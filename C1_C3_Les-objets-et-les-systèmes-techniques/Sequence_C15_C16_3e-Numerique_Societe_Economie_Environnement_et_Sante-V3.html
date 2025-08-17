@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<title>Séquence 3ᵉ – Numérique, société, environnement et santé</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --bg: #041a40;
+      --panel: #0b2f5c;
+      --border: #234d8c;
+      --title: #81aaff;
+      --subtitle: #9bbefc;
+      --heading: #c68ef2;
+      --text: #e4eaf5;
+      --input-bg: #12335e;
+      --input-border: #2e5d9f;
+      --button: #1d4e89;
+      --button-hover: #2966b1;
+      --highlight: #61dafb;
+      --drag-bg: #194a80;
+      --drop-bg: #0d3a6e;
+      --drop-border: #4178be;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); }
+    h1 { text-align: center; color: var(--title); margin-top: 20px; margin-bottom: 10px; font-size: 1.8em; }
+    h2 { color: var(--heading); margin-top: 25px; }
+    h3 { color: var(--subtitle); margin-top: 20px; }
+    h4 { color: var(--subtitle); margin-top: 15px; margin-bottom: 5px; }
+    .section { background-color: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin: 20px; }
+    .info { width: 95%; margin: 0 auto 20px auto; border-collapse: collapse; background-color: var(--panel); color: var(--text); }
+    .info td { border: 1px solid var(--border); padding: 6px; }
+    .info input { width: 100%; background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text); padding: 4px; border-radius: 4px; }
+    textarea, input[type='text'] { width: 100%; background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text); padding: 6px; border-radius: 4px; resize: vertical; }
+    button{background-color:var(--button);border:none;color:var(--text);padding:8px 16px;margin-top:10px;border-radius:4px;cursor:pointer;transition:background-color .2s ease}
+    button:hover { background-color: var(--button-hover); }
+    
+    .answer.visible { display: block; }
+    .callout { background-color: var(--drop-bg); border-left: 4px solid var(--highlight); border-radius: 4px; padding: 10px; margin: 10px 0; }
+    .drag-container { display: flex; flex-wrap: wrap; margin-bottom: 10px; }
+    .drag-item { background-color: var(--drag-bg); border: 1px solid var(--drop-border); border-radius: 4px; padding: 5px 10px; margin: 5px; cursor: grab; user-select: none; }
+    .drop-zone { min-height: 70px; background-color: var(--drop-bg); border: 2px dashed var(--drop-border); border-radius: 6px; padding: 10px; margin: 5px; flex: 1 1 45%; }
+    .drop-zone h4 { margin-top: 0; margin-bottom: 5px; color: var(--subtitle); }
+    .drop-zone ul { list-style: none; padding: 0; margin: 0; }
+    .microq { margin-top: 15px; }
+    .microq textarea { margin-top: 5px; }
+  
+/* Ajouts pour DRP + micro-questions + accessibilité */
+.kbd{padding:.1rem .4rem;border:1px solid var(--input-border, #444);border-radius:6px;background:var(--input-bg, #111)}
+.drp-container{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.drp-container textarea{width:100%;min-height:72px}
+button{cursor:pointer}
+
+@media (max-width:700px){.drp-container{grid-template-columns:1fr}}
+.answer{display:none;margin-top:10px;padding:10px;background-color:var(--drop-bg);border-left:4px solid var(--highlight);border-radius:4px}
+.answer.visible{display:block}
+.match-drop{min-height:50px;background-color:var(--drop-bg);border:2px dashed var(--drop-border);border-radius:6px;padding:8px;margin:6px 0}
+.match-option{background-color:var(--drag-bg);border:1px solid var(--drop-border);border-radius:4px;padding:4px 8px;margin:4px;display:inline-block;cursor:grab}
+.match-drop.ok{border-color:#28a745}
+.match-drop.ko{border-color:#e74c3c}
+
+.hud strong{font-weight:700}
+
+a, a:visited { color: #9ecbff; }
+a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
+.pref-link { font-weight: 600; }
+
+.badge-perfect{
+  display:inline-block;
+  margin-left:8px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#1e7e34;
+  color:#fff;
+  font-weight:700;
+  box-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+
+/* --- Bloc code Python (style éditeur sombre) --- */
+.code-block{background:#0f111a;border-radius:8px;padding:14px 16px;overflow:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.code-block code{font-family:Consolas, 'Courier New', monospace; font-size:15px; line-height:1.6; color:#e6e6e6; white-space:pre;}
+.tok-cmt{color:#98c379}        /* commentaires */
+.tok-str{color:#e5c07b}        /* chaînes */
+.tok-kw {color:#61afef}        /* mots-clés */
+.tok-fn {color:#56b6c2}        /* noms de fonctions */
+.tok-id {color:#e6e6e6}        /* identifiants */
+.tok-op {color:#e6e6e6}        /* opérateurs */
+.tok-num{color:#d19a66}        /* nombres */
+.tok-pun{color:#e6e6e6}        /* ponctuation */
+
+/* Mise en valeur de la consigne sous 2.a */
+.consigne{background:rgba(97,175,239,0.12); border-left:4px solid #61afef; padding:10px 12px; border-radius:6px; color:#cfe6ff}
+.consigne strong{color:#cfe6ff}
+.copy-btn{margin:8px 0 12px; display:inline-block}
+</style>
+</head>
+<body>
+<h1>Séquence 3ᵉ : Numérique, société, environnement et santé</h1>
+<!-- Fiche d'activité -->
+<table class="info">
+<tr><td>Thématique abordée :</td><td>Écologie du numérique et usages responsables (impression raisonnée), protection des données, initiation Python appliquée aux usages (HTTP/HTTPS).</td></tr>
+<tr><td>Attendu de fin de cycle :</td><td>C1.5 – Identifier des règles permettant de sécuriser un environnement numérique et respecter la propriété intellectuelle ; <br/>
+    C1.6 – Appréhender la responsabilité de chacun dans les dérives (e-réputation, atteinte à la vie privée, données personnelles).<br/>
+    Comprendre l’impact environnemental des technologies et adopter des gestes sobres (impression, vidéo, stockage).</td></tr>
+<tr><td>Compétences détaillées :</td><td>- Expliquer l’« écologie du numérique » et relier fabrication/usage/fin de vie aux impacts (équipements, centres de données, réseaux).<br/>
+    - Mettre en œuvre une <strong>impression raisonnée</strong> (aperçu, pages ciblées, recto-verso, plusieurs pages par feuille, PDF quand c’est pertinent).<br/>
+    - Lire, compléter et tester un <strong>programme Python</strong> simple (commentaires, variables, <code>print</code>, conditions <code>if/else</code>) sur un compilateur en ligne.<br/>
+    - Respecter les droits (image, auteur), soigner son e-réputation et ses réglages de confidentialité.</td></tr>
+<tr><td>Connaissances à mobiliser :</td><td>Cycle de vie des équipements ; gestes sobres (impression/streaming/mails) ; notions HTTP/HTTPS (rôle du chiffrement) ; 
+    composants d’un programme (commentaires, instructions, entrée/sortie, tests) ; consentement et droit à l’image.</td></tr>
+<tr><td>Compétences du socle commun travaillées :</td><td>D1 – Langages (argumenter à partir d’un document technique) ;<br/>
+  D2 – Méthodes et outils (expérimenter en Python et configurer l’impression) ; <br/>
+    D3 – Personne et citoyen (responsabilités numériques) ;<br/> D4 – Systèmes naturels et techniques (impacts, sobriété).</td></tr>
+<tr><td>Compétences numériques (CRCN) :</td><td>Information et données (sélection d’informations utiles dans un PDF) ; <br/>
+    Création de contenus (documents PDF/impressions maîtrisées) ; <br/>
+    Protection et sécurité (bonnes pratiques, HTTPS) ; <br/>
+    Environnement numérique (utiliser des outils en ligne pour tester du code)..</td></tr>
+</table>
+<p style="text-align:center">Complétez vos informations et suivez les activités pour comprendre comment protéger vos données, naviguer en toute sécurité et respecter la propriété intellectuelle.</p>
+<table class="info" style="width:60%; margin:auto">
+<tr><td>Nom :</td><td><input id="nom4" type="text"/></td></tr>
+<tr><td>Prénom :</td><td><input id="prenom4" type="text"/></td></tr>
+<tr><td>Classe :</td><td><input id="classe4" type="text"/></td></tr>
+</table>
+<button onclick="saveProgress4()">Sauvegarder mon travail</button>
+
+  <!-- Problématique -->
+  <div class="section" id="problematique">
+    <h2>❓ Problématique</h2>
+    <p>Comment protéger efficacement sa vie numérique tout en respectant les droits des autres et en comprenant l’impact de ses actions en ligne&nbsp;?</p>
+    <textarea placeholder="Votre reformulation de la problématique…"></textarea>
+    <button onclick="toggleAnswer('corr_prob')">Voir la correction</button>
+    <div class="answer" id="corr_prob">
+      Voici une reformulation simple :
+
+<div>"Comment faire attention à ce qu’on fait sur Internet pour rester en sécurité, respecter les autres et comprendre les conséquences de nos actions en ligne ?" </div>
+
+<div>Et si tu veux une version encore plus imagée : </div>
+
+<div>"Comment être un bon citoyen du monde numérique : se protéger, respecter les autres et réfléchir avant de cliquer ?"
+ </div>      
+      
+ <div>  Pistes attendues : mots de passe robustes/uniques + 2FA, gestion d’e-réputation, consentement avant publication, paramétrages de confidentialité, vérification des sources, respect du droit à l’image.
+    </div>
+  </div>
+
+  <!-- Situation déclenchante -->
+  <div class="section" id="situation-declenchante">
+    <h3>⚡ Situation déclenchante</h3>
+    <p>Un ami publie sur les réseaux sociaux une photo de vous prise au cours du week-end. Cette publication révèle votre localisation et votre identité sans votre accord. Quelles sont les conséquences possibles&nbsp;? Comment aurait-il dû agir avant de diffuser cette information&nbsp;? Quels conseils donneriez-vous à vos proches&nbsp;?</p>
+    <textarea placeholder="Votre analyse…"></textarea>
+    <button onclick="toggleAnswer('corr_sit')">Voir la correction</button>
+    <div class="answer" id="corr_sit">
+      Conséquences possibles : atteinte à la vie privée, risques d’usurpation, harcèlement, diffusion non maîtrisée. Bonnes pratiques : demander le consentement, recadrer/masquer, limiter l’audience, paramétrer la confidentialité, retirer la publication sur demande.
+    </div>
+  </div>
+
+  <!-- Section 1: Observation et e‑réputation -->
+  <div class='section'>
+    <h2>1. Être observé sur Internet</h2>
+    <div class='callout'><p>Chaque action que vous effectuez en ligne (likes, commentaires, photos publiées) laisse une trace. Ces traces constituent votre <strong>e‑réputation</strong>, qui peut être consultée par d’autres (camarades, employeurs, écoles…). Respecter les règles de confidentialité et réfléchir avant de publier protège votre image et votre vie privée.</p></div>
+    <h3>1.a – Distinguer les bonnes et mauvaises pratiques</h3>
+    <p>Classez chaque comportement selon qu’il contribue à une bonne e‑réputation ou qu’il la met en danger.</p>
+    <div class='drag-container'>
+      <div class='drag-item' draggable='true'>Publier des photos embarrassantes de soi ou d’amis</div>
+      <div class='drag-item' draggable='true'>Vérifier les paramètres de confidentialité</div>
+      <div class='drag-item' draggable='true'>Participer à des discussions respectueuses</div>
+      <div class='drag-item' draggable='true'>Partager des informations fausses ou privées</div>
+      <div class='drag-item' draggable='true'>Utiliser un pseudonyme</div>
+      <div class='drag-item' draggable='true'>Critiquer violemment quelqu’un en ligne</div>
+    </div>
+    <div class='drop-zone'><h4>Bonne pratique</h4><ul id='goodrep'></ul></div>
+    <div class='drop-zone'><h4>Mauvaise pratique</h4><ul id='badrep'></ul></div>
+    <button onclick="toggleAnswer('ans3_1a')">Voir la correction</button>
+    <div class='answer' id='ans3_1a'><p>Bonnes pratiques : Vérifier les paramètres de confidentialité ; Participer à des discussions respectueuses ; Utiliser un pseudonyme (dans certains contextes). Mauvaises pratiques : Publier des photos embarrassantes ; Partager des informations fausses ou privées ; Critiquer violemment quelqu’un en ligne.</p></div>
+
+    <h3>1.b – Questions</h3>
+    <ol>
+      <li>Peut‑on vraiment être « invisible » sur Internet ? Expliquez pourquoi.</li>
+     
+       <textarea rows='4' placeholder='Vos réponses...'></textarea>
+    <button onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
+    <div class='answer' id='ans3_1b'><p>Il est très difficile d’être invisible car les sites, fournisseurs d’accès et applications conservent des traces de nos connexions. </p></div>
+  
+      
+      
+      <li>Quelles mesures simples prendre pour protéger votre e‑réputation ?</li>
+   
+    <textarea rows='4' placeholder='Vos réponses...'></textarea>
+    <button onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
+    <div class='answer' id='ans3_1b'><p>Il est très difficile d’être invisible car les sites, fournisseurs d’accès et applications conservent des traces de nos connexions. On peut toutefois réduire son empreinte en limitant les publications, en utilisant des paramètres de confidentialité, en choisissant des pseudos, en demandant la suppression de contenus inappropriés et en faisant attention à ce que l’on partage.</p></div>
+       </ol>
+  </div>
+</div>
+  <!-- Section 2: Activité professionnelle -->
+  
+   
+    
+  <div class='section'>
+    <h2>2. Activités professionnelles</h2>
+    
+<p style="font-size:28px; font-weight:bold; color:white; font-family:'Georgia', serif; text-shadow:1px 1px 2px black;">⚖️ Activité professionnelle en ligne</p>
+
+    
+    <div class='callout'><p>Internet offre un accès mondial et permet de lancer facilement une activité professionnelle (boutique en ligne, blog, chaîne vidéo…). Les avantages : visibilité, réduction des coûts, horaires flexibles. Les inconvénients : forte concurrence, risques de piratage, besoin de compétences techniques et légales. Il faut un site clair, sécurisé et conforme aux réglementations (données, paiements…).</p></div>
+    <h3>2.a – Avantages et inconvénients</h3>
+    <p>Faites glisser les éléments ci‑dessous dans la catégorie qui convient.</p>
+    <div class='drag-container'>
+      <div class='drag-item' draggable='true'>Visibilité internationale</div>
+      <div class='drag-item' draggable='true'>Frais de démarrage réduits</div>
+      <div class='drag-item' draggable='true'>Accès 24 h/24</div>
+      <div class='drag-item' draggable='true'>Risque accru de cyberattaques</div>
+      <div class='drag-item' draggable='true'>Concurrence mondiale</div>
+      <div class='drag-item' draggable='true'>Nécessité de connaissances juridiques</div>
+      <div class='drag-item' draggable='true'>Souplesse de travail</div>
+    </div>
+    <div class='drop-zone'><h4>Avantage</h4><ul id='pro'></ul></div>
+    <div class='drop-zone'><h4>Inconvénient</h4><ul id='con'></ul></div>
+    <button onclick="toggleAnswer('ans3_2a')">Voir la correction</button>
+    <div class='answer' id='ans3_2a'><p>Avantages : Visibilité internationale ; Frais de démarrage réduits ; Accès 24 h/24 ; Souplesse de travail. Inconvénients : Risque accru de cyberattaques ; Concurrence mondiale ; Nécessité de connaissances juridiques.</p></div>
+
+    <h3>2.b – Questions</h3>
+    <ol>
+      <li>Quels sont les prérequis techniques pour lancer une activité en ligne en toute sécurité ?</li>
+      <textarea rows='4' placeholder='Vos réponses...'></textarea>
+      <div class='answer' id='ans3_2b'><p>Il faut un hébergement fiable, un certificat HTTPS, un système de paiement sécurisé, des sauvegardes régulières et un antivirus. Le respect des lois protège les utilisateurs et l’entreprise : RGPD pour les données personnelles, respect des licences et droits d’auteur pour les contenus utilisés, informations légales (mentions obligatoires) pour instaurer la confiance.</p></div>
+      
+      <li>Pourquoi est‑il important de respecter les lois (RGPD, propriété intellectuelle) lorsqu’on a un site ?</li>
+    
+    <textarea rows='4' placeholder='Vos réponses...'></textarea>
+    <button onclick="toggleAnswer('ans3_2b')">Voir la correction</button>
+    <div class='answer' id='ans3_2b'><p>Il faut un hébergement fiable, un certificat HTTPS, un système de paiement sécurisé, des sauvegardes régulières et un antivirus. Le respect des lois protège les utilisateurs et l’entreprise : RGPD pour les données personnelles, respect des licences et droits d’auteur pour les contenus utilisés, informations légales (mentions obligatoires) pour instaurer la confiance.</p></div>
+      
+   </ol>
+    
+    
+ <p style="font-size:28px; font-weight:bold; color:white; font-family:'Georgia', serif; text-shadow:1px 1px 2px black;">⚖️ La révolution du numérique dans les entreprises</p>
+  
+     
+    
+
+ <div class="container">
+    <h1>Impact du Numérique sur le Monde du Travail</h1>
+   
+   <br>
+  <div class="container">    
+    
+ Dans quelle mesure le numérique va-t-il modifier le monde du travail ? Quels types de métiers ne seront pas supprimés par la révolution numérique ? Ces questions étaient au coeur des conférences interactives « Trouver ma place dans un monde de robots ». Voici quelques réponses de conférenciers.   
+ </div> 
+   
+<br>
+    <div class="quote">
+      <strong>Xavier Gendron, cofondateur et CEO de BeWe :</strong> « Comme dans toute révolution industrielle, des métiers disparaissent et d’autres apparaissent, mais surtout les métiers se transforment. Tous les métiers sont influencés par le numérique. La robotisation ne signifie pas toujours la destruction d’emplois. Elle force à ne plus penser en termes de métier, de tâches, mais de compétences. »
+    </div>
+<br>
+    <div class="quote">
+      <strong>Charles Christory, fondateur et CEO d’Adictiz,</strong> pense que les avancées technologiques et la robotisation permettront de réduire les tâches « aliénantes » et « ennuyantes », laissant plus de temps au travailleur pour se concentrer sur des activités créatives.
+    </div>
+<br>
+    <div class="quote">
+      <strong>Nathalie Balla, PDG de La Redoute :</strong> « Chez nous, le métier le plus influencé par la technologie est la logistique. L’automatisation des entrepôts a changé la relation de l’homme à son travail. Aujourd’hui, la machine apporte la marchandise au collaborateur alors qu’avant, l’homme apportait la marchandise à l’homme. Le travail est donc moins usant et plus agréable. »
+    </div>
+   
+<br>
+    <div class="source">
+      Source : Le Monde, 16 mai 2017
+    </div>
+  </div>   
+    
+  
+    
+    <h3>2.c – Questions</h3>
+    <ol>
+      <li>Les métiers d’hier sont-ils les mêmes que les métiers de demain ?</li>
+      <textarea rows='4' placeholder='Vos réponses...'></textarea>
+    <button onclick="toggleAnswer('ans3_2c1')">Voir la correction</button>
+    <div class='answer' id='ans3_2c1'><p>Non, les métiers d’hier ne seront pas exactement les mêmes que ceux de demain. Le numérique transforme profondément le monde du travail. Comme le souligne Xavier Gendron, les révolutions industrielles entraînent la disparition de certains métiers, l’apparition de nouveaux, mais surtout la transformation des métiers existants. Ce ne sont plus les tâches qui définissent un métier, mais les compétences. Par exemple, un comptable d’hier utilisait des registres papier, tandis qu’un comptable d’aujourd’hui maîtrise des logiciels automatisés. Le métier reste, mais il évolue.
+
+🔍 Idée clé : Les métiers changent de forme, de méthode et d’outils, mais pas toujours de nom.</p></div>
+      
+      <li>En quoi la robotique a-t-elle fait évoluer les métiers ?</li>
+    
+    <textarea rows='4' placeholder='Vos réponses...'></textarea>
+    <button onclick="toggleAnswer('ans3_2c2')">Voir la correction</button>
+    <div class='answer' id='ans3_2c2'><p>La robotique a modifié les métiers en réduisant les tâches répétitives, pénibles ou aliénantes, comme le dit Charles Christory. Elle permet aux travailleurs de se concentrer sur des activités plus créatives et valorisantes. Dans le domaine de la logistique, Nathalie Balla explique que l’automatisation des entrepôts a changé la relation de l’homme à son travail : la machine apporte désormais la marchandise au collaborateur, ce qui rend le travail moins fatigant et plus agréable.
+
+🔍 Idée clé : La robotique transforme les conditions de travail, améliore le confort et redéfinit les rôles humains.</p></div>
+      
+       <li>Citez un métier qui va sans doute profondément évoluer avec le numérique.</li>
+    
+    <textarea rows='4' placeholder='Vos réponses...'></textarea>
+    <button onclick="toggleAnswer('ans3_2c3')">Voir la correction</button>
+    <div class='answer' id='ans3_2c3'><p>Un exemple clair est le métier de logisticien ou d’agent d’entrepôt, comme mentionné par Nathalie Balla. Ce métier est fortement influencé par l’automatisation : les tâches physiques sont réduites, les outils numériques prennent une place centrale, et les compétences requises évoluent vers la gestion de systèmes automatisés. D’autres métiers comme enseignant, journaliste, ou assistant administratif sont également en pleine mutation avec l’intelligence artificielle, les plateformes numériques et les outils collaboratifs.
+
+🔍 Idée clé : Les métiers liés à la gestion, la production, la communication et l’analyse sont tous concernés par cette évolution.</p></div>   
+      
+      
+      
+   </ol>    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+  </div>
+    
+
+  
+
+  
+
+  <!-- Section 3: Impact environnemental -->
+  <div class='section'>
+    <h2>3. Impact environnemental des technologies</h2>
+    <div class='callout'><p>Les centres de données consomment beaucoup d’énergie pour faire fonctionner et refroidir des milliers de serveurs. Les appareils numériques nécessitent des métaux rares dont l’extraction pollue. Le numérique représente environ 3 % de la consommation électrique mondiale et émet des gaz à effet de serre. Réduire l’empreinte numérique passe par la sobriété : éteindre les appareils inutilisés, limiter la vidéo en streaming haute définition, prolonger la durée de vie des équipements.</p></div>
+ </div> 
+    
+  
+  <!-- ========================= -->
+<!-- 3. IMPACT ENVIRONNEMENTAL -->
+<!-- ========================= -->
+<div class="section" id="impact-env">
+  <h2>3. Impact environnemental des technologies</h2>
+
+  <!-- Intégration de la ressource PDF (placer DELAGR~1.PDF à côté du fichier HTML) -->
+  <div class="callout">
+    <p><strong>Ressource :</strong> <em>L’écologie du numérique</em> (Delagrave / Geek Junior).</p>
+    <embed src="DELAGR~1.PDF#view=FitH" type="application/pdf" width="100%" height="420px"
+           style="border:1px solid var(--border); border-radius:6px;"
+           onerror="this.outerHTML='<p>📄 <a href=&quot;DELAGR~1.PDF&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Ouvrir le PDF dans un nouvel onglet</a></p>';">
+  </div>
+
+  <h3>3.a – Questions à partir du document</h3>
+  <p class="consigne"><strong>Consigne :</strong> Répondez aux questions ci-dessous en vous appuyant sur le PDF. Justifiez en une à deux phrases.</p>
+
+  <!-- Q1 -->
+  <p>1) Qu’appelle-t-on <strong>écologie du numérique</strong> ?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe1')">Voir la correction</button>
+  <div class="answer" id="corr_qe1">
+    Utilisation <em>durable, responsable et raisonnée</em> des appareils et services numériques pour réduire leur pollution et leur empreinte environnementale. :contentReference[oaicite:0]{index=0}
+  </div>
+
+  <!-- Q2 -->
+  <p>2) En France (2022), quelle part de l’empreinte carbone totale provient du secteur numérique&nbsp;?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe2')">Voir la correction</button>
+  <div class="answer" id="corr_qe2">
+    Environ <strong>4,4&nbsp;%</strong> de l’empreinte carbone. :contentReference[oaicite:1]{index=1}
+  </div>
+
+  <!-- Q3 -->
+  <p>3) Quelle part de l’impact carbone du numérique provient principalement de nos <strong>équipements</strong> (smartphones, ordinateurs, TV)&nbsp;?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe3')">Voir la correction</button>
+  <div class="answer" id="corr_qe3">
+    Environ <strong>50&nbsp;%</strong>. :contentReference[oaicite:2]{index=2}
+  </div>
+
+  <!-- Q4 -->
+  <p>4) Et des <strong>centres de données</strong>&nbsp;?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe4')">Voir la correction</button>
+  <div class="answer" id="corr_qe4">
+    Environ <strong>46&nbsp;%</strong> (ordre de grandeur donné dans le document). :contentReference[oaicite:3]{index=3}
+  </div>
+
+  <!-- Q5 -->
+  <p>5) Pourquoi dit-on que <strong>80&nbsp;%</strong> des émissions d’un appareil sont liées à sa <strong>fabrication</strong>&nbsp;?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe5')">Voir la correction</button>
+  <div class="answer" id="corr_qe5">
+    L’extraction des ressources, la transformation des matériaux, l’assemblage et le transport sont très énergivores et émetteurs de GES, bien plus que l’usage unitaire. :contentReference[oaicite:4]{index=4}
+  </div>
+
+  <!-- Q6 -->
+  <p>6) Donnez les ordres de grandeur nécessaires pour fabriquer un <strong>ordinateur</strong> (combustibles, produits chimiques, eau).</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe6')">Voir la correction</button>
+  <div class="answer" id="corr_qe6">
+    ≈ <strong>240&nbsp;kg</strong> de combustibles fossiles, <strong>22&nbsp;kg</strong> de produits chimiques et <strong>1,5&nbsp;tonne</strong> d’eau. :contentReference[oaicite:5]{index=5}
+  </div>
+
+  <!-- Q7 -->
+  <p>7) Citez <strong>trois gestes</strong> parmi “Les 10 bons gestes du numérique” qui réduisent l’empreinte environnementale.</p>
+  <textarea placeholder="Votre réponse… (ex. éteindre les appareils, Wi-Fi plutôt que 4G/5G, limiter le streaming HD, trier sa boîte mail, etc.)"></textarea>
+  <button onclick="toggleAnswer('corr_qe7')">Voir la correction</button>
+  <div class="answer" id="corr_qe7">
+    Exemples : éteindre/mettre en veille les appareils, fermer les applis inutilisées, limiter la vidéo en streaming HD, préférer le Wi-Fi à la 4G/5G, compresser les pièces jointes, trier/supprimer les mails, n’imprimer que si nécessaire. :contentReference[oaicite:6]{index=6}
+  </div>
+
+  <!-- Q8 -->
+  <p>8) Expliquez ce que sont les <strong>terres rares</strong> et donnez un exemple d’usage.</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe8')">Voir la correction</button>
+  <div class="answer" id="corr_qe8">
+    Groupe d’environ 17 éléments (ex. yttrium, cérium) aux propriétés électromagnétiques utiles : batteries, écrans, LED, etc. Leur extraction a un impact environnemental. :contentReference[oaicite:7]{index=7}
+  </div>
+
+  <!-- Q9 -->
+  <p>9) Pourquoi privilégier des appareils <strong>réparables / reconditionnés / éco-conçus</strong>&nbsp;?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe9')">Voir la correction</button>
+  <div class="answer" id="corr_qe9">
+    Pour <strong>prolonger la durée de vie</strong>, éviter de nouvelles fabrications (très émettrices), limiter l’extraction de ressources et le volume de déchets. :contentReference[oaicite:8]{index=8}
+  </div>
+
+  <!-- Q10 -->
+  <p>10) Donnez un argument pour <strong>limiter l’usage d’IA génératives</strong> et du <strong>streaming HD</strong> quand ce n’est pas nécessaire.</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_qe10')">Voir la correction</button>
+  <div class="answer" id="corr_qe10">
+    Ces services sollicitent fortement les data centers et les réseaux : ils consomment énergie et eau ; réduire ces usages diminue l’empreinte environnementale. :contentReference[oaicite:9]{index=9}
+  </div>
+
+  <h3>3.b – Imprimer de manière raisonnée</h3>
+  <p>Observez l’écran d’impression (Word/LibreOffice). Répondez :</p>
+
+  <p>1) Quel est l’intérêt de n’imprimer que <strong>quelques pages</strong> d’un document (menu “Pages”)&nbsp;?</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_print1')">Voir la correction</button>
+  <div class="answer" id="corr_print1">
+    Économiser <strong>papier</strong> et <strong>encre</strong> en n’imprimant que les pages utiles (éviter les pages blanches/annexes).
+  </div>
+
+  <p>2) Citez un réglage du menu d’impression qui permet d’<strong>économiser du papier</strong>.</p>
+  <textarea placeholder="Votre réponse… (ex. recto-verso, 2 ou 4 pages par feuille)"></textarea>
+  <button onclick="toggleAnswer('corr_print2')">Voir la correction</button>
+  <div class="answer" id="corr_print2">
+    <strong>Recto-verso</strong> et/ou “<strong>plusieurs pages par feuille</strong>” (2, 4, 6…). On peut aussi utiliser le mode <em>brouillon</em> et l’<em>aperçu</em> avant impression.
+  </div>
+  
+ <!-- Q3 -->
+<p>3) Quand est-il <strong>préférable d’exporter en PDF</strong> plutôt que d’imprimer sur papier&nbsp;? Donnez deux situations concrètes (ex. dépôt sur ENT, relecture, archivage).</p>
+<textarea placeholder="Votre réponse…"></textarea>
+<button onclick="toggleAnswer('corr_print3')">Voir la correction</button>
+<div class="answer" id="corr_print3">
+  Quand le document est à <strong>partager/archiver</strong> ou à <strong>relire à l’écran</strong> (ENT, mail, Teams…), un PDF est suffisant et évite le papier. 
+  On imprime seulement les versions finales indispensables.
+</div>
+
+<!-- Q4 -->
+<p>4) Citez <strong>deux réglages</strong> qui réduisent la consommation d’<strong>encre</strong> à l’impression et expliquez leur effet.</p>
+<textarea placeholder="Votre réponse… (ex. mode brouillon/économie, niveaux de gris, retirer l’arrière-plan, police éco…)"></textarea>
+<button onclick="toggleAnswer('corr_print4')">Voir la correction</button>
+<div class="answer" id="corr_print4">
+  <em>Mode brouillon</em> (moins d’encre, plus rapide) ; <em>niveaux de gris/noir et blanc</em> (évite l’encre couleur). 
+  On peut aussi retirer l’arrière-plan et utiliser une police économe.
+
+  <h4>🧾 Polices économes et écologiques</h4>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Police</th>
+        <th>Particularité principale</th>
+        <th>Économie estimée</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Ecofont</strong></td>
+        <td>Lettres avec micro-trous invisibles à l’œil nu</td>
+        <td>Jusqu’à 28 %</td>
+      </tr>
+      <tr>
+        <td><strong>Ryman Eco</strong></td>
+        <td>Design creux et élégant, très lisible</td>
+        <td>Environ 33 %</td>
+      </tr>
+      <tr>
+        <td><strong>Century Gothic</strong></td>
+        <td>Lignes fines, très répandue dans les bureaux</td>
+        <td>Environ 30 %</td>
+      </tr>
+      <tr>
+        <td><strong>Garamond</strong></td>
+        <td>Élégante et compacte, idéale pour les textes littéraires</td>
+        <td>Environ 24 %</td>
+      </tr>
+      <tr>
+        <td><strong>Calibri</strong></td>
+        <td>Moderne et efficace, bonne lisibilité</td>
+        <td>Moyenne</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Q5 -->
+<p>5) À quoi servent les options <strong>« Aperçu avant impression »</strong> et <strong>« Pages : 3-5, 8 »</strong> ? En quoi cela rend l’impression plus écologique&nbsp;?</p>
+<textarea placeholder="Votre réponse…"></textarea>
+<button onclick="toggleAnswer('corr_print5')">Voir la correction</button>
+<div class="answer" id="corr_print5">
+  L’aperçu évite les erreurs (marges/coupes). Le sélecteur de pages imprime <strong>seulement l’utile</strong> (3-5, 8), 
+  limitant papier/encre et ré-impressions.
+</div>
+
+<!-- Q6 -->
+<p>6) Expliquez l’intérêt de <strong>« 2 ou 4 pages par feuille »</strong>. Dans quel cas est-ce pertinent&nbsp;?</p>
+<textarea placeholder="Votre réponse…"></textarea>
+<button onclick="toggleAnswer('corr_print6')">Voir la correction</button>
+<div class="answer" id="corr_print6">
+  Regroupe plusieurs pages sur une feuille : idéal pour <strong>fiches de relecture</strong> ou diaporamas. 
+  On lit encore confortablement tout en divisant le nombre de feuilles imprimées.
+</div>
+
+<!-- Q7 -->
+<p>7) Vous devez rendre un devoir signé. Proposez une <strong>stratégie raisonnée</strong> selon les besoins : (a) signature manuscrite exigée, (b) signature numérique acceptée.</p>
+<textarea placeholder="Votre réponse…"></textarea>
+<button onclick="toggleAnswer('corr_print7')">Voir la correction</button>
+<div class="answer" id="corr_print7">
+  (a) Imprimer en <strong>recto-verso</strong> et <strong>niveaux de gris</strong> si possible ; <br>
+  ✍️ Ajouter une <strong>signature manuscrite</strong> après impression, puis scanner si nécessaire.<br><br>
+
+  (b) Créer un <strong>PDF signé</strong> pour envoi via ENT ou email, évitant toute impression.<br>
+  Voici comment faire dans les logiciels courants :
+
+  <ul>
+    <li><strong>Microsoft Word :</strong> Insérer une image de votre signature (scannée ou prise en photo), puis enregistrer en PDF via <em>Fichier &gt; Exporter &gt; Créer un document PDF/XPS</em>.</li>
+    <li><strong>LibreOffice Writer :</strong> Même méthode : insérer l’image de la signature, puis <em>Fichier &gt; Exporter au format PDF</em>.</li>
+    <li>💡 Astuce : Vous pouvez aussi utiliser un outil comme <em>Adobe Acrobat Reader</em> ou <em>DocHub</em> pour signer directement un PDF.</li>
+  </ul>
+</div>
+
+ 
+</div>
+  
+   
+  
+  
+  
+  <!-- Partie 4.a — Programme Python -->
+  <div class="section" id="sec2">
+    <h2>4. Données, sécurité et Python</h2>
+    <h3>4.a – Programme Python</h3>
+    <p class="consigne"><strong>Consigne :</strong> Complétez le programme ci-dessous afin qu’il avertisse l’utilisateur si l’URL ne commence pas par <code>https://</code>. Vous pouvez tester votre code avec l’un des compilateurs recommandés ci-dessous.</p>
+
+  
+<div class="callout" id="compilateurs-python">
+<strong>🧰 Ressource — Compilateurs Python en ligne (préférés)</strong>
+<ol>
+  <li>💻 <a href="https://programiz.com" style="color:#1E90FF;">Programiz</a></li>
+  <li>🌐 <a href="https://online-python.com" style="color:#1E90FF;">Online Python</a></li>
+  <li>⚡ <a href="https://online-python-compiler.com" style="color:#1E90FF;">Online Python Compiler</a></li>
+</ol>
+<p style="font-size:0.95em;opacity:0.95;margin:6px 0 0">⚠️ Évitez de partager des données sensibles dans un éditeur en ligne.</p>
+</div>
+
+    <button type="button" id="copy-code" class="copy-btn">Copier le code</button>
+    <div class="code-block" aria-label="Exemple de code Python">
+      <code id="code-python">
+<span class="tok-cmt"># Vérifie si l’URL est sécurisée</span>
+<span class="tok-id">url</span> <span class="tok-op">=</span> <span class="tok-str">"http://example.com"</span>  <span class="tok-cmt"># modifiez cette variable pour tester</span>
+
+<span class="tok-cmt"># TODO : testez si l’URL commence par "https://"</span>
+<span class="tok-kw">if</span> <span class="tok-id">url</span>.<span class="tok-fn">startswith</span>(<span class="tok-str">"https://"</span>)<span class="tok-pun">:</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"Connexion sécurisée"</span>)
+<span class="tok-kw">else</span><span class="tok-pun">:</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"Connexion non sécurisée : attention !"</span>)
+      </code>
+    </div>
+
+    <h4>📖 Glossaire (FR / EN)</h4>
+    <ul>
+      <li><strong>URL</strong> — <em>Uniform Resource Locator</em> (FR : localisateur uniforme de ressource)</li>
+      <li><strong>HTTP</strong> — <em>HyperText Transfer Protocol</em> • <strong>HTTPS</strong> — HTTP chiffré via TLS</li>
+      <li><strong>TLS</strong> — <em>Transport Layer Security</em> • <strong>SSL</strong> — <em>Secure Sockets Layer</em> (ancêtre)</li>
+      <li><strong>DNS</strong> — <em>Domain Name System</em> (système de noms de domaine)</li>
+      <li><strong>2FA</strong> — <em>Two-Factor Authentication</em> (authentification à deux facteurs)</li>
+    </ul>
+  
+
+  <!-- Questions intermédiaires : modèle générique avec champs + correction -->
+  <div class="section" id="questions">
+    <h2>🔎 Questions</h2>
+
+    <p>Pourquoi est-il déconseillé d’utiliser le même mot de passe sur plusieurs services&nbsp;?</p>
+    <textarea placeholder="Votre réponse…"></textarea>
+    <button onclick="toggleAnswer('corr_q1')">Voir la correction</button>
+    <div class="answer" id="corr_q1">Si un service est compromis, toutes les autres connexions sont exposées. Préférer un mot de passe unique par service (+ phrase de passe + 2FA).</div>
+
+    <p>Que signifie le cadenas dans la barre d’adresse d’un navigateur&nbsp;?</p>
+    <textarea placeholder="Votre réponse…"></textarea>
+    <button onclick="toggleAnswer('corr_q2')">Voir la correction</button>
+    <div class="answer" id="corr_q2">Le cadenas indique que la connexion est chiffrée (HTTPS/TLS) entre le navigateur et le site. Il n’atteste pas, à lui seul, de la fiabilité du contenu.</div>
+  </div>
+
+    
+   <h3>4.b – Travaux pratiques guidés (11 micro-défis)</h3>
+<p class="consigne"><strong>Consigne :</strong> lancez un des compilateurs recommandés, copiez le code de la séquence si besoin, puis réalisez chaque défi. Testez, justifiez en une ou deux phrases.</p>
+
+<!-- D1 -->
+<p><strong>D1 – Commentaires</strong> : ajoutez, au début du programme, un commentaire qui explique ce que fait le script (contrôle de l’URL en HTTPS).</p>
+<textarea placeholder="Votre justification / capture de sortie…"></textarea>
+<button onclick="toggleAnswer('corr_d1')">Voir la correction</button>
+<div class="answer" id="corr_d1">
+  Exemple : <code># Vérifie si l’URL commence par https:// et affiche un message de sécurité</code>. Un commentaire n’est pas exécuté ; il sert à documenter.
+</div>
+
+<!-- D2 -->
+<p><strong>D2 – Variables</strong> : changez la valeur de <code>url</code> (ex. <code>"https://college.fr"</code>, puis <code>"http://example.com"</code>) et observez les messages.</p>
+<textarea placeholder="Que s’affiche-t-il ? Expliquez."></textarea>
+<button onclick="toggleAnswer('corr_d2')">Voir la correction</button>
+<div class="answer" id="corr_d2">
+  Avec <code>https://…</code> → « Connexion sécurisée ». Avec <code>http://…</code> → « Connexion non sécurisée : attention ! ». 
+  <code>startswith("https://")</code> renvoie <code>True</code> ou <code>False</code>.
+</div>
+
+<!-- D3 -->
+<p><strong>D3 – print()</strong> : affichez la valeur de <code>url</code> avant le test (ex. <code>print("Test de :", url)</code>). À quoi sert cette trace ?</p>
+<textarea placeholder="Votre réponse…"></textarea>
+<button onclick="toggleAnswer('corr_d3')">Voir la correction</button>
+<div class="answer" id="corr_d3">
+  Vérifier la donnée traitée (débogage). On sait exactement quelle URL est testée.
+</div>
+
+<!-- D4 -->
+<p><strong>D4 – Chaînes</strong> : En programmation, une <em>chaîne</em> est une suite de caractères (comme une phrase ou une adresse web).<br>
+Créez une variable appelée <code>domaine</code> qui contient les <strong>10 premiers caractères</strong> d’une autre chaîne appelée <code>url</code>. 
+Utilisez la technique du <strong>slice</strong> (tranchage) pour cela, puis affichez le contenu de <code>domaine</code>.</p>
+
+📦 <strong>Exemple concret 1 :</strong><br>
+Si <code>url = "https://www.google.com"</code>, alors<br>
+<code>domaine = url.slice(0, 10)</code> donnera <code>"https://ww"</code><br><br>
+
+📦 <strong>Exemple concret 2 :</strong><br>
+Si <code>url = "https://openclassrooms.com"</code>, alors<br>
+<code>domaine = url.slice(0, 10)</code> donnera <code>"https://op"</code><br><br>
+
+<!-- Bonus : affichage dynamique -->
+<p><strong>Affichage dynamique :</strong></p>
+<p id="exemple1"></p>
+<p id="exemple2"></p>
+
+<script>
+  const url1 = "https://www.google.com";
+  const domaine1 = url1.slice(0, 10);
+  document.getElementById("exemple1").innerText = `Exemple 1 → Domaine extrait : ${domaine1}`;
+
+  const url2 = "https://openclassrooms.com";
+  const domaine2 = url2.slice(0, 10);
+  document.getElementById("exemple2").innerText = `Exemple 2 → Domaine extrait : ${domaine2}`;
+</script>
+ 
+
+<textarea placeholder="Code / explication… (ex. domaine = url[:10])"></textarea>
+<button onclick="toggleAnswer('corr_d4')">Voir la correction</button>
+
+<div class="answer" id="corr_d4">
+  ✅ <strong>Correction :</strong><br>
+  <code>domaine = url[:10]</code><br>
+  <code>print(domaine)</code><br><br>
+
+  🔍 <strong>Explication :</strong><br>
+  En Python, on peut extraire une partie d’une chaîne grâce au <strong>slice</strong>.<br>
+  <code>url[:10]</code signifie : "Prends les caractères de <code>url</code> depuis le début (position 0) jusqu’à la position 9 incluse."<br>
+  Cela donne les 10 premiers caractères.<br><br>
+
+  📦 <strong>Exemple concret :</strong><br>
+  Si <code>url = "https://www.google.com"</code>, alors<br>
+  <code>domaine = url[:10]</code> donnera <code>"https://www"</code><br><br>
+
+  🧠 <strong>Astuce pour retenir :</strong><br>
+  Imagine que la chaîne est une boîte de lettres. Le slice te permet de dire : "Je veux les 10 premières lettres de la boîte."<br>
+  C’est comme découper une tranche de pain : tu choisis où tu commences et où tu t’arrêtes 🍞.
+</div>
+
+
+<!-- D5 -->
+<p><strong>D5 – Condition if/else</strong> : ajoutez un <code>elif</code> pour afficher <em>« Format d’URL inattendu »</em> si l’URL ne commence ni par <code>http://</code> ni par <code>https://</code>.</p>
+<textarea placeholder="Votre réponse / code…"></textarea>
+<button onclick="toggleAnswer('corr_d5')">Voir la correction</button>
+<div class="answer" id="corr_d5">
+  Schéma : <code>if url.startswith("https://") ... elif url.startswith("http://") ... else: print("Format d’URL inattendu")</code>.
+</div>
+
+<!-- D6 -->
+<p><strong>D6 – Indentation</strong> : désindentez volontairement une ligne, exécutez, puis corrigez. Quel message d’erreur obtenez-vous ?</p>
+<textarea placeholder="Message d’erreur / correction…"></textarea>
+<button onclick="toggleAnswer('corr_d6')">Voir la correction</button>
+<div class="answer" id="corr_d6">
+  Erreur de type <em>IndentationError</em> (ou <em>expected an indented block</em>). Python utilise l’indentation pour délimiter les blocs.
+</div>
+
+<!-- D7 -->
+<p><strong>D7 – Entrée utilisateur</strong> : remplacez la ligne qui fixe <code>url</code> par <code>url = input("Entrez une URL : ")</code> et testez plusieurs cas.</p>
+<textarea placeholder="Vos essais (https, http, texte)…"></textarea>
+<button onclick="toggleAnswer('corr_d7')">Voir la correction</button>
+<div class="answer" id="corr_d7">
+  <code>input()</code> lit une chaîne tapée au clavier. Le reste du programme fonctionne sans changer la logique.
+</div>
+
+<!-- D8 -->
+<p><strong>D8 – Opérateurs logiques</strong> : En programmation, on utilise des <em>opérateurs logiques</em> pour vérifier plusieurs conditions à la fois.<br><br>
+
+Dans cet exercice, vous devez vérifier si une chaîne appelée <code>url</code> est invalide. Une URL est considérée comme invalide dans deux cas :
+<ul>
+  <li>Elle est <strong>vide</strong> (c’est-à-dire qu’elle ne contient aucun caractère).</li>
+  <li>Elle ne contient pas le texte <code>"://"</code>, qui est généralement présent dans une adresse web (comme <code>https://</code> ou <code>ftp://</code>).</li>
+</ul>
+
+👉 Pour cela, utilisez l’opérateur logique <code>or</code>, qui signifie « ou » en anglais. Il permet de dire : <em>si la première condition est vraie OU si la deuxième est vraie</em>, alors on exécute une action.<br><br>
+
+🧠 <strong>Rappel :</strong>  
+- <code>==</code> permet de tester l’égalité (exemple : <code>url == ""</code> signifie que la chaîne est vide).  
+- <code>not in</code> permet de vérifier qu’un élément <strong>n’est pas présent</strong> dans une chaîne (exemple : <code>"://" not in url</code>).
+
+💬 Affichez le message <code>"URL vide"</code> si l’une des deux conditions est vraie.</p>
+
+<textarea placeholder="Votre condition…"></textarea>
+<button onclick="toggleAnswer('corr_d8')">Voir la correction</button>
+
+<div class="answer" id="corr_d8">
+  ✅ <strong>Correction :</strong><br>
+  <code>if url == "" or "://" not in url:</code><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>print("URL vide")</code><br><br>
+
+  🔍 <strong>Explication :</strong><br>
+  - <code>url == ""</code> vérifie si la chaîne est vide.<br>
+  - <code>"://" not in url</code> vérifie si le texte <code>"://"</code> est absent.<br>
+  - L’opérateur <code>or</code> permet de combiner les deux conditions : si l’une ou l’autre est vraie, le message s’affiche.
+</div>
+
+
+<!-- D9 -->
+<p><strong>D9 – Fonction</strong> : En programmation, une <em>fonction</em> est un bloc de code que l’on peut réutiliser pour effectuer une tâche spécifique.<br><br>
+
+Dans cet exercice, vous devez écrire une fonction appelée <code>est_securisee(u)</code> qui vérifie si une adresse web (appelée <code>u</code>) commence par <code>https://</code>. Ce préfixe indique que le site utilise une connexion sécurisée.<br><br>
+
+👉 La fonction doit :
+<ul>
+  <li>Renvoyer <code>True</code> si <code>u</code> commence par <code>https://</code></li>
+  <li>Renvoyer <code>False</code> dans tous les autres cas</li>
+</ul>
+
+🧠 <strong>Rappel :</strong>  
+- <code>def</code> sert à définir une fonction.  
+- <code>startswith()</code> est une méthode qui vérifie si une chaîne commence par un certain texte.  
+- <code>return</code> permet de renvoyer un résultat depuis la fonction.  
+- Une fois la fonction écrite, vous devez l’<strong>appeler</strong> pour l’utiliser, en lui passant une URL comme argument.</p>
+
+<textarea placeholder="Définition + appel…"></textarea>
+<button onclick="toggleAnswer('corr_d9')">Voir la correction</button>
+
+<div class="answer" id="corr_d9">
+  ✅ <strong>Correction complète avec affichage :</strong><br><br>
+
+  <pre style="background-color:#1e1e1e; color:#d4d4d4; padding:15px; border-radius:8px; font-family:'Courier New', monospace;">
+# Vérifie si l'URL est sécurisée
+url = "http://example.com"  # modifiez cette variable pour tester
+
+# Définition de la fonction
+def est_securisee(u):
+    return u.startswith("https://")
+
+# Appel de la fonction
+if est_securisee(url):
+    print("Connexion sécurisée")
+else:
+    print("Connexion non sécurisée : attention !")
+  </pre>
+
+  🔍 <strong>Explication :</strong><br>
+  - La fonction <code>est_securisee(u)</code> utilise <code>startswith("https://")</code> pour vérifier si l’URL commence par le protocole sécurisé.<br>
+  - Elle renvoie <code>True</code> ou <code>False</code> selon le cas.<br>
+  - Le test <code>if est_securisee(url)</code> permet d’afficher un message adapté selon que l’URL est sécurisée ou non.<br>
+  - Ce programme est utile pour sensibiliser à la sécurité sur le web.
+  
+<h4>D9-bis — Vérification HTTPS insensible à la casse</h4>
+<p class="consigne"><strong>Consigne :</strong> testez le même script avec <code>HTTPS://</code> (majuscules). Expliquez pourquoi le résultat reste correct.</p>
+
+<button type="button" class="copy-btn" data-copy-target="code-python-d9b">Copier le code</button>
+<div class="code-block"><code id="code-python-d9b">
+<span class="tok-cmt"># Demande une URL à l'utilisateur</span>
+<span class="tok-id">url</span> <span class="tok-op">=</span> <span class="tok-fn">input</span>(<span class="tok-str">"Entrez l'URL complète : "</span>)   <span class="tok-cmt"># saisie utilisateur</span>
+
+<span class="tok-cmt"># Normalisation : tout en minuscules pour éviter les erreurs de casse</span>
+<span class="tok-id">url_min</span> <span class="tok-op">=</span> <span class="tok-id">url</span>.<span class="tok-fn">lower</span>()                <span class="tok-cmt"># "HTTPS://" → "https://"</span>
+
+<span class="tok-cmt"># Test du préfixe sécurisé</span>
+<span class="tok-kw">if</span> <span class="tok-id">url_min</span>.<span class="tok-fn">startswith</span>(<span class="tok-str">"https://"</span>)<span class="tok-pun">:</span>      <span class="tok-cmt"># True si l'URL commence par https://</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"✅ L'URL est sécurisée."</span>)     <span class="tok-cmt"># message positif</span>
+<span class="tok-kw">else</span><span class="tok-pun">:</span>                                       <span class="tok-cmt"># sinon</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"⚠️ L'URL n'est pas sécurisée. Utilisez HTTPS."</span>)  <span class="tok-cmt"># message d'alerte</span>
+</code></div>
+
+<button onclick="toggleAnswer('corr_d9b')">Voir la correction</button>
+<div class="answer" id="corr_d9b">
+  <p><strong>Pourquoi ça marche ?</strong> <code>lower()</code> convertit l’URL en minuscules avant la comparaison ; <code>startswith()</code> devient insensible à la casse.</p>
+</div>
+ 
+  
+  
+</div>
+
+
+
+<!-- D10 -->
+<p><strong>D10 – Tests multiples</strong> : En programmation, il est courant de devoir tester plusieurs données à la suite. Ici, vous allez créer une <code>liste</code> d’URL (<code>urls</code>) et utiliser une <code>boucle for</code> pour vérifier chacune d’elles avec la fonction <code>est_securisee()</code> définie précédemment.<br><br>
+
+👉 Objectif :
+<ul>
+  <li>Créer une liste d’URL</li>
+  <li>Parcourir cette liste avec une boucle <code>for</code></li>
+  <li>Afficher pour chaque URL : <code>"OK"</code> si elle est sécurisée, ou <code>"Non sécurisée"</code> sinon</li>
+</ul>
+
+🧠 <strong>Rappel :</strong>
+<ul>
+  <li>Une liste se crée avec des crochets : <code>urls = ["https://...", "http://..."]</code></li>
+  <li>La boucle <code>for</code> permet de parcourir chaque élément</li>
+  <li>On peut réutiliser la fonction <code>est_securisee()</code> écrite dans D9</li>
+</ul>
+</p>
+
+<textarea placeholder="Votre boucle / sortie attendue…"></textarea>
+<button onclick="toggleAnswer('corr_d10')">Voir la correction</button>
+
+<div class="answer" id="corr_d10">
+  ✅ <strong>Correction complète :</strong><br><br>
+
+  <pre style="background-color:#1e1e1e; color:#d4d4d4; padding:15px; border-radius:8px; font-family:'Courier New', monospace;">
+# Définition de la fonction
+def est_securisee(u):
+    return u.startswith("https://")
+
+# Liste d'URLs à tester
+urls = [
+    "https://www.google.com",
+    "http://www.exemple.com",
+    "https://monsite.org",
+    "ftp://serveur.local",
+    "http://insecure.net"
+]
+
+# Boucle de test
+for u in urls:
+    if est_securisee(u):
+        print(u, "➡️ OK ✅")
+    else:
+        print(u, "➡️ Non sécurisée ⚠️")
+  </pre>
+
+  🔍 <strong>Explication détaillée :</strong><br>
+  <ul>
+    <li><code>urls</code> est une liste contenant plusieurs adresses web.</li>
+    <li>La boucle <code>for u in urls</code> permet de parcourir chaque URL une par une.</li>
+    <li>Pour chaque <code>u</code>, on appelle la fonction <code>est_securisee(u)</code> qui renvoie <code>True</code> ou <code>False</code>.</li>
+    <li>Si l’URL commence par <code>https://</code>, on affiche « OK » avec un ✅ ; sinon, on affiche « Non sécurisée » avec un ⚠️.</li>
+    <li>Ce programme est utile pour filtrer ou alerter sur les connexions non sécurisées dans une liste de sites.</li>
+  </ul>
+
+  💡 <strong>Astuce pédagogique :</strong>  
+  Vous pouvez ajouter d’autres protocoles (comme <code>ftp://</code> ou <code>file://</code>) pour tester la robustesse de votre fonction.  
+  Essayez aussi d’intégrer ce test dans une interface graphique ou un site web pour aller plus loin !
+</div>
+
+
+<!-- D11 -->
+<p><strong>D11 – Refactorisation</strong> : En programmation, <em>refactoriser</em> signifie améliorer ou réorganiser le code sans changer son comportement. Ici, vous allez regrouper toute la logique d’affichage dans une seule fonction appelée <code>verifie(u)</code>.<br><br>
+
+👉 Objectif :
+<ul>
+  <li>Créer une fonction <code>verifie(u)</code> qui affiche un message selon le type d’URL</li>
+  <li>Utiliser <code>input()</code> pour tester une URL saisie par l’utilisateur</li>
+  <li>Tester aussi une liste d’URLs avec une boucle</li>
+</ul>
+
+🧠 <strong>Rappel :</strong>
+<ul>
+  <li><code>startswith()</code> permet de vérifier le début d’une chaîne</li>
+  <li><code>input()</code> permet de saisir une valeur au clavier</li>
+  <li>Une fonction peut contenir des <code>if / elif / else</code> pour gérer plusieurs cas</li>
+</ul>
+</p>
+
+<textarea placeholder="Votre fonction finale…"></textarea>
+<button onclick="toggleAnswer('corr_d11')">Voir la correction</button>
+
+<div class="answer" id="corr_d11">
+  ✅ <strong>Correction complète et stylisée :</strong><br><br>
+
+  <pre style="background-color:#1e1e1e; color:#d4d4d4; padding:15px; border-radius:8px; font-family:'Courier New', monospace;">
+# Fonction unique pour vérifier et afficher le type de connexion
+def verifie(u):
+    if u.startswith("https://"):
+        print(u, "➡️ Connexion sécurisée ✅")
+    elif u.startswith("http://"):
+        print(u, "➡️ Connexion non sécurisée ⚠️")
+    else:
+        print(u, "➡️ Format d’URL inattendu ❓")
+
+# Test avec une saisie utilisateur
+url_utilisateur = input("Entrez une URL à tester : ")
+verifie(url_utilisateur)
+
+print("\n🔁 Test avec une liste d’URLs :\n")
+
+# Liste d'exemples
+urls = [
+    "https://www.google.com",
+    "http://site-insecure.net",
+    "ftp://serveur.local",
+    "https://monblog.fr",
+    "file://localhost"
+]
+
+# Boucle de test
+for u in urls:
+    verifie(u)
+  </pre>
+
+  🔍 <strong>Explication détaillée :</strong><br>
+  <ul>
+    <li><code>verifie(u)</code> est une fonction qui affiche un message selon le protocole de l’URL.</li>
+    <li>Elle utilise <code>if / elif / else</code> pour distinguer les cas : sécurisé, non sécurisé, ou inattendu.</li>
+    <li><code>input()</code> permet à l’utilisateur de tester une URL en direct.</li>
+    <li>La boucle <code>for</code> permet de tester plusieurs URLs automatiquement.</li>
+    <li>Les emojis rendent le retour visuel plus intuitif et agréable.</li>
+  </ul>
+
+  <h4>D11-bis — Détection des URL sans schéma</h4>
+<p class="consigne"><strong>Consigne :</strong> testez avec <code>https://…</code>, <code>http://…</code> et <code>www.exemple.com</code> (sans schéma).</p>
+
+<button type="button" class="copy-btn" data-copy-target="code-python-d11b">Copier le code</button>
+<div class="code-block"><code id="code-python-d11b">
+<span class="tok-cmt"># Demande une URL à l'utilisateur</span>
+<span class="tok-id">url</span> <span class="tok-op">=</span> <span class="tok-fn">input</span>(<span class="tok-str">"Entrez l'URL : "</span>)              <span class="tok-cmt"># saisie libre</span>
+<span class="tok-id">u</span> <span class="tok-op">=</span> <span class="tok-id">url</span>.<span class="tok-fn">lower</span>()                                 <span class="tok-cmt"># normalisation casse</span>
+
+<span class="tok-kw">if</span> <span class="tok-id">u</span>.<span class="tok-fn">startswith</span>(<span class="tok-str">"https://"</span>)<span class="tok-pun">:</span>                 <span class="tok-cmt"># schéma sécurisé</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"✅ L'URL est sécurisée."</span>)            <span class="tok-cmt"># OK</span>
+<span class="tok-kw">elif</span> <span class="tok-id">u</span>.<span class="tok-fn">startswith</span>(<span class="tok-str">"http://"</span>)<span class="tok-pun">:</span>               <span class="tok-cmt"># schéma non sécurisé</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"⚠️ L'URL n'est pas sécurisée. Passez en HTTPS."</span>)  <span class="tok-cmt"># alerte</span>
+<span class="tok-kw">else</span><span class="tok-pun">:</span>                                              <span class="tok-cmt"># aucun schéma fourni</span>
+    <span class="tok-fn">print</span>(<span class="tok-str">"ℹ️ L'URL ne contient pas de protocole (http/https). Ajoutez-en pour plus de sécurité."</span>)  <span class="tok-cmt"># info</span>
+  </code></div>
+
+<button onclick="toggleAnswer('corr_d11b')">Voir la correction</button>
+<div class="answer" id="corr_d11b">
+  <p>Le script traite les trois cas : HTTPS (sécurisé), HTTP (non sécurisé), <em>aucun protocole</em> (information à l’utilisateur).</p>
+</div></br>
+
+ </br>
+  
+  💡 <strong>Astuce bonus :</strong>  
+  Vous pouvez améliorer cette fonction en ajoutant une vérification du format général (présence de « . » ou d’un nom de domaine), ou en l’intégrant dans une interface web ou un script de sécurité.
+
+
+
+<h4>💡 Bonus — Validation “tous cas” (format simple)</h4>
+<p class="consigne"><strong>Consigne :</strong> testez plusieurs entrées : vide, <code>https://site.fr</code>, <code>http://…</code>, <code>www.site.fr</code>, <code>ftp://…</code>, <code>texte</code>… Observez les messages et expliquez.</p>
+
+<button type="button" class="copy-btn" data-copy-target="code-python-bonus">Copier le code</button>
+<div class="code-block"><code id="code-python-bonus">
+<span class="tok-cmt"># Fonction d'analyse "tout terrain" (simple, sans bibliothèque)</span>
+<span class="tok-kw">def</span> <span class="tok-fn">analyse_url</span>(<span class="tok-id">u</span>)<span class="tok-pun">:</span>                           <span class="tok-cmt"># définit une fonction</span>
+    <span class="tok-kw">if</span> <span class="tok-id">u</span> <span class="tok-op">==</span> <span class="tok-str">""</span><span class="tok-pun">:</span>                                   <span class="tok-cmt"># cas chaîne vide</span>
+        <span class="tok-kw">return</span> <span class="tok-str">"⚠️ Saisie vide."</span>                 <span class="tok-cmt"># message dédié</span>
+
+    <span class="tok-id">s</span> <span class="tok-op">=</span> <span class="tok-id">u</span>.<span class="tok-fn">lower</span>()                                   <span class="tok-cmt"># normalisation casse</span>
+    <span class="tok-id">a_protocole</span> <span class="tok-op">=</span> <span class="tok-str">"://"</span> <span class="tok-kw">in</span> <span class="tok-id">s</span>                 <span class="tok-cmt"># présence d'un schéma ?</span>
+
+    <span class="tok-kw">if</span> <span class="tok-id">a_protocole</span><span class="tok-pun">:</span>                               <span class="tok-cmt"># si schéma présent</span>
+        <span class="tok-id">proto</span><span class="tok-pun">,</span> <span class="tok-id">reste</span> <span class="tok-op">=</span> <span class="tok-id">s</span>.<span class="tok-fn">split</span>(<span class="tok-str">"://"</span><span class="tok-pun">,</span> <span class="tok-num">1</span>)  <span class="tok-cmt"># sépare "https" et le reste</span>
+        <span class="tok-kw">if</span> <span class="tok-id">proto</span> <span class="tok-op">==</span> <span class="tok-str">"https"</span><span class="tok-pun">:</span>                   <span class="tok-cmt"># protocole sécurisé</span>
+            <span class="tok-kw">if</span> <span class="tok-str">"."</span> <span class="tok-kw">in</span> <span class="tok-id">reste</span><span class="tok-pun">:</span>             <span class="tok-cmt"># format domaine très simple</span>
+                <span class="tok-kw">return</span> <span class="tok-str">"✅ Sécurisée (HTTPS) et format plausible."</span>   <span class="tok-cmt"># OK</span>
+            <span class="tok-kw">else</span><span class="tok-pun">:</span>                                       <span class="tok-cmt"># pas de point</span>
+                <span class="tok-kw">return</span> <span class="tok-str">"ℹ️ HTTPS mais format atypique (pas de '.')."</span>
+        <span class="tok-kw">elif</span> <span class="tok-id">proto</span> <span class="tok-op">==</span> <span class="tok-str">"http"</span><span class="tok-pun">:</span>             <span class="tok-cmt"># protocole non sécurisé</span>
+            <span class="tok-kw">return</span> <span class="tok-str">"⚠️ Non sécurisée (HTTP). Préférez HTTPS."</span>
+        <span class="tok-kw">else</span><span class="tok-pun">:</span>                                       <span class="tok-cmt"># protocole inconnu (ftp, file, …)</span>
+            <span class="tok-kw">return</span> <span class="tok-str">"ℹ️ Protocole non géré ('{}')."</span>.<span class="tok-fn">format</span>(<span class="tok-id">proto</span>)
+    <span class="tok-kw">else</span><span class="tok-pun">:</span>                                           <span class="tok-cmt"># aucun schéma fourni</span>
+        <span class="tok-kw">if</span> <span class="tok-str">"."</span> <span class="tok-kw">in</span> <span class="tok-id">s</span><span class="tok-pun">:</span>                    <span class="tok-cmt"># ressemble à un domaine</span>
+            <span class="tok-kw">return</span> <span class="tok-str">"ℹ️ Pas de protocole. Essayez : https://"</span> <span class="tok-op">+</span> <span class="tok-id">u</span>
+        <span class="tok-kw">else</span><span class="tok-pun">:</span>                                       <span class="tok-cmt"># simple texte</span>
+            <span class="tok-kw">return</span> <span class="tok-str">"❓ Saisie non reconnue comme URL."</span>
+
+<span class="tok-cmt"># Programme de test minimal</span>
+<span class="tok-id">url</span> <span class="tok-op">=</span> <span class="tok-fn">input</span>(<span class="tok-str">"Entrez une URL : "</span>)                <span class="tok-cmt"># lire l'entrée</span>
+<span class="tok-fn">print</span>( <span class="tok-fn">analyse_url</span>(<span class="tok-id">url</span>) )                      <span class="tok-cmt"># afficher le diagnostic</span>
+</code></div>
+
+<button onclick="toggleAnswer('corr_bonus')">Voir la correction</button>
+<div class="answer" id="corr_bonus">
+  <ul>
+    <li><strong>Vide</strong> → ⚠️ Saisie vide.</li>
+    <li><strong>https://site.fr</strong> → ✅ Sécurisée (HTTPS) et format plausible.</li>
+    <li><strong>http://site.fr</strong> → ⚠️ Non sécurisée (HTTP). Préférez HTTPS.</li>
+    <li><strong>www.site.fr</strong> → ℹ️ Pas de protocole. Suggestion d’ajout <code>https://</code>.</li>
+    <li><strong>ftp://site.fr</strong> → ℹ️ Protocole non géré (‘ftp’).</li>
+    <li><strong>texte</strong> → ❓ Saisie non reconnue comme URL.</li>
+  </ul>
+</div>
+
+
+
+</div>
+   
+    
+    
+    
+    
+  </div>  
+    
+
+  
+  
+<!-- ===================================== -->
+<!-- 4. SYNTHÈSE & MÉTACOGNITION (alignée) -->
+<!-- ===================================== -->
+<div class="section" id="synthese-meta">
+  <h2>🧠 Synthèse et métacognition</h2>
+
+  <p>1) Ce que j’ai compris de l’<strong>écologie du numérique</strong> et de l’empreinte des équipements / data centers.</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_meta1')">Voir la correction</button>
+  <div class="answer" id="corr_meta1">
+    Idées clés : l’essentiel de l’impact est lié à la <strong>fabrication</strong> ; les équipements pèsent plus que les usages individuels ; data centers et réseaux contribuent fortement.
+  </div>
+
+  <p>2) <strong>Trois gestes</strong> que je peux appliquer dès cette semaine (impression raisonnée, mails, vidéos, Wi-Fi…)</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_meta2')">Voir la correction</button>
+  <div class="answer" id="corr_meta2">
+    Ex. : trier ma boîte mail et compresser les PJ ; limiter le streaming HD ; préférer le Wi-Fi à la 4G/5G ; activer recto-verso par défaut.
+  </div>
+
+  <p>3) Comment <strong>prolonger la durée de vie</strong> d’un appareil ? (soin, réparation, reconditionné, accessoires adaptés…)</p>
+  <textarea placeholder="Votre réponse…"></textarea>
+  <button onclick="toggleAnswer('corr_meta3')">Voir la correction</button>
+  <div class="answer" id="corr_meta3">
+    Protéger (housse/verre trempé), entretenir la batterie, réparer/faire réparer, privilégier produits réparables/reconditionnés, éviter les remplacements de confort.
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- 5. AUTOÉVALUATION    -->
+<!-- ===================== -->
+<div class="section" id="auto-eval">
+  <h2>✅ Autoévaluation (coche)</h2>
+  <div class="checkgrid">
+<li><label>Je peux définir l’<strong>écologie du numérique</strong>.</label><input type="checkbox"></li>
+    <li><label>Je connais au moins <strong>3 bons gestes</strong> (mails, Wi-Fi, streaming, extinction…).</label><input type="checkbox"></li>
+   <li><label>Je sais configurer une <strong>impression recto-verso</strong> et <strong>plusieurs pages par feuille</strong>.</label><input type="checkbox"></li>
+    <li><label>Je sais expliquer la différence d’impact entre <strong>équipements</strong> et <strong>centres de données</strong>.</label><input type="checkbox"></li>
+    <li><label>Je peux justifier l’intérêt des appareils <strong>réparables / reconditionnés</strong>.</label><input type="checkbox"></li>
+  </div>
+</div>
+  
+  
+  
+
+
+   <div class='section'>
+     
+<!-- ===================== -->
+<!--  Conclusion et travail à faire    -->
+<!-- ===================== -->
+     
+     
+    <h2>Conclusion et travail à faire</h2>
+    <p>Vous avez analysé comment le numérique influence la société, l’économie, l’environnement et la santé. Sauvegardez votre progression, exportez votre travail en PDF et classez-le dans le dossier <em>« Création, conception, réalisation, innovations »</em> ou <em>« Les objets et les systèmes techniques »</em> selon la thématique.</p>
+    <p><strong>Travail à faire pour la prochaine fois :</strong> <li>Créez un document destiné à la prévention des troubles musculo-squelettiques quand on travaille face à un ordinateur. Vous donnerez les conseils suivants : </li>
+ <p> 📏 Règles essentielles pour une bonne posture</p>
+<p>🪑 Posture du corps</p>
+</li>Dos droit, légèrement incliné vers l’arrière (≈110°)</li>
+
+<li>Pieds à plat sur le sol ou sur un repose-pieds</li>
+
+<li>Genoux à angle droit ou légèrement ouvert (>90°)</li>
+
+<li>Bas du dos soutenu par le dossier du siège</li>
+
+<p>🖥️ Position de l’écran</p>
+<li>Haut de l’écran à hauteur des yeux</li>
+
+<li>Distance écran–yeux : 50 à 70 cm</li>
+
+<li>Inclinaison légère vers l’arrière pour éviter les reflets</li>
+
+<p>⌨️ Clavier et souris</p>
+<li>Avant-bras parallèles au sol</li>
+
+<li>Poignets droits, pas cassés</li>
+
+<li>Clavier et souris proches du corps</li>
+
+<p>⏱️ Organisation du travail</p>
+<li>Pause toutes les 45–60 minutes</li>
+
+<li>Étirements réguliers</li>
+
+<li>Alterner les positions : assis, debout, étiré</li>    
+      
+<p>✨ 1 - Exportez en PDF et rangez-le dans votre arborescence.</p>
+   
+<p>✨ 2 - Affichez votre document dans vos salles de classe, pour que tout le monde puisse être informé.</p>  
+   
+ </p>
+  </div>
+
+  
+  
+<script>
+  // Affichage/masquage des corrections
+  function toggleAnswer(id){
+    var e = document.getElementById(id);
+    if(!e) return;
+    e.style.display = (e.style.display==='block') ? 'none' : 'block';
+  }
+
+  // Bouton "Copier le code" (copie texte brut sans balises)
+  (function(){
+    const btn = document.getElementById('copy-code');
+    const codeEl = document.getElementById('code-python');
+    if(!btn || !codeEl) return;
+    function getPlainText(node){ return (node.innerText||node.textContent||'').replace(/\u00A0/g,' '); }
+    btn.addEventListener('click', async ()=>{
+      const txt = getPlainText(codeEl);
+      try{
+        await navigator.clipboard.writeText(txt);
+        const old = btn.textContent; btn.textContent = 'Copié !';
+        setTimeout(()=>btn.textContent = old, 1200);
+      }catch(e){
+        const range = document.createRange(); range.selectNodeContents(codeEl);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        document.execCommand('copy'); sel.removeAllRanges();
+        const old = btn.textContent; btn.textContent = 'Copié !';
+        setTimeout(()=>btn.textContent = old, 1200);
+      }
+    });
+  })();
+</script>
+
+# Ce code gère tous les boutons ayant data-copy-target="ID_DU_CODE".
+<script>
+(function(){
+  document.querySelectorAll('[data-copy-target]').forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      const id = btn.getAttribute('data-copy-target');
+      const codeEl = document.getElementById(id);
+      if(!codeEl) return;
+      const txt = (codeEl.innerText || codeEl.textContent || '').replace(/\u00A0/g,' ');
+      try{ await navigator.clipboard.writeText(txt); }
+      catch(e){
+        const range = document.createRange(); range.selectNodeContents(codeEl);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        document.execCommand('copy'); sel.removeAllRanges();
+      }
+      const old = btn.textContent; btn.textContent = 'Copié !';
+      setTimeout(()=> btn.textContent = old, 1200);
+    });
+  });
+})();
+</script>
+
+
+
+</body>
+</html>

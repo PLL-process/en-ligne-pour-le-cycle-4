@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<title>Séquence 4ᵉ – Cybersécurité et protection des données</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --bg: #041a40;
+      --panel: #0b2f5c;
+      --border: #234d8c;
+      --title: #81aaff;
+      --subtitle: #9bbefc;
+      --heading: #c68ef2;
+      --text: #e4eaf5;
+      --input-bg: #12335e;
+      --input-border: #2e5d9f;
+      --button: #1d4e89;
+      --button-hover: #2966b1;
+      --highlight: #61dafb;
+      --drag-bg: #194a80;
+      --drop-bg: #0d3a6e;
+      --drop-border: #4178be;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); }
+    h1 { text-align: center; color: var(--title); margin-top: 20px; margin-bottom: 10px; font-size: 1.8em; }
+    h2 { color: var(--heading); margin-top: 25px; }
+    h3 { color: var(--subtitle); margin-top: 20px; }
+    h4 { color: var(--subtitle); margin-top: 15px; margin-bottom: 5px; }
+    .section { background-color: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin: 20px; }
+    .info { width: 95%; margin: 0 auto 20px auto; border-collapse: collapse; background-color: var(--panel); color: var(--text); }
+    .info td { border: 1px solid var(--border); padding: 6px; }
+    .info input { width: 100%; background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text); padding: 4px; border-radius: 4px; }
+    textarea, input[type='text'] { width: 100%; background-color: var(--input-bg); border: 1px solid var(--input-border); color: var(--text); padding: 6px; border-radius: 4px; resize: vertical; }
+    button{background-color:var(--button);border:none;color:var(--text);padding:8px 16px;margin-top:10px;border-radius:4px;cursor:pointer;transition:background-color .2s ease}
+    button:hover { background-color: var(--button-hover); }
+    
+    .answer.visible { display: block; }
+    .callout { background-color: var(--drop-bg); border-left: 4px solid var(--highlight); border-radius: 4px; padding: 10px; margin: 10px 0; }
+    .drag-container { display: flex; flex-wrap: wrap; margin-bottom: 10px; }
+    .drag-item { background-color: var(--drag-bg); border: 1px solid var(--drop-border); border-radius: 4px; padding: 5px 10px; margin: 5px; cursor: grab; user-select: none; }
+    .drop-zone { min-height: 70px; background-color: var(--drop-bg); border: 2px dashed var(--drop-border); border-radius: 6px; padding: 10px; margin: 5px; flex: 1 1 45%; }
+    .drop-zone h4 { margin-top: 0; margin-bottom: 5px; color: var(--subtitle); }
+    .drop-zone ul { list-style: none; padding: 0; margin: 0; }
+    .microq { margin-top: 15px; }
+    .microq textarea { margin-top: 5px; }
+  
+/* Ajouts pour DRP + micro-questions + accessibilité */
+.kbd{padding:.1rem .4rem;border:1px solid var(--input-border, #444);border-radius:6px;background:var(--input-bg, #111)}
+.drp-container{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.drp-container textarea{width:100%;min-height:72px}
+button{cursor:pointer}
+
+@media (max-width:700px){.drp-container{grid-template-columns:1fr}}
+.answer{display:none;margin-top:10px;padding:10px;background-color:var(--drop-bg);border-left:4px solid var(--highlight);border-radius:4px}
+.answer.visible{display:block}
+.match-drop{min-height:50px;background-color:var(--drop-bg);border:2px dashed var(--drop-border);border-radius:6px;padding:8px;margin:6px 0}
+.match-option{background-color:var(--drag-bg);border:1px solid var(--drop-border);border-radius:4px;padding:4px 8px;margin:4px;display:inline-block;cursor:grab}
+.match-drop.ok{border-color:#28a745}
+.match-drop.ko{border-color:#e74c3c}
+
+.hud strong{font-weight:700}
+
+a, a:visited { color: #9ecbff; }
+a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
+.pref-link { font-weight: 600; }
+
+.badge-perfect{
+  display:inline-block;
+  margin-left:8px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:#1e7e34;
+  color:#fff;
+  font-weight:700;
+  box-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+
+/* --- Bloc code Python (style éditeur sombre) --- */
+.code-block{background:#0f111a;border-radius:8px;padding:14px 16px;overflow:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.code-block code{font-family:Consolas, 'Courier New', monospace; font-size:15px; line-height:1.6; color:#e6e6e6; white-space:pre;}
+.tok-cmt{color:#98c379}        /* commentaires */
+.tok-str{color:#e5c07b}        /* chaînes */
+.tok-kw {color:#61afef}        /* mots-clés */
+.tok-fn {color:#56b6c2}        /* noms de fonctions */
+.tok-id {color:#e6e6e6}        /* identifiants */
+.tok-op {color:#e6e6e6}        /* opérateurs */
+.tok-num{color:#d19a66}        /* nombres */
+.tok-pun{color:#e6e6e6}        /* ponctuation */
+
+/* Mise en valeur de la consigne sous 2.a */
+.consigne{background:rgba(97,175,239,0.12); border-left:4px solid #61afef; padding:10px 12px; border-radius:6px; color:#cfe6ff}
+.consigne strong{color:#cfe6ff}
+.copy-btn{margin:8px 0 12px; display:inline-block}
+</style>
+</head>
+<body>
+<h1>Séquence 4ᵉ : Cybersécurité et protection des données</h1>
+<!-- Fiche d'activité -->
+<table class="info">
+<tr><td>Thématique abordée :</td><td>Protéger ses données, comprendre les cyberattaques et respecter la propriété intellectuelle</td></tr>
+<tr><td>Attendu de fin de cycle :</td><td>C1.5 – Identifier des règles permettant de sécuriser un environnement numérique et respecter la propriété intellectuelle ; C1.6 – Appréhender la responsabilité de chacun dans les dérives (cyberviolence, atteinte à la vie privée, aux données personnelles, usurpation d’identité).</td></tr>
+<tr><td>Compétences détaillées :</td><td>Comprendre les différents types d’attaques (phishing, malware…), choisir et appliquer des mesures de protection adaptées (mots de passe, 2FA, VPN, sauvegardes), respecter les droits d’auteur et le droit à l’image, développer son e‑réputation.</td></tr>
+<tr><td>Connaissances à mobiliser :</td><td>Risques de cybersécurité (attaques, ingénierie sociale), bonnes pratiques de protection, données personnelles et RGPD, outils (VPN, navigation privée, proxy), droit d’auteur et droit à l’image, e‑réputation et cyberviolence.</td></tr>
+<tr><td>Compétences du socle commun travaillées :</td><td>Domaine 1 – Langages pour penser et communiquer (comprendre et utiliser les unités, lire et interpréter des messages numériques) ; Domaine 2 – Méthodes et outils pour apprendre (organiser son travail numérique, utiliser un gestionnaire de fichiers, programmer en Python) ; Domaine 4 – Systèmes naturels et techniques (analyser le fonctionnement des protocoles de sécurité, distinguer entre navigation privée, VPN et proxy) ; Domaine 3 – Formation de la personne et du citoyen (droits et devoirs sur Internet, responsabilité individuelle).</td></tr>
+<tr><td>Compétences numériques (CRCN) :</td><td>Information et données (niveau 3) : distinguer types de données et d’espaces de stockage ; Protection et sécurité (niveaux 2‑3) : identifier les menaces et appliquer les bonnes pratiques ; Environnement numérique (niveau 3) : utiliser les outils et services pour s’informer et travailler en ligne.</td></tr>
+</table>
+<p style="text-align:center">Complétez vos informations et suivez les activités pour comprendre comment protéger vos données, naviguer en toute sécurité et respecter la propriété intellectuelle.</p>
+<table class="info" style="width:60%; margin:auto">
+<tr><td>Nom :</td><td><input id="nom4" type="text"/></td></tr>
+<tr><td>Prénom :</td><td><input id="prenom4" type="text"/></td></tr>
+<tr><td>Classe :</td><td><input id="classe4" type="text"/></td></tr>
+</table>
+<button onclick="saveProgress4()">Sauvegarder mon travail</button>
+<!-- Problématique et situation déclenchante -->
+<div class="section">
+<h2>❓ Problématique</h2><div class="section" style="margin-top:12px;">
+<p>Comment protéger efficacement sa vie numérique tout en respectant les droits des autres et en comprenant l’impact de ses actions en ligne ?</p>
+<h3>Situation déclenchante</h3>
+<p>Un ami publie sur les réseaux sociaux une photo de vous prise au cours du week‑end. Cette publication révèle votre localisation et votre identité sans votre accord. Quelles sont les conséquences possibles ? Comment auriez‑vous dû agir avant de diffuser cette information ? Quels conseils donner à vos proches ?</p>
+</div>
+<h3>🧭 Feuille DRP — Questions pour guider la résolution</h3><div class="drp-container"><div><label>Mes observations</label><textarea placeholder="Écrire ici…" rows="3"></textarea></div><div><label>Mon problème à résoudre</label><textarea placeholder="Écrire ici…" rows="3"></textarea></div><div><label>Mes idées pour le résoudre</label><textarea placeholder="Écrire ici…" rows="3"></textarea></div></div></div>
+<!-- Section 1 -->
+<div class="section">
+<h2>🛡️ 1. Risques et bonnes pratiques</h2>
+<div class="callout"><p>La cybersécurité repose autant sur des mesures techniques (pare‑feu, antivirus) que sur les comportements humains. De nombreuses attaques exploitent l’<strong>ingénierie sociale</strong> : e‑mails frauduleux, appels ou messages trompeurs. Les études montrent que plus de 98 % des cyberattaques reposent sur l’erreur humaine. Comprendre ces méthodes et appliquer des bonnes pratiques permet de réduire les risques.</p></div>
+<div class="section" id="exo-menaces-def">
+<h3>📌 Notions clés</h3>
+<p><strong>Exemples :</strong> <em>Phishing, Ransomware, Cheval de Troie (Trojan), MITM, DDoS</em>. 💡 De nombreuses attaques réussies exploitent l’<em>ingénierie sociale</em>.</p>
+<h4>✋ Associer « menace → définition »</h4>
+<div class="hud" style="display:flex;gap:12px;align-items:center;margin:8px 0;">
+<strong id="score-menaces">Score : 0/5</strong><span class="badge-perfect" id="perfect-menaces" style="display:none;">Parfait ! 5/5 🎉</span>
+<span aria-live="polite" id="timer-menaces">⏱️ 00:00</span>
+<button id="start-menaces" title="Démarrer le chrono (facultatif)" type="button">Démarrer le chrono</button>
+<button id="stop-menaces" title="Arrêter le chrono" type="button">Arrêter</button>
+<button id="reset-chrono-menaces" title="Remettre à zéro le chrono" type="button">Remise à zéro</button>
+</div>
+<p>Faites glisser chaque <strong>étiquette</strong> sur la <strong>bonne définition</strong>.</p>
+<div aria-label="Étiquettes à faire glisser" class="drag-container">
+<span class="match-option" data-key="phishing" draggable="true">[Hameçonnage]</span>
+<span class="match-option" data-key="ransom" draggable="true">[Rançongiciel]</span>
+<span class="match-option" data-key="trojan" draggable="true">[Cheval de Troie]</span>
+<span class="match-option" data-key="mitm" draggable="true">[Homme-du-milieu]</span>
+<span class="match-option" data-key="ddos" draggable="true">[Déni de service]</span>
+</div>
+<div class="match-drop" data-accept="phishing"><strong>Phishing</strong> : se faire passer pour un tiers de confiance pour voler des infos. (ex. mail/piège)</div>
+<div class="match-drop" data-accept="ransom"><strong>Ransomware</strong> : chiffrer des fichiers et exiger une rançon.</div>
+<div class="match-drop" data-accept="trojan"><strong>Trojan</strong> : logiciel déguisé qui ouvre une porte dérobée.</div>
+<div class="match-drop" data-accept="mitm"><strong>MITM</strong> : intercepter/modifier des communications.</div>
+<div class="match-drop" data-accept="ddos"><strong>DDoS</strong> : saturer un service pour le rendre indisponible.</div>
+<div style="margin-top:8px">
+<button id="check-menaces" type="button">Vérifier</button>
+<button id="reset-menaces" type="button">Réinitialiser</button>
+<button onclick="toggleAnswer('corr-menaces')" type="button">Voir la correction</button>
+</div>
+<div class="answer" id="corr-menaces">
+<p>1. Phishing → hameçonnage   2. Ransomware → rançongiciel   3. Trojan → cheval de Troie   4. MITM → homme‑du‑milieu   5. DDoS → déni de service.</p>
+</div>
+<div class="microq">
+<h4>✏️ Micro‑question</h4>
+<p>Laquelle de ces attaques repose surtout sur la <strong>manipulation psychologique</strong> ?</p>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq-menaces')" type="button">Voir la correction</button>
+<div class="answer" id="mq-menaces"><p>Le <strong>phishing</strong> (hameçonnage) repose principalement sur la manipulation psychologique.</p></div>
+</div>
+</div>
+<h3>1.a – Identifier risques et bonnes pratiques</h3>
+<p>Faites glisser chaque étiquette dans la bonne colonne (<strong>Risques/attaques</strong> ou <strong>Bonnes pratiques</strong>).</p>
+<div class="drag-container">
+<!-- Risques (12) -->
+<div class="drag-item" draggable="true">Hameçonnage (phishing)</div>
+<div class="drag-item" draggable="true">Man‑in‑the‑Middle</div>
+<div class="drag-item" draggable="true">Ransomware</div>
+<div class="drag-item" draggable="true">DDoS (déni de service)</div>
+<div class="drag-item" draggable="true">Malware / virus</div>
+<div class="drag-item" draggable="true">Logiciel espion (spyware)</div>
+<div class="drag-item" draggable="true">Keylogger</div>
+<div class="drag-item" draggable="true">Ingénierie sociale</div>
+<div class="drag-item" draggable="true">Brute force</div>
+<div class="drag-item" draggable="true">Zero‑day exploit</div>
+<div class="drag-item" draggable="true">Menaces internes</div>
+<div class="drag-item" draggable="true">Attaques IoT</div>
+<!-- Bonnes pratiques (12) -->
+<div class="drag-item" draggable="true">Utiliser des mots de passe forts et uniques</div>
+<div class="drag-item" draggable="true">Activer l’authentification à deux facteurs</div>
+<div class="drag-item" draggable="true">Faire des sauvegardes régulières</div>
+<div class="drag-item" draggable="true">Mettre à jour ses logiciels</div>
+<div class="drag-item" draggable="true">Installer un antivirus à jour</div>
+<div class="drag-item" draggable="true">Télécharger uniquement depuis des sources officielles</div>
+<div class="drag-item" draggable="true">Éviter les réseaux WiFi publics non sécurisés</div>
+<div class="drag-item" draggable="true">Vérifier les sites avant d’acheter en ligne</div>
+<div class="drag-item" draggable="true">Sensibiliser les utilisateurs</div>
+<div class="drag-item" draggable="true">Séparer les usages personnels et professionnels</div>
+<div class="drag-item" draggable="true">Utiliser un VPN</div>
+<div class="drag-item" draggable="true">Cartographier son système d’information</div>
+</div>
+<div class="drop-zone"><h4>Risques / attaques</h4><ul id="risk-list"></ul></div>
+<div class="drop-zone"><h4>Bonnes pratiques</h4><ul id="good-list"></ul></div>
+<button onclick="toggleAnswer('ans4_1a')">Voir la correction</button>
+<div class="answer" id="ans4_1a"><p><strong>Risques :</strong> Hameçonnage, Man‑in‑the‑Middle, Ransomware, DDoS, Malware/virus, Spyware, Keylogger, Ingénierie sociale, Brute force, Zero‑day exploit, Menaces internes, Attaques IoT. <strong>Bonnes pratiques :</strong> Utiliser des mots de passe forts et uniques ; Activer l’authentification à deux facteurs ; Faire des sauvegardes régulières ; Mettre à jour ses logiciels ; Installer un antivirus ; Télécharger uniquement depuis des sources officielles ; Éviter les réseaux WiFi publics non sécurisés ; Vérifier les sites avant d’acheter ; Sensibiliser les utilisateurs ; Séparer les usages personnels et professionnels ; Utiliser un VPN ; Cartographier son système d’information.</p></div>
+<div class="microq">
+<h4>❓ Pourquoi dit‑on que les humains sont le maillon faible de la cybersécurité ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq1_human')">Voir la correction</button>
+<div class="answer" id="mq1_human"><p>✅ Parce que la plupart des attaques exploitent des failles humaines (curiosité, crédulité, manque de vigilance). Des messages frauduleux peuvent amener les utilisateurs à divulguer des informations sensibles ou à cliquer sur des liens malveillants.</p></div>
+<h5>✏️ Micro‑questions</h5>
+<p>Parmi ces mots de passe, lesquels sont sûrs ? Justifiez.</p>
+<ul>
+<li>azerty</li><li>Paul2008</li><li><span class="kbd">M4i$0nBleu3</span></li><li>Kikoolol</li><li><span class="kbd">78?GhRt5$Plop</span></li>
+</ul>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<details><summary>✅ Voir un corrigé possible</summary>
+<p>Robustes : <code>M4i$0nBleu3</code>, <code>78?GhRt5$Plop</code> (longueur + diversité). Les autres sont courts/prédictibles.</p>
+</details>
+<p>Faut‑il réutiliser le même mot de passe ?</p>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<details><summary>✅ Corrigé</summary><p>Non. Si un site est compromis, tous vos comptes seraient alors exposés. Un mot de passe unique par service.</p></details>
+<p class="muted">💡 Astuce : créez une « phrase de passe » (plus longue) + 2FA quand c’est possible.</p>
+</div>
+</div>
+<!-- Section 2 -->
+<div class="section">
+<h2>🔒 2. Vérifier qu’un échange est sécurisé</h2>
+<div class="callout"><p>Sur le Web, un site sécurisé utilise le protocole <code>https</code>, symbolisé par un cadenas dans la barre d’adresse. Cela signifie que les échanges sont chiffrés (SSL/TLS). Ce n’est pas une garantie absolue de légitimité, mais un site sans <code>https</code> ne doit pas recevoir de données sensibles.</p></div>
+<h3>2.a – Programme Python</h3>
+
+<div class="callout" id="compilateurs-python">
+<strong>🧰 Ressource — Compilateurs Python en ligne (préférés)</strong>
+<ol>
+  <li>💻 <a href="https://programiz.com" style="color:#1E90FF;">Programiz</a></li>
+  <li>🌐 <a href="https://online-python.com" style="color:#1E90FF;">Online Python</a></li>
+  <li>⚡ <a href="https://online-python-compiler.com" style="color:#1E90FF;">Online Python Compiler</a></li>
+</ol>
+<p style="font-size:0.95em;opacity:0.95;margin:6px 0 0">⚠️ Évitez de partager des données sensibles dans un éditeur en ligne.</p>
+</div>
+<div class="section" id="glossaire-sigles">
+<h4>📖 Glossaire des sigles (FR / EN)</h4>
+<ul>
+<li><strong>URL</strong> — <em>Uniform Resource Locator</em> (FR : localisateur uniforme de ressource)</li>
+<li><strong>HTTP</strong> — <em>HyperText Transfer Protocol</em> (FR : protocole de transfert hypertexte)</li>
+<li><strong>HTTPS</strong> — <em>HTTP Secure</em> (HTTP chiffré via TLS/SSL)</li>
+<li><strong>TLS</strong> — <em>Transport Layer Security</em> (FR : sécurité de la couche de transport)</li>
+<li><strong>SSL</strong> — <em>Secure Sockets Layer</em> (ancienne version de TLS)</li>
+<li><strong>DNS</strong> — <em>Domain Name System</em> (FR : système de noms de domaine)</li>
+<li><strong>MITM</strong> — <em>Man‑In‑The‑Middle</em> (FR : homme‑du‑milieu)</li>
+<li><strong>DDoS</strong> — <em>Distributed Denial of Service</em> (FR : déni de service distribué)</li>
+<li><strong>VPN</strong> — <em>Virtual Private Network</em> (FR : réseau privé virtuel)</li>
+<li><strong>2FA</strong> — <em>Two‑Factor Authentication</em> (FR : authentification à deux facteurs)</li>
+<li><strong>Phishing</strong> — FR : hameçonnage</li>
+<li><strong>Ransomware</strong> — FR : rançongiciel</li>
+<li><strong>Trojan</strong> — FR : cheval de Troie</li>
+</ul>
+</div>
+<p class="consigne">Complétez le programme ci‑dessous afin qu’il avertisse l’utilisateur si l’URL ne commence pas par https://. Vous pouvez tester votre code avec l’un des compilateurs recommandés ci‑dessus.</p>
+<button class="copy-btn" id="copy-code" type="button">Copier le code</button>
+<div aria-label="Exemple de code Python" class="code-block">
+<code id="code-python">
+<span class="tok-cmt"># Vérifie si l’URL est sécurisée</span>
+<span class="tok-id">url</span> <span class="tok-op">=</span> <span class="tok-str">"http://example.com"</span> <span class="tok-cmt"># modifiez cette variable pour tester</span>
+<span class="tok-cmt"># TODO : testez si l’URL commence par "https://"</span>
+<span class="tok-kw">if</span> <span class="tok-id">url</span>.<span class="tok-fn">startswith</span>(<span class="tok-str">"https://"</span>)<span class="tok-pun">:</span>
+<span class="tok-fn">print</span>(<span class="tok-str">"Connexion sécurisée"</span>)
+<span class="tok-kw">else</span><span class="tok-pun">:</span>
+<span class="tok-fn">print</span>(<span class="tok-str">"Connexion non sécurisée : attention !"</span>)
+</code>
+</div>
+
+
+<p>Quel message ce programme affiche‑t‑il pour l’URL fournie ?</p>
+<textarea placeholder="Votre réponse…" rows="2"></textarea>
+<p>Donnez un exemple d’URL sécurisée que vous utilisez quotidiennement.</p>
+<textarea placeholder="Votre réponse…" rows="2"></textarea>
+<button onclick="toggleAnswer('ans4_2')">Voir la correction</button>
+<div class="answer" id="ans4_2"><p>Le programme affiche « Connexion non sécurisée : attention ! » car l’URL commence par <code>http://</code>. Une URL sécurisée commence par <code>https://</code>, par exemple <code>https://www.cnil.fr</code> ou <code>https://pix.academy</code>.</p></div>
+<div class="microq">
+<h4>❓ Pourquoi est‑il important de vérifier qu’un site utilise HTTPS ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq2_https')">Voir la correction</button>
+<div class="answer" id="mq2_https"><p>✅ HTTPS chiffre la connexion entre votre navigateur et le serveur, empêchant les espions d’intercepter vos données (mots de passe, informations bancaires). Un site sans HTTPS ne protège pas vos informations sensibles.</p></div>
+</div>
+</div>
+<!-- Section 3 -->
+<div class="section">
+<h2>🗂️ 3. Qu’est‑ce qu’une donnée personnelle ?</h2>
+<div class="callout"><p>Une <strong>donnée personnelle</strong> est une information qui permet d’identifier directement ou indirectement une personne : nom, prénom, numéro de téléphone, adresse, date de naissance, mais aussi adresse IP, données de santé, identifiants de connexion, etc. Le RGPD (Règlement Général sur la Protection des Données) encadre leur utilisation.</p></div>
+<h3>3.a – Classez les données</h3>
+<p>Classez les exemples suivants dans la catégorie correspondante.</p>
+<div class="drag-container">
+<!-- Lots of données -->
+<div class="drag-item" draggable="true">Nom et prénom</div>
+<div class="drag-item" draggable="true">Date de naissance</div>
+<div class="drag-item" draggable="true">Numéro de carte d’identité</div>
+<div class="drag-item" draggable="true">Photo de profil</div>
+<div class="drag-item" draggable="true">Adresse e‑mail</div>
+<div class="drag-item" draggable="true">Numéro de téléphone</div>
+<div class="drag-item" draggable="true">Adresse postale</div>
+<div class="drag-item" draggable="true">Adresse IP</div>
+<div class="drag-item" draggable="true">Identifiant ENT</div>
+<div class="drag-item" draggable="true">Groupe sanguin</div>
+<div class="drag-item" draggable="true">Historique de navigation</div>
+<div class="drag-item" draggable="true">Résultats scolaires</div>
+<div class="drag-item" draggable="true">Numéro de carte bancaire</div>
+<div class="drag-item" draggable="true">Localisation GPS</div>
+</div>
+<div class="drop-zone"><h4>Identité</h4><ul id="dp-id"></ul></div>
+<div class="drop-zone"><h4>Contact / Connexion</h4><ul id="dp-contact"></ul></div>
+<div class="drop-zone"><h4>Données sensibles</h4><ul id="dp-sensitive"></ul></div>
+<button onclick="toggleAnswer('ans4_3a')">Voir la correction</button>
+<div class="answer" id="ans4_3a"><p>
+      Identité : Nom et prénom, Date de naissance, Numéro de carte d’identité, Photo de profil.<br/>
+      Contact / Connexion : Adresse e‑mail, Numéro de téléphone, Adresse postale, Adresse IP, Identifiant ENT.<br/>
+      Données sensibles : Groupe sanguin, Historique de navigation, Résultats scolaires, Numéro de carte bancaire, Localisation GPS.
+    </p></div>
+<h3>3.b – Pourquoi sont‑elles sensibles ?</h3>
+<p>Expliquez pourquoi il faut protéger ces données et ce qu’il pourrait arriver si elles étaient dévoilées.</p>
+<textarea placeholder="Votre réponse…" rows="3"></textarea>
+<button onclick="toggleAnswer('ans4_3b')">Voir la correction</button>
+<div class="answer" id="ans4_3b"><p>La divulgation de ces informations peut permettre l’usurpation d’identité, le vol ou la fraude (paiements frauduleux), la discrimination (données de santé), le harcèlement ou l’atteinte à la vie privée. Il est essentiel de limiter leur diffusion et de paramétrer la confidentialité de ses comptes.</p></div>
+<div class="microq">
+<h4>❓ Qu’est‑ce qu’un identifiant de connexion et pourquoi faut‑il le protéger ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq3_id')">Voir la correction</button>
+<div class="answer" id="mq3_id"><p>✅ Un identifiant (login) permet d’accéder à vos services en ligne (ENT, réseau social, messagerie). S’il est divulgué avec votre mot de passe, un attaquant peut accéder à vos comptes et usurper votre identité.</p></div>
+</div>
+</div>
+<!-- Section 4 -->
+<div class="section">
+<h2>🛡️ 4. Protéger ses données personnelles</h2>
+<div class="callout"><p>Ne partagez jamais vos mots de passe, vérifiez l’expéditeur et le contenu des messages avant de cliquer sur un lien ou de télécharger une pièce jointe. Les attaques visent à récupérer vos données (phishing, keyloggers) ou à bloquer l’accès à vos fichiers (rançongiciels). À l’inverse, certains comportements vous protègent : mise à jour, 2FA, sauvegardes, VPN.</p></div>
+<h3>4.a – Associer attaques et solutions</h3>
+<p>Faites glisser chaque élément sous la colonne correspondante.</p>
+<div class="drag-container">
+<!-- Attaques -->
+<div class="drag-item" draggable="true">Mot de passe identique partout</div>
+<div class="drag-item" draggable="true">Réseau WiFi public sans mot de passe</div>
+<div class="drag-item" draggable="true">Phishing par SMS</div>
+<div class="drag-item" draggable="true">Rançongiciel</div>
+<div class="drag-item" draggable="true">Cliquer sur un lien inconnu</div>
+<div class="drag-item" draggable="true">Partager ses identifiants</div>
+<div class="drag-item" draggable="true">Brute force</div>
+<div class="drag-item" draggable="true">Insérer une clé USB trouvée</div>
+<!-- Solutions -->
+<div class="drag-item" draggable="true">Activer la double authentification</div>
+<div class="drag-item" draggable="true">Utiliser un gestionnaire de mots de passe</div>
+<div class="drag-item" draggable="true">Mettre à jour son antivirus</div>
+<div class="drag-item" draggable="true">Utiliser un VPN</div>
+<div class="drag-item" draggable="true">Ne pas cliquer sur les liens suspects</div>
+<div class="drag-item" draggable="true">Vérifier l’URL d’un site</div>
+<div class="drag-item" draggable="true">Sensibiliser ses proches</div>
+<div class="drag-item" draggable="true">Limiter le partage d’informations personnelles</div>
+</div>
+<div class="drop-zone"><h4>Comportements à risque</h4><ul id="risk4"></ul></div>
+<div class="drop-zone"><h4>Mesures de protection</h4><ul id="protect4"></ul></div>
+<button onclick="toggleAnswer('ans4_4a')">Voir la correction</button>
+<div class="answer" id="ans4_4a"><p>
+<strong>Comportements à risque :</strong> Mot de passe identique partout ; Réseau WiFi public sans mot de passe ; Phishing par SMS ; Rançongiciel ; Cliquer sur un lien inconnu ; Partager ses identifiants ; Brute force ; Insérer une clé USB trouvée.<br/>
+<strong>Mesures de protection :</strong> Activer la double authentification ; Utiliser un gestionnaire de mots de passe ; Mettre à jour son antivirus ; Utiliser un VPN ; Ne pas cliquer sur les liens suspects ; Vérifier l’URL d’un site ; Sensibiliser ses proches ; Limiter le partage d’informations personnelles.
+    </p></div>
+<div class="microq">
+<h4>❓ Quelle est la différence entre un ransomware et un phishing ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq4_diff')">Voir la correction</button>
+<div class="answer" id="mq4_diff"><p>✅ Un phishing est une tentative de tromperie pour obtenir vos identifiants ou vos données (souvent par e‑mail ou SMS), tandis qu’un ransomware est un logiciel malveillant qui chiffre vos fichiers et exige une rançon pour les débloquer.</p></div>
+</div>
+</div>
+<!-- Section 5 -->
+<div class="section">
+<h2>🕵️ 5. Limiter ses traces en ligne</h2>
+<div class="callout"><p>La <strong>navigation privée</strong> empêche l’enregistrement de l’historique et des cookies sur l’appareil. Un <strong>VPN</strong> chiffre votre connexion et masque votre adresse IP. Un <strong>proxy</strong> sert d’intermédiaire entre votre ordinateur et Internet. Aucun de ces outils ne garantit l’anonymat absolu : combinez‑les avec une vigilance générale.</p></div>
+<h3>5.a – Associer outils et fonctionnalités</h3>
+<p>Faites correspondre chaque fonctionnalité avec l’outil qui l’offre.</p>
+<div class="drag-container">
+<!-- Fonctions supplémentaires -->
+<div class="drag-item" draggable="true">Ne stocke pas l’historique local</div>
+<div class="drag-item" draggable="true">Bloque certains cookies</div>
+<div class="drag-item" draggable="true">Chiffre la connexion</div>
+<div class="drag-item" draggable="true">Masque l’adresse IP</div>
+<div class="drag-item" draggable="true">Permet d’accéder à du contenu géobloqué</div>
+<div class="drag-item" draggable="true">Peut ralentir la connexion</div>
+<div class="drag-item" draggable="true">Ne protège pas des malwares</div>
+<div class="drag-item" draggable="true">Ne modifie pas l’adresse IP</div>
+<div class="drag-item" draggable="true">Filtre certaines publicités</div>
+<div class="drag-item" draggable="true">Cache votre localisation</div>
+</div>
+<div class="drop-zone"><h4>Navigation privée</h4><ul id="tools-nav"></ul></div>
+<div class="drop-zone"><h4>VPN</h4><ul id="tools-vpn"></ul></div>
+<div class="drop-zone"><h4>Proxy</h4><ul id="tools-proxy"></ul></div>
+<button onclick="toggleAnswer('ans4_5a')">Voir la correction</button>
+<div class="answer" id="ans4_5a"><p>
+      Navigation privée : Ne stocke pas l’historique local ; Bloque certains cookies ; Ne modifie pas l’adresse IP ; Ne protège pas des malwares.<br/>
+      VPN : Chiffre la connexion ; Masque l’adresse IP ; Permet d’accéder à du contenu géobloqué ; Peut ralentir la connexion ; Cache votre localisation.<br/>
+      Proxy : Masque l’adresse IP (selon le type) ; Peut permettre d’accéder à du contenu bloqué ; Filtre certaines publicités ; Ne chiffre pas forcément la connexion.
+    </p></div>
+<h3>5.b – Questions</h3>
+<p>Quels sont les avantages et limites de la navigation privée ?</p>
+<textarea placeholder="Votre réponse…" rows="2"></textarea>
+<button onclick="toggleAnswer('ans4_5b1')">Voir la correction</button>
+<div class="answer" id="ans4_5b1"><p>La navigation privée efface l’historique et les cookies à la fermeture de la fenêtre, ce qui limite la traçabilité sur l’ordinateur. Elle ne masque pas votre IP ni les traces laissées sur les serveurs des sites et n’empêche pas votre fournisseur d’accès d’observer votre activité.</p></div>
+<p>Dans quels cas l’utilisation d’un VPN est‑elle pertinente ?</p>
+<textarea placeholder="Votre réponse…" rows="2"></textarea>
+<button onclick="toggleAnswer('ans4_5b2')">Voir la correction</button>
+<div class="answer" id="ans4_5b2"><p>Un VPN est recommandé pour sécuriser vos connexions sur des réseaux publics, contourner des restrictions géographiques, protéger votre adresse IP contre le pistage. Il ne remplace pas les bonnes pratiques de sécurité (mise à jour, mots de passe robustes).</p></div>
+<div class="microq">
+<h4>❓ Un proxy protège‑t‑il votre navigation ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq5_proxy')">Voir la correction</button>
+<div class="answer" id="mq5_proxy"><p>✅ Un proxy peut masquer votre adresse IP vis‑à‑vis du site consulté, mais il ne chiffre pas votre connexion et peut loguer vos activités. Il n’offre donc pas le même niveau de protection qu’un VPN.</p></div>
+</div>
+</div>
+<!-- Section 6 -->
+<div class="section">
+<h2>© 6. Propriété intellectuelle et e‑réputation</h2>
+<div class="callout"><p>La <strong>propriété intellectuelle</strong> protège les œuvres de l’esprit : livres, musiques, dessins, logiciels, photographies, etc. Respecter cette propriété signifie citer vos sources, obtenir les autorisations nécessaires et utiliser des œuvres libres de droits ou sous licence (Creative Commons). Le <strong>droit à l’image</strong> protège la représentation des personnes : il faut obtenir leur accord pour diffuser leur visage.</p></div>
+<h3>6.a – Classer les actions</h3>
+<p>Faites glisser chaque action dans la catégorie appropriée (autorisé/interdit).</p>
+<div class="drag-container">
+<div class="drag-item" draggable="true">Utiliser une photo libre de droits avec attribution</div>
+<div class="drag-item" draggable="true">Partager un film piraté sur un réseau social</div>
+<div class="drag-item" draggable="true">Citer ses sources dans un exposé</div>
+<div class="drag-item" draggable="true">Utiliser un logiciel piraté</div>
+<div class="drag-item" draggable="true">Prendre un camarade en photo et la publier sans son accord</div>
+<div class="drag-item" draggable="true">Utiliser un texte sous licence Creative Commons en mentionnant l’auteur</div>
+<div class="drag-item" draggable="true">Créer son propre contenu original</div>
+<div class="drag-item" draggable="true">Copier-coller un article sans citer l’auteur</div>
+</div>
+<div class="drop-zone"><h4>Actions autorisées / bonnes pratiques</h4><ul id="prop-good"></ul></div>
+<div class="drop-zone"><h4>Actions interdites / mauvaises pratiques</h4><ul id="prop-bad"></ul></div>
+<button onclick="toggleAnswer('ans4_6a')">Voir la correction</button>
+<div class="answer" id="ans4_6a"><p>
+<strong>Autorisé :</strong> Utiliser une photo libre de droits avec attribution ; Citer ses sources dans un exposé ; Utiliser un texte sous licence Creative Commons en mentionnant l’auteur ; Créer son propre contenu original.<br/>
+<strong>Interdit :</strong> Partager un film piraté ; Utiliser un logiciel piraté ; Prendre un camarade en photo et la publier sans son accord ; Copier-coller un article sans citer l’auteur.
+    </p></div>
+<div class="microq">
+<h4>❓ Qu’est‑ce que le droit à l’image ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq6_image')">Voir la correction</button>
+<div class="answer" id="mq6_image"><p>✅ Le droit à l’image garantit à toute personne le contrôle sur la diffusion de sa photo ou de sa vidéo. On doit obtenir l’accord de la personne concernée avant de publier son image, même sur des réseaux sociaux.</p></div>
+</div>
+<div class="microq">
+<h4>❓ Pourquoi respecter la propriété intellectuelle ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq6_ip')">Voir la correction</button>
+<div class="answer" id="mq6_ip"><p>✅ Pour respecter le travail des auteurs et des créateurs, éviter de violer la loi et encourager la création. Utiliser des œuvres sans autorisation peut entraîner des poursuites et des sanctions.</p></div>
+</div>
+<h3>6.b – E‑réputation</h3>
+<p>L’e‑réputation est l’image que l’on renvoie sur Internet. Elle se construit à partir de tout ce qui est publié en ligne (photos, commentaires, vidéos, likes, etc.). Une mauvaise e‑réputation peut nuire à votre vie personnelle ou professionnelle.</p>
+<div class="microq">
+<h4>❓ Comment protéger son e‑réputation ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq6_reputation')">Voir la correction</button>
+<div class="answer" id="mq6_reputation"><p>✅ Ne publiez pas de photos ou de messages embarrassants ; contrôlez vos paramètres de confidentialité ; surveillez votre nom sur les moteurs de recherche ; demandez la suppression de contenus indésirables ; respectez les autres en ligne.</p></div>
+</div>
+<div class="microq">
+<h4>❓ Que faire en cas de cyberharcèlement ?</h4>
+<textarea placeholder="Votre réponse…" rows="2"></textarea><br/>
+<button onclick="toggleAnswer('mq6_harcel')">Voir la correction</button>
+<div class="answer" id="mq6_harcel"><p>✅ Conservez des preuves (captures d’écran), ne répondez pas aux insultes, parlez-en à un adulte de confiance, signalez le compte ou le contenu, contactez les plateformes ou les autorités. Le cyberharcèlement est puni par la loi.</p></div>
+</div>
+</div>
+<!-- Conclusion et métacognition -->
+<div class="section">
+<h2>Synthèse et métacognition</h2>
+<p>Dans cette séquence, vous avez appris à identifier les principaux risques de cybersécurité, à appliquer des bonnes pratiques pour protéger vos données, à classer les types de données personnelles, à distinguer navigation privée, VPN et proxy, et à respecter la propriété intellectuelle et l’e‑réputation. Répondez aux questions suivantes pour faire le point.</p>
+<h3>Synthèse</h3>
+<textarea placeholder="Rédigez un résumé de ce que vous avez retenu…" rows="4"></textarea>
+<h3>Questions métacognitives</h3>
+<ol>
+<li>Qu’ai‑je réussi sans aide ?</li>
+<textarea placeholder="Réponses aux questions métacognitives…" rows="6"></textarea>
+<li>Qu’est‑ce qui m’a demandé le plus d’efforts ?</li>
+<textarea placeholder="Réponses aux questions métacognitives…" rows="6"></textarea>
+<li>Quelle stratégie m’a le plus aidé ? (ex. lire attentivement les définitions, classer avant de cliquer…)</li>
+<textarea placeholder="Réponses aux questions métacognitives…" rows="6"></textarea>
+<li>Quelles erreurs ai‑je corrigées et comment ?</li>
+<textarea placeholder="Réponses aux questions métacognitives…" rows="6"></textarea>
+<li>Comment puis‑je réutiliser ces méthodes dans une autre situation (PIX, autres disciplines) ?</li>
+<textarea placeholder="Réponses aux questions métacognitives…" rows="6"></textarea>
+<li>Que ferai‑je différemment la prochaine fois pour gagner du temps et être plus précis ?</li>
+<textarea placeholder="Réponses aux questions métacognitives…" rows="6"></textarea>
+</ol>
+</div>
+<h3>Autoévaluation (coche)</h3>
+<ul>
+<li><input type="checkbox"/> Je sais reconnaître différents types d’attaques et de bonnes pratiques</li>
+<li><input type="checkbox"/> Je sais vérifier qu’une URL est sécurisée et proposer une URL HTTPS</li>
+<li><input type="checkbox"/> Je sais classer des données personnelles selon leur sensibilité</li>
+<li><input type="checkbox"/> Je sais associer des comportements à risque et des mesures de protection</li>
+<li><input type="checkbox"/> Je sais différencier navigation privée, VPN et proxy</li>
+<li><input type="checkbox"/> Je sais respecter la propriété intellectuelle et protéger mon e‑réputation</li>
+</ul>
+<script>
+    function saveProgress4() {
+      ['nom4','prenom4','classe4'].forEach(id => { localStorage.setItem('4e_' + id, document.getElementById(id).value); });
+      alert('Progression sauvegardée !');
+    }
+    window.addEventListener('load', () => {
+      ['nom4','prenom4','classe4'].forEach(id => {
+        const val = localStorage.getItem('4e_' + id);
+        if (val) document.getElementById(id).value = val;
+      });
+    });
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el.classList.contains('visible')) el.classList.remove('visible');
+      else el.classList.add('visible');
+    }
+    // Drag & drop
+    const draggables = document.querySelectorAll('.drag-item');
+    draggables.forEach(item => {
+      item.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', item.textContent));
+    });
+    const drops = document.querySelectorAll('.drop-zone');
+    drops.forEach(zone => {
+      zone.addEventListener('dragover', e => e.preventDefault());
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        const data = e.dataTransfer.getData('text/plain');
+        const li = document.createElement('li');
+        li.textContent = data;
+        zone.querySelector('ul').appendChild(li);
+      });
+    });
+  
+// --- Exercice d'association menaces -> définitions ---
+(function(){
+  const zone = document.getElementById('exo-menaces-def');
+  if(!zone) return;
+  const options = zone.querySelectorAll('.match-option');
+  const drops = zone.querySelectorAll('.match-drop');
+  options.forEach(opt => {
+    opt.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', opt.getAttribute('data-key'));
+      e.dataTransfer.effectAllowed = 'move';
+    });
+  });
+  drops.forEach(d => {
+    d.addEventListener('dragover', (e)=>{ e.preventDefault(); });
+    d.addEventListener('drop', (e)=>{
+      e.preventDefault();
+      const key = e.dataTransfer.getData('text/plain');
+      const label = zone.querySelector('.match-option[data-key="'+key+'"]');
+      if(!label) return;
+      // Retirer toute étiquette précédemment déposée
+      const prev = d.querySelector('.match-option');
+      if(prev){ zone.querySelector('.drag-container').appendChild(prev); }
+      d.appendChild(label);
+      d.classList.remove('ok','ko');
+    });
+  });
+  const checkBtn = zone.querySelector('#check-menaces');
+  const resetBtn = zone.querySelector('#reset-menaces');
+  checkBtn.addEventListener('click', ()=>{
+    drops.forEach(d => {
+      const accept = d.getAttribute('data-accept');
+      const inside = d.querySelector('.match-option');
+      if(inside && inside.getAttribute('data-key') === accept){ d.classList.add('ok'); d.classList.remove('ko'); }
+      else { d.classList.add('ko'); d.classList.remove('ok'); }
+    });
+  });
+  resetBtn.addEventListener('click', ()=>{
+    const pool = zone.querySelector('.drag-container');
+    drops.forEach(d => {
+      const opt = d.querySelector('.match-option');
+      if(opt){ pool.appendChild(opt); }
+      d.classList.remove('ok','ko');
+    });
+  });
+})();
+
+// === HUD : score + chrono (facultatif) ===
+(function(){
+  // -- Récupération des éléments HUD
+  const zone = document.getElementById('exo-menaces-def');                 // zone de l'exercice
+  if(!zone) return;                                                         // sécurité si l'exercice n'est pas présent
+  const drops = zone.querySelectorAll('.match-drop');                       // zones de dépôt
+  const scoreEl = zone.querySelector('#score-menaces');                     // affichage du score
+  const timerEl = zone.querySelector('#timer-menaces');                     // affichage du chrono
+  const startBtn = zone.querySelector('#start-menaces');                    // bouton démarrer
+  const stopBtn = zone.querySelector('#stop-menaces');                      // bouton arrêter
+  const resetBtn = zone.querySelector('#reset-chrono-menaces');             // bouton remise à zéro
+
+  // -- Variables du chrono
+  let timerId = null;                                                       // identifiant setInterval
+  let elapsed = 0;                                                          // temps écoulé en secondes
+
+  // -- Formateur mm:ss
+  function fmt(s){
+    const m = Math.floor(s/60).toString().padStart(2,'0');                  // minutes sur 2 chiffres
+    const sec = (s%60).toString().padStart(2,'0');                          // secondes sur 2 chiffres
+    return m+':'+sec;                                                       // chaîne mm:ss
+  }
+
+  // -- Démarrer le chrono
+  startBtn.addEventListener('click', ()=>{
+    if(timerId!==null) return;                                              // ne pas créer plusieurs intervalles
+    timerId = setInterval(()=>{                                             // incrément chaque seconde
+      elapsed += 1;                                                         
+      timerEl.textContent = '⏱️ ' + fmt(elapsed);                           // maj affichage
+    }, 1000);
+  });
+
+  // -- Arrêter le chrono
+  stopBtn.addEventListener('click', ()=>{
+    if(timerId!==null){                                                     // si un intervalle existe
+      clearInterval(timerId);                                               // on l'arrête
+      timerId = null;                                                       // on réinitialise l'id
+    }
+  });
+
+  // -- Remise à zéro du chrono
+  resetBtn.addEventListener('click', ()=>{
+    if(timerId!==null){                                                     // si le chrono tournait
+      clearInterval(timerId);                                               // on l'arrête
+      timerId = null;                                                       // reset id
+    }
+    elapsed = 0;                                                            // remise à zéro du compteur
+    timerEl.textContent = '⏱️ 00:00';                                      // affichage initial
+  });
+
+  // -- Mise à jour du score lors du clic sur "Vérifier"
+  const checkBtn = zone.querySelector('#check-menaces');                    // bouton vérifier
+  checkBtn.addEventListener('click', ()=>{
+    let correct = 0;                                                        // compteur de réponses correctes
+    drops.forEach(d => {                                                    // pour chaque zone de dépôt
+      const accept = d.getAttribute('data-accept');                         // clé attendue
+      const inside = d.querySelector('.match-option');                      // étiquette déposée
+      if(inside && inside.getAttribute('data-key') === accept){             // correspondance correcte ?
+        correct += 1;                                                       // incrément score
+      }
+    });
+    scoreEl.textContent = 'Score : ' + correct + '/5';                      // affichage "x/5"
+  });
+})(); 
+
+// === Badge "Parfait ! 5/5 🎉" ===
+(function(){
+  const zone = document.getElementById('exo-menaces-def');
+  if(!zone) return;
+  const badge = zone.querySelector('#perfect-menaces');
+  const scoreEl = zone.querySelector('#score-menaces');
+  const checkBtn = zone.querySelector('#check-menaces');
+  const resetBtn = zone.querySelector('#reset-menaces');
+  const drops = zone.querySelectorAll('.match-drop');
+  const pool = zone.querySelector('.drag-container');
+
+  function parseScore(){
+    // scoreEl.textContent format: "Score : X/5"
+    const m = (scoreEl.textContent||'').match(/(\d+)\/(\d+)/);
+    if(!m) return {x:0,n:5};
+    return {x:parseInt(m[1],10), n:parseInt(m[2],10)};
+  }
+  function showBadgeIfPerfect(){
+    const s = parseScore();
+    if(s.x === s.n){
+      badge.style.display = 'inline-block';
+      badge.setAttribute('aria-live','polite');
+    }else{
+      hideBadge();
+    }
+  }
+  function hideBadge(){
+    badge.style.display = 'none';
+  }
+
+  // Afficher/masquer à chaque Vérifier
+  if(checkBtn){
+    checkBtn.addEventListener('click', showBadgeIfPerfect);
+  }
+  // Masquer si l'élève modifie une association (drop) ou réinitialise
+  drops.forEach(d => {
+    d.addEventListener('drop', hideBadge);
+  });
+  if(pool){
+    pool.addEventListener('drop', hideBadge);
+  }
+  if(resetBtn){
+    resetBtn.addEventListener('click', hideBadge);
+  }
+})();
+// --- Bouton "Copier le code" ---
+(function(){
+  const btn = document.getElementById('copy-code');
+  const codeEl = document.getElementById('code-python');
+  if(!btn || !codeEl) return;
+  function getPlainText(node){
+    // Récupère le texte "visible" (innerText) pour ne pas copier les balises
+    return (node.innerText || node.textContent || '').replace(/\u00A0/g,' ');
+  }
+  btn.addEventListener('click', async ()=>{
+    try{
+      const txt = getPlainText(codeEl);
+      await navigator.clipboard.writeText(txt);
+      const old = btn.textContent;
+      btn.textContent = 'Copié !';
+      setTimeout(()=>{ btn.textContent = old; }, 1200);
+    }catch(e){
+      // Fallback si clipboard API non disponible
+      const range = document.createRange();
+      range.selectNodeContents(codeEl);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      document.execCommand('copy');
+      sel.removeAllRanges();
+      const old = btn.textContent;
+      btn.textContent = 'Copié !';
+      setTimeout(()=>{ btn.textContent = old; }, 1200);
+    }
+  });
+})();
+</script>
+</body>
+</html>
