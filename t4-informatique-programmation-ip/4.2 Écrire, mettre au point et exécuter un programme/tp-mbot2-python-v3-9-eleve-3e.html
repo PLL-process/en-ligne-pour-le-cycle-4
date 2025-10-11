@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tp-mbot2-python-v3_9 — Élève (3e)</title>
+<style>
+:root{
+  --bg:#0e1020;--panel:#151936;--ink:#eaf0ff;--muted:#a8b2d8;
+  --accent:#66e0ff;--violet:#a78bfa;--ok:#34d399;--warn:#fbbf24;--bad:#f87171
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Verdana,Segoe UI,Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{padding:26px 14px 8px;text-align:center}
+h1{margin:0;font-size:clamp(22px,3.6vw,36px);font-weight:800;background:linear-gradient(90deg,var(--accent),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+main{max-width:1100px;margin:14px auto;padding:0 12px 80px}
+.card{background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 8px 22px rgba(0,0,0,.3)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+label{display:block;margin:6px 0 4px}
+input[type=text],input[type=number]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:#0a0d1e;color:#eaf0ff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row>*{flex:1 1 220px}
+.btn{appearance:none;border:1px solid rgba(255,255,255,.18);background:#1b2144;color:#e8edff;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:600;transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.25)}
+.btn.small{font-size:12px;padding:6px 10px}
+pre{background:#0a0d1e;border:1px solid rgba(255,255,255,.12);padding:12px;border-radius:10px;overflow:auto}
+code{font-family:ui-monospace,Consolas,Menlo,monospace;word-break:break-word}
+.ok{color:var(--ok)} .bad{color:var(--bad)} .score{font-weight:800}
+.dropzone{min-height:56px;padding:8px;border:1px dashed rgba(255,255,255,.35);border-radius:10px;background:#0a0d1e}
+.bank{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.program{display:flex;flex-direction:column;gap:8px}
+.token{display:inline-block;padding:6px 10px;border-radius:10px;background:#223;border:1px solid rgba(255,255,255,.25);cursor:grab;user-select:none;white-space:pre}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;margin-top:8px;table-layout:fixed}
+th,td{border:1px solid rgba(255,255,255,.15);padding:8px;text-align:left;vertical-align:top;word-wrap:break-word}
+th{background:#121735}
+.consigne{background:#121735;border:1px solid rgba(255,255,255,.12);padding:10px;border-radius:10px}
+.answer{margin-top:6px;font-size:14px}
+.small{font-size:12px;color:#cbd5ff}
+.color-preview{height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.2)}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#121735;border:1px solid rgba(255,255,255,.12);font-size:12px;color:#c7d2fe}
+hr{border:none;border-top:1px solid rgba(255,255,255,.12);margin:14px 0}
+@media print{
+  body{background:#fff;color:#000}
+  .card{box-shadow:none;border-color:#999}
+  .no-print{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>TP — mBot2 & Python (3e) • v3.9 (all-in-one)</h1>
+  <p class="small">Ressources → Consignes → Questions → Étiquettes + QCM + Trous • Mélange initial + au démarrage du chrono • Score auto /20</p>
+</header>
+<main>
+
+<!-- IDENTITÉ + CHRONO + SCORE -->
+<section class="card">
+  <div class="grid">
+    <div><label>Nom</label><input id="nom" type="text" placeholder="Dupont"></div>
+    <div><label>Prénom</label><input id="prenom" type="text" placeholder="Camille"></div>
+    <div><label>Classe</label><input id="classe" type="text" placeholder="3e B"></div>
+  </div>
+  <div class="row">
+    <button id="startTimer" class="btn">⏱️ Démarrer le chronomètre</button>
+    <button id="stopTimer" class="btn">⏹️ Arrêter</button>
+    <button id="shuffleAll" class="btn">🔀 Mélanger toutes les étiquettes</button>
+    <span>Temps : <strong id="elapsed">00:00</strong></span>
+    <span class="score">Score brut : <span id="score">0</span> / <span id="total">0</span> • /20 : <span id="note20">0.0</span></span>
+  </div>
+</section>
+
+<!-- TABLEAU API (RESPONSIVE) -->
+<section class="card" id="api">
+  <h2>Tableau API — mBot2 & CyberPi</h2>
+  <div class="small">Astuce : faites défiler horizontalement si besoin (mobile) • bouton d’impression plus bas.</div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Action</th><th>Commande Python</th><th>Paramètres</th><th>Exemple</th><th>Effet</th></tr>
+      <tr><td>Console (sans saut)</td><td><code>cyberpi.console.print(x)</code></td><td>x: texte/nombre</td><td><code>cyberpi.console.print("Hello")</code></td><td>Affiche sur la même ligne</td></tr>
+      <tr><td>Console (avec saut)</td><td><code>cyberpi.console.println(x)</code></td><td>x: texte/nombre</td><td><code>cyberpi.console.println(3)</code></td><td>Affiche puis ligne suivante</td></tr>
+      <tr><td>Attente</td><td><code>time.sleep(s)</code></td><td>s: secondes (float)</td><td><code>time.sleep(0.05)</code></td><td>Pause du programme</td></tr>
+      <tr><td>LED on</td><td><code>cyberpi.led.on(R,G,B,"all")</code></td><td>0–255</td><td><code>cyberpi.led.on(255,20,30,"all")</code></td><td>Couleur RGB</td></tr>
+      <tr><td>LED off</td><td><code>cyberpi.led.off()</code></td><td>—</td><td><code>cyberpi.led.off()</code></td><td>Éteint</td></tr>
+      <tr><td>Boutons</td><td><code>cyberpi.controller.is_press(k)</code></td><td>k: 'a','b','up','down','left','right'</td><td><code>cyberpi.controller.is_press('up')</code></td><td>Vrai/Faux</td></tr>
+      <tr><td>Avancer (durée)</td><td><code>mbot2.forward(speed, run_time)</code></td><td>% ; s</td><td><code>mbot2.forward(50,1)</code></td><td>Tout droit</td></tr>
+      <tr><td>Reculer (durée)</td><td><code>mbot2.backward(speed, run_time)</code></td><td>% ; s</td><td><code>mbot2.backward(30,0.5)</code></td><td>En arrière</td></tr>
+      <tr><td>Ligne droite (distance)</td><td><code>mbot2.straight(cm, speed)</code></td><td>cm ; %</td><td><code>mbot2.straight(40,50)</code></td><td>Distance précise</td></tr>
+      <tr><td>Tourner</td><td><code>mbot2.turn(angle, speed)</code></td><td>° ; %</td><td><code>mbot2.turn(90,50)</code></td><td>Rotation (droite positive)</td></tr>
+      <tr><td>Puissance G/D</td><td><code>mbot2.drive_power(L,R)</code></td><td>% ; %</td><td><code>mbot2.drive_power(20,-20)</code></td><td>Virage</td></tr>
+      <tr><td>Arrêt d'urgence</td><td><code>mbot2.EM_stop(port="all")</code></td><td>—</td><td><code>mbot2.EM_stop("all")</code></td><td>Stop immédiat</td></tr>
+      <tr><td>Ultrason</td><td><code>ultrasonic2.get_distance()</code></td><td>—</td><td><code>d = ultrasonic2.get_distance()</code></td><td>cm (0/None si pas de mesure)</td></tr>
+      <tr><td>Wi-Fi</td><td><code>wifi.connect(ssid,pwd)</code> / <code>wifi.is_connect()</code></td><td>chaînes</td><td><code>wifi.connect("SSID","pass")</code></td><td>Connexion vérifiée</td></tr>
+      <tr><td>Couleurs hex</td><td><code>#RRGGBB → (R,G,B)</code></td><td>—</td><td><code>#FF0000 → (255,0,0)</code></td><td>LED faciles</td></tr>
+    </table>
+  </div>
+  <div class="row no-print"><button class="btn" onclick="printAPI()">🖨️ Imprimer seulement ce tableau</button></div>
+</section>
+
+<!-- MODULES (ÉTIQUETTES) -->
+<div id="modules">
+  <!-- m1 -->
+  <section class="card" id="m1">
+    <h2>Apprentissage 1 — Console
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd1',['m1t1','m1t2','m1t3','m1t4'],'fb-qd1')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Affiche « XY » puis nouvelle ligne « Z ».</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank1" class="dropzone bank">
+        <span class="token" id="m1t1">import cyberpi</span>
+        <span class="token" id="m1t2">cyberpi.console.print("X")</span>
+        <span class="token" id="m1t3">cyberpi.console.println("Y")</span>
+        <span class="token" id="m1t4">cyberpi.console.println("Z")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog1" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog1',['m1t1','m1t2','m1t3','m1t4'],2,'qd1','fb-qd1')">Vérifier</button><span>Essais : <strong id="tries-qd1">3</strong></span></div>
+    <div id="fb-qd1" class="answer"></div>
+  </section>
+
+  <!-- m2 -->
+  <section class="card" id="m2">
+    <h2>Apprentissage 2 — LED : RGB & #hex
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd2',['m2t1','m2t2','m2t3','m2t4'],'fb-qd2')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Allumer rouge doux 1 s puis éteindre.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank2" class="dropzone bank">
+        <span class="token" id="m2t1">import cyberpi, time</span>
+        <span class="token" id="m2t2">cyberpi.led.on(255,20,30,"all")</span>
+        <span class="token" id="m2t3">time.sleep(1)</span>
+        <span class="token" id="m2t4">cyberpi.led.off()</span>
+      </div></div>
+      <div style="flex:1"><div id="prog2" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog2',['m2t1','m2t2','m2t3','m2t4'],2,'qd2','fb-qd2')">Vérifier</button><span>Essais : <strong id="tries-qd2">3</strong></span></div>
+    <div id="fb-qd2" class="answer"></div>
+  </section>
+
+  <!-- m3 -->
+  <section class="card" id="m3">
+    <h2>Apprentissage 3 — Manette
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd3',['m3t1','m3t2','m3t3','m3t4'],'fb-qd3')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Attendre « up », avancer 1 s à 40%.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank3" class="dropzone bank">
+        <span class="token" id="m3t1">import cyberpi, time</span>
+        <span class="token" id="m3t2">while not cyberpi.controller.is_press('up'):</span>
+        <span class="token" id="m3t3">    time.sleep(0.05)</span>
+        <span class="token" id="m3t4">cyberpi.mbot2.forward(speed=40, run_time=1)</span>
+      </div></div>
+      <div style="flex:1"><div id="prog3" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog3',['m3t1','m3t2','m3t3','m3t4'],2,'qd3','fb-qd3')">Vérifier</button><span>Essais : <strong id="tries-qd3">3</strong></span></div>
+    <div id="fb-qd3" class="answer"></div>
+  </section>
+
+  <!-- m4 -->
+  <section class="card" id="m4">
+    <h2>Apprentissage 4 — Temporiser
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd4',['m4t1','m4t2','m4t3','m4t4'],'fb-qd4')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>« Action 1 » → pause 2 s → « Action 2 ».</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank4" class="dropzone bank">
+        <span class="token" id="m4t1">import time, cyberpi</span>
+        <span class="token" id="m4t2">cyberpi.console.println("Action 1")</span>
+        <span class="token" id="m4t3">time.sleep(2)</span>
+        <span class="token" id="m4t4">cyberpi.console.println("Action 2")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog4" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog4',['m4t1','m4t2','m4t3','m4t4'],2,'qd4','fb-qd4')">Vérifier</button><span>Essais : <strong id="tries-qd4">3</strong></span></div>
+    <div id="fb-qd4" class="answer"></div>
+  </section>
+
+  <!-- m5 -->
+  <section class="card" id="m5">
+    <h2>Apprentissage 5 — Moteurs
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd5',['m5t1','m5t2','m5t3'],'fb-qd5')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Reculer 0,5 s, puis arrêt immédiat.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank5" class="dropzone bank">
+        <span class="token" id="m5t1">import cyberpi as cpi</span>
+        <span class="token" id="m5t2">cpi.mbot2.backward(speed=30, run_time=0.5)</span>
+        <span class="token" id="m5t3">cpi.mbot2.EM_stop(port="all")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog5" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog5',['m5t1','m5t2','m5t3'],2,'qd5','fb-qd5')">Vérifier</button><span>Essais : <strong id="tries-qd5">3</strong></span></div>
+    <div id="fb-qd5" class="answer"></div>
+  </section>
+
+  <!-- m6 -->
+  <section class="card" id="m6">
+    <h2>Apprentissage 6 — Rotation
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd6',['m6t1','m6t2'],'fb-qd6')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Tourner à gauche 90°.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank6" class="dropzone bank">
+        <span class="token" id="m6t1">import cyberpi as cpi</span>
+        <span class="token" id="m6t2">cpi.mbot2.turn(-90, speed=50)</span>
+      </div></div>
+      <div style="flex:1"><div id="prog6" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog6',['m6t1','m6t2'],2,'qd6','fb-qd6')">Vérifier</button><span>Essais : <strong id="tries-qd6">3</strong></span></div>
+    <div id="fb-qd6" class="answer"></div>
+  </section>
+
+  <!-- m7 -->
+  <section class="card" id="m7">
+    <h2>Apprentissage 7 — Ultrason
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd7',['m7t1','m7t2','m7t3','m7t4','m7t5','m7t6'],'fb-qd7')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Lire distance, arrêt si &lt; 15 cm ; sinon avancer.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank7" class="dropzone bank">
+        <span class="token" id="m7t1">from mbuild.ultrasonic2 import ultrasonic2</span>
+        <span class="token" id="m7t2">d = ultrasonic2.get_distance()</span>
+        <span class="token" id="m7t3">if d is None or d == 0 or d &lt; 15:</span>
+        <span class="token" id="m7t4">    cyberpi.mbot2.EM_stop(port="all")</span>
+        <span class="token" id="m7t5">else:</span>
+        <span class="token" id="m7t6">    cyberpi.mbot2.forward(speed=30)</span>
+      </div></div>
+      <div style="flex:1"><div id="prog7" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog7',['m7t1','m7t2','m7t3','m7t4','m7t5','m7t6'],3,'qd7','fb-qd7')">Vérifier</button><span>Essais : <strong id="tries-qd7">3</strong></span></div>
+    <div id="fb-qd7" class="answer"></div>
+  </section>
+
+  <!-- m8 -->
+  <section class="card" id="m8">
+    <h2>Apprentissage 8 — Reconstitution complète
+      <button class="btn small" style="float:right" onclick="revealIfDone('q8',['t1','t2','t3','t4','t5','t6'],'fb-q8')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Attendre A → avancer 1 s → stop.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank8" class="dropzone bank">
+        <span class="token" id="t1">import cyberpi, time</span>
+        <span class="token" id="t2">cyberpi.console.println("Appuie sur A")</span>
+        <span class="token" id="t3">while not cyberpi.controller.is_press('a'):</span>
+        <span class="token" id="t4">    time.sleep(0.05)</span>
+        <span class="token" id="t5">cyberpi.mbot2.forward(speed=40, run_time=1)</span>
+        <span class="token" id="t6">cyberpi.mbot2.EM_stop(port="all")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog8" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog8',['t1','t2','t3','t4','t5','t6'],6,'q8','fb-q8')">Vérifier</button><span>Essais : <strong id="tries-q8">3</strong></span></div>
+    <div id="fb-q8" class="answer"></div>
+  </section>
+
+  <!-- m9 -->
+  <section class="card" id="m9">
+    <h2>Apprentissage 9 — Directions
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd9',['m9t1','m9t2','m9t3','m9t4'],'fb-qd9')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Avancer → tourner 90° → reculer 0,5 s.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank9" class="dropzone bank">
+        <span class="token" id="m9t1">import cyberpi as cpi</span>
+        <span class="token" id="m9t2">cpi.mbot2.forward(speed=40, run_time=1)</span>
+        <span class="token" id="m9t3">cpi.mbot2.turn(90, speed=50)</span>
+        <span class="token" id="m9t4">cpi.mbot2.backward(speed=30, run_time=0.5)</span>
+      </div></div>
+      <div style="flex:1"><div id="prog9" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog9',['m9t1','m9t2','m9t3','m9t4'],2,'qd9','fb-qd9')">Vérifier</button><span>Essais : <strong id="tries-qd9">3</strong></span></div>
+    <div id="fb-qd9" class="answer"></div>
+  </section>
+
+  <!-- m10 -->
+  <section class="card" id="m10">
+    <h2>Apprentissage 10 — Wi-Fi
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd10',['m10t1','m10t2','m10t3'],'fb-qd10')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Connexion puis test d’état.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank10" class="dropzone bank">
+        <span class="token" id="m10t1">import cyberpi, time</span>
+        <span class="token" id="m10t2">cyberpi.wifi.connect("SSID","motdepasse")</span>
+        <span class="token" id="m10t3">cyberpi.wifi.is_connect()</span>
+      </div></div>
+      <div style="flex:1"><div id="prog10" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog10',['m10t1','m10t2','m10t3'],2,'qd10','fb-qd10')">Vérifier</button><span>Essais : <strong id="tries-qd10">3</strong></span></div>
+    <div id="fb-qd10" class="answer"></div>
+  </section>
+
+  <!-- Thèmes -->
+  <section class="card" id="avoid_seek">
+    <h2>Thématique — Évitement / Recherche
+      <button class="btn small" style="float:right" onclick="revealIfDone('qAS',['as1','as2','as3','as4','as5','as6','as7','as8','as9','as10','as11'],'fb-qAS')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Distance &lt; 15 cm → stop, reculer 5 cm, tourner 135° ; sinon avancer.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bankAS" class="dropzone bank">
+        <span class="token" id="as1">from mbuild.ultrasonic2 import ultrasonic2</span>
+        <span class="token" id="as2">import cyberpi as cpi, time</span>
+        <span class="token" id="as3">while True:</span>
+        <span class="token" id="as4">    d = ultrasonic2.get_distance()</span>
+        <span class="token" id="as5">    if (d is None) or (d == 0) or (d &lt; 15):</span>
+        <span class="token" id="as6">        cpi.mbot2.EM_stop(port="all")</span>
+        <span class="token" id="as7">        cpi.mbot2.straight(-5, speed=50)</span>
+        <span class="token" id="as8">        cpi.mbot2.turn(135, speed=50)</span>
+        <span class="token" id="as9">    else:</span>
+        <span class="token" id="as10">        cpi.mbot2.forward(speed=40)</span>
+        <span class="token" id="as11">    time.sleep(0.05)</span>
+      </div></div>
+      <div style="flex:1"><div id="progAS" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('progAS',['as1','as2','as3','as4','as5','as6','as7','as8','as9','as10','as11'],3,'qAS','fb-qAS')">Vérifier</button><span>Essais : <strong id="tries-qAS">3</strong></span></div>
+    <div id="fb-qAS" class="answer"></div>
+  </section>
+
+  <section class="card" id="line_follow">
+    <h2>Thématique — Suiveur de ligne
+      <button class="btn small" style="float:right" onclick="revealIfDone('qLF',['lf1','lf2','lf3','lf4','lf5','lf6','lf7','lf8','lf9','lf10','lf11','lf12'],'fb-qLF')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Tout droit si L1 &amp; R1 &lt; 50 ; sinon corriger vers le capteur qui voit le noir.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bankLF" class="dropzone bank">
+        <span class="token" id="lf1">import cyberpi as cpi, time</span>
+        <span class="token" id="lf2">while True:</span>
+        <span class="token" id="lf3">    L1 = cpi.quad_rgb_sensor.get_gray('l1', index=1)</span>
+        <span class="token" id="lf4">    R1 = cpi.quad_rgb_sensor.get_gray('r1', index=1)</span>
+        <span class="token" id="lf5">    if L1 &lt; 50 and R1 &lt; 50:</span>
+        <span class="token" id="lf6">        cpi.mbot2.drive_power(20, -20)</span>
+        <span class="token" id="lf7">    elif L1 &lt; 50:</span>
+        <span class="token" id="lf8">        cpi.mbot2.drive_power(5, -20)</span>
+        <span class="token" id="lf9">    elif R1 &lt; 50:</span>
+        <span class="token" id="lf10">        cpi.mbot2.drive_power(20, -5)</span>
+        <span class="token" id="lf11">    else:</span>
+        <span class="token" id="lf12">        cpi.led.on(0,255,0)</span>
+      </div></div>
+      <div style="flex:1"><div id="progLF" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('progLF',['lf1','lf2','lf3','lf4','lf5','lf6','lf7','lf8','lf9','lf10','lf11','lf12'],3,'qLF','fb-qLF')">Vérifier</button><span>Essais : <strong id="tries-qLF">3</strong></span></div>
+    <div id="fb-qLF" class="answer"></div>
+  </section>
+</div>
+<!-- /modules -->
+
+<!-- CONVERTISSEUR -->
+<section class="card" id="hexrgb">
+  <h2>Convertisseur #hex ⇄ RGB</h2>
+  <div class="grid">
+    <div><label>#hex</label><input id="hex" type="text" value="#40E0D0" placeholder="#RRGGBB"><div class="small">Ex : #FF0000, #00FF00, #0000FF</div></div>
+    <div><label>R</label><input id="r" type="number" min="0" max="255" value="64"></div>
+    <div><label>G</label><input id="g" type="number" min="0" max="255" value="224"></div>
+    <div><label>B</label><input id="b" type="number" min="0" max="255" value="208"></div>
+    <div><label>Aperçu</label><div id="preview" class="color-preview"></div></div>
+  </div>
+  <p class="small">À utiliser avec : <code>cyberpi.led.on(R,G,B,"all")</code></p>
+</section>
+
+<!-- EXERCICES ADDITIONNELS -->
+<section class="card" id="extra">
+  <h2>Exercices complémentaires</h2>
+
+  <!-- Q2a / Q2b / Q2c : HEX depuis RGB -->
+  <div class="consigne"><h3>Q2-a — LED (#hex) : code du <em>jaune</em> (2 pts)</h3>
+    <p>R=255, G=255, B=0 → #hex ?</p>
+    <input type="text" id="q2a" placeholder="#??????">
+    <div class="row">
+      <button class="btn" onclick="checkHEX('q2a','#FFFF00',2)">Vérifier</button>
+      <button class="btn small" onclick="revealHEX('q2a','#FFFF00')">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q2a">3</strong></span>
+    </div>
+    <div id="fb-q2a" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q2-b — LED (#hex) : code du <em>cyan</em> (2 pts)</h3>
+    <p>R=0, G=255, B=255 → #hex ?</p>
+    <input type="text" id="q2b" placeholder="#??????">
+    <div class="row">
+      <button class="btn" onclick="checkHEX('q2b','#00FFFF',2)">Vérifier</button>
+      <button class="btn small" onclick="revealHEX('q2b','#00FFFF')">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q2b">3</strong></span>
+    </div>
+    <div id="fb-q2b" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q2-c — LED (#hex) : code du <em>magenta</em> (2 pts)</h3>
+    <p>R=255, G=0, B=255 → #hex ?</p>
+    <input type="text" id="q2c" placeholder="#??????">
+    <div class="row">
+      <button class="btn" onclick="checkHEX('q2c','#FF00FF',2)">Vérifier</button>
+      <button class="btn small" onclick="revealHEX('q2c','#FF00FF')">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q2c">3</strong></span>
+    </div>
+    <div id="fb-q2c" class="answer"></div>
+  </div>
+  <hr>
+
+  <!-- Q1 : print vs println -->
+  <div class="consigne">
+    <h3>Q1 — Console : print vs println (2 pts)</h3>
+    <p>Choisis la bonne affirmation :</p>
+    <label><input type="radio" name="q1" value="a"> print et println font exactement la même chose.</label><br>
+    <label><input type="radio" name="q1" value="b"> println ajoute un retour à la ligne, pas print.</label><br>
+    <label><input type="radio" name="q1" value="c"> print efface l’écran, println non.</label>
+    <div class="row"><button class="btn" onclick="checkQCM('q1','b',2)">Vérifier</button>
+      <button class="btn small" onclick="revealQCM('q1','b')">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q1">3</strong></span></div>
+    <div id="fb-q1" class="answer"></div>
+  </div>
+  <hr>
+
+  <!-- Q3 : is_press up -->
+  <div class="consigne">
+    <h3>Q3 — Manette : flèche haut (2 pts)</h3>
+    <p>La fonction qui détecte l’appui sur la flèche <strong>haut</strong> est…</p>
+    <label><input type="radio" name="q3" value="a"> cyberpi.controller.is_press('up')</label><br>
+    <label><input type="radio" name="q3" value="b"> cyberpi.controller.press('up')</label><br>
+    <label><input type="radio" name="q3" value="c"> is_up_pressed()</label>
+    <div class="row"><button class="btn" onclick="checkQCM('q3','a',2)">Vérifier</button>
+      <button class="btn small" onclick="revealQCM('q3','a')">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q3">3</strong></span></div>
+    <div id="fb-q3" class="answer"></div>
+  </div>
+  <hr>
+
+  <!-- Q4 : temporiser 2s -->
+  <div class="consigne">
+    <h3>Q4 — Temporiser 2 secondes (2 pts)</h3>
+    <p>Complète :</p>
+<pre><code>import time
+# Pause de ____ secondes
+time.sleep(____)</code></pre>
+    <input type="text" id="q4" placeholder="ta réponse (ex : 2)">
+    <div class="row"><button class="btn" onclick="checkBlankSingle('q4',['2','2.0'],2)">Vérifier</button>
+      <button class="btn small" onclick="revealBlankSingle('q4',['2'])">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q4">3</strong></span></div>
+    <div id="fb-q4" class="answer"></div>
+  </div>
+  <hr>
+
+  <!-- Q5 : forward 1s à 50% -->
+  <div class="consigne">
+    <h3>Q5 — Avancer 1 s à 50 % (3 pts)</h3>
+<pre><code>import cyberpi as cpi
+cpi.mbot2.forward(speed=____,  run_time=____)</code></pre>
+    <div class="row">
+      <input type="number" id="q5a" placeholder="speed">
+      <input type="number" id="q5b" placeholder="run_time">
+    </div>
+    <div class="row">
+      <button class="btn" onclick="checkTwoFields('q5a','q5b',50,1,3,'fb-q5','q5')">Vérifier</button>
+      <button class="btn small" onclick="revealTwoFields('q5a','q5b',50,1,'fb-q5','q5')">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q5">3</strong></span>
+    </div>
+    <div id="fb-q5" class="answer"></div>
+  </div>
+  <hr>
+
+  <!-- Q9 : checkbox multi -->
+  <div class="consigne">
+    <h3>Q9 — Directions mBot2 (4 pts)</h3>
+    <p>Coche les fonctions valides (plusieurs réponses possibles) :</p>
+    <label><input type="checkbox" name="q9" value="A"> cyberpi.mbot2.forward(speed=30, run_time=1)</label><br>
+    <label><input type="checkbox" name="q9" value="B"> cyberpi.mbot2.backward(speed=30, run_time=1)</label><br>
+    <label><input type="checkbox" name="q9" value="C"> cyberpi.mbot2.turn(90, speed=50)</label><br>
+    <label><input type="checkbox" name="q9" value="D"> cyberpi.mbot2.fly(speed=100)</label>
+    <div class="row">
+      <button class="btn" onclick="checkCheckbox('q9',['A','B','C'],4)">Vérifier</button>
+      <button class="btn small" onclick="revealCheckbox('q9',['A','B','C'])">Terminer → correction</button>
+      <span>Essais restants : <strong id="tries-q9">3</strong></span>
+    </div>
+    <div id="fb-q9" class="answer"></div>
+  </div>
+
+</section>
+
+<!-- 20 QUESTIONS À TROUS — BOUCLES -->
+<section class="card" id="trous">
+  <h2>20 questions à trous — boucles (1 pt chacune)</h2>
+  <div id="blanks"></div>
+  <div class="row"><button class="btn" onclick="checkAllBlanks()">Vérifier toutes</button>
+    <span class="pill">3 essais / question • « Terminer » affiche la correction après 3 essais.</span></div>
+  <div id="fb-blanks" class="answer"></div>
+</section>
+
+<!-- EXPORT / PRINT -->
+<section class="card">
+  <div class="row">
+    <button class="btn" onclick="exportResults()">📄 Exporter mes réponses (JSON)</button>
+    <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+    <span class="pill">PDF : <strong>Ctrl+P</strong> → <em>Microsoft Print to PDF</em> (Windows) ou <em>Enregistrer au format PDF</em> (macOS/Linux).</span>
+  </div>
+</section>
+
+<script>
+/* ===== Chrono ===== */
+let startTime=null, timerHandle=null;
+function formatTime(ms){const s=Math.floor(ms/1000);const m=String(Math.floor(s/60)).padStart(2,'0');const ss=String(s%60).padStart(2,'0');return m+':'+ss;}
+document.getElementById('startTimer').addEventListener('click',()=>{shuffleAllBanks();if(!startTime){startTime=performance.now();timerHandle=setInterval(()=>{document.getElementById('elapsed').textContent=formatTime(performance.now()-startTime);},200);}});
+document.getElementById('stopTimer').addEventListener('click',()=>{if(timerHandle){clearInterval(timerHandle);timerHandle=null;}});
+
+/* ===== Score global ===== */
+let POINTS={}, TOTAL=0, score=0, tries={};
+function addItem(key,pts){if(!(key in POINTS)){POINTS[key]=pts;TOTAL+=pts;updateNotes();tries[key]=3;}}
+function addScore(key){if(POINTS[key] && tries[key]>0){score+=POINTS[key];tries[key]=0;updateNotes();}}
+function decTry(key){if(tries[key]>0){tries[key]-=1;}return tries[key];}
+function updateNotes(){document.getElementById('score').textContent=score;document.getElementById('total').textContent=TOTAL;document.getElementById('note20').textContent=((score/TOTAL)*20).toFixed(1);}updateNotes();
+
+/* ===== Drag & Drop (étiquettes) ===== */
+function enableDnDFor(idBank,idProg){
+  const bank=document.getElementById(idBank),prog=document.getElementById(idProg);
+  [bank,prog].forEach(dz=>{dz.addEventListener('dragover',e=>e.preventDefault());dz.addEventListener('drop',e=>{e.preventDefault();const id=e.dataTransfer.getData('text/plain');const el=document.getElementById(id);if(el)dz.appendChild(el);});});
+  document.querySelectorAll('#'+idBank+' .token, #'+idProg+' .token').forEach(tok=>{
+    tok.setAttribute('draggable','true'); tok.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',tok.id);});
+  });
+}
+function tokenText(id){const el=document.getElementById(id);return el?el.innerText:'';}
+function revealSolution(name,order,fbId){const code=order.map(tokenText).join('\n');document.getElementById(fbId).innerHTML='<pre><code>'+code.replace(/</g,'&lt;')+'</code></pre>';}
+function revealIfDone(name,order,fbId){if((tries[name]||0)===0){revealSolution(name,order,fbId);}else{document.getElementById(fbId).innerHTML='<span class="bad">Correction après 3 essais (reste : '+tries[name]+').</span>';}}
+function checkDnD(progId,order,pts,name,fbId){
+  addItem(name,pts);
+  const prog=document.getElementById(progId);const ids=[...prog.children].map(x=>x.id);
+  if(ids.length===order.length && ids.every((v,i)=>v===order[i])){
+    document.getElementById(fbId).innerHTML='<span class="ok">✔ +'+pts+' pt(s)</span>';addScore(name);
+  }else{
+    if(decTry(name)===0){document.getElementById(fbId).innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span>';revealSolution(name,order,fbId);}
+    else{document.getElementById(fbId).innerHTML='<span class="bad">✖ Ordre incorrect. Reste : '+tries[name]+'</span>';}
+  }
+}
+/* activer DnD pour tous les modules */
+['1','2','3','4','5','6','7','8','9','10'].forEach(i=>enableDnDFor('bank'+i,'prog'+i));
+enableDnDFor('bankAS','progAS'); enableDnDFor('bankLF','progLF');
+
+/* Mélange des banques */
+const BANK_IDS=['bank1','bank2','bank3','bank4','bank5','bank6','bank7','bank8','bank9','bank10','bankAS','bankLF'];
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
+function shuffleAllBanks(){BANK_IDS.forEach(id=>{const el=document.getElementById(id);if(el)shuffleChildren(el);});}
+shuffleAllBanks();
+document.getElementById('shuffleAll').addEventListener('click', shuffleAllBanks);
+
+/* Enregistrer points des modules / thèmes */
+addItem('qd1',2);addItem('qd2',2);addItem('qd3',2);addItem('qd4',2);addItem('qd5',2);addItem('qd6',2);addItem('qd7',3);addItem('q8',6);addItem('qd9',2);addItem('qd10',2);addItem('qAS',3);addItem('qLF',3);
+
+/* ===== QCM générique (radio) ===== */
+function checkQCM(qid,correct,pts){
+  addItem(qid,pts);
+  const sel=document.querySelector('input[name="'+qid+'"]:checked'); const fb=document.getElementById('fb-'+qid);
+  if(!sel){fb.innerHTML='<span class="bad">Choisis une réponse.</span>';return;}
+  if(sel.value===correct){fb.innerHTML='<span class="ok">✔ +'+pts+' pt</span>';addScore(qid);}
+  else{const t=decTry(qid);if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Réponse : <strong>'+correct.toUpperCase()+'</strong></span>';}else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealQCM(qid,correct){
+  const fb=document.getElementById('fb-'+qid);
+  if((tries[qid]||0)===0){fb.innerHTML='<div class="small">Réponse : <strong>'+correct.toUpperCase()+'</strong></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[qid]+'</span>';}
+}
+
+/* ===== HEX depuis RGB ===== */
+function normHEX(s){s=(s||'').trim(); if(s[0]!=='#') s='#'+s; return s.toUpperCase();}
+function checkHEX(id,correct,pts){
+  addItem(id,pts);
+  const val=normHEX(document.getElementById(id).value), good=correct.toUpperCase(), fb=document.getElementById('fb-'+id);
+  if(val===good){fb.innerHTML='<span class="ok">✔ +'+pts+' pt</span>';addScore(id);}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Réponse : <code>'+good+'</code></span>';} else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealHEX(id,correct){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponse : <code>'+correct.toUpperCase()+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[id]+'</span>';}
+}
+addItem('q2a',2);addItem('q2b',2);addItem('q2c',2); addItem('q1',2); addItem('q3',2);
+
+/* ===== Trous “une valeur” (Q4) ===== */
+function checkBlankSingle(id,answers,pts){
+  addItem(id,pts);
+  const v=(document.getElementById(id).value||'').trim(); const fb=document.getElementById('fb-'+id);
+  if(answers.includes(v)){fb.innerHTML='<span class="ok">✔ +'+pts+' pt</span>';addScore(id);}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Réponse : <code>'+answers[0]+'</code></span>';} else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealBlankSingle(id,answers){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponse : <code>'+answers[0]+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[id]+'</span>';}
+}
+addItem('q4',2);
+
+/* ===== Deux champs (Q5) ===== */
+function checkTwoFields(aId,bId,aGood,bGood,pts,fbId,name){
+  addItem(name,pts);
+  const A=+document.getElementById(aId).value, B=+document.getElementById(bId).value, fb=document.getElementById(fbId);
+  if(A===aGood && B===bGood){fb.innerHTML='<span class="ok">✔ +'+pts+' pts</span>';addScore(name);}
+  else{const t=decTry(name); if(t===0){fb.innerHTML='<span class="bad">✖ À compléter : speed='+aGood+', run_time='+bGood+'.</span>';} else{fb.innerHTML='<span class="bad">✖ Incorrect. Reste : '+t+'</span>';}}
+}
+function revealTwoFields(aId,bId,aGood,bGood,fbId,name){
+  const fb=document.getElementById(fbId);
+  if((tries[name]||0)===0){fb.innerHTML='<div class="small">Solution : speed='+aGood+', run_time='+bGood+'</div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[name]+'</span>';}
+}
+addItem('q5',3);
+
+/* ===== Checkbox multi (Q9) ===== */
+function getChecked(name){return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(x=>x.value).sort();}
+function checkCheckbox(name,goodArr,pts){
+  addItem(name,pts);
+  const val=getChecked(name).join(','), good=[...goodArr].sort().join(','), fb=document.getElementById('fb-'+name);
+  if(val===good){fb.innerHTML='<span class="ok">✔ +'+pts+' pts</span>';addScore(name);}
+  else{const t=decTry(name); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction : '+goodArr.join(', ')+'</span>';} else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealCheckbox(name,goodArr){
+  const fb=document.getElementById('fb-'+name);
+  if((tries[name]||0)===0){fb.innerHTML='<div class="small">Correction : '+goodArr.join(', ')+'</div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[name]+'</span>';}
+}
+addItem('q9',4);
+
+/* ===== Convertisseur #hex ⇄ RGB (outil) ===== */
+const ih=document.getElementById('hex'), ir=document.getElementById('r'), ig=document.getElementById('g'), ib=document.getElementById('b'), prev=document.getElementById('preview');
+function clamp(v){v=Math.round(+v||0);if(v<0)v=0;if(v>255)v=255;return v;} function toHex(n){return clamp(n).toString(16).padStart(2,'0').toUpperCase();}
+function setPreview(r,g,b){prev.style.background='rgb('+clamp(r)+','+clamp(g)+','+clamp(b)+')';}
+function hexToRgb(h){h=h.trim();if(!/^#?[0-9A-Fa-f]{6}$/.test(h))return null;if(h[0]!=='#')h='#'+h;return {r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16),b:parseInt(h.slice(5,7),16)};}
+function rgbToHex(r,g,b){return '#'+toHex(r)+toHex(g)+toHex(b);} ih.addEventListener('input',()=>{const x=hexToRgb(ih.value);if(x){ir.value=x.r;ig.value=x.g;ib.value=x.b;setPreview(x.r,x.g,x.b);}}); [ir,ig,ib].forEach(inp=>inp.addEventListener('input',()=>{ih.value=rgbToHex(ir.value,ig.value,ib.value);setPreview(ir.value,ig.value,ib.value);})); setPreview(ir.value,ig.value,ib.value);
+
+/* ===== 20 blanks (boucles) ===== */
+const blanksData = [
+  {id:'b1',q:'Boucle infinie : entête',a:['while true:']},
+  {id:'b2',q:'Pause dans une boucle (50 ms)',a:['time.sleep(0.05)','sleep(0.05)']},
+  {id:'b3',q:'Boucler 5 fois : entête',a:['for i in range(5):','for i in range(0,5):']},
+  {id:'b4',q:'Sortir de la boucle',a:['break']},
+  {id:'b5',q:'Passer à l’itération suivante',a:['continue']},
+  {id:'b6',q:'Accumuler i de 0 à 9 : entête',a:['for i in range(10):']},
+  {id:'b7',q:'Compteur 1→5 inclus : entête',a:['for i in range(1,6):']},
+  {id:'b8',q:'While : répéter tant que d ≥ 15',a:['while d >= 15:']},
+  {id:'b9',q:'While : jusqu’à appui sur A (négation)',a:["while not cyberpi.controller.is_press('a'):"]},
+  {id:'b10',q:'Afficher i à chaque tour',a:['print(i)','cyberpi.console.println(i)','cyberpi.console.print(i)']},
+  {id:'b11',q:'Somme s : initialisation',a:['s = 0']},
+  {id:'b12',q:'Incrémenter s de i',a:['s = s + i','s+=i']},
+  {id:'b13',q:'Boucler sur [2,4,6]',a:['for x in [2,4,6]:']},
+  {id:'b14',q:'Boucler sur "ABC"',a:['for c in "ABC":']},
+  {id:'b15',q:'Tant que distance inconnue',a:['while d is None:']},
+  {id:'b16',q:"Tant qu’aucune touche A/B",a:["while not (cyberpi.controller.is_press('a') or cyberpi.controller.is_press('b')):"]},
+  {id:'b17',q:'Compte à rebours 3,2,1',a:['for i in [3,2,1]:']},
+  {id:'b18',q:'range 0→8 pas 2',a:['for i in range(0,9,2):','for i in range(0,10,2):']},
+  {id:'b19',q:'Index & valeur sur l',a:['for i, v in enumerate(l):']},
+  {id:'b20',q:'Répéter 3 fois : "Go"',a:['for _ in range(3):']}
+];
+const blanksRoot = document.getElementById('blanks');
+blanksData.forEach((it,idx)=>{
+  const d=document.createElement('div');
+  d.className='consigne'; d.style.margin='10px 0';
+  d.innerHTML=`
+    <p><strong>${idx+1}.</strong> ${it.q}</p>
+    <input type="text" id="${it.id}" placeholder="ta réponse ici">
+    <div class="row">
+      <button class="btn small" onclick="checkBlank('${it.id}',${idx})">Vérifier</button>
+      <button class="btn small" onclick="revealBlank('${it.id}',${idx})">Terminer → correction</button>
+      <span>Essais : <strong id="tries-${it.id}">3</strong></span>
+    </div>
+    <div id="fb-${it.id}" class="answer"></div>`;
+  blanksRoot.appendChild(d);
+  addItem(it.id,1);
+});
+function norm(s){return (s||'').toLowerCase().replace(/\s+/g,' ').trim();}
+function checkBlank(id,idx){
+  const fb=document.getElementById('fb-'+id), inp=document.getElementById(id);
+  const good=blanksData[idx].a.map(norm), val=norm(inp.value);
+  if(good.includes(val)){fb.innerHTML='<span class="ok">✔ +1 pt</span>';addScore(id);}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span><div class="small"><code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';} else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealBlank(id,idx){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponses acceptées : <code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[id]+'</span>';}
+}
+function checkAllBlanks(){let okc=0;blanksData.forEach((it,i)=>{const s=score;checkBlank(it.id,i);if(score>s)okc++;document.getElementById('tries-'+it.id).textContent=tries[it.id];});document.getElementById('fb-blanks').innerHTML='<span class="ok">'+okc+' bonne(s) réponse(s) validée(s).</span>';}
+
+/* ===== Export / Impression ===== */
+function exportResults(){
+  const data={nom:document.getElementById('nom').value||'',prenom:document.getElementById('prenom').value||'',classe:document.getElementById('classe').value||'',temps:document.getElementById('elapsed').textContent,score:score,total:TOTAL,note20:((score/TOTAL)*20).toFixed(1),tries:tries};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tp-mbot2-python-v3_9_resultats.json';a.click();URL.revokeObjectURL(a.href);
+}
+function printAPI(){
+  const src=document.getElementById('api').querySelector('.table-wrap').innerHTML;
+  const w=window.open('','_blank');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Tableau API — mBot2</title><style>body{font-family:Verdana,Segoe UI,Tahoma,sans-serif}table{width:100%;border-collapse:collapse}th,td{border:1px solid #888;padding:8px;text-align:left}th{background:#eee}</style></head><body>'+src+'</body></html>');
+  w.document.close();w.focus();w.print();
+}
+</script>
+
+</main>
+</body>
+</html>
