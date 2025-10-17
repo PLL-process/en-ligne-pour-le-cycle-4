@@ -88,6 +88,23 @@ a.btn-mblock:hover{filter:brightness(.92)}
 .glow-success{box-shadow:0 0 0 0 rgba(52,211,153,.7);animation:glow 1.8s ease-out}
 @keyframes glow{0%{box-shadow:0 0 0 10px rgba(52,211,153,.35)}100%{box-shadow:0 0 0 0 rgba(52,211,153,.0)}}
 .ledbox{width:100px;height:100px;border-radius:10px;border:1px solid #67e8f9;margin-top:10px;background:#000}
+  
+// Mélange et activation du drag & drop pour les exercices 1 à 6
+['1','2','3','4','5','6'].forEach(i=>{
+  enableDnDFor('bank'+i,'prog'+i);
+});
+shuffleAllBanks(); // mélange toutes les banques (1→6 + A7)
+
+  
+  
+addItem('qd1', 2, 3);
+addItem('qd2', 2, 3);
+addItem('qd3', 2, 3);
+addItem('qd4', 2, 3);
+addItem('qd5', 2, 3);
+addItem('qd6', 2, 3);
+
+  
 </style>
 </head>
 <body>
@@ -496,7 +513,14 @@ function enableDnDFor(idBank,idProg){
 }
 function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
-function shuffleAllBanks(){['bankA7'].forEach(id=>{const el=document.getElementById(id);if(el)shuffleChildren(el);});}
+  
+ /* ========= la fonction shuffleAllBanks() mélange les banques bank1 à bank7 ========= */ 
+function shuffleAllBanks(){
+  ['bank1','bank2','bank3','bank4','bank5','bank6','bankA7'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)shuffleChildren(el);
+  });
+  }
 
 /* ========= A7 tokens ========= */
 const A7_ORDER=['a7t1','a7t2','a7t3','a7t4','a7t5','a7t6','a7t7','a7t8','a7t9','a7t10'];
