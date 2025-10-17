@@ -128,14 +128,127 @@ a.btn-mblock:hover{filter:brightness(.92)}
   </div>
 </section>
 
-<!-- APPRENTISSAGES 1 → 6 -->
-<section class="card" id="A1_6">
-  <h2>🧠 Apprentissages 1 à 6</h2>
-  <div class="grid" id="a16Grid">
-    <div><h3><span class="qnum">A</span> Entrées</h3></div>
-    <div><h3><span class="qnum">B</span> Programmes</h3></div>
-  </div>
+<!--           APPRENTISSAGES 1 → 6         -->
+ 
+<section class="card">
+  <h2>🧪 Apprentissages A1 → A6 (à trous)</h2>
+  <div id="a16Grid" class="grid"></div>
 </section>
+
+  
+<!-- MODULES (ÉTIQUETTES) -->
+  
+<div id="modules">
+  <!-- Apprentissage 1 -->
+  <section class="card" id="m1">
+    <h2>Apprentissage 1 — Console
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd1',['m1t1','m1t2','m1t3','m1t4'],'fb-qd1')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Affiche « XY » puis nouvelle ligne « Z ».</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank1" class="dropzone bank">
+        <span class="token" id="m1t1">import cyberpi</span>
+        <span class="token" id="m1t2">cyberpi.console.print("X")</span>
+        <span class="token" id="m1t3">cyberpi.console.println("Y")</span>
+        <span class="token" id="m1t4">cyberpi.console.println("Z")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog1" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog1',['m1t1','m1t2','m1t3','m1t4'],2,'qd1','fb-qd1')">Vérifier</button><span>Essais : <strong id="tries-qd1">3</strong></span></div>
+    <div id="fb-qd1" class="answer"></div>
+  </section>
+
+  <!-- Apprentissage 2 -->
+  <section class="card" id="m2">
+    <h2>Apprentissage 2 — LED : RGB & #hex
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd2',['m2t1','m2t2','m2t3','m2t4'],'fb-qd2')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Allumer rouge doux 1 s puis éteindre.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank2" class="dropzone bank">
+        <span class="token" id="m2t1">import cyberpi, time</span>
+        <span class="token" id="m2t2">cyberpi.led.on(255,20,30,"all")</span>
+        <span class="token" id="m2t3">time.sleep(1)</span>
+        <span class="token" id="m2t4">cyberpi.led.off()</span>
+      </div></div>
+      <div style="flex:1"><div id="prog2" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog2',['m2t1','m2t2','m2t3','m2t4'],2,'qd2','fb-qd2')">Vérifier</button><span>Essais : <strong id="tries-qd2">3</strong></span></div>
+    <div id="fb-qd2" class="answer"></div>
+  </section>
+
+  <!-- Apprentissage 3 -->
+  <section class="card" id="m3">
+    <h2>Apprentissage 3 — Manette
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd3',['m3t1','m3t2','m3t3','m3t4'],'fb-qd3')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Attendre « up », avancer 1 s à 40%.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank3" class="dropzone bank">
+        <span class="token" id="m3t1">import cyberpi, time</span>
+        <span class="token" id="m3t2">while not cyberpi.controller.is_press('up'):</span>
+        <span class="token" id="m3t3">    time.sleep(0.05)</span>
+        <span class="token" id="m3t4">cyberpi.mbot2.forward(speed=40, run_time=1)</span>
+      </div></div>
+      <div style="flex:1"><div id="prog3" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog3',['m3t1','m3t2','m3t3','m3t4'],2,'qd3','fb-qd3')">Vérifier</button><span>Essais : <strong id="tries-qd3">3</strong></span></div>
+    <div id="fb-qd3" class="answer"></div>
+  </section>
+
+  <!-- Apprentissage 4 -->
+  <section class="card" id="m4">
+    <h2>Apprentissage 4 — Temporiser
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd4',['m4t1','m4t2','m4t3','m4t4'],'fb-qd4')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>« Action 1 » → pause 2 s → « Action 2 ».</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank4" class="dropzone bank">
+        <span class="token" id="m4t1">import time, cyberpi</span>
+        <span class="token" id="m4t2">cyberpi.console.println("Action 1")</span>
+        <span class="token" id="m4t3">time.sleep(2)</span>
+        <span class="token" id="m4t4">cyberpi.console.println("Action 2")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog4" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog4',['m4t1','m4t2','m4t3','m4t4'],2,'qd4','fb-qd4')">Vérifier</button><span>Essais : <strong id="tries-qd4">3</strong></span></div>
+    <div id="fb-qd4" class="answer"></div>
+  </section>
+
+  <!-- Apprentissage 5 -->
+  <section class="card" id="m5">
+    <h2>Apprentissage 5 — Moteurs
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd5',['m5t1','m5t2','m5t3'],'fb-qd5')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Reculer 0,5 s, puis arrêt immédiat.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank5" class="dropzone bank">
+        <span class="token" id="m5t1">import cyberpi as cpi</span>
+        <span class="token" id="m5t2">cpi.mbot2.backward(speed=30, run_time=0.5)</span>
+        <span class="token" id="m5t3">cpi.mbot2.EM_stop(port="all")</span>
+      </div></div>
+      <div style="flex:1"><div id="prog5" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog5',['m5t1','m5t2','m5t3'],2,'qd5','fb-qd5')">Vérifier</button><span>Essais : <strong id="tries-qd5">3</strong></span></div>
+    <div id="fb-qd5" class="answer"></div>
+  </section>
+
+  <!-- Apprentissage 6 -->
+  <section class="card" id="m6">
+    <h2>Apprentissage 6 — Rotation
+      <button class="btn small" style="float:right" onclick="revealIfDone('qd6',['m6t1','m6t2'],'fb-qd6')">Terminer → correction</button>
+    </h2>
+    <div class="consigne"><p>Tourner à gauche 90°.</p></div>
+    <div class="row">
+      <div style="flex:1"><div id="bank6" class="dropzone bank">
+        <span class="token" id="m6t1">import cyberpi as cpi</span>
+        <span class="token" id="m6t2">cpi.mbot2.turn(-90, speed=50)</span>
+      </div></div>
+      <div style="flex:1"><div id="prog6" class="dropzone program"></div></div>
+    </div>
+    <div class="row"><button class="btn" onclick="checkDnD('prog6',['m6t1','m6t2'],2,'qd6','fb-qd6')">Vérifier</button><span>Essais : <strong id="tries-qd6">3</strong></span></div>
+    <div id="fb-qd6" class="answer"></div>
+  </section>
 
 <!-- APPRENTISSAGE 7 — ÉTIQUETTES À TROUS -->
 <section class="card" id="A7">
@@ -313,23 +426,45 @@ const A16=[
   {t:'🛞 Apprentissage 5 — Moteurs', ex:'cyberpi.mbot2.backward(speed=30, run_time=0.5)', pts:2, consigne:'Reculer 0,5 s, puis arrêt immédiat.'},
   {t:'🔄 Apprentissage 6 — Rotation', ex:'cyberpi.mbot2.turn(-90, speed=50)', pts:2, consigne:'Tourner à gauche de 90°.'},
 ];
+  
+  
+ /*  Ajoute une fonction de mélange */ 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+ 
+  
+  /*  Appelle shuffle(A16) juste avant de générer les cartes  */
+  
 const a16g=document.getElementById('a16Grid');
-function buildA16(){
-  A16.forEach((it,i)=>{
-    const d=document.createElement('div'); d.className='card'; d.style.background='rgba(20,28,56,.55)';
-    d.innerHTML=`<h3>${it.t}</h3>
-    <div class="small">Consigne : ${it.consigne}</div>
-    <input id="a${i}" type="text" placeholder='${it.ex.replace(/"/g,"&quot;")}'>
-    <div class="row">
-      <button class="btn small neon" onclick="checkA(${i},'${it.ex.replace(/'/g,"\\'")}')">Vérifier</button>
-      <button class="btn small" onclick="hintA(${i},'${it.ex.replace(/'/g,"\\'")}')">💡 Astuce</button>
-      <span>Essais : <b id="tries-a${i}">3</b></span>
-    </div>
-    <div id="fb-a${i}" class="small"></div>`;
+function buildA16() {
+  shuffle(A16);  // <<<<<< On mélange ici
+
+  A16.forEach((it, i) => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.style.background = 'rgba(20,28,56,.55)';
+    d.innerHTML = `
+      <h3>${it.t}</h3>
+      <div class="small">Consigne : ${it.consigne}</div>
+      <input id="a${i}" type="text" placeholder='${it.ex.replace(/"/g,"&quot;")}'>
+      <div class="row">
+        <button class="btn small neon" onclick="checkA(${i},'${it.ex.replace(/'/g,"\\'")}')">Vérifier</button>
+        <button class="btn small" onclick="hintA(${i},'${it.ex.replace(/'/g,"\\'")}')">💡 Astuce</button>
+        <span>Essais : <b id="tries-a${i}">3</b></span>
+      </div>
+      <div id="fb-a${i}" class="small"></div>
+    `;
     a16g.appendChild(d);
-    addItem('a'+i,2,3);
+    addItem('a' + i, 2, 3);
   });
 }
+/*     fin  */
+
+
 function norm(s){return(s||'').toLowerCase().replace(/\s+/g,' ').trim();}
 function checkA(i,good){
   const id='a'+i, fb=document.getElementById('fb-'+id), val=norm(document.getElementById(id).value), ok=norm(good);
@@ -546,6 +681,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
   updateColor();
   upd();
 });
+  /* assurance que buildA16() est bien exécuté après le chargement de la page */
+ 
+  
 </script>
 </body>
 </html>
