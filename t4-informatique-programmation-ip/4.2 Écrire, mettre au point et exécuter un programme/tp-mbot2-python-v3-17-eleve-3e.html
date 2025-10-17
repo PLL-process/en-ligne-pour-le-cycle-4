@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP mBot2 & Python — Séquence complète (Élève 3e)</title>
+<style>
+:root{
+  --bg1:#0d1226; --bg2:#0a1022; --glass:rgba(20,28,56,.62); --ink:#eaf1ff; --muted:#a9b6df;
+  --cyan:#67e8f9; --violet:#a78bfa; --gold:#f6c549; --green:#34d399; --red:#ef4444; --orange:#f59e0b;
+  --outline:rgba(255,255,255,.16);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:
+    radial-gradient(1000px 600px at 80% -10%, #233064 0%, transparent 40%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--ink); font-family:Verdana,Segoe UI,Tahoma,sans-serif; line-height:1.6;
+}
+header{padding:26px 14px 8px;text-align:center}
+h1{
+  margin:0; font-size:clamp(22px,3.6vw,40px); font-weight:900;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+main{max-width:1220px;margin:10px auto 120px;padding:0 12px}
+.card{
+  background:var(--glass); border:1px solid var(--outline); border-radius:16px;
+  padding:16px; margin:14px 0; box-shadow:0 18px 40px rgba(0,0,0,.35); backdrop-filter:blur(7px);
+}
+h2{margin:0 0 10px;font-size:clamp(18px,2.6vw,26px);color:var(--cyan)}
+h3{margin:8px 0;color:var(--gold)}
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;background:#0e1630;border:1px solid var(--outline);font-size:12px;color:#cbd5ff}
+.small{font-size:12px;color:#cbd5ff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(280px,1fr))}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+label{display:block;margin-bottom:4px;color:#9fc4ff}
+input[type=text],input[type=number],textarea{
+  width:100%;padding:10px;border-radius:10px;border:1px solid var(--outline);
+  background:#0c1224;color:#eaf0ff
+}
+.btn{appearance:none;border:1px solid var(--outline);background:#162453;color:#e8edff;
+  padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700;letter-spacing:.2px;transition:.18s}
+.btn.neon:hover{box-shadow:0 0 0 3px rgba(103,232,249,.25), 0 0 18px rgba(103,232,249,.4); transform:translateY(-1px)}
+.btn.small{font-size:12px;padding:6px 10px}
+pre,code{font-family:Consolas,ui-monospace,Menlo,monospace}
+pre.code, pre.code-correction{
+  background:#0c1224;border:1px solid var(--outline); border-radius:12px; padding:12px; overflow:auto
+}
+.kw{color:#7dd3fc;font-weight:700}
+.fn{color:#60a5fa}
+.num{color:#fda4af}
+.str{color:#fbbf24}
+.com{color:#86efac}
+.table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid var(--outline)}
+.table th{background:#0d2238;color:#8de4ff;text-align:left;padding:10px;border-bottom:1px solid var(--outline)}
+.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.table tr:nth-child(even){background:rgba(255,255,255,.03)}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dropzone{min-height:56px;padding:8px;border:1px dashed rgba(255,255,255,.35);border-radius:12px;background:#0c1224}
+.bank{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;min-height:340px}
+.program{display:flex;flex-direction:column;gap:8px}
+.token{
+  display:inline-block;padding:6px 10px;border-radius:10px;background:#1a223e;
+  border:1px solid rgba(255,255,255,.25);cursor:grab;user-select:none;white-space:pre;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.token:hover{outline:1px solid var(--cyan)}
+.help-bubble{
+  position:fixed; right:18px; bottom:18px; max-width:360px; padding:14px 16px;
+  background:#0b2842; border:1px solid rgba(255,255,255,.22); border-radius:14px; z-index:99;
+  box-shadow:0 12px 30px rgba(0,0,0,.4); display:none
+}
+.help-bubble h4{margin:0 0 6px;color:#8de4ff}
+.help-bubble .close{float:right;cursor:pointer;color:#9ad3ff}
+.ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--orange)}
+.score{font-weight:800}
+.test-mblock{margin-top:10px;padding:12px;border-radius:12px;background:#153055;border:1px solid var(--outline)}
+a.btn-mblock{display:inline-block;margin-top:6px;color:#0b1220;background:#8de4ff;padding:6px 10px;border-radius:999px;text-decoration:none;font-weight:800}
+a.btn-mblock:hover{filter:brightness(.92)}
+@media print{.no-print{display:none} body{background:#fff;color:#000} .card{box-shadow:none;border-color:#999}}
+.qnum{display:inline-block;min-width:28px;padding:2px 8px;border-radius:999px;background:#0b2842;color:#9ad3ff;font-weight:900;margin-right:6px}
+.state-ok{border-color:rgba(52,211,153,.55)} .state-bad{border-color:rgba(239,68,68,.55)}
+.caption{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.glow-success{box-shadow:0 0 0 0 rgba(52,211,153,.7);animation:glow 1.8s ease-out}
+@keyframes glow{0%{box-shadow:0 0 0 10px rgba(52,211,153,.35)}100%{box-shadow:0 0 0 0 rgba(52,211,153,.0)}}
+.ledbox{width:100px;height:100px;border-radius:10px;border:1px solid #67e8f9;margin-top:10px;background:#000}
+</style>
+</head>
+<body>
+<header>
+  <h1>✨ TP mBot2 & Python — Séquence complète (Élève 3e)</h1>
+  <p class="small">Thème sombre • API colorée • Mémento Python • Aides contextuelles • Étiquettes à trous • Score /20</p>
+</header>
+<main>
+
+<!-- IDENTITÉ + CHRONO + SCORE -->
+<section class="card">
+  <div class="grid">
+    <div><label>Nom</label><input id="nom" type="text" placeholder="Dupont"></div>
+    <div><label>Prénom</label><input id="prenom" type="text" placeholder="Camille"></div>
+    <div><label>Classe</label><input id="classe" type="text" placeholder="3e B"></div>
+  </div>
+  <div class="row">
+    <button id="startTimer" class="btn neon">⏱️ Démarrer le chronomètre</button>
+    <button id="stopTimer" class="btn">⏹️ Arrêter</button>
+    <span>Temps : <strong id="elapsed">00:00</strong></span>
+    <span class="score">Score brut : <span id="score">0</span> / <span id="total">0</span> • /20 : <span id="note20">0.0</span></span>
+  </div>
+</section>
+
+<!-- TABLEAU API -->
+<section class="card" id="api">
+  <div class="caption">
+    <h2>📚 Tableau API — mBot2 & CyberPi</h2>
+    <button class="btn small" onclick="window.print()">🖨️ Imprimer seulement ce tableau</button>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr>
+        <th>Action</th><th>Commande Python</th><th>Paramètres</th><th>Exemple</th><th>Effet</th>
+      </tr></thead>
+      <tbody id="apiBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- APPRENTISSAGES 1 → 6 -->
+<section class="card" id="A1_6">
+  <h2>🧠 Apprentissages 1 à 6</h2>
+  <div class="grid" id="a16Grid">
+    <div><h3><span class="qnum">A</span> Entrées</h3></div>
+    <div><h3><span class="qnum">B</span> Programmes</h3></div>
+  </div>
+</section>
+
+<!-- APPRENTISSAGE 7 — ÉTIQUETTES À TROUS -->
+<section class="card" id="A7">
+  <h2>🤖 Apprentissage 7 — Éviteur d’obstacles expressif</h2>
+  <div class="badge">Essais autorisés : <b id="triesA7view">1</b> • Barème : <b>+4 pts</b></div>
+  <p class="small">Glisse les 10 étiquettes dans le programme. Après 1 minute, une bulle d’aide peut s’afficher. Puis, teste dans mBlock 5.6.</p>
+  <div class="grid">
+    <div>
+      <h3><span class="qnum">G</span>Banque d’étiquettes</h3>
+      <div id="bankA7" class="dropzone bank"></div>
+    </div>
+    <div>
+      <h3><span class="qnum">D</span>Programme à compléter</h3>
+      <div id="progA7" class="dropzone program"></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn neon" onclick="checkA7()">Vérifier</button>
+    <button class="btn small" onclick="revealA7()">Terminer → Correction</button>
+    <span>Essais restants : <strong id="triesA7">1</strong></span>
+  </div>
+  <div id="fb-A7" class="small"></div>
+  <div class="test-mblock">
+    <h3>💻 Teste ton programme sur ton robot !</h3>
+    <p>Ouvre <b>mBlock 5.6</b>, colle ton code Python et téléverse-le sur ton <b>mBot2</b>.</p>
+    <a class="btn-mblock" href="https://ide.mblock.cc" target="_blank" rel="noopener">📥 Ouvrir mBlock</a>
+  </div>
+</section>
+
+<!-- MÉMENTO PYTHON -->
+<section class="card" id="memo">
+  <h2>📘 Mémento Python (utile pour les QCM)</h2>
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th>Catégorie</th><th>Syntaxe</th><th>Exemple</th><th>Utilité</th></tr></thead>
+      <tbody id="memoBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 20 QUESTIONS À TROUS (boucles) -->
+<section class="card" id="trous">
+  <h2>🧩 20 questions à trous — Boucles</h2>
+  <div class="badge">1 pt chacune • Essais dégressifs (3→2→1)</div>
+  <div class="card" style="background:#0e1630">
+    <h3>📘 Consignes</h3>
+    <ul class="small">
+      <li>Tape le <b>code Python exact</b> attendu (minuscules/majuscules comptent).</li>
+      <li>Utilise le <b>bouton d’aide</b> si tu bloques : un indice partiel s’affiche.</li>
+      <li>La correction apparaît après tes essais.</li>
+    </ul>
+    <button class="btn neon" onclick="showGlobalHint()">💡 Aide globale</button>
+  </div>
+  <div id="blanks"></div>
+  <div class="row">
+    <button class="btn" onclick="checkAllBlanks()">Vérifier toutes</button>
+  </div>
+</section>
+
+<!-- EXERCICES COMPLÉMENTAIRES -->
+<section class="card" id="complements">
+  <h2>🎯 Exercices complémentaires</h2>
+  <div class="grid">
+    <div class="card" style="background:#0f1733">
+      <h3>Associer une fonction à sa description</h3>
+      <div class="small">Exemples : <code>cyberpi.led.on</code>, <code>time.sleep</code>, <code>cyberpi.mbot2.turn</code>, <code>cyberpi.controller.is_press</code>.</div>
+      <p class="small">Activité libre : crée un tableau à deux colonnes et fais relier par traits (ou sur feuille).</p>
+    </div>
+    <div class="card" style="background:#0f1733">
+      <h3>Vrai / Faux — 5 affirmations</h3>
+      <ul class="small">
+        <li><code>println</code> ajoute un retour à la ligne. (Vrai)</li>
+        <li><code>time.sleep(0.05)</code> fait une pause de 5 s. (Faux)</li>
+        <li><code>cyberpi.mbot2.EM_stop()</code> arrête les moteurs immédiatement. (Vrai)</li>
+        <li>Une couleur #hex comporte 6 chiffres/lettres après <code>#</code>. (Vrai)</li>
+        <li><code>cyberpi.ultrasonic2.get()</code> renvoie toujours une valeur > 0. (Faux)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERTISSEUR RGB/HEX (FIN DE DOCUMENT) -->
+<section class="card" id="convertisseur">
+  <h2>🌈 Convertisseur #hex ⇄ RGB</h2>
+  <p>Entre une couleur au format hexadécimal ou ses composantes RGB (0 à 255) pour tester la couleur de la LED :</p>
+  <div class="row">
+    <div>
+      <label>Code #HEX :</label>
+      <input id="hexInput" type="text" maxlength="7" placeholder="#00FFFF">
+    </div>
+    <div>
+      <label>Rouge :</label><input id="rInput" type="number" min="0" max="255" value="0">
+      <label>Vert :</label><input id="gInput" type="number" min="0" max="255" value="255">
+      <label>Bleu :</label><input id="bInput" type="number" min="0" max="255" value="255">
+    </div>
+    <button class="btn neon" onclick="updateColor()">💡 Tester la couleur</button>
+  </div>
+  <div id="ledPreview" class="ledbox"></div>
+</section>
+
+<!-- EXPORT / PRINT -->
+<section class="card no-print">
+  <div class="row">
+    <button class="btn" onclick="exportResults()">📄 Exporter mes réponses (JSON)</button>
+    <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+    <span class="badge">PDF : <b>Ctrl+P</b> → Microsoft Print to PDF</span>
+  </div>
+</section>
+
+<!-- HELP BUBBLE -->
+<div id="help" class="help-bubble">
+  <span class="close" onclick="hideHelp()">✖</span>
+  <h4>💡 Indice</h4>
+  <div id="helpText" class="small"></div>
+</div>
+
+</main>
+
+<script>
+/* ========= Audio (bip / buzz / success) ========= */
+const AudioFX = (()=>{
+  let ctx;
+  function ensure(){ if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)(); }
+  function tone(freq=880, dur=0.12, type='sine', gain=0.06){
+    ensure();
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type; o.frequency.value=freq; g.gain.value=gain;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    setTimeout(()=>{o.stop();}, dur*1000);
+  }
+  return {
+    ok(){ tone(1046,0.10,'triangle',0.07); setTimeout(()=>tone(1318,0.12,'triangle',0.07),90); },
+    fail(){ tone(220,0.18,'sawtooth',0.05); },
+    chime(){ tone(988,0.14,'sine',0.08); setTimeout(()=>tone(1480,0.18,'sine',0.08),120); setTimeout(()=>tone(1760,0.22,'sine',0.07),260); }
+  };
+})();
+
+/* ========= Chrono & notes ========= */
+let startTime=null,timerHandle=null;
+function fmt(ms){const s=Math.floor(ms/1000);const m=String(Math.floor(s/60)).padStart(2,'0');const ss=String(s%60).padStart(2,'0');return m+':'+ss;}
+document.getElementById('startTimer').addEventListener('click',()=>{
+  if(!startTime){startTime=performance.now();timerHandle=setInterval(()=>{document.getElementById('elapsed').textContent=fmt(performance.now()-startTime);},200);}
+  shuffleAllBanks(); armHelpTimer();
+});
+document.getElementById('stopTimer').addEventListener('click',()=>{if(timerHandle){clearInterval(timerHandle);timerHandle=null;}});
+
+let POINTS={},TOTAL=0,score=0,tries={};
+function addItem(key,pts,tr){if(!(key in POINTS)){POINTS[key]=pts;TOTAL+=pts;tries[key]=tr;upd();}}
+function addScore(key){if(POINTS[key]&&tries[key]===0){return;} if(POINTS[key]){score+=POINTS[key];tries[key]=0;upd();AudioFX.chime();}}
+function decTry(key){if(tries[key]>0){tries[key]-=1;}return tries[key];}
+function upd(){document.getElementById('score').textContent=score;document.getElementById('total').textContent=TOTAL;document.getElementById('note20').textContent=((score/TOTAL)*20).toFixed(1);}
+
+/* ========= API data ========= */
+const API_DATA=[
+['🖥️ Console (sans saut)','cyberpi.console.print(x)','x: texte/nombre','cyberpi.console.print("Hello")','Affiche sur la même ligne'],
+['🖨️ Console (avec saut)','cyberpi.console.println(x)','x: texte/nombre','cyberpi.console.println(3)','Affiche puis va à la ligne'],
+['⏸️ Attente','time.sleep(s)','s: secondes (float)','time.sleep(0.2)','Met en pause le programme'],
+['🚦 LED allumer','cyberpi.led.on(R,G,B,"all")','0–255','cyberpi.led.on(255,20,30,"all")','Couleur RGB'],
+['🎮 Manette (touche)','cyberpi.controller.is_press("a")','"a","b","up","down","left","right"','if cyberpi.controller.is_press("up"):','Détecte une touche'],
+['🛞 Avancer','cyberpi.mbot2.forward(speed=V)','0–100 %','cyberpi.mbot2.forward(speed=50)','Fait avancer le robot'],
+['🔄 Tourner','cyberpi.mbot2.turn(angle, speed=V)','angle° ; V%','cyberpi.mbot2.turn(90, speed=50)','Tourne sur place'],
+['📡 Distance (cm)','cyberpi.ultrasonic2.get(index=1)','—','d=cyberpi.ultrasonic2.get(index=1)','Retourne la distance'],
+['🛑 Arrêt immédiat','cyberpi.mbot2.EM_stop(port="all")','—','cyberpi.mbot2.EM_stop(port="all")','Stop d’urgence'],
+['🔊 Son','cyberpi.audio.play("hello")','nom du son','cyberpi.audio.play("laugh")','Joue un effet sonore']
+];
+const apiBody=document.getElementById('apiBody');
+function buildAPI(){ API_DATA.forEach(r=>{ const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); apiBody.appendChild(tr);});}
+
+/* ========= A1→A6 ========= */
+const A16=[
+  {t:'🖥️ Apprentissage 1 — Console', ex:'cyberpi.console.println("Bonjour 3e !")', pts:2, consigne:'Affiche « Bonjour 3e ! » puis va à la ligne.'},
+  {t:'🚦 Apprentissage 2 — LED : RGB & #hex', ex:'cyberpi.led.on(255,20,30,"all")', pts:2, consigne:'Allumer rouge doux 1 s puis éteindre.'},
+  {t:'🎮 Apprentissage 3 — Manette', ex:"while not cyberpi.controller.is_press('up'):", pts:2, consigne:'Attendre la touche ↑ puis avancer 1 s à 40 %.'},
+  {t:'⏳ Apprentissage 4 — Temporiser', ex:'time.sleep(2)', pts:2, consigne:'Afficher « Action 1 », pause 2 s, puis « Action 2 ».'},
+  {t:'🛞 Apprentissage 5 — Moteurs', ex:'cyberpi.mbot2.backward(speed=30, run_time=0.5)', pts:2, consigne:'Reculer 0,5 s, puis arrêt immédiat.'},
+  {t:'🔄 Apprentissage 6 — Rotation', ex:'cyberpi.mbot2.turn(-90, speed=50)', pts:2, consigne:'Tourner à gauche de 90°.'},
+];
+const a16g=document.getElementById('a16Grid');
+function buildA16(){
+  A16.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='card'; d.style.background='rgba(20,28,56,.55)';
+    d.innerHTML=`<h3>${it.t}</h3>
+    <div class="small">Consigne : ${it.consigne}</div>
+    <input id="a${i}" type="text" placeholder='${it.ex.replace(/"/g,"&quot;")}'>
+    <div class="row">
+      <button class="btn small neon" onclick="checkA(${i},'${it.ex.replace(/'/g,"\\'")}')">Vérifier</button>
+      <button class="btn small" onclick="hintA(${i},'${it.ex.replace(/'/g,"\\'")}')">💡 Astuce</button>
+      <span>Essais : <b id="tries-a${i}">3</b></span>
+    </div>
+    <div id="fb-a${i}" class="small"></div>`;
+    a16g.appendChild(d);
+    addItem('a'+i,2,3);
+  });
+}
+function norm(s){return(s||'').toLowerCase().replace(/\s+/g,' ').trim();}
+function checkA(i,good){
+  const id='a'+i, fb=document.getElementById('fb-'+id), val=norm(document.getElementById(id).value), ok=norm(good);
+  if(val===ok){ fb.innerHTML='<span class="ok">✔ +2 pts</span>'; addScore(id); document.getElementById('a'+i).closest('.card').classList.add('state-ok'); AudioFX.ok(); }
+  else{ const t=decTry(id); if(t===0){ fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction : <code>'+good+'</code></span>'; }
+        else { fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>'; AudioFX.fail(); }
+        document.getElementById('tries-'+id).textContent=tries[id];
+        document.getElementById('a'+i).closest('.card').classList.add('state-bad');
+  }
+}
+function hintA(i,good){ alert('Indice : '+good.slice(0, Math.max(3, Math.ceil(good.length*0.5)))+'…');}
+
+/* ========= Help bubble (A7) ========= */
+let helpTimer=null;
+function armHelpTimer(){ clearTimeout(helpTimer); helpTimer=setTimeout(()=>{showHelpRandom();},60000); }
+function showHelpRandom(){
+  const lines=A7_TOKENS.map(t=>t.text);
+  const pick=lines[Math.floor(Math.random()*lines.length)];
+  document.getElementById('helpText').innerHTML='Essaie d’utiliser : <code>'+pick.replace(/</g,'&lt;')+'</code>';
+  document.getElementById('help').style.display='block';
+  setTimeout(hideHelp,10000);
+}
+function hideHelp(){document.getElementById('help').style.display='none';}
+
+/* ========= Drag & Drop ========= */
+function enableDnDFor(idBank,idProg){
+  const bank=document.getElementById(idBank),prog=document.getElementById(idProg);
+  [bank,prog].forEach(dz=>{dz.addEventListener('dragover',e=>e.preventDefault());dz.addEventListener('drop',e=>{e.preventDefault();const id=e.dataTransfer.getData('text/plain');const el=document.getElementById(id);if(el)dz.appendChild(el);});});
+}
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
+function shuffleAllBanks(){['bankA7'].forEach(id=>{const el=document.getElementById(id);if(el)shuffleChildren(el);});}
+
+/* ========= A7 tokens ========= */
+const A7_ORDER=['a7t1','a7t2','a7t3','a7t4','a7t5','a7t6','a7t7','a7t8','a7t9','a7t10'];
+const A7_TOKENS=[
+  {id:'a7t1', text:'import cyberpi, time'},
+  {id:'a7t2', text:'SEUIL = 15'},
+  {id:'a7t3', text:'PORT = 1'},
+  {id:'a7t4', text:'VITESSE = 50'},
+  {id:'a7t5', text:'d = cyberpi.ultrasonic2.get(index=PORT)'},
+  {id:'a7t6', text:'if d is None or d == 0:'},
+  {id:'a7t7', text:'    cyberpi.audio.play("buzzing")'},
+  {id:'a7t8', text:'elif d < SEUIL:'},
+  {id:'a7t9', text:'    cyberpi.audio.play("laugh")'},
+  {id:'a7t10',text:'    cyberpi.mbot2.turn(135, speed=VITESSE)'}
+];
+function buildA7(){
+  const bank=document.getElementById('bankA7'); const prog=document.getElementById('progA7');
+  A7_TOKENS.forEach(t=>{
+    const s=document.createElement('span'); s.className='token'; s.id=t.id; s.textContent=t.text;
+    s.setAttribute('draggable','true'); s.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',t.id));
+    bank.appendChild(s);
+  });
+  const holes=[
+    '# 1. importations',
+    'SEUIL = [ __ ]         # 2. seuil de détection (cm)',
+    'PORT = [ __ ]          # 3. port du capteur',
+    'VITESSE = [ __ ]       # 4. vitesse (%)',
+    'while True:\n    [ __ ]             # 5. lecture distance',
+    '    if d is None or d == 0:\n        cyberpi.led.on(255,0,0,"all")\n        cyberpi.mbot2.EM_stop(port="all")\n        [ __ ]         # 6. son si pas de mesure',
+    '    [ __ ]             # 7. condition obstacle',
+    '        cyberpi.led.on(255,165,0,"all")\n        cyberpi.mbot2.EM_stop(port="all")\n        [ __ ]         # 8. son de rire',
+    '        cyberpi.mbot2.backward(speed=VITESSE, run_time=0.4)\n        [ __ ]         # 9. rotation',
+    '    else:\n        cyberpi.led.on(0,255,0,"all")\n        cyberpi.audio.play("hello")\n        cyberpi.mbot2.forward(speed=VITESSE)\n    time.sleep(0.1)'
+  ];
+  for(let i=0;i<10;i++){
+    const dz=document.createElement('div'); dz.className='dropzone'; const lab=document.createElement('div'); lab.className='small'; lab.innerHTML='<span class="qnum">'+(i+1)+'</span>'+holes[i]; dz.appendChild(lab); prog.appendChild(dz);
+  }
+  enableDnDFor('bankA7','progA7'); shuffleChildren(bank);
+  addItem('A7',4,1); document.getElementById('triesA7').textContent=tries['A7']; document.getElementById('triesA7view').textContent=tries['A7'];
+}
+function getProgTokenIds(){const ids=[];document.querySelectorAll('#progA7 .dropzone').forEach(dz=>{const tk=[...dz.querySelectorAll('.token')].pop(); if(tk) ids.push(tk.id); else ids.push(null);}); return ids;}
+function revealA7(){ if((tries['A7']||0)>0){document.getElementById('fb-A7').innerHTML='<span class="bad">La correction apparaît après ton essai.</span>'; return;} showA7Correction(); }
+function showA7Correction(){
+  const code = `<span class="kw">import</span> cyberpi, time <span class="com"># Import</span>
+SEUIL <span class="kw">=</span> <span class="num">15</span>
+PORT <span class="kw">=</span> <span class="num">1</span>
+VITESSE <span class="kw">=</span> <span class="num">50</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    d <span class="kw">=</span> cyberpi.ultrasonic2.get(index<span class="kw">=</span>PORT)
+    <span class="kw">if</span> d <span class="kw">is</span> <span class="kw">None</span> <span class="kw">or</span> d <span class="kw">==</span> <span class="num">0</span>:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"buzzing"</span>)
+    <span class="kw">elif</span> d <span class="kw">&lt;</span> SEUIL:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">165</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"laugh"</span>)
+        cyberpi.mbot2.backward(speed<span class="kw">=</span>VITESSE, run_time<span class="kw">=</span><span class="num">0.4</span>)
+        cyberpi.mbot2.turn(<span class="num">135</span>, speed<span class="kw">=</span>VITESSE)
+    <span class="kw">else</span>:
+        cyberpi.led.on(<span class="num">0</span>,<span class="num">255</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"hello"</span>)
+        cyberpi.mbot2.forward(speed<span class="kw">=</span>VITESSE)
+    time.sleep(<span class="num">0.1</span>)`;
+  document.getElementById('fb-A7').innerHTML='<h3>🟦 Correction commentée</h3><pre class="code-correction">'+code+'</pre>';
+}
+function checkA7(){
+  const ids=getProgTokenIds(); const exp=A7_ORDER;
+  if(ids.some(x=>x===null)){document.getElementById('fb-A7').innerHTML='<span class="warn">Il te manque des étiquettes dans la partie droite.</span>'; AudioFX.fail(); return;}
+  const ok=ids.every((x,i)=>x===exp[i]);
+  if(ok){ document.getElementById('fb-A7').innerHTML='<span class="ok">✔ +4 pts. 🎉</span>'; addScore('A7'); document.getElementById('A7').classList.add('state-ok','glow-success'); setTimeout(()=>document.getElementById('A7').classList.remove('glow-success'),1500); }
+  else{ const t=decTry('A7'); if(t===0){ document.getElementById('fb-A7').innerHTML='<span class="bad">✖ Essai utilisé. Correction :</span>'; showA7Correction(); } else { document.getElementById('fb-A7').innerHTML='<span class="bad">✖ Ordre incorrect. Il te reste '+t+' essai.</span>'; AudioFX.fail(); } document.getElementById('triesA7').textContent=tries['A7']; }
+}
+
+/* ========= Mémento ========= */
+const MEMO=[
+['Boucle for','for i in range(n):','for i in range(3):','Répète n fois'],
+['Boucle while','while condition:','while True:','Répète tant que vrai'],
+['Condition','if … elif … else:','if d < 10:','Choix logique'],
+['Pause','time.sleep(s)','time.sleep(1)','Attente (s)'],
+['Affichage','print(x)','print("OK")','Console'],
+['Ultrason','cyberpi.ultrasonic2.get(index=1)','d=cyberpi.ultrasonic2.get(index=1)','Distance (cm)'],
+['LED','cyberpi.led.on(R,G,B,"all")','cyberpi.led.on(255,20,30,"all")','Couleur'],
+['Son','cyberpi.audio.play("nom")','cyberpi.audio.play("hello")','Effet sonore'],
+];
+function buildMemo(){ const b=document.getElementById('memoBody'); MEMO.forEach(r=>{const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); b.appendChild(tr);});}
+
+/* ========= 20 blanks (boucles) ========= */
+const blanksData=[
+{id:'b1',q:'Boucle infinie : entête',a:['while true:']},
+{id:'b2',q:'Pause 50 ms',a:['time.sleep(0.05)','sleep(0.05)']},
+{id:'b3',q:'Boucler 5 fois : entête',a:['for i in range(5):','for i in range(0,5):']},
+{id:'b4',q:'Sortir de la boucle',a:['break']},
+{id:'b5',q:'Passer à l’itération suivante',a:['continue']},
+{id:'b6',q:'Compter 0→9 : entête',a:['for i in range(10):']},
+{id:'b7',q:'Compter 1→5 inclus',a:['for i in range(1,6):']},
+{id:'b8',q:'While tant que d ≥ 15',a:['while d >= 15:']},
+{id:'b9',q:'Jusqu’à appui sur A',a:["while not cyberpi.controller.is_press('a'):"]},
+{id:'b10',q:'Afficher i',a:['print(i)','cyberpi.console.println(i)','cyberpi.console.print(i)']},
+{id:'b11',q:'Somme : init',a:['s = 0']},
+{id:'b12',q:'Somme : ajouter i',a:['s = s + i','s+=i']},
+{id:'b13',q:'Boucler sur [2,4,6]',a:['for x in [2,4,6]:']},
+{id:'b14',q:'Boucler sur "ABC"',a:['for c in "ABC":']},
+{id:'b15',q:'Tant que distance inconnue',a:['while d is None:']},
+{id:'b16',q:"Tant qu’aucune touche A/B",a:["while not (cyberpi.controller.is_press('a') or cyberpi.controller.is_press('b')):"]},
+{id:'b17',q:'Compte à rebours 3,2,1',a:['for i in [3,2,1]:']},
+{id:'b18',q:'range 0→8 pas 2',a:['for i in range(0,9,2):','for i in range(0,10,2):']},
+{id:'b19',q:'Index & valeur sur l',a:['for i, v in enumerate(l):']},
+{id:'b20',q:'Répéter 3 fois "Go"',a:['for _ in range(3):']}
+];
+const blanksRoot=document.getElementById('blanks');
+function buildBlanks(){
+  blanksData.forEach((it,idx)=>{
+    const d=document.createElement('div'); d.className='card'; d.style.background='rgba(20,28,56,.55)';
+    const initTries=(idx<3?3:(idx<6?2:1)); const pts=1;
+    d.innerHTML=`<div class="small"><span class="qnum">${idx+1}</span>${it.q}</div>
+    <input type="text" id="${it.id}" placeholder="ta réponse ici">
+    <div class="row">
+      <button class="btn small neon" onclick="checkBlank('${it.id}',${idx})">Vérifier</button>
+      <button class="btn small" onclick="revealBlank('${it.id}',${idx})">Terminer → correction</button>
+      <button class="btn small" onclick="hintBlank(${idx})">💡 Aide</button>
+      <span>Essais : <strong id="tries-${it.id}">${initTries}</strong></span>
+    </div>
+    <div id="fb-${it.id}" class="answer small"></div>`;
+    blanksRoot.appendChild(d);
+    addItem(it.id,pts,initTries);
+  });
+}
+function norm2(s){return(s||'').toLowerCase().replace(/\s+/g,' ').trim();}
+function checkBlank(id,idx){
+  const fb=document.getElementById('fb-'+id),inp=document.getElementById(id);
+  const good=blanksData[idx].a.map(norm2),val=norm2(inp.value);
+  if(good.includes(val)){fb.innerHTML='<span class="ok">✔ +1 pt</span>';addScore(id);AudioFX.ok();}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span><div class="small"><code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';} else {fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';AudioFX.fail();}} document.getElementById('tries-'+id).textContent=tries[id];
+}
+function revealBlank(id,idx){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponses acceptées : <code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes essais : '+tries[id]+'</span>';}
+}
+function checkAllBlanks(){blanksData.forEach((it,i)=>{checkBlank(it.id,i); document.getElementById('tries-'+it.id).textContent=tries[it.id];});}
+function hintBlank(idx){const arr=blanksData[idx].a; const hint=arr[0].slice(0, Math.max(3, Math.ceil(arr[0].length*0.5)))+'…'; alert('Indice : '+hint);}
+function showGlobalHint(){const pick=blanksData[Math.floor(Math.random()*blanksData.length)].a[0]; document.getElementById('helpText').innerHTML='Essaie avec : <code>'+pick.replace(/</g,'&lt;')+'</code>'; document.getElementById('help').style.display='block'; setTimeout(hideHelp,9000);}
+
+/* ========= Convertisseur ========= */
+function hexToRgb(hex){ const m=hex.trim(); if(!/^#?[0-9a-fA-F]{6}$/.test(m)) return null; const n=parseInt(m.replace('#',''),16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function rgbToHex(r,g,b){ function h(x){x=Math.min(255,Math.max(0,parseInt(x||0,10)));return x.toString(16).padStart(2,'0');} return '#'+h(r)+h(g)+h(b); }
+function updateColor(){
+  const hex=document.getElementById('hexInput').value.trim();
+  const r=+document.getElementById('rInput').value;
+  const g=+document.getElementById('gInput').value;
+  const b=+document.getElementById('bInput').value;
+  const led=document.getElementById('ledPreview');
+  if(hex && /^#?[0-9a-fA-F]{6}$/.test(hex)){
+    const [rr,gg,bb]=hexToRgb(hex);
+    document.getElementById('rInput').value=rr;
+    document.getElementById('gInput').value=gg;
+    document.getElementById('bInput').value=bb;
+    led.style.background=rgbToHex(rr,gg,bb);
+  } else {
+    const h=rgbToHex(r,g,b).toUpperCase();
+    document.getElementById('hexInput').value=h;
+    led.style.background=h;
+  }
+}
+
+/* ========= Export ========= */
+function exportResults(){
+  const data={nom:document.getElementById('nom').value||'',prenom:document.getElementById('prenom').value||'',classe:document.getElementById('classe').value||'',temps:document.getElementById('elapsed').textContent,score:score,total:TOTAL,note20:((score/TOTAL)*20).toFixed(1),tries:tries};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='tp-mbot2-python-v3_17_resultats.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ========= Initialisation DOM ========= */
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildAPI();
+  buildA16();
+  buildA7();
+  buildMemo();
+  buildBlanks();
+  updateColor();
+  upd();
+});
+</script>
+</body>
+</html>
