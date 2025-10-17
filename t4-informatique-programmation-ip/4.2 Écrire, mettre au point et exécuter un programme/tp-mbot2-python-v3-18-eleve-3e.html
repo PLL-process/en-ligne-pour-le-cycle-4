@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<!-- =========================================================================
+🟪 SECTION 1 — HEAD + CSS
+But : métadonnées, titre onglet, police par défaut + TOUT LE STYLE de la page.
+Début CSS : <style> … Fin CSS : </style>
+=========================================================================== -->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP mBot2 & Python — Séquence complète (Élève 3e)</title>
+
+<!-- ===================== Début CSS global ===================== -->
+<style>
+/* 
+  Palette & thème sombre néon
+  - Variables CSS réutilisées pour cohérence
+*/
+:root{
+  --bg1:#0d1226; --bg2:#0a1022; --glass:rgba(20,28,56,.62); --ink:#eaf1ff; --muted:#a9b6df;
+  --cyan:#67e8f9; --violet:#a78bfa; --gold:#f6c549; --green:#34d399; --red:#ef4444; --orange:#f59e0b;
+  --outline:rgba(255,255,255,.16);
+}
+
+/* Réglages de base */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:
+    radial-gradient(1000px 600px at 80% -10%, #233064 0%, transparent 40%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--ink); font-family:Verdana,Segoe UI,Tahoma,sans-serif; line-height:1.6;
+}
+
+/* En-tête & titre */
+header{padding:26px 14px 8px;text-align:center}
+h1{
+  margin:0; font-size:clamp(22px,3.6vw,40px); font-weight:900;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+.small{font-size:12px;color:#cbd5ff}
+
+main{max-width:1220px;margin:10px auto 120px;padding:0 12px}
+
+/* Cartes (panneaux) */
+.card{
+  background:var(--glass); border:1px solid var(--outline); border-radius:16px;
+  padding:16px; margin:14px 0; box-shadow:0 18px 40px rgba(0,0,0,.35); backdrop-filter:blur(7px);
+}
+
+/* Titres de section */
+h2{margin:0 0 10px;font-size:clamp(18px,2.6vw,26px);color:var(--cyan)}
+h3{margin:8px 0;color:var(--gold)}
+
+/* Badges & éléments utilitaires */
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;background:#0e1630;border:1px solid var(--outline);font-size:12px;color:#cbd5ff}
+.score{font-weight:800}
+.caption{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* Grilles & lignes */
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(280px,1fr))}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+/* Champs formulaire */
+label{display:block;margin-bottom:4px;color:#9fc4ff}
+input[type=text],input[type=number],textarea{
+  width:100%;padding:10px;border-radius:10px;border:1px solid var(--outline);
+  background:#0c1224;color:#eaf0ff
+}
+
+/* Boutons */
+.btn{
+  appearance:none;border:1px solid var(--outline);background:#162453;color:#e8edff;
+  padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700;letter-spacing:.2px;transition:.18s
+}
+.btn.neon:hover{
+  box-shadow:0 0 0 3px rgba(103,232,249,.25), 0 0 18px rgba(103,232,249,.4);
+  transform:translateY(-1px)
+}
+.btn.small{font-size:12px;padding:6px 10px}
+
+/* Code & coloration simplifiée */
+pre,code{font-family:Consolas,ui-monospace,Menlo,monospace}
+pre.code, pre.code-correction{
+  background:#0c1224;border:1px solid var(--outline); border-radius:12px; padding:12px; overflow:auto
+}
+.kw{color:#7dd3fc;font-weight:700}
+.fn{color:#60a5fa}
+.num{color:#fda4af}
+.str{color:#fbbf24}
+.com{color:#86efac}
+
+/* Tableaux */
+.table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid var(--outline)}
+.table th{background:#0d2238;color:#8de4ff;text-align:left;padding:10px;border-bottom:1px solid var(--outline)}
+.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.table tr:nth-child(even){background:rgba(255,255,255,.03)}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch} /* ← évite tout débordement */
+
+/* Étiquettes & zones de dépôt (drag & drop) */
+.dropzone{
+  min-height:56px;padding:8px;border:1px dashed rgba(255,255,255,.35);
+  border-radius:12px;background:#0c1224
+}
+.bank{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;min-height:220px}
+.program{display:flex;flex-direction:column;gap:8px}
+.token{
+  display:inline-block;padding:6px 10px;border-radius:10px;background:#1a223e;
+  border:1px solid rgba(255,255,255,.25);cursor:grab;user-select:none;white-space:pre;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.token:hover{outline:1px solid var(--cyan)}
+.qnum{display:inline-block;min-width:28px;padding:2px 8px;border-radius:999px;background:#0b2842;color:#9ad3ff;font-weight:900;margin-right:6px}
+
+/* États visuels */
+.ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--orange)}
+.state-ok{border-color:rgba(52,211,153,.55)} 
+.state-bad{border-color:rgba(239,68,68,.55)}
+.glow-success{box-shadow:0 0 0 0 rgba(246,197,73,.75);animation:glow 1.5s ease-out}
+@keyframes glow{0%{box-shadow:0 0 0 12px rgba(246,197,73,.3)}100%{box-shadow:0 0 0 0 rgba(246,197,73,0)}}
+
+/* Bulle d’aide */
+.help-bubble{
+  position:fixed; right:18px; bottom:18px; max-width:360px; padding:14px 16px;
+  background:#0b2842; border:1px solid rgba(255,255,255,.22); border-radius:14px; z-index:99;
+  box-shadow:0 12px 30px rgba(0,0,0,.4); display:none
+}
+.help-bubble h4{margin:0 0 6px;color:#8de4ff}
+.help-bubble .close{float:right;cursor:pointer;color:#9ad3ff}
+
+/* LED (convertisseur fin de page) */
+.ledbox{width:100px;height:100px;border-radius:10px;border:1px solid #67e8f9;margin-top:10px;background:#000}
+
+/* Impression */
+@media print{
+  .no-print{display:none} body{background:#fff;color:#000} .card{box-shadow:none;border-color:#999}
+}
+</style>
+<!-- ===================== Fin CSS global ===================== -->
+
+</head>
+<!-- ===================== Fin SECTION 1 — HEAD + CSS ===================== -->
+
+
+
+<!-- =========================================================================
+🟦 SECTION 2 — CORPS DU DOCUMENT HTML
+But : tout le contenu visible (cartes, tableaux, exercices, etc.)
+Ici PAS de CSS ni de JS — seulement du HTML structurel.
+=========================================================================== -->
+<body>
+
+<!-- ========== En-tête de page ========== -->
+<header>
+  <h1>✨ TP mBot2 & Python — Séquence complète (Élève 3e)</h1>
+  <p class="small">Thème sombre • API colorée • Mémento Python • Aides contextuelles • Étiquettes à trous • Score /20</p>
+</header>
+
+<main>
+
+  <!-- ========== Identité + Chronomètre + Score ========== -->
+  <section class="card" id="identite">
+    <div class="grid">
+      <div><label>Nom</label><input id="nom" type="text" placeholder="Dupont"></div>
+      <div><label>Prénom</label><input id="prenom" type="text" placeholder="Camille"></div>
+      <div><label>Classe</label><input id="classe" type="text" placeholder="3e B"></div>
+    </div>
+    <div class="row">
+      <button id="startTimer" class="btn neon">⏱️ Démarrer le chronomètre</button>
+      <button id="stopTimer" class="btn">⏹️ Arrêter</button>
+      <span>Temps : <strong id="elapsed">00:00</strong></span>
+      <span class="score">Score brut : <span id="score">0</span> / <span id="total">0</span> • /20 : <span id="note20">0.0</span></span>
+    </div>
+  </section>
+
+  <!-- ========== Tableau API — mBot2 & CyberPi ========== -->
+  <section class="card" id="api">
+    <div class="caption">
+      <h2>📚 Tableau API — mBot2 & CyberPi</h2>
+      <button class="btn small" onclick="window.print()">🖨️ Imprimer seulement ce tableau</button>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr>
+          <th>Action</th><th>Commande Python</th><th>Paramètres</th><th>Exemple</th><th>Effet</th>
+        </tr></thead>
+        <tbody id="apiBody"><!-- rempli en JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== Apprentissages A1 → A6 (drag & drop) ========== 
+       IMPORTANT : Contrairement à la v3.17 (qui avait une version à champs <input>),
+       ici on ne garde QUE la version à étiquettes (banque/prog). -->
+  <section class="card" id="A1_6">
+    <h2>🧠 Apprentissages 1 à 6 — Étiquettes à glisser</h2>
+
+    <!-- Apprentissage 1 -->
+    <section class="card" id="m1">
+      <h3><span class="qnum">A1</span>Console
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd1',['m1t1','m1t2','m1t3','m1t4'],'fb-qd1')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Affiche « X » (sans saut) puis « Y » (saut), puis « Z ».</div>
+      <div class="grid">
+        <div>
+          <h4>Banque d’étiquettes</h4>
+          <div id="bank1" class="dropzone bank">
+            <span class="token" id="m1t1">import cyberpi</span>
+            <span class="token" id="m1t2">cyberpi.console.print("X")</span>
+            <span class="token" id="m1t3">cyberpi.console.println("Y")</span>
+            <span class="token" id="m1t4">cyberpi.console.println("Z")</span>
+          </div>
+        </div>
+        <div>
+          <h4>Programme à compléter</h4>
+          <div id="prog1" class="dropzone program"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="checkDnD('prog1',['m1t1','m1t2','m1t3','m1t4'],2,'qd1','fb-qd1')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd1">3</strong></span>
+      </div>
+      <div id="fb-qd1" class="small"></div>
+    </section>
+
+    <!-- Apprentissage 2 -->
+    <section class="card" id="m2">
+      <h3><span class="qnum">A2</span>LED : RGB & #hex
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd2',['m2t1','m2t2','m2t3','m2t4'],'fb-qd2')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Allumer rouge doux 1 s puis éteindre.</div>
+      <div class="grid">
+        <div>
+          <h4>Banque d’étiquettes</h4>
+          <div id="bank2" class="dropzone bank">
+            <span class="token" id="m2t1">import cyberpi, time</span>
+            <span class="token" id="m2t2">cyberpi.led.on(255,20,30,"all")</span>
+            <span class="token" id="m2t3">time.sleep(1)</span>
+            <span class="token" id="m2t4">cyberpi.led.off()</span>
+          </div>
+        </div>
+        <div>
+          <h4>Programme à compléter</h4>
+          <div id="prog2" class="dropzone program"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="checkDnD('prog2',['m2t1','m2t2','m2t3','m2t4'],2,'qd2','fb-qd2')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd2">3</strong></span>
+      </div>
+      <div id="fb-qd2" class="small"></div>
+    </section>
+
+    <!-- Apprentissage 3 -->
+    <section class="card" id="m3">
+      <h3><span class="qnum">A3</span>Manette
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd3',['m3t1','m3t2','m3t3','m3t4'],'fb-qd3')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Attendre la touche ↑, avancer 1 s à 40 %.</div>
+      <div class="grid">
+        <div>
+          <h4>Banque d’étiquettes</h4>
+          <div id="bank3" class="dropzone bank">
+            <span class="token" id="m3t1">import cyberpi, time</span>
+            <span class="token" id="m3t2">while not cyberpi.controller.is_press('up'):</span>
+            <span class="token" id="m3t3">    time.sleep(0.05)</span>
+            <span class="token" id="m3t4">cyberpi.mbot2.forward(speed=40, run_time=1)</span>
+          </div>
+        </div>
+        <div>
+          <h4>Programme à compléter</h4>
+          <div id="prog3" class="dropzone program"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="checkDnD('prog3',['m3t1','m3t2','m3t3','m3t4'],2,'qd3','fb-qd3')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd3">3</strong></span>
+      </div>
+      <div id="fb-qd3" class="small"></div>
+    </section>
+
+    <!-- Apprentissage 4 -->
+    <section class="card" id="m4">
+      <h3><span class="qnum">A4</span>Temporiser
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd4',['m4t1','m4t2','m4t3','m4t4'],'fb-qd4')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : « Action 1 » → pause 2 s → « Action 2 ».</div>
+      <div class="grid">
+        <div>
+          <h4>Banque d’étiquettes</h4>
+          <div id="bank4" class="dropzone bank">
+            <span class="token" id="m4t1">import time, cyberpi</span>
+            <span class="token" id="m4t2">cyberpi.console.println("Action 1")</span>
+            <span class="token" id="m4t3">time.sleep(2)</span>
+            <span class="token" id="m4t4">cyberpi.console.println("Action 2")</span>
+          </div>
+        </div>
+        <div>
+          <h4>Programme à compléter</h4>
+          <div id="prog4" class="dropzone program"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="checkDnD('prog4',['m4t1','m4t2','m4t3','m4t4'],2,'qd4','fb-qd4')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd4">3</strong></span>
+      </div>
+      <div id="fb-qd4" class="small"></div>
+    </section>
+
+    <!-- Apprentissage 5 -->
+    <section class="card" id="m5">
+      <h3><span class="qnum">A5</span>Moteurs
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd5',['m5t1','m5t2','m5t3'],'fb-qd5')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Reculer 0,5 s, puis arrêt immédiat.</div>
+      <div class="grid">
+        <div>
+          <h4>Banque d’étiquettes</h4>
+          <div id="bank5" class="dropzone bank">
+            <span class="token" id="m5t1">import cyberpi as cpi</span>
+            <span class="token" id="m5t2">cpi.mbot2.backward(speed=30, run_time=0.5)</span>
+            <span class="token" id="m5t3">cpi.mbot2.EM_stop(port="all")</span>
+          </div>
+        </div>
+        <div>
+          <h4>Programme à compléter</h4>
+          <div id="prog5" class="dropzone program"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="checkDnD('prog5',['m5t1','m5t2','m5t3'],2,'qd5','fb-qd5')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd5">3</strong></span>
+      </div>
+      <div id="fb-qd5" class="small"></div>
+    </section>
+
+    <!-- Apprentissage 6 -->
+    <section class="card" id="m6">
+      <h3><span class="qnum">A6</span>Rotation
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd6',['m6t1','m6t2'],'fb-qd6')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Tourner à gauche 90°.</div>
+      <div class="grid">
+        <div>
+          <h4>Banque d’étiquettes</h4>
+          <div id="bank6" class="dropzone bank">
+            <span class="token" id="m6t1">import cyberpi as cpi</span>
+            <span class="token" id="m6t2">cpi.mbot2.turn(-90, speed=50)</span>
+          </div>
+        </div>
+        <div>
+          <h4>Programme à compléter</h4>
+          <div id="prog6" class="dropzone program"></div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" onclick="checkDnD('prog6',['m6t1','m6t2'],2,'qd6','fb-qd6')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd6">3</strong></span>
+      </div>
+      <div id="fb-qd6" class="small"></div>
+    </section>
+  </section>
+  <!-- ========== Fin Apprentissages 1–6 ========== -->
+
+  <!-- ========== Apprentissage 7 — Éviteur d’obstacles expressif ========== -->
+  <section class="card" id="A7">
+    <h2>🤖 Apprentissage 7 — Éviteur d’obstacles expressif</h2>
+    <div class="badge">Essais autorisés : <b id="triesA7view">1</b> • Barème : <b>+4 pts</b></div>
+    <p class="small">Glisse les 10 étiquettes dans le programme. Après 1 minute, une bulle d’aide peut s’afficher. Puis, teste dans mBlock 5.6.</p>
+    <div class="grid">
+      <div>
+        <h3>Banque d’étiquettes</h3>
+        <div id="bankA7" class="dropzone bank"><!-- rempli en JS --></div>
+      </div>
+      <div>
+        <h3>Programme à compléter</h3>
+        <div id="progA7" class="dropzone program"><!-- trous générés en JS --></div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn neon" onclick="checkA7()">Vérifier</button>
+      <button class="btn small" onclick="revealA7()">Terminer → Correction</button>
+      <span>Essais restants : <strong id="triesA7">1</strong></span>
+    </div>
+    <div id="fb-A7" class="small"></div>
+    <div class="card" style="background:#153055;border:1px solid var(--outline);margin-top:10px">
+      <h3>💻 Teste ton programme sur ton robot !</h3>
+      <p>Ouvre <b>mBlock 5.6</b>, colle ton code Python et téléverse-le sur ton <b>mBot2</b>.</p>
+      <a class="btn" style="background:#8de4ff;color:#0b1220" href="https://ide.mblock.cc" target="_blank" rel="noopener">📥 Ouvrir mBlock</a>
+    </div>
+  </section>
+
+  <!-- ========== Mémento Python ========== -->
+  <section class="card" id="memo">
+    <h2>📘 Mémento Python (utile pour les QCM)</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Catégorie</th><th>Syntaxe</th><th>Exemple</th><th>Utilité</th></tr></thead>
+        <tbody id="memoBody"><!-- rempli en JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== 20 Questions à trous (boucles) ========== -->
+  <section class="card" id="trous">
+    <h2>🧩 20 questions à trous — Boucles</h2>
+    <div class="badge">1 pt chacune • Essais dégressifs (3→2→1)</div>
+    <div class="card" style="background:#0e1630">
+      <h3>📘 Consignes</h3>
+      <ul class="small">
+        <li>Tape le <b>code Python exact</b> attendu (minuscules/majuscules comptent).</li>
+        <li>Utilise le <b>bouton d’aide</b> si tu bloques : un indice partiel s’affiche.</li>
+        <li>La correction apparaît après tes essais.</li>
+      </ul>
+      <button class="btn neon" onclick="showGlobalHint()">💡 Aide globale</button>
+    </div>
+    <div id="blanks"><!-- rempli en JS --></div>
+    <div class="row"><button class="btn" onclick="checkAllBlanks()">Vérifier toutes</button></div>
+  </section>
+
+  <!-- ========== Exercices complémentaires ========== -->
+  <section class="card" id="complements">
+    <h2>🎯 Exercices complémentaires</h2>
+    <div class="grid">
+      <div class="card" style="background:#0f1733">
+        <h3>Associer une fonction à sa description</h3>
+        <div class="small">Exemples : <code>cyberpi.led.on</code>, <code>time.sleep</code>, <code>cyberpi.mbot2.turn</code>, <code>cyberpi.controller.is_press</code>.</div>
+        <p class="small">Activité libre : crée un tableau à deux colonnes et fais relier par traits (ou sur feuille).</p>
+      </div>
+      <div class="card" style="background:#0f1733">
+        <h3>Vrai / Faux — 5 affirmations</h3>
+        <ul class="small">
+          <li><code>println</code> ajoute un retour à la ligne. (Vrai)</li>
+          <li><code>time.sleep(0.05)</code> fait une pause de 5 s. (Faux)</li>
+          <li><code>cyberpi.mbot2.EM_stop()</code> arrête les moteurs immédiatement. (Vrai)</li>
+          <li>Une couleur #hex comporte 6 chiffres/lettres après <code>#</code>. (Vrai)</li>
+          <li><code>cyberpi.ultrasonic2.get()</code> renvoie toujours une valeur > 0. (Faux)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Convertisseur #hex ⇄ RGB (fin) ========== -->
+  <section class="card" id="convertisseur">
+    <h2>🌈 Convertisseur #hex ⇄ RGB</h2>
+    <p>Entre une couleur au format hexadécimal ou ses composantes RGB (0 à 255) pour tester la couleur de la LED :</p>
+    <div class="row">
+      <div>
+        <label>Code #HEX :</label>
+        <input id="hexInput" type="text" maxlength="7" placeholder="#00FFFF">
+      </div>
+      <div>
+        <label>Rouge :</label><input id="rInput" type="number" min="0" max="255" value="0">
+        <label>Vert :</label><input id="gInput" type="number" min="0" max="255" value="255">
+        <label>Bleu :</label><input id="bInput" type="number" min="0" max="255" value="255">
+      </div>
+      <button class="btn neon" onclick="updateColor()">💡 Tester la couleur</button>
+    </div>
+    <div id="ledPreview" class="ledbox"></div>
+  </section>
+
+  <!-- ========== Export / Impression ========== -->
+  <section class="card no-print">
+    <div class="row">
+      <button class="btn" onclick="exportResults()">📄 Exporter mes réponses (JSON)</button>
+      <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+      <span class="badge">PDF : <b>Ctrl+P</b> → Microsoft Print to PDF</span>
+    </div>
+  </section>
+
+  <!-- ========== Bulle d’aide ========== -->
+  <div id="help" class="help-bubble">
+    <span class="close" onclick="hideHelp()">✖</span>
+    <h4>💡 Indice</h4>
+    <div id="helpText" class="small"></div>
+  </div>
+
+</main>
+<!-- ===================== Fin SECTION 2 — CORPS DU DOCUMENT HTML ===================== -->
+
+
+
+<!-- =========================================================================
+🟨 SECTION 3 — SCRIPT JAVASCRIPT
+But : logique interactive (sons, chrono, DnD, barème, vérifications…)
+Début JS : <script> … Fin JS : </script>
+=========================================================================== -->
+<script>
+/* ============================================================
+   🔊 AudioFX (sons succès/erreur/chime)
+   - ensure(): crée un contexte audio au premier son
+   - ok(), fail(), chime(): effets utilisés dans les feedbacks
+============================================================ */
+const AudioFX = (()=>{ let ctx;
+  function ensure(){ if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)(); }
+  function tone(freq=880, dur=0.12, type='sine', gain=0.06){
+    ensure();
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type; o.frequency.value=freq; g.gain.value=gain;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    setTimeout(()=>{o.stop();}, dur*1000);
+  }
+  return {
+    ok(){ tone(1046,0.10,'triangle',0.07); setTimeout(()=>tone(1318,0.12,'triangle',0.07),90); },
+    fail(){ tone(220,0.18,'sawtooth',0.05); },
+    chime(){ tone(988,0.14,'sine',0.08); setTimeout(()=>tone(1480,0.18,'sine',0.08),120); setTimeout(()=>tone(1760,0.22,'sine',0.07),260); }
+  };
+})();
+
+/* ============================================================
+   ⏱️ Chronomètre + Note
+   - start/stop : met à jour #elapsed toutes les 200 ms
+   - upd() : met à jour score / total et note /20
+============================================================ */
+let startTime=null,timerHandle=null;
+function fmt(ms){const s=Math.floor(ms/1000);const m=String(Math.floor(s/60)).padStart(2,'0');const ss=String(s%60).padStart(2,'0');return m+':'+ss;}
+document.getElementById('startTimer').addEventListener('click',()=>{
+  if(!startTime){startTime=performance.now();timerHandle=setInterval(()=>{document.getElementById('elapsed').textContent=fmt(performance.now()-startTime);},200);}
+  shuffleAllBanks();  // Mélange initial de toutes les banques d'étiquettes
+  armHelpTimer();     // Lance le timer pour la bulle d’aide
+});
+document.getElementById('stopTimer').addEventListener('click',()=>{if(timerHandle){clearInterval(timerHandle);timerHandle=null;}});
+
+let POINTS={},TOTAL=0,score=0,tries={};
+function addItem(key,pts,tr){if(!(key in POINTS)){POINTS[key]=pts;TOTAL+=pts;tries[key]=tr;upd();}}
+function addScore(key){if(POINTS[key]&&tries[key]===0){return;} if(POINTS[key]){score+=POINTS[key];tries[key]=0;upd();AudioFX.chime();}}
+function decTry(key){if(tries[key]>0){tries[key]-=1;}return tries[key];}
+function upd(){document.getElementById('score').textContent=score;document.getElementById('total').textContent=TOTAL;document.getElementById('note20').textContent=((score/TOTAL)*20).toFixed(1);}
+
+/* ============================================================
+   📚 Tableau API — données + remplissage
+============================================================ */
+const API_DATA=[
+['🖥️ Console (sans saut)','cyberpi.console.print(x)','x: texte/nombre','cyberpi.console.print("Hello")','Affiche sur la même ligne'],
+['🖨️ Console (avec saut)','cyberpi.console.println(x)','x: texte/nombre','cyberpi.console.println(3)','Affiche puis va à la ligne'],
+['⏸️ Attente','time.sleep(s)','s: secondes (float)','time.sleep(0.2)','Met en pause le programme'],
+['🚦 LED allumer','cyberpi.led.on(R,G,B,"all")','0–255','cyberpi.led.on(255,20,30,"all")','Couleur RGB'],
+['🎮 Manette (touche)','cyberpi.controller.is_press("a")','"a","b","up","down","left","right"','if cyberpi.controller.is_press("up"):','Détecte une touche'],
+['🛞 Avancer','cyberpi.mbot2.forward(speed=V)','0–100 %','cyberpi.mbot2.forward(speed=50)','Fait avancer le robot'],
+['🔄 Tourner','cyberpi.mbot2.turn(angle, speed=V)','angle° ; V%','cyberpi.mbot2.turn(90, speed=50)','Tourne sur place'],
+['📡 Distance (cm)','cyberpi.ultrasonic2.get(index=1)','—','d=cyberpi.ultrasonic2.get(index=1)','Retourne la distance'],
+['🛑 Arrêt immédiat','cyberpi.mbot2.EM_stop(port="all")','—','cyberpi.mbot2.EM_stop(port="all")','Stop d’urgence'],
+['🔊 Son','cyberpi.audio.play("hello")','nom du son','cyberpi.audio.play("laugh")','Joue un effet sonore']
+];
+function buildAPI(){ const body=document.getElementById('apiBody'); API_DATA.forEach(r=>{const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); body.appendChild(tr);});}
+
+/* ============================================================
+   🧠 Drag & Drop utilitaires
+   - enableDnDFor(bankId, progId) : autorise le drop entre 2 zones
+   - shuffleChildren(el) : mélange des étiquettes dans une banque
+   - shuffleAllBanks() : mélange bank1→bank6 + bankA7
+============================================================ */
+function enableDnDFor(idBank,idProg){
+  const bank=document.getElementById(idBank),prog=document.getElementById(idProg);
+  [bank,prog].forEach(dz=>{
+    dz.addEventListener('dragover',e=>e.preventDefault());
+    dz.addEventListener('drop',e=>{
+      e.preventDefault();
+      const id=e.dataTransfer.getData('text/plain');
+      const el=document.getElementById(id);
+      if(el) dz.appendChild(el);
+    });
+  });
+}
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
+function shuffleAllBanks(){
+  ['bank1','bank2','bank3','bank4','bank5','bank6','bankA7'].forEach(id=>{
+    const el=document.getElementById(id); if(el) shuffleChildren(el);
+  });
+}
+
+/* ============================================================
+   ✔️ Vérif. DnD générique A1→A6
+   - checkDnD(progId, expectedIds, pts, key, fbId)
+   - revealIfDone(key, expectedIds, fbId) : montre correction si essais=0
+============================================================ */
+function getProgTokenIds(progId){
+  const ids=[]; document.querySelectorAll('#'+progId+' .token').forEach(t=>ids.push(t.id));
+  return ids;
+}
+function showCorrectionList(expectedIds){
+  return '<pre class="code-correction">'+expectedIds.map(id=>{
+    const el=document.getElementById(id); return (el?el.textContent:id);
+  }).join('\n')+'</pre>';
+}
+function checkDnD(progId, expectedIds, pts, key, fbId){
+  const fb=document.getElementById(fbId);
+  const ids=getProgTokenIds(progId);
+  if(ids.length!==expectedIds.length){ fb.innerHTML='<span class="warn">Il manque des étiquettes.</span>'; AudioFX.fail(); return; }
+  const ok=ids.every((x,i)=>x===expectedIds[i]);
+  if(ok){ fb.innerHTML='<span class="ok">✔ +'+pts+' pts</span>'; addScore(key); document.getElementById(progId).classList.add('state-ok','glow-success'); setTimeout(()=>document.getElementById(progId).classList.remove('glow-success'),1200); AudioFX.ok(); }
+  else{
+    const t=decTry(key);
+    if(t===0){ fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span>'+showCorrectionList(expectedIds); }
+    else{ fb.innerHTML='<span class="bad">✖ Ordre incorrect. Essais restants : '+t+'</span>'; AudioFX.fail(); }
+    document.getElementById('tries-'+key).textContent=tries[key];
+    document.getElementById(progId).classList.add('state-bad');
+  }
+}
+function revealIfDone(key, expectedIds, fbId){
+  const fb=document.getElementById(fbId);
+  if((tries[key]||0)>0){ fb.innerHTML='<span class="bad">La correction apparaît après tes essais.</span>'; return; }
+  fb.innerHTML='<h4>Correction :</h4>'+showCorrectionList(expectedIds);
+}
+
+/* ============================================================
+   🤖 Apprentissage 7 — Données & construction
+============================================================ */
+const A7_ORDER=['a7t1','a7t2','a7t3','a7t4','a7t5','a7t6','a7t7','a7t8','a7t9','a7t10'];
+const A7_TOKENS=[
+  {id:'a7t1', text:'import cyberpi, time'},
+  {id:'a7t2', text:'SEUIL = 15'},
+  {id:'a7t3', text:'PORT = 1'},
+  {id:'a7t4', text:'VITESSE = 50'},
+  {id:'a7t5', text:'d = cyberpi.ultrasonic2.get(index=PORT)'},
+  {id:'a7t6', text:'if d is None or d == 0:'},
+  {id:'a7t7', text:'    cyberpi.audio.play("buzzing")'},
+  {id:'a7t8', text:'elif d < SEUIL:'},
+  {id:'a7t9', text:'    cyberpi.audio.play("laugh")'},
+  {id:'a7t10',text:'    cyberpi.mbot2.turn(135, speed=VITESSE)'}
+];
+function buildA7(){
+  const bank=document.getElementById('bankA7'); const prog=document.getElementById('progA7');
+  // Banque (gauche)
+  A7_TOKENS.forEach(t=>{
+    const s=document.createElement('span'); s.className='token'; s.id=t.id; s.textContent=t.text;
+    s.setAttribute('draggable','true');
+    s.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',t.id));
+    bank.appendChild(s);
+  });
+  // Trous (droite)
+  const holes=[
+    '# 1. importations',
+    'SEUIL = [ __ ]         # 2. seuil de détection (cm)',
+    'PORT = [ __ ]          # 3. port du capteur',
+    'VITESSE = [ __ ]       # 4. vitesse (%)',
+    'while True:\n    [ __ ]             # 5. lecture distance',
+    '    if d is None or d == 0:\n        cyberpi.led.on(255,0,0,"all")\n        cyberpi.mbot2.EM_stop(port="all")\n        [ __ ]         # 6. son si pas de mesure',
+    '    [ __ ]             # 7. condition obstacle',
+    '        cyberpi.led.on(255,165,0,"all")\n        cyberpi.mbot2.EM_stop(port="all")\n        [ __ ]         # 8. son de rire',
+    '        cyberpi.mbot2.backward(speed=VITESSE, run_time=0.4)\n        [ __ ]         # 9. rotation',
+    '    else:\n        cyberpi.led.on(0,255,0,"all")\n        cyberpi.audio.play("hello")\n        cyberpi.mbot2.forward(speed=VITESSE)\n    time.sleep(0.1)'
+  ];
+  for(let i=0;i<10;i++){
+    const dz=document.createElement('div'); dz.className='dropzone'; 
+    const lab=document.createElement('div'); lab.className='small'; lab.innerHTML='<span class="qnum">'+(i+1)+'</span>'+holes[i]; 
+    dz.appendChild(lab); prog.appendChild(dz);
+  }
+  enableDnDFor('bankA7','progA7');
+  // Barème A7 : 4 pts, 1 essai
+  addItem('A7',4,1);
+  document.getElementById('triesA7').textContent=tries['A7'];
+  document.getElementById('triesA7view').textContent=tries['A7'];
+}
+function getA7ProgIds(){
+  const ids=[]; document.querySelectorAll('#progA7 .dropzone').forEach(dz=>{
+    const tk=[...dz.querySelectorAll('.token')].pop(); ids.push(tk?tk.id:null);
+  }); return ids;
+}
+function showA7Correction(){
+  const code = `<span class="kw">import</span> cyberpi, time <span class="com"># Import</span>
+SEUIL <span class="kw">=</span> <span class="num">15</span>
+PORT <span class="kw">=</span> <span class="num">1</span>
+VITESSE <span class="kw">=</span> <span class="num">50</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    d <span class="kw">=</span> cyberpi.ultrasonic2.get(index<span class="kw">=</span>PORT)
+    <span class="kw">if</span> d <span class="kw">is</span> <span class="kw">None</span> <span class="kw">or</span> d <span class="kw">==</span> <span class="num">0</span>:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"buzzing"</span>)
+    <span class="kw">elif</span> d <span class="kw">&lt;</span> SEUIL:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">165</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"laugh"</span>)
+        cyberpi.mbot2.backward(speed<span class="kw">=</span>VITESSE, run_time<span class="kw">=</span><span class="num">0.4</span>)
+        cyberpi.mbot2.turn(<span class="num">135</span>, speed<span class="kw">=</span>VITESSE)
+    <span class="kw">else</span>:
+        cyberpi.led.on(<span class="num">0</span>,<span class="num">255</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"hello"</span>)
+        cyberpi.mbot2.forward(speed<span class="kw">=</span>VITESSE)
+    time.sleep(<span class="num">0.1</span>)`;
+  document.getElementById('fb-A7').innerHTML='<h3>🟦 Correction commentée</h3><pre class="code-correction">'+code+'</pre>';
+}
+function checkA7(){
+  const ids=getA7ProgIds();
+  if(ids.some(x=>x===null)){document.getElementById('fb-A7').innerHTML='<span class="warn">Il te manque des étiquettes dans la partie droite.</span>'; AudioFX.fail(); return;}
+  const ok=ids.every((x,i)=>x===A7_ORDER[i]);
+  if(ok){ document.getElementById('fb-A7').innerHTML='<span class="ok">✔ +4 pts. 🎉</span>'; addScore('A7'); document.getElementById('A7').classList.add('state-ok','glow-success'); setTimeout(()=>document.getElementById('A7').classList.remove('glow-success'),1500); AudioFX.ok(); }
+  else{ const t=decTry('A7'); if(t===0){ document.getElementById('fb-A7').innerHTML='<span class="bad">✖ Essai utilisé. Correction :</span>'; showA7Correction(); } else { document.getElementById('fb-A7').innerHTML='<span class="bad">✖ Ordre incorrect. Il te reste '+t+' essai.</span>'; AudioFX.fail(); } document.getElementById('triesA7').textContent=tries['A7']; }
+}
+function revealA7(){ if((tries['A7']||0)>0){document.getElementById('fb-A7').innerHTML='<span class="bad">La correction apparaît après ton essai.</span>'; return;} showA7Correction(); }
+
+/* ============================================================
+   💬 Bulle d’aide (après 60 s)
+============================================================ */
+let helpTimer=null;
+function armHelpTimer(){ clearTimeout(helpTimer); helpTimer=setTimeout(()=>{showHelpRandom();},60000); }
+function showHelpRandom(){
+  const lines=A7_TOKENS.map(t=>t.text);
+  const pick=lines[Math.floor(Math.random()*lines.length)];
+  document.getElementById('helpText').innerHTML='Essaie d’utiliser : <code>'+pick.replace(/</g,'&lt;')+'</code>';
+  document.getElementById('help').style.display='block';
+  setTimeout(hideHelp,10000);
+}
+function hideHelp(){document.getElementById('help').style.display='none';}
+
+/* ============================================================
+   📘 Mémento Python — données & génération
+============================================================ */
+const MEMO=[
+['Boucle for','for i in range(n):','for i in range(3):','Répète n fois'],
+['Boucle while','while condition:','while True:','Répète tant que vrai'],
+['Condition','if … elif … else:','if d < 10:','Choix logique'],
+['Pause','time.sleep(s)','time.sleep(1)','Attente (s)'],
+['Affichage','print(x)','print("OK")','Console'],
+['Ultrason','cyberpi.ultrasonic2.get(index=1)','d=cyberpi.ultrasonic2.get(index=1)','Distance (cm)'],
+['LED','cyberpi.led.on(R,G,B,"all")','cyberpi.led.on(255,20,30,"all")','Couleur'],
+['Son','cyberpi.audio.play("nom")','cyberpi.audio.play("hello")','Effet sonore'],
+];
+function buildMemo(){ const b=document.getElementById('memoBody'); MEMO.forEach(r=>{const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); b.appendChild(tr);});}
+
+/* ============================================================
+   🧩 20 questions à trous — données & logique
+   - Essais dégressifs : q1-3 → 3 essais ; q4-6 → 2 ; reste → 1
+============================================================ */
+const blanksData=[
+{id:'b1',q:'Boucle infinie : entête',a:['while true:']},
+{id:'b2',q:'Pause 50 ms',a:['time.sleep(0.05)','sleep(0.05)']},
+{id:'b3',q:'Boucler 5 fois : entête',a:['for i in range(5):','for i in range(0,5):']},
+{id:'b4',q:'Sortir de la boucle',a:['break']},
+{id:'b5',q:'Passer à l’itération suivante',a:['continue']},
+{id:'b6',q:'Compter 0→9 : entête',a:['for i in range(10):']},
+{id:'b7',q:'Compter 1→5 inclus',a:['for i in range(1,6):']},
+{id:'b8',q:'While tant que d ≥ 15',a:['while d >= 15:']},
+{id:'b9',q:'Jusqu’à appui sur A',a:["while not cyberpi.controller.is_press('a'):"]},
+{id:'b10',q:'Afficher i',a:['print(i)','cyberpi.console.println(i)','cyberpi.console.print(i)']},
+{id:'b11',q:'Somme : init',a:['s = 0']},
+{id:'b12',q:'Somme : ajouter i',a:['s = s + i','s+=i']},
+{id:'b13',q:'Boucler sur [2,4,6]',a:['for x in [2,4,6]:']},
+{id:'b14',q:'Boucler sur "ABC"',a:['for c in "ABC":']},
+{id:'b15',q:'Tant que distance inconnue',a:['while d is None:']},
+{id:'b16',q:"Tant qu’aucune touche A/B",a:["while not (cyberpi.controller.is_press('a') or cyberpi.controller.is_press('b')):"]},
+{id:'b17',q:'Compte à rebours 3,2,1',a:['for i in [3,2,1]:']},
+{id:'b18',q:'range 0→8 pas 2',a:['for i in range(0,9,2):','for i in range(0,10,2):']},
+{id:'b19',q:'Index & valeur sur l',a:['for i, v in enumerate(l):']},
+{id:'b20',q:'Répéter 3 fois "Go"',a:['for _ in range(3):']}
+];
+const blanksRoot=document.getElementById('blanks');
+function buildBlanks(){
+  blanksData.forEach((it,idx)=>{
+    const d=document.createElement('div'); d.className='card'; d.style.background='rgba(20,28,56,.55)';
+    const initTries=(idx<3?3:(idx<6?2:1)); const pts=1;
+    d.innerHTML=`<div class="small"><span class="qnum">${idx+1}</span>${it.q}</div>
+    <input type="text" id="${it.id}" placeholder="ta réponse ici">
+    <div class="row">
+      <button class="btn small neon" onclick="checkBlank('${it.id}',${idx})">Vérifier</button>
+      <button class="btn small" onclick="revealBlank('${it.id}',${idx})">Terminer → correction</button>
+      <button class="btn small" onclick="hintBlank(${idx})">💡 Aide</button>
+      <span>Essais : <strong id="tries-${it.id}">${initTries}</strong></span>
+    </div>
+    <div id="fb-${it.id}" class="answer small"></div>`;
+    blanksRoot.appendChild(d);
+    addItem(it.id,pts,initTries);
+  });
+}
+function norm2(s){return(s||'').toLowerCase().replace(/\s+/g,' ').trim();}
+function checkBlank(id,idx){
+  const fb=document.getElementById('fb-'+id),inp=document.getElementById(id);
+  const good=blanksData[idx].a.map(norm2),val=norm2(inp.value);
+  if(good.includes(val)){fb.innerHTML='<span class="ok">✔ +1 pt</span>';addScore(id);AudioFX.ok();}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span><div class="small"><code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';} else {fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';AudioFX.fail();}} document.getElementById('tries-'+id).textContent=tries[id];
+}
+function revealBlank(id,idx){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponses acceptées : <code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes essais : '+tries[id]+'</span>';}
+}
+function checkAllBlanks(){blanksData.forEach((it,i)=>{checkBlank(it.id,i); document.getElementById('tries-'+it.id).textContent=tries[it.id];});}
+function hintBlank(idx){const arr=blanksData[idx].a; const hint=arr[0].slice(0, Math.max(3, Math.ceil(arr[0].length*0.5)))+'…'; alert('Indice : '+hint);}
+function showGlobalHint(){const pick=blanksData[Math.floor(Math.random()*blanksData.length)].a[0]; document.getElementById('helpText').innerHTML='Essaie avec : <code>'+pick.replace(/</g,'&lt;')+'</code>'; document.getElementById('help').style.display='block'; setTimeout(hideHelp,9000);}
+
+/* ============================================================
+   🎨 Convertisseur HEX/RGB
+============================================================ */
+function hexToRgb(hex){ const m=hex.trim(); if(!/^#?[0-9a-fA-F]{6}$/.test(m)) return null; const n=parseInt(m.replace('#',''),16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function rgbToHex(r,g,b){ function h(x){x=Math.min(255,Math.max(0,parseInt(x||0,10)));return x.toString(16).padStart(2,'0');} return '#'+h(r)+h(g)+h(b); }
+function updateColor(){
+  const hex=document.getElementById('hexInput').value.trim();
+  const r=+document.getElementById('rInput').value;
+  const g=+document.getElementById('gInput').value;
+  const b=+document.getElementById('bInput').value;
+  const led=document.getElementById('ledPreview');
+  if(hex && /^#?[0-9a-fA-F]{6}$/.test(hex)){
+    const [rr,gg,bb]=hexToRgb(hex);
+    document.getElementById('rInput').value=rr;
+    document.getElementById('gInput').value=gg;
+    document.getElementById('bInput').value=bb;
+    led.style.background=rgbToHex(rr,gg,bb);
+  } else {
+    const h=rgbToHex(r,g,b).toUpperCase();
+    document.getElementById('hexInput').value=h;
+    led.style.background=h;
+  }
+}
+
+/* ============================================================
+   📦 Export JSON (nom, prénom, classe, temps, score, etc.)
+============================================================ */
+function exportResults(){
+  const data={
+    nom:document.getElementById('nom').value||'',
+    prenom:document.getElementById('prenom').value||'',
+    classe:document.getElementById('classe').value||'',
+    temps:document.getElementById('elapsed').textContent,
+    score:score,total:TOTAL,note20:((score/TOTAL)*20).toFixed(1),
+    tries:tries
+  };
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='tp-mbot2-python-v3_18_resultats.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ============================================================
+   🚀 Initialisation DOM — ordre de construction
+   - buildAPI()
+   - buildA7()
+   - buildMemo()
+   - buildBlanks()
+   - activer DnD pour A1→A6
+   - barèmes A1→A6
+   - mise à jour note/score
+============================================================ */
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildAPI();
+  buildA7();
+  buildMemo();
+  buildBlanks();
+  // Active le DnD pour A1→A6
+  ['1','2','3','4','5','6'].forEach(i=>{ enableDnDFor('bank'+i,'prog'+i); });
+  // Initialise barèmes/essais : 2 pts chacun, 3 essais
+  addItem('qd1',2,3); addItem('qd2',2,3); addItem('qd3',2,3);
+  addItem('qd4',2,3); addItem('qd5',2,3); addItem('qd6',2,3);
+  // Mélange initial de toutes les banques
+  shuffleAllBanks();
+  // Met à jour l’affichage de la note
+  upd();
+});
+</script>
+<!-- ===================== Fin SECTION 3 — SCRIPT JAVASCRIPT ===================== -->
+
+</body>
+</html>
