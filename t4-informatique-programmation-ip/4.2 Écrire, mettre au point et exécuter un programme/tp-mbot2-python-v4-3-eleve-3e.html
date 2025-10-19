@@ -355,8 +355,7 @@ pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline)
       <button class="btn neon" onclick="updateColor()">💡 Tester la couleur</button>
     </div>
     <div id="ledPreview" class="ledbox"></div>
-  </section>
-  
+
   
   <!-- EXERCICES COMPLÉMENTAIRES (12 cartes) -->
     
@@ -811,24 +810,40 @@ addItem('q9',4);
   
   
 /* ========= Convertisseur ========= */
-function hexToRgb(hex){ const m=hex.trim(); if(!/^#?[0-9a-fA-F]{6}$/.test(m)) return null; const n=parseInt(m.replace('#',''),16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function hexToRgb(hex){
+  let m = hex.trim();
+  if(m[0]!=='#') m = '#'+m; // ✅ ajoute le dièse si manquant
+  if(!/^#?[0-9a-fA-F]{6}$/.test(m)) return null;
+  const n = parseInt(m.replace('#',''),16);
+  return [(n>>16)&255,(n>>8)&255,n&255];
+}
+
+  
+  
 function rgbToHex(r,g,b){ function h(x){x=Math.min(255,Math.max(0,parseInt(x||0,10)));return x.toString(16).padStart(2,'0');} return '#'+h(r)+h(g)+h(b); }
+  
 function updateColor(){
-  const hex=document.getElementById('hexInput').value.trim();
-  const r=+document.getElementById('rInput').value;
-  const g=+document.getElementById('gInput').value;
-  const b=+document.getElementById('bInput').value;
-  const led=document.getElementById('ledPreview');
-  if(hex && /^#?[0-9a-fA-F]{6}$/.test(hex)){
-    const [rr,gg,bb]=hexToRgb(hex);
-    document.getElementById('rInput').value=rr;
-    document.getElementById('gInput').value=gg;
-    document.getElementById('bInput').value=bb;
-    led.style.background=rgbToHex(rr,gg,bb);
+  const hexField = document.getElementById('hexInput');
+  const rField = document.getElementById('rInput');
+  const gField = document.getElementById('gInput');
+  const bField = document.getElementById('bInput');
+  const led = document.getElementById('ledPreview');
+
+  const hex = hexField.value.trim();
+  const r = parseInt(rField.value || 0);
+  const g = parseInt(gField.value || 0);
+  const b = parseInt(bField.value || 0);
+
+  if (/^#?[0-9a-fA-F]{6}$/.test(hex)) {
+    // ✅ si saisie d’un code HEX correct → MAJ des RGB
+    const [rr, gg, bb] = hexToRgb(hex);
+    rField.value = rr; gField.value = gg; bField.value = bb;
+    led.style.background = rgbToHex(rr, gg, bb);
   } else {
-    const h=rgbToHex(r,g,b).toUpperCase();
-    document.getElementById('hexInput').value=h;
-    led.style.background=h;
+    // ✅ sinon, MAJ du champ HEX à partir des valeurs RGB
+    const newHex = rgbToHex(r, g, b).toUpperCase();
+    hexField.value = newHex;
+    led.style.background = newHex;
   }
 }
 
@@ -853,6 +868,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
   shuffleAllBanks();
   // Note
   upd();
+  updateColor(); // ✅ prévisualisation initiale au chargement
 });
 </script>
 <!-- ===================== Fin SECTION 3 — SCRIPT JAVASCRIPT ===================== -->
