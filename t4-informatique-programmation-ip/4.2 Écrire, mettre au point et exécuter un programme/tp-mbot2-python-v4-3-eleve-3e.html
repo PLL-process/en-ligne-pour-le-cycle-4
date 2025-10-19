@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP mBot2 & Python — v4.3 (Élève 3e)</title>
+
+<!-- =========================================================
+     ===============       CSS GLOBAL (début)      ============
+     - Thème sombre "glass", typographie lisible
+     - Grilles, cartes, boutons, table, tokens, zones DnD
+     - Barre de progression du score
+     ========================================================= -->
+<style>
+:root{
+  --bg1:#0a0f22;  --bg2:#0b1026; --glass:rgba(18, 24, 48, .62);
+  --ink:#e9f1ff; --muted:#b4c1ea; --outline:rgba(255,255,255,.14);
+  --cyan:#67e8f9; --violet:#a78bfa; --gold:#f6c549;
+  --green:#34d399; --red:#ef4444; --orange:#f59e0b;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background:
+    radial-gradient(1000px 600px at 80% -10%, #223061 0%, transparent 40%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--ink); line-height:1.6;
+  font-family: Inter, Segoe UI, Roboto, system-ui, -apple-system, Arial, sans-serif;
+}
+
+/* ----------- Titres & Conteneurs ----------- */
+header{padding:30px 14px 6px;text-align:center}
+h1{
+  margin:0; font-size:clamp(22px,3.6vw,40px); font-weight:900;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+main{max-width:1220px;margin:14px auto 120px;padding:0 12px}
+.card{
+  background:var(--glass); border:1px solid var(--outline); border-radius:16px;
+  padding:16px; margin:14px 0; box-shadow:0 18px 40px rgba(0,0,0,.35);
+  backdrop-filter:blur(7px);
+}
+h2{margin:0 0 10px;font-size:clamp(18px,2.6vw,26px);color:var(--cyan)}
+h3{margin:10px 0;color:var(--gold)}
+.small{font-size:12px;color:#cdd6ff}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#0e1630;border:1px solid var(--outline);font-size:12px;color:#cbd5ff}
+
+/* ----------- Dispositions ----------- */
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(280px,1fr))}
+.list{display:flex;flex-direction:column;gap:12px}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+/* ----------- Formulaires & Boutons ----------- */
+label{display:block;margin-bottom:4px;color:#9cc6ff}
+input[type=text],input[type=number],textarea{
+  width:100%;padding:10px;border-radius:10px;border:1px solid var(--outline);
+  background:#0c1224;color:#eaf0ff
+}
+.btn{appearance:none;border:1px solid var(--outline);background:#162453;color:#e8edff;
+  padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700;letter-spacing:.2px;transition:.18s}
+.btn.neon:hover{box-shadow:0 0 0 3px rgba(103,232,249,.25), 0 0 18px rgba(103,232,249,.4); transform:translateY(-1px)}
+.btn.small{font-size:12px;padding:6px 10px}
+
+/* ----------- Tables ----------- */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid var(--outline)}
+.table th{background:#0d2238;color:#8de4ff;text-align:left;padding:10px;border-bottom:1px solid var(--outline)}
+.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.table tr:nth-child(even){background:rgba(255,255,255,.03)}
+
+/* ----------- DnD (banque & programme) ----------- */
+.dropzone{
+  min-height:56px;padding:8px;border:1px dashed rgba(255,255,255,.35);
+  border-radius:12px;background:#0c1224; transition:.15s;
+}
+.dropzone:hover{border-color:#9fdcff}
+.dropzone .dz-label{display:flex;align-items:center;gap:8px;color:#9bb5ff}
+.qnum{display:inline-flex;justify-content:center;align-items:center;
+  min-width:24px;height:24px;border-radius:999px;background:#0b2842;color:#9ad3ff;font-weight:900}
+
+.bank{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;min-height:340px}
+.program{display:flex;flex-direction:column;gap:8px}
+
+/* ----------- Étiquettes ----------- */
+.token{
+  display:inline-block;padding:6px 10px;border-radius:10px;background:#1a223e;
+  border:1px solid rgba(255,255,255,.25);cursor:grab;user-select:none;white-space:pre;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.token:hover{outline:1px solid var(--cyan)}
+.token:active{cursor:grabbing}
+
+/* ----------- Feedback ----------- */
+.ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--orange)}
+.state-ok{border-color:rgba(52,211,153,.55)}
+.state-bad{border-color:rgba(239,68,68,.55)}
+.answer{margin-top:8px}
+
+/* ----------- Code (correction colorée) ----------- */
+pre.code, pre.code-correction{
+  background:#0c1224;border:1px solid var(--outline); border-radius:12px; padding:12px; overflow:auto
+}
+.kw{color:#7dd3fc;font-weight:700}
+.fn{color:#60a5fa}
+.num{color:#fda4af}
+.str{color:#fbbf24}
+.com{color:#86efac}
+
+/* ----------- Barre de progression ----------- */
+.progress{
+  position:relative;height:14px;background:#101a38;border-radius:999px;border:1px solid var(--outline);overflow:hidden
+}
+.progress > .bar{
+  position:absolute;left:0;top:0;height:100%;width:0%;
+  background:linear-gradient(90deg,#2dd4bf,#22d3ee,#60a5fa);
+  transition:width .35s ease
+}
+
+/* ----------- Zone LED (convertisseur) ----------- */
+.ledbox{width:100px;height:100px;border-radius:10px;border:1px solid #67e8f9;margin-top:10px;background:#000}
+
+/* ----------- Impression ----------- */
+@media print{.no-print{display:none} body{background:#fff;color:#000} .card{box-shadow:none;border-color:#999}}
+</style>
+<!-- ================================ CSS GLOBAL (fin) ================================ -->
+</head>
+
+<body>
+<header>
+  <h1>✨ TP mBot2 & Python — Séquence complète (v4.3)</h1>
+  <p class="small">Thème sombre • API colorée • A1→A7 à étiquettes • QCM & trous • Score /20 + barre de progression</p>
+</header>
+
+<main>
+
+<!-- =================================================================================
+     SECTION 1 — ENTÊTE ÉLÈVE + Chronomètre + Score + Progress Bar
+     ================================================================================= -->
+<section class="card">
+  <div class="grid">
+    <div><label>Nom</label><input id="nom" type="text" placeholder="Dupont"></div>
+    <div><label>Prénom</label><input id="prenom" type="text" placeholder="Camille"></div>
+    <div><label>Classe</label><input id="classe" type="text" placeholder="3e B"></div>
+  </div>
+
+  <div class="row" style="margin-top:8px">
+    <button id="startTimer" class="btn neon">⏱️ Démarrer le chrono</button>
+    <button id="stopTimer" class="btn">⏹️ Arrêter</button>
+    <span>Temps : <strong id="elapsed">00:00</strong></span>
+    <span class="badge">Score brut : <b id="score">0</b> / <b id="total">0</b> • Note /20 : <b id="note20">0.0</b></span>
+  </div>
+
+  <!-- Barre de progression liée à la note /20 -->
+  <div style="margin-top:10px">
+    <div class="progress"><div id="progBar" class="bar"></div></div>
+    <div class="small">Progression vers 20 : <span id="progPct">0%</span></div>
+  </div>
+</section>
+
+<!-- =================================================================================
+     SECTION 2 — TABLEAU API
+     ================================================================================= -->
+<section class="card" id="api">
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <h2>📚 Tableau API — mBot2 & CyberPi</h2>
+    <button class="btn small" onclick="window.print()">🖨️ Imprimer seulement ce tableau</button>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr>
+        <th>Action</th><th>Commande Python</th><th>Paramètres</th><th>Exemple</th><th>Effet</th>
+      </tr></thead>
+      <tbody id="apiBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =================================================================================
+     SECTION 3 — APPRENTISSAGES A1 → A6 (étiquettes)
+     - Chaque carte contient : banque (gauche) + programme (droite) avec lignes numérotées
+     - Vérification: chaque case doit contenir 1 étiquette (remplacement autorisé)
+     ================================================================================= -->
+<section class="card">
+  <h2>🧪 Apprentissages A1 → A6 (étiquettes ligne par ligne)</h2>
+  <div id="a16Grid" class="list"></div>
+</section>
+
+<!-- =================================================================================
+     SECTION 4 — APPRENTISSAGE 7 (expressif) : 10 cases numérotées
+     ================================================================================= -->
+<section class="card" id="A7">
+  <h2>🤖 Apprentissage 7 — Éviteur d’obstacles expressif</h2>
+  <div class="badge">Essais autorisés : <b id="triesA7view">1</b> • Barème : <b>+4 pts</b></div>
+  <p class="small">Glisse les 10 étiquettes dans les 10 cases numérotées (une étiquette par case). Après l’essai ou « Terminer », la correction commentée s’affiche.</p>
+
+  <div class="grid">
+    <div>
+      <h3>G — Banque d’étiquettes</h3>
+      <div id="bankA7" class="dropzone bank"></div>
+    </div>
+    <div>
+      <h3>D — Programme à compléter</h3>
+      <div id="progA7" class="program"></div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:8px">
+    <button class="btn neon" onclick="checkA7()">Vérifier</button>
+    <button class="btn small" onclick="revealA7()">Terminer → correction</button>
+    <span>Essais restants : <strong id="triesA7">1</strong></span>
+  </div>
+  <div id="fb-A7" class="answer small"></div>
+</section>
+
+<!-- =================================================================================
+     SECTION 5 — MÉMENTO PYTHON
+     ================================================================================= -->
+<section class="card" id="memo">
+  <h2>📘 Mémento Python (utile pour les QCM)</h2>
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th>Catégorie</th><th>Syntaxe</th><th>Exemple</th><th>Utilité</th></tr></thead>
+      <tbody id="memoBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =================================================================================
+     SECTION 6 — 20 QUESTIONS À TROUS : Boucles
+     ================================================================================= -->
+<section class="card" id="trous">
+  <h2>🧩 20 questions à trous — Boucles</h2>
+  <div class="badge">1 pt chacune • Essais dégressifs (3→2→1)</div>
+  <div class="card" style="background:#0e1630">
+    <h3>📘 Consignes</h3>
+    <ul class="small">
+      <li>Tape le <b>code Python exact</b> attendu (minuscules/majuscules comptent parfois).</li>
+      <li>Utilise le <b>bouton d’aide</b> si tu bloques : un indice partiel s’affiche.</li>
+      <li>La correction apparaît après tes essais.</li>
+    </ul>
+    <button class="btn neon" onclick="showGlobalHint()">💡 Aide globale</button>
+  </div>
+  <div id="blanks"></div>
+  <div class="row">
+    <button class="btn" onclick="checkAllBlanks()">Vérifier toutes</button>
+  </div>
+</section>
+
+<!-- =================================================================================
+     SECTION 7 — Convertisseur HEX ⇄ RGB (prévisualisation LED)
+     ================================================================================= -->
+<section class="card" id="convertisseur">
+  <h2>🌈 Convertisseur #hex ⇄ RGB</h2>
+  <p class="small">Entre une couleur au format hexadécimal ou ses composantes RGB (0 à 255) pour tester la couleur de la LED :</p>
+  <div class="row">
+    <div>
+      <label>Code #HEX :</label>
+      <input id="hexInput" type="text" maxlength="7" placeholder="#00FFFF">
+    </div>
+    <div>
+      <label>Rouge :</label><input id="rInput" type="number" min="0" max="255" value="0">
+      <label>Vert :</label><input id="gInput" type="number" min="0" max="255" value="255">
+      <label>Bleu :</label><input id="bInput" type="number" min="0" max="255" value="255">
+    </div>
+    <button class="btn neon" onclick="updateColor()">💡 Tester la couleur</button>
+  </div>
+  <div id="ledPreview" class="ledbox"></div>
+</section>
+
+<!-- =================================================================================
+     SECTION 8 — Export / Impression
+     ================================================================================= -->
+<section class="card no-print">
+  <div class="row">
+    <button class="btn" onclick="exportResults()">📄 Exporter mes réponses (JSON)</button>
+    <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+    <span class="badge">PDF : <b>Ctrl+P</b> → Microsoft Print to PDF</span>
+  </div>
+</section>
+
+</main>
+
+<!-- =========================================================
+     ===============       JAVASCRIPT (début)     =============
+     - Audio / Chrono / Score + progress bar
+     - Données : API, Mémento, A1→A6, A7, Blanks
+     - Drag & Drop générique (banque ↔ zones numérotées)
+     - Générateurs DOM & vérifications
+     ========================================================= -->
+<script>
+/* ==========================  Utilitaires  ========================== */
+/** Sonorités de feedback (sans fichiers, via WebAudio) */
+const AudioFX = (()=>{ let ctx;
+  function ensure(){ if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)(); }
+  function tone(freq=880, dur=0.12, type='sine', gain=0.06){
+    ensure(); const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type; o.frequency.value=freq; g.gain.value=gain;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    setTimeout(()=>o.stop(), dur*1000);
+  }
+  return {
+    ok(){ tone(1046,0.10,'triangle',0.07); setTimeout(()=>tone(1318,0.12,'triangle',0.07),90); },
+    fail(){ tone(220,0.18,'sawtooth',0.05); },
+    chime(){ tone(988,0.14,'sine',0.08); setTimeout(()=>tone(1480,0.18,'sine',0.08),120); setTimeout(()=>tone(1760,0.22,'sine',0.07),260); }
+  };
+})();
+
+/** Chronomètre simple (mm:ss) */
+let startTime=null,timerHandle=null;
+function fmt(ms){const s=Math.floor(ms/1000);const m=String(Math.floor(s/60)).padStart(2,'0');const ss=String(s%60).padStart(2,'0');return m+':'+ss;}
+document.getElementById('startTimer').addEventListener('click',()=>{
+  if(!startTime){startTime=performance.now();timerHandle=setInterval(()=>{document.getElementById('elapsed').textContent=fmt(performance.now()-startTime);},200);}
+  // Mélange initial au démarrage pour tout le monde
+  shuffleAllBanks();
+});
+document.getElementById('stopTimer').addEventListener('click',()=>{if(timerHandle){clearInterval(timerHandle);timerHandle=null;}});
+
+/** Gestion du barème global et de la progress bar */
+let POINTS={},TOTAL=0,score=0,tries={};
+function addItem(key,pts,tr){ if(!(key in POINTS)){POINTS[key]=pts;TOTAL+=pts;tries[key]=tr;upd();} }
+function addScore(key){ if(!POINTS[key]) return;
+  if(tries[key]===0) return; // déjà marqué
+  score+=POINTS[key]; tries[key]=0; upd(); AudioFX.chime();
+}
+function decTry(key){ if(tries[key]>0){tries[key]-=1;} return tries[key]; }
+function upd(){
+  const note=(score/TOTAL)*20 || 0;
+  document.getElementById('score').textContent=score;
+  document.getElementById('total').textContent=TOTAL;
+  document.getElementById('note20').textContent=note.toFixed(1);
+  const pct=Math.round((note/20)*100);
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('progPct').textContent=pct+'%';
+}
+
+/** Shuffle générique (Fisher–Yates) */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ==========================  Données API & Mémento  ========================== */
+const API_DATA=[
+['🖥️ Console (sans saut)','cyberpi.console.print(x)','x: texte/nombre','cyberpi.console.print("Hello")','Affiche sur la même ligne'],
+['🖨️ Console (avec saut)','cyberpi.console.println(x)','x: texte/nombre','cyberpi.console.println(3)','Affiche puis va à la ligne'],
+['⏸️ Attente','time.sleep(s)','s: secondes (float)','time.sleep(0.2)','Met en pause le programme'],
+['🚦 LED allumer','cyberpi.led.on(R,G,B,"all")','0–255','cyberpi.led.on(255,20,30,"all")','Couleur RGB'],
+['🎮 Manette (touche)','cyberpi.controller.is_press("a")','"a","b","up","down","left","right"','if cyberpi.controller.is_press("up"):','Détecte une touche'],
+['🛞 Avancer','cyberpi.mbot2.forward(speed=V)','0–100 %','cyberpi.mbot2.forward(speed=50)','Fait avancer le robot'],
+['🔄 Tourner','cyberpi.mbot2.turn(angle, speed=V)','angle° ; V%','cyberpi.mbot2.turn(90, speed=50)','Tourne sur place'],
+['📡 Distance (cm)','cyberpi.ultrasonic2.get(index=1)','—','d=cyberpi.ultrasonic2.get(index=1)','Retourne la distance'],
+['🛑 Arrêt immédiat','cyberpi.mbot2.EM_stop(port="all")','—','cyberpi.mbot2.EM_stop(port="all")','Stop d’urgence'],
+['🔊 Son','cyberpi.audio.play("hello")','nom du son','cyberpi.audio.play("laugh")','Joue un effet sonore']
+];
+const MEMO=[
+['Boucle for','for i in range(n):','for i in range(3):','Répète n fois'],
+['Boucle while','while condition:','while True:','Répète tant que vrai'],
+['Condition','if … elif … else:','if d < 10:','Choix logique'],
+['Pause','time.sleep(s)','time.sleep(1)','Attente (s)'],
+['Affichage','print(x)','print("OK")','Console'],
+['Ultrason','cyberpi.ultrasonic2.get(index=1)','d=cyberpi.ultrasonic2.get(index=1)','Distance (cm)'],
+['LED','cyberpi.led.on(R,G,B,"all")','cyberpi.led.on(255,20,30,"all")','Couleur'],
+['Son','cyberpi.audio.play("nom")','cyberpi.audio.play("hello")','Effet sonore'],
+];
+
+/* ==========================  Apprentissages A1→A6  ==========================
+   - Chaque bloc contient :
+     * banque : liste de tokens (drag)
+     * programme : N lignes .dropzone, 1 token attendu par ligne
+     * expected : tableau d'identifiants attendus (ordre exact)
+========================================================================== */
+const A16_DATA = [
+  {
+    id:'A1', title:'🖥️ Apprentissage 1 — Console',
+    consigne:'Affiche « Bonjour 3e ! » puis va à la ligne.',
+    tokens:[
+      {id:'a1_t1', text:'import cyberpi'},
+      {id:'a1_t2', text:'cyberpi.console.println("Bonjour 3e !")'}
+    ],
+    holes:[
+      'Glisse ici la bonne étiquette…',
+      'Glisse ici la bonne étiquette…'
+    ],
+    expected:['a1_t1','a1_t2'], pts:2, tries:3
+  },
+  {
+    id:'A2', title:'🚦 Apprentissage 2 — LED : RGB & #hex',
+    consigne:'Allumer rouge doux 1 s puis éteindre.',
+    tokens:[
+      {id:'a2_t1', text:'import cyberpi, time'},
+      {id:'a2_t2', text:'cyberpi.led.on(255,20,30,"all")'},
+      {id:'a2_t3', text:'time.sleep(1)'},
+      {id:'a2_t4', text:'cyberpi.led.off()'}
+    ],
+    holes:['Ligne 1','Ligne 2','Ligne 3','Ligne 4'],
+    expected:['a2_t1','a2_t2','a2_t3','a2_t4'], pts:2, tries:3
+  },
+  {
+    id:'A3', title:'🎮 Apprentissage 3 — Manette',
+    consigne:'Attendre la touche ↑ puis avancer 1 s à 40 %.',
+    tokens:[
+      {id:'a3_t1', text:'import cyberpi, time'},
+      {id:'a3_t2', text:"while not cyberpi.controller.is_press('up'):"},
+      {id:'a3_t3', text:'    time.sleep(0.05)'},
+      {id:'a3_t4', text:'cyberpi.mbot2.forward(speed=40, run_time=1)'}
+    ],
+    holes:['L1','L2','L3','L4'],
+    expected:['a3_t1','a3_t2','a3_t3','a3_t4'], pts:2, tries:3
+  },
+  {
+    id:'A4', title:'⏳ Apprentissage 4 — Temporiser',
+    consigne:'Afficher « Action 1 », pause 2 s, puis « Action 2 ».',
+    tokens:[
+      {id:'a4_t1', text:'import time, cyberpi'},
+      {id:'a4_t2', text:'cyberpi.console.println("Action 1")'},
+      {id:'a4_t3', text:'time.sleep(2)'},
+      {id:'a4_t4', text:'cyberpi.console.println("Action 2")'}
+    ],
+    holes:['L1','L2','L3','L4'],
+    expected:['a4_t1','a4_t2','a4_t3','a4_t4'], pts:2, tries:3
+  },
+  {
+    id:'A5', title:'🛞 Apprentissage 5 — Moteurs',
+    consigne:'Reculer 0,5 s, puis arrêt immédiat.',
+    tokens:[
+      {id:'a5_t1', text:'import cyberpi as cpi'},
+      {id:'a5_t2', text:'cpi.mbot2.backward(speed=30, run_time=0.5)'},
+      {id:'a5_t3', text:'cpi.mbot2.EM_stop(port="all")'}
+    ],
+    holes:['L1','L2','L3'],
+    expected:['a5_t1','a5_t2','a5_t3'], pts:2, tries:3
+  },
+  {
+    id:'A6', title:'🔄 Apprentissage 6 — Rotation',
+    consigne:'Tourner à gauche 90°.',
+    tokens:[
+      {id:'a6_t1', text:'import cyberpi as cpi'},
+      {id:'a6_t2', text:'cpi.mbot2.turn(-90, speed=50)'}
+    ],
+    holes:['L1','L2'],
+    expected:['a6_t1','a6_t2'], pts:2, tries:3
+  }
+];
+
+/* ==========================  Apprentissage 7  ========================== */
+const A7_ORDER=['a7t1','a7t2','a7t3','a7t4','a7t5','a7t6','a7t7','a7t8','a7t9','a7t10'];
+const A7_TOKENS=[
+  {id:'a7t1', text:'import cyberpi, time'},
+  {id:'a7t2', text:'SEUIL = 15'},
+  {id:'a7t3', text:'PORT = 1'},
+  {id:'a7t4', text:'VITESSE = 50'},
+  {id:'a7t5', text:'d = cyberpi.ultrasonic2.get(index=PORT)'},
+  {id:'a7t6', text:'if d is None or d == 0:'},
+  {id:'a7t7', text:'    cyberpi.audio.play("buzzing")'},
+  {id:'a7t8', text:'elif d < SEUIL:'},
+  {id:'a7t9', text:'    cyberpi.audio.play("laugh")'},
+  {id:'a7t10',text:'    cyberpi.mbot2.turn(135, speed=VITESSE)'}
+];
+const A7_HOLES=[
+  '# 1. importations',
+  'SEUIL = [ __ ]         # 2. seuil de détection (cm)',
+  'PORT = [ __ ]          # 3. port du capteur',
+  'VITESSE = [ __ ]       # 4. vitesse (%)',
+  'while True:\n    [ __ ]             # 5. lecture distance',
+  '    if d is None or d == 0:\n        cyberpi.led.on(255,0,0,"all")\n        cyberpi.mbot2.EM_stop(port="all")\n        [ __ ]         # 6. son si pas de mesure',
+  '    [ __ ]             # 7. condition obstacle',
+  '        cyberpi.led.on(255,165,0,"all")\n        cyberpi.mbot2.EM_stop(port="all")\n        [ __ ]         # 8. son de rire',
+  '        cyberpi.mbot2.backward(speed=VITESSE, run_time=0.4)\n        [ __ ]         # 9. rotation',
+  '    else:\n        cyberpi.led.on(0,255,0,"all")\n        cyberpi.audio.play("hello")\n        cyberpi.mbot2.forward(speed=VITESSE)\n    time.sleep(0.1)'
+];
+
+/* ==========================  20 questions à trous  ========================== */
+const blanksData=[
+{id:'b1',q:'Boucle infinie : entête',a:['while true:']},
+{id:'b2',q:'Pause 50 ms',a:['time.sleep(0.05)','sleep(0.05)']},
+{id:'b3',q:'Boucler 5 fois : entête',a:['for i in range(5):','for i in range(0,5):']},
+{id:'b4',q:'Sortir de la boucle',a:['break']},
+{id:'b5',q:'Passer à l’itération suivante',a:['continue']},
+{id:'b6',q:'Compter 0→9 : entête',a:['for i in range(10):']},
+{id:'b7',q:'Compter 1→5 inclus',a:['for i in range(1,6):']},
+{id:'b8',q:'While tant que d ≥ 15',a:['while d >= 15:']},
+{id:'b9',q:'Jusqu’à appui sur A',a:["while not cyberpi.controller.is_press('a'):"]},
+{id:'b10',q:'Afficher i',a:['print(i)','cyberpi.console.println(i)','cyberpi.console.print(i)']},
+{id:'b11',q:'Somme : init',a:['s = 0']},
+{id:'b12',q:'Somme : ajouter i',a:['s = s + i','s+=i']},
+{id:'b13',q:'Boucler sur [2,4,6]',a:['for x in [2,4,6]:']},
+{id:'b14',q:'Boucler sur "ABC"',a:['for c in "ABC":']},
+{id:'b15',q:'Tant que distance inconnue',a:['while d is None:']},
+{id:'b16',q:"Tant qu’aucune touche A/B",a:["while not (cyberpi.controller.is_press('a') or cyberpi.controller.is_press('b')):"]},
+{id:'b17',q:'Compte à rebours 3,2,1',a:['for i in [3,2,1]:']},
+{id:'b18',q:'range 0→8 pas 2',a:['for i in range(0,9,2):','for i in range(0,10,2):']},
+{id:'b19',q:'Index & valeur sur l',a:['for i, v in enumerate(l):']},
+{id:'b20',q:'Répéter 3 fois "Go"',a:['for _ in range(3):']}
+];
+
+/* ==========================  Générateurs DOM ========================== */
+function buildAPI(){
+  const body=document.getElementById('apiBody');
+  API_DATA.forEach(r=>{
+    const tr=document.createElement('tr');
+    r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);});
+    body.appendChild(tr);
+  });
+}
+function buildMemo(){
+  const b=document.getElementById('memoBody');
+  MEMO.forEach(r=>{
+    const tr=document.createElement('tr');
+    r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);});
+    b.appendChild(tr);
+  });
+}
+
+/** Création d’une carte A1→A6 avec DnD par lignes */
+function buildA16(){
+  const root=document.getElementById('a16Grid');
+  A16_DATA.forEach((ex,idx)=>{
+    // Carte
+    const wrap=document.createElement('div'); wrap.className='card'; wrap.style.background='rgba(20,28,56,.55)';
+    // Entête
+    const h=document.createElement('h3'); h.textContent=ex.title; wrap.appendChild(h);
+    const sc=document.createElement('div'); sc.className='small'; sc.textContent='Consigne : '+ex.consigne; wrap.appendChild(sc);
+
+    // Grille banque / programme
+    const g=document.createElement('div'); g.className='grid';
+
+    // Banque
+    const left=document.createElement('div');
+    const bank=document.createElement('div'); bank.id=`bank_${ex.id}`; bank.className='dropzone bank';
+    left.appendChild(bank);
+
+    // Programme (lignes numérotées)
+    const right=document.createElement('div');
+    const prog=document.createElement('div'); prog.id=`prog_${ex.id}`; prog.className='program';
+    ex.holes.forEach((lab,i)=>{
+      const dz=document.createElement('div'); dz.className='dropzone';
+      const lbl=document.createElement('div'); lbl.className='dz-label small'; lbl.innerHTML=`<span class="qnum">${i+1}</span> ${lab}`;
+      dz.appendChild(lbl);
+      prog.appendChild(dz);
+    });
+    right.appendChild(prog);
+
+    g.appendChild(left); g.appendChild(right);
+    wrap.appendChild(g);
+
+    // Boutons + essais
+    const footer=document.createElement('div'); footer.className='row';
+    footer.innerHTML = `
+      <button class="btn neon" onclick="checkA16('${ex.id}')">Vérifier</button>
+      <button class="btn small" onclick="revealA16('${ex.id}')">Terminer → correction</button>
+      <span>Essais : <b id="tries_${ex.id}">${ex.tries}</b></span>
+    `;
+    wrap.appendChild(footer);
+
+    // Feedback
+    const fb=document.createElement('div'); fb.id=`fb_${ex.id}`; fb.className='answer small';
+    wrap.appendChild(fb);
+
+    // Ajout au DOM
+    root.appendChild(wrap);
+
+    // Étiquettes : on clone pour éviter le coupage si réutilisées ailleurs
+    const shuffled = shuffle([...ex.tokens]);
+    shuffled.forEach(t=>{
+      const s=document.createElement('span'); s.className='token'; s.id=t.id; s.textContent=t.text;
+      s.setAttribute('draggable','true');
+      s.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',t.id));
+      bank.appendChild(s);
+    });
+
+    // Activer le DnD entre bank et toutes les dropzones du programme
+    enableDnDForBankAndProgram(bank, prog);
+
+    // Barème
+    addItem(ex.id, ex.pts, ex.tries);
+  });
+}
+
+/** Création du bloc A7 (10 cases) */
+function buildA7(){
+  const bank=document.getElementById('bankA7');
+  const prog=document.getElementById('progA7');
+
+  // tokens mélangés
+  shuffle([...A7_TOKENS]).forEach(t=>{
+    const s=document.createElement('span'); s.className='token'; s.id=t.id; s.textContent=t.text;
+    s.setAttribute('draggable','true');
+    s.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',t.id));
+    bank.appendChild(s);
+  });
+
+  // 10 lignes
+  A7_HOLES.forEach((hole,i)=>{
+    const dz=document.createElement('div'); dz.className='dropzone';
+    const lbl=document.createElement('div'); lbl.className='dz-label small';
+    lbl.innerHTML=`<span class="qnum">${i+1}</span> ${hole.replace(/</g,'&lt;')}`;
+    dz.appendChild(lbl);
+    prog.appendChild(dz);
+  });
+
+  enableDnDForBankAndProgram(bank, prog);
+  addItem('A7',4,1);
+  document.getElementById('triesA7').textContent=tries['A7'];
+  document.getElementById('triesA7view').textContent=tries['A7'];
+}
+
+/** Questions à trous (20) */
+function buildBlanks(){
+  const root=document.getElementById('blanks');
+  blanksData.forEach((it,idx)=>{
+    const d=document.createElement('div'); d.className='card'; d.style.background='rgba(20,28,56,.55)';
+    const initTries=(idx<3?3:(idx<6?2:1)); const pts=1;
+    d.innerHTML=`<div class="small"><span class="qnum">${idx+1}</span>${it.q}</div>
+    <input type="text" id="${it.id}" placeholder="ta réponse ici">
+    <div class="row">
+      <button class="btn small neon" onclick="checkBlank('${it.id}',${idx})">Vérifier</button>
+      <button class="btn small" onclick="revealBlank('${it.id}',${idx})">Terminer → correction</button>
+      <button class="btn small" onclick="hintBlank(${idx})">💡 Aide</button>
+      <span>Essais : <strong id="tries-${it.id}">${initTries}</strong></span>
+    </div>
+    <div id="fb-${it.id}" class="answer small"></div>`;
+    root.appendChild(d);
+    addItem(it.id,pts,initTries);
+  });
+}
+
+/* ==========================  Drag & Drop générique  ==========================
+   - enableDnDForBankAndProgram(bankEl, progEl)
+   - Chaque .dropzone du programme accepte 1 token (remplacement autorisé)
+   - On peut ramener un token dans la banque
+========================================================================== */
+function enableDnDForBankAndProgram(bankEl, progEl){
+  // Autoriser le drop sur la "banque" (pour ranger / remplacer)
+  bankEl.addEventListener('dragover', e=>e.preventDefault());
+  bankEl.addEventListener('drop', e=>{
+    e.preventDefault();
+    const id = e.dataTransfer.getData('text/plain');
+    const el = document.getElementById(id);
+    if(el) bankEl.appendChild(el);
+  });
+
+  // Autoriser le drop sur chaque case numérotée du programme (remplacement)
+  [...progEl.querySelectorAll('.dropzone')].forEach(dz=>{
+    dz.addEventListener('dragover', e=>e.preventDefault());
+    dz.addEventListener('drop', e=>{
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      const el = document.getElementById(id);
+      if(!el) return;
+      // S’il y a déjà un token, on le renvoie dans la banque
+      const old = dz.querySelector('.token');
+      if(old) bankEl.appendChild(old);
+      dz.appendChild(el);
+    });
+  });
+}
+
+/** Récupère l’id du token déposé dans chaque dropzone d’un container */
+function getProgTokenIds(containerEl){
+  const ids=[];
+  containerEl.querySelectorAll('.dropzone').forEach(dz=>{
+    const tk=dz.querySelector('.token');
+    ids.push(tk ? tk.id : null);
+  });
+  return ids;
+}
+
+/** Mélange toutes les banques d’étiquettes (A1→A6, A7) au chargement/chrono */
+function shuffleAllBanks(){
+  // banques A1→A6
+  A16_DATA.forEach(ex=>{
+    const bank=document.getElementById(`bank_${ex.id}`);
+    if(!bank) return;
+    const arr=[...bank.querySelectorAll('.token')];
+    shuffle(arr).forEach(el=>bank.appendChild(el));
+  });
+  // banque A7
+  const b7=document.getElementById('bankA7');
+  if(b7){
+    const arr=[...b7.querySelectorAll('.token')];
+    shuffle(arr).forEach(el=>b7.appendChild(el));
+  }
+}
+
+/* ==========================  Vérifications A1→A6  ========================== */
+function checkA16(id){
+  const ex = A16_DATA.find(x=>x.id===id);
+  const fb=document.getElementById(`fb_${id}`);
+  const triesEl=document.getElementById(`tries_${id}`);
+  const prog=document.getElementById(`prog_${id}`);
+  const ids = getProgTokenIds(prog);
+
+  if(ids.some(x=>x===null)){
+    fb.innerHTML='<span class="warn">Il te manque des étiquettes à droite.</span>'; AudioFX.fail(); return;
+  }
+  const ok = ids.every((x,i)=>x===ex.expected[i]);
+  if(ok){
+    fb.innerHTML='<span class="ok">✔ +'+ex.pts+' pts</span>'; addScore(id);
+    prog.classList.add('state-ok');
+  }else{
+    const t=decTry(id);
+    if(t===0){ fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span>'+renderCorrection(ex); }
+    else{ fb.innerHTML='<span class="bad">✖ Ordre incorrect. Il te reste '+t+' essai(s).</span>'; AudioFX.fail(); }
+    triesEl.textContent=tries[id];
+    prog.classList.add('state-bad');
+  }
+}
+function revealA16(id){
+  const ex=A16_DATA.find(x=>x.id===id);
+  const fb=document.getElementById(`fb_${id}`);
+  if((tries[id]||0)===0) fb.innerHTML=renderCorrection(ex);
+  else fb.innerHTML='<span class="bad">La correction s’affiche après tes essais.</span>';
+}
+function renderCorrection(ex){
+  // Affiche les lignes attendues, colorées
+  const code = ex.expected.map((tokId)=>{
+    const t = ex.tokens.find(x=>x.id===tokId);
+    return t ? t.text : '';
+  }).join('\n');
+  return `<pre class="code-correction"><span class="com"># Correction attendue</span>\n${escapeHtml(code)}</pre>`;
+}
+
+/* ==========================  Vérification A7  ========================== */
+function checkA7(){
+  const fb=document.getElementById('fb-A7');
+  const triesEl=document.getElementById('triesA7');
+  const prog=document.getElementById('progA7');
+  const ids=getProgTokenIds(prog);
+
+  if(ids.some(x=>x===null)){ fb.innerHTML='<span class="warn">Il te manque des étiquettes dans la partie droite.</span>'; AudioFX.fail(); return; }
+  const ok=ids.every((x,i)=>x===A7_ORDER[i]);
+  if(ok){ fb.innerHTML='<span class="ok">✔ +4 pts. 🎉</span>'; addScore('A7'); prog.classList.add('state-ok'); }
+  else{
+    const t=decTry('A7'); if(t===0){ fb.innerHTML='<span class="bad">✖ Essai utilisé. Correction :</span>'+renderA7Correction(); }
+    else{ fb.innerHTML='<span class="bad">✖ Ordre incorrect. Il te reste '+t+' essai.</span>'; AudioFX.fail(); }
+    triesEl.textContent=tries['A7'];
+    prog.classList.add('state-bad');
+  }
+}
+function revealA7(){
+  if((tries['A7']||0)>0){ document.getElementById('fb-A7').innerHTML='<span class="bad">La correction apparaît après ton essai.</span>'; return; }
+  document.getElementById('fb-A7').innerHTML=renderA7Correction();
+}
+function renderA7Correction(){
+  const code = `<span class="kw">import</span> cyberpi, time <span class="com"># Import</span>
+SEUIL <span class="kw">=</span> <span class="num">15</span>
+PORT <span class="kw">=</span> <span class="num">1</span>
+VITESSE <span class="kw">=</span> <span class="num">50</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    d <span class="kw">=</span> cyberpi.ultrasonic2.get(index<span class="kw">=</span>PORT)
+    <span class="kw">if</span> d <span class="kw">is</span> <span class="kw">None</span> <span class="kw">or</span> d <span class="kw">==</span> <span class="num">0</span>:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"buzzing"</span>)
+    <span class="kw">elif</span> d <span class="kw">&lt;</span> SEUIL:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">165</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"laugh"</span>)
+        cyberpi.mbot2.backward(speed<span class="kw">=</span>VITESSE, run_time<span class="kw">=</span><span class="num">0.4</span>)
+        cyberpi.mbot2.turn(<span class="num">135</span>, speed<span class="kw">=</span>VITESSE)
+    <span class="kw">else</span>:
+        cyberpi.led.on(<span class="num">0</span>,<span class="num">255</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"hello"</span>)
+        cyberpi.mbot2.forward(speed<span class="kw">=</span>VITESSE)
+    time.sleep(<span class="num">0.1</span>)`;
+  return `<h3>🟦 Correction commentée</h3><pre class="code-correction">${code}</pre>`;
+}
+
+/* ==========================  Blanks : vérifs  ========================== */
+function norm2(s){return(s||'').toLowerCase().replace(/\s+/g,' ').trim();}
+function checkBlank(id,idx){
+  const fb=document.getElementById('fb-'+id),inp=document.getElementById(id);
+  const good=blanksData[idx].a.map(norm2),val=norm2(inp.value);
+  if(good.includes(val)){fb.innerHTML='<span class="ok">✔ +1 pt</span>';addScore(id);AudioFX.ok();}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span><div class="small"><code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';} else {fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';AudioFX.fail();}} document.getElementById('tries-'+id).textContent=tries[id];
+}
+function revealBlank(id,idx){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){ fb.innerHTML='<div class="small">Réponses acceptées : <code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>'; }
+  else{ fb.innerHTML='<span class="bad">La correction s’affiche après tes essais.</span>'; }
+}
+function checkAllBlanks(){blanksData.forEach((it,i)=>{checkBlank(it.id,i); document.getElementById('tries-'+it.id).textContent=tries[it.id];});}
+function hintBlank(idx){const arr=blanksData[idx].a; const hint=arr[0].slice(0, Math.max(3, Math.ceil(arr[0].length*0.5)))+'…'; alert('Indice : '+hint);}
+function showGlobalHint(){
+  const pick=blanksData[Math.floor(Math.random()*blanksData.length)].a[0];
+  alert('Indice global : '+pick);
+}
+
+/* ==========================  Convertisseur HEX/RGB  ========================== */
+function hexToRgb(hex){ const m=hex.trim(); if(!/^#?[0-9a-fA-F]{6}$/.test(m)) return null; const n=parseInt(m.replace('#',''),16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function rgbToHex(r,g,b){ function h(x){x=Math.min(255,Math.max(0,parseInt(x||0,10)));return x.toString(16).padStart(2,'0');} return '#'+h(r)+h(g)+h(b); }
+function updateColor(){
+  const hex=document.getElementById('hexInput').value.trim();
+  const r=+document.getElementById('rInput').value;
+  const g=+document.getElementById('gInput').value;
+  const b=+document.getElementById('bInput').value;
+  const led=document.getElementById('ledPreview');
+  if(hex && /^#?[0-9a-fA-F]{6}$/.test(hex)){
+    const [rr,gg,bb]=hexToRgb(hex);
+    document.getElementById('rInput').value=rr;
+    document.getElementById('gInput').value=gg;
+    document.getElementById('bInput').value=bb;
+    led.style.background=rgbToHex(rr,gg,bb);
+  } else {
+    const h=rgbToHex(r,g,b).toUpperCase();
+    document.getElementById('hexInput').value=h;
+    led.style.background=h;
+  }
+}
+
+/* ==========================  Export JSON  ========================== */
+function exportResults(){
+  const data={nom:document.getElementById('nom').value||'',prenom:document.getElementById('prenom').value||'',classe:document.getElementById('classe').value||'',temps:document.getElementById('elapsed').textContent,score:score,total:TOTAL,note20:((score/TOTAL)*20).toFixed(1),tries:tries};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='tp-mbot2-python-v4_3_resultats.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ==========================  Helpers  ========================== */
+function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+/* ==========================  Initialisation DOM ========================== */
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildAPI();
+  buildMemo();
+  buildA16();
+  buildA7();
+  buildBlanks();
+  updateColor();
+  upd();           // met à jour barème & progress
+  shuffleAllBanks(); // mélange initial
+});
+</script>
+<!-- =============================== JAVASCRIPT (fin) =============================== -->
+</body>
+</html>
