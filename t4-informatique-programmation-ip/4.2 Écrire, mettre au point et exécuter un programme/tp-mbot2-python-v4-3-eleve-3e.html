@@ -87,10 +87,14 @@ pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline)
 /* Couleurs spécifiques pour mieux distinguer A1→A6 */
 #m1,#m2,#m3,#m4,#m5,#m6{border-left:6px solid var(--gold);background:linear-gradient(90deg,rgba(246,197,73,.08),rgba(255,255,255,.02))}
 #A7{border-left:6px solid var(--cyan);background:linear-gradient(90deg,rgba(103,232,249,.08),rgba(255,255,255,.02))}
+<<<<<<< HEAD
   
 #progress { transition: width 0.4s ease-in-out; }
 
 
+=======
+
+>>>>>>> ed835acab19b02decf9a94eaa1848edf59fcf54e
 /* Bulle d’aide */
 .help-bubble{
   position:fixed; right:18px; bottom:18px; max-width:360px; padding:14px 16px;
@@ -137,6 +141,7 @@ pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline)
       <span>Temps : <strong id="elapsed">00:00</strong></span>
       <span class="score">Score brut : <span id="score">0</span> / <span id="total">0</span> • /20 : <span id="note20">0.0</span></span>
     </div>
+<<<<<<< HEAD
     
     <span class="score">Score brut :
   <span id="score">0</span> / <span id="total">0</span> • /20 :
@@ -151,11 +156,16 @@ pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline)
     
   </section>
 
+=======
+  </section>
+
+>>>>>>> ed835acab19b02decf9a94eaa1848edf59fcf54e
   <!-- TABLEAU API -->
   <section class="card" id="api">
     <div class="caption">
       <h2>📚 Tableau API — mBot2 & CyberPi</h2>
       <button class="btn small" onclick="window.print()">🖨️ Imprimer ce tableau</button>
+<<<<<<< HEAD
     </div>
     <div class="table-wrap">
       <table class="table">
@@ -446,8 +456,318 @@ cpi.mbot2.forward(speed=____,  run_time=____)</code></pre>
     <label><input type="checkbox" name="q9" value="D"> cyberpi.mbot2.fly(speed=100)</label>
     <div class="row"><button class="btn" onclick="checkCheckbox('q9',['A','B','C'],4)">Vérifier</button><button class="btn small" onclick="revealCheckbox('q9',['A','B','C'])">Terminer → correction</button><span>Essais : <strong id="tries-q9">3</strong></span></div>
     <div id="fb-q9" class="answer"></div>
+=======
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Action</th><th>Commande Python</th><th>Paramètres</th><th>Exemple</th><th>Effet</th></tr></thead>
+        <tbody id="apiBody"><!-- rempli en JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- APPRENTISSAGES 1 → 6 : DnD -->
+  <section class="card" id="A1_6">
+    <h2>🧠 Apprentissages 1 à 6 — Étiquettes à glisser</h2>
+
+    <!-- A1 -->
+    <section class="card" id="m1">
+      <h3><span class="qnum">A1</span>Console
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd1',['m1t1','m1t2','m1t3','m1t4'],'fb-qd1')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Affiche « X » (sans saut) puis « Y » (saut), puis « Z ».</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank1" class="dropzone bank">
+            <span class="token" id="m1t1" draggable="true">import cyberpi</span>
+            <span class="token" id="m1t2" draggable="true">cyberpi.console.print("X")</span>
+            <span class="token" id="m1t3" draggable="true">cyberpi.console.println("Y")</span>
+            <span class="token" id="m1t4" draggable="true">cyberpi.console.println("Z")</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog1" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog1',['m1t1','m1t2','m1t3','m1t4'],2,'qd1','fb-qd1')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd1">3</strong></span></div>
+      <div id="fb-qd1" class="small"></div>
+    </section>
+
+    <!-- A2 -->
+    <section class="card" id="m2">
+      <h3><span class="qnum">A2</span>LED : RGB & #hex
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd2',['m2t1','m2t2','m2t3','m2t4'],'fb-qd2')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Allumer rouge doux 1 s puis éteindre.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank2" class="dropzone bank">
+            <span class="token" id="m2t1" draggable="true">import cyberpi, time</span>
+            <span class="token" id="m2t2" draggable="true">cyberpi.led.on(255,20,30,"all")</span>
+            <span class="token" id="m2t3" draggable="true">time.sleep(1)</span>
+            <span class="token" id="m2t4" draggable="true">cyberpi.led.off()</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog2" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog2',['m2t1','m2t2','m2t3','m2t4'],2,'qd2','fb-qd2')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd2">3</strong></span></div>
+      <div id="fb-qd2" class="small"></div>
+    </section>
+
+    <!-- A3 -->
+    <section class="card" id="m3">
+      <h3><span class="qnum">A3</span>Manette
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd3',['m3t1','m3t2','m3t3','m3t4'],'fb-qd3')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Attendre la touche ↑, avancer 1 s à 40 %.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank3" class="dropzone bank">
+            <span class="token" id="m3t1" draggable="true">import cyberpi, time</span>
+            <span class="token" id="m3t2" draggable="true">while not cyberpi.controller.is_press('up'):</span>
+            <span class="token" id="m3t3" draggable="true">    time.sleep(0.05)</span>
+            <span class="token" id="m3t4" draggable="true">cyberpi.mbot2.forward(speed=40, run_time=1)</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog3" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog3',['m3t1','m3t2','m3t3','m3t4'],2,'qd3','fb-qd3')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd3">3</strong></span></div>
+      <div id="fb-qd3" class="small"></div>
+    </section>
+
+    <!-- A4 -->
+    <section class="card" id="m4">
+      <h3><span class="qnum">A4</span>Temporiser
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd4',['m4t1','m4t2','m4t3','m4t4'],'fb-qd4')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : « Action 1 » → pause 2 s → « Action 2 ».</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank4" class="dropzone bank">
+            <span class="token" id="m4t1" draggable="true">import time, cyberpi</span>
+            <span class="token" id="m4t2" draggable="true">cyberpi.console.println("Action 1")</span>
+            <span class="token" id="m4t3" draggable="true">time.sleep(2)</span>
+            <span class="token" id="m4t4" draggable="true">cyberpi.console.println("Action 2")</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog4" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog4',['m4t1','m4t2','m4t3','m4t4'],2,'qd4','fb-qd4')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd4">3</strong></span></div>
+      <div id="fb-qd4" class="small"></div>
+    </section>
+
+    <!-- A5 -->
+    <section class="card" id="m5">
+      <h3><span class="qnum">A5</span>Moteurs
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd5',['m5t1','m5t2','m5t3'],'fb-qd5')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Reculer 0,5 s, puis arrêt immédiat.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank5" class="dropzone bank">
+            <span class="token" id="m5t1" draggable="true">import cyberpi as cpi</span>
+            <span class="token" id="m5t2" draggable="true">cpi.mbot2.backward(speed=30, run_time=0.5)</span>
+            <span class="token" id="m5t3" draggable="true">cpi.mbot2.EM_stop(port="all")</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog5" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog5',['m5t1','m5t2','m5t3'],2,'qd5','fb-qd5')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd5">3</strong></span></div>
+      <div id="fb-qd5" class="small"></div>
+    </section>
+
+    <!-- A6 -->
+    <section class="card" id="m6">
+      <h3><span class="qnum">A6</span>Rotation
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd6',['m6t1','m6t2'],'fb-qd6')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Tourner à gauche 90°.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank6" class="dropzone bank">
+            <span class="token" id="m6t1" draggable="true">import cyberpi as cpi</span>
+            <span class="token" id="m6t2" draggable="true">cpi.mbot2.turn(-90, speed=50)</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog6" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog6',['m6t1','m6t2'],2,'qd6','fb-qd6')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd6">3</strong></span></div>
+      <div id="fb-qd6" class="small"></div>
+    </section>
+  </section>
+
+  <!-- APPRENTISSAGE 7 : Éviteur d’obstacles expressif (slots) -->
+  <section class="card" id="A7">
+    <h2>🤖 Apprentissage 7 — Éviteur d’obstacles expressif</h2>
+    <div class="badge">Essais autorisés : <b id="triesA7view">1</b> • Barème : <b>+4 pts</b></div>
+    <p class="small">Glisse les 10 étiquettes dans les 10 <b>slots</b> (chacun attend 1 étiquette). Après 1 minute, une bulle d’aide peut s’afficher. Puis teste dans mBlock 5.6.</p>
+    <div class="grid">
+      <div>
+        <h3>Banque d’étiquettes</h3>
+        <div id="bankA7" class="dropzone bank"><!-- rempli en JS --></div>
+      </div>
+      <div>
+        <h3>Programme à compléter</h3>
+        <div id="progA7" class="dropzone program"><!-- trous/slots générés en JS --></div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn neon" onclick="checkA7()">Vérifier</button>
+      <button class="btn small" onclick="revealA7()">Terminer → Correction</button>
+      <span>Essais restants : <strong id="triesA7">1</strong></span>
+    </div>
+    <div id="fb-A7" class="small"></div>
+  </section>
+
+  <!-- MÉMENTO PYTHON -->
+  <section class="card" id="memo">
+    <h2>📘 Mémento Python (utile pour les QCM)</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Catégorie</th><th>Syntaxe</th><th>Exemple</th><th>Utilité</th></tr></thead>
+        <tbody id="memoBody"><!-- rempli en JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 20 QUESTIONS À TROUS -->
+  <section class="card" id="trous">
+    <h2>🧩 20 questions à trous — Boucles</h2>
+    <div class="badge">1 pt chacune • Essais dégressifs (3→2→1)</div>
+    <div class="card" style="background:#0e1630">
+      <h3>📘 Consignes</h3>
+      <ul class="small">
+        <li>Tape le <b>code Python exact</b> attendu (minuscules/majuscules comptent).</li>
+        <li>Utilise le <b>bouton d’aide</b> si tu bloques : un indice partiel s’affiche.</li>
+        <li>La correction apparaît après tes essais.</li>
+      </ul>
+      <button class="btn neon" onclick="showGlobalHint()">💡 Aide globale</button>
+    </div>
+    <div id="blanks"><!-- rempli en JS --></div>
+    <div class="row"><button class="btn" onclick="checkAllBlanks()">Vérifier toutes</button></div>
+  </section>
+
+  
+      
+
+  <!-- CONVERTISSEUR RGB/HEX -->
+  <section class="card" id="convertisseur">
+    <h2>🌈 Convertisseur #hex ⇄ RGB</h2>
+    <p>Entre une couleur #hex ou ses composantes RGB (0→255). La prévisualisation reflète la LED :</p>
+    <div class="row">
+      <div>
+        <label>Code #HEX :</label>
+        <input id="hexInput" type="text" maxlength="7" placeholder="#00FFFF">
+      </div>
+      <div>
+        <label>Rouge :</label><input id="rInput" type="number" min="0" max="255" value="0">
+        <label>Vert :</label><input id="gInput" type="number" min="0" max="255" value="255">
+        <label>Bleu :</label><input id="bInput" type="number" min="0" max="255" value="255">
+      </div>
+      <button class="btn neon" onclick="updateColor()">💡 Tester la couleur</button>
+    </div>
+    <div id="ledPreview" class="ledbox"></div>
+
+  
+  <!-- EXERCICES COMPLÉMENTAIRES (12 cartes) -->
+    
+  
+  <section class="card" id="complements">
+    <h2>🎯 Exercices complémentaires (12)</h2>
+    <div class="list">
+      
+      
+    <div class="consigne"><h3>Q2-a — LED (#hex) : jaune (2 pts)</h3>
+    <p>R=255, G=255, B=0 → #hex ?</p>
+    <input type="text" id="q2a" placeholder="#??????">
+    <div class="row"><button class="btn" onclick="checkHEX('q2a','#FFFF00',2)">Vérifier</button><button class="btn small" onclick="revealHEX('q2a','#FFFF00')">Terminer → correction</button><span>Essais : <strong id="tries-q2a">3</strong></span></div>
+    <div id="fb-q2a" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q2-b — LED (#hex) : cyan (2 pts)</h3>
+    <p>R=0, G=255, B=255 → #hex ?</p>
+    <input type="text" id="q2b" placeholder="#??????">
+    <div class="row"><button class="btn" onclick="checkHEX('q2b','#00FFFF',2)">Vérifier</button><button class="btn small" onclick="revealHEX('q2b','#00FFFF')">Terminer → correction</button><span>Essais : <strong id="tries-q2b">3</strong></span></div>
+    <div id="fb-q2b" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q2-c — LED (#hex) : magenta (2 pts)</h3>
+    <p>R=255, G=0, B=255 → #hex ?</p>
+    <input type="text" id="q2c" placeholder="#??????">
+    <div class="row"><button class="btn" onclick="checkHEX('q2c','#FF00FF',2)">Vérifier</button><button class="btn small" onclick="revealHEX('q2c','#FF00FF')">Terminer → correction</button><span>Essais : <strong id="tries-q2c">3</strong></span></div>
+    <div id="fb-q2c" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q1 — Console : print vs println (2 pts)</h3>
+    <p>Choisis la bonne affirmation :</p>
+    <label><input type="radio" name="q1" value="a"> print et println font la même chose.</label><br>
+    <label><input type="radio" name="q1" value="b"> println ajoute un retour à la ligne, pas print.</label><br>
+    <label><input type="radio" name="q1" value="c"> print efface l’écran.</label>
+    <div class="row"><button class="btn" onclick="checkQCM('q1','b',2)">Vérifier</button><button class="btn small" onclick="revealQCM('q1','b')">Terminer → correction</button><span>Essais : <strong id="tries-q1">3</strong></span></div>
+    <div id="fb-q1" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q3 — Manette : flèche haut (2 pts)</h3>
+    <p>La fonction qui détecte l’appui sur la flèche <strong>haut</strong> est…</p>
+    <label><input type="radio" name="q3" value="a"> cyberpi.controller.is_press('up')</label><br>
+    <label><input type="radio" name="q3" value="b"> cyberpi.controller.press('up')</label><br>
+    <label><input type="radio" name="q3" value="c"> is_up_pressed()</label>
+    <div class="row"><button class="btn" onclick="checkQCM('q3','a',2)">Vérifier</button><button class="btn small" onclick="revealQCM('q3','a')">Terminer → correction</button><span>Essais : <strong id="tries-q3">3</strong></span></div>
+    <div id="fb-q3" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q4 — Temporiser 2 secondes (2 pts)</h3>
+<pre><code>import time
+# Pause de ____ secondes
+time.sleep(____)</code></pre>
+    <input type="text" id="q4" placeholder="ex : 2">
+    <div class="row"><button class="btn" onclick="checkBlankSingle('q4',['2','2.0'],2)">Vérifier</button><button class="btn small" onclick="revealBlankSingle('q4',['2'])">Terminer → correction</button><span>Essais : <strong id="tries-q4">3</strong></span></div>
+    <div id="fb-q4" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q5 — Avancer 1 s à 50 % (3 pts)</h3>
+<pre><code>import cyberpi as cpi
+cpi.mbot2.forward(speed=____,  run_time=____)</code></pre>
+    <div class="row"><input type="number" id="q5a" placeholder="speed"><input type="number" id="q5b" placeholder="run_time"></div>
+    <div class="row"><button class="btn" onclick="checkTwoFields('q5a','q5b',50,1,3,'fb-q5','q5')">Vérifier</button><button class="btn small" onclick="revealTwoFields('q5a','q5b',50,1,'fb-q5','q5')">Terminer → correction</button><span>Essais : <strong id="tries-q5">3</strong></span></div>
+    <div id="fb-q5" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q9 — Directions mBot2 (4 pts)</h3>
+    <p>Coche les fonctions valides :</p>
+    <label><input type="checkbox" name="q9" value="A"> cyberpi.mbot2.forward(speed=30, run_time=1)</label><br>
+    <label><input type="checkbox" name="q9" value="B"> cyberpi.mbot2.backward(speed=30, run_time=1)</label><br>
+    <label><input type="checkbox" name="q9" value="C"> cyberpi.mbot2.turn(90, speed=50)</label><br>
+    <label><input type="checkbox" name="q9" value="D"> cyberpi.mbot2.fly(speed=100)</label>
+    <div class="row"><button class="btn" onclick="checkCheckbox('q9',['A','B','C'],4)">Vérifier</button><button class="btn small" onclick="revealCheckbox('q9',['A','B','C'])">Terminer → correction</button><span>Essais : <strong id="tries-q9">3</strong></span></div>
+    <div id="fb-q9" class="answer"></div>
   </div>
 </section>
+
+  
+
+  
+
+  <!-- EXPORT / PRINT -->
+  <section class="card no-print">
+    <div class="row">
+      <button class="btn" onclick="exportResults()">📄 Exporter mes réponses (JSON)</button>
+      <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+      <span class="badge">PDF : <b>Ctrl+P</b> → Microsoft Print to PDF</span>
+    </div>
+  </section>
+
+  <!-- Bulle d’aide -->
+  <div id="help" class="help-bubble">
+    <span class="close" onclick="hideHelp()">✖</span>
+    <h4>💡 Indice</h4>
+    <div id="helpText" class="small"></div>
+>>>>>>> ed835acab19b02decf9a94eaa1848edf59fcf54e
+  </div>
 
   
 
@@ -506,6 +826,7 @@ let POINTS={},TOTAL=0,score=0,tries={};
 function addItem(key,pts=1,tr=3){if(!(key in POINTS)){POINTS[key]=pts;TOTAL+=pts;tries[key]=tr;upd();}}
 function addScore(key){if(POINTS[key]&&tries[key]===0){return;} if(POINTS[key]){score+=POINTS[key];tries[key]=0;upd();AudioFX.chime();}}
 function decTry(key){if(tries[key]>0){tries[key]-=1;}return tries[key];}
+<<<<<<< HEAD
 
 function upd() {
   const sc = document.getElementById('score');
@@ -558,6 +879,43 @@ function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.r
 function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
 function shuffleAllBanks(){['bank1','bank2','bank3','bank4','bank5','bank6','bankA7'].forEach(id=>{const el=document.getElementById(id); if(el) shuffleChildren(el);});}
 
+=======
+function upd(){document.getElementById('score').textContent=score;document.getElementById('total').textContent=TOTAL;document.getElementById('note20').textContent=((score/TOTAL)*20).toFixed(1);}
+
+/* ========= API (tableau) ========= */
+const API_DATA = [
+  ['🖥️ Console (sans saut)','cyberpi.console.print(x)','x: texte/nombre','cyberpi.console.print("Hello")','Affiche sur la même ligne'],
+  ['🖨️ Console (avec saut)','cyberpi.console.println(x)','x: texte/nombre','cyberpi.console.println(3)','Affiche puis va à la ligne'],
+  ['⏸️ Attente','time.sleep(s)','s: secondes (float)','time.sleep(0.2)','Met en pause le programme'],
+  ['🚦 LED allumer','cyberpi.led.on(R,G,B,"all")','0–255','cyberpi.led.on(255,20,30,"all")','Couleur RGB'],
+  ['🎮 Manette (touche)','cyberpi.controller.is_press("a")','"a","b","up","down","left","right"','if cyberpi.controller.is_press("up"):','Détecte une touche'],
+  ['🛞 Avancer','cyberpi.mbot2.forward(speed=V)','0–100 %','cyberpi.mbot2.forward(speed=50)','Fait avancer le robot'],
+  ['🔄 Tourner','cyberpi.mbot2.turn(angle, speed=V)','angle° ; V%','cyberpi.mbot2.turn(90, speed=50)','Tourne sur place'],
+  ['📡 Distance (cm)','cyberpi.ultrasonic2.get(index=1)','—','d=cyberpi.ultrasonic2.get(index=1)','Retourne la distance'],
+  ['🛑 Arrêt immédiat','cyberpi.mbot2.EM_stop(port="all")','—','cyberpi.mbot2.EM_stop(port="all")','Stop d’urgence'],
+  ['🔊 Son','cyberpi.audio.play("hello")','nom du son','cyberpi.audio.play("laugh")','Joue un effet sonore']
+];
+function buildAPI(){
+  const body=document.getElementById('apiBody');
+  API_DATA.forEach(r=>{const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); body.appendChild(tr);});
+}
+
+/* ========= Drag & Drop utilitaires ========= */
+function enableDnDFor(idBank,idProg){
+  const bank=document.getElementById(idBank),prog=document.getElementById(idProg);
+  [bank,prog].forEach(dz=>{
+    dz.addEventListener('dragover',e=>e.preventDefault());
+    dz.addEventListener('drop',e=>{
+      e.preventDefault(); const id=e.dataTransfer.getData('text/plain'); const el=document.getElementById(id);
+      if(el) dz.appendChild(el);
+    });
+  });
+}
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
+function shuffleAllBanks(){['bank1','bank2','bank3','bank4','bank5','bank6','bankA7'].forEach(id=>{const el=document.getElementById(id); if(el) shuffleChildren(el);});}
+
+>>>>>>> ed835acab19b02decf9a94eaa1848edf59fcf54e
 /* ========= Vérif. DnD A1→A6 ========= */
 function getProgTokenIds(progId){const ids=[]; document.querySelectorAll('#'+progId+' .token').forEach(t=>ids.push(t.id)); return ids;}
 function showCorrectionList(expectedIds){
@@ -839,6 +1197,7 @@ function revealCheckbox(name,goodArr){
 }
 addItem('q9',4);
   
+<<<<<<< HEAD
 // Déclaration barèmes complémentaires
 ['q2a','q2b','q2c','q1','q3','q4','q5','q9'].forEach(k=>{
   if(!(k in POINTS)) addItem(k,2,3);
@@ -894,6 +1253,50 @@ ih.addEventListener('input', updateFromHex);
 // ✅ init couleur au chargement
 window.addEventListener('DOMContentLoaded', updateFromRGB);
 
+=======
+  
+  
+  
+  
+/* ========= Convertisseur ========= */
+function hexToRgb(hex){
+  let m = hex.trim();
+  if(m[0]!=='#') m = '#'+m; // ✅ ajoute le dièse si manquant
+  if(!/^#?[0-9a-fA-F]{6}$/.test(m)) return null;
+  const n = parseInt(m.replace('#',''),16);
+  return [(n>>16)&255,(n>>8)&255,n&255];
+}
+
+  
+  
+function rgbToHex(r,g,b){ function h(x){x=Math.min(255,Math.max(0,parseInt(x||0,10)));return x.toString(16).padStart(2,'0');} return '#'+h(r)+h(g)+h(b); }
+  
+function updateColor(){
+  const hexField = document.getElementById('hexInput');
+  const rField = document.getElementById('rInput');
+  const gField = document.getElementById('gInput');
+  const bField = document.getElementById('bInput');
+  const led = document.getElementById('ledPreview');
+
+  const hex = hexField.value.trim();
+  const r = parseInt(rField.value || 0);
+  const g = parseInt(gField.value || 0);
+  const b = parseInt(bField.value || 0);
+
+  if (/^#?[0-9a-fA-F]{6}$/.test(hex)) {
+    // ✅ si saisie d’un code HEX correct → MAJ des RGB
+    const [rr, gg, bb] = hexToRgb(hex);
+    rField.value = rr; gField.value = gg; bField.value = bb;
+    led.style.background = rgbToHex(rr, gg, bb);
+  } else {
+    // ✅ sinon, MAJ du champ HEX à partir des valeurs RGB
+    const newHex = rgbToHex(r, g, b).toUpperCase();
+    hexField.value = newHex;
+    led.style.background = newHex;
+  }
+}
+
+>>>>>>> ed835acab19b02decf9a94eaa1848edf59fcf54e
 /* ========= Export ========= */
 function exportResults(){
   const data={nom:document.getElementById('nom').value||'',prenom:document.getElementById('prenom').value||'',classe:document.getElementById('classe').value||'',temps:document.getElementById('elapsed').textContent,score:score,total:TOTAL,note20:((score/TOTAL)*20).toFixed(1),tries:tries};
