@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!-- =========================================================================
+🟪 SECTION 1 — HEAD + CSS
+But : métadonnées + styles globaux (thème sombre, cartes, tokens, tableaux…)
+=========================================================================== -->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP mBot2 & Python — Séquence complète v4.5 (Élève 3e)</title>
+
+<!-- ===================== Début CSS global ===================== -->
+<style>
+:root{
+  --bg1:#0d1226; --bg2:#0a1022; --glass:rgba(20,28,56,.62); --ink:#eaf1ff; --muted:#a9b6df;
+  --cyan:#67e8f9; --violet:#a78bfa; --gold:#f6c549; --green:#34d399; --red:#ef4444; --orange:#f59e0b;
+  --outline:rgba(255,255,255,.16);
+}
+*{box-sizing:border-box} html,body{margin:0;height:100%}
+body{
+  background:
+    radial-gradient(1000px 600px at 80% -10%, #233064 0%, transparent 40%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--ink); font-family:Verdana,Segoe UI,Tahoma,sans-serif; line-height:1.6;
+}
+header{padding:26px 14px 8px;text-align:center}
+h1{
+  margin:0; font-size:clamp(22px,3.6vw,40px); font-weight:900;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 6px 20px rgba(0,0,0,.35);
+}
+main{max-width:1240px;margin:10px auto 120px;padding:0 12px}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 14px 0;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  backdrop-filter: blur(7px);
+  font-size: 14px; /* taille de texte harmonisée */
+  line-height: 1.6; /* lisibilité optimale */
+}
+
+/* =========================
+   Tailles de texte personnalisées
+========================= */
+.xsmall  { font-size: 10px; color:#a9b6df; }       /* très petit, pour notes ou légendes */
+.small   { font-size: 12px; color:#cbd5ff; }       /* texte discret (déjà existant) */
+.medium  { font-size: 15px; color:#eaf1ff; }       /* taille standard */
+.large   { font-size: 18px; color:#eaf1ff; font-weight:500; } /* texte important */
+.xlarge  { font-size: 22px; color:#8de4ff; font-weight:700; } /* titres ou alertes */
+
+h2{margin:0 0 10px;font-size:clamp(18px,2.6vw,26px);color:var(--cyan)}
+h3{margin:8px 0;color:var(--gold)}
+h4{margin:6px 0;color:#bfe7ff}
+.small{font-size:12px;color:#cbd5ff}
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;background:#0e1630;border:1px solid var(--outline);font-size:12px;color:#cbd5ff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(280px,1fr))}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+label{display:block;margin-bottom:4px;color:#9fc4ff}
+input[type=text],input[type=number],textarea{
+  width:100%;padding:10px;border-radius:10px;border:1px solid var(--outline);
+  background:#0c1224;color:#eaf0ff
+}
+.btn{
+  appearance:none;border:1px solid var(--outline);background:#162453;color:#e8edff;
+  padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:700;letter-spacing:.2px;transition:.18s
+}
+.btn.neon:hover{box-shadow:0 0 0 3px rgba(103,232,249,.25), 0 0 18px rgba(103,232,249,.4); transform:translateY(-1px)}
+.btn.small{font-size:12px;padding:6px 10px}
+.caption{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.score{font-weight:800}
+
+.table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;border:1px solid var(--outline)}
+.table th{background:#0d2238;color:#8de4ff;text-align:left;padding:10px;border-bottom:1px solid var(--outline)}
+.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.table tr:nth-child(even){background:rgba(255,255,255,.03)}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+pre,code{font-family:Consolas,ui-monospace,Menlo,monospace}
+pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline); border-radius:12px; padding:12px; overflow:auto}
+.kw{color:#7dd3fc;font-weight:700}.fn{color:#60a5fa}.num{color:#fda4af}.str{color:#fbbf24}.com{color:#86efac}
+.qnum{display:inline-block;min-width:28px;padding:2px 8px;border-radius:999px;background:#0b2842;color:#9ad3ff;font-weight:900;margin-right:6px}
+.ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--orange)}
+.state-ok{border-color:rgba(52,211,153,.55)} .state-bad{border-color:rgba(239,68,68,.55)}
+.glow-success{box-shadow:0 0 0 0 rgba(246,197,73,.75);animation:glow 1.5s ease-out}
+@keyframes glow{0%{box-shadow:0 0 0 12px rgba(246,197,73,.3)}100%{box-shadow:0 0 0 0 rgba(246,197,73,0)}}
+
+.dropzone{min-height:56px;padding:8px;border:1px dashed rgba(255,255,255,.35);border-radius:12px;background:#0c1224}
+.bank{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;min-height:220px}
+.program{display:flex;flex-direction:column;gap:8px}
+.token{
+  display:inline-block;padding:6px 10px;border-radius:10px;background:#1a223e;
+  border:1px solid rgba(255,255,255,.25);cursor:grab;user-select:none;white-space:pre;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.token:hover{outline:1px solid var(--cyan)}
+.slot{min-height:40px;padding:8px;border:1px dashed rgba(255,255,255,.25);border-radius:8px;margin-top:6px;background:#0b1430}
+
+/* Couleurs spécifiques pour mieux distinguer A1→A6 */
+#m1,#m2,#m3,#m4,#m5,#m6{border-left:6px solid var(--gold);background:linear-gradient(90deg,rgba(246,197,73,.08),rgba(255,255,255,.02))}
+#A7{border-left:6px solid var(--cyan);background:linear-gradient(90deg,rgba(103,232,249,.08),rgba(255,255,255,.02))}
+  
+#progress { transition: width 0.4s ease-in-out; }
+
+
+  /* uniformiser les 20 questions*/
+  
+.consigne-card.text-lg {
+  font-size: 14px;                /* taille de texte harmonisée */
+  line-height: 1.7;
+}
+  
+  
+/* Bulle d’aide */
+.help-bubble{
+  position:fixed; right:18px; bottom:18px; max-width:360px; padding:14px 16px;
+  background:#0b2842; border:1px solid rgba(255,255,255,.22); border-radius:14px; z-index:99;
+  box-shadow:0 12px 30px rgba(0,0,0,.4); display:none
+}
+.help-bubble h4{margin:0 0 6px;color:#8de4ff}
+.help-bubble .close{float:right;cursor:pointer;color:#9ad3ff}
+  
+/* 🎯 Mise en forme des exercices complémentaires */
+#complements .consigne {
+  background: rgba(20, 28, 56, 0.55);
+  border-left: 6px solid #b07d62; /* couleur cuivre douce */
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: 14px;                /* taille de texte harmonisée */
+  color: #eaf1ff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+#complements h3 {
+  color: #f6c549;                 /* titre doré pour cohérence visuelle */
+  margin-top: 0;
+}
+#complements p {
+  color: #cbd5ff;
+  line-height: 1.6;
+}
+#complements input[type="text"], 
+#complements input[type="number"] {
+  max-width: 180px;
+}
+#complements hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,.1);
+  margin: 14px 0;
+}
+
+/* Convertisseur */
+.ledbox{width:100px;height:100px;border-radius:10px;border:1px solid #67e8f9;margin-top:10px;background:#000}
+
+@media print{.no-print{display:none} body{background:#fff;color:#000} .card{box-shadow:none;border-color:#999}}
+</style>
+
+</head>
+  
+<!-- ===================== Fin SECTION 1 — HEAD + CSS ===================== -->
+
+<!-- =========================================================================
+🟦 SECTION 2 — CORPS DU DOCUMENT HTML (tout le contenu visible)
+=========================================================================== -->
+<body>
+<header>
+  <h1>✨ TP mBot2 & Python — Séquence complète v4.5 (Élève 3e)</h1>
+  <p class="small">Thème sombre • API colorée • Mémento Python • Aides contextuelles • Étiquettes à trous • Score /20</p>
+</header>
+
+<main>
+  <!-- IDENTITÉ + CHRONO + SCORE -->
+  <section class="card" id="identite">
+    <div class="grid">
+      <div><label>Nom</label><input id="nom" type="text" placeholder="Dupont"></div>
+      <div><label>Prénom</label><input id="prenom" type="text" placeholder="Camille"></div>
+      <div><label>Classe</label><input id="classe" type="text" placeholder="3e B"></div>
+    </div>
+    <div class="row">
+      <button id="startTimer" class="btn neon">⏱️ Démarrer le chronomètre</button>
+      <button id="stopTimer" class="btn">⏹️ Arrêter</button>
+      <span>Temps : <strong id="elapsed">00:00</strong></span>
+       
+    <span class="score">Score brut :
+  <span id="score">0</span> / <span id="total">0</span> • /20 :
+  <span id="note20">0.0</span>
+</span>
+<div style="background:#182848;border-radius:999px;margin-top:8px;overflow:hidden;height:10px;">
+  <div id="progress" style="height:100%;width:0;background:linear-gradient(90deg,#67e8f9,#a78bfa);transition:width .3s ease;"></div>
+</div>
+
+    
+    
+    
+  </section>
+
+  <!-- TABLEAU API -->
+  <section class="card" id="api">
+    <div class="caption">
+      <h2>📚 Tableau API — mBot2 & CyberPi</h2>
+      <button class="btn small" onclick="window.print()">🖨️ Imprimer ce tableau</button>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Action</th><th>Commande Python</th><th>Paramètres</th><th>Exemple</th><th>Effet</th></tr></thead>
+        <tbody id="apiBody"><!-- rempli en JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- APPRENTISSAGES 1 → 6 : DnD -->
+  <section class="card" id="A1_6">
+    <h2>🧠 Apprentissages 1 à 6 — Étiquettes à glisser</h2>
+
+    <!-- A1 -->
+    <section class="card" id="m1">
+      <h3><span class="qnum">A1</span>Console
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd1',['m1t1','m1t2','m1t3','m1t4'],'fb-qd1')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Affiche  « Y » (saut) puis « X » (sans saut), puis « Z ».</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank1" class="dropzone bank">
+            <span class="token" id="m1t1" draggable="true">import cyberpi</span>
+            <span class="token" id="m1t2" draggable="true">cyberpi.console.print("X")</span>
+            <span class="token" id="m1t3" draggable="true">cyberpi.console.println("Y")</span>
+            <span class="token" id="m1t4" draggable="true">cyberpi.console.println("Z")</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog1" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog1',['m1t1','m1t3','m1t2','m1t4'],2,'qd1','fb-qd1')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd1">3</strong></span></div>
+      <div id="fb-qd1" class="small"></div>
+    </section>
+
+    <!-- A2 -->
+    <section class="card" id="m2">
+      <h3><span class="qnum">A2</span>LED : RGB & #hex
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd2',['m2t1','m2t2','m2t3','m2t4'],'fb-qd2')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Allumer rouge doux 1 s puis éteindre.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank2" class="dropzone bank">
+            <span class="token" id="m2t1" draggable="true">import cyberpi, time</span>
+            <span class="token" id="m2t2" draggable="true">cyberpi.led.on(255,20,30,"all")</span>
+            <span class="token" id="m2t3" draggable="true">time.sleep(1)</span>
+            <span class="token" id="m2t4" draggable="true">cyberpi.led.off()</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog2" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog2',['m2t1','m2t2','m2t3','m2t4'],2,'qd2','fb-qd2')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd2">3</strong></span></div>
+      <div id="fb-qd2" class="small"></div>
+    </section>
+
+    <!-- A3 -->
+    <section class="card" id="m3">
+      <h3><span class="qnum">A3</span>Manette
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd3',['m3t1','m3t2','m3t3','m3t4'],'fb-qd3')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Attendre la touche ↑, avancer 1 s à 40 %.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank3" class="dropzone bank">
+            <span class="token" id="m3t1" draggable="true">import cyberpi, time</span>
+            <span class="token" id="m3t2" draggable="true">while not cyberpi.controller.is_press('up'):</span>
+            <span class="token" id="m3t3" draggable="true">    time.sleep(0.05)</span>
+            <span class="token" id="m3t4" draggable="true">cyberpi.mbot2.forward(speed=40, run_time=1)</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog3" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog3',['m3t1','m3t2','m3t3','m3t4'],2,'qd3','fb-qd3')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd3">3</strong></span></div>
+      <div id="fb-qd3" class="small"></div>
+    </section>
+
+    <!-- A4 -->
+    <section class="card" id="m4">
+      <h3><span class="qnum">A4</span>Temporiser
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd4',['m4t1','m4t2','m4t3','m4t4'],'fb-qd4')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : « Action 1 » → pause 2 s → « Action 2 ».</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank4" class="dropzone bank">
+            <span class="token" id="m4t1" draggable="true">import time, cyberpi</span>
+            <span class="token" id="m4t2" draggable="true">cyberpi.console.println("Action 1")</span>
+            <span class="token" id="m4t3" draggable="true">time.sleep(2)</span>
+            <span class="token" id="m4t4" draggable="true">cyberpi.console.println("Action 2")</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog4" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog4',['m4t1','m4t2','m4t3','m4t4'],2,'qd4','fb-qd4')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd4">3</strong></span></div>
+      <div id="fb-qd4" class="small"></div>
+    </section>
+
+    <!-- A5 -->
+    <section class="card" id="m5">
+      <h3><span class="qnum">A5</span>Moteurs
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd5',['m5t1','m5t2','m5t3'],'fb-qd5')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Reculer 0,5 s, puis arrêt immédiat.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank5" class="dropzone bank">
+            <span class="token" id="m5t1" draggable="true">import cyberpi as cpi</span>
+            <span class="token" id="m5t2" draggable="true">cpi.mbot2.backward(speed=30, run_time=0.5)</span>
+            <span class="token" id="m5t3" draggable="true">cpi.mbot2.EM_stop(port="all")</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog5" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog5',['m5t1','m5t2','m5t3'],2,'qd5','fb-qd5')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd5">3</strong></span></div>
+      <div id="fb-qd5" class="small"></div>
+    </section>
+
+    <!-- A6 -->
+    <section class="card" id="m6">
+      <h3><span class="qnum">A6</span>Rotation
+        <button class="btn small" style="float:right" onclick="revealIfDone('qd6',['m6t1','m6t2'],'fb-qd6')">Terminer → correction</button>
+      </h3>
+      <div class="small">Consigne : Tourner à gauche 90°.</div>
+      <div class="grid">
+        <div><h4>Banque d’étiquettes</h4>
+          <div id="bank6" class="dropzone bank">
+            <span class="token" id="m6t1" draggable="true">import cyberpi as cpi</span>
+            <span class="token" id="m6t2" draggable="true">cpi.mbot2.turn(-90, speed=50)</span>
+          </div>
+        </div>
+        <div><h4>Programme à compléter</h4><div id="prog6" class="dropzone program"></div></div>
+      </div>
+      <div class="row"><button class="btn" onclick="checkDnD('prog6',['m6t1','m6t2'],2,'qd6','fb-qd6')">Vérifier</button>
+        <span>Essais : <strong id="tries-qd6">3</strong></span></div>
+      <div id="fb-qd6" class="small"></div>
+    </section>
+  </section>
+
+  <!-- APPRENTISSAGE 7 : Éviteur d’obstacles expressif (slots) -->
+  <section class="card" id="A7">
+    <h2>🤖 Apprentissage 7 — Éviteur d’obstacles expressif</h2>
+    <div class="badge">Essais autorisés : <b id="triesA7view">1</b> • Barème : <b>+4 pts</b></div>
+    <p class="small">Glisse les 10 étiquettes dans les 10 <b>slots</b> (chacun attend 1 étiquette). Après 1 minute, une bulle d’aide peut s’afficher. Puis teste dans mBlock 5.6.</p>
+    <div class="grid">
+      <div>
+        <h3>Banque d’étiquettes</h3>
+        <div id="bankA7" class="dropzone bank"><!-- rempli en JS --></div>
+      </div>
+      <div>
+        <h3>Programme à compléter</h3>
+        <div id="progA7" class="dropzone program"><!-- trous/slots générés en JS --></div>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn neon" onclick="checkA7()">Vérifier</button>
+      <button class="btn small" onclick="revealA7()">Terminer → Correction</button>
+      <span>Essais restants : <strong id="triesA7">1</strong></span>
+    </div>
+    <div id="fb-A7" class="small"></div>
+  </section>
+
+  <!-- MÉMENTO PYTHON -->
+  <section class="card" style="background:#0e1630; border-left:6px solid #d7d4ff;" id="memo">
+    <h2>📘 Mémento Python (utile pour les QCM)</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Catégorie</th><th>Syntaxe</th><th>Exemple</th><th>Utilité</th></tr></thead>
+        <tbody id="memoBody"><!-- rempli en JS --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 20 QUESTIONS À TROUS -->
+  <section class="card" id="trous">
+    <h2>🧩 20 questions à trous — Boucles</h2>
+    <div class="badge">1 pt chacune • Essais dégressifs (3→2→1)</div>
+    <div class="card" style="background:#0e1630">
+     
+<h3>📘 Consignes</h3>
+<div class="card" style="background:#0e1630; border-left:6px solid #67e8f9;">
+  <ul class="medium">
+    <li>💬 <b>Lis bien la consigne</b> avant d’écrire ton code.</li>
+    <li>🧩 <b>Tape exactement</b> la ligne de code Python demandée.</li>
+    <li>⚠️ <b>Respecte les minuscules et majuscules</b> (comme un mot de passe).</li>
+    <li>🔠 Sois attentif aux <b>espaces</b> et à la <b>ponctuation</b> (par ex. <code>:</code>, <code>" "</code>).</li>
+    <li>⏳ Tu as <b>3 essais</b> : le score baisse à chaque erreur.</li>
+    <li>💡 Si tu es bloqué, clique sur <b>« Aide »</b> pour un <b>indice partiel</b>.</li>
+    <li>✅ La <b>correction complète</b> s’affiche après les 3 essais.</li>
+  </ul>
+
+  <div style="margin-top:10px; padding:10px; background:#11182e; border-radius:10px;">
+    <p style="color:#8de4ff; font-weight:bold;">💻 Exemple en Python de correction :</p>
+    <pre style="background:#0a1020; color:#eaf1ff; padding:12px; border-radius:10px; font-family:Consolas, monospace;">
+# Boucle simple : répète 3 fois (Ceci est un commentaire avec le symbole # en début de ligne)
+for i in range(3):
+    print("Bonjour !")  # ce bloc est indenté de 4 espaces
+    </pre>
+
+    <p class="medium" style="color:#a9b6df;">
+  🔍 Ce code affiche trois fois le mot <code>Bonjour !</code>.  
+  Chaque ligne commence avec la même indentation (le même retrait à gauche).<br>
+  L'indentation est nécessaire chaque fois que tu ouvres un bloc de code, par exemple après :
+</p>
+
+<ul class="large" style="color:#a9b6df; padding-left: 1.5em;">
+  <li><code>if</code>, <code>elif</code>, <code>else</code> (conditions)</li>
+  <li><code>for</code>, <code>while</code> (boucles)</li>
+  <li><code>def</code>, <code>class</code> (fonctions ou classes)</li>
+  <li><code>try</code>, <code>except</code>, <code>finally</code> (gestion d'erreurs)</li>
+  <li>Toute structure où la ligne se termine par <code>:</code></li>
+</ul>
+
+<p class="medium" style="color:#a9b6df;">
+  Exemple :<br><br>
+<pre style="background:#0a1020; color:#eaf1ff; padding:12px; border-radius:10px;  font-family:Consolas, monospace;">
+ python
+ 
+ if x > 0:
+     print("x est positif")  # ce bloc est indenté (4 espaces)
+ </pre> 
+  📌 Sans cette indentation, Python renverra une <strong>erreur de syntaxe</strong>.
+</p>
+
+   
+  </div>
+</div>
+
+      
+      <button class="btn neon" onclick="showGlobalHint()">💡 Aide globale</button>
+    </div>
+    <div id="blanks"><!-- rempli en JS --></div>
+    <div class="row"><button class="btn" onclick="checkAllBlanks()">Vérifier toutes</button></div>
+  
+  </section>
+
+
+      
+
+  <!-- CONVERTISSEUR RGB/HEX -->
+<!-- 🎨 Convertisseur #hex ⇄ RGB -->
+<section class="card" id="hexrgb">
+  <h2>🌈 Convertisseur #hex ⇄ RGB</h2>
+  <div class="grid">
+    <div>
+      <label>#Hex :</label>
+      <input id="hex" type="text" value="#40E0D0" placeholder="#RRGGBB">
+      <div class="small">Ex : #FF0000 rouge • #00FF00 vert • #0000FF bleu</div>
+    </div>
+    <div>
+      <label>R :</label><input id="r" type="number" min="0" max="255" value="64">
+      <label>G :</label><input id="g" type="number" min="0" max="255" value="224">
+      <label>B :</label><input id="b" type="number" min="0" max="255" value="208">
+      <div><label>Aperçu :</label><div id="preview" class="ledbox"></div></div>
+    </div>
+  </div>
+  <p class="small">À utiliser avec : <code>cyberpi.led.on(R,G,B,"all")</code></p>
+</section>
+
+
+<!-- EXERCICES COMPLÉMENTAIRES (12 cartes) -->
+    
+  
+  <section class="card" id="complements">
+    <h2>🎯 Exercices complémentaires (12)</h2>
+    <div class="list">
+      
+      
+    <div class="consigne"><h3>Q2-a — LED (#hex) : jaune (2 pts)</h3>
+    <p>R=255, G=255, B=0 → #hex ?</p>
+    <input type="text" id="q2a" placeholder="#??????">
+    <div class="row"><button class="btn" onclick="checkHEX('q2a','#FFFF00',2)">Vérifier</button><button class="btn small" onclick="revealHEX('q2a','#FFFF00')">Terminer → correction</button><span>Essais : <strong id="tries-q2a">3</strong></span></div>
+    <div id="fb-q2a" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q2-b — LED (#hex) : cyan (2 pts)</h3>
+    <p>R=0, G=255, B=255 → #hex ?</p>
+    <input type="text" id="q2b" placeholder="#??????">
+    <div class="row"><button class="btn" onclick="checkHEX('q2b','#00FFFF',2)">Vérifier</button><button class="btn small" onclick="revealHEX('q2b','#00FFFF')">Terminer → correction</button><span>Essais : <strong id="tries-q2b">3</strong></span></div>
+    <div id="fb-q2b" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q2-c — LED (#hex) : magenta (2 pts)</h3>
+    <p>R=255, G=0, B=255 → #hex ?</p>
+    <input type="text" id="q2c" placeholder="#??????">
+    <div class="row"><button class="btn" onclick="checkHEX('q2c','#FF00FF',2)">Vérifier</button><button class="btn small" onclick="revealHEX('q2c','#FF00FF')">Terminer → correction</button><span>Essais : <strong id="tries-q2c">3</strong></span></div>
+    <div id="fb-q2c" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q1 — Console : print vs println (2 pts)</h3>
+    <p>Choisis la bonne affirmation :</p>
+    <label><input type="radio" name="q1" value="a"> print et println font la même chose.</label><br>
+    <label><input type="radio" name="q1" value="b"> println ajoute un retour à la ligne, pas print.</label><br>
+    <label><input type="radio" name="q1" value="c"> print efface l’écran.</label>
+    <div class="row"><button class="btn" onclick="checkQCM('q1','b',2)">Vérifier</button><button class="btn small" onclick="revealQCM('q1','b')">Terminer → correction</button><span>Essais : <strong id="tries-q1">3</strong></span></div>
+    <div id="fb-q1" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q3 — Manette : flèche haut (2 pts)</h3>
+    <p>La fonction qui détecte l’appui sur la flèche <strong>haut</strong> est…</p>
+    <label><input type="radio" name="q3" value="a"> cyberpi.controller.is_press('up')</label><br>
+    <label><input type="radio" name="q3" value="b"> cyberpi.controller.press('up')</label><br>
+    <label><input type="radio" name="q3" value="c"> is_up_pressed()</label>
+    <div class="row"><button class="btn" onclick="checkQCM('q3','a',2)">Vérifier</button><button class="btn small" onclick="revealQCM('q3','a')">Terminer → correction</button><span>Essais : <strong id="tries-q3">3</strong></span></div>
+    <div id="fb-q3" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q4 — Temporiser 2 secondes (2 pts)</h3>
+<pre><code>import time
+# Pause de ____ secondes
+time.sleep(____)</code></pre>
+    <input type="text" id="q4" placeholder="ex : 2">
+    <div class="row"><button class="btn" onclick="checkBlankSingle('q4',['2','2.0'],2)">Vérifier</button><button class="btn small" onclick="revealBlankSingle('q4',['2'])">Terminer → correction</button><span>Essais : <strong id="tries-q4">3</strong></span></div>
+    <div id="fb-q4" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q5 — Avancer 1 s à 50 % (3 pts)</h3>
+<pre><code>import cyberpi as cpi
+cpi.mbot2.forward(speed=____,  run_time=____)</code></pre>
+    <div class="row"><input type="number" id="q5a" placeholder="speed"><input type="number" id="q5b" placeholder="run_time"></div>
+    <div class="row"><button class="btn" onclick="checkTwoFields('q5a','q5b',50,1,3,'fb-q5','q5')">Vérifier</button><button class="btn small" onclick="revealTwoFields('q5a','q5b',50,1,'fb-q5','q5')">Terminer → correction</button><span>Essais : <strong id="tries-q5">3</strong></span></div>
+    <div id="fb-q5" class="answer"></div>
+  </div>
+  <hr>
+  <div class="consigne"><h3>Q9 — Directions mBot2 (4 pts)</h3>
+    <p>Coche les fonctions valides :</p>
+    <label><input type="checkbox" name="q9" value="A"> cyberpi.mbot2.forward(speed=30, run_time=1)</label><br>
+    <label><input type="checkbox" name="q9" value="B"> cyberpi.mbot2.backward(speed=30, run_time=1)</label><br>
+    <label><input type="checkbox" name="q9" value="C"> cyberpi.mbot2.turn(90, speed=50)</label><br>
+    <label><input type="checkbox" name="q9" value="D"> cyberpi.mbot2.fly(speed=100)</label>
+    <div class="row"><button class="btn" onclick="checkCheckbox('q9',['A','B','C'],4)">Vérifier</button><button class="btn small" onclick="revealCheckbox('q9',['A','B','C'])">Terminer → correction</button><span>Essais : <strong id="tries-q9">3</strong></span></div>
+    <div id="fb-q9" class="answer"></div>
+  </div>
+</section>
+
+  
+
+  
+
+  <!-- EXPORT / PRINT -->
+  <section class="card no-print">
+    <div class="row">
+      <button class="btn" onclick="exportResults()">📄 Exporter mes réponses (JSON)</button>
+      <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+      <span class="badge">PDF : <b>Ctrl+P</b> → Microsoft Print to PDF</span>
+    </div>
+  </section>
+
+  <!-- Bulle d’aide -->
+  <div id="help" class="help-bubble">
+    <span class="close" onclick="hideHelp()">✖</span>
+    <h4>💡 Indice</h4>
+    <div id="helpText" class="small"></div>
+  </div>
+
+</main>
+<!-- ===================== Fin SECTION 2 — CORPS HTML ===================== -->
+
+
+
+<!-- =========================================================================
+🟨 SECTION 3 — SCRIPT JAVASCRIPT (logique interactive)
+=========================================================================== -->
+<script>
+/* ========= AudioFX (sons) ========= */
+const AudioFX = (()=>{ let ctx;
+  function ensure(){ if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)(); }
+  function tone(freq=880, dur=0.12, type='sine', gain=0.06){
+    ensure(); const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type; o.frequency.value=freq; g.gain.value=gain; o.connect(g); g.connect(ctx.destination); o.start();
+    setTimeout(()=>{o.stop();}, dur*1000);
+  }
+  return {
+    ok(){ tone(1046,0.10,'triangle',0.07); setTimeout(()=>tone(1318,0.12,'triangle',0.07),90); },
+    fail(){ tone(220,0.18,'sawtooth',0.05); },
+    chime(){ tone(988,0.14,'sine',0.08); setTimeout(()=>tone(1480,0.18,'sine',0.08),120); setTimeout(()=>tone(1760,0.22,'sine',0.07),260); }
+  };
+})();
+
+/* ========= Chrono & notes ========= */
+let startTime=null,timerHandle=null;
+function fmt(ms){const s=Math.floor(ms/1000);const m=String(Math.floor(s/60)).padStart(2,'0');const ss=String(s%60).padStart(2,'0');return m+':'+ss;}
+document.getElementById('startTimer').addEventListener('click',()=>{
+  if(!startTime){startTime=performance.now();timerHandle=setInterval(()=>{document.getElementById('elapsed').textContent=fmt(performance.now()-startTime);},200);}
+  shuffleAllBanks(); armHelpTimer();
+});
+document.getElementById('stopTimer').addEventListener('click',()=>{if(timerHandle){clearInterval(timerHandle);timerHandle=null;}});
+  
+let POINTS={},TOTAL=0,score=0,tries={};
+
+// ✅ initialise directement les barèmes avant toute fonction
+['qd1','qd2','qd3','qd4','qd5','qd6'].forEach(id=>addItem(id,2,3));
+
+  
+function addItem(key,pts=1,tr=3){if(!(key in POINTS)){POINTS[key]=pts;TOTAL+=pts;tries[key]=tr;upd();}}
+let SCORED = {};
+function addScore(key){
+  if (SCORED[key]) return;
+  if(POINTS[key]){score+=POINTS[key];tries[key]=0;upd();AudioFX.chime();SCORED[key]=true;}
+}
+function decTry(key){if(tries[key]>0){tries[key]-=1;}return tries[key];}
+
+function upd() {
+  const sc = document.getElementById('score');
+  const tot = document.getElementById('total');
+  const note = document.getElementById('note20');
+  const bar = document.getElementById('progress');
+
+  sc.textContent = score;
+  tot.textContent = TOTAL;
+
+  const note20 = (score / TOTAL) * 20;
+  note.textContent = note20.toFixed(1);
+
+  // ✅ Mise à jour de la barre de progression (largeur en %)
+  const pct = Math.min(100, (score / TOTAL) * 100);
+  bar.style.width = pct + '%';
+}
+
+
+/* ========= API (tableau) ========= */
+const API_DATA = [
+  ['🖥️ Console (sans saut)','cyberpi.console.print(x)','x: texte/nombre','cyberpi.console.print("Hello")','Affiche sur la même ligne'],
+  ['🖨️ Console (avec saut)','cyberpi.console.println(x)','x: texte/nombre','cyberpi.console.println(3)','Affiche puis va à la ligne'],
+  ['⏸️ Attente','time.sleep(s)','s: secondes (float)','time.sleep(0.2)','Met en pause le programme'],
+  ['🚦 LED allumer','cyberpi.led.on(R,G,B,"all")','0–255','cyberpi.led.on(255,20,30,"all")','Couleur RGB'],
+  ['🎮 Manette (touche)','cyberpi.controller.is_press("a")','"a","b","up","down","left","right"','if cyberpi.controller.is_press("up"):','Détecte une touche'],
+  ['🛞 Avancer','cyberpi.mbot2.forward(speed=V)','0–100 %','cyberpi.mbot2.forward(speed=50)','Fait avancer le robot'],
+  ['🔄 Tourner','cyberpi.mbot2.turn(angle, speed=V)','angle° ; V%','cyberpi.mbot2.turn(90, speed=50)','Tourne sur place'],
+  ['📡 Distance (cm)','cyberpi.ultrasonic2.get(index=1)','—','d=cyberpi.ultrasonic2.get(index=1)','Retourne la distance'],
+  ['🛑 Arrêt immédiat','cyberpi.mbot2.EM_stop(port="all")','—','cyberpi.mbot2.EM_stop(port="all")','Stop d’urgence'],
+  ['🔊 Son','cyberpi.audio.play("hello")','nom du son','cyberpi.audio.play("laugh")','Joue un effet sonore']
+];
+function buildAPI(){
+  const body=document.getElementById('apiBody');
+  API_DATA.forEach(r=>{const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); body.appendChild(tr);});
+}
+
+/* ========= Drag & Drop utilitaires ========= */
+function enableDnDFor(idBank,idProg){
+  const bank=document.getElementById(idBank),prog=document.getElementById(idProg);
+  [bank,prog].forEach(dz=>{
+    dz.addEventListener('dragover',e=>e.preventDefault());
+    dz.addEventListener('drop',e=>{
+      e.preventDefault(); const id=e.dataTransfer.getData('text/plain'); const el=document.getElementById(id);
+      if(el) dz.appendChild(el);
+    });
+  });
+}
+
+function makeTokensDraggable() {
+  document.querySelectorAll('.token').forEach(token => {
+    token.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', token.id);
+    });
+  });
+}
+  
+  
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleChildren(el){const kids=[...el.children];shuffleArray(kids).forEach(k=>el.appendChild(k));}
+function shuffleAllBanks(){['bank1','bank2','bank3','bank4','bank5','bank6','bankA7'].forEach(id=>{const el=document.getElementById(id); if(el) shuffleChildren(el);});}
+
+/* ========= Vérif. DnD A1→A6 ========= */
+function getProgTokenIds(progId){const ids=[]; document.querySelectorAll('#'+progId+' .token').forEach(t=>ids.push(t.id)); return ids;}
+function showCorrectionList(expectedIds){
+  return '<pre class="code-correction">'+expectedIds.map(id=>{const el=document.getElementById(id); return (el?el.textContent:id);}).join('\n')+'</pre>';
+}
+function checkDnD(progId, expectedIds, pts, key, fbId){
+  const fb=document.getElementById(fbId);
+  addItem(key,pts,3);
+  const ids=getProgTokenIds(progId);
+  if(ids.length!==expectedIds.length){ fb.innerHTML='<span class="warn">Il manque des étiquettes.</span>'; AudioFX.fail(); return; }
+  const ok=ids.every((x,i)=>x===expectedIds[i]);
+  if(ok){ fb.innerHTML='<span class="ok">✔ +'+pts+' pts</span>'; addScore(key); document.getElementById(progId).classList.add('state-ok','glow-success'); setTimeout(()=>document.getElementById(progId).classList.remove('glow-success'),1200); AudioFX.ok(); }
+  else{
+    const t=decTry(key);
+    if(t===0){ fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span>'+showCorrectionList(expectedIds); }
+    else{ fb.innerHTML='<span class="bad">✖ Ordre incorrect. Essais restants : '+t+'</span>'; AudioFX.fail(); }
+    const triesSpan=document.getElementById('tries-'+key); if(triesSpan) triesSpan.textContent=tries[key];
+    document.getElementById(progId).classList.add('state-bad');
+  }
+}
+function revealIfDone(key, expectedIds, fbId){
+  const fb=document.getElementById(fbId);
+  if((tries[key]||0)>0){ fb.innerHTML='<span class="bad">La correction apparaît après tes essais.</span>'; return; }
+  fb.innerHTML='<h4>Correction :</h4>'+showCorrectionList(expectedIds);
+}
+
+    /* ========= A7 (slots) ========= */
+const A7_ORDER=['a7t1','a7t2','a7t3','a7t4','a7t5','a7t6','a7t7','a7t8','a7t9','a7t10'];
+const A7_TOKENS=[
+  {id:'a7t1', text:'import cyberpi, time'},
+  {id:'a7t2', text:'SEUIL = 15'},
+  {id:'a7t3', text:'PORT = 1'},
+  {id:'a7t4', text:'VITESSE = 50'},
+  {id:'a7t5', text:'d = cyberpi.ultrasonic2.get(index=PORT)'},
+  {id:'a7t6', text:'cyberpi.audio.play("buzzing")'},
+  {id:'a7t7', text:'elif d < SEUIL:'},
+  {id:'a7t8', text:'cyberpi.audio.play("laugh")'},
+  {id:'a7t9', text:'cyberpi.mbot2.turn(135, speed=VITESSE)'},
+  {id:'a7t10',text:'time.sleep(0.1)'}
+];
+  
+function buildA7(){
+  const bank=document.getElementById('bankA7'); const prog=document.getElementById('progA7');
+  // Banque d’étiquettes
+  A7_TOKENS.forEach(t=>{
+    const s=document.createElement('span'); s.className='token'; s.id=t.id; s.textContent=t.text; s.draggable=true;
+    s.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',t.id));
+    bank.appendChild(s);
+  });
+  // 10 slots (1 étiquette chacun) pour éviter l’erreur “il manque des étiquettes”
+
+ /* --- Génération des 10 “trous” (slots) du programme --- */
+  const holes = [
+    '# 1. importations',
+    'SEUIL = [ __ ]          # 2. seuil de détection (cm)',
+    'PORT = [ __ ]           # 3. port du capteur',
+    'VITESSE = [ __ ]        # 4. vitesse (%)',
+    'while True:<br>[ __ ]         # 5. lecture distance</span>',
+    '    if d is None or d == 0:\n        <br>cyberpi.led.on(255,0,0,"all")\n        <br>cyberpi.mbot2.EM_stop(port="all")\n        <br>[ __ ]         # 6. son si pas de mesure',
+    '    [ __ ]              # 7. condition obstacle',
+    '        cyberpi.led.on(255,165,0,"all")\n       <br> cyberpi.mbot2.EM_stop(port="all")\n      <br>   [ __ ]         # 8. son de rire',
+    '        cyberpi.mbot2.backward(speed=VITESSE, run_time=0.4)\n       <br>  [ __ ]         # 9. rotation',
+    '    else:\n    <br>     cyberpi.led.on(0,255,0,"all")\n    <br>     cyberpi.audio.play("hello")\n      <br>   cyberpi.mbot2.forward(speed=VITESSE)\n   <br>  [ __ ]  #Pause avant de refaire une mesure'
+  ];
+
+  
+  holes.forEach((txt,idx)=>{
+    const container=document.createElement('div'); container.className='dropzone';
+    const label=document.createElement('div'); label.className='small'; label.innerHTML='<span class="qnum">'+(idx+1)+'</span>'+txt;
+    const slot=document.createElement('div'); slot.className='slot'; slot.id='a7slot'+(idx+1);
+    // Le slot n’accepte qu’1 token (remplace si déjà présent)
+    slot.addEventListener('dragover',e=>e.preventDefault());
+    slot.addEventListener('drop',e=>{
+      e.preventDefault(); const id=e.dataTransfer.getData('text/plain'); const el=document.getElementById(id);
+      if(!el) return;
+      // remet l’ancien token (s’il existe) dans la banque
+      const prev=slot.querySelector('.token'); if(prev) bank.appendChild(prev);
+      slot.appendChild(el);
+    });
+    container.appendChild(label); container.appendChild(slot); prog.appendChild(container);
+  });
+  // DnD banque elle-même (pour reposer un token)
+  bank.addEventListener('dragover',e=>e.preventDefault());
+  bank.addEventListener('drop',e=>{
+    e.preventDefault(); const id=e.dataTransfer.getData('text/plain'); const el=document.getElementById(id);
+    if(el) bank.appendChild(el);
+  });
+  addItem('A7',4,1);
+  document.getElementById('triesA7').textContent=tries['A7'];
+  document.getElementById('triesA7view').textContent=tries['A7'];
+}
+function getA7ProgIds(){
+  // lit chaque slot a7slot1..10, prend son unique token (ou null)
+  const ids=[]; for(let i=1;i<=10;i++){ const t=document.querySelector('#a7slot'+i+' .token'); ids.push(t?t.id:null); } return ids;
+}
+function showA7Correction(){
+  const code = `<span class="kw">import</span> cyberpi, time <span class="com"># Import</span>
+SEUIL <span class="kw">=</span> <span class="num">15</span>
+PORT <span class="kw">=</span> <span class="num">1</span>
+VITESSE <span class="kw">=</span> <span class="num">50</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    d <span class="kw">=</span> cyberpi.ultrasonic2.get(index<span class="kw">=</span>PORT)
+    <span class="kw">if</span> d <span class="kw">is</span> <span class="kw">None</span> <span class="kw">or</span> d <span class="kw">==</span> <span class="num">0</span>:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"buzzing"</span>)
+    <span class="kw">elif</span> d <span class="kw">&lt;</span> SEUIL:
+        cyberpi.led.on(<span class="num">255</span>,<span class="num">165</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.mbot2.EM_stop(port<span class="kw">=</span><span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"laugh"</span>)
+        cyberpi.mbot2.backward(speed<span class="kw">=</span>VITESSE, run_time<span class="kw">=</span><span class="num">0.4</span>)
+        cyberpi.mbot2.turn(<span class="num">135</span>, speed<span class="kw">=</span>VITESSE)
+    <span class="kw">else</span>:
+        cyberpi.led.on(<span class="num">0</span>,<span class="num">255</span>,<span class="num">0</span>,<span class="str">"all"</span>)
+        cyberpi.audio.play(<span class="str">"hello"</span>)
+        cyberpi.mbot2.forward(speed<span class="kw">=</span>VITESSE)
+    time.sleep(<span class="num">0.1</span>)`;
+  document.getElementById('fb-A7').innerHTML='<h3>🟦 Correction commentée</h3><pre class="code-correction">'+code+'</pre>';
+}
+function checkA7(){
+  const ids=getA7ProgIds();
+  if(ids.some(x=>x===null)){document.getElementById('fb-A7').innerHTML='<span class="warn">Il te manque des étiquettes dans au moins un slot.</span>'; AudioFX.fail(); return;}
+  const ok=ids.every((x,i)=>x===A7_ORDER[i]);
+  if(ok){ document.getElementById('fb-A7').innerHTML='<span class="ok">✔ +4 pts. 🎉</span>'; addScore('A7'); document.getElementById('A7').classList.add('state-ok','glow-success'); setTimeout(()=>document.getElementById('A7').classList.remove('glow-success'),1500); AudioFX.ok(); }
+  else{ const t=decTry('A7'); if(t===0){ document.getElementById('fb-A7').innerHTML='<span class="bad">✖ Essai utilisé. Correction :</span>'; showA7Correction(); } else { document.getElementById('fb-A7').innerHTML='<span class="bad">✖ Ordre incorrect. Il te reste '+t+' essai.</span>'; AudioFX.fail(); } document.getElementById('triesA7').textContent=tries['A7']; }
+}
+function revealA7(){ 
+  if((tries['A7']||0)>0){
+    document.getElementById('fb-A7').innerHTML='<span class="bad">La correction apparaîtra après ton essai.</span>';
+    return;
+  }
+  showA7Correction();
+}
+
+/* === Lancer la construction A7 au chargement === */
+document.addEventListener("DOMContentLoaded", buildA7);
+
+/* ========= Bulle d’aide ========= */
+let helpTimer=null;
+function armHelpTimer(){ clearTimeout(helpTimer); helpTimer=setTimeout(()=>{showHelpRandom();},60000); }
+function showHelpRandom(){
+  const lines=A7_TOKENS.map(t=>t.text);
+  const pick=lines[Math.floor(Math.random()*lines.length)];
+  document.getElementById('helpText').innerHTML='Essaie d’utiliser : <code>'+pick.replace(/</g,'&lt;')+'</code>';
+  document.getElementById('help').style.display='block'; setTimeout(hideHelp,10000);
+}
+function hideHelp(){document.getElementById('help').style.display='none';}
+
+/* ========= Mémento ========= */
+const MEMO=[
+ ['Boucle for','for i in range(n):','for i in range(3):','Répète n fois'],
+ ['Boucle while','while condition:','while True:','Répète tant que vrai'],
+ ['Condition','if … elif … else:','if d < 10:','Choix logique'],
+ ['Pause','time.sleep(s)','time.sleep(1)','Attente (s)'],
+ ['Affichage','print(x)','print("OK")','Console'],
+ ['Ultrason','cyberpi.ultrasonic2.get(index=1)','d=cyberpi.ultrasonic2.get(index=1)','Distance (cm)'],
+ ['LED','cyberpi.led.on(R,G,B,"all")','cyberpi.led.on(255,20,30,"all")','Couleur'],
+ ['Son','cyberpi.audio.play("nom")','cyberpi.audio.play("hello")','Effet sonore']
+];
+function buildMemo(){ const b=document.getElementById('memoBody'); MEMO.forEach(r=>{const tr=document.createElement('tr'); r.forEach(c=>{const td=document.createElement('td'); td.textContent=c; tr.appendChild(td);}); b.appendChild(tr);});}
+
+/* ========= 20 questions à trous ========= */
+const blanksData=[
+
+
+/* ------------------------------------------------------
+   1. Boucle infinie
+------------------------------------------------------ */  
+{id:'b1',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg, #0b1320 0%, #141d2e 100%);
+      border: 1px solid #1e3a8a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      color: #e5e7eb;
+      box-shadow: 0 0 10px rgba(30,58,138,0.4);
+      border-left:6px solid #9088ff;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.1em;">
+      🧠 Consigne – Boucle infinie (entête)
+    </h3>
+    <p style="margin-bottom:8px;">
+      ✏️ <strong>Écris la ligne de code Python</strong> qui permet de 
+      <b>répéter des actions sans fin</b> — on appelle cela une <b>boucle infinie</b>.
+    </p>
+    <p style="margin-bottom:8px;">
+      Cette ligne est l’<b>entête</b> de la boucle : elle indique au programme que ce qui suit sera 
+      <b>répété sans arrêt</b>.
+    </p>
+    <p style="margin-bottom:8px;">
+      💡 En programmation, une <b>boucle infinie</b> est une structure qui 
+      <b>exécute toujours les mêmes instructions sans s’arrêter</b>.
+    </p>
+    <p style="margin-bottom:0;">
+      🤖 Imagine que tu veux que ton <b>robot mBot2</b> 
+      continue à avancer ou à vérifier ses capteurs sans jamais s’arrêter : 
+      pour cela, on écrit une <b>boucle infinie</b> en Python.
+    </p>
+  </div>`,
+ a:['while true:']
+},
+/* ------------------------------------------------------
+   2. Pause courte
+------------------------------------------------------ */
+{id:'b2',
+ q:`<div class="consigne-card text-lg" style="
+      background: linear-gradient(135deg,#0b1320 0%,#1a1f3a 100%);
+      border: 1px solid #2563eb;
+      border-radius: 16px;
+      padding: 20px 26px;
+      margin: 16px -12px 20px -12px;
+      color: #e5e7eb;
+      box-shadow: 0 0 12px rgba(37,99,235,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.25em;">
+      ⏸️ Consigne – Faire une courte pause (50 ms)
+    </h3>
+    <p>💬 <strong>Écris la ligne de code Python</strong> qui permet au programme de 
+      <b>faire une très courte pause</b> avant de continuer – comme si ton robot 
+      attendait un instant avant de refaire une action.</p>
+    <p>En Python, on utilise la commande <b>time.sleep()</b> pour marquer une pause :
+      le chiffre entre parenthèses indique la durée en secondes.</p>
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+      <code style="color:#7dd3fc;">time.sleep(2)</code>
+      <span style="color:#a3e635;"> ← met le robot en pause pendant 2 secondes</span>
+    </div>
+    <p style="margin-top:10px;">💡 <b>Astuce :</b> 1 seconde = 1000 millisecondes, 
+    donc 0.02 s correspond à une pause de 20 ms !</p>
+  </div>`,
+ a:['time.sleep(0.05)','sleep(0.05)']
+},
+
+
+  
+/* ------------------------------------------------------
+   3. Boucler 5 fois
+------------------------------------------------------ */
+{id:'b3',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0b1320 0%,#151b32 100%);
+      border: 1px solid #2563eb;
+      border-radius: 16px;
+      padding: 18px 24px;
+      margin: 16px -10px 20px -10px;
+      color: #e5e7eb;
+      box-shadow: 0 0 12px rgba(37,99,235,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+<h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🔁 Consigne – Répéter <i style="color:#f6c549;">5</i> fois</h3>
+    <p>🎯 Tu dois écrire une <b>boucle</b> qui permet de <b>répéter plusieurs fois une action</b>.</p>
+    <p>Elle commence toujours par le mot <code>for</code>, suivi d’un petit nom de variable 
+      (<code>i</code> en général), du mot <code>in</code>, et d’une fonction spéciale qui crée une liste 
+      de nombres de 0 jusqu’à <b>n − 1</b>.</p>
+    <p>💡 Cette fonction s’appelle <code>range(n)</code> → elle crée les nombres <code>0, 1, 2, …, n − 1</code>.</p>
+    <p>🔠 N’oublie pas <b>les deux-points</b> <code>:</code> à la fin ! (sinon Python affiche une erreur de syntaxe)</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+      <pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;">
+<span style="color:#86efac;"># Exemple :</span>
+<span style="color:#7dd3fc;">for</span> i <span style="color:#7dd3fc;">in</span> <span style="color:#93c5fd;">range(3)</span>:
+<span style="color:#fbbf24;">print</span>("Bonjour mBot2 !")
+</pre>
+      <span style="color:#a3e635;">→ ce code répète trois fois l’affichage “Bonjour mBot2 !”</span>
+    </div>
+  </div>`,
+ a:['for i in range(5):','for i in range(0,5):']
+},
+
+/* ------------------------------------------------------
+   4. Sortir d’une boucle
+------------------------------------------------------ */
+{id:'b4',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg, #0b1320 0%, #141d2e 100%);
+      border: 1px solid #1e3a8a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      color: #e5e7eb;
+      box-shadow: 0 0 10px rgba(30,58,138,0.4);
+      border-left:6px solid #9088ff;
+    ">
+    <h3 style="color:#fbbf24; margin-top:0; font-size:1.2em;">🚪 Consigne – Sortir d’une boucle</h3>
+
+    <p>💬 Tu es dans une <b>boucle</b> (<code>for</code> ou <code>while</code>) et tu veux 
+    <b>l’arrêter immédiatement</b>, même si elle n’est pas encore terminée.</p>
+
+    <p style="color:#fca5a5;">🟥 Pour cela, on utilise un <b>mot-clé Python</b> qui permet de 
+    <b>sortir de la boucle tout de suite</b> dès qu’on le rencontre.</p>
+
+    <p style="color:#c084fc;">🧠 Tu dois écrire <b>un seul mot</b>, sans parenthèses ni guillemets.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+      <pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;">
+# Exemple :
+for i in range(10):
+    if i == 5:
+        break
+print("Boucle interrompue à i = 5")</pre>
+      <span style="color:#a3e635;">→ Le mot-clé <code>break</code> interrompt la boucle dès que i = 5.</span>
+    </div>
+
+    <div style="background:#141b3d;border-radius:10px;padding:12px;margin-top:12px;">
+      <strong style="color:#f472b6;">Remarque :</strong> Ce mot-clé est souvent utilisé 
+      <b>à l’intérieur d’une condition</b>.<br>
+      Par exemple, pour arrêter le robot mBot2 lorsqu’un obstacle est détecté :
+      <pre style="color:#93c5fd;font-family:Consolas,monospace;margin:0;">if distance < 10:
+    break</pre>
+    </div>
+  </div>`,
+ a:['break']
+},
+
+/* ------------------------------------------------------
+   5. Passer à l’étape suivante
+------------------------------------------------------ */
+{id:'b5',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg, #0b1320 0%, #141d2e 100%);
+      border: 1px solid #1e3a8a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      color: #e5e7eb;
+      box-shadow: 0 0 10px rgba(30,58,138,0.4);
+      border-left:6px solid #9088ff;
+    ">
+    <h3 style="color:#38bdf8; margin-top:0; font-size:1.2em;">⏭️ Consigne – Passer à l’étape suivante</h3>
+
+    <p>💬 Tu es dans une <b>boucle</b> (<code>for</code> ou <code>while</code>) et, dans certains cas, 
+    tu ne veux <b>pas exécuter la suite du bloc</b>, mais simplement <b>passer directement à la prochaine répétition</b>.</p>
+
+    <p style="color:#93c5fd;">📘 Cela signifie : « passe à l’itération suivante, sans exécuter le reste de cette fois-ci ».</p>
+
+    <p style="color:#fef9c3;">✍️ Écris le <b>mot-clé Python</b> qui permet de <b>sauter la fin du tour en cours</b> de boucle.</p>
+
+  </div>`,
+ a:['continue']
+},
+
+/* ------------------------------------------------------
+   6. Compter de 0 à 9
+------------------------------------------------------ */
+{id:'b6',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#162240 100%);
+      border: 1px solid #60a5fa;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 14px rgba(96,165,250,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🔢 Consigne – Compter de 0 à 9</h3>
+
+    <p>📘 Tu veux écrire une <b>boucle</b> qui <b>compte de 0 jusqu’à 9</b>.</p>
+    <p>En Python, on utilise le mot-clé <code>for</code> pour répéter une action plusieurs fois.</p>
+
+    <ul style="margin-left:1em; color:#cbd5ff;">
+      <li>🧩 Une <b>variable</b> (souvent <code>i</code>) qui prendra les valeurs <code>0, 1, 2, …</code></li>
+      <li>📥 Le mot-clé <code>in</code></li>
+      <li>⚙️ Et une fonction spéciale <code>range(...)</code> qui génère les nombres à répéter</li>
+    </ul>
+
+    <p>💡 Pour compter de 0 à 7, on écrit <code>range(8)</code>  
+    (car Python s’arrête juste avant 8).</p>
+
+    <p>✅ N’oublie pas <b>les deux-points</b> <code>:</code> à la fin de la ligne !</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:12px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+for i in range(8):
+    print(i)
+</pre>
+      <span style="color:#a3e635;">→ Ce code affiche les nombres : <code>0 1 2 3 4 5 6 7</code></span>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:12px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong> 
+      <b><code>range(n)</code></b> compte toujours à partir de 0, et s’arrête juste avant <b>n</b>.<br>
+      Donc <code>range(5)</code> fait <code>0,1,2,3,4</code> et <code>range(8)</code> fait <code>0→7</code>.
+    </div>
+  </div>`,
+ a:['for i in range(10):','for i in range(0,10):']
+},
+
+/* ------------------------------------------------------
+   7. Compter de 1 à 5 inclus — version avec transposition
+------------------------------------------------------ */
+{id:'b7',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1a2345 100%);
+      border: 1px solid #60a5fa;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 14px rgba(96,165,250,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🔢 Consigne – Compter de 1 à 5 inclus</h3>
+
+    <p>📘 Tu veux créer une <b>boucle</b> qui compte de <b>1 jusqu’à 5</b> (et inclut le 5).</p>
+    <p>En Python, la fonction <code>range(...)</code> ne va <b>jamais</b> jusqu’au dernier nombre indiqué.</p>
+    <p>Voici un <b>exemple avec d'autres valeurs</b> pour t’aider à comprendre :</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+for i in range(2, 7):
+    print(i)
+</pre>
+      <span style="color:#a3e635;">→ Ce code affiche : <code>2 3 4 5 6</code></span>
+    </div>
+
+    <p style="margin-top:10px;">🧠 À toi maintenant de transposer ce principe pour compter de <b>1 à 5</b>.</p>
+
+    <div style="margin-top:10px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🧩 Le mot <code>for</code></li>
+        <li>🔣 Une variable (souvent <code>i</code>)</li>
+        <li>⚙️ La fonction <code>range(début, fin)</code></li>
+        <li>🪄 Et <b>les deux-points</b> <code>:</code> à la fin</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:12px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong> 
+      <code>range(a, b)</code> commence à <b>a</b> et s’arrête juste avant <b>b</b>.<br>
+      Donc <code>range(2, 7)</code> → <code>2, 3, 4, 5, 6</code>.<br>
+      À toi de trouver la même logique pour arriver à <code>1, 2, 3, 4, 5</code>.
+    </div>
+  </div>`,
+ a:['for i in range(1,6):','for i in range(1, 6):']
+},
+
+/* ------------------------------------------------------
+   8. Tant que distance ≥ 15 — version par transposition
+------------------------------------------------------ */
+{id:'b8',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#152446 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">📡 Consigne – Tant que distance ≥ 15</h3>
+
+    <p>🤔 Tu veux écrire une <b>boucle while</b> qui répète des actions <b>aussi longtemps qu’une condition est vraie</b>.</p>
+    <p>Mais au lieu de parler de “distance”, regarde cet <b>exemple analogue</b> :</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# On définit une variable "temperature" avec une valeur de départ
+temperature = 25
+
+# Tant que la température est supérieure ou égale à 20
+while temperature >= 20:
+    # On affiche un message à chaque itération
+    print("Encore assez chaud")
+    # On diminue la température de 1 à chaque tour de boucle
+    temperature -= 1
+</pre>
+      <span style="color:#a3e635;">→ Ce code s’exécute tant que la température reste au-dessus de 20°C.</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi maintenant de <b>transposer</b> cette logique :  
+    remplace la température par la <b>distance</b> mesurée par le capteur,  
+    et 20 par la valeur <b>15</b>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🔁 Le mot <code>while</code></li>
+        <li>📏 La condition <code>d >= 15</code></li>
+        <li>🪄 Et les <b>deux-points</b> <code>:</code> à la fin</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      En Python, le symbole <code>>=</code> signifie <b>supérieur ou égal à</b>.<br>
+      Donc <code>while d >= 15:</code> veut dire « répète tant que la distance est au moins 15 cm ».
+    </div>
+  </div>`,
+ a:['while d >= 15:']
+},
+
+/* ------------------------------------------------------
+   9. Jusqu’à appui sur A — version par transposition commentée
+------------------------------------------------------ */
+{id:'b9',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#182c4a 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🎮 Consigne – Jusqu’à appui sur A</h3>
+
+    <p>💭 Tu veux écrire une <b>boucle while</b> qui <b>attend qu’un bouton soit pressé</b> pour sortir de la boucle.</p>
+
+    <p>Regarde d’abord cet <b>exemple analogue</b> (avec le bouton <code>B</code>) :</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Tant que le bouton B n’est pas pressé
+while not cyberpi.controller.is_press('b'):
+    # On attend un court instant avant de vérifier à nouveau
+    time.sleep(0.05)
+
+# Quand la boucle se termine, le bouton a été pressé
+print("Le bouton B a été pressé !")
+</pre>
+<span style="color:#a3e635;">→ Ce programme “attend” que le bouton B soit appuyé avant de continuer.</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi maintenant de <b>transposer</b> :  
+    remplace le bouton <code>B</code> par le bouton <b>A</b> pour ta propre boucle.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🎮 La condition : <code>not cyberpi.controller.is_press('a')</code></li>
+        <li>⏳ Ajoute une <code>pause courte</code> (<code>time.sleep(0.05)</code>) à chaque tour</li>
+        <li>🪄 Et n’oublie pas <b>les deux-points</b> <code>:</code> à la fin</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      On utilise souvent cette structure pour créer une boucle “en attente” :  
+      le robot reste immobile jusqu’à ce que l’utilisateur appuie sur une touche.
+    </div>
+  </div>`,
+ a:["while not cyberpi.controller.is_press('a'):"]
+},
+
+/* ------------------------------------------------------
+   10. Afficher i — version explicative et commentée
+------------------------------------------------------ */
+{id:'b10',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1a2d4c 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🖨️ Consigne – Afficher une variable dans une boucle</h3>
+
+    <p>💭 Tu veux <b>voir le contenu d’une variable</b> pendant que la boucle se répète.  
+    En Python, on utilise pour cela la fonction <code>print()</code>.</p>
+
+    <p>Regarde d’abord cet <b>exemple analogue</b> :</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Boucle de 0 à 4
+for x in range(5):
+    # Affiche la valeur actuelle de x à chaque tour
+    print(x)
+</pre>
+<span style="color:#a3e635;">→ Ce code écrit 0, 1, 2, 3, 4 (une ligne par nombre).</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi maintenant de <b>transposer</b> :  
+    utilise la même idée, mais avec la variable <b>i</b> (celle de ta boucle précédente).</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>💬 Utilise la fonction <code>print()</code></li>
+        <li>🪄 Mets la variable à afficher entre parenthèses : <code>print(i)</code></li>
+        <li>✅ Chaque passage de boucle affichera une nouvelle ligne</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Tu peux aussi afficher un texte en même temps que la variable :  
+      <code>print("Tour numéro :", i)</code>  
+      → Python affichera à la fois le texte et la valeur.
+    </div>
+  </div>`,
+ a:['print(i)','cyberpi.console.println(i)','cyberpi.console.print(i)']
+},
+
+/* ------------------------------------------------------
+   11. Somme : init — initialiser une variable avant la boucle
+------------------------------------------------------ */
+{id:'b11',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1b3252 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🧮 Consigne – Initialiser une somme avant la boucle</h3>
+
+    <p>💭 Avant de commencer à additionner des nombres, ton programme doit <b>créer une variable “somme”</b>  
+    (ou <code>s</code>) et la <b>mettre à 0</b>. C’est ce qu’on appelle <b>initialiser</b> une variable.</p>
+
+    <p>Sans cette étape, Python ne saura pas quoi additionner.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# On prépare une variable pour stocker la somme
+s = 0
+
+# Boucle qui parcourt les nombres de 1 à 4
+for i in range(1, 5):
+    # On ajoute i à la somme à chaque tour
+    s = s + i
+
+# On affiche le résultat final
+print("Somme finale =", s)
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche : <code>Somme finale = 10</code> (car 1+2+3+4 = 10)</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi maintenant de <b>transposer</b> :  
+    crée simplement la variable <code>s</code> et mets-la à <b>0</b>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🧮 Nom de la variable : <code>s</code></li>
+        <li>🎯 Valeur de départ : <code>0</code></li>
+        <li>✅ L’initialisation se fait <b>avant la boucle</b></li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Cette étape est indispensable avant toute addition répétée (compteur, moyenne, total, etc.).
+    </div>
+  </div>`,
+ a:['s = 0']
+},
+
+/* ------------------------------------------------------
+   12. Somme : ajouter i — comprendre le cumul dans une boucle
+------------------------------------------------------ */
+{id:'b12',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1c3458 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">➕ Consigne – Ajouter une valeur à la somme</h3>
+
+    <p>💭 Après avoir créé ta variable <code>s = 0</code>, tu veux maintenant <b>ajouter</b> à chaque tour la valeur de ta variable <code>i</code> (ou d’un autre nombre).</p>
+    
+    <p>👉 Cette opération s’appelle une <b>accumulation</b> : la variable “garde en mémoire” le résultat précédent et ajoute la nouvelle valeur à chaque passage.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple avec des nombres de 1 à 4
+s = 0
+for n in range(1, 5):
+    # On ajoute n à la somme s à chaque tour
+    s = s + n
+
+print("Somme totale =", s)
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche : <code>Somme totale = 10</code> (car 1+2+3+4 = 10)</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    utilise la variable <b>i</b> à la place de <code>n</code> et ajoute-la à <code>s</code>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🧮 L’accumulation s’écrit <code>s = s + i</code></li>
+        <li>⚡ Tu peux aussi utiliser la forme abrégée : <code>s += i</code></li>
+        <li>✅ Cette ligne est à placer <b>à l’intérieur de la boucle</b></li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Le symbole <code>+=</code> veut dire “ajoute à toi-même” → pratique pour simplifier le code !
+    </div>
+  </div>`,
+ a:['s = s + i','s+=i']
+},
+
+/* ------------------------------------------------------
+   13. Boucler sur [2,4,6] — parcourir une liste de valeurs
+------------------------------------------------------ */
+{id:'b13',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1e3a5c 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🔢 Consigne – Parcourir une liste de nombres</h3>
+
+    <p>💭 Cette fois, tu ne veux pas compter jusqu’à un certain nombre,  
+    mais <b>parcourir directement une liste</b> composée de quelques valeurs précises.</p>
+
+    <p>En Python, une liste s’écrit entre <code>[ ]</code> et ses éléments sont séparés par des virgules.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : parcourir une liste de températures
+for t in [18, 20, 22]:
+    print("Température :", t, "°C")
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche successivement :  
+18 °C, 20 °C et 22 °C</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi maintenant de <b>transposer</b> :  
+    fais une boucle qui parcourt la liste <code>[2, 4, 6]</code> et qui utilise la variable <code>x</code>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>💬 Syntaxe de base : <code>for variable in [liste]:</code></li>
+        <li>🧮 Exemple adapté : <code>for x in [2, 4, 6]:</code></li>
+        <li>✅ N’oublie pas les <b>deux-points</b> <code>:</code> à la fin !</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Tu peux aussi créer la liste séparément :  
+      <code>nombres = [2,4,6]</code> puis <code>for x in nombres:</code>
+    </div>
+  </div>`,
+ a:['for x in [2,4,6]:']
+},
+
+/* ------------------------------------------------------
+   14. Boucler sur "ABC" — Parcourir un texte lettre par lettre
+------------------------------------------------------ */
+{id:'b14',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1d365a 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🔤 Consigne – Parcourir un texte lettre par lettre</h3>
+
+    <p>💭 Une <b>chaîne de caractères</b> (<code>"ABC"</code>, <code>"mBot"</code>…) est comme une <b>petite liste de lettres</b>.  
+    Python peut donc parcourir chaque lettre, une par une, grâce à une boucle <code>for</code>.</p>
+
+    <p>🎯 Ton but : afficher chaque lettre du mot <b>"ABC"</b> sur une nouvelle ligne.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple avec le mot "ROBOT"
+for lettre in "ROBOT":
+    print("Lettre :", lettre)
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche :  
+<code>R</code>, <code>O</code>, <code>B</code>, <code>O</code>, <code>T</code> (une par ligne)</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    écris une boucle qui parcourt le mot <code>"ABC"</code> et affiche chaque lettre.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🔠 Utilise une variable comme <code>c</code> pour chaque caractère</li>
+        <li>🧩 Le texte est entouré de guillemets <code>"..."</code></li>
+        <li>✅ Termine la ligne par <code>:</code></li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Tu peux faire la même chose avec un prénom, par exemple :  
+      <code>for c in "Camille":</code> → affiche chaque lettre de ton nom 😄
+    </div>
+  </div>`,
+ a:['for c in "ABC":']
+},
+
+/* ------------------------------------------------------
+   15. Tant que distance inconnue — Attente de mesure valide
+------------------------------------------------------ */
+{id:'b15',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1a3756 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">📡 Consigne – Attendre une mesure valide</h3>
+
+    <p>💭 Le capteur ultrason du mBot2 peut parfois mettre un petit moment avant de renvoyer une mesure.  
+    Tant qu’il n’a rien détecté, la variable <code>d</code> (distance) ne contient aucune valeur.</p>
+
+    <p>👉 En Python, on dit qu’elle vaut <b><code>None</code></b> — ce qui signifie “rien” ou “inconnu”.  
+    On peut donc écrire une <b>boucle while</b> qui attend que la mesure devienne connue.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : attendre qu'un capteur renvoie une valeur
+distance = None
+while distance is None:
+    print("⏳ En attente de mesure...")
+    # Simulation : on imagine que la mesure arrive
+    distance = 12
+</pre>
+<span style="color:#a3e635;">→ Ce code répète le message jusqu’à ce qu’une vraie valeur soit reçue.</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    écris une boucle qui se répète <b>tant que la variable <code>d</code> n’a pas encore de valeur</b>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>📏 Le mot <code>None</code> représente “aucune donnée”</li>
+        <li>🔁 Utilise <code>while</code> pour attendre tant que la condition est vraie</li>
+        <li>✅ Syntaxe à retenir : <code>while d is None:</code></li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Dans un vrai robot, on utilise cette méthode pour patienter  
+      jusqu’à ce que le capteur ultrason ait bien mesuré la distance avant d’agir.
+    </div>
+  </div>`,
+ a:['while d is None:']
+},
+
+/* ------------------------------------------------------
+   16. Tant qu’aucune touche A/B — Attente d’une action utilisateur
+------------------------------------------------------ */
+{id:'b16',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1a385a 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🎮 Consigne – Attendre l’appui sur A ou B</h3>
+
+    <p>💭 Cette fois, le programme doit <b>patienter tant qu’aucune touche n’a été pressée</b>.  
+    En robotique, on utilise cela pour <b>attendre que l’utilisateur démarre le robot</b>.</p>
+
+    <p>👉 En Python, la manette du mBot2 se contrôle avec  
+    <code>cyberpi.controller.is_press("a")</code> ou <code>is_press("b")</code>.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : attendre que l'une des touches soit appuyée
+while not (cyberpi.controller.is_press("left") or cyberpi.controller.is_press("right")):
+    print("⏳ En attente d'une action…")
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche le message jusqu’à ce qu’on appuie sur ← ou →.</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    écris une boucle qui se répète <b>tant que les touches A et B ne sont pas pressées</b>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🎮 Utilise <code>cyberpi.controller.is_press("a")</code> et <code>("b")</code></li>
+        <li>🔁 Combine les deux avec <code>or</code></li>
+        <li>🚫 Ajoute <code>not</code> devant pour dire “tant qu’aucune touche n’est pressée”</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Cette logique d’attente est très utilisée dans les programmes de démarrage :  
+      le robot reste “en pause” jusqu’à ce que tu lui donnes le signal.
+    </div>
+  </div>`,
+ a:["while not (cyberpi.controller.is_press('a') or cyberpi.controller.is_press('b')):"]
+},
+
+/* ------------------------------------------------------
+   17. Compte à rebours — Parcourir une liste décroissante
+------------------------------------------------------ */
+{id:'b17',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1b3a5c 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">⏳ Consigne – Compte à rebours</h3>
+
+    <p>💭 Une boucle peut parcourir une liste de nombres dans l’ordre que tu veux — même <b>du plus grand au plus petit</b>.  
+    C’est parfait pour créer un <b>compte à rebours</b> avant une action (démarrage, lancement, etc.).</p>
+
+    <p>👉 En Python, on écrit une liste entre crochets <code>[ ]</code>, en séparant les valeurs par des virgules.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : compte à rebours de 5 à 1
+for i in [5, 4, 3, 2, 1]:
+    print(i)
+print("🚀 Décollage !")
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche 5, 4, 3, 2, 1 puis le mot “Décollage !”</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    fais une boucle qui compte <b>3, 2, 1</b> avant le départ.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>📋 Utilise les crochets <code>[ ]</code> pour créer ta liste</li>
+        <li>💡 Les valeurs sont séparées par des virgules</li>
+        <li>🚀 L’ordre décroissant est possible manuellement</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      On peut ensuite ajouter une courte pause (<code>time.sleep()</code>) entre chaque nombre pour un effet “compte à rebours” animé 🔢.
+    </div>
+  </div>`,
+ a:['for i in [3,2,1]:']
+},
+
+/* ------------------------------------------------------
+   18. Compter par pas de 2 — Découvrir range(début, fin, pas)
+------------------------------------------------------ */
+{id:'b18',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1a3552 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">➿ Consigne – Compter de 0 à 8 par pas de 2</h3>
+
+    <p>💭 Tu veux que ton programme affiche <b>0, 2, 4, 6, 8</b>.  
+    Pour cela, on utilise la fonction <code>range()</code> avec <b>trois paramètres</b> :</p>
+
+    <div style="margin:10px 0; padding:10px; background:#0b1430; border-radius:10px;">
+      <code style="color:#93c5fd;">range(début, fin, pas)</code>  
+      <span style="color:#a3e635;">→ crée une suite de nombres</span>
+      <ul style="color:#cbd5ff; margin-top:8px;">
+        <li><b>début</b> → premier nombre de la séquence</li>
+        <li><b>fin</b> → la suite s’arrête avant ce nombre</li>
+        <li><b>pas</b> → écart entre deux valeurs successives</li>
+      </ul>
+    </div>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : nombres pairs jusqu’à 10 (exclus)
+for i in range(0, 10, 2):
+    print(i)
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche : 0, 2, 4, 6, 8</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    écris une boucle qui compte de <b>0</b> à <b>8</b> par pas de <b>2</b>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>⚙️ Utilise <code>for i in range(0, 9, 2):</code> ou <code>range(0, 10, 2)</code></li>
+        <li>📊 Le dernier nombre n’est jamais inclus</li>
+        <li>💡 <b>range(0, 9, 2)</b> produit la même séquence que <b>range(0, 10, 2)</b></li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Essaie aussi avec un pas négatif : <code>range(10, 0, -2)</code> → 10, 8, 6, 4, 2.
+    </div>
+  </div>`,
+ a:['for i in range(0,9,2):','for i in range(0,10,2):']
+},
+
+/* ------------------------------------------------------
+   19. Index et valeur — Découvrir enumerate()
+------------------------------------------------------ */
+{id:'b19',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#1d3256 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">📋 Consigne – Parcourir une liste avec index et valeur</h3>
+
+    <p>💭 Tu veux que ton programme affiche <b>à la fois la position et le contenu</b> de chaque élément d’une liste.  
+    En Python, la fonction <code>enumerate()</code> permet de parcourir une liste en donnant ces deux informations :</p>
+
+    <div style="background:#0b1430;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : couleurs avec leur position
+couleurs = ["rouge", "vert", "bleu"]
+
+for i, v in enumerate(couleurs):
+    print(i, ":", v)
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche :<br>0 : rouge<br>1 : vert<br>2 : bleu</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    écris la ligne de boucle Python qui associe l’index <code>i</code> et la valeur <code>v</code>  
+    pour une liste <code>l</code>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>📦 Utilise <code>for i, v in enumerate(l):</code></li>
+        <li>🔢 <code>i</code> → la position de l’élément (commence à 0)</li>
+        <li>🎨 <code>v</code> → la valeur dans la liste</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Tu peux aussi préciser à <code>enumerate()</code> à partir de quel nombre commencer :  
+      <code>enumerate(l, start=1)</code> → commencera à 1 au lieu de 0.
+    </div>
+
+    <div style="margin-top:18px; background:#0c1224; border-radius:10px; padding:10px;">
+      <table style="border-collapse:collapse;width:100%;color:#eaf1ff;text-align:center;">
+        <thead><tr style="background:#1a2b4a;color:#8de4ff;">
+          <th>Position (<code>i</code>)</th><th>Valeur (<code>v</code>)</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>0</td><td>"rouge"</td></tr>
+          <tr><td>1</td><td>"vert"</td></tr>
+          <tr><td>2</td><td>"bleu"</td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin-top:6px;">💡 Le tableau ci-dessus illustre ce que fait <code>enumerate()</code>.</p>
+    </div>
+  </div>`,
+ a:['for i, v in enumerate(l):']
+},
+
+/* ------------------------------------------------------
+   20. Répéter 3 fois “Go” — Utiliser une boucle sans variable
+------------------------------------------------------ */
+{id:'b20',
+ q:`<div class="consigne-card" style="
+      background: linear-gradient(135deg,#0d1226 0%,#18345a 100%);
+      border: 1px solid #3b82f6;
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin: 16px -10px 20px -10px;
+      color: #eaf1ff;
+      box-shadow: 0 0 16px rgba(59,130,246,0.35);
+      border-left:6px solid #9088ff;
+      line-height:1.7;
+    ">
+    <h3 style="color:#60a5fa; margin-top:0; font-size:1.2em;">🔁 Consigne – Répéter 3 fois “Go”</h3>
+
+    <p>💭 Tu veux faire afficher <b>trois fois le mot "Go"</b> à l’écran.  
+    Pour cela, on utilise une <b>boucle</b> avec le mot-clé <code>for</code> et la fonction <code>range()</code>.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="color:#eaf1ff;font-family:Consolas,monospace;margin:0;
+max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+# Exemple : afficher 7 fois un message
+for _ in range(7):
+    print("Go !")
+</pre>
+<span style="color:#a3e635;">→ Ce code affiche “Go !” sept fois de suite</span>
+    </div>
+
+    <p style="margin-top:10px;">🧩 À toi de <b>transposer</b> :  
+    écris la ligne de boucle Python qui répète <b>3 fois une action</b>.</p>
+
+    <div style="margin-top:12px; padding:10px; background:#0c1224; border-radius:10px;">
+      <ul style="margin:0; color:#cbd5ff;">
+        <li>🔁 Utilise <code>for _ in range(…):</code></li>
+        <li>❗ Le symbole <code>_</code> signifie que la variable n’est pas utilisée</li>
+        <li>📢 Tu peux afficher un texte, faire clignoter une LED ou jouer un son 3 fois</li>
+      </ul>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:14px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong>  
+      Si tu remplaces <code>_</code> par <code>i</code>, tu pourras afficher le numéro de chaque tour :
+<pre style="background:#0a1020; padding:10px; border-radius:8px; color:#a3e635;
+font-family:Consolas, monospace;">for i in range(…):
+    print("Tour", i + 1)</pre>
+    </div>
+
+    <div style="margin-top:16px; text-align:center;">
+      <span style="font-size:1.3em;">🚀 <b>À toi de jouer !</b></span>
+    </div>
+  </div>`,
+ a:['for _ in range(3):','for i in range(3):']
+}
+
+];
+ /*------------------------------------------------------ */
+  
+const blanksRoot=document.getElementById('blanks');
+function buildBlanks(){
+  blanksData.forEach((it,idx)=>{
+    const d=document.createElement('div'); d.className='card'; d.style.background='rgba(20,28,56,.55)';
+    const initTries=(idx<3?3:(idx<6?2:1));
+    d.innerHTML=`<div class="small"><span class="qnum">${idx+1}</span>${it.q}</div>
+    <input type="text" id="${it.id}" placeholder="ta réponse ici">
+    <div class="row">
+      <button class="btn small neon" onclick="checkBlank('${it.id}',${idx})">Vérifier</button>
+      <button class="btn small" onclick="revealBlank('${it.id}',${idx})">Terminer → correction</button>
+      <button class="btn small" onclick="hintBlank(${idx})">💡 Aide</button>
+      <span>Essais : <strong id="tries-${it.id}">${initTries}</strong></span>
+    </div>
+    <div id="fb-${it.id}" class="answer small"></div>`;
+    blanksRoot.appendChild(d);
+    addItem(it.id,1,initTries);
+  });
+}
+function norm2(s){return (s||'').toLowerCase().replace(/['"\s]+/g,' ').trim();}
+function checkBlank(id,idx){
+  const fb=document.getElementById('fb-'+id),inp=document.getElementById(id);
+  const good=blanksData[idx].a.map(norm2),val=norm2(inp.value);
+  if(good.includes(val)){fb.innerHTML='<span class="ok">✔ +1 pt</span>';addScore(id);AudioFX.ok();}
+  else{const t=decTry(id); if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction :</span><div class="small"><code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';} else {fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';AudioFX.fail();}} document.getElementById('tries-'+id).textContent=tries[id];
+}
+function revealBlank(id,idx){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponses acceptées : <code>'+blanksData[idx].a.join('</code> ; <code>')+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes essais : '+tries[id]+'</span>';}
+}
+function checkAllBlanks(){blanksData.forEach((it,i)=>{checkBlank(it.id,i); document.getElementById('tries-'+it.id).textContent=tries[it.id];});}
+
+/* ===== Indice amélioré personnalisé pour chaque question ===== */
+function hintBlank(idx){
+  const question = blanksData[idx];
+  const id = question.id;
+  let msg = "";
+
+  switch(id){
+    case "b1": // Boucle infinie
+      msg = `
+      <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+                  border-radius:10px; color:#eaf1ff; font-size:14px;">
+        <p style="margin:0 0 6px;"><span style="color:#8de4ff;">✨ Indice :</span>
+        Commence par <code style="color:#93c5fd;">while</code>, puis ajoute un mot
+        qui veut dire <b>toujours vrai</b>. N’oublie pas les deux points (<code>:</code>) à la fin.
+        </p>
+        <pre style="background:#0a1020; padding:10px; border-radius:8px;
+                    color:#fbbf24; font-family:Consolas, monospace;">
+Indice : while Tr… 
+        </pre>
+      </div>`;
+      break;
+
+    case "b2": // Pause 50 ms
+      msg = `
+      <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+                  border-radius:10px; color:#eaf1ff; font-size:14px;">
+        <p><span style="color:#8de4ff;">💡 Indice :</span>
+        Tu veux dire au programme “attends un court instant”.  
+        Utilise la fonction <code style="color:#7dd3fc;">time.sleep()</code> avec un petit nombre entre parenthèses.</p>
+        <p>Par exemple : une pause d’<b>une demi-seconde</b> serait <code>time.sleep(0.5)</code>.</p>
+        <pre style="background:#0a1020; padding:10px; border-radius:8px;
+                    color:#fbbf24; font-family:Consolas, monospace;">
+Indice : time.sleep(…)
+        </pre>
+      </div>`;
+      break;
+      
+      case "b3": // Boucler n fois
+      msg = `
+      <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+                  border-radius:10px; color:#eaf1ff; font-size:14px;">
+        <p><span style="color:#8de4ff;">💡 Indice :</span>
+        La boucle commence par <code>for</code>, puis une petite variable (<code>i</code>), 
+        ensuite le mot <code>in</code>, et une fonction qui crée une suite de nombres : <code>range(...)</code>.</p>
+        <p>Essaie de compléter : <code style="color:#fbbf24;">for i in r…</code></p>
+        <pre style="background:#0a1020; padding:10px; border-radius:8px;
+                    color:#7dd3fc; font-family:Consolas, monospace;">
+# Exemple :
+for i in range(4):
+    print("Coucou !")</pre>
+      </div>`;
+      break;
+
+    case "b4": // Sortir d’une boucle
+  msg = `
+     <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+                  border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#fde68a;">💡 Indice :</span>
+    Si tu veux <b>arrêter une boucle tout de suite</b>, écris simplement le mot-clé :
+    <code>break</code></p>
+
+    <pre style="background:#0a1020; padding:10px; border-radius:8px;
+                color:#fcd34d; font-family:Consolas, monospace;">
+Indice : break</pre>
+  </div>`;
+  break;
+  
+case "b5": // Passer à l’étape suivante
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #38bdf8;
+              border-radius:10px; color:#e0f2fe; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>
+    Pour <b>sauter directement au tour suivant</b> d’une boucle sans exécuter la suite, 
+    écris simplement le mot-clé <code>continue</code>.</p>
+
+    <div style="background:#0c1224;border-radius:10px;padding:12px;margin-top:10px;">
+<pre style="
+  color:#eaf1ff;                     /* texte clair sur fond sombre */
+  font-family:Consolas,monospace;    /* police de code classique */
+  margin:0;                          /* pas de marge extérieure */
+  max-width:95%;                     /* empêche le dépassement horizontal */
+  overflow-x:auto;                   /* ajoute une barre de défilement si besoin */
+  white-space:pre-wrap;              /* conserve les sauts de ligne tout en autorisant le retour automatique */
+">
+for i in range(5):
+    if i == 2:
+        continue  # saute le reste du tour quand i vaut 2
+    print(i)
+</pre>
+      <span style="color:#a3e635;">→ Résultat : <code>0, 1, 3, 4</code> (le <code>2</code> est « sauté »)</span>
+    </div>
+
+    <div style="background:#162035;border-radius:10px;padding:12px;margin-top:12px;">
+      <strong style="color:#7dd3fc;">Astuce :</strong> On utilise souvent ce mot-clé à l’intérieur d’une condition <code>if</code>.<br>
+      Cela permet d’éviter une action uniquement dans un cas précis, tout en continuant la boucle.
+    </div>
+
+    <pre style="background:#0a1020; padding:10px; border-radius:8px;
+                color:#38bdf8; font-family:Consolas, monospace;
+                white-space:pre-wrap; word-wrap:break-word;">
+Indice : conti…</pre>
+  </div>`;
+  break;
+      
+case "b6": // Compter de 0 à 9
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #60a5fa;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span> 
+    Utilise la <b>boucle for</b> avec la fonction <code>range(…)</code> pour compter de 0 à 9.</p>
+    <pre style="background:#0a1020; padding:10px; border-radius:8px;
+                color:#60a5fa; font-family:Consolas, monospace;
+                max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for i in r…</pre>
+  </div>`;
+  break;
+
+case "b7":
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #60a5fa;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span> 
+    Regarde bien l’exemple <code>range(2, 7)</code> : il s’arrête avant <code>7</code>.  
+    Pour ton cas, il faut qu’il s’arrête avant <code>6</code>.</p>
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for i in r…
+</pre>
+  </div>`;
+  break;
+      
+case "b8": // Tant que distance ≥ 15
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span> 
+    Pense à utiliser <code>while</code> suivi d’une <b>condition logique</b> qui reste vraie tant que la distance est grande.</p>
+    <p>Exemple analogue : <code>while temperature >= 20:</code></p>
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : while d >= …
+</pre>
+  </div>`;
+  break;
+      
+case "b9": // Jusqu’à appui sur A
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span> 
+    Tu dois créer une boucle qui <b>continue tant qu’un bouton n’est pas pressé</b>.</p>
+    <p>Essaie de penser en langage naturel :</p>
+    <blockquote style="color:#93c5fd; margin:6px 0;">“Tant que le bouton A n’est pas appuyé…”</blockquote>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : while not cyberpi.controller.is_press('a'):
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      <code>not</code> signifie “<b>tant que ce n’est pas vrai</b>”.  
+      Donc <code>while not …</code> veut dire “répète tant que la condition n’est pas remplie”.
+    </div>
+  </div>`;
+  break;
+
+  case "b10": // Afficher i
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Utilise la fonction <code>print()</code> pour <b>afficher le contenu</b> d’une variable à chaque tour de boucle.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : cyberpi.c…
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Tu peux afficher un message plus clair pour vérifier ton programme :  
+      <code>print("Valeur actuelle :", i)</code>
+    </div>
+  </div>`;
+  break;
+
+  case "b11": // Somme : init
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Avant d’ajouter des nombres, il faut <b>initialiser</b> la variable qui servira à stocker le total.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : s = …
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      On écrit toujours cette ligne <b>avant la boucle</b> pour que la variable parte de zéro.  
+      Sans ça, Python afficherait une erreur.
+    </div>
+  </div>`;
+  break;
+      
+case "b12": // Somme : ajouter i
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Tu dois <b>ajouter la valeur de i</b> à la variable <code>s</code> à chaque passage de la boucle.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : s = s…
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Tu peux écrire plus court : <code>s += i</code>  
+      (cela revient exactement au même que <code>s = s + i</code>).
+    </div>
+  </div>`;
+  break;
+      
+case "b13": // Boucler sur [2,4,6]
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Pour parcourir directement une liste de nombres (sans <code>range()</code>),  
+    place les valeurs entre crochets <code>[ ]</code> et sépare-les par des virgules.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for x in […
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Le nom <code>x</code> peut être remplacé par ce que tu veux,  
+      mais il faut rester cohérent dans la boucle.
+    </div>
+  </div>`;
+  break;
+
+ case "b14": // Boucler sur "ABC"
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    En Python, un texte (<code>"ABC"</code>) se parcourt comme une petite liste.  
+    Utilise <code>for</code> pour lire chaque lettre une par une.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for c in …
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Tu peux aussi utiliser cette méthode pour  
+      parcourir un mot entré par l’utilisateur ou une variable texte.
+    </div>
+  </div>`;
+  break;
+      
+  case "b15": // Tant que distance inconnue
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Tu veux que le robot attende <b>tant qu’il n’a pas encore reçu de mesure</b>.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : while d is …
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      <code>None</code> signifie “aucune donnée”.  
+      C’est une valeur spéciale en Python utilisée pour dire “je n’ai encore rien reçu”.
+    </div>
+  </div>`;
+  break;
+      
+case "b16": // Tant qu’aucune touche A/B
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Tu veux dire : “attends tant que ni A ni B n’ont été pressées”.  
+    Pour cela, combine les deux vérifications avec <code>or</code> et ajoute <code>not</code> devant.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : while not (cyberpi.controller.is_press('a') or cyberpi.controller.is_press('b')):
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Le mot <code>not</code> inverse le sens d’une condition.  
+      Ici, il signifie “tant que ce n’est pas le cas…”.
+    </div>
+  </div>`;
+  break;
+      
+case "b17": // Compte à rebours
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Tu veux faire un <b>compte à rebours</b>.  
+    Crée une petite liste avec les nombres <code>[3, 2, 1]</code> et fais une boucle <code>for</code> dessus.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for i in [3…
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Tu peux ajouter <code>time.sleep(1)</code> après <code>print(i)</code>  
+      pour afficher un nombre par seconde ⏱️.
+    </div>
+  </div>`;
+  break;
+      
+case "b18": // Compter par pas de 2
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Tu veux compter de 0 à 8, mais <b>en sautant un nombre sur deux</b>.  
+    Utilise <code>range()</code> avec trois paramètres : début, fin, pas.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for i in range(0…
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Si tu veux compter de 1 en 1, enlève le troisième nombre.  
+      Si tu veux aller à rebours, mets un pas négatif (<code>-1</code> ou <code>-2</code>).
+    </div>
+  </div>`;
+  break;
+      
+case "b19": // Index et valeur
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Tu veux à la fois l’index (position) et la valeur de chaque élément d’une liste.  
+    Utilise la fonction <code>enumerate()</code> dans la boucle.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for i, v in e…
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Tu peux afficher les deux en même temps :  
+<pre style="background:#0a1020; color:#a3e635; padding:8px; border-radius:8px;">print(i, ":", v)</pre>
+    </div>
+  </div>`;
+  break;
+      
+case "b20": // Répéter 3 fois "Go"
+  msg = `
+  <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+              border-radius:10px; color:#eaf1ff; font-size:14px;">
+    <p><span style="color:#7dd3fc;">💡 Indice :</span>  
+    Pour répéter une action 3 fois, on utilise une boucle <code>for</code> avec la fonction <code>range(3)</code>.</p>
+
+<pre style="background:#0a1020; padding:10px; border-radius:8px;
+            color:#60a5fa; font-family:Consolas, monospace;
+            max-width:95%;overflow-x:auto;white-space:pre-wrap;">
+Indice : for _ in range…
+</pre>
+
+    <div style="background:#162035;border-radius:10px;padding:10px;margin-top:10px;">
+      <strong style="color:#7dd3fc;">Astuce bonus :</strong>  
+      Si tu veux voir le numéro de chaque répétition, écris plutôt :  
+<pre style="background:#0a1020; color:#a3e635; padding:8px; border-radius:8px;">for i in range(3):
+    print("Go", i + 1)</pre>
+    </div>
+  </div>`;
+  break;
+
+      
+    default:
+      msg = `
+      <div style="padding:14px; background:#0c1224; border:1px solid #3b82f6;
+                  border-radius:10px; color:#eaf1ff; font-size:14px;">
+        <p style="margin:0;"><span style="color:#8de4ff;">🧠 Indice général :</span>
+        Observe la consigne et essaie de retrouver la commande Python correspondante.  
+        Tu peux aussi consulter le <b>📘 Mémento Python</b> plus haut pour t’aider.</p>
+      </div>`;
+  }
+
+
+  
+  // Affiche la bulle d’aide dans le panneau existant
+  const helpBox = document.getElementById('help');
+  const helpText = document.getElementById('helpText');
+  helpText.innerHTML = msg;
+  helpBox.style.display = 'block';
+  setTimeout(()=>helpBox.style.display='none', 12000);
+}
+
+/* ===== Fin de l'Indice amélioré façon carte d’aide ===== */  
+  
+function showGlobalHint(){
+  const visible = document.querySelector('.card:visible input[type=text]');
+  if(!visible) return;
+  const id = visible.id;
+  const idx = blanksData.findIndex(it=>it.id===id);
+  const pick = blanksData[idx].a[0];
+  document.getElementById('helpText').innerHTML='Essaie avec : <code>'+pick.replace(/</g,'&lt;')+'</code>';
+  document.getElementById('help').style.display='block';
+  setTimeout(hideHelp,9000);
+}
+ 
+  
+  
+  /* ===== QCM ===== */
+function checkQCM(qid,correct,pts){
+  addItem(qid,pts);
+  const sel=document.querySelector('input[name="'+qid+'"]:checked');const fb=document.getElementById('fb-'+qid);
+  if(!sel){fb.innerHTML='<span class="bad">Choisis une réponse.</span>';return;}
+  if(sel.value===correct){fb.innerHTML='<span class="ok">✔ +'+pts+' pt</span>';addScore(qid);}
+  else{const t=decTry(qid);if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Réponse : <strong>'+correct.toUpperCase()+'</strong></span>';}else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealQCM(qid,correct){
+  const fb=document.getElementById('fb-'+qid);
+  if((tries[qid]||0)===0){fb.innerHTML='<div class="small">Réponse : <strong>'+correct.toUpperCase()+'</strong></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[qid]+'</span>';}
+}
+
+/* ===== HEX ===== */
+function normHEX(s){s=(s||'').trim();if(s[0]!=='#')s='#'+s;return s.toUpperCase();}
+function checkHEX(id,correct,pts){
+  addItem(id,pts);
+  const val=normHEX(document.getElementById(id).value),good=correct.toUpperCase(),fb=document.getElementById('fb-'+id);
+  if(val===good){fb.innerHTML='<span class="ok">✔ +'+pts+' pt</span>';addScore(id);}
+  else{const t=decTry(id);if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Réponse : <code>'+good+'</code></span>';}else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealHEX(id,correct){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponse : <code>'+correct.toUpperCase()+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[id]+'</span>';}
+}
+addItem('q2a',2);addItem('q2b',2);addItem('q2c',2);addItem('q1',2);addItem('q3',2);
+
+/* ===== Trous “une valeur” (Q4) ===== */
+function checkBlankSingle(id,answers,pts){
+  addItem(id,pts);
+  const v=(document.getElementById(id).value||'').trim();const fb=document.getElementById('fb-'+id);
+  if(answers.includes(v)){fb.innerHTML='<span class="ok">✔ +'+pts+' pt</span>';addScore(id);}
+  else{const t=decTry(id);if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Réponse : <code>'+answers[0]+'</code></span>';}else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealBlankSingle(id,answers){
+  const fb=document.getElementById('fb-'+id);
+  if((tries[id]||0)===0){fb.innerHTML='<div class="small">Réponse : <code>'+answers[0]+'</code></div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[id]+'</span>';}
+}
+addItem('q4',2);
+
+/* ===== Deux champs (Q5) ===== */
+function checkTwoFields(aId,bId,aGood,bGood,pts,fbId,name){
+  addItem(name,pts);
+  const A=+document.getElementById(aId).value,B=+document.getElementById(bId).value,fb=document.getElementById(fbId);
+  if(A===aGood&&B===bGood){fb.innerHTML='<span class="ok">✔ +'+pts+' pts</span>';addScore(name);}
+  else{const t=decTry(name);if(t===0){fb.innerHTML='<span class="bad">✖ À compléter : speed='+aGood+', run_time='+bGood+'.</span>';}else{fb.innerHTML='<span class="bad">✖ Incorrect. Reste : '+t+'</span>';}}
+}
+function revealTwoFields(aId,bId,aGood,bGood,fbId,name){
+  const fb=document.getElementById(fbId);
+  if((tries[name]||0)===0){fb.innerHTML='<div class="small">Solution : speed='+aGood+', run_time='+bGood+'</div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[name]+'</span>';}
+}
+addItem('q5',3);
+
+/* ===== Checkbox multi (Q9) ===== */
+function getChecked(name){return[...document.querySelectorAll('input[name="'+name+'"]:checked')].map(x=>x.value).sort();}
+function checkCheckbox(name,goodArr,pts){
+  addItem(name,pts);
+  const val=getChecked(name).join(','),good=[...goodArr].sort().join(','),fb=document.getElementById('fb-'+name);
+  if(val===good){fb.innerHTML='<span class="ok">✔ +'+pts+' pts</span>';addScore(name);}
+  else{const t=decTry(name);if(t===0){fb.innerHTML='<span class="bad">✖ Plus d’essais. Correction : '+goodArr.join(', ')+'</span>';}else{fb.innerHTML='<span class="bad">✖ Essaie encore. Reste : '+t+'</span>';}}
+}
+function revealCheckbox(name,goodArr){
+  const fb=document.getElementById('fb-'+name);
+  if((tries[name]||0)===0){fb.innerHTML='<div class="small">Correction : '+goodArr.join(', ')+'</div>';}
+  else{fb.innerHTML='<span class="bad">Correction après tes 3 essais : '+tries[name]+'</span>';}
+}
+addItem('q9',4);
+  
+ 
+/* ===== Convertisseur #hex ⇄ RGB (corrigé et fluide) ===== */
+const ih=document.getElementById('hex'),
+      ir=document.getElementById('r'),
+      ig=document.getElementById('g'),
+      ib=document.getElementById('b'),
+      prev=document.getElementById('preview');
+
+function clamp(v){ v=Math.round(+v||0); return Math.min(255,Math.max(0,v)); }
+function toHex(n){ return clamp(n).toString(16).padStart(2,'0').toUpperCase(); }
+function rgbToHex(r,g,b){ return '#' + toHex(r) + toHex(g) + toHex(b); }
+
+function hexToRgb(h){
+  if(!h) return null;
+  h=h.trim(); if(h[0]!=='#') h='#'+h;
+  if(!/^#?[0-9A-Fa-f]{6}$/.test(h)) return null;
+  const n=parseInt(h.slice(1),16);
+  return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+}
+
+function setPreview(r,g,b){
+  prev.style.backgroundColor = `rgb(${clamp(r)},${clamp(g)},${clamp(b)})`;
+}
+
+function updateFromHex(){
+  const rgb=hexToRgb(ih.value);
+  if(rgb){
+    ir.value=rgb.r; ig.value=rgb.g; ib.value=rgb.b;
+    setPreview(rgb.r,rgb.g,rgb.b);
+  }
+}
+
+function updateFromRGB(){
+  const r=ir.value, g=ig.value, b=ib.value;
+  const hex=rgbToHex(r,g,b);
+  ih.value=hex;
+  setPreview(r,g,b);
+}
+
+// 🔁 écouteurs bidirectionnels
+ih.addEventListener('input', updateFromHex);
+[ir,ig,ib].forEach(inp=>{
+  inp.addEventListener('input', updateFromRGB);
+  inp.addEventListener('change', updateFromRGB);
+  inp.addEventListener('wheel', e=>e.preventDefault()); // évite scroll
+});
+
+// ✅ init couleur au chargement
+window.addEventListener('DOMContentLoaded', updateFromRGB);
+
+/* ========= Export ========= */
+function exportResults(){
+  const data={nom:document.getElementById('nom').value||'',prenom:document.getElementById('prenom').value||'',classe:document.getElementById('classe').value||'',temps:document.getElementById('elapsed').textContent,score:score,total:TOTAL,note20:((score/TOTAL)*20).toFixed(1),tries:tries};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='tp-mbot2-python-v4_resultats.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+
+/* ========= Initialisation DOM ========= */
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildAPI();
+  buildMemo();
+  buildBlanks();
+  
+  // Active DnD A1→A6
+  ['1','2','3','4','5','6'].forEach(i => {
+  enableDnDFor('bank'+i,'prog'+i);
+});
+makeTokensDraggable(); // ✅ rend les étiquettes réellement déplaçables
+
+  // Mélange initial
+  shuffleAllBanks();
+  // Note
+  upd();
+
+});
+
+</script>
+<!-- ===================== Fin SECTION 3 — SCRIPT JAVASCRIPT ===================== -->
+</body>
+</html>
