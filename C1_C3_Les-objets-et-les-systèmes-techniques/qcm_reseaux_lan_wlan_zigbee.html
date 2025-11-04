@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- ✅ Encodage UTF-8 pour les accents -->
+  <meta charset="UTF-8">
+  <!-- ✅ Responsive pour projection et mobiles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ✅ Titre de l’onglet -->
+  <title>QCM — LAN / WLAN / Hub / Switch / Routeur / Zigbee (Cycle 4)</title>
+
+  <!-- ✅ Styles internes pour une page autonome -->
+  <style>
+    /* 🎨 Thème sombre agréable pour la projection */
+    :root { /* Variables de couleur réutilisables */
+      --bg: #0d1117;            /* Fond principal */
+      --panel: #161b22;         /* Panneaux/cartes */
+      --text: #e6edf3;          /* Texte principal */
+      --muted: #9ba3b4;         /* Texte secondaire */
+      --primary: #3b82f6;       /* Bleu accents */
+      --success: #22c55e;       /* Vert succès */
+      --danger: #ef4444;        /* Rouge erreurs */
+      --warning: #f59e0b;       /* Orange infos */
+      --border: #30363d;        /* Bordures */
+    }
+
+    /* 🌌 Corps de page */
+    body {
+      margin: 0;                /* Supprime marges par défaut */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; /* Police lisible */
+      background: radial-gradient(1200px 800px at 20% -10%, #111826 0, #0d1117 40%, #0b0f14 100%); /* Léger dégradé */
+      color: var(--text);       /* Couleur du texte */
+      line-height: 1.5;         /* Hauteur de ligne confortable */
+    }
+
+    /* 🏷️ En-tête */
+    header {
+      padding: 24px 16px;                   /* Espacement interne */
+      border-bottom: 1px solid var(--border); /* Ligne de séparation */
+      background: linear-gradient(90deg, #111827 0%, #0f172a 100%); /* Bandeau */
+      position: sticky;                     /* Collé en haut au scroll */
+      top: 0;                               /* Position */
+      z-index: 5;                           /* Au-dessus du contenu */
+    }
+
+    /* 🧭 Conteneur central */
+    .container {
+      max-width: 1100px;    /* Largeur optimale lecture */
+      margin: 0 auto;       /* Centrage */
+      padding: 20px 16px;   /* Espacement */
+    }
+
+    /* 🧑‍🎓 Bandeau titre */
+    .title {
+      display: flex;                /* Mise en ligne éléments */
+      gap: 12px;                    /* Espacement entre icône et texte */
+      align-items: center;          /* Alignement vertical */
+      font-size: clamp(20px, 3vw, 28px); /* Taille responsive */
+      font-weight: 700;             /* Gras */
+    }
+
+    /* 🗂️ Sous-titre */
+    .subtitle {
+      color: var(--muted);          /* Teinte secondaire */
+      margin-top: 6px;              /* Espacement */
+      font-size: 14px;              /* Taille */
+    }
+
+    /* 🧾 Carte / panneau */
+    .card {
+      background: rgba(22, 27, 34, 0.85); /* Panneau sombre transparent */
+      border: 1px solid var(--border);    /* Bordure fine */
+      border-radius: 14px;                /* Coins doux */
+      padding: 18px;                      /* Espacement interne */
+      margin: 16px 0;                     /* Espacement externe */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* Ombre douce */
+      backdrop-filter: blur(4px);         /* Légère vitre floutée */
+    }
+
+    /* 🧑‍🎓 Formulaire élève */
+    .grid {
+      display: grid;                /* Grille fluide */
+      grid-template-columns: 1fr 1fr; /* Deux colonnes */
+      gap: 12px;                    /* Espacement */
+    }
+
+    /* 🧾 Labels de champs */
+    label {
+      font-size: 13px;                  /* Taille label */
+      color: var(--muted);              /* Couleur label */
+      display: block;                   /* Bloc */
+      margin-bottom: 6px;               /* Espacement sous label */
+    }
+
+    /* 🧑‍🎓 Champs de saisie */
+    input[type="text"] {
+      width: 100%;                      /* Pleine largeur */
+      padding: 10px 12px;               /* Confort de saisie */
+      background: #0b1220;              /* Fond champ */
+      border: 1px solid var(--border);  /* Bordure */
+      border-radius: 10px;              /* Coins doux */
+      color: var(--text);               /* Texte champ */
+      outline: none;                    /* Pas de contour bleu */
+    }
+    input[type="text"]:focus {
+      border-color: var(--primary);     /* Bordure bleue au focus */
+      box-shadow: 0 0 0 3px rgba(59,130,246,.15); /* Halo */
+    }
+
+    /* 🧠 Titre de section */
+    h2 {
+      margin: 0 0 12px 0;               /* Espacement titres */
+      font-size: 20px;                   /* Taille */
+    }
+
+    /* 📝 Question */
+    .question {
+      border-top: 1px dashed var(--border);   /* Séparation */
+      padding-top: 14px;                      /* Espacement interne */
+      margin-top: 14px;                       /* Espacement externe */
+    }
+    .q-text {
+      font-weight: 600;                       /* Texte question en gras */
+      font-size: 16px;                        /* Taille question */
+    }
+
+    /* ✅ Compétence sous la question */
+    .competence {
+      font-size: 13px;                        /* Taille */
+      color: var(--muted);                    /* Teinte secondaire */
+      margin-top: 6px;                        /* Espacement */
+    }
+
+    /* 🔘 Options */
+    .options {
+      margin-top: 10px;                       /* Espacement */
+      display: grid;                           /* Grille */
+      gap: 8px;                                /* Espacement lignes */
+    }
+    .opt {
+      display: flex;                           /* Radio + texte inline */
+      gap: 10px;                               /* Espace entre radio et texte */
+      align-items: flex-start;                 /* Alignement */
+      padding: 10px 12px;                      /* Zone cliquable confortable */
+      background: #0c1322;                     /* Fond option */
+      border: 1px solid transparent;           /* Bordure invisible par défaut */
+      border-radius: 10px;                     /* Coins */
+      cursor: pointer;                         /* Pointeur main */
+      transition: border-color .2s ease;       /* Transition douce */
+    }
+    .opt:hover { border-color: var(--primary); } /* Survol */
+
+    /* 🎯 Feedback par question */
+    .feedback {
+      margin-top: 8px;                     /* Espacement */
+      font-size: 14px;                     /* Taille */
+    }
+    .ok { color: var(--success); }          /* Correct */
+    .ko { color: var(--danger); }           /* Incorrect */
+
+    /* 🧮 Résumé / score */
+    .score {
+      margin-top: 12px;                       /* Espacement */
+      padding: 10px 12px;                     /* Confort */
+      border-radius: 10px;                    /* Coins */
+      background: #0c131f;                    /* Fond */
+      border: 1px solid var(--border);        /* Bordure */
+      font-weight: 600;                        /* Gras */
+    }
+
+    /* 🔘 Boutons d’action */
+    .btns {
+      display: flex;                    /* Ligne boutons */
+      flex-wrap: wrap;                  /* Retour ligne si petit écran */
+      gap: 10px;                        /* Espacement */
+      margin-top: 12px;                 /* Espacement */
+    }
+    button {
+      border: 1px solid var(--border);  /* Bordure */
+      background: #0f172a;              /* Fond bouton */
+      color: var(--text);               /* Couleur texte */
+      border-radius: 10px;              /* Coins */
+      padding: 10px 14px;               /* Taille */
+      cursor: pointer;                  /* Main */
+      font-weight: 600;                 /* Gras */
+    }
+    .primary { border-color: var(--primary); }  /* Accent bleu */
+    .ghost   { background: transparent; }       /* Bouton discret */
+    .warn    { border-color: var(--warning); }  /* Accent orange */
+
+    /* 📌 Encadré d’aide */
+    .help {
+      font-size: 13px;                      /* Taille */
+      color: var(--muted);                  /* Couleur */
+      margin-top: 8px;                      /* Espacement */
+      display: none;                        /* Caché par défaut */
+    }
+
+    /* 📎 Pied de page */
+    footer {
+      text-align: center;                   /* Centré */
+      color: var(--muted);                  /* Teinte douce */
+      padding: 26px 16px;                   /* Espacement */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🧭 En-tête fixe -->
+  <header>
+    <div class="container">
+      <div class="title">📘 QCM — Réseaux informatiques (Cycle 4)</div>
+      <div class="subtitle">LAN • WLAN • Hub • Switch • Routeur • Zigbee — 2 QCM × 20 questions (compétences affichées, correction automatique)</div>
+    </div>
+  </header>
+
+  <!-- 🧑‍🎓 Formulaire élève -->
+  <main class="container">
+    <section class="card">
+      <h2>🧑‍🎓 Identification de l’élève</h2>
+      <div class="grid">
+        <div>
+          <label for="nom">Nom</label>
+          <input id="nom" type="text" placeholder="Ex. : Dupont" />
+        </div>
+        <div>
+          <label for="prenom">Prénom</label>
+          <input id="prenom" type="text" placeholder="Ex. : Anaïs" />
+        </div>
+        <div>
+          <label for="classe">Classe</label>
+          <input id="classe" type="text" placeholder="Ex. : 4e B" />
+        </div>
+        <div>
+          <label for="date">Date</label>
+          <input id="date" type="text" placeholder="Ex. : 04/11/2025" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 🧪 QCM 1 : LAN/WLAN/Hub/Switch/Routeur -->
+    <section id="qcm1" class="card">
+      <h2>🧩 QCM n°1 — LAN / WLAN / Hub / Switch / Routeur (20 questions)</h2>
+      <div id="qcm1-questions"></div>
+      <div class="btns">
+        <button class="primary" onclick="corriger('qcm1')">✅ Corriger QCM n°1</button>
+        <button class="ghost"   onclick="reponses('qcm1')">💡 Afficher les réponses</button>
+        <button class="warn"    onclick="reinitialiser('qcm1')">♻️ Réinitialiser</button>
+      </div>
+      <div id="qcm1-score" class="score" aria-live="polite"></div>
+    </section>
+
+    <!-- 📡 QCM 2 : Zigbee -->
+    <section id="qcm2" class="card">
+      <h2>📡 QCM n°2 — Zigbee & Protocoles sans fil (20 questions)</h2>
+      <div id="qcm2-questions"></div>
+      <div class="btns">
+        <button class="primary" onclick="corriger('qcm2')">✅ Corriger QCM n°2</button>
+        <button class="ghost"   onclick="reponses('qcm2')">💡 Afficher les réponses</button>
+        <button class="warn"    onclick="reinitialiser('qcm2')">♻️ Réinitialiser</button>
+      </div>
+      <div id="qcm2-score" class="score" aria-live="polite"></div>
+    </section>
+
+    <!-- ℹ️ Aide / consignes -->
+    <section class="card">
+      <h2>ℹ️ Conseils</h2>
+      <p class="help" style="display:block">
+        • Coche une seule réponse par question. • Lis bien la compétence associée à chaque item (programme Technologie 2024).<br>
+        • Tu peux corriger plusieurs fois, afficher les réponses pour t’auto-corriger, puis réinitialiser et retenter.
+      </p>
+    </section>
+  </main>
+
+  <!-- 🧷 Pied de page -->
+  <footer>
+    © Ressource pédagogique — Collège • Séquence Réseaux (Cycle 4) — Créé avec ❤️ pour l’autonomie des élèves
+  </footer>
+
+  <!-- 🧠 Logique JavaScript : génération, correction, réponses -->
+  <script>
+    // ================================
+    // 📚 Banque des compétences (codes officiels abrégés pour lisibilité)
+    // ================================
+    const COMP = {
+      C11: "C1.1 — Collecter, trier et analyser des données",
+      C12: "C1.2 — Représenter et transmettre des informations",
+      C21: "C2.1 — Comprendre le fonctionnement d’un réseau (flux d’informations)",
+      C22: "C2.2 — Identifier les composants d’un réseau local",
+      C31: "C3.1 — Adapter un protocole/choix technologique à un usage",
+      C41: "C4.1 — Sécuriser des échanges simples (vocabulaire de base)",
+    };
+
+    // ==========================================
+    // 🧩 QCM n°1 — LAN / WLAN / Hub / Switch / Routeur (20 items)
+    // Chaque item : { q, opts:[...], good: index, comp: codeComp, help: string }
+    // ==========================================
+    const DATA_QCM1 = [
+      { q:"Que signifie LAN ?", opts:["Large Area Network","Local Area Network","Linked Access Node"], good:1, comp:"C21", help:"LAN = réseau local sur une zone restreinte (salle, bâtiment)." },
+      { q:"Que signifie WLAN ?", opts:["Wired LAN","Wireless Local Area Network","World LAN"], good:1, comp:"C21", help:"WLAN = LAN sans fil (Wi-Fi)." },
+      { q:"Dans un LAN, la liaison la plus courante est…", opts:["La fibre noire","Le câble Ethernet","Le câble coaxial TV"], good:1, comp:"C22", help:"Ethernet est la norme la plus répandue en câblage local." },
+      { q:"Un WLAN utilise principalement…", opts:["Des ondes radio (Wi-Fi)","Des ondes infrarouges","Des faisceaux laser"], good:0, comp:"C22", help:"Le Wi-Fi exploite des ondes radio (2,4/5 GHz)." },
+      { q:"Rôle d’un Hub ?", opts:["Relier des réseaux IP","Diffuser à tous les ports sans filtrer","Affecter des adresses IP"], good:1, comp:"C22", help:"Le Hub ne sélectionne pas : il répète à tous." },
+      { q:"Rôle d’un Switch ?", opts:["Attribuer des adresses IP","Acheminer selon adresses MAC","Traduire IP ↔ MAC"], good:1, comp:"C22", help:"Le Switch travaille en couche 2 avec les adresses MAC." },
+      { q:"Rôle principal d’un Routeur ?", opts:["Traduire courant/tension","Relier des réseaux IP et router les paquets","Stocker des fichiers"], good:1, comp:"C22", help:"Le routeur opère en couche 3 (IP)." },
+      { q:"Half-duplex signifie…", opts:["Émission et réception simultanées","Un seul sens à la fois","Pas d’émission"], good:1, comp:"C21", help:"Comme un talkie-walkie : on parle OU on écoute." },
+      { q:"Full-duplex signifie…", opts:["Deux sens en même temps","Un seul sens à la fois","Diffusion à tous"], good:0, comp:"C21", help:"Comme un téléphone : on parle ET on écoute." },
+      { q:"Un Switch stocke…", opts:["Une table MAC","Une table ARP uniquement","Rien"], good:0, comp:"C11", help:"La table MAC relie adresse MAC ↔ port." },
+      { q:"Un Routeur maintient…", opts:["Une table de routage IP","Une table des mots de passe","Une table des VLAN"], good:0, comp:"C11", help:"Table de routage : réseaux → prochaines étapes." },
+      { q:"Couche OSI du Hub ?", opts:["1 (Physique)","2 (Liaison)","3 (Réseau)"], good:0, comp:"C21", help:"Le Hub répète le signal électrique (couche 1)." },
+      { q:"Couche OSI du Switch ?", opts:["1 (Physique)","2 (Liaison)","3 (Réseau)"], good:1, comp:"C21", help:"Le Switch gère les trames et MAC (couche 2)." },
+      { q:"Couche OSI du Routeur ?", opts:["1 (Physique)","2 (Liaison)","3 (Réseau)"], good:2, comp:"C21", help:"Le Routeur traite les paquets IP (couche 3)." },
+      { q:"Dans ta salle, relier 20 PC entre eux = plutôt…", opts:["Routeur","Switch","Hub"], good:1, comp:"C31", help:"Le Switch est l’équipement adapté au LAN de salle." },
+      { q:"Accéder à Internet depuis ce LAN = nécessité…", opts:["Un routeur/box","Un second switch uniquement","Un hub Wi-Fi"], good:0, comp:"C31", help:"Le routeur/box relie LAN ↔ Internet." },
+      { q:"WLAN : fréquence(s) la plus utilisée…", opts:["2,4 et 5 GHz","7 GHz","900 MHz uniquement"], good:0, comp:"C21", help:"Le Wi-Fi exploite 2,4/5 GHz (et parfois 6 GHz)." },
+      { q:"Dans un Hub, un envoi à B est…", opts:["Diffusé à tous","Envoyé seulement à B","Bloqué"], good:0, comp:"C22", help:"Le Hub “inonde” tous les ports." },
+      { q:"Dans un Switch, un envoi à B est…", opts:["Diffusé à tous","Envoyé seulement au port de B","Remis au routeur"], good:1, comp:"C22", help:"Le Switch cible le bon port d’après la table MAC." },
+      { q:"Un VLAN sur un Switch sert à…", opts:["Augmenter la puissance électrique","Segmenter le réseau en domaines logiques","Crypter le Wi-Fi"], good:1, comp:"C31", help:"Les VLAN séparent logiquement des groupes." }
+    ];
+
+    // ==========================================
+    // 📡 QCM n°2 — Zigbee (20 items)
+    // ==========================================
+    const DATA_QCM2 = [
+      { q:"Zigbee est un protocole…", opts:["De stockage USB","Sans fil basse consommation","Filaire audio"], good:1, comp:"C31", help:"Zigbee = IoT basse énergie." },
+      { q:"Norme sous-jacente de Zigbee :", opts:["IEEE 802.15.4","IEEE 802.3","IEEE 802.11"], good:0, comp:"C21", help:"802.15.4 sert de base à Zigbee (WPAN)." },
+      { q:"Topologie phare de Zigbee :", opts:["Étoile uniquement","Linéaire","Maillée (mesh)"], good:2, comp:"C21", help:"Le maillage étend portée et fiabilité." },
+      { q:"Fréquence courante Zigbee :", opts:["2,4 GHz","60 GHz","3,5 GHz"], good:0, comp:"C21", help:"Comme le Wi-Fi/Bluetooth : 2,4 GHz." },
+      { q:"Débit typique Zigbee :", opts:["250 kbit/s","100 Mbit/s","1 Gbit/s"], good:0, comp:"C11", help:"Faible mais suffisant pour capteurs." },
+      { q:"Consommation Zigbee :", opts:["Élevée","Moyenne","Très faible"], good:2, comp:"C31", help:"Plusieurs années sur pile possibles." },
+      { q:"Coordinateur Zigbee :", opts:["Crée et gère le réseau","Éteint les capteurs","Attribue les IP publiques"], good:0, comp:"C22", help:"C’est la “passerelle” du réseau Zigbee." },
+      { q:"Routeur Zigbee :", opts:["Relaye les messages","Stocke des films","Bloque le Wi-Fi"], good:0, comp:"C22", help:"Rôle de relais (souvent sur secteur)." },
+      { q:"End Device Zigbee :", opts:["Relais obligatoire","Nœud final souvent sur pile","Routeur central"], good:1, comp:"C22", help:"Économie d’énergie, pas de relais." },
+      { q:"Exemple d’usage Zigbee :", opts:["Capteur de porte","Fibre backbone opérateur","Serveur web Apache"], good:0, comp:"C31", help:"Domotique : capteurs, prises, lampes." },
+      { q:"Avantage clé Zigbee :", opts:["Très haut débit","Réseau maillé & faible énergie","Remplace l’IP"], good:1, comp:"C31", help:"Parfait pour objets connectés." },
+      { q:"Comparé au Wi-Fi, Zigbee est…", opts:["Plus rapide","Moins rapide mais plus économe","Identique"], good:1, comp:"C11", help:"Compromis débit ↔ autonomie." },
+      { q:"Portée typique Zigbee :", opts:["10–100 m selon obstacles",">5 km","1 m"], good:0, comp:"C21", help:"Portée modeste mais maillage aide." },
+      { q:"Un exemple d’écosystème Zigbee :", opts:["Philips Hue","FTP","HDMI-CEC"], good:0, comp:"C31", help:"Hue, Ikea TRÅDFRI, Aqara, etc." },
+      { q:"Zigbee nécessite souvent…", opts:["Une passerelle (hub)","Un commutateur PoE","Une carte SIM"], good:0, comp:"C22", help:"Pour dialoguer avec smartphone/box." },
+      { q:"Mesh Zigbee permet…", opts:["Redondance de chemin","ULTRA-débit","Adresse IP publique"], good:0, comp:"C21", help:"Fiabilité et couverture accrues." },
+      { q:"Besoins énergétiques d’un End Device :", opts:["Très faibles","Moyens","Très élevés"], good:0, comp:"C31", help:"Pensé pour piles longues durées." },
+      { q:"Zigbee s’utilise surtout pour…", opts:["Jeux AAA","Domotique capteurs/actionneurs","Fibre optique cœur réseau"], good:1, comp:"C31", help:"Maison intelligente / capteurs." },
+      { q:"Exemple concret en classe :", opts:["Capteur mouvement allume lampe","Routeur BGP opérateur","Switch cœur de data-center"], good:0, comp:"C31", help:"Scène domotique pédagogique." },
+      { q:"Zigbee fonctionne…", opts:["Sans Internet pour le réseau local","Uniquement avec 4G","Avec câble coaxial"], good:0, comp:"C21", help:"Réseau local maillé autonome." }
+    ];
+
+    // =========================================================
+    // 🛠️ Fonction utilitaire : crée un élément avec classes/texte
+    // =========================================================
+    function el(tag, cls = "", text = "") {
+      const n = document.createElement(tag);     // Crée l’élément
+      if (cls) n.className = cls;               // Ajoute des classes si besoin
+      if (text) n.textContent = text;           // Ajoute du texte si fourni
+      return n;                                  // Retourne l’élément
+    }
+
+    // =========================================================
+    // 🧩 Génération visuelle d’un QCM à partir d’un tableau de données
+    // containerId : "qcm1-questions" | "qcm2-questions"
+    // data        : tableau d’items (DATA_QCM1 | DATA_QCM2)
+    // =========================================================
+    function renderQCM(containerId, data) {
+      const wrap = document.getElementById(containerId); // Récupère le conteneur
+      wrap.innerHTML = "";                                // Nettoie le contenu
+
+      data.forEach((item, idx) => {                      // Parcourt chaque question
+        const q = el("div", "question");                 // Conteneur de la question
+
+        const title = el("div", "q-text", `Q${idx+1}. ${item.q}`); // Intitulé
+        q.appendChild(title);                                         // Ajoute le titre
+
+        const comp = el("div", "competence", `🎯 Compétence : ${COMP[item.comp] || item.comp}`); // Compétence
+        q.appendChild(comp);                                           // Ajoute la compétence
+
+        const opts = el("div", "options");                            // Conteneur options
+        item.opts.forEach((label, i) => {                             // Parcourt les choix
+          const opt = el("label", "opt");                             // Ligne d’option
+          const radio = document.createElement("input");              // Crée radio
+          radio.type = "radio";                                       // Type radio
+          radio.name = `${containerId}-q${idx}`;                      // Groupe par question
+          radio.value = i;                                            // Valeur = index du choix
+          opt.appendChild(radio);                                     // Insère la radio
+          const span = el("span", "", label);                         // Texte du choix
+          opt.appendChild(span);                                      // Insère le texte
+          opts.appendChild(opt);                                      // Ajoute l’option à la liste
+        });
+        q.appendChild(opts);                                          // Ajoute options au bloc
+
+        const fb = el("div", "feedback");                             // Zone de feedback
+        q.appendChild(fb);                                            // Ajoute feedback
+
+        const help = el("div", "help", `💡 Aide : ${item.help}`);     // Aide ciblée
+        q.appendChild(help);                                          // Ajoute aide (cachée)
+
+        wrap.appendChild(q);                                          // Ajoute la question au conteneur
+      });
+    }
+
+    // =========================================================
+    // ✅ Correction d’un QCM (calcule score + feedback)
+    // qcmId : "qcm1" | "qcm2"
+    // =========================================================
+    function corriger(qcmId) {
+      const data = qcmId === "qcm1" ? DATA_QCM1 : DATA_QCM2; // Sélection des données
+      const cont = document.getElementById(`${qcmId}-questions`);    // Conteneur QCM
+      const blocks = Array.from(cont.querySelectorAll(".question")); // Toutes les questions
+      let score = 0;                                                 // Compteur score
+
+      blocks.forEach((block, idx) => {                               // Parcourt questions
+        const radios = block.querySelectorAll(`input[type="radio"][name="${qcmId}-questions-q${idx}"], input[type="radio"][name="${qcmId}-q${idx}"]`); 
+        // ↑ Compat : au cas où le nom diffère (sécurité)
+
+        let selected = -1;                                           // Par défaut : rien coché
+        radios.forEach((r, i) => { if (r.checked) selected = Number(r.value); }); // Trouve la sélection
+
+        const fb = block.querySelector(".feedback");                 // Zone feedback
+        const help = block.querySelector(".help");                   // Zone aide
+
+        if (selected === data[idx].good) {                           // Si juste
+          score++;                                                   // Incrémente score
+          fb.textContent = "✅ Correct !";                           // Message succès
+          fb.className = "feedback ok";                              // Style vert
+          help.style.display = "none";                               // Cache l’aide
+        } else {
+          fb.textContent = `❌ Incorrect. Astuce : ${data[idx].help}`; // Message erreur + astuce
+          fb.className = "feedback ko";                              // Style rouge
+          help.style.display = "block";                              // Montre l’aide
+        }
+      });
+
+      const scoreBox = document.getElementById(`${qcmId}-score`);    // Zone score global
+      scoreBox.textContent = `🧮 Score : ${score} / ${data.length}  —  Note sur 20 : ${score} / ${data.length} × 20 = ${Math.round((score/data.length)*20)}/20`; 
+      // ↑ Affichage clair du score et de la note
+    }
+
+    // =========================================================
+    // 💡 Afficher toutes les bonnes réponses (mise en évidence)
+    // qcmId : "qcm1" | "qcm2"
+    // =========================================================
+    function reponses(qcmId) {
+      const data = qcmId === "qcm1" ? DATA_QCM1 : DATA_QCM2;           // Données
+      const cont = document.getElementById(`${qcmId}-questions`);      // Conteneur
+      const blocks = Array.from(cont.querySelectorAll(".question"));   // Questions
+
+      blocks.forEach((block, idx) => {                                 // Parcourt questions
+        const radios = block.querySelectorAll(`input[type="radio"][name="${qcmId}-q${idx}"]`); // Radios
+        radios.forEach((r, i) => { r.checked = (i === data[idx].good); }); // Coche la bonne réponse
+        const fb = block.querySelector(".feedback");                   // Feedback
+        fb.textContent = "✅ Bonne réponse affichée.";                  // Message
+        fb.className = "feedback ok";                                  // Style vert
+        const help = block.querySelector(".help");                     // Aide
+        help.style.display = "block";                                  // Affiche l’aide explicative
+      });
+
+      const scoreBox = document.getElementById(`${qcmId}-score`);      // Zone score
+      scoreBox.textContent = "📌 Les bonnes réponses ont été affichées. Tu peux maintenant étudier les aides et réessayer."; 
+      // ↑ Message d’information
+    }
+
+    // =========================================================
+    // ♻️ Réinitialiser un QCM (tout décocher + vider feedback)
+    // qcmId : "qcm1" | "qcm2"
+    // =========================================================
+    function reinitialiser(qcmId) {
+      const cont = document.getElementById(`${qcmId}-questions`);          // Conteneur
+      const blocks = Array.from(cont.querySelectorAll(".question"));       // Questions
+      blocks.forEach(block => {                                            // Pour chaque question
+        block.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false); // Décoche
+        const fb = block.querySelector(".feedback");                       // Feedback
+        fb.textContent = "";                                               // Vide message
+        fb.className = "feedback";                                         // Réinitialise style
+        const help = block.querySelector(".help");                         // Aide
+        help.style.display = "none";                                       // Cache l’aide
+      });
+      const scoreBox = document.getElementById(`${qcmId}-score`);          // Zone score
+      scoreBox.textContent = "";                                           // Vide score
+    }
+
+    // =========================================================
+    // 🚀 Au chargement : générer les deux QCM depuis les données
+    // =========================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      renderQCM("qcm1-questions", DATA_QCM1);   // Rend les 20 questions du QCM 1
+      renderQCM("qcm2-questions", DATA_QCM2);   // Rend les 20 questions du QCM 2
+    });
+  </script>
+</body>
+</html>
