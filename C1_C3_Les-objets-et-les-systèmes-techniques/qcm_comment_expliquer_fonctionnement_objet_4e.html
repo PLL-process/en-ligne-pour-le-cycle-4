@@ -1,0 +1,939 @@
+<!-- Indique que le document est un fichier HTML5 -->
+<!DOCTYPE html>
+<!-- Ouvre la balise principale HTML et précise la langue -->
+<html lang="fr">
+<head>
+    <!-- Encodage des caractères en UTF-8 pour gérer les accents -->
+    <meta charset="UTF-8">
+    <!-- Titre affiché dans l’onglet du navigateur -->
+    <title>QCM - Comment expliquer le fonctionnement d’un objet ?</title>
+
+    <!-- Début du style CSS intégré -->
+    <style>
+        /* Style global pour le corps de la page */
+        body {
+            font-family: Arial, sans-serif;    /* Police principale */
+            background: #0f172a;              /* Fond sombre bleu nuit */
+            color: #e5e7eb;                   /* Texte gris très clair */
+            margin: 0;                        /* Supprime les marges par défaut du navigateur */
+            padding: 0;                       /* Supprime les espacements internes par défaut */
+        }
+
+        /* Conteneur principal pour centrer le contenu et limiter la largeur */
+        .container {
+            max-width: 1000px;                /* Largeur maximale du contenu */
+            margin: 0 auto;                   /* Centre le bloc horizontalement */
+            padding: 20px;                    /* Ajoute un peu d’espace interne */
+        }
+
+        /* Bandeau d’en-tête en haut de la page */
+        header {
+            background: linear-gradient(135deg, #1d4ed8, #22c55e); /* Dégradé bleu / vert */
+            padding: 20px;                   /* Espacement interne du bandeau */
+            border-radius: 10px;             /* Bords arrondis du bandeau */
+            display: flex;                   /* Mise en page en ligne (flex) */
+            align-items: center;             /* Centre verticalement les éléments */
+            gap: 20px;                       /* Espace entre les éléments du bandeau */
+            margin-bottom: 20px;             /* Espace sous le bandeau */
+        }
+
+        /* Zone contenant le texte dans l’en-tête */
+        .header-text {
+            flex: 1;                         /* Prend toute la place disponible */
+        }
+
+        /* Titre principal dans l’en-tête */
+        header h1 {
+            margin: 0;                       /* Supprime la marge par défaut */
+            font-size: 1.8em;                /* Taille de police du titre */
+            color: #f9fafb;                  /* Couleur du texte (presque blanc) */
+        }
+
+        /* Paragraphe de sous-titre dans l’en-tête */
+        header p {
+            margin: 5px 0 0 0;               /* Légère marge au-dessus */
+            font-size: 0.95em;               /* Taille du texte du sous-titre */
+            color: #e5e7eb;                  /* Couleur claire */
+        }
+
+        /* Bloc qui contient les images SVG d’objets (imprimante, spa, radiateur) */
+        .header-illustrations {
+            display: flex;                   /* Affiche les SVG en ligne */
+            gap: 10px;                       /* Espace entre les SVG */
+        }
+
+        /* Style commun aux petites cartes d’info sous le bandeau (compétences, score, etc.) */
+        .info-card {
+            background: #111827;             /* Fond sombre mais différent du fond global */
+            border-radius: 10px;             /* Bords arrondis */
+            padding: 15px;                   /* Espacement interne */
+            margin-bottom: 15px;             /* Espace sous la carte */
+            border: 1px solid #1f2933;       /* Légère bordure pour délimiter */
+        }
+
+        /* Titre des petites cartes d’info (zones compétences, consignes, etc.) */
+        .info-card h2 {
+            margin-top: 0;                   /* Supprime la marge supérieure */
+            color: #60a5fa;                  /* Titre bleu clair */
+            font-size: 1.1em;                /* Taille légèrement augmentée */
+        }
+
+        /* Style pour la liste de compétences */
+        .skills-list {
+            display: flex;                   /* Affiche les items sur une même ligne */
+            flex-wrap: wrap;                 /* Permet le retour à la ligne si trop long */
+            gap: 8px;                        /* Espace entre les “pastilles” de compétences */
+            margin-top: 5px;                 /* Petite marge avec le titre */
+        }
+
+        /* Pastille de compétence individuelle (C2.1, C2.2, etc.) */
+        .skill-tag {
+            background: #1e293b;            /* Fond sombre bleuté */
+            border-radius: 999px;           /* Forme de “pilule” très arrondie */
+            padding: 4px 10px;              /* Espacement interne */
+            font-size: 0.85em;              /* Taille de texte réduite */
+            border: 1px solid #334155;      /* Légère bordure pour se détacher */
+        }
+
+        /* Style général pour chaque question de QCM */
+        .question {
+            background: #020617;            /* Fond très sombre pour chaque bloc question */
+            border-radius: 10px;            /* Bords arrondis du bloc question */
+            padding: 15px;                  /* Espacement interne */
+            margin-bottom: 15px;            /* Espace entre deux questions */
+            border: 1px solid #1f2937;      /* Fine bordure autour de chaque question */
+        }
+
+        /* Titre de question (Ex : Question 1…) */
+        .question h3 {
+            margin-top: 0;                  /* Supprime la marge en haut */
+            color: #38bdf8;                 /* Couleur bleu ciel pour le titre de la question */
+            font-size: 1.05em;              /* Taille légèrement augmentée */
+        }
+
+        /* Classe pour afficher la compétence juste sous la question */
+        .competence-label {
+            font-size: 0.85em;              /* Texte plus petit */
+            color: #a5b4fc;                 /* Mauve clair pour la compétence */
+            margin-bottom: 8px;             /* Petite séparation avec le reste */
+        }
+
+        /* Liste des propositions (A, B, C, D) */
+        .options {
+            margin-top: 8px;                /* Espace au-dessus de la liste de réponses */
+        }
+
+        /* Chaque ligne de réponse (label) */
+        .options label {
+            display: block;                 /* Chaque proposition sur une ligne */
+            margin-bottom: 5px;             /* Espace entre deux lignes */
+            cursor: pointer;                /* Curseur = main au survol */
+        }
+
+        /* Couleur des inputs radio pour qu’ils s’intègrent bien sur fond sombre */
+        .options input[type="radio"] {
+            margin-right: 5px;              /* Espace entre la puce radio et le texte */
+        }
+
+        /* Zone d’affichage des feedbacks après correction */
+        .feedback {
+            margin-top: 8px;                /* Espace entre les réponses et le feedback */
+            font-size: 0.9em;               /* Taille de texte légèrement réduite */
+        }
+
+        /* Couleur verte pour les réponses correctes */
+        .correct {
+            color: #4ade80;                 /* Vert clair */
+        }
+
+        /* Couleur rouge pour les réponses incorrectes */
+        .incorrect {
+            color: #f97373;                 /* Rouge/rose */
+        }
+
+        /* Style de la barre de score globale */
+        .score-panel {
+            display: flex;                  /* Affiche les éléments sur une ligne */
+            flex-wrap: wrap;                /* Permet de revenir à la ligne si pas assez de place */
+            gap: 10px;                      /* Espace horizontal/vertical entre les éléments */
+            align-items: center;            /* Centre verticalement les éléments */
+        }
+
+        /* Zone textuelle du score (résumé) */
+        .score-text {
+            font-weight: bold;              /* Met en gras le score */
+        }
+
+        /* Barre de progression visuelle en bas de la zone score */
+        .score-bar-container {
+            flex: 1;                        /* Prend l’espace horizontal restant */
+            background: #111827;            /* Fond sombre pour la barre */
+            border-radius: 999px;           /* Forme de pilule */
+            overflow: hidden;               /* Cache ce qui dépasse */
+            height: 12px;                   /* Hauteur de la barre */
+            border: 1px solid #1f2937;      /* Bordure légère */
+        }
+
+        /* Vraie barre de progression (largeur modifiée par JavaScript) */
+        .score-bar {
+            height: 100%;                   /* Prend toute la hauteur du conteneur */
+            width: 0%;                      /* Largeur initiale = 0% avant correction */
+            background: linear-gradient(90deg, #22c55e, #22d3ee); /* Dégradé vert-bleu */
+            transition: width 0.5s ease;    /* Animation fluide quand la barre change de taille */
+        }
+
+        /* Style des boutons principaux (corriger, réinitialiser) */
+        .actions {
+            margin-top: 10px;               /* Espace au-dessus du groupe de boutons */
+        }
+
+        /* Style commun à tous les boutons */
+        button {
+            background: #2563eb;            /* Fond bleu moyen */
+            color: #f9fafb;                 /* Texte très clair */
+            border: none;                   /* Pas de bordure par défaut */
+            padding: 10px 16px;             /* Taille du bouton (hauteur et largeur) */
+            border-radius: 999px;           /* Bouton arrondi */
+            cursor: pointer;                /* Curseur main */
+            font-size: 0.95em;              /* Taille de texte du bouton */
+            margin-right: 8px;              /* Espace entre les boutons */
+        }
+
+        /* Effet au survol d’un bouton (éclaircit un peu) */
+        button:hover {
+            background: #1d4ed8;            /* Bleu un peu plus foncé au survol */
+        }
+
+        /* Bouton secondaire (réinitialisation) avec une autre couleur */
+        .btn-secondary {
+            background: #6b7280;            /* Gris pour le bouton secondaire */
+        }
+
+        /* Effet au survol du bouton secondaire */
+        .btn-secondary:hover {
+            background: #4b5563;            /* Gris légèrement plus foncé */
+        }
+
+        /* Petit texte d’aide en bas */
+        footer {
+            margin-top: 25px;               /* Espace au-dessus du pied de page */
+            font-size: 0.8em;               /* Texte plus petit */
+            color: #9ca3af;                 /* Gris clair */
+            text-align: center;             /* Centrer le texte */
+        }
+    </style>
+    <!-- Fin du style CSS -->
+</head>
+
+<!-- Début du corps du document HTML -->
+<body>
+    <!-- Conteneur principal pour centrer le contenu -->
+    <div class="container">
+        <!-- Bandeau d’en-tête avec titre, sous-titre et images SVG -->
+        <header>
+            <!-- Texte à gauche dans le bandeau -->
+            <div class="header-text">
+                <!-- Titre principal du QCM -->
+                <h1>QCM – Comment expliquer le fonctionnement d’un objet ?</h1>
+                <!-- Sous-titre motivant avec emojis -->
+                <p>💡 Imprimante, spa, radiateur… Teste tes connaissances sur les notices, les contraintes et la programmation !</p>
+            </div>
+
+            <!-- Illustrations SVG à droite dans le bandeau -->
+            <div class="header-illustrations">
+                <!-- SVG simplifié d’une imprimante (image vectorielle intégrée) -->
+                <svg width="70" height="50" viewBox="0 0 80 60">
+                    <!-- Corps de l’imprimante -->
+                    <rect x="5" y="15" width="70" height="35" rx="6" fill="#111827" stroke="#e5e7eb" />
+                    <!-- Feuille de papier -->
+                    <rect x="20" y="2" width="40" height="20" rx="2" fill="#f9fafb" stroke="#e5e7eb" />
+                    <!-- Fente de sortie -->
+                    <rect x="20" y="38" width="40" height="5" fill="#e5e7eb" />
+                    <!-- Bouton rond -->
+                    <circle cx="65" cy="25" r="3" fill="#22c55e" />
+                </svg>
+
+                <!-- SVG simplifié d’un spa gonflable -->
+                <svg width="70" height="50" viewBox="0 0 80 60">
+                    <!-- Bassin du spa -->
+                    <ellipse cx="40" cy="35" rx="30" ry="15" fill="#0f172a" stroke="#e5e7eb" />
+                    <!-- Eau dans le spa -->
+                    <ellipse cx="40" cy="32" rx="28" ry="10" fill="#1d4ed8" opacity="0.6" />
+                    <!-- Thermomètre -->
+                    <rect x="60" y="10" width="6" height="20" rx="3" fill="#e5e7eb" />
+                    <circle cx="63" cy="32" r="5" fill="#ef4444" />
+                </svg>
+
+                <!-- SVG simplifié d’un radiateur programmable -->
+                <svg width="70" height="50" viewBox="0 0 80 60">
+                    <!-- Corps du radiateur -->
+                    <rect x="10" y="15" width="50" height="30" rx="4" fill="#111827" stroke="#e5e7eb" />
+                    <!-- Traits verticaux pour les “lames” -->
+                    <line x1="18" y1="18" x2="18" y2="42" stroke="#e5e7eb" />
+                    <line x1="26" y1="18" x2="26" y2="42" stroke="#e5e7eb" />
+                    <line x1="34" y1="18" x2="34" y2="42" stroke="#e5e7eb" />
+                    <line x1="42" y1="18" x2="42" y2="42" stroke="#e5e7eb" />
+                    <line x1="50" y1="18" x2="50" y2="42" stroke="#e5e7eb" />
+                    <!-- Petit écran du thermostat -->
+                    <rect x="62" y="18" width="10" height="12" rx="2" fill="#0f172a" stroke="#e5e7eb" />
+                    <!-- Chiffres stylisés (petits rectangles) -->
+                    <rect x="64" y="20" width="6" height="2" fill="#e5e7eb" />
+                    <rect x="64" y="24" width="6" height="2" fill="#e5e7eb" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- Carte d’info présentant les compétences travaillées -->
+        <section class="info-card">
+            <!-- Titre de la carte -->
+            <h2>Compétences évaluées 📚</h2>
+            <!-- Description courte -->
+            <p>Chaque question du QCM est reliée à au moins une compétence du programme de technologie :</p>
+            <!-- Liste sous forme de “pastilles” -->
+            <div class="skills-list">
+                <span class="skill-tag">C2.1 – Décrire l’expérience de l’utilisateur</span>
+                <span class="skill-tag">C2.2 – Repérer et expliquer les contraintes</span>
+                <span class="skill-tag">C9.1 – Modifier un algorithme</span>
+                <span class="skill-tag">C9.2 – Traduire un algorithme en programme</span>
+                <span class="skill-tag">C9.3 – Programmer un système réel</span>
+            </div>
+        </section>
+
+        <!-- Carte d’info avec le principe de fonctionnement du QCM -->
+        <section class="info-card">
+            <!-- Titre de la carte -->
+            <h2>Consignes du QCM ✏️</h2>
+            <!-- Texte d’explication -->
+            <p>
+                Réponds à chaque question en cochant la bonne réponse.  
+                Clique ensuite sur <strong>« Corriger mes réponses »</strong> pour afficher ta note,
+                les corrections détaillées et les compétences associées.
+            </p>
+            <!-- Phrase motivante -->
+            <p>🎯 Objectif : comprendre comment une notice, des pictogrammes et un programme peuvent rendre un objet plus facile à utiliser.</p>
+        </section>
+
+        <!-- Carte contenant la zone de score globale -->
+        <section class="info-card">
+            <!-- Titre de la carte -->
+            <h2>Score global 🧮</h2>
+            <!-- Conteneur du score et de la barre de progression -->
+            <div class="score-panel">
+                <!-- Zone de texte où la note sera affichée par JavaScript -->
+                <div class="score-text" id="scoreText">
+                    Ta note s’affichera ici après la correction.
+                </div>
+                <!-- Conteneur de la barre de progression -->
+                <div class="score-bar-container">
+                    <!-- Vraie barre de progression dont la largeur sera modifiée en JavaScript -->
+                    <div class="score-bar" id="scoreBar"></div>
+                </div>
+            </div>
+            <!-- Groupe de boutons d’action -->
+            <div class="actions">
+                <!-- Bouton pour lancer la correction via JavaScript -->
+                <button id="btnCorriger">Corriger mes réponses ✅</button>
+                <!-- Bouton pour remettre le QCM à zéro -->
+                <button class="btn-secondary" id="btnReset">Réinitialiser le QCM 🔁</button>
+            </div>
+        </section>
+
+        <!-- ============================== -->
+        <!--  DÉBUT DES 25 QUESTIONS QCM   -->
+        <!-- ============================== -->
+
+        <!-- Question 1 -->
+        <section class="question" data-question="1">
+            <h3>Question 1 – Quel est l’objectif principal d’un manuel utilisateur ?</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Décrire l’expérience de l’utilisateur</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A">A. Décrire le code source interne de l’objet</label>
+                <label><input type="radio" name="q1" value="B">B. Aider l’utilisateur à comprendre et utiliser l’objet</label>
+                <label><input type="radio" name="q1" value="C">C. Rendre l’objet plus cher</label>
+                <label><input type="radio" name="q1" value="D">D. Remplacer complètement les dessins techniques</label>
+            </div>
+            <div class="feedback" id="fb-q1"></div>
+        </section>
+
+        <!-- Question 2 -->
+        <section class="question" data-question="2">
+            <h3>Question 2 – Quel document permet d’identifier toutes les contraintes autour d’un objet ?</h3>
+            <div class="competence-label">Compétence visée : C2.2 – Repérer les contraintes</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A">A. Un diagramme des interacteurs</label>
+                <label><input type="radio" name="q2" value="B">B. Un tableau de mesures</label>
+                <label><input type="radio" name="q2" value="C">C. Un planning de fabrication</label>
+                <label><input type="radio" name="q2" value="D">D. Un code informatique</label>
+            </div>
+            <div class="feedback" id="fb-q2"></div>
+        </section>
+
+        <!-- Question 3 -->
+        <section class="question" data-question="3">
+            <h3>Question 3 – Dans un manuel utilisateur, un pictogramme sert surtout à…</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Décrire l’expérience de l’utilisateur</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A">A. Complexifier les informations</label>
+                <label><input type="radio" name="q3" value="B">B. Illustrer et faciliter la compréhension</label>
+                <label><input type="radio" name="q3" value="C">C. Remplacer les textes obligatoirement</label>
+                <label><input type="radio" name="q3" value="D">D. Interdire l’usage de couleurs</label>
+            </div>
+            <div class="feedback" id="fb-q3"></div>
+        </section>
+
+        <!-- Question 4 -->
+        <section class="question" data-question="4">
+            <h3>Question 4 – Une contrainte “esthétique” correspond à : </h3>
+            <div class="competence-label">Compétence visée : C2.2 – Contraintes prises en compte</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A">A. La sécurité de l’objet</label>
+                <label><input type="radio" name="q4" value="B">B. La forme et l’attrait visuel pour l’utilisateur</label>
+                <label><input type="radio" name="q4" value="C">C. La résistance électrique</label>
+                <label><input type="radio" name="q4" value="D">D. La consommation énergétique</label>
+            </div>
+            <div class="feedback" id="fb-q4"></div>
+        </section>
+
+        <!-- Question 5 -->
+        <section class="question" data-question="5">
+            <h3>Question 5 – Le risque associé à la mention « DANGER » sur un lisseur est :</h3>
+            <div class="competence-label">Compétence visée : C2.2 – Contraintes de sécurité</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A">A. Un risque de panne électronique</label>
+                <label><input type="radio" name="q5" value="B">B. Un risque de brûlure</label>
+                <label><input type="radio" name="q5" value="C">C. Un risque d’explosion de batterie</label>
+                <label><input type="radio" name="q5" value="D">D. Aucun risque réel</label>
+            </div>
+            <div class="feedback" id="fb-q5"></div>
+        </section>
+
+        <!-- Question 6 -->
+        <section class="question" data-question="6">
+            <h3>Question 6 – Lequel de ces éléments est un interacteur de l’imprimante ?</h3>
+            <div class="competence-label">Compétence visée : C2.2 – Interacteurs</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A">A. Le soleil</label>
+                <label><input type="radio" name="q6" value="B">B. Le papier</label>
+                <label><input type="radio" name="q6" value="C">C. Le vent</label>
+                <label><input type="radio" name="q6" value="D">D. Les lunettes de l’utilisateur</label>
+            </div>
+            <div class="feedback" id="fb-q6"></div>
+        </section>
+
+        <!-- Question 7 -->
+        <section class="question" data-question="7">
+            <h3>Question 7 – Dans l’activité spa, l’énergie utilisée par le spa est :</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Usage d’un objet</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A">A. Mécanique</label>
+                <label><input type="radio" name="q7" value="B">B. Thermique</label>
+                <label><input type="radio" name="q7" value="C">C. Électrique</label>
+                <label><input type="radio" name="q7" value="D">D. Solaire</label>
+            </div>
+            <div class="feedback" id="fb-q7"></div>
+        </section>
+
+        <!-- Question 8 -->
+        <section class="question" data-question="8">
+            <h3>Question 8 – Le symbole « &lt; 10°C » sur la notice du spa signifie que :</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Pictogrammes et conditions d’usage</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A">A. Le spa ne doit pas être utilisé en dessous de 10°C</label>
+                <label><input type="radio" name="q8" value="B">B. Le spa se gonfle plus vite lorsqu’il fait froid</label>
+                <label><input type="radio" name="q8" value="C">C. Le spa se dégonfle automatiquement</label>
+                <label><input type="radio" name="q8" value="D">D. Le spa tombe en panne sous 20°C</label>
+            </div>
+            <div class="feedback" id="fb-q8"></div>
+        </section>
+
+        <!-- Question 9 -->
+        <section class="question" data-question="9">
+            <h3>Question 9 – Un algorithme sert principalement à :</h3>
+            <div class="competence-label">Compétence visée : C9.1 – Modifier un algorithme</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A">A. Réaliser un dessin artistique</label>
+                <label><input type="radio" name="q9" value="B">B. Décrire des étapes d’usage ou de fonctionnement</label>
+                <label><input type="radio" name="q9" value="C">C. Décorer le manuel</label>
+                <label><input type="radio" name="q9" value="D">D. Remplacer toutes les consignes écrites</label>
+            </div>
+            <div class="feedback" id="fb-q9"></div>
+        </section>
+
+        <!-- Question 10 -->
+        <section class="question" data-question="10">
+            <h3>Question 10 – Quel mode du radiateur assure une température minimale de 7,5°C ?</h3>
+            <div class="competence-label">Compétence visée : C9.3 – Programmer un système réel</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="A">A. Mode Nor</label>
+                <label><input type="radio" name="q10" value="B">B. Mode Pro</label>
+                <label><input type="radio" name="q10" value="C">C. Mode FrF</label>
+                <label><input type="radio" name="q10" value="D">D. Mode OFF</label>
+            </div>
+            <div class="feedback" id="fb-q10"></div>
+        </section>
+
+        <!-- Question 11 -->
+        <section class="question" data-question="11">
+            <h3>Question 11 – Quel bouton permet de changer de mode sur le radiateur ?</h3>
+            <div class="competence-label">Compétence visée : C9.1 – Modifier un algorithme (navigation entre modes)</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A">A. ON/OFF</label>
+                <label><input type="radio" name="q11" value="B">B. Menu</label>
+                <label><input type="radio" name="q11" value="C">C. Timer</label>
+                <label><input type="radio" name="q11" value="D">D. Reset</label>
+            </div>
+            <div class="feedback" id="fb-q11"></div>
+        </section>
+
+        <!-- Question 12 -->
+        <section class="question" data-question="12">
+            <h3>Question 12 – Une contrainte de sécurité signifie que :</h3>
+            <div class="competence-label">Compétence visée : C2.2 – Contraintes de sécurité</div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A">A. L’objet doit être décoré</label>
+                <label><input type="radio" name="q12" value="B">B. L’objet ne doit pas présenter de dangers pour l’utilisateur</label>
+                <label><input type="radio" name="q12" value="C">C. L’objet doit être silencieux</label>
+                <label><input type="radio" name="q12" value="D">D. L’objet doit être connecté à Internet</label>
+            </div>
+            <div class="feedback" id="fb-q12"></div>
+        </section>
+
+        <!-- Question 13 -->
+        <section class="question" data-question="13">
+            <h3>Question 13 – Traduire un algorithme en programme consiste à :</h3>
+            <div class="competence-label">Compétence visée : C9.2 – Traduire un algorithme en programme</div>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A">A. Lui ajouter des images</label>
+                <label><input type="radio" name="q13" value="B">B. Le transformer en code informatique exécutable</label>
+                <label><input type="radio" name="q13" value="C">C. Le supprimer</label>
+                <label><input type="radio" name="q13" value="D">D. Le rendre invisible</label>
+            </div>
+            <div class="feedback" id="fb-q13"></div>
+        </section>
+
+        <!-- Question 14 -->
+        <section class="question" data-question="14">
+            <h3>Question 14 – Une notice doit être :</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Notice compréhensible par tous</div>
+            <div class="options">
+                <label><input type="radio" name="q14" value="A">A. Complexe</label>
+                <label><input type="radio" name="q14" value="B">B. Accessible à tous</label>
+                <label><input type="radio" name="q14" value="C">C. Réservée aux experts</label>
+                <label><input type="radio" name="q14" value="D">D. 100&nbsp;% textuelle</label>
+            </div>
+            <div class="feedback" id="fb-q14"></div>
+        </section>
+
+        <!-- Question 15 -->
+        <section class="question" data-question="15">
+            <h3>Question 15 – Un dessin peut-il parfois remplacer un texte dans une notice ?</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Modes de représentation</div>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A">A. Non, jamais</label>
+                <label><input type="radio" name="q15" value="B">B. Oui, parfois</label>
+                <label><input type="radio" name="q15" value="C">C. Toujours</label>
+                <label><input type="radio" name="q15" value="D">D. Jamais, car cela est interdit</label>
+            </div>
+            <div class="feedback" id="fb-q15"></div>
+        </section>
+
+        <!-- Question 16 -->
+        <section class="question" data-question="16">
+            <h3>Question 16 – Une contrainte environnementale concerne :</h3>
+            <div class="competence-label">Compétence visée : C2.2 – Contraintes environnementales</div>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A">A. Le style de l’objet</label>
+                <label><input type="radio" name="q16" value="B">B. L’impact écologique de l’objet</label>
+                <label><input type="radio" name="q16" value="C">C. La couleur de l’emballage</label>
+                <label><input type="radio" name="q16" value="D">D. Le prix de vente</label>
+            </div>
+            <div class="feedback" id="fb-q16"></div>
+        </section>
+
+        <!-- Question 17 -->
+        <section class="question" data-question="17">
+            <h3>Question 17 – Quel est le rôle principal du bouton Marche/Arrêt du spa ?</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Comprendre les commandes</div>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A">A. Gonfler automatiquement le spa</label>
+                <label><input type="radio" name="q17" value="B">B. Mettre en route ou arrêter le spa</label>
+                <label><input type="radio" name="q17" value="C">C. Régler la température</label>
+                <label><input type="radio" name="q17" value="D">D. Décorer l’interface</label>
+            </div>
+            <div class="feedback" id="fb-q17"></div>
+        </section>
+
+        <!-- Question 18 -->
+        <section class="question" data-question="18">
+            <h3>Question 18 – Quel pictogramme indique le mode froid sur le thermostat ?</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Lire des pictogrammes</div>
+            <div class="options">
+                <label><input type="radio" name="q18" value="A">A. Un soleil</label>
+                <label><input type="radio" name="q18" value="B">B. Une ampoule</label>
+                <label><input type="radio" name="q18" value="C">C. Un flocon</label>
+                <label><input type="radio" name="q18" value="D">D. Une alarme</label>
+            </div>
+            <div class="feedback" id="fb-q18"></div>
+        </section>
+
+        <!-- Question 19 -->
+        <section class="question" data-question="19">
+            <h3>Question 19 – Modifier un algorithme signifie :</h3>
+            <div class="competence-label">Compétence visée : C9.1 – Modifier un algorithme</div>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A">A. Changer les étapes de l’algorithme</label>
+                <label><input type="radio" name="q19" value="B">B. Supprimer les dessins du manuel</label>
+                <label><input type="radio" name="q19" value="C">C. Ajouter des couleurs au texte</label>
+                <label><input type="radio" name="q19" value="D">D. Ouvrir un fichier PDF</label>
+            </div>
+            <div class="feedback" id="fb-q19"></div>
+        </section>
+
+        <!-- Question 20 -->
+        <section class="question" data-question="20">
+            <h3>Question 20 – Un programme permet :</h3>
+            <div class="competence-label">Compétence visée : C9.3 – Contrôler un système réel</div>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A">A. De faire fonctionner un objet automatiquement</label>
+                <label><input type="radio" name="q20" value="B">B. De limiter l’usage de la notice</label>
+                <label><input type="radio" name="q20" value="C">C. D’enlever toutes les sécurités</label>
+                <label><input type="radio" name="q20" value="D">D. D’effacer la notice</label>
+            </div>
+            <div class="feedback" id="fb-q20"></div>
+        </section>
+
+        <!-- Question 21 -->
+        <section class="question" data-question="21">
+            <h3>Question 21 – Un interacteur est :</h3>
+            <div class="competence-label">Compétence visée : C2.2 – Interacteurs d’un objet</div>
+            <div class="options">
+                <label><input type="radio" name="q21" value="A">A. Un élément en contact direct ou indirect avec l’objet</label>
+                <label><input type="radio" name="q21" value="B">B. Le superviseur du chantier</label>
+                <label><input type="radio" name="q21" value="C">C. Un code informatique</label>
+                <label><input type="radio" name="q21" value="D">D. Une décoration</label>
+            </div>
+            <div class="feedback" id="fb-q21"></div>
+        </section>
+
+        <!-- Question 22 -->
+        <section class="question" data-question="22">
+            <h3>Question 22 – Le bouton « Menu » du radiateur permet de :</h3>
+            <div class="competence-label">Compétence visée : C9.1 – Navigation dans un algorithme</div>
+            <div class="options">
+                <label><input type="radio" name="q22" value="A">A. Régler l’heure précisément</label>
+                <label><input type="radio" name="q22" value="B">B. Changer de mode (Nor, Pro, FrF)</label>
+                <label><input type="radio" name="q22" value="C">C. Ouvrir un tiroir</label>
+                <label><input type="radio" name="q22" value="D">D. Jouer un son d’alarme</label>
+            </div>
+            <div class="feedback" id="fb-q22"></div>
+        </section>
+
+        <!-- Question 23 -->
+        <section class="question" data-question="23">
+            <h3>Question 23 – Pour vider le spa, il faut :</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Lecture d’une procédure</div>
+            <div class="options">
+                <label><input type="radio" name="q23" value="A">A. Percer un trou dans la bâche</label>
+                <label><input type="radio" name="q23" value="B">B. Retirer un bouchon au fond pour que l’eau s’écoule</label>
+                <label><input type="radio" name="q23" value="C">C. Brancher un aspirateur d’eau</label>
+                <label><input type="radio" name="q23" value="D">D. Retourner complètement le spa</label>
+            </div>
+            <div class="feedback" id="fb-q23"></div>
+        </section>
+
+        <!-- Question 24 -->
+        <section class="question" data-question="24">
+            <h3>Question 24 – Une notice peut contenir :</h3>
+            <div class="competence-label">Compétence visée : C2.1 – Combiner plusieurs représentations</div>
+            <div class="options">
+                <label><input type="radio" name="q24" value="A">A. Uniquement du texte</label>
+                <label><input type="radio" name="q24" value="B">B. Uniquement des dessins</label>
+                <label><input type="radio" name="q24" value="C">C. Uniquement des algorithmes</label>
+                <label><input type="radio" name="q24" value="D">D. Du texte, des dessins et des algorithmes</label>
+            </div>
+            <div class="feedback" id="fb-q24"></div>
+        </section>
+
+        <!-- Question 25 -->
+        <section class="question" data-question="25">
+            <h3>Question 25 – Le mode « Pro » du radiateur sert à :</h3>
+            <div class="competence-label">Compétence visée : C9.3 – Programmation de modes de fonctionnement</div>
+            <div class="options">
+                <label><input type="radio" name="q25" value="A">A. Éteindre complètement l’appareil</label>
+                <label><input type="radio" name="q25" value="B">B. Régler automatiquement des horaires de chauffage</label>
+                <label><input type="radio" name="q25" value="C">C. Régler la luminosité de l’écran</label>
+                <label><input type="radio" name="q25" value="D">D. Augmenter le prix de l’électricité</label>
+            </div>
+            <div class="feedback" id="fb-q25"></div>
+        </section>
+
+        <!-- Pied de page avec un message de fin -->
+        <footer>
+            <!-- Message simple pour conclure le QCM -->
+            <p>📘 N’hésite pas à refaire le QCM jusqu’à obtenir la maîtrise complète des notions de notice, contraintes et programmation.</p>
+        </footer>
+    </div>
+
+    <!-- Début du script JavaScript qui gère la correction et le score -->
+    <script>
+        // Objet JavaScript contenant les bonnes réponses, les explications et les compétences
+        const qcmData = {
+            // Chaque propriété correspond à une question : clé = q1, q2, etc.
+            q1: {
+                correct: "B",                                                    // Bonne réponse
+                competence: "C2.1",                                              // Compétence évaluée
+                explanation: "Un manuel utilisateur sert à guider l’utilisateur pour qu’il puisse utiliser l’objet sans être expert."
+            },
+            q2: {
+                correct: "A",
+                competence: "C2.2",
+                explanation: "Le diagramme des interacteurs liste les éléments en contact avec l’objet et les contraintes associées."
+            },
+            q3: {
+                correct: "B",
+                competence: "C2.1",
+                explanation: "Les pictogrammes sont des dessins qui rendent les consignes plus rapides à comprendre."
+            },
+            q4: {
+                correct: "B",
+                competence: "C2.2",
+                explanation: "La contrainte esthétique concerne la forme et l’apparence, pour plaire à l’utilisateur."
+            },
+            q5: {
+                correct: "B",
+                competence: "C2.2",
+                explanation: "La mention « DANGER » indique ici un risque de brûlure si le lisseur est mal utilisé."
+            },
+            q6: {
+                correct: "B",
+                competence: "C2.2",
+                explanation: "Le papier est un interacteur essentiel pour une imprimante, car elle imprime des informations dessus."
+            },
+            q7: {
+                correct: "C",
+                competence: "C2.1",
+                explanation: "Le spa est alimenté par une prise de courant : il utilise donc de l’énergie électrique."
+            },
+            q8: {
+                correct: "A",
+                competence: "C2.1",
+                explanation: "Le symbole « &lt; 10°C » indique qu’il ne faut pas utiliser le spa si la température est inférieure à 10°C."
+            },
+            q9: {
+                correct: "B",
+                competence: "C9.1",
+                explanation: "Un algorithme décrit une suite d’actions à réaliser, étape par étape."
+            },
+            q10: {
+                correct: "C",
+                competence: "C9.3",
+                explanation: "Le mode FrF garantit une température minimale de 7,5°C pour protéger le logement du froid."
+            },
+            q11: {
+                correct: "B",
+                competence: "C9.1",
+                explanation: "Le bouton « Menu » permet de naviguer entre les différents modes de fonctionnement."
+            },
+            q12: {
+                correct: "B",
+                competence: "C2.2",
+                explanation: "Une contrainte de sécurité vise à éviter que l’objet ne soit dangereux pour l’utilisateur."
+            },
+            q13: {
+                correct: "B",
+                competence: "C9.2",
+                explanation: "Traduire un algorithme consiste à le convertir en code informatique prêt à être exécuté par la machine."
+            },
+            q14: {
+                correct: "B",
+                competence: "C2.1",
+                explanation: "Une notice doit rester claire et compréhensible par tous, pas seulement par des spécialistes."
+            },
+            q15: {
+                correct: "B",
+                competence: "C2.1",
+                explanation: "Un dessin peut parfois remplacer un texte, car certaines actions sont plus simples à comprendre visuellement."
+            },
+            q16: {
+                correct: "B",
+                competence: "C2.2",
+                explanation: "Les contraintes environnementales concernent l’impact de l’objet sur la planète (déchets, énergie, etc.)."
+            },
+            q17: {
+                correct: "B",
+                competence: "C2.1",
+                explanation: "Le bouton Marche/Arrêt permet de mettre en route ou d’arrêter le système, ici le spa."
+            },
+            q18: {
+                correct: "C",
+                competence: "C2.1",
+                explanation: "Le flocon est un pictogramme universel pour représenter le froid."
+            },
+            q19: {
+                correct: "A",
+                competence: "C9.1",
+                explanation: "Modifier un algorithme consiste à changer les étapes pour mieux répondre au besoin."
+            },
+            q20: {
+                correct: "A",
+                competence: "C9.3",
+                explanation: "Un programme commande un objet de façon automatique, selon ce que le code indique."
+            },
+            q21: {
+                correct: "A",
+                competence: "C2.2",
+                explanation: "Un interacteur est un élément qui interagit avec l’objet (utilisateur, meuble, papier, etc.)."
+            },
+            q22: {
+                correct: "B",
+                competence: "C9.1",
+                explanation: "Le bouton « Menu » fait défiler les différents écrans et modes disponibles."
+            },
+            q23: {
+                correct: "B",
+                competence: "C2.1",
+                explanation: "La notice indique de retirer un bouchon pour laisser l’eau s’écouler par un tuyau, sans abîmer le spa."
+            },
+            q24: {
+                correct: "D",
+                competence: "C2.1",
+                explanation: "Une notice efficace combine texte, dessins et parfois algorithmes pour être plus claire."
+            },
+            q25: {
+                correct: "B",
+                competence: "C9.3",
+                explanation: "Le mode Pro permet de programmer des horaires de chauffage adaptés au rythme de vie."
+            }
+        };
+
+        // Récupération des boutons dans le DOM (structure HTML)
+        const btnCorriger = document.getElementById("btnCorriger"); // Bouton de correction
+        const btnReset = document.getElementById("btnReset");       // Bouton de réinitialisation
+        const scoreText = document.getElementById("scoreText");     // Zone de texte de la note
+        const scoreBar = document.getElementById("scoreBar");       // Barre de progression de la note
+
+        // Fonction qui corrige l’ensemble du QCM
+        function corrigerQCM() {
+            // Variable pour compter le nombre de bonnes réponses
+            let bonnesReponses = 0;
+            // Nombre total de questions dans le QCM
+            const totalQuestions = 25;
+
+            // Boucle sur toutes les questions (de q1 à q25)
+            for (let i = 1; i <= totalQuestions; i++) {
+                // Construction de la clé de l’objet qcmData (q1, q2, etc.)
+                const key = "q" + i;
+                // Récupération de la bonne réponse pour la question i
+                const bonne = qcmData[key].correct;
+                // Récupération de l’explication associée
+                const explication = qcmData[key].explanation;
+                // Récupération de la compétence associée
+                const competence = qcmData[key].competence;
+
+                // Récupération de toutes les réponses possibles (inputs radio) pour la question i
+                const radios = document.querySelectorAll("input[name='q" + i + "']");
+                // Variable pour stocker la réponse choisie par l’élève (si elle existe)
+                let reponseChoisie = null;
+
+                // Parcours des propositions pour trouver celle qui est cochée
+                radios.forEach(function (r) {
+                    // Si l’input radio est sélectionné (checked)
+                    if (r.checked) {
+                        // On enregistre sa valeur (A, B, C ou D)
+                        reponseChoisie = r.value;
+                    }
+                });
+
+                // Récupération de la zone de feedback pour la question i
+                const feedbackDiv = document.getElementById("fb-q" + i);
+
+                // Si aucune réponse n’a été choisie
+                if (reponseChoisie === null) {
+                    // On affiche un message invitant à répondre
+                    feedbackDiv.innerHTML = "<span class='incorrect'>❓ Aucune réponse sélectionnée. Pense à cocher une proposition.</span><br>" +
+                        "<span>Compétence : <strong>" + competence + "</strong></span><br>" +
+                        "<span>" + explication + "</span>";
+                    // On passe à la question suivante sans ajouter de point
+                    continue;
+                }
+
+                // Si la réponse choisie est correcte
+                if (reponseChoisie === bonne) {
+                    // On incrémente le nombre de bonnes réponses
+                    bonnesReponses++;
+                    // On affiche un message positif avec l’explication
+                    feedbackDiv.innerHTML = "<span class='correct'>✅ Bonne réponse !</span><br>" +
+                        "<span>Compétence : <strong>" + competence + "</strong></span><br>" +
+                        "<span>" + explication + "</span>";
+                } else {
+                    // Si la réponse est incorrecte, on affiche la bonne réponse et l’explication
+                    feedbackDiv.innerHTML = "<span class='incorrect'>❌ Réponse incorrecte. La bonne réponse était : <strong>" +
+                        bonne +
+                        "</strong>.</span><br>" +
+                        "<span>Compétence : <strong>" + competence + "</strong></span><br>" +
+                        "<span>" + explication + "</span>";
+                }
+            }
+
+            // Calcul de la note sur 25
+            const note25 = bonnesReponses;
+            // Conversion de la note sur 20 (règle de trois)
+            const note20 = Math.round((note25 * 20 / totalQuestions) * 10) / 10; // Arrondi au dixième
+
+            // Construction d’un message motivant en fonction de la note
+            let messageMotivant = "";
+            if (note20 === 20) {
+                messageMotivant = " 🎉 Parfait, tu maîtrises totalement ce chapitre !";
+            } else if (note20 >= 15) {
+                messageMotivant = " 💪 Très bon travail, encore quelques détails à revoir.";
+            } else if (note20 >= 10) {
+                messageMotivant = " 🙂 C’est en bonne voie, reprends les corrections pour progresser.";
+            } else {
+                messageMotivant = " 🚀 Courage, ce QCM est fait pour t’aider à comprendre. Tu peux le refaire plusieurs fois.";
+            }
+
+            // Mise à jour du texte affichant la note
+            scoreText.innerHTML =
+                "Tu obtiens <strong>" + note25 + " / " + totalQuestions + "</strong> (soit <strong>" +
+                note20 + " / 20</strong>)." + messageMotivant;
+
+            // Calcul du pourcentage de bonnes réponses pour la barre de progression
+            const pourcentage = (note25 / totalQuestions) * 100;
+            // Mise à jour de la largeur de la barre de score
+            scoreBar.style.width = pourcentage + "%";
+        }
+
+        // Fonction qui réinitialise le QCM (réponses et feedbacks)
+        function resetQCM() {
+            // Nombre total de questions
+            const totalQuestions = 25;
+
+            // Boucle sur chaque question
+            for (let i = 1; i <= totalQuestions; i++) {
+                // Récupération de tous les inputs radio de la question i
+                const radios = document.querySelectorAll("input[name='q" + i + "']");
+                // On désélectionne toutes les cases
+                radios.forEach(function (r) {
+                    r.checked = false;
+                });
+                // On vide le feedback associé à la question i
+                const feedbackDiv = document.getElementById("fb-q" + i);
+                feedbackDiv.innerHTML = "";
+            }
+
+            // Réinitialisation du texte de la zone de score
+            scoreText.textContent = "Ta note s’affichera ici après la correction.";
+            // Réinitialisation de la barre de progression à 0 %
+            scoreBar.style.width = "0%";
+        }
+
+        // Ajout d’un écouteur d’événement au bouton de correction
+        btnCorriger.addEventListener("click", corrigerQCM);
+        // Ajout d’un écouteur d’événement au bouton de réinitialisation
+        btnReset.addEventListener("click", resetQCM);
+    </script>
+    <!-- Fin du script JavaScript -->
+
+</body>
+<!-- Fin de la balise HTML principale -->
+</html>
