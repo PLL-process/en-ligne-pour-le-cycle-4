@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Algorigrammes – 30 exercices interactifs</title>
+
+    <style>
+        /* ---------- Style général de la page ---------- */
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(90deg, #1d4ed8, #0ea5e9);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #020617;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(15, 23, 42, 0.7);
+        }
+
+        h1, h2, h3 {
+            color: #60a5fa;
+        }
+
+        .course-box {
+            border-left: 5px solid #38bdf8;
+            background: #0b1120;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        .course-box strong {
+            color: #fbbf24;
+        }
+
+        /* ---------- Tableau des symboles avec SVG ---------- */
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .symbol-table th,
+        .symbol-table td {
+            border: 1px solid #1e293b;
+            padding: 6px 8px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .symbol-table th {
+            background: #111827;
+        }
+
+        .symbol-svg {
+            background: #020617;
+            border-radius: 4px;
+            padding: 4px;
+        }
+
+        /* ---------- Zone de score global ---------- */
+        .scoreboard {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+
+        #score-text {
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 14px;
+            margin-left: 15px;
+            background: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #22c55e;
+            transition: width 0.3s;
+        }
+
+        /* ---------- Bloc exercice ---------- */
+        .exercise {
+            background: #020617;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 15px 15px 12px 15px;
+            margin-bottom: 18px;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 6px 14px;
+            margin-right: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-help {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .btn-check {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 6px;
+            font-size: 0.9rem;
+        }
+
+        .help-text {
+            display: none;
+            margin-top: 6px;
+            font-size: 0.9rem;
+            color: #fbbf24;
+        }
+
+        .attempts {
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .choices {
+            margin-top: 6px;
+        }
+
+        .choices label {
+            display: block;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 380px;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #4b5563;
+            background: #020617;
+            color: #e5e7eb;
+        }
+
+        /* ---------- Listes triables (ordre à remettre) ---------- */
+        .sortable-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 6px;
+        }
+
+        /* ✅ Vertical : un item par ligne, pleine largeur */
+        .sortable-item {
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            background: #111827;
+            border-radius: 6px;
+            border: 1px solid #1f2937;
+            cursor: grab;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .drag-over {
+            border: 1px dashed #38bdf8;
+            background: #0f172a;
+        }
+
+        /* ---------- Récapitulatif ---------- */
+        #show-summary {
+            margin-top: 10px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            background: #7c3aed;
+            color: white;
+        }
+
+        #summary-box {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #4b5563;
+            background: #020617;
+            display: none;
+        }
+
+        .exo-tag {
+            font-size: 0.9rem;
+            color: #a5b4fc;
+        }
+
+        .dnb-tag {
+            font-size: 0.8rem;
+            color: #facc15;
+            margin-left: 8px;
+        }
+
+        .logic-tag {
+            font-size: 0.8rem;
+            color: #4ade80;
+            margin-left: 8px;
+        }
+
+        .exo-svg {
+            margin: 6px 0 10px 0;
+            background: #020617;
+            border-radius: 8px;
+            border: 1px solid #1f2937;
+            padding: 6px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>🧠 Algorigrammes – 30 exercices interactifs</h1>
+    <p>Simule, code, expérimente : entraîne-toi sur les algorithmes et les algorigrammes.</p>
+</header>
+
+<main>
+    <!-- ====================== RAPPEL DE COURS ====================== -->
+    <section class="course-box">
+        <h2>📚 Rappel de cours : algorithmes & algorigrammes</h2>
+        <p>
+            Un <strong>algorithme</strong> est une <strong>suite ordonnée d’instructions</strong> permettant de résoudre un problème.
+            C’est une recette très précise, que l’on peut exécuter étape par étape.
+        </p>
+        <p>
+            Un <strong>algorigramme</strong> (ou <strong>organigramme</strong>) est une <strong>représentation graphique</strong> d’un algorithme :
+            on utilise des <strong>symboles</strong> (ovale, rectangle, losange, flèches…) pour représenter les étapes.
+        </p>
+
+        <!-- Tableau des symboles avec icônes SVG -->
+        <table class="symbol-table">
+            <thead>
+            <tr>
+                <th>Symbole</th>
+                <th>Rôle</th>
+                <th>Icône (SVG)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Ovale (Début / Fin)</td>
+                <td>Marque le début ou la fin de l’algorithme.</td>
+                <td>
+                    <svg class="symbol-svg" width="80" height="40">
+                        <ellipse cx="40" cy="20" rx="30" ry="15"
+                                 fill="#0ea5e9" stroke="#38bdf8" stroke-width="2"/>
+                    </svg>
+                </td>
+            </tr>
+            <tr>
+                <td>Rectangle (Action)</td>
+                <td>Représente un traitement ou une instruction (calcul, affectation...).</td>
+                <td>
+                    <svg class="symbol-svg" width="80" height="40">
+                        <rect x="10" y="8" width="60" height="24"
+                              fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+                    </svg>
+                </td>
+            </tr>
+            <tr>
+                <td>Parallélogramme (Entrée / Sortie)</td>
+                <td>Représente la lecture ou l’affichage d’une donnée.</td>
+                <td>
+                    <svg class="symbol-svg" width="80" height="40">
+                        <polygon points="10,10 60,10 70,30 20,30"
+                                 fill="#facc15" stroke="#eab308" stroke-width="2"/>
+                    </svg>
+                </td>
+            </tr>
+            <tr>
+                <td>Losange (Test / Condition)</td>
+                <td>Pose une question (Vrai / Faux – Oui / Non) pour choisir un chemin.</td>
+                <td>
+                    <svg class="symbol-svg" width="80" height="40">
+                        <polygon points="40,5 70,20 40,35 10,20"
+                                 fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+                    </svg>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            En technologie, tu dois savoir&nbsp;:
+        </p>
+        <ul>
+            <li>Lire un <strong>algorithme textuel</strong> (pseudo-code ou description en phrases).</li>
+            <li>Lire un <strong>algorigramme</strong> et expliquer ce qu’il fait.</li>
+            <li>Prévoir la <strong>valeur finale</strong> d’une variable après l’exécution.</li>
+            <li>Construire ou compléter un <strong>algorigramme simple</strong> (suites d’instructions, conditions, boucles).</li>
+        </ul>
+        <p>
+            👉 Tu disposes pour chaque exercice d’un <strong>bouton d’aide</strong> (indice),
+            de <strong>3 essais maximum</strong> et d’un <strong>système de points</strong>.
+            Les <strong>30 exercices</strong> sont totalisés dans le score global
+            (barème automatiquement calculé, que ton enseignant pourra éventuellement ramener sur 20).
+        </p>
+    </section>
+
+    <!-- ====================== SCORE GLOBAL ====================== -->
+    <section class="scoreboard">
+        <div id="score-text">
+            Score : <span id="score-value">0</span> / <span id="score-max">0</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </section>
+
+    <button id="show-summary">📊 Afficher le détail des points</button>
+    <div id="summary-box"></div>
+
+    <!-- ====================== EXERCICES 1 à 20 (cours + entraînement) ====================== -->
+
+    <!-- Exercice 1 -->
+    <section class="exercise" data-id="1" data-type="qcm" data-points="1" data-answer="B">
+        <div class="exercise-header">
+            <h3>Exercice 1 – Qu’est-ce qu’un algorithme ? <span class="exo-tag">🧩</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Parmi les propositions suivantes, laquelle décrit le mieux un <strong>algorithme</strong> ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q1" value="A"> A. Une image décorative que l’on ajoute dans un document.</label>
+            <label><input type="radio" name="q1" value="B"> B. Une suite ordonnée d’instructions permettant de résoudre un problème.</label>
+            <label><input type="radio" name="q1" value="C"> C. Un fichier audio contenant une musique.</label>
+            <label><input type="radio" name="q1" value="D"> D. Une seule instruction isolée.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Pense à la comparaison avec une recette de cuisine : on suit plusieurs étapes précises dans un ordre donné.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 2 -->
+    <section class="exercise" data-id="2" data-type="qcm" data-points="1" data-answer="C">
+        <div class="exercise-header">
+            <h3>Exercice 2 – Le losange dans un algorigramme <span class="exo-tag">🔷</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Dans un algorigramme, à quoi sert le symbole en forme de <strong>losange</strong> ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q2" value="A"> A. À représenter le début ou la fin.</label>
+            <label><input type="radio" name="q2" value="B"> B. À représenter un calcul ou un affichage.</label>
+            <label><input type="radio" name="q2" value="C"> C. À représenter un test ou une condition (Oui / Non).</label>
+            <label><input type="radio" name="q2" value="D"> D. À dessiner un robot.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Dans le losange, on écrit souvent une question du type « x &gt; 0 ? » avec deux flèches : une pour Oui, une pour Non.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 3 -->
+    <section class="exercise" data-id="3" data-type="qcm" data-points="1" data-answer="A">
+        <div class="exercise-header">
+            <h3>Exercice 3 – Début / Fin d’un algorigramme <span class="exo-tag">🟢</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Quel symbole utilise-t-on pour représenter le <strong>début</strong> ou la <strong>fin</strong> d’un algorigramme ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q3" value="A"> A. Un ovale (ou ellipse).</label>
+            <label><input type="radio" name="q3" value="B"> B. Un rectangle.</label>
+            <label><input type="radio" name="q3" value="C"> C. Un losange.</label>
+            <label><input type="radio" name="q3" value="D"> D. Un triangle.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Le même symbole (ovale) sert généralement pour « Début » et pour « Fin ».
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 4 -->
+    <section class="exercise" data-id="4" data-type="qcm" data-points="1" data-answer="D">
+        <div class="exercise-header">
+            <h3>Exercice 4 – Lire un algorithme textuel simple <span class="exo-tag">📜</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            On considère l’algorithme textuel suivant :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Lire A
+  Lire B
+  S &lt;- A + B
+  Afficher S
+FIN
+        </pre>
+        <p class="question-text">
+            Que fait cet algorithme ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q4" value="A"> A. Il calcule la différence B − A.</label>
+            <label><input type="radio" name="q4" value="B"> B. Il compare A et B et affiche le plus grand.</label>
+            <label><input type="radio" name="q4" value="C"> C. Il affiche toujours la valeur 0.</label>
+            <label><input type="radio" name="q4" value="D"> D. Il lit deux nombres et affiche leur somme.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Observe la ligne « S &lt;- A + B » : on ajoute A et B, puis on affiche S.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 5 -->
+    <section class="exercise" data-id="5" data-type="qcm" data-points="1" data-answer="C">
+        <div class="exercise-header">
+            <h3>Exercice 5 – Ordre d’exécution <span class="exo-tag">➡️</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Dans un algorigramme <strong>sans boucle</strong> ni condition, la plupart des instructions sont exécutées :
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q5" value="A"> A. Dans un ordre totalement aléatoire.</label>
+            <label><input type="radio" name="q5" value="B"> B. Toujours de la fin vers le début.</label>
+            <label><input type="radio" name="q5" value="C"> C. De haut en bas, en suivant les flèches.</label>
+            <label><input type="radio" name="q5" value="D"> D. Une instruction sur deux seulement.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Pense à la manière dont tu lis un texte : l’algorigramme suit aussi des flèches qui indiquent le sens.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 6 -->
+    <section class="exercise" data-id="6" data-type="qcm" data-points="1" data-answer="B">
+        <div class="exercise-header">
+            <h3>Exercice 6 – Condition SI / SINON <span class="exo-tag">⚖️</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Une structure conditionnelle <strong>SI ... ALORS ... SINON</strong> permet de :
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q6" value="A"> A. Répéter une instruction un grand nombre de fois.</label>
+            <label><input type="radio" name="q6" value="B"> B. Choisir entre deux chemins différents selon que la condition est vraie ou fausse.</label>
+            <label><input type="radio" name="q6" value="C"> C. Arrêter immédiatement l’algorithme.</label>
+            <label><input type="radio" name="q6" value="D"> D. Effacer toutes les variables.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            On se pose une question (test), puis on exécute soit le bloc « ALORS », soit le bloc « SINON ».
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 7 -->
+    <section class="exercise" data-id="7" data-type="qcm" data-points="1" data-answer="D">
+        <div class="exercise-header">
+            <h3>Exercice 7 – Boucle TANT QUE <span class="exo-tag">🔁</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Une boucle <strong>TANT QUE</strong> (while) permet de :
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q7" value="A"> A. Exécuter une seule fois l’algorithme.</label>
+            <label><input type="radio" name="q7" value="B"> B. Dessiner uniquement un symbole dans l’algorigramme.</label>
+            <label><input type="radio" name="q7" value="C"> C. Lire un nombre et l’afficher.</label>
+            <label><input type="radio" name="q7" value="D"> D. Répéter un bloc d’instructions tant que la condition est vraie.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Tant que la condition est vraie, on revient au début du bloc. Quand elle devient fausse, on sort de la boucle.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 8 -->
+    <section class="exercise" data-id="8" data-type="qcm" data-points="1" data-answer="C">
+        <div class="exercise-header">
+            <h3>Exercice 8 – Notion de variable <span class="exo-tag">📦</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            En algorithmique, une <strong>variable</strong> est :
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q8" value="A"> A. Une consigne que l’on ne doit jamais modifier.</label>
+            <label><input type="radio" name="q8" value="B"> B. Un dessin dans l’algorigramme.</label>
+            <label><input type="radio" name="q8" value="C"> C. Une « boîte » qui peut contenir une valeur qui change au cours de l’algorithme.</label>
+            <label><input type="radio" name="q8" value="D"> D. Le nom du fichier où l’on enregistre l’algorithme.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            On peut affecter une nouvelle valeur à une variable, par exemple « x &lt;- x + 1 ».
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 9 -->
+    <section class="exercise" data-id="9" data-type="text" data-points="1" data-answer="instructions">
+        <div class="exercise-header">
+            <h3>Exercice 9 – Phrase à compléter <span class="exo-tag">✍️</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Complète la phrase suivante (un seul mot attendu) :
+        </p>
+        <p class="question-text">
+            « Un algorithme est une suite ordonnée d’<strong>__________</strong> pour résoudre un problème. »
+        </p>
+        <input class="answer-input" type="text" placeholder="Écris le mot attendu (sans accent si possible)">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Pense au mot qui désigne les actions précises que l’on doit exécuter l’une après l’autre.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 10 -->
+    <section class="exercise" data-id="10" data-type="text" data-points="1" data-answer="debut">
+        <div class="exercise-header">
+            <h3>Exercice 10 – Mot clé de départ <span class="exo-tag">🏁</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Quel mot clé utilise-t-on très souvent pour marquer le <strong>début</strong> d’un algorithme textuel ?
+        </p>
+        <input class="answer-input" type="text" placeholder="Écris le mot (ex : DEBUT)">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            On l’écrit souvent en majuscules, juste avant les premières instructions.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 11 -->
+    <section class="exercise" data-id="11" data-type="text" data-points="1" data-answer="tant que">
+        <div class="exercise-header">
+            <h3>Exercice 11 – Mot clé de répétition <span class="exo-tag">🔁</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Quel mot clé, en français, marque souvent une <strong>boucle</strong> de répétition dans un algorithme textuel ? (deux mots)
+        </p>
+        <input class="answer-input" type="text" placeholder="Ex : TANT QUE">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            On l’utilise dans l’expression « ________ condition VRAIE faire ... ».
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 12 -->
+    <section class="exercise" data-id="12" data-type="text" data-points="1" data-answer="5">
+        <div class="exercise-header">
+            <h3>Exercice 12 – Valeur finale d’une variable 1 <span class="exo-tag">🧮</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            On considère l’algorithme suivant :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  x &lt;- 3
+  x &lt;- x + 2
+FIN
+        </pre>
+        <p class="question-text">
+            Quelle est la valeur finale de <strong>x</strong> à la fin de l’algorithme ?
+        </p>
+        <input class="answer-input" type="text" placeholder="Écris un nombre">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Commence par la première affectation, puis ajoute 2. Tu peux écrire les étapes sur ton brouillon.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 13 -->
+    <section class="exercise" data-id="13" data-type="text" data-points="1" data-answer="9">
+        <div class="exercise-header">
+            <h3>Exercice 13 – Valeur finale d’une variable 2 <span class="exo-tag">🧮</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Algorithme :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  n &lt;- 4
+  n &lt;- n * 2
+  n &lt;- n + 1
+FIN
+        </pre>
+        <p class="question-text">
+            Quelle est la valeur finale de <strong>n</strong> ?
+        </p>
+        <input class="answer-input" type="text" placeholder="Écris un nombre">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            D’abord la multiplication par 2, puis on ajoute 1 à la nouvelle valeur.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 14 -->
+    <section class="exercise" data-id="14" data-type="text" data-points="1" data-answer="4">
+        <div class="exercise-header">
+            <h3>Exercice 14 – Nombre de répétitions <span class="exo-tag">🔂</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            On considère la boucle suivante :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+POUR i ALLANT DE 1 À 4
+  Afficher i
+FIN POUR
+        </pre>
+        <p class="question-text">
+            Combien de fois l’instruction <strong>Afficher i</strong> est-elle exécutée ?
+        </p>
+        <input class="answer-input" type="text" placeholder="Écris un nombre">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Compte les valeurs prises par i : 1, 2, 3, 4.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 15 (ordre vertical) -->
+    <section class="exercise" data-id="15" data-type="order" data-points="1" data-answer="t1,t2,t3,t4">
+        <div class="exercise-header">
+            <h3>Exercice 15 – Remettre les étapes dans l’ordre (faire du thé) <span class="exo-tag">🍵</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Glisse-dépose les étapes <strong>de haut en bas</strong> pour décrire l’algorithme qui permet de préparer une tasse de thé.
+        </p>
+        <ul class="sortable-list">
+            <li class="sortable-item" draggable="true" data-step="t3">Verser l’eau chaude dans la tasse.</li>
+            <li class="sortable-item" draggable="true" data-step="t1">Faire chauffer de l’eau.</li>
+            <li class="sortable-item" draggable="true" data-step="t4">Retirer le sachet et déguster.</li>
+            <li class="sortable-item" draggable="true" data-step="t2">Mettre un sachet de thé dans la tasse.</li>
+        </ul>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            On ne peut pas verser l’eau chaude avant de l’avoir chauffée, ni retirer le sachet avant de l’avoir mis.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 16 (SVG à déplacer, vertical) -->
+    <section class="exercise" data-id="16" data-type="order" data-points="1" data-answer="a1,a2,a3,a4">
+        <div class="exercise-header">
+            <h3>Exercice 16 – Structure d’un algorithme (étiquettes SVG à déplacer) <span class="exo-tag">🏗️🧩</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Glisse-dépose les <strong>étiquettes SVG</strong> de haut en bas pour retrouver la structure :
+            DEBUT → Lire les données → Traiter les données → FIN.
+        </p>
+        <ul class="sortable-list">
+            <li class="sortable-item" draggable="true" data-step="a3">
+                <svg width="220" height="40">
+                    <rect x="5" y="5" width="210" height="30" rx="6" ry="6"
+                          fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                          font-size="13" fill="#020617">
+                        Traiter les données
+                    </text>
+                </svg>
+            </li>
+            <li class="sortable-item" draggable="true" data-step="a1">
+                <svg width="220" height="40">
+                    <rect x="5" y="5" width="210" height="30" rx="15" ry="15"
+                          fill="#0ea5e9" stroke="#38bdf8" stroke-width="2"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                          font-size="13" fill="#020617">
+                        DEBUT
+                    </text>
+                </svg>
+            </li>
+            <li class="sortable-item" draggable="true" data-step="a4">
+                <svg width="220" height="40">
+                    <rect x="5" y="5" width="210" height="30" rx="15" ry="15"
+                          fill="#0ea5e9" stroke="#38bdf8" stroke-width="2"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                          font-size="13" fill="#020617">
+                        FIN
+                    </text>
+                </svg>
+            </li>
+            <li class="sortable-item" draggable="true" data-step="a2">
+                <svg width="220" height="40">
+                    <rect x="5" y="5" width="210" height="30" rx="6" ry="6"
+                          fill="#facc15" stroke="#eab308" stroke-width="2"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                          font-size="13" fill="#020617">
+                        Lire les données d’entrée
+                    </text>
+                </svg>
+            </li>
+        </ul>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Un algorithme commence par DEBUT, puis lit les données, les traite, et se termine par FIN.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 17 (ordre vertical) -->
+    <section class="exercise" data-id="17" data-type="order" data-points="1" data-answer="c1,c2,c3,c4">
+        <div class="exercise-header">
+            <h3>Exercice 17 – Parcours d’un algorithme positif/négatif <span class="exo-tag">🔍</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Glisse-dépose les étapes <strong>de haut en bas</strong> pour un algorithme qui teste si un nombre N est positif.
+        </p>
+        <ul class="sortable-list">
+            <li class="sortable-item" draggable="true" data-step="c3">SI N &gt;= 0 ALORS écrire « N est positif » SINON écrire « N est négatif ».</li>
+            <li class="sortable-item" draggable="true" data-step="c4">FIN.</li>
+            <li class="sortable-item" draggable="true" data-step="c1">DEBUT.</li>
+            <li class="sortable-item" draggable="true" data-step="c2">Lire N.</li>
+        </ul>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            L’ordre classique : DEBUT → Lire N → Tester N → FIN.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 18 -->
+    <section class="exercise" data-id="18" data-type="qcm" data-points="1" data-answer="B">
+        <div class="exercise-header">
+            <h3>Exercice 18 – Interpréter une condition <span class="exo-tag">🤔</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Dans l’instruction « SI x &gt; 10 ALORS afficher "Grand" SINON afficher "Petit" », que se passe-t-il si x = 12 ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q18" value="A"> A. L’algorithme affiche « Petit ».</label>
+            <label><input type="radio" name="q18" value="B"> B. L’algorithme affiche « Grand ».</label>
+            <label><input type="radio" name="q18" value="C"> C. L’algorithme affiche les deux messages.</label>
+            <label><input type="radio" name="q18" value="D"> D. L’algorithme s’arrête immédiatement.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Compare 12 et 10 : la condition « x &gt; 10 » est-elle vraie ou fausse ?
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 19 -->
+    <section class="exercise" data-id="19" data-type="qcm" data-points="1" data-answer="D">
+        <div class="exercise-header">
+            <h3>Exercice 19 – Boucle TANT QUE avec compteur <span class="exo-tag">⏱️</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            On considère l’algorithme suivant :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  i &lt;- 0
+  TANT QUE i &lt; 3 FAIRE
+    Afficher i
+    i &lt;- i + 1
+  FIN TANT QUE
+FIN
+        </pre>
+        <p class="question-text">
+            Quelles valeurs de <strong>i</strong> sont affichées ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q19" value="A"> A. 0 seulement.</label>
+            <label><input type="radio" name="q19" value="B"> B. 1, 2, 3.</label>
+            <label><input type="radio" name="q19" value="C"> C. 0, 1, 2, 3.</label>
+            <label><input type="radio" name="q19" value="D"> D. 0, 1, 2.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            La boucle continue tant que i est strictement inférieur à 3.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 20 -->
+    <section class="exercise" data-id="20" data-type="qcm" data-points="1" data-answer="A">
+        <div class="exercise-header">
+            <h3>Exercice 20 – Algorigramme schématique (lecture) <span class="exo-tag">📈</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            On lit l’algorigramme suivant (décrit en texte) :
+        </p>
+        <ul>
+            <li>Ovale « Début »</li>
+            <li>Rectangle « Lire N »</li>
+            <li>Losange « N est-il pair ? »</li>
+            <li>Flèche « Oui » vers rectangle « Afficher "N est pair" »</li>
+            <li>Flèche « Non » vers rectangle « Afficher "N est impair" »</li>
+            <li>Rejoint vers ovale « Fin »</li>
+        </ul>
+        <p class="question-text">
+            Quelle phrase décrit le mieux ce que fait cet algorigramme ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q20" value="A"> A. Il lit un nombre N et indique s’il est pair ou impair.</label>
+            <label><input type="radio" name="q20" value="B"> B. Il affiche toujours que N est pair.</label>
+            <label><input type="radio" name="q20" value="C"> C. Il calcule la somme de deux nombres.</label>
+            <label><input type="radio" name="q20" value="D"> D. Il efface la valeur de N.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Le losange pose une question sur N. Selon la réponse, on affiche un message différent.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- ====================== EXERCICES 21 à 25 – type DNB (déjà comptés) ====================== -->
+
+    <!-- Exercice 21 -->
+    <section class="exercise" data-id="21" data-type="qcm" data-points="1" data-answer="C">
+        <div class="exercise-header">
+            <h3>Exercice 21 – Type DNB : régulation de température <span class="exo-tag">🌡️</span><span class="dnb-tag">Type DNB</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Un algorithme de chauffage est décrit ainsi&nbsp;:
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Lire Temp
+  SI Temp &lt; 19 ALORS
+      Allumer chauffage
+  SINON
+      Eteindre chauffage
+  FIN SI
+FIN
+        </pre>
+        <p class="question-text">
+            Que fait cet algorithme&nbsp;?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q21" value="A"> A. Il allume toujours le chauffage, quelle que soit la température.</label>
+            <label><input type="radio" name="q21" value="B"> B. Il éteint toujours le chauffage, quelle que soit la température.</label>
+            <label><input type="radio" name="q21" value="C"> C. Il allume le chauffage si la température est inférieure à 19&nbsp;°C, sinon il l’éteint.</label>
+            <label><input type="radio" name="q21" value="D"> D. Il calcule la moyenne de plusieurs températures.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Compare la valeur lue pour Temp à 19&nbsp;°C : il y a une branche pour Temp &lt; 19, et une pour le cas contraire.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 22 -->
+    <section class="exercise" data-id="22" data-type="qcm" data-points="1" data-answer="B">
+        <div class="exercise-header">
+            <h3>Exercice 22 – Type DNB : éclairage automatique <span class="exo-tag">💡</span><span class="dnb-tag">Type DNB</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Un extrait d’algorigramme pour un éclairage extérieur est donné ci-dessous&nbsp;:
+        </p>
+        <ul>
+            <li>Lire <code>Luminosité</code> et <code>Présence</code>.</li>
+            <li>Test&nbsp;: «&nbsp;Luminosité &lt; 30&nbsp;ET Présence = OUI ?&nbsp;»</li>
+            <li>Branche OUI&nbsp;: «&nbsp;Allumer la lampe&nbsp;».</li>
+            <li>Branche NON&nbsp;: «&nbsp;Éteindre la lampe&nbsp;».</li>
+        </ul>
+        <p class="question-text">
+            Dans quelle situation la lampe s’allume-t-elle&nbsp;?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q22" value="A"> A. Quand la luminosité est forte et qu’il n’y a personne.</label>
+            <label><input type="radio" name="q22" value="B"> B. Quand la luminosité est faible (Luminosité &lt; 30) et qu’une présence est détectée.</label>
+            <label><input type="radio" name="q22" value="C"> C. Uniquement quand la luminosité est forte.</label>
+            <label><input type="radio" name="q22" value="D"> D. La lampe est toujours allumée.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            L’expression « Luminosité &lt; 30 ET Présence = OUI » doit être vraie en même temps pour suivre la branche OUI.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 23 -->
+    <section class="exercise" data-id="23" data-type="text" data-points="1" data-answer="12">
+        <div class="exercise-header">
+            <h3>Exercice 23 – Type DNB : calcul de note <span class="exo-tag">📊</span><span class="dnb-tag">Type DNB</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Un algorithme calcule la moyenne de deux contrôles pour une activité technologique&nbsp;:
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Lire N1
+  Lire N2
+  M &lt;- (N1 + N2) / 2
+  Afficher M
+FIN
+        </pre>
+        <p class="question-text">
+            On exécute l’algorithme avec N1 = 10 et N2 = 14.  
+            Quelle valeur est affichée pour M&nbsp;? (écris un nombre)
+        </p>
+        <input class="answer-input" type="text" placeholder="Écris la moyenne">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Calcule (10 + 14) / 2. Tu peux faire le calcul sur ton brouillon comme dans un sujet de DNB.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 24 -->
+    <section class="exercise" data-id="24" data-type="qcm" data-points="1" data-answer="D">
+        <div class="exercise-header">
+            <h3>Exercice 24 – Type DNB : tri sélectif automatisé <span class="exo-tag">♻️</span><span class="dnb-tag">Type DNB</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Un système de tri automatique décide dans quel bac envoyer une bouteille.  
+            L’algorithme est le suivant&nbsp;:
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Lire Matiere
+  SI Matiere = "verre" ALORS
+      Envoyer vers bac VERRE
+  SINON SI Matiere = "plastique" ALORS
+      Envoyer vers bac PLASTIQUE
+  SINON
+      Envoyer vers bac AUTRES
+  FIN SI
+FIN
+        </pre>
+        <p class="question-text">
+            Que se passe-t-il si la matière lue est <strong>"plastique"</strong> ?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q24" value="A"> A. La bouteille est envoyée dans le bac VERRE.</label>
+            <label><input type="radio" name="q24" value="B"> B. La bouteille est envoyée dans le bac AUTRES.</label>
+            <label><input type="radio" name="q24" value="C"> C. La bouteille est refusée et l’algorithme s’arrête.</label>
+            <label><input type="radio" name="q24" value="D"> D. La bouteille est envoyée dans le bac PLASTIQUE.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Suis les tests dans l’ordre : d’abord « verre », puis « plastique », puis sinon.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 25 -->
+    <section class="exercise" data-id="25" data-type="text" data-points="1" data-answer="10">
+        <div class="exercise-header">
+            <h3>Exercice 25 – Type DNB : fabrication en série <span class="exo-tag">🏭</span><span class="dnb-tag">Type DNB</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+        <p class="question-text">
+            Un atelier fabrique un lot de pièces grâce à une boucle&nbsp;:
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Compteur &lt;- 0
+  TANT QUE Compteur &lt; 10 FAIRE
+      Fabriquer une pièce
+      Compteur &lt;- Compteur + 1
+  FIN TANT QUE
+FIN
+        </pre>
+        <p class="question-text">
+            Combien de pièces sont fabriquées à la fin de l’algorithme&nbsp;? (écris un nombre)
+        </p>
+        <input class="answer-input" type="text" placeholder="Nombre de pièces fabriquées">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            La boucle répète les instructions tant que Compteur &lt; 10. Compte le nombre d’incrémentations de Compteur.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- ====================== EXERCICES 26 à 30 – Logique / PDF ====================== -->
+
+    <!-- Exercice 26 : porte automatique -->
+    <section class="exercise" data-id="26" data-type="qcm" data-points="1" data-answer="B">
+        <div class="exercise-header">
+            <h3>Exercice 26 – Porte automatique (détection de présence) <span class="logic-tag">Logique</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+
+        <!-- Illustration SVG : porte + capteur -->
+        <svg class="exo-svg" width="320" height="80">
+            <rect x="20" y="20" width="80" height="40" fill="#1f2937" stroke="#e5e7eb" stroke-width="2"/>
+            <rect x="100" y="20" width="80" height="40" fill="#111827" stroke="#e5e7eb" stroke-width="2"/>
+            <line x1="140" y1="20" x2="140" y2="60" stroke="#e5e7eb" stroke-width="1.5"/>
+            <circle cx="230" cy="40" r="10" fill="#22c55e"/>
+            <text x="230" y="65" font-size="11" fill="#e5e7eb" text-anchor="middle">Personne</text>
+            <text x="60" y="15" font-size="11" fill="#e5e7eb" text-anchor="middle">Porte</text>
+            <rect x="260" y="30" width="40" height="20" fill="#0ea5e9" stroke="#38bdf8" stroke-width="2"/>
+            <text x="280" y="44" font-size="9" fill="#020617" text-anchor="middle">Capteur</text>
+        </svg>
+
+        <p class="question-text">
+            On considère une porte automatique de magasin.  
+            L’algorithme prévu est :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  SI détection présence = OUI ALORS
+      Ouvrir porte
+      Attendre 5 secondes
+      Fermer porte
+  FIN SI
+FIN
+        </pre>
+        <p class="question-text">
+            Que fait cet algorithme lorsque quelqu’un est détecté par le capteur&nbsp;?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q26" value="A"> A. Il ferme immédiatement la porte.</label>
+            <label><input type="radio" name="q26" value="B"> B. Il ouvre la porte, attend 5 secondes, puis la referme.</label>
+            <label><input type="radio" name="q26" value="C"> C. Il laisse la porte ouverte en permanence.</label>
+            <label><input type="radio" name="q26" value="D"> D. Il ne fait rien.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Repère l’ordre des actions après la détection de présence : ouverture → attente → fermeture.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 27 : essuie-glaces -->
+    <section class="exercise" data-id="27" data-type="qcm" data-points="1" data-answer="C">
+        <div class="exercise-header">
+            <h3>Exercice 27 – Essuie-glaces automatiques <span class="logic-tag">Logique</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+
+        <!-- Illustration SVG : voiture + pluie -->
+        <svg class="exo-svg" width="320" height="80">
+            <rect x="40" y="40" width="120" height="25" fill="#1f2937" stroke="#e5e7eb" stroke-width="2"/>
+            <circle cx="60" cy="70" r="7" fill="#020617" stroke="#e5e7eb" stroke-width="2"/>
+            <circle cx="140" cy="70" r="7" fill="#020617" stroke="#e5e7eb" stroke-width="2"/>
+            <line x1="80" y1="40" x2="120" y2="25" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="200" y1="20" x2="195" y2="30" stroke="#0ea5e9" stroke-width="2"/>
+            <line x1="220" y1="15" x2="215" y2="25" stroke="#0ea5e9" stroke-width="2"/>
+            <line x1="240" y1="22" x2="235" y2="32" stroke="#0ea5e9" stroke-width="2"/>
+            <text x="80" y="20" font-size="11" fill="#e5e7eb">Essuie-glaces auto</text>
+        </svg>
+
+        <p class="question-text">
+            Un capteur de pluie commande automatiquement les essuie-glaces.  
+            Algorithme :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  SI détection pluie = OUI ALORS
+      Activer essuie-glaces
+  SINON
+      Désactiver essuie-glaces
+  FIN SI
+FIN
+        </pre>
+        <p class="question-text">
+            Dans quelle situation les essuie-glaces sont-ils activés&nbsp;?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q27" value="A"> A. Toujours, même s’il ne pleut pas.</label>
+            <label><input type="radio" name="q27" value="B"> B. Jamais, l’algorithme ne les active pas.</label>
+            <label><input type="radio" name="q27" value="C"> C. Uniquement quand le capteur détecte la pluie.</label>
+            <label><input type="radio" name="q27" value="D"> D. Uniquement quand la voiture est à l’arrêt.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Regarde la condition : le test « détection pluie = OUI » décide si on active ou non les essuie-glaces.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 28 : stock de hand spinners -->
+    <section class="exercise" data-id="28" data-type="qcm" data-points="1" data-answer="D">
+        <div class="exercise-header">
+            <h3>Exercice 28 – Stock de hand spinners <span class="logic-tag">Logique</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+
+        <!-- Illustration SVG : rayon + boîtes -->
+        <svg class="exo-svg" width="320" height="80">
+            <rect x="20" y="20" width="280" height="40" fill="#111827" stroke="#e5e7eb" stroke-width="2"/>
+            <rect x="30" y="25" width="40" height="30" fill="#1f2937" stroke="#38bdf8" stroke-width="1.5"/>
+            <rect x="80" y="25" width="40" height="30" fill="#1f2937" stroke="#38bdf8" stroke-width="1.5"/>
+            <rect x="130" y="25" width="40" height="30" fill="#1f2937" stroke="#38bdf8" stroke-width="1.5"/>
+            <rect x="180" y="25" width="40" height="30" fill="#1f2937" stroke="#38bdf8" stroke-width="1.5"/>
+            <rect x="230" y="25" width="40" height="30" fill="#1f2937" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="160" y="18" font-size="11" fill="#e5e7eb" text-anchor="middle">Hand spinners</text>
+        </svg>
+
+        <p class="question-text">
+            Un magasin gère le stock de hand spinners.  
+            Algorithme :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Lire Quantite
+  SI Quantite &lt; 50 ALORS
+      Passer une commande
+  FIN SI
+FIN
+        </pre>
+        <p class="question-text">
+            Dans quel cas une commande est-elle passée&nbsp;?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q28" value="A"> A. Quand la quantité est supérieure à 50.</label>
+            <label><input type="radio" name="q28" value="B"> B. Quand la quantité est exactement égale à 50.</label>
+            <label><input type="radio" name="q28" value="C"> C. Une commande est toujours passée, même avec un stock important.</label>
+            <label><input type="radio" name="q28" value="D"> D. Quand la quantité est strictement inférieure à 50.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Le symbole « &lt; » signifie « strictement inférieur à ».  
+            Pense à un exemple : Quantité = 30 → commande ? Quantité = 60 → commande ?
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 29 : Mario et caisse "?" -->
+    <section class="exercise" data-id="29" data-type="text" data-points="1" data-answer="1000">
+        <div class="exercise-header">
+            <h3>Exercice 29 – Mario saute sur une caisse « ? » <span class="logic-tag">Logique</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+
+        <!-- Illustration SVG : Mario simplifié + caisse ? -->
+        <svg class="exo-svg" width="320" height="80">
+            <rect x="10" y="60" width="300" height="10" fill="#14532d"/>
+            <rect x="40" y="38" width="18" height="22" fill="#ef4444"/>
+            <circle cx="49" cy="32" r="8" fill="#fde68a"/>
+            <rect x="140" y="30" width="25" height="25" fill="#f59e0b" stroke="#78350f" stroke-width="2"/>
+            <text x="152" y="47" font-size="18" fill="#111827" text-anchor="middle">?</text>
+        </svg>
+
+        <p class="question-text">
+            Un extrait de jeu vidéo est décrit par l’algorithme suivant :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Point &lt;- 0
+  SI bouton sauter = OUI ALORS
+      SI caisse "?" touchée = OUI ALORS
+          Point &lt;- Point + 1000
+      FIN SI
+  FIN SI
+  Afficher Point
+FIN
+        </pre>
+        <p class="question-text">
+            Mario appuie sur le bouton de saut et touche une caisse « ? ».  
+            Combien de points sont affichés à la fin de l’algorithme&nbsp;? (écris un nombre)
+        </p>
+        <input class="answer-input" type="text" placeholder="Nombre de points">
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            La variable Point commence à 0. La caisse « ? » ajoute 1000 points si elle est touchée pendant le saut.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+    <!-- Exercice 30 : four avec capteur -->
+    <section class="exercise" data-id="30" data-type="qcm" data-points="1" data-answer="A">
+        <div class="exercise-header">
+            <h3>Exercice 30 – Four avec capteur de cuisson <span class="logic-tag">Logique</span></h3>
+            <span class="attempts">Essais restants : <span class="attempts-count">3</span></span>
+        </div>
+
+        <!-- Illustration SVG : four + gâteau -->
+        <svg class="exo-svg" width="320" height="80">
+            <rect x="40" y="15" width="140" height="50" fill="#111827" stroke="#e5e7eb" stroke-width="2"/>
+            <rect x="50" y="25" width="120" height="30" fill="#020617" stroke="#4b5563" stroke-width="1.5"/>
+            <rect x="90" y="40" width="40" height="10" fill="#f97316"/>
+            <text x="110" y="38" font-size="9" fill="#e5e7eb" text-anchor="middle">Gâteau</text>
+            <line x1="130" y1="20" x2="150" y2="10" stroke="#0ea5e9" stroke-width="2"/>
+            <circle cx="152" cy="8" r="4" fill="#0ea5e9"/>
+            <text x="190" y="25" font-size="10" fill="#e5e7eb">Capteur cuisson</text>
+        </svg>
+
+        <p class="question-text">
+            Un four intelligent utilise un capteur pour vérifier la cuisson d’un gâteau.  
+            Algorithme simplifié :
+        </p>
+        <pre style="background:#020617;border:1px solid #1f2937;padding:8px;border-radius:6px;">
+DEBUT
+  Lancer cuisson
+  QUAND minuteur = 0 FAIRE
+      Planter capteur dans le gâteau
+      SI gateau cuit = NON ALORS
+          Ajouter 5 minutes de cuisson
+      FIN SI
+  FIN QUAND
+FIN
+        </pre>
+        <p class="question-text">
+            Que se passe-t-il si, à la fin du minuteur, le gâteau n’est pas encore cuit&nbsp;?
+        </p>
+        <div class="choices">
+            <label><input type="radio" name="q30" value="A"> A. Le four ajoute automatiquement 5 minutes de cuisson.</label>
+            <label><input type="radio" name="q30" value="B"> B. Le four s’arrête et ne fait rien.</label>
+            <label><input type="radio" name="q30" value="C"> C. Le four passe en mode « réfrigérateur ».</label>
+            <label><input type="radio" name="q30" value="D"> D. Le four affiche « erreur » et efface la minuterie.</label>
+        </div>
+        <button class="btn btn-help">💡 Aide</button>
+        <button class="btn btn-check">✅ Correction</button>
+        <div class="help-text">
+            Le capteur vérifie si le gâteau est cuit. Si la réponse est NON, on prolonge la cuisson de 5 minutes.
+        </div>
+        <div class="feedback"></div>
+    </section>
+
+</main>
+
+<!-- ====================== SCRIPT INTERACTIF ====================== -->
+<script>
+    // ----- État global des exercices -----
+    const exercisesState = {}; // stocke pour chaque exercice : type, tentatives restantes, points
+    let totalScore = 0;        // score obtenu
+    let maxScore = 0;          // score maximal (calculé automatiquement)
+
+    // Normalise une chaîne (minuscules + suppression des accents) pour comparer les réponses texte
+    function normalizeString(str) {
+        if (!str) return "";
+        return str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+    }
+
+    // Met à jour l’affichage du score global et la barre de progression
+    function updateGlobalScoreDisplay() {
+        const scoreSpan = document.getElementById("score-value");
+        const maxSpan = document.getElementById("score-max");
+        const progressFill = document.getElementById("progress-fill");
+
+        scoreSpan.textContent = totalScore.toFixed(2);
+        maxSpan.textContent = maxScore.toFixed(0);
+
+        const percent = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+        progressFill.style.width = percent + "%";
+    }
+
+    // Affiche un récapitulatif détaillé des points par exercice
+    function showSummary() {
+        const box = document.getElementById("summary-box");
+        let html = "<h3>📊 Détail des points par exercice</h3><ul>";
+        for (const id in exercisesState) {
+            const ex = exercisesState[id];
+            html += `<li>Exercice ${id} : ${ex.awarded.toFixed(2)} / ${ex.maxPoints}</li>`;
+        }
+        html += `</ul><p><strong>Score global :</strong> ${totalScore.toFixed(2)} / ${maxScore.toFixed(0)}</p>`;
+        box.innerHTML = html;
+        box.style.display = "block";
+    }
+
+    // Initialise tous les exercices (type, points, boutons, drag & drop…)
+    function initExercises() {
+        const allExercises = document.querySelectorAll(".exercise");
+        allExercises.forEach((exo) => {
+            const id = exo.getAttribute("data-id");
+            const type = exo.getAttribute("data-type");
+            const points = parseFloat(exo.getAttribute("data-points")) || 0;
+
+            // Ajout des points possibles au score maximal
+            maxScore += points;
+
+            // Création de l’état interne de l’exercice
+            exercisesState[id] = {
+                id: id,
+                type: type,
+                attemptsLeft: 3,
+                maxPoints: points,
+                awarded: 0
+            };
+
+            // Affichage initial des essais restants
+            const attemptsSpan = exo.querySelector(".attempts-count");
+            if (attemptsSpan) attemptsSpan.textContent = "3";
+
+            // Gestion des boutons d’aide / correction
+            const helpBtn = exo.querySelector(".btn-help");
+            const checkBtn = exo.querySelector(".btn-check");
+            const helpText = exo.querySelector(".help-text");
+            const feedback = exo.querySelector(".feedback");
+
+            // Bouton d’aide : afficher / masquer l’indice
+            if (helpBtn && helpText) {
+                helpBtn.addEventListener("click", () => {
+                    helpText.style.display = helpText.style.display === "block" ? "none" : "block";
+                });
+            }
+
+            // Bouton de correction : vérifie la réponse
+            if (checkBtn) {
+                checkBtn.addEventListener("click", () => {
+                    checkExercise(exo, id, feedback);
+                });
+            }
+
+            // Initialisation du drag & drop pour les exercices de type "order"
+            if (type === "order") {
+                initDragAndDrop(exo);
+            }
+        });
+
+        updateGlobalScoreDisplay();
+    }
+
+    // Calcule les points attribués selon le nombre d’essais utilisés
+    function computePointsForAttempt(exState) {
+        if (exState.maxPoints === 0) return 0;
+        if (exState.attemptsLeft <= 0) return 0;
+
+        // 1er essai : 100 %, 2e : 50 %, 3e : 25 %
+        const attemptsUsed = 3 - exState.attemptsLeft + 1;
+
+        if (attemptsUsed === 1) {
+            return exState.maxPoints;
+        } else if (attemptsUsed === 2) {
+            return exState.maxPoints * 0.5;
+        } else {
+            return exState.maxPoints * 0.25;
+        }
+    }
+
+    // Vérifie la réponse pour un exercice donné
+    function checkExercise(exerciseElement, id, feedbackElement) {
+        const exState = exercisesState[id];
+        if (exState.attemptsLeft <= 0) {
+            feedbackElement.textContent = "Plus d’essais disponibles pour cet exercice.";
+            feedbackElement.style.color = "#f97316";
+            return;
+        }
+
+        const type = exState.type;
+        const expected = exerciseElement.getAttribute("data-answer");
+        let isCorrect = false;
+
+        // ----- QCM -----
+        if (type === "qcm") {
+            const radios = exerciseElement.querySelectorAll("input[type='radio']");
+            let selected = null;
+            radios.forEach((r) => {
+                if (r.checked) selected = r.value;
+            });
+            if (!selected) {
+                feedbackElement.textContent = "Choisis une réponse avant de cliquer sur « Correction ».";
+                feedbackElement.style.color = "#f97316";
+                return;
+            }
+            if (selected === expected) isCorrect = true;
+
+        // ----- Réponse texte / numérique -----
+        } else if (type === "text") {
+            const input = exerciseElement.querySelector(".answer-input");
+            if (!input) return;
+            const userValue = input.value;
+            const normUser = normalizeString(userValue);
+            const normExpected = normalizeString(expected);
+            if (!isNaN(expected)) {
+                if (Number(normUser) === Number(normExpected)) isCorrect = true;
+            } else {
+                if (normUser === normExpected) isCorrect = true;
+            }
+
+        // ----- Ordre à remettre (drag & drop vertical) -----
+        } else if (type === "order") {
+            const list = exerciseElement.querySelector(".sortable-list");
+            if (!list) return;
+            const items = list.querySelectorAll(".sortable-item");
+            let order = [];
+            items.forEach((item) => {
+                order.push(item.getAttribute("data-step"));
+            });
+            const orderStr = order.join(",");
+            if (orderStr === expected) isCorrect = true;
+        }
+
+        // ----- Gestion des points et messages -----
+        if (isCorrect) {
+            const points = computePointsForAttempt(exState);
+            if (exState.awarded === 0 && points > 0) {
+                totalScore += points;
+                exState.awarded = points;
+            }
+            feedbackElement.textContent =
+                `✅ Bonne réponse ! Tu gagnes ${exState.awarded.toFixed(2)} point(s) pour cet exercice.`;
+            feedbackElement.style.color = "#22c55e";
+            exState.attemptsLeft = 0;
+
+            const attemptsSpan = exerciseElement.querySelector(".attempts-count");
+            if (attemptsSpan) attemptsSpan.textContent = "0";
+            const checkBtn = exerciseElement.querySelector(".btn-check");
+            if (checkBtn) {
+                checkBtn.classList.add("btn-disabled");
+                checkBtn.disabled = true;
+            }
+        } else {
+            exState.attemptsLeft -= 1;
+            if (exState.attemptsLeft > 0) {
+                feedbackElement.textContent =
+                    `❌ Mauvaise réponse. Essaie encore, il te reste ${exState.attemptsLeft} essai(s).`;
+                feedbackElement.style.color = "#f97316";
+            } else {
+                feedbackElement.textContent =
+                    "❌ Mauvaise réponse. Tu n’as plus d’essai pour cet exercice.";
+                feedbackElement.style.color = "#ef4444";
+                const attemptsSpan = exerciseElement.querySelector(".attempts-count");
+                if (attemptsSpan) attemptsSpan.textContent = "0";
+                const checkBtn = exerciseElement.querySelector(".btn-check");
+                if (checkBtn) {
+                    checkBtn.classList.add("btn-disabled");
+                    checkBtn.disabled = true;
+                }
+            }
+        }
+
+        updateGlobalScoreDisplay();
+    }
+
+    // Initialise le drag & drop vertical pour les exercices de type "order"
+    function initDragAndDrop(exerciseElement) {
+        const list = exerciseElement.querySelector(".sortable-list");
+        if (!list) return;
+        let draggedItem = null;
+
+        list.querySelectorAll(".sortable-item").forEach((item) => {
+            // Début du drag
+            item.addEventListener("dragstart", (e) => {
+                draggedItem = item;
+                e.dataTransfer.effectAllowed = "move";
+            });
+
+            // Entrée dans une zone potentiellement cible
+            item.addEventListener("dragenter", () => {
+                if (item !== draggedItem) item.classList.add("drag-over");
+            });
+
+            // Autorise le drop
+            item.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
+
+            // Sortie de la zone
+            item.addEventListener("dragleave", () => {
+                item.classList.remove("drag-over");
+            });
+
+            // Drop effectif : on réinsère l’élément dans la liste
+            item.addEventListener("drop", (e) => {
+                e.preventDefault();
+                item.classList.remove("drag-over");
+                if (item === draggedItem) return;
+
+                const children = Array.from(list.children);
+                const draggedIndex = children.indexOf(draggedItem);
+                const targetIndex = children.indexOf(item);
+
+                // Insère l’item déplacé avant ou après la cible pour obtenir un ordre vertical
+                if (draggedIndex < targetIndex) {
+                    list.insertBefore(draggedItem, item.nextSibling);
+                } else {
+                    list.insertBefore(draggedItem, item);
+                }
+            });
+
+            // Fin du drag
+            item.addEventListener("dragend", () => {
+                list.querySelectorAll(".sortable-item").forEach((it) => {
+                    it.classList.remove("drag-over");
+                });
+                draggedItem = null;
+            });
+        });
+    }
+
+    // Au chargement du DOM : initialisation
+    document.addEventListener("DOMContentLoaded", () => {
+        initExercises();
+        const summaryBtn = document.getElementById("show-summary");
+        if (summaryBtn) {
+            summaryBtn.addEventListener("click", () => {
+                showSummary();
+            });
+        }
+    });
+</script>
+</body>
+</html>
