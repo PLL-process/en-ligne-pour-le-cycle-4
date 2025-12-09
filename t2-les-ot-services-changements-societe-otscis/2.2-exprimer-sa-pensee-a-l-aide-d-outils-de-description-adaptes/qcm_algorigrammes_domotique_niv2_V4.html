@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorigrammes, Pseudo-Code & Logique - Aventure Interactive</title>
+    <style>
+        /* THÈME SOMBRE AMÉLIORÉ AVEC ESTHÉTIQUE IMMERSIVE */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #020617, #0f172a);
+            color: #e5e7eb;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #dbeafe;
+            margin-top: 10px;
+        }
+
+ main {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #020617;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(15, 23, 42, 0.7);
+        }
+
+        .course-box {
+            border-left: 5px solid #38bdf8;
+            background: #0b1120;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+       .course-box strong {
+            color: #fbbf24;
+        }
+
+
+        section {
+            background-color: rgba(15,23,42,0.9);
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #1f2937;
+            box-shadow: 0 0 30px rgba(59,130,246,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            border-left: 8px solid #60a5fa;
+            padding-left: 15px;
+            color: #bfdbfe;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: #93c5fd;
+            margin-top: 20px;
+            font-size: 1.3rem;
+        }
+
+        .mot-cle {
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        .definition {
+            background-color: #0f172a;
+            border-left: 5px solid #60a5fa;
+            padding: 12px 15px;
+            margin: 12px 0;
+            font-size: 0.95rem;
+            border-radius: 8px;
+        }
+
+        .astuce {
+            background-color: #1e293b;
+            border-left: 5px solid #fbbf24;
+            padding: 12px 15px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+            border-radius: 8px;
+        }
+
+        /* SCHÉMAS AMÉLIORÉS */
+        .schema {
+            margin: 15px 0;
+            padding: 12px;
+            background-color: #020617;
+            border: 1px dashed #334155;
+            border-radius: 10px;
+            transition: box-shadow 0.3s;
+        }
+
+        .schema:hover {
+            box-shadow: 0 0 15px rgba(59,130,246,0.5);
+        }
+
+        .schema svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .schema figcaption {
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            color: #9ca3af;
+        }
+
+        /* TABLEAUX INTERACTIFS */
+        .table-evenements {
+            margin: 10px 0;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .table-evenements th, .table-evenements td {
+            border: 1px solid #334155;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table-evenements th {
+            background-color: #1e293b;
+            color: #bfdbfe;
+        }
+
+        .table-evenements select {
+            background-color: #020617;
+            color: #e5e7eb;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 4px;
+            width: 100%;
+        }
+
+        /* EXERCICES IMMERSIFS */
+        .exercice {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #0f172a;
+            border: 1px solid #1f2937;
+            box-shadow: 0 0 20px rgba(59,130,246,0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        .exercice:hover {
+            box-shadow: 0 0 25px rgba(59,130,246,0.4);
+        }
+
+        .consigne {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #dbeafe;
+        }
+
+        .schema-interactif {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin: 15px 0;
+            background-color: #020617;
+            border: 1px dashed #334155;
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .schema-interactif svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .menu-schema {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            background-color: #0f172a;
+            color: #e5e7eb;
+            border: 1px solid #334155;
+            border-radius: 6px;
+        }
+
+        .explication-exo {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #9ca3af;
+        }
+
+        .btn-verifier {
+            background-color: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-verifier:hover {
+            background-color: #2563eb;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .ok {
+            color: #4ade80;
+        }
+
+        .ko {
+            color: #f97316;
+        }
+
+        /* PROGRESSION ET SCORE */
+        #progress-bar {
+            margin: 20px 0;
+            height: 10px;
+            background-color: #1e293b;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #progress {
+            height: 100%;
+            background-color: #60a5fa;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        #score-total {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #bfdbfe;
+            margin-top: 30px;
+        }
+
+        table.truth-table {
+            margin: 10px 0;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        table.truth-table th, table.truth-table td {
+            border: 1px solid #334155;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table.truth-table th {
+            background-color: #1e293b;
+        }
+
+
+        :root {
+    --wire: #333;
+    --switch-open: #c0392b;
+    --switch-closed: #27ae60;
+    --lamp-off: #777;
+    --lamp-on: #f1c40f;
+    --bg: #fff;
+    --text: #111;
+    --focus: #1e90ff;
+  }
+  body { font-family: system-ui, sans-serif; color: var(--text); background: var(--bg); margin: 2rem; }
+  h1 { font-size: 1.4rem; margin-bottom: .5rem; }
+  p { margin: .25rem 0 .75rem; }
+  .panel { display: grid; gap: 1rem; grid-template-columns: 1fr; max-width: 720px; }
+  .controls { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+  .control {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .35rem .6rem; border: 1px solid #ccc; border-radius: .5rem;
+    background: #fafafa; cursor: pointer;
+  }
+  .control[aria-pressed="true"] { border-color: var(--switch-closed); background: #effaf2; }
+  .control[aria-pressed="false"] { border-color: var(--switch-open); background: #fff5f4; }
+  .control:focus-visible { outline: 3px solid var(--focus); }
+  .status { font-variant-numeric: tabular-nums; }
+  .legend { font-size: .9rem; color: #555; }
+
+  svg { max-width: 720px; width: 100%; height: auto; }
+  .wire { stroke: var(--wire); stroke-width: 4; fill: none; }
+  .switch { stroke-width: 6; stroke-linecap: round; cursor: pointer; }
+  .switch-label { font-size: 14px; fill: var(--text); }
+  .lamp-bulb { stroke: #444; stroke-width: 3; fill: var(--lamp-off); transition: fill .15s ease, filter .15s ease; }
+  .lamp-glow { opacity: 0; transition: opacity .15s ease; }
+  .on .lamp-bulb { fill: var(--lamp-on); filter: drop-shadow(0 0 8px rgba(241,196,15,.8)); }
+  .on .lamp-glow { opacity: .8; }
+
+  /* switch colors depend on state */
+  .switch.open { stroke: var(--switch-open); }
+  .switch.closed { stroke: var(--switch-closed); }
+
+  /* helper badges */
+  .badge { font-size: .85rem; padding: .15rem .4rem; border-radius: .35rem; background: #eee; }
+  .badge.on { background: #fff3cd; border: 1px solid #ffe69c; }
+  .badge.off { background: #f1f1f1; border: 1px solid #e5e5e5; }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🧠 Plongez dans l'Aventure des Algorigrammes !</h1>
+            <p>Explorez la logique et les algorithmes à travers des exercices interactifs. Gagnez des points et obtenez votre note sur 20 !</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- RAPPEL -->
+        <section id="course-box rappel">
+                        <h2>📚 Rappel de cours : algorithmes & algorigrammes</h2>
+            <p>
+                Un <strong>algorithme</strong> est une <strong>suite ordonnée d’instructions</strong> permettant de résoudre un problème.
+                C’est une recette très précise, que l’on peut exécuter étape par étape.
+            </p>
+            <p>
+                Un <strong>algorigramme</strong> (ou <strong>organigramme</strong>) est une <strong>représentation graphique</strong> d’un algorithme :
+                on utilise des <strong>symboles</strong> (ovale, rectangle, losange, flèches…) pour représenter les étapes.
+            </p>
+
+            <!-- Tableau des symboles avec icônes SVG -->
+            <table class="symbol-table">
+                <thead>
+                    <tr>
+                        <th>Forme géométrique</th>
+                        <th>Rôle</th>
+                        <th>Symbole</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ellipse /Ovale (Début / Fin)</td>
+                        <td>Marque le début ou la fin de l’algorithme.</td>
+                        <td>
+                            <svg class="symbol-svg" width="80" height="40">
+                                <ellipse cx="40" cy="20" rx="30" ry="15"
+                                         fill="#0ea5e9" stroke="#38bdf8" stroke-width="2" />
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Rectangle (Action)</td>
+                        <td>Représente un traitement ou une instruction (calcul, affectation...).</td>
+                        <td>
+                            <svg class="symbol-svg" width="80" height="40">
+                                <rect x="10" y="8" width="60" height="24"
+                                      fill="#22c55e" stroke="#16a34a" stroke-width="2" />
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Parallélogramme (Entrée / Sortie)</td>
+                        <td>Représente la lecture ou l’affichage d’une donnée.</td>
+                        <td>
+                            <svg class="symbol-svg" width="80" height="40">
+                                <polygon points="10,10 60,10 70,30 20,30"
+                                         fill="#facc15" stroke="#eab308" stroke-width="2" />
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Losange (Test / Condition)</td>
+                        <td>Pose une question (Vrai / Faux – Oui / Non) pour choisir un chemin.</td>
+                        <td>
+                            <svg class="symbol-svg" width="80" height="40">
+                                <polygon points="40,5 70,20 40,35 10,20"
+                                         fill="#f97316" stroke="#ea580c" stroke-width="2" />
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                En technologie, tu dois savoir&nbsp;:
+            </p>
+            <ul>
+                <li>Lire un <strong>algorithme textuel</strong> (écrit sous forme de phrases ou de pseudo-code).</li>
+                <li>Lire un <strong>algorigramme</strong> et expliquer ce qu’il fait.</li>
+                <li>Prévoir la <strong>valeur finale</strong> d’une variable après l’exécution.</li>
+                <li>Construire ou compléter un <strong>algorigramme simple</strong> (suites d’instructions, conditions, boucles).</li>
+            </ul>
+            <p>
+                👉 Tu disposes pour chaque exercice d’un <strong>bouton d’aide</strong> (indice),
+                de <strong>3 essais maximum</strong> et d’un <strong>système de points</strong>.
+           
+
+            <h3>1.2 Pseudo-code Associé</h3>
+            <pre style="background-color: #0f172a; padding: 15px; border-radius: 8px; color: #bfdbfe; font-size: 0.95rem;">
+Début
+SI nuit ET présence
+ALORS Allumer lampe
+      Attendre 3 min
+      Eteindre lampe
+SINON Eteindre lampe
+FIN SI
+Retour au début
+            </pre>
+
+            <h3>1.3 Mots-clés Utiles</h3>
+            <div class="astuce">
+                <strong>Mots-clés pseudo-code :</strong>
+                <ul>
+                    <li><code>SI</code>, <code>ALORS</code>, <code>SINON</code>, <code>FIN SI</code></li>
+                    <li><code>ET</code>, <code>OU</code></li>
+                    <li><code>POUR</code>, <code>TANT_QUE</code>, <code>RÉPÉTER … JUSQU&apos;À</code></li>
+                    <li><code>Début</code>, <code>Fin</code>, <code>Retour au début</code></li>
+                </ul>
+            </div>
+
+            <h3>Fonctions ET et OU</h3>
+            <p>L'utilisation des fonctions ET et OU sont essentielles pour présenter correctement une solution.</p>
+
+
+            <h3>Fonctions ET</h3>
+
+            <ul>
+                    <li>A, B sont les variables d'entrées.</li>
+                    <li> S est la variable de sortie.</li>
+                </ul>
+
+            <p>Voici plusieurs façons de présenter autrement l’expression logique S = A ET B (ou S = A . B) en gardant les mêmes variables A, B et S, selon différents contextes pédagogiques ou visuels :</p>
+
+
+            <p>🧠 1. Forme algébrique booléenne</p>
+        
+             <p>S = A . B</p>
+
+                <ul>
+                    <li>Utilise la notation multiplicative classique en algèbre de Boole.</li>
+                    <li>Interprétation : S est vrai (1) uniquement si A et B sont tous les deux vrais (1).</li>
+                </ul>
+
+            <p>🧠 🔤 2. Forme textuelle explicite</p>
+
+            <p>S est vrai si A est vrai ET B est vrai</p>
+            <br>
+
+            
+            <p>🔘 3. Forme conditionnelle</p>
+
+            <p>Si A = 1 ET B = 1 alors S = 1, sinon S = 0</p>
+           
+            <p>🔄 4. Table de vérité</p>
+
+            <table class="truth-table">
+                <caption>Table de vérité ET</caption>
+                <tr><th>A</th><th>B</th><th>S = A ET B</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>🔌 5. Représentations de la porte logique ET</p>
+
+            <section aria-labelledby="titre-et">
+ 
+            <p>💡 6. Schéma électrique de la fonction ET</p>
+
+             <h1>Simulation de la fonction ET (porte AND) avec deux interrupteurs</h1>
+  <p class="legend">L’ampoule S s’allume uniquement si les deux interrupteurs A et B sont fermés (A = 1 et B = 1). Cliquez ou utilisez Espace/Entrée pour basculer chaque interrupteur.</p>
+
+  <div class="panel">
+    <div class="controls" aria-label="Contrôles des interrupteurs">
+      <button id="btnA" class="control" type="button" aria-pressed="false" aria-controls="circuit" data-key="A">
+        <span class="badge" id="badgeA">A = 0 (ouvert)</span>
+      </button>
+      <button id="btnB" class="control" type="button" aria-pressed="false" aria-controls="circuit" data-key="B">
+        <span class="badge" id="badgeB">B = 0 (ouvert)</span>
+      </button>
+      <span class="status" id="statusS" aria-live="polite">S = 0 (éteinte)</span>
+    </div>
+
+    <!-- SVG circuit -->
+    <svg id="circuit" viewBox="0 0 800 300" role="img" aria-labelledby="title desc">
+      <title id="title">Circuit électrique simulant S = A ET B</title>
+      <desc id="desc">Deux interrupteurs en série A et B entre la source et l’ampoule S. L’ampoule s’allume uniquement si les deux interrupteurs sont fermés.</desc>
+
+      <!-- Source (pile) and ground -->
+      <rect x="40" y="100" width="20" height="80" fill="#999" stroke="#444" />
+      <line x1="50" y1="180" x2="50" y2="260" class="wire" />
+      <line x1="50" y1="260" x2="760" y2="260" class="wire" />
+      <line x1="760" y1="260" x2="760" y2="200" class="wire" />
+
+      <!-- Upper wire to switches -->
+      <line x1="60" y1="140" x2="210" y2="140" class="wire" />
+      <!-- Switch A -->
+      <g id="switchA" tabindex="0" role="button" aria-label="Interrupteur A" data-state="open">
+        <line x1="210" y1="140" x2="280" y2="140" class="wire" />
+        <!-- blade: open = tilted, closed = horizontal -->
+        <line id="bladeA" x1="280" y1="140" x2="320" y2="110" class="switch open" />
+        <circle cx="280" cy="140" r="6" fill="#555" />
+        <circle cx="320" cy="140" r="6" fill="#555" />
+        <text x="255" y="95" class="switch-label">A</text>
+      </g>
+
+      <!-- Wire between switches -->
+      <line x1="320" y1="140" x2="430" y2="140" class="wire" />
+
+      <!-- Switch B -->
+      <g id="switchB" tabindex="0" role="button" aria-label="Interrupteur B" data-state="open">
+        <line x1="430" y1="140" x2="500" y2="140" class="wire" />
+        <line id="bladeB" x1="500" y1="140" x2="540" y2="110" class="switch open" />
+        <circle cx="500" cy="140" r="6" fill="#555" />
+        <circle cx="540" cy="140" r="6" fill="#555" />
+        <text x="475" y="95" class="switch-label">B</text>
+      </g>
+
+      <!-- Wire to lamp -->
+      <line x1="540" y1="140" x2="650" y2="140" class="wire" />
+      <!-- Lamp S -->
+      <g id="lamp" transform="translate(650,110)">
+        <circle cx="50" cy="50" r="40" class="lamp-bulb" />
+        <!-- Glow -->
+        <circle cx="50" cy="50" r="55" fill="url(#glowGrad)" class="lamp-glow" />
+        <text x="45" y="115" class="switch-label">S</text>
+      </g>
+
+      <!-- Return wire -->
+      <line x1="700" y1="140" x2="760" y2="140" class="wire" />
+
+      <!-- Glow gradient -->
+      <defs>
+        <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f1c40f" stop-opacity="0.8" />
+          <stop offset="100%" stop-color="#f1c40f" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <p class="legend">Logique: S = A ET B. Interrupteurs <em>en série</em>. Fermer A et B pour allumer S.</p>
+    <p class="legend">Tips (EN): Lamp turns on only when both switches are closed. Use Space/Enter to toggle.</p>
+  </div>
+
+
+
+          <p><strong>Formule booléenne :</strong> <code>S = a . b</code></p>
+
+          <figure>
+            <figcaption>Symbole standard (US) de la porte ET</figcaption>
+            <svg width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="20" x2="40" y2="20" stroke="black" />
+              <line x1="0" y1="60" x2="40" y2="60" stroke="black" />
+              <path d="M40,10 Q80,40 40,70 Z" fill="none" stroke="black" />
+              <line x1="80" y1="40" x2="120" y2="40" stroke="black" />
+              <text x="5" y="15" font-size="12">a</text>
+              <text x="5" y="65" font-size="12">b</text>
+              <text x="100" y="35" font-size="12">S</text>
+            </svg>
+          </figure>
+
+          <figure>
+            <figcaption>Symbole rectangulaire (FR) avec &amp;</figcaption>
+            <svg width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="20" x2="40" y2="20" stroke="black" />
+              <line x1="0" y1="60" x2="40" y2="60" stroke="black" />
+              <rect x="40" y="20" width="40" height="40" fill="none" stroke="black" />
+              <text x="55" y="50" font-size="20">&amp;</text>
+              <line x1="80" y1="40" x2="120" y2="40" stroke="black" />
+              <text x="5" y="15" font-size="12">a</text>
+              <text x="5" y="65" font-size="12">b</text>
+              <text x="100" y="35" font-size="12">S</text>
+            </svg>
+          </figure>
+
+  
+
+
+            <p>🧩 6. Forme en pseudo-code </p>
+
+        <figure aria-labelledby="caption-and">
+          <figcaption id="caption-and">Pseudo-code : S = A ET B</figcaption>
+          <pre><code>Si A = 1 et B = 1 alors
+           S ← 1
+        Sinon
+           S ← 0
+        FinSi</code></pre>
+        </figure>
+
+
+
+              <h3>Fonctions OU</h3>
+
+            <table class="truth-table">
+                <caption>Table de vérité OU</caption>
+                <tr><th>A</th><th>B</th><th>S = A OU B (S = A + B )</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <h3>Algorithme et Gestion des Sous-Problèmes</h3>
+            <p>L'utilisation des sous-problèmes est idéale pour une meilleure lisibilité, pour alléger l'algorithme lors de succession d'actions identiques, pour faciliter le travail en collaboration, pour faciliter une recherche d'erreur (test individuel des sous-problèmes).</p>
+
+        </section>
+
+         </section>
+
+        <!-- SCORE GLOBAL -->
+        <section class="scoreboard">
+            <div id="score-text">
+                Score : <span id="score-value">0</span> / <span id="score-max">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </section>
+
+        <button id="show-summary">📊 Afficher le détail des points</button>
+        <div id="summary-box"></div>
+
+        <!-- PROGRESSION -->
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <!-- EXERCICES -->
+        <section id="exercices">
+            <h2>2. L'Aventure des Exercices : Gagnez des Points !</h2>
+            <p>Remplissez les tableaux et choisissez les symboles/logiques corrects. Chaque exercice rapporte des points pour un total sur 20.</p>
+
+            <!-- Exo 1 : Porte Automatique -->
+            <article class="exercice" id="exo1" data-points="2">
+                <h3>Exercice 1 — Porte automatique</h3>
+
+                <div class="consigne">
+                    Dès qu'une personne est détectée, la porte s'ouvre pendant 5 secondes, puis se referme. Complète le tableau puis indique le type de symbole utilisé pour la question « Présence ? ».
+                </div>
+
+                <!-- Tableau EVÈNEMENTS / ACTIONS with dropdowns for both -->
+                <table class="table-evenements">
+                    <tr>
+                        <th>ÉVÈNEMENTS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo1_ev1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect" data-correct="true">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo1_ac1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir" data-correct="true">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo1_ev2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause" data-correct="true">Pause de 5s</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo1_ac2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause" data-correct="true">Pause de 5s</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo1_ev3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer" data-correct="true">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo1_ac3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer" data-correct="true">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="schema-interactif">
+                    <svg viewBox="0 0 500 500">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#fff" stroke="#000" stroke-width="1" />
+                            </marker>
+                        </defs>
+
+                        <!-- Début -->
+                        <ellipse cx="250" cy="40" rx="50" ry="20" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="45" text-anchor="middle" fill="#000" font-size="14">Début</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="60" x2="250" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Détection personne ? -->
+                        <polygon points="250,140 300,100 250,60 200,100" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="100" text-anchor="middle" fill="#000" font-size="12">Détection personne ?</text>
+
+                        <!-- NON left with arrow -->
+                        <line x1="200" y1="100" x2="150" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="175" y="90" fill="#000" font-size="10">NON</text>
+
+                        <!-- Loop up from NON -->
+                        <line x1="150" y1="100" x2="150" y2="40" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- OUI down with increased space -->
+                        <line x1="250" y1="140" x2="250" y2="180" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="160" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Ouvrir porte -->
+                        <rect x="190" y="180" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="200" text-anchor="middle" fill="#000" font-size="12">Ouvrir porte</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="210" x2="250" y2="250" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Pause de 5 secondes -->
+                        <rect x="190" y="250" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="270" text-anchor="middle" fill="#000" font-size="12">Pause de 5 secondes</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="280" x2="250" y2="320" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Détection personne ? -->
+                        <polygon points="250,360 300,320 250,280 200,320" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="320" text-anchor="middle" fill="#000" font-size="12">Détection personne ?</text>
+
+                        <!-- OUI right with arrow -->
+                        <line x1="300" y1="320" x2="350" y2="320" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="325" y="310" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Loop up from OUI to Pause -->
+                        <line x1="350" y1="320" x2="350" y2="260" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <line x1="350" y1="260" x2="250" y2="260" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- NON down with increased space -->
+                        <line x1="250" y1="360" x2="250" y2="400" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="380" fill="#000" font-size="10">NON</text>
+
+                        <!-- Fermer porte -->
+                        <rect x="190" y="400" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="420" text-anchor="middle" fill="#000" font-size="12">Fermer porte</text>
+
+                        <!-- Loop back to Début from Fermer -->
+                        <line x1="250" y1="430" x2="250" y2="460" stroke="#000" stroke-width="2" />
+                        <line x1="250" y1="460" x2="150" y2="460" stroke="#000" stroke-width="2" />
+                        <line x1="150" y1="460" x2="150" y2="60" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                    </svg>
+
+                    <select class="menu-schema" id="exo1_select1" style="top: 22%; left: 50%;">
+                        <option value="">Type de symbole ?</option>
+                        <option value="ellipse">Ellipse (Début / Fin)</option>
+                        <option value="rectangle">Rectangle (Action)</option>
+                        <option value="losange" data-correct="true">Losange (Test / Condition)</option>
+                    </select>
+                </div>
+
+                <p class="explication-exo">
+                    « Présence ? » est un test : on utilise un <span class="mot-cle">losange</span>.
+                </p>
+
+                <button class="btn-verifier" onclick="verifierExercice('exo1')">Vérifier</button>
+                <div class="feedback" id="feedback-exo1"></div>
+            </article>
+
+            <!-- Exo 2 : Escalator -->
+            <article class="exercice" id="exo2" data-points="2">
+                <h3>Exercice 2 — Escalator (mise en marche)</h3>
+
+                <div class="consigne">
+                    À partir de la détection d'une personne en bas, l'escalator se met en marche pendant 1 minute puis s'arrête. Complète le tableau puis le symbole « Détection bas ? ».
+                </div>
+
+                <table class="table-evenements">
+                    <tr>
+                        <th>ÉVÈNEMENTS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo2_ev1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas" data-correct="true">Détection bas ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                                <option value="att1">Attendre 1 mn</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo2_ac1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="off" data-correct="true">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                                <option value="att1">Attendre 1 mn</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo2_ev2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on" data-correct="true">Escalator ON</option>
+                                <option value="att1">Attendre 1 mn</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo2_ac2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on" data-correct="true">Escalator ON</option>
+                                <option value="att1">Attendre 1 mn</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo2_ev3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                                <option value="att1" data-correct="true">Attendre 1 mn</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo2_ac3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                                <option value="att1" data-correct="true">Attendre 1 mn</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="schema-interactif">
+                    <svg viewBox="0 0 500 450">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#fff" stroke="#000" stroke-width="1" />
+                            </marker>
+                        </defs>
+
+                        <!-- Début -->
+                        <ellipse cx="250" cy="40" rx="50" ry="20" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="45" text-anchor="middle" fill="#000" font-size="14">Début</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="60" x2="250" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Détection bas ? -->
+                        <polygon points="250,140 300,100 250,60 200,100" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="100" text-anchor="middle" fill="#000" font-size="12">Détection bas ?</text>
+
+                        <!-- NON left with arrow -->
+                        <line x1="200" y1="100" x2="150" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="175" y="90" fill="#000" font-size="10">NON</text>
+
+                        <!-- Loop up from NON -->
+                        <line x1="150" y1="100" x2="150" y2="40" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- OUI down with increased space -->
+                        <line x1="250" y1="140" x2="250" y2="180" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="160" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Escalator ON -->
+                        <rect x="190" y="180" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="200" text-anchor="middle" fill="#000" font-size="12">Escalator ON</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="210" x2="250" y2="250" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Pause de 1 minute -->
+                        <rect x="190" y="250" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="270" text-anchor="middle" fill="#000" font-size="12">Pause de 1 minute</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="280" x2="250" y2="320" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Escalator OFF -->
+                        <rect x="190" y="320" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="340" text-anchor="middle" fill="#000" font-size="12">Escalator OFF</text>
+
+                        <!-- Loop back to Début -->
+                        <line x1="250" y1="350" x2="250" y2="380" stroke="#000" stroke-width="2" />
+                        <line x1="250" y1="380" x2="150" y2="380" stroke="#000" stroke-width="2" />
+                        <line x1="150" y1="380" x2="150" y2="60" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                    </svg>
+
+                    <select class="menu-schema" id="exo2_select1" style="top: 22%; left: 50%;">
+                        <option value="">Type de symbole ?</option>
+                        <option value="ellipse">Ellipse (Début / Fin)</option>
+                        <option value="rectangle">Rectangle (Action)</option>
+                        <option value="losange" data-correct="true">Losange (Test / Condition)</option>
+                    </select>
+                </div>
+
+                <p class="explication-exo">
+                    « Détection bas ? » est une condition, donc un <span class="mot-cle">losange</span>.
+                </p>
+
+                <button class="btn-verifier" onclick="verifierExercice('exo2')">Vérifier</button>
+                <div class="feedback" id="feedback-exo2"></div>
+            </article>
+
+            <!-- Exo 3 : Escalator avec détection haut -->
+            <article class="exercice" id="exo3" data-points="2">
+                <h3>Exercice 3 — Escalator (avec détection haut)</h3>
+
+                <div class="consigne">
+                    Suite de l'exercice précédent. L'escalator s'arrête lorsque la personne est détectée en haut. Complète le tableau puis indique le type de symbole utilisé pour la question « Détection haut ? ».
+                </div>
+
+                <table class="table-evenements">
+                    <tr>
+                        <th>ÉVÈNEMENTS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo3_ev1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas" data-correct="true">Détection bas ?</option>
+                                <option value="detecthaut">Détection haut ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo3_ac1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="detecthaut">Détection haut ?</option>
+                                <option value="off" data-correct="true">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo3_ev2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="detecthaut" data-correct="true">Détection haut ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on">Escalator ON</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo3_ac2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detectbas">Détection bas ?</option>
+                                <option value="detecthaut">Détection haut ?</option>
+                                <option value="off">Escalator OFF</option>
+                                <option value="on" data-correct="true">Escalator ON</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="schema-interactif">
+                    <svg viewBox="0 0 500 450">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#fff" stroke="#000" stroke-width="1" />
+                            </marker>
+                        </defs>
+
+                        <!-- Début -->
+                        <ellipse cx="250" cy="40" rx="50" ry="20" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="45" text-anchor="middle" fill="#000" font-size="14">Début</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="60" x2="250" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Détection bas ? -->
+                        <polygon points="250,140 300,100 250,60 200,100" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="100" text-anchor="middle" fill="#000" font-size="12">Détection bas ?</text>
+
+                        <!-- NON left with arrow -->
+                        <line x1="200" y1="100" x2="150" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="175" y="90" fill="#000" font-size="10">NON</text>
+
+                        <!-- Loop up from NON -->
+                        <line x1="150" y1="100" x2="150" y2="40" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- OUI down with increased space -->
+                        <line x1="250" y1="140" x2="250" y2="180" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="160" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Escalator ON -->
+                        <rect x="190" y="180" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="200" text-anchor="middle" fill="#000" font-size="12">Escalator ON</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="210" x2="250" y2="250" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Détection haut ? -->
+                        <polygon points="250,290 300,250 250,210 200,250" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="250" text-anchor="middle" fill="#000" font-size="12">Détection haut ?</text>
+
+                        <!-- NON left with arrow -->
+                        <line x1="200" y1="250" x2="150" y2="250" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="175" y="240" fill="#000" font-size="10">NON</text>
+
+                        <!-- Loop up from NON to Escalator ON -->
+                        <line x1="150" y1="250" x2="150" y2="190" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <line x1="150" y1="190" x2="250" y2="190" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- OUI down with increased space -->
+                        <line x1="250" y1="290" x2="250" y2="330" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="310" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Escalator OFF -->
+                        <rect x="190" y="330" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="350" text-anchor="middle" fill="#000" font-size="12">Escalator OFF</text>
+
+                        <!-- Loop back to Début -->
+                        <line x1="250" y1="360" x2="250" y2="390" stroke="#000" stroke-width="2" />
+                        <line x1="250" y1="390" x2="150" y2="390" stroke="#000" stroke-width="2" />
+                        <line x1="150" y1="390" x2="150" y2="60" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                    </svg>
+
+                    <select class="menu-schema" id="exo3_select1" style="top: 58%; left: 50%;">
+                        <option value="">Type de symbole ?</option>
+                        <option value="ellipse">Ellipse (Début / Fin)</option>
+                        <option value="rectangle">Rectangle (Action)</option>
+                        <option value="losange" data-correct="true">Losange (Test / Condition)</option>
+                    </select>
+                </div>
+
+                <p class="explication-exo">
+                    « Détection haut ? » est une condition, donc un <span class="mot-cle">losange</span>.
+                </p>
+
+                <button class="btn-verifier" onclick="verifierExercice('exo3')">Vérifier</button>
+                <div class="feedback" id="feedback-exo3"></div>
+            </article>
+
+            <!-- Exo 4 : Distributeur de boisson -->
+            <article class="exercice" id="exo4" data-points="2">
+                <h3>Exercice 4 — Distributeur de boisson (pièce = 1 €)</h3>
+
+                <div class="consigne">
+                    Le distributeur affiche le prix (1 €), vérifie que la pièce insérée est bien 1 €, puis distribue la boisson. Sinon, il rejette la pièce. Complète le tableau puis le symbole « Pièce = 1 € ? ».
+                </div>
+
+                <table class="table-evenements">
+                    <tr>
+                        <th>ÉVÈNEMENTS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo4_ev1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="boisselue" data-correct="true">Boisson sélectionnée ?</option>
+                                <option value="piece1">Pièce = 1 € ?</option>
+                                <option value="afficher">Afficher le prix : 1 €</option>
+                                <option value="distribuer">Distribuer la boisson</option>
+                                <option value="rejeter">Rejeter la pièce</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo4_ac1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="boisselue">Boisson sélectionnée ?</option>
+                                <option value="piece1">Pièce = 1 € ?</option>
+                                <option value="afficher" data-correct="true">Afficher le prix : 1 €</option>
+                                <option value="distribuer">Distribuer la boisson</option>
+                                <option value="rejeter">Rejeter la pièce</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo4_ev2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="boisselue">Boisson sélectionnée ?</option>
+                                <option value="piece1" data-correct="true">Pièce = 1 € ?</option>
+                                <option value="afficher">Afficher le prix : 1 €</option>
+                                <option value="distribuer">Distribuer la boisson</option>
+                                <option value="rejeter">Rejeter la pièce</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo4_ac2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="boisselue">Boisson sélectionnée ?</option>
+                                <option value="piece1">Pièce = 1 € ?</option>
+                                <option value="afficher">Afficher le prix : 1 €</option>
+                                <option value="distribuer" data-correct="true">Distribuer la boisson</option>
+                                <option value="rejeter">Rejeter la pièce</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo4_ev3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="boisselue">Boisson sélectionnée ?</option>
+                                <option value="piece1">Pièce = 1 € ?</option>
+                                <option value="afficher">Afficher le prix : 1 €</option>
+                                <option value="distribuer">Distribuer la boisson</option>
+                                <option value="rejeter" data-correct="true">Rejeter la pièce</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo4_ac3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="boisselue">Boisson sélectionnée ?</option>
+                                <option value="piece1">Pièce = 1 € ?</option>
+                                <option value="afficher">Afficher le prix : 1 €</option>
+                                <option value="distribuer">Distribuer la boisson</option>
+                                <option value="rejeter" data-correct="true">Rejeter la pièce</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="schema-interactif">
+                    <svg viewBox="0 0 500 450">
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#fff" stroke="#000" stroke-width="1" />
+                            </marker>
+                        </defs>
+
+                        <!-- Début -->
+                        <ellipse cx="250" cy="40" rx="50" ry="20" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="45" text-anchor="middle" fill="#000" font-size="14">Début</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="60" x2="250" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Boisson sélectionnée ? -->
+                        <polygon points="250,140 300,100 250,60 200,100" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="100" text-anchor="middle" fill="#000" font-size="12">Boisson sélectionnée ?</text>
+
+                        <!-- NON left with arrow -->
+                        <line x1="200" y1="100" x2="150" y2="100" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="175" y="90" fill="#000" font-size="10">NON</text>
+
+                        <!-- Loop up from NON -->
+                        <line x1="150" y1="100" x2="150" y2="40" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- OUI down with increased space -->
+                        <line x1="250" y1="140" x2="250" y2="180" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="160" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Afficher le prix : 1 € -->
+                        <rect x="190" y="180" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="200" text-anchor="middle" fill="#000" font-size="12">Afficher le prix : 1 €</text>
+
+                        <!-- Arrow down with increased space -->
+                        <line x1="250" y1="210" x2="250" y2="250" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Pièce = 1 € ? -->
+                        <polygon points="250,290 300,250 250,210 200,250" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="250" text-anchor="middle" fill="#000" font-size="12">Pièce = 1 € ?</text>
+
+                        <!-- NON left with arrow -->
+                        <line x1="200" y1="250" x2="150" y2="250" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="175" y="240" fill="#000" font-size="10">NON</text>
+
+                        <!-- Rejeter la pièce -->
+                        <rect x="90" y="230" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="150" y="250" text-anchor="middle" fill="#000" font-size="12">Rejeter la pièce</text>
+
+                        <!-- Loop back from Rejeter to Pièce test -->
+                        <line x1="150" y1="260" x2="150" y2="280" stroke="#000" stroke-width="2" />
+                        <line x1="150" y1="280" x2="250" y2="280" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- OUI down with increased space -->
+                        <line x1="250" y1="290" x2="250" y2="330" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="270" y="310" fill="#000" font-size="10">OUI</text>
+
+                        <!-- Distribuer la boisson -->
+                        <rect x="190" y="330" width="120" height="30" stroke="#000" stroke-width="2" fill="none" />
+                        <text x="250" y="350" text-anchor="middle" fill="#000" font-size="12">Distribuer la boisson</text>
+
+                        <!-- Loop back to Début -->
+                        <line x1="250" y1="360" x2="250" y2="390" stroke="#000" stroke-width="2" />
+                        <line x1="250" y1="390" x2="150" y2="390" stroke="#000" stroke-width="2" />
+                        <line x1="150" y1="390" x2="150" y2="60" stroke="#000" stroke-width="2" marker-end="url(#arrow)" />
+                    </svg>
+
+                    <select class="menu-schema" id="exo4_select1" style="top: 58%; left: 50%;">
+                        <option value="">Type de symbole ?</option>
+                        <option value="ellipse">Ellipse (Début / Fin)</option>
+                        <option value="rectangle">Rectangle (Action)</option>
+                        <option value="losange" data-correct="true">Losange (Test / Condition)</option>
+                    </select>
+                </div>
+
+                <p class="explication-exo">
+                    « Pièce = 1 € ? » est une condition, donc un <span class="mot-cle">losange</span>.
+                </p>
+
+                <button class="btn-verifier" onclick="verifierExercice('exo4')">Vérifier</button>
+                <div class="feedback" id="feedback-exo4"></div>
+            </article>
+
+            <!-- Add more exercises as needed -->
+        </section>
+
+        <div id="score-total">Score Total : 0 / 20</div>
+    </main>
+
+    <script>
+        let totalScore = 0;
+        const totalPoints = 20;
+
+        function verifierExercice(id) {
+            const exercice = document.getElementById(id);
+            const selects = exercice.querySelectorAll('select');
+            let correct = 0;
+            selects.forEach(sel => {
+                const opt = sel.options[sel.selectedIndex];
+                if (opt && opt.dataset.correct === 'true') correct++;
+            });
+            const points = parseInt(exercice.dataset.points);
+            const earned = (correct === selects.length) ? points : 0;
+            totalScore += earned;
+            updateProgress();
+            const feedback = document.getElementById(`feedback-${id}`);
+            feedback.textContent = correct === selects.length ? `✔ Bravo ! +${points} points` : '✖ Réessayez !';
+            feedback.classList.add(correct === selects.length ? 'ok' : 'ko');
+        }
+
+        function updateProgress() {
+            const progress = (totalScore / totalPoints) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+            document.getElementById('score-total').textContent = `Score Total : ${totalScore} / 20`;
+        }
+
+
+          // State
+  let A = 0, B = 0;
+
+  const btnA = document.getElementById('btnA');
+  const btnB = document.getElementById('btnB');
+  const badgeA = document.getElementById('badgeA');
+  const badgeB = document.getElementById('badgeB');
+  const statusS = document.getElementById('statusS');
+
+  const switchA = document.getElementById('switchA');
+  const switchB = document.getElementById('switchB');
+  const bladeA = document.getElementById('bladeA');
+  const bladeB = document.getElementById('bladeB');
+  const lamp = document.getElementById('lamp');
+
+  function updateUI() {
+    // Update blades orientation and color
+    if (A === 1) {
+      bladeA.setAttribute('x2', '320'); bladeA.setAttribute('y2', '140');
+      bladeA.classList.remove('open'); bladeA.classList.add('closed');
+      switchA.setAttribute('data-state', 'closed');
+      btnA.setAttribute('aria-pressed', 'true');
+      badgeA.textContent = 'A = 1 (fermé)'; badgeA.className = 'badge on';
+    } else {
+      bladeA.setAttribute('x2', '320'); bladeA.setAttribute('y2', '110');
+      bladeA.classList.remove('closed'); bladeA.classList.add('open');
+      switchA.setAttribute('data-state', 'open');
+      btnA.setAttribute('aria-pressed', 'false');
+      badgeA.textContent = 'A = 0 (ouvert)'; badgeA.className = 'badge off';
+    }
+
+    if (B === 1) {
+      bladeB.setAttribute('x2', '540'); bladeB.setAttribute('y2', '140');
+      bladeB.classList.remove('open'); bladeB.classList.add('closed');
+      switchB.setAttribute('data-state', 'closed');
+      btnB.setAttribute('aria-pressed', 'true');
+      badgeB.textContent = 'B = 1 (fermé)'; badgeB.className = 'badge on';
+    } else {
+      bladeB.setAttribute('x2', '540'); bladeB.setAttribute('y2', '110');
+      bladeB.classList.remove('closed'); bladeB.classList.add('open');
+      switchB.setAttribute('data-state', 'open');
+      btnB.setAttribute('aria-pressed', 'false');
+      badgeB.textContent = 'B = 0 (ouvert)'; badgeB.className = 'badge off';
+    }
+
+    const S = (A === 1 && B === 1) ? 1 : 0;
+    lamp.classList.toggle('on', S === 1);
+    statusS.textContent = S === 1 ? 'S = 1 (allumée)' : 'S = 0 (éteinte)';
+  }
+
+  function toggle(key) {
+    if (key === 'A') A = A ? 0 : 1;
+    if (key === 'B') B = B ? 0 : 1;
+    updateUI();
+  }
+
+  // Button interactions
+  btnA.addEventListener('click', () => toggle('A'));
+  btnB.addEventListener('click', () => toggle('B'));
+
+  // SVG switch interactions (mouse + keyboard)
+  function attachSwitchHandlers(el, key) {
+    el.addEventListener('click', () => toggle(key));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(key); }
+    });
+  }
+  attachSwitchHandlers(switchA, 'A');
+  attachSwitchHandlers(switchB, 'B');
+
+  // Init
+  updateUI();
+
+    </script>
+</body>
+</html>
