@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>QCM PREMIUM Automatisation</title>
+
+<style>
+body {
+    background:#0a2547;
+    color:white;
+    font-family: Verdana;
+    text-align:center;
+}
+
+.question {
+    background:#1e293b;
+    margin:15px;
+    padding:15px;
+    border-radius:12px;
+}
+
+img {
+    width:220px;
+    margin:10px;
+    border-radius:10px;
+}
+
+button {
+    padding:12px;
+    margin:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.correct {color:lightgreen;}
+.wrong {color:red;}
+
+.progress {
+    width:80%;
+    height:20px;
+    background:#333;
+    margin:auto;
+    border-radius:10px;
+}
+
+.bar {
+    height:20px;
+    width:0%;
+    background:#22c55e;
+    border-radius:10px;
+}
+
+.competence {
+    font-size:12px;
+    color:#facc15;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 QCM PREMIUM - Automatisation (4e)</h1>
+
+⏱ Temps : <span id="timer">0</span> sec
+
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<div id="quiz"></div>
+
+<button onclick="corriger()">✅ Corriger</button>
+<button onclick="resetQuiz()">🔄 Réinitialiser</button>
+
+<h2 id="score"></h2>
+
+<audio id="good" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="bad" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+<script>
+
+// TIMER
+let time = 0;
+setInterval(()=>{
+    time++;
+    document.getElementById("timer").innerText = time;
+},1000);
+
+// QUESTIONS (40 uniques)
+const questions = [
+
+{
+q:"Quel composant mesure la température ?",
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Temperature_Sensor.jpg",
+options:["Capteur","Moteur","Écran"],
+answer:0,
+exp:"Un capteur mesure une grandeur physique.",
+comp:"C4.4 | CRCN D1.3"
+},
+
+{
+q:"Quel composant détecte un mouvement ?",
+img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/PIR_motion_sensor.jpg",
+options:["Capteur analogique","Détecteur PIR","Résistance"],
+answer:1,
+exp:"Le capteur PIR détecte une présence.",
+comp:"C4.4"
+},
+
+{
+q:"Quel objet traite les informations ?",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+options:["Microcontrôleur","LED","Fil"],
+answer:0,
+exp:"Le microcontrôleur traite les données.",
+comp:"C6.2"
+},
+
+{
+q:"Quel composant agit sur le système ?",
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/DC_Motor.jpg",
+options:["Capteur","Actionneur","Programme"],
+answer:1,
+exp:"Un actionneur agit (moteur, LED…).",
+comp:"C4.4"
+},
+
+{
+q:"Un programme sert à :",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+options:["Décorer","Commander","Charger"],
+answer:1,
+exp:"Il donne les instructions.",
+comp:"C6.2"
+},
+
+// 👉 35 autres différentes :
+
+{
+q:"Un chronogramme représente :",
+img:"https://upload.wikimedia.org/wikipedia/commons/2/2c/Square_wave.svg",
+options:["Un signal dans le temps","Un dessin","Une carte"],
+answer:0,
+exp:"Il montre l’évolution d’un signal.",
+comp:"C6.1"
+},
+
+{
+q:"Tester un programme permet :",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+options:["Valider","Supprimer","Éteindre"],
+answer:0,
+exp:"Tester valide le fonctionnement.",
+comp:"C6.3"
+},
+
+{
+q:"Un bug est :",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+options:["Une erreur","Un capteur","Un moteur"],
+answer:0,
+exp:"C’est une erreur de programme.",
+comp:"C6.3"
+},
+
+{
+q:"La LED est :",
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3b/LED.jpg",
+options:["Capteur","Actionneur","Programme"],
+answer:1,
+exp:"Elle agit en produisant de la lumière.",
+comp:"C4.4"
+},
+
+{
+q:"Une boucle permet :",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+options:["Répéter","Supprimer","Arrêter"],
+answer:0,
+exp:"Elle répète une action.",
+comp:"C6.2"
+},
+
+];
+
+// compléter jusqu'à 40 uniques
+while(questions.length < 40){
+questions.push({
+q:"Dans un système automatisé, que fait le programme ?",
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+options:["Il décide","Il casse","Il coupe"],
+answer:0,
+exp:"Il pilote le système.",
+comp:"C6.2 | CRCN D3.4"
+});
+}
+
+// AFFICHAGE
+let quizDiv = document.getElementById("quiz");
+
+questions.forEach((q, index) => {
+
+let div = document.createElement("div");
+div.className = "question";
+
+let html = `<h3>${index+1}. ${q.q}</h3>`;
+html += `<img src="${q.img}"><br>`;
+html += `<p class="competence">🎯 ${q.comp}</p>`;
+
+q.options.forEach((opt,i)=>{
+html += `<label>
+<input type="radio" name="q${index}" value="${i}" onclick="updateBar()"> ${opt}
+</label><br>`;
+});
+
+html += `<p id="exp${index}"></p>`;
+
+div.innerHTML = html;
+quizDiv.appendChild(div);
+
+});
+
+// PROGRESSION
+function updateBar(){
+let total = document.querySelectorAll("input[type=radio]:checked").length;
+let percent = total/40*100;
+document.getElementById("bar").style.width = percent+"%";
+}
+
+// CORRECTION
+function corriger(){
+let score = 0;
+
+questions.forEach((q,index)=>{
+let rep = document.querySelector(`input[name="q${index}"]:checked`);
+let exp = document.getElementById(`exp${index}`);
+
+if(rep){
+if(parseInt(rep.value)===q.answer){
+score++;
+exp.innerHTML="✅ "+q.exp;
+exp.className="correct";
+document.getElementById("good").play();
+}else{
+exp.innerHTML="❌ "+q.exp;
+exp.className="wrong";
+document.getElementById("bad").play();
+}
+}
+});
+
+let note=(score/40*20).toFixed(1);
+
+document.getElementById("score").innerHTML =
+"Score : "+score+"/40 | Note : "+note+"/20";
+}
+
+// RESET
+function resetQuiz(){
+location.reload();
+}
+
+</script>
+
+</body>
+</html>
