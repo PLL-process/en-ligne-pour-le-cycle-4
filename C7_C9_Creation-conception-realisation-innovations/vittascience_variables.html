@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -276,6 +276,24 @@ input[type="range"]{
   }
 }
 
+/* Correction visuelle : conserver un fond sombre uniforme même avant le démarrage */
+.locked-before-start{
+  opacity:1 !important;
+  pointer-events:none;
+  filter:none !important;
+}
+.locked-before-start .question,
+.locked-before-start .media,
+.locked-before-start .note,
+.locked-before-start .option,
+.locked-before-start textarea,
+.locked-before-start input{
+  background:#121a27 !important;
+  color:#f2f6fb !important;
+}
+html, body{
+  background-color:#0f1218 !important;
+}
 </style>
 </head>
 <body>
@@ -608,9 +626,57 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
 </tbody>
 </table>
 <div class="note">En Python, on écrit les nombres décimaux avec un point : <span class="kbd">4.5</span>.</div>
-<h3>Installer une bibliothèque si elle manque</h3>
-<p><strong>Dans PowerShell :</strong></p>
-<pre># Vérifie que Python est disponible.
+
+</section>
+
+<section class="card" id="installation-python-outils">
+  <h2>Installer Python et les outils nécessaires</h2>
+
+  <div class="note">
+    <strong>Avant de commencer :</strong>
+    pour programmer en Python sur ton ordinateur, tu dois d’abord installer
+    <strong>Python</strong>. Ensuite, tu peux utiliser soit <strong>PowerShell</strong>,
+    soit un environnement de développement comme <strong>PyCharm</strong>.
+  </div>
+
+  <h3>1. Installer Python</h3>
+  <p>
+    Télécharge Python depuis le site officiel :
+    <a class="resource-link" href="https://www.python.org/downloads/" target="_blank" rel="noopener">
+      Télécharger Python
+    </a>
+  </p>
+
+  <p>
+    Pendant l’installation sur Windows, pense à cocher l’option :
+    <strong>Add Python to PATH</strong>.
+  </p>
+
+  <h3>2. Installer PyCharm (facultatif mais conseillé)</h3>
+  <p>
+    Télécharge PyCharm Community depuis le site officiel :
+    <a class="resource-link" href="https://www.jetbrains.com/pycharm/download/" target="_blank" rel="noopener">
+      Télécharger PyCharm
+    </a>
+  </p>
+
+  <h3>3. Installer une bibliothèque si elle manque</h3>
+  <div class="note">
+    <strong>Important :</strong>
+    à certains moments, surtout pour les scripts ou les commandes dans
+    <strong>PowerShell</strong>, il peut être nécessaire d’ouvrir PowerShell
+    <strong>en tant qu’administrateur</strong>.
+  </div>
+
+  <p>
+    Sous Windows : fais un clic droit sur <strong>PowerShell</strong>, puis choisis
+    <strong>Exécuter en tant qu’administrateur</strong>.
+  </p>
+
+  <h3>Installer une bibliothèque si elle manque</h3>
+  <p><strong>Dans PowerShell (de préférence en administrateur si nécessaire) :</strong></p>
+  <pre>
+# Vérifie que Python est disponible.
 python --version
 
 # Installe matplotlib.
@@ -618,11 +684,22 @@ python -m pip install matplotlib
 
 # turtle est généralement inclus avec Python.
 # Si besoin, on peut essayer :
-python -m pip install PythonTurtle</pre>
-<p><strong>Dans PyCharm :</strong> ouvrir le projet, puis aller dans <span class="kbd">View</span> → <span class="kbd">Tool Windows</span> → <span class="kbd">Python Packages</span>, chercher la bibliothèque et cliquer sur <span class="kbd">Install</span>.</p>
-<p><a class="resource-link" href="https://www.jetbrains.com/pycharm/" target="_blank" rel="noopener">Télécharger PyCharm</a><a class="resource-link" href="https://www.jetbrains.com/help/pycharm/installing-uninstalling-and-upgrading-packages.html" target="_blank" rel="noopener">Aide officielle packages PyCharm</a></p>
-</section>
+python -m pip install PythonTurtle
+  </pre>
 
+  <p>
+    <strong>Dans PyCharm :</strong> ouvrir le projet, puis aller dans
+    <span class="kbd">View</span> → <span class="kbd">Tool Windows</span> →
+    <span class="kbd">Python Packages</span>, chercher la bibliothèque et cliquer sur
+    <span class="kbd">Install</span>.
+  </p>
+
+  <p>
+    <a class="resource-link" href="https://www.jetbrains.com/help/pycharm/installing-uninstalling-and-upgrading-packages.html" target="_blank" rel="noopener">
+      Aide officielle pour installer des packages dans PyCharm
+    </a>
+  </p>
+</section>
 <section class="card extra">
 <h2>10 exercices supplémentaires non notés – Pour aller plus loin</h2>
 <p>Ces exercices sont progressifs. Les élèves entrent eux-mêmes les valeurs pour créer leurs variables.</p>
@@ -1426,3 +1503,4 @@ function corrigerQuizVideo(){
 
 </body>
 </html>
+
