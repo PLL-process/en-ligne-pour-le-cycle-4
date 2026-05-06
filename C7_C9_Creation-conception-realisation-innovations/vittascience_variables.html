@@ -457,6 +457,124 @@ la réponse est affichée, mais <strong>la question ne rapporte plus de points</
 <p class="small">Pour ouvrir ce mode, saisir le code simple demandé. Vous pouvez le modifier dans le code HTML si besoin.</p>
 </section>
 
+<!-- DEBUT_BLOC_INSTALL_MANAGER_PYTHON_PYCHARM -->
+<section class="card" id="installation-python-pycharm">
+<h2>Installer Python, PyCharm et les bibliothèques nécessaires</h2>
+
+<div class="note">
+<strong>Objectif :</strong> préparer l'ordinateur pour programmer en Python dans Vittascience, PowerShell et PyCharm.
+</div>
+
+<p>
+Python est le langage de programmation. PyCharm est un environnement de développement qui facilite l'écriture, l'exécution et l'organisation des programmes.
+</p>
+
+<p>
+Deux méthodes existent pour installer Python :
+</p>
+
+<ul>
+<li><strong>Méthode 1 :</strong> utiliser <strong>Python Install Manager</strong>, proposé par python.org.</li>
+<li><strong>Méthode 2 :</strong> télécharger directement le <strong>standalone installer</strong>, par exemple Python 3.14.x.</li>
+</ul>
+
+<p>
+Dans les deux cas, il faut toujours passer par le site officiel :
+<span class="kbd">python.org</span>.
+</p>
+
+<p>
+<a class="resource-link" href="https://www.python.org/downloads/" target="_blank" rel="noopener">Télécharger Python</a>
+<a class="resource-link" href="https://www.jetbrains.com/pycharm/download/" target="_blank" rel="noopener">Télécharger PyCharm Community</a>
+</p>
+
+<h3>1. Installer Python avec Python Install Manager</h3>
+
+<p>
+Les captures ci-dessous montrent la méthode avec <strong>Python Install Manager</strong>. C'est normal si une fenêtre de terminal apparaît : le gestionnaire configure Python et propose d'installer le moteur Python appelé <strong>CPython</strong>.
+</p>
+<div class="media">
+  <img src="assets/install-manager-python-01.png" loading="lazy" decoding="async" alt="Etape 1 : sur le site officiel python.org, cliquer sur Download Python install manager. Cette methode installe d'abord un gestionnaire d'installation.">
+  <div class="caption">Etape 1 : sur le site officiel python.org, cliquer sur Download Python install manager. Cette methode installe d'abord un gestionnaire d'installation.</div>
+</div>
+<div class="media">
+  <img src="assets/install-manager-python-02.png" loading="lazy" decoding="async" alt="Etape 2 : Windows demande confirmation. Verifier que l'editeur est Python Software Foundation et que la source est www.python.org, puis cliquer sur Installer Python.">
+  <div class="caption">Etape 2 : Windows demande confirmation. Verifier que l'editeur est Python Software Foundation et que la source est www.python.org, puis cliquer sur Installer Python.</div>
+</div>
+<div class="media">
+  <img src="assets/install-manager-python-03.png" loading="lazy" decoding="async" alt="Etape 3 : le Python installation manager propose d'ajouter le dossier des commandes au PATH. Repondre y puis Entrer pour pouvoir utiliser les commandes py, python ou python3.14 dans un terminal.">
+  <div class="caption">Etape 3 : le Python installation manager propose d'ajouter le dossier des commandes au PATH. Repondre y puis Entrer pour pouvoir utiliser les commandes py, python ou python3.14 dans un terminal.</div>
+</div>
+<div class="media">
+  <img src="assets/install-manager-python-04.png" loading="lazy" decoding="async" alt="Etape 4 : le gestionnaire propose ensuite d'installer CPython. CPython est le moteur Python principal. Repondre Y ou appuyer sur Entree pour l'installer.">
+  <div class="caption">Etape 4 : le gestionnaire propose ensuite d'installer CPython. CPython est le moteur Python principal. Repondre Y ou appuyer sur Entree pour l'installer.</div>
+</div>
+<div class="media">
+  <img src="assets/install-manager-python-05.png" loading="lazy" decoding="async" alt="Etape 5 : la configuration est terminee. Le gestionnaire affiche l'aide des commandes py. Si l'aide en ligne est proposee, on peut repondre n.">
+  <div class="caption">Etape 5 : la configuration est terminee. Le gestionnaire affiche l'aide des commandes py. Si l'aide en ligne est proposee, on peut repondre n.</div>
+</div>
+<h3>2. Ouvrir PowerShell ou Terminal en administrateur</h3>
+
+<p>
+Pour ouvrir rapidement PowerShell ou Terminal en administrateur, appuyer sur <span class="kbd">Win + X</span>, puis choisir <strong>Terminal (Admin)</strong> ou <strong>Windows PowerShell (Admin)</strong>.
+</p>
+
+<div class="note">
+<strong>En classe :</strong> l'installation peut nécessiter les droits de l'établissement. Si Windows demande un mot de passe administrateur, il faut demander l'aide de l'enseignant ou de l'administrateur réseau.
+</div>
+
+<h3>3. Vérifier que Python fonctionne</h3>
+
+<p>
+Après l'installation, ouvrir une nouvelle fenêtre PowerShell, puis tester les commandes suivantes :
+</p>
+
+<pre># Vérifie que Python est disponible.
+python --version
+
+# Autre commande possible sous Windows.
+py --version
+
+# Vérifie que pip fonctionne.
+python -m pip --version
+
+# Met pip à jour si nécessaire.
+python -m pip install --upgrade pip</pre>
+
+<h3>4. Installer une bibliothèque Python avec PowerShell</h3>
+
+<p>
+Une bibliothèque ajoute des possibilités à Python. Par exemple, <span class="kbd">matplotlib</span> permet de tracer des graphiques.
+</p>
+
+<pre># Installe matplotlib pour tracer des graphiques.
+python -m pip install matplotlib
+
+# Si la commande python ne fonctionne pas, essayer avec py.
+py -m pip install matplotlib</pre>
+
+<h3>5. Installer une bibliothèque dans PyCharm</h3>
+
+<p>
+Dans PyCharm, on peut aussi installer une bibliothèque directement depuis les paramètres. Le raccourci utile est <span class="kbd">Ctrl + Alt + S</span>.
+</p>
+
+<ol>
+<li>Ouvrir PyCharm.</li>
+<li>Appuyer sur <span class="kbd">Ctrl + Alt + S</span>.</li>
+<li>Aller dans <strong>Project</strong>, puis <strong>Python Interpreter</strong>.</li>
+<li>Cliquer sur <strong>+</strong> ou <strong>Install</strong> selon la version.</li>
+<li>Rechercher la bibliothèque, par exemple <span class="kbd">matplotlib</span>.</li>
+<li>Cliquer sur <strong>Install Package</strong>.</li>
+</ol>
+
+<div class="note">
+<strong>À retenir :</strong> PowerShell installe les bibliothèques avec <span class="kbd">pip</span>. PyCharm peut aussi installer les bibliothèques avec son interface graphique. Les deux méthodes sont utiles.
+</div>
+
+</section>
+<!-- FIN_BLOC_INSTALL_MANAGER_PYTHON_PYCHARM -->
+
 <form id="eval" class="locked-before-start">
 
 <section class="card">
@@ -640,6 +758,105 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
   </div>
 
   <h3>1. Installer Python</h3>
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
+  <div class='caption'>Figure 3 : lancer l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
+  <div class='caption'>Figure 4 : progression de l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
+</div>
+"
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
+  <div class='caption'>Figure 3 : lancer l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
+  <div class='caption'>Figure 4 : progression de l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
+</div>
+"
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
+  <div class='caption'>Figure 3 : lancer l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
+  <div class='caption'>Figure 4 : progression de l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
+</div>
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Installer Python – étape 1'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Installer Python – étape 2'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Installer Python – étape 3'>
+  <div class='caption'>Figure 3 : lancer l’installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Installer Python – étape 4'>
+  <div class='caption'>Figure 4 : installation en cours.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Installer Python – étape 5'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, appuyez sur <kbd>Win + X</kbd>
+  puis choisissez « Windows PowerShell (Admin) ».
+</div>
   <p>
     Télécharge Python depuis le site officiel :
     <a class="resource-link" href="https://www.python.org/downloads/" target="_blank" rel="noopener">
@@ -1503,5 +1720,10 @@ function corrigerQuizVideo(){
 
 </body>
 </html>
+
+
+
+
+
 
 
