@@ -1,0 +1,135 @@
+name: Finalisation Vittascience variables
+
+on:
+  push:
+    paths:
+      - '.github/workflows/polish-vittascience-final.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Corriger la page HTML
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html')
+          text = path.read_text(encoding='utf-8-sig')
+          original = text
+
+          # 1) Supprimer l'exercice 6 lorsque la capture de blocs n'est pas fiable.
+          pattern_ex6 = re.compile(
+              r'\n<section class="card">\s*\n<div class="exerciseHead"><h2>Exercice 6 – Blocs à remettre dans le bon ordre</h2>.*?<!-- FIN_INTERFACE_VITTASCIENCE_EXO_6 -->\s*\n',
+              re.S
+          )
+          text, removed_ex6 = pattern_ex6.subn('\n', text, count=1)
+
+          # Si l'exercice n'est pas trouvé par le motif complet, on laisse le fichier intact.
+          if removed_ex6:
+              text = text.replace('Exercice 7 – VMC intelligente', 'Exercice 6 – VMC intelligente')
+              text = text.replace('Exercice 8 – Analyse d’une correction de la VMC', 'Exercice 7 – Analyse d’une correction de la VMC')
+              text = text.replace('Exercice 9 – Devis automatisé', 'Exercice 8 – Devis automatisé')
+              text = text.replace('Exercice 10 – Trois situations similaires', 'Exercice 9 – Trois situations similaires')
+              text = text.replace('Exercice 11 – Pour aller plus loin : coder soi-même', 'Exercice 10 – Pour aller plus loin : coder soi-même')
+
+          # 2) Corriger l'affichage pédagogique du décimal Python.
+          text = text.replace('<input type="radio" name="q11" value="25.2">25,2</label>', '<input type="radio" name="q11" value="25.2">25.2</label>')
+          text = text.replace('La bonne réponse est 25,2', 'La bonne réponse est 25.2')
+
+          # 3) Éviter les doublons de la section installation Python si plusieurs blocs ont été insérés.
+          install_pattern = re.compile(r'\n<section class="card">\s*<h2>Installer Python et les outils nécessaires</h2>.*?</section>', re.S)
+          matches = list(install_pattern.finditer(text))
+          if len(matches) > 1:
+              keep = matches[0].group(0)
+              parts = []
+              last = 0
+              for i, m in enumerate(matches):
+                  parts.append(text[last:m.start()])
+                  if i == 0:
+                      parts.append(keep)
+                  last = m.end()
+              parts.append(text[last:])
+              text = ''.join(parts)
+
+          # 4) Ajouter les alternatives WebPython à PyCharm, une seule fois.
+          alternatives = '''
+<div class="note">
+<strong>Alternatives à l'installation de PyCharm :</strong> si l'installation de PyCharm est impossible, si le réseau du collège bloque certains téléchargements, ou si l'élève travaille sur tablette, il peut utiliser une plateforme Python en ligne.
+<br>
+<a class="resource-link" href="https://www.cahier-indice.fr/1reG/" target="_blank" rel="noopener">Plateforme WebPython – cahier-indice.fr</a>
+<a class="resource-link" href="https://www.online-python.com/" target="_blank" rel="noopener">Online Python – éditeur Python en ligne</a>
+<p class="small">Ces plateformes permettent d'écrire et de tester rapidement du code Python depuis un navigateur. Elles sont utiles en dépannage, mais PyCharm reste plus complet pour apprendre à organiser un vrai projet.</p>
+</div>
+'''
+          if 'https://www.cahier-indice.fr/1reG/' not in text:
+              marker = '<h2>Installer Python et les outils nécessaires</h2>'
+              if marker in text:
+                  text = text.replace(marker, marker + alternatives, 1)
+
+          # 5) Ajouter highlight.js et un habillage automatique des blocs <pre>.
+          css_link = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">'
+          if 'highlight.js/11.9.0/styles/github-dark.min.css' not in text:
+              text = text.replace('</head>', css_link + '\n</head>', 1)
+
+          highlighter = '''
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('pre').forEach(function(pre){
+    if(pre.querySelector('code')){ return; }
+    const source = pre.textContent;
+    const code = document.createElement('code');
+    code.textContent = source;
+    code.className = /Invoke-WebRequest|Set-ExecutionPolicy|PowerShell|wmic|Start-Process|pip install/i.test(source) ? 'language-powershell' : 'language-python';
+    pre.textContent = '';
+    pre.appendChild(code);
+  });
+  if(window.hljs){ hljs.highlightAll(); }
+});
+</script>
+'''
+          if 'hljs.highlightAll' not in text:
+              text = text.replace('</body>', highlighter + '\n</body>', 1)
+
+          path.write_text(text, encoding='utf-8')
+          print('Suppression exercice 6 :', bool(removed_ex6))
+          print('Taille avant/après :', len(original), len(text))
+
+      - name: Rapport de contrôle rapide
+        shell: python
+        run: |
+          from pathlib import Path
+          text = Path('C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html').read_text(encoding='utf-8')
+          checks = {
+              'exercice_6_blocs_supprime': 'Exercice 6 – Blocs à remettre dans le bon ordre' not in text,
+              'webpython_present': 'https://www.cahier-indice.fr/1reG/' in text and 'https://www.online-python.com/' in text,
+              'highlight_present': 'hljs.highlightAll' in text,
+              'iframe_vittascience_present': '<iframe' in text and 'fr.vittascience.com/python/' in text,
+              'video_youtube_presente': 'youtube.com/embed/dfAqqofAag8' in text,
+              'decimal_python_corrige': 'name="q11" value="25.2">25.2</label>' in text,
+          }
+          for k,v in checks.items():
+              print(k, ':', 'OK' if v else 'A_VERIFIER')
+          if not all(checks.values()):
+              raise SystemExit('Certains contrôles demandent une vérification.')
+
+      - name: Supprimer le workflow temporaire
+        run: rm .github/workflows/polish-vittascience-final.yml
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html .github/workflows/polish-vittascience-final.yml
+          git commit -m "Finalise page Vittascience variables" || echo "Aucun changement à commiter"
+          git push
