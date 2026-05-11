@@ -1,0 +1,56 @@
+name: Suppression exercice 6 Vittascience
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-exercice-6-vittascience.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  remove-exercice-6:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Supprimer l'exercice 6 et son iframe Vittascience
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html')
+          text = path.read_text(encoding='utf-8-sig')
+          original = text
+
+          pattern = re.compile(
+              r'\n<section class="card">\s*\n<div class="exerciseHead"><h2>Exercice 6 – Blocs à remettre dans le bon ordre</h2>.*?<!-- FIN_INTERFACE_VITTASCIENCE_EXO_6 -->\s*\n',
+              re.S
+          )
+          text, count = pattern.subn('\n', text, count=1)
+
+          if count == 0:
+              raise SystemExit('Bloc exercice 6 non trouvé : aucune modification effectuée.')
+
+          text = text.replace('Exercice 7 – VMC intelligente', 'Exercice 6 – VMC intelligente')
+          text = text.replace('Exercice 8 – Analyse d’une correction de la VMC', 'Exercice 7 – Analyse d’une correction de la VMC')
+          text = text.replace('Exercice 9 – Devis automatisé', 'Exercice 8 – Devis automatisé')
+          text = text.replace('Exercice 10 – Trois situations similaires', 'Exercice 9 – Trois situations similaires')
+          text = text.replace('Exercice 11 – Pour aller plus loin : coder soi-même', 'Exercice 10 – Pour aller plus loin : coder soi-même')
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Supprimer le workflow temporaire
+        run: rm .github/workflows/remove-exercice-6-vittascience.yml
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html .github/workflows/remove-exercice-6-vittascience.yml
+          git commit -m "Supprime exercice 6 capture incorrecte Vittascience" || echo "Aucun changement à commiter"
+          git push
