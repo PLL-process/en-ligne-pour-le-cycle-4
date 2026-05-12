@@ -458,6 +458,19 @@ la réponse est affichée, mais <strong>la question ne rapporte plus de points</
 </div>
 </section>
 
+<section class="card" id="rappel-rapide-python">
+<h2>Rappel rapide avant les exercices</h2>
+<div class="note">
+Une variable est comme une boîte avec un nom. Quand le programme donne une nouvelle valeur à cette variable, l’ancienne valeur est remplacée.
+</div>
+<ul>
+<li><span class="kbd">x = 14</span> signifie que la variable <span class="kbd">x</span> contient maintenant 14.</li>
+<li><span class="kbd">print(x)</span> affiche la valeur de <span class="kbd">x</span>.</li>
+<li><span class="kbd">print("x")</span> affiche le texte <span class="kbd">x</span>, parce que les guillemets indiquent du texte.</li>
+</ul>
+<p><a class="resource-link" href="#mini-cours">Aller au mini-cours complet</a></p>
+</section>
+
 
 <!-- RAPPEL_VITTASCIENCE_MODE_MIXTE -->
 <section class="card" id="interface-vittascience-python">
@@ -819,7 +832,7 @@ print(cout_total)</code></pre></div>
 quantite = 78
 cout_emballage = 139</code></pre><input type="number" id="q92"></div>
 <div class="question" data-qnum="23"><strong>8.3</strong> Si cout_emballage = 5, quel devient le coût total ?<input type="number" id="q93"></div>
-<div class="question" data-qnum="24"><strong>8.4</strong> Si on ajoute remise = 26, quel est le coût total final ?<input type="number" id="q94"></div>
+<div class="question" data-qnum="24"><strong>8.4</strong> Si une remise de 26 € est déduite du coût total obtenu en 8.3, quel est le coût total final ?<input type="number" id="q94"></div>
 </section>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_8 -->
 <div class="vitta-choice" id="interface-vittascience-exo-8">
@@ -965,7 +978,7 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
 </form>
 
 
-<section class="card">
+<section class="card" id="mini-cours">
 <h2>Mini-cours : variables, entiers, flottants et chaînes</h2>
 <p>Une <strong>variable</strong> mémorise une information. En Python, elle peut contenir plusieurs types de données.</p>
 <table>
@@ -1418,7 +1431,7 @@ function corrigerTout(finTemps){
   score += addIf(q91ok,2); if(!q91ok) erreurs.push('Ex.8.1 : citer au moins deux variables utiles');
   score += addIf(eqNum(document.getElementById('q92').value,34225),2); if(!eqNum(document.getElementById('q92').value,34225)) erreurs.push('Ex.8.2 : 34225');
   score += addIf(eqNum(document.getElementById('q93').value,34091),2); if(!eqNum(document.getElementById('q93').value,34091)) erreurs.push('Ex.8.3 : 34091');
-  score += addIf(eqNum(document.getElementById('q94').value,34065),2); if(!eqNum(document.getElementById('q94').value,34065)) erreurs.push('Ex.8.4 : 34065');
+  score += addIf(eqNum(document.getElementById('q94').value,34065),2); if(!eqNum(document.getElementById('q94').value,34065)) erreurs.push('Ex.8.4 : la remise de 26 est à soustraire, résultat attendu 34065');
 
   score += addIf(eqNum(document.getElementById('q101').value,928),2); if(!eqNum(document.getElementById('q101').value,928)) erreurs.push('Ex.9.1 : 928');
   score += addIf(eqNum(document.getElementById('q102').value,600),2); if(!eqNum(document.getElementById('q102').value,600)) erreurs.push('Ex.9.2 : 600');
@@ -1466,29 +1479,26 @@ function reinitialiser(){
 
 const aidesParQuestion = {
   1:"Lis directement la valeur affichée dans la console.",
-  2:"Suis la variable x jusqu’à sa dernière affectation.",
-  3:"Cherche la ligne où la variable y reçoit une nouvelle valeur.",
+  2:"Regarde chaque ligne où x reçoit une valeur. La valeur finale est celle de la dernière ligne qui change x.",
+  3:"Cherche le moment où y est recalculée, puis explique que sa nouvelle valeur remplace l’ancienne.",
   4:"Regarde la réponse qui est validée en vert.",
   5:"Suis la dernière valeur de la variable x.",
-  6:"Repère l’opération utilisée dans la dernière affectation de y.",
+  6:"Repère le calcul fait avec x et y dans la dernière ligne qui calcule y.",
   7:"Observe la réponse surlignée en vert.",
-  8:"La capture sert à vérifier la sortie obtenue.",
+  8:"Compare le nombre affiché par le programme avec le nombre validé en vert dans la correction.",
   9:"Observe si y est écrit avec ou sans guillemets.",
   10:"Les guillemets transforment un nom de variable en texte.",
   11:"Refais le calcul de y sans les guillemets.",
   12:"Observe la réponse validée en vert.",
   13:"Le message explique le rôle des guillemets.",
-  14:"L’ordre doit permettre d’afficher d’abord bonjour puis au revoir.",
-  15:"Une même variable peut changer de valeur au cours du programme.",
-  16:"Une chaîne de caractères est du texte.",
-  17:"Lis les formules correspondant aux blocs.",
-  18:"Calcule d’abord a, puis utilise a pour calculer b.",
-  19:"Lis la dernière colonne du tableau validé.",
-  20:"b utilise la valeur de a.",
+  17:"Lis le programme comme deux étapes : calculer a, puis calculer b.",
+  18:"Pour chaque valeur de x, commence par a = x × 2 + 1, puis remplace a dans le calcul de b.",
+  19:"Commence avec x = 20 : calcule a, puis utilise cette valeur de a pour calculer b.",
+  20:"Observe que la formule de b contient la variable a.",
   21:"Cherche les noms des données qui peuvent changer.",
   22:"Multiplie puis ajoute le coût d’emballage.",
   23:"Recalcule avec le nouveau coût d’emballage.",
-  24:"Recalcule avec la remise.",
+  24:"Une remise diminue le prix : pars du résultat précédent et enlève 26.",
   25:"Multiplie le prix par la quantité puis ajoute le coût.",
   26:"Même méthode : multiplication puis addition.",
   27:"Même méthode : multiplication puis addition.",
@@ -1500,38 +1510,35 @@ const aidesParQuestion = {
 };
 
 const correctionsParQuestion = {
-  1:"Réponse : 25,2.",
-  2:"Réponse : x vaut 14 à la fin.",
-  3:"y est recalculée : elle reçoit une nouvelle valeur issue d’un calcul.",
-  4:"Réponse : 26.",
-  5:"Réponse : x vaut 36 à la fin.",
-  6:"Réponse : x − 2 × y.",
-  7:"Réponse : 26.",
-  8:"La capture confirme que 26 est la bonne sortie du programme.",
-  9:"Réponse : y.",
-  10:"Avec les guillemets, y est une chaîne de caractères, pas une variable.",
-  11:"Sans guillemets, la valeur affichée serait 4.",
-  12:"Réponse : y.",
-  13:"Le message rappelle que y entre guillemets est du texte.",
-  14:"Ordre : affecter bonjour → afficher → affecter au revoir → afficher.",
-  15:"Il faut afficher deux fois pour voir les deux valeurs successives.",
-  16:"Réponse : Non.",
-  17:"Réponse : a = x × 2 + 1 ; b = x × a − 3.",
-  18:"a : 5, 11, 17, 25 ; b : 7, 52, 133, 297.",
-  19:"Réponse : 817.",
-  20:"Il faut calculer a avant b car b dépend de a.",
-  21:"Variables possibles : prix_matiere, quantite, cout_emballage, remise.",
-  22:"Réponse : 34225.",
-  23:"Réponse : 34091.",
-  24:"Réponse : 34065.",
-  25:"Réponse : 928.",
-  26:"Réponse : 600.",
-  27:"Réponse : 411.",
-  28:"La logique reste la même ; changent surtout les noms des variables et les valeurs.",
-  29:"Réponse : Oui.",
-  30:"Réponse : humidite_sol.",
-  31:"On arrose si la température et la luminosité sont élevées, si le sol est sec et si le dernier arrosage est assez ancien.",
-  32:"Réponse : Non."
+  1:"La console affiche 25,2. Il faut lire le résultat affiché par le programme, pas seulement les valeurs écrites au départ.",
+  2:"x vaut 14 à la fin : quand une variable reçoit une nouvelle valeur, cette valeur remplace la précédente.",
+  3:"y est recalculée pendant le programme. Sa valeur affichée est donc la nouvelle valeur obtenue par le calcul.",
+  4:"La bonne réponse est 26 : c’est la valeur que le programme obtient après avoir fait le calcul.",
+  5:"x vaut 36 à la fin : on garde la dernière valeur donnée à x.",
+  6:"Le calcul est x − 2 × y : on enlève deux fois y à x.",
+  7:"La valeur validée en vert est 26. C’est le résultat attendu par la correction.",
+  8:"La capture confirme que le programme affiche 26. Elle permet de comparer ton résultat avec la réponse validée.",
+  9:"La bonne réponse est y : avec des guillemets, le programme affiche le texte y.",
+  10:"Avec les guillemets, y n’est pas utilisée comme variable. Le programme affiche simplement le caractère y.",
+  11:"Sans guillemets, y redevient une variable : le programme affiche alors sa valeur, c’est-à-dire 4.",
+  12:"La réponse validée est y. Les guillemets font afficher le texte y.",
+  13:"Le message rappelle que y entre guillemets est du texte, alors que y sans guillemets désigne la variable.",
+  17:"Le programme se lit ainsi : a = x × 2 + 1, puis b = x × a − 3. On calcule donc a avant b.",
+  18:"On applique les deux calculs dans l’ordre. Pour x = 2 : a = 5 puis b = 7 ; pour x = 5 : a = 11 puis b = 52 ; pour x = 8 : a = 17 puis b = 133 ; pour x = 12 : a = 25 puis b = 297.",
+  19:"Pour x = 20, on calcule d’abord a = 20 × 2 + 1 = 41. Ensuite b = 20 × 41 − 3 = 817.",
+  20:"Il faut calculer a avant b, car la formule de b utilise la valeur de a.",
+  21:"Variables possibles : prix_matiere, quantite, cout_emballage, remise. Ce sont des valeurs qui peuvent changer selon la situation.",
+  22:"On calcule d’abord 437 × 78 = 34 086, puis on ajoute le coût d’emballage : 34 086 + 139 = 34 225.",
+  23:"Le produit reste 437 × 78 = 34 086. Avec cout_emballage = 5, on obtient 34 086 + 5 = 34 091.",
+  24:"Une remise se soustrait. On part du résultat précédent : 34 091 − 26 = 34 065.",
+  25:"Pour la voiture solaire : 145 × 6 = 870, puis 870 + 58 = 928.",
+  26:"Pour les boîtiers domotiques : 32 × 18 = 576, puis 576 + 24 = 600.",
+  27:"Pour les kits d’arrosage : 27 × 14 = 378, puis 378 + 33 = 411.",
+  28:"La logique reste la même : multiplier un prix par une quantité, puis ajouter un coût fixe. Seuls les noms des variables et les valeurs changent.",
+  29:"Oui : la température est assez élevée, la luminosité aussi, le sol est sec et le dernier arrosage est assez ancien.",
+  30:"La variable est humidite_sol : elle indique si la terre est sèche ou humide.",
+  31:"On arrose si les quatre conditions sont vraies en même temps : température élevée, luminosité élevée, sol sec et dernier arrosage assez ancien.",
+  32:"Non : si la terre est déjà très humide, la condition du sol sec n’est pas respectée, donc il ne faut pas arroser."
 };
 
 const pointsParQuestion = {
@@ -1540,7 +1547,6 @@ const pointsParQuestion = {
   7:2,8:2,
   9:2,10:2,11:2,
   12:2,13:2,
-  14:2,15:2,16:2,
   17:2,18:6,
   19:2,20:2,
   21:2,22:2,23:2,24:2,
