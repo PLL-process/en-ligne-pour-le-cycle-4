@@ -1,0 +1,196 @@
+name: Correction finale numérotation et alternatives WebPython
+
+on:
+  push:
+    paths:
+      - '.github/workflows/final-fix-numbering-webpython.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Corriger la page Vittascience
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html')
+          text = path.read_text(encoding='utf-8-sig')
+          original = text
+
+          # ------------------------------------------------------------
+          # 1. Supprimer l'ancien exercice « Blocs à remettre dans le bon ordre »
+          #    si jamais il est encore présent.
+          # ------------------------------------------------------------
+          old_ex6 = re.compile(
+              r'\n<section class="card">\s*\n<div class="exerciseHead"><h2>Exercice\s+6\s+–\s+Blocs à remettre dans le bon ordre</h2>.*?<!-- FIN_INTERFACE_VITTASCIENCE_EXO_6 -->\s*\n',
+              re.S
+          )
+          text, removed = old_ex6.subn('\n', text, count=1)
+
+          # ------------------------------------------------------------
+          # 2. Harmoniser les sous-numéros visibles des exercices restants.
+          #    Exemple : « Exercice 6 – VMC intelligente » doit contenir 6.1, 6.2, etc.
+          # ------------------------------------------------------------
+          section_pattern = re.compile(
+              r'(<section class="card">\s*\n<div class="exerciseHead"><h2>Exercice\s+(\d+)\s+–\s+.*?</h2>.*?</section>)',
+              re.S
+          )
+
+          corrected_titles = []
+
+          def renumber_section(match):
+              section = match.group(1)
+              exercise_number = match.group(2)
+
+              # Remplace les libellés visibles du type <strong>7.1</strong>
+              # sans toucher aux noms techniques des champs (q71, q72, etc.).
+              fixed = re.sub(
+                  r'(<strong>)\s*\d+\.(\d+)\s*(</strong>)',
+                  rf'\g<1>{exercise_number}.\2\g<3>',
+                  section
+              )
+
+              if fixed != section:
+                  title = re.search(r'<h2>(.*?)</h2>', section, re.S)
+                  corrected_titles.append(title.group(1) if title else f'Exercice {exercise_number}')
+              return fixed
+
+          text = section_pattern.sub(renumber_section, text)
+
+          # ------------------------------------------------------------
+          # 3. Corriger la réponse décimale Python visible dans l'exercice 1.
+          # ------------------------------------------------------------
+          text = text.replace('<input type="radio" name="q11" value="25.2">25,2</label>', '<input type="radio" name="q11" value="25.2">25.2</label>')
+          text = text.replace('La bonne réponse est 25,2', 'La bonne réponse est 25.2')
+
+          # ------------------------------------------------------------
+          # 4. Nettoyer les doublons éventuels de la section installation Python.
+          # ------------------------------------------------------------
+          install_re = re.compile(r'\n<section class="card">\s*<h2>Installer Python et les outils nécessaires</h2>.*?</section>', re.S)
+          matches = list(install_re.finditer(text))
+          if len(matches) > 1:
+              chunks = []
+              last = 0
+              for index, match in enumerate(matches):
+                  chunks.append(text[last:match.start()])
+                  if index == 0:
+                      chunks.append(match.group(0))
+                  last = match.end()
+              chunks.append(text[last:])
+              text = ''.join(chunks)
+
+          # ------------------------------------------------------------
+          # 5. Remplacer ou ajouter le paragraphe d'alternatives à PyCharm.
+          # ------------------------------------------------------------
+          alternatives = '''
+<div class="note" id="alternatives-pycharm-webpython">
+<strong>Alternatives à l’installation de PyCharm :</strong>
+si l’installation de PyCharm est impossible, si l’ordinateur manque d’espace, si le réseau bloque certains téléchargements, ou si l’élève travaille sur tablette, il peut utiliser une plateforme Python en ligne.
+<br>
+<a class="resource-link" href="https://www.cahier-indice.fr/1reG/" target="_blank" rel="noopener">Plateforme WebPython – cahier-indice.fr</a>
+<a class="resource-link" href="https://www.online-python.com/" target="_blank" rel="noopener">Online Python – éditeur Python en ligne</a>
+<p class="small">
+La plateforme <strong>WebPython</strong> est utilisée dans des contextes scolaires, notamment au lycée, et permet de tester rapidement du code Python depuis un navigateur. Elle est très pratique lorsque l’on ne peut pas installer de logiciel sur l’ordinateur. En revanche, elle ne permet pas toujours d’importer des modules externes. Pour les projets nécessitant des bibliothèques comme <span class="kbd">pygame</span>, <span class="kbd">matplotlib</span> ou d’autres modules, il faut privilégier <strong>PyCharm avec Python installé localement</strong>, ou utiliser une plateforme en ligne plus complète comme <strong>Online Python</strong> lorsque les modules nécessaires sont disponibles.</p>
+</div>
+'''
+
+          # Supprime d'anciens blocs éventuels d'alternatives pour éviter les répétitions.
+          text = re.sub(
+              r'\n<div class="note"[^>]*>\s*<strong>Alternatives? à l[’\']installation de PyCharm.*?</div>\s*',
+              '\n',
+              text,
+              flags=re.S
+          )
+
+          marker = '<h2>Installer Python et les outils nécessaires</h2>'
+          if marker in text:
+              text = text.replace(marker, marker + alternatives, 1)
+          else:
+              raise SystemExit('Section « Installer Python et les outils nécessaires » introuvable.')
+
+          # ------------------------------------------------------------
+          # 6. Ajouter la coloration syntaxique des blocs de code, sans doublon.
+          # ------------------------------------------------------------
+          css_link = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">'
+          if 'highlight.js/11.9.0/styles/github-dark.min.css' not in text:
+              text = text.replace('</head>', css_link + '\n</head>', 1)
+
+          highlighter = '''
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('pre').forEach(function(pre){
+    if(pre.querySelector('code')){ return; }
+    const source = pre.textContent;
+    const code = document.createElement('code');
+    code.textContent = source;
+    code.className = /Invoke-WebRequest|Set-ExecutionPolicy|PowerShell|wmic|Start-Process|pip install|python -m/i.test(source) ? 'language-powershell' : 'language-python';
+    pre.textContent = '';
+    pre.appendChild(code);
+  });
+  if(window.hljs){ hljs.highlightAll(); }
+});
+</script>
+'''
+          if 'hljs.highlightAll' not in text:
+              text = text.replace('</body>', highlighter + '\n</body>', 1)
+
+          path.write_text(text, encoding='utf-8')
+
+          print('Ancien exercice 6 supprimé :', bool(removed))
+          print('Sections renumérotées :', ', '.join(sorted(set(corrected_titles))) or 'aucune')
+          print('Taille avant/après :', len(original), len(text))
+
+      - name: Vérifications finales
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          text = Path('C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html').read_text(encoding='utf-8')
+
+          checks = {
+              'ancien_exercice_6_supprime': 'Exercice 6 – Blocs à remettre dans le bon ordre' not in text,
+              'alternatives_webpython_presentes': 'https://www.cahier-indice.fr/1reG/' in text and 'https://www.online-python.com/' in text,
+              'coloration_code_presente': 'hljs.highlightAll' in text,
+              'decimal_python_corrige': 'name="q11" value="25.2">25.2</label>' in text,
+              'vittascience_iframe_present': '<iframe' in text and 'fr.vittascience.com/python/' in text,
+          }
+
+          # Vérifie que dans chaque section Exercice N, les <strong>N.x</strong> visibles commencent par le bon N.
+          section_pattern = re.compile(r'<section class="card">\s*\n<div class="exerciseHead"><h2>Exercice\s+(\d+)\s+–\s+.*?</h2>.*?</section>', re.S)
+          numbering_ok = True
+          for m in section_pattern.finditer(text):
+              n = m.group(1)
+              section = m.group(0)
+              visible_numbers = re.findall(r'<strong>\s*(\d+)\.(\d+)\s*</strong>', section)
+              for major, minor in visible_numbers:
+                  if major != n:
+                      print(f'Incohérence : Exercice {n} contient {major}.{minor}')
+                      numbering_ok = False
+          checks['sous_numerotation_coherente'] = numbering_ok
+
+          for key, value in checks.items():
+              print(key, ':', 'OK' if value else 'A_VERIFIER')
+          if not all(checks.values()):
+              raise SystemExit('Des vérifications finales ont échoué.')
+
+      - name: Supprimer le workflow temporaire
+        run: rm .github/workflows/final-fix-numbering-webpython.yml
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html .github/workflows/final-fix-numbering-webpython.yml
+          git commit -m "Corrige numerotation et ajoute alternatives WebPython" || echo "Aucun changement à commiter"
+          git push
