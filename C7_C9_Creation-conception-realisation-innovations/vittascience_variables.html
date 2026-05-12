@@ -334,12 +334,19 @@ html, body{
     min-height:540px;
   }
 }
+
+/* ── Highlight.js overrides for dark theme integration ── */
+.hljs{background:#0d1117 !important;border-radius:0;padding:0;}
+pre code.hljs{display:block;padding:0;}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
 </head>
 <body>
 <div class="sticky"><div class="inner">
 <div class="timer" id="timer">⏱ Chrono indicatif : en attente</div><button type="button" class="toggleTopBar" onclick="basculerVoletHaut()">Masquer le volet</button>
-<div class="scoreLive">Barème total : 60 points → note ramenée sur 20<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div><div class="progress-text" id="progressText">Progression : 0 / 32 questions</div></div>
+<div class="scoreLive">Barème total : 62 points → note ramenée sur 20<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div><div class="progress-text" id="progressText">Progression : 0 / 29 questions</div></div>
 <div class="buttons">
 <button class="primary" onclick="corrigerTout()">Corriger / calculer la note</button>
 <button class="secondary" onclick="window.print()">Imprimer</button>
@@ -350,7 +357,7 @@ html, body{
 <section class="hero">
 <h1>Vittascience – Créer des variables, manipuler les types et programmer des systèmes</h1>
 <p class="lead">Chaque capture d’écran fait l’objet d’un questionnaire. Avant de répondre, l’élève doit expérimenter le programme correspondant dans l’interface Vittascience.</p>
-<div><span class="pill">Durée : 55 minutes</span><span class="pill">60 points</span><span class="pill">Note /20 automatique</span><span class="pill">Ressource vidéo incluse</span></div>
+<div><span class="pill">Durée : 55 minutes</span><span class="pill">62 points</span><span class="pill">Note /20 automatique</span><span class="pill">Ressource vidéo incluse</span></div>
 </section>
 
 
@@ -560,7 +567,7 @@ Les exercices notés de la première partie se font dans Vittascience. La partie
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 2 – QCM sur le même programme</h2><div class="badge">6 points</div></div>
 <div class="media"><img src="assets/capture-02-qcm.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 2.</div></div>
-<div class="question" data-qnum="4"><strong>2.1</strong> Quelle réponse doit être choisie ?<div class="options">
+<div class="question" data-qnum="4"><strong>2.1</strong> Observe la capture ci-dessus : dans ce QCM affiché par Vittascience, quelle est la bonne réponse à sélectionner ?<div class="options">
 <label class="option"><input type="radio" name="q21" value="9">9</label>
 <label class="option"><input type="radio" name="q21" value="26">26</label>
 <label class="option"><input type="radio" name="q21" value="19">19</label>
@@ -605,7 +612,7 @@ Les exercices notés de la première partie se font dans Vittascience. La partie
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 3 – Lecture d’une correction validée</h2><div class="badge">4 points</div></div>
 <div class="media"><img src="assets/capture-03-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 3.</div></div>
-<div class="question" data-qnum="7"><strong>3.1</strong> Quelle réponse est surlignée en vert ?<input type="number" id="q31"></div>
+<div class="question" data-qnum="7"><strong>3.1</strong> Dans la capture ci-dessus, quelle valeur numérique est surlignée en vert ? (Écris le nombre exact.)<input type="number" id="q31"></div>
 <div class="question" data-qnum="8"><strong>3.2</strong> Que confirme cette capture au sujet du programme ?<textarea id="q32"></textarea></div>
 </section>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_3 -->
@@ -642,7 +649,7 @@ Les exercices notés de la première partie se font dans Vittascience. La partie
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 4 – Attention aux guillemets</h2><div class="badge">6 points</div></div>
 <div class="media"><img src="assets/capture-04-guillemets.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 4.</div></div>
-<div class="question" data-qnum="9"><strong>4.1</strong> Quelle réponse doit être choisie ?<div class="options">
+<div class="question" data-qnum="9"><strong>4.1</strong> Observe la capture ci-dessus : dans ce QCM, quelle est la bonne réponse à sélectionner ?<div class="options">
 <label class="option"><input type="radio" name="q41" value="10">10</label>
 <label class="option"><input type="radio" name="q41" value="5">5</label>
 <label class="option"><input type="radio" name="q41" value="13">13</label>
@@ -684,7 +691,7 @@ Les exercices notés de la première partie se font dans Vittascience. La partie
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 5 – Correction sur les guillemets</h2><div class="badge">4 points</div></div>
 <div class="media"><img src="assets/capture-05-guillemets-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 5.</div></div>
-<div class="question" data-qnum="12"><strong>5.1</strong> Quelle réponse a été validée ?<input type="text" id="q51"></div>
+<div class="question" data-qnum="12"><strong>5.1</strong> Dans la capture ci-dessus, quelle valeur est indiquée comme validée (surlignée en vert) ? Écris la valeur exacte telle qu'elle apparaît.<input type="text" id="q51"></div>
 <div class="question" data-qnum="13"><strong>5.2</strong> Que rappelle le message vert ?<textarea id="q52"></textarea></div>
 </section>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_5 -->
@@ -720,13 +727,13 @@ Les exercices notés de la première partie se font dans Vittascience. La partie
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 6 – VMC intelligente</h2><div class="badge">8 points</div></div>
-<div class="media"><img src="assets/capture-08-vmc.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 7.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre>a = x * 2 + 1
-b = x * a - 3</pre></div>
-<div class="question" data-qnum="17"><strong>7.1</strong> Quelle lecture correcte du programme faut-il retenir ?<div class="options">
+<div class="media"><img src="assets/capture-08-vmc.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 6.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre><code class="language-python">a = x * 2 + 1
+b = x * a - 3</code></pre></div>
+<div class="question" data-qnum="17"><strong>6.1</strong> Quelle lecture correcte du programme faut-il retenir ?<div class="options">
 <label class="option"><input type="radio" name="q71" value="A">a = x × 2 + 1 ; b = x × a − 3</label>
 <label class="option"><input type="radio" name="q71" value="B">a = x + 2 + 1 ; b = x + a − 3</label>
 <label class="option"><input type="radio" name="q71" value="C">a = 2 + x ; b = a − 3</label></div></div>
-<div class="question" data-qnum="18"><strong>7.2</strong> Compléter le tableau pour x = 2 ; 5 ; 8 ; 12
+<div class="question" data-qnum="18"><strong>6.2</strong> Compléter le tableau pour x = 2 ; 5 ; 8 ; 12
 <table><thead><tr><th>Entrée x</th><th>2</th><th>5</th><th>8</th><th>12</th></tr></thead><tbody>
 <tr><th>Sortie a</th><td><input type="number" id="q72a"></td><td><input type="number" id="q72b"></td><td><input type="number" id="q72c"></td><td><input type="number" id="q72d"></td></tr>
 <tr><th>Sortie b</th><td><input type="number" id="q73a"></td><td><input type="number" id="q73b"></td><td><input type="number" id="q73c"></td><td><input type="number" id="q73d"></td></tr>
@@ -765,9 +772,9 @@ b = x * a - 3</pre></div>
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 7 – Analyse d’une correction de la VMC</h2><div class="badge">4 points</div></div>
-<div class="media"><img src="assets/capture-09-vmc-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 8.</div></div>
-<div class="question" data-qnum="19"><strong>8.1</strong> Quelle valeur de b correspond à x = 20 ?<input type="number" id="q81"></div>
-<div class="question" data-qnum="20"><strong>8.2</strong> Pourquoi faut-il calculer a avant b ?<textarea id="q82"></textarea></div>
+<div class="media"><img src="assets/capture-09-vmc-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 7.</div></div>
+<div class="question" data-qnum="19"><strong>7.1</strong> Quelle valeur de b correspond à x = 20 ?<input type="number" id="q81"></div>
+<div class="question" data-qnum="20"><strong>7.2</strong> Pourquoi faut-il calculer a avant b ?<textarea id="q82"></textarea></div>
 </section>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_8 -->
 <div class="vitta-choice" id="interface-vittascience-exo-8">
@@ -802,17 +809,17 @@ b = x * a - 3</pre></div>
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 8 – Devis automatisé</h2><div class="badge">8 points</div></div>
-<div class="media"><img src="assets/capture-10-devis.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 9.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre>prix_matiere = 437
+<div class="media"><img src="assets/capture-10-devis.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 8.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre><code class="language-python">prix_matiere = 437
 quantite = 78
 cout_emballage = 139
 cout_total = prix_matiere * quantite + cout_emballage
-print(cout_total)</pre></div>
-<div class="question" data-qnum="21"><strong>9.1</strong> Dans ce type d’exercice, nomme au moins deux variables utiles.<textarea id="q91"></textarea></div>
-<div class="question" data-qnum="22"><strong>9.2</strong> Coût total initial pour :<pre>prix_matiere = 437
+print(cout_total)</code></pre></div>
+<div class="question" data-qnum="21"><strong>8.1</strong> Dans ce type d’exercice, nomme au moins deux variables utiles.<textarea id="q91"></textarea></div>
+<div class="question" data-qnum="22"><strong>8.2</strong> En utilisant la formule du programme (<span class="kbd">cout_total = prix_matiere × quantite + cout_emballage</span>), calcule le coût total affiché pour ces valeurs initiales :<pre><code class="language-python">prix_matiere = 437
 quantite = 78
-cout_emballage = 139</pre><input type="number" id="q92"></div>
-<div class="question" data-qnum="23"><strong>9.3</strong> Si cout_emballage = 5, quel devient le coût total ?<input type="number" id="q93"></div>
-<div class="question" data-qnum="24"><strong>9.4</strong> Si on ajoute remise = 26, quel est le coût total final ?<input type="number" id="q94"></div>
+cout_emballage = 139</code></pre><input type="number" id="q92"></div>
+<div class="question" data-qnum="23"><strong>8.3</strong> Si cout_emballage = 5, quel devient le coût total ?<input type="number" id="q93"></div>
+<div class="question" data-qnum="24"><strong>8.4</strong> Si on ajoute remise = 26, quel est le coût total final ?<input type="number" id="q94"></div>
 </section>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_9 -->
 <div class="vitta-choice" id="interface-vittascience-exo-9">
@@ -847,16 +854,21 @@ cout_emballage = 139</pre><input type="number" id="q92"></div>
 
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 9 – Trois situations similaires</h2><div class="badge">8 points</div></div>
-<div class="question" data-qnum="25"><strong>10.1</strong> Maquette de voiture solaire :<pre>prix_panneau = 145
+<div class="note">
+  <strong>À faire pour chaque situation :</strong> reproduis le programme dans Vittascience en ajoutant la ligne de calcul
+  <span class="kbd">cout_total = prix × quantite + cout_fixe</span> (avec les noms de variables du code), puis entre le résultat affiché dans la console.
+  <br>La formule est la même que dans l'exercice 8 — seuls les noms des variables et les valeurs changent.
+</div>
+<div class="question" data-qnum="25"><strong>9.1</strong> Maquette de voiture solaire – Ajoute la ligne <span class="kbd">cout_total = prix_panneau * quantite + cout_assemblage</span>, exécute dans Vittascience et entre le coût total affiché :<pre><code class="language-python">prix_panneau = 145
 quantite = 6
-cout_assemblage = 58</pre><input type="number" id="q101"></div>
-<div class="question" data-qnum="26"><strong>10.2</strong> Boîtiers domotiques :<pre>prix_boitiers = 32
+cout_assemblage = 58</code></pre><input type="number" id="q101"></div>
+<div class="question" data-qnum="26"><strong>9.2</strong> Boîtiers domotiques – Ajoute la ligne <span class="kbd">cout_total = prix_boitiers * quantite + cout_transport</span>, exécute dans Vittascience et entre le coût total affiché :<pre><code class="language-python">prix_boitiers = 32
 quantite = 18
-cout_transport = 24</pre><input type="number" id="q102"></div>
-<div class="question" data-qnum="27"><strong>10.3</strong> Kits d’arrosage connectés :<pre>prix_kit = 27
+cout_transport = 24</code></pre><input type="number" id="q102"></div>
+<div class="question" data-qnum="27"><strong>9.3</strong> Kits d’arrosage connectés – Ajoute la ligne <span class="kbd">cout_total = prix_kit * quantite + cout_capteur</span>, exécute dans Vittascience et entre le coût total affiché :<pre><code class="language-python">prix_kit = 27
 quantite = 14
-cout_capteur = 33</pre><input type="number" id="q103"></div>
-<div class="question" data-qnum="28"><strong>10.4</strong> Dans ces trois cas, qu’est-ce qui change : la logique du programme, ou seulement les noms des variables et les valeurs ?<textarea id="q104"></textarea></div>
+cout_capteur = 33</code></pre><input type="number" id="q103"></div>
+<div class="question" data-qnum="28"><strong>9.4</strong> Dans ces trois cas, qu’est-ce qui change : la logique du programme, ou seulement les noms des variables et les valeurs ?<textarea id="q104"></textarea></div>
 </section>
 <!-- DEBUT_INTERFACE_VITTASCIENCE_EXO_10 -->
 <div class="vitta-choice" id="interface-vittascience-exo-10">
@@ -892,7 +904,6 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
 <section class="card">
 <div class="exerciseHead"><h2>Exercice 11 – Version interactive : arrosage automatique</h2><div class="badge">8 points</div></div>
 <p>On arrose seulement si les quatre conditions suivantes sont vraies : température &gt; 25 ; luminosité &gt; 60 ; humidité du sol &lt; 40 ; temps &gt; 12.</p>
-<div class="question" data-qnum="29">
 <div class="media">
 <label>🌡 Température <input type="range" id="tempRange" min="0" max="45" value="30" oninput="updateIrrigation()"></label>
 <div class="small">Valeur : <span id="tempVal">30</span> °C</div>
@@ -905,18 +916,18 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
 </div>
 <div class="media">
 <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;"><div id="waterLed" style="width:34px;height:34px;border-radius:50%;background:#666;border:2px solid rgba(255,255,255,.25)"></div><div><strong>Décision :</strong> <span id="waterDecision">Arroser</span><div class="small" id="waterReason">Les conditions sont réunies.</div></div></div>
-<pre id="waterCode"></pre><button type="button" class="secondary" onclick="resetIrrigation()">Réinitialiser les valeurs par défaut</button>
-</div></div>
-<div class="question" data-qnum="30"><strong>11.1</strong> Avec les valeurs au chargement, faut-il arroser ?<div class="options">
+<pre style="padding:0;border:none;background:transparent;"><code id="waterCode" class="language-python"></code></pre><button type="button" class="secondary" onclick="resetIrrigation()">Réinitialiser les valeurs par défaut</button>
+</div>
+<div class="question" data-qnum="29"><strong>11.1</strong> Avec les valeurs au chargement, faut-il arroser ?<div class="options">
 <label class="option"><input type="radio" name="q111" value="oui">Oui</label>
 <label class="option"><input type="radio" name="q111" value="non">Non</label></div></div>
-<div class="question" data-qnum="31"><strong>11.2</strong> Quelle variable traduit l’état de la terre ?<div class="options">
+<div class="question" data-qnum="30"><strong>11.2</strong> Quelle variable traduit l’état de la terre ?<div class="options">
 <label class="option"><input type="radio" name="q112" value="temperature">temperature</label>
 <label class="option"><input type="radio" name="q112" value="luminosite">luminosite</label>
 <label class="option"><input type="radio" name="q112" value="humidite_sol">humidite_sol</label>
 <label class="option"><input type="radio" name="q112" value="temps">temps</label></div></div>
-<div class="question" data-qnum="32"><strong>11.3</strong> Explique quand le système doit arroser.<textarea id="q113"></textarea></div>
-<div class="question" data-qnum="33"><strong>11.4</strong> Si la terre est déjà très humide, faut-il arroser ?<div class="options">
+<div class="question" data-qnum="31"><strong>11.3</strong> Explique quand le système doit arroser.<textarea id="q113"></textarea></div>
+<div class="question" data-qnum="32"><strong>11.4</strong> Si la terre est déjà très humide, faut-il arroser ?<div class="options">
 <label class="option"><input type="radio" name="q114" value="oui">Oui</label>
 <label class="option"><input type="radio" name="q114" value="non">Non</label></div></div>
 </section>
@@ -980,99 +991,24 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
   </div>
 
   <h3>1. Installer Python</h3>
-"
 <div class='media'>
-  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <img src='assets/install-manager-python-01.png' alt='Installer Python – étape 1'>
   <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
 </div>
 <div class='media'>
-  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <img src='assets/install-manager-python-02.png' alt='Installer Python – étape 2'>
   <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
 </div>
 <div class='media'>
-  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
-  <div class='caption'>Figure 3 : lancer l'installation.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
-  <div class='caption'>Figure 4 : progression de l'installation.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
-  <div class='caption'>Figure 5 : installation terminée.</div>
-</div>
-<div class='note'>
-  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
-</div>
-"
-"
-<div class='media'>
-  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
-  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
-  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
-  <div class='caption'>Figure 3 : lancer l'installation.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
-  <div class='caption'>Figure 4 : progression de l'installation.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
-  <div class='caption'>Figure 5 : installation terminée.</div>
-</div>
-<div class='note'>
-  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
-</div>
-"
-"
-<div class='media'>
-  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
-  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
-  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
-  <div class='caption'>Figure 3 : lancer l'installation.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
-  <div class='caption'>Figure 4 : progression de l'installation.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
-  <div class='caption'>Figure 5 : installation terminée.</div>
-</div>
-<div class='note'>
-  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
-</div>
-"
-<div class='media'>
-  <img src='assets/python-step1.png' alt='Installer Python – étape 1'>
-  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step2.png' alt='Installer Python – étape 2'>
-  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
-</div>
-<div class='media'>
-  <img src='assets/python-step3.png' alt='Installer Python – étape 3'>
+  <img src='assets/install-manager-python-03.png' alt='Installer Python – étape 3'>
   <div class='caption'>Figure 3 : lancer l’installation.</div>
 </div>
 <div class='media'>
-  <img src='assets/python-step4.png' alt='Installer Python – étape 4'>
+  <img src='assets/install-manager-python-04.png' alt='Installer Python – étape 4'>
   <div class='caption'>Figure 4 : installation en cours.</div>
 </div>
 <div class='media'>
-  <img src='assets/python-step5.png' alt='Installer Python – étape 5'>
+  <img src='assets/install-manager-python-05.png' alt='Installer Python – étape 5'>
   <div class='caption'>Figure 5 : installation terminée.</div>
 </div>
 <div class='note'>
@@ -1099,6 +1035,17 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
     </a>
   </p>
 
+  <div class="note" style="border-left:5px solid var(--warn);background:rgba(255,209,102,.07);margin:16px 0;">
+    <strong>⚠️ Alternatives à l’installation de PyCharm</strong>
+    <p>Si l’installation de PyCharm est impossible — manque d’espace disque, réseau qui bloque certains téléchargements, ou travail sur tablette — il est possible d’utiliser une plateforme Python en ligne.</p>
+    <p><strong>WebPython</strong> est utilisée dans des contextes scolaires, notamment au lycée. Elle permet de tester rapidement du code Python depuis un navigateur, sans aucune installation. C’est une solution pratique lorsqu’on ne peut pas installer de logiciel sur l’ordinateur. En revanche, elle ne permet pas toujours d’importer des modules externes.</p>
+    <p>Pour les projets nécessitant des bibliothèques comme <span class="kbd">pygame</span>, <span class="kbd">matplotlib</span>, <span class="kbd">turtle</span> ou d’autres modules, il faut privilégier PyCharm avec Python installé localement, ou utiliser une plateforme en ligne plus complète comme <strong>Online Python</strong> lorsque les modules nécessaires y sont disponibles.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+      <a class="resource-link" href="https://webpython.codepoint.net/" target="_blank" rel="noopener">Ouvrir WebPython</a>
+      <a class="resource-link" href="https://www.online-python.com/" target="_blank" rel="noopener">Ouvrir Online Python</a>
+    </div>
+  </div>
+
   <h3>3. Installer une bibliothèque si elle manque</h3>
   <div class="note">
     <strong>Important :</strong>
@@ -1112,9 +1059,8 @@ cout_capteur = 33</pre><input type="number" id="q103"></div>
     <strong>Exécuter en tant qu’administrateur</strong>.
   </p>
 
-  <h3>Installer une bibliothèque si elle manque</h3>
   <p><strong>Dans PowerShell (de préférence en administrateur si nécessaire) :</strong></p>
-  <pre>
+  <pre><code class="language-python">
 # Vérifie que Python est disponible.
 python --version
 
@@ -1124,7 +1070,7 @@ python -m pip install matplotlib
 # turtle est généralement inclus avec Python.
 # Si besoin, on peut essayer :
 python -m pip install PythonTurtle
-  </pre>
+  </code></pre>
 
   <p>
     <strong>Dans PyCharm :</strong> ouvrir le projet, puis aller dans
@@ -1198,7 +1144,7 @@ Pour ouvrir rapidement PowerShell ou Terminal en administrateur, appuyer sur <sp
 Après l’installation, ouvrir une nouvelle fenêtre PowerShell, puis tester les commandes suivantes.
 </p>
 
-<pre># Vérifie que Python est disponible.
+<pre><code class="language-python"># Vérifie que Python est disponible.
 python --version
 
 # Autre commande possible sous Windows.
@@ -1208,7 +1154,7 @@ py --version
 python -m pip --version
 
 # Met pip à jour si nécessaire.
-python -m pip install --upgrade pip</pre>
+python -m pip install --upgrade pip</code></pre>
 
 <h3>4. Installer une bibliothèque Python avec PowerShell</h3>
 
@@ -1216,11 +1162,11 @@ python -m pip install --upgrade pip</pre>
 Une bibliothèque ajoute des possibilités à Python. Par exemple, <span class="kbd">matplotlib</span> permet de tracer des graphiques.
 </p>
 
-<pre># Installe matplotlib pour tracer des graphiques.
+<pre><code class="language-python"># Installe matplotlib pour tracer des graphiques.
 python -m pip install matplotlib
 
 # Si la commande python ne fonctionne pas, essayer avec py.
-py -m pip install matplotlib</pre>
+py -m pip install matplotlib</code></pre>
 
 <h3>5. Installer une bibliothèque dans PyCharm</h3>
 
@@ -1248,14 +1194,14 @@ Dans PyCharm, on peut aussi installer une bibliothèque directement depuis les p
 <p>Ces exercices sont progressifs. Les élèves entrent eux-mêmes les valeurs pour créer leurs variables.</p>
 
 <h3>Bonus 1 – Présentation avec une chaîne</h3>
-<pre># On demande le prénom de l'élève.
+<pre><code class="language-python"># On demande le prénom de l'élève.
 prenom = input("Entre ton prénom : ")
 
 # On affiche une phrase personnalisée.
-print("Bonjour", prenom)</pre>
+print("Bonjour", prenom)</code></pre>
 
 <h3>Bonus 2 – Addition de deux entiers</h3>
-<pre># On demande un premier entier.
+<pre><code class="language-python"># On demande un premier entier.
 a = int(input("Entre un premier entier : "))
 
 # On demande un deuxième entier.
@@ -1265,10 +1211,10 @@ b = int(input("Entre un deuxième entier : "))
 somme = a + b
 
 # On affiche le résultat.
-print("La somme est :", somme)</pre>
+print("La somme est :", somme)</code></pre>
 
 <h3>Bonus 3 – Prix total avec un nombre décimal</h3>
-<pre># On demande le prix d'un objet.
+<pre><code class="language-python"># On demande le prix d'un objet.
 prix = float(input("Prix d'un objet en euros : "))
 
 # On demande la quantité.
@@ -1278,10 +1224,10 @@ quantite = int(input("Quantité achetée : "))
 total = prix * quantite
 
 # On affiche le total.
-print("Le prix total est :", total, "euros")</pre>
+print("Le prix total est :", total, "euros")</code></pre>
 
 <h3>Bonus 4 – Kilomètres vers miles</h3>
-<pre># On demande une distance en kilomètres.
+<pre><code class="language-python"># On demande une distance en kilomètres.
 kilometres = float(input("Distance en kilomètres : "))
 
 # On définit le facteur de conversion.
@@ -1291,20 +1237,20 @@ facteur = 0.621371
 miles = kilometres * facteur
 
 # On affiche le résultat.
-print(kilometres, "km =", miles, "miles")</pre>
+print(kilometres, "km =", miles, "miles")</code></pre>
 
 <h3>Bonus 5 – Celsius vers Fahrenheit</h3>
-<pre># On demande une température en degrés Celsius.
+<pre><code class="language-python"># On demande une température en degrés Celsius.
 celsius = float(input("Température en °C : "))
 
 # On convertit en degrés Fahrenheit.
 fahrenheit = celsius * 9 / 5 + 32
 
 # On affiche le résultat.
-print(celsius, "°C =", fahrenheit, "°F")</pre>
+print(celsius, "°C =", fahrenheit, "°F")</code></pre>
 
 <h3>Bonus 6 – Aire d’un triangle</h3>
-<pre># On demande la base du triangle.
+<pre><code class="language-python"># On demande la base du triangle.
 base = float(input("Longueur de la base : "))
 
 # On demande la hauteur du triangle.
@@ -1314,20 +1260,20 @@ hauteur = float(input("Hauteur du triangle : "))
 aire = base * hauteur / 2
 
 # On affiche le résultat.
-print("L'aire du triangle est :", aire)</pre>
+print("L'aire du triangle est :", aire)</code></pre>
 
 <h3>Bonus 7 – Répéter un message</h3>
-<pre># On demande un mot.
+<pre><code class="language-python"># On demande un mot.
 mot = input("Entre un mot : ")
 
 # On demande un nombre de répétitions.
 nombre = int(input("Combien de fois faut-il l'afficher ? "))
 
 # On répète le mot.
-print(mot * nombre)</pre>
+print(mot * nombre)</code></pre>
 
 <h3>Bonus 8 – PyCharm : carré avec turtle</h3>
-<pre># On importe la bibliothèque turtle.
+<pre><code class="language-python"># On importe la bibliothèque turtle.
 import turtle
 
 # On crée une tortue.
@@ -1345,10 +1291,10 @@ for i in range(4):
     stylo.right(90)
 
 # On garde la fenêtre ouverte.
-turtle.done()</pre>
+turtle.done()</code></pre>
 
 <h3>Bonus 9 – PyCharm : triangle coloré</h3>
-<pre># On importe la bibliothèque turtle.
+<pre><code class="language-python"># On importe la bibliothèque turtle.
 import turtle
 
 # On crée une tortue.
@@ -1369,10 +1315,10 @@ for i in range(3):
     stylo.left(120)
 
 # On garde la fenêtre ouverte.
-turtle.done()</pre>
+turtle.done()</code></pre>
 
 <h3>Bonus 10 – PyCharm : spirale simple</h3>
-<pre># On importe la bibliothèque turtle.
+<pre><code class="language-python"># On importe la bibliothèque turtle.
 import turtle
 
 # On crée une tortue.
@@ -1390,15 +1336,16 @@ for i in range(segments):
     stylo.right(90)
 
 # On garde la fenêtre ouverte.
-turtle.done()</pre>
+turtle.done()</code></pre>
 </section>
 
-<section class="card"><h2>Résultat final</h2><div id="resultat" class="result"></div><p class="small">Calcul sur 60 points, puis conversion automatique sur 20.</p></section>
+<section class="card"><h2>Résultat final</h2><div id="resultat" class="result"></div><p class="small">Calcul sur 62 points, puis conversion automatique sur 20.</p></section>
 <div class="footer">Document HTML interactif pour les élèves de cycle 4.</div>
 </div>
 
 <script>
 const DUREE = 55*60;
+const TOTAL_POINTS = 62;
 let remaining = DUREE;
 let timerInt = null;
 function fmt(sec){ const m=String(Math.floor(sec/60)).padStart(2,'0'); const s=String(sec%60).padStart(2,'0'); return m+':'+s; }
@@ -1414,7 +1361,7 @@ function updateIrrigation(){
   const on=(t>25 && l>60 && h<40 && tm>12), led=document.getElementById('waterLed');
   document.getElementById('waterDecision').textContent=on?'Arroser':'Ne pas arroser'; document.getElementById('waterReason').textContent=on?'Les conditions sont réunies.':'Au moins une condition n’est pas remplie.';
   led.style.background=on?'#39d6a1':'#666'; led.style.boxShadow=on?'0 0 18px rgba(57,214,161,.8)':'none';
-  document.getElementById('waterCode').textContent=`temperature = ${t}
+  const wcEl=document.getElementById('waterCode'); wcEl.textContent=`temperature = ${t}
 luminosite = ${l}
 humidite_sol = ${h}
 temps = ${tm}
@@ -1425,6 +1372,7 @@ else:
     arroser = 0
 
 print(arroser)`;
+  if(typeof hljs !== 'undefined') hljs.highlightElement(wcEl);
 }
 window.addEventListener('load', function(){ startTimer(); updateIrrigation(); });
 
@@ -1453,12 +1401,8 @@ function corrigerTout(finTemps){
   const q52=norm(document.getElementById('q52').value); const q52ok=(q52.includes('guillemet') || q52.includes('chaine') || q52.includes('caractere')) && q52.includes('variable');
   score += addIf(q52ok,2); if(!q52ok) erreurs.push('Ex.5.2 : le message rappelle que y n’est plus une variable mais une chaîne');
 
-  score += addIf(readRadio('q61')==='A',2); if(readRadio('q61')!=='A') erreurs.push('Ex.6.1 : l’ordre correct est A');
-  const q62=norm(document.getElementById('q62').value); const q62ok=q62.includes('deux') || q62.includes('2') || q62.includes('success');
-  score += addIf(q62ok,2); if(!q62ok) erreurs.push('Ex.6.2 : il faut afficher deux fois pour voir deux valeurs successives');
-  score += addIf(readRadio('q63')==='non',2); if(readRadio('q63')!=='non') erreurs.push('Ex.6.3 : une variable texte n’est pas forcément numérique');
-
-  score += addIf(readRadio('q71')==='A',2); if(readRadio('q71')!=='A') erreurs.push('Ex.7.1 : la lecture correcte est A');
+  /* Ex.6 – VMC intelligente */
+  score += addIf(readRadio('q71')==='A',2); if(readRadio('q71')!=='A') erreurs.push('Ex.6.1 : la lecture correcte est A');
   const expected = {q72a:5,q72b:11,q72c:17,q72d:25,q73a:7,q73b:52,q73c:133,q73d:297};
   Object.keys(expected).forEach(function(id){
     const ok=eqNum(document.getElementById(id).value, expected[id]);
@@ -1466,21 +1410,21 @@ function corrigerTout(finTemps){
     if(!ok) erreurs.push(id + ' : réponse attendue ' + expected[id]);
   });
 
-  score += addIf(eqNum(document.getElementById('q81').value,817),2); if(!eqNum(document.getElementById('q81').value,817)) erreurs.push('Ex.8.1 : pour x = 20, b = 817');
+  score += addIf(eqNum(document.getElementById('q81').value,817),2); if(!eqNum(document.getElementById('q81').value,817)) erreurs.push('Ex.7.1 : pour x = 20, b = 817');
   const q82=norm(document.getElementById('q82').value); const q82ok=q82.includes('a') && q82.includes('b') && (q82.includes('avant') || q82.includes('ordre') || q82.includes('depend'));
-  score += addIf(q82ok,2); if(!q82ok) erreurs.push('Ex.8.2 : b dépend de a, donc on calcule a avant b');
+  score += addIf(q82ok,2); if(!q82ok) erreurs.push('Ex.7.2 : b dépend de a, donc on calcule a avant b');
 
   const q91=norm(document.getElementById('q91').value); const q91ok=(q91.includes('prix') || q91.includes('quantite') || q91.includes('emballage') || q91.includes('remise'));
-  score += addIf(q91ok,2); if(!q91ok) erreurs.push('Ex.9.1 : citer au moins deux variables utiles');
-  score += addIf(eqNum(document.getElementById('q92').value,34225),2); if(!eqNum(document.getElementById('q92').value,34225)) erreurs.push('Ex.9.2 : 34225');
-  score += addIf(eqNum(document.getElementById('q93').value,34091),2); if(!eqNum(document.getElementById('q93').value,34091)) erreurs.push('Ex.9.3 : 34091');
-  score += addIf(eqNum(document.getElementById('q94').value,34065),2); if(!eqNum(document.getElementById('q94').value,34065)) erreurs.push('Ex.9.4 : 34065');
+  score += addIf(q91ok,2); if(!q91ok) erreurs.push('Ex.8.1 : citer au moins deux variables utiles');
+  score += addIf(eqNum(document.getElementById('q92').value,34225),2); if(!eqNum(document.getElementById('q92').value,34225)) erreurs.push('Ex.8.2 : 34225');
+  score += addIf(eqNum(document.getElementById('q93').value,34091),2); if(!eqNum(document.getElementById('q93').value,34091)) erreurs.push('Ex.8.3 : 34091');
+  score += addIf(eqNum(document.getElementById('q94').value,34065),2); if(!eqNum(document.getElementById('q94').value,34065)) erreurs.push('Ex.8.4 : 34065');
 
-  score += addIf(eqNum(document.getElementById('q101').value,928),2); if(!eqNum(document.getElementById('q101').value,928)) erreurs.push('Ex.10.1 : 928');
-  score += addIf(eqNum(document.getElementById('q102').value,600),2); if(!eqNum(document.getElementById('q102').value,600)) erreurs.push('Ex.10.2 : 600');
-  score += addIf(eqNum(document.getElementById('q103').value,411),2); if(!eqNum(document.getElementById('q103').value,411)) erreurs.push('Ex.10.3 : 411');
+  score += addIf(eqNum(document.getElementById('q101').value,928),2); if(!eqNum(document.getElementById('q101').value,928)) erreurs.push('Ex.9.1 : 928');
+  score += addIf(eqNum(document.getElementById('q102').value,600),2); if(!eqNum(document.getElementById('q102').value,600)) erreurs.push('Ex.9.2 : 600');
+  score += addIf(eqNum(document.getElementById('q103').value,411),2); if(!eqNum(document.getElementById('q103').value,411)) erreurs.push('Ex.9.3 : 411');
   const q104=norm(document.getElementById('q104').value); const q104ok=(q104.includes('meme') || q104.includes('logique') || q104.includes('seulement')) && (q104.includes('variable') || q104.includes('valeur'));
-  score += addIf(q104ok,2); if(!q104ok) erreurs.push('Ex.10.4 : la logique reste la même ; changent surtout les noms des variables et les valeurs');
+  score += addIf(q104ok,2); if(!q104ok) erreurs.push('Ex.9.4 : la logique reste la même ; changent surtout les noms des variables et les valeurs');
 
   score += addIf(readRadio('q111')==='oui',2); if(readRadio('q111')!=='oui') erreurs.push('Ex.11.1 : avec les valeurs par défaut, il faut arroser');
   score += addIf(readRadio('q112')==='humidite_sol',2); if(readRadio('q112')!=='humidite_sol') erreurs.push('Ex.11.2 : la variable est humidite_sol');
@@ -1491,14 +1435,14 @@ function corrigerTout(finTemps){
   
   const penaliteCorrection = pointsCorrectionRevelee();
   score = Math.max(0, score - penaliteCorrection);
-  const note=(score/60)*20;
+  const note=(score/TOTAL_POINTS)*20;
 
   let app='À renforcer';
   if(note>=16) app='Très bon travail'; else if(note>=12) app='Travail satisfaisant'; else if(note>=8) app='Bases présentes, mais à consolider';
   const nom=document.getElementById('nomEleve').value.trim();
   const box=document.getElementById('resultat');
   box.className='result show '+(note>=10?'ok':'warn');
-  box.innerHTML='<p><strong>'+(nom||'Élève')+'</strong> : '+score.toFixed(2).replace('.',',')+' / 60, soit <strong>'+note.toFixed(1).replace('.',',')+' / 20</strong>.</p>'
+  box.innerHTML='<p><strong>'+(nom||'Élève')+'</strong> : '+score.toFixed(2).replace('.',',')+' / '+TOTAL_POINTS+', soit <strong>'+note.toFixed(1).replace('.',',')+' / 20</strong>.</p>'
     + '<p><strong>Appréciation :</strong> '+app+'</p>' + (penaliteCorrection>0?'<p class="penalty-note">Points retirés car correction affichée : '+penaliteCorrection+' point(s).</p>':'')
     + (finTemps?'<p><strong>Le temps est écoulé.</strong> La correction a été déclenchée automatiquement.</p>':'')
     + (erreurs.length?'<details><summary>Réponses à retravailler</summary><ul><li>'+erreurs.join('</li><li>')+'</li></ul></details>':'<p>Bravo, tout est correct.</p>');
@@ -2045,15 +1989,15 @@ function corrigerQuizVideo(){
 </script>
 
 
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('pre code').forEach(function(el){
+    if(el.id !== 'waterCode') hljs.highlightElement(el);
+  });
+  // Also highlight waterCode on first load
+  const wc = document.getElementById('waterCode');
+  if(wc && wc.textContent.trim()) hljs.highlightElement(wc);
+});
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
