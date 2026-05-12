@@ -14,7 +14,7 @@
 .timer.warn{background:var(--warn);color:#111;border-color:transparent}.timer.danger{background:var(--danger);color:#fff;border-color:transparent}
 .hero,.card{background:rgba(24,29,38,.96);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow)}
 .hero{padding:26px;margin-bottom:20px}.card{padding:22px;margin-bottom:18px}
-h1,h2{margin-top:0;line-height:1.2} h1{font-size:clamp(2rem,4vw,3rem)} h2{font-size:clamp(1.35rem,2.3vw,1.9rem);color:var(--accent);border-left:6px solid var(--accent);padding-left:14px}
+h1,h2{margin-top:0;line-height:1.2} h1{font-size:clamp(2rem,4vw,3rem)} h2{font-size:clamp(1.35rem,2.3vw,1.9rem);color:var(--accent);border-left:6px solid var(--accent);padding-left:14px} h3{color:var(--text);margin-bottom:8px} h4{color:var(--muted);margin:18px 0 8px}
 p,li,label{color:var(--muted)} .lead{color:var(--text);font-size:1.08rem}
 .pill{display:inline-block;padding:8px 12px;border-radius:999px;margin:4px 6px 4px 0;background:rgba(94,168,255,.12);border:1px solid rgba(94,168,255,.25)}
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.metaBox{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;padding:14px}
@@ -42,6 +42,7 @@ iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:14px}.footer{text-
 }
 .code-transcrit{border-left:5px solid var(--accent);background:#0d1117;padding:14px;border-radius:0 14px 14px 0;margin:12px 0;}
 .resource-link{display:inline-block;margin:8px 8px 0 0;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#7df0c8);color:#081018;font-weight:700;text-decoration:none;}
+.resource-link.prefill-link{background:linear-gradient(90deg,var(--warn),#ffe9a6);color:#14110a;}
 .extra{border-left:5px solid var(--warn);}
 
 
@@ -802,6 +803,10 @@ b = x * a - 3</code></pre></div>
     <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
       Ouvrir directement Vittascience
     </a>
+    <!-- Lien pré-rempli optionnel : créer un lien de partage Vittascience, remplacer href, puis enlever hidden. Ne pas utiliser localId. -->
+    <a class="resource-link prefill-link" href="https://fr.vittascience.com/python/?link=IDENTIFIANT_DU_PROJET_PARTAGE_EXO_7" target="_blank" rel="noopener" hidden>
+      Ouvrir avec le code pré-rempli
+    </a>
   </div>
 
   <iframe
@@ -846,6 +851,10 @@ cout_emballage = 139</code></pre><input type="number" id="q92"></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
       Ouvrir directement Vittascience
+    </a>
+    <!-- Lien pré-rempli optionnel : créer un lien de partage Vittascience, remplacer href, puis enlever hidden. Ne pas utiliser localId. -->
+    <a class="resource-link prefill-link" href="https://fr.vittascience.com/python/?link=IDENTIFIANT_DU_PROJET_PARTAGE_EXO_8" target="_blank" rel="noopener" hidden>
+      Ouvrir avec le code pré-rempli
     </a>
   </div>
 
@@ -895,6 +904,10 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
   <div class="vitta-actions">
     <a class="resource-link" href="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" target="_blank" rel="noopener">
       Ouvrir directement Vittascience
+    </a>
+    <!-- Lien pré-rempli optionnel : créer un lien de partage Vittascience, remplacer href, puis enlever hidden. Ne pas utiliser localId. -->
+    <a class="resource-link prefill-link" href="https://fr.vittascience.com/python/?link=IDENTIFIANT_DU_PROJET_PARTAGE_EXO_9" target="_blank" rel="noopener" hidden>
+      Ouvrir avec le code pré-rempli
     </a>
   </div>
 
@@ -1003,7 +1016,9 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
     soit un environnement de développement comme <strong>PyCharm</strong>.
   </div>
 
-  <h3>1. Installer Python</h3>
+  <h3>Méthode classique</h3>
+
+  <h4>1. Installer Python</h4>
 <div class='media'>
   <img src='assets/install-manager-python-01.png' alt='Installer Python – étape 1'>
   <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
@@ -1040,7 +1055,7 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
     <strong>Add Python to PATH</strong>.
   </p>
 
-  <h3>2. Installer PyCharm (facultatif mais conseillé)</h3>
+  <h4>2. Installer PyCharm (facultatif mais conseillé)</h4>
   <p>
     Télécharge PyCharm Community depuis le site officiel :
     <a class="resource-link" href="https://www.jetbrains.com/pycharm/download/" target="_blank" rel="noopener">
@@ -1059,7 +1074,7 @@ cout_capteur = 33</code></pre><input type="number" id="q103"></div>
     </div>
   </div>
 
-  <h3>3. Installer une bibliothèque si elle manque</h3>
+  <h4>3. Installer une bibliothèque si elle manque</h4>
   <div class="note">
     <strong>Important :</strong>
     à certains moments, surtout pour les scripts ou les commandes dans
@@ -1097,10 +1112,8 @@ python -m pip install PythonTurtle
       Aide officielle pour installer des packages dans PyCharm
     </a>
   </p>
-</section>
 <!-- DEBUT_BLOC_INSTALL_MANAGER_PYTHON_PYCHARM -->
-<section class="card extra" id="installation-python-pycharm">
-<h2>Méthode récente : Python Install Manager</h2>
+<h3>Méthode moderne : Python Install Manager (recommandée)</h3>
 
 <div class="note">
 <strong>Pourquoi cette partie ?</strong> Les exercices principaux se réalisent directement dans Vittascience. Les captures ci-dessous deviennent utiles surtout pour les <strong>10 exercices supplémentaires non notés – Pour aller plus loin</strong>, car certains prolongements demandent d’utiliser Python sur l’ordinateur ou dans PyCharm.
@@ -1116,7 +1129,7 @@ Avant les prolongements, les élèves doivent d’abord travailler sur le site V
 <a class="resource-link" href="https://www.jetbrains.com/pycharm/download/" target="_blank" rel="noopener">Télécharger PyCharm Community</a>
 </p>
 
-<h3>1. Installer Python avec Python Install Manager</h3>
+<h4>1. Installer Python avec Python Install Manager</h4>
 
 <p>
 Python Install Manager est une méthode proposée par <span class="kbd">python.org</span>. Il installe d’abord un gestionnaire, puis il peut proposer d’installer le vrai moteur Python, appelé <strong>CPython</strong>. C’est normal.
@@ -1141,7 +1154,7 @@ Python Install Manager est une méthode proposée par <span class="kbd">python.o
   <img src="assets/install-manager-python-05.png" loading="lazy" decoding="async" alt="Étape 5 : la configuration est terminée. Le gestionnaire affiche l’aide des commandes « py ». Si l’aide en ligne est proposée, on peut répondre « n ».">
   <div class="caption">Étape 5 : la configuration est terminée. Le gestionnaire affiche l’aide des commandes « py ». Si l’aide en ligne est proposée, on peut répondre « n ».</div>
 </div>
-<h3>2. Ouvrir PowerShell ou Terminal en administrateur</h3>
+<h4>2. Ouvrir PowerShell ou Terminal en administrateur</h4>
 
 <p>
 Pour ouvrir rapidement PowerShell ou Terminal en administrateur, appuyer sur <span class="kbd">Win + X</span>, puis choisir <strong>Terminal (Admin)</strong> ou <strong>Windows PowerShell (Admin)</strong>.
@@ -1151,7 +1164,7 @@ Pour ouvrir rapidement PowerShell ou Terminal en administrateur, appuyer sur <sp
 <strong>En classe :</strong> l’installation peut nécessiter les droits de l’établissement. Si Windows demande un mot de passe administrateur, il faut demander l’aide de l’enseignant ou de l’administrateur réseau.
 </div>
 
-<h3>3. Vérifier que Python fonctionne</h3>
+<h4>3. Vérifier que Python fonctionne</h4>
 
 <p>
 Après l’installation, ouvrir une nouvelle fenêtre PowerShell, puis tester les commandes suivantes.
@@ -1169,7 +1182,7 @@ python -m pip --version
 # Met pip à jour si nécessaire.
 python -m pip install --upgrade pip</code></pre>
 
-<h3>4. Installer une bibliothèque Python avec PowerShell</h3>
+<h4>4. Installer une bibliothèque Python avec PowerShell</h4>
 
 <p>
 Une bibliothèque ajoute des possibilités à Python. Par exemple, <span class="kbd">matplotlib</span> permet de tracer des graphiques.
@@ -1181,7 +1194,7 @@ python -m pip install matplotlib
 # Si la commande python ne fonctionne pas, essayer avec py.
 py -m pip install matplotlib</code></pre>
 
-<h3>5. Installer une bibliothèque dans PyCharm</h3>
+<h4>5. Installer une bibliothèque dans PyCharm</h4>
 
 <p>
 Dans PyCharm, on peut aussi installer une bibliothèque directement depuis les paramètres. Le raccourci utile est <span class="kbd">Ctrl + Alt + S</span>.
