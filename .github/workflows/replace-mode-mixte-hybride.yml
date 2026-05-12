@@ -1,0 +1,68 @@
+name: Terminologie mode hybride Vittascience
+
+on:
+  push:
+    paths:
+      - '.github/workflows/replace-mode-mixte-hybride.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  replace-terminology:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Remplacer mode mixte par mode hybride
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html')
+          text = path.read_text(encoding='utf-8-sig')
+          original = text
+
+          # Ne pas modifier les URL techniques contenant mode=mixed.
+          replacements = {
+              'mode mixte': 'mode hybride',
+              'Mode mixte': 'Mode hybride',
+              'MODE MIXTE': 'MODE HYBRIDE',
+              'Ouvrir l’interface Vittascience Python – mode mixte': 'Ouvrir l’interface Vittascience Python – mode hybride',
+              'Ouvrir l’interface Vittascience Python - mode mixte': 'Ouvrir l’interface Vittascience Python – mode hybride',
+          }
+          for old, new in replacements.items():
+              text = text.replace(old, new)
+
+          # Ajouter une note de cohérence une seule fois dans la section interface Vittascience.
+          note = '''
+<p class="small" id="note-mode-hybride-vittascience">
+Dans ce document, nous utilisons l’expression <strong>mode hybride</strong>, qui correspond à l’interface Vittascience permettant d’associer blocs et code Python. Certains liens techniques peuvent encore contenir le mot anglais <span class="kbd">mixed</span> dans l’adresse ; c’est normal, il s’agit du paramètre interne du site.
+</p>
+'''
+          if 'id="note-mode-hybride-vittascience"' not in text:
+              marker = 'Les exercices notés de la première partie se font dans Vittascience. La partie « Installer Python et les outils nécessaires » sert surtout aux prolongements non notés.\n</p>'
+              if marker in text:
+                  text = text.replace(marker, marker + note, 1)
+              else:
+                  alt_marker = '</section>\n<section class="card start-panel" id="startPanel">'
+                  text = text.replace(alt_marker, note + alt_marker, 1)
+
+          path.write_text(text, encoding='utf-8')
+          print('Occurrences remplacées :', original.count('mode mixte') + original.count('Mode mixte'))
+
+      - name: Supprimer le workflow temporaire
+        run: rm .github/workflows/replace-mode-mixte-hybride.yml
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add C7_C9_Creation-conception-realisation-innovations/vittascience_variables.html .github/workflows/replace-mode-mixte-hybride.yml
+          git commit -m "Remplace mode mixte par mode hybride" || echo "Aucun changement à commiter"
+          git push
