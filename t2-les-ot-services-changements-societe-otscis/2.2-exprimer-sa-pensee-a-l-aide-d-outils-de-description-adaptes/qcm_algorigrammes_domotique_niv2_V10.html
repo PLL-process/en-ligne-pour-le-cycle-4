@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Encodage UTF-8 pour afficher correctement les accents. -->
+  <meta charset="UTF-8">
+  <!-- Affichage responsive pour ordinateur, tablette et smartphone. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Titre affiché dans l'onglet du navigateur. -->
+  <title>TP Algorigrammes & Domotique - Niveau 2 - V10</title>
+  <style>
+    /* Variables du thème sombre. */
+    :root {
+      --bg: #07111f;
+      --panel: #101c30;
+      --panel2: #16243b;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: #334155;
+      --blue: #38bdf8;
+      --green: #22c55e;
+      --yellow: #facc15;
+      --orange: #fb923c;
+      --red: #f87171;
+      --purple: #a78bfa;
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    /* Variables du thème clair. */
+    body.light {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --panel2: #eef6ff;
+      --text: #0f172a;
+      --muted: #334155;
+      --line: #94a3b8;
+      --shadow: rgba(15, 23, 42, 0.12);
+    }
+
+    /* Mise en page générale. */
+    body {
+      margin: 0;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background: radial-gradient(circle at top, #1e3a8a 0%, var(--bg) 48%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Bandeau supérieur compact. */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.42rem 0.75rem;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.97), rgba(2, 6, 23, 0.97));
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Ligne du bandeau. */
+    .header-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    /* Titre compact. */
+    h1 {
+      margin: 0;
+      font-size: clamp(1rem, 2.1vw, 1.55rem);
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Sous-titre discret. */
+    .subtitle {
+      margin: 0.12rem 0 0;
+      color: #dbeafe;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Barre de progression compacte. */
+    .progress-shell {
+      height: 10px;
+      background: rgba(2, 6, 23, 0.55);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0.28rem 0 0;
+      max-width: 760px;
+    }
+
+    /* Remplissage de progression. */
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+      transition: width 0.35s ease;
+    }
+
+    /* Menu de navigation compact. */
+    .phase-menu {
+      display: flex;
+      gap: 0.25rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 1240px;
+      margin: 0.35rem auto 0;
+    }
+
+    /* Conteneur principal. */
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    /* Cartes et sections. */
+    section, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1.1rem;
+      margin: 1rem 0;
+      box-shadow: 0 14px 28px var(--shadow);
+    }
+
+    /* Titres de section. */
+    h2 {
+      margin-top: 0;
+      color: var(--text);
+      border-left: 8px solid var(--blue);
+      padding-left: 0.8rem;
+    }
+
+    /* Sous-titres. */
+    h3 {
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Grille adaptative. */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Boutons. */
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 0.5rem 0.78rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--blue), #93c5fd);
+      color: #03111f;
+      min-height: 38px;
+      margin: 0.12rem;
+      font-size: 0.9rem;
+    }
+
+    /* Survol des boutons. */
+    button:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    /* Bouton secondaire. */
+    .secondary { background: linear-gradient(135deg, #cbd5e1, #94a3b8); }
+
+    /* Bouton dangereux. */
+    .danger { background: linear-gradient(135deg, #fecaca, var(--red)); }
+
+    /* Bouton actif. */
+    .activePhase { outline: 3px solid var(--yellow); }
+
+    /* Étiquettes. */
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 23, 0.55);
+      border-radius: 999px;
+      padding: 0.22rem 0.58rem;
+      color: var(--text);
+      font-size: 0.86rem;
+      margin: 0.12rem;
+    }
+
+    /* Champs. */
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 0.25rem;
+      padding: 0.7rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 23, 0.65);
+      color: var(--text);
+      font-family: inherit;
+      min-height: 44px;
+    }
+
+    /* Champs en thème clair. */
+    body.light input, body.light select, body.light textarea { background: #ffffff; color: #0f172a; }
+
+    /* Cases à cocher et boutons radio. */
+    input[type="checkbox"], input[type="radio"] { width: auto; transform: scale(1.18); margin-right: 0.4rem; min-height: auto; }
+
+    /* Curseurs. */
+    input[type="range"] { accent-color: var(--blue); }
+
+    /* Tableaux. */
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+
+    /* Cellules de tableau. */
+    th, td { border: 1px solid var(--line); padding: 0.72rem; vertical-align: top; }
+
+    /* En-têtes de tableau. */
+    th { background: var(--panel2); }
+
+    /* Bloc de réussite. */
+    .success { border-left: 6px solid var(--green); background: rgba(34, 197, 94, 0.12); padding: 0.9rem; border-radius: 14px; }
+
+    /* Bloc d'aide. */
+    .note { border-left: 6px solid var(--yellow); background: rgba(250, 204, 21, 0.12); padding: 0.9rem; border-radius: 14px; }
+
+    /* Bloc d'erreur. */
+    .error { border-left: 6px solid var(--red); background: rgba(248, 113, 113, 0.12); padding: 0.9rem; border-radius: 14px; }
+
+    /* Phase masquée. */
+    .hidden { display: none; }
+
+    /* Zones de blocs. */
+    .dropzone, .bank {
+      min-height: 170px;
+      border: 2px dashed var(--blue);
+      border-radius: 16px;
+      padding: 0.8rem;
+      background: rgba(2, 6, 23, 0.28);
+    }
+
+    /* Bloc d'algorithme à déplacer. */
+    .algo-block {
+      user-select: none;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 0.68rem;
+      margin: 0.45rem 0;
+      cursor: grab;
+      background: rgba(2, 6, 23, 0.72);
+      color: var(--text);
+      min-height: 34px;
+    }
+
+    /* Bloc d'algorithme en thème clair. */
+    body.light .algo-block { background: #f8fafc; color: #0f172a; }
+
+    /* Bloc début / fin. */
+    .b-start { border-left: 8px solid var(--blue); }
+
+    /* Bloc action. */
+    .b-action { border-left: 8px solid var(--green); }
+
+    /* Bloc condition. */
+    .b-condition { border-left: 8px solid var(--orange); }
+
+    /* Bloc boucle. */
+    .b-loop { border-left: 8px solid var(--purple); }
+
+    /* Question QCM. */
+    .question { border: 1px solid var(--line); border-radius: 16px; padding: 1rem; margin: 1rem 0; background: rgba(2, 6, 23, 0.34); }
+
+    /* Option QCM. */
+    .option { display: block; border: 1px solid transparent; border-radius: 12px; padding: 0.65rem; margin: 0.45rem 0; background: rgba(15, 23, 42, 0.55); }
+
+    /* Option QCM en thème clair. */
+    body.light .option { background: #f1f5f9; }
+
+    /* Survol option. */
+    .option:hover { border-color: var(--blue); }
+
+    /* Zone de feedback. */
+    .feedback { margin-top: 0.8rem; min-height: 1.8rem; }
+
+    /* Code de validation. */
+    .code-box { font-family: Consolas, Monaco, monospace; letter-spacing: 0.06rem; background: rgba(2, 6, 23, 0.65); border: 1px dashed var(--blue); padding: 0.8rem; border-radius: 13px; text-align: center; }
+
+    /* Score principal. */
+    .score-big { font-size: clamp(2rem, 6vw, 4rem); text-align: center; color: #bbf7d0; font-weight: bold; }
+
+    /* Glossaire flottant. */
+    .glossary-toggle { position: fixed; right: 18px; bottom: 18px; z-index: 80; border-radius: 999px; min-width: 54px; }
+
+    /* Panneau du glossaire. */
+    .glossary-panel { position: fixed; right: -390px; top: 0; width: 350px; height: 100vh; z-index: 90; overflow-y: auto; padding: 1rem; background: rgba(15, 23, 42, 0.98); border-left: 2px solid var(--yellow); transition: right 0.35s ease; }
+
+    /* Panneau du glossaire ouvert. */
+    .glossary-panel.open { right: 0; }
+
+    /* Entrée de glossaire. */
+    .glossary-item { padding: 0.75rem; background: rgba(255,255,255,0.06); border-radius: 12px; margin: 0.6rem 0; }
+
+    /* Terme du glossaire. */
+    .glossary-item strong { color: var(--blue); }
+
+    /* SVG responsive. */
+    svg { max-width: 100%; height: auto; }
+
+    /* Limitation de hauteur pour les corrections, afin d'éviter un très long scroll. */
+    .correction-box svg { max-height: 560px; }
+
+    /* Adaptation mobile. */
+    @media (max-width: 760px) {
+      .header-row { grid-template-columns: 1fr; }
+      .subtitle { display: none; }
+      .phase-menu { justify-content: center; }
+      button { font-size: 0.82rem; padding: 0.45rem 0.58rem; }
+      .glossary-panel { width: 300px; }
+    }
+
+    /* Plein écran : largeur plus confortable. */
+    :fullscreen main { max-width: 1360px; }
+
+    /* Impression propre. */
+    @media print {
+      body { background: white; color: black; }
+      header, button, .no-print, .glossary-toggle, .glossary-panel { display: none; }
+      section, .card, .question { background: white; color: black; box-shadow: none; border: 1px solid #999; }
+      h2, h3 { color: black; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div>
+        <h1>🏠 TP Algorigrammes & Domotique - Niveau 2 - V10</h1>
+        <p class="subtitle">Corrections visuelles des algorigrammes : Début, Action, Condition, Oui/Non, Boucle.</p>
+        <div class="progress-shell"><div id="globalProgress" class="progress-fill"></div></div>
+      </div>
+      <p id="progressText" class="subtitle">Étape 0 sur 5 - Score actuel : 0 / 20</p>
+    </div>
+    <nav class="phase-menu" aria-label="Navigation entre les phases">
+      <button id="btnP0" onclick="showPhase(0)">Phase 0</button>
+      <button id="btnP1" onclick="showPhase(1)">Phase 1</button>
+      <button id="btnP2" onclick="showPhase(2)">Phase 2</button>
+      <button id="btnP3" onclick="showPhase(3)">Phase 3</button>
+      <button id="btnP4" onclick="showPhase(4)">Phase 4</button>
+      <button id="btnP5" onclick="showPhase(5)">Bilan</button>
+      <button id="fullscreenBtn" class="secondary" onclick="toggleFullscreen()">⛶ Plein écran</button>
+      <button class="secondary" onclick="toggleTheme()">☀️/🌙 Thème</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="identity">
+      <h2>🧾 Identification</h2>
+      <div class="grid">
+        <label>Nom et prénom
+          <input id="studentName" type="text" placeholder="Exemple : Sarah Pierre">
+        </label>
+        <label>Classe
+          <input id="studentClass" type="text" placeholder="Exemple : 4e A">
+        </label>
+        <label>Date
+          <input id="studentDate" type="date">
+        </label>
+      </div>
+      <p class="note"><strong>Important :</strong> cette V10 conserve <strong>3 points de vie</strong> et ajoute une correction visuelle de l'algorigramme après les phases 1 à 4.</p>
+      <p id="lifeBox" class="code-box">Points de vie : ❤️❤️❤️</p>
+    </section>
+
+    <section id="phase0" class="phase">
+      <h2>Phase 0 - Les bases indispensables</h2>
+      <p><strong>Objectif :</strong> comprendre la règle fondamentale des symboles avant de construire un algorigramme.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Règles d'or</h3>
+          <table>
+            <tr><th>Symbole</th><th>Rôle</th><th>Exemple correct</th></tr>
+            <tr><td>Ovale</td><td>Début ou fin</td><td>Début / Fin</td></tr>
+            <tr><td>Rectangle</td><td>Action</td><td>Allumer la lampe</td></tr>
+            <tr><td>Losange</td><td>Condition / question</td><td>Luminosité &lt; 50 lux ?</td></tr>
+            <tr><td>Flèche</td><td>Ordre d'exécution</td><td>Étape 1 → Étape 2</td></tr>
+          </table>
+          <p class="error"><strong>Erreur à éviter :</strong> écrire une action dans un losange. Exemple à éviter : « Allumer la lumière ? ». Le losange doit tester une information : « Présence détectée ? ».</p>
+        </div>
+        <div class="card">
+          <h3>Mini-activité : associer</h3>
+          <label>Ovale
+            <select id="mOvale"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <label>Rectangle
+            <select id="mRectangle"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <label>Losange
+            <select id="mLosange"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <label>Flèche
+            <select id="mFleche"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <button onclick="checkPhase0()">Vérifier la phase 0</button>
+          <button class="secondary" onclick="showCorrection('corr0', 'bases')">Voir la correction des symboles</button>
+          <div id="f0" class="feedback"></div>
+        </div>
+      </div>
+      <div id="corr0" class="feedback correction-box"></div>
+    </section>
+
+    <section id="phase1" class="phase hidden">
+      <h2>Phase 1 - Algorigramme linéaire</h2>
+      <p><strong>Mission :</strong> construire un algorigramme sans condition : allumer une lampe, attendre, puis éteindre.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Blocs disponibles</h3>
+          <p class="note">Clique sur les blocs dans le bon ordre. Sur ordinateur, tu peux aussi les glisser.</p>
+          <div id="bank1" class="bank"></div>
+        </div>
+        <div class="card">
+          <h3>Ta construction</h3>
+          <div id="zone1" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event, 1)"></div>
+          <button onclick="checkBuild(1)">Vérifier</button>
+          <button class="secondary" onclick="clearZone(1)">Effacer</button>
+          <button class="secondary" onclick="showCorrection('corr1', 'lineaire')">Voir l'algorigramme corrigé</button>
+          <div id="f1" class="feedback"></div>
+        </div>
+      </div>
+      <div id="corr1" class="feedback correction-box"></div>
+    </section>
+
+    <section id="phase2" class="phase hidden">
+      <h2>Phase 2 - Condition simple : allumer s'il fait nuit</h2>
+      <p><strong>Mission :</strong> construire l'algorithme d'un éclairage automatique qui s'allume seulement si la luminosité est faible.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Blocs disponibles</h3>
+          <div id="bank2" class="bank"></div>
+        </div>
+        <div class="card">
+          <h3>Ta construction</h3>
+          <div id="zone2" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event, 2)"></div>
+          <button onclick="checkBuild(2)">Vérifier</button>
+          <button class="secondary" onclick="clearZone(2)">Effacer</button>
+          <button class="secondary" onclick="showCorrection('corr2', 'condition')">Voir l'algorigramme corrigé</button>
+          <div id="f2" class="feedback"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Simulation de la condition</h3>
+        <label>Luminosité : <span id="luxValue">500</span> lux
+          <input id="lux" type="range" min="0" max="1000" value="500">
+        </label>
+        <button onclick="simulatePhase2()">Tester la lumière</button>
+        <div id="sim2" class="feedback"></div>
+      </div>
+      <div id="corr2" class="feedback correction-box"></div>
+    </section>
+
+    <section id="phase3" class="phase hidden">
+      <h2>Phase 3 - Condition composée : présence ET obscurité</h2>
+      <p><strong>Mission :</strong> la lampe s'allume si une présence est détectée <strong>ET</strong> si la luminosité est inférieure à 50 lux.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Blocs disponibles</h3>
+          <div id="bank3" class="bank"></div>
+        </div>
+        <div class="card">
+          <h3>Ta construction</h3>
+          <div id="zone3" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event, 3)"></div>
+          <button onclick="checkBuild(3)">Vérifier</button>
+          <button class="secondary" onclick="clearZone(3)">Effacer</button>
+          <button class="secondary" onclick="showCorrection('corr3', 'complexe')">Voir l'algorigramme corrigé</button>
+          <div id="f3" class="feedback"></div>
+        </div>
+      </div>
+      <div id="corr3" class="feedback correction-box"></div>
+      <div class="card">
+        <h3>Débogage</h3>
+        <p>Un élève a écrit : <strong>SI présence = oui OU luminosité &lt; 50 lux ALORS allumer lampe</strong>.</p>
+        <p>Coche les deux erreurs principales.</p>
+        <label class="option"><input type="checkbox" class="bug" value="ou"> Il faudrait utiliser ET au lieu de OU.</label>
+        <label class="option"><input type="checkbox" class="bug" value="sinon"> Il faut prévoir clairement la branche NON : éteindre la lampe.</label>
+        <label class="option"><input type="checkbox" class="bug" value="debut"> Le mot Début est interdit.</label>
+        <label class="option"><input type="checkbox" class="bug" value="capteur"> Un capteur ne peut jamais être lu.</label>
+        <button onclick="checkBugs()">Corriger le débogage</button>
+        <button class="secondary" onclick="showCorrection('corrBug', 'complexe')">Afficher la correction sous forme d'algorigramme</button>
+        <div id="fBug" class="feedback"></div>
+        <div id="corrBug" class="feedback correction-box"></div>
+      </div>
+    </section>
+
+    <section id="phase4" class="phase hidden">
+      <h2>Phase 4 - Pont Scratch / mBlock et évaluation courte</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Question 1 : losange et Scratch/mBlock</h3>
+          <p>Quel bloc Scratch/mBlock correspond au losange d'un algorigramme ?</p>
+          <label class="option"><input type="radio" name="q0" value="0"> si ... alors ... sinon</label>
+          <label class="option"><input type="radio" name="q0" value="1"> jouer un son</label>
+          <label class="option"><input type="radio" name="q0" value="2"> avancer de 10 pas</label>
+          <button onclick="checkQcm(0,0,'fq0')">Vérifier</button>
+          <button class="secondary" onclick="showCorrection('qcorr0','scratch')">Voir la correspondance</button>
+          <div id="fq0" class="feedback"></div>
+          <div id="qcorr0" class="feedback correction-box"></div>
+        </div>
+        <div class="card">
+          <h3>Question 2 : arrosage automatique</h3>
+          <p>Le système doit arroser si le sol est sec ET s'il ne pleut pas. Quelle condition est correcte ?</p>
+          <label class="option"><input type="radio" name="q1" value="0"> Humidité &lt; 30 % ET pluie = non ?</label>
+          <label class="option"><input type="radio" name="q1" value="1"> Arroser le jardin ?</label>
+          <label class="option"><input type="radio" name="q1" value="2"> Lampe allumée ?</label>
+          <button onclick="checkQcm(1,0,'fq1')">Vérifier</button>
+          <button class="secondary" onclick="showCorrection('qcorr1','arrosage')">Voir l'algorigramme corrigé</button>
+          <div id="fq1" class="feedback"></div>
+          <div id="qcorr1" class="feedback correction-box"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Mini-projet</h3>
+        <p>Choisis un système et complète sa logique. La correction génère un algorigramme.</p>
+        <label>Système choisi
+          <select id="projectType" onchange="updateProjectHelp()">
+            <option value="store">Store automatique</option>
+            <option value="arrosage">Arrosage automatique</option>
+            <option value="portail">Portail sécurisé</option>
+          </select>
+        </label>
+        <label>Condition principale
+          <input id="projectCondition" type="text" placeholder="Exemple : luminosité > 800 lux">
+        </label>
+        <label>Action si OUI
+          <input id="projectYes" type="text" placeholder="Exemple : descendre le store">
+        </label>
+        <label>Action si NON
+          <input id="projectNo" type="text" placeholder="Exemple : laisser le store ouvert">
+        </label>
+        <button onclick="checkProject()">Valider mon mini-projet</button>
+        <button class="secondary" onclick="generateProjectCorrection()">Générer l'algorigramme de correction</button>
+        <div id="projectHelp" class="note"></div>
+        <div id="f4" class="feedback"></div>
+        <div id="projectAlgo" class="feedback correction-box"></div>
+      </div>
+    </section>
+
+    <section id="phase5" class="phase hidden">
+      <h2>Bilan final et export</h2>
+      <div id="scoreBig" class="score-big">0 / 20</div>
+      <div id="report" class="card"><p>Complète les phases pour obtenir ton bilan.</p></div>
+      <div id="validationCode" class="code-box">Code de validation : en attente</div>
+      <button onclick="finalReport()">Générer le bilan</button>
+      <button class="secondary" onclick="window.print()">Imprimer / enregistrer en PDF</button>
+      <button class="danger" onclick="resetAll()">Réinitialiser ma progression</button>
+    </section>
+  </main>
+
+  <button class="glossary-toggle" onclick="toggleGlossary()" title="Glossaire">📚</button>
+  <aside id="glossaryPanel" class="glossary-panel">
+    <button class="secondary" onclick="toggleGlossary()">Fermer ✕</button>
+    <h2>Glossaire</h2>
+    <div class="glossary-item"><strong>Algorigramme</strong><br>Représentation graphique d'un algorithme avec des symboles normalisés.</div>
+    <div class="glossary-item"><strong>Capteur</strong><br>Élément qui mesure ou détecte une information : luminosité, présence, température.</div>
+    <div class="glossary-item"><strong>Actionneur</strong><br>Élément qui agit sur le réel : lampe, moteur, sirène, électrovanne.</div>
+    <div class="glossary-item"><strong>Condition</strong><br>Question à laquelle on répond par oui ou non. Elle se place dans un losange.</div>
+    <div class="glossary-item"><strong>Boucle</strong><br>Retour à une étape précédente. En domotique, on surveille souvent les capteurs en continu.</div>
+    <div class="glossary-item"><strong>Capteur TOR</strong><br>Capteur « Tout Ou Rien » : il renvoie deux états, par exemple oui/non ou 0/1.</div>
+  </aside>
+
+  <script>
+    // Nombre maximal de points de vie. 
+    const MAX_LIVES = 3;
+
+    // Blocs utilisés pour les phases de construction.
+    const blockSets = {
+      1: [
+        {id:'debut', text:'Début', type:'b-start'},
+        {id:'allumer', text:'Allumer la lampe', type:'b-action'},
+        {id:'attendre', text:'Attendre 10 secondes', type:'b-action'},
+        {id:'eteindre', text:'Éteindre la lampe', type:'b-action'},
+        {id:'fin', text:'Fin', type:'b-start'}
+      ],
+      2: [
+        {id:'debut', text:'Début', type:'b-start'},
+        {id:'lireLux', text:'Lire la luminosité', type:'b-action'},
+        {id:'testNuit', text:'SI luminosité < 50 lux ?', type:'b-condition'},
+        {id:'allumer', text:'OUI : allumer la lampe', type:'b-action'},
+        {id:'eteindre', text:'NON : éteindre la lampe', type:'b-action'},
+        {id:'boucle', text:'Retour au début', type:'b-loop'}
+      ],
+      3: [
+        {id:'debut', text:'Début', type:'b-start'},
+        {id:'lireLux', text:'Lire la luminosité', type:'b-action'},
+        {id:'lirePresence', text:'Lire le détecteur de présence', type:'b-action'},
+        {id:'test', text:'SI présence = oui ET luminosité < 50 lux ?', type:'b-condition'},
+        {id:'allumer', text:'OUI : allumer la lampe', type:'b-action'},
+        {id:'eteindre', text:'NON : éteindre la lampe', type:'b-action'},
+        {id:'boucle', text:'Retour au début', type:'b-loop'}
+      ]
+    };
+
+    // Ordres corrects pour les constructions.
+    const expected = {
+      1: ['debut', 'allumer', 'attendre', 'eteindre', 'fin'],
+      2: ['debut', 'lireLux', 'testNuit', 'allumer', 'eteindre', 'boucle'],
+      3: ['debut', 'lireLux', 'lirePresence', 'test', 'allumer', 'eteindre', 'boucle']
+    };
+
+    // État global de l'activité.
+    let state = JSON.parse(localStorage.getItem('algoDomotiqueV10State') || JSON.stringify({phase:0,lives:MAX_LIVES,p0:false,p1:false,p2:false,p3:false,bug:false,qcm:{},p4:false,score:0}));
+
+    // Affiche une phase et masque les autres.
+    function showPhase(n) {
+      // Parcours de toutes les phases.
+      for (let i = 0; i <= 5; i++) {
+        // Récupération de la section.
+        const section = document.getElementById(`phase${i}`);
+        // Affichage de la phase demandée.
+        section.classList.toggle('hidden', i !== n);
+        // Mise en évidence du bouton actif.
+        document.getElementById(`btnP${i}`).classList.toggle('activePhase', i === n);
+      }
+      // Sauvegarde de la phase actuelle.
+      state.phase = n;
+      // Sauvegarde locale.
+      saveState();
+      // Mise à jour du score et de la progression.
+      updateProgress();
+    }
+
+    // Sauvegarde l'état global.
+    function saveState() {
+      // Écriture dans le stockage local du navigateur.
+      localStorage.setItem('algoDomotiqueV10State', JSON.stringify(state));
+    }
+
+    // Active ou désactive le plein écran.
+    function toggleFullscreen() {
+      // Récupération du bouton.
+      const btn = document.getElementById('fullscreenBtn');
+      // Demande de plein écran si aucun élément ne l'utilise.
+      if (!document.fullscreenElement) {
+        // Passage de la page en plein écran.
+        document.documentElement.requestFullscreen().then(() => btn.textContent = '⤢ Quitter plein écran').catch(() => alert('Le plein écran est bloqué. Utilise F11 si nécessaire.'));
+      } else {
+        // Sortie du plein écran.
+        document.exitFullscreen().then(() => btn.textContent = '⛶ Plein écran');
+      }
+    }
+
+    // Met à jour le bouton si on quitte avec Échap.
+    document.addEventListener('fullscreenchange', () => {
+      // Récupération du bouton.
+      const btn = document.getElementById('fullscreenBtn');
+      // Sécurité si le bouton n'existe pas.
+      if (!btn) return;
+      // Mise à jour du texte.
+      btn.textContent = document.fullscreenElement ? '⤢ Quitter plein écran' : '⛶ Plein écran';
+    });
+
+    // Change le thème clair/sombre.
+    function toggleTheme() {
+      // Bascule de la classe light.
+      document.body.classList.toggle('light');
+      // Sauvegarde du thème.
+      localStorage.setItem('algoDomotiqueV10Theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    }
+
+    // Ouvre ou ferme le glossaire.
+    function toggleGlossary() {
+      // Bascule du panneau de glossaire.
+      document.getElementById('glossaryPanel').classList.toggle('open');
+    }
+
+    // Met à jour les points de vie.
+    function updateLives() {
+      // Construction des cœurs pleins et vides.
+      const hearts = '❤️'.repeat(Math.max(0, state.lives)) + '🖤'.repeat(MAX_LIVES - Math.max(0, state.lives));
+      // Affichage.
+      document.getElementById('lifeBox').textContent = `Points de vie : ${hearts}`;
+    }
+
+    // Retire un point de vie en cas d'erreur.
+    function loseLife() {
+      // Retrait d'une vie sans descendre sous zéro.
+      state.lives = Math.max(0, state.lives - 1);
+      // Sauvegarde.
+      saveState();
+      // Mise à jour visuelle.
+      updateLives();
+    }
+
+    // Met à jour score et progression.
+    function updateProgress() {
+      // Nombre d'étapes validées.
+      const done = [state.p0, state.p1, state.p2, state.p3, state.bug, state.p4].filter(Boolean).length;
+      // Nombre de bonnes réponses QCM.
+      const qGood = Object.values(state.qcm).filter(Boolean).length;
+      // Score total sur 20.
+      state.score = Math.round(((done / 6) * 14 + (qGood / 2) * 6) * 10) / 10;
+      // Progression liée à la phase affichée.
+      const percent = Math.round(((state.phase + 1) / 6) * 100);
+      // Mise à jour graphique.
+      document.getElementById('globalProgress').style.width = `${percent}%`;
+      // Mise à jour du texte.
+      document.getElementById('progressText').textContent = `Étape ${state.phase} sur 5 - Score actuel : ${state.score} / 20`;
+      // Mise à jour du score final.
+      document.getElementById('scoreBig').textContent = `${state.score} / 20`;
+      // Sauvegarde.
+      saveState();
+    }
+
+    // Vérifie la phase 0.
+    function checkPhase0() {
+      // Test des quatre associations attendues.
+      const ok = document.getElementById('mOvale').value === 'Début ou fin' && document.getElementById('mRectangle').value === 'Action' && document.getElementById('mLosange').value === 'Condition' && document.getElementById('mFleche').value === 'Ordre';
+      // Zone de feedback.
+      const zone = document.getElementById('f0');
+      // Si tout est bon.
+      if (ok) {
+        // Message positif.
+        zone.innerHTML = '<div class="success">Correct. Tu as identifié les symboles de base.</div>';
+        // Validation de la phase.
+        state.p0 = true;
+      } else {
+        // Message d'aide.
+        zone.innerHTML = '<div class="error">Pas encore. Le rectangle contient une action ; le losange contient une question.</div>';
+        // Perte d'une vie.
+        loseLife();
+      }
+      // Affichage de la correction.
+      showCorrection('corr0','bases');
+      // Sauvegarde et progression.
+      saveState();
+      updateProgress();
+    }
+
+    // Affiche les banques de blocs.
+    function renderBanks() {
+      // Parcours des phases avec construction.
+      [1,2,3].forEach(phase => {
+        // Récupération de la banque.
+        const bank = document.getElementById(`bank${phase}`);
+        // Nettoyage.
+        bank.innerHTML = '';
+        // Mélange des blocs.
+        const shuffled = [...blockSets[phase]].sort(() => Math.random() - 0.5);
+        // Création de chaque bloc.
+        shuffled.forEach(block => {
+          // Création de l'élément.
+          const el = document.createElement('div');
+          // Classes visuelles.
+          el.className = `algo-block ${block.type}`;
+          // Texte affiché.
+          el.textContent = block.text;
+          // Activation du glisser-déposer.
+          el.draggable = true;
+          // Identifiant du bloc.
+          el.dataset.id = block.id;
+          // Phase du bloc.
+          el.dataset.phase = phase;
+          // Événement de glissement.
+          el.addEventListener('dragstart', dragBlock);
+          // Ajout au clic pour les tablettes.
+          el.addEventListener('click', () => addBlock(phase, block.id));
+          // Ajout à la banque.
+          bank.appendChild(el);
+        });
+        // Restauration éventuelle de la construction.
+        restoreZone(phase);
+      });
+    }
+
+    // Début du glisser-déposer.
+    function dragBlock(event) {
+      // Stocke la phase et l'identifiant du bloc.
+      event.dataTransfer.setData('text/plain', `${event.target.dataset.phase}:${event.target.dataset.id}`);
+    }
+
+    // Autorise le dépôt.
+    function allowDrop(event) {
+      // Empêche le comportement par défaut.
+      event.preventDefault();
+    }
+
+    // Dépose un bloc.
+    function dropBlock(event, phase) {
+      // Empêche le comportement par défaut.
+      event.preventDefault();
+      // Récupération des données.
+      const data = event.dataTransfer.getData('text/plain');
+      // Découpage phase/id.
+      const [sourcePhase, id] = data.split(':');
+      // Vérification de la bonne phase.
+      if (Number(sourcePhase) !== phase) return;
+      // Ajout du bloc.
+      addBlock(phase, id);
+    }
+
+    // Ajoute un bloc dans une zone de construction.
+    function addBlock(phase, id) {
+      // Recherche du bloc.
+      const block = blockSets[phase].find(b => b.id === id);
+      // Arrêt si introuvable.
+      if (!block) return;
+      // Création du bloc visuel.
+      const el = document.createElement('div');
+      // Classes du bloc.
+      el.className = `algo-block ${block.type}`;
+      // Texte du bloc.
+      el.textContent = block.text;
+      // Identifiant sauvegardé.
+      el.dataset.id = id;
+      // Aide de suppression.
+      el.title = 'Double-clique pour retirer ce bloc.';
+      // Suppression au double-clic.
+      el.addEventListener('dblclick', () => { el.remove(); saveZone(phase); });
+      // Ajout dans la zone.
+      document.getElementById(`zone${phase}`).appendChild(el);
+      // Sauvegarde.
+      saveZone(phase);
+    }
+
+    // Sauvegarde une zone de construction.
+    function saveZone(phase) {
+      // Lecture de l'ordre des blocs.
+      const order = Array.from(document.querySelectorAll(`#zone${phase} .algo-block`)).map(el => el.dataset.id);
+      // Sauvegarde locale.
+      localStorage.setItem(`algoDomotiqueV10Zone${phase}`, JSON.stringify(order));
+    }
+
+    // Restaure une zone de construction.
+    function restoreZone(phase) {
+      // Lecture de la sauvegarde.
+      const saved = JSON.parse(localStorage.getItem(`algoDomotiqueV10Zone${phase}`) || '[]');
+      // Nettoyage de la zone.
+      document.getElementById(`zone${phase}`).innerHTML = '';
+      // Réajout des blocs.
+      saved.forEach(id => addBlock(phase, id));
+    }
+
+    // Efface une zone.
+    function clearZone(phase) {
+      // Nettoyage visuel.
+      document.getElementById(`zone${phase}`).innerHTML = '';
+      // Suppression de la sauvegarde.
+      localStorage.removeItem(`algoDomotiqueV10Zone${phase}`);
+      // Message.
+      document.getElementById(`f${phase}`).innerHTML = '<div class="note">Construction effacée. Recommence étape par étape.</div>';
+    }
+
+    // Vérifie une construction.
+    function checkBuild(phase) {
+      // Lecture de l'ordre choisi.
+      const order = Array.from(document.querySelectorAll(`#zone${phase} .algo-block`)).map(el => el.dataset.id);
+      // Comparaison avec l'ordre attendu.
+      const ok = JSON.stringify(order) === JSON.stringify(expected[phase]);
+      // Zone de feedback.
+      const zone = document.getElementById(`f${phase}`);
+      // Si l'ordre est juste.
+      if (ok) {
+        // Message positif.
+        zone.innerHTML = '<div class="success">Correct. L’ordre respecte la logique de l’algorigramme.</div>';
+        // Validation de la phase.
+        state[`p${phase}`] = true;
+      } else {
+        // Message d'aide.
+        zone.innerHTML = '<div class="error">À corriger. Indice : commence par Début, lis les capteurs avant les tests, puis place les actions Oui/Non.</div>';
+        // Perte d'une vie.
+        loseLife();
+      }
+      // Correction visuelle automatique.
+      const keys = {1:'lineaire', 2:'condition', 3:'complexe'};
+      showCorrection(`corr${phase}`, keys[phase]);
+      // Sauvegarde et score.
+      saveState();
+      updateProgress();
+    }
+
+    // Simule l'éclairage simple.
+    function simulatePhase2() {
+      // Lecture de la luminosité.
+      const lux = Number(document.getElementById('lux').value);
+      // Test de la condition.
+      const on = lux < 50;
+      // Message de simulation.
+      document.getElementById('sim2').innerHTML = on ? '<div class="success">La lampe s’allume : la luminosité est inférieure à 50 lux.</div>' : '<div class="note">La lampe reste éteinte : la luminosité n’est pas inférieure à 50 lux.</div>';
+    }
+
+    // Vérifie le débogage.
+    function checkBugs() {
+      // Lecture des cases cochées.
+      const selected = Array.from(document.querySelectorAll('.bug:checked')).map(el => el.value).sort();
+      // Réponses attendues.
+      const ok = JSON.stringify(selected) === JSON.stringify(['ou','sinon'].sort());
+      // Message selon résultat.
+      if (ok) {
+        document.getElementById('fBug').innerHTML = '<div class="success">Correct. Il faut ET pour éviter l’allumage en plein jour, et il faut une branche NON qui éteint la lampe.</div>';
+        state.bug = true;
+      } else {
+        document.getElementById('fBug').innerHTML = '<div class="error">Pas encore. Cherche une erreur de logique ET/OU et une erreur dans la branche NON.</div>';
+        loseLife();
+      }
+      // Affichage de la correction.
+      showCorrection('corrBug','complexe');
+      // Sauvegarde et score.
+      saveState();
+      updateProgress();
+    }
+
+    // Vérifie une question QCM de la phase 4.
+    function checkQcm(index, correct, target) {
+      // Récupération de la réponse choisie.
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      // Zone de feedback.
+      const zone = document.getElementById(target);
+      // Si aucune réponse n'est cochée.
+      if (!selected) { zone.innerHTML = '<div class="note">Choisis une réponse avant de vérifier.</div>'; return; }
+      // Test de la réponse.
+      const ok = Number(selected.value) === correct;
+      // Si la réponse est juste.
+      if (ok) {
+        zone.innerHTML = '<div class="success">Correct. La logique est cohérente avec l’algorigramme.</div>';
+        state.qcm[index] = true;
+      } else {
+        zone.innerHTML = '<div class="error">Pas encore. Relis la règle : condition = question dans un losange ; action = rectangle.</div>';
+        state.qcm[index] = false;
+        loseLife();
+      }
+      // Affichage de la correction selon la question.
+      if (index === 0) showCorrection('qcorr0','scratch');
+      if (index === 1) showCorrection('qcorr1','arrosage');
+      // Sauvegarde et score.
+      saveState();
+      updateProgress();
+    }
+
+    // Affiche une correction SVG.
+    function showCorrection(targetId, type) {
+      // Zone cible.
+      const target = document.getElementById(targetId);
+      // Sécurité si elle n'existe pas.
+      if (!target) return;
+      // Choix du SVG.
+      const svg = type === 'lineaire' ? svgLinear() : type === 'condition' ? svgCondition() : type === 'complexe' ? svgComplex() : type === 'arrosage' ? svgArrosage() : type === 'scratch' ? svgScratch() : svgBases();
+      // Affichage de la correction.
+      target.innerHTML = `<div class="success"><strong>Correction sous forme d’algorigramme :</strong>${svg}</div>`;
+    }
+
+    // Génère un SVG de base sur les symboles.
+    function svgBases() {
+      return `<svg viewBox="0 0 760 260" role="img" aria-label="Symboles d'algorigramme"><ellipse cx="130" cy="75" rx="85" ry="30" fill="#0284c7" stroke="#e0f2fe"/><text x="130" y="82" text-anchor="middle" fill="white" font-size="18">Début / Fin</text><rect x="280" y="45" width="170" height="60" rx="8" fill="#16a34a" stroke="#dcfce7"/><text x="365" y="82" text-anchor="middle" fill="white" font-size="18">Action</text><polygon points="595,25 720,75 595,125 470,75" fill="#fb923c" stroke="#fff7ed"/><text x="595" y="82" text-anchor="middle" fill="#111827" font-size="18">Condition ?</text><line x1="130" y1="170" x2="620" y2="170" stroke="currentColor" stroke-width="5" marker-end="url(#a0)"/><text x="370" y="205" text-anchor="middle" fill="currentColor" font-size="18">La flèche indique l'ordre d'exécution.</text><defs><marker id="a0" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="currentColor"/></marker></defs></svg>`;
+    }
+
+    // Génère l'algorigramme linéaire.
+    function svgLinear() {
+      return makeVerticalSvg(['Début','Allumer la lampe','Attendre 10 s','Éteindre la lampe','Fin']);
+    }
+
+    // Génère l'algorigramme avec condition simple.
+    function svgCondition() {
+      return makeBranchSvg('Lire luminosité','Luminosité < 50 lux ?','Oui : allumer lampe','Non : éteindre lampe','Retour au début');
+    }
+
+    // Génère l'algorigramme avec condition composée.
+    function svgComplex() {
+      return makeBranchSvg('Lire luminosité et présence','Présence ET luminosité < 50 ?','Oui : allumer lampe','Non : éteindre lampe','Retour au début');
+    }
+
+    // Génère l'algorigramme d'arrosage.
+    function svgArrosage() {
+      return makeBranchSvg('Lire humidité et pluie','Humidité < 30 % ET pluie = non ?','Oui : arroser','Non : ne pas arroser','Retour au début');
+    }
+
+    // Génère la correspondance Scratch / mBlock.
+    function svgScratch() {
+      return `<svg viewBox="0 0 760 360" role="img" aria-label="Correspondance algorigramme Scratch mBlock"><polygon points="210,80 360,150 210,220 60,150" fill="#fb923c" stroke="#fff7ed"/><text x="210" y="145" text-anchor="middle" fill="#111827" font-size="18">Condition ?</text><text x="210" y="168" text-anchor="middle" fill="#111827" font-size="15">Losange</text><line x1="370" y1="150" x2="450" y2="150" stroke="currentColor" stroke-width="4" marker-end="url(#as)"/><rect x="470" y="90" width="230" height="120" rx="20" fill="#f59e0b" stroke="#fef3c7"/><text x="585" y="130" text-anchor="middle" fill="#111827" font-size="18">si &lt;condition&gt;</text><text x="585" y="158" text-anchor="middle" fill="#111827" font-size="18">alors</text><text x="585" y="186" text-anchor="middle" fill="#111827" font-size="18">sinon</text><text x="380" y="285" text-anchor="middle" fill="currentColor" font-size="18">Un losange correspond souvent au bloc Scratch/mBlock : si ... alors ... sinon.</text><defs><marker id="as" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="currentColor"/></marker></defs></svg>`;
+    }
+
+    // Génère un algorigramme vertical simple.
+    function makeVerticalSvg(steps) {
+      const h = 90 + steps.length * 82;
+      let svg = `<svg viewBox="0 0 760 ${h}" role="img" aria-label="Algorigramme corrigé"><defs><marker id="av" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="currentColor"/></marker></defs>`;
+      steps.forEach((txt,i)=>{
+        const y = 45 + i * 82;
+        const isStart = txt === 'Début' || txt === 'Fin';
+        if (isStart) svg += `<ellipse cx="380" cy="${y}" rx="150" ry="30" fill="#0284c7" stroke="#e0f2fe"/><text x="380" y="${y+7}" text-anchor="middle" fill="white" font-size="20">${escapeHtml(txt)}</text>`;
+        else svg += `<rect x="190" y="${y-28}" width="380" height="56" rx="9" fill="#16a34a" stroke="#dcfce7"/><text x="380" y="${y+7}" text-anchor="middle" fill="white" font-size="20">${escapeHtml(txt)}</text>`;
+        if (i < steps.length - 1) svg += `<line x1="380" y1="${y+34}" x2="380" y2="${y+74}" stroke="currentColor" stroke-width="4" marker-end="url(#av)"></line>`;
+      });
+      return svg + '</svg>';
+    }
+
+    // Génère un algorigramme avec un losange et deux branches Oui/Non.
+    function makeBranchSvg(readText, conditionText, yesText, noText, loopText) {
+      return `<svg viewBox="0 0 900 650" role="img" aria-label="Algorigramme avec condition oui non"><defs><marker id="ab" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="currentColor"/></marker></defs><ellipse cx="450" cy="45" rx="135" ry="30" fill="#0284c7" stroke="#e0f2fe"/><text x="450" y="52" text-anchor="middle" fill="white" font-size="20">Début</text><line x1="450" y1="75" x2="450" y2="115" stroke="currentColor" stroke-width="4" marker-end="url(#ab)"/><rect x="250" y="115" width="400" height="58" rx="9" fill="#16a34a" stroke="#dcfce7"/><text x="450" y="151" text-anchor="middle" fill="white" font-size="19">${escapeHtml(readText)}</text><line x1="450" y1="173" x2="450" y2="220" stroke="currentColor" stroke-width="4" marker-end="url(#ab)"/><polygon points="450,220 700,300 450,380 200,300" fill="#fb923c" stroke="#fff7ed"/><text x="450" y="306" text-anchor="middle" fill="#111827" font-size="19">${escapeHtml(conditionText)}</text><line x1="200" y1="300" x2="130" y2="300" stroke="#22c55e" stroke-width="4" marker-end="url(#ab)"/><text x="165" y="285" text-anchor="middle" fill="#22c55e" font-size="18">Oui</text><rect x="30" y="390" width="300" height="58" rx="9" fill="#16a34a" stroke="#dcfce7"/><text x="180" y="426" text-anchor="middle" fill="white" font-size="19">${escapeHtml(yesText)}</text><line x1="130" y1="300" x2="130" y2="390" stroke="#22c55e" stroke-width="4" marker-end="url(#ab)"/><line x1="700" y1="300" x2="770" y2="300" stroke="#f87171" stroke-width="4" marker-end="url(#ab)"/><text x="735" y="285" text-anchor="middle" fill="#f87171" font-size="18">Non</text><rect x="570" y="390" width="300" height="58" rx="9" fill="#991b1b" stroke="#fecaca"/><text x="720" y="426" text-anchor="middle" fill="white" font-size="19">${escapeHtml(noText)}</text><line x1="770" y1="300" x2="770" y2="390" stroke="#f87171" stroke-width="4" marker-end="url(#ab)"/><line x1="180" y1="448" x2="180" y2="520" stroke="currentColor" stroke-width="4"/><line x1="720" y1="448" x2="720" y2="520" stroke="currentColor" stroke-width="4"/><line x1="180" y1="520" x2="450" y2="520" stroke="currentColor" stroke-width="4"/><line x1="720" y1="520" x2="450" y2="520" stroke="currentColor" stroke-width="4"/><rect x="270" y="550" width="360" height="58" rx="9" fill="#7c3aed" stroke="#ddd6fe"/><text x="450" y="586" text-anchor="middle" fill="white" font-size="19">${escapeHtml(loopText)}</text><path d="M 450 550 C 450 500, 820 500, 820 140 C 820 80, 590 75, 450 75" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#ab)"/></svg>`;
+    }
+
+    // Échappe les caractères spéciaux.
+    function escapeHtml(text) {
+      return String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+
+    // Affiche l'aide du mini-projet.
+    function updateProjectHelp() {
+      const type = document.getElementById('projectType').value;
+      const help = {store:'Exemple : SI luminosité > 800 lux ALORS descendre le store SINON laisser le store ouvert.', arrosage:'Exemple : SI humidité du sol < 35 % ET pluie = non ALORS arroser SINON ne pas arroser.', portail:'Exemple : SI voiture détectée ET aucun obstacle ALORS ouvrir le portail SINON garder fermé.'};
+      document.getElementById('projectHelp').textContent = help[type];
+    }
+
+    // Valide le mini-projet.
+    function checkProject() {
+      const condition = document.getElementById('projectCondition').value.trim();
+      const yes = document.getElementById('projectYes').value.trim();
+      const no = document.getElementById('projectNo').value.trim();
+      const zone = document.getElementById('f4');
+      if (condition.length >= 5 && yes.length >= 5 && no.length >= 5) {
+        zone.innerHTML = '<div class="success">Mini-projet validé. Tu as une condition et deux actions possibles.</div>';
+        state.p4 = true;
+        generateProjectCorrection();
+      } else {
+        zone.innerHTML = '<div class="error">Complète la condition, l’action si OUI et l’action si NON.</div>';
+        loseLife();
+      }
+      saveState();
+      updateProgress();
+    }
+
+    // Génère l'algorigramme du mini-projet.
+    function generateProjectCorrection() {
+      const condition = document.getElementById('projectCondition').value.trim() || 'condition à préciser';
+      const yes = document.getElementById('projectYes').value.trim() || 'action si OUI';
+      const no = document.getElementById('projectNo').value.trim() || 'action si NON';
+      document.getElementById('projectAlgo').innerHTML = `<div class="success"><strong>Algorigramme généré :</strong>${makeBranchSvg('Lire les capteurs', condition + ' ?', 'Oui : ' + yes, 'Non : ' + no, 'Retour au début')}</div>`;
+    }
+
+    // Génère le bilan final.
+    function finalReport() {
+      const name = document.getElementById('studentName').value.trim() || 'Élève';
+      const classe = document.getElementById('studentClass').value.trim() || 'Classe non renseignée';
+      const date = document.getElementById('studentDate').value || new Date().toISOString().slice(0, 10);
+      const rows = [['Phase 0 - Bases',state.p0],['Phase 1 - Linéaire',state.p1],['Phase 2 - Condition simple',state.p2],['Phase 3 - Condition composée',state.p3],['Débogage',state.bug],['Phase 4 - Mini-projet / évaluation',state.p4]].map(([label,ok])=>`<tr><td>${label}</td><td>${ok ? 'Acquis' : 'À retravailler'}</td></tr>`).join('');
+      const code = generateCode(name, classe, state.score, date);
+      document.getElementById('report').innerHTML = `<h3>Bilan de ${escapeHtml(name)} - ${escapeHtml(classe)}</h3><p>Date : ${date}</p><table><thead><tr><th>Partie</th><th>Niveau</th></tr></thead><tbody>${rows}</tbody></table><p><strong>Score :</strong> ${state.score} / 20</p>`;
+      document.getElementById('validationCode').textContent = `Code de validation : ${code}`;
+    }
+
+    // Génère un code de validation court.
+    function generateCode(name, classe, score, date) {
+      const raw = `${name}-${classe}-${score}-${date}-V10`;
+      const encoded = btoa(unescape(encodeURIComponent(raw)));
+      return encoded.replace(/[^A-Z0-9]/gi, '').substring(0, 10).toUpperCase();
+    }
+
+    // Réinitialise l'activité.
+    function resetAll() {
+      if (!confirm('Réinitialiser toute la progression V10 ?')) return;
+      Object.keys(localStorage).filter(k => k.startsWith('algoDomotiqueV10')).forEach(k => localStorage.removeItem(k));
+      location.reload();
+    }
+
+    // Initialise la page.
+    function init() {
+      if (localStorage.getItem('algoDomotiqueV10Theme') === 'light') document.body.classList.add('light');
+      document.getElementById('studentDate').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('lux').addEventListener('input', e => document.getElementById('luxValue').textContent = e.target.value);
+      renderBanks();
+      updateProjectHelp();
+      updateLives();
+      showPhase(state.phase || 0);
+      updateProgress();
+    }
+
+    // Lancement après chargement.
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
