@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Encodage UTF-8 pour afficher correctement les accents. -->
+  <meta charset="UTF-8">
+  <!-- Affichage adapté aux ordinateurs, tablettes et smartphones. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Titre affiché dans l'onglet du navigateur. -->
+  <title>TP Algorigrammes & Domotique - Niveau 2 - V9</title>
+  <style>
+    /* Variables du thème sombre. */
+    :root {
+      --bg: #07111f;
+      --panel: #101c30;
+      --panel2: #16243b;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: #334155;
+      --blue: #38bdf8;
+      --green: #22c55e;
+      --yellow: #facc15;
+      --orange: #fb923c;
+      --red: #f87171;
+      --purple: #a78bfa;
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    /* Variables du thème clair. */
+    body.light {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --panel2: #eef6ff;
+      --text: #0f172a;
+      --muted: #334155;
+      --line: #94a3b8;
+      --shadow: rgba(15, 23, 42, 0.12);
+    }
+
+    /* Style général de la page. */
+    body {
+      margin: 0;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background: radial-gradient(circle at top, #1e3a8a 0%, var(--bg) 48%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* Bandeau compact : il reste visible, mais occupe beaucoup moins de place. */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.97), rgba(2, 6, 23, 0.97));
+      border-bottom: 1px solid var(--line);
+      padding: 0.45rem 0.75rem;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Ligne supérieure du bandeau compact. */
+    .header-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    /* Bloc titre + progression. */
+    .header-main {
+      min-width: 0;
+    }
+
+    /* Titre principal plus petit. */
+    h1 {
+      margin: 0;
+      font-size: clamp(1rem, 2.2vw, 1.55rem);
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Sous-titre volontairement discret pour gagner de la place. */
+    .subtitle {
+      margin: 0.15rem 0 0;
+      color: #dbeafe;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Barre de progression globale compacte. */
+    .progress-shell {
+      height: 10px;
+      background: rgba(2, 6, 23, 0.55);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0.32rem 0 0;
+      max-width: 760px;
+    }
+
+    /* Remplissage de la barre de progression. */
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+      transition: width 0.35s ease;
+    }
+
+    /* Menu des phases en version compacte. */
+    .phase-menu {
+      display: flex;
+      gap: 0.25rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 1220px;
+      margin: 0.35rem auto 0;
+    }
+
+    /* Conteneur principal. */
+    main {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    /* Sections et cartes. */
+    section, .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.15rem;
+      margin: 1rem 0;
+      box-shadow: 0 14px 28px var(--shadow);
+    }
+
+    /* Titres de niveau 2. */
+    h2 {
+      margin-top: 0;
+      color: var(--text);
+      border-left: 8px solid var(--blue);
+      padding-left: 0.8rem;
+    }
+
+    /* Titres de niveau 3. */
+    h3 {
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    /* Grille responsive. */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Boutons généraux. */
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 0.52rem 0.78rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--blue), #93c5fd);
+      color: #03111f;
+      min-height: 38px;
+      margin: 0.1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Effet au survol des boutons. */
+    button:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    /* Bouton secondaire. */
+    .secondary {
+      background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+    }
+
+    /* Bouton de réinitialisation. */
+    .danger {
+      background: linear-gradient(135deg, #fecaca, var(--red));
+    }
+
+    /* Bouton de phase active. */
+    .activePhase {
+      outline: 3px solid var(--yellow);
+    }
+
+    /* Étiquettes. */
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 23, 0.55);
+      border-radius: 999px;
+      padding: 0.22rem 0.58rem;
+      color: var(--text);
+      font-size: 0.86rem;
+      margin: 0.12rem;
+    }
+
+    /* Champs de saisie. */
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 0.25rem;
+      padding: 0.7rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 23, 0.65);
+      color: var(--text);
+      font-family: inherit;
+      min-height: 44px;
+    }
+
+    /* Champs en thème clair. */
+    body.light input, body.light select, body.light textarea {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    /* Cases à cocher et boutons radio. */
+    input[type="checkbox"], input[type="radio"] {
+      width: auto;
+      transform: scale(1.18);
+      margin-right: 0.4rem;
+      min-height: auto;
+    }
+
+    /* Curseurs. */
+    input[type="range"] {
+      accent-color: var(--blue);
+    }
+
+    /* Tableaux. */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    /* Cellules. */
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.72rem;
+      vertical-align: top;
+    }
+
+    /* En-têtes de tableau. */
+    th {
+      background: var(--panel2);
+    }
+
+    /* Bloc de réussite. */
+    .success {
+      border-left: 6px solid var(--green);
+      background: rgba(34, 197, 94, 0.12);
+      padding: 0.9rem;
+      border-radius: 14px;
+    }
+
+    /* Bloc d'aide. */
+    .note {
+      border-left: 6px solid var(--yellow);
+      background: rgba(250, 204, 21, 0.12);
+      padding: 0.9rem;
+      border-radius: 14px;
+    }
+
+    /* Bloc d'erreur. */
+    .error {
+      border-left: 6px solid var(--red);
+      background: rgba(248, 113, 113, 0.12);
+      padding: 0.9rem;
+      border-radius: 14px;
+    }
+
+    /* Phase masquée. */
+    .hidden {
+      display: none;
+    }
+
+    /* Zone de blocs. */
+    .dropzone, .bank {
+      min-height: 170px;
+      border: 2px dashed var(--blue);
+      border-radius: 16px;
+      padding: 0.8rem;
+      background: rgba(2, 6, 23, 0.28);
+    }
+
+    /* Bloc d'algorithme. */
+    .algo-block {
+      user-select: none;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 0.68rem;
+      margin: 0.45rem 0;
+      cursor: grab;
+      background: rgba(2, 6, 23, 0.72);
+      color: var(--text);
+      min-height: 34px;
+    }
+
+    /* Bloc d'algorithme en thème clair. */
+    body.light .algo-block {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Couleur des blocs de début et fin. */
+    .b-start { border-left: 8px solid var(--blue); }
+
+    /* Couleur des blocs d'action. */
+    .b-action { border-left: 8px solid var(--green); }
+
+    /* Couleur des blocs de condition. */
+    .b-condition { border-left: 8px solid var(--orange); }
+
+    /* Couleur des blocs de boucle. */
+    .b-loop { border-left: 8px solid var(--purple); }
+
+    /* Question QCM. */
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: rgba(2, 6, 23, 0.34);
+    }
+
+    /* Option QCM. */
+    .option {
+      display: block;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 0.65rem;
+      margin: 0.45rem 0;
+      background: rgba(15, 23, 42, 0.55);
+    }
+
+    /* Option QCM en thème clair. */
+    body.light .option {
+      background: #f1f5f9;
+    }
+
+    /* Survol option. */
+    .option:hover {
+      border-color: var(--blue);
+    }
+
+    /* Zone de feedback. */
+    .feedback {
+      margin-top: 0.8rem;
+      min-height: 1.8rem;
+    }
+
+    /* Code de validation. */
+    .code-box {
+      font-family: Consolas, Monaco, monospace;
+      letter-spacing: 0.06rem;
+      background: rgba(2, 6, 23, 0.65);
+      border: 1px dashed var(--blue);
+      padding: 0.8rem;
+      border-radius: 13px;
+      text-align: center;
+    }
+
+    /* Score principal. */
+    .score-big {
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      color: #bbf7d0;
+      font-weight: bold;
+    }
+
+    /* SVG responsive. */
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Adaptation spécifique aux petits écrans. */
+    @media (max-width: 760px) {
+      .header-row {
+        grid-template-columns: 1fr;
+      }
+      .subtitle {
+        display: none;
+      }
+      .phase-menu {
+        justify-content: center;
+      }
+      button {
+        font-size: 0.82rem;
+        padding: 0.45rem 0.58rem;
+      }
+    }
+
+    /* En plein écran, on réduit encore un peu les marges. */
+    :fullscreen main {
+      max-width: 1320px;
+    }
+
+    /* Impression propre. */
+    @media print {
+      body { background: white; color: black; }
+      header, button, .no-print { display: none; }
+      section, .card, .question { background: white; color: black; box-shadow: none; border: 1px solid #999; }
+      h2, h3 { color: black; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Ligne compacte : titre à gauche, progression à droite. -->
+    <div class="header-row">
+      <div class="header-main">
+        <!-- Titre principal. -->
+        <h1>🏠 TP Algorigrammes & Domotique - Niveau 2 - V9</h1>
+        <!-- Objectif court. -->
+        <p class="subtitle">Parcours progressif : découvrir, ordonner, tester, corriger, simuler, puis concevoir.</p>
+        <!-- Barre de progression. -->
+        <div class="progress-shell"><div id="globalProgress" class="progress-fill"></div></div>
+      </div>
+      <!-- Texte de progression. -->
+      <p id="progressText" class="subtitle">Étape 0 sur 5 - Score actuel : 0 / 20</p>
+    </div>
+    <!-- Menu de navigation compact. -->
+    <nav class="phase-menu" aria-label="Navigation entre les phases">
+      <button id="btnP0" onclick="showPhase(0)">Phase 0</button>
+      <button id="btnP1" onclick="showPhase(1)">Phase 1</button>
+      <button id="btnP2" onclick="showPhase(2)">Phase 2</button>
+      <button id="btnP3" onclick="showPhase(3)">Phase 3</button>
+      <button id="btnP4" onclick="showPhase(4)">Phase 4</button>
+      <button id="btnP5" onclick="showPhase(5)">Bilan</button>
+      <button id="fullscreenBtn" class="secondary" onclick="toggleFullscreen()">⛶ Plein écran</button>
+      <button class="secondary" onclick="toggleTheme()">☀️/🌙 Thème</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="identity">
+      <!-- Identification pour le suivi du professeur. -->
+      <h2>🧾 Identification</h2>
+      <div class="grid">
+        <label>Nom et prénom
+          <input id="studentName" type="text" placeholder="Exemple : Sarah Pierre">
+        </label>
+        <label>Classe
+          <input id="studentClass" type="text" placeholder="Exemple : 4e A">
+        </label>
+        <label>Date
+          <input id="studentDate" type="date">
+        </label>
+      </div>
+      <p class="note"><strong>Important :</strong> cette version limite la gamification à <strong>3 points de vie</strong>, pour garder l'activité motivante sans être trop longue.</p>
+      <p id="lifeBox" class="code-box">Points de vie : ❤️❤️❤️</p>
+    </section>
+
+    <section id="phase0" class="phase">
+      <!-- Phase 0 : construction des bases. -->
+      <h2>Phase 0 - Découverte : comprendre avant de répondre</h2>
+      <p><strong>Objectif :</strong> reconnaître les symboles de base et le vocabulaire domotique avant de résoudre des problèmes.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Les 4 symboles de base</h3>
+          <table>
+            <tr><th>Symbole</th><th>Rôle</th></tr>
+            <tr><td>Ovale</td><td>Début ou fin</td></tr>
+            <tr><td>Rectangle</td><td>Action</td></tr>
+            <tr><td>Losange</td><td>Condition, test, question</td></tr>
+            <tr><td>Flèche</td><td>Ordre d'exécution</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Mini-activité : associer</h3>
+          <label>Ovale
+            <select id="mOvale"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <label>Rectangle
+            <select id="mRectangle"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <label>Losange
+            <select id="mLosange"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <label>Flèche
+            <select id="mFleche"><option value="">Choisir</option><option>Action</option><option>Début ou fin</option><option>Condition</option><option>Ordre</option></select>
+          </label>
+          <button onclick="checkPhase0()">Vérifier la phase 0</button>
+          <button class="secondary" onclick="showCorrection('corr0', 'bases')">Voir la correction avec algorigramme</button>
+          <div id="f0" class="feedback"></div>
+        </div>
+      </div>
+      <div id="corr0" class="feedback"></div>
+    </section>
+
+    <section id="phase1" class="phase hidden">
+      <!-- Phase 1 : algorithme linéaire. -->
+      <h2>Phase 1 - Algorigramme linéaire très simple</h2>
+      <p><strong>Mission :</strong> remettre dans l'ordre l'algorithme « allumer une lampe pendant 10 secondes, puis l'éteindre ».</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Blocs disponibles</h3>
+          <p class="note">Clique sur les blocs dans le bon ordre. Sur ordinateur, tu peux aussi les glisser.</p>
+          <div id="bank1" class="bank"></div>
+        </div>
+        <div class="card">
+          <h3>Ta construction</h3>
+          <div id="zone1" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event, 1)"></div>
+          <button onclick="checkBuild(1)">Vérifier</button>
+          <button class="secondary" onclick="clearZone(1)">Effacer</button>
+          <button class="secondary" onclick="showCorrection('corr1', 'lineaire')">Voir l'algorigramme corrigé</button>
+          <div id="f1" class="feedback"></div>
+        </div>
+      </div>
+      <div id="corr1" class="feedback"></div>
+    </section>
+
+    <section id="phase2" class="phase hidden">
+      <!-- Phase 2 : introduction progressive de la condition. -->
+      <h2>Phase 2 - Introduire une condition</h2>
+      <p><strong>Mission :</strong> construire l'algorithme d'un éclairage automatique qui s'allume seulement s'il fait nuit.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Blocs disponibles</h3>
+          <div id="bank2" class="bank"></div>
+        </div>
+        <div class="card">
+          <h3>Ta construction</h3>
+          <div id="zone2" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event, 2)"></div>
+          <button onclick="checkBuild(2)">Vérifier</button>
+          <button class="secondary" onclick="clearZone(2)">Effacer</button>
+          <button class="secondary" onclick="showCorrection('corr2', 'condition')">Voir l'algorigramme corrigé</button>
+          <div id="f2" class="feedback"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Simulation de la condition</h3>
+        <label>Luminosité : <span id="luxValue">500</span> lux
+          <input id="lux" type="range" min="0" max="1000" value="500">
+        </label>
+        <button onclick="simulatePhase2()">Tester la lumière</button>
+        <div id="sim2" class="feedback"></div>
+      </div>
+      <div id="corr2" class="feedback"></div>
+    </section>
+
+    <section id="phase3" class="phase hidden">
+      <!-- Phase 3 : niveau complexe. -->
+      <h2>Phase 3 - Domotique plus complexe : présence ET obscurité</h2>
+      <p><strong>Mission :</strong> utiliser une condition composée : la lampe s'allume si une présence est détectée <strong>ET</strong> s'il fait sombre.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Construction de l'algorigramme</h3>
+          <div id="bank3" class="bank"></div>
+        </div>
+        <div class="card">
+          <h3>Ta construction</h3>
+          <div id="zone3" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event, 3)"></div>
+          <button onclick="checkBuild(3)">Vérifier</button>
+          <button class="secondary" onclick="clearZone(3)">Effacer</button>
+          <button class="secondary" onclick="showCorrection('corr3', 'complexe')">Voir l'algorigramme corrigé</button>
+          <div id="f3" class="feedback"></div>
+        </div>
+      </div>
+      <div id="corr3" class="feedback"></div>
+      <div class="card">
+        <h3>Débogage</h3>
+        <p>Un élève a écrit : <strong>SI présence = oui OU luminosité &lt; 50 lux ALORS allumer lampe</strong>.</p>
+        <p>Coche les deux erreurs principales.</p>
+        <label class="option"><input type="checkbox" class="bug" value="ou"> Il faudrait utiliser ET au lieu de OU.</label>
+        <label class="option"><input type="checkbox" class="bug" value="sinon"> Il faut prévoir clairement la branche SINON : éteindre la lampe.</label>
+        <label class="option"><input type="checkbox" class="bug" value="debut"> Le mot Début est interdit.</label>
+        <label class="option"><input type="checkbox" class="bug" value="capteur"> Un capteur ne peut jamais être lu.</label>
+        <button onclick="checkBugs()">Corriger le débogage</button>
+        <button class="secondary" onclick="showCorrection('corrBug', 'complexe')">Afficher la correction sous forme d'algorigramme</button>
+        <div id="fBug" class="feedback"></div>
+        <div id="corrBug" class="feedback"></div>
+      </div>
+      <div class="card">
+        <h3>QCM final court</h3>
+        <div id="quiz"></div>
+      </div>
+    </section>
+
+    <section id="phase4" class="phase hidden">
+      <!-- Phase 4 : mini-projet libre. -->
+      <h2>Phase 4 - Mini-projet : concevoir ton propre système</h2>
+      <p><strong>Mission :</strong> choisir un système domotique, écrire sa logique, puis générer une correction sous forme d'algorigramme.</p>
+      <div class="grid">
+        <div class="card">
+          <label>Système choisi
+            <select id="projectType" onchange="updateProjectHelp()">
+              <option value="store">Store automatique</option>
+              <option value="arrosage">Arrosage automatique</option>
+              <option value="portail">Portail sécurisé</option>
+            </select>
+          </label>
+          <label>Condition principale
+            <input id="projectCondition" type="text" placeholder="Exemple : luminosité > 800 lux">
+          </label>
+          <label>Action si OUI
+            <input id="projectYes" type="text" placeholder="Exemple : descendre le store">
+          </label>
+          <label>Action si NON
+            <input id="projectNo" type="text" placeholder="Exemple : laisser le store ouvert">
+          </label>
+          <button onclick="checkProject()">Valider mon mini-projet</button>
+          <button class="secondary" onclick="generateProjectCorrection()">Générer l'algorigramme de correction</button>
+          <div id="projectHelp" class="note"></div>
+          <div id="f4" class="feedback"></div>
+        </div>
+        <div class="card">
+          <h3>Algorigramme généré</h3>
+          <div id="projectAlgo" class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="phase5" class="phase hidden">
+      <!-- Bilan final. -->
+      <h2>Bilan final et export</h2>
+      <div id="scoreBig" class="score-big">0 / 20</div>
+      <div id="report" class="card"><p>Complète les phases pour obtenir ton bilan.</p></div>
+      <div id="validationCode" class="code-box">Code de validation : en attente</div>
+      <button onclick="finalReport()">Générer le bilan</button>
+      <button class="secondary" onclick="window.print()">Imprimer / enregistrer en PDF</button>
+      <button class="danger" onclick="resetAll()">Réinitialiser ma progression</button>
+    </section>
+  </main>
+
+  <script>
+    // Nombre maximal de points de vie.
+    const MAX_LIVES = 3;
+
+    // Définition des blocs de chaque phase de construction.
+    const blockSets = {
+      1: [
+        {id:'debut', text:'Début', type:'b-start'},
+        {id:'allumer', text:'Allumer la lampe', type:'b-action'},
+        {id:'attendre', text:'Attendre 10 secondes', type:'b-action'},
+        {id:'eteindre', text:'Éteindre la lampe', type:'b-action'},
+        {id:'fin', text:'Fin', type:'b-start'}
+      ],
+      2: [
+        {id:'debut', text:'Début', type:'b-start'},
+        {id:'lireLux', text:'Lire la luminosité', type:'b-action'},
+        {id:'testNuit', text:'SI luminosité < 50 lux ?', type:'b-condition'},
+        {id:'allumer', text:'OUI : allumer la lampe', type:'b-action'},
+        {id:'eteindre', text:'NON : éteindre la lampe', type:'b-action'},
+        {id:'boucle', text:'Retour au début', type:'b-loop'}
+      ],
+      3: [
+        {id:'debut', text:'Début', type:'b-start'},
+        {id:'lireLux', text:'Lire la luminosité', type:'b-action'},
+        {id:'lirePresence', text:'Lire le détecteur de présence', type:'b-action'},
+        {id:'test', text:'SI présence = oui ET luminosité < 50 lux ?', type:'b-condition'},
+        {id:'allumer', text:'OUI : allumer la lampe', type:'b-action'},
+        {id:'eteindre', text:'NON : éteindre la lampe', type:'b-action'},
+        {id:'boucle', text:'Retour au début', type:'b-loop'}
+      ]
+    };
+
+    // Ordres attendus pour les constructions.
+    const expected = {
+      1: ['debut', 'allumer', 'attendre', 'eteindre', 'fin'],
+      2: ['debut', 'lireLux', 'testNuit', 'allumer', 'eteindre', 'boucle'],
+      3: ['debut', 'lireLux', 'lirePresence', 'test', 'allumer', 'eteindre', 'boucle']
+    };
+
+    // Questions finales courtes.
+    const qcm = [
+      {q:'Quel bloc Scratch/mBlock correspond au losange ?', options:['si ... alors ... sinon','jouer un son','avancer de 10 pas'], correct:0, exp:'Le losange pose une condition. En Scratch/mBlock, cela correspond souvent au bloc si ... alors ... sinon.'},
+      {q:'Avec une condition ET, quand la sortie est-elle vraie ?', options:['Quand une seule condition est vraie','Quand toutes les conditions sont vraies','Jamais'], correct:1, exp:'Avec ET, toutes les conditions doivent être vraies.'},
+      {q:'Quel élément est une entrée ?', options:['Lampe','Moteur','Capteur de présence'], correct:2, exp:'Le capteur donne une information au système : c’est une entrée.'}
+    ];
+
+    // État global sauvegardé dans le navigateur.
+    let state = JSON.parse(localStorage.getItem('algoDomotiqueV9State') || JSON.stringify({phase:0, lives:MAX_LIVES, p0:false, p1:false, p2:false, p3:false, bug:false, qcm:{}, p4:false, score:0}));
+
+    // Fonction qui affiche une phase et masque les autres.
+    function showPhase(n) {
+      // Parcours des phases disponibles.
+      for (let i = 0; i <= 5; i++) {
+        // Récupération de la section de phase.
+        const section = document.getElementById(`phase${i}`);
+        // Masquage ou affichage selon la phase demandée.
+        section.classList.toggle('hidden', i !== n);
+        // Mise en évidence du bouton actif.
+        document.getElementById(`btnP${i}`).classList.toggle('activePhase', i === n);
+      }
+      // Sauvegarde de la phase actuelle.
+      state.phase = n;
+      // Sauvegarde locale.
+      saveState();
+      // Mise à jour de la progression.
+      updateProgress();
+    }
+
+    // Fonction qui sauvegarde l'état global.
+    function saveState() {
+      // Écriture de l'état dans localStorage.
+      localStorage.setItem('algoDomotiqueV9State', JSON.stringify(state));
+    }
+
+    // Fonction qui active ou quitte le plein écran.
+    function toggleFullscreen() {
+      // Récupération du bouton pour changer son texte.
+      const btn = document.getElementById('fullscreenBtn');
+      // Si aucun élément n'est en plein écran, on demande le plein écran.
+      if (!document.fullscreenElement) {
+        // Demande de plein écran sur toute la page.
+        document.documentElement.requestFullscreen().then(() => {
+          // Texte du bouton après activation.
+          btn.textContent = '⤢ Quitter plein écran';
+        }).catch(() => {
+          // Message si le navigateur bloque la demande.
+          alert('Le navigateur a bloqué le plein écran. Utilise la touche F11 si nécessaire.');
+        });
+      } else {
+        // Sortie du mode plein écran.
+        document.exitFullscreen().then(() => {
+          // Texte du bouton après sortie.
+          btn.textContent = '⛶ Plein écran';
+        });
+      }
+    }
+
+    // Fonction qui maintient le texte du bouton plein écran si l'utilisateur quitte avec Échap.
+    document.addEventListener('fullscreenchange', () => {
+      // Récupération du bouton.
+      const btn = document.getElementById('fullscreenBtn');
+      // Sécurité si le bouton n'existe pas encore.
+      if (!btn) return;
+      // Mise à jour du texte.
+      btn.textContent = document.fullscreenElement ? '⤢ Quitter plein écran' : '⛶ Plein écran';
+    });
+
+    // Fonction qui change le thème sombre/clair.
+    function toggleTheme() {
+      // Bascule de la classe light sur le body.
+      document.body.classList.toggle('light');
+      // Sauvegarde du thème choisi.
+      localStorage.setItem('algoDomotiqueV9Theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    }
+
+    // Fonction qui met à jour les points de vie.
+    function updateLives() {
+      // Création des coeurs pleins et vides.
+      const hearts = '❤️'.repeat(Math.max(0, state.lives)) + '🖤'.repeat(MAX_LIVES - Math.max(0, state.lives));
+      // Affichage des points de vie.
+      document.getElementById('lifeBox').textContent = `Points de vie : ${hearts}`;
+    }
+
+    // Fonction qui retire un point de vie en cas d'erreur.
+    function loseLife() {
+      // Retrait d'une vie sans descendre sous zéro.
+      state.lives = Math.max(0, state.lives - 1);
+      // Sauvegarde.
+      saveState();
+      // Affichage.
+      updateLives();
+    }
+
+    // Fonction qui met à jour la barre de progression et le score.
+    function updateProgress() {
+      // Liste des validations comptabilisées.
+      const done = [state.p0, state.p1, state.p2, state.p3, state.bug, state.p4].filter(Boolean).length;
+      // Score QCM final.
+      const qGood = Object.values(state.qcm).filter(Boolean).length;
+      // Score calculé sur 20.
+      state.score = Math.round(((done / 6) * 14 + (qGood / qcm.length) * 6) * 10) / 10;
+      // Pourcentage de progression global.
+      const percent = Math.round(((state.phase + 1) / 6) * 100);
+      // Mise à jour graphique.
+      document.getElementById('globalProgress').style.width = `${percent}%`;
+      // Mise à jour textuelle.
+      document.getElementById('progressText').textContent = `Étape ${state.phase} sur 5 - Score actuel : ${state.score} / 20`;
+      // Mise à jour du score final si la zone existe.
+      document.getElementById('scoreBig').textContent = `${state.score} / 20`;
+      // Sauvegarde.
+      saveState();
+    }
+
+    // Fonction qui vérifie la phase 0.
+    function checkPhase0() {
+      // Vérification des quatre associations attendues.
+      const ok = document.getElementById('mOvale').value === 'Début ou fin' && document.getElementById('mRectangle').value === 'Action' && document.getElementById('mLosange').value === 'Condition' && document.getElementById('mFleche').value === 'Ordre';
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById('f0');
+      // Affichage du feedback.
+      if (ok) {
+        zone.innerHTML = '<div class="success">Correct. Tu as identifié les quatre symboles de base.</div>';
+        state.p0 = true;
+      } else {
+        zone.innerHTML = '<div class="error">Pas encore. Indice : le losange sert à poser une question ; le rectangle sert à écrire une action.</div>';
+        loseLife();
+      }
+      // Sauvegarde et progression.
+      saveState();
+      updateProgress();
+    }
+
+    // Fonction qui affiche les banques de blocs.
+    function renderBanks() {
+      // Parcours des phases de construction.
+      [1, 2, 3].forEach(phase => {
+        // Récupération de la banque.
+        const bank = document.getElementById(`bank${phase}`);
+        // Nettoyage.
+        bank.innerHTML = '';
+        // Mélange léger des blocs pour éviter que l'ordre soit donné.
+        const shuffled = [...blockSets[phase]].sort(() => Math.random() - 0.5);
+        // Création des blocs disponibles.
+        shuffled.forEach(block => {
+          // Création d'un élément visuel.
+          const el = document.createElement('div');
+          // Ajout des classes.
+          el.className = `algo-block ${block.type}`;
+          // Ajout du texte.
+          el.textContent = block.text;
+          // Activation du glisser-déposer.
+          el.draggable = true;
+          // Stockage des informations.
+          el.dataset.id = block.id;
+          el.dataset.phase = phase;
+          // Début de déplacement.
+          el.addEventListener('dragstart', dragBlock);
+          // Clic compatible tablette.
+          el.addEventListener('click', () => addBlock(phase, block.id));
+          // Ajout dans la banque.
+          bank.appendChild(el);
+        });
+        // Restauration de la zone de construction.
+        restoreZone(phase);
+      });
+    }
+
+    // Fonction de début de déplacement.
+    function dragBlock(event) {
+      // Stockage de l'identifiant et de la phase du bloc.
+      event.dataTransfer.setData('text/plain', `${event.target.dataset.phase}:${event.target.dataset.id}`);
+    }
+
+    // Fonction qui autorise le dépôt.
+    function allowDrop(event) {
+      // Empêche le comportement par défaut.
+      event.preventDefault();
+    }
+
+    // Fonction de dépôt dans une zone.
+    function dropBlock(event, phase) {
+      // Empêche le comportement par défaut.
+      event.preventDefault();
+      // Récupération des données transférées.
+      const data = event.dataTransfer.getData('text/plain');
+      // Découpage des données.
+      const [sourcePhase, id] = data.split(':');
+      // Vérification que le bloc vient de la bonne phase.
+      if (Number(sourcePhase) !== phase) return;
+      // Ajout du bloc.
+      addBlock(phase, id);
+    }
+
+    // Fonction qui ajoute un bloc à la construction.
+    function addBlock(phase, id) {
+      // Recherche du bloc.
+      const block = blockSets[phase].find(b => b.id === id);
+      // Sécurité si le bloc n'existe pas.
+      if (!block) return;
+      // Création de l'élément.
+      const el = document.createElement('div');
+      // Ajout des classes.
+      el.className = `algo-block ${block.type}`;
+      // Texte affiché.
+      el.textContent = block.text;
+      // Stockage de l'identifiant.
+      el.dataset.id = id;
+      // Indication de suppression.
+      el.title = 'Double-clique pour retirer ce bloc.';
+      // Suppression au double-clic.
+      el.addEventListener('dblclick', () => { el.remove(); saveZone(phase); });
+      // Ajout dans la zone.
+      document.getElementById(`zone${phase}`).appendChild(el);
+      // Sauvegarde.
+      saveZone(phase);
+    }
+
+    // Fonction qui sauvegarde une construction.
+    function saveZone(phase) {
+      // Lecture de l'ordre actuel.
+      const order = Array.from(document.querySelectorAll(`#zone${phase} .algo-block`)).map(el => el.dataset.id);
+      // Sauvegarde locale.
+      localStorage.setItem(`algoDomotiqueV9Zone${phase}`, JSON.stringify(order));
+    }
+
+    // Fonction qui restaure une construction sauvegardée.
+    function restoreZone(phase) {
+      // Lecture des blocs sauvegardés.
+      const saved = JSON.parse(localStorage.getItem(`algoDomotiqueV9Zone${phase}`) || '[]');
+      // Nettoyage de la zone.
+      document.getElementById(`zone${phase}`).innerHTML = '';
+      // Ajout de chaque bloc.
+      saved.forEach(id => addBlock(phase, id));
+    }
+
+    // Fonction qui efface une construction.
+    function clearZone(phase) {
+      // Nettoyage visuel.
+      document.getElementById(`zone${phase}`).innerHTML = '';
+      // Suppression locale.
+      localStorage.removeItem(`algoDomotiqueV9Zone${phase}`);
+      // Feedback.
+      document.getElementById(`f${phase}`).innerHTML = '<div class="note">Construction effacée. Recommence étape par étape.</div>';
+    }
+
+    // Fonction qui vérifie une construction.
+    function checkBuild(phase) {
+      // Lecture de l'ordre choisi.
+      const order = Array.from(document.querySelectorAll(`#zone${phase} .algo-block`)).map(el => el.dataset.id);
+      // Comparaison avec l'ordre attendu.
+      const ok = JSON.stringify(order) === JSON.stringify(expected[phase]);
+      // Récupération du feedback.
+      const zone = document.getElementById(`f${phase}`);
+      // Traitement du résultat.
+      if (ok) {
+        zone.innerHTML = '<div class="success">Correct. Tu as construit l’algorigramme dans un ordre logique.</div>';
+        state[`p${phase}`] = true;
+      } else {
+        zone.innerHTML = '<div class="error">À corriger. Indice : lis les capteurs avant la condition, puis place les actions Oui/Non.</div>';
+        loseLife();
+      }
+      // Affichage automatique de l'algorigramme corrigé.
+      const keys = {1:'lineaire', 2:'condition', 3:'complexe'};
+      showCorrection(`corr${phase}`, keys[phase]);
+      // Sauvegarde et score.
+      saveState();
+      updateProgress();
+    }
+
+    // Fonction qui simule la phase 2.
+    function simulatePhase2() {
+      // Lecture de la luminosité.
+      const lux = Number(document.getElementById('lux').value);
+      // Test de la condition.
+      const on = lux < 50;
+      // Affichage du résultat.
+      document.getElementById('sim2').innerHTML = on ? '<div class="success">La lampe s’allume : la luminosité est inférieure à 50 lux.</div>' : '<div class="note">La lampe reste éteinte : la luminosité n’est pas assez faible.</div>';
+    }
+
+    // Fonction qui vérifie le débogage.
+    function checkBugs() {
+      // Lecture des cases cochées.
+      const selected = Array.from(document.querySelectorAll('.bug:checked')).map(el => el.value).sort();
+      // Réponses attendues.
+      const ok = JSON.stringify(selected) === JSON.stringify(['ou','sinon'].sort());
+      // Feedback.
+      if (ok) {
+        document.getElementById('fBug').innerHTML = '<div class="success">Correct. Il faut ET pour éviter l’allumage en plein jour, et il faut une action claire dans la branche NON.</div>';
+        state.bug = true;
+      } else {
+        document.getElementById('fBug').innerHTML = '<div class="error">Pas encore. Cherche une erreur de logique ET/OU et une erreur dans la branche SINON.</div>';
+        loseLife();
+      }
+      // Correction graphique.
+      showCorrection('corrBug', 'complexe');
+      // Sauvegarde et score.
+      saveState();
+      updateProgress();
+    }
+
+    // Fonction qui affiche le QCM final court.
+    function renderQcm() {
+      // Récupération du conteneur QCM.
+      const quiz = document.getElementById('quiz');
+      // Nettoyage.
+      quiz.innerHTML = '';
+      // Parcours des questions.
+      qcm.forEach((item, index) => {
+        // Création d'une question.
+        const div = document.createElement('div');
+        // Ajout de la classe.
+        div.className = 'question';
+        // HTML de la question.
+        div.innerHTML = `<h3>Question courte ${index + 1}</h3><p><strong>${item.q}</strong></p>${item.options.map((op,i)=>`<label class="option"><input type="radio" name="q${index}" value="${i}">${op}</label>`).join('')}<button onclick="checkQcm(${index})">Vérifier</button><button class="secondary" onclick="showCorrection('qcorr${index}', 'complexe')">Voir l'algorigramme associé</button><div id="fq${index}" class="feedback"></div><div id="qcorr${index}" class="feedback"></div>`;
+        // Ajout dans la page.
+        quiz.appendChild(div);
+      });
+    }
+
+    // Fonction qui vérifie une question courte.
+    function checkQcm(index) {
+      // Lecture de la réponse choisie.
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      // Zone de feedback.
+      const zone = document.getElementById(`fq${index}`);
+      // Vérification du choix.
+      if (!selected) { zone.innerHTML = '<div class="note">Choisis une réponse.</div>'; return; }
+      // Test de la réponse.
+      const ok = Number(selected.value) === qcm[index].correct;
+      // Affichage.
+      if (ok) {
+        zone.innerHTML = `<div class="success">Correct. ${qcm[index].exp}</div>`;
+        state.qcm[index] = true;
+      } else {
+        zone.innerHTML = `<div class="error">Pas encore. ${qcm[index].exp}</div>`;
+        state.qcm[index] = false;
+        loseLife();
+      }
+      // Sauvegarde et score.
+      saveState();
+      updateProgress();
+    }
+
+    // Fonction qui affiche une correction sous forme d'algorigramme SVG.
+    function showCorrection(targetId, type) {
+      // Dictionnaire des corrections textuelles.
+      const data = {
+        bases: ['Début', 'Action', 'Condition ?', 'Fin'],
+        lineaire: ['Début', 'Allumer lampe', 'Attendre 10 s', 'Éteindre lampe', 'Fin'],
+        condition: ['Début', 'Lire luminosité', 'Luminosité < 50 lux ?', 'Oui : allumer lampe', 'Non : éteindre lampe', 'Retour au début'],
+        complexe: ['Début', 'Lire luminosité', 'Lire présence', 'Présence ET luminosité < 50 ?', 'Oui : allumer lampe', 'Non : éteindre lampe', 'Retour au début']
+      };
+      // Choix de la liste correspondant au type demandé.
+      const steps = data[type] || data.lineaire;
+      // Génération du SVG.
+      document.getElementById(targetId).innerHTML = `<div class="success"><strong>Correction sous forme d'algorigramme :</strong>${makeFlowSvg(steps)}</div>`;
+    }
+
+    // Fonction qui crée un algorigramme SVG vertical simple.
+    function makeFlowSvg(steps) {
+      // Hauteur calculée selon le nombre d'étapes.
+      const h = 90 + steps.length * 82;
+      // Début du SVG.
+      let svg = `<svg viewBox="0 0 760 ${h}" role="img" aria-label="Algorigramme corrigé"><defs><marker id="arrowV9" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="currentColor"/></marker></defs>`;
+      // Parcours des étapes.
+      steps.forEach((txt, i) => {
+        // Coordonnée verticale.
+        const y = 45 + i * 82;
+        // Test du type condition.
+        const isCond = txt.includes('?');
+        // Test du type début/fin.
+        const isStart = txt === 'Début' || txt === 'Fin';
+        // Dessin du symbole approprié.
+        if (isCond) {
+          svg += `<polygon points="380,${y-34} 610,${y} 380,${y+34} 150,${y}" fill="#fb923c" stroke="#fff7ed" stroke-width="2"></polygon><text x="380" y="${y+5}" text-anchor="middle" fill="#111827" font-size="20">${escapeHtml(txt)}</text>`;
+        } else if (isStart) {
+          svg += `<ellipse cx="380" cy="${y}" rx="150" ry="30" fill="#0284c7" stroke="#e0f2fe" stroke-width="2"></ellipse><text x="380" y="${y+7}" text-anchor="middle" fill="white" font-size="20">${escapeHtml(txt)}</text>`;
+        } else {
+          svg += `<rect x="190" y="${y-28}" width="380" height="56" rx="9" fill="#16a34a" stroke="#dcfce7" stroke-width="2"></rect><text x="380" y="${y+7}" text-anchor="middle" fill="white" font-size="20">${escapeHtml(txt)}</text>`;
+        }
+        // Dessin de la flèche vers l'étape suivante.
+        if (i < steps.length - 1) svg += `<line x1="380" y1="${y+36}" x2="380" y2="${y+74}" stroke="currentColor" stroke-width="4" marker-end="url(#arrowV9)"></line>`;
+      });
+      // Fin du SVG.
+      svg += '</svg>';
+      // Retour du SVG.
+      return svg;
+    }
+
+    // Fonction qui protège le texte dans le SVG et les bilans.
+    function escapeHtml(text) {
+      // Remplacement des caractères spéciaux.
+      return String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+
+    // Fonction qui affiche une aide selon le mini-projet choisi.
+    function updateProjectHelp() {
+      // Lecture du choix.
+      const type = document.getElementById('projectType').value;
+      // Aides par système.
+      const help = {
+        store: 'Exemple : SI luminosité > 800 lux ALORS descendre le store SINON laisser le store ouvert.',
+        arrosage: 'Exemple : SI humidité du sol < 35 % ALORS arroser SINON ne pas arroser.',
+        portail: 'Exemple : SI voiture détectée ET aucun obstacle ALORS ouvrir le portail SINON garder fermé.'
+      };
+      // Affichage de l'aide.
+      document.getElementById('projectHelp').textContent = help[type];
+    }
+
+    // Fonction qui valide le mini-projet.
+    function checkProject() {
+      // Lecture des champs.
+      const condition = document.getElementById('projectCondition').value.trim();
+      const yes = document.getElementById('projectYes').value.trim();
+      const no = document.getElementById('projectNo').value.trim();
+      // Zone de feedback.
+      const zone = document.getElementById('f4');
+      // Vérification simple.
+      if (condition.length >= 5 && yes.length >= 5 && no.length >= 5) {
+        zone.innerHTML = '<div class="success">Mini-projet validé. Tu as bien une condition et deux actions possibles.</div>';
+        state.p4 = true;
+        generateProjectCorrection();
+      } else {
+        zone.innerHTML = '<div class="error">Complète la condition, l’action si OUI et l’action si NON.</div>';
+        loseLife();
+      }
+      // Sauvegarde.
+      saveState();
+      updateProgress();
+    }
+
+    // Fonction qui génère l'algorigramme du mini-projet.
+    function generateProjectCorrection() {
+      // Lecture des champs.
+      const condition = document.getElementById('projectCondition').value.trim() || 'condition à préciser ?';
+      const yes = document.getElementById('projectYes').value.trim() || 'action si OUI';
+      const no = document.getElementById('projectNo').value.trim() || 'action si NON';
+      // Étapes générées.
+      const steps = ['Début', 'Lire les capteurs', `${condition} ?`, `Oui : ${yes}`, `Non : ${no}`, 'Retour au début'];
+      // Affichage.
+      document.getElementById('projectAlgo').innerHTML = makeFlowSvg(steps);
+    }
+
+    // Fonction qui génère le bilan final.
+    function finalReport() {
+      // Lecture des informations élève.
+      const name = document.getElementById('studentName').value.trim() || 'Élève';
+      const classe = document.getElementById('studentClass').value.trim() || 'Classe non renseignée';
+      const date = document.getElementById('studentDate').value || new Date().toISOString().slice(0, 10);
+      // Création des lignes du bilan.
+      const rows = [
+        ['Phase 0 - Bases', state.p0],
+        ['Phase 1 - Linéaire', state.p1],
+        ['Phase 2 - Condition simple', state.p2],
+        ['Phase 3 - Condition composée', state.p3],
+        ['Débogage', state.bug],
+        ['Phase 4 - Mini-projet', state.p4]
+      ].map(([label, ok]) => `<tr><td>${label}</td><td>${ok ? 'Acquis' : 'À retravailler'}</td></tr>`).join('');
+      // Code de validation.
+      const code = generateCode(name, classe, state.score, date);
+      // Affichage du bilan.
+      document.getElementById('report').innerHTML = `<h3>Bilan de ${escapeHtml(name)} - ${escapeHtml(classe)}</h3><p>Date : ${date}</p><table><thead><tr><th>Partie</th><th>Niveau</th></tr></thead><tbody>${rows}</tbody></table><p><strong>Score :</strong> ${state.score} / 20</p>`;
+      // Affichage du code.
+      document.getElementById('validationCode').textContent = `Code de validation : ${code}`;
+    }
+
+    // Fonction qui crée un code de validation court.
+    function generateCode(name, classe, score, date) {
+      // Chaîne source.
+      const raw = `${name}-${classe}-${score}-${date}-V9`;
+      // Encodage compatible accents.
+      const encoded = btoa(unescape(encodeURIComponent(raw)));
+      // Nettoyage.
+      return encoded.replace(/[^A-Z0-9]/gi, '').substring(0, 10).toUpperCase();
+    }
+
+    // Fonction qui remet tout à zéro.
+    function resetAll() {
+      // Confirmation utilisateur.
+      if (!confirm('Réinitialiser toute la progression V9 ?')) return;
+      // Suppression des données locales.
+      Object.keys(localStorage).filter(k => k.startsWith('algoDomotiqueV9')).forEach(k => localStorage.removeItem(k));
+      // Rechargement de la page.
+      location.reload();
+    }
+
+    // Fonction de démarrage.
+    function init() {
+      // Restauration du thème clair si besoin.
+      if (localStorage.getItem('algoDomotiqueV9Theme') === 'light') document.body.classList.add('light');
+      // Date par défaut.
+      document.getElementById('studentDate').value = new Date().toISOString().slice(0, 10);
+      // Synchronisation du curseur de luminosité.
+      document.getElementById('lux').addEventListener('input', e => document.getElementById('luxValue').textContent = e.target.value);
+      // Affichage des banques de blocs.
+      renderBanks();
+      // Affichage du QCM.
+      renderQcm();
+      // Aide initiale du projet.
+      updateProjectHelp();
+      // Mise à jour des points de vie.
+      updateLives();
+      // Affichage de la phase sauvegardée.
+      showPhase(state.phase || 0);
+      // Mise à jour du score.
+      updateProgress();
+    }
+
+    // Lancement après chargement du DOM.
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
