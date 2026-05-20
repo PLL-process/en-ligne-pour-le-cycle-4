@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Définition de l'encodage pour afficher correctement les accents. -->
+  <meta charset="UTF-8">
+  <!-- Adaptation de la page aux écrans d'ordinateur, tablette et smartphone. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Titre affiché dans l'onglet du navigateur. -->
+  <title>TP interactif - Algorigrammes et domotique - Niveau 2 - V7</title>
+  <style>
+    /* Variables générales de couleurs. */
+    :root {
+      --fond: #06111f;
+      --fond-clair: #0f172a;
+      --carte: #111c2e;
+      --texte: #f8fafc;
+      --texte-secondaire: #cbd5e1;
+      --bleu: #38bdf8;
+      --bleu-fonce: #1d4ed8;
+      --vert: #22c55e;
+      --jaune: #facc15;
+      --orange: #fb923c;
+      --rouge: #f87171;
+      --violet: #a78bfa;
+      --bordure: #334155;
+    }
+
+    /* Mise en forme générale du document. */
+    body {
+      margin: 0;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background: radial-gradient(circle at top, #172554 0%, var(--fond) 45%, #020617 100%);
+      color: var(--texte);
+      line-height: 1.6;
+    }
+
+    /* En-tête principal de l'activité. */
+    header {
+      padding: 2rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--bordure);
+      background: linear-gradient(135deg, #1e3a8a, #020617);
+    }
+
+    /* Titre principal. */
+    h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 4vw, 2.9rem);
+    }
+
+    /* Sous-titre. */
+    .subtitle {
+      max-width: 980px;
+      margin: 0.7rem auto 0;
+      color: var(--texte-secondaire);
+      font-size: 1.05rem;
+    }
+
+    /* Conteneur central de la page. */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Mise en forme commune des sections et cartes. */
+    section, .card {
+      background: rgba(17, 28, 46, 0.94);
+      border: 1px solid var(--bordure);
+      border-radius: 18px;
+      padding: 1.1rem;
+      margin: 1rem 0;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    /* Titres de niveau 2. */
+    h2 {
+      margin-top: 0;
+      color: #dbeafe;
+      border-left: 8px solid var(--bleu);
+      padding-left: 0.8rem;
+    }
+
+    /* Titres de niveau 3. */
+    h3 {
+      color: #bfdbfe;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Grille adaptative. */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Cartes de mission importantes. */
+    .mission {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(167, 139, 250, 0.12));
+      border-color: rgba(56, 189, 248, 0.55);
+    }
+
+    /* Étiquettes de difficulté ou de compétence. */
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--bordure);
+      background: #020617;
+      color: #e0f2fe;
+      border-radius: 999px;
+      padding: 0.22rem 0.58rem;
+      font-size: 0.84rem;
+      margin: 0.12rem;
+    }
+
+    /* Tableaux pédagogiques. */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    /* Cellules de tableau. */
+    th, td {
+      border: 1px solid var(--bordure);
+      padding: 0.7rem;
+      vertical-align: top;
+    }
+
+    /* En-têtes de tableau. */
+    th {
+      background: #172554;
+      color: #eff6ff;
+    }
+
+    /* Champs de saisie et listes déroulantes. */
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 0.25rem;
+      padding: 0.65rem;
+      border-radius: 10px;
+      border: 1px solid var(--bordure);
+      background: #020617;
+      color: var(--texte);
+      font-family: inherit;
+    }
+
+    /* Cases à cocher. */
+    input[type="checkbox"], input[type="radio"] {
+      width: auto;
+      margin-right: 0.4rem;
+      transform: scale(1.18);
+    }
+
+    /* Curseurs de simulation. */
+    input[type="range"] {
+      accent-color: var(--bleu);
+    }
+
+    /* Boutons généraux. */
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 0.72rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: #03111f;
+      background: linear-gradient(135deg, var(--bleu), #93c5fd);
+      margin: 0.25rem 0.15rem;
+    }
+
+    /* Survol des boutons. */
+    button:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    /* Bouton secondaire. */
+    .secondary {
+      background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+    }
+
+    /* Bouton de réinitialisation. */
+    .danger {
+      background: linear-gradient(135deg, #fecaca, #f87171);
+    }
+
+    /* Bloc de réussite. */
+    .success {
+      border-left: 6px solid var(--vert);
+      background: rgba(34, 197, 94, 0.11);
+      padding: 0.85rem;
+      border-radius: 12px;
+    }
+
+    /* Bloc d'avertissement ou indice. */
+    .note {
+      border-left: 6px solid var(--jaune);
+      background: rgba(250, 204, 21, 0.11);
+      padding: 0.85rem;
+      border-radius: 12px;
+    }
+
+    /* Bloc d'erreur. */
+    .error {
+      border-left: 6px solid var(--rouge);
+      background: rgba(248, 113, 113, 0.11);
+      padding: 0.85rem;
+      border-radius: 12px;
+    }
+
+    /* Question du QCM. */
+    .question {
+      border: 1px solid var(--bordure);
+      border-radius: 16px;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: rgba(2, 6, 23, 0.45);
+    }
+
+    /* En-tête d'une question. */
+    .question-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    /* Option de réponse. */
+    .option {
+      display: block;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 0.65rem;
+      margin: 0.45rem 0;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Option survolée. */
+    .option:hover {
+      border-color: var(--bleu);
+    }
+
+    /* Zone de feedback. */
+    .feedback {
+      margin-top: 0.8rem;
+      min-height: 1.8rem;
+    }
+
+    /* Barre de progression. */
+    .progress-wrap {
+      background: #020617;
+      border: 1px solid var(--bordure);
+      border-radius: 999px;
+      height: 18px;
+      overflow: hidden;
+    }
+
+    /* Remplissage de la barre de progression. */
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--vert), var(--bleu), var(--violet));
+      transition: width 0.35s ease;
+    }
+
+    /* Affichage du score. */
+    .score-big {
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      color: #bbf7d0;
+      font-weight: bold;
+    }
+
+    /* Code de validation. */
+    .code-box {
+      font-family: Consolas, Monaco, monospace;
+      letter-spacing: 0.08rem;
+      background: #020617;
+      border: 1px dashed var(--bleu);
+      padding: 0.8rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    /* Zone où l'élève dépose ou ajoute des blocs. */
+    .dropzone {
+      min-height: 220px;
+      border: 2px dashed var(--bleu);
+      border-radius: 16px;
+      padding: 0.8rem;
+      background: rgba(2, 6, 23, 0.45);
+    }
+
+    /* Bloc d'algorithme déplaçable. */
+    .algo-block {
+      user-select: none;
+      border-radius: 12px;
+      padding: 0.65rem;
+      margin: 0.45rem 0;
+      border: 1px solid var(--bordure);
+      background: #020617;
+      color: var(--texte);
+      cursor: grab;
+    }
+
+    /* Bloc en cours de déplacement. */
+    .algo-block:active {
+      cursor: grabbing;
+    }
+
+    /* Bloc de type début ou fin. */
+    .b-start { border-left: 7px solid var(--bleu); }
+
+    /* Bloc de type action. */
+    .b-action { border-left: 7px solid var(--vert); }
+
+    /* Bloc de type condition. */
+    .b-condition { border-left: 7px solid var(--orange); }
+
+    /* Bloc de type boucle. */
+    .b-loop { border-left: 7px solid var(--violet); }
+
+    /* Lexique interactif. */
+    .lexique span {
+      border-bottom: 1px dotted var(--bleu);
+      cursor: help;
+    }
+
+    /* Zone masquée. */
+    .hidden {
+      display: none;
+    }
+
+    /* SVG en responsive. */
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Mise en page imprimée. */
+    @media print {
+      body { background: white; color: black; }
+      header, button, .no-print { display: none; }
+      section, .card, .question { background: white; color: black; box-shadow: none; border: 1px solid #999; }
+      h2, h3 { color: black; }
+    }
+
+    /* Adaptation aux petits écrans et au tactile. */
+    @media (max-width: 720px) {
+      main { padding: 0.55rem; }
+      section, .card { padding: 0.85rem; }
+      .algo-block, button { min-height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Titre de la version V7. -->
+    <h1>🏠 TP interactif : Algorigrammes & domotique - Niveau 2 - V7</h1>
+    <!-- Présentation courte du projet. -->
+    <p class="subtitle">Une version plus active : mini-missions, QCM commenté, construction d'algorigramme, débogage, simulation et lien avec Scratch/mBlock.</p>
+  </header>
+
+  <main>
+    <section class="mission">
+      <!-- Présentation de la mission globale. -->
+      <h2>🎯 Mission générale</h2>
+      <p><strong>Tu es technicien ou technicienne domotique.</strong> Plusieurs habitants signalent des problèmes : lumière qui reste allumée, portail qui ne s'ouvre pas, alarme trop sensible. Tu vas lire, tester et corriger des algorigrammes pour proposer une solution fiable.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Objectif d'apprentissage</h3>
+          <p>À la fin de l'activité, je sais <strong>identifier</strong> les entrées/sorties, <strong>lire</strong> une condition, <strong>construire</strong> un algorigramme simple et <strong>corriger</strong> une erreur logique.</p>
+        </div>
+        <div class="card">
+          <h3>Compétences travaillées</h3>
+          <p><span class="tag">Événement</span><span class="tag">Action</span><span class="tag">Condition</span><span class="tag">Boucle</span><span class="tag">Capteur</span><span class="tag">Actionneur</span><span class="tag">Scratch/mBlock</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Zone d'identification de l'élève. -->
+      <h2>🧾 Identification et suivi</h2>
+      <div class="grid">
+        <label>Nom et prénom
+          <input id="studentName" type="text" placeholder="Exemple : Lucas Bernard">
+        </label>
+        <label>Classe
+          <input id="studentClass" type="text" placeholder="Exemple : 4e B">
+        </label>
+        <label>Date
+          <input id="studentDate" type="date">
+        </label>
+      </div>
+      <p class="note"><strong>Gamification :</strong> tu disposes de 5 points de vie pour les questions du QCM. Une erreur enlève un point de vie, mais elle donne aussi un indice pour apprendre.</p>
+      <p id="lifeBox" class="code-box">Points de vie : ❤️❤️❤️❤️❤️</p>
+    </section>
+
+    <section>
+      <!-- Fiche ressource intégrée. -->
+      <h2>📚 Fiche ressource : symboles et vocabulaire</h2>
+      <button onclick="toggleResource()">📖 Afficher / masquer le rappel de cours</button>
+      <div id="resourceBox">
+        <table>
+          <thead>
+            <tr><th>Terme du programme</th><th>Définition</th><th>Exemple concret</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Événement</strong></td><td>Information qui déclenche ou influence une action.</td><td>Une présence est détectée ; un bouton est appuyé.</td></tr>
+            <tr><td><strong>Action</strong></td><td>Commande réalisée par le système.</td><td>Allumer une lampe ; ouvrir un portail ; activer une alarme.</td></tr>
+            <tr><td><strong>Condition</strong></td><td>Question qui oriente l'algorithme vers Oui ou Non.</td><td>SI luminosité &lt; 50 lux ALORS...</td></tr>
+            <tr><td><strong>Boucle</strong></td><td>Répétition d'une partie de l'algorithme.</td><td>Le système vérifie la luminosité toutes les secondes.</td></tr>
+            <tr><td><strong>Capteur TOR</strong></td><td>Capteur Tout Ou Rien : il renvoie deux états possibles.</td><td>Présence détectée : oui/non ; porte ouverte : oui/non.</td></tr>
+          </tbody>
+        </table>
+        <div class="grid">
+          <div class="card">
+            <h3>Ovale : Début / Fin</h3>
+            <svg viewBox="0 0 220 90" role="img" aria-label="Symbole début fin"><ellipse cx="110" cy="45" rx="85" ry="28" fill="#0284c7" stroke="#e0f2fe"/><text x="110" y="51" text-anchor="middle" fill="white" font-size="18">Début / Fin</text></svg>
+          </div>
+          <div class="card">
+            <h3>Rectangle : Action</h3>
+            <svg viewBox="0 0 220 90" role="img" aria-label="Symbole action"><rect x="35" y="20" width="150" height="50" rx="7" fill="#16a34a" stroke="#dcfce7"/><text x="110" y="51" text-anchor="middle" fill="white" font-size="18">Action</text></svg>
+          </div>
+          <div class="card">
+            <h3>Losange : Condition</h3>
+            <svg viewBox="0 0 220 120" role="img" aria-label="Symbole condition"><polygon points="110,10 205,60 110,110 15,60" fill="#f59e0b" stroke="#fef3c7"/><text x="110" y="66" text-anchor="middle" fill="#111827" font-size="17">Condition ?</text></svg>
+          </div>
+        </div>
+        <p class="lexique"><strong>Lexique interactif :</strong> <span title="Élément qui mesure ou détecte une information. Exemple : capteur de luminosité.">capteur</span>, <span title="Élément qui agit sur le réel. Exemple : moteur, lampe, buzzer.">actionneur</span>, <span title="Condition qui utilise deux informations. Avec ET, les deux doivent être vraies.">ET logique</span>, <span title="Condition qui utilise deux informations. Avec OU, une seule peut suffire.">OU logique</span>.</p>
+      </div>
+    </section>
+
+    <section>
+      <!-- Images et schémas simplifiés reliant le réel à l'algorigramme. -->
+      <h2>🔗 Lien avec le réel : capteurs et actionneurs</h2>
+      <div class="grid">
+        <div class="card"><h3>👁️ Capteur IR / présence</h3><p>Il détecte une présence : c'est une <strong>entrée</strong>.</p><p><span class="tag">Événement : présence détectée</span></p></div>
+        <div class="card"><h3>🔘 Bouton poussoir</h3><p>Il indique si l'utilisateur appuie : c'est une <strong>entrée TOR</strong>.</p><p><span class="tag">Événement : bouton appuyé</span></p></div>
+        <div class="card"><h3>💡 LED / lampe</h3><p>Elle s'allume sur commande : c'est une <strong>sortie</strong>.</p><p><span class="tag">Action : allumer</span></p></div>
+        <div class="card"><h3>⚙️ Moteur de portail</h3><p>Il met le portail en mouvement : c'est un <strong>actionneur</strong>.</p><p><span class="tag">Action : ouvrir / fermer</span></p></div>
+      </div>
+    </section>
+
+    <section>
+      <!-- QCM sous forme de mini-missions. -->
+      <h2>✅ Phase 1 - Mini-missions QCM avec feedback</h2>
+      <p>Chaque erreur déclenche une explication et un indice. Le but n'est pas seulement d'avoir une note : le but est de comprendre.</p>
+      <div class="progress-wrap"><div id="progressFill" class="progress-fill"></div></div>
+      <p id="progressText">Progression : 0 / 10 missions vérifiées.</p>
+      <div id="quiz"></div>
+    </section>
+
+    <section>
+      <!-- Construction active d'un algorigramme. -->
+      <h2>🧩 Phase 2 - Construire un algorigramme par blocs</h2>
+      <p><strong>Mission :</strong> M. Dupont oublie souvent d'éteindre la lumière du couloir. Construis l'algorithme suivant : la lampe s'allume si une présence est détectée ET s'il fait sombre, puis elle s'éteint après 30 secondes.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Blocs disponibles</h3>
+          <p class="note">Sur ordinateur : glisse les blocs. Sur tablette : touche un bloc pour l'ajouter.</p>
+          <div id="blockBank"></div>
+        </div>
+        <div class="card">
+          <h3>Zone de construction</h3>
+          <div id="dropzone" class="dropzone" ondragover="allowDrop(event)" ondrop="dropBlock(event)"></div>
+          <button onclick="checkBuild()">🔎 Vérifier la construction</button>
+          <button class="secondary" onclick="clearBuild()">Effacer la construction</button>
+          <div id="buildFeedback" class="feedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Activité de débogage. -->
+      <h2>🐞 Phase 3 - Débogage : trouver les erreurs</h2>
+      <p><strong>Situation :</strong> la lumière du jardin s'allume parfois en plein jour. Voici l'algorithme écrit par un élève.</p>
+      <div class="card">
+        <pre style="white-space: pre-wrap; background:#020617; padding:1rem; border-radius:12px; border:1px solid var(--bordure);">Début
+Lire luminosité
+Lire présence
+SI présence = oui OU luminosité &lt; 50 lux ALORS
+   Allumer lampe
+SINON
+   Attendre 30 secondes
+FIN SI
+Retour au début</pre>
+      </div>
+      <p>Coche les deux erreurs principales.</p>
+      <label class="option"><input type="checkbox" class="bug" value="ou"> La condition utilise OU alors qu'il faudrait ET.</label>
+      <label class="option"><input type="checkbox" class="bug" value="non"> La branche SINON ne commande pas clairement l'extinction de la lampe.</label>
+      <label class="option"><input type="checkbox" class="bug" value="debut"> Le mot Début est interdit dans un algorigramme.</label>
+      <label class="option"><input type="checkbox" class="bug" value="capteur"> Un capteur ne peut jamais être lu dans un algorithme.</label>
+      <button onclick="checkBugs()">🛠️ Corriger l'algorithme</button>
+      <div id="bugFeedback" class="feedback"></div>
+    </section>
+
+    <section>
+      <!-- Lien entre algorigramme et programmation par blocs. -->
+      <h2>🧱 Phase 4 - Pont avec Scratch / mBlock</h2>
+      <p>En Cycle 4, il faut comprendre que le losange d'un algorigramme correspond souvent à un bloc de test dans Scratch ou mBlock.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Question</h3>
+          <p>Quel bloc Scratch/mBlock correspond le mieux à un losange contenant : <strong>présence détectée ET luminosité &lt; 50</strong> ?</p>
+          <select id="blockChoice">
+            <option value="">-- Choisir une réponse --</option>
+            <option value="repeat">Répéter indéfiniment</option>
+            <option value="ifelse">Si ... alors ... sinon</option>
+            <option value="move">Avancer de 10 pas</option>
+            <option value="sound">Jouer un son</option>
+          </select>
+          <button onclick="checkScratch()">Vérifier</button>
+          <div id="scratchFeedback" class="feedback"></div>
+        </div>
+        <div class="card">
+          <h3>Correspondance</h3>
+          <table>
+            <tr><th>Algorigramme</th><th>Scratch / mBlock</th></tr>
+            <tr><td>Losange : condition</td><td>Bloc <strong>si ... alors ... sinon</strong></td></tr>
+            <tr><td>Rectangle : action</td><td>Bloc de commande : allumer LED, faire tourner moteur...</td></tr>
+            <tr><td>Boucle</td><td>Bloc <strong>répéter</strong> ou <strong>répéter indéfiniment</strong></td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Simulation visuelle du système. -->
+      <h2>🎮 Phase 5 - Simulation visuelle</h2>
+      <p>Modifie les capteurs pour voir le comportement du système.</p>
+      <div class="grid">
+        <div class="card">
+          <label>Luminosité : <span id="luxValue">500</span> lux
+            <input id="lux" type="range" min="0" max="1000" value="500">
+          </label>
+          <p><label><input id="presence" type="checkbox"> Présence détectée</label></p>
+          <button onclick="runSimulation()">▶️ Lancer la simulation</button>
+        </div>
+        <div class="card" id="simBox" aria-live="polite">
+          <h3>Maison simulée</h3>
+          <svg viewBox="0 0 420 260" role="img" aria-label="Simulation d'une lampe domotique">
+            <rect x="30" y="100" width="360" height="130" rx="12" fill="#1e293b" stroke="#94a3b8"/>
+            <polygon points="30,100 210,25 390,100" fill="#334155" stroke="#94a3b8"/>
+            <rect x="180" y="150" width="60" height="80" fill="#0f172a" stroke="#94a3b8"/>
+            <circle id="lampCircle" cx="210" cy="95" r="22" fill="#475569" stroke="#e2e8f0"/>
+            <text id="lampText" x="210" y="250" text-anchor="middle" fill="#e2e8f0">Lampe éteinte</text>
+          </svg>
+          <p id="simText">La simulation n'a pas encore été lancée.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Bilan global et validation professeur. -->
+      <h2>📊 Bilan final</h2>
+      <div id="scoreBig" class="score-big">0 / 20</div>
+      <div id="competenceReport" class="card"><p>Réalise les phases pour obtenir ton bilan.</p></div>
+      <div id="validationBlock" class="code-box">Code de validation : en attente</div>
+      <button onclick="finalReport()">📌 Générer le bilan</button>
+      <button class="secondary" onclick="window.print()">📄 Imprimer / Enregistrer en PDF</button>
+      <button class="danger" onclick="resetAll()">♻️ Réinitialiser</button>
+    </section>
+
+    <section>
+      <!-- Phase hybride vers la manipulation réelle. -->
+      <h2>🧪 Activité complémentaire hybride</h2>
+      <p><strong>Phase 1 :</strong> réussir ce TP en ligne.</p>
+      <p><strong>Phase 2 :</strong> reproduire l'algorithme dans Scratch, mBlock, Vittascience, Logitoc ou sur une carte Arduino / Micro:bit selon le matériel disponible.</p>
+      <p><strong>Défi expert :</strong> ajoute un bouton manuel qui force l'extinction de la lampe.</p>
+      <textarea id="bonusText" rows="7" placeholder="Écris ton amélioration : capteur utilisé, condition ajoutée, action commandée..."></textarea>
+      <button onclick="saveBonus()">💾 Enregistrer mon défi expert</button>
+      <div id="bonusFeedback" class="feedback"></div>
+    </section>
+  </main>
+
+  <script>
+    // Tableau des questions contextualisées du QCM.
+    const questions = [
+      {niveau:'🟢 Facile', comp:'Symboles', q:'Le portail de Mme Michu doit tester si une voiture est présente. Quel symbole faut-il utiliser pour représenter ce test ?', options:['Un rectangle d’action','Un losange de condition','Une flèche seule','Un ovale de fin'], correct:1, hint:'Un test pose une question avec deux réponses possibles : oui ou non.', exp:'Le losange représente une condition. Ici, la question est : voiture présente ?'},
+      {niveau:'🟢 Facile', comp:'Entrées', q:'Dans une alarme, le détecteur d’ouverture de porte est...', options:['un actionneur','une entrée du système','une sortie du système','une boucle'], correct:1, hint:'Il fournit une information au programme.', exp:'Le détecteur donne une information : porte ouverte ou fermée. C’est donc une entrée.'},
+      {niveau:'🟢 Facile', comp:'Actions', q:'Dans un éclairage automatique, “allumer la lampe” est...', options:['une action','une condition','un capteur','un événement interdit'], correct:0, hint:'Cherche ce que le système commande réellement.', exp:'Allumer une lampe est une action commandée par le système.'},
+      {niveau:'🟡 Moyen', comp:'Condition ET', q:'La lampe doit s’allumer seulement si présence = oui ET luminosité < 50 lux. Si présence = oui et luminosité = 600 lux, que doit faire la lampe ?', options:['S’allumer','Rester éteinte','Déclencher l’alarme','Ouvrir le portail'], correct:1, hint:'Avec ET, toutes les conditions doivent être vraies.', exp:'Il y a bien une présence, mais il ne fait pas sombre. La condition complète est donc fausse.'},
+      {niveau:'🟡 Moyen', comp:'Condition OU', q:'Une alarme se déclenche si porte ouverte OU fenêtre ouverte. La porte est fermée, mais la fenêtre est ouverte. Que se passe-t-il ?', options:['L’alarme reste inactive','L’alarme se déclenche','La lampe s’éteint','Le moteur tourne en continu'], correct:1, hint:'Avec OU, une seule condition vraie peut suffire.', exp:'La fenêtre ouverte suffit à déclencher l’alarme.'},
+      {niveau:'🟡 Moyen', comp:'Traduction', q:'Quel pseudo-code correspond à : “Si la luminosité baisse, alors la lampe s’allume” ?', options:['SI luminosité < seuil ALORS allumer lampe','SI lampe allumée ALORS luminosité baisse','TANT QUE lampe ALORS seuil','FIN SI puis Début'], correct:0, hint:'La condition doit porter sur la luminosité.', exp:'On teste la luminosité, puis on commande l’action allumer lampe.'},
+      {niveau:'🔴 Expert', comp:'Débogage', q:'Un algorithme allume une lampe avec : SI présence OU nuit ALORS allumer. Quel est le risque ?', options:['La lampe peut s’allumer en plein jour dès qu’il y a présence','La lampe ne peut jamais s’allumer','La condition est toujours fausse','Le capteur devient un actionneur'], correct:0, hint:'Compare OU et ET.', exp:'Avec OU, la présence seule suffit. Pour économiser l’énergie, il faudrait souvent présence ET nuit.'},
+      {niveau:'🔴 Expert', comp:'Sécurité', q:'Un portail motorisé doit se fermer seulement si aucun obstacle n’est détecté. Quelle condition est correcte ?', options:['SI obstacle détecté ALORS fermer','SI aucun obstacle détecté ALORS fermer','SI nuit ALORS fermer toujours','SI voiture présente ALORS bloquer tous les capteurs'], correct:1, hint:'La sécurité interdit de fermer en présence d’un obstacle.', exp:'Le portail ne doit se fermer que si le capteur indique qu’il n’y a pas d’obstacle.'},
+      {niveau:'🔴 Expert', comp:'Scratch/mBlock', q:'Dans Scratch/mBlock, quel bloc correspond le mieux au losange d’un algorigramme ?', options:['Si ... alors ... sinon','Jouer le son','Avancer de 10 pas','Dire bonjour'], correct:0, hint:'Un losange choisit entre deux chemins.', exp:'Le bloc si ... alors ... sinon représente un test avec deux branches.'},
+      {niveau:'🔴 Expert', comp:'Boucle', q:'Pourquoi ajoute-t-on souvent “Retour au début” dans un algorithme domotique ?', options:['Pour recommencer la surveillance régulièrement','Pour effacer tous les capteurs','Pour finir définitivement le programme','Pour changer la couleur du schéma'], correct:0, hint:'Un système domotique surveille souvent en continu.', exp:'Le système doit relire les capteurs régulièrement : c’est une boucle de surveillance.'}
+    ];
+
+    // Tableau des blocs disponibles pour la construction d'algorigramme.
+    const blocks = [
+      {id:'debut', text:'Début', type:'b-start'},
+      {id:'lux', text:'Lire la luminosité', type:'b-action'},
+      {id:'presence', text:'Lire le détecteur de présence', type:'b-action'},
+      {id:'condition', text:'SI présence = oui ET luminosité < 50 lux', type:'b-condition'},
+      {id:'allumer', text:'ALORS allumer la lampe', type:'b-action'},
+      {id:'attendre', text:'Attendre 30 secondes', type:'b-action'},
+      {id:'eteindre', text:'Éteindre la lampe', type:'b-action'},
+      {id:'boucle', text:'Retour au début', type:'b-loop'}
+    ];
+
+    // Ordre attendu pour valider la construction.
+    const expectedOrder = ['debut', 'lux', 'presence', 'condition', 'allumer', 'attendre', 'eteindre', 'boucle'];
+
+    // Réponses sauvegardées du QCM.
+    let answers = JSON.parse(localStorage.getItem('algoDomotiqueV7Answers') || '{}');
+
+    // Nombre de points de vie de l'élève.
+    let lives = Number(localStorage.getItem('algoDomotiqueV7Lives') || 5);
+
+    // État des activités hors QCM.
+    let taskState = JSON.parse(localStorage.getItem('algoDomotiqueV7TaskState') || '{"build":false,"bugs":false,"scratch":false,"simulation":false}');
+
+    // Fonction qui affiche ou masque la fiche ressource.
+    function toggleResource() {
+      // Récupération du bloc de rappel de cours.
+      const box = document.getElementById('resourceBox');
+      // Bascule de la classe hidden.
+      box.classList.toggle('hidden');
+    }
+
+    // Fonction qui met à jour l'affichage des points de vie.
+    function updateLives() {
+      // Création de la chaîne d'icônes selon le nombre de vies restantes.
+      const hearts = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 5 - lives));
+      // Affichage des points de vie.
+      document.getElementById('lifeBox').textContent = `Points de vie : ${hearts}`;
+      // Sauvegarde locale des points de vie.
+      localStorage.setItem('algoDomotiqueV7Lives', String(lives));
+    }
+
+    // Fonction qui affiche les questions du QCM.
+    function renderQuiz() {
+      // Récupération du conteneur du QCM.
+      const quiz = document.getElementById('quiz');
+      // Nettoyage du conteneur.
+      quiz.innerHTML = '';
+      // Parcours des questions.
+      questions.forEach((item, index) => {
+        // Création d'un bloc HTML pour la question.
+        const div = document.createElement('div');
+        // Ajout de la classe CSS question.
+        div.className = 'question';
+        // Construction du contenu de la question.
+        div.innerHTML = `
+          <div class="question-head">
+            <h3>Mission ${index + 1}</h3>
+            <span class="tag">${item.niveau} - ${item.comp}</span>
+          </div>
+          <p><strong>${item.q}</strong></p>
+          ${item.options.map((op, i) => `
+            <label class="option">
+              <input type="radio" name="q${index}" value="${i}" ${answers[index]?.choice === i ? 'checked' : ''}>
+              ${op}
+            </label>
+          `).join('')}
+          <button onclick="checkQuestion(${index})">Vérifier</button>
+          <button class="secondary" onclick="showHint(${index})">Voir un indice</button>
+          <div id="feedback-${index}" class="feedback">${answers[index]?.html || ''}</div>
+        `;
+        // Ajout de la question dans le QCM.
+        quiz.appendChild(div);
+      });
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui affiche un indice pour une question.
+    function showHint(index) {
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById(`feedback-${index}`);
+      // Affichage de l'indice sans donner directement la réponse.
+      zone.innerHTML = `<div class="note"><strong>Indice :</strong> ${questions[index].hint}</div>`;
+    }
+
+    // Fonction qui vérifie une question du QCM.
+    function checkQuestion(index) {
+      // Récupération du bouton radio sélectionné.
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      // Récupération de la zone de correction.
+      const zone = document.getElementById(`feedback-${index}`);
+      // Vérification de la présence d'une réponse.
+      if (!selected) {
+        // Message si rien n'est choisi.
+        zone.innerHTML = '<div class="note">Choisis une réponse avant de vérifier.</div>';
+        // Arrêt de la fonction.
+        return;
+      }
+      // Conversion de la réponse en nombre entier.
+      const choice = Number(selected.value);
+      // Récupération de la question.
+      const item = questions[index];
+      // Vérification de la justesse.
+      const ok = choice === item.correct;
+      // Retrait d'un point de vie si la réponse est fausse et si la question n'était pas déjà validée juste.
+      if (!ok && !answers[index]?.ok) lives = Math.max(0, lives - 1);
+      // Création du feedback détaillé.
+      const html = ok
+        ? `<div class="success">✅ Correct. ${item.exp}</div>`
+        : `<div class="error">❌ Ce n'est pas encore cela. <strong>Indice :</strong> ${item.hint}<br><strong>Correction :</strong> ${item.exp}</div>`;
+      // Affichage du feedback.
+      zone.innerHTML = html;
+      // Sauvegarde de la réponse.
+      answers[index] = { choice, ok, html, competence: item.comp };
+      // Sauvegarde locale du QCM.
+      localStorage.setItem('algoDomotiqueV7Answers', JSON.stringify(answers));
+      // Mise à jour des points de vie.
+      updateLives();
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui affiche les blocs disponibles.
+    function renderBlocks() {
+      // Récupération de la banque de blocs.
+      const bank = document.getElementById('blockBank');
+      // Nettoyage de la banque de blocs.
+      bank.innerHTML = '';
+      // Parcours des blocs disponibles.
+      blocks.forEach(block => {
+        // Création d'un bloc visuel.
+        const div = document.createElement('div');
+        // Ajout des classes CSS.
+        div.className = `algo-block ${block.type}`;
+        // Ajout du texte.
+        div.textContent = block.text;
+        // Activation du glisser-déposer.
+        div.draggable = true;
+        // Stockage de l'identifiant du bloc.
+        div.dataset.id = block.id;
+        // Stockage du type de bloc.
+        div.dataset.type = block.type;
+        // Gestion du début du glisser-déposer.
+        div.addEventListener('dragstart', dragBlock);
+        // Gestion du clic tactile ou souris pour ajouter rapidement.
+        div.addEventListener('click', () => addBlockToBuild(block.id));
+        // Ajout du bloc dans la banque.
+        bank.appendChild(div);
+      });
+      // Restauration éventuelle de la construction sauvegardée.
+      restoreBuild();
+    }
+
+    // Fonction qui autorise le dépôt d'un bloc.
+    function allowDrop(event) {
+      // Empêche le comportement par défaut du navigateur.
+      event.preventDefault();
+    }
+
+    // Fonction appelée quand un bloc commence à être glissé.
+    function dragBlock(event) {
+      // Stockage de l'identifiant du bloc dans le transfert HTML5.
+      event.dataTransfer.setData('text/plain', event.target.dataset.id);
+    }
+
+    // Fonction appelée quand un bloc est déposé dans la zone de construction.
+    function dropBlock(event) {
+      // Empêche le comportement par défaut.
+      event.preventDefault();
+      // Récupération de l'identifiant du bloc déposé.
+      const id = event.dataTransfer.getData('text/plain');
+      // Ajout du bloc à la construction.
+      addBlockToBuild(id);
+    }
+
+    // Fonction qui ajoute un bloc dans la zone de construction.
+    function addBlockToBuild(id) {
+      // Recherche du bloc dans le tableau des blocs.
+      const block = blocks.find(b => b.id === id);
+      // Sécurité si l'identifiant n'existe pas.
+      if (!block) return;
+      // Récupération de la zone de dépôt.
+      const zone = document.getElementById('dropzone');
+      // Création du bloc déposé.
+      const div = document.createElement('div');
+      // Ajout des classes CSS.
+      div.className = `algo-block ${block.type}`;
+      // Ajout du texte avec numéro automatique.
+      div.textContent = block.text;
+      // Stockage de l'identifiant.
+      div.dataset.id = block.id;
+      // Ajout d'un bouton de suppression au double clic.
+      div.title = 'Double-clique pour retirer ce bloc.';
+      // Suppression au double-clic.
+      div.addEventListener('dblclick', () => { div.remove(); saveBuild(); });
+      // Ajout du bloc dans la zone.
+      zone.appendChild(div);
+      // Sauvegarde de la construction.
+      saveBuild();
+    }
+
+    // Fonction qui sauvegarde la construction de blocs.
+    function saveBuild() {
+      // Récupération de l'ordre des blocs dans la zone.
+      const order = Array.from(document.querySelectorAll('#dropzone .algo-block')).map(el => el.dataset.id);
+      // Sauvegarde locale de l'ordre.
+      localStorage.setItem('algoDomotiqueV7Build', JSON.stringify(order));
+    }
+
+    // Fonction qui restaure la construction sauvegardée.
+    function restoreBuild() {
+      // Récupération du JSON sauvegardé.
+      const saved = JSON.parse(localStorage.getItem('algoDomotiqueV7Build') || '[]');
+      // Récupération de la zone de dépôt.
+      const zone = document.getElementById('dropzone');
+      // Nettoyage de la zone de dépôt.
+      zone.innerHTML = '';
+      // Ajout des blocs sauvegardés.
+      saved.forEach(id => addBlockToBuild(id));
+    }
+
+    // Fonction qui efface la construction.
+    function clearBuild() {
+      // Nettoyage de la zone de dépôt.
+      document.getElementById('dropzone').innerHTML = '';
+      // Suppression de la sauvegarde locale.
+      localStorage.removeItem('algoDomotiqueV7Build');
+      // Message à l'élève.
+      document.getElementById('buildFeedback').innerHTML = '<div class="note">Construction effacée. Tu peux recommencer.</div>';
+    }
+
+    // Fonction qui vérifie la construction d'algorigramme.
+    function checkBuild() {
+      // Récupération de l'ordre choisi par l'élève.
+      const order = Array.from(document.querySelectorAll('#dropzone .algo-block')).map(el => el.dataset.id);
+      // Comparaison avec l'ordre attendu.
+      const ok = JSON.stringify(order) === JSON.stringify(expectedOrder);
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById('buildFeedback');
+      // Affichage du résultat.
+      if (ok) {
+        // Validation si tout est correct.
+        zone.innerHTML = '<div class="success">✅ Construction correcte : tu as placé les lectures de capteurs avant la condition, puis les actions dans le bon ordre.</div>';
+        // Mémorisation de la réussite.
+        taskState.build = true;
+      } else {
+        // Aide si la construction n'est pas correcte.
+        zone.innerHTML = '<div class="error">❌ À corriger. Indice : commence par Début, lis les capteurs, teste la condition, réalise les actions, puis retourne au début.</div>';
+      }
+      // Sauvegarde de l'état des tâches.
+      saveTaskState();
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui vérifie les erreurs repérées dans l'algorithme faux.
+    function checkBugs() {
+      // Récupération des cases cochées.
+      const selected = Array.from(document.querySelectorAll('.bug:checked')).map(el => el.value).sort();
+      // Réponses attendues.
+      const expected = ['non', 'ou'];
+      // Test de validité.
+      const ok = JSON.stringify(selected) === JSON.stringify(expected.sort());
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById('bugFeedback');
+      // Affichage du résultat.
+      if (ok) {
+        // Message de réussite avec correction complète.
+        zone.innerHTML = '<div class="success">✅ Correct. Pour économiser l’énergie, il faut utiliser ET. La branche SINON doit aussi contenir une action claire : Éteindre lampe.</div>';
+        // Validation de la tâche.
+        taskState.bugs = true;
+      } else {
+        // Message d'aide.
+        zone.innerHTML = '<div class="error">❌ Regarde surtout la condition logique et la branche SINON. Une branche doit conduire à une action cohérente.</div>';
+      }
+      // Sauvegarde de l'état.
+      saveTaskState();
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui vérifie le lien Scratch/mBlock.
+    function checkScratch() {
+      // Lecture de la réponse choisie.
+      const value = document.getElementById('blockChoice').value;
+      // Récupération de la zone de correction.
+      const zone = document.getElementById('scratchFeedback');
+      // Test de la réponse.
+      if (value === 'ifelse') {
+        // Correction si la réponse est bonne.
+        zone.innerHTML = '<div class="success">✅ Correct. Le losange d’un algorigramme correspond très souvent à un bloc “si ... alors ... sinon”.</div>';
+        // Validation de la tâche.
+        taskState.scratch = true;
+      } else {
+        // Aide si la réponse est fausse.
+        zone.innerHTML = '<div class="error">❌ Indice : cherche le bloc qui permet de choisir entre deux chemins selon une condition.</div>';
+      }
+      // Sauvegarde de l'état.
+      saveTaskState();
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui lance la simulation visuelle.
+    function runSimulation() {
+      // Lecture de la luminosité.
+      const lux = Number(document.getElementById('lux').value);
+      // Lecture de la présence.
+      const presence = document.getElementById('presence').checked;
+      // Application de la condition étudiée.
+      const lampOn = presence && lux < 50;
+      // Récupération du cercle de lampe.
+      const circle = document.getElementById('lampCircle');
+      // Récupération du texte SVG.
+      const lampText = document.getElementById('lampText');
+      // Récupération du texte explicatif.
+      const simText = document.getElementById('simText');
+      // Mise à jour de la couleur de la lampe.
+      circle.setAttribute('fill', lampOn ? '#facc15' : '#475569');
+      // Mise à jour du texte dans le SVG.
+      lampText.textContent = lampOn ? 'Lampe allumée' : 'Lampe éteinte';
+      // Mise à jour du texte explicatif.
+      simText.innerHTML = lampOn
+        ? '✅ La lampe s’allume : présence détectée ET luminosité inférieure à 50 lux.'
+        : 'ℹ️ La lampe reste éteinte : au moins une des deux conditions n’est pas vérifiée.';
+      // Validation de la tâche de simulation.
+      taskState.simulation = true;
+      // Sauvegarde de l'état.
+      saveTaskState();
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui synchronise les curseurs avec les textes affichés.
+    function bindSliders() {
+      // Récupération du curseur de luminosité.
+      const lux = document.getElementById('lux');
+      // Récupération du texte de luminosité.
+      const luxValue = document.getElementById('luxValue');
+      // Mise à jour initiale.
+      luxValue.textContent = lux.value;
+      // Mise à jour à chaque mouvement du curseur.
+      lux.addEventListener('input', () => luxValue.textContent = lux.value);
+    }
+
+    // Fonction qui sauvegarde l'état des tâches hors QCM.
+    function saveTaskState() {
+      // Sauvegarde de l'objet taskState en JSON.
+      localStorage.setItem('algoDomotiqueV7TaskState', JSON.stringify(taskState));
+    }
+
+    // Fonction qui calcule et met à jour le score global.
+    function updateScore() {
+      // Nombre de questions QCM réussies.
+      const qcmGood = Object.values(answers).filter(a => a.ok).length;
+      // Score QCM ramené sur 12 points.
+      const qcmScore = (qcmGood / questions.length) * 12;
+      // Score des activités pratiques sur 8 points.
+      const taskScore = (taskState.build ? 2 : 0) + (taskState.bugs ? 2 : 0) + (taskState.scratch ? 2 : 0) + (taskState.simulation ? 2 : 0);
+      // Score final sur 20 arrondi au dixième.
+      const score20 = Math.round((qcmScore + taskScore) * 10) / 10;
+      // Nombre de questions QCM vérifiées.
+      const done = Object.keys(answers).length;
+      // Pourcentage de progression QCM.
+      const progress = Math.round((done / questions.length) * 100);
+      // Mise à jour de la barre de progression.
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      // Mise à jour du texte de progression.
+      document.getElementById('progressText').textContent = `Progression : ${done} / ${questions.length} missions vérifiées.`;
+      // Mise à jour du score final.
+      document.getElementById('scoreBig').textContent = `${score20} / 20`;
+      // Sauvegarde du score.
+      localStorage.setItem('algoDomotiqueV7Score', String(score20));
+    }
+
+    // Fonction qui transforme un résultat en niveau de maîtrise.
+    function levelLabel(rate) {
+      // Niveau expert.
+      if (rate >= 0.85) return '🔵 Expert';
+      // Niveau acquis.
+      if (rate >= 0.65) return '🟢 Acquis';
+      // Niveau en cours.
+      if (rate >= 0.4) return '🟡 En cours';
+      // Niveau à retravailler.
+      return '🔴 À retravailler';
+    }
+
+    // Fonction qui génère le bilan final par compétences.
+    function finalReport() {
+      // Lecture du nom de l'élève.
+      const name = document.getElementById('studentName').value.trim() || 'Élève';
+      // Lecture de la classe.
+      const classe = document.getElementById('studentClass').value.trim() || 'Classe non renseignée';
+      // Lecture de la date.
+      const date = document.getElementById('studentDate').value || new Date().toISOString().slice(0, 10);
+      // Calcul du score final déjà affiché.
+      const score = localStorage.getItem('algoDomotiqueV7Score') || '0';
+      // Création d'un bilan simple par grands axes.
+      const axes = [
+        ['QCM contextualisé', Object.values(answers).filter(a => a.ok).length / questions.length],
+        ['Construction d’algorigramme', taskState.build ? 1 : 0],
+        ['Débogage', taskState.bugs ? 1 : 0],
+        ['Lien Scratch/mBlock', taskState.scratch ? 1 : 0],
+        ['Simulation', taskState.simulation ? 1 : 0]
+      ];
+      // Construction des lignes du tableau.
+      const rows = axes.map(([label, rate]) => `<tr><td>${label}</td><td>${levelLabel(rate)}</td></tr>`).join('');
+      // Génération d'un code de validation.
+      const code = generateCode(name, classe, score, date);
+      // Affichage du bilan.
+      document.getElementById('competenceReport').innerHTML = `<h3>Bilan de ${name} - ${classe}</h3><p>Date : ${date}</p><table><thead><tr><th>Axe évalué</th><th>Niveau</th></tr></thead><tbody>${rows}</tbody></table><p><strong>Score :</strong> ${score} / 20</p>`;
+      // Affichage du code de validation.
+      document.getElementById('validationBlock').textContent = `Code de validation : ${code}`;
+    }
+
+    // Fonction qui génère un code court de validation.
+    function generateCode(name, classe, score, date) {
+      // Création d'une chaîne source.
+      const raw = `${name}-${classe}-${score}-${date}-V7`;
+      // Encodage en base64 compatible accents.
+      const encoded = btoa(unescape(encodeURIComponent(raw)));
+      // Nettoyage et limitation de la longueur du code.
+      return encoded.replace(/[^A-Z0-9]/gi, '').substring(0, 10).toUpperCase();
+    }
+
+    // Fonction qui sauvegarde le défi expert.
+    function saveBonus() {
+      // Lecture du texte saisi.
+      const text = document.getElementById('bonusText').value.trim();
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById('bonusFeedback');
+      // Test de longueur minimale.
+      if (text.length < 45) {
+        // Message si la réponse est trop courte.
+        zone.innerHTML = '<div class="note">Ajoute au moins un capteur, une condition et une action pour que ton amélioration soit exploitable.</div>';
+        // Arrêt de la fonction.
+        return;
+      }
+      // Sauvegarde locale du défi.
+      localStorage.setItem('algoDomotiqueV7Bonus', text);
+      // Message de réussite.
+      zone.innerHTML = '<div class="success">Défi expert enregistré. Tu peux maintenant l’expliquer ou le programmer en blocs.</div>';
+    }
+
+    // Fonction qui réinitialise toute l'activité.
+    function resetAll() {
+      // Demande de confirmation.
+      if (!confirm('Réinitialiser toutes les réponses de la V7 ?')) return;
+      // Réinitialisation des réponses.
+      answers = {};
+      // Réinitialisation des points de vie.
+      lives = 5;
+      // Réinitialisation des tâches.
+      taskState = {build:false, bugs:false, scratch:false, simulation:false};
+      // Suppression des données locales.
+      localStorage.removeItem('algoDomotiqueV7Answers');
+      localStorage.removeItem('algoDomotiqueV7Lives');
+      localStorage.removeItem('algoDomotiqueV7TaskState');
+      localStorage.removeItem('algoDomotiqueV7Build');
+      localStorage.removeItem('algoDomotiqueV7Score');
+      localStorage.removeItem('algoDomotiqueV7Bonus');
+      // Réaffichage du QCM.
+      renderQuiz();
+      // Réaffichage des blocs.
+      renderBlocks();
+      // Mise à jour des points de vie.
+      updateLives();
+      // Nettoyage des zones de feedback.
+      document.getElementById('buildFeedback').innerHTML = '';
+      document.getElementById('bugFeedback').innerHTML = '';
+      document.getElementById('scratchFeedback').innerHTML = '';
+      document.getElementById('competenceReport').innerHTML = '<p>Réalise les phases pour obtenir ton bilan.</p>';
+      document.getElementById('validationBlock').textContent = 'Code de validation : en attente';
+    }
+
+    // Fonction d'initialisation de la page.
+    function init() {
+      // Préremplissage de la date.
+      document.getElementById('studentDate').value = new Date().toISOString().slice(0, 10);
+      // Activation des curseurs.
+      bindSliders();
+      // Affichage du QCM.
+      renderQuiz();
+      // Affichage des blocs de construction.
+      renderBlocks();
+      // Mise à jour des points de vie.
+      updateLives();
+      // Restauration du défi expert.
+      document.getElementById('bonusText').value = localStorage.getItem('algoDomotiqueV7Bonus') || '';
+      // Mise à jour du score initial.
+      updateScore();
+    }
+
+    // Lancement de l'initialisation après chargement du document.
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
