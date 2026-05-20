@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Encodage de la page en UTF-8 pour afficher correctement les accents français. -->
+  <meta charset="UTF-8">
+  <!-- Adaptation automatique de l'affichage aux écrans de tablette, d'ordinateur et de téléphone. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Titre affiché dans l'onglet du navigateur. -->
+  <title>Algorigrammes et domotique - Niveau 2 - V6</title>
+  <style>
+    /* Variables de couleurs pour garder une identité visuelle cohérente. */
+    :root {
+      --fond: #07111f;
+      --fond-2: #0f172a;
+      --carte: #111c2f;
+      --texte: #f8fafc;
+      --texte-doux: #cbd5e1;
+      --bleu: #38bdf8;
+      --vert: #22c55e;
+      --orange: #fb923c;
+      --rouge: #f87171;
+      --jaune: #facc15;
+      --violet: #a78bfa;
+      --bordure: #334155;
+    }
+
+    /* Mise en page générale de la page. */
+    body {
+      margin: 0;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background: linear-gradient(135deg, var(--fond), #020617 60%, #111827);
+      color: var(--texte);
+      line-height: 1.6;
+    }
+
+    /* En-tête principal. */
+    header {
+      padding: 2rem 1rem;
+      text-align: center;
+      background: radial-gradient(circle at top, #1d4ed8, #020617 70%);
+      border-bottom: 1px solid var(--bordure);
+    }
+
+    /* Titre principal. */
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 3rem);
+    }
+
+    /* Sous-titre de l'en-tête. */
+    .subtitle {
+      max-width: 900px;
+      margin: 0.8rem auto 0;
+      color: var(--texte-doux);
+      font-size: 1.05rem;
+    }
+
+    /* Conteneur central. */
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Cartes de contenu. */
+    section, .card {
+      background: rgba(17, 28, 47, 0.94);
+      border: 1px solid var(--bordure);
+      border-radius: 18px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    /* Titres de section. */
+    h2 {
+      color: #dbeafe;
+      border-left: 8px solid var(--bleu);
+      padding-left: 0.8rem;
+      margin-top: 0;
+    }
+
+    /* Sous-titres. */
+    h3 {
+      color: #bfdbfe;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Grille responsive. */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Boîte de mission. */
+    .mission {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.14), rgba(167, 139, 250, 0.12));
+      border: 1px solid rgba(56, 189, 248, 0.45);
+    }
+
+    /* Étiquettes colorées. */
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--bordure);
+      background: #020617;
+      color: #e0f2fe;
+      font-size: 0.84rem;
+      margin: 0.15rem;
+    }
+
+    /* Tableaux. */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    /* Cellules de tableau. */
+    th, td {
+      border: 1px solid var(--bordure);
+      padding: 0.75rem;
+      vertical-align: top;
+    }
+
+    /* En-têtes de tableau. */
+    th {
+      background: #172554;
+      color: #eff6ff;
+    }
+
+    /* Lignes paires. */
+    tr:nth-child(even) td {
+      background: rgba(2, 6, 23, 0.35);
+    }
+
+    /* Blocs importants. */
+    .note {
+      border-left: 6px solid var(--jaune);
+      background: rgba(250, 204, 21, 0.1);
+      padding: 0.9rem;
+      border-radius: 12px;
+    }
+
+    /* Blocs de réussite. */
+    .success {
+      border-left: 6px solid var(--vert);
+      background: rgba(34, 197, 94, 0.1);
+      padding: 0.9rem;
+      border-radius: 12px;
+    }
+
+    /* Blocs d'erreur. */
+    .error {
+      border-left: 6px solid var(--rouge);
+      background: rgba(248, 113, 113, 0.1);
+      padding: 0.9rem;
+      border-radius: 12px;
+    }
+
+    /* Formulaire d'identification. */
+    .identity {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.8rem;
+    }
+
+    /* Libellés de formulaire. */
+    label {
+      font-weight: bold;
+      color: #e0f2fe;
+    }
+
+    /* Champs, menus et zones de texte. */
+    input, select, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 0.25rem;
+      padding: 0.65rem;
+      border-radius: 10px;
+      border: 1px solid var(--bordure);
+      background: #020617;
+      color: var(--texte);
+      font-family: inherit;
+    }
+
+    /* Cases à cocher plus lisibles. */
+    input[type="checkbox"] {
+      width: auto;
+      transform: scale(1.25);
+      margin-right: 0.4rem;
+    }
+
+    /* Curseurs de simulation. */
+    input[type="range"] {
+      accent-color: var(--bleu);
+    }
+
+    /* Boutons. */
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: #04111f;
+      background: linear-gradient(135deg, var(--bleu), #60a5fa);
+      margin: 0.3rem 0.15rem;
+    }
+
+    /* Effet au survol des boutons. */
+    button:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    /* Bouton secondaire. */
+    .secondary {
+      background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+    }
+
+    /* Bouton de danger raisonnable pour réinitialiser. */
+    .danger {
+      background: linear-gradient(135deg, #fecaca, #f87171);
+    }
+
+    /* Conteneur de chaque question. */
+    .question {
+      border: 1px solid var(--bordure);
+      border-radius: 16px;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: rgba(2, 6, 23, 0.45);
+    }
+
+    /* En-tête de question. */
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Niveau de difficulté. */
+    .niveau {
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      background: #020617;
+      border: 1px solid var(--bordure);
+      color: #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    /* Options du QCM. */
+    .option {
+      display: block;
+      margin: 0.45rem 0;
+      padding: 0.7rem;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid transparent;
+    }
+
+    /* Option survolée. */
+    .option:hover {
+      border-color: var(--bleu);
+    }
+
+    /* Retour pédagogique. */
+    .feedback {
+      margin-top: 0.8rem;
+      min-height: 2rem;
+    }
+
+    /* Barre de progression. */
+    .progress-wrap {
+      background: #020617;
+      border: 1px solid var(--bordure);
+      border-radius: 999px;
+      height: 18px;
+      overflow: hidden;
+    }
+
+    /* Remplissage de la barre. */
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--vert), var(--bleu), var(--violet));
+      transition: width 0.4s ease;
+    }
+
+    /* Score principal. */
+    .score-big {
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      color: #bbf7d0;
+      font-weight: bold;
+    }
+
+    /* Code de validation. */
+    .code-box {
+      font-family: Consolas, Monaco, monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.12rem;
+      background: #020617;
+      border: 1px dashed var(--bleu);
+      padding: 0.8rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    /* SVG des algorigrammes. */
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Zone imprimable. */
+    @media print {
+      body { background: white; color: black; }
+      header, button, .no-print { display: none; }
+      section, .card, .question { box-shadow: none; border: 1px solid #999; background: white; color: black; }
+      h2, h3 { color: black; }
+    }
+
+    /* Adaptation aux petits écrans. */
+    @media (max-width: 720px) {
+      main { padding: 0.55rem; }
+      section, .card { padding: 0.85rem; }
+      th, td { padding: 0.55rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Titre de la ressource pédagogique. -->
+    <h1>🏠 Algorigrammes & domotique - Niveau 2 - V6</h1>
+    <!-- Phrase d'accroche pour donner du sens à l'activité. -->
+    <p class="subtitle">Mission : lire, tester, corriger et compléter des algorigrammes de systèmes domotiques simples.</p>
+  </header>
+
+  <main>
+    <section class="mission">
+      <!-- Objectif général de la séance. -->
+      <h2>🎯 Objectif d'apprentissage</h2>
+      <p><strong>À la fin de l'activité, je sais identifier les entrées, les sorties et les conditions d'un système domotique, puis lire, compléter ou corriger un algorigramme simple.</strong></p>
+      <div class="grid">
+        <div class="card">
+          <h3>Ce que je vais apprendre</h3>
+          <ul>
+            <li>Reconnaître un <strong>capteur</strong>, un <strong>actionneur</strong>, une <strong>entrée</strong> et une <strong>sortie</strong>.</li>
+            <li>Comprendre une condition du type <strong>SI... ALORS... SINON</strong>.</li>
+            <li>Utiliser les fonctions logiques <strong>ET</strong> et <strong>OU</strong>.</li>
+            <li>Prévoir le comportement d'un système automatisé.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Ce qui sera évalué</h3>
+          <ul>
+            <li>Lire correctement les symboles d'un algorigramme.</li>
+            <li>Repérer les erreurs logiques.</li>
+            <li>Choisir la bonne action selon les valeurs des capteurs.</li>
+            <li>Justifier une réponse avec une phrase simple.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Identification utile pour un export imprimé ou PDF. -->
+      <h2>🧾 Identification de l'élève</h2>
+      <div class="identity">
+        <label>Nom et prénom
+          <input id="studentName" type="text" placeholder="Exemple : Marie Martin">
+        </label>
+        <label>Classe
+          <input id="studentClass" type="text" placeholder="Exemple : 4e A">
+        </label>
+        <label>Date
+          <input id="studentDate" type="date">
+        </label>
+      </div>
+    </section>
+
+    <section>
+      <!-- Situation concrète pour motiver le travail. -->
+      <h2>🏡 Situation de départ : une maison intelligente à dépanner</h2>
+      <p>Une famille utilise une maison équipée de systèmes domotiques : éclairage automatique, chauffage intelligent, alarme et arrosage automatique.</p>
+      <p>Depuis quelques jours, certains systèmes se déclenchent au mauvais moment. Ton rôle est celui d'un <strong>technicien domotique</strong> : tu dois analyser les algorigrammes et choisir les bonnes corrections.</p>
+      <p><span class="tag">Exemple concret</span> La lumière du couloir doit s'allumer seulement s'il fait sombre <strong>ET</strong> si une présence est détectée.</p>
+    </section>
+
+    <section>
+      <!-- Rappel de vocabulaire indispensable. -->
+      <h2>📚 Rappels : vocabulaire et symboles</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Notion</th>
+            <th>Définition simple</th>
+            <th>Exemple domotique</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Capteur</strong></td>
+            <td>Élément qui mesure ou détecte une information.</td>
+            <td>Détecteur de présence, capteur de luminosité, capteur de température.</td>
+          </tr>
+          <tr>
+            <td><strong>Actionneur</strong></td>
+            <td>Élément qui agit sur le réel.</td>
+            <td>Lampe, moteur de portail, chauffage, électrovanne d'arrosage.</td>
+          </tr>
+          <tr>
+            <td><strong>Entrée</strong></td>
+            <td>Information reçue par le système.</td>
+            <td>Présence détectée = oui ; luminosité = 120 lux.</td>
+          </tr>
+          <tr>
+            <td><strong>Sortie</strong></td>
+            <td>Action commandée par le système.</td>
+            <td>Allumer la lampe ; ouvrir le portail ; déclencher l'alarme.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Symbole</th>
+            <th>Rôle dans l'algorigramme</th>
+            <th>Repère visuel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ovale</td>
+            <td>Début ou fin de l'algorithme.</td>
+            <td><svg width="120" height="45" role="img" aria-label="Ovale début fin"><ellipse cx="60" cy="22" rx="48" ry="17" fill="#0ea5e9" stroke="#e0f2fe"/><text x="60" y="27" text-anchor="middle" fill="white" font-size="13">Début</text></svg></td>
+          </tr>
+          <tr>
+            <td>Rectangle</td>
+            <td>Action ou traitement.</td>
+            <td><svg width="120" height="45" role="img" aria-label="Rectangle action"><rect x="20" y="8" width="80" height="30" rx="4" fill="#16a34a" stroke="#dcfce7"/><text x="60" y="28" text-anchor="middle" fill="white" font-size="13">Action</text></svg></td>
+          </tr>
+          <tr>
+            <td>Losange</td>
+            <td>Test ou condition : réponse oui/non.</td>
+            <td><svg width="120" height="70" role="img" aria-label="Losange condition"><polygon points="60,5 110,35 60,65 10,35" fill="#f59e0b" stroke="#fef3c7"/><text x="60" y="39" text-anchor="middle" fill="#111827" font-size="12">Condition ?</text></svg></td>
+          </tr>
+          <tr>
+            <td>Flèche</td>
+            <td>Ordre d'exécution.</td>
+            <td><svg width="120" height="45" role="img" aria-label="Flèche ordre"><line x1="20" y1="22" x2="95" y2="22" stroke="#e2e8f0" stroke-width="4"/><polygon points="95,22 82,14 82,30" fill="#e2e8f0"/></svg></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>À retenir :</strong> un losange pose une question. Si la réponse est « oui », l'algorithme suit une branche. Si la réponse est « non », il suit l'autre branche.</div>
+    </section>
+
+    <section>
+      <!-- Exemple guidé avant les questions évaluées. -->
+      <h2>🧭 Exemple guidé : éclairage automatique du couloir</h2>
+      <p><strong>Besoin :</strong> la lampe du couloir s'allume seulement si une présence est détectée <strong>ET</strong> s'il fait sombre.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Lecture en français</h3>
+          <ol>
+            <li>Le système mesure la luminosité.</li>
+            <li>Le système vérifie si une personne est présente.</li>
+            <li>Si présence = oui <strong>ET</strong> luminosité &lt; 300 lux, alors la lampe s'allume.</li>
+            <li>Sinon, la lampe reste éteinte.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>Algorigramme simplifié</h3>
+          <svg viewBox="0 0 540 430" role="img" aria-label="Algorigramme éclairage automatique">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#e2e8f0"/></marker>
+            </defs>
+            <ellipse cx="270" cy="35" rx="80" ry="24" fill="#0ea5e9" stroke="#e0f2fe"/>
+            <text x="270" y="40" text-anchor="middle" fill="white">Début</text>
+            <line x1="270" y1="60" x2="270" y2="95" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrow)"/>
+            <polygon points="270,95 430,155 270,215 110,155" fill="#f59e0b" stroke="#fef3c7"/>
+            <text x="270" y="148" text-anchor="middle" fill="#111827" font-size="15">Présence ?</text>
+            <text x="270" y="168" text-anchor="middle" fill="#111827" font-size="15">ET luminosité &lt; 300 lux ?</text>
+            <line x1="430" y1="155" x2="500" y2="155" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrow)"/>
+            <text x="462" y="145" fill="#bbf7d0">Oui</text>
+            <rect x="350" y="240" width="150" height="48" rx="8" fill="#16a34a" stroke="#dcfce7"/>
+            <text x="425" y="270" text-anchor="middle" fill="white">Allumer lampe</text>
+            <line x1="500" y1="155" x2="500" y2="264" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrow)"/>
+            <line x1="110" y1="155" x2="40" y2="155" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrow)"/>
+            <text x="68" y="145" fill="#fecaca">Non</text>
+            <rect x="40" y="240" width="150" height="48" rx="8" fill="#991b1b" stroke="#fecaca"/>
+            <text x="115" y="270" text-anchor="middle" fill="white">Éteindre lampe</text>
+            <line x1="40" y1="155" x2="40" y2="264" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrow)"/>
+            <line x1="425" y1="288" x2="425" y2="350" stroke="#e2e8f0" stroke-width="3"/>
+            <line x1="115" y1="288" x2="115" y2="350" stroke="#e2e8f0" stroke-width="3"/>
+            <line x1="115" y1="350" x2="270" y2="350" stroke="#e2e8f0" stroke-width="3"/>
+            <line x1="425" y1="350" x2="270" y2="350" stroke="#e2e8f0" stroke-width="3"/>
+            <line x1="270" y1="350" x2="270" y2="380" stroke="#e2e8f0" stroke-width="3" marker-end="url(#arrow)"/>
+            <ellipse cx="270" cy="405" rx="70" ry="22" fill="#64748b" stroke="#e2e8f0"/>
+            <text x="270" y="410" text-anchor="middle" fill="white">Fin</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Mini-simulateur de capteurs pour relier l'algorithme au réel. -->
+      <h2>🎮 Mini-simulateur domotique</h2>
+      <p>Modifie les valeurs des capteurs, puis clique sur « Exécuter la simulation ».</p>
+      <div class="grid">
+        <div class="card">
+          <label>Luminosité : <span id="luxValue">500</span> lux
+            <input id="lux" type="range" min="0" max="1000" value="500">
+          </label>
+          <label>Température : <span id="tempValue">20</span> °C
+            <input id="temp" type="range" min="5" max="35" value="20">
+          </label>
+          <label>Humidité du sol : <span id="humValue">50</span> %
+            <input id="hum" type="range" min="0" max="100" value="50">
+          </label>
+          <p><label><input id="presence" type="checkbox"> Présence détectée</label></p>
+          <p><label><input id="porte" type="checkbox"> Porte ouverte</label></p>
+          <button onclick="runSimulation()">▶️ Exécuter la simulation</button>
+        </div>
+        <div class="card" id="simulationResult" aria-live="polite">
+          <h3>Résultat</h3>
+          <p>La simulation n'a pas encore été lancée.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Tableau des compétences pour rendre l'évaluation explicite. -->
+      <h2>📋 Compétences travaillées</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Référentiel</th>
+            <th>Compétence ciblée</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Technologie cycle 4 - programme 2020</td>
+            <td>Exprimer sa pensée à l'aide d'outils de description adaptés : algorithmes, algorigrammes, schémas.</td>
+          </tr>
+          <tr>
+            <td>Technologie cycle 4 - programme 2020</td>
+            <td>Appliquer les principes élémentaires de l'algorithmique et du codage à la résolution d'un problème simple.</td>
+          </tr>
+          <tr>
+            <td>CRCN / PIX</td>
+            <td>Résoudre des problèmes techniques simples dans un environnement numérique.</td>
+          </tr>
+          <tr>
+            <td>Socle commun</td>
+            <td>Domaine 2 : méthodes et outils pour apprendre ; Domaine 4 : systèmes naturels et systèmes techniques.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <!-- QCM progressif généré par JavaScript. -->
+      <h2>✅ QCM progressif avec correction immédiate</h2>
+      <p>Lis chaque question. Choisis une réponse. Clique ensuite sur « Vérifier ». La correction explique la logique à retenir.</p>
+      <div class="progress-wrap" aria-label="Progression du QCM"><div id="progressFill" class="progress-fill"></div></div>
+      <p id="progressText">Progression : 0 / 15 questions vérifiées.</p>
+      <div id="quiz"></div>
+    </section>
+
+    <section>
+      <!-- Bilan final automatiquement mis à jour. -->
+      <h2>📊 Bilan automatique</h2>
+      <div id="scoreBig" class="score-big">0 / 20</div>
+      <div id="competenceReport" class="card"><p>Réponds aux questions pour obtenir un bilan par compétence.</p></div>
+      <div id="validationBlock" class="code-box">Code de validation : en attente</div>
+      <button onclick="finalReport()">📌 Générer le bilan</button>
+      <button class="secondary" onclick="window.print()">📄 Imprimer / Enregistrer en PDF</button>
+      <button class="danger" onclick="resetAll()">♻️ Réinitialiser</button>
+    </section>
+
+    <section>
+      <!-- Synthèse à recopier dans le cahier. -->
+      <h2>🧠 Synthèse finale à retenir</h2>
+      <div class="success">
+        <p><strong>Un système domotique</strong> reçoit des informations grâce à des <strong>capteurs</strong>. Il analyse ces informations dans un programme. Ensuite, il agit sur le réel grâce à des <strong>actionneurs</strong>.</p>
+        <p><strong>Un algorigramme</strong> représente graphiquement un algorithme. Le rectangle indique une action, le losange indique une condition, et les flèches indiquent l'ordre d'exécution.</p>
+        <p>Les conditions <strong>ET</strong> et <strong>OU</strong> ne signifient pas la même chose : avec <strong>ET</strong>, toutes les conditions doivent être vraies ; avec <strong>OU</strong>, une seule condition vraie peut suffire.</p>
+      </div>
+    </section>
+
+    <section>
+      <!-- Défi bonus pour les élèves rapides. -->
+      <h2>🚀 Défi bonus : créer ton algorigramme</h2>
+      <p>Choisis un système : portail automatique, arrosage, alarme ou éclairage. Écris ci-dessous les étapes de ton algorithme en phrases simples.</p>
+      <textarea id="bonusText" rows="7" placeholder="Exemple : Début. Lire la luminosité. Si luminosité est inférieure à 300 lux ET présence détectée, alors allumer la lampe. Sinon éteindre la lampe. Fin."></textarea>
+      <button onclick="saveBonus()">💾 Enregistrer mon défi bonus</button>
+      <div id="bonusFeedback" class="feedback"></div>
+    </section>
+  </main>
+
+  <script>
+    // Tableau contenant toutes les questions du QCM progressif.
+    const questions = [
+      {niveau:'🟢 Facile', competence:'Symboles', q:'Dans un algorigramme, quel symbole représente une condition ?', options:['Un rectangle','Un losange','Une flèche','Un cercle plein'], correct:1, exp:'Le losange sert à poser une question : la réponse conduit vers Oui ou Non.'},
+      {niveau:'🟢 Facile', competence:'Entrées / sorties', q:'Dans un éclairage automatique, le détecteur de présence est...', options:['un actionneur','une sortie','un capteur','une lampe'], correct:2, exp:'Le détecteur de présence capte une information : c’est donc un capteur, c’est-à-dire une entrée du système.'},
+      {niveau:'🟢 Facile', competence:'Entrées / sorties', q:'Dans un système de chauffage intelligent, le radiateur commandé est...', options:['un capteur','un actionneur','une condition','un commentaire'], correct:1, exp:'Le radiateur agit sur le réel en produisant de la chaleur : c’est un actionneur.'},
+      {niveau:'🟡 Moyen', competence:'Condition ET', q:'La lampe doit s’allumer si présence = oui ET luminosité < 300 lux. Que se passe-t-il avec présence = oui et luminosité = 700 lux ?', options:['La lampe s’allume','La lampe reste éteinte','Le système s’arrête','Le capteur devient une sortie'], correct:1, exp:'Avec ET, les deux conditions doivent être vraies. Ici, il y a présence, mais il ne fait pas sombre : la lampe reste éteinte.'},
+      {niveau:'🟡 Moyen', competence:'Condition OU', q:'Une alarme se déclenche si porte ouverte OU fenêtre ouverte. Si la porte est fermée mais la fenêtre ouverte, que fait l’alarme ?', options:['Elle reste éteinte','Elle se déclenche','Elle attend la nuit','Elle allume le chauffage'], correct:1, exp:'Avec OU, une seule condition vraie suffit. La fenêtre ouverte suffit donc à déclencher l’alarme.'},
+      {niveau:'🟡 Moyen', competence:'Lecture d’algorigramme', q:'Dans un algorigramme, pourquoi les flèches sont-elles importantes ?', options:['Elles décorent le schéma','Elles indiquent l’ordre d’exécution','Elles remplacent les capteurs','Elles indiquent seulement les couleurs'], correct:1, exp:'Les flèches indiquent le chemin suivi par l’algorithme. Une flèche mal placée peut changer tout le fonctionnement.'},
+      {niveau:'🟡 Moyen', competence:'Domotique', q:'Pour un arrosage automatique, quelle condition est la plus logique ?', options:['SI sol humide ALORS arroser','SI sol sec ALORS arroser','SI lampe allumée ALORS arroser','SI chauffage éteint ALORS arroser'], correct:1, exp:'L’arrosage doit se déclencher quand le sol est sec, pas quand il est déjà humide.'},
+      {niveau:'🟡 Moyen', competence:'Pseudo-code', q:'Quelle phrase correspond le mieux à : SI température < 18 ALORS allumer chauffage SINON éteindre chauffage ?', options:['Le chauffage s’allume quand il fait chaud','Le chauffage s’allume quand il fait froid','Le chauffage s’allume toujours','Le chauffage ne s’allume jamais'], correct:1, exp:'Si la température est inférieure à 18 °C, il fait trop froid : le chauffage s’allume.'},
+      {niveau:'🔴 Expert', competence:'Bug logique', q:'Un élève écrit : SI présence OU luminosité < 300 ALORS allumer lampe. Quel problème peut apparaître ?', options:['La lampe peut s’allumer en plein jour si quelqu’un passe','La lampe ne s’allumera jamais','Le capteur devient inutile','La condition est impossible'], correct:0, exp:'Avec OU, la présence seule suffit. La lampe peut donc s’allumer même en plein jour.'},
+      {niveau:'🔴 Expert', competence:'Bug logique', q:'Dans un portail automatique, on veut éviter d’écraser un obstacle. Quelle correction est la plus sûre ?', options:['Fermer même si obstacle détecté','Fermer seulement si aucun obstacle n’est détecté','Supprimer le capteur d’obstacle','Fermer uniquement la nuit'], correct:1, exp:'Pour la sécurité, le portail ne doit se fermer que si aucun obstacle n’est détecté.'},
+      {niveau:'🔴 Expert', competence:'Compléter', q:'Complète la logique : SI code correct ET porte fermée ALORS...', options:['Déclencher l’alarme','Déverrouiller la serrure','Allumer l’arrosage','Éteindre tous les capteurs'], correct:1, exp:'Si le code est correct et que la porte est fermée, le système peut déverrouiller la serrure.'},
+      {niveau:'🔴 Expert', competence:'Simulation', q:'Dans le simulateur, si luminosité = 100 lux et présence = oui, quelle sortie est attendue ?', options:['Lampe allumée','Lampe éteinte','Arrosage activé','Chauffage forcément activé'], correct:0, exp:'100 lux signifie qu’il fait sombre. Avec une présence détectée, la lampe doit s’allumer.'},
+      {niveau:'🟢 Facile', competence:'Symboles', q:'Quel symbole représente une action comme « allumer la lampe » ?', options:['Losange','Rectangle','Flèche seule','Table de vérité'], correct:1, exp:'Une action ou un traitement est placé dans un rectangle.'},
+      {niveau:'🟡 Moyen', competence:'Entrées / sorties', q:'La valeur « luminosité = 250 lux » est...', options:['une sortie','une action','une entrée mesurée','un moteur'], correct:2, exp:'La luminosité est une information mesurée par un capteur : c’est une entrée.'},
+      {niveau:'🔴 Expert', competence:'Synthèse', q:'Quelle proposition décrit le mieux un système domotique automatisé ?', options:['Il agit au hasard','Il reçoit des informations, teste des conditions, puis commande des actionneurs','Il n’utilise jamais de capteurs','Il remplace toutes les décisions humaines sans règle'], correct:1, exp:'Un système automatisé suit un programme : il reçoit des informations, analyse des conditions, puis agit avec des actionneurs.'}
+    ];
+
+    // Objet qui mémorise les réponses vérifiées de l'élève.
+    let answers = JSON.parse(localStorage.getItem('algoDomotiqueV6Answers') || '{}');
+
+    // Fonction qui affiche toutes les questions dans la page.
+    function renderQuiz() {
+      // Récupération du conteneur HTML du QCM.
+      const quiz = document.getElementById('quiz');
+      // Vidage du conteneur avant de reconstruire les questions.
+      quiz.innerHTML = '';
+      // Parcours de toutes les questions.
+      questions.forEach((item, index) => {
+        // Création d'une carte HTML pour la question.
+        const div = document.createElement('div');
+        // Ajout de la classe CSS de question.
+        div.className = 'question';
+        // Construction du contenu HTML de la question.
+        div.innerHTML = `
+          <div class="question-head">
+            <h3>Question ${index + 1}</h3>
+            <span class="niveau">${item.niveau} - ${item.competence}</span>
+          </div>
+          <p><strong>${item.q}</strong></p>
+          ${item.options.map((op, i) => `
+            <label class="option">
+              <input type="radio" name="q${index}" value="${i}" ${answers[index]?.choice === i ? 'checked' : ''}>
+              ${op}
+            </label>
+          `).join('')}
+          <button onclick="checkQuestion(${index})">Vérifier</button>
+          <button class="secondary" onclick="showHint(${index})">Indice</button>
+          <div id="feedback-${index}" class="feedback">${answers[index]?.html || ''}</div>
+        `;
+        // Ajout de la carte dans la page.
+        quiz.appendChild(div);
+      });
+      // Mise à jour immédiate du score et de la progression.
+      updateScore();
+    }
+
+    // Fonction qui affiche un indice sans donner directement la réponse.
+    function showHint(index) {
+      // Récupération de la question concernée.
+      const item = questions[index];
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById(`feedback-${index}`);
+      // Affichage d'un indice adapté à la compétence.
+      zone.innerHTML = `<div class="note"><strong>Indice :</strong> repère d'abord la notion travaillée : ${item.competence}. Relis ensuite le rappel de cours correspondant.</div>`;
+    }
+
+    // Fonction qui vérifie la réponse d'une question.
+    function checkQuestion(index) {
+      // Récupération de la réponse sélectionnée par l'élève.
+      const selected = document.querySelector(`input[name="q${index}"]:checked`);
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById(`feedback-${index}`);
+      // Vérification qu'une réponse a bien été choisie.
+      if (!selected) {
+        // Message si aucune réponse n'est sélectionnée.
+        zone.innerHTML = '<div class="note">Choisis une réponse avant de vérifier.</div>';
+        // Arrêt de la fonction.
+        return;
+      }
+      // Conversion de la réponse choisie en nombre entier.
+      const choice = Number(selected.value);
+      // Récupération de la question concernée.
+      const item = questions[index];
+      // Test de la justesse de la réponse.
+      const ok = choice === item.correct;
+      // Création du message de correction.
+      const html = ok
+        ? `<div class="success">✅ Correct. ${item.exp}</div>`
+        : `<div class="error">❌ Pas tout à fait. Bonne réponse : <strong>${item.options[item.correct]}</strong>.<br>${item.exp}</div>`;
+      // Affichage du message dans la page.
+      zone.innerHTML = html;
+      // Mémorisation de la réponse vérifiée.
+      answers[index] = { choice, ok, html, competence: item.competence };
+      // Sauvegarde locale dans le navigateur.
+      localStorage.setItem('algoDomotiqueV6Answers', JSON.stringify(answers));
+      // Mise à jour du score.
+      updateScore();
+    }
+
+    // Fonction qui calcule et affiche le score global.
+    function updateScore() {
+      // Comptage du nombre de questions vérifiées.
+      const done = Object.keys(answers).length;
+      // Comptage du nombre de bonnes réponses.
+      const good = Object.values(answers).filter(a => a.ok).length;
+      // Calcul du score sur 20.
+      const score20 = questions.length ? Math.round((good / questions.length) * 20 * 10) / 10 : 0;
+      // Calcul du pourcentage de progression.
+      const progress = Math.round((done / questions.length) * 100);
+      // Mise à jour de la barre de progression.
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      // Mise à jour du texte de progression.
+      document.getElementById('progressText').textContent = `Progression : ${done} / ${questions.length} questions vérifiées.`;
+      // Mise à jour du score visuel.
+      document.getElementById('scoreBig').textContent = `${score20} / 20`;
+      // Sauvegarde du score dans le navigateur.
+      localStorage.setItem('algoDomotiqueV6Score', String(score20));
+    }
+
+    // Fonction qui génère le bilan détaillé par compétence.
+    function finalReport() {
+      // Récupération du nom de l'élève.
+      const name = document.getElementById('studentName').value.trim() || 'Élève';
+      // Récupération de la classe.
+      const classe = document.getElementById('studentClass').value.trim() || 'Classe non renseignée';
+      // Récupération de la date.
+      const date = document.getElementById('studentDate').value || new Date().toISOString().slice(0, 10);
+      // Création d'un dictionnaire pour compter les compétences.
+      const report = {};
+      // Parcours de toutes les questions.
+      questions.forEach((q, index) => {
+        // Initialisation de la compétence si besoin.
+        report[q.competence] = report[q.competence] || { ok: 0, total: 0 };
+        // Incrémentation du total de questions de cette compétence.
+        report[q.competence].total += 1;
+        // Incrémentation si la réponse est correcte.
+        if (answers[index]?.ok) report[q.competence].ok += 1;
+      });
+      // Transformation du bilan en lignes HTML.
+      const rows = Object.entries(report).map(([comp, r]) => `<tr><td>${comp}</td><td>${r.ok} / ${r.total}</td><td>${levelLabel(r.ok, r.total)}</td></tr>`).join('');
+      // Comptage des bonnes réponses.
+      const good = Object.values(answers).filter(a => a.ok).length;
+      // Calcul du score sur 20.
+      const score20 = Math.round((good / questions.length) * 20 * 10) / 10;
+      // Création d'un code simple de validation.
+      const code = generateCode(name, classe, score20, date);
+      // Affichage du bilan par compétence.
+      document.getElementById('competenceReport').innerHTML = `<h3>Bilan de ${name} - ${classe}</h3><p>Date : ${date}</p><table><thead><tr><th>Compétence</th><th>Résultat</th><th>Niveau</th></tr></thead><tbody>${rows}</tbody></table>`;
+      // Affichage du code de validation.
+      document.getElementById('validationBlock').textContent = `Code de validation : ${code}`;
+      // Sauvegarde du code de validation.
+      localStorage.setItem('algoDomotiqueV6Code', code);
+    }
+
+    // Fonction qui convertit un résultat en niveau lisible.
+    function levelLabel(ok, total) {
+      // Calcul du taux de réussite.
+      const rate = total === 0 ? 0 : ok / total;
+      // Niveau très satisfaisant.
+      if (rate >= 0.85) return '🔵 Expert';
+      // Niveau satisfaisant.
+      if (rate >= 0.65) return '🟢 Acquis';
+      // Niveau fragile.
+      if (rate >= 0.4) return '🟡 En cours';
+      // Niveau insuffisant.
+      return '🔴 À retravailler';
+    }
+
+    // Fonction qui génère un code court de validation.
+    function generateCode(name, classe, score, date) {
+      // Texte source utilisé pour le code.
+      const raw = `${name}-${classe}-${score}-${date}`;
+      // Encodage simple du texte.
+      const encoded = btoa(unescape(encodeURIComponent(raw)));
+      // Retour d'un code court en majuscules.
+      return encoded.replace(/[^A-Z0-9]/gi, '').substring(0, 10).toUpperCase();
+    }
+
+    // Fonction qui exécute la simulation domotique.
+    function runSimulation() {
+      // Lecture de la luminosité.
+      const lux = Number(document.getElementById('lux').value);
+      // Lecture de la température.
+      const temp = Number(document.getElementById('temp').value);
+      // Lecture de l'humidité.
+      const hum = Number(document.getElementById('hum').value);
+      // Lecture de la présence.
+      const presence = document.getElementById('presence').checked;
+      // Lecture de l'état de la porte.
+      const porte = document.getElementById('porte').checked;
+      // Condition de la lampe.
+      const lampe = presence && lux < 300;
+      // Condition du chauffage.
+      const chauffage = temp < 18;
+      // Condition de l'arrosage.
+      const arrosage = hum < 35;
+      // Condition de l'alarme.
+      const alarme = porte && !presence;
+      // Création du résultat en HTML.
+      const html = `
+        <h3>Résultat de la simulation</h3>
+        <p>💡 Lampe : <strong>${lampe ? 'allumée' : 'éteinte'}</strong> ${lampe ? '(présence ET obscurité)' : '(condition non vérifiée)'}</p>
+        <p>🌡️ Chauffage : <strong>${chauffage ? 'allumé' : 'éteint'}</strong> ${chauffage ? '(température trop basse)' : '(température suffisante)'}</p>
+        <p>🌿 Arrosage : <strong>${arrosage ? 'activé' : 'désactivé'}</strong> ${arrosage ? '(sol sec)' : '(sol suffisamment humide)'}</p>
+        <p>🚨 Alarme : <strong>${alarme ? 'déclenchée' : 'inactive'}</strong> ${alarme ? '(porte ouverte sans présence reconnue)' : '(pas de situation d’alerte)'}</p>
+      `;
+      // Affichage du résultat.
+      document.getElementById('simulationResult').innerHTML = html;
+    }
+
+    // Fonction qui met à jour l'affichage des curseurs.
+    function bindSliders() {
+      // Liste des curseurs à synchroniser avec leur texte.
+      const pairs = [['lux','luxValue'], ['temp','tempValue'], ['hum','humValue']];
+      // Parcours des curseurs.
+      pairs.forEach(([inputId, spanId]) => {
+        // Récupération du curseur.
+        const input = document.getElementById(inputId);
+        // Récupération de l'affichage numérique.
+        const span = document.getElementById(spanId);
+        // Mise à jour initiale.
+        span.textContent = input.value;
+        // Mise à jour à chaque modification.
+        input.addEventListener('input', () => span.textContent = input.value);
+      });
+    }
+
+    // Fonction qui sauvegarde le défi bonus.
+    function saveBonus() {
+      // Récupération du texte de l'élève.
+      const txt = document.getElementById('bonusText').value.trim();
+      // Récupération de la zone de feedback.
+      const zone = document.getElementById('bonusFeedback');
+      // Vérification de la longueur minimale.
+      if (txt.length < 40) {
+        // Message si la réponse est trop courte.
+        zone.innerHTML = '<div class="note">Ajoute quelques étapes : début, lecture d’un capteur, condition, action, fin.</div>';
+        // Arrêt de la fonction.
+        return;
+      }
+      // Sauvegarde locale du défi bonus.
+      localStorage.setItem('algoDomotiqueV6Bonus', txt);
+      // Message de confirmation.
+      zone.innerHTML = '<div class="success">Défi bonus enregistré. Pense à vérifier que ton algorithme contient au moins une condition.</div>';
+    }
+
+    // Fonction qui réinitialise toutes les réponses.
+    function resetAll() {
+      // Demande de confirmation avant suppression.
+      if (!confirm('Réinitialiser les réponses de cette page ?')) return;
+      // Suppression des réponses en mémoire.
+      answers = {};
+      // Suppression des données locales de cette activité.
+      localStorage.removeItem('algoDomotiqueV6Answers');
+      localStorage.removeItem('algoDomotiqueV6Score');
+      localStorage.removeItem('algoDomotiqueV6Code');
+      localStorage.removeItem('algoDomotiqueV6Bonus');
+      // Reconstruction du QCM.
+      renderQuiz();
+      // Réinitialisation du bilan.
+      document.getElementById('competenceReport').innerHTML = '<p>Réponds aux questions pour obtenir un bilan par compétence.</p>';
+      // Réinitialisation du code de validation.
+      document.getElementById('validationBlock').textContent = 'Code de validation : en attente';
+    }
+
+    // Fonction de démarrage exécutée au chargement de la page.
+    function init() {
+      // Préremplissage de la date du jour si le champ est vide.
+      document.getElementById('studentDate').value = new Date().toISOString().slice(0, 10);
+      // Activation des curseurs de simulation.
+      bindSliders();
+      // Affichage du QCM.
+      renderQuiz();
+      // Récupération éventuelle du défi bonus sauvegardé.
+      document.getElementById('bonusText').value = localStorage.getItem('algoDomotiqueV6Bonus') || '';
+    }
+
+    // Lancement de l'initialisation quand le DOM est disponible.
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
