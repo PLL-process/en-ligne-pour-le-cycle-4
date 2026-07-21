@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM XXL (40) — Réseaux, IP, NFC, RFID, Zigbee — Cycle 4 (2024)</title>
+<style>
+:root{ --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b;}
+*{box-sizing:border-box}
+body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--ink); line-height:1.5;}
+header{padding:18px 20px; background:linear-gradient(90deg,#0e1630,#1f2a57);}
+h1{margin:0; font-size:1.35rem;}
+.wrap{max-width:980px; margin:18px auto; padding:0 14px;}
+.card{background:var(--card); border:1px solid #223060; border-radius:18px; padding:14px 16px; margin:14px 0; box-shadow:0 6px 18px rgba(0,0,0,.25);}
+.row{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+.badge{display:inline-block; padding:2px 8px; border-radius:999px; font-size:.8rem; color:#0e1630; background:#c7d2fe; font-weight:700;}
+.pts{font-weight:700; color:#d1fae5;}
+.btn{border:1px solid #344a8a; padding:8px 12px; border-radius:12px; cursor:pointer; background:#1b254a; color:var(--ink); font-weight:600;}
+.btn.small{padding:5px 8px; font-size:.9rem;}
+.btn:hover{filter:brightness(1.15);}
+.help{display:none; margin-top:8px; color:var(--muted);}
+.answer{margin-top:8px; font-weight:700;}
+.ok{color:var(--ok);} .ko{color:var(--ko);} .muted{color:var(--muted);}
+.q-title{margin:0 0 6px 0; font-size:1.05rem;}
+.footer{margin:16px 0; padding:12px; border-radius:14px; background:#0f1a3d; border:1px solid #23316b;}
+.score{font-size:1.1rem; font-weight:800;}
+input[type="number"], input[type="text"], select{background:#0f1836; border:1px solid #2b3c75; color:var(--ink); padding:8px 10px; border-radius:10px;}
+label{display:block; margin:.25rem 0;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.note{font-size:.9rem; color:#cbd5e1;}
+.idbox{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px;}
+.idbox input{width:100%;}
+img.schema{max-width:100%; border-radius:12px; border:1px solid #29417d; background:#0b1330;}
+
+/* 🖼️ Styles des illustrations de questions */
+.q-fig{                 /* Conteneur figure pour la question */
+  margin:10px 0;       /* Espace autour de l'image */
+  text-align:center;   /* Centre image + légende */
+}
+.q-fig img.q-img{      /* L'image elle-même */
+  max-width:100%;      /* Ne dépasse jamais la carte */
+  height:auto;         /* Garde les proportions */
+  border-radius:12px;  /* Coins arrondis */
+  border:1px solid #29417d; /* Liseré discret */
+  background:#0b1330;  /* Fond sombre si PNG transparent */
+}
+.q-fig figcaption{     /* Légende et crédit */
+  font-size:.9rem;
+  color:#a9b6df;
+  margin-top:6px;
+}
+
+/* ─────────────────────────────────────────────
+   🔢 Numérotation automatique des questions
+   ───────────────────────────────────────────── */
+.wrap{ counter-reset: q; }                 /* 1) Remet le compteur au début du QCM */
+.card .q-title::before{                    /* 2) Préfixe devant chaque titre de question */
+  counter-increment: q;                    /*    Incrémente le compteur */
+  content: "Q" counter(q) " — ";           /*    Affiche : Q1 — , Q2 — , etc. */
+  color:#a9b6df;                           /*    Couleur discrète */
+  font-weight:700;                         /*    Un peu plus marqué */
+}
+
+/* 🔢 Numérotation automatique des questions */
+
+.card .q-title::before{                          /* Ajoute un préfixe devant chaque titre .q-title */
+  counter-increment: q;                          /* Incrémente le compteur à chaque question */
+  content: "Q" counter(q) " — ";                 /* Affiche Q1 — , Q2 — , etc. */
+  color:#a9b6df;                                 /* Couleur discrète */
+  font-weight:700;                               /* Mise en valeur */
+}
+
+</style>
+</head>
+<body>
+<header class="row">
+  <h1>QCM XXL (40) — Réseaux, IP, NFC, RFID, Zigbee — Cycle 4 (2024)</h1>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <p class="q-title">Identité de l’élève</p>
+    <div class="idbox">
+      <input id="nom" placeholder="Nom">
+      <input id="prenom" placeholder="Prénom">
+      <input id="classe" placeholder="Classe (ex. 4eB)">
+    </div>
+    <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
+  </div>
+
+<div class="footer row">
+  <!-- Zone score + ajout du compteur de questions -->
+  <div class="score" id="score">
+    <!-- Score courant -->
+    Score : 0 / <span id="max">0</span> pts
+    <!-- Note ramenée à /20 -->
+    — Barème ramené à <strong id="sur20">0.00</strong> / 20
+    <!-- 🔢 Affichage du nombre total de questions -->
+    — Questions : <strong id="nbq">0</strong>
+  </div>
+
+  <!-- Bouton : correction globale -->
+  <button class="btn" onclick="corrigerTout()">Corriger tout</button>
+  <!-- Bouton : remise à zéro -->
+  <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
+
+  <!-- Rappel des compétences visées -->
+  <div class="note">Les questions ciblent C1.4 • C4.5 • C4.6 • C4.7 • C4.8 • C4.9 • C7.8.</div>
+</div>
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Le routeur sert principalement à…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="Images/routeur_wan_hd.jpg" alt="Routeur reliant le LAN à Internet">
+        <figcaption>Le routeur fait la passerelle entre le réseau local (LAN) et Internet (WAN).</figcaption>
+      </figure>
+
+
+
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q1" value="lan"> relier des appareils en local</label>
+      <label><input type="radio" name="q1" value="wan"> relier le réseau local à Internet</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a1')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q1','wan','fb1',1)">Corriger</button>
+      </div>
+      <div id="a1" class="help">C’est la « passerelle » vers l’extérieur.</div>
+      <div id="fb1" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Un commutateur (switch) sert à…</p>
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q2" value="trier"> commuter les trames entre ports du LAN</label>
+      <label><input type="radio" name="q2" value="traduire"> traduire les adresses IP en noms</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a2')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q2','trier','fb2',1)">Corriger</button>
+      </div>
+      <div id="a2" class="help">Le switch travaille au niveau du réseau local.</div>
+      <div id="fb2" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Deux appareils d’un même LAN partagent la même IPv4.</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q3" value="v"> Vrai</label>
+      <label><input type="radio" name="q3" value="f"> Faux</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a3')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q3','f','fb3',1)">Corriger</button>
+      </div>
+      <div id="a3" class="help">Une adresse IP doit être unique sur le LAN.</div>
+      <div id="fb3" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">À quoi sert le « masque de sous-réseau » ? (mots-clés)</p>
+      <span class="badge">Compétence visée : C4.7</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q4" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a4')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q4',['reseau','hote','plage','séparer','partie'],'fb4',1)">Corriger</button>
+      </div>
+      <div id="a4" class="help">Il sépare la partie réseau de la partie hôte.</div>
+      <div id="fb4" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">Laquelle est une adresse privée classique ?</p>
+      <span class="badge">Compétence visée : C4.7</span> <span class="pts">(1 pt)</span>
+      <select id="q5">
+        <option value="">— Choisir —</option>
+        <option value="8.8.8.8">8.8.8.8</option>
+        <option value="172.16.5.10">172.16.5.10</option>
+        <option value="11.0.0.5">11.0.0.5</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a5')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q5','172.16.5.10','fb5',1)">Corriger</button>
+      </div>
+      <div id="a5" class="help">Plages privées : 10.0.0.0/8 • 172.16.0.0/12 • 192.168.0.0/16.</div>
+      <div id="fb5" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Chemin du trafic PC→Internet dans la salle :</p>
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <select id="q6">
+        <option value="">— Choisir —</option>
+        <option value="direct">PC → Internet (direct)</option>
+        <option value="switch-routeur">PC → Switch → Routeur/Modem → Internet</option>
+        <option value="routeur-switch">PC → Routeur/Modem → Switch → Internet</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a6')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q6','switch-routeur','fb6',1)">Corriger</button>
+      </div>
+      <div id="a6" class="help">Le LAN passe par le switch, puis la passerelle.</div>
+      <div id="fb6" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Coche les liaisons <em>filaires</em> :</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="checkbox" name="q7" value="wifi"> Wi‑Fi</label>
+      <label><input type="checkbox" name="q7" value="eth"> Ethernet RJ45</label>
+      <label><input type="checkbox" name="q7" value="fib"> Fibre optique</label>
+      <label><input type="checkbox" name="q7" value="bt"> Bluetooth</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a7')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q7',['eth','fib'],'fb7',1)">Corriger</button>
+      </div>
+      <div id="a7" class="help">Un câble = liaison filaire (RJ45, fibre).</div>
+      <div id="fb7" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Zigbee utilise typiquement la bande…</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <select id="q8">
+        <option value="">— Choisir —</option>
+        <option value="24">2,4 GHz</option>
+        <option value="1356">13,56 MHz</option>
+        <option value="uhf">860–960 MHz</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a8')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q8','24','fb8',1)">Corriger</button>
+      </div>
+      <div id="a8" class="help">Zigbee (IoT) fonctionne souvent en 2,4 GHz.</div>
+      <div id="fb8" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">NFC a une portée…</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q9" value="courte"> très courte (quelques cm)</label>
+      <label><input type="radio" name="q9" value="longue"> plusieurs dizaines de mètres</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a9')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q9','courte','fb9',1)">Corriger</button>
+      </div>
+      <div id="a9" class="help">NFC = très courte distance, usage paiement sans contact.</div>
+      <div id="fb9" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Donne un usage typique de la RFID (exemples)</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q10" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a10')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q10',['inventaire','badge','suivi','antivol','péage'],'fb10',1)">Corriger</button>
+      </div>
+      <div id="a10" class="help">Badges d’accès, antivols magasins, inventaire logistique…</div>
+      <div id="fb10" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Le protocole de sécurité Wi‑Fi conseillé à l’école :</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <select id="q11">
+        <option value="">— Choisir —</option>
+        <option value="wep">WEP</option>
+        <option value="wpa2">WPA2/3</option>
+        <option value="aucun">Aucun</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a11')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q11','wpa2','fb11',1)">Corriger</button>
+      </div>
+      <div id="a11" class="help">Éviter WEP, obsolète.</div>
+      <div id="fb11" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Le vidéo‑projecteur de la salle est relié en…</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q12" value="wifi"> Wi‑Fi</label>
+      <label><input type="radio" name="q12" value="bt"> Bluetooth</label>
+      <label><input type="radio" name="q12" value="nfc"> NFC</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a12')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q12','bt','fb12',1)">Corriger</button>
+      </div>
+      <div id="a12" class="help">Selon le document, liaison Bluetooth au VP.</div>
+      <div id="fb12" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">DHCP attribue…</p>
+      <span class="badge">Compétence visée : C4.7</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q13" value="ip"> des adresses IP dynamiques</label>
+      <label><input type="radio" name="q13" value="dns"> des noms de domaine</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a13')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q13','ip','fb13',1)">Corriger</button>
+      </div>
+      <div id="a13" class="help">Le serveur DHCP loue une IP au poste.</div>
+      <div id="fb13" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">DNS sert à… (mots-clés)</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q14" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a14')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q14',['nom','domaine','traduire','adresse','ip'],'fb14',1)">Corriger</button>
+      </div>
+      <div id="a14" class="help">Il traduit un nom (domaine) en adresse IP.</div>
+      <div id="fb14" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Quel câble pour relier un PC au switch ?</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <select id="q15">
+        <option value="">— Choisir —</option>
+        <option value="rj11">RJ11</option>
+        <option value="rj45">RJ45 (Ethernet)</option>
+        <option value="usb">USB</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a15')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q15','rj45','fb15',1)">Corriger</button>
+      </div>
+      <div id="a15" class="help">RJ45 = Ethernet ; RJ11 = téléphonie.</div>
+      <div id="fb15" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Un cookie est stocké…</p>
+      <span class="badge">Compétence visée : C1.4</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q16" value="site"> sur le site</label>
+      <label><input type="radio" name="q16" value="client"> sur l’appareil de l’utilisateur</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a16')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q16','client','fb16',1)">Corriger</button>
+      </div>
+      <div id="a16" class="help">Le site écrit un petit fichier côté navigateur.</div>
+      <div id="fb16" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Une raison de refuser des cookies non essentiels :</p>
+      <span class="badge">Compétence visée : C1.4</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q17" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a17')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q17',['vie','privée','traçage','suivi','données'],'fb17',1)">Corriger</button>
+      </div>
+      <div id="a17" class="help">Limiter le suivi/traçage et la collecte de données.</div>
+      <div id="fb17" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Dans une chanson, le droit d’auteur protège…</p>
+      <span class="badge">Compétence visée : C1.4</span> <span class="pts">(1 pt)</span>
+      <label><input type="checkbox" name="q18" value="texte"> le texte</label>
+      <label><input type="checkbox" name="q18" value="musique"> la musique</label>
+      <label><input type="checkbox" name="q18" value="gratuit"> le fait d’être gratuit</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a18')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q18',['texte','musique'],'fb18',1)">Corriger</button>
+      </div>
+      <div id="a18" class="help">Texte et musique sont protégés.</div>
+      <div id="fb18" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Décès en 2025 → Domaine public en (année) :</p>
+      <span class="badge">Compétence visée : C1.4</span> <span class="pts">(1 pt)</span>
+      <input type="number" id="q19" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a19')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q19',2096,'fb19',1)">Corriger</button>
+      </div>
+      <div id="a19" class="help">Décès + 70 ans, effet 1er janvier suivant.</div>
+      <div id="fb19" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.6" data-points="1">
+      <p class="q-title">Nombre de lignes d’objets dans le tableau imprimantes :</p>
+      <span class="badge">Compétence visée : C4.6</span> <span class="pts">(1 pt)</span>
+      <input type="number" id="q20" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a20')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q20',4,'fb20',1)">Corriger</button>
+      </div>
+      <div id="a20" class="help">Compter les lignes de données.</div>
+      <div id="fb20" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.5" data-points="2">
+      <p class="q-title">Imprimantes connectées sans fil (2 choix) :</p>
+      <span class="badge">Compétence visée : C4.5</span> <span class="pts">(2 pts)</span>
+      <label><input type="checkbox" name="q21" value="z1"> Zongo 1</label>
+      <label><input type="checkbox" name="q21" value="az2"> Aber Z2 (Wi‑Fi)</label>
+      <label><input type="checkbox" name="q21" value="p2b"> Prim2be (Bluetooth)</label>
+      <label><input type="checkbox" name="q21" value="az3"> Aber Z3 (Ethernet)</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a21')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q21',['az2','p2b'],'fb21',2)">Corriger</button>
+      </div>
+      <div id="a21" class="help">Wi‑Fi ou Bluetooth = sans fil.</div>
+      <div id="fb21" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">Un /32 en IPv4 correspond à…</p>
+      <span class="badge">Compétence visée : C4.7</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q22" value="host"> un seul hôte</label>
+      <label><input type="radio" name="q22" value="reseau"> tout un réseau</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a22')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q22','host','fb22',1)">Corriger</button>
+      </div>
+      <div id="a22" class="help">Masque 255.255.255.255 = 1 hôte.</div>
+      <div id="fb22" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Nom courant de l’adresse de sortie du LAN :</p>
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q23" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a23')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q23',['passerelle','gateway','routeur'],'fb23',1)">Corriger</button>
+      </div>
+      <div id="a23" class="help">On parle de passerelle par défaut (gateway).</div>
+      <div id="fb23" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Attribuer la même IP à deux appareils provoque…</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q24" value="ok"> aucun problème</label>
+      <label><input type="radio" name="q24" value="conflict"> un conflit d’adresses</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a24')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q24','conflict','fb24',1)">Corriger</button>
+      </div>
+      <div id="a24" class="help">Chaque IP doit être unique.</div>
+      <div id="fb24" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Un usage typique de Zigbee :</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q25" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a25')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q25',['domotique','ampoule','capteur','iot'],'fb25',1)">Corriger</button>
+      </div>
+      <div id="a25" class="help">Domotique (ampoules, capteurs IoT).</div>
+      <div id="fb25" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">La portée typique de NFC est de…</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <select id="q26">
+        <option value="">— Choisir —</option>
+        <option value="cm">quelques centimètres</option>
+        <option value="m">quelques mètres</option>
+        <option value="diz">dizaines de mètres</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a26')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q26','cm','fb26',1)">Corriger</button>
+      </div>
+      <div id="a26" class="help">NFC = très proche.</div>
+      <div id="fb26" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Le Wi‑Fi est…</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q27" value="filaire"> filaire</label>
+      <label><input type="radio" name="q27" value="nonfilaire"> non filaire</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a27')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q27','nonfilaire','fb27',1)">Corriger</button>
+      </div>
+      <div id="a27" class="help">Wi‑Fi = liaison radio sans fil.</div>
+      <div id="fb27" class="answer"></div>
+    </section>
+    
+
+<section class="card" data-competence="C4.9" data-points="2">
+  <p class="q-title">À partir du schéma « Document 3 » ci‑dessous, choisis le <em>parcours</em> correct d’une trame vers Internet :</p>
+  <span class="badge">Compétence visée : C4.9</span> <span class="pts">(2 pts)</span>
+  <img class="schema" src="Images/doc3_schema_parcours.png" alt="Schéma du réseau (remplacer l’URL par votre image)">
+  <select id="q28">
+    <option value="">— Choisir —</option>
+    <option value="pc-switch-routeur-internet">PC → Switch → Routeur/Modem → Internet</option>
+    <option value="pc-routeur-switch-internet">PC → Routeur/Modem → Switch → Internet</option>
+    <option value="pc-internet">PC → Internet (direct)</option>
+  </select>
+  <div class="row">
+    <button class="btn small" onclick="aide('a28')">Aide</button>
+    <button class="btn small" onclick="checkSelect('q28','pc-switch-routeur-internet','fb28',2)">Corriger</button>
+  </div>
+  <div id="a28" class="help">Rappel : le commutateur gère le trafic local, la passerelle (routeur) fait la sortie WAN.</div>
+  <div id="fb28" class="answer"></div>
+</section>
+
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Doc 3 : délai (ms) avant que le switch s’active après le PC :</p>
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <input type="number" id="q29" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a29')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q29',10,'fb29',1)">Corriger</button>
+      </div>
+      <div id="a29" class="help">Lire l’écart sur la chronologie.</div>
+      <div id="fb29" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Doc 3 : durée d’activité du PC (ms) :</p>
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <input type="number" id="q30" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a30')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q30',35,'fb30',1)">Corriger</button>
+      </div>
+      <div id="a30" class="help">Lire la longueur du segment PC.</div>
+      <div id="fb30" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">IPv6 a des adresses…</p>
+      <span class="badge">Compétence visée : C4.7</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q31" value="plus"> plus longues qu’IPv4</label>
+      <label><input type="radio" name="q31" value="moins"> plus courtes qu’IPv4</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a31')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q31','plus','fb31',1)">Corriger</button>
+      </div>
+      <div id="a31" class="help">IPv6 = 128 bits ; IPv4 = 32 bits.</div>
+      <div id="fb31" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Nom du réseau Wi‑Fi : on l’appelle le…</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q32" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a32')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q32',['ssid','nom','réseau'],'fb32',1)">Corriger</button>
+      </div>
+      <div id="a32" class="help">Le SSID est l’identifiant du réseau Wi‑Fi.</div>
+      <div id="fb32" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Un réglage qui peut réduire les interférences Wi‑Fi :</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q33" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a33')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q33',['canal','channel','5ghz','distance'],'fb33',1)">Corriger</button>
+      </div>
+      <div id="a33" class="help">Changer de canal/5 GHz/éloignement des sources d’interférence.</div>
+      <div id="fb33" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Coche les supports <em>cuivre</em> :</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="checkbox" name="q34" value="rj45"> RJ45</label>
+      <label><input type="checkbox" name="q34" value="fibre"> Fibre optique</label>
+      <label><input type="checkbox" name="q34" value="usb"> USB</label>
+      <label><input type="checkbox" name="q34" value="coax"> Coaxial</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a34')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q34',['rj45','usb','coax'],'fb34',1)">Corriger</button>
+      </div>
+      <div id="a34" class="help">La fibre est en verre ; les autres sont cuivre.</div>
+      <div id="fb34" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Télécharger gratuitement une chanson rend son usage libre en classe.</p>
+      <span class="badge">Compétence visée : C1.4</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q35" value="v"> Vrai</label>
+      <label><input type="radio" name="q35" value="f"> Faux</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a35')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q35','f','fb35',1)">Corriger</button>
+      </div>
+      <div id="a35" class="help">Gratuité ≠ libre de droits.</div>
+      <div id="fb35" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Le switch de la salle correspond à une topologie…</p>
+      <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
+      <select id="q36">
+        <option value="">— Choisir —</option>
+        <option value="bus">bus</option>
+        <option value="etoile">étoile</option>
+        <option value="anneau">anneau</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a36')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q36','etoile','fb36',1)">Corriger</button>
+      </div>
+      <div id="a36" class="help">Les postes reliés à un switch forment une étoile.</div>
+      <div id="fb36" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Zigbee propose un réseau en maillage (mesh).</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q37" value="v"> Vrai</label>
+      <label><input type="radio" name="q37" value="f"> Faux</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a37')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q37','v','fb37',1)">Corriger</button>
+      </div>
+      <div id="a37" class="help">Les nœuds peuvent relayer (mesh).</div>
+      <div id="fb37" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C7.8" data-points="2">
+      <p class="q-title">Coche les affirmations vraies sur RFID :</p>
+      <span class="badge">Compétence visée : C7.8</span> <span class="pts">(2 pts)</span>
+      <label><input type="checkbox" name="q38" value="pas"> Les étiquettes passives n’ont pas de batterie</label>
+      <label><input type="checkbox" name="q38" value="act"> Les étiquettes actives ont une batterie</label>
+      <label><input type="checkbox" name="q38" value="nfc"> NFC porte à 50 m</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a38')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q38',['pas','act'],'fb38',2)">Corriger</button>
+      </div>
+      <div id="a38" class="help">NFC porte à quelques centimètres.</div>
+      <div id="fb38" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">Nom de l’adresse spéciale envoyée à tous les hôtes d’un LAN :</p>
+      <span class="badge">Compétence visée : C4.7</span> <span class="pts">(1 pt)</span>
+      <input type="text" id="q39" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a39')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q39',['broadcast','diffusion'],'fb39',1)">Corriger</button>
+      </div>
+      <div id="a39" class="help">Adresse de broadcast = diffusion à tous.</div>
+      <div id="fb39" class="answer"></div>
+    </section>
+    
+
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Le filtrage MAC permet…</p>
+      <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q40" value="autoriser"> d’autoriser/refuser des appareils par adresse MAC</label>
+      <label><input type="radio" name="q40" value="vitesse"> de multiplier le débit Internet</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a40')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q40','autoriser','fb40',1)">Corriger</button>
+      </div>
+      <div id="a40" class="help">Contrôle d’accès par adresse physique.</div>
+      <div id="fb40" class="answer"></div>
+    </section>
+    
+  <div class="footer">
+    <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
+  </div>
+
+</div> <!-- .wrap -->
+
+<script>
+let total = 0;
+const max = (()=>{ let s=0; document.querySelectorAll('section.card').forEach(sec=>{ s += Number(sec.dataset.points||0); }); return s; })();
+document.getElementById('max').textContent = max;
+
+// 🔢 Compte le nombre de questions (= cartes .card) présentes dans la page
+const nbq = document.querySelectorAll('section.card').length; // Récupère toutes les sections de question
+document.getElementById('nbq').textContent = nbq;             // Affiche la valeur dans le bandeau
+
+
+function aide(id){ const el=document.getElementById(id); el.style.display = (el.style.display==='block'?'none':'block'); }
+function feedback(id, ok, msg){ const fb=document.getElementById(id); fb.className='answer ' + (ok?'ok':'ko'); fb.textContent = msg; }
+const awarded = new Set();
+function givePoints(key, pts){
+  if(awarded.has(key)) return;
+  total += pts;
+  awarded.add(key);
+  const sur20 = (total/max)*20;
+  document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">'+max+'</span> pts — Barème ramené à <strong id="sur20">'+sur20.toFixed(2)+'</strong> / 20';
+}
+function checkMCQ(name, correct, fbId, pts){
+  const sel=document.querySelector('input[name="'+name+'"]:checked');
+  if(!sel){ feedback(fbId,false,'⛳ Choisis une réponse.'); return; }
+  const ok = sel.value===correct;
+  feedback(fbId, ok, ok?'✅ Bonne réponse !':'❌ Essaie encore.');
+  if(ok) givePoints(name, pts);
+}
+function checkSelect(id, correct, fbId, pts){
+  const val=document.getElementById(id).value;
+  const ok=(val===correct);
+  feedback(fbId, ok, ok?'✅ Exact.':'❌ Regarde le schéma.');
+  if(ok) givePoints(id, pts);
+}
+function checkNumber(id, correctNumber, fbId, pts){
+  const val=Number(document.getElementById(id).value);
+  const ok=(val===Number(correctNumber));
+  feedback(fbId, ok, ok?'✅ Juste.':'❌ Vérifie l\'échelle.');
+  if(ok) givePoints(id, pts);
+}
+function checkTextIncludes(id, keywords, fbId, pts){
+  const val=(document.getElementById(id).value||'').toLowerCase();
+  const ok = keywords.some(k => val.includes(k));
+  feedback(fbId, ok, ok?'✅ Idée principale OK.':'❌ Mot-clé manquant.');
+  if(ok) givePoints(id, pts);
+}
+function checkMulti(name, correctValues, fbId, pts){
+  const all = Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(i=>i.value);
+  const ok = correctValues.length===all.length && correctValues.every(v => all.includes(v));
+  feedback(fbId, ok, ok?'✅ Parfait.':'❌ Trop/pas assez ou mauvais choix.');
+  if(ok) givePoints(name, pts);
+}
+function corrigerTout(){
+  document.querySelectorAll('.card .btn.small:nth-of-type(2)').forEach(btn=>btn.click());
+  const sur20 = (total/max)*20;
+  const id = 'Nom: '+(document.getElementById('nom').value||'-')+' | Prénom: '+(document.getElementById('prenom').value||'-')+' | Classe: '+(document.getElementById('classe').value||'-');
+  document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ')';
+}
+function reinitialiser(){
+  total=0; awarded.clear();
+  document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">'+max+'</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20';
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i=>i.checked=false);
+  document.querySelectorAll('input[type=text],input[type=number]').forEach(i=>i.value='');
+  document.querySelectorAll('select').forEach(s=>s.value='');
+  document.querySelectorAll('.answer').forEach(a=>{a.textContent=''; a.className='answer';});
+  document.querySelectorAll('.help').forEach(h=>h.style.display='none');
+  document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
+}
+</script>
+</body>
+</html>

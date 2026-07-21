@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorigrammes, Pseudo-Code & Logique - Aventure Interactive</title>
+    <style>
+        /* THÈME SOMBRE GÉNÉRAL */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #020617, #0f172a);
+            color: #e5e7eb;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #dbeafe;
+            margin-top: 10px;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #020617;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(15, 23, 42, 0.7);
+        }
+
+        section {
+            background-color: rgba(15,23,42,0.9);
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #1f2937;
+            box-shadow: 0 0 30px rgba(59,130,246,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            border-left: 8px solid #60a5fa;
+            padding-left: 15px;
+            color: #bfdbfe;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: #93c5fd;
+            margin-top: 20px;
+            font-size: 1.3rem;
+        }
+
+        .course-box {
+            border-left: 5px solid #38bdf8;
+            background: #0b1120;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        .course-box strong {
+            color: #fbbf24;
+        }
+
+        .mot-cle {
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        .definition {
+            background-color: #0f172a;
+            border-left: 5px solid #60a5fa;
+            padding: 12px 15px;
+            margin: 12px 0;
+            font-size: 0.95rem;
+            border-radius: 8px;
+        }
+
+        .astuce {
+            background-color: #1e293b;
+            border-left: 5px solid #fbbf24;
+            padding: 12px 15px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+            border-radius: 8px;
+        }
+
+        /* TABLEAU DES SYMBOLES + IMAGES SVG */
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+
+        .symbol-table th,
+        .symbol-table td {
+            border: 1px solid #334155;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .symbol-table th {
+            background-color: #1e293b;
+            color: #bfdbfe;
+        }
+
+        .symbol-svg,
+        .symbol-img {
+            display: block;
+            margin: 0 auto;
+            max-width: 80px;
+            height: auto;
+        }
+
+        /* TABLEAUX INTERACTIFS ÉVÈNEMENTS / ACTIONS */
+        .table-evenements {
+            margin: 10px 0;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .table-evenements th, .table-evenements td {
+            border: 1px solid #334155;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table-evenements th {
+            background-color: #1e293b;
+            color: #bfdbfe;
+        }
+
+        .table-evenements select {
+            background-color: #020617;
+            color: #e5e7eb;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 4px;
+            width: 100%;
+        }
+
+        /* SCHÉMAS STATIQUES ET INTERACTIFS */
+        .schema {
+            margin: 15px 0;
+            padding: 12px;
+            background-color: #020617;
+            border: 1px dashed #334155;
+            border-radius: 10px;
+            transition: box-shadow 0.3s;
+        }
+
+        .schema:hover {
+            box-shadow: 0 0 15px rgba(59,130,246,0.5);
+        }
+
+        .schema svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .schema figcaption {
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            color: #9ca3af;
+        }
+
+        .schema-interactif {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin: 15px 0;
+            background-color: #020617;
+            border: 1px dashed #334155;
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .schema-interactif svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .menu-schema {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            background-color: #0f172a;
+            color: #e5e7eb;
+            border: 1px solid #334155;
+            border-radius: 6px;
+        }
+
+        /* EXERCICES */
+        .exercice {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #0f172a;
+            border: 1px solid #1f2937;
+            box-shadow: 0 0 20px rgba(59,130,246,0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        .exercice:hover {
+            box-shadow: 0 0 25px rgba(59,130,246,0.4);
+        }
+
+        .consigne {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #dbeafe;
+        }
+
+        .explication-exo {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #9ca3af;
+        }
+
+        /* BOUTONS / FEEDBACK */
+        .btn-verifier {
+            background-color: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-verifier:hover {
+            background-color: #2563eb;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .ok {
+            color: #4ade80;
+        }
+
+        .ko {
+            color: #f97316;
+        }
+
+        /* SCORE GLOBAL + BARRE DE PROGRESSION */
+        .scoreboard {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: #0b1120;
+            border: 1px solid #1f2937;
+        }
+
+        #score-text {
+            font-size: 1.1rem;
+            color: #bfdbfe;
+        }
+
+        .progress-bar {
+            margin-top: 10px;
+            height: 12px;
+            background-color: #1e293b;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #22c55e, #3b82f6);
+            transition: width 0.5s ease;
+        }
+
+        #score-total {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #bfdbfe;
+            margin-top: 30px;
+        }
+
+        #show-summary {
+            margin-top: 15px;
+            background-color: #10b981;
+            color: #022c22;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #show-summary:hover {
+            background-color: #059669;
+        }
+
+        #summary-box {
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* TABLES DE VÉRITÉ */
+        table.truth-table {
+            margin: 10px 0;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        table.truth-table th, table.truth-table td {
+            border: 1px solid #334155;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table.truth-table th {
+            background-color: #1e293b;
+        }
+
+        /* SCHÉMA ÉLECTRIQUE INTERACTIF (FONCTION ET) */
+        :root {
+            --wire: #e5e7eb;
+            --switch-open: #f97316;
+            --switch-closed: #22c55e;
+            --lamp-off: #4b5563;
+            --lamp-on: #facc15;
+            --text: #e5e7eb;
+            --focus: #38bdf8;
+        }
+
+        .panel {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+            max-width: 720px;
+            margin-top: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: .75rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .35rem .6rem;
+            border: 1px solid #334155;
+            border-radius: .5rem;
+            background: #020617;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .control[aria-pressed="true"] {
+            border-color: var(--switch-closed);
+            background: #064e3b;
+        }
+
+        .control[aria-pressed="false"] {
+            border-color: var(--switch-open);
+            background: #3b0764;
+        }
+
+        .control:focus-visible {
+            outline: 3px solid var(--focus);
+        }
+
+        .status {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .legend {
+            font-size: .9rem;
+            color: #9ca3af;
+        }
+
+        svg {
+            max-width: 720px;
+            width: 100%;
+            height: auto;
+        }
+
+        .wire {
+            stroke: var(--wire);
+            stroke-width: 4;
+            fill: none;
+        }
+
+        .switch {
+            stroke-width: 6;
+            stroke-linecap: round;
+            cursor: pointer;
+        }
+
+        .switch-label {
+            font-size: 14px;
+            fill: var(--text);
+        }
+
+        .lamp-bulb {
+            stroke: #e5e7eb;
+            stroke-width: 3;
+            fill: var(--lamp-off);
+            transition: fill .15s ease, filter .15s ease;
+        }
+
+        .lamp-glow {
+            opacity: 0;
+            transition: opacity .15s ease;
+        }
+
+        .on .lamp-bulb {
+            fill: var(--lamp-on);
+            filter: drop-shadow(0 0 8px rgba(250,204,21,.8));
+        }
+
+        .on .lamp-glow {
+            opacity: .8;
+        }
+
+        .switch.open { stroke: var(--switch-open); }
+        .switch.closed { stroke: var(--switch-closed); }
+
+        .badge {
+            font-size: .85rem;
+            padding: .15rem .4rem;
+            border-radius: .35rem;
+            background: #111827;
+            border: 1px solid #374151;
+        }
+
+        .badge.on {
+            background: #022c22;
+            border-color: #16a34a;
+        }
+
+        .badge.off {
+            background: #111827;
+            border-color: #4b5563;
+        }
+
+
+
+  .table-evenements-actions {
+    border-collapse: collapse;                 /* Fusionne les bordures */
+    margin: 20px auto;
+    width: 80%;
+    max-width: 700px;
+    font-family: Verdana, Arial, sans-serif;
+    color: #f1f5f9;                            /* Texte clair (fond sombre) */
+  }
+
+  /* Bordures générales */
+  .table-evenements-actions th,
+  .table-evenements-actions td {
+    border: 2px solid #94a3b8;                 /* Gris doux */
+    padding: 12px 16px;
+    text-align: center;
+  }
+
+  /* En-têtes */
+  .table-evenements-actions th {
+    font-weight: bold;
+    letter-spacing: 1px;
+    background-color: rgba(148, 163, 184, 0.15);
+  }
+
+  /* Corps du tableau */
+  .table-evenements-actions td {
+    font-size: 1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .table-evenements-actions {
+      width: 95%;
+    }
+  }
+
+
+  .algo-wrap { display: flex; justify-content: center; margin: 12px 0 24px; }
+  .algo-svg { width: 100%; max-width: 900px; height: auto; }
+
+  .shape {
+    fill: rgba(255,255,255,0.02);
+    stroke: #9ca3af;
+    stroke-width: 3;
+  }
+
+  .arrow {
+    stroke: #9ca3af;
+    stroke-width: 3;
+    fill: none;
+    marker-end: url(#arrow);
+  }
+
+  .txt {
+    fill: #ffffff;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 22px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+
+  .label {
+    fill: #ffffff;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .node {
+    fill: rgba(255,255,255,0.02);
+    stroke: #9ca3af;
+    stroke-width: 3;
+  }
+
+
+  /* Conteneur  Algorigramme — Exo 1 */
+  .algo-superpose{
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 12px auto 20px;
+  }
+
+  .algo-svg{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Formes */
+  .shape{
+    fill: transparent;
+    stroke: #9ca3af;
+    stroke-width: 3;
+  }
+
+  /* Flèches : ligne + pointe même couleur */
+  .arrow{
+    stroke: #9ca3af;
+    stroke-width: 3;
+    fill: none;
+    marker-end: url(#arrow);
+    color: #9ca3af;
+  }
+
+  /* Rond */
+  .node{
+    fill: transparent;
+    stroke: #9ca3af;
+    stroke-width: 3;
+  }
+
+  /* Menus (centrés, ne débordent pas sur les flèches) */
+  .algo-select{
+    position: absolute;
+    z-index: 10;
+    transform: translate(-50%,-50%);
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid #475569;
+    background: rgba(2, 6, 23, 0.92);
+    color: #e5e7eb;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    pointer-events: auto;
+    width: 240px;
+    max-width: 70%;
+  }
+
+  /* Mini menus */
+  .algo-mini{
+    width: 96px;
+    padding: 5px 6px;
+    border-radius: 8px;
+  }
+
+  /* Positions (% basées sur viewBox 900×620) */
+  .algo-ellipse{ left: 50%; top: 8.9%; width: 220px; }
+  .algo-losange{ left: 50%; top: 44.35%; width: 300px; }   /* plus large mais reste DANS le losange */
+  .algo-rectangle{ left: 50%; top: 76.61%; width: 260px; } /* dans le rectangle */
+  .algo-oui{ left: 57%; top: 63.2%; }                    /* près de la branche OUI */
+  .algo-non{ left: 77.5%; top: 40.0%; }                    /* décalé pour éviter le rond */
+
+  /* Bouton vérifier (discret) */
+  .btn-verifier{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 11;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #475569;
+    background: rgba(15, 23, 42, 0.9);
+    color: #e5e7eb;
+    font-family: Verdana, Arial, sans-serif;
+    cursor: pointer;
+  }
+
+  .feedback{
+    position: absolute;
+    left: 10px;
+    bottom: 14px;
+    z-index: 11;
+    font-family: Verdana, Arial, sans-serif;
+    color: #e5e7eb;
+  }
+
+  .feedback.ok{ color: #22c55e; }
+  .feedback.ko{ color: #f97316; }
+
+  @media (max-width: 700px){
+    .algo-losange{ width: 250px; }
+    .algo-rectangle{ width: 230px; }
+  }
+
+
+
+
+    /* ========================= */
+    /* STYLE GÉNÉRAL  Exo 2           */
+    /* ========================= */
+
+    body { /* Corps de page */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police */
+      background: linear-gradient(to bottom, #020617, #0f172a); /* Fond */
+      color: #e5e7eb; /* Texte */
+      margin: 0; /* Marges */
+      padding: 30px; /* Padding */
+    }
+
+    .container { /* Bloc central */
+      max-width: 980px; /* Largeur max */
+      margin: 0 auto; /* Centrage */
+      background: #0b1120; /* Fond */
+      padding: 30px; /* Padding */
+      border-radius: 12px; /* Coins */
+      box-shadow: 0 0 30px rgba(59,130,246,0.3); /* Ombre */
+    }
+
+    h1 { /* Titre */
+      text-align: center; /* Centré */
+      color: #60a5fa; /* Bleu */
+      margin: 0 0 10px 0; /* Marges */
+    }
+
+    .consigne { /* Consigne */
+      text-align: center; /* Centré */
+      font-style: italic; /* Italique */
+      line-height: 1.4; /* Interligne */
+      margin: 0 0 18px 0; /* Marges */
+      color: #e5e7eb; /* Couleur */
+    }
+
+    /* ========================= */
+    /* TABLEAU ÉVÈNEMENTS / ACTIONS */
+    /* ========================= */
+
+    .ea-wrap { /* Conteneur tableau */
+      margin: 18px 0 10px 0; /* Marges */
+      padding: 14px; /* Padding */
+      border: 1px solid #334155; /* Bordure */
+      border-radius: 10px; /* Coins */
+      background: #020617; /* Fond */
+    }
+
+    .ea-title { /* Titre tableau */
+      text-align: center; /* Centré */
+      color: #bfdbfe; /* Bleu clair */
+      margin: 0 0 10px 0; /* Marge */
+      font-weight: 700; /* Gras */
+      letter-spacing: 0.3px; /* Espacement */
+    }
+
+    table { /* Tableau */
+      width: 100%; /* Largeur */
+      border-collapse: collapse; /* Bordures jointes */
+      font-size: 1.05rem; /* Taille */
+    }
+
+    th, td { /* Cellules */
+      border: 1px solid #334155; /* Bordure */
+      padding: 10px; /* Padding */
+      text-align: left; /* Alignement */
+    }
+
+    th { /* Entêtes */
+      background: #1e293b; /* Fond */
+      color: #bfdbfe; /* Couleur */
+    }
+
+    /* ========================= */
+    /* ZONE SCHÉMA + SUPERPOSITION */
+    /* ========================= */
+
+    .schema { /* Zone schéma */
+      background: #020617; /* Fond */
+      border: 1px dashed #334155; /* Bordure */
+      border-radius: 10px; /* Coins */
+      padding: 18px; /* Padding */
+      margin: 18px 0; /* Marges */
+      text-align: center; /* Centré */
+    }
+
+    .algo-wrap { /* Conteneur relatif */
+      position: relative; /* Référence absolute */
+      display: inline-block; /* Ajusté au contenu */
+      max-width: 100%; /* Responsive */
+    }
+
+    .algo-svg { /* SVG */
+      width: min(760px, 100%); /* Largeur */
+      height: auto; /* Auto */
+      display: block; /* Bloc */
+    }
+
+    /* ========================= */
+    /* MENUS SUPERPOSÉS          */
+    /* ========================= */
+
+    .algo-select { /* Menu générique */
+      position: absolute; /* Superposé */
+      padding: 6px 8px; /* Padding */
+      background: #020617; /* Fond */
+      color: #e5e7eb; /* Texte */
+      border: 1px solid #334155; /* Bordure */
+      border-radius: 8px; /* Coins */
+      font-size: 1rem; /* Taille */
+      cursor: pointer; /* Curseur */
+      outline: none; /* Pas de contour */
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.15); /* Liseré léger */
+    }
+
+    /* Important : les 3 menus "dans les formes" */
+    /* Ellipse : on met un menu assez large mais qui reste dans l’ellipse */
+    #sel2-ellipse { /* Dans ellipse */
+      left: 50%; /* Centre */
+      top: 12.8%; /* Centre ellipse */
+      transform: translate(-50%, -50%); /* Centrage */
+      width: 240px; /* Largeur */
+    }
+
+    /* Losange : menu dans le losange, un peu plus étroit pour ne pas dépasser */
+    #sel2-losange { /* Dans losange */
+      left: 50%; /* Centre */
+      top: 44.8%; /* Centre losange */
+      transform: translate(-50%, -50%); /* Centrage */
+      width: 250px; /* Largeur */
+    }
+
+    /* Rectangle : menu dans le rectangle */
+    #sel2-rectangle { /* Dans rectangle */
+      left: 50%; /* Centre */
+      top: 82.2%; /* Centre rectangle */
+      transform: translate(-50%, -50%); /* Centrage */
+      width: 270px; /* Largeur */
+    }
+
+    /* OUI / NON : placés À CÔTÉ des flèches, sans les recouvrir */
+    #sel2-oui { /* À côté de la flèche verticale */
+      left: 56%; /* Légèrement à droite de l’axe */
+      top: 64.5%; /* Entre losange et rectangle */
+      transform: translate(-50%, -50%); /* Centrage */
+      width: 120px; /* Largeur */
+    }
+
+    #sel2-non { /* À droite, près du point, mais pas sur la flèche */
+      left: 86.5%; /* À droite */
+      top: 40.8%; /* Aligné au point */
+      transform: translate(-50%, -50%); /* Centrage */
+      width: 120px; /* Largeur */
+    }
+
+    /* ========================= */
+    /* BOUTON + FEEDBACK         */
+    /* ========================= */
+
+    button { /* Bouton */
+      display: block; /* Bloc */
+      margin: 18px auto; /* Centré */
+      padding: 12px 30px; /* Padding */
+      background: #3b82f6; /* Bleu */
+      color: white; /* Texte */
+      border: none; /* Bordure */
+      border-radius: 8px; /* Coins */
+      font-size: 1.1rem; /* Taille */
+      cursor: pointer; /* Curseur */
+    }
+
+    button:hover { /* Survol */
+      background: #2563eb; /* Bleu foncé */
+    }
+
+    #feedback { /* Feedback */
+      text-align: center; /* Centré */
+      font-size: 1.2rem; /* Taille */
+      margin-top: 10px; /* Marge */
+      padding: 14px; /* Padding */
+      border-radius: 8px; /* Coins */
+    }
+
+    .ok { /* OK */
+      background: rgba(34,197,94,0.2); /* Vert */
+      color: #22c55e; /* Texte */
+    }
+
+    .ko { /* KO */
+      background: rgba(239,68,68,0.2); /* Rouge */
+      color: #ef4444; /* Texte */
+    }
+ 
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🧠 Plongez dans l'Aventure des Algorigrammes !</h1>
+            <p>Explorez la logique et les algorithmes à travers des exercices interactifs. Gagnez des points et obtenez votre note sur 20&nbsp;!</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- RAPPEL DE COURS -->
+        <section id="rappel" class="course-box">
+            <h2>📚 Rappel de cours : algorithmes &amp; algorigrammes</h2>
+
+            <p>
+                Un <strong>algorithme</strong> est une <strong>suite ordonnée d’instructions</strong> permettant de résoudre un problème.
+                C’est une recette très précise que l’on peut exécuter étape par étape.
+            </p>
+            <p>
+                Un <strong>algorigramme</strong> (ou <strong>organigramme</strong>) est une <strong>représentation graphique</strong> de l’algorithme&nbsp;:
+                on utilise des <strong>symboles normalisés</strong> (ovale, rectangle, parallélogramme, losange, rectangle barré, flèches…) pour représenter les étapes.
+            </p>
+
+            <!-- Tableau des symboles avec fichiers SVG -->
+            <table class="symbol-table">
+                <thead>
+                    <tr>
+                        <th>Forme géométrique</th>
+                        <th>Rôle</th>
+                        <th>Symbole</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ellipse / Ovale (Début / Fin)</td>
+                        <td>Marque le <strong>début</strong> ou la <strong>fin</strong> de l’algorithme.</td>
+                        <td>
+                            <!-- Fichier SVG du dossier Images -->
+                            <img src="Images/Code_graphique_Debut.svg"
+                                 alt="Symbole d’ovale pour début/fin d’algorithme"
+                                 class="symbol-img">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Rectangle (Action)</td>
+                        <td>Représente un <strong>traitement</strong> ou une <strong>action</strong> (calcul, affectation, commande…).</td>
+                        <td>
+                            <img src="Images/Code_graphique_Action.drawio.svg"
+                                 alt="Symbole de rectangle pour une action"
+                                 class="symbol-img">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Parallélogramme (Entrée / Sortie)</td>
+                        <td>Représente la <strong>lecture</strong> ou l’<strong>affichage</strong> d’une donnée (entrée/sortie).</td>
+                        <td>
+                            <svg class="symbol-svg" width="80" height="40">
+                                <polygon points="10,10 60,10 70,30 20,30"
+                                         fill="#facc15" stroke="#eab308" stroke-width="2" />
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Losange (Test / Condition)</td>
+                        <td>Pose une <strong>question</strong> (Vrai/Faux – Oui/Non) pour choisir un chemin.</td>
+                        <td>
+                            <img src="Images/Code_graphique_Evenement.drawio.svg"
+                                 alt="Symbole de losange pour une condition"
+                                 class="symbol-img">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Rectangle barré (Sous-programme)</td>
+                        <td>Représente un <strong>sous-programme</strong> (procédure ou fonction) appelé depuis l’algorithme principal.</td>
+                        <td>
+                            <img src="Images/Code_graphique_Sous-Programme.drawio.svg"
+                                 alt="Symbole de sous-programme (rectangle barré)"
+                                 class="symbol-img">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="definition">
+                <strong>Sous-programme :</strong> bloc d’instructions réutilisable que l’on appelle depuis
+                le programme principal. Il permet de <strong>simplifier</strong> l’algorigramme, de
+                <strong>réduire les répétitions</strong> et de <strong>faciliter les tests</strong>.
+            </div>
+
+            <div class="definition">
+                <strong>Commentaire :</strong> texte non exécuté, ajouté pour <strong>expliquer</strong> le rôle
+                d’une partie de l’algorithme. En pseudo-code, on peut par exemple commencer par <code>//</code>.
+            </div>
+
+            <div class="definition">
+                <strong>Flèches :</strong> elles indiquent le <strong>sens de circulation</strong> de l’algorithme
+                (ordre d’exécution) entre les symboles. Une flèche mal orientée peut changer complètement le fonctionnement.
+            </div>
+
+            <div class="astuce">
+                Les symboles d’algorigramme sont également disponibles en <strong>images SVG</strong> dans le
+                dossier <code>Images</code> de cette séquence (par exemple
+                <code>Code_graphique_Action.drawio.svg</code>). Une fois le projet envoyé sur GitHub,
+                ces images seront <strong>visibles en ligne</strong> dans la page HTML.
+            </div>
+
+            <p>
+                En technologie, tu dois savoir&nbsp;:
+            </p>
+            <ul>
+                <li>Lire un <strong>algorithme textuel</strong> (écrit sous forme de phrases ou de pseudo-code).</li>
+                <li>Lire un <strong>algorigramme</strong> et expliquer ce qu’il fait.</li>
+                <li>Prévoir la <strong>valeur finale</strong> d’une variable après exécution.</li>
+                <li>Construire ou compléter un <strong>algorigramme simple</strong> (actions, conditions, boucles, sous-programmes).</li>
+                <li>Identifier les <strong>commentaires</strong> et suivre correctement les <strong>flèches</strong>.</li>
+            </ul>
+            <p>
+                👉 Tu disposes pour chaque exercice d’un <strong>bouton d’aide</strong> (indice),
+                de <strong>3 essais maximum</strong> et d’un <strong>système de points</strong>.
+            </p>
+
+            <h3>1.2 Pseudo-code associé</h3>
+            <pre style="background-color: #0f172a; padding: 15px; border-radius: 8px; color: #bfdbfe; font-size: 0.95rem;">
+Début
+   // Détection automatique de présence
+   SI nuit ET présence ALORS
+      Allumer lampe
+      Attendre 3 min
+      Éteindre lampe
+   SINON
+      Éteindre lampe
+   FIN SI
+Retour au début
+            </pre>
+
+            <h3>1.3 Mots-clés utiles</h3>
+            <div class="astuce">
+                <strong>Mots-clés pseudo-code :</strong>
+                <ul>
+                    <li><code>SI</code>, <code>ALORS</code>, <code>SINON</code>, <code>FIN SI</code></li>
+                    <li><code>ET</code>, <code>OU</code></li>
+                    <li><code>POUR</code>, <code>TANT_QUE</code>, <code>RÉPÉTER … JUSQU'À</code></li>
+                    <li><code>Début</code>, <code>Fin</code>, <code>Retour au début</code></li>
+                    <li><code>Appeler Sous-programme_X</code> (appel d’un sous-programme)</li>
+                </ul>
+            </div>
+
+            <h3>Fonction logique ET</h3>
+            <p>L’utilisation de la fonction logique <strong>ET</strong> est essentielle pour présenter correctement une solution.</p>
+
+            <ul>
+                <li><strong>A</strong>, <strong>B</strong> : variables d’entrée.</li>
+                <li><strong>S</strong> : variable de sortie.</li>
+            </ul>
+
+            <p>🧠 1. Forme algébrique booléenne</p>
+            <p><code>S = A . B</code></p>
+            <ul>
+                <li>S est vrai (1) uniquement si A et B sont tous les deux vrais (1).</li>
+            </ul>
+
+            <p>🔤 2. Forme textuelle explicite</p>
+            <p><em>S est vrai si A est vrai ET B est vrai.</em></p>
+
+            <p>🔘 3. Forme conditionnelle</p>
+            <p><code>Si A = 1 ET B = 1 alors S = 1, sinon S = 0.</code></p>
+
+            <p>🔄 4. Table de vérité</p>
+            <table class="truth-table">
+                <caption>Table de vérité ET</caption>
+                <tr><th>A</th><th>B</th><th>S = A ET B</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>🔌 5. Représentations de la porte logique ET</p>
+
+              <h3 style="margin:0 0 10px 0; color:#e5e7eb; font-family:Verdana;">Porte logique <span style="color:#38bdf8;">ET</span> : symbole européen et symbole US</h3>
+
+            <!-- =============================== -->
+            <!-- Image EU (Européen)             -->
+            <!-- =============================== -->
+            <figure style="margin:0; background:#020617; border:1px solid #1f2937; border-radius:12px; padding:10px;">
+              <!-- Image : chemin relatif depuis ton HTML -->
+              <img
+                src="Images/porte_ET_EU.png"
+                alt="Symbole européen de la porte logique ET"
+                style="width:40%; height:auto; display:block; margin:0 auto; border-radius:10px; border:1px solid #1f2937;"
+              >
+              <!-- Légende -->
+              <figcaption style="margin-top:8px; color:#9ca3af; font-family:Verdana; font-size:0.9rem; text-align:center;">
+                Symbole européen (IEC) — porte ET
+              </figcaption>
+            </figure>
+
+            <!-- =============================== -->
+                <!-- Image US (Américain)            -->
+                <!-- =============================== -->
+                <figure style="margin:0; background:#020617; border:1px solid #1f2937; border-radius:12px; padding:10px;">
+                  <!-- Image : chemin relatif depuis ton HTML -->
+                  <img
+                    src="Images/porte_ET_US.png"
+                    alt="Symbole américain de la porte logique ET"
+                    style="width:40%; height:auto; display:block; margin:0 auto; border-radius:10px; border:1px solid #1f2937;"
+                  >
+                  <!-- Légende -->
+                  <figcaption style="margin-top:8px; color:#9ca3af; font-family:Verdana; font-size:0.9rem; text-align:center;">
+                    Symbole US (ANSI) — porte ET
+                  </figcaption>
+                </figure>
+
+  </div>
+
+  <!-- Petite remarque pédagogique -->
+  <p style="margin:10px 0 0 0; color:#cbd5e1; font-family:Verdana; font-size:0.92rem;">
+    Les deux symboles représentent la même fonction logique : la sortie vaut 1 uniquement si <strong>les deux entrées valent 1</strong>.
+  </p>
+
+            <p>🧩 6. Pseudo-code de la fonction ET</p>
+            <figure aria-labelledby="caption-and">
+                <figcaption id="caption-and">Pseudo-code : S = A ET B</figcaption>
+                <pre><code>Si A = 1 et B = 1 alors
+   S ← 1
+Sinon
+   S ← 0
+FinSi</code></pre>
+            </figure>
+
+            <p>💡 7. Schéma électrique interactif de la fonction ET</p>
+            <p class="legend">
+                L’ampoule <strong>S</strong> s’allume uniquement si les deux interrupteurs <strong>A</strong> et <strong>B</strong> sont fermés.
+                Cliquez ou utilisez Espace/Entrée pour basculer chaque interrupteur.
+            </p>
+
+            <div class="panel">
+                <div class="controls" aria-label="Contrôles des interrupteurs">
+                    <button id="btnA" class="control" type="button" aria-pressed="false" aria-controls="circuit" data-key="A">
+                        <span class="badge" id="badgeA">A = 0 (ouvert)</span>
+                    </button>
+                    <button id="btnB" class="control" type="button" aria-pressed="false" aria-controls="circuit" data-key="B">
+                        <span class="badge" id="badgeB">B = 0 (ouvert)</span>
+                    </button>
+                    <span class="status" id="statusS" aria-live="polite">S = 0 (éteinte)</span>
+                </div>
+
+<!-- SVG circuit -->
+<svg id="circuit" viewBox="0 0 800 300" role="img" aria-labelledby="title desc">
+  <title id="title">Circuit électrique simulant S = A ET B</title>
+  <desc id="desc">Deux interrupteurs en série A et B entre l’accumulateur E et l’ampoule S. L’ampoule ne s’allume que si les deux interrupteurs sont fermés.</desc>
+
+  <!-- Accumulateur E -->
+  <g id="source">
+    <rect x="40" y="160" width="20" height="80" fill="#111827" stroke="#e5e7eb" />
+    <!-- signe + -->
+    <line x1="45" y1="175" x2="55" y2="175" stroke="#e5e7eb" stroke-width="2" />
+    <line x1="50" y1="170" x2="50" y2="180" stroke="#e5e7eb" stroke-width="2" />
+    <!-- signe - -->
+    <line x1="45" y1="225" x2="55" y2="225" stroke="#e5e7eb" stroke-width="2" />
+    <text x="20" y="190" class="switch-label">E</text>
+  </g>
+
+  <!-- Liaison bas / masse -->
+  <line x1="50" y1="240" x2="50" y2="262" class="wire" />
+  <line x1="50" y1="260" x2="762" y2="262" class="wire" />
+  <line x1="760" y1="260" x2="760" y2="138" class="wire" />
+
+  <!-- Symbole de masse -->
+  <g id="ground" transform="translate(400,280)">
+    <line x1="10" y1="-20" x2="10" y2="0" stroke="#e5e7eb" stroke-width="2" />
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#e5e7eb" stroke-width="2" />
+    <line x1="5" y1="5" x2="15" y2="5" stroke="#e5e7eb" stroke-width="2" />
+    <line x1="8" y1="10" x2="12" y2="10" stroke="#e5e7eb" stroke-width="2" />
+  </g>
+
+  <!-- Fil supérieur vers interrupteurs -->
+  <line x1="50" y1="140" x2="50" y2="160" class="wire" />
+  <line x1="48" y1="140" x2="210" y2="140" class="wire" />
+
+  <!-- Interrupteur A -->
+  <g id="switchA" tabindex="0" role="button" aria-label="Interrupteur A" data-state="open">
+    <line x1="210" y1="140" x2="280" y2="140" class="wire" />
+    <line id="bladeA" x1="280" y1="140" x2="320" y2="110" class="switch open" />
+    <circle cx="280" cy="140" r="6" fill="#6b7280" />
+    <circle cx="320" cy="140" r="6" fill="#6b7280" />
+    <text x="255" y="95" class="switch-label">A</text>
+  </g>
+
+  <!-- Fil entre A et B -->
+  <line x1="325" y1="140" x2="430" y2="140" class="wire" />
+
+  <!-- Interrupteur B -->
+  <g id="switchB" tabindex="0" role="button" aria-label="Interrupteur B" data-state="open">
+    <line x1="430" y1="140" x2="500" y2="140" class="wire" />
+    <line id="bladeB" x1="500" y1="140" x2="540" y2="110" class="switch open" />
+    <circle cx="500" cy="140" r="6" fill="#6b7280" />
+    <circle cx="540" cy="140" r="6" fill="#6b7280" />
+    <text x="475" y="95" class="switch-label">B</text>
+  </g>
+
+  <!-- Fil vers lampe -->
+  <line x1="546" y1="140" x2="650" y2="140" class="wire" />
+
+  <!-- Ampoule S (cercle + croix) -->
+  <g id="lamp" transform="translate(630,90)">
+    <circle cx="50" cy="50" r="35" class="lamp-bulb" stroke="#111827" stroke-width="2" fill="none"/>
+    <!-- Glow -->
+    <circle cx="50" cy="50" r="50" fill="url(#glowGrad)" class="lamp-glow" />
+    <!-- Croix de lampe -->
+    <line x1="30" y1="30" x2="70" y2="70" stroke="#111827" stroke-width="3" />
+    <line x1="70" y1="30" x2="30" y2="70" stroke="#111827" stroke-width="3" />
+    <text x="45" y="115" class="switch-label">S</text>
+  </g>
+
+  <!-- Retour vers masse (ajusté pour toucher) -->
+  <line x1="716" y1="140" x2="760" y2="140" class="wire" />
+  <line x1="760" y1="140" x2="760" y2="200" class="wire" />
+
+  <!-- Dégradé de lueur -->
+  <defs>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#facc15" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#facc15" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+</svg>
+
+
+                <p class="legend">Logique : S = A ET B. Interrupteurs en <strong>série</strong>. Fermer A et B pour allumer S.</p>
+            </div>
+
+            <p><strong>Formule booléenne :</strong> <code>S = A . B</code></p>
+
+            <h3>Fonction logique OU</h3>
+            <p>La fonction logique <strong>OU</strong> permet d’allumer la sortie si au moins une des entrées est active.</p>
+
+            <p>🧠 1. Forme algébrique booléenne</p>
+            <p><code>S = A + B</code></p>
+
+            <p>🔤 2. Forme textuelle explicite</p>
+            <p><em>S est vrai si A est vrai OU B est vrai (ou les deux).</em></p>
+
+            <p>🔘 3. Forme conditionnelle</p>
+            <p><code>Si A = 1 OU B = 1 alors S = 1, sinon S = 0.</code></p>
+
+            <p>🔄 4. Table de vérité</p>
+            <table class="truth-table">
+                <caption>Table de vérité OU</caption>
+                <tr><th>A</th><th>B</th><th>S = A OU B (S = A + B)</th></tr>
+                <tr><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td></tr>
+            </table>
+
+            <p>🔌 5. Représentation de la porte logique OU</p>
+
+
+            <!-- ===================================================== -->
+            <!-- PORTE LOGIQUE OU : SYMBOLes EUROPÉEN + US (STANDARD)   -->
+            <!-- ===================================================== -->
+
+            <section class="bloc-ressource">
+              <!-- Titre de la section -->
+              <h3>Représentations de la porte logique OU</h3>
+
+              <!-- Grille contenant les deux représentations -->
+              <div class="grille-images-2">
+                
+                <!-- Image 1 : Symbole Européen -->
+                <figure class="carte-image">
+                  <img
+                    src="Images/porte_OU_EU.png"
+                    alt="Porte logique OU - symbole européen"
+                    loading="lazy"
+                    style="width:40%; height:auto; display:block; margin:0 auto; border-radius:10px; border:1px solid #1f2937;"
+                  >
+                  <figcaption>Symbole européen (IEC)</figcaption>
+                </figure>
+
+                <!-- Image 2 : Symbole US -->
+                <figure class="carte-image">
+                  <img
+                    src="Images/porte_OU_US.png"
+                    alt="Porte logique OU - symbole standard US"
+                    loading="lazy"
+                    style="width:40%; height:auto; display:block; margin:0 auto; border-radius:10px; border:1px solid #1f2937;"
+                  >
+                  <figcaption>Symbole US (ANSI)</figcaption>
+                </figure>
+
+              </div>
+            </section>
+
+
+            <p>🧩 6. Pseudo-code de la fonction OU</p>
+            <figure aria-labelledby="caption-or">
+                <figcaption id="caption-or">Pseudo-code : S = A OU B</figcaption>
+                <pre><code>Si A = 1 ou B = 1 alors
+   S ← 1
+Sinon
+   S ← 0
+FinSi</code></pre>
+            </figure>
+
+
+              <p>💡 7. Schéma électrique interactif de la fonction OU</p>
+
+<!-- =============================== -->
+<!-- SCHÉMA ÉLECTRIQUE INTERACTIF OU -->
+<!-- =============================== -->
+
+<!-- Légende pédagogique -->
+<p class="legend">
+  L’ampoule <strong>S</strong> s’allume si <strong>A</strong> est fermé <strong>OU</strong> si <strong>B</strong> est fermé (ou les deux).
+  Cliquez sur les interrupteurs (ou Espace/Entrée).
+</p>
+
+<!-- Panneau (même style que ET, mais IDs différents pour ne pas mélanger) -->
+<div class="panel">
+  <!-- Zone de contrôles -->
+  <div class="controls" aria-label="Contrôles des interrupteurs (OU)">
+    <!-- Bouton A (OU) -->
+    <button id="btnA_or" class="control" type="button" aria-pressed="false" aria-controls="circuit_or" data-key="A">
+      <span class="badge" id="badgeA_or">A = 0 (ouvert)</span>
+    </button>
+
+    <!-- Bouton B (OU) -->
+    <button id="btnB_or" class="control" type="button" aria-pressed="false" aria-controls="circuit_or" data-key="B">
+      <span class="badge" id="badgeB_or">B = 0 (ouvert)</span>
+    </button>
+
+    <!-- Statut S (OU) -->
+    <span class="status" id="statusS_or" aria-live="polite">S = 0 (éteinte)</span>
+  </div>
+
+  <!-- ===================== -->
+  <!-- SVG : Circuit logique OU -->
+  <!-- Interrupteurs en PARALLÈLE -->
+  <!-- ===================== -->
+  <svg id="circuit_or" viewBox="0 0 800 360" role="img" aria-labelledby="title_or desc_or">
+    <title id="title_or">Circuit électrique simulant S = A OU B</title>
+    <desc id="desc_or">Deux interrupteurs en parallèle A et B entre la source E et l’ampoule S. L’ampoule s’allume si au moins un interrupteur est fermé.</desc>
+
+    <!-- Source E -->
+    <g id="source_or">
+      <rect x="40" y="170" width="20" height="90" fill="#111827" stroke="#e5e7eb" />
+      <line x1="45" y1="188" x2="55" y2="188" stroke="#e5e7eb" stroke-width="2" />
+      <line x1="50" y1="183" x2="50" y2="193" stroke="#e5e7eb" stroke-width="2" />
+      <line x1="45" y1="245" x2="55" y2="245" stroke="#e5e7eb" stroke-width="2" />
+      <text x="20" y="205" class="switch-label">E</text>
+    </g>
+
+    <!-- Fil principal haut (sortie +) -->
+    <line x1="50" y1="150" x2="50" y2="170" class="wire" />
+    <line x1="50" y1="150" x2="240" y2="150" class="wire" />
+
+    <!-- Point de dérivation vers 2 branches -->
+    <circle cx="240" cy="150" r="6" fill="#6b7280" />
+
+    <!-- Branche haute (A) : montée puis interrupteur A -->
+    <line x1="240" y1="150" x2="240" y2="110" class="wire" />
+    <line x1="240" y1="110" x2="300" y2="110" class="wire" />
+
+    <!-- Interrupteur A (branche haute) -->
+    <g id="switchA_or" tabindex="0" role="button" aria-label="Interrupteur A (OU)" data-state="open">
+      <line x1="300" y1="110" x2="360" y2="110" class="wire" />
+      <line id="bladeA_or" x1="360" y1="110" x2="400" y2="80" class="switch open" />
+      <circle cx="360" cy="110" r="6" fill="#6b7280" />
+      <circle cx="400" cy="110" r="6" fill="#6b7280" />
+      <text x="330" y="65" class="switch-label">A</text>
+    </g>
+
+    <!-- Retour branche haute vers nœud de réunion -->
+    <line x1="406" y1="110" x2="500" y2="110" class="wire" />
+    <line x1="500" y1="110" x2="500" y2="150" class="wire" />
+
+    <!-- Branche basse (B) : descente puis interrupteur B -->
+    <line x1="240" y1="150" x2="240" y2="210" class="wire" />
+    <line x1="240" y1="210" x2="300" y2="210" class="wire" />
+
+    <!-- Interrupteur B (branche basse) -->
+    <g id="switchB_or" tabindex="0" role="button" aria-label="Interrupteur B (OU)" data-state="open">
+      <line x1="300" y1="210" x2="360" y2="210" class="wire" />
+      <line id="bladeB_or" x1="360" y1="210" x2="400" y2="180" class="switch open" />
+      <circle cx="360" cy="210" r="6" fill="#6b7280" />
+      <circle cx="400" cy="210" r="6" fill="#6b7280" />
+      <text x="330" y="255" class="switch-label">B</text>
+    </g>
+
+    <!-- Retour branche basse vers nœud de réunion -->
+    <line x1="406" y1="210" x2="500" y2="210" class="wire" />
+    <line x1="500" y1="210" x2="500" y2="150" class="wire" />
+
+    <!-- Nœud de réunion (avant la lampe) -->
+    <circle cx="500" cy="150" r="6" fill="#6b7280" />
+
+    <!-- Fil vers lampe -->
+    <line x1="500" y1="150" x2="650" y2="150" class="wire" />
+
+    <!-- Ampoule S (cercle + croix) -->
+    <g id="lamp_or" transform="translate(630,100)">
+      <circle cx="50" cy="50" r="35" class="lamp-bulb" stroke="#111827" stroke-width="2" fill="none"></circle>
+      <circle cx="50" cy="50" r="50" fill="url(#glowGrad_or)" class="lamp-glow"></circle>
+      <line x1="30" y1="30" x2="70" y2="70" stroke="#111827" stroke-width="3"></line>
+      <line x1="70" y1="30" x2="30" y2="70" stroke="#111827" stroke-width="3"></line>
+      <text x="45" y="115" class="switch-label">S</text>
+    </g>
+
+    <!-- Retour vers borne - (bas) -->
+    <line x1="716" y1="150" x2="760" y2="150" class="wire" />
+    <line x1="760" y1="150" x2="760" y2="300" class="wire" />
+    <line x1="50" y1="300" x2="760" y2="300" class="wire" />
+    <line x1="50" y1="260" x2="50" y2="300" class="wire" />
+
+    <!-- Dégradé de lueur -->
+    <defs>
+      <radialGradient id="glowGrad_or" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#facc15" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="#facc15" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <!-- Rappel logique -->
+  <p class="legend">
+    Logique : S = A OU B. Interrupteurs en <strong>parallèle</strong>. Fermer A <strong>ou</strong> B pour allumer S.
+  </p>
+</div>
+
+
+
+
+            <h3>Algorithme et gestion des sous-problèmes</h3>
+            <p>
+                L’utilisation de <strong>sous-programmes</strong> est idéale pour une meilleure lisibilité, pour
+                alléger l’algorithme lorsqu’il y a des actions répétitives, pour faciliter le travail en
+                collaboration et pour simplifier la recherche d’erreur (tests séparés de chaque sous-programme).
+            </p>
+        </section>
+
+        <!-- SCORE GLOBAL -->
+        <section class="scoreboard">
+            <div id="score-text">
+                Score global : <span id="score-value">0</span> / <span id="score-max">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </section>
+
+        <button id="show-summary">📊 Afficher le détail des points</button>
+        <div id="summary-box"></div>
+
+        <!-- EXERCICES -->
+        <section id="exercices">
+            <h2>2. L'Aventure des Exercices : Gagnez des Points&nbsp;!</h2>
+            <p>Remplissez les tableaux et choisissez les symboles/logiques corrects. Chaque exercice rapporte des points pour un total sur 20.</p>
+
+
+            <!-- ===================================================== -->
+<!-- EXERCICE 1 (SANS CORRECTION) : Mario avance si bouton  -->
+<!-- ===================================================== -->
+
+<section class="exercice" id="exo1">
+  <!-- Titre de l'exercice -->
+  <h3>Exo 1 — Algorigramme : faire avancer Mario</h3>
+
+  <!-- Énoncé -->
+  <p>
+    🎯 Réalise la description par <strong>algorigramme</strong> permettant à Mario d’avancer
+    dès que le joueur appuie sur le bouton <strong>Avancer</strong> de la manette de jeu.
+  </p>
+
+     <!-- =============================== -->
+    <!-- TABLEAU ÉVÈNEMENTS / ACTIONS   -->
+    <!-- =============================== -->
+
+    <table class="table-evenements-actions">
+      <thead>
+        <tr>
+          <th>ÉVÈNEMENTS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bouton <strong>Avancer</strong> activé&nbsp;?</td>
+          <td>Avancer de <strong>10 pixels</strong></td>
+        </tr>
+      </tbody>
+</table>
+
+
+  <!-- Consignes de réalisation -->
+  <div class="consignes">
+    <p>🎯  Consignes de réalisation</p>
+    <ul>
+      <li>Complète les symboles : <strong>Début</strong>, <strong>Test (losange)</strong>, <strong>Action (rectangle)</strong>, <strong>Flèches</strong>.</li>
+      <li>Ton algorigramme doit boucler : si le bouton n’est pas activé, on continue d’attendre.</li>
+      <li>Si le bouton est activé, Mario avance de 10 pixels, puis on recommence.</li>
+    </ul>
+  </div>
+
+  <!-- Zone de réponse (élève) -->
+  <div class="zone-reponse">
+    <p><strong>📝 complète ci-dessous  ton algorigramme :</strong> événements, actions, etc. </p>
+
+    <!-- ===================================================== -->
+<!-- ALGORIGRAMME (style Draw.io) : Mario avance si bouton  -->
+<!-- ===================================================== -->
+
+<section class="algorigramme" id="algo_exo1">
+  <h4>Algorigramme — Exo 1</h4>
+
+  <div class="algo-superpose" role="img" aria-label="Algorigramme interactif : placer correctement un évènement, une action et OUI/NON.">
+
+    <!-- ===================== -->
+    <!-- MENUS SUPERPOSÉS      -->
+    <!-- ===================== -->
+
+    <!-- 1) Ellipse (doit être : Début) -->
+    <select class="algo-select algo-ellipse" id="sel-ellipse" aria-label="Menu dans l'ellipse">
+      <option value="">Choisir…</option>
+
+      <!-- ÉLÉMENTS ATTENDUS POSSIBLES -->
+      <option>Début</option>
+
+      <!-- CHOIX EXHAUSTIF (événements / actions / oui-non / autres) -->
+      <option>Bouton Avancer activé ?</option>
+      <option>Capteur détecte un obstacle ?</option>
+      <option>Température &gt; 25°C ?</option>
+      <option>Avancer de 10 pixels</option>
+      <option>Tourner à droite</option>
+      <option>Allumer la LED</option>
+      <option>Attendre 1 seconde</option>
+      <option>OUI</option>
+      <option>NON</option>
+      <option>Fin</option>
+    </select>
+
+    <!-- 2) Losange (doit être : Bouton Avancer activé ?) -->
+    <select class="algo-select algo-losange" id="sel-losange" aria-label="Menu dans le losange">
+      <option value="">Choisir…</option>
+
+      <!-- CHOIX EXHAUSTIF -->
+      <option>Début</option>
+      <option>Bouton Avancer activé ?</option>
+      <option>Capteur détecte un obstacle ?</option>
+      <option>Température &gt; 25°C ?</option>
+      <option>Avancer de 10 pixels</option>
+      <option>Tourner à droite</option>
+      <option>Allumer la LED</option>
+      <option>Attendre 1 seconde</option>
+      <option>OUI</option>
+      <option>NON</option>
+      <option>Fin</option>
+    </select>
+
+    <!-- 3) OUI (doit être : OUI) -->
+    <select class="algo-select algo-mini algo-oui" id="sel-oui" aria-label="Menu pour OUI">
+      <option value="">…</option>
+
+      <!-- CHOIX EXHAUSTIF -->
+      <option>OUI</option>
+      <option>NON</option>
+      <option>Début</option>
+      <option>Fin</option>
+      <option>Bouton Avancer activé ?</option>
+      <option>Avancer de 10 pixels</option>
+    </select>
+
+    <!-- 4) NON (doit être : NON) -->
+    <select class="algo-select algo-mini algo-non" id="sel-non" aria-label="Menu pour NON">
+      <option value="">…</option>
+
+      <!-- CHOIX EXHAUSTIF -->
+      <option>NON</option>
+      <option>OUI</option>
+      <option>Début</option>
+      <option>Fin</option>
+      <option>Bouton Avancer activé ?</option>
+      <option>Avancer de 10 pixels</option>
+    </select>
+
+    <!-- 5) Rectangle (doit être : Avancer de 10 pixels) -->
+    <select class="algo-select algo-rectangle" id="sel-rectangle" aria-label="Menu dans le rectangle">
+      <option value="">Choisir…</option>
+
+      <!-- CHOIX EXHAUSTIF -->
+      <option>Début</option>
+      <option>Bouton Avancer activé ?</option>
+      <option>Capteur détecte un obstacle ?</option>
+      <option>Température &gt; 25°C ?</option>
+      <option>Avancer de 10 pixels</option>
+      <option>Tourner à droite</option>
+      <option>Allumer la LED</option>
+      <option>Attendre 1 seconde</option>
+      <option>OUI</option>
+      <option>NON</option>
+      <option>Fin</option>
+    </select>
+
+    <!-- ===================== -->
+    <!-- SVG SUPPORT           -->
+    <!-- ===================== -->
+    <svg viewBox="0 0 900 620" class="algo-svg" xmlns="http://www.w3.org/2000/svg">
+
+      <defs>
+        <!-- Pointe de flèche : même couleur que la ligne -->
+        <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="currentColor"></path>
+        </marker>
+      </defs>
+
+      <!-- Formes -->
+      <ellipse cx="450" cy="55" rx="140" ry="55" class="shape"></ellipse>
+      <polygon points="450,175 630,275 450,375 270,275" class="shape"></polygon>
+      <rect x="310" y="430" width="280" height="90" rx="6" ry="6" class="shape"></rect>
+
+      <!-- Flèches / lignes (retours alignés) -->
+      <line x1="450" y1="110" x2="450" y2="175" class="arrow"></line>
+      <line x1="450" y1="375" x2="450" y2="430" class="arrow"></line>
+
+      <line x1="450" y1="520" x2="450" y2="555" class="arrow"></line>
+
+      <line x1="450" y1="555" x2="180" y2="555" class="arrow"></line>
+      <line x1="180" y1="555" x2="180" y2="140" class="arrow"></line>
+      <line x1="180" y1="140" x2="450" y2="140" class="arrow"></line>
+      <line x1="450" y1="140" x2="450" y2="175" class="arrow"></line>
+
+      <circle cx="641" cy="275" r="10" class="node"></circle>
+      <line x1="653" y1="275" x2="780" y2="275" class="arrow"></line>
+      <line x1="780" y1="275" x2="780" y2="140" class="arrow"></line>
+      <line x1="780" y1="140" x2="450" y2="140" class="arrow"></line>
+
+    </svg>
+
+    <!-- (Option) Bouton vérifier -->
+    <button class="btn-verifier" type="button" onclick="verifierAlgoExo1()">Vérifier</button>
+    <div id="feedback-algo-exo1" class="feedback" aria-live="polite"></div>
+
+  </div>
+</section>
+
+ <!-- =============================== -->
+<!-- EXERCICE 2 — Stock HandSpinner  -->
+<!-- =============================== -->
+
+<section class="exercice" id="exo2">
+  <h3>Exo 2 — Algorigramme : gestion du stock de HandSpinner</h3>
+
+  <p class="consigne">
+    Réalise la description par <strong>algorigramme</strong> permettant de gérer le stock de HandSpinner mis en rayon.
+    <br>Quand la quantité est <strong>inférieure à 50</strong>, une commande se fait automatiquement auprès du fournisseur.
+  </p>
+
+  <!-- =============================== -->
+  <!-- TABLEAU ÉVÈNEMENTS / ACTIONS   -->
+  <!-- =============================== -->
+  <table class="table-evenements-actions">
+    <thead>
+      <tr>
+        <th>ÉVÈNEMENTS</th>
+        <th>ACTIONS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Quantité &lt; 50 ?</td>
+        <td>Passer une commande</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- =============================== -->
+  <!-- ALGORIGRAMME SUPERPOSÉ (STYLE EXO 1) -->
+  <!-- =============================== -->
+  <section class="algorigramme" id="algo_exo2">
+    <h4>Algorigramme — Exo 2</h4>
+
+    <div class="algo-superpose" role="img" aria-label="Algorigramme interactif Exo 2 : stock HandSpinner">
+
+      <!-- (Optionnel mais conseillé) : réduire un peu les menus UNIQUEMENT pour Exo2 -->
+      <style>
+        /* Menus Exo 2 : un peu plus petits pour ne pas dépasser */
+        #algo_exo2 .algo-select { font-size: 13px; padding: 5px 8px; } /* Réduction */
+        #algo_exo2 .algo-mini   { width: 90px; padding: 5px 6px; }     /* Mini menus */
+        #algo_exo2 .algo-ellipse{ width: 210px; }                      /* Ellipse */
+        #algo_exo2 .algo-losange{ width: 260px; }                      /* Losange */
+        #algo_exo2 .algo-rectangle{ width: 240px; }                    /* Rectangle */
+      </style>
+
+      <!-- 1) Ellipse (doit être : Début) -->
+      <select class="algo-select algo-ellipse" id="sel2-ellipse" aria-label="Menu dans l'ellipse (Exo 2)">
+        <option value="">Choisir…</option>
+
+        <!-- Attendus -->
+        <option>Début</option>
+
+        <!-- Choix “exhaustif” (événements / actions / oui-non / autres) -->
+        <option>Quantité &lt; 50 ?</option>
+        <option>Passer une commande</option>
+        <option>OUI</option>
+        <option>NON</option>
+        <option>Fin</option>
+      </select>
+
+      <!-- 2) Losange (doit être : Quantité < 50 ?) -->
+      <select class="algo-select algo-losange" id="sel2-losange" aria-label="Menu dans le losange (Exo 2)">
+        <option value="">Choisir…</option>
+
+        <option>Début</option>
+        <option>Quantité &lt; 50 ?</option>
+        <option>Passer une commande</option>
+        <option>OUI</option>
+        <option>NON</option>
+        <option>Fin</option>
+      </select>
+
+      <!-- 3) OUI (doit être : OUI) -->
+      <select class="algo-select algo-mini algo-oui" id="sel2-oui" aria-label="Menu pour OUI (Exo 2)">
+        <option value="">…</option>
+        <option>OUI</option>
+        <option>NON</option>
+      </select>
+
+      <!-- 4) NON (doit être : NON) -->
+      <select class="algo-select algo-mini algo-non" id="sel2-non" aria-label="Menu pour NON (Exo 2)">
+        <option value="">…</option>
+        <option>NON</option>
+        <option>OUI</option>
+      </select>
+
+      <!-- 5) Rectangle (doit être : Passer une commande) -->
+      <select class="algo-select algo-rectangle" id="sel2-rectangle" aria-label="Menu dans le rectangle (Exo 2)">
+        <option value="">Choisir…</option>
+
+        <option>Début</option>
+        <option>Quantité &lt; 50 ?</option>
+        <option>Passer une commande</option>
+        <option>OUI</option>
+        <option>NON</option>
+        <option>Fin</option>
+      </select>
+
+      <!-- ===================== -->
+      <!-- SVG SUPPORT (MÊME QUE EXO 1 : 900×620) -->
+      <!-- ===================== -->
+      <svg viewBox="0 0 900 620" class="algo-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="currentColor"></path>
+          </marker>
+        </defs>
+
+        <!-- Formes -->
+        <ellipse cx="450" cy="55" rx="140" ry="55" class="shape"></ellipse>
+        <polygon points="450,175 630,275 450,375 270,275" class="shape"></polygon>
+        <rect x="310" y="430" width="280" height="90" rx="6" ry="6" class="shape"></rect>
+
+        <!-- Flèches -->
+        <line x1="450" y1="110" x2="450" y2="175" class="arrow" style="marker-end:url(#arrow2)"></line>
+        <line x1="450" y1="375" x2="450" y2="430" class="arrow" style="marker-end:url(#arrow2)"></line>
+
+        <line x1="450" y1="520" x2="450" y2="555" class="arrow" style="marker-end:url(#arrow2)"></line>
+
+        <!-- Retour bas gauche -->
+        <line x1="450" y1="555" x2="180" y2="555" class="arrow" style="marker-end:url(#arrow2)"></line>
+        <line x1="180" y1="555" x2="180" y2="140" class="arrow" style="marker-end:url(#arrow2)"></line>
+        <line x1="180" y1="140" x2="450" y2="140" class="arrow" style="marker-end:url(#arrow2)"></line>
+        <line x1="450" y1="140" x2="450" y2="175" class="arrow" style="marker-end:url(#arrow2)"></line>
+
+        <!-- Sortie NON : point + retour haut droit -->
+        <circle cx="641" cy="275" r="10" class="node"></circle>
+        <line x1="653" y1="275" x2="780" y2="275" class="arrow" style="marker-end:url(#arrow2)"></line>
+        <line x1="780" y1="275" x2="780" y2="140" class="arrow" style="marker-end:url(#arrow2)"></line>
+        <line x1="780" y1="140" x2="450" y2="140" class="arrow" style="marker-end:url(#arrow2)"></line>
+      </svg>
+
+      <button class="btn-verifier" type="button" onclick="verifierAlgoExo2()">Vérifier</button>
+      <div id="feedback-algo-exo2" class="feedback" aria-live="polite"></div>
+
+    </div>
+  </section>
+</section>
+
+
+
+
+            
+
+
+
+
+            <!-- Exo 4 : Porte automatique -->
+            <article class="exercice" id="exo1" data-points="2">
+                <h3>Exercice 4 — Porte automatique</h3>
+
+                <div class="consigne">
+                    Dès qu'une personne est détectée, la porte s'ouvre pendant 5 secondes, puis se referme. Complète le tableau puis indique le type de symbole utilisé pour la question « Présence ? ».
+                </div>
+
+                <!-- Tableau EVÈNEMENTS / ACTIONS -->
+                <table class="table-evenements">
+                    <tr>
+                        <th>ÉVÈNEMENTS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo1_ev1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect" data-correct="true">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo1_ac1" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir" data-correct="true">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo1_ev2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause" data-correct="true">Pause de 5s</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo1_ac2" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer">Fermer porte</option>
+                                <option value="pause" data-correct="true">Pause de 5s</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="exo1_ev3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer" data-correct="true">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="exo1_ac3" class="table-select">
+                                <option value="">Choisir…</option>
+                                <option value="detect">Détection personne ?</option>
+                                <option value="ouvrir">Ouvrir porte</option>
+                                <option value="fermer" data-correct="true">Fermer porte</option>
+                                <option value="pause">Pause de 5s</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="schema-interactif">
+                    <!-- schéma et menu déjà présents, inchangés visuellement -->
+                    <!-- ... (schéma complet de l'exercice 1 inchangé) ... -->
+                    <!-- Pour alléger la réponse, tu conserves ici ton SVG existant -->
+                    <!-- IMPORTANT : ne supprime pas ce commentaire, remets ton SVG d'origine -->
+                    <select class="menu-schema" id="exo1_select1" style="top: 22%; left: 50%;">
+                        <option value="">Type de symbole ?</option>
+                        <option value="ellipse">Ellipse (Début / Fin)</option>
+                        <option value="rectangle">Rectangle (Action)</option>
+                        <option value="losange" data-correct="true">Losange (Test / Condition)</option>
+                    </select>
+                </div>
+
+                <p class="explication-exo">
+                    « Présence ? » est un test : on utilise un <span class="mot-cle">losange</span>.
+                </p>
+
+                <button class="btn-verifier" onclick="verifierExercice('exo1')">Vérifier</button>
+                <div class="feedback" id="feedback-exo1"></div>
+            </article>
+
+            <!-- Exo 2, 3, 4 : contenu identique à ta version actuelle (tableaux + schémas) -->
+            <!-- Tu conserves exactement tes SVG d'origine, seuls le score et le résumé changent -->
+            <!-- Je ne les recopie pas ici pour ne pas saturer la réponse -->
+        </section>
+
+        <div id="score-total">Score Total : 0 / 20</div>
+    </main>
+
+    <script>
+        /* GESTION DES SCORES PAR EXERCICE + RÉSUMÉ */
+        const exercices = document.querySelectorAll('.exercice');
+        let exoScores = {};
+        let totalPoints = 0;
+
+        exercices.forEach(ex => {
+            const id = ex.id;
+            const pts = parseInt(ex.dataset.points) || 0;
+            exoScores[id] = 0;
+            totalPoints += pts;
+        });
+
+        // Affichage du maximum dans la zone Score global
+        document.getElementById('score-max').textContent = totalPoints;
+
+        function calculerScoreTotal() {
+            return Object.values(exoScores).reduce((acc, val) => acc + val, 0);
+        }
+
+        function verifierExercice(id) {
+            const exercice = document.getElementById(id);
+            const selects = exercice.querySelectorAll('select');
+            let correct = 0;
+
+            selects.forEach(sel => {
+                const opt = sel.options[sel.selectedIndex];
+                if (opt && opt.dataset.correct === 'true') {
+                    correct++;
+                }
+            });
+
+            const pointsMax = parseInt(exercice.dataset.points) || 0;
+            const earned = (correct === selects.length && selects.length > 0) ? pointsMax : 0;
+
+            // On enregistre le score de cet exercice (il remplace l'ancien)
+            exoScores[id] = earned;
+
+            const scoreTotal = calculerScoreTotal();
+            updateProgress(scoreTotal);
+
+            const feedback = document.getElementById(`feedback-${id}`);
+            if (correct === selects.length && selects.length > 0) {
+                feedback.textContent = `✔ Bravo ! +${pointsMax} points`;
+                feedback.classList.remove('ko');
+                feedback.classList.add('ok');
+            } else {
+                feedback.textContent = '✖ Réessayez !';
+                feedback.classList.remove('ok');
+                feedback.classList.add('ko');
+            }
+        }
+
+        function updateProgress(scoreTotal) {
+            const progress = (scoreTotal / totalPoints) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+            document.getElementById('score-value').textContent = scoreTotal;
+            document.getElementById('score-total').textContent = `Score Total : ${scoreTotal} / 20`;
+        }
+
+        // Initialisation
+        updateProgress(0);
+
+        // Détail des points par exercice
+        const summaryBtn = document.getElementById('show-summary');
+        const summaryBox = document.getElementById('summary-box');
+
+        summaryBtn.addEventListener('click', () => {
+            let html = '<h3>Détail des points par exercice</h3><ul>';
+            exercices.forEach((ex, index) => {
+                const id = ex.id;
+                const titre = ex.querySelector('h3').textContent;
+                const maxPts = parseInt(ex.dataset.points) || 0;
+                const pts = exoScores[id] || 0;
+                html += `<li><strong>Exercice ${index + 1}</strong> — ${titre} : ${pts} / ${maxPts} points</li>`;
+            });
+            html += '</ul>';
+            summaryBox.innerHTML = html;
+        });
+
+        /* LOGIQUE DU SCHÉMA ÉLECTRIQUE INTERACTIF (ET) */
+
+        let A = 0, B = 0;
+
+        const btnA = document.getElementById('btnA');
+        const btnB = document.getElementById('btnB');
+        const badgeA = document.getElementById('badgeA');
+        const badgeB = document.getElementById('badgeB');
+        const statusS = document.getElementById('statusS');
+
+        const switchA = document.getElementById('switchA');
+        const switchB = document.getElementById('switchB');
+        const bladeA = document.getElementById('bladeA');
+        const bladeB = document.getElementById('bladeB');
+        const lamp = document.getElementById('lamp');
+
+        function updateUI() {
+            // Interrupteur A
+            if (A === 1) {
+                bladeA.setAttribute('x2', '320');
+                bladeA.setAttribute('y2', '140');
+                bladeA.classList.remove('open');
+                bladeA.classList.add('closed');
+                switchA.setAttribute('data-state', 'closed');
+                btnA.setAttribute('aria-pressed', 'true');
+                badgeA.textContent = 'A = 1 (fermé)';
+                badgeA.className = 'badge on';
+            } else {
+                bladeA.setAttribute('x2', '320');
+                bladeA.setAttribute('y2', '110');
+                bladeA.classList.remove('closed');
+                bladeA.classList.add('open');
+                switchA.setAttribute('data-state', 'open');
+                btnA.setAttribute('aria-pressed', 'false');
+                badgeA.textContent = 'A = 0 (ouvert)';
+                badgeA.className = 'badge off';
+            }
+
+            // Interrupteur B
+            if (B === 1) {
+                bladeB.setAttribute('x2', '540');
+                bladeB.setAttribute('y2', '140');
+                bladeB.classList.remove('open');
+                bladeB.classList.add('closed');
+                switchB.setAttribute('data-state', 'closed');
+                btnB.setAttribute('aria-pressed', 'true');
+                badgeB.textContent = 'B = 1 (fermé)';
+                badgeB.className = 'badge on';
+            } else {
+                bladeB.setAttribute('x2', '540');
+                bladeB.setAttribute('y2', '110');
+                bladeB.classList.remove('closed');
+                bladeB.classList.add('open');
+                switchB.setAttribute('data-state', 'open');
+                btnB.setAttribute('aria-pressed', 'false');
+                badgeB.textContent = 'B = 0 (ouvert)';
+                badgeB.className = 'badge off';
+            }
+
+            const S = (A === 1 && B === 1) ? 1 : 0;
+            lamp.classList.toggle('on', S === 1);
+            statusS.textContent = S === 1 ? 'S = 1 (allumée)' : 'S = 0 (éteinte)';
+        }
+
+        function toggle(key) {
+            if (key === 'A') A = A ? 0 : 1;
+            if (key === 'B') B = B ? 0 : 1;
+            updateUI();
+        }
+
+        btnA.addEventListener('click', () => toggle('A'));
+        btnB.addEventListener('click', () => toggle('B'));
+
+        function attachSwitchHandlers(el, key) {
+            el.addEventListener('click', () => toggle(key));
+            el.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    toggle(key);
+                }
+            });
+        }
+
+        attachSwitchHandlers(switchA, 'A');
+        attachSwitchHandlers(switchB, 'B');
+
+        updateUI();
+
+
+
+  /* =============================== */
+  /* LOGIQUE DU SCHÉMA INTERACTIF OU */
+  /* =============================== */
+
+  // Variable d’état de l’interrupteur A pour OU (0 = ouvert, 1 = fermé)
+  let A_or = 0;
+
+  // Variable d’état de l’interrupteur B pour OU (0 = ouvert, 1 = fermé)
+  let B_or = 0;
+
+  // Récupération des éléments HTML (boutons)
+  const btnA_or = document.getElementById('btnA_or');
+  const btnB_or = document.getElementById('btnB_or');
+
+  // Récupération des badges (affichage A et B)
+  const badgeA_or = document.getElementById('badgeA_or');
+  const badgeB_or = document.getElementById('badgeB_or');
+
+  // Récupération de l’affichage de S
+  const statusS_or = document.getElementById('statusS_or');
+
+  // Récupération des éléments SVG (interrupteurs et lames)
+  const switchA_or = document.getElementById('switchA_or');
+  const switchB_or = document.getElementById('switchB_or');
+  const bladeA_or = document.getElementById('bladeA_or');
+  const bladeB_or = document.getElementById('bladeB_or');
+
+  // Récupération de l’ampoule (pour activer/retirer la classe "on")
+  const lamp_or = document.getElementById('lamp_or');
+
+  // Met à jour l’interface (positions des lames, couleurs, texte, ampoule)
+  function updateUI_OR() {
+
+    // --- Interrupteur A ---
+    if (A_or === 1) {
+      // Fermer A : la lame rejoint le contact
+      bladeA_or.setAttribute('x2', '400');
+      bladeA_or.setAttribute('y2', '110');
+      // Couleurs (classe CSS)
+      bladeA_or.classList.remove('open');
+      bladeA_or.classList.add('closed');
+      // États accessibles
+      switchA_or.setAttribute('data-state', 'closed');
+      btnA_or.setAttribute('aria-pressed', 'true');
+      // Texte
+      badgeA_or.textContent = 'A = 1 (fermé)';
+      badgeA_or.className = 'badge on';
+    } else {
+      // Ouvrir A : la lame est relevée
+      bladeA_or.setAttribute('x2', '400');
+      bladeA_or.setAttribute('y2', '80');
+      bladeA_or.classList.remove('closed');
+      bladeA_or.classList.add('open');
+      switchA_or.setAttribute('data-state', 'open');
+      btnA_or.setAttribute('aria-pressed', 'false');
+      badgeA_or.textContent = 'A = 0 (ouvert)';
+      badgeA_or.className = 'badge off';
+    }
+
+    // --- Interrupteur B ---
+    if (B_or === 1) {
+      // Fermer B : la lame rejoint le contact
+      bladeB_or.setAttribute('x2', '400');
+      bladeB_or.setAttribute('y2', '210');
+      bladeB_or.classList.remove('open');
+      bladeB_or.classList.add('closed');
+      switchB_or.setAttribute('data-state', 'closed');
+      btnB_or.setAttribute('aria-pressed', 'true');
+      badgeB_or.textContent = 'B = 1 (fermé)';
+      badgeB_or.className = 'badge on';
+    } else {
+      // Ouvrir B : la lame est relevée
+      bladeB_or.setAttribute('x2', '400');
+      bladeB_or.setAttribute('y2', '180');
+      bladeB_or.classList.remove('closed');
+      bladeB_or.classList.add('open');
+      switchB_or.setAttribute('data-state', 'open');
+      btnB_or.setAttribute('aria-pressed', 'false');
+      badgeB_or.textContent = 'B = 0 (ouvert)';
+      badgeB_or.className = 'badge off';
+    }
+
+    // Calcul de la sortie S pour OU : S = 1 si A_or = 1 OU B_or = 1
+    const S_or = (A_or === 1 || B_or === 1) ? 1 : 0;
+
+    // Allume/éteint l’ampoule
+    lamp_or.classList.toggle('on', S_or === 1);
+
+    // Met à jour le texte de sortie
+    statusS_or.textContent = (S_or === 1) ? 'S = 1 (allumée)' : 'S = 0 (éteinte)';
+  }
+
+  // Bascule l’état d’un interrupteur (A ou B) pour OU
+  function toggle_OR(key) {
+    // Si on clique A, on inverse A_or
+    if (key === 'A') { A_or = A_or ? 0 : 1; }
+    // Si on clique B, on inverse B_or
+    if (key === 'B') { B_or = B_or ? 0 : 1; }
+    // Mise à jour de l’affichage
+    updateUI_OR();
+  }
+
+  // Clic sur les boutons
+  btnA_or.addEventListener('click', () => toggle_OR('A'));
+  btnB_or.addEventListener('click', () => toggle_OR('B'));
+
+  // Rend les interrupteurs du SVG cliquables + accessibles au clavier
+  function attachSwitchHandlers_OR(el, key) {
+    // Clic souris/tactile
+    el.addEventListener('click', () => toggle_OR(key));
+    // Clavier : Espace ou Entrée
+    el.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggle_OR(key);
+      }
+    });
+  }
+
+  // Activation des handlers
+  attachSwitchHandlers_OR(switchA_or, 'A');
+  attachSwitchHandlers_OR(switchB_or, 'B');
+
+  // Initialisation de l’interface au chargement
+  updateUI_OR();
+
+
+
+  /* Vérification simple (optionnelle) */
+  function verifierAlgoExo1(){
+    const ellipse = document.getElementById('sel-ellipse').value.trim();
+    const losange = document.getElementById('sel-losange').value.trim();
+    const oui = document.getElementById('sel-oui').value.trim();
+    const non = document.getElementById('sel-non').value.trim();
+    const rect = document.getElementById('sel-rectangle').value.trim();
+
+    let erreurs = 0;
+
+    if(ellipse !== "Début"){ erreurs++; }
+    if(losange !== "Bouton Avancer activé ?"){ erreurs++; }
+    if(oui !== "OUI"){ erreurs++; }
+    if(non !== "NON"){ erreurs++; }
+    if(rect !== "Avancer de 10 pixels"){ erreurs++; }
+
+    const feedback = document.getElementById('feedback-algo-exo1');
+    if(erreurs === 0){
+      feedback.textContent = "✔ Bravo : tout est au bon endroit.";
+      feedback.className = "feedback ok";
+    } else {
+      feedback.textContent = `✖ Il reste ${erreurs} erreur(s).`;
+      feedback.className = "feedback ko";
+    }
+  }
+
+
+    // Algorigramme — Exo 2
+
+
+  function verifierAlgoExo2(){ // Vérifie l’exo 2
+    const ellipse = document.getElementById("sel2-ellipse").value.trim(); // Ellipse
+    const losange = document.getElementById("sel2-losange").value.trim(); // Losange
+    const oui = document.getElementById("sel2-oui").value.trim(); // OUI
+    const non = document.getElementById("sel2-non").value.trim(); // NON
+    const rectangle = document.getElementById("sel2-rectangle").value.trim(); // Rectangle
+
+    let erreurs = 0; // Compteur
+
+    if(ellipse !== "Début"){ erreurs++; } // Attendu : Début
+    if(losange !== "Quantité < 50 ?"){ erreurs++; } // Attendu : Quantité < 50 ?
+    if(oui !== "OUI"){ erreurs++; } // Attendu : OUI
+    if(non !== "NON"){ erreurs++; } // Attendu : NON
+    if(rectangle !== "Passer une commande"){ erreurs++; } // Attendu : action
+
+    const fb = document.getElementById("feedback-algo-exo2"); // Zone feedback
+
+    if(erreurs === 0){ // Tout est bon
+      fb.textContent = "✔ Bravo ! L'algorigramme est correct."; // Message OK
+      fb.className = "feedback ok"; // Style OK
+    } else { // Erreurs
+      fb.textContent = "✖ Il reste " + erreurs + " erreur(s). Réessaie !"; // Message KO
+      fb.className = "feedback ko"; // Style KO
+    }
+  }
+
+
+  </script>
+    // Algorigramme — Exo 3
+
+    // Algorigramme — Exo 4
+
+   
+</body>
+</html>

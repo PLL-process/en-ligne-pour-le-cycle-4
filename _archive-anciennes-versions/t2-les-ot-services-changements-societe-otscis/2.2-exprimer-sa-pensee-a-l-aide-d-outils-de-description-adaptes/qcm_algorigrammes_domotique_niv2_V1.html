@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Encodage des caractères en UTF-8 pour gérer correctement les accents -->
+    <meta charset="UTF-8">
+    <!-- Titre de l'onglet du navigateur -->
+    <title>QCM d'algorigrammes - Domotique</title>
+
+    <!-- Zone de styles CSS pour l'esthétique de la page -->
+    <style>
+        /* Style global de la page : police, couleur de fond, marges */
+        body {
+            font-family: Arial, sans-serif; /* Police de base lisible */
+            background: #0f172a;           /* Fond sombre bleu nuit */
+            color: #e5e7eb;                /* Texte gris très clair */
+            margin: 0;                     /* Suppression des marges par défaut */
+            padding: 0;                    /* Suppression des espacements par défaut */
+        }
+
+        /* Bandeau supérieur de la page (titre général) */
+        header {
+            background: linear-gradient(90deg, #1d4ed8, #0ea5e9); /* Dégradé bleu */
+            padding: 1.5rem;                                     /* Espacement intérieur */
+            text-align: center;                                  /* Titre centré */
+        }
+
+        /* Style du titre principal dans le bandeau */
+        header h1 {
+            margin: 0;                /* Pas de marge autour du titre */
+            font-size: 1.8rem;        /* Taille du texte du titre */
+            color: #f9fafb;           /* Couleur du texte (blanc cassé) */
+        }
+
+        /* Sous-titre dans le bandeau */
+        header p {
+            margin: 0.5rem 0 0;       /* Marge au-dessus et en dessous du sous-titre */
+            font-size: 0.95rem;       /* Taille du sous-titre */
+        }
+
+        /* Conteneur principal de la page */
+        .container {
+            max-width: 1000px;  /* Largeur maximale du contenu central */
+            margin: 2rem auto;  /* Centrage horizontal + marge verticale */
+            padding: 0 1rem;    /* Espacement horizontal interne */
+        }
+
+        /* Carte / bloc pour chaque exercice */
+        .card {
+            background: #111827;              /* Fond sombre pour la carte */
+            border-radius: 12px;              /* Bords arrondis */
+            padding: 1.5rem;                  /* Espacement interne */
+            margin-bottom: 1.5rem;            /* Espacement entre deux cartes */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35); /* Ombre pour le relief */
+            border: 1px solid #1f2937;        /* Légère bordure sombre */
+        }
+
+        /* Titre de chaque exercice */
+        .card h2 {
+            margin-top: 0;                    /* Pas de marge en haut */
+            font-size: 1.3rem;                /* Taille du titre d'exercice */
+            color: #93c5fd;                   /* Bleu clair pour le mettre en valeur */
+        }
+
+        /* Texte de description de la situation (radar, escalator, etc.) */
+        .description {
+            font-size: 0.95rem;               /* Légèrement plus petit que le corps de texte */
+            line-height: 1.5;                 /* Espacement entre les lignes */
+            margin-bottom: 1rem;              /* Espace sous la description */
+        }
+
+        /* Conteneur pour la liste d'étapes à compléter */
+        .steps {
+            display: flex;                    /* Affichage en colonnes flexibles */
+            flex-direction: column;           /* Organisation verticale des lignes */
+            gap: 0.7rem;                      /* Espacement entre les lignes */
+            margin-bottom: 1rem;              /* Espace sous les étapes */
+        }
+
+        /* Ligne unique (numéro + menu déroulant) */
+        .step-row {
+            display: flex;                    /* Alignement horizontal du numéro et du select */
+            align-items: center;              /* Alignement vertical au centre */
+            gap: 0.5rem;                      /* Espacement entre numéro et select */
+        }
+
+        /* Numéro d'étape (1, 2, 3, ...) */
+        .step-number {
+            width: 2rem;                      /* Largeur fixe pour bien aligner les numéros */
+            text-align: right;               /* Numéro aligné à droite */
+            font-weight: bold;               /* Numéro en gras */
+            color: #e5e7eb;                  /* Couleur claire */
+        }
+
+        /* Menu déroulant pour choisir un bloc de l'algorigramme */
+        .step-select {
+            flex: 1;                          /* Prend tout l'espace horizontal disponible */
+            padding: 0.35rem 0.5rem;         /* Espacement interne du select */
+            border-radius: 8px;              /* Bords arrondis */
+            border: 1px solid #4b5563;       /* Bordure gris moyen */
+            background: #020617;             /* Fond très sombre */
+            color: #e5e7eb;                  /* Texte clair */
+        }
+
+        /* Boutons "Vérifier" pour chaque exercice */
+        .check-button {
+            padding: 0.5rem 1rem;            /* Espacement interne du bouton */
+            border-radius: 999px;            /* Bouton en forme de pilule */
+            border: none;                    /* Pas de bordure CSS par défaut */
+            background: #22c55e;             /* Vert pour "valider" */
+            color: #022c22;                  /* Texte vert très foncé */
+            font-weight: bold;               /* Texte du bouton en gras */
+            cursor: pointer;                 /* Curseur "main" */
+            margin-right: 0.5rem;            /* Espace à droite du bouton */
+        }
+
+        /* Changement de couleur du bouton quand la souris passe dessus */
+        .check-button:hover {
+            background: #16a34a;             /* Vert légèrement plus foncé au survol */
+        }
+
+        /* Bouton "Réinitialiser" pour remettre les menus à blanc */
+        .reset-button {
+            padding: 0.5rem 1rem;            /* Espacement interne */
+            border-radius: 999px;            /* Bouton arrondi */
+            border: none;                    /* Pas de bordure */
+            background: #f97316;             /* Orange pour distinguer du bouton vert */
+            color: #111827;                  /* Texte sombre pour le contraste */
+            font-weight: bold;               /* Texte en gras */
+            cursor: pointer;                 /* Curseur "main" */
+        }
+
+        /* Couleur au survol du bouton "Réinitialiser" */
+        .reset-button:hover {
+            background: #ea580c;             /* Orange plus foncé */
+        }
+
+        /* Zone de retour (score, correction) sous les boutons */
+        .feedback {
+            margin-top: 0.8rem;              /* Espace au-dessus de la zone de feedback */
+            font-size: 0.9rem;               /* Légèrement plus petit que le corps de texte */
+        }
+
+        /* Texte en cas de réponses toutes correctes */
+        .feedback.ok {
+            color: #bbf7d0;                  /* Vert très clair */
+        }
+
+        /* Texte en cas d'erreurs */
+        .feedback.error {
+            color: #fecaca;                  /* Rouge très clair */
+        }
+
+        /* Petite légende pour expliquer l’objectif de l’exercice */
+        .hint {
+            font-size: 0.8rem;               /* Taille réduite */
+            color: #9ca3af;                  /* Gris clair */
+            margin-bottom: 0.5rem;           /* Espace sous la légende */
+        }
+    </style>
+</head>
+<body>
+    <!-- Bandeau principal de la page -->
+    <header>
+        <!-- Titre principal de la page -->
+        <h1>QCM d'algorigrammes – Domotique et systèmes automatiques</h1>
+        <!-- Sous-titre expliquant brièvement l'activité -->
+        <p>Complète les algorigrammes à l'aide des menus déroulants, puis vérifie tes réponses.</p>
+    </header>
+
+    <!-- Conteneur principal pour regrouper toutes les cartes d'exercices -->
+    <main class="container">
+
+        <!-- ===================== EXERCICE 1 : RADAR DE VITESSE ===================== -->
+        <section class="card" id="exercice1">
+            <!-- Titre de l'exercice 1 -->
+            <h2>Exercice 1 – Radar de vitesse automatique 🚗📸</h2>
+
+            <!-- Description textuelle de la situation (adaptée du PDF) -->
+            <p class="description">
+                Un radar automatique contrôle la vitesse des véhicules.
+                Dès qu'un véhicule est détecté à une vitesse strictement supérieure à 90&nbsp;km/h,
+                le radar doit enregistrer la plaque, activer le flash puis envoyer les informations au centre de traitement.
+                Remets les blocs de l'algorigramme dans l'ordre logique d'exécution.
+            </p>
+
+            <!-- Légende indiquant à l'élève ce qu'il doit faire -->
+            <p class="hint">
+                Objectif : retrouver l'ordre des blocs principaux de l'algorigramme pour le cas où la vitesse dépasse 90&nbsp;km/h.
+            </p>
+
+            <!-- Liste des étapes à compléter via des menus déroulants -->
+            <div class="steps">
+                <!-- Étape 1 -->
+                <div class="step-row">
+                    <!-- Numéro d'étape -->
+                    <span class="step-number">1.</span>
+                    <!-- Menu déroulant pour choisir un bloc -->
+                    <select class="step-select" data-exercice="1" data-index="0">
+                        <!-- Option vide par défaut -->
+                        <option value="">— Choisir un bloc —</option>
+                        <!-- Différentes propositions de blocs -->
+                        <option value="debut">Début</option>
+                        <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                        <option value="lecture_plaque">Lecture de la plaque</option>
+                        <option value="activer_flash">Activer le flash</option>
+                        <option value="envoyer_central">Envoyer l'information au central</option>
+                    </select>
+                </div>
+
+                <!-- Étape 2 -->
+                <div class="step-row">
+                    <span class="step-number">2.</span>
+                    <select class="step-select" data-exercice="1" data-index="1">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                        <option value="lecture_plaque">Lecture de la plaque</option>
+                        <option value="activer_flash">Activer le flash</option>
+                        <option value="envoyer_central">Envoyer l'information au central</option>
+                    </select>
+                </div>
+
+                <!-- Étape 3 -->
+                <div class="step-row">
+                    <span class="step-number">3.</span>
+                    <select class="step-select" data-exercice="1" data-index="2">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                        <option value="lecture_plaque">Lecture de la plaque</option>
+                        <option value="activer_flash">Activer le flash</option>
+                        <option value="envoyer_central">Envoyer l'information au central</option>
+                    </select>
+                </div>
+
+                <!-- Étape 4 -->
+                <div class="step-row">
+                    <span class="step-number">4.</span>
+                    <select class="step-select" data-exercice="1" data-index="3">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                        <option value="lecture_plaque">Lecture de la plaque</option>
+                        <option value="activer_flash">Activer le flash</option>
+                        <option value="envoyer_central">Envoyer l'information au central</option>
+                    </select>
+                </div>
+
+                <!-- Étape 5 -->
+                <div class="step-row">
+                    <span class="step-number">5.</span>
+                    <select class="step-select" data-exercice="1" data-index="4">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                        <option value="lecture_plaque">Lecture de la plaque</option>
+                        <option value="activer_flash">Activer le flash</option>
+                        <option value="envoyer_central">Envoyer l'information au central</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Boutons d'action pour l'exercice 1 -->
+            <button class="check-button" data-exercice="1">Vérifier</button>
+            <button class="reset-button" data-exercice="1">Réinitialiser</button>
+
+            <!-- Zone d'affichage des retours (score, aide, correction) -->
+            <div class="feedback" id="feedback-1"></div>
+        </section>
+
+        <!-- ===================== EXERCICE 2 : ESCALATOR ===================== -->
+        <section class="card" id="exercice2">
+            <!-- Titre de l'exercice 2 -->
+            <h2>Exercice 2 – Escalator à détection de présence 🛗</h2>
+
+            <!-- Description de la situation (adaptée du PDF) -->
+            <p class="description">
+                Un escalator est à l'arrêt pour économiser de l'énergie.
+                Lorsqu'une personne est détectée en bas, l'escalator démarre.
+                Il fonctionne pendant 1&nbsp;minute pour permettre à la personne de monter, puis s'arrête.
+                Remets les blocs de l'algorigramme dans l'ordre logique.
+            </p>
+
+            <!-- Légende / objectif -->
+            <p class="hint">
+                Objectif : ordonner les actions de mise en marche et d'arrêt de l'escalator selon l'algorigramme proposé.
+            </p>
+
+            <!-- Liste des étapes pour l'exercice 2 -->
+            <div class="steps">
+                <!-- Étape 1 -->
+                <div class="step-row">
+                    <span class="step-number">1.</span>
+                    <select class="step-select" data-exercice="2" data-index="0">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="detect_bas">Détection en bas ?</option>
+                        <option value="activer_escalator">Activer l'escalator</option>
+                        <option value="attendre_1min">Attendre 1 minute</option>
+                        <option value="desactiver_escalator">Désactiver l'escalator</option>
+                    </select>
+                </div>
+
+                <!-- Étape 2 -->
+                <div class="step-row">
+                    <span class="step-number">2.</span>
+                    <select class="step-select" data-exercice="2" data-index="1">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="detect_bas">Détection en bas ?</option>
+                        <option value="activer_escalator">Activer l'escalator</option>
+                        <option value="attendre_1min">Attendre 1 minute</option>
+                        <option value="desactiver_escalator">Désactiver l'escalator</option>
+                    </select>
+                </div>
+
+                <!-- Étape 3 -->
+                <div class="step-row">
+                    <span class="step-number">3.</span>
+                    <select class="step-select" data-exercice="2" data-index="2">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="detect_bas">Détection en bas ?</option>
+                        <option value="activer_escalator">Activer l'escalator</option>
+                        <option value="attendre_1min">Attendre 1 minute</option>
+                        <option value="desactiver_escalator">Désactiver l'escalator</option>
+                    </select>
+                </div>
+
+                <!-- Étape 4 -->
+                <div class="step-row">
+                    <span class="step-number">4.</span>
+                    <select class="step-select" data-exercice="2" data-index="3">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="detect_bas">Détection en bas ?</option>
+                        <option value="activer_escalator">Activer l'escalator</option>
+                        <option value="attendre_1min">Attendre 1 minute</option>
+                        <option value="desactiver_escalator">Désactiver l'escalator</option>
+                    </select>
+                </div>
+
+                <!-- Étape 5 -->
+                <div class="step-row">
+                    <span class="step-number">5.</span>
+                    <select class="step-select" data-exercice="2" data-index="4">
+                        <option value="">— Choisir un bloc —</option>
+                        <option value="debut">Début</option>
+                        <option value="detect_bas">Détection en bas ?</option>
+                        <option value="activer_escalator">Activer l'escalator</option>
+                        <option value="attendre_1min">Attendre 1 minute</option>
+                        <option value="desactiver_escalator">Désactiver l'escalator</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Boutons pour l'exercice 2 -->
+            <button class="check-button" data-exercice="2">Vérifier</button>
+            <button class="reset-button" data-exercice="2">Réinitialiser</button>
+
+            <!-- Zone de feedback pour l'exercice 2 -->
+            <div class="feedback" id="feedback-2"></div>
+        </section>
+    </main>
+
+    <!-- Zone de scripts JavaScript pour gérer la correction des QCM -->
+    <script>
+        // Tableau des réponses correctes pour chaque exercice
+        // Pour l'exercice 1 (radar) : ordre attendu des blocs
+        // 1 : Début
+        // 2 : Test vitesse > 90 km/h ?
+        // 3 : Lecture de la plaque
+        // 4 : Activer le flash
+        // 5 : Envoyer l'information au central
+        const bonnesReponses = {
+            1: [ "debut", "test_vitesse", "lecture_plaque", "activer_flash", "envoyer_central" ], // Exercice 1
+            2: [ "debut", "detect_bas", "activer_escalator", "attendre_1min", "desactiver_escalator" ] // Exercice 2
+        };
+
+        // Fonction pour vérifier les réponses d'un exercice donné
+        function verifierExercice(numeroExercice) {
+            // Sélection de tous les menus déroulants (select) de l'exercice ciblé
+            const selects = document.querySelectorAll('.step-select[data-exercice="' + numeroExercice + '"]');
+            // Récupération du tableau des bonnes réponses pour cet exercice
+            const bonnes = bonnesReponses[numeroExercice];
+            // Compteur de bonnes réponses
+            let score = 0;
+            // Compteur d'erreurs
+            let erreurs = 0;
+            // Variable pour détecter si au moins un select est resté vide
+            let incomplet = false;
+
+            // Boucle sur tous les menus déroulants de l'exercice
+            selects.forEach(function(select, index) {
+                // Récupération de la valeur choisie par l'élève
+                const valeur = select.value;
+                // Si aucune valeur n'est choisie (case vide)
+                if (valeur === "") {
+                    // On note que l'exercice n'est pas complètement rempli
+                    incomplet = true;
+                    // On ne compare pas avec la bonne réponse dans ce cas
+                    return;
+                }
+                // Si la valeur correspond à la bonne réponse à cette position
+                if (valeur === bonnes[index]) {
+                    // On incrémente le score
+                    score += 1;
+                    // On surligne le select en vert (bonne réponse)
+                    select.style.borderColor = "#22c55e";
+                } else {
+                    // Sinon on incrémente le nombre d'erreurs
+                    erreurs += 1;
+                    // On surligne le select en rouge (mauvaise réponse)
+                    select.style.borderColor = "#ef4444";
+                }
+            });
+
+            // Récupération de la zone de feedback correspondante à cet exercice
+            const feedback = document.getElementById("feedback-" + numeroExercice);
+
+            // Si au moins un champ est vide, on invite l'élève à compléter
+            if (incomplet) {
+                feedback.textContent = "Complète toutes les lignes avant de vérifier 👍";
+                feedback.className = "feedback error"; // Style rouge clair
+                return; // On sort de la fonction
+            }
+
+            // Si aucune erreur n'a été trouvée
+            if (erreurs === 0) {
+                // Message de réussite
+                feedback.textContent = "Parfait ! Toutes les étapes sont dans le bon ordre 🎉 (score : " + score + " / " + bonnes.length + ")";
+                feedback.className = "feedback ok"; // Style vert clair
+            } else {
+                // Message signalant qu'il reste des erreurs
+                feedback.textContent = "Il reste " + erreurs + " erreur(s). Regarde surtout les tests et l'ordre des actions 😉 (score : " + score + " / " + bonnes.length + ")";
+                feedback.className = "feedback error"; // Style rouge clair
+            }
+        }
+
+        // Fonction pour réinitialiser un exercice (vider les selects et retirer les couleurs)
+        function reinitialiserExercice(numeroExercice) {
+            // Sélection de tous les menus déroulants pour l'exercice choisi
+            const selects = document.querySelectorAll('.step-select[data-exercice="' + numeroExercice + '"]');
+            // Boucle sur chaque menu
+            selects.forEach(function(select) {
+                // Remise à la valeur vide
+                select.value = "";
+                // Remise de la bordure à sa couleur par défaut
+                select.style.borderColor = "#4b5563";
+            });
+            // Récupération de la zone de feedback associée
+            const feedback = document.getElementById("feedback-" + numeroExercice);
+            // Effacement du texte d'aide ou de score
+            feedback.textContent = "";
+            // Remise de la classe par défaut
+            feedback.className = "feedback";
+        }
+
+        // Ajout d'écouteurs d'événements sur tous les boutons "Vérifier"
+        document.querySelectorAll(".check-button").forEach(function(bouton) {
+            // Récupération du numéro d'exercice indiqué dans l'attribut data-exercice
+            const numero = bouton.getAttribute("data-exercice");
+            // Ajout de l'événement "click" sur ce bouton
+            bouton.addEventListener("click", function() {
+                // Appel de la fonction de vérification pour l'exercice ciblé
+                verifierExercice(numero);
+            });
+        });
+
+        // Ajout d'écouteurs d'événements sur tous les boutons "Réinitialiser"
+        document.querySelectorAll(".reset-button").forEach(function(bouton) {
+            // Récupération du numéro d'exercice indiqué dans l'attribut data-exercice
+            const numero = bouton.getAttribute("data-exercice");
+            // Ajout de l'événement "click" sur ce bouton
+            bouton.addEventListener("click", function() {
+                // Appel de la fonction de réinitialisation pour l'exercice ciblé
+                reinitialiserExercice(numero);
+            });
+        });
+    </script>
+</body>
+</html>

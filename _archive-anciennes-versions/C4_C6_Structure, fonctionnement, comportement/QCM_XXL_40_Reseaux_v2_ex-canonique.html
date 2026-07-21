@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM XXL (40) — Réseaux, IP, NFC, RFID, Zigbee — Cycle 4 (2024)</title>
+<style>
+:root{ --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; --timer:#f59e0b;}
+*{box-sizing:border-box}
+body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--ink); line-height:1.5;}
+header{padding:18px 20px; background:linear-gradient(90deg,#0e1630,#1f2a57);}
+h1{margin:0; font-size:1.35rem;}
+.wrap{max-width:980px; margin:18px auto; padding:0 14px; counter-reset:q;}
+.card{background:var(--card); border:1px solid #223060; border-radius:18px; padding:14px 16px; margin:14px 0; box-shadow:0 6px 18px rgba(0,0,0,.25);}
+.card .q-title::before{counter-increment:q; content:"Q" counter(q) " — "; color:#a9b6df; font-weight:700;}
+.row{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+.badge{display:inline-block; padding:2px 8px; border-radius:999px; font-size:.8rem; color:#0e1630; background:#c7d2fe; font-weight:700;}
+.pts{font-weight:700; color:#d1fae5;}
+.btn{border:1px solid #344a8a; padding:8px 12px; border-radius:12px; cursor:pointer; background:#1b254a; color:var(--ink); font-weight:600;}
+.btn.small{padding:5px 8px; font-size:.9rem;}
+.btn:hover{filter:brightness(1.15);}
+.help{display:none; margin-top:8px; color:var(--muted); padding:10px; border-left:4px solid var(--accent); background:var(--bg); border-radius:4px; font-size:0.95rem; line-height:1.6;}
+.answer{margin-top:8px; font-weight:700; padding:12px; border-radius:8px; background:var(--bg); box-shadow:0 2px 4px rgba(0,0,0,0.1); border:1px solid transparent; transition:all 0.3s ease;}
+.ok{color:var(--ok); border-color:var(--ok); background:linear-gradient(135deg, #16a34a20, transparent);}
+.ko{color:var(--ko); border-color:var(--ko); background:linear-gradient(135deg, #ef444420, transparent);}
+.muted{color:var(--muted);}
+.q-title{margin:0 0 6px 0; font-size:1.05rem;}
+.footer{margin:16px 0; padding:12px; border-radius:14px; background:#0f1a3d; border:1px solid #23316b;}
+.score{font-size:1.1rem; font-weight:800;}
+input[type="number"], input[type="text"], select{background:#0f1836; border:1px solid #2b3c75; color:var(--ink); padding:8px 10px; border-radius:10px;}
+label{display:block; margin:.25rem 0;}
+.grid2{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;}
+.note{font-size:.9rem; color:#cbd5e1;}
+.idbox input{width:100%;}
+img.schema{max-width:100%; border-radius:12px; border:1px solid #29417d; background:#0b1330;}
+.q-fig{margin:10px 0; text-align:center;}
+.q-fig img.q-img{max-width:100%; height:auto; border-radius:12px; border:1px solid #29417d; background:#0b1330;}
+.q-fig figcaption{font-size:.9rem; color:#a9b6df; margin-top:6px;}
+.help.show-help { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+/* Feedback interactif */
+.feedback-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; display:flex; align-items:center; gap:8px; }
+.feedback-title::before { content:"Checkmark"; font-size:1.4rem; }
+.ok .feedback-title::before { content:"Checkmark"; }
+.ko .feedback-title::before { content:"Cross"; }
+.feedback-explanation { margin-top: 8px; font-size: 0.95rem; line-height: 1.6; }
+.feedback-correct { color:var(--ok); font-weight:bold; }
+.feedback-tip { margin-top:10px; padding:8px; background:#1b254a; border-radius:8px; font-size:0.9rem; border-left:3px solid var(--accent); }
+.retry-btn { margin-top:8px; padding:6px 10px; font-size:0.85rem; background:var(--accent); color:#0e1630; border:none; border-radius:8px; cursor:pointer; }
+.retry-btn:hover { background:#5eead4; }
+/* Barre de progression détaillée */
+.progress-container { margin: 16px 0; padding:12px; background:#1b254a; border-radius:12px; border:1px solid #2b3c75; }
+.progress-header { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem; color:var(--muted); }
+.progress-label { font-weight:600; }
+.progress-value { color:var(--accent); }
+.progress-bars { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.progress-item { display:flex; flex-direction:column; }
+.progress-bar { height:12px; background:#0f1836; border-radius:6px; overflow:hidden; border:1px solid #2b3c75; }
+.progress-fill { height:100%; width:0%; transition:width 0.5s ease; }
+.progress-fill.answered { background:linear-gradient(90deg, #7dd3fc, #5eead4); }
+.progress-fill.correct { background:linear-gradient(90deg, #16a34a, #22c55e); }
+.progress-fill.incorrect { background:linear-gradient(90deg, #ef4444, #f87171); }
+.progress-text { margin-top:4px; font-size:0.85rem; text-align:center; color:var(--muted); }
+/* Minuteur */
+.timer-container { display:flex; align-items:center; gap:8px; font-size:1rem; font-weight:600; color:var(--timer); }
+.timer-icon { font-size:1.2rem; }
+.timer-btn { padding:4px 8px; font-size:0.8rem; background:#1b254a; border:1px solid #344a8a; color:var(--ink); border-radius:8px; cursor:pointer; }
+.timer-btn:hover { background:#2d3a6e; }
+</style>
+</head>
+<body>
+<header class="row"> <h1>QCM XXL (40) — Réseaux, IP, NFC, RFID, Zigbee — Cycle 4 (2024)</h1></header>
+<div class="wrap"> 
+<div class="card"> <p class="id-title">Identité de l’élève</p> <div class="grid2"> <input id="nom" placeholder="Nom"> <input id="prenom" placeholder="Prénom"> <input id="classe" placeholder="Classe (ex. 4eB)"> </div> <p class="note">Renseigne ton identité avant de cliquer sur « Corriger tout ».</p> </div> 
+
+<!-- Barre de progression détaillée -->
+<div class="progress-container">
+  <div class="progress-header">
+    <div class="progress-label">Progrès global</div>
+    <div class="progress-value" id="globalPercent">0%</div>
+  </div>
+  <div class="progress-bars">
+    <div class="progress-item">
+      <div class="progress-bar"><div class="progress-fill answered" id="answeredFill"></div></div>
+      <div class="progress-text">Répondues : <span id="answeredCount">0</span>/40</div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-bar"><div class="progress-fill correct" id="correctFill"></div></div>
+      <div class="progress-text">Correctes : <span id="correctCount">0</span>/40</div>
+    </div>
+  </div>
+  <div class="progress-bars" style="margin-top:8px;">
+    <div class="progress-item">
+      <div class="progress-bar"><div class="progress-fill incorrect" id="incorrectFill"></div></div>
+      <div class="progress-text">Incorrectes : <span id="incorrectCount">0</span>/40</div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-bar"><div class="progress-fill" style="background:#344a8a;"></div></div>
+      <div class="progress-text">Non répondues : <span id="unansweredCount">40</span>/40</div>
+    </div>
+  </div>
+</div>
+
+<!-- Minuteur -->
+<div class="footer row" style="justify-content:space-between;">
+  <div class="timer-container">
+    <span class="timer-icon">Clock</span>
+    <span id="timerDisplay">00:00</span>
+    <button class="timer-btn" id="timerBtn" onclick="toggleTimer()">Démarrer</button>
+  </div>
+  <div style="display:flex; gap:8px;">
+    <button class="btn" onclick="corrigerTout()">Corriger tout</button>
+    <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
+    <button class="btn" onclick="showAllHelps()">Afficher toutes les aides</button>
+  </div>
+  <div class="note">Les questions ciblent C1.4 • C4.5 • C4.6 • C4.7 • C4.8 • C4.9 • C7.8.</div>
+</div>
+
+<div class="footer row"> 
+  <div class="score" id="score"> Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">0</strong> </div> 
+</div> 
+
+<!-- Toutes les questions (Q1 à Q40) -->
+<!-- (Identiques à la version précédente, avec ajout de tracking de réponse) -->
+
+<!-- Q1 -->
+<section class="card" data-competence="C4.9" data-points="1"> <p class="q-title">Le routeur sert principalement à…</p> <figure class="q-fig"> <img class="q-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Home_LAN_local_area_network_example_diagram.png/1200px-Home_LAN_local_area_network_example_diagram.png" alt="Routeur reliant le LAN à Internet"> <figcaption>Le routeur fait la passerelle entre le réseau local (LAN) et Internet (WAN).</figcaption> </figure> <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span> <label><input type="radio" name="q1" value="lan"> relier des appareils en local</label> <label><input type="radio" name="q1" value="wan"> relier le réseau local à Internet</label> <div class="row"> <button class="btn small" onclick="aide('a1')">Aide</button> <button class="btn small" onclick="checkMCQ('q1','wan','fb1',1)">Corriger</button> </div> <div id="a1" class="help">Le routeur est un appareil clé dans un réseau. Il connecte le réseau local (LAN, Local Area Network) à un réseau externe comme Internet (WAN, Wide Area Network). Il agit comme une passerelle, gérant le trafic entrant et sortant. Par exemple, il utilise le NAT (Network Address Translation) pour traduire les adresses IP privées du LAN en adresse IP publique pour Internet. Contrairement au switch, qui connecte seulement les appareils au sein du même LAN sans routage externe, le routeur décide du chemin des paquets vers d'autres réseaux. Cela permet à tous les appareils du LAN d'accéder à Internet via une seule connexion.</div> <div id="fb1" class="answer"></div> </section>
+
+<!-- ... Q2 à Q39 ... -->
+
+<!-- Q40 -->
+<section class="card" data-competence="C4.8" data-points="1"> <p class="q-title">Le filtrage MAC permet…</p> <span class="badge">Compétence visée : C4.8</span> <span class="pts">(1 pt)</span> <label><input type="radio" name="q40" value="autoriser"> d’autoriser/refuser des appareils par adresse MAC</label> <label><input type="radio" name="q40" value="vitesse"> de multiplier le débit Internet</label> <div class="row"> <button class="btn small" onclick="aide('a40')">Aide</button> <button class="btn small" onclick="checkMCQ('q40','autoriser','fb40',1)">Corriger</button> </div> <div id="a40" class="help">Le filtrage MAC autorise/refuse appareils basés sur leur adresse MAC unique (physique, 48 bits, ex. 00:1A:2B:3C:4D:5E). Sur routeur/switch, liste blanche/noire. Améliore sécurité en bloquant inconnus, mais spoofable. Ne multiplie pas débit (QoS pour ça). Utile en Wi-Fi pour limiter accès à appareils connus.</div> <div id="fb40" class="answer"></div> </section>
+
+<div class="footer"> <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div> </div>
+</div>
+
+<script>
+let total = 0;
+let answeredCount = 0;
+let correctCount = 0;
+let incorrectCount = 0;
+const max = (() => { let s = 0; document.querySelectorAll('section.card').forEach(sec => { s += Number(sec.dataset.points || 0); }); return s; })();
+const totalQuestions = document.querySelectorAll('section.card').length;
+document.getElementById('max').textContent = max;
+document.getElementById('nbq').textContent = totalQuestions;
+
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const secs = (seconds % 60).toString().padStart(2, '0');
+  return `${mins}:${secs}`;
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  document.getElementById('timerBtn').textContent = 'Pause';
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+  }, 1000);
+}
+
+function stopTimer() {
+  if (!timerRunning) return;
+  timerRunning = false;
+  document.getElementById('timerBtn').textContent = 'Reprendre';
+  clearInterval(timerInterval);
+}
+
+function toggleTimer() {
+  if (timerRunning) stopTimer(); else startTimer();
+}
+
+function resetTimer() {
+  stopTimer();
+  timerSeconds = 0;
+  document.getElementById('timerDisplay').textContent = '00:00';
+  document.getElementById('timerBtn').textContent = 'Démarrer';
+}
+
+function updateProgress() {
+  const answeredPercent = (answeredCount / totalQuestions) * 100;
+  const correctPercent = (correctCount / totalQuestions) * 100;
+  const incorrectPercent = (incorrectCount / totalQuestions) * 100;
+  const unansweredCount = totalQuestions - answeredCount;
+
+  document.getElementById('answeredFill').style.width = answeredPercent + '%';
+  document.getElementById('correctFill').style.width = correctPercent + '%';
+  document.getElementById('incorrectFill').style.width = incorrectPercent + '%';
+  document.getElementById('answeredCount').textContent = answeredCount;
+  document.getElementById('correctCount').textContent = correctCount;
+  document.getElementById('incorrectCount').textContent = incorrectCount;
+  document.getElementById('unansweredCount').textContent = unansweredCount;
+  document.getElementById('globalPercent').textContent = Math.round((total / max) * 100) + '%';
+}
+
+function incrementAnswered(correct) {
+  answeredCount++;
+  if (correct) correctCount++; else incorrectCount++;
+  updateProgress();
+}
+
+function decrementAnswered(correct) {
+  answeredCount = Math.max(0, answeredCount - 1);
+  if (correct) correctCount = Math.max(0, correctCount - 1);
+  else incorrectCount = Math.max(0, incorrectCount - 1);
+  updateProgress();
+}
+
+function givePoints(key, pts) { 
+  if (awarded.has(key)) return; 
+  total += pts; 
+  awarded.add(key); 
+  const sur20 = (total / max) * 20; 
+  document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">' + sur20.toFixed(2) + '</strong> / 20 — Questions : <strong id="nbq">' + totalQuestions + '</strong>'; 
+}
+
+const awarded = new Set();
+
+function aide(id) { const el = document.getElementById(id); el.classList.toggle("show-help"); }
+
+function feedback(id, ok, content) {
+  const fb = document.getElementById(id);
+  fb.className = 'answer ' + (ok ? 'ok' : 'ko');
+  fb.innerHTML = content;
+}
+
+function resetQuestion(name, wasCorrect) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach(i => i.checked = false);
+  document.querySelectorAll(`#q${name.substring(1)}, #${name}`).forEach(el => { 
+    if (el.type === 'text' || el.type === 'number') el.value = ''; 
+    if (el.tagName === 'SELECT') el.value = ''; 
+  });
+  const fbId = 'fb' + name.substring(1);
+  document.getElementById(fbId).innerHTML = '';
+  document.getElementById(fbId).className = 'answer';
+  const helpId = 'a' + name.substring(1);
+  document.getElementById(helpId).classList.remove('show-help');
+  awarded.delete(name);
+  decrementAnswered(wasCorrect);
+}
+
+function checkMCQ(name, correct, fbId, pts) {
+  const sel = document.querySelector('input[name="' + name + '"]:checked');
+  if (!sel) { feedback(fbId, false, '<div class="feedback-title">Aucune réponse sélectionnée</div><div class="feedback-explanation">Veuillez choisir une option avant de corriger.</div>'); return; }
+  const ok = sel.value === correct;
+  const helpId = 'a' + name.substring(1);
+  const helpText = document.getElementById(helpId).textContent;
+  const correctLabel = document.querySelector('label input[name="' + name + '"][value="' + correct + '"]').parentNode.textContent.trim();
+  let title = ok ? 'Super ! Tu as raison !' : 'Pas tout à fait...';
+  let icon = ok ? 'Checkmark' : 'Cross';
+  let tip = ok ? 'Tu maîtrises ce concept ! Continue comme ça !' : 'Regarde l\'explication et réessaie !';
+  let retry = !ok ? `<button class="retry-btn" onclick="resetQuestion('${name}', ${ok}); this.parentNode.remove();">Réessayer</button>` : '';
+  let content = `
+    <div class="feedback-title">${icon} ${title}</div>
+    <div class="feedback-explanation">
+      ${ok ? '' : '<div class="feedback-correct">Bonne réponse : <strong>' + correctLabel + '</strong></div>'}
+      <div class="feedback-tip">${tip}</div>
+      <details style="margin-top:10px;"><summary style="cursor:pointer; color:var(--accent);">Voir l'explication complète</summary>${helpText}</details>
+    </div>
+    ${retry}
+  `;
+  feedback(fbId, ok, content);
+  if (!ok) aide(helpId);
+  if (ok && !awarded.has(name)) { givePoints(name, pts); incrementAnswered(true); }
+  else if (!ok && !awarded.has(name)) incrementAnswered(false);
+}
+
+function checkSelect(id, correct, fbId, pts) {
+  const val = document.getElementById(id).value;
+  if (!val) { feedback(fbId, false, '<div class="feedback-title">Aucune sélection</div><div class="feedback-explanation">Choisis une option !</div>'); return; }
+  const ok = (val === correct);
+  const helpId = 'a' + id.substring(1);
+  const helpText = document.getElementById(helpId).textContent;
+  const correctText = document.querySelector('#' + id + ' option[value="' + correct + '"]').textContent;
+  let title = ok ? 'Bravo ! Exact !' : 'Presque...';
+  let icon = ok ? 'Checkmark' : 'Cross';
+  let tip = ok ? 'Excellent choix !' : 'Vérifie le schéma et réessaie !';
+  let retry = !ok ? `<button class="retry-btn" onclick="document.getElementById('${id}').value=''; document.getElementById('${fbId}').innerHTML=''; document.getElementById('${fbId}').className='answer'; decrementAnswered(false);">Réessayer</button>` : '';
+  let content = `
+    <div class="feedback-title">${icon} ${title}</div>
+    <div class="feedback-explanation">
+      ${ok ? '' : '<div class="feedback-correct">Bonne option : <strong>' + correctText + '</strong></div>'}
+      <div class="feedback-tip">${tip}</div>
+      <details style="margin-top:10px;"><summary style="cursor:pointer; color:var(--accent);">Explication détaillée</summary>${helpText}</details>
+    </div>
+    ${retry}
+  `;
+  feedback(fbId, ok, content);
+  if (!ok) aide(helpId);
+  if (ok && !awarded.has(id)) { givePoints(id, pts); incrementAnswered(true); }
+  else if (!ok && !awarded.has(id)) incrementAnswered(false);
+}
+
+// Les autres fonctions checkNumber, checkTextIncludes, checkMulti sont similaires avec incrementAnswered(true/false)
+
+function corrigerTout() {
+  document.querySelectorAll('.card .btn.small').forEach(btn => { if (btn.textContent.trim().toLowerCase().includes('corriger')) btn.click(); });
+  const sur20 = (total / max) * 20;
+  const id = 'Nom: ' + (document.getElementById('nom').value || '-') + ' | Prénom: ' + (document.getElementById('prenom').value || '-') + ' | Classe: ' + (document.getElementById('classe').value || '-');
+  document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ') — Temps : ' + formatTime(timerSeconds);
+}
+
+function reinitialiser() {
+  total = 0; answeredCount = 0; correctCount = 0; incorrectCount = 0; awarded.clear();
+  document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">' + totalQuestions + '</strong>';
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
+  document.querySelectorAll('input[type=text],input[type=number]').forEach(i => i.value = '');
+  document.querySelectorAll('select').forEach(s => s.value = '');
+  document.querySelectorAll('.answer').forEach(a => { a.textContent = ''; a.className = 'answer'; });
+  document.querySelectorAll('.help').forEach(h => h.classList.remove('show-help'));
+  document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
+  updateProgress();
+  resetTimer();
+}
+
+function showAllHelps() { document.querySelectorAll('.help').forEach(h => h.classList.add('show-help')); }
+
+// Initialisation
+updateProgress();
+resetTimer();
+</script>
+</body>
+</html>

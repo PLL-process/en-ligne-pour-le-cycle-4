@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1f3a">
+  <meta name="description" content="Séquence Cybersécurité 4e - Programme Technologie Collège 2024">
+  <title>Séquence 4e — Cybersécurité — V10 (PWA + Accessibilité + Tests)</title>
+  <link rel="manifest" href="data:application/manifest+json,{
+    &quot;name&quot;: &quot;Cybersécurité 4e&quot;,
+    &quot;short_name&quot;: &quot;Cyber4e&quot;,
+    &quot;description&quot;: &quot;Séquence complète Technologie Collège&quot;,
+    &quot;start_url&quot;: &quot;.&quot;,
+    &quot;display&quot;: &quot;standalone&quot;,
+    &quot;background_color&quot;: &quot;#0b1f3a&quot;,
+    &quot;theme_color&quot;: &quot;#61dafb&quot;,
+    &quot;icons&quot;: [{
+      &quot;src&quot;: &quot;data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9Ijk2IiBjeT0iOTYiIHI9Ijk2IiBmaWxsPSIjNjFEQUZCIi8+CjxwYXRoIGQ9Ik0xMjAgOTZhNCA0IDAgMSAwLTgtMDRhNCA0IDAgMCAwIDgtNGg4YTQgNCAwIDAgMCAwLTguOGgtOGE0IDQgMCAxIDAgMC04YzQtNC40IDAgOC4zIDAgMTJjMCAyLjUgMS4zIDQuOCA0IDUuMmE0IDQgMCAwIDAgNS4yIDBjLjk4LS4yIDEuOC0uOCAyLjQtMS44IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K&quot;,
+      &quot;sizes&quot;: &quot;192x192&quot;,
+      &quot;type&quot;: &quot;image/svg+xml&quot;
+    }]
+  }">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0b1f3a; --bg2: #091d34; --panel: #10294f; --line: #1f3f77;
+      --text: #eaf1ff; --muted: #bfd3ff; --accent: #61dafb; --ok: #81fba1; 
+      --warn: #ffd66b; --err: #ff7b88; --vio: #c68ef2;
+      --glow: 0 0 12px rgba(97, 218, 251, .6);
+      --focus-ring: 0 0 0 3px rgba(97, 218, 251, .5);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text); font-family: Poppins, system-ui, sans-serif;
+      font-size: clamp(14px, 3vw, 16px); line-height: 1.6;
+      -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+    }
+    .container { max-width: 100%; margin: 8px auto; padding: 0 min(12px, 5vw); }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--glow); padding: clamp(12px, 4vw, 16px); margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(1.5rem, 6vw, 2rem); color: #82b3ff; text-align: center; margin: 0 0 12px; }
+    h2 { font-size: clamp(1.2rem, 4vw, 1.4rem); color: var(--vio); margin: 0 0 12px; }
+    h3 { font-size: clamp(1rem, 3vw, 1.2rem); color: #bfd3ff; margin: 0 0 12px; }
+    .btn {
+      background: #1d4e89; color: #fff; border: none; border-radius: 8px;
+      padding: 12px 16px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+      font-size: 1rem; width: 100%; margin: 4px 0; transition: all .2s ease;
+    }
+    .btn:hover { background: #2966b1; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus { outline: none; box-shadow: var(--focus-ring); }
+    .btn-secondary { background: #173a66; }
+    .note-bar {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      align-items: center; background: #0a2547; border: 1px solid var(--line);
+      border-radius: 12px; padding: 12px; margin: 12px 0; flex-direction: column;
+    }
+    @media (min-width: 481px) {
+      .note-bar { flex-direction: row; }
+      .btn { width: auto; }
+    }
+    .badge { 
+      background: #11407a; border: 1px solid var(--line); border-radius: 999px; 
+      padding: 4px 8px; font-size: 0.85rem; display: inline-block; 
+    }
+    .scorebar {
+      position: sticky; top: 0; background: rgba(9, 29, 52, .98); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line); z-index: 1000; padding: 6px 0;
+    }
+    .scorebar-inner {
+      display: flex; flex-wrap: wrap; gap: 6px; justify-content: space-between;
+      align-items: center; padding: 0 min(8px, 3vw); max-width: 100%;
+    }
+    .score-pill {
+      background: #0a2547; border: 1px solid var(--line); border-radius: 999px;
+      padding: 4px 8px; font-size: 0.8rem; flex: 1; min-width: 80px; text-align: center;
+    }
+    #studentName {
+      width: 100%; max-width: 160px; background: #0a2547; border: 1px solid var(--line);
+      border-radius: 6px; color: var(--text); padding: 4px 8px; font-size: 0.8rem;
+    }
+    .terminal {
+      background: #081c34; border: 1px solid #173a66; border-radius: 12px;
+      padding: 16px; font-family: 'Fira Code', monospace; overflow: auto; min-height: 120px;
+    }
+    .cursor { width: 8px; background: #9ad0ff; animation: blink 1s step-end infinite; display: inline-block; }
+    @keyframes blink { 50% { background: transparent; } }
+    textarea {
+      width: 100%; min-height: 90px; border-radius: 10px; border: 1px solid var(--line);
+      background: #0a2547; color: var(--text); padding: 12px; font-size: 1rem; resize: vertical;
+    }
+    .response-label { font-weight: 600; color: #cfe1ff; margin: 8px 0 4px; font-size: 1rem; }
+
+    /* DROP ZONES */
+    .pool { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; justify-content: center; }
+    .draggable {
+      cursor: grab; background: #14335f; border: 1px solid var(--line); border-radius: 8px;
+      padding: 8px 12px; font-size: 0.9rem; min-width: 80px; text-align: center;
+      transition: all .2s ease; user-select: none;
+    }
+    .draggable:hover, .draggable:active { transform: scale(1.05); box-shadow: var(--glow); }
+    .dropzone {
+      min-height: clamp(52px, 15vw, 80px); border: 2px dashed #2b64a1; border-radius: 10px;
+      padding: 12px; margin: 8px 0; background: #0a274d; display: flex; flex-wrap: wrap;
+      gap: 6px; align-items: center; justify-content: center;
+    }
+    .dropzone::before { 
+      content: 'Dépose ici 👇'; color: #a9c7ff; font-size: clamp(0.8rem, 2vw, 0.9rem); 
+    }
+    .drop-target { 
+      outline: 2px solid #61dafb; background: #0a274d !important; border-color: #61dafb; 
+    }
+
+    /* QCM ULTRA-OPTIMIZED */
+    .qcm-block {
+      background: linear-gradient(135deg, #1a365d, #2d3748); border-radius: 12px;
+      padding: clamp(12px, 4vw, 16px); margin: 12px 0; border-left: clamp(3px, 1vw, 6px) solid;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); position: relative; overflow: hidden;
+      transition: all .2s ease;
+    }
+    .qcm-block:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(97, 218, 251, .2); }
+    .qcm-block:active { transform: scale(.98); }
+    .qcm-block:focus-within { box-shadow: var(--focus-ring); }
+    .qcm-block::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: clamp(3px, 1vw, 6px); background: linear-gradient(to bottom, var(--accent), var(--ok));
+    }
+    .qcm-question {
+      font-weight: 600; color: var(--accent); margin-bottom: 12px; display: flex;
+      flex-wrap: wrap; align-items: center; gap: 8px; font-size: clamp(0.95rem, 3vw, 1rem);
+    }
+    .qcm-question i { font-size: clamp(1rem, 4vw, 1.2em); flex-shrink: 0; }
+    .qcm-option {
+      display: flex; align-items: flex-start; gap: 10px; padding: clamp(10px, 3vw, 12px);
+      margin: 6px 0; background: rgba(255,255,255,0.05); border-radius: 8px; cursor: pointer;
+      transition: all .2s ease; border: 2px solid transparent; font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+      min-height: 20px; position: relative; touch-action: manipulation;
+    }
+    .qcm-option:hover, .qcm-option:focus-within { 
+      background: rgba(97, 218, 251, 0.15); border-color: var(--accent); 
+    }
+    .qcm-option:active { transform: scale(.98); }
+    .qcm-option input:checked + label {
+      background: linear-gradient(135deg, var(--ok), #66f3a1); color: #000; 
+      font-weight: 600; border-color: var(--ok);
+    }
+    .qcm-option input[type="radio"], .qcm-option input[type="checkbox"] {
+      width: clamp(18px, 5vw, 20px); height: clamp(18px, 5vw, 20px); 
+      accent-color: var(--accent); margin: 0; flex-shrink: 0; margin-top: 2px; 
+      transform: scale(1.1);
+    }
+    .qcm-option label { 
+      flex: 1; margin: 0; cursor: pointer; display: flex; align-items: center; 
+      gap: 8px; padding: 4px; 
+    }
+    .qcm-option i { font-size: 1rem; flex-shrink: 0; width: 16px; text-align: center; }
+
+    /* SECTION COLORS */
+    .qcm-sec1 { border-left-color: var(--accent) !important; }
+    .qcm-sec2 { border-left-color: #c678dd !important; }
+    .qcm-sec3 { border-left-color: var(--ok) !important; }
+    .qcm-sec4 { border-left-color: var(--vio) !important; }
+    .qcm-sec5 { border-left-color: #98c379 !important; }
+    .qcm-sec6 { border-left-color: #ff9800 !important; }
+
+    /* PROGRESS BAR */
+    .progress { 
+      background: var(--panel); height: 12px; border-radius: 6px; overflow: hidden; 
+      margin: 8px 0; 
+    }
+    #prog { 
+      background: var(--ok); height: 100%; transition: width .3s ease; 
+    }
+
+    /* TABLE */
+    table.competences {
+      width: 100%; border-collapse: collapse; border: 1px solid var(--line);
+      background: #0b2349; border-radius: 10px; overflow: hidden; margin: 8px 0;
+    }
+    table.competences th, table.competences td {
+      border: 1px solid var(--line); padding: 8px; text-align: left;
+    }
+    table.competences th { background: #0f2d59; }
+
+    /* MODALS */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,10,20,.78); display: none;
+      align-items: center; justify-content: center; padding: 16px; z-index: 10000;
+    }
+    .modal[open] { display: flex; }
+    .modal .box {
+      background: #0c2346; border: 1px solid #2a5796; border-radius: 12px;
+      max-width: 90vw; width: 100%; padding: 16px; box-shadow: var(--glow);
+      max-height: 80vh; overflow-y: auto;
+    }
+    .modal .close { 
+      float: right; cursor: pointer; color: #cde6ff; background: none; 
+      border: none; font-size: 1.5rem; 
+    }
+
+    /* GAMIFICATION */
+    .gamification {
+      position: fixed; top: 80px; right: 12px; background: rgba(16, 41, 79, .95);
+      backdrop-filter: blur(10px); border-radius: 12px; padding: 12px; z-index: 999;
+      border: 1px solid var(--line);
+    }
+    .badges-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    /* SR-ONLY */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .container { padding: 0 8px; }
+      .panel { padding: 10px; margin-bottom: 12px; }
+      .scorebar-inner { flex-direction: column; gap: 6px; text-align: center; }
+      .score-pill { flex: none; min-width: auto; }
+      .note-bar { flex-direction: column; gap: 6px; }
+      .btn { padding: 10px; font-size: 0.9rem; }
+      .qcm-block { padding: 12px; margin: 8px 0; border-left-width: 3px; }
+      .qcm-question { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .qcm-option { padding: 10px; gap: 8px; }
+      input[type="radio"], input[type="checkbox"] { width: 22px !important; height: 22px !important; }
+      .pool { gap: 6px; }
+      .draggable { padding: 8px 10px; font-size: 0.85rem; min-width: 70px; }
+      .dropzone { min-height: 60px; padding: 10px; font-size: 0.85rem; }
+      .gamification { position: static; right: auto; top: auto; }
+    }
+
+    @media (min-width: 769px) {
+      .gamification { width: 200px; }
+      .note-bar { flex-direction: row; }
+      .btn { width: auto; }
+    }
+
+    /* PRINT */
+    @media print {
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .scorebar, .btn, .gamification { display: none; }
+      .panel { box-shadow: none; border: 1px solid #000; }
+    }
+
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* HIGH CONTRAST */
+    @media (prefers-contrast: high) {
+      :root { --text: #ffffff; --panel: #1a365d; }
+      .qcm-option input:checked + label { background: #00ff00 !important; color: #000 !important; }
+    }
+
+    /* Python IDE */
+    .python-code {
+      background:#000 !important;
+      border:1px solid #333;
+      border-radius:12px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+      overflow:hidden;
+      margin:12px 0;
+      position:relative;
+    }
+    .python-code::before {
+      content:'🐍 Python IDE';
+      position:absolute;
+      top:8px;
+      right:12px;
+      color:#666;
+      font-size:0.8rem;
+      font-family:'Fira Code';
+    }
+    .python-code pre { 
+      background:transparent !important;
+      margin:0;
+      padding:20px 16px;
+      overflow-x:auto;
+    }
+    .python-code code { 
+      color:#fff;
+      font-family:'Fira Code',monospace;
+      font-size:0.95rem;
+      line-height:1.5;
+    }
+    .python-code .keyword {color:#c678dd; font-weight:600;}
+    .python-code .string {color:#98c379;}
+    .python-code .comment {color:#5c6370; font-style:italic;}
+    .python-code .function {color:#61afef;}
+    .python-code .number {color:#d19a66;}
+    .python-code .operator {color:#abb2bf;}
+  </style>
+</head>
+<body>
+<div class="scorebar">
+  <div class="scorebar-inner">
+    <div>💻 <strong>Séquence 4e — Cybersécurité</strong></div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <span class="score-pill">👤 <input id="studentName" type="text" placeholder="Nom / Prénom" style="background:#0a2547;border:1px solid var(--line);border-radius:6px;color:var(--text);padding:2px 6px;width:180px"/></span>
+      <span class="score-pill">⏱️ <span id="chrono">00:00</span></span>
+      <span class="score-pill">🏁 <strong id="scoreTotal">0</strong>/65</span>
+      <button class="btn" id="btnRecalc" style="padding:4px 8px"><i class="fas fa-sync-alt"></i></button>
+      <button class="btn" id="btnPDF" style="padding:4px 8px"><i class="fas fa-file-pdf"></i></button>
+    </div>
+  </div>
+</div>
+<!-- INTRO : terminal + musique -->
+<div class="container">
+  <div class="section panel">
+    <h1>Bienvenue</h1>
+    <div class="terminal" id="terminalIntro" aria-live="polite"></div>
+    <noscript>Veuillez activer JavaScript pour voir l’animation d’introduction.</noscript>
+
+    <div class="note-bar">
+      <button class="btn" id="btnSound">🔊 Rejouer la musique (≤ 1 min)</button>
+      <button class="btn btn-secondary" id="btnStop">⏸️ Pause musique</button>
+      <span class="badge">Musique d’ambiance synthétisée (WebAudio) 🎵</span>
+    </div>
+  </div>
+</div>
+
+  <!-- Mise en situation générale -->
+  <div class="section panel">
+    <h2>📰 Mise en situation générale</h2>
+    <p>Imagine que tu utilises ton smartphone pour envoyer un e-mail avec une photo de classe. Soudain, ton compte est hacké car ton mot de passe était trop simple. Tes messages privés sont exposés sur les réseaux sociaux, et tu reçois des commentaires malveillants. Cette histoire est inspirée de faits réels : en 2025, des milliers d'adolescents ont été victimes de phishing via des apps comme Snapchat ou Instagram, menant à des cas de harcèlement cybernétique rapportés par la CNIL.</p>
+    <p>Dans le monde d'aujourd'hui, où les e-mails, réseaux sociaux et services en ligne font partie de ton quotidien, les risques sont partout : vol de données, usurpation d'identité, ou propagation de malware. Mais avec les bonnes pratiques, tu peux te protéger – active 2FA, utilise des mots de passe forts, et sois vigilant avec les liens. Cela te prépare à un avenir où la cybersécurité est essentielle pour tous.</p>
+  </div>
+
+  <!-- Problématique -->
+  <div class="section panel">
+    <h2>❓ Problématique</h2>
+    <p>Comment protéger mes données, mes comptes et ma e‑réputation tout en utilisant des services numériques (e-mails, réseaux sociaux, etc.) ?</p>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="pbm"></textarea>
+  </div>
+
+  <!-- Compétences -->
+  <div class="section panel">
+    <h2>📊 Compétences & connaissances (Socle / Techno / CRCN)</h2>
+    <table class="competences">
+      <thead><tr><th>Domaine</th><th>Formulation</th><th>Traces (exemples)</th></tr></thead>
+      <tbody>
+        <tr><td>Socle — Domaine 2</td><td>Adopter des comportements responsables;<br/>Comprendre les risques numériques;<br/>Respecter les règles d’usage</td><td>Réponses aux questions sur les risques, adoption de bonnes pratiques dans les exercices, respect des règles dans les quizzes</td></tr>
+        <tr><td>CRCN — S1.1 / S2.2</td><td>Protéger ses données;<br/>Sécuriser ses comptes (mots de passe, 2FA);<br/>Gérer ses traces</td><td>Activation 2FA dans les simulations, gestion des traces dans les quizzes, sauvegardes et mises à jour dans les DnD</td></tr>
+        <tr><td>Technologie — C1→C3</td><td>Identifier risques et bonnes pratiques;<br/>Classer les données;<br/>Programmer un test d’URL (HTTP/HTTPS)</td><td>Code Python pour test URL, classification des données dans DnD, identification des risques dans quizzes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 1. Risques et bonnes pratiques -->
+  <div class="section panel">
+    <h2>🛡️ 1. Risques et bonnes pratiques <span class="badge">Score : <span id="s1">0</span>/14</span></h2>
+    <h3>📰 Mise en situation : Un incident au collège inspiré de faits réels</h3>
+    <p>Imagine que tu es un élève de 4e au collège. Un matin, tu reçois un e-mail qui semble provenir de la direction de ton établissement. Il te demande de cliquer sur un lien pour "mettre à jour tes informations personnelles" afin d'accéder à une nouvelle plateforme éducative. Le message est urgent et menace de bloquer ton compte Pronote si tu ne le fais pas immédiatement. Intrigué, tu cliques... et sans le savoir, tu viens d'installer un malware sur ton ordinateur familial.</p>
+    <p>Cette situation est inspirée de faits réels récents. Par exemple, en juillet 2025, la ville de St. Paul aux États-Unis a été victime d'une attaque ransomware par le groupe Interlock, qui a volé 43 Go de données internes, y compris des informations sensibles sur les citoyens. De même, en septembre 2025, un cyberincident majeur a perturbé les aéroports européens comme Heathrow, causé par une surcharge DDoS qui a paralysé les systèmes. Au collège, un tel risque pourrait survenir via un phishing ciblant les élèves, comme dans l'attaque algérienne contre le fonds social marocain en avril 2025, où des hackers ont fuité des données sensibles.</p>
+    <p><strong>Risques impliqués :</strong> Le phishing peut mener à l'installation d'un keylogger (enregistreur de frappes) ou d'un trojan, exposant tes mots de passe et données personnelles. Un ransomware pourrait chiffrer tes fichiers scolaires, exigeant une rançon. Une attaque DDoS pourrait bloquer l'accès au site du collège, perturbant les cours en ligne.</p>
+    <p><strong>Bonne attitude à avoir :</strong> Vérifie toujours l'expéditeur (hover sur l'e-mail pour voir l'adresse réelle). Ne clique pas sur des liens suspects ; contacte directement la direction par un canal officiel (comme l'ENT du collège). Active la 2FA sur tous tes comptes, utilise un antivirus à jour, et fais des sauvegardes régulières de tes devoirs sur un cloud sécurisé comme OneDrive scolaire. Si tu suspects quelque chose, alerte un adulte ou le professeur de technologie immédiatement.</p>
+    <p>En adoptant ces habitudes, tu évites de devenir le "maillon faible" et protèges non seulement tes données, mais aussi celles de ton entourage. Souviens-toi : la vigilance est la première ligne de défense !</p>
+
+    <h3>📌 Notions clés</h3>
+    <p><span class="tag tooltip" data-tip="Phishing : faux message qui imite un service pour voler des infos.">Phishing</span>
+       <span class="tag tooltip" data-tip="2FA : 2 preuves d'identité (mot de passe + code/app/clé).">2FA</span>
+       <span class="tag tooltip" data-tip="Mot de passe fort : long (phrase), unique, complexe.">Mot de passe</span>
+       <span class="tag tooltip" data-tip="Sauvegarde : copie de secours pour récupérer ses données.">Sauvegarde</span>
+       <span class="tag tooltip" data-tip="Antivirus/MAJ : réduit le risque de compromission.">MAJ & Antivirus</span>
+       <span class="tag tooltip" data-tip="Malware : logiciel malveillant qui infecte l'ordinateur.">Malware</span>
+       <span class="tag tooltip" data-tip="DDoS : surcharge un site avec trop de connexions.">DDoS</span>
+       <span class="tag tooltip" data-tip="VPN : masque ton IP et chiffre ta connexion.">VPN</span>
+       <span class="tag tooltip" data-tip="HTTPS : protocole sécurisé qui chiffre les données.">HTTPS</span>
+       <span class="tag tooltip" data-tip="Cookie : fichier qui suit tes actions sur un site.">Cookie</span></p>
+
+    <h3>✋ Associer « menace → définition » (6 paires) (4 points)</h3>
+    <div class="pool" id="pool1a">
+      <span class="draggable" draggable="true" data-type="phish">Hameçonnage</span>
+      <span class="draggable" draggable="true" data-type="ransom">Rançongiciel</span>
+      <span class="draggable" draggable="true" data-type="trojan">Cheval de Troie</span>
+      <span class="draggable" draggable="true" data-type="malware">Malware</span>
+      <span class="draggable" draggable="true" data-type="ddos">Attaque DDoS</span>
+      <span class="draggable" draggable="true" data-type="keylog">Keylogger</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px,1fr));gap:8px">
+      <div class="dropzone" id="zPh" data-accept="phish"><strong>Phishing :</strong> faux message pour voler des infos.</div>
+      <div class="dropzone" id="zRa" data-accept="ransom"><strong>Ransomware :</strong> chiffre et demande rançon.</div>
+      <div class="dropzone" id="zTr" data-accept="trojan"><strong>Trojan :</strong> se fait passer pour logiciel utile.</div>
+      <div class="dropzone" id="zMal" data-accept="malware"><strong>Malware :</strong> logiciel malveillant général.</div>
+      <div class="dropzone" id="zDDo" data-accept="ddos"><strong>DDoS :</strong> surcharge le serveur.</div>
+      <div class="dropzone" id="zKey" data-accept="keylog"><strong>Keylogger :</strong> enregistre les frappes clavier.</div>
+    </div>
+
+    <h3>❓ Micro‑question Phishing (1 point)</h3>
+    <div class="qcm-block" style="background:#0a2547;border-radius:8px;padding:10px;border-left:5px solid var(--accent);margin-bottom:10px;">
+      <p>Laquelle de ces propositions décrit le mieux le <em>phishing</em> ?</p>
+      <label><input type="radio" name="q1p" value="0"> Accélérer la connexion Internet</label><br/>
+      <label><input type="radio" name="q1p" value="1"> Se faire passer pour un service afin de voler des infos</label>
+    </div>
+
+    <h3>📦 Faites glisser chaque étiquette dans la bonne colonne (8 étiquettes) (3 points)</h3>
+    <div class="pool" id="pool1b">
+      <span class="draggable" draggable="true" data-type="risk">Lien inconnu</span>
+      <span class="draggable" draggable="true" data-type="risk">Fichier .exe suspect</span>
+      <span class="draggable" draggable="true" data-type="risk">Email d'une banque inconnue</span>
+      <span class="draggable" draggable="true" data-type="risk">Pièce jointe non demandée</span>
+      <span class="draggable" draggable="true" data-type="good">2FA activée</span>
+      <span class="draggable" draggable="true" data-type="good">Sauvegarde hebdo</span>
+      <span class="draggable" draggable="true" data-type="good">Antivirus à jour</span>
+      <span class="draggable" draggable="true" data-type="good">VPN sur WiFi public</span>
+    </div>
+    <div class="pool" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <div><h3>⚠️ Risques / attaques</h3><div id="zRisk" class="dropzone" data-accept="risk"></div></div>
+      <div><h3>✅ Bonnes pratiques</h3><div id="zGood" class="dropzone" data-accept="good"></div></div>
+    </div>
+
+    <h3>💬 Pourquoi dit‑on que les humains sont le maillon faible ? (non noté)</h3>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q1why"></textarea>
+
+    <h3>✏️ Micro‑questions — Mots de passe (1 point)</h3>
+    <p>Parmi ces mots de passe, lesquels sont sûrs ? Justifie.</p>
+    <label><input type="checkbox" name="mp" value="bad"> azerty123</label><br/>
+    <label><input type="checkbox" name="mp" value="good" data-good="1"> MonChien!@dore*LesCroquettes#2025!</label><br/>
+    <label><input type="checkbox" name="mp" value="bad"> 12345678</label><br/>
+    <label><input type="checkbox" name="mp" value="good" data-good="1"> SoleilBrille@Paris2024#France!</label><br/>
+    <label><input type="checkbox" name="mp" value="bad"> password1</label><br/>
+    <label><input type="checkbox" name="mp" value="bad"> qwertyuiop</label><br/>
+    <label><input type="checkbox" name="mp" value="good" data-good="1"> MontagneVerte*Ete2025$Voyage!</label><br/>
+    <label><input type="checkbox" name="mp" value="bad"> 000000</label>
+    <div class="response-label">Ta justification ici 👇</div><textarea id="mpJust"></textarea>
+
+    <h3>🔒 <strong>Quiz Menaces & Solutions (6 questions)</strong></h3>
+    <p><strong>Q1 :</strong> Quelle solution contre le phishing ?</p>
+    <label><input type="radio" name="q1a" value="1"> Activer 2FA</label> •
+    <label><input type="radio" name="q1a" value="0"> Cliquer sur tous les liens</label><br><br>
+    
+    <p><strong>Q2 :</strong> Le ransomware chiffre :</p>
+    <label><input type="radio" name="q1b" value="1"> Tes fichiers</label> •
+    <label><input type="radio" name="q1b" value="0"> Ton mot de passe</label><br><br>
+    
+    <p><strong>Q3 :</strong> Solution contre keylogger ?</p>
+    <label><input type="radio" name="q1c" value="1"> Antivirus</label> •
+    <label><input type="radio" name="q1c" value="0"> Sauvegarde</label><br><br>
+    
+    <p><strong>Q4 :</strong> DDoS attaque :</p>
+    <label><input type="radio" name="q1d" value="1"> Le serveur</label> •
+    <label><input type="radio" name="q1d" value="0"> Ton mot de passe</label><br><br>
+    
+    <p><strong>Q5 :</strong> Malware c'est :</p>
+    <label><input type="radio" name="q1e" value="1"> Logiciel malveillant</label> •
+    <label><input type="radio" name="q1e" value="0"> Antivirus</label><br><br>
+    
+    <p><strong>Q6 :</strong> Solution contre DDoS ?</p>
+    <label><input type="radio" name="q1f" value="1"> Pare-feu</label> •
+    <label><input type="radio" name="q1f" value="0"> 2FA</label>
+
+    <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help1').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr1').style.display='flex'">🔑 Correction</button>
+      <button class="btn" id="chk1" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
+      <button class="btn btn-secondary" id="rst1" style="padding:6px 10px;font-size:0.8rem;width:auto">Réinitialiser</button>
+      <span id="res1" class="badge"></span>
+    </div>
+  </div>
+
+  <div id="help1" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Aide pour la section 1</h3>
+      <p>Associez chaque menace à sa définition correcte. Utilisez les indices emojis pour vous aider !</p>
+    </div>
+  </div>
+
+  <div id="corr1" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Correction pour la section 1</h3>
+      <p>Phishing : faux message pour voler des infos<br>Ransomware : chiffre et demande rançon<br>Trojan : se fait passer pour logiciel utile<br>Malware : logiciel malveillant général<br>DDoS : surcharge le serveur<br>Keylogger : enregistre les frappes clavier</p>
+      <p>Q1: Se faire passer pour un service afin de voler des infos</p>
+      <p>Risques : Lien inconnu, Fichier .exe suspect, Email d'une banque inconnue, Pièce jointe non demandée</p>
+      <p>Bonnes pratiques : 2FA activée, Sauvegarde hebdo, Antivirus à jour, VPN sur WiFi public</p>
+      <p>Mots de passe sûrs : MonChien!@dore*LesCroquettes#2025!, SoleilBrille@Paris2024#France!, MontagneVerte*Ete2025$Voyage!</p>
+      <p>Quiz : Q1 Activer 2FA, Q2 Tes fichiers, Q3 Antivirus, Q4 Le serveur, Q5 Logiciel malveillant, Q6 Pare-feu</p>
+    </div>
+  </div>
+
+  <!-- 2. Python + Tab & indentation -->
+  <div class="section panel">
+    <h2>🧠 2. Programme Python — Touche Tab & Indentation <span class="badge">Score : <span id="s2">0</span>/8</span></h2>
+
+    <h3>📰 Mise en situation : L'importance de Python dans un monde connecté</h3>
+    <p>Imagine-toi en 4e ou 3e au collège, en train de scroller sur ton smartphone pendant la récré. Soudain, une alerte push de ton app favorite, comme TikTok ou Snapchat, te prévient d'une nouvelle mise à jour pour "améliorer la sécurité". Ce que tu ne sais pas, c'est que derrière cette app, des milliers de lignes de code Python veillent à protéger tes données contre les hackers. Par exemple, en 2025, Python est au cœur de systèmes comme ceux de Netflix pour recommander des vidéos personnalisées, ou de Instagram pour détecter les contenus malveillants via l'IA. Sans Python, ces plateformes ne pourraient pas analyser des milliards de données en temps réel pour bloquer les cybermenaces comme le phishing ou les deepfakes.</p>
+    <p>Dans l'écosystème numérique d'aujourd'hui, Python est partout : il pilote les robots d'Amazon pour livrer tes colis, optimise les algorithmes de Google pour tes recherches scolaires, et même aide les médecins à analyser des images médicales avec des outils comme TensorFlow. En apprenant Python, tu deviens un acteur clé de cet univers – imagine coder un bot pour vérifier si un site est sécurisé avant de cliquer, ou créer une app simple pour alerter tes amis sur les risques en ligne. C'est concret et puissant !</p>
+    <p>Et pour ton avenir ? Les perspectives d'emploi explosent : d'ici 2030, plus de 1 million d'emplois en cybersécurité et développement seront créés en Europe, avec Python comme compétence n°1 demandée. Des métiers comme data scientist (salaire moyen 50 000€/an), ingénieur IA, ou expert cybersécurité (jusqu'à 80 000€) attendent ceux qui maîtrisent ce langage. En 4e ou 3e, commencer maintenant te donne un avantage énorme – pense à Elon Musk ou aux créateurs de YouTube, qui ont tous débuté jeunes avec la programmation. Python n'est pas juste un cours : c'est la clé pour inventer le futur, protéger la société, et décrocher un job passionnant. Prêt à coder pour changer le monde ?</p>
+
+    <p><strong>Rappel :</strong> En Python, l'<em>indentation</em> (décalage vers la droite) n'est pas décorative : c'est une <strong>règle obligatoire</strong> qui définit les blocs (<code>if</code>, <code>for</code>, <code>while</code>, <code>def</code>…).<br> La touche <span class="kbd">Tab</span> insère souvent <strong>4 espaces</strong>. Ne mélange pas Tab et espaces dans un même fichier.</p>
+<figure>
+  <img src="https://pll-process.github.io/en-ligne-pour-le-cycle-4/C1_C3_Les-objets-et-les-systèmes-techniques/Images/tab_key.png"
+       alt="Touche Tab du clavier"
+       style="max-width:280px;width:100%;border:1px solid #2a5796;border-radius:10px"/>
+  <figcaption>🔎 <strong>Touche Tab</strong> — Située à gauche du A sur la plupart des claviers.</figcaption>
+</figure>
+
+    <h3>💥 Erreur fréquente</h3>
+<div class="python-code">
+<pre><code>age = 20
+if age &gt;= 18:
+print("Tu es majeur.")  # &lt;-- Indentation manquante (provoque une erreur)
+print("Fin du programme.")</code></pre>
+</div>
+    <p><strong>Sortie possible :</strong> <code>IndentationError: expected an indented block</code></p>
+
+    <h3>✅ Exécution OK</h3>
+<div class="python-code">
+<pre><code>age = 20
+if age &gt;= 18:
+    print("Tu es majeur.")
+print("Fin du programme.")</code></pre>
+</div>
+
+    <h3>🔧 <strong>Exemple complet : Vérification d'URL sécurisée</strong></h3>
+<div class="python-code">
+<pre><code># Programme complet : Vérifier la sécurité d'une URL
+url = input("Entre une URL : ")  # Demande à l'utilisateur
+
+if url.startswith("https://"):
+    print("✅ Connexion sécurisée (HTTPS)")
+    print("    Les données sont chiffrées")
+else:
+    print("⚠️  Connexion non sécurisée (HTTP)")
+    print("    Les données peuvent être interceptées")
+
+print("Fin du programme.")</code></pre>
+</div>
+
+    <h3>🔄 <strong>Exemple boucle FOR : Vérifier plusieurs URLs</strong></h3>
+<div class="python-code">
+<pre><code># Vérifier une liste d'URLs avec une boucle FOR
+urls = ["http://site1.com", "https://site2.fr", "http://phishing.com"]
+
+for url in urls:  # Parcourir chaque URL
+    if url.startswith("https://"):
+        print(f"✅ {url} = SÉCURISÉE")
+    else:
+        print(f"⚠️  {url} = NON SÉCURISÉE")
+
+print("Vérification terminée.")</code></pre>
+</div>
+    <p><strong>Sortie attendue :</strong></p>
+<pre><code>⚠️  http://site1.com = NON SÉCURISÉE
+✅ https://site2.fr = SÉCURISÉE
+⚠️  http://phishing.com = NON SÉCURISÉE
+Vérification terminée.</code></pre>
+
+    <h3>🔁 <strong>Exemple boucle WHILE : Test continu d'URL</strong></h3>
+<div class="python-code">
+<pre><code># Tester URLs jusqu'à trouver une sécurisée
+print("🔍 Testeur de sécurité URL - Tape 'quit' pour arrêter")
+
+while True:  # Boucle infinie
+    url = input("Entre une URL : ").strip()
+    
+    if url.lower() == "quit":
+        print("⏹️  Arrêt du testeur.")
+        break  # Sortir de la boucle
+    
+    if url.startswith("https://"):
+        print(f"✅ {url} = SÉCURISÉE !")
+    else:
+        print(f"⚠️  {url} = NON SÉCURISÉE")
+
+print("Fin du programme.")</code></pre>
+</div>
+    <p><strong>Exemple d'exécution :</strong></p>
+<pre><code>🔍 Testeur de sécurité URL - Tape 'quit' pour arrêter
+Entre une URL : http://test.com
+⚠️  http://test.com = NON SÉCURISÉE
+Entre une URL : https://banque.fr
+✅ https://banque.fr = SÉCURISÉE !
+Entre une URL : quit
+⏹️  Arrêt du testeur.
+Fin du programme.</code></pre>
+
+    <h3>🔒 <strong>Quiz Python & Cybersécurité (6 questions)</strong></h3>
+    <p><strong>Q1 :</strong> HTTPS chiffre‑t‑il les données en transit ?
+      <label><input type="radio" name="pyq" value="1"> Oui</label> •
+      <label><input type="radio" name="pyq" value="0"> Non</label>
+    </p>
+    <div class="note-bar"><button class="btn" id="chk2">Vérifier</button><span id="res2" class="badge"></span></div>
+  </div>
+
+  <!-- 3. Données personnelles -->
+  <div class="section panel">
+    <h2>🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="s3">0</span>/11</span></h2>
+    <h3>📰 Mise en situation : Le vol de données au collège</h3>
+    <p>Imagine que tu es en 4e, et que tu reçois un message sur ton téléphone d'un "ami" te demandant ta date de naissance et ton adresse e-mail pour "un projet de classe". Sans réfléchir, tu partages ces infos. Le lendemain, tu découvres que ton compte scolaire a été hacké, et des notes falsifiées apparaissent sur Pronote. Pire, tes photos personnelles circulent sur un groupe WhatsApp sans ton accord.</p>
+    <p>Cette situation s'inspire d'incidents réels, comme le cybermois 2025 en France, où des campagnes sensibilisent les écoles à la cybersécurité après des fuites de données dans des établissements éducatifs. En septembre 2025, une enquête du ministère de l'Éducation nationale a révélé que 70% des élèves partagent des données sensibles sans protection, menant à des cas de harcèlement cybernétique. Le programme de technologie au collège de 2024 insiste sur la classification des données pour éviter de tels risques.</p>
+    <p><strong>Risques impliqués :</strong> Les données personnelles peuvent être utilisées pour l'usurpation d'identité ou le doxxing, exposant à des dangers comme le harcèlement ou le vol financier. Les données sensibles (santé, opinions) sont encore plus vulnérables et protégées par la loi RGPD.</p>
+    <p><strong>Bonne attitude à avoir :</strong> Identifie toujours ce qui est personnel : ne partage pas ton nom, photo ou localisation sans raison. Utilise des pseudonymes en ligne, vérifie les demandes d'infos, et signale tout partage suspect à un adulte. Au collège, cela t'aide à protéger ta vie privée dès maintenant.</p>
+    <p>En comprenant cela, tu construis une e-réputation solide et évites des problèmes futurs. La cybersécurité commence par savoir ce que tu partages !</p>
+
+    <h3>3.a — Classer les données (9 étiquettes) (4 points)</h3>
+    <div class="pool" id="pool3">
+      <span class="draggable" draggable="true" data-type="identite">Nom & prénom</span>
+      <span class="draggable" draggable="true" data-type="contact">Adresse e‑mail</span>
+      <span class="draggable" draggable="true" data-type="contact">N° de téléphone</span>
+      <span class="draggable" draggable="true" data-type="sens">Données de santé</span>
+      <span class="draggable" draggable="true" data-type="identite">Date de naissance</span>
+      <span class="draggable" draggable="true" data-type="sens">Opinion politique</span>
+      <span class="draggable" draggable="true" data-type="identite">Photo d'identité</span>
+      <span class="draggable" draggable="true" data-type="contact">Adresse postale</span>
+      <span class="draggable" draggable="true" data-type="sens">Religion</span>
+    </div>
+    <div class="pool" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div><h3>👤 Identité</h3><div id="dzIdentite" class="dropzone" data-accept="identite"></div></div>
+      <div><h3>📬 Contact</h3><div id="dzContact" class="dropzone" data-accept="contact"></div></div>
+      <div><h3>🔒 Sensibles</h3><div id="dzSens" class="dropzone" data-accept="sens"></div></div>
+    </div>
+
+    <h3>3.b — Pourquoi sont‑elles sensibles ? (non noté)</h3>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q3b"></textarea>
+
+    <h3>🔒 <strong>Quiz Données Personnelles (7 questions)</strong></h3>
+    <p><strong>Q1 :</strong> Une donnée personnelle identifie :</p>
+    <label><input type="radio" name="q3a" value="1"> Une personne</label> •
+    <label><input type="radio" name="q3a" value="0"> Un objet</label><br><br>
+    
+    <p><strong>Q2 :</strong> Exemple de donnée sensible :</p>
+    <label><input type="radio" name="q3b" value="1"> Santé</label> •
+    <label><input type="radio" name="q3b" value="0"> Couleur préférée</label><br><br>
+    
+    <p><strong>Q3 :</strong> RGPD protège :</p>
+    <label><input type="radio" name="q3c" value="1"> Données personnelles</label> •
+    <label><input type="radio" name="q3c" value="0"> Logiciels</label><br><br>
+    
+    <p><strong>Q4 :</strong> Photo est une donnée :</p>
+    <label><input type="radio" name="q3d" value="1"> Personnelle</label> •
+    <label><input type="radio" name="q3d" value="0"> Publique</label><br><br>
+    
+    <p><strong>Q5 :</strong> Géolocalisation est :</p>
+    <label><input type="radio" name="q3e" value="1"> Personnelle</label> •
+    <label><input type="radio" name="q3e" value="0"> Anonyme</label><br><br>
+    
+    <p><strong>Q6 :</strong> Opinion politique est :</p>
+    <label><input type="radio" name="q3f" value="1"> Sensible</label> •
+    <label><input type="radio" name="q3f" value="0"> Contact</label><br><br>
+    
+    <p><strong>Q7 :</strong> Date de naissance est :</p>
+    <label><input type="radio" name="q3g" value="1"> Identité</label> •
+    <label><input type="radio" name="q3g" value="0"> Sensible</label>
+
+    <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help3').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr3').style.display='flex'">🔑 Correction</button>
+      <button class="btn" id="chk3" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
+      <button class="btn btn-secondary" id="rst3" style="padding:6px 10px;font-size:0.8rem;width:auto">Réinitialiser</button>
+      <span id="res3" class="badge"></span>
+    </div>
+  </div>
+
+  <div id="help3" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Aide pour la section 3</h3>
+      <p>Identité : Infos qui te nomment directement (nom, date naissance).</p>
+      <p>Contact : Moyens de te joindre (e-mail, téléphone).</p>
+      <p>Sensibles : Infos privées comme santé ou opinions.</p>
+    </div>
+  </div>
+
+  <div id="corr3" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Correction pour la section 3</h3>
+      <p>Identité : Nom/prénom, Date naissance, Photo.</p>
+      <p>Contact : E-mail, Téléphone, Adresse postale.</p>
+      <p>Sensibles : Santé, Opinion politique, Religion.</p>
+      <p>Q1: Une personne, Q2: Santé, Q3: Données personnelles, Q4: Personnelle, Q5: Personnelle, Q6: Sensible, Q7: Identité.</p>
+    </div>
+  </div>
+
+  <!-- 4. Protéger ses données personnelles -->
+  <div class="section panel">
+    <h2>🔒 4. Protéger ses données personnelles <span class="badge">Score : <span id="s4">0</span>/11</span></h2>
+    <h3>📰 Mise en situation : L'attaque sur ton compte scolaire</h3>
+    <p>Imagine que pendant un cours en ligne, tu ouvres un fichier partagé par un "camarade" sur l'ENT. Soudain, ton ordinateur ralentit, et un message demande une rançon pour débloquer tes fichiers de devoirs. Tes notes et infos personnelles sont encryptées !</p>
+    <p>Ce scénario est basé sur des actualités comme l'enquête 2025 du ministère de l'Éducation nationale, où 42% des écoles françaises ont subi des cyberattaques, souvent via des fichiers suspects. Le programme techno 2024 met l'accent sur les bonnes pratiques pour sécuriser les comptes, aligné sur le Cybermois d'octobre 2025 qui sensibilise les élèves.</p>
+    <p><strong>Risques impliqués :</strong> Perte d'accès à tes données, vol d'identité, ou propagation à l'école entière via réseaux partagés.</p>
+    <p><strong>Bonne attitude à avoir :</strong> Utilise des mots de passe forts, active 2FA sur Pronote, mets à jour ton antivirus, et sauvegarde sur cloud scolaire. N'ouvre pas de fichiers suspects – vérifie toujours la source !</p>
+    <p>Protéger tes données aujourd'hui te prépare à un monde où la cybersécurité est essentielle pour tous les métiers numériques.</p>
+
+    <h3>4.b — Associer « attaque → solution » (6 paires) (4 points)</h3>
+    <div style="background:linear-gradient(135deg, #1e3c72, #2a5298); padding:20px; border-radius:12px; margin:16px 0; box-shadow:0 8px 32px rgba(30,60,114,0.4);">
+      <h4 style="color:#fff; text-align:center; margin-bottom:16px;">🎮 Associer attaques & solutions !</h4>
+      <p style="color:#e0e7ff; text-align:center; font-size:0.95rem;">Glisse les solutions aux bonnes attaques. Survole pour infos !</p>
+      
+      <div class="pool" id="pool4b" style="justify-content:center; gap:12px; margin:20px 0;">
+        <span class="draggable tooltip" data-type="sol_2fa" data-tip="🛡️ Activer 2FA : Ajoute un code pour protéger ton compte !">Activer 2FA</span>
+        <span class="draggable tooltip" data-type="sol_backup" data-tip="💾 Sauvegarder : Copie tes fichiers pour les récupérer si perdu !">Sauvegarder</span>
+        <span class="draggable tooltip" data-type="sol_majs" data-tip="🔄 Mettre à jour : Corrige les failles de tes apps !">Mettre à jour</span>
+        <span class="draggable tooltip" data-type="sol_av" data-tip="🦠 Antivirus : Détecte et supprime les virus !">Antivirus</span>
+        <span class="draggable tooltip" data-type="sol_vpn" data-tip="🌐 VPN : Masque ton IP et chiffre ta connexion !">VPN</span>
+        <span class="draggable tooltip" data-type="sol_pass" data-tip="🔑 Mot de passe fort : Long et complexe pour résister aux attaques !">Mot de passe fort</span>
+      </div>
+
+      <div class="pool" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div style="background:#F57C00;color:white;padding:16px;border-radius:8px;">
+          <h4>Phishing</h4>
+          <div id="zSolPh" class="dropzone" data-accept="sol_2fa"></div>
+        </div>
+        <div style="background:#795548;color:white;padding:16px;border-radius:8px;">
+          <h4>Rançongiciel</h4>
+          <div id="zSolRa" class="dropzone" data-accept="sol_backup"></div>
+        </div>
+        <div style="background:#607D8B;color:white;padding:16px;border-radius:8px;">
+          <h4>Faille</h4>
+          <div id="zSolMj" class="dropzone" data-accept="sol_majs"></div>
+        </div>
+        <div style="background:#4CAF50;color:white;padding:16px;border-radius:8px;">
+          <h4>Malware</h4>
+          <div id="zSolMal" class="dropzone" data-accept="sol_av"></div>
+        </div>
+        <div style="background:#2196F3;color:white;padding:16px;border-radius:8px;">
+          <h4>Suivi IP</h4>
+          <div id="zSolIP" class="dropzone" data-accept="sol_vpn"></div>
+        </div>
+        <div style="background:#FF9800;color:white;padding:16px;border-radius:8px;">
+          <h4>Brute force</h4>
+          <div id="zSolBr" class="dropzone" data-accept="sol_pass"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>❓ Question (non noté)</h3>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q4why"></textarea>
+
+    <h3>🔒 <strong>Quiz Protection Données (7 questions)</strong></h3>
+    <p><strong>Q1 :</strong> Solution contre brute force :</p>
+    <label><input type="radio" name="q4a" value="1"> Mot de passe fort</label> •
+    <label><input type="radio" name="q4a" value="0"> Sauvegarde</label><br><br>
+    
+    <p><strong>Q2 :</strong> 2FA ajoute :</p>
+    <label><input type="radio" name="q4b" value="1"> Une seconde preuve</label> •
+    <label><input type="radio" name="q4b" value="0"> Un mot de passe faible</label><br><br>
+    
+    <p><strong>Q3 :</strong> Mises à jour corrigent :</p>
+    <label><input type="radio" name="q4c" value="1"> Failles de sécurité</label> •
+    <label><input type="radio" name="q4c" value="0"> Rien</label><br><br>
+    
+    <p><strong>Q4 :</strong> Sauvegarde protège contre :</p>
+    <label><input type="radio" name="q4d" value="1"> Ransomware</label> •
+    <label><input type="radio" name="q4d" value="0"> Phishing</label><br><br>
+    
+    <p><strong>Q5 :</strong> Antivirus détecte :</p>
+    <label><input type="radio" name="q4e" value="1"> Malware</label> •
+    <label><input type="radio" name="q4e" value="0"> Mises à jour</label><br><br>
+    
+    <p><strong>Q6 :</strong> VPN masque :</p>
+    <label><input type="radio" name="q4f" value="1"> Adresse IP</label> •
+    <label><input type="radio" name="q4f" value="0"> Mot de passe</label><br><br>
+    
+    <p><strong>Q7 :</strong> Prudence avec liens évite :</p>
+    <label><input type="radio" name="q4g" value="1"> Phishing</label> •
+    <label><input type="radio" name="q4g" value="0"> Sauvegarde</label>
+
+    <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help4').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr4').style.display='flex'">🔑 Correction</button>
+      <button class="btn" id="chk4" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
+      <span id="res4" class="badge"></span>
+    </div>
+  </div>
+
+  <div id="help4" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Aide pour la section 4</h3>
+      <p>Phishing : 2FA</p>
+      <p>Rançongiciel : Sauvegarde</p>
+      <p>Faille : Mises à jour</p>
+      <p>Malware : Antivirus</p>
+      <p>Suivi IP : VPN</p>
+      <p>Brute force : Mot de passe fort</p>
+    </div>
+  </div>
+
+  <div id="corr4" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Correction pour la section 4</h3>
+      <p>Phishing : Activer 2FA</p>
+      <p>Rançongiciel : Sauvegarder</p>
+      <p>Faille corrigée : Mettre à jour</p>
+      <p>Malware : Installer antivirus</p>
+      <p>Suivi IP : Utiliser VPN</p>
+      <p>Brute force : Mot de passe fort</p>
+      <p>Q1: Mot de passe fort, Q2: Une seconde preuve, Q3: Failles de sécurité, Q4: Ransomware, Q5: Malware, Q6: Adresse IP, Q7: Phishing</p>
+    </div>
+  </div>
+
+  <!-- 5. Limiter ses traces en ligne -->
+  <div class="section panel">
+    <h2>🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="s5">0</span>/10</span></h2>
+    <h3>📰 Mise en situation : Le suivi invisible sur les réseaux</h3>
+    <p>Imagine que tu postes une photo de ta sortie au collège sur Instagram. Quelques jours plus tard, tu reçois des pubs pour des magasins près de chez toi, et un inconnu commente avec des infos sur ta vie privée. Tes traces en ligne ont été suivies !</p>
+    <p>Inspiré d'actualités comme le Cybermois 2025, où 60% des jeunes français sont traqués via cookies sans le savoir. Le programme techno 2024 enseigne la gestion des traces pour éviter le profilage, comme dans les cas d'espionnage via géolocalisation rapportés en 2025.</p>
+    <p><strong>Risques impliqués :</strong> Profilage publicitaire, harcèlement, ou vol d'identité via accumulations de traces (cookies, géo).</p>
+    <p><strong>Bonne attitude à avoir :</strong> Gère tes cookies, désactive géo inutile, utilise navigation privée, et un VPN. Pense avant de poster – ta e-réputation dépend de tes traces !</p>
+    <p>Limiter tes traces te donne le contrôle de ta vie numérique dès le collège.</p>
+
+    <h3>5.a — QCM (VPN / Proxy / Nav privée - 6 options) (3 points)</h3>
+    <label><input type="checkbox" name="vp" value="1" data-good="1"> Un VPN chiffre la connexion et masque l’adresse IP.</label><br/>
+    <label><input type="checkbox" name="vp" value="0"> La navigation privée rend anonyme vis‑à‑vis du FAI.</label><br/>
+    <label><input type="checkbox" name="vp" value="0"> Un proxy chiffre toujours les données.</label><br/>
+    <label><input type="checkbox" name="vp" value="1" data-good="1"> Bloquer cookies limite suivi publicitaire.</label><br/>
+    <label><input type="checkbox" name="vp" value="0"> Géolocalisation est toujours sûre.</label><br/>
+    <label><input type="checkbox" name="vp" value="1" data-good="1"> Se déconnecter efface les sessions actives.</label>
+
+    <h3>5.b — Stratégies (1 point)</h3>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q5b"></textarea>
+
+    <h3>🔒 <strong>Quiz Traces en Ligne (6 questions)</strong></h3>
+    <p><strong>Q1 :</strong> Cookies servent à :</p>
+    <label><input type="radio" name="q5a" value="1"> Suivre navigation</label> •
+    <label><input type="radio" name="q5a" value="0"> Chiffrer données</label><br><br>
+    
+    <p><strong>Q2 :</strong> Navigation privée cache :</p>
+    <label><input type="radio" name="q5b" value="1"> Historique local</label> •
+    <label><input type="radio" name="q5b" value="0"> IP au FAI</label><br><br>
+    
+    <p><strong>Q3 :</strong> VPN masque :</p>
+    <label><input type="radio" name="q5c" value="1"> IP</label> •
+    <label><input type="radio" name="q5c" value="0"> Cookies</label><br><br>
+    
+    <p><strong>Q4 :</strong> Géolocalisation révèle :</p>
+    <label><input type="radio" name="q5d" value="1"> Position</label> •
+    <label><input type="radio" name="q5d" value="0"> Mot de passe</label><br><br>
+    
+    <p><strong>Q5 :</strong> Déconnexion évite :</p>
+    <label><input type="radio" name="q5e" value="1"> Sessions ouvertes</label> •
+    <label><input type="radio" name="q5e" value="0"> Mises à jour</label><br><br>
+    
+    <p><strong>Q6 :</strong> Publier infos inutiles augmente :</p>
+    <label><input type="radio" name="q5f" value="1"> Traces</label> •
+    <label><input type="radio" name="q5f" value="0"> Sécurité</label><br><br>
+    
+    <p><strong>Q7 :</strong> Proxy est comme :</p>
+    <label><input type="radio" name="q5g" value="1"> Intermédiaire</label> •
+    <label><input type="radio" name="q5g" value="0"> Chiffrement total</label>
+
+    <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help5').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr5').style.display='flex'">🔑 Correction</button>
+      <button class="btn" id="chk5" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
+      <span id="res5" class="badge"></span>
+    </div>
+  </div>
+
+  <div id="help5" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Aide pour la section 5</h3>
+      <p>Cochez : VPN, Bloquer cookies, Déconnexion.</p>
+      <p>Quiz : Pensez à ce qui réduit la visibilité en ligne.</p>
+    </div>
+  </div>
+
+  <div id="corr5" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Correction pour la section 5</h3>
+      <p>QCM : VPN, Bloquer cookies, Déconnexion.</p>
+      <p>Q1: Suivre navigation, Q2: Historique local, Q3: IP, Q4: Position, Q5: Sessions ouvertes, Q6: Traces, Q7: Intermédiaire.</p>
+    </div>
+  </div>
+
+  <!-- 6. Propriété intellectuelle & e-réputation -->
+  <div class="section panel">
+    <h2>⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="s6">0</span>/15</span></h2>
+    <h3>📰 Mise en situation : La photo virale au collège</h3>
+    <p>Imagine que tu partages une photo drôle d'un camarade sur Snapchat sans son accord. Elle devient virale, et il subit du harcèlement. Ton compte est signalé, affectant ta réputation scolaire.</p>
+    <p>Basé sur des cas comme en 2025, où des élèves français ont été sanctionnés pour violations de droit à l'image, aligné sur le programme techno 2024 qui enseigne le respect des licences Creative Commons pour protéger les œuvres.</p>
+    <p><strong>Risques impliqués :</strong> Sanctions légales, dommages à l'e-réputation, ou conflits avec amis.</p>
+    <p><strong>Bonne attitude à avoir :</strong> Demande toujours l'accord pour photos, cite les sources pour œuvres, utilise Creative Commons. Construis une e-réputation positive en postant responsablement.</p>
+    <p>Cela te prépare à un monde où ta présence en ligne influence ton avenir professionnel.</p>
+
+    <h3>6.a — Droit à l'image (Vrai/Faux) (2 points)</h3>
+    <div class="qcm-block" style="background:#0a2547;border-radius:8px;padding:10px;border-left:5px solid var(--accent);margin-bottom:10px;">
+      <label><input type="radio" name="img1" value="1"> Publier la photo d’un camarade sans autorisation est autorisé si c’est “pour rire”.</label><br/>
+      <label><input type="radio" name="img1" value="2" data-correct="1"> Il faut une autorisation claire (ou celle des responsables légaux pour un mineur) avant diffusion.</label>
+    </div>
+
+    <h3>6.b — Respecter la propriété intellectuelle (6 paires) (2 points)</h3>
+    <div style="background:linear-gradient(135deg, #1e3c72, #2a5298); padding:20px; border-radius:12px; margin:16px 0; box-shadow:0 8px 32px rgba(30,60,114,0.4);">
+      <h4 style="color:#fff; text-align:center; margin-bottom:16px;">🎮 Associer propriété intellectuelle !</h4>
+      <p style="color:#e0e7ff; text-align:center; font-size:0.95rem;">Glisse les actions aux bons cas. Survole pour infos !</p>
+      
+      <div class="pool" id="pool6b" style="justify-content:center; gap:12px; margin:20px 0;">
+        <span class="draggable tooltip" data-type="cc" data-tip="📝 Citer licence : Indique l'auteur et le type CC !">Citer licence</span>
+        <span class="draggable tooltip" data-type="ask" data-tip="🙋 Demander autorisation : Toujours demander à l'auteur !">Demander autorisation</span>
+        <span class="draggable tooltip" data-type="np" data-tip="🚫 Ne pas publier : Si pas d'accord, n'utilise pas !">Ne pas publier</span>
+        <span class="draggable tooltip" data-type="ccnc" data-tip="💰 Licence CC-NC : Non commercial, pas pour vendre !">CC-NC</span>
+        <span class="draggable tooltip" data-type="askim" data-tip="📸 Autorisation image : Pour photos de personnes !">Autorisation image</span>
+        <span class="draggable tooltip" data-type="npcc" data-tip="🛑 Pas de copie sans licence : Respecte le copyright !">Pas de copie</span>
+      </div>
+
+      <div class="pool" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+        <div style="background:#4CAF50;color:white;padding:16px;border-radius:8px;">
+          <h4>Image en ligne</h4>
+          <div id="zPI1" class="dropzone" data-accept="cc"></div>
+        </div>
+        <div style="background:#2196F3;color:white;padding:16px;border-radius:8px;">
+          <h4>Filmer camarade</h4>
+          <div id="zPI2" class="dropzone" data-accept="ask"></div>
+        </div>
+        <div style="background:#F57C00;color:white;padding:16px;border-radius:8px;">
+          <h4>Sans accord</h4>
+          <div id="zPI3" class="dropzone" data-accept="np"></div>
+        </div>
+        <div style="background:#795548;color:white;padding:16px;border-radius:8px;">
+          <h4>Image non commercial</h4>
+          <div id="zPI4" class="dropzone" data-accept="ccnc"></div>
+        </div>
+        <div style="background:#607D8B;color:white;padding:16px;border-radius:8px;">
+          <h4>Droit à l'image</h4>
+          <div id="zPI5" class="dropzone" data-accept="askim"></div>
+        </div>
+        <div style="background:#FF9800;color:white;padding:16px;border-radius:8px;">
+          <h4>Sans licence</h4>
+          <div id="zPI6" class="dropzone" data-accept="npcc"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>🔒 <strong>Quiz Propriété Intellectuelle (7 questions)</strong></h3>
+    <p><strong>Q1 :</strong> Droit d'auteur protège :</p>
+    <label><input type="radio" name="q6a" value="1"> Œuvres</label> •
+    <label><input type="radio" name="q6a" value="0"> Objets</label><br><br>
+    
+    <p><strong>Q2 :</strong> Creative Commons permet :</p>
+    <label><input type="radio" name="q6b" value="1"> Partage avec conditions</label> •
+    <label><input type="radio" name="q6b" value="0"> Copie illimitée</label><br><br>
+    
+    <p><strong>Q3 :</strong> Publier photo sans accord :</p>
+    <label><input type="radio" name="q6c" value="1"> Interdit</label> •
+    <label><input type="radio" name="q6c" value="0"> Autorisé</label><br><br>
+    
+    <p><strong>Q4 :</strong> E-réputation dépend de :</p>
+    <label><input type="radio" name="q6d" value="1"> Tes posts</label> •
+    <label><input type="radio" name="q6d" value="0"> Seulement amis</label><br><br>
+    
+    <p><strong>Q5 :</strong> Licence CC-BY exige :</p>
+    <label><input type="radio" name="q6e" value="1"> Citation</label> •
+    <label><input type="radio" name="q6e" value="0"> Rien</label><br><br>
+    
+    <p><strong>Q6 :</strong> Pour image d'autrui :</p>
+    <label><input type="radio" name="q6f" value="1"> Demander autorisation</label> •
+    <label><input type="radio" name="q6f" value="0"> Publier directement</label><br><br>
+    
+    <p><strong>Q7 :</strong> Sans accord :</p>
+    <label><input type="radio" name="q6g" value="1"> Ne pas publier</label> •
+    <label><input type="radio" name="q6g" value="0"> Partager</label>
+
+    <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help6').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr6').style.display='flex'">🔑 Correction</button>
+      <button class="btn" id="chk6" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
+      <span id="res6" class="badge"></span>
+    </div>
+  </div>
+
+  <div id="help6" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Aide pour la section 6</h3>
+      <p>Image en ligne : Citer licence</p>
+      <p>Filmer camarade : Demander autorisation</p>
+      <p>Sans accord : Ne pas publier</p>
+      <p>Jeu : Survole pour définitions. Commercial : CC0, CC BY, CC BY-SA, CC BY-ND. Modification : CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA. Attribution : CC BY et combinaisons. ShareAlike : CC BY-SA, CC BY-NC-SA.</p>
+    </div>
+  </div>
+
+  <div id="corr6" class="modal">
+    <div class="box">
+      <span class="close" onclick="this.parentElement.parentElement.style.display='none'">×</span>
+      <h3>Correction pour la section 6</h3>
+      <p>Image en ligne : Citer licence</p>
+      <p>Filmer camarade : Demander autorisation</p>
+      <p>Sans accord : Ne pas publier</p>
+      <p>Q1: Œuvres, Q2: Partage conditions, Q3: Interdit, Q4: Tes posts, Q5: Citation, Q6: Autorisation, Q7: Ne pas publier.</p>
+      <p>Jeu : Commercial : CC0, CC BY, CC BY-SA, CC BY-ND. Modification : CC0, CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA. Attribution : CC BY, CC BY-SA, CC BY-ND, CC BY-NC, CC BY-NC-SA, CC BY-NC-ND. ShareAlike : CC BY-SA, CC BY-NC-SA.</p>
+    </div>
+  </div>
+
+  <!-- Métacognition & Synthèse -->
+  <div class="section panel">
+    <h2>🧠 Métacognition (non notée)</h2>
+    <div class="response-label">Ce que j’ai appris</div><textarea id="meta1"></textarea>
+    <div class="response-label">Ce que je dois encore comprendre / questions</div><textarea id="meta2"></textarea>
+    <div class="response-label">Ma stratégie pour la prochaine séance</div><textarea id="meta3"></textarea>
+  </div>
+
+  <div class="section panel">
+    <h2>📄 Synthèse & Export</h2>
+    <h3>Synthèse de la séquence</h3>
+    <p>Cette séquence sur la cybersécurité aligne parfaitement avec le programme de technologie au collège de 2024, qui met l'accent sur la protection des données, la sécurisation des comptes et la gestion des traces numériques au cycle 4. Inspirée du socle commun (domaine 2 : comportements responsables) et du CRCN (S1.1/S2.2), elle prépare les élèves à identifier risques et bonnes pratiques, classer données, et programmer des tests URL.</p>
+    <p>En 2025, l'actualité souligne l'urgence : le Cybermois sensibilise aux cyberattaques en éducation, avec une enquête montrant 42% des écoles françaises touchées. Des incidents comme les fuites de données sensibles en avril 2025 (Algérie-Maroc) ou les perturbations DDoS aux aéroports (septembre 2025) rappellent que la vigilance est clé. Retenez : utilisez 2FA, mots de passe forts, VPN ; respectez droits d'auteur et image ; limitez traces pour une e-réputation solide. Ces compétences sont essentielles pour un monde numérique sûr !</p>
+    <div class="note-bar">
+      <span>🏁 Total actuel : <strong id="scoreTotal2">0</strong>/65</span>
+      <div style="flex:1;max-width:420px">
+        <div class="progress" aria-label="Progression"><div id="prog" style="width:0%"></div></div>
+      </div>
+      <button class="btn" id="saveBtn">💾 Sauvegarder</button>
+      <button class="btn" id="loadBtn">📥 Recharger</button>
+      <button class="btn" id="btnPDF2">📄 PDF</button>
+    </div>
+  </div>
+
+</div>
+<div id="endScreen" class="modal">
+  <div class="box">
+    <h2>🎉 Félicitations !</h2>
+    <p>Tu maîtrises désormais les bases de la cybersécurité. 👏</p>
+    <button class="btn" onclick="this.parentElement.parentElement.style.display='none'">↩ Revenir</button>
+  </div>
+</div>
+
+<script>
+// ---- Terminal intro text ----
+const introLines = [
+  "Bienvenue dans la Séquence Cybersécurité du Collège Joseph Lagrosillière – Encadrée par M. GOUACIDE-JEAN-ERNEST.",
+  "Explore, code et protège tes données ! 💻🔒"
+];
+(function typeIntro(){
+  const el=document.getElementById('terminalIntro');
+  let i=0,j=0;
+  function step(){
+    if(i<introLines.length){
+      const line=introLines[i];
+      if(j<=line.length){
+        el.innerHTML = el.innerHTML.slice(0, -1) + line[j] + '<span class="cursor">&nbsp;</span>';
+        j++; setTimeout(step, 50);
+      }else{
+        el.innerHTML += '<br/>'; i++; j=0; setTimeout(step, 300);
+      }
+    }else{
+      el.innerHTML += "<br/><span style='color:#8ad4ff'>Prêt ? Fais défiler pour commencer.</span>";
+    }
+  }
+  step();
+})();
+
+// ---- WebAudio ambient (≤60s) ----
+let _ctx, _osc = [], _g;
+function startAmbient(){
+  if(!_ctx){ _ctx = new (window.AudioContext||window.webkitAudioContext)(); }
+  if(_ctx.state === 'suspended'){ _ctx.resume(); }
+  stopAmbient();
+  _g = _ctx.createGain(); _g.gain.value = 0.05; _g.connect(_ctx.destination);
+  const now=_ctx.currentTime;
+  const freqs=[196, 261.63, 329.63]; // G3, C4, E4 pad
+  freqs.forEach((f,k)=>{
+    const o = _ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+    const g = _ctx.createGain(); g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.08/(k+1), now+2);
+    g.gain.exponentialRampToValueAtTime(0.0001, now+58);
+    o.connect(g).connect(_g); o.start(); _osc.push(o);
+  });
+  // stop after 60s
+  setTimeout(stopAmbient, 60000);
+}
+function stopAmbient(){
+  if(_osc.length){ _osc.forEach(o=>{try{o.stop();}catch(_){} }); _osc=[]; }
+  if(_g){ try{_g.disconnect();}catch(_){} _g=null; }
+}
+document.getElementById('btnSound').addEventListener('click', startAmbient);
+document.getElementById('btnStop').addEventListener('click', stopAmbient);
+
+// ---- Chrono global ----
+(function(){const el=document.getElementById('chrono');let s=0;setInterval(()=>{s++;const m=('0'+Math.floor(s/60)).slice(-2),ss=('0'+(s%60)).slice(-2);el.textContent=m+':'+ss;},1000);})();
+
+// ---- PDF ----
+document.getElementById('btnPDF')?.addEventListener('click',()=>window.print());
+document.getElementById('btnPDF2')?.addEventListener('click',()=>window.print());
+
+  
+ window.addEventListener('load',()=>{
+  setTimeout(()=>{ try{ startAmbient(); }catch{} },3000);
+});
+ 
+ function showEnd() {
+  document.getElementById('endScreen').style.display = 'flex';
+}
+ 
+// ---- Drag & Drop generic ----
+function setupDnD(doc){
+  const draggables=doc.querySelectorAll('.draggable');
+  draggables.forEach(el=>{
+    el.addEventListener('dragstart',e=>{
+      e.dataTransfer.setData('type',el.dataset.type);
+      e.dataTransfer.setData('text',el.textContent);
+    });
+  });
+  const zones=doc.querySelectorAll('.dropzone');
+  zones.forEach(z=>{
+    z.addEventListener('dragover',e=>{
+      e.preventDefault();
+      z.classList.add('drop-target');
+    });
+    z.addEventListener('dragleave',()=>z.classList.remove('drop-target'));
+    z.addEventListener('drop',e=>{
+      e.preventDefault();
+      z.classList.remove('drop-target');
+      const text=e.dataTransfer.getData('text');
+      const type=e.dataTransfer.getData('type');
+      const el=document.createElement('span');
+      el.className='draggable';
+      el.dataset.type=type;
+      el.textContent=text;
+      z.appendChild(el);
+      z.setAttribute('data-filled','1');
+    });
+  });
+}
+
+  setupDnD(document);
+
+// ---- Scoring weights (Total /65) ----
+const W={ s1:14, s2:8, s3:11, s4:11, s5:10, s6:15 };
+
+// ---- Section 1 scoring ----
+function score1(){
+  let pts=0;
+  // menace->def (6 items, 4 pts)
+  const map=[['zPh','phish'],['zRa','ransom'],['zTr','trojan'],['zMal','malware'],['zDDo','ddos'],['zKey','keylog']];
+  let ok=0; map.forEach(([id,t])=>{const z=document.getElementById(id); const d=z.querySelector('.draggable'); if(d && d.dataset.type===t) ok++; });
+  pts += Math.round((ok/6)*4);
+  // micro question phishing (1 pt)
+  const mq = document.querySelector('input[name="q1p"][value="1"]')?.checked; if(mq) pts += 1;
+  // tri risques vs bonnes pratiques (3 pts)
+  let ok2=0, tot2=0;

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Séquence 4e – Cybersécurité et protection des données – V5 (Cyber Immersive)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0b1f3a; --bg2:#091d34; --panel:#10294f; --line:#1f3f77;
+    --text:#eaf1ff; --muted:#bfd3ff; --accent:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --vio:#c68ef2;
+    --glow:0 0 12px rgba(97,218,251,.6);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  h1,h2,h3{margin:0 0 10px}
+  h1{color:#82b3ff;text-align:center;font-size:2rem;letter-spacing:.3px}
+  h2{color:var(--vio);font-size:1.3rem}
+  h3{color:var(--muted);font-weight:600}
+  .container{max-width:1100px;margin:0 auto;padding:14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;box-shadow:var(--glow)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+  .btn:hover{background:#2966b1}
+  .btn-secondary{background:#173a66}
+  .tag{display:inline-block;background:#14335f;border:1px solid var(--line);padding:4px 8px;border-radius:999px;margin:2px 4px}
+  code,pre{font-family:'Fira Code',monospace}
+  pre{background:#0b2349;border:1px solid var(--line);border-radius:12px;padding:12px;overflow:auto}
+  .tiny{font-size:.92rem;color:var(--muted)}
+  .tooltip[data-tip]{position:relative}
+  .tooltip[data-tip]:hover::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 8px);background:#062142;color:#dff3ff;border:1px solid #2d65a3;border-radius:8px;padding:10px;min-width:240px;max-width:420px;box-shadow:var(--glow);z-index:5;white-space:normal;line-height:1.3}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .kbd{border:1px solid var(--line);border-radius:6px;background:#0e2a52;padding:.1rem .35rem}
+  .badge{display:inline-block;background:#11407a;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+  .validated::after{content:' ✔ Validé';color:var(--ok);margin-left:6px}
+  .answer{display:none;margin-top:8px;padding:10px;background:#092244;border-left:4px solid var(--accent);border-radius:8px}
+  .answer.visible{display:block}
+  .note-bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;background:#0a2547;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px}
+
+  /* Intro neon + terminal typing */
+  .intro{position:relative;overflow:hidden;padding:36px 14px 10px;border-bottom:1px solid var(--line)}
+  .neon{ text-align:center;font-size:1.8rem;color:#a7c8ff;text-shadow:0 0 8px rgba(130,179,255,.8)}
+  .terminal{font-family:'Fira Code',monospace;text-align:center;margin-top:4px;white-space:nowrap;overflow:hidden;border-right:2px solid #7bd1ff;width:0;animation:typing 4.2s steps(60,end) forwards,blink .9s step-end infinite}
+  @keyframes typing{from{width:0} to{width:100%}}
+  @keyframes blink{50%{border-color:transparent}}
+
+  /* Print */
+  @media print {
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    a::after{content:' (' attr(href) ')';font-size:.9em}
+    .audio-ctl {display:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- INTRO + MUSIQUE -->
+  <section class="intro">
+    <div class="neon">💻 Bienvenue dans la cybersécurité — Séquence 4e 🔐</div>
+    <div class="terminal">Protéger ses données • Comprendre les risques • Devenir citoyen numérique éclairé</div>
+    <div class="toolbar audio-ctl">
+      <button class="btn" id="audioToggle">🔈 Son activé</button>
+    </div>
+  </section>
+
+  <!-- CHATGPT -->
+  <section class="panel">
+    <h2>🧭 Utiliser ChatGPT pour approfondir</h2>
+    <p>Pour expliquer une notion (ex. <em>ransomware</em>, <em>phishing</em>, <em>VPN</em>), ouvre ChatGPT dans un <strong>nouvel onglet</strong>, choisis <em>« Étudier »</em> puis <em>« Explique-moi un sujet »</em>.</p>
+    <p><a class="tag" href="https://chat.openai.com/?model=gpt-5" target="_blank">🔗 Ouvrir ChatGPT</a></p>
+  </section>
+
+  <!-- GLOSSAIRE -->
+  <section class="panel">
+    <h2>📖 Glossaire des sigles (FR • EN)</h2>
+    <p class="tiny">Survole pour une définition courte.</p>
+    <div>
+      <span class="tag tooltip" data-tip="Virtual Private Network • Chiffre la connexion et masque l’IP.">VPN</span>
+      <span class="tag tooltip" data-tip="HyperText Transfer Protocol Secure • Version chiffrée du protocole HTTP.">HTTPS</span>
+      <span class="tag tooltip" data-tip="Distributed Denial of Service • Saturation pour rendre un service indisponible.">DDoS</span>
+      <span class="tag tooltip" data-tip="Man-In-The-Middle • Interception d’échanges entre deux parties.">MITM</span>
+    </div>
+  </section>
+
+  <!-- 1.a -->
+  <section class="panel" id="ex1a">
+    <h2>1.a – Identifier risques et bonnes pratiques</h2>
+    <p>Survole chaque étiquette pour une définition claire et un exemple.</p>
+    <div class="grid-2">
+      <div>
+        <h3>🛑 Risques / attaques</h3>
+        <div>
+          <span class="tag tooltip" data-tip="🎣 Phishing (hameçonnage) : message piégé qui imite un service (ex : faux impots.gouv).">Phishing</span>
+          <span class="tag tooltip" data-tip="🧨 Ransomware (rançongiciel) : chiffre vos fichiers & demande une rançon (ex : WannaCry, hôpitaux).">Ransomware</span>
+          <span class="tag tooltip" data-tip="🌐 MITM (homme du milieu) : intercepte/modifie les échanges sur un réseau.">MITM</span>
+          <span class="tag tooltip" data-tip="⚡ DDoS : inonde un serveur de requêtes pour le faire tomber.">DDoS</span>
+          <span class="tag tooltip" data-tip="🐛 Malware : logiciel malveillant (virus/spyware).">Malware</span>
+        </div>
+      </div>
+      <div>
+        <h3>🛡️ Bonnes pratiques</h3>
+        <div>
+          <span class="tag tooltip" data-tip="Mots de passe longs et uniques pour chaque site.">Mots de passe forts</span>
+          <span class="tag tooltip" data-tip="2FA = deux preuves d’identité (mot de passe + code/app/clé).">2FA</span>
+          <span class="tag tooltip" data-tip="Mettre à jour système et applications pour corriger des failles.">Mises à jour</span>
+          <span class="tag tooltip" data-tip="Sauvegardes régulières (cloud + clé USB) pour restaurer après incident.">Sauvegardes</span>
+          <span class="tag tooltip" data-tip="Vérifier l’URL, ne pas cliquer sur des liens suspects.">Esprit critique</span>
+        </div>
+        <div class="panel" style="margin-top:8px;background:#0b274f;border-left:4px solid var(--accent)">
+          💡 Astuce : crée une <em>phrase de passe</em> + active la <strong>2FA</strong> quand c’est possible.<br/>
+          Exemples : <code>MonChienAdoreLesCroquettes2025!</code> • <code>JeBoisDuCaféLeMatinÀ7h</code> • <code>VacancesEnMartiniqueEn2026!</code>
+          <div style="margin-top:8px">
+            <button class="btn btn-secondary" id="help2faBtn">ℹ️ Comprendre le 2FA</button>
+            <span id="chk2fa" class="badge">2FA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.a -->
+  <section class="panel" id="py">
+    <h2>2.a – Programme Python</h2>
+    <p><strong>Compilateur en ligne recommandé :</strong> 🌐 <a href="https://www.online-python.com/" target="_blank">Online Python</a></p>
+    <div class="panel" style="background:#0a2547">
+      🔍 <strong>Qu’est-ce qu’une URL ?</strong> C’est l’<em>adresse</em> d’une ressource sur Internet (ex. <code>https://www.education.gouv.fr</code>).<br/>
+      🔒 <strong>HTTPS</strong> = chiffré et sécurisé.  ⚠️ <strong>HTTP</strong> = non chiffré, donc vulnérable.
+    </div>
+
+    <h3>🧠 Synthèse : Touche Tab &amp; Indentation en Python</h3>
+    <p>En Python, l’<strong>indentation</strong> (décalage vers la droite) est <u>obligatoire</u> pour délimiter les blocs (<code>if</code>, <code>for</code>, <code>def</code>...). La touche <span class="kbd">Tab</span> insère souvent <strong>4 espaces</strong>.</p>
+
+    <!-- Image de la touche TAB : place le fichier dans /images/tab_key.png de ton dépôt -->
+    <p class="tiny">📍 Sur un clavier standard, la touche <strong>Tab</strong> se situe <em>au-dessus</em> de <strong>Caps Lock</strong> et <em>à gauche</em> de la touche <strong>A</strong> (AZERTY).</p>
+    <p style="text-align:center"><img src="images/tab_key.png" alt="Touche Tab" style="max-width:260px;border-radius:8px"/></p>
+
+    <pre><code># Vérifie si l’URL est sécurisée
+url = "http://example.com"  # modifiez cette variable pour tester
+
+if url.startswith("https://"):
+    print("Connexion sécurisée ✅ (HTTPS)")
+else:
+    print("Connexion non sécurisée ⚠️ (HTTP)")
+</code></pre>
+
+    <div class="grid-2">
+      <div>
+        <h3>⚠️ Erreur fréquente : IndentationError</h3>
+        <p class="tiny">Python attend une indentation après <code>if</code>/<code>for</code>/etc. Sans cela → <em>IndentationError</em>.</p>
+        <!-- Tu peux insérer ici ta capture : <img src="images/indentation_error.png" style="max-width:100%;border-radius:10px" alt="IndentationError"> -->
+      </div>
+      <div>
+        <h3>✅ Exécution OK</h3>
+        <p class="tiny">Quand tout est correct, le compilateur affiche :</p>
+        <!-- Image générée en SVG (Return Code 0) -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" style="max-width:100%;border-radius:10px">
+          <rect width="600" height="200" fill="#0b1f3a"/>
+          <text x="300" y="105" text-anchor="middle" font-family="Fira Code, monospace" font-size="22" fill="#81fba1">** Process exited - Return Code: 0 **</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.a -->
+  <section class="panel" id="data3a">
+    <h2>3.a – Classer les données</h2>
+    <div class="toolbar">
+      <button class="btn btn-secondary" id="helpId">🆘 Aide Identité</button>
+      <button class="btn btn-secondary" id="helpContact">🆘 Aide Contact</button>
+      <button class="btn btn-secondary" id="helpSens">🆘 Aide Données sensibles</button>
+    </div>
+    <p class="tiny">Objectif : comprendre <em>quelle donnée va dans quelle catégorie</em> (exemples dans les aides).</p>
+  </section>
+
+  <!-- 3.b -->
+  <section class="panel" id="why3b">
+    <h2>3.b – Pourquoi sont-elles sensibles ?</h2>
+    <p>Quelques cas réels pour comprendre l’impact :</p>
+    <ul>
+      <li>💳 <strong>Equifax (2017)</strong> : fuite massive d’identités (≈147M).</li>
+      <li>🏥 <strong>CHU de Brest (2023)</strong> : piratage et divulgation de données médicales.</li>
+      <li>📱 <strong>Facebook (2021)</strong> : 533M de n° de téléphone publiés.</li>
+    </ul>
+  </section>
+
+  <!-- Différence -->
+  <section class="panel" id="diff">
+    <h2>❓ Différence : ransomware vs phishing</h2>
+    <p>Besoin d’un rappel ? <button class="btn btn-secondary" id="btnRecall">ℹ️ Définitions du 1.a</button></p>
+  </section>
+
+  <!-- E-réputation -->
+  <section class="panel" id="erep">
+    <h2>6.b – E-réputation</h2>
+    <p>Des affaires récentes montrent que <strong>publier sans réfléchir</strong> peut détruire une réputation : diffusion d’images privées, deepfakes d’enseignants, anciens posts ressortis des années après…</p>
+    <div class="panel" style="background:#0a2547">⚠️ <strong>Pense avant de poster :</strong> ce que tu publies aujourd’hui peut réapparaître demain (études, emploi, amitiés).</div>
+  </section>
+
+  <!-- Export -->
+  <section class="panel">
+    <h2>Récapitulatif & Export</h2>
+    <div class="note-bar">
+      <span>Note automatique : <strong id="note20">0</strong>/20</span>
+      <button class="btn" id="btnPrint">📄 Exporter en PDF</button>
+    </div>
+  </section>
+</div>
+
+<!-- MODALES -->
+<div class="modal" id="modal2fa" style="position:fixed;inset:0;background:rgba(0,10,20,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50">
+  <div class="box" style="background:#0c2346;border:1px solid #2a5796;border-radius:12px;max-width:760px;width:100%;padding:16px;box-shadow:var(--glow)">
+    <span class="close" data-close="#modal2fa" style="float:right;cursor:pointer;color:#cde6ff">✖ Fermer</span>
+    <h3>🔐 Comprendre le 2FA (Authentification à deux facteurs)</h3>
+    <p>Le <strong>2FA</strong> demande <u>deux preuves d’identité</u> pour se connecter : c’est une couche de sécurité supplémentaire.</p>
+    <ul>
+      <li>📱 Code reçu par SMS</li>
+      <li>🔐 Application d’authentification (Google/Microsoft Authenticator)</li>
+      <li>🔔 Notification “push” sur ton téléphone</li>
+      <li>🔑 Clé de sécurité physique (YubiKey…)</li>
+    </ul>
+    <div class="panel" style="background:#0a2547">
+      <strong>🧠 Test minute</strong> — coche la/les affirmation(s) vraie(s)<br/>
+      <label><input type="checkbox" name="q2fa" value="r" /> Le 2FA remplace le mot de passe.</label><br/>
+      <label><input type="checkbox" name="q2fa" value="v" /> Le 2FA demande deux preuves d’identité.</label><br/>
+      <label><input type="checkbox" name="q2fa" value="r2" /> Le 2FA ne sert qu’aux comptes bancaires.</label><br/>
+      <div class="toolbar">
+        <button class="btn" id="chk2faBtn">Vérifier mes réponses</button>
+        <span id="res2fa" class="badge"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modalRecall" style="position:fixed;inset:0;background:rgba(0,10,20,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:50">
+  <div class="box" style="background:#0c2346;border:1px solid #2a5796;border-radius:12px;max-width:760px;width:100%;padding:16px;box-shadow:var(--glow)">
+    <span class="close" data-close="#modalRecall" style="float:right;cursor:pointer;color:#cde6ff">✖ Fermer</span>
+    <h3>ℹ️ Rappel – Définitions (extrait du 1.a)</h3>
+    <ul>
+      <li><strong>Ransomware</strong> : chiffre vos fichiers et demande une rançon.</li>
+      <li><strong>Phishing</strong> : se fait passer pour un service afin de voler des informations.</li>
+      <li><strong>MITM</strong> : intercepte les communications sur un réseau.</li>
+      <li><strong>DDoS</strong> : submerge un service de requêtes jusqu’à l’indisponibilité.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  /* =========================
+     Musique d’ambiance (WebAudio)
+     — synthèse locale : 58 s env., fade-in/out
+     ========================= */
+  (function(){
+    const btn = document.getElementById('audioToggle');
+    let ctx, osc, gain, stopAt;  // WebAudio nodes
+    function startSound(){
+      if (ctx) { try { ctx.resume(); } catch(e){} return; }
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      osc = ctx.createOscillator();
+      gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = 220; // A3
+      gain.gain.value = 0.0;
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+
+      // Fade-in 3s
+      const now = ctx.currentTime;
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.linearRampToValueAtTime(0.28, now + 3.0);
+
+      // Légère modulation pour effet "pad"
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.type = 'sine'; lfo.frequency.value = 0.15; // très lent
+      lfoGain.gain.value = 6; // +/- 6 Hz
+      lfo.connect(lfoGain).connect(osc.frequency);
+      lfo.start();
+
+      // Arrêt automatique à ~58 s (fade-out 3s)
+      stopAt = now + 58;
+      gain.gain.setValueAtTime(0.28, stopAt - 3);
+      gain.gain.linearRampToValueAtTime(0.0, stopAt);
+      setTimeout(stopSound, 58000);
+    }
+    function stopSound(){
+      if (!ctx) return;
+      try { gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5); } catch(e){}
+      try { osc.stop(ctx.currentTime + 0.6); } catch(e){}
+      try { ctx.close(); } catch(e){}
+      ctx = osc = gain = null;
+    }
+    // Auto-play au chargement (peut être bloqué par le navigateur ; le bouton sert de secours)
+    window.addEventListener('load', startSound, { once:true });
+    btn && btn.addEventListener('click', ()=>{
+      if (!ctx) { startSound(); btn.textContent = '🔈 Son activé'; }
+      else if (ctx.state === 'running') { ctx.suspend(); btn.textContent = '🔇 Son coupé'; }
+      else { ctx.resume(); btn.textContent = '🔈 Son activé'; }
+    });
+  })();
+
+  // Export PDF
+  document.getElementById('btnPrint')?.addEventListener('click',()=>window.print());
+
+  // Ouvrir / fermer modales
+  document.getElementById('help2faBtn')?.addEventListener('click',()=>document.getElementById('modal2fa').style.display='flex');
+  document.getElementById('btnRecall')?.addEventListener('click',()=>document.getElementById('modalRecall').style.display='flex');
+  document.querySelectorAll('[data-close]')?.forEach(x=>x.addEventListener('click',e=>{
+    const sel=e.currentTarget.getAttribute('data-close'); document.querySelector(sel).style.display='none';
+  }));
+
+  // Mini-test 2FA + coche ✔ persistante
+  const chkBtn = document.getElementById('chk2faBtn');
+  const res2fa = document.getElementById('res2fa');
+  const badge2fa = document.getElementById('chk2fa');
+  function setValidated(){
+    badge2fa.classList.add('validated');
+    localStorage.setItem('cyber_v5_2fa_valid','1');
+  }
+  if(localStorage.getItem('cyber_v5_2fa_valid')==='1'){ setValidated(); }
+  chkBtn?.addEventListener('click',()=>{
+    const boxes = [...document.querySelectorAll('input[name="q2fa"]')];
+    const ok = boxes.find(b=>b.value==='v' && b.checked) && !boxes.find(b=>b.value!=='v' && b.checked);
+    if(ok){ res2fa.textContent='🎉 Bravo !'; res2fa.className='badge'; setValidated(); }
+    else { res2fa.textContent='⚠️ Essaie encore'; res2fa.className='badge'; }
+  });
+
+  // Placeholder note globale (à brancher si tu ajoutes d’autres exercices notés)
+  document.getElementById('note20').textContent = '0';
+</script>
+</body>
+</html>

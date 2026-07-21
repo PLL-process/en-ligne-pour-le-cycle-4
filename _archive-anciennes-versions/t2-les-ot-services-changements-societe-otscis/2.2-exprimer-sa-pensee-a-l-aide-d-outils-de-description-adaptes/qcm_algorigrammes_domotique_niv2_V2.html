@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Encodage des caractères pour gérer les accents -->
+    <meta charset="UTF-8">
+    <!-- Titre de la page (onglet du navigateur) -->
+    <title>Algorigramme - Radar de vitesse</title>
+
+    <!-- Zone de styles CSS -->
+    <style>
+        /* Style général de la page : fond sombre, texte clair */
+        body {
+            /* Police principale lisible */
+            font-family: Arial, sans-serif;
+            /* Couleur de fond (bleu nuit) */
+            background-color: #0f172a;
+            /* Couleur du texte (gris très clair) */
+            color: #e5e7eb;
+            /* Suppression des marges par défaut */
+            margin: 0;
+            /* Suppression des espacements par défaut */
+            padding: 0;
+        }
+
+        /* Bandeau supérieur (titre principal) */
+        header {
+            /* Dégradé bleu pour le fond du bandeau */
+            background: linear-gradient(90deg, #1d4ed8, #0ea5e9);
+            /* Espacement intérieur */
+            padding: 1.5rem;
+            /* Texte centré */
+            text-align: center;
+        }
+
+        /* Titre principal dans le bandeau */
+        header h1 {
+            /* Suppression des marges autour du titre */
+            margin: 0;
+            /* Taille de police du titre */
+            font-size: 1.8rem;
+            /* Couleur du texte (quasi blanc) */
+            color: #f9fafb;
+        }
+
+        /* Sous-titre dans le bandeau */
+        header p {
+            /* Marge au-dessus du sous-titre */
+            margin: 0.5rem 0 0;
+            /* Taille du texte du sous-titre */
+            font-size: 0.95rem;
+        }
+
+        /* Conteneur central pour limiter la largeur du contenu */
+        .container {
+            /* Largeur maximale du contenu */
+            max-width: 1100px;
+            /* Centrage horizontal et marge verticale */
+            margin: 2rem auto;
+            /* Petite marge intérieure horizontale */
+            padding: 0 1rem;
+        }
+
+        /* Carte / bloc pour un exercice complet (A + B) */
+        .card {
+            /* Fond sombre du bloc */
+            background-color: #111827;
+            /* Coins arrondis */
+            border-radius: 12px;
+            /* Espacement intérieur */
+            padding: 1.5rem;
+            /* Marge inférieure entre deux cartes */
+            margin-bottom: 2rem;
+            /* Ombre portée pour donner du relief */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            /* Fine bordure sombre */
+            border: 1px solid #1f2937;
+        }
+
+        /* Titre secondaire (titre de l’exercice) */
+        .card h2 {
+            /* Suppression de la marge supérieure */
+            margin-top: 0;
+            /* Taille du titre de l’exercice */
+            font-size: 1.4rem;
+            /* Couleur bleutée pour le mettre en valeur */
+            color: #93c5fd;
+        }
+
+        /* Petits titres "Partie A", "Partie B" */
+        .card h3 {
+            /* Marge supérieure pour séparer les sections */
+            margin-top: 1.2rem;
+            /* Couleur légèrement différente */
+            color: #bfdbfe;
+        }
+
+        /* Texte de description de la situation */
+        .description {
+            /* Taille du texte de description */
+            font-size: 0.95rem;
+            /* Hauteur de ligne pour aérer le texte */
+            line-height: 1.5;
+        }
+
+        /* Texte d'indication / aide à l'élève */
+        .hint {
+            /* Taille du texte de la consigne */
+            font-size: 0.85rem;
+            /* Couleur gris clair */
+            color: #9ca3af;
+            /* Marge inférieure pour aérer */
+            margin-bottom: 0.5rem;
+        }
+
+        /* Conteneur pour la partie A (drag & drop) : tableau + étiquettes */
+        .partie-a {
+            /* Marge supérieure pour séparer visuellement */
+            margin-top: 0.8rem;
+        }
+
+        /* Conteneur horizontal pour tableau et banc d'étiquettes */
+        .drag-container {
+            /* Affichage en flex pour mettre les colonnes côte à côte */
+            display: flex;
+            /* Espacement entre les colonnes */
+            gap: 1.5rem;
+            /* Adaptation sur petits écrans */
+            flex-wrap: wrap;
+        }
+
+        /* Tableau des zones de dépôt (Événements / Actions) */
+        .drop-table {
+            /* Flex : prend plus de place que le banc d'étiquettes */
+            flex: 2;
+        }
+
+        /* Banc d'étiquettes à déplacer */
+        .label-bank {
+            /* Flex : prend un peu moins de place */
+            flex: 1;
+        }
+
+        /* Titre des colonnes du tableau (Événements / Actions) */
+        .drop-table h4 {
+            /* Marge en bas pour séparer du tableau */
+            margin-bottom: 0.5rem;
+        }
+
+        /* Grille pour les colonnes du tableau */
+        .drop-grid {
+            /* Affichage en grille à 2 colonnes */
+            display: grid;
+            /* Deux colonnes de même largeur */
+            grid-template-columns: repeat(2, 1fr);
+            /* Espacement entre les cases */
+            gap: 0.75rem;
+        }
+
+        /* En-têtes des colonnes (Événements et Actions) */
+        .drop-header {
+            /* Texte centré */
+            text-align: center;
+            /* Texte en gras */
+            font-weight: bold;
+            /* Fond sombre */
+            background-color: #020617;
+            /* Coins arrondis */
+            border-radius: 8px;
+            /* Espacement intérieur */
+            padding: 0.4rem;
+            /* Bordure */
+            border: 1px solid #4b5563;
+        }
+
+        /* Zone de dépôt pour les étiquettes (cases du tableau) */
+        .dropzone {
+            /* Hauteur minimale pour bien voir la zone */
+            min-height: 60px;
+            /* Bordure en pointillé pour indiquer que c’est une zone de dépôt */
+            border: 2px dashed #4b5563;
+            /* Coins arrondis */
+            border-radius: 8px;
+            /* Espacement intérieur */
+            padding: 0.4rem;
+            /* Couleur de fond légèrement différente */
+            background-color: #020617;
+        }
+
+        /* Zone de dépôt survolée pendant le drag */
+        .dropzone.over {
+            /* Changement de couleur de bordure lorsque la souris passe avec une étiquette */
+            border-color: #22c55e;
+        }
+
+        /* Style des étiquettes à déplacer */
+        .draggable-label {
+            /* Affichage en bloc pour mieux manipuler les étiquettes */
+            display: inline-block;
+            /* Espacement interne de l’étiquette */
+            padding: 0.3rem 0.5rem;
+            /* Marge entre les étiquettes */
+            margin: 0.2rem;
+            /* Bordure arrondie */
+            border-radius: 999px;
+            /* Fond bleuté pour les étiquettes */
+            background-color: #1d4ed8;
+            /* Couleur du texte */
+            color: #f9fafb;
+            /* Taille de police */
+            font-size: 0.85rem;
+            /* Curseur "main" pour indiquer que c’est déplaçable */
+            cursor: grab;
+            /* Bordure légère */
+            border: 1px solid #0f172a;
+        }
+
+        /* Banc d'étiquettes intitulé */
+        .label-bank h4 {
+            /* Marge en bas */
+            margin-bottom: 0.5rem;
+        }
+
+        /* Boutons de validation et réinitialisation (partie A & B) */
+        .button-row {
+            /* Marge supérieure pour séparer du contenu précédent */
+            margin-top: 0.8rem;
+        }
+
+        /* Style général des boutons d’action */
+        button {
+            /* Espacement interne */
+            padding: 0.4rem 0.9rem;
+            /* Bordure arrondie */
+            border-radius: 999px;
+            /* Suppression de la bordure par défaut */
+            border: none;
+            /* Texte en gras */
+            font-weight: bold;
+            /* Marge à droite entre les boutons */
+            margin-right: 0.5rem;
+            /* Curseur "main" */
+            cursor: pointer;
+            /* Taille de police */
+            font-size: 0.85rem;
+        }
+
+        /* Bouton de validation (vert) */
+        .btn-valid {
+            /* Couleur de fond verte */
+            background-color: #22c55e;
+            /* Couleur du texte foncée */
+            color: #022c22;
+        }
+
+        /* Bouton de validation au survol */
+        .btn-valid:hover {
+            /* Vert plus foncé */
+            background-color: #16a34a;
+        }
+
+        /* Bouton de réinitialisation (orange) */
+        .btn-reset {
+            /* Couleur de fond orange */
+            background-color: #f97316;
+            /* Couleur du texte foncée */
+            color: #111827;
+        }
+
+        /* Bouton de réinitialisation au survol */
+        .btn-reset:hover {
+            /* Orange plus foncé */
+            background-color: #ea580c;
+        }
+
+        /* Zone de feedback (texte de correction, score, message d’erreur) */
+        .feedback {
+            /* Marge au-dessus de la zone de feedback */
+            margin-top: 0.6rem;
+            /* Taille de police */
+            font-size: 0.85rem;
+        }
+
+        /* Feedback positif (réponses correctes) */
+        .feedback.ok {
+            /* Couleur verte claire */
+            color: #bbf7d0;
+        }
+
+        /* Feedback d’erreur (il reste des erreurs) */
+        .feedback.error {
+            /* Couleur rouge claire */
+            color: #fecaca;
+        }
+
+        /* Partie B : conteneur de l’algorigramme (image de fond) */
+        .flowchart-container {
+            /* Position relative pour pouvoir placer des éléments en absolu à l’intérieur */
+            position: relative;
+            /* Largeur maximale de l’algorigramme */
+            max-width: 700px;
+            /* Hauteur fixe (à ajuster selon l’image utilisée) */
+            height: 400px;
+            /* Centrage horizontal */
+            margin: 1rem auto;
+            /* Image de fond représentant l’algorigramme incomplet */
+            background-image: url("images/radar_algorigramme_incomplet.svg");
+            /* Ajustement de la taille de l’image pour qu’elle tienne dans le conteneur */
+            background-size: contain;
+            /* Empêche la répétition de l’image */
+            background-repeat: no-repeat;
+            /* Fond de secours si l’image ne se charge pas */
+            background-color: #020617;
+            /* Bordure légère pour bien voir le cadre de l’algorigramme */
+            border: 1px solid #4b5563;
+            /* Coins arrondis */
+            border-radius: 12px;
+        }
+
+        /* Style des menus déroulants superposés sur l’algorigramme */
+        .overlay-select {
+            /* Placement absolu dans le conteneur */
+            position: absolute;
+            /* Largeur de chaque select */
+            width: 220px;
+            /* Fond légèrement opaque pour être lisible sur l’image */
+            background-color: rgba(15, 23, 42, 0.9);
+            /* Couleur du texte */
+            color: #e5e7eb;
+            /* Bordure arrondie */
+            border-radius: 8px;
+            /* Bordure de couleur gris moyenne */
+            border: 1px solid #4b5563;
+            /* Espacement interne */
+            padding: 0.25rem 0.4rem;
+            /* Taille de police */
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bandeau principal avec le titre général -->
+    <header>
+        <!-- Titre général de la page -->
+        <h1>Algorigramme – Radar de vitesse automatique</h1>
+        <!-- Sous-titre expliquant l'activité -->
+        <p>Partie A : classer les étiquettes. Partie B : compléter l’algorigramme sur l’image.</p>
+    </header>
+
+    <!-- Conteneur central pour l’exercice -->
+    <main class="container">
+        <!-- Carte contenant l’exercice 1 : Radar -->
+        <section class="card" id="exercice1">
+            <!-- Titre de l'exercice -->
+            <h2>Exercice 1 – Radar automatique 🚗📸</h2>
+
+            <!-- Description textuelle de la situation -->
+            <p class="description">
+                Un radar automatique contrôle la vitesse des véhicules sur une portion de route.
+                Lorsque la vitesse d'un véhicule dépasse 90&nbsp;km/h, le radar doit lire la plaque,
+                déclencher le flash et envoyer les informations au centre de traitement.
+            </p>
+
+            <!-- ================== PARTIE A : DRAG & DROP ================== -->
+            <h3>Partie A – Classer les étiquettes entre Événements et Actions</h3>
+
+            <!-- Consigne pour la partie A -->
+            <p class="hint">
+                a) Fais glisser chaque étiquette dans la bonne colonne : <strong>Événements</strong> ou <strong>Actions</strong>.
+            </p>
+
+            <!-- Conteneur pour le tableau de dépôt et le banc d'étiquettes -->
+            <div class="partie-a">
+                <div class="drag-container">
+                    <!-- Colonne avec le tableau et les zones de dépôt -->
+                    <div class="drop-table">
+                        <!-- Titre explicatif du tableau -->
+                        <h4>Tableau à compléter</h4>
+                        <!-- Grille à deux colonnes : Événements / Actions -->
+                        <div class="drop-grid">
+                            <!-- En-tête de la colonne Événements -->
+                            <div class="drop-header">Événements</div>
+                            <!-- En-tête de la colonne Actions -->
+                            <div class="drop-header">Actions</div>
+
+                            <!-- Zone de dépôt Événements (les étiquettes "événement" doivent finir ici) -->
+                            <div class="dropzone" data-type="evenement"></div>
+                            <!-- Zone de dépôt Actions (les étiquettes "action" doivent finir ici) -->
+                            <div class="dropzone" data-type="action"></div>
+                        </div>
+                    </div>
+
+                    <!-- Colonne avec les étiquettes à glisser (banc) -->
+                    <div class="label-bank">
+                        <!-- Titre du banc d'étiquettes -->
+                        <h4>Étiquettes à placer</h4>
+                        <!-- Étiquette : événement = un véhicule est détecté -->
+                        <span class="draggable-label"
+                              draggable="true"
+                              data-id="vehicule_detecte">
+                            Un véhicule est détecté
+                        </span>
+                        <!-- Étiquette : événement = la vitesse mesurée dépasse 90 km/h -->
+                        <span class="draggable-label"
+                              draggable="true"
+                              data-id="vitesse_sup_90">
+                            La vitesse mesurée &gt; 90 km/h
+                        </span>
+                        <!-- Étiquette : action = lecture de la plaque -->
+                        <span class="draggable-label"
+                              draggable="true"
+                              data-id="lecture_plaque">
+                            Lire la plaque d'immatriculation
+                        </span>
+                        <!-- Étiquette : action = activer le flash -->
+                        <span class="draggable-label"
+                              draggable="true"
+                              data-id="activer_flash">
+                            Activer le flash
+                        </span>
+                        <!-- Étiquette : action = envoyer les informations -->
+                        <span class="draggable-label"
+                              draggable="true"
+                              data-id="envoyer_infos">
+                            Envoyer les informations au centre
+                        </span>
+                        <!-- Étiquette : événement = fin du contrôle du véhicule -->
+                        <span class="draggable-label"
+                              draggable="true"
+                              data-id="fin_controle">
+                            Fin du contrôle du véhicule
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Ligne de boutons pour valider ou réinitialiser la partie A -->
+                <div class="button-row">
+                    <!-- Bouton de validation pour la partie A -->
+                    <button type="button"
+                            class="btn-valid"
+                            id="btn-check-a">
+                        Vérifier la partie A
+                    </button>
+                    <!-- Bouton de réinitialisation pour la partie A -->
+                    <button type="button"
+                            class="btn-reset"
+                            id="btn-reset-a">
+                        Réinitialiser la partie A
+                    </button>
+                </div>
+
+                <!-- Zone de feedback pour la partie A -->
+                <div class="feedback" id="feedback-a"></div>
+            </div>
+
+            <!-- ================== PARTIE B : MENUS SUR L'ALGORIGRAMME ================== -->
+            <h3>Partie B – Compléter l’algorigramme sur l’image</h3>
+
+            <!-- Consigne pour la partie B -->
+            <p class="hint">
+                b) Complète l’algorigramme en choisissant le bon bloc dans chaque menu déroulant
+                superposé sur l’image.
+            </p>
+
+            <!-- Conteneur de l’image d’algorigramme avec les menus déroulants superposés -->
+            <div class="flowchart-container">
+                <!-- Menu déroulant 1 : bloc de départ -->
+                <select class="overlay-select"
+                        data-index="0"
+                        style="top: 25px; left: 240px;">
+                    <!-- Option vide par défaut -->
+                    <option value="">— Choisir un bloc —</option>
+                    <!-- Différents blocs possibles -->
+                    <option value="debut">Début</option>
+                    <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                    <option value="lecture_plaque">Lecture de la plaque</option>
+                    <option value="activer_flash">Activer le flash</option>
+                    <option value="envoyer_centre">Envoyer les informations au centre</option>
+                    <option value="fin">Fin</option>
+                </select>
+
+                <!-- Menu déroulant 2 : test de la vitesse -->
+                <select class="overlay-select"
+                        data-index="1"
+                        style="top: 110px; left: 240px;">
+                    <option value="">— Choisir un bloc —</option>
+                    <option value="debut">Début</option>
+                    <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                    <option value="lecture_plaque">Lecture de la plaque</option>
+                    <option value="activer_flash">Activer le flash</option>
+                    <option value="envoyer_centre">Envoyer les informations au centre</option>
+                    <option value="fin">Fin</option>
+                </select>
+
+                <!-- Menu déroulant 3 : lecture de la plaque -->
+                <select class="overlay-select"
+                        data-index="2"
+                        style="top: 200px; left: 40px;">
+                    <option value="">— Choisir un bloc —</option>
+                    <option value="debut">Début</option>
+                    <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                    <option value="lecture_plaque">Lecture de la plaque</option>
+                    <option value="activer_flash">Activer le flash</option>
+                    <option value="envoyer_centre">Envoyer les informations au centre</option>
+                    <option value="fin">Fin</option>
+                </select>
+
+                <!-- Menu déroulant 4 : flash -->
+                <select class="overlay-select"
+                        data-index="3"
+                        style="top: 260px; left: 240px;">
+                    <option value="">— Choisir un bloc —</option>
+                    <option value="debut">Début</option>
+                    <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                    <option value="lecture_plaque">Lecture de la plaque</option>
+                    <option value="activer_flash">Activer le flash</option>
+                    <option value="envoyer_centre">Envoyer les informations au centre</option>
+                    <option value="fin">Fin</option>
+                </select>
+
+                <!-- Menu déroulant 5 : envoi au centre -->
+                <select class="overlay-select"
+                        data-index="4"
+                        style="top: 320px; left: 440px;">
+                    <option value="">— Choisir un bloc —</option>
+                    <option value="debut">Début</option>
+                    <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                    <option value="lecture_plaque">Lecture de la plaque</option>
+                    <option value="activer_flash">Activer le flash</option>
+                    <option value="envoyer_centre">Envoyer les informations au centre</option>
+                    <option value="fin">Fin</option>
+                </select>
+
+                <!-- Menu déroulant 6 : fin de l’algorithme -->
+                <select class="overlay-select"
+                        data-index="5"
+                        style="top: 360px; left: 240px;">
+                    <option value="">— Choisir un bloc —</option>
+                    <option value="debut">Début</option>
+                    <option value="test_vitesse">Vitesse &gt; 90 km/h ?</option>
+                    <option value="lecture_plaque">Lecture de la plaque</option>
+                    <option value="activer_flash">Activer le flash</option>
+                    <option value="envoyer_centre">Envoyer les informations au centre</option>
+                    <option value="fin">Fin</option>
+                </select>
+            </div>
+
+            <!-- Ligne de boutons pour la partie B -->
+            <div class="button-row">
+                <!-- Bouton de validation pour la partie B -->
+                <button type="button"
+                        class="btn-valid"
+                        id="btn-check-b">
+                    Vérifier la partie B
+                </button>
+                <!-- Bouton de réinitialisation pour la partie B -->
+                <button type="button"
+                        class="btn-reset"
+                        id="btn-reset-b">
+                    Réinitialiser la partie B
+                </button>
+            </div>
+
+            <!-- Zone de feedback pour la partie B -->
+            <div class="feedback" id="feedback-b"></div>
+        </section>
+    </main>
+
+    <!-- Script JavaScript pour gérer le drag & drop et la correction -->
+    <script>
+        /* ===================== CONFIGURATION DES BONNES RÉPONSES ===================== */
+
+        // Objet indiquant pour chaque étiquette si c'est un "evenement" ou une "action"
+        const bonnesClasses = {
+            // Étiquette "Un véhicule est détecté" => événement
+            "vehicule_detecte": "evenement",
+            // Étiquette "La vitesse mesurée > 90 km/h" => événement
+            "vitesse_sup_90": "evenement",
+            // Étiquette "Lire la plaque d'immatriculation" => action
+            "lecture_plaque": "action",
+            // Étiquette "Activer le flash" => action
+            "activer_flash": "action",
+            // Étiquette "Envoyer les informations au centre" => action
+            "envoyer_infos": "action",
+            // Étiquette "Fin du contrôle du véhicule" => événement
+            "fin_controle": "evenement"
+        };
+
+        // Tableau des bonnes réponses pour la partie B (algorigramme)
+        // Chaque case correspond au menu déroulant data-index = 0, 1, 2, 3, 4, 5
+        const bonnesReponsesB = [
+            "debut",          // Select 0 : bloc de départ
+            "test_vitesse",   // Select 1 : test de la vitesse
+            "lecture_plaque", // Select 2 : lecture de la plaque
+            "activer_flash",  // Select 3 : activer le flash
+            "envoyer_centre", // Select 4 : envoyer les infos
+            "fin"             // Select 5 : fin
+        ];
+
+        /* ===================== PARTIE A : DRAG & DROP ===================== */
+
+        // Variable globale pour mémoriser l'ID de l'étiquette en cours de déplacement
+        let etiquetteEnDeplacement = null;
+
+        // Sélection de toutes les étiquettes déplaçables
+        const etiquettes = document.querySelectorAll(".draggable-label");
+        // Sélection de toutes les zones de dépôt
+        const zonesDepot = document.querySelectorAll(".dropzone");
+
+        // Boucle sur chaque étiquette pour lui ajouter les événements de drag
+        etiquettes.forEach(function(etiquette) {
+            // Quand le drag commence
+            etiquette.addEventListener("dragstart", function(event) {
+                // On mémorise l'ID de l'étiquette en cours de déplacement
+                etiquetteEnDeplacement = event.target;
+                // On change légèrement l'opacité pendant le déplacement
+                event.target.style.opacity = "0.6";
+            });
+
+            // Quand le drag se termine (qu'il y ait dépôt ou non)
+            etiquette.addEventListener("dragend", function(event) {
+                // On remet l'opacité normale
+                event.target.style.opacity = "1";
+                // On réinitialise la variable de suivi
+                etiquetteEnDeplacement = null;
+            });
+        });
+
+        // Boucle sur chaque zone de dépôt pour gérer l'arrivée des étiquettes
+        zonesDepot.forEach(function(zone) {
+            // Autoriser le dépôt d'un élément dans la zone (comportement par défaut : interdit)
+            zone.addEventListener("dragover", function(event) {
+                // Empêcher le comportement par défaut
+                event.preventDefault();
+                // Ajouter une classe visuelle "over" pour signaler le survol
+                zone.classList.add("over");
+            });
+
+            // Quand la souris quitte la zone de dépôt
+            zone.addEventListener("dragleave", function(event) {
+                // Retirer la classe visuelle de survol
+                zone.classList.remove("over");
+            });
+
+            // Quand l'étiquette est lâchée dans la zone
+            zone.addEventListener("drop", function(event) {
+                // Empêcher le comportement par défaut
+                event.preventDefault();
+                // Retirer la classe de survol
+                zone.classList.remove("over");
+                // Vérifier qu'on a bien une étiquette en cours de déplacement
+                if (etiquetteEnDeplacement) {
+                    // Ajouter l'étiquette dans la zone de dépôt (elle change de parent dans le DOM)
+                    zone.appendChild(etiquetteEnDeplacement);
+                }
+            });
+        });
+
+        /* ===================== VÉRIFICATION PARTIE A ===================== */
+
+        // Récupération des éléments HTML pour les boutons et le feedback de la partie A
+        const boutonCheckA = document.getElementById("btn-check-a");
+        const boutonResetA = document.getElementById("btn-reset-a");
+        const feedbackA = document.getElementById("feedback-a");
+
+        // Fonction pour vérifier la partie A
+        function verifierPartieA() {
+            // Compteur de bonnes réponses
+            let bonnes = 0;
+            // Compteur d'étiquettes au total
+            let total = 0;
+            // Compteur d'erreurs
+            let erreurs = 0;
+
+            // On parcourt chaque étiquette pour vérifier dans quelle zone elle se trouve
+            etiquettes.forEach(function(etiquette) {
+                // On récupère l'ID unique de l'étiquette
+                const id = etiquette.getAttribute("data-id");
+                // On récupère la zone dans laquelle l'étiquette est posée (son parent)
+                const parent = etiquette.parentElement;
+                // Par défaut, le type de zone est "aucun"
+                let typeZone = "aucun";
+
+                // Si le parent est une zone de dépôt (et non le banc d'étiquettes)
+                if (parent.classList.contains("dropzone")) {
+                    // On récupère le type de la zone (evenement ou action)
+                    typeZone = parent.getAttribute("data-type");
+                }
+
+                // On vérifie uniquement si l'étiquette est dans une des deux zones du tableau
+                if (typeZone === "evenement" || typeZone === "action") {
+                    // On augmente le nombre total d'étiquettes prises en compte
+                    total += 1;
+                    // On récupère la classe attendue pour cette étiquette
+                    const classeAttendue = bonnesClasses[id];
+                    // Si la classe attendue correspond bien à la zone de dépôt
+                    if (classeAttendue === typeZone) {
+                        // On compte une bonne réponse
+                        bonnes += 1;
+                    } else {
+                        // Sinon, on compte une erreur
+                        erreurs += 1;
+                    }
+                }
+            });
+
+            // Si aucune étiquette n'a été placée, on invite l'élève à commencer
+            if (total === 0) {
+                feedbackA.textContent = "Place au moins une étiquette dans une colonne avant de vérifier 🙂";
+                feedbackA.className = "feedback error";
+                return;
+            }
+
+            // Si aucune erreur
+            if (erreurs === 0 && bonnes > 0) {
+                feedbackA.textContent = "Bravo ! Toutes les étiquettes placées sont bien classées ✅ (" +
+                    bonnes + " / " + total + ").";
+                feedbackA.className = "feedback ok";
+            } else {
+                // S'il reste des erreurs
+                feedbackA.textContent = "Il reste " + erreurs +
+                    " erreur(s) dans le classement. Vérifie la différence entre un événement et une action 😉 (" +
+                    bonnes + " correctement placées / " + total + ").";
+                feedbackA.className = "feedback error";
+            }
+        }
+
+        // Fonction pour réinitialiser la partie A (remettre les étiquettes dans le banc)
+        function reinitialiserPartieA() {
+            // Sélection du banc d'étiquettes (où se trouvent les étiquettes au départ)
+            const banc = document.querySelector(".label-bank");
+            // Pour chaque étiquette
+            etiquettes.forEach(function(etiquette) {
+                // On la remet dans le banc d'étiquettes
+                banc.appendChild(etiquette);
+            });
+            // On efface le message de feedback
+            feedbackA.textContent = "";
+            // On remet la classe de base
+            feedbackA.className = "feedback";
+        }
+
+        // Ajout des écouteurs sur les boutons de la partie A
+        boutonCheckA.addEventListener("click", verifierPartieA);
+        boutonResetA.addEventListener("click", reinitialiserPartieA);
+
+        /* ===================== PARTIE B : MENUS DÉROULANTS SUR L'IMAGE ===================== */
+
+        // Sélection de tous les menus déroulants qui complètent l'algorigramme
+        const selectsB = document.querySelectorAll(".flowchart-container .overlay-select");
+        // Sélection des éléments HTML pour les boutons et le feedback de la partie B
+        const boutonCheckB = document.getElementById("btn-check-b");
+        const boutonResetB = document.getElementById("btn-reset-b");
+        const feedbackB = document.getElementById("feedback-b");
+
+        // Fonction pour vérifier la partie B
+        function verifierPartieB() {
+            // Compteur de bonnes réponses
+            let bonnes = 0;
+            // Compteur d'erreurs
+            let erreurs = 0;
+            // Indicateur : au moins un menu est resté vide
+            let incomplet = false;
+
+            // Parcours de chaque menu déroulant
+            selectsB.forEach(function(select) {
+                // Récupération de l'index du menu (data-index)
+                const index = parseInt(select.getAttribute("data-index"), 10);
+                // Récupération de la valeur choisie par l'élève
+                const valeur = select.value;
+                // Récupération de la bonne réponse attendue à cette position
+                const bonne = bonnesReponsesB[index];
+
+                // Si le menu est resté vide
+                if (valeur === "") {
+                    // On signale que l'exercice est incomplet
+                    incomplet = true;
+                    // On remet la bordure par défaut
+                    select.style.borderColor = "#4b5563";
+                } else if (valeur === bonne) {
+                    // Si la valeur est correcte : on ajoute une bonne réponse
+                    bonnes += 1;
+                    // Bordure verte pour signaler que c'est correct
+                    select.style.borderColor = "#22c55e";
+                } else {
+                    // Sinon : on compte une erreur
+                    erreurs += 1;
+                    // Bordure rouge pour signaler l'erreur
+                    select.style.borderColor = "#ef4444";
+                }
+            });
+
+            // Si au moins un menu est vide, on demande de compléter
+            if (incomplet) {
+                feedbackB.textContent = "Complète tous les menus déroulants avant de vérifier 🙂";
+                feedbackB.className = "feedback error";
+                return;
+            }
+
+            // Si aucune erreur
+            if (erreurs === 0) {
+                feedbackB.textContent = "Excellent ! L’algorigramme est correctement complété 🎉 (" +
+                    bonnes + " / " + bonnesReponsesB.length + ").";
+                feedbackB.className = "feedback ok";
+            } else {
+                // Si des erreurs subsistent
+                feedbackB.textContent = "Il reste " + erreurs +
+                    " bloc(s) incorrect(s). Regarde surtout l’ordre des actions après le test de vitesse 😉 (" +
+                    bonnes + " correct(s) / " + bonnesReponsesB.length + ").";
+                feedbackB.className = "feedback error";
+            }
+        }
+
+        // Fonction pour réinitialiser la partie B
+        function reinitialiserPartieB() {
+            // Pour chaque menu déroulant
+            selectsB.forEach(function(select) {
+                // On remet la valeur vide
+                select.value = "";
+                // On remet la bordure par défaut
+                select.style.borderColor = "#4b5563";
+            });
+            // On efface le message de feedback
+            feedbackB.textContent = "";
+            // On remet la classe de base
+            feedbackB.className = "feedback";
+        }
+
+        // Ajout des écouteurs sur les boutons de la partie B
+        boutonCheckB.addEventListener("click", verifierPartieB);
+        boutonResetB.addEventListener("click", reinitialiserPartieB);
+    </script>
+</body>
+</html>
