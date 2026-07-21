@@ -1,112 +1,840 @@
-<script>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QCM XXL (40 questions) — eCall : la chaîne d'information d'une voiture — 4e (2024)</title>
+  <style>
+    /* Définition des variables CSS pour les couleurs (thème bleu foncé) */
+    :root { --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; }
+    /* Styles généraux pour tous les éléments (box-sizing pour une meilleure gestion des paddings) */
+    * { box-sizing: border-box; }
+    /* Styles pour le body (fond, police, couleur texte) */
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    /* Styles pour l'en-tête (padding et gradient de fond) */
+    header { padding: 18px 20px; background: linear-gradient(90deg, #0e1630, #1f2a57); }
+    /* Styles pour h1 (marge zéro, taille police) */
+    h1 { margin: 0; font-size: 1.35rem; }
+    /* Styles pour le wrapper principal (largeur max, marges, padding, reset du compteur q) */
+    .wrap { max-width: 980px; margin: 18px auto; padding: 0 14px; counter-reset: q; }
+    /* Styles pour les cartes (fond, bordure, arrondi, padding, marge, ombre) */
+    .card { background: var(--card); border: 1px solid #223060; border-radius: 18px; padding: 14px 16px; margin: 14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+    /* Ajout du numéro de question avant le titre (incrément du compteur) */
+    .card .q-title::before { counter-increment: q; content: "Q" counter(q) " — "; color: #a9b6df; font-weight: 700; }
+    /* Styles pour les lignes flex (display flex, wrap, gap, align) */
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    /* Styles pour les badges (display inline, padding, arrondi, taille police, couleurs) */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; color: #0e1630; background: #c7d2fe; font-weight: 700; }
+    /* Styles pour les points (gras, couleur verte) */
+    .pts { font-weight: 700; color: #d1fae5; }
+    /* Styles pour les boutons (bordure, padding, arrondi, curseur, fond, couleur, gras) */
+    .btn { border: 1px solid #344a8a; padding: 8px 12px; border-radius: 12px; cursor: pointer; background: #1b254a; color: var(--ink); font-weight: 600; }
+    /* Styles pour les petits boutons (padding et taille police réduits) */
+    .btn.small { padding: 5px 8px; font-size: .9rem; }
+    /* Effet hover sur boutons (augmente la luminosité) */
+    .btn:hover { filter: brightness(1.15); }
+    /* Styles pour les aides (cachées par défaut, marge, couleur muted, padding amélioré, bordure latérale pour visibilité) */
+    .help { display: none; margin-top: 8px; color: var(--muted); padding: 10px; border-left: 4px solid var(--accent); background: var(--bg); border-radius: 4px; font-size: 0.95rem; line-height: 1.6; }
+    /* Styles pour les réponses (marge, gras, padding, arrondi, fond, ombre pour un look boxed) */
+    .answer { margin-top: 8px; font-weight: 700; padding: 10px; border-radius: 8px; background: var(--bg); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    /* Couleur et bordure pour réponses correctes (vert) */
+    .ok { color: var(--ok); border: 1px solid var(--ok); }
+    /* Couleur et bordure pour réponses incorrectes (rouge) */
+    .ko { color: var(--ko); border: 1px solid var(--ko); }
+    /* Couleur pour texte muted (gris) */
+    .muted { color: var(--muted); }
+    /* Styles pour les titres de questions (marge, taille police) */
+    .q-title { margin: 0 0 6px 0; font-size: 1.05rem; }
+    /* Styles pour le footer (marge, padding, arrondi, fond, bordure) */
+    .footer { margin: 16px 0; padding: 12px; border-radius: 14px; background: #0f1a3d; border: 1px solid #23316b; }
+    /* Styles pour le score (taille police, gras) */
+    .score { font-size: 1.1rem; font-weight: 800; }
+    /* Styles pour inputs numériques, text et select (fond, bordure, couleur, padding, arrondi) */
+    input[type="number"], input[type="text"], select { background: #0f1836; border: 1px solid #2b3c75; color: var(--ink); padding: 8px 10px; border-radius: 10px; }
+    /* Styles pour labels (display block, marge) */
+    label { display: block; margin: .25rem 0; }
+    /* Styles pour grille à 3 colonnes (grid, columns, gap) */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    /* Styles pour notes (taille police, couleur claire) */
+    .note { font-size: .9rem; color: #cbd5e1; }
+    /* Styles pour inputs dans idbox (largeur 100%) */
+    .idbox input { width: 100%; }
+    /* Styles pour images schema (largeur max, arrondi, bordure, fond) */
+    img.schema { max-width: 100%; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
+    /* Commentaire : Illustrations */
+    /* Styles pour figures questions (marge, align center) */
+    .q-fig { margin: 10px 0; text-align: center; }
+    /* Styles pour images dans figures (largeur max, hauteur auto, arrondi, bordure, fond) */
+    .q-fig img.q-img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
+    /* Styles pour figcaption (taille police, couleur, marge) */
+    .q-fig figcaption { font-size: .9rem; color: #a9b6df; margin-top: 6px; }
+    /* Styles pour help (caché, marge, couleur) */
+    .help { display: none; margin-top: 8px; color: var(--muted); }
+    /* Classe pour afficher l'aide (display block) */
+    .help.show-help { display: block; }
+    /* Amélioration : Styles pour les tableaux (bordure collapse, largeur, marge) */
+    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+    /* Styles pour th et td (bordure, padding, align) */
+    th, td { border: 1px solid #2b3c75; padding: 8px; text-align: left; }
+    /* Styles pour th (fond bleu foncé) */
+    th { background: #1b254a; }
+  </style>
+</head>
+<body>
+  <header><h1>QCM XXL (40 questions) — eCall : la chaîne d'information d'une voiture — 4e (2024)</h1></header>
+  <div class="wrap">
+    <!-- Section d'identification (sans q-title pour ne pas compter comme question) -->
+    <div class="card">
+      <!-- Titre de l'identité, avec nouvelle classe id-title sans compteur -->
+      <p class="id-title">Identité de l’élève</p>
+      <!-- Grille pour inputs nom, prénom, classe -->
+      <div class="grid2">
+        <!-- Input pour nom -->
+        <input id="nom" placeholder="Nom">
+        <!-- Input pour prénom -->
+        <input id="prenom" placeholder="Prénom">
+        <!-- Input pour classe -->
+        <input id="classe" placeholder="Classe (ex. 4eB)">
+      </div>
+      <!-- Note pour l'utilisateur -->
+      <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
+    </div>
+    <!-- Bandeau score et boutons globaux -->
+    <div class="footer row">
+      <!-- Affichage du score -->
+      <div class="score" id="score"> Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">0</strong> </div>
+      <!-- Bouton pour corriger tout -->
+      <button class="btn" onclick="corrigerTout()">Corriger tout</button>
+      <!-- Bouton pour réinitialiser -->
+      <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
+      <!-- Amélioration : Bouton pour afficher toutes les aides -->
+      <button class="btn" onclick="showAllHelps()">Afficher toutes les aides</button>
+      <!-- Note sur les compétences -->
+      <div class="note">Les questions ciblent 4e_C4.4 (constituants de la chaîne d'information d'un objet réel), avec des liens vers C4.1 et C6.2.</div>
+    </div>
+    <!-- Q1 : Question sur le routeur -->
+    
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quelle est la première étape de la chaîne d'information ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q1" value="v0"> Traiter</label>
+  <label><input type="radio" name="q1" value="v1"> Communiquer</label>
+  <label><input type="radio" name="q1" value="v2"> Acquérir</label>
+  <label><input type="radio" name="q1" value="v3"> Stocker</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a1')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q1','v2','fb1',1)">Corriger</button>
+  </div>
+  <div id="a1" class="help">La chaîne d'information commence toujours par ACQUÉRIR : un capteur transforme une grandeur physique (choc, position…) en signal exploitable.</div>
+  <div id="fb1" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel élément acquiert les données dans le système eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q2" value="v0"> Capteur</label>
+  <label><input type="radio" name="q2" value="v1"> Actionneur</label>
+  <label><input type="radio" name="q2" value="v2"> Carte SIM</label>
+  <label><input type="radio" name="q2" value="v3"> Batterie</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a2')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q2','v0','fb2',1)">Corriger</button>
+  </div>
+  <div id="a2" class="help">Le capteur est l'organe d'acquisition. La carte SIM sert à communiquer, la batterie à alimenter.</div>
+  <div id="fb2" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel capteur détecte un accident ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q3" value="v0"> GPS</label>
+  <label><input type="radio" name="q3" value="v1"> Accéléromètre</label>
+  <label><input type="radio" name="q3" value="v2"> Thermomètre</label>
+  <label><input type="radio" name="q3" value="v3"> Caméra</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a3')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q3','v1','fb3',1)">Corriger</button>
+  </div>
+  <div id="a3" class="help">L'accéléromètre mesure les variations brutales de vitesse : une décélération violente signale un choc.</div>
+  <div id="fb3" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Que fait le GPS ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q4" value="v0"> Mesure la vitesse du vent</label>
+  <label><input type="radio" name="q4" value="v1"> Localise le véhicule</label>
+  <label><input type="radio" name="q4" value="v2"> Envoie un SMS</label>
+  <label><input type="radio" name="q4" value="v3"> Active un bouton</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a4')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q4','v1','fb4',1)">Corriger</button>
+  </div>
+  <div id="a4" class="help">Le récepteur GPS/GNSS calcule la position du véhicule grâce aux satellites — indispensable pour guider les secours.</div>
+  <div id="fb4" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Le eCall peut-il fonctionner automatiquement ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q5" value="v0"> Oui</label>
+  <label><input type="radio" name="q5" value="v1"> Non</label>
+  <label><input type="radio" name="q5" value="v2"> Seulement la nuit</label>
+  <label><input type="radio" name="q5" value="v3"> Seulement en ville</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a5')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q5','v0','fb5',1)">Corriger</button>
+  </div>
+  <div id="a5" class="help">En cas de choc grave (déclenchement des airbags), l'appel part automatiquement, sans action du conducteur.</div>
+  <div id="fb5" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Dans la chaîne d'information, quel élément TRAITE les données du eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q6" value="v0"> Le microcontrôleur (calculateur)</label>
+  <label><input type="radio" name="q6" value="v1"> L'antenne</label>
+  <label><input type="radio" name="q6" value="v2"> Le réservoir</label>
+  <label><input type="radio" name="q6" value="v3"> Le pare-brise</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a6')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q6','v0','fb6',1)">Corriger</button>
+  </div>
+  <div id="a6" class="help">Le calculateur embarqué analyse les signaux des capteurs et décide de déclencher (ou non) l'appel d'urgence.</div>
+  <div id="fb6" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel élément COMMUNIQUE l'alerte vers l'extérieur ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q7" value="v0"> Le module GSM et son antenne</label>
+  <label><input type="radio" name="q7" value="v1"> Le compteur de vitesse</label>
+  <label><input type="radio" name="q7" value="v2"> L'accéléromètre</label>
+  <label><input type="radio" name="q7" value="v3"> Le rétroviseur</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a7')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q7','v0','fb7',1)">Corriger</button>
+  </div>
+  <div id="a7" class="help">Le module de téléphonie mobile (avec sa carte SIM intégrée) transmet l'appel et les données au centre de secours.</div>
+  <div id="fb7" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Cite dans l'ordre les 3 grandes fonctions de la chaîne d'information (mots-clés).</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <input type="text" id="q8" placeholder="acquérir, …, …">
+  <div class="row">
+    <button class="btn small" onclick="aide('a8')">Aide</button>
+    <button class="btn small" onclick="checkTextIncludes('q8',['acquérir', 'acquerir', 'traiter', 'communiquer'],'fb8',1)">Corriger</button>
+  </div>
+  <div id="a8" class="help">Acquérir (capteurs) → Traiter (calculateur) → Communiquer (module GSM). C'est le squelette de toute chaîne d'information.</div>
+  <div id="fb8" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel numéro d'urgence européen le eCall compose-t-il ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <input type="number" id="q9" placeholder="Nombre">
+  <div class="row">
+    <button class="btn small" onclick="aide('a9')">Aide</button>
+    <button class="btn small" onclick="checkNumber('q9',112,'fb9',1)">Corriger</button>
+  </div>
+  <div id="a9" class="help">Le 112 est le numéro d'urgence unique européen, valable dans toute l'Union européenne.</div>
+  <div id="fb9" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Depuis quelle année le eCall est-il obligatoire sur les nouveaux modèles de voitures vendus dans l'UE ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <input type="number" id="q10" placeholder="Nombre">
+  <div class="row">
+    <button class="btn small" onclick="aide('a10')">Aide</button>
+    <button class="btn small" onclick="checkNumber('q10',2018,'fb10',1)">Corriger</button>
+  </div>
+  <div id="a10" class="help">Le règlement européen impose le eCall sur les nouveaux modèles homologués depuis le 31 mars 2018.</div>
+  <div id="fb10" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Comment le conducteur peut-il déclencher le eCall manuellement ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q11" value="v0"> Avec le bouton SOS de l'habitacle</label>
+  <label><input type="radio" name="q11" value="v1"> En klaxonnant 3 fois</label>
+  <label><input type="radio" name="q11" value="v2"> En freinant fort</label>
+  <label><input type="radio" name="q11" value="v3"> En ouvrant le capot</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a11')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q11','v0','fb11',1)">Corriger</button>
+  </div>
+  <div id="a11" class="help">Un bouton SOS (souvent au plafonnier) permet de déclencher l'appel même sans choc, par exemple pour un malaise.</div>
+  <div id="fb11" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Coche les données transmises automatiquement par le eCall (jeu de données minimal).</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="checkbox" name="q12" value="v0"> La position du véhicule</label>
+  <label><input type="checkbox" name="q12" value="v1"> L'heure de l'accident</label>
+  <label><input type="checkbox" name="q12" value="v2"> Le sens de circulation</label>
+  <label><input type="checkbox" name="q12" value="v3"> La playlist du conducteur</label>
+  <label><input type="checkbox" name="q12" value="v4"> La couleur du véhicule préférée du passager</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a12')">Aide</button>
+    <button class="btn small" onclick="checkMulti('q12',['v0', 'v1', 'v2'],'fb12',1)">Corriger</button>
+  </div>
+  <div id="a12" class="help">Le MSD (Minimum Set of Data) contient position, heure, direction, identification du véhicule… mais aucune donnée sans rapport avec le secours.</div>
+  <div id="fb12" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Que signifie MSD dans le contexte du eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q13" value="v0"> Minimum Set of Data (jeu minimal de données)</label>
+  <label><input type="radio" name="q13" value="v1"> Maximum Speed Detector</label>
+  <label><input type="radio" name="q13" value="v2"> Mobile SIM Device</label>
+  <label><input type="radio" name="q13" value="v3"> Message Sonore Digital</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a13')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q13','v0','fb13',1)">Corriger</button>
+  </div>
+  <div id="a13" class="help">Le MSD est le paquet de données normalisé envoyé au centre d'appel : position, heure, type de déclenchement…</div>
+  <div id="fb13" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel événement déclenche automatiquement le eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q14" value="v0"> Le déploiement des airbags / un choc violent détecté</label>
+  <label><input type="radio" name="q14" value="v1"> Le passage des vitesses</label>
+  <label><input type="radio" name="q14" value="v2"> L'allumage des phares</label>
+  <label><input type="radio" name="q14" value="v3"> Le plein d'essence</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a14')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q14','v0','fb14',1)">Corriger</button>
+  </div>
+  <div id="a14" class="help">Les capteurs de choc liés aux airbags servent de déclencheur : si les airbags partent, l'appel part.</div>
+  <div id="fb14" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Après l'envoi des données, que permet aussi le eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q15" value="v0"> Une communication vocale avec les secours</label>
+  <label><input type="radio" name="q15" value="v1"> De commander une dépanneuse pizza</label>
+  <label><input type="radio" name="q15" value="v2"> D'éteindre le moteur à distance</label>
+  <label><input type="radio" name="q15" value="v3"> De recharger la batterie</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a15')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q15','v0','fb15',1)">Corriger</button>
+  </div>
+  <div id="a15" class="help">Le haut-parleur et le micro de l'habitacle ouvrent une liaison vocale : l'opérateur du 112 peut parler aux occupants.</div>
+  <div id="fb15" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Dans le eCall, le haut-parleur et le micro appartiennent plutôt à…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q16" value="v0"> l'interface humain-machine (IHM)</label>
+  <label><input type="radio" name="q16" value="v1"> la chaîne d'énergie</label>
+  <label><input type="radio" name="q16" value="v2"> la carrosserie</label>
+  <label><input type="radio" name="q16" value="v3"> au système de freinage</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a16')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q16','v0','fb16',1)">Corriger</button>
+  </div>
+  <div id="a16" class="help">Micro et haut-parleur permettent le dialogue humain ↔ machine/secours : c'est l'IHM du système.</div>
+  <div id="fb16" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Le eCall nécessite-t-il un abonnement téléphonique du conducteur ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q17" value="v0"> Non, le service est gratuit et intégré</label>
+  <label><input type="radio" name="q17" value="v1"> Oui, un forfait 5G obligatoire</label>
+  <label><input type="radio" name="q17" value="v2"> Oui, 2 € par appel</label>
+  <label><input type="radio" name="q17" value="v3"> Seulement à l'étranger</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a17')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q17','v0','fb17',1)">Corriger</button>
+  </div>
+  <div id="a17" class="help">La carte SIM est intégrée au véhicule et l'appel au 112 est gratuit : aucun abonnement personnel n'est requis.</div>
+  <div id="fb17" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">En dehors d'un accident, le eCall…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q18" value="v0"> reste dormant : il ne transmet pas la position en continu</label>
+  <label><input type="radio" name="q18" value="v1"> suit le véhicule en permanence</label>
+  <label><input type="radio" name="q18" value="v2"> envoie la position toutes les minutes</label>
+  <label><input type="radio" name="q18" value="v3"> filme l'habitacle</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a18')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q18','v0','fb18',1)">Corriger</button>
+  </div>
+  <div id="a18" class="help">Par respect de la vie privée, le système est « dormant » : il ne communique qu'en cas de déclenchement.</div>
+  <div id="fb18" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Principal intérêt du eCall pour les secours :</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q19" value="v0"> Gagner du temps d'intervention grâce à la localisation précise</label>
+  <label><input type="radio" name="q19" value="v1"> Réparer la voiture à distance</label>
+  <label><input type="radio" name="q19" value="v2"> Éviter les embouteillages</label>
+  <label><input type="radio" name="q19" value="v3"> Payer le péage</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a19')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q19','v0','fb19',1)">Corriger</button>
+  </div>
+  <div id="a19" class="help">Localisation immédiate = intervention plus rapide, surtout la nuit ou en zone rurale, quand personne ne peut alerter.</div>
+  <div id="fb19" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quelle constellation européenne de satellites peut fournir la position au eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q20" value="v0"> Galileo</label>
+  <label><input type="radio" name="q20" value="v1"> Hubble</label>
+  <label><input type="radio" name="q20" value="v2"> Ariane</label>
+  <label><input type="radio" name="q20" value="v3"> Starlink</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a20')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q20','v0','fb20',1)">Corriger</button>
+  </div>
+  <div id="a20" class="help">Galileo est le système de navigation par satellites de l'Union européenne, utilisé en complément du GPS américain.</div>
+  <div id="fb20" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Coche les éléments qui appartiennent à la chaîne d'INFORMATION du eCall.</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="checkbox" name="q21" value="v0"> Accéléromètre</label>
+  <label><input type="checkbox" name="q21" value="v1"> Récepteur GPS</label>
+  <label><input type="checkbox" name="q21" value="v2"> Calculateur</label>
+  <label><input type="checkbox" name="q21" value="v3"> Module GSM</label>
+  <label><input type="checkbox" name="q21" value="v4"> Batterie 12 V</label>
+  <label><input type="checkbox" name="q21" value="v5"> Pneus</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a21')">Aide</button>
+    <button class="btn small" onclick="checkMulti('q21',['v0', 'v1', 'v2', 'v3'],'fb21',1)">Corriger</button>
+  </div>
+  <div id="a21" class="help">Capteurs (accéléromètre, GPS), traitement (calculateur) et communication (GSM) = chaîne d'information. La batterie relève de la chaîne d'énergie.</div>
+  <div id="fb21" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">La batterie du véhicule joue quel rôle pour le eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q22" value="v0"> ALIMENTER le système en énergie électrique</label>
+  <label><input type="radio" name="q22" value="v1"> ACQUÉRIR la position</label>
+  <label><input type="radio" name="q22" value="v2"> TRAITER les données</label>
+  <label><input type="radio" name="q22" value="v3"> Décorer le moteur</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a22')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q22','v0','fb22',1)">Corriger</button>
+  </div>
+  <div id="a22" class="help">Sans énergie, pas d'information : la batterie alimente capteurs, calculateur et module de communication.</div>
+  <div id="fb22" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Pourquoi le eCall dispose-t-il souvent d'une batterie de secours ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q23" value="v0"> Pour fonctionner même si la batterie principale est détruite dans le choc</label>
+  <label><input type="radio" name="q23" value="v1"> Pour alimenter l'autoradio</label>
+  <label><input type="radio" name="q23" value="v2"> Pour recharger les téléphones</label>
+  <label><input type="radio" name="q23" value="v3"> Pour chauffer les sièges</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a23')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q23','v0','fb23',1)">Corriger</button>
+  </div>
+  <div id="a23" class="help">Un accident grave peut couper l'alimentation principale : la batterie de secours garantit l'appel d'urgence.</div>
+  <div id="fb23" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Le signal issu de l'accéléromètre est d'abord…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q24" value="v0"> une grandeur physique convertie en signal électrique</label>
+  <label><input type="radio" name="q24" value="v1"> un SMS</label>
+  <label><input type="radio" name="q24" value="v2"> une image</label>
+  <label><input type="radio" name="q24" value="v3"> un son</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a24')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q24','v0','fb24',1)">Corriger</button>
+  </div>
+  <div id="a24" class="help">Le capteur transforme la décélération (grandeur physique) en signal électrique que le calculateur peut traiter.</div>
+  <div id="fb24" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel composant identifie le véhicule dans les données envoyées ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q25" value="v0"> Le numéro d'identification du véhicule (VIN)</label>
+  <label><input type="radio" name="q25" value="v1"> La plaque du conducteur précédent</label>
+  <label><input type="radio" name="q25" value="v2"> Le ticket de parking</label>
+  <label><input type="radio" name="q25" value="v3"> Le code couleur</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a25')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q25','v0','fb25',1)">Corriger</button>
+  </div>
+  <div id="a25" class="help">Le VIN (Vehicle Identification Number) permet aux secours de connaître le modèle exact du véhicule accidenté.</div>
+  <div id="fb25" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Vrai ou faux : le eCall peut aussi être déclenché par un témoin depuis un autre véhicule équipé.</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q26" value="v0"> Vrai</label>
+  <label><input type="radio" name="q26" value="v1"> Faux</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a26')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q26','v0','fb26',1)">Corriger</button>
+  </div>
+  <div id="a26" class="help">Le bouton SOS permet un déclenchement manuel : un témoin d'accident peut alerter le 112 depuis son propre véhicule.</div>
+  <div id="fb26" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Où sont reçues les données du eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q27" value="v0"> Dans un centre de réception des appels d'urgence (PSAP)</label>
+  <label><input type="radio" name="q27" value="v1"> Chez le concessionnaire</label>
+  <label><input type="radio" name="q27" value="v2"> Sur les réseaux sociaux</label>
+  <label><input type="radio" name="q27" value="v3"> À la station de lavage</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a27')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q27','v0','fb27',1)">Corriger</button>
+  </div>
+  <div id="a27" class="help">Le PSAP (Public Safety Answering Point) est le centre 112 qui reçoit l'appel et coordonne les secours.</div>
+  <div id="fb27" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Le trajet « capteur → calculateur → module GSM → antenne » illustre…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q28" value="v0"> le cheminement de l'information dans le système</label>
+  <label><input type="radio" name="q28" value="v1"> la chaîne d'énergie</label>
+  <label><input type="radio" name="q28" value="v2"> le circuit de refroidissement</label>
+  <label><input type="radio" name="q28" value="v3"> la transmission mécanique</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a28')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q28','v0','fb28',1)">Corriger</button>
+  </div>
+  <div id="a28" class="help">C'est le flux d'information : acquisition, traitement, puis communication vers l'extérieur.</div>
+  <div id="fb28" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quelle grandeur mesure l'accéléromètre ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q29" value="v0"> L'accélération (variation de vitesse)</label>
+  <label><input type="radio" name="q29" value="v1"> La température du moteur</label>
+  <label><input type="radio" name="q29" value="v2"> La pression des pneus</label>
+  <label><input type="radio" name="q29" value="v3"> Le niveau d'essence</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a29')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q29','v0','fb29',1)">Corriger</button>
+  </div>
+  <div id="a29" class="help">Accéléromètre = capteur d'accélération. Une forte décélération (choc) déclenche l'alerte.</div>
+  <div id="fb29" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Sans réseau mobile disponible, le eCall…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q30" value="v0"> ne peut pas transmettre : la communication nécessite une couverture</label>
+  <label><input type="radio" name="q30" value="v1"> fonctionne par pigeon voyageur</label>
+  <label><input type="radio" name="q30" value="v2"> utilise le Bluetooth du conducteur</label>
+  <label><input type="radio" name="q30" value="v3"> envoie un fax</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a30')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q30','v0','fb30',1)">Corriger</button>
+  </div>
+  <div id="a30" class="help">Le module GSM a besoin d'une couverture mobile. C'est une limite du système dans les zones blanches.</div>
+  <div id="fb30" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Classer eCall parmi les objets suivants : c'est un…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q31" value="v0"> système embarqué communicant</label>
+  <label><input type="radio" name="q31" value="v1"> jouet connecté</label>
+  <label><input type="radio" name="q31" value="v2"> objet purement mécanique</label>
+  <label><input type="radio" name="q31" value="v3"> meuble</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a31')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q31','v0','fb31',1)">Corriger</button>
+  </div>
+  <div id="a31" class="help">Le eCall est un système électronique embarqué dans le véhicule, qui communique avec l'extérieur : un objet communicant.</div>
+  <div id="fb31" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Coche les situations où le eCall se déclenche.</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="checkbox" name="q32" value="v0"> Choc violent avec airbags</label>
+  <label><input type="checkbox" name="q32" value="v1"> Appui sur le bouton SOS</label>
+  <label><input type="checkbox" name="q32" value="v2"> Démarrage du moteur</label>
+  <label><input type="checkbox" name="q32" value="v3"> Ouverture d'une portière</label>
+  <label><input type="checkbox" name="q32" value="v4"> Pluie forte</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a32')">Aide</button>
+    <button class="btn small" onclick="checkMulti('q32',['v0', 'v1'],'fb32',1)">Corriger</button>
+  </div>
+  <div id="a32" class="help">Deux déclencheurs seulement : automatique (choc grave) ou manuel (bouton SOS).</div>
+  <div id="fb32" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel capteur donne la POSITION du véhicule ? (mot-clé)</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <input type="text" id="q33" placeholder="Nom du capteur / système">
+  <div class="row">
+    <button class="btn small" onclick="aide('a33')">Aide</button>
+    <button class="btn small" onclick="checkTextIncludes('q33',['gps', 'gnss', 'galileo', 'satellite'],'fb33',1)">Corriger</button>
+  </div>
+  <div id="a33" class="help">Le récepteur GPS/GNSS (dont Galileo) calcule la position par satellites.</div>
+  <div id="fb33" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">La communication du eCall vers le 112 passe par…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q34" value="v0"> le réseau de téléphonie mobile</label>
+  <label><input type="radio" name="q34" value="v1"> un câble Ethernet déroulé derrière la voiture</label>
+  <label><input type="radio" name="q34" value="v2"> le réseau électrique</label>
+  <label><input type="radio" name="q34" value="v3"> la radio FM</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a34')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q34','v0','fb34',1)">Corriger</button>
+  </div>
+  <div id="a34" class="help">L'appel et le MSD transitent par le réseau mobile, comme un appel téléphonique classique.</div>
+  <div id="fb34" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quelle information N'EST PAS transmise par le eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q35" value="v0"> L'historique de navigation internet du conducteur</label>
+  <label><input type="radio" name="q35" value="v1"> La position du véhicule</label>
+  <label><input type="radio" name="q35" value="v2"> L'heure du déclenchement</label>
+  <label><input type="radio" name="q35" value="v3"> Le sens de circulation</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a35')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q35','v0','fb35',1)">Corriger</button>
+  </div>
+  <div id="a35" class="help">Le MSD est minimal et strictement lié au secours : aucune donnée de navigation personnelle n'est envoyée.</div>
+  <div id="fb35" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Le nombre d'occupants peut être estimé grâce…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q36" value="v0"> aux capteurs de bouclage des ceintures de sécurité</label>
+  <label><input type="radio" name="q36" value="v1"> au poids du coffre</label>
+  <label><input type="radio" name="q36" value="v2"> à la caméra de recul</label>
+  <label><input type="radio" name="q36" value="v3"> au niveau sonore</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a36')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q36','v0','fb36',1)">Corriger</button>
+  </div>
+  <div id="a36" class="help">Les capteurs de ceinture donnent une estimation du nombre de personnes à secourir — précieuse pour dimensionner les secours.</div>
+  <div id="fb36" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Dans un algorigramme du eCall, le test « choc détecté ? » se représente par…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q37" value="v0"> un losange (décision)</label>
+  <label><input type="radio" name="q37" value="v1"> un rectangle (action)</label>
+  <label><input type="radio" name="q37" value="v2"> un ovale (début)</label>
+  <label><input type="radio" name="q37" value="v3"> un nuage</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a37')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q37','v0','fb37',1)">Corriger</button>
+  </div>
+  <div id="a37" class="help">Le losange représente toujours une décision/condition dans un algorigramme.</div>
+  <div id="fb37" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Si « choc détecté = FAUX », que fait le programme du eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q38" value="v0"> Il continue de surveiller les capteurs (boucle)</label>
+  <label><input type="radio" name="q38" value="v1"> Il appelle quand même le 112</label>
+  <label><input type="radio" name="q38" value="v2"> Il éteint la voiture</label>
+  <label><input type="radio" name="q38" value="v3"> Il efface le programme</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a38')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q38','v0','fb38',1)">Corriger</button>
+  </div>
+  <div id="a38" class="help">Tant qu'aucun choc n'est détecté, le système boucle sur la surveillance des capteurs : c'est une boucle d'attente d'événement.</div>
+  <div id="fb38" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Le eCall améliore surtout la sécurité…</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q39" value="v0"> passive après l'accident (rapidité des secours)</label>
+  <label><input type="radio" name="q39" value="v1"> du coffre à bagages</label>
+  <label><input type="radio" name="q39" value="v2"> des piétons avant l'accident</label>
+  <label><input type="radio" name="q39" value="v3"> du autoradio</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a39')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q39','v0','fb39',1)">Corriger</button>
+  </div>
+  <div id="a39" class="help">Le eCall n'évite pas l'accident : il réduit le délai d'arrivée des secours, ce qui sauve des vies après le choc.</div>
+  <div id="fb39" class="answer"></div>
+</section>
+<section class="card" data-competence="4e_C4.4" data-points="1">
+  <p class="q-title">Quel domaine du socle est le plus mobilisé quand tu décris la chaîne d'information du eCall ?</p>
+  <span class="badge">Compétence visée : 4e_C4.4</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q40" value="v0"> D4 — les systèmes naturels et techniques</label>
+  <label><input type="radio" name="q40" value="v1"> D1.2 — langues étrangères</label>
+  <label><input type="radio" name="q40" value="v2"> D1.4 — arts</label>
+  <label><input type="radio" name="q40" value="v3"> D5 — histoire uniquement</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a40')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q40','v0','fb40',1)">Corriger</button>
+  </div>
+  <div id="a40" class="help">Décrire l'organisation interne d'un système technique relève du domaine 4 du socle commun.</div>
+  <div id="fb40" class="answer"></div>
+</section>
 
-// =============================
-// QUESTIONS
-// =============================
-let questions = [
-
-{
-q: "1. Quelle est la première étape de la chaîne d'information ?",
-choices: ["Traiter", "Communiquer", "Acquérir", "Stocker"],
-answer: 2
-},
-{
-q: "2. Quel élément acquiert les données ?",
-choices: ["Capteur", "Actionneur", "Carte SIM", "Batterie"],
-answer: 0
-},
-{
-q: "3. Quel capteur détecte un accident ?",
-choices: ["GPS", "Accéléromètre", "Thermomètre", "Caméra"],
-answer: 1
-},
-{
-q: "4. Que fait le GPS ?",
-choices: ["Mesure la vitesse", "Localise", "Envoie SMS", "Active bouton"],
-answer: 1
-},
-{
-q: "5. Le eCall fonctionne automatiquement ?",
-choices: ["Oui", "Non", "Seulement la nuit", "Seulement manuel"],
-answer: 0
-}
-
-];
-
-// Générer automatiquement jusqu'à 40 questions
-for(let i = 6; i <= 40; i++){
-    questions.push({
-        q: i + ". Le système eCall permet-il de sauver des vies ?",
-        choices: ["Oui", "Non", "Parfois", "Jamais"],
-        answer: 0
-    });
-}
-
-// =============================
-// AFFICHAGE
-// =============================
-let quizDiv = document.getElementById("quiz");
-
-questions.forEach((q, index) => {
-    let div = document.createElement("div");
-    div.className = "question";
-
-    let html = "<p>" + q.q + "</p>";
-
-    q.choices.forEach((choice, i) => {
-        html += `
-        <label>
-        <input type="radio" name="q${index}" value="${i}">
-        ${choice}
-        </label><br>`;
-    });
-
-    div.innerHTML = html;
-    quizDiv.appendChild(div);
-});
-
-// =============================
-// CORRECTION AVEC NOTE /20
-// =============================
-function corriger(){
-
-    let score = 0;
-
-    questions.forEach((q, index) => {
-
-        let radios = document.getElementsByName("q"+index);
-
-        radios.forEach(r => {
-
-            if(r.checked && parseInt(r.value) === q.answer){
-                score++;
-            }
-
-        });
-
-    });
-
-    // Calcul note sur 20
-    let note = (score / questions.length) * 20;
-
-    // Arrondi à 2 décimales
-    note = note.toFixed(2);
-
-    // Affichage
-    document.getElementById("score").innerHTML =
-    "🎯 Score : " + score + " / " + questions.length +
-    "<br>📊 Note : " + note + " / 20";
-
-}
-
-// =============================
-// RESET
-// =============================
-function resetQuiz(){
-
-    // Recharge la page
-    location.reload();
-
-}
-
-</script>
+    <div class="footer">
+      <!-- Texte de résumé -->
+      <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
+    </div>
+  </div> <!-- Fin du wrap -->
+  <script>
+    // Initialisation de la variable total pour le score
+    let total = 0;
+    // Calcul du maximum de points en sommants les data-points des sections
+    const max = (() => {
+      let s = 0;
+      document.querySelectorAll('section.card').forEach(sec => {
+        s += Number(sec.dataset.points || 0);
+      });
+      return s;
+    })();
+    // Affichage du max dans le span
+    document.getElementById('max').textContent = max;
+    // Calcul du nombre de questions (sections card)
+    const nbq = document.querySelectorAll('section.card').length;
+    // Affichage du nombre de questions
+    document.getElementById('nbq').textContent = nbq;
+    // Fonction pour toggle l'aide
+    function aide(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle("show-help");
+    }
+    // Fonction pour afficher le feedback
+    function feedback(id, ok, msg) {
+      const fb = document.getElementById(id);
+      fb.className = 'answer ' + (ok ? 'ok' : 'ko');
+      fb.innerHTML = msg; // Use innerHTML to allow <br> or other HTML if needed
+    }
+    // Set pour les points déjà attribués (éviter doublons)
+    const awarded = new Set();
+    // Fonction pour attribuer des points
+    function givePoints(key, pts) {
+      if (awarded.has(key)) return;
+      total += pts;
+      awarded.add(key);
+      const sur20 = (total / max) * 20;
+      document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">' + sur20.toFixed(2) + '</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
+    }
+    // Fonction pour vérifier MCQ (radio), optimisée avec label correct
+    function checkMCQ(name, correct, fbId, pts) {
+      const sel = document.querySelector('input[name="' + name + '"]:checked');
+      if (!sel) {
+        feedback(fbId, false, '⛳ Veuillez choisir une réponse avant de corriger.');
+        return;
+      }
+      const ok = sel.value === correct;
+      const helpId = 'a' + name.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let correctLabel = document.querySelector('label input[name="' + name + '"][value="' + correct + '"]').parentNode.textContent.trim();
+      let msg = ok ? '✅ Bonne réponse ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise réponse. La bonne réponse est : ' + correctLabel + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId); // Show help if wrong
+      if (ok) givePoints(name, pts);
+    }
+    // Fonction pour vérifier select, optimisée
+    function checkSelect(id, correct, fbId, pts) {
+      const val = document.getElementById(id).value;
+      const ok = (val === correct);
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      const correctText = document.querySelector('#' + id + ' option[value="' + correct + '"]').textContent;
+      let msg = ok ? '✅ Exact ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise sélection. La bonne option est : ' + correctText + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier nombre, optimisée
+    function checkNumber(id, correctNumber, fbId, pts) {
+      const val = Number(document.getElementById(id).value);
+      const ok = (val === Number(correctNumber));
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let msg = ok ? '✅ Juste ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise valeur. La bonne valeur est : ' + correctNumber + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier texte avec mots-clés, optimisée
+    function checkTextIncludes(id, keywords, fbId, pts) {
+      const val = (document.getElementById(id).value || '').toLowerCase();
+      const ok = keywords.some(k => val.includes(k.toLowerCase()));
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let msg = ok ? '✅ Idée principale correcte ! <br>Explication détaillée : ' + helpText : '❌ Mot-clé manquant. Mots-clés attendus : ' + keywords.join(', ') + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier multi checkboxes, optimisée avec labels corrects
+    function checkMulti(name, correctValues, fbId, pts) {
+      const all = Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(i => i.value);
+      const ok = correctValues.length === all.length && correctValues.every(v => all.includes(v));
+      const helpId = 'a' + name.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let correctLabels = correctValues.map(v => document.querySelector('label input[name="' + name + '"][value="' + v + '"]').parentNode.textContent.trim()).join(', ');
+      let msg = ok ? '✅ Parfait ! <br>Explication détaillée : ' + helpText : '❌ Sélection incorrecte (trop, pas assez ou mauvais choix). Choix corrects : ' + correctLabels + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(name, pts);
+    }
+    // Fonction pour corriger tout
+    function corrigerTout() {
+      document.querySelectorAll('.card .btn.small').forEach(btn => {
+        if (btn.textContent.trim().toLowerCase().includes('corriger')) btn.click();
+      });
+      const sur20 = (total / max) * 20;
+      const id = 'Nom: ' + (document.getElementById('nom').value || '-') + ' | Prénom: ' + (document.getElementById('prenom').value || '-') + ' | Classe: ' + (document.getElementById('classe').value || '-');
+      document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ')';
+    }
+    // Fonction pour réinitialiser
+    function reinitialiser() {
+      total = 0;
+      awarded.clear();
+      document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
+      document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
+      document.querySelectorAll('input[type=text],input[type=number]').forEach(i => i.value = '');
+      document.querySelectorAll('select').forEach(s => s.value = '');
+      document.querySelectorAll('.answer').forEach(a => { a.textContent = ''; a.className = 'answer'; });
+      document.querySelectorAll('.help').forEach(h => h.classList.remove('show-help'));
+      document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
+    }
+    // Amélioration : Fonction pour afficher toutes les aides
+    function showAllHelps() {
+      document.querySelectorAll('.help').forEach(h => h.classList.add('show-help'));
+    }
+  </script>
+</body>
+</html>

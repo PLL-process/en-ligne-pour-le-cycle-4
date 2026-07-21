@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QCM (24 questions) — Algorigrammes &amp; logique, spécial DNB — 3e (2024)</title>
+  <style>
+    /* Définition des variables CSS pour les couleurs (thème bleu foncé) */
+    :root { --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; }
+    /* Styles généraux pour tous les éléments (box-sizing pour une meilleure gestion des paddings) */
+    * { box-sizing: border-box; }
+    /* Styles pour le body (fond, police, couleur texte) */
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    /* Styles pour l'en-tête (padding et gradient de fond) */
+    header { padding: 18px 20px; background: linear-gradient(90deg, #0e1630, #1f2a57); }
+    /* Styles pour h1 (marge zéro, taille police) */
+    h1 { margin: 0; font-size: 1.35rem; }
+    /* Styles pour le wrapper principal (largeur max, marges, padding, reset du compteur q) */
+    .wrap { max-width: 980px; margin: 18px auto; padding: 0 14px; counter-reset: q; }
+    /* Styles pour les cartes (fond, bordure, arrondi, padding, marge, ombre) */
+    .card { background: var(--card); border: 1px solid #223060; border-radius: 18px; padding: 14px 16px; margin: 14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+    /* Ajout du numéro de question avant le titre (incrément du compteur) */
+    .card .q-title::before { counter-increment: q; content: "Q" counter(q) " — "; color: #a9b6df; font-weight: 700; }
+    /* Styles pour les lignes flex (display flex, wrap, gap, align) */
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    /* Styles pour les badges (display inline, padding, arrondi, taille police, couleurs) */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; color: #0e1630; background: #c7d2fe; font-weight: 700; }
+    /* Styles pour les points (gras, couleur verte) */
+    .pts { font-weight: 700; color: #d1fae5; }
+    /* Styles pour les boutons (bordure, padding, arrondi, curseur, fond, couleur, gras) */
+    .btn { border: 1px solid #344a8a; padding: 8px 12px; border-radius: 12px; cursor: pointer; background: #1b254a; color: var(--ink); font-weight: 600; }
+    /* Styles pour les petits boutons (padding et taille police réduits) */
+    .btn.small { padding: 5px 8px; font-size: .9rem; }
+    /* Effet hover sur boutons (augmente la luminosité) */
+    .btn:hover { filter: brightness(1.15); }
+    /* Styles pour les aides (cachées par défaut, marge, couleur muted, padding amélioré, bordure latérale pour visibilité) */
+    .help { display: none; margin-top: 8px; color: var(--muted); padding: 10px; border-left: 4px solid var(--accent); background: var(--bg); border-radius: 4px; font-size: 0.95rem; line-height: 1.6; }
+    /* Styles pour les réponses (marge, gras, padding, arrondi, fond, ombre pour un look boxed) */
+    .answer { margin-top: 8px; font-weight: 700; padding: 10px; border-radius: 8px; background: var(--bg); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    /* Couleur et bordure pour réponses correctes (vert) */
+    .ok { color: var(--ok); border: 1px solid var(--ok); }
+    /* Couleur et bordure pour réponses incorrectes (rouge) */
+    .ko { color: var(--ko); border: 1px solid var(--ko); }
+    /* Couleur pour texte muted (gris) */
+    .muted { color: var(--muted); }
+    /* Styles pour les titres de questions (marge, taille police) */
+    .q-title { margin: 0 0 6px 0; font-size: 1.05rem; }
+    /* Styles pour le footer (marge, padding, arrondi, fond, bordure) */
+    .footer { margin: 16px 0; padding: 12px; border-radius: 14px; background: #0f1a3d; border: 1px solid #23316b; }
+    /* Styles pour le score (taille police, gras) */
+    .score { font-size: 1.1rem; font-weight: 800; }
+    /* Styles pour inputs numériques, text et select (fond, bordure, couleur, padding, arrondi) */
+    input[type="number"], input[type="text"], select { background: #0f1836; border: 1px solid #2b3c75; color: var(--ink); padding: 8px 10px; border-radius: 10px; }
+    /* Styles pour labels (display block, marge) */
+    label { display: block; margin: .25rem 0; }
+    /* Styles pour grille à 3 colonnes (grid, columns, gap) */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    /* Styles pour notes (taille police, couleur claire) */
+    .note { font-size: .9rem; color: #cbd5e1; }
+    /* Styles pour inputs dans idbox (largeur 100%) */
+    .idbox input { width: 100%; }
+    /* Styles pour images schema (largeur max, arrondi, bordure, fond) */
+    img.schema { max-width: 100%; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
+    /* Commentaire : Illustrations */
+    /* Styles pour figures questions (marge, align center) */
+    .q-fig { margin: 10px 0; text-align: center; }
+    /* Styles pour images dans figures (largeur max, hauteur auto, arrondi, bordure, fond) */
+    .q-fig img.q-img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
+    /* Styles pour figcaption (taille police, couleur, marge) */
+    .q-fig figcaption { font-size: .9rem; color: #a9b6df; margin-top: 6px; }
+    /* Styles pour help (caché, marge, couleur) */
+    .help { display: none; margin-top: 8px; color: var(--muted); }
+    /* Classe pour afficher l'aide (display block) */
+    .help.show-help { display: block; }
+    /* Amélioration : Styles pour les tableaux (bordure collapse, largeur, marge) */
+    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+    /* Styles pour th et td (bordure, padding, align) */
+    th, td { border: 1px solid #2b3c75; padding: 8px; text-align: left; }
+    /* Styles pour th (fond bleu foncé) */
+    th { background: #1b254a; }
+  </style>
+</head>
+<body>
+  <header><h1>QCM (24 questions) — Algorigrammes &amp; logique, spécial DNB — 3e (2024)</h1></header>
+  <div class="wrap">
+    <!-- Section d'identification (sans q-title pour ne pas compter comme question) -->
+    <div class="card">
+      <!-- Titre de l'identité, avec nouvelle classe id-title sans compteur -->
+      <p class="id-title">Identité de l’élève</p>
+      <!-- Grille pour inputs nom, prénom, classe -->
+      <div class="grid2">
+        <!-- Input pour nom -->
+        <input id="nom" placeholder="Nom">
+        <!-- Input pour prénom -->
+        <input id="prenom" placeholder="Prénom">
+        <!-- Input pour classe -->
+        <input id="classe" placeholder="Classe (ex. 4eB)">
+      </div>
+      <!-- Note pour l'utilisateur -->
+      <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
+    </div>
+    <!-- Bandeau score et boutons globaux -->
+    <div class="footer row">
+      <!-- Affichage du score -->
+      <div class="score" id="score"> Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">0</strong> </div>
+      <!-- Bouton pour corriger tout -->
+      <button class="btn" onclick="corrigerTout()">Corriger tout</button>
+      <!-- Bouton pour réinitialiser -->
+      <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
+      <!-- Amélioration : Bouton pour afficher toutes les aides -->
+      <button class="btn" onclick="showAllHelps()">Afficher toutes les aides</button>
+      <!-- Note sur les compétences -->
+      <div class="note">Les questions ciblent 3e_C6.2 (modifier et tester un programme), en préparation de l'épreuve de sciences du brevet.</div>
+    </div>
+    <!-- Q1 : Question sur le routeur -->
+    
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Dans un algorigramme, l'ovale (ou forme arrondie) représente…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q1" value="v0"> le début ou la fin</label>
+  <label><input type="radio" name="q1" value="v1"> une action</label>
+  <label><input type="radio" name="q1" value="v2"> une décision</label>
+  <label><input type="radio" name="q1" value="v3"> une entrée de données</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a1')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q1','v0','fb1',1)">Corriger</button>
+  </div>
+  <div id="a1" class="help">Début et Fin s'écrivent toujours dans une forme ovale : ce sont les bornes du programme.</div>
+  <div id="fb1" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Le rectangle représente…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q2" value="v0"> une action / instruction</label>
+  <label><input type="radio" name="q2" value="v1"> une décision</label>
+  <label><input type="radio" name="q2" value="v2"> le début</label>
+  <label><input type="radio" name="q2" value="v3"> une boucle uniquement</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a2')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q2','v0','fb2',1)">Corriger</button>
+  </div>
+  <div id="a2" class="help">Chaque rectangle contient une action à exécuter : « allumer la lampe », « incrémenter le compteur »…</div>
+  <div id="fb2" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Le losange représente…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q3" value="v0"> un test / une décision (question à réponse OUI ou NON)</label>
+  <label><input type="radio" name="q3" value="v1"> une action</label>
+  <label><input type="radio" name="q3" value="v2"> la fin</label>
+  <label><input type="radio" name="q3" value="v3"> un commentaire</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a3')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q3','v0','fb3',1)">Corriger</button>
+  </div>
+  <div id="a3" class="help">Le losange pose une question fermée ; deux flèches en sortent : une pour OUI (vrai), une pour NON (faux).</div>
+  <div id="fb3" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Combien de flèches sortent d'un losange de décision ?</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q4" value="v0"> 2 (vrai / faux)</label>
+  <label><input type="radio" name="q4" value="v1"> 1</label>
+  <label><input type="radio" name="q4" value="v2"> 3</label>
+  <label><input type="radio" name="q4" value="v3"> aucune</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a4')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q4','v0','fb4',1)">Corriger</button>
+  </div>
+  <div id="a4" class="help">Une sortie par réponse possible au test : la branche VRAI et la branche FAUX.</div>
+  <div id="fb4" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Les flèches d'un algorigramme indiquent…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q5" value="v0"> l'ordre d'exécution des étapes</label>
+  <label><input type="radio" name="q5" value="v1"> la couleur des blocs</label>
+  <label><input type="radio" name="q5" value="v2"> le niveau sonore</label>
+  <label><input type="radio" name="q5" value="v3"> la taille du programme</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a5')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q5','v0','fb5',1)">Corriger</button>
+  </div>
+  <div id="a5" class="help">On lit l'algorigramme en suivant les flèches : elles imposent l'enchaînement des instructions.</div>
+  <div id="fb5" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Éclairage automatique : « SI luminosité &lt; 50 ALORS allumer la lampe ». Si luminosité = 30, la lampe…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q6" value="v0"> s'allume</label>
+  <label><input type="radio" name="q6" value="v1"> s'éteint</label>
+  <label><input type="radio" name="q6" value="v2"> clignote</label>
+  <label><input type="radio" name="q6" value="v3"> explose</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a6')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q6','v0','fb6',1)">Corriger</button>
+  </div>
+  <div id="a6" class="help">30 &lt; 50 : la condition est VRAIE, donc la branche ALORS s'exécute : la lampe s'allume.</div>
+  <div id="fb6" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Même programme : si luminosité = 80, la lampe…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q7" value="v0"> reste éteinte (ou s'éteint)</label>
+  <label><input type="radio" name="q7" value="v1"> s'allume</label>
+  <label><input type="radio" name="q7" value="v2"> clignote</label>
+  <label><input type="radio" name="q7" value="v3"> double d'intensité</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a7')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q7','v0','fb7',1)">Corriger</button>
+  </div>
+  <div id="a7" class="help">80 &lt; 50 est FAUX : on suit la branche SINON/FAUX, la lampe n'est pas allumée.</div>
+  <div id="fb7" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Une boucle « TANT QUE » répète des instructions…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q8" value="v0"> tant que la condition est vraie</label>
+  <label><input type="radio" name="q8" value="v1"> exactement une fois</label>
+  <label><input type="radio" name="q8" value="v2"> jamais</label>
+  <label><input type="radio" name="q8" value="v3"> tant que la condition est fausse</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a8')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q8','v0','fb8',1)">Corriger</button>
+  </div>
+  <div id="a8" class="help">À chaque tour, la condition est re-testée : dès qu'elle devient fausse, on sort de la boucle.</div>
+  <div id="fb8" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Que risque un programme dont la condition de boucle ne devient jamais fausse ?</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q9" value="v0"> Une boucle infinie</label>
+  <label><input type="radio" name="q9" value="v1"> Un arrêt immédiat</label>
+  <label><input type="radio" name="q9" value="v2"> Une division par zéro</label>
+  <label><input type="radio" name="q9" value="v3"> Un gain de vitesse</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a9')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q9','v0','fb9',1)">Corriger</button>
+  </div>
+  <div id="a9" class="help">Si rien ne fait évoluer la condition, le programme tourne sans fin : boucle infinie, bug classique du DNB.</div>
+  <div id="fb9" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">« compteur = compteur + 1 » s'appelle…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q10" value="v0"> une incrémentation</label>
+  <label><input type="radio" name="q10" value="v1"> une décrémentation</label>
+  <label><input type="radio" name="q10" value="v2"> une comparaison</label>
+  <label><input type="radio" name="q10" value="v3"> une suppression</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a10')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q10','v0','fb10',1)">Corriger</button>
+  </div>
+  <div id="a10" class="help">Incrémenter = augmenter de 1. La variable sert souvent à compter les tours de boucle.</div>
+  <div id="fb10" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">compteur part de 0 ; on l'incrémente à chaque tour d'une boucle exécutée 5 fois. Valeur finale ?</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <input type="number" id="q11" placeholder="Nombre">
+  <div class="row">
+    <button class="btn small" onclick="aide('a11')">Aide</button>
+    <button class="btn small" onclick="checkNumber('q11',5,'fb11',1)">Corriger</button>
+  </div>
+  <div id="a11" class="help">0 → 1 → 2 → 3 → 4 → 5 : cinq incrémentations donnent 5.</div>
+  <div id="fb11" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">La condition « température &gt; 30 ET humidité &lt; 20 » est vraie…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q12" value="v0"> seulement si LES DEUX conditions sont vraies</label>
+  <label><input type="radio" name="q12" value="v1"> si au moins une est vraie</label>
+  <label><input type="radio" name="q12" value="v2"> jamais</label>
+  <label><input type="radio" name="q12" value="v3"> toujours</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a12')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q12','v0','fb12',1)">Corriger</button>
+  </div>
+  <div id="a12" class="help">L'opérateur ET exige que toutes les conditions soient vraies en même temps.</div>
+  <div id="fb12" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">La condition « bouton appuyé OU détecteur activé » est vraie…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q13" value="v0"> si au moins UNE des deux conditions est vraie</label>
+  <label><input type="radio" name="q13" value="v1"> seulement si les deux sont vraies</label>
+  <label><input type="radio" name="q13" value="v2"> jamais</label>
+  <label><input type="radio" name="q13" value="v3"> si les deux sont fausses</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a13')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q13','v0','fb13',1)">Corriger</button>
+  </div>
+  <div id="a13" class="help">L'opérateur OU se contente d'une seule condition vraie.</div>
+  <div id="fb13" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">La porte logique qui ne s'active que si TOUTES les entrées sont à 1 est la porte…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q14" value="v0"> ET (AND)</label>
+  <label><input type="radio" name="q14" value="v1"> OU (OR)</label>
+  <label><input type="radio" name="q14" value="v2"> NON (NOT)</label>
+  <label><input type="radio" name="q14" value="v3"> PEUT-ÊTRE</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a14')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q14','v0','fb14',1)">Corriger</button>
+  </div>
+  <div id="a14" class="help">Porte ET : sortie à 1 uniquement quand toutes les entrées valent 1 — comme deux interrupteurs en série.</div>
+  <div id="fb14" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">La porte NON (NOT)…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q15" value="v0"> inverse l'entrée (1 devient 0, 0 devient 1)</label>
+  <label><input type="radio" name="q15" value="v1"> additionne les entrées</label>
+  <label><input type="radio" name="q15" value="v2"> recopie l'entrée</label>
+  <label><input type="radio" name="q15" value="v3"> éteint le circuit</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a15')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q15','v0','fb15',1)">Corriger</button>
+  </div>
+  <div id="a15" class="help">L'inverseur retourne le contraire de son entrée : c'est la négation logique.</div>
+  <div id="fb15" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Un parallélogramme dans certains algorigrammes représente…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q16" value="v0"> une entrée ou une sortie de données</label>
+  <label><input type="radio" name="q16" value="v1"> une décision</label>
+  <label><input type="radio" name="q16" value="v2"> la fin</label>
+  <label><input type="radio" name="q16" value="v3"> une erreur</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a16')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q16','v0','fb16',1)">Corriger</button>
+  </div>
+  <div id="a16" class="help">Lire une valeur de capteur ou afficher un résultat : les échanges de données se notent en parallélogramme.</div>
+  <div id="fb16" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Un « sous-programme » sert à…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q17" value="v0"> regrouper des instructions réutilisables (appelées plusieurs fois)</label>
+  <label><input type="radio" name="q17" value="v1"> ralentir le programme</label>
+  <label><input type="radio" name="q17" value="v2"> décorer l'algorigramme</label>
+  <label><input type="radio" name="q17" value="v3"> supprimer les variables</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a17')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q17','v0','fb17',1)">Corriger</button>
+  </div>
+  <div id="a17" class="help">Le sous-programme (ou fonction) évite de copier-coller le même bloc : on l'appelle quand on en a besoin.</div>
+  <div id="fb17" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Un « événement » dans un programme, c'est…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q18" value="v0"> un fait extérieur qui déclenche une séquence (appui, détection…)</label>
+  <label><input type="radio" name="q18" value="v1"> une variable</label>
+  <label><input type="radio" name="q18" value="v2"> un losange</label>
+  <label><input type="radio" name="q18" value="v3"> une erreur de syntaxe</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a18')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q18','v0','fb18',1)">Corriger</button>
+  </div>
+  <div id="a18" class="help">« Quand le bouton est pressé… » : l'événement lance l'exécution d'un bloc d'instructions.</div>
+  <div id="fb18" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Portail automatique : « SI obstacle détecté ALORS stopper la fermeture ». Cette instruction sert à…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q19" value="v0"> la sécurité des personnes</label>
+  <label><input type="radio" name="q19" value="v1"> accélérer le moteur</label>
+  <label><input type="radio" name="q19" value="v2"> économiser l'encre</label>
+  <label><input type="radio" name="q19" value="v3"> compter les voitures</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a19')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q19','v0','fb19',1)">Corriger</button>
+  </div>
+  <div id="a19" class="help">Le test d'obstacle est une exigence de sécurité incontournable dans les systèmes réels.</div>
+  <div id="fb19" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Dans un algorigramme, une flèche qui REMONTE vers un test précédent matérialise…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q20" value="v0"> une boucle</label>
+  <label><input type="radio" name="q20" value="v1"> une erreur obligatoire</label>
+  <label><input type="radio" name="q20" value="v2"> la fin</label>
+  <label><input type="radio" name="q20" value="v3"> un commentaire</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a20')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q20','v0','fb20',1)">Corriger</button>
+  </div>
+  <div id="a20" class="help">Revenir en arrière dans le flux = répéter : c'est ainsi qu'une boucle se dessine.</div>
+  <div id="fb20" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Coche les affirmations VRAIES.</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="checkbox" name="q21" value="v0"> Un losange contient une question fermée</label>
+  <label><input type="checkbox" name="q21" value="v1"> Un rectangle contient une action</label>
+  <label><input type="checkbox" name="q21" value="v2"> Un algorigramme se lit en suivant les flèches</label>
+  <label><input type="checkbox" name="q21" value="v3"> Un ovale contient un calcul compliqué</label>
+  <label><input type="checkbox" name="q21" value="v4"> Un losange a une seule sortie</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a21')">Aide</button>
+    <button class="btn small" onclick="checkMulti('q21',['v0', 'v1', 'v2'],'fb21',1)">Corriger</button>
+  </div>
+  <div id="a21" class="help">Ovale = début/fin (pas de calcul) ; losange = 2 sorties (vrai/faux).</div>
+  <div id="fb21" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">« Traduire un algorithme en programme », c'est passer…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q22" value="v0"> d'une description (schéma, langage naturel) à un code exécutable</label>
+  <label><input type="radio" name="q22" value="v1"> du code au schéma</label>
+  <label><input type="radio" name="q22" value="v2"> du français à l'anglais</label>
+  <label><input type="radio" name="q22" value="v3"> du papier au cartable</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a22')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q22','v0','fb22',1)">Corriger</button>
+  </div>
+  <div id="a22" class="help">L'algorithme décrit la logique ; le programme l'écrit dans un langage que la machine exécute (blocs, Python…).</div>
+  <div id="fb22" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Au DNB, l'épreuve de sciences peut inclure des questions de…</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q23" value="v0"> programmation et d'algorithmique (technologie)</label>
+  <label><input type="radio" name="q23" value="v1"> cuisine</label>
+  <label><input type="radio" name="q23" value="v2"> solfège</label>
+  <label><input type="radio" name="q23" value="v3"> géologie martienne</label>
+  <div class="row">
+    <button class="btn small" onclick="aide('a23')">Aide</button>
+    <button class="btn small" onclick="checkMCQ('q23','v0','fb23',1)">Corriger</button>
+  </div>
+  <div id="a23" class="help">L'algorithmique fait partie des attendus du cycle 4, évaluables au brevet dans l'épreuve de sciences.</div>
+  <div id="fb23" class="answer"></div>
+</section>
+<section class="card" data-competence="3e_C6.2" data-points="1">
+  <p class="q-title">Quel mot désigne la valeur qui déclenche l'action quand la mesure la franchit ? (mot-clé)</p>
+  <span class="badge">Compétence visée : 3e_C6.2</span>
+  <span class="pts">(1 pt)</span>
+  <input type="text" id="q24" placeholder="Le … de déclenchement">
+  <div class="row">
+    <button class="btn small" onclick="aide('a24')">Aide</button>
+    <button class="btn small" onclick="checkTextIncludes('q24',['seuil'],'fb24',1)">Corriger</button>
+  </div>
+  <div id="a24" class="help">Le seuil est la valeur de comparaison : en dessous (ou au-dessus), le programme change de comportement.</div>
+  <div id="fb24" class="answer"></div>
+</section>
+
+    <div class="footer">
+      <!-- Texte de résumé -->
+      <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
+    </div>
+  </div> <!-- Fin du wrap -->
+  <script>
+    // Initialisation de la variable total pour le score
+    let total = 0;
+    // Calcul du maximum de points en sommants les data-points des sections
+    const max = (() => {
+      let s = 0;
+      document.querySelectorAll('section.card').forEach(sec => {
+        s += Number(sec.dataset.points || 0);
+      });
+      return s;
+    })();
+    // Affichage du max dans le span
+    document.getElementById('max').textContent = max;
+    // Calcul du nombre de questions (sections card)
+    const nbq = document.querySelectorAll('section.card').length;
+    // Affichage du nombre de questions
+    document.getElementById('nbq').textContent = nbq;
+    // Fonction pour toggle l'aide
+    function aide(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle("show-help");
+    }
+    // Fonction pour afficher le feedback
+    function feedback(id, ok, msg) {
+      const fb = document.getElementById(id);
+      fb.className = 'answer ' + (ok ? 'ok' : 'ko');
+      fb.innerHTML = msg; // Use innerHTML to allow <br> or other HTML if needed
+    }
+    // Set pour les points déjà attribués (éviter doublons)
+    const awarded = new Set();
+    // Fonction pour attribuer des points
+    function givePoints(key, pts) {
+      if (awarded.has(key)) return;
+      total += pts;
+      awarded.add(key);
+      const sur20 = (total / max) * 20;
+      document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">' + sur20.toFixed(2) + '</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
+    }
+    // Fonction pour vérifier MCQ (radio), optimisée avec label correct
+    function checkMCQ(name, correct, fbId, pts) {
+      const sel = document.querySelector('input[name="' + name + '"]:checked');
+      if (!sel) {
+        feedback(fbId, false, '⛳ Veuillez choisir une réponse avant de corriger.');
+        return;
+      }
+      const ok = sel.value === correct;
+      const helpId = 'a' + name.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let correctLabel = document.querySelector('label input[name="' + name + '"][value="' + correct + '"]').parentNode.textContent.trim();
+      let msg = ok ? '✅ Bonne réponse ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise réponse. La bonne réponse est : ' + correctLabel + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId); // Show help if wrong
+      if (ok) givePoints(name, pts);
+    }
+    // Fonction pour vérifier select, optimisée
+    function checkSelect(id, correct, fbId, pts) {
+      const val = document.getElementById(id).value;
+      const ok = (val === correct);
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      const correctText = document.querySelector('#' + id + ' option[value="' + correct + '"]').textContent;
+      let msg = ok ? '✅ Exact ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise sélection. La bonne option est : ' + correctText + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier nombre, optimisée
+    function checkNumber(id, correctNumber, fbId, pts) {
+      const val = Number(document.getElementById(id).value);
+      const ok = (val === Number(correctNumber));
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let msg = ok ? '✅ Juste ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise valeur. La bonne valeur est : ' + correctNumber + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier texte avec mots-clés, optimisée
+    function checkTextIncludes(id, keywords, fbId, pts) {
+      const val = (document.getElementById(id).value || '').toLowerCase();
+      const ok = keywords.some(k => val.includes(k.toLowerCase()));
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let msg = ok ? '✅ Idée principale correcte ! <br>Explication détaillée : ' + helpText : '❌ Mot-clé manquant. Mots-clés attendus : ' + keywords.join(', ') + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier multi checkboxes, optimisée avec labels corrects
+    function checkMulti(name, correctValues, fbId, pts) {
+      const all = Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(i => i.value);
+      const ok = correctValues.length === all.length && correctValues.every(v => all.includes(v));
+      const helpId = 'a' + name.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let correctLabels = correctValues.map(v => document.querySelector('label input[name="' + name + '"][value="' + v + '"]').parentNode.textContent.trim()).join(', ');
+      let msg = ok ? '✅ Parfait ! <br>Explication détaillée : ' + helpText : '❌ Sélection incorrecte (trop, pas assez ou mauvais choix). Choix corrects : ' + correctLabels + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(name, pts);
+    }
+    // Fonction pour corriger tout
+    function corrigerTout() {
+      document.querySelectorAll('.card .btn.small').forEach(btn => {
+        if (btn.textContent.trim().toLowerCase().includes('corriger')) btn.click();
+      });
+      const sur20 = (total / max) * 20;
+      const id = 'Nom: ' + (document.getElementById('nom').value || '-') + ' | Prénom: ' + (document.getElementById('prenom').value || '-') + ' | Classe: ' + (document.getElementById('classe').value || '-');
+      document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ')';
+    }
+    // Fonction pour réinitialiser
+    function reinitialiser() {
+      total = 0;
+      awarded.clear();
+      document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
+      document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
+      document.querySelectorAll('input[type=text],input[type=number]').forEach(i => i.value = '');
+      document.querySelectorAll('select').forEach(s => s.value = '');
+      document.querySelectorAll('.answer').forEach(a => { a.textContent = ''; a.className = 'answer'; });
+      document.querySelectorAll('.help').forEach(h => h.classList.remove('show-help'));
+      document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
+    }
+    // Amélioration : Fonction pour afficher toutes les aides
+    function showAllHelps() {
+      document.querySelectorAll('.help').forEach(h => h.classList.add('show-help'));
+    }
+  </script>
+</body>
+</html>
