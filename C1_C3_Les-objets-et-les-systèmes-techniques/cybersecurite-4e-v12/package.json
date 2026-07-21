@@ -1,0 +1,46 @@
+{
+  "name": "cybersecurite-4e-v12",
+  "version": "12.0.0",
+  "private": true,
+  "scripts": {
+    "serve:static": "http-server -p 5173 .",
+  "test:a11y": "start-server-and-test \"npm:serve:static\" http://127.0.0.1:5173 \"axe http://127.0.0.1:5173/SEQUENCE_C15_C16_4e_Cybersecurite_V12.html --exit\""
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage",
+    "test:a11y": "npx axe http://localhost:3000 --exit",
+    "test:perf": "lhci autorun --collect.staticDistDir=build --output.json",
+    "test:full": "npm run test && npm run test:a11y && npm run test:perf",
+    "lighthouse": "lhci autorun",
+    "axe": "npx axe http://localhost:3000 --exit",
+    "bundle": "webpack-bundle-analyzer build/static/js/*.js",
+    "deploy": "gh-pages -d build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.8.0",
+    "@axe-core/react": "^4.7.2",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@lhci/cli": "latest",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "babel-jest": "^30.2.0",
+    "gh-pages": "^4.0.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "lighthouse": "^11.0.0",
+    "webpack-bundle-analyzer": "^4.7.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead"
+  ]
+}

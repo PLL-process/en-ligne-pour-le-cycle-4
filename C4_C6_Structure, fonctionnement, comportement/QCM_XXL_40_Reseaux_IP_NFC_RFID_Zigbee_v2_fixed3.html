@@ -1,0 +1,936 @@
+<!-- Déclaration du type de document HTML5 -->
+<!DOCTYPE html>
+
+<!-- Ouverture de la balise html avec la langue française -->
+<html lang="fr">
+
+<!-- Ouverture de la balise head pour les métadonnées -->
+<head>
+  <!-- Définition de l'encodage des caractères en UTF-8 -->
+  <meta charset="utf-8">
+  <!-- Configuration de la vue mobile pour un affichage responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Titre de la page, amélioré pour plus de descriptivité -->
+  <title>QCM XXL (40 questions) — Réseaux, IP, NFC, RFID, Zigbee — Cycle 4 (2024)</title>
+  <!-- Ouverture de la balise style pour les CSS -->
+  <style>
+    /* Définition des variables CSS pour les couleurs (thème bleu foncé) */
+    :root { --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; }
+    /* Styles généraux pour tous les éléments (box-sizing pour une meilleure gestion des paddings) */
+    * { box-sizing: border-box; }
+    /* Styles pour le body (fond, police, couleur texte) */
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--ink); line-height: 1.5; }
+    /* Styles pour l'en-tête (padding et gradient de fond) */
+    header { padding: 18px 20px; background: linear-gradient(90deg, #0e1630, #1f2a57); }
+    /* Styles pour h1 (marge zéro, taille police) */
+    h1 { margin: 0; font-size: 1.35rem; }
+    /* Styles pour le wrapper principal (largeur max, marges, padding, reset du compteur q) */
+    .wrap { max-width: 980px; margin: 18px auto; padding: 0 14px; counter-reset: q; }
+    /* Styles pour les cartes (fond, bordure, arrondi, padding, marge, ombre) */
+    .card { background: var(--card); border: 1px solid #223060; border-radius: 18px; padding: 14px 16px; margin: 14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+    /* Ajout du numéro de question avant le titre (incrément du compteur) */
+    .card .q-title::before { counter-increment: q; content: "Q" counter(q) " — "; color: #a9b6df; font-weight: 700; }
+    /* Styles pour les lignes flex (display flex, wrap, gap, align) */
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    /* Styles pour les badges (display inline, padding, arrondi, taille police, couleurs) */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; color: #0e1630; background: #c7d2fe; font-weight: 700; }
+    /* Styles pour les points (gras, couleur verte) */
+    .pts { font-weight: 700; color: #d1fae5; }
+    /* Styles pour les boutons (bordure, padding, arrondi, curseur, fond, couleur, gras) */
+    .btn { border: 1px solid #344a8a; padding: 8px 12px; border-radius: 12px; cursor: pointer; background: #1b254a; color: var(--ink); font-weight: 600; }
+    /* Styles pour les petits boutons (padding et taille police réduits) */
+    .btn.small { padding: 5px 8px; font-size: .9rem; }
+    /* Effet hover sur boutons (augmente la luminosité) */
+    .btn:hover { filter: brightness(1.15); }
+    /* Styles pour les aides (cachées par défaut, marge, couleur muted, padding amélioré, bordure latérale pour visibilité) */
+    .help { display: none; margin-top: 8px; color: var(--muted); padding: 10px; border-left: 4px solid var(--accent); background: var(--bg); border-radius: 4px; font-size: 0.95rem; line-height: 1.6; }
+    /* Styles pour les réponses (marge, gras, padding, arrondi, fond, ombre pour un look boxed) */
+    .answer { margin-top: 8px; font-weight: 700; padding: 10px; border-radius: 8px; background: var(--bg); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    /* Couleur et bordure pour réponses correctes (vert) */
+    .ok { color: var(--ok); border: 1px solid var(--ok); }
+    /* Couleur et bordure pour réponses incorrectes (rouge) */
+    .ko { color: var(--ko); border: 1px solid var(--ko); }
+    /* Couleur pour texte muted (gris) */
+    .muted { color: var(--muted); }
+    /* Styles pour les titres de questions (marge, taille police) */
+    .q-title { margin: 0 0 6px 0; font-size: 1.05rem; }
+    /* Styles pour le footer (marge, padding, arrondi, fond, bordure) */
+    .footer { margin: 16px 0; padding: 12px; border-radius: 14px; background: #0f1a3d; border: 1px solid #23316b; }
+    /* Styles pour le score (taille police, gras) */
+    .score { font-size: 1.1rem; font-weight: 800; }
+    /* Styles pour inputs numériques, text et select (fond, bordure, couleur, padding, arrondi) */
+    input[type="number"], input[type="text"], select { background: #0f1836; border: 1px solid #2b3c75; color: var(--ink); padding: 8px 10px; border-radius: 10px; }
+    /* Styles pour labels (display block, marge) */
+    label { display: block; margin: .25rem 0; }
+    /* Styles pour grille à 3 colonnes (grid, columns, gap) */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    /* Styles pour notes (taille police, couleur claire) */
+    .note { font-size: .9rem; color: #cbd5e1; }
+    /* Styles pour inputs dans idbox (largeur 100%) */
+    .idbox input { width: 100%; }
+    /* Styles pour images schema (largeur max, arrondi, bordure, fond) */
+    img.schema { max-width: 100%; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
+    /* Commentaire : Illustrations */
+    /* Styles pour figures questions (marge, align center) */
+    .q-fig { margin: 10px 0; text-align: center; }
+    /* Styles pour images dans figures (largeur max, hauteur auto, arrondi, bordure, fond) */
+    .q-fig img.q-img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
+    /* Styles pour figcaption (taille police, couleur, marge) */
+    .q-fig figcaption { font-size: .9rem; color: #a9b6df; margin-top: 6px; }
+    /* Styles pour help (caché, marge, couleur) */
+    .help { display: none; margin-top: 8px; color: var(--muted); }
+    /* Classe pour afficher l'aide (display block) */
+    .help.show-help { display: block; }
+    /* Amélioration : Styles pour les tableaux (bordure collapse, largeur, marge) */
+    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+    /* Styles pour th et td (bordure, padding, align) */
+    th, td { border: 1px solid #2b3c75; padding: 8px; text-align: left; }
+    /* Styles pour th (fond bleu foncé) */
+    th { background: #1b254a; }
+  </style>
+</head>
+
+<!-- Ouverture de la balise body -->
+<body>
+  <!-- En-tête avec titre -->
+  <header class="row">
+    <!-- Titre principal du QCM -->
+    <h1>QCM XXL (40) — Réseaux, IP, NFC, RFID, Zigbee — Cycle 4 (2024)</h1>
+  </header>
+  <!-- Wrapper principal -->
+  <div class="wrap">
+    <!-- Section d'identification (sans q-title pour ne pas compter comme question) -->
+    <div class="card">
+      <!-- Titre de l'identité, avec nouvelle classe id-title sans compteur -->
+      <p class="id-title">Identité de l’élève</p>
+      <!-- Grille pour inputs nom, prénom, classe -->
+      <div class="grid2">
+        <!-- Input pour nom -->
+        <input id="nom" placeholder="Nom">
+        <!-- Input pour prénom -->
+        <input id="prenom" placeholder="Prénom">
+        <!-- Input pour classe -->
+        <input id="classe" placeholder="Classe (ex. 4eB)">
+      </div>
+      <!-- Note pour l'utilisateur -->
+      <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
+    </div>
+    <!-- Bandeau score et boutons globaux -->
+    <div class="footer row">
+      <!-- Affichage du score -->
+      <div class="score" id="score"> Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">0</strong> </div>
+      <!-- Bouton pour corriger tout -->
+      <button class="btn" onclick="corrigerTout()">Corriger tout</button>
+      <!-- Bouton pour réinitialiser -->
+      <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
+      <!-- Amélioration : Bouton pour afficher toutes les aides -->
+      <button class="btn" onclick="showAllHelps()">Afficher toutes les aides</button>
+      <!-- Note sur les compétences -->
+      <div class="note">Les questions ciblent C1.4 • C4.5 • C4.6 • C4.7 • C4.8 • C4.9 • C7.8.</div>
+    </div>
+    <!-- Q1 : Question sur le routeur -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <!-- Titre de la question -->
+      <p class="q-title">Le routeur sert principalement à…</p>
+      <!-- Figure avec image -->
+      <figure class="q-fig">
+        <!-- Image illustrative -->
+        <img class="q-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Home_LAN_local_area_network_example_diagram.png/1200px-Home_LAN_local_area_network_example_diagram.png" alt="Routeur reliant le LAN à Internet (amélioré pour accessibilité)">
+        <!-- Légende -->
+        <figcaption>Le routeur fait la passerelle entre le réseau local (LAN) et Internet (WAN).</figcaption>
+      </figure>
+      <!-- Badge compétence -->
+      <span class="badge">Compétence visée : C4.9</span>
+      <!-- Points -->
+      <span class="pts">(1 pt)</span>
+      <!-- Options radio -->
+      <label><input type="radio" name="q1" value="lan"> relier des appareils en local</label>
+      <label><input type="radio" name="q1" value="wan"> relier le réseau local à Internet</label>
+      <!-- Boutons aide et corriger -->
+      <div class="row">
+        <button class="btn small" onclick="aide('a1')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q1','wan','fb1',1)">Corriger</button>
+      </div>
+      <!-- Div aide (cachée, détaillée comme un cours) -->
+      <div id="a1" class="help">Le routeur est un appareil clé dans un réseau. Il connecte le réseau local (LAN, Local Area Network) à un réseau externe comme Internet (WAN, Wide Area Network). Il agit comme une passerelle, gérant le trafic entrant et sortant. Par exemple, il utilise le NAT (Network Address Translation) pour traduire les adresses IP privées du LAN en adresse IP publique pour Internet. Contrairement au switch, qui connecte seulement les appareils au sein du même LAN sans routage externe, le routeur décide du chemin des paquets vers d'autres réseaux. Cela permet à tous les appareils du LAN d'accéder à Internet via une seule connexion.</div>
+      <!-- Div feedback -->
+      <div id="fb1" class="answer"></div>
+    </section>
+    <!-- Q2 : Question sur le commutateur -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Un commutateur (switch) sert à…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://m.media-amazon.com/images/I/61EddgH8wKL._AC_UF894,1000_QL80_.jpg" alt="Commutateur Ethernet à plusieurs ports RJ45 (amélioré pour accessibilité)">
+        <figcaption>Le commutateur (switch) distribue le trafic entre les machines du réseau local.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q2" value="trier"> commuter les trames entre ports du LAN</label>
+      <label><input type="radio" name="q2" value="traduire"> traduire les adresses IP en noms</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a2')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q2','trier','fb2',1)">Corriger</button>
+      </div>
+      <div id="a2" class="help">Le switch, ou commutateur, est un appareil qui connecte plusieurs appareils au sein d'un réseau local (LAN). Il travaille au niveau 2 du modèle OSI (couche liaison), en commutant les trames Ethernet entre les ports basés sur les adresses MAC. Contrairement à un hub qui diffuse à tous, le switch apprend les adresses MAC et envoie les données seulement au port destinataire, réduisant les collisions et améliorant la performance. Il ne traduit pas les adresses IP en noms (c'est le rôle du DNS). Dans un réseau domestique ou scolaire, il permet à plusieurs PCs de communiquer efficacement sans sortir du LAN.</div>
+      <div id="fb2" class="answer"></div>
+    </section>
+    <!-- Q3 : Question sur IP unique -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Deux appareils d’un même LAN partagent la même IPv4.</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q3" value="v"> Vrai</label>
+      <label><input type="radio" name="q3" value="f"> Faux</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a3')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q3','f','fb3',1)">Corriger</button>
+      </div>
+      <div id="a3" class="help">Dans un réseau local (LAN), chaque appareil doit avoir une adresse IP unique pour éviter les conflits. Si deux appareils ont la même IP, le réseau ne saura pas à qui envoyer les paquets, causant des erreurs de communication, des déconnexions ou des dysfonctionnements. Le DHCP attribue automatiquement des IP uniques, ou on les configure manuellement. C'est comme des adresses postales : deux maisons avec la même adresse causeraient des problèmes de livraison.</div>
+      <div id="fb3" class="answer"></div>
+    </section>
+    <!-- Q4 : Question sur masque de sous-réseau -->
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">À quoi sert le « masque de sous-réseau » ? (mots-clés)</p>
+      <span class="badge">Compétence visée : C4.7</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q4" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a4')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q4',['reseau','hote','plage','séparer','partie'],'fb4',1)">Corriger</button>
+      </div>
+      <div id="a4" class="help">Le masque de sous-réseau est un nombre binaire (ex. 255.255.255.0 ou /24) qui sépare une adresse IP en partie réseau et partie hôte. La partie réseau identifie le sous-réseau, tandis que la partie hôte identifie l'appareil spécifique. Par exemple, pour 192.168.1.10/24, 192.168.1 est le réseau, .10 l'hôte. Cela permet de diviser un grand réseau en sous-réseaux plus petits pour une meilleure organisation, sécurité et efficacité. Sans masque, les appareils ne sauraient si une IP est locale ou distante, impactant le routage.</div>
+      <div id="fb4" class="answer"></div>
+    </section>
+    <!-- Q5 : Question sur adresse privée -->
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">Laquelle est une adresse privée classique ?</p>
+      <span class="badge">Compétence visée : C4.7</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q5">
+        <option value="">— Choisir —</option>
+        <option value="8.8.8.8">8.8.8.8</option>
+        <option value="172.16.5.10">172.16.5.10</option>
+        <option value="11.0.0.5">11.0.0.5</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a5')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q5','172.16.5.10','fb5',1)">Corriger</button>
+      </div>
+      <div id="a5" class="help">Les adresses IP privées sont réservées pour les réseaux internes et ne sont pas routables sur Internet. Les plages classiques sont : 10.0.0.0/8 (10.0.0.0 à 10.255.255.255), 172.16.0.0/12 (172.16.0.0 à 172.31.255.255), et 192.168.0.0/16 (192.168.0.0 à 192.168.255.255). Par exemple, 172.16.5.10 est privée. 8.8.8.8 est publique (DNS Google), et 11.0.0.5 est publique. Elles sont utilisées dans les LAN pour éviter les conflits globaux, avec NAT pour accéder à Internet.</div>
+      <div id="fb5" class="answer"></div>
+    </section>
+    <!-- Q6 : Question sur chemin du trafic -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Chemin du trafic PC→Internet dans la salle :</p>
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q6">
+        <option value="">— Choisir —</option>
+        <option value="direct">PC → Internet (direct)</option>
+        <option value="switch-routeur">PC → Switch → Routeur/Modem → Internet</option>
+        <option value="routeur-switch">PC → Routeur/Modem → Switch → Internet</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a6')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q6','switch-routeur','fb6',1)">Corriger</button>
+      </div>
+      <div id="a6" class="help">Dans un réseau local typique, le trafic d'un PC vers Internet passe d'abord par le switch (qui connecte les appareils locaux), puis par le routeur/modEM (la passerelle qui route vers le WAN). Le switch gère le trafic interne, le routeur translate et envoie à Internet. Un chemin direct n'existe pas sans routeur, et l'ordre inverse (routeur puis switch) n'a pas de sens car le switch est en amont pour le LAN.</div>
+      <div id="fb6" class="answer"></div>
+    </section>
+    <!-- Q7 : Question sur liaisons filaires -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Coche les liaisons <em>filaires</em> :</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://m.media-amazon.com/images/S/aplus-media/sc/70c4082e-4cc0-4cb8-8d05-fcd08c4f5091.__CR0,0,1940,1200_PT0_SX970_V1___.jpg" alt="Comparaison RJ45 (filaire) et Wi-Fi (sans fil) (amélioré pour accessibilité)">
+        <figcaption>RJ45 et fibre = liaisons filaires ; Wi-Fi/Bluetooth = liaisons sans fil.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="checkbox" name="q7" value="wifi"> Wi-Fi</label>
+      <label><input type="checkbox" name="q7" value="eth"> Ethernet RJ45</label>
+      <label><input type="checkbox" name="q7" value="fib"> Fibre optique</label>
+      <label><input type="checkbox" name="q7" value="bt"> Bluetooth</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a7')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q7',['eth','fib'],'fb7',1)">Corriger</button>
+      </div>
+      <div id="a7" class="help">Une liaison filaire utilise un câble physique pour transmettre les données, comme Ethernet RJ45 (câble torsadé cuivre) ou fibre optique (lumière dans verre). Elles offrent une connexion stable, rapide et sécurisée, mais limitée par la longueur du câble. Wi-Fi et Bluetooth sont sans fil, utilisant des ondes radio, plus flexibles mais sensibles aux interférences et moins sécurisées. Choisir filaire pour des performances hautes en fixe.</div>
+      <div id="fb7" class="answer"></div>
+    </section>
+    <!-- Q8 : Question sur bande Zigbee -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Zigbee utilise typiquement la bande…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://www.domo-blog.fr/wp-content/uploads/2025/01/carte-noeuds-zigbee-reseau-routage-maillage.png" alt="Réseau Zigbee en maillage avec capteurs/ampoules (amélioré pour accessibilité)">
+        <figcaption>Zigbee connecte des objets (IoT) en réseau maillé à faible consommation.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q8">
+        <option value="">— Choisir —</option>
+        <option value="24">2,4 GHz</option>
+        <option value="1356">13,56 MHz</option>
+        <option value="uhf">860–960 MHz</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a8')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q8','24','fb8',1)">Corriger</button>
+      </div>
+      <div id="a8" class="help">Zigbee est un protocole pour l'IoT, utilisant la bande 2,4 GHz (comme Wi-Fi, mais avec moins de puissance pour économiser l'énergie). Cela permet un réseau maillé où les appareils relaient les signaux, étendant la portée. 13,56 MHz est pour NFC (courte portée), et 860–960 MHz pour RFID UHF (identification longue portée). Zigbee est idéal pour domotique car faible consommation, fiable en mesh, et supporte jusqu'à 65 000 nœuds.</div>
+      <div id="fb8" class="answer"></div>
+    </section>
+    <!-- Q9 : Question sur portée NFC -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">NFC a une portée…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://www.lsa-conso.fr/mediatheque/2/6/3/000250362_896x598_c.png" alt="Paiement sans contact par NFC (amélioré pour accessibilité)">
+        <figcaption>NFC fonctionne à quelques centimètres : badge/paiement sans contact.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q9" value="courte"> très courte (quelques cm)</label>
+      <label><input type="radio" name="q9" value="longue"> plusieurs dizaines de mètres</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a9')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q9','courte','fb9',1)">Corriger</button>
+      </div>
+      <div id="a9" class="help">NFC (Near Field Communication) est une technologie radio à très courte portée (typiquement <10 cm, max 20 cm), fonctionnant à 13,56 MHz. Cela assure la sécurité pour des usages comme le paiement sans contact ou les badges d'accès, évitant les interceptions distantes. Contrairement à Bluetooth (jusqu'à 10m) ou Wi-Fi (dizaines de m), NFC nécessite un contact proche, rendant les transactions intentionnelles et sécurisées.</div>
+      <div id="fb9" class="answer"></div>
+    </section>
+    <!-- Q10 : Question sur usage RFID -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Donne un usage typique de la RFID (exemples)</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://shop.alrytech.fr/cdn/shop/collections/IMG_0615_1200x900.jpg?v=1661111730" alt="Étiquette RFID et portique d’anti-vol magasin (amélioré pour accessibilité)">
+        <figcaption>RFID identifie un objet à distance : puces passives/actives selon le besoin.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q10" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a10')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q10',['inventaire','badge','suivi','antivol','péage'],'fb10',1)">Corriger</button>
+      </div>
+      <div id="a10" class="help">RFID (Radio Frequency Identification) utilise des étiquettes (tags) avec une puce et antenne pour identifier des objets sans contact. Usages typiques : badges d'accès (contrôle entrée), antivols en magasins (portiques détectent tags non désactivés), inventaire logistique (suivi stocks automatisés), péages autoroutiers (tags sur voitures pour paiement rapide). Les tags passifs (sans batterie, alimentés par lecteur) sont courants pour coût bas, actifs pour longue portée. Cela améliore l'efficacité en automatisant l'identification.</div>
+      <div id="fb10" class="answer"></div>
+    </section>
+    <!-- Q11 : Question sur protocole Wi-Fi -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Le protocole de sécurité Wi-Fi conseillé à l’école :</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q11">
+        <option value="">— Choisir —</option>
+        <option value="wep">WEP</option>
+        <option value="wpa2">WPA2/3</option>
+        <option value="aucun">Aucun</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a11')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q11','wpa2','fb11',1)">Corriger</button>
+      </div>
+      <div id="a11" class="help">Pour sécuriser un réseau Wi-Fi, WPA2 ou WPA3 sont recommandés car ils utilisent un chiffrement fort (AES) et des clés dynamiques pour protéger les données contre les écoutes et attaques. WEP est obsolète et craquable en minutes. Aucun protocole laisse le réseau ouvert aux intrus. En école, WPA2/3 avec mot de passe fort et filtrage MAC protège les données élèves et évite les usages inappropriés.</div>
+      <div id="fb11" class="answer"></div>
+    </section>
+    <!-- Q12 : Question sur connexion vidéo-projecteur (réponse Bluetooth) -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Le vidéo‑projecteur de la salle est relié en…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/23f171c8-d35c-4f63-889d-2c84d816755a.__CR0,0,600,450_PT0_SX600_V1___.jpg" alt="Vidéoprojecteur relié en Bluetooth à un appareil (amélioré pour accessibilité)">
+        <figcaption>Le vidéoprojecteur du Doc. 3 communique en Bluetooth (et non en Wi-Fi).</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q12" value="wifi"> Wi-Fi</label>
+      <label><input type="radio" name="q12" value="bt"> Bluetooth</label>
+      <label><input type="radio" name="q12" value="nfc"> NFC</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a12')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q12','bt','fb12',1)">Corriger</button>
+      </div>
+      <div id="a12" class="help">Selon le document 3, le vidéo-projecteur est connecté via Bluetooth, une technologie sans fil à courte portée (10m) pour audio/vidéo, avec faible latence. Wi-Fi est pour réseaux plus larges, NFC pour contact proche. Bluetooth est idéal pour projection sans câble, mais nécessite appairage. En classe, cela facilite le partage d'écran depuis un PC ou mobile sans infrastructure réseau complexe.</div>
+      <div id="fb12" class="answer"></div>
+    </section>
+    <!-- Q13 : Question sur DHCP -->
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">DHCP attribue…</p>
+      <span class="badge">Compétence visée : C4.7</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q13" value="ip"> des adresses IP dynamiques</label>
+      <label><input type="radio" name="q13" value="dns"> des noms de domaine</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a13')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q13','ip','fb13',1)">Corriger</button>
+      </div>
+      <div id="a13" class="help">DHCP (Dynamic Host Configuration Protocol) est un serveur qui attribue automatiquement des adresses IP dynamiques aux appareils dans un réseau, évitant les configurations manuelles et conflits. Il 'loue' une IP pour une durée, avec masque, passerelle, DNS. Les noms de domaine sont gérés par DNS. DHCP simplifie la gestion en LAN, surtout avec appareils mobiles entrant/sortant.</div>
+      <div id="fb13" class="answer"></div>
+    </section>
+    <!-- Q14 : Question sur DNS -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">DNS sert à… (mots-clés)</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q14" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a14')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q14',['nom','domaine','traduire','adresse','ip'],'fb14',1)">Corriger</button>
+      </div>
+      <div id="a14" class="help">DNS (Domain Name System) traduit les noms de domaine humains (ex. google.com) en adresses IP machines (ex. 142.250.189.174). C'est comme un annuaire : quand vous tapez un URL, votre PC demande au DNS l'IP correspondante pour se connecter. Sans DNS, on devrait mémoriser les IP. Il est hiérarchique, avec serveurs racine, TLD, autoritaires. En réseau, configurez un DNS comme 8.8.8.8 pour résolution rapide.</div>
+      <div id="fb14" class="answer"></div>
+    </section>
+    <!-- Q15 : Question sur câble PC-switch -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Quel câble pour relier un PC au switch ?</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://i.ytimg.com/vi/wbP6zSO6x2s/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDrH2dJ947t82qxQcEp4PM6OLu36w" alt="Câble RJ45 et prise Ethernet (amélioré pour accessibilité)">
+        <figcaption>Un câble RJ45 relie un ordinateur au commutateur : liaison Ethernet filaire.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q15">
+        <option value="">— Choisir —</option>
+        <option value="rj11">RJ11</option>
+        <option value="rj45">RJ45 (Ethernet)</option>
+        <option value="usb">USB</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a15')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q15','rj45','fb15',1)">Corriger</button>
+      </div>
+      <div id="a15" class="help">Pour connecter un PC à un switch dans un réseau Ethernet, utilisez un câble RJ45 (Registered Jack 45), aussi appelé câble Ethernet ou Cat5/6. Il a 8 broches pour transmission bidirectionnelle jusqu'à 1Gbps+. RJ11 est pour téléphonie (4-6 broches), USB pour périphériques courts. Le RJ45 est torsadé pour réduire interférences, avec normes comme straight-through pour PC-switch. Vérifiez les catégories (Cat6 pour haut débit).</div>
+      <div id="fb15" class="answer"></div>
+    </section>
+    <!-- Q16 : Question sur cookie -->
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Un cookie est stocké…</p>
+      <span class="badge">Compétence visée : C1.4</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q16" value="site"> sur le site</label>
+      <label><input type="radio" name="q16" value="client"> sur l’appareil de l’utilisateur</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a16')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q16','client','fb16',1)">Corriger</button>
+      </div>
+      <div id="a16" class="help">Un cookie est un petit fichier texte stocké sur l'appareil de l'utilisateur (client) par le navigateur, à la demande du site. Il contient des données comme ID session, préférences. Le site l'envoie au navigateur, qui le renvoie à chaque visite. Cela permet de se souvenir des connexions ou paniers. Non stocké sur le site pour protéger la vie privée, mais peut être utilisé pour traçage, d'où les consents RGPD.</div>
+      <div id="fb16" class="answer"></div>
+    </section>
+    <!-- Q17 : Question sur refus cookies -->
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Une raison de refuser des cookies non essentiels :</p>
+      <span class="badge">Compétence visée : C1.4</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q17" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a17')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q17',['vie','privée','traçage','suivi','données'],'fb17',1)">Corriger</button>
+      </div>
+      <div id="a17" class="help">Refuser les cookies non essentiels protège la vie privée en limitant le traçage et la collecte de données personnelles. Ces cookies (publicitaires, analytiques) suivent vos habitudes pour profils targeted. En refusant, vous évitez la vente de données à tiers, réduisez les risques de fuites, et respectez RGPD. Les essentiels (session, sécurité) sont obligatoires, mais non essentiels sont optionnels pour une navigation plus anonyme.</div>
+      <div id="fb17" class="answer"></div>
+    </section>
+    <!-- Q18 : Question sur droit d'auteur chanson -->
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Dans une chanson, le droit d’auteur protège…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="https://media.istockphoto.com/id/1093277842/vector/licence-and-copyright-sign-set-with-trademark-creative-commons-public-domain-and-other-icons.jpg?s=612x612&w=is&k=20&c=a1cJlrCqMIvXXABiwHzd1-FrHueX7JKmXGIOeBcCEuc=" alt="Logos Creative Commons et droit d’auteur (amélioré pour accessibilité)">
+        <figcaption>Le droit d’auteur protège le texte et la musique ; de nombreuses œuvres sont sous licences CC.</figcaption>
+      </figure>
+      <span class="badge">Compétence visée : C1.4</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="checkbox" name="q18" value="texte"> le texte</label>
+      <label><input type="checkbox" name="q18" value="musique"> la musique</label>
+      <label><input type="checkbox" name="q18" value="gratuit"> le fait d’être gratuit</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a18')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q18',['texte','musique'],'fb18',1)">Corriger</button>
+      </div>
+      <div id="a18" class="help">Le droit d'auteur protège les œuvres originales comme les paroles (texte) et la composition musicale d'une chanson, dès création, pour 70 ans après mort de l'auteur. Cela empêche copie, distribution sans permission. Le fait d'être gratuit n'est pas protégé ; une œuvre gratuite peut être sous copyright. Utilisez Creative Commons pour licences libres permettant partage avec conditions (attribution, non-commercial).</div>
+      <div id="fb18" class="answer"></div>
+    </section>
+    <!-- Q19 : Question sur domaine public -->
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Décès en 2025 → Domaine public en (année) :</p>
+      <span class="badge">Compétence visée : C1.4</span>
+      <span class="pts">(1 pt)</span>
+      <input type="number" id="q19" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a19')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q19',2096,'fb19',1)">Corriger</button>
+      </div>
+      <div id="a19" class="help">Le droit d'auteur dure 70 ans après le décès de l'auteur. Pour un décès en 2025, l'œuvre entre dans le domaine public le 1er janvier de l'année suivante +70 ans, soit 2096. Alors, elle est libre d'usage sans permission. Cela encourage la création tout en permettant l'accès public eventual. Vérifiez exceptions comme œuvres anonymes ou collectives.</div>
+      <div id="fb19" class="answer"></div>
+    </section>
+    <!-- Amélioration : Card pour le tableau des imprimantes (sans q-title pour ne pas compter comme question) -->
+    <div class="card">
+      <!-- Titre du document -->
+      <h3>Document 2 : Tableau des imprimantes</h3>
+      <!-- Tableau ajouté pour Q20 et Q21 -->
+      <table>
+        <!-- En-tête du tableau -->
+        <tr>
+          <th>Imprimante</th>
+          <th>Connexion</th>
+        </tr>
+        <!-- Ligne 1 -->
+        <tr>
+          <td>Zongo 1</td>
+          <td>USB (filaire)</td>
+        </tr>
+        <!-- Ligne 2 (sans fil) -->
+        <tr>
+          <td>Aber Z2</td>
+          <td>Wi-Fi</td>
+        </tr>
+        <!-- Ligne 3 (sans fil) -->
+        <tr>
+          <td>Prim2be</td>
+          <td>Bluetooth</td>
+        </tr>
+        <!-- Ligne 4 -->
+        <tr>
+          <td>Aber Z3</td>
+          <td>Ethernet (filaire)</td>
+        </tr>
+      </table>
+    </div>
+    <!-- Q20 : Question sur nombre de lignes dans tableau (4) -->
+    <section class="card" data-competence="C4.6" data-points="1">
+      <p class="q-title">Nombre de lignes d’objets dans le tableau imprimantes :</p>
+      <span class="badge">Compétence visée : C4.6</span>
+      <span class="pts">(1 pt)</span>
+      <input type="number" id="q20" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a20')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q20',4,'fb20',1)">Corriger</button>
+      </div>
+      <div id="a20" class="help">Un tableau organise des données en lignes et colonnes. Ici, comptez les lignes de données (objets), excluant l'en-tête. Il y en a 4 (Zongo 1, Aber Z2, Prim2be, Aber Z3). Cela aide à analyser des ensembles de données, comme en informatique pour bases de données ou spreadsheets. Compter précisément évite erreurs en programmation ou stats.</div>
+      <div id="fb20" class="answer"></div>
+    </section>
+    <!-- Q21 : Question sur imprimantes sans fil -->
+    <section class="card" data-competence="C4.5" data-points="2">
+      <p class="q-title">Imprimantes connectées sans fil (2 choix) :</p>
+      <span class="badge">Compétence visée : C4.5</span>
+      <span class="pts">(2 pts)</span>
+      <label><input type="checkbox" name="q21" value="z1"> Zongo 1</label>
+      <label><input type="checkbox" name="q21" value="az2"> Aber Z2 (Wi-Fi)</label>
+      <label><input type="checkbox" name="q21" value="p2b"> Prim2be (Bluetooth)</label>
+      <label><input type="checkbox" name="q21" value="az3"> Aber Z3 (Ethernet)</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a21')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q21',['az2','p2b'],'fb21',2)">Corriger</button>
+      </div>
+      <div id="a21" class="help">Les connexions sans fil n'utilisent pas de câbles, comme Wi-Fi (réseau local radio) ou Bluetooth (courte portée). Dans le tableau, Aber Z2 (Wi-Fi) et Prim2be (Bluetooth) sont sans fil. Zongo 1 (USB) et Aber Z3 (Ethernet) sont filaires. Sans fil offre mobilité mais peut avoir latence ; filaire est plus stable. Choisir selon besoins en impression mobile ou fixe.</div>
+      <div id="fb21" class="answer"></div>
+    </section>
+    <!-- Q22 : Question sur /32 IPv4 -->
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">Un /32 en IPv4 correspond à…</p>
+      <span class="badge">Compétence visée : C4.7</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q22" value="host"> un seul hôte</label>
+      <label><input type="radio" name="q22" value="reseau"> tout un réseau</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a22')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q22','host','fb22',1)">Corriger</button>
+      </div>
+      <div id="a22" class="help">En notation CIDR, /32 en IPv4 signifie un masque de 255.255.255.255, où tous les 32 bits sont pour le réseau, laissant 0 bit pour hôtes. Cela correspond à une seule adresse IP (un hôte unique), utilisée pour loopback ou point-à-point. Contrairement à /24 (256 adresses, 254 hôtes), /32 n'est pas un réseau mais une adresse spécifique.</div>
+      <div id="fb22" class="answer"></div>
+    </section>
+    <!-- Q23 : Question sur adresse de sortie LAN -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Nom courant de l’adresse de sortie du LAN :</p>
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q23" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a23')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q23',['passerelle','gateway','routeur'],'fb23',1)">Corriger</button>
+      </div>
+      <div id="a23" class="help">L'adresse de sortie du LAN est appelée passerelle par défaut (default gateway), souvent l'IP du routeur (ex. 192.168.1.1). C'est l'adresse vers laquelle les paquets sont envoyés quand la destination n'est pas dans le LAN. Sans elle, pas d'accès Internet. Configurez-la via DHCP ou manuellement dans les paramètres réseau pour routage correct.</div>
+      <div id="fb23" class="answer"></div>
+    </section>
+    <!-- Q24 : Question sur conflit IP -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Attribuer la même IP à deux appareils provoque…</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q24" value="ok"> aucun problème</label>
+      <label><input type="radio" name="q24" value="conflict"> un conflit d’adresses</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a24')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q24','conflict','fb24',1)">Corriger</button>
+      </div>
+      <div id="a24" class="help">Attribuer la même IP à deux appareils cause un conflit d'adresses : le réseau ne sait pas lequel cibler, menant à pertes de paquets, déconnexions. Les OS détectent et alertent. Utilisez DHCP pour attributions uniques ou vérifiez avec ipconfig/arp. Cela souligne l'importance de l'unicité IP dans un sous-réseau pour communication fiable.</div>
+      <div id="fb24" class="answer"></div>
+    </section>
+    <!-- Q25 : Question sur usage Zigbee -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Un usage typique de Zigbee :</p>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q25" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a25')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q25',['domotique','ampoule','capteur','iot'],'fb25',1)">Corriger</button>
+      </div>
+      <div id="a25" class="help">Zigbee est utilisé en domotique pour connecter des objets IoT comme ampoules intelligentes, capteurs (température, mouvement), thermostats. Son réseau maillé permet aux appareils de relayer, étendant la couverture sans hub central fort. Faible consommation idéal pour piles. Exemples : Philips Hue (ampoules), capteurs sécurité. Contrairement à Wi-Fi (énergie haute), Zigbee est optimisé pour IoT bas débit.</div>
+      <div id="fb25" class="answer"></div>
+    </section>
+    <!-- Q26 : Question sur portée NFC -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">La portée typique de NFC est de…</p>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q26">
+        <option value="">— Choisir —</option>
+        <option value="cm">quelques centimètres</option>
+        <option value="m">quelques mètres</option>
+        <option value="diz">dizaines de mètres</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a26')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q26','cm','fb26',1)">Corriger</button>
+      </div>
+      <div id="a26" class="help">La portée de NFC est de quelques centimètres (typ. 4 cm, max 10-20 cm), conçue pour sécurité en requérant proximité physique. Fonctionne par induction électromagnétique à 13,56 MHz. Usages : paiement mobile (Apple Pay), tags NFC pour info. Contrairement à Bluetooth (mètres), cela prévient interceptions. En pratique, touchez l'appareil au lecteur pour échange de données.</div>
+      <div id="fb26" class="answer"></div>
+    </section>
+    <!-- Q27 : Question sur Wi-Fi filaire ou non -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Le Wi‑Fi est…</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q27" value="filaire"> filaire</label>
+      <label><input type="radio" name="q27" value="nonfilaire"> non filaire</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a27')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q27','nonfilaire','fb27',1)">Corriger</button>
+      </div>
+      <div id="a27" class="help">Wi-Fi est une technologie sans fil (non filaire), utilisant des ondes radio (2.4/5 GHz) pour connecter appareils à un réseau. Basé sur IEEE 802.11, il permet mobilité sans câbles, mais sensible aux interférences/murs. Filaire (ex. Ethernet) utilise câbles pour stabilité. Wi-Fi est idéal pour laptops/mobiles, mais sécurisez avec WPA pour éviter hacks.</div>
+      <div id="fb27" class="answer"></div>
+    </section>
+    <!-- Q28 : Question sur parcours trame (Doc 3) -->
+    <section class="card" data-competence="C4.9" data-points="2">
+      <p class="q-title">À partir du schéma « Document 3 » ci‑dessous, choisis le <em>parcours</em> correct d’une trame vers Internet :</p>
+      <!-- Image du schéma -->
+      <img class="schema" src="https://www.wixxim.fr/uploads/images/infrastructure-reseau-local.jpg" alt="Schéma du réseau (Document 3) (amélioré pour accessibilité)">
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(2 pts)</span>
+      <select id="q28">
+        <option value="">— Choisir —</option>
+        <option value="pc-switch-routeur-internet">PC → Switch → Routeur/Modem → Internet</option>
+        <option value="pc-routeur-switch-internet">PC → Routeur/Modem → Switch → Internet</option>
+        <option value="pc-internet">PC → Internet (direct)</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a28')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q28','pc-switch-routeur-internet','fb28',2)">Corriger</button>
+      </div>
+      <div id="a28" class="help">Dans un réseau, une trame d'un PC vers Internet passe par le switch (gestion locale), puis le routeur/modEM (routage vers WAN). Le switch commute au niveau MAC dans LAN, le routeur au niveau IP pour externe. Direct impossible sans routeur ; ordre inverse illogique car switch est interne. Comprendre cela aide à dépanner : vérifiez connexions couche par couche (OSI).</div>
+      <div id="fb28" class="answer"></div>
+    </section>
+    <!-- Q29 : Question sur délai Doc 3 -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Doc 3 : délai (ms) avant que le switch s’active après le PC :</p>
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(1 pt)</span>
+      <input type="number" id="q29" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a29')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q29',10,'fb29',1)">Corriger</button>
+      </div>
+      <div id="a29" class="help">Sur une chronologie réseau, le délai est l'écart temporel entre activation PC et switch. Ici, 10 ms. Cela montre la latence : le PC envoie une trame, le switch la reçoit et traite. En analyse réseau, outils comme Wireshark mesurent cela pour optimiser (réduire latence pour VoIP/jeux). Facteurs : câblage, charge appareil.</div>
+      <div id="fb29" class="answer"></div>
+    </section>
+    <!-- Q30 : Question sur durée PC Doc 3 -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Doc 3 : durée d’activité du PC (ms) :</p>
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(1 pt)</span>
+      <input type="number" id="q30" placeholder="Réponse numérique">
+      <div class="row">
+        <button class="btn small" onclick="aide('a30')">Aide</button>
+        <button class="btn small" onclick="checkNumber('q30',35,'fb30',1)">Corriger</button>
+      </div>
+      <div id="a30" class="help">La durée d'activité est la longueur du segment PC sur la chronologie, ici 35 ms. Cela représente le temps de transmission/ traitement d'une trame. En réseaux, analysez pour bottlenecks : durée longue indique charge haute ou problèmes. Utilisez pour calculer débit (bits/temps). Comprendre aide à dimensionner réseaux pour applications temps réel.</div>
+      <div id="fb30" class="answer"></div>
+    </section>
+    <!-- Q31 : Question sur IPv6 -->
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">IPv6 a des adresses…</p>
+      <span class="badge">Compétence visée : C4.7</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q31" value="plus"> plus longues qu’IPv4</label>
+      <label><input type="radio" name="q31" value="moins"> plus courtes qu’IPv4</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a31')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q31','plus','fb31',1)">Corriger</button>
+      </div>
+      <div id="a31" class="help">IPv6 utilise 128 bits pour adresses (ex. 2001:0db8:85a3:0000:0000:8a2e:0370:7334), plus longues que IPv4 (32 bits, ex. 192.168.1.1). Cela fournit 3.4×10^38 adresses vs 4 milliards, résolvant l'épuisement IPv4. IPv6 améliore routage, sécurité (IPsec intégré), auto-configuration. Transition via dual-stack. Plus d'adresses pour IoT/5G.</div>
+      <div id="fb31" class="answer"></div>
+    </section>
+    <!-- Q32 : Question sur nom réseau Wi-Fi -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Nom du réseau Wi‑Fi : on l’appelle le…</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q32" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a32')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q32',['ssid','nom','réseau'],'fb32',1)">Corriger</button>
+      </div>
+      <div id="a32" class="help">Le nom du réseau Wi-Fi est le SSID (Service Set Identifier), visible lors de la recherche de réseaux. C'est l'identifiant unique du point d'accès. Choisissez un SSID clair mais sécurisé, cachez-le pour invisibilité. Le SSID aide les appareils à se connecter ; changez-le par défaut pour éviter hacks. En multi-SSID, segmentez pour invités/privé.</div>
+      <div id="fb32" class="answer"></div>
+    </section>
+    <!-- Q33 : Question sur réduction interférences Wi-Fi -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Un réglage qui peut réduire les interférences Wi‑Fi :</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q33" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a33')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q33',['canal','channel','5ghz','distance'],'fb33',1)">Corriger</button>
+      </div>
+      <div id="a33" class="help">Les interférences Wi-Fi viennent de micro-ondes, voisins sur même canal. Réduisez en changeant de canal (1,6,11 en 2.4GHz pour non-chevauchement), passant à 5GHz (plus canaux, moins interférences mais portée courte), ou éloignant sources (ex. routeur central). Utilisez apps comme Wi-Fi Analyzer pour scanner et choisir canal libre. Améliore vitesse/stabilité.</div>
+      <div id="fb33" class="answer"></div>
+    </section>
+    <!-- Q34 : Question sur supports cuivre -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Coche les supports <em>cuivre</em> :</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="checkbox" name="q34" value="rj45"> RJ45</label>
+      <label><input type="checkbox" name="q34" value="fibre"> Fibre optique</label>
+      <label><input type="checkbox" name="q34" value="usb"> USB</label>
+      <label><input type="checkbox" name="q34" value="coax"> Coaxial</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a34')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q34',['rj45','usb','coax'],'fb34',1)">Corriger</button>
+      </div>
+      <div id="a34" class="help">Les supports cuivre transmettent via électricité sur fil métallique : RJ45 (Ethernet torsadé), USB (périphériques), coaxial (TV/câble). Fibre optique utilise lumière sur verre/silice, plus rapide sur longues distances sans interférences électromagnétiques. Cuivre est économique mais sensible aux EMI ; fibre pour haut débit/futures-proof.</div>
+      <div id="fb34" class="answer"></div>
+    </section>
+    <!-- Q35 : Question sur téléchargement chanson -->
+    <section class="card" data-competence="C1.4" data-points="1">
+      <p class="q-title">Télécharger gratuitement une chanson rend son usage libre en classe.</p>
+      <span class="badge">Compétence visée : C1.4</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q35" value="v"> Vrai</label>
+      <label><input type="radio" name="q35" value="f"> Faux</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a35')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q35','f','fb35',1)">Corriger</button>
+      </div>
+      <div id="a35" class="help">Télécharger gratuitement ne rend pas l'usage libre ; la chanson reste sous copyright sauf si domaine public ou CC. Gratuité peut être légale (promotion) mais usage en classe nécessite permission ou exception éducative limitée. Vérifiez licences : CC-BY pour attribution, ou sites comme Jamendo pour musique libre. Respecter droits évite amendes ; préférez sources légales.</div>
+      <div id="fb35" class="answer"></div>
+    </section>
+    <!-- Q36 : Question sur topologie switch -->
+    <section class="card" data-competence="C4.9" data-points="1">
+      <p class="q-title">Le switch de la salle correspond à une topologie…</p>
+      <span class="badge">Compétence visée : C4.9</span>
+      <span class="pts">(1 pt)</span>
+      <select id="q36">
+        <option value="">— Choisir —</option>
+        <option value="bus">bus</option>
+        <option value="etoile">étoile</option>
+        <option value="anneau">anneau</option>
+      </select>
+      <div class="row">
+        <button class="btn small" onclick="aide('a36')">Aide</button>
+        <button class="btn small" onclick="checkSelect('q36','etoile','fb36',1)">Corriger</button>
+      </div>
+      <div id="a36" class="help">Un switch crée une topologie en étoile, où chaque appareil est connecté directement au switch central. Cela réduit collisions vs bus (câble partagé), et est plus fiable que anneau (boucle, panne coupe tout). En étoile, panne d'un lien affecte seulement un appareil. Idéal pour LAN modernes, scalable avec switches cascadés.</div>
+      <div id="fb36" class="answer"></div>
+    </section>
+    <!-- Q37 : Question sur Zigbee maillage -->
+    <section class="card" data-competence="C7.8" data-points="1">
+      <p class="q-title">Zigbee propose un réseau en maillage (mesh).</p>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q37" value="v"> Vrai</label>
+      <label><input type="radio" name="q37" value="f"> Faux</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a37')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q37','v','fb37',1)">Corriger</button>
+      </div>
+      <div id="a37" class="help">Vrai : Zigbee supporte le maillage (mesh), où les nœuds (appareils) relaient les signaux, étendant la portée et fiabilité. Si un nœud tombe, les routes se reconfigurent. Idéal pour IoT étendu (maison entière). Contrairement à étoile (tout via hub), mesh est décentralisé, économe en énergie avec routeurs/end-devices.</div>
+      <div id="fb37" class="answer"></div>
+    </section>
+    <!-- Q38 : Question sur affirmations RFID -->
+    <section class="card" data-competence="C7.8" data-points="2">
+      <p class="q-title">Coche les affirmations vraies sur RFID :</p>
+      <span class="badge">Compétence visée : C7.8</span>
+      <span class="pts">(2 pts)</span>
+      <label><input type="checkbox" name="q38" value="pas"> Les étiquettes passives n’ont pas de batterie</label>
+      <label><input type="checkbox" name="q38" value="act"> Les étiquettes actives ont une batterie</label>
+      <label><input type="checkbox" name="q38" value="nfc"> NFC porte à 50 m</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a38')">Aide</button>
+        <button class="btn small" onclick="checkMulti('q38',['pas','act'],'fb38',2)">Corriger</button>
+      </div>
+      <div id="a38" class="help">Vraies : Étiquettes passives sans batterie (alimentées par lecteur via induction), actives avec batterie pour portée plus longue (mètres vs cm). Faux : NFC (sous-ensemble RFID) porte à quelques cm, pas 50m (c'est pour RFID UHF). Passives bon marché pour volumes hauts ; actives pour tracking actif (ex. containers).</div>
+      <div id="fb38" class="answer"></div>
+    </section>
+    <!-- Q39 : Question sur adresse broadcast -->
+    <section class="card" data-competence="C4.7" data-points="1">
+      <p class="q-title">Nom de l’adresse spéciale envoyée à tous les hôtes d’un LAN :</p>
+      <span class="badge">Compétence visée : C4.7</span>
+      <span class="pts">(1 pt)</span>
+      <input type="text" id="q39" placeholder="Réponse courte">
+      <div class="row">
+        <button class="btn small" onclick="aide('a39')">Aide</button>
+        <button class="btn small" onclick="checkTextIncludes('q39',['broadcast','diffusion'],'fb39',1)">Corriger</button>
+      </div>
+      <div id="a39" class="help">L'adresse de broadcast (ou diffusion) est spéciale pour envoyer à tous les hôtes du LAN (ex. 192.168.1.255 pour /24). Les paquets broadcast sont reçus par tous, utilisés pour ARP (trouver MAC), DHCP discovery. Calcul : IP réseau avec tous bits hôte à 1. Limitez broadcast pour éviter surcharge ; VLANs segmentent.</div>
+      <div id="fb39" class="answer"></div>
+    </section>
+    <!-- Q40 : Question sur filtrage MAC -->
+    <section class="card" data-competence="C4.8" data-points="1">
+      <p class="q-title">Le filtrage MAC permet…</p>
+      <span class="badge">Compétence visée : C4.8</span>
+      <span class="pts">(1 pt)</span>
+      <label><input type="radio" name="q40" value="autoriser"> d’autoriser/refuser des appareils par adresse MAC</label>
+      <label><input type="radio" name="q40" value="vitesse"> de multiplier le débit Internet</label>
+      <div class="row">
+        <button class="btn small" onclick="aide('a40')">Aide</button>
+        <button class="btn small" onclick="checkMCQ('q40','autoriser','fb40',1)">Corriger</button>
+      </div>
+      <div id="a40" class="help">Le filtrage MAC autorise/refuse appareils basés sur leur adresse MAC unique (physique, 48 bits, ex. 00:1A:2B:3C:4D:5E). Sur routeur/switch, liste blanche/noire. Améliore sécurité en bloquant inconnus, mais spoofable. Ne multiplie pas débit (QoS pour ça). Utile en Wi-Fi pour limiter accès à appareils connus.</div>
+      <div id="fb40" class="answer"></div>
+    </section>
+    <!-- Résumé final -->
+    <div class="footer">
+      <!-- Texte de résumé -->
+      <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
+    </div>
+  </div> <!-- Fin du wrap -->
+  <!-- Script JavaScript pour la fonctionnalité -->
+  <script>
+    // Initialisation de la variable total pour le score
+    let total = 0;
+    // Calcul du maximum de points en sommants les data-points des sections
+    const max = (() => {
+      let s = 0;
+      document.querySelectorAll('section.card').forEach(sec => {
+        s += Number(sec.dataset.points || 0);
+      });
+      return s;
+    })();
+    // Affichage du max dans le span
+    document.getElementById('max').textContent = max;
+    // Calcul du nombre de questions (sections card)
+    const nbq = document.querySelectorAll('section.card').length;
+    // Affichage du nombre de questions
+    document.getElementById('nbq').textContent = nbq;
+    // Fonction pour toggle l'aide
+    function aide(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle("show-help");
+    }
+    // Fonction pour afficher le feedback
+    function feedback(id, ok, msg) {
+      const fb = document.getElementById(id);
+      fb.className = 'answer ' + (ok ? 'ok' : 'ko');
+      fb.innerHTML = msg; // Use innerHTML to allow <br> or other HTML if needed
+    }
+    // Set pour les points déjà attribués (éviter doublons)
+    const awarded = new Set();
+    // Fonction pour attribuer des points
+    function givePoints(key, pts) {
+      if (awarded.has(key)) return;
+      total += pts;
+      awarded.add(key);
+      const sur20 = (total / max) * 20;
+      document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">' + sur20.toFixed(2) + '</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
+    }
+    // Fonction pour vérifier MCQ (radio), optimisée avec label correct
+    function checkMCQ(name, correct, fbId, pts) {
+      const sel = document.querySelector('input[name="' + name + '"]:checked');
+      if (!sel) {
+        feedback(fbId, false, '⛳ Veuillez choisir une réponse avant de corriger.');
+        return;
+      }
+      const ok = sel.value === correct;
+      const helpId = 'a' + name.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let correctLabel = document.querySelector('label input[name="' + name + '"][value="' + correct + '"]').parentNode.textContent.trim();
+      let msg = ok ? '✅ Bonne réponse ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise réponse. La bonne réponse est : ' + correctLabel + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId); // Show help if wrong
+      if (ok) givePoints(name, pts);
+    }
+    // Fonction pour vérifier select, optimisée
+    function checkSelect(id, correct, fbId, pts) {
+      const val = document.getElementById(id).value;
+      const ok = (val === correct);
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      const correctText = document.querySelector('#' + id + ' option[value="' + correct + '"]').textContent;
+      let msg = ok ? '✅ Exact ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise sélection. La bonne option est : ' + correctText + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier nombre, optimisée
+    function checkNumber(id, correctNumber, fbId, pts) {
+      const val = Number(document.getElementById(id).value);
+      const ok = (val === Number(correctNumber));
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let msg = ok ? '✅ Juste ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise valeur. La bonne valeur est : ' + correctNumber + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier texte avec mots-clés, optimisée
+    function checkTextIncludes(id, keywords, fbId, pts) {
+      const val = (document.getElementById(id).value || '').toLowerCase();
+      const ok = keywords.some(k => val.includes(k.toLowerCase()));
+      const helpId = 'a' + id.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let msg = ok ? '✅ Idée principale correcte ! <br>Explication détaillée : ' + helpText : '❌ Mot-clé manquant. Mots-clés attendus : ' + keywords.join(', ') + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(id, pts);
+    }
+    // Fonction pour vérifier multi checkboxes, optimisée avec labels corrects
+    function checkMulti(name, correctValues, fbId, pts) {
+      const all = Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(i => i.value);
+      const ok = correctValues.length === all.length && correctValues.every(v => all.includes(v));
+      const helpId = 'a' + name.substring(1);
+      const helpText = document.getElementById(helpId).textContent;
+      let correctLabels = correctValues.map(v => document.querySelector('label input[name="' + name + '"][value="' + v + '"]').parentNode.textContent.trim()).join(', ');
+      let msg = ok ? '✅ Parfait ! <br>Explication détaillée : ' + helpText : '❌ Sélection incorrecte (trop, pas assez ou mauvais choix). Choix corrects : ' + correctLabels + '. <br>Explication détaillée : ' + helpText;
+      feedback(fbId, ok, msg);
+      if (!ok) aide(helpId);
+      if (ok) givePoints(name, pts);
+    }
+    // Fonction pour corriger tout
+    function corrigerTout() {
+      document.querySelectorAll('.card .btn.small').forEach(btn => {
+        if (btn.textContent.trim().toLowerCase().includes('corriger')) btn.click();
+      });
+      const sur20 = (total / max) * 20;
+      const id = 'Nom: ' + (document.getElementById('nom').value || '-') + ' | Prénom: ' + (document.getElementById('prenom').value || '-') + ' | Classe: ' + (document.getElementById('classe').value || '-');
+      document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ')';
+    }
+    // Fonction pour réinitialiser
+    function reinitialiser() {
+      total = 0;
+      awarded.clear();
+      document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
+      document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
+      document.querySelectorAll('input[type=text],input[type=number]').forEach(i => i.value = '');
+      document.querySelectorAll('select').forEach(s => s.value = '');
+      document.querySelectorAll('.answer').forEach(a => { a.textContent = ''; a.className = 'answer'; });
+      document.querySelectorAll('.help').forEach(h => h.classList.remove('show-help'));
+      document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
+    }
+    // Amélioration : Fonction pour afficher toutes les aides
+    function showAllHelps() {
+      document.querySelectorAll('.help').forEach(h => h.classList.add('show-help'));
+    }
+  </script>
+</body>
+
+<!-- Fin de la balise html -->
+</html>

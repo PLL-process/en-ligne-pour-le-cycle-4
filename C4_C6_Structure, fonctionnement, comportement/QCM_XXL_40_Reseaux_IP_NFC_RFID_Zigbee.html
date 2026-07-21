@@ -32,6 +32,45 @@ label{display:block; margin:.25rem 0;}
 .idbox{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px;}
 .idbox input{width:100%;}
 img.schema{max-width:100%; border-radius:12px; border:1px solid #29417d; background:#0b1330;}
+
+/* 🖼️ Styles des illustrations de questions */
+.q-fig{                 /* Conteneur figure pour la question */
+  margin:10px 0;       /* Espace autour de l'image */
+  text-align:center;   /* Centre image + légende */
+}
+.q-fig img.q-img{      /* L'image elle-même */
+  max-width:100%;      /* Ne dépasse jamais la carte */
+  height:auto;         /* Garde les proportions */
+  border-radius:12px;  /* Coins arrondis */
+  border:1px solid #29417d; /* Liseré discret */
+  background:#0b1330;  /* Fond sombre si PNG transparent */
+}
+.q-fig figcaption{     /* Légende et crédit */
+  font-size:.9rem;
+  color:#a9b6df;
+  margin-top:6px;
+}
+
+/* ─────────────────────────────────────────────
+   🔢 Numérotation automatique des questions
+   ───────────────────────────────────────────── */
+.wrap{ counter-reset: q; }                 /* 1) Remet le compteur au début du QCM */
+.card .q-title::before{                    /* 2) Préfixe devant chaque titre de question */
+  counter-increment: q;                    /*    Incrémente le compteur */
+  content: "Q" counter(q) " — ";           /*    Affiche : Q1 — , Q2 — , etc. */
+  color:#a9b6df;                           /*    Couleur discrète */
+  font-weight:700;                         /*    Un peu plus marqué */
+}
+
+/* 🔢 Numérotation automatique des questions */
+
+.card .q-title::before{                          /* Ajoute un préfixe devant chaque titre .q-title */
+  counter-increment: q;                          /* Incrémente le compteur à chaque question */
+  content: "Q" counter(q) " — ";                 /* Affiche Q1 — , Q2 — , etc. */
+  color:#a9b6df;                                 /* Couleur discrète */
+  font-weight:700;                               /* Mise en valeur */
+}
+
 </style>
 </head>
 <body>
@@ -50,15 +89,35 @@ img.schema{max-width:100%; border-radius:12px; border:1px solid #29417d; backgro
     <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
   </div>
 
-  <div class="footer row">
-    <div class="score" id="score">Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20</div>
-    <button class="btn" onclick="corrigerTout()">Corriger tout</button>
-    <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
-    <div class="note">Les questions ciblent C1.4 • C4.5 • C4.6 • C4.7 • C4.8 • C4.9 • C7.8.</div>
+<div class="footer row">
+  <!-- Zone score + ajout du compteur de questions -->
+  <div class="score" id="score">
+    <!-- Score courant -->
+    Score : 0 / <span id="max">0</span> pts
+    <!-- Note ramenée à /20 -->
+    — Barème ramené à <strong id="sur20">0.00</strong> / 20
+    <!-- 🔢 Affichage du nombre total de questions -->
+    — Questions : <strong id="nbq">0</strong>
   </div>
+
+  <!-- Bouton : correction globale -->
+  <button class="btn" onclick="corrigerTout()">Corriger tout</button>
+  <!-- Bouton : remise à zéro -->
+  <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
+
+  <!-- Rappel des compétences visées -->
+  <div class="note">Les questions ciblent C1.4 • C4.5 • C4.6 • C4.7 • C4.8 • C4.9 • C7.8.</div>
+</div>
 
     <section class="card" data-competence="C4.9" data-points="1">
       <p class="q-title">Le routeur sert principalement à…</p>
+      <figure class="q-fig">
+        <img class="q-img" src="Images/routeur_wan_hd.jpg" alt="Routeur reliant le LAN à Internet">
+        <figcaption>Le routeur fait la passerelle entre le réseau local (LAN) et Internet (WAN).</figcaption>
+      </figure>
+
+
+
       <span class="badge">Compétence visée : C4.9</span> <span class="pts">(1 pt)</span>
       <label><input type="radio" name="q1" value="lan"> relier des appareils en local</label>
       <label><input type="radio" name="q1" value="wan"> relier le réseau local à Internet</label>
@@ -655,6 +714,11 @@ img.schema{max-width:100%; border-radius:12px; border:1px solid #29417d; backgro
 let total = 0;
 const max = (()=>{ let s=0; document.querySelectorAll('section.card').forEach(sec=>{ s += Number(sec.dataset.points||0); }); return s; })();
 document.getElementById('max').textContent = max;
+
+// 🔢 Compte le nombre de questions (= cartes .card) présentes dans la page
+const nbq = document.querySelectorAll('section.card').length; // Récupère toutes les sections de question
+document.getElementById('nbq').textContent = nbq;             // Affiche la valeur dans le bandeau
+
 
 function aide(id){ const el=document.getElementById(id); el.style.display = (el.style.display==='block'?'none':'block'); }
 function feedback(id, ok, msg){ const fb=document.getElementById(id); fb.className='answer ' + (ok?'ok':'ko'); fb.textContent = msg; }

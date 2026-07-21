@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vittascience – Créer des variables, manipuler les types et programmer des systèmes</title>
+<style>
+:root{--bg:#0f1218;--panel:#181d26;--text:#f2f6fb;--muted:#ced6e3;--accent:#39d6a1;--accent2:#5ea8ff;--warn:#ffd166;--danger:#ff6b6b;--border:rgba(255,255,255,.12);--shadow:0 14px 36px rgba(0,0,0,.28)}
+*{box-sizing:border-box} body{margin:0;font-family:Verdana,Arial,sans-serif;background:linear-gradient(180deg,#0d1016 0%,#151a23 100%);color:var(--text);line-height:1.6}
+.container{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:24px 0 80px}
+.sticky{position:sticky;top:0;z-index:100;background:rgba(10,12,18,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.inner{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:12px 0;display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.timer,.scoreLive{padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.05);font-weight:700}
+.timer.warn{background:var(--warn);color:#111;border-color:transparent}.timer.danger{background:var(--danger);color:#fff;border-color:transparent}
+.hero,.card{background:rgba(24,29,38,.96);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow)}
+.hero{padding:26px;margin-bottom:20px}.card{padding:22px;margin-bottom:18px}
+h1,h2{margin-top:0;line-height:1.2} h1{font-size:clamp(2rem,4vw,3rem)} h2{font-size:clamp(1.35rem,2.3vw,1.9rem);color:var(--accent);border-left:6px solid var(--accent);padding-left:14px}
+p,li,label{color:var(--muted)} .lead{color:var(--text);font-size:1.08rem}
+.pill{display:inline-block;padding:8px 12px;border-radius:999px;margin:4px 6px 4px 0;background:rgba(94,168,255,.12);border:1px solid rgba(94,168,255,.25)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.metaBox{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;padding:14px}
+input[type=text],input[type=number],textarea{width:100%;margin-top:8px;background:#0f141c;color:var(--text);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px;font-family:inherit;font-size:1rem} textarea{min-height:90px;resize:vertical}
+.exerciseHead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.badge{padding:8px 12px;border-radius:12px;background:rgba(255,209,102,.14);border:1px solid rgba(255,209,102,.25);font-weight:700}
+.media{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:12px;margin:12px 0}.media img{width:100%;height:auto;display:block;border-radius:10px}.caption{margin-top:8px;font-size:.95rem;color:#d8e0ed}
+.note,.question{margin:12px 0;padding:14px;border-left:5px solid var(--accent2);background:rgba(255,255,255,.03);border-radius:0 14px 14px 0}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}.option{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.03)}
+table{width:100%;border-collapse:collapse;margin-top:10px;border:1px solid var(--border)} th,td{border:1px solid var(--border);padding:10px;text-align:center} th{background:rgba(94,168,255,.14)}
+pre,.kbd{font-family:Consolas,monospace} pre{background:#0d1117;border:1px solid var(--border);border-radius:14px;padding:14px;white-space:pre-wrap;color:#dce7f7}.kbd{display:inline-block;padding:2px 8px;border-radius:8px;background:#0d1117;border:1px solid rgba(255,255,255,.12)}
+.buttons{display:flex;gap:10px;flex-wrap:wrap} button{border:none;border-radius:12px;padding:12px 16px;font-family:inherit;font-weight:700;cursor:pointer}.primary{background:linear-gradient(90deg,var(--accent),#7df0c8);color:#081018}.secondary{background:linear-gradient(90deg,rgba(94,168,255,.18),rgba(94,168,255,.08));color:var(--text);border:1px solid rgba(94,168,255,.22)}.danger{background:linear-gradient(90deg,rgba(255,107,107,.92),rgba(255,107,107,.78));color:white}
+.result{display:none;padding:16px;border-radius:16px;margin-top:12px}.result.show{display:block}.result.ok{background:rgba(62,207,142,.13);border:1px solid rgba(62,207,142,.26)}.result.warn{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.26)}
+iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:14px}.footer{text-align:center;color:#d0d8e4;margin-top:24px;font-size:.95rem}.small{font-size:.94rem;color:#d8e0ed}
+
+/* Améliorations lisibilité + responsive */
+.media img{image-rendering:auto;background:#fff;}
+@media (min-width:1000px){.media img{max-width:920px;margin:auto;}}
+@media (max-width:700px){
+  .container{width:calc(100% - 16px);padding:12px 0 60px}
+  .card,.hero{padding:14px;border-radius:16px}
+  .sticky .inner,.inner{width:calc(100% - 16px)}
+  .options{grid-template-columns:1fr}
+  table{font-size:.9rem}
+  th,td{padding:6px}
+}
+.code-transcrit{border-left:5px solid var(--accent);background:#0d1117;padding:14px;border-radius:0 14px 14px 0;margin:12px 0;}
+.resource-link{display:inline-block;margin:8px 8px 0 0;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#7df0c8);color:#081018;font-weight:700;text-decoration:none;}
+.extra{border-left:5px solid var(--warn);}
+
+
+.question-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.help-btn,.corr-btn{
+  padding:9px 12px;
+  border-radius:10px;
+  font-size:.92rem;
+}
+.help-btn{
+  background:linear-gradient(90deg,rgba(94,168,255,.24),rgba(94,168,255,.12));
+  color:var(--text);
+  border:1px solid rgba(94,168,255,.30);
+}
+.corr-btn{
+  background:linear-gradient(90deg,rgba(57,214,161,.90),rgba(125,240,200,.85));
+  color:#081018;
+}
+.question-feedback{
+  display:none;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+}
+.question-feedback.show{display:block;}
+.question.revealed{
+  outline:2px solid rgba(255,209,102,.55);
+}
+.penalty-note{
+  color:var(--warn);
+  font-weight:700;
+}
+
+
+/* Options avancées : temps, sauvegarde, niveau, mode enseignant */
+.start-panel{
+  border:2px solid rgba(57,214,161,.35);
+}
+.timer.soft{background:rgba(57,214,161,.12);border-color:rgba(57,214,161,.30);}
+.timer.medium{background:rgba(255,209,102,.18);color:var(--text);border-color:rgba(255,209,102,.35);}
+.timer.late{background:rgba(255,107,107,.14);color:var(--text);border-color:rgba(255,107,107,.35);}
+.teacher-panel{
+  display:none;
+  border-left:5px solid var(--warn);
+}
+.teacher-panel.show{display:block;}
+.level-note{
+  padding:12px;
+  border-radius:12px;
+  background:rgba(94,168,255,.10);
+  border:1px solid rgba(94,168,255,.25);
+  margin-top:10px;
+}
+.locked-before-start{
+  opacity:.42;
+  pointer-events:none;
+  filter:grayscale(.2);
+}
+.save-status{
+  font-size:.9rem;
+  color:var(--muted);
+}
+
+
+/* Volet supérieur réductible */
+.sticky.compact .scoreLive,
+.sticky.compact .buttons{
+  display:none;
+}
+.sticky.compact .inner{
+  padding:6px 0;
+}
+.sticky.compact .timer{
+  font-size:.92rem;
+  padding:7px 10px;
+}
+.toggleTopBar{
+  background:linear-gradient(90deg,rgba(94,168,255,.18),rgba(94,168,255,.08));
+  color:var(--text);
+  border:1px solid rgba(94,168,255,.22);
+  padding:8px 12px;
+  border-radius:10px;
+}
+@media (max-width:800px){
+  .sticky .scoreLive{display:none;}
+  .sticky .buttons{display:none;}
+  .sticky .inner{padding:6px 0;}
+}
+
+
+/* Améliorations v2 : accessibilité, progression, export, impression */
+.progress-wrap{
+  width:100%;
+  height:10px;
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--border);
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .25s ease;
+}
+.progress-text{
+  font-size:.9rem;
+  color:var(--muted);
+  margin-top:6px;
+}
+.save-toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:200;
+  display:none;
+  padding:10px 14px;
+  border-radius:12px;
+  background:rgba(57,214,161,.92);
+  color:#081018;
+  font-weight:700;
+  box-shadow:var(--shadow);
+}
+.save-toast.show{display:block;}
+input[type="range"]{
+  width:100%;
+  min-height:34px;
+}
+.question[data-complete="1"]{
+  border-left-color:var(--accent);
+}
+.question[data-complete="0"]{
+  border-left-color:var(--accent2);
+}
+@media print{
+  .sticky,
+  .start-panel,
+  .teacher-panel,
+  .question-tools,
+  button,
+  iframe,
+  .save-toast{
+    display:none !important;
+  }
+  body{
+    background:white !important;
+    color:black !important;
+  }
+  .card,.hero,.question,.media{
+    box-shadow:none !important;
+    border:1px solid #999 !important;
+    background:white !important;
+    color:black !important;
+  }
+  p,li,label,.caption,.small{
+    color:black !important;
+  }
+  textarea,input{
+    border:1px solid #777 !important;
+    color:black !important;
+  }
+}
+
+
+.vitta-frame{
+  margin:14px 0;
+  padding:14px;
+  border:1px solid rgba(94,168,255,.30);
+  border-radius:16px;
+  background:rgba(94,168,255,.08);
+}
+.vitta-frame iframe{
+  width:100%;
+  min-height:620px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:white;
+}
+.vitta-frame summary{
+  cursor:pointer;
+  font-weight:700;
+  color:var(--text);
+}
+@media (max-width:700px){
+  .vitta-frame iframe{min-height:520px;}
+}
+
+
+/* Vidéo responsive et mini-quiz immersif */
+.video-details{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:14px;
+  margin:14px 0;
+}
+.video-details summary{
+  cursor:pointer;
+  font-weight:700;
+  color:var(--text);
+  font-size:1.05rem;
+}
+.video-wrapper iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  min-height:260px;
+  border:none;
+  border-radius:14px;
+}
+.video-quiz{
+  margin-top:18px;
+  padding:14px;
+  border:1px solid rgba(57,214,161,.25);
+  border-radius:18px;
+  background:rgba(57,214,161,.06);
+}
+.video-question{
+  border-left-color:var(--accent);
+}
+@media (max-width:700px){
+  .video-wrapper iframe{
+    min-height:210px;
+  }
+}
+
+/* Correction visuelle : conserver un fond sombre uniforme même avant le démarrage */
+.locked-before-start{
+  opacity:1 !important;
+  pointer-events:none;
+  filter:none !important;
+}
+.locked-before-start .question,
+.locked-before-start .media,
+.locked-before-start .note,
+.locked-before-start .option,
+.locked-before-start textarea,
+.locked-before-start input{
+  background:#121a27 !important;
+  color:#f2f6fb !important;
+}
+html, body{
+  background-color:#0f1218 !important;
+}
+</style>
+</head>
+<body>
+<div class="sticky"><div class="inner">
+<div class="timer" id="timer">⏱ Chrono indicatif : en attente</div><button type="button" class="toggleTopBar" onclick="basculerVoletHaut()">Masquer le volet</button>
+<div class="scoreLive">Barème total : 60 points → note ramenée sur 20<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div><div class="progress-text" id="progressText">Progression : 0 / 32 questions</div></div>
+<div class="buttons">
+<button class="primary" onclick="corrigerTout()">Corriger / calculer la note</button>
+<button class="secondary" onclick="window.print()">Imprimer</button>
+<button class="danger" onclick="reinitialiser()">Réinitialiser</button>
+</div></div></div>
+
+<div class="container">
+<section class="hero">
+<h1>Vittascience – Créer des variables, manipuler les types et programmer des systèmes</h1>
+<p class="lead">Chaque capture d’écran fait l’objet d’un questionnaire. Avant de répondre, l’élève doit expérimenter le programme correspondant dans l’interface Vittascience.</p>
+<div><span class="pill">Durée : 55 minutes</span><span class="pill">60 points</span><span class="pill">Note /20 automatique</span><span class="pill">Ressource vidéo incluse</span></div>
+</section>
+
+
+<section class="card" id="ressource-video">
+<h2>Ressource vidéo interactive</h2>
+
+<p class="note">
+🎯 Regarde la vidéo puis reproduis les étapes dans Vittascience.
+</p>
+
+<p>
+Cette ressource sert de rappel de cours avant les exercices. La vidéo est masquée par défaut pour éviter de distraire les élèves.
+</p>
+
+<details class="video-details">
+  <summary>🎥 Voir la vidéo explicative</summary>
+
+  <div class="media video-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/dfAqqofAag8?rel=0&modestbranding=1&iv_load_policy=3"
+      title="Vidéo Vittascience - Variables"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+
+    <div class="caption">
+      🎥 Vidéo explicative intégrée avec une interface plus discrète.
+    </div>
+  </div>
+
+  <a
+    href="https://youtu.be/dfAqqofAag8"
+    target="_blank"
+    rel="noopener"
+    class="resource-link">
+    Ouvrir la vidéo dans un nouvel onglet
+  </a>
+</details>
+
+<div class="video-quiz">
+  <h3>Mini-quiz après la vidéo</h3>
+  <p class="small">
+    Réponds après avoir regardé la vidéo. Ce mini-quiz n’est pas noté dans le barème principal.
+  </p>
+
+  <div class="question video-question">
+    <strong>V1.</strong> À quoi sert une variable ?
+    <div class="options">
+      <label class="option"><input type="radio" name="vquiz1" value="a"> À mémoriser une information</label>
+      <label class="option"><input type="radio" name="vquiz1" value="b"> À décorer le programme</label>
+      <label class="option"><input type="radio" name="vquiz1" value="c"> À remplacer l’écran</label>
+    </div>
+  </div>
+
+  <div class="question video-question">
+    <strong>V2.</strong> En Python, que représente <span class="kbd">"y"</span> ?
+    <div class="options">
+      <label class="option"><input type="radio" name="vquiz2" value="a"> Une variable numérique</label>
+      <label class="option"><input type="radio" name="vquiz2" value="b"> Une chaîne de caractères</label>
+      <label class="option"><input type="radio" name="vquiz2" value="c"> Une erreur obligatoire</label>
+    </div>
+  </div>
+
+  <div class="question video-question">
+    <strong>V3.</strong> Que faut-il faire pour vérifier un programme ?
+    <div class="options">
+      <label class="option"><input type="radio" name="vquiz3" value="a"> Le recopier sans le tester</label>
+      <label class="option"><input type="radio" name="vquiz3" value="b"> L’expérimenter dans Vittascience</label>
+      <label class="option"><input type="radio" name="vquiz3" value="c"> Supprimer les variables</label>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button type="button" class="secondary" onclick="corrigerQuizVideo()">Corriger le mini-quiz vidéo</button>
+  </div>
+
+  <div id="videoQuizResult" class="result"></div>
+</div>
+</section>
+
+
+<section class="card"><div class="meta">
+<div class="metaBox"><strong>Nom et prénom</strong><input type="text" id="nomEleve" autocomplete="off" required></div>
+<div class="metaBox"><strong>Classe</strong><input type="text" id="classeEleve" autocomplete="off" required></div>
+<div class="metaBox"><strong>Consigne</strong><p class="small">Pour chaque exercice : observer la capture, reproduire ou tester dans Vittascience, puis répondre.</p></div>
+</div></section>
+
+
+<section class="card">
+<h2>Règle importante concernant les aides et corrections</h2>
+<p>
+Chaque question dispose d’un bouton <strong>💡 Aide</strong> et d’un bouton <strong>✅ Correction</strong>.
+L’aide sert à orienter l’élève sans donner directement la réponse.
+</p>
+<div class="note">
+<strong>Attention :</strong> si l’élève clique sur le bouton <strong>✅ Correction</strong> d’une question,
+la réponse est affichée, mais <strong>la question ne rapporte plus de points</strong>.
+</div>
+</section>
+
+
+<section class="card start-panel" id="startPanel">
+<h2>Réglages avant de commencer</h2>
+<p>Choisis les paramètres de travail avant de lancer le questionnaire. Le chronomètre est <strong>indicatif</strong> : il ne bloque pas le travail.</p>
+
+<div class="meta">
+  <div class="metaBox">
+    <strong>Temps de travail</strong><br>
+    <label><input type="radio" name="choixTemps" value="normal" checked> Temps conseillé : 55 min</label><br>
+    <label><input type="radio" name="choixTemps" value="tiers"> Temps aménagé : 55 min + tiers temps</label><br>
+    <label><input type="radio" name="choixTemps" value="libre"> Sans chrono affiché</label>
+  </div>
+
+  <div class="metaBox">
+    <strong>Niveau d’adaptation</strong><br>
+    <label><input type="radio" name="niveauCycle" value="5e" onchange="changerNiveau('5e')"> 5e : accompagné</label><br>
+    <label><input type="radio" name="niveauCycle" value="4e" checked onchange="changerNiveau('4e')"> 4e : intermédiaire</label><br>
+    <label><input type="radio" name="niveauCycle" value="3e" onchange="changerNiveau('3e')"> 3e : autonomie renforcée</label>
+    <div class="level-note" id="levelNote">Niveau 4e : travail guidé, mais avec justification attendue.</div>
+  </div>
+
+  <div class="metaBox">
+    <strong>Sauvegarde automatique</strong>
+    <p class="small">Les réponses sont sauvegardées dans ce navigateur. En cas de fermeture accidentelle, elles peuvent être retrouvées sur le même appareil.</p>
+    <div class="save-status" id="saveStatus">Sauvegarde : en attente du démarrage.</div>
+  </div>
+</div>
+
+<div class="buttons" style="margin-top:14px;">
+  <button type="button" class="primary" onclick="demarrerEvaluation()">Démarrer le questionnaire</button><button type="button" class="secondary" onclick="exporterReponses()">Exporter mes réponses</button>
+  <button type="button" class="secondary" onclick="activerModeEnseignant()">Mode enseignant</button>
+</div>
+
+<p class="small">Ce choix est libre et confidentiel. Les élèves bénéficiant d’un aménagement disposent du temps adapté à leur situation.</p>
+</section>
+
+<section class="card teacher-panel" id="teacherPanel">
+<h2>Mode enseignant</h2>
+<p>Ce panneau permet d’afficher quelques informations utiles sans modifier les exercices.</p>
+<div class="buttons">
+  <button type="button" class="secondary" onclick="afficherToutesCorrections()">Afficher les corrections dans les boutons</button>
+  <button type="button" class="secondary" onclick="effacerSauvegarde()">Effacer la sauvegarde locale</button><button type="button" class="secondary" onclick="exporterReponses()">Exporter les réponses</button>
+</div>
+<p class="small">Pour ouvrir ce mode, saisir le code simple demandé. Vous pouvez le modifier dans le code HTML si besoin.</p>
+</section>
+
+<form id="eval" class="locked-before-start">
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 1 – Calcul avec variables</h2><div class="badge">6 points</div></div>
+<div class="media"><img src="assets/capture-01-variables.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 1.</div></div>
+<div class="note">À faire : reproduire le programme dans Vittascience puis répondre.</div>
+<div class="question" data-qnum="1"><strong>1.1</strong> Quelle valeur est affichée dans la console ?<div class="options">
+<label class="option"><input type="radio" name="q11" value="25.2">25,2</label>
+<label class="option"><input type="radio" name="q11" value="8.4">8,4</label>
+<label class="option"><input type="radio" name="q11" value="7">7</label>
+<label class="option"><input type="radio" name="q11" value="2">2</label></div></div>
+<div class="question" data-qnum="2"><strong>1.2</strong> Quelle est la valeur finale de x ?<input type="number" id="q12" step="0.1"></div>
+<div class="question" data-qnum="3"><strong>1.3</strong> Explique pourquoi la valeur affichée pour y est différente de sa valeur initiale.<textarea id="q13"></textarea></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 2 – QCM sur le même programme</h2><div class="badge">6 points</div></div>
+<div class="media"><img src="assets/capture-02-qcm.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 2.</div></div>
+<div class="question" data-qnum="4"><strong>2.1</strong> Quelle réponse doit être choisie ?<div class="options">
+<label class="option"><input type="radio" name="q21" value="9">9</label>
+<label class="option"><input type="radio" name="q21" value="26">26</label>
+<label class="option"><input type="radio" name="q21" value="19">19</label>
+<label class="option"><input type="radio" name="q21" value="5">5</label></div></div>
+<div class="question" data-qnum="5"><strong>2.2</strong> Quelle est la valeur finale de x ?<input type="number" id="q22"></div>
+<div class="question" data-qnum="6"><strong>2.3</strong> Quel calcul permet d’obtenir y ?<div class="options">
+<label class="option"><input type="radio" name="q23" value="b">x − 2 × y</label>
+<label class="option"><input type="radio" name="q23" value="a">x + 2 × y</label>
+<label class="option"><input type="radio" name="q23" value="c">12 + x − y</label></div></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 3 – Lecture d’une correction validée</h2><div class="badge">4 points</div></div>
+<div class="media"><img src="assets/capture-03-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 3.</div></div>
+<div class="question" data-qnum="7"><strong>3.1</strong> Quelle réponse est surlignée en vert ?<input type="number" id="q31"></div>
+<div class="question" data-qnum="8"><strong>3.2</strong> Que confirme cette capture au sujet du programme ?<textarea id="q32"></textarea></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 4 – Attention aux guillemets</h2><div class="badge">6 points</div></div>
+<div class="media"><img src="assets/capture-04-guillemets.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 4.</div></div>
+<div class="question" data-qnum="9"><strong>4.1</strong> Quelle réponse doit être choisie ?<div class="options">
+<label class="option"><input type="radio" name="q41" value="10">10</label>
+<label class="option"><input type="radio" name="q41" value="5">5</label>
+<label class="option"><input type="radio" name="q41" value="13">13</label>
+<label class="option"><input type="radio" name="q41" value="y">y</label></div></div>
+<div class="question" data-qnum="10"><strong>4.2</strong> Pourquoi le programme affiche-t-il y et non sa valeur numérique ?<textarea id="q42"></textarea></div>
+<div class="question" data-qnum="11"><strong>4.3</strong> Si on enlève les guillemets, quelle valeur serait affichée ?<input type="number" id="q43"></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 5 – Correction sur les guillemets</h2><div class="badge">4 points</div></div>
+<div class="media"><img src="assets/capture-05-guillemets-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 5.</div></div>
+<div class="question" data-qnum="12"><strong>5.1</strong> Quelle réponse a été validée ?<input type="text" id="q51"></div>
+<div class="question" data-qnum="13"><strong>5.2</strong> Que rappelle le message vert ?<textarea id="q52"></textarea></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 6 – Blocs à remettre dans le bon ordre</h2><div class="badge">6 points</div></div>
+<div class="media"><img src="assets/capture-06-blocs-ordre.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 6a.</div></div>
+<div class="media"><img src="assets/capture-07-blocs-etiquettes.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 6b – blocs à organiser.</div></div>
+<div class="question" data-qnum="14"><strong>6.1</strong> On veut afficher :<pre>bonjour
+au revoir</pre>Quel est l’ordre correct ?<div class="options">
+<label class="option"><input type="radio" name="q61" value="A">affecter mot = "bonjour" → afficher mot → affecter mot = "au revoir" → afficher mot</label>
+<label class="option"><input type="radio" name="q61" value="B">affecter mot = "au revoir" → afficher mot → affecter mot = "bonjour" → afficher mot</label>
+<label class="option"><input type="radio" name="q61" value="C">affecter mot = "bonjour" → affecter mot = "au revoir" → afficher mot → afficher mot</label></div></div>
+<div class="question" data-qnum="15"><strong>6.2</strong> Pourquoi faut-il afficher mot deux fois ?<textarea id="q62"></textarea></div>
+<div class="question" data-qnum="16"><strong>6.3</strong> Une variable texte est-elle obligatoirement numérique ?<div class="options">
+<label class="option"><input type="radio" name="q63" value="oui">Oui</label>
+<label class="option"><input type="radio" name="q63" value="non">Non</label></div></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 7 – VMC intelligente</h2><div class="badge">8 points</div></div>
+<div class="media"><img src="assets/capture-08-vmc.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 7.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre>a = x * 2 + 1
+b = x * a - 3</pre></div>
+<div class="question" data-qnum="17"><strong>7.1</strong> Quelle lecture correcte du programme faut-il retenir ?<div class="options">
+<label class="option"><input type="radio" name="q71" value="A">a = x × 2 + 1 ; b = x × a − 3</label>
+<label class="option"><input type="radio" name="q71" value="B">a = x + 2 + 1 ; b = x + a − 3</label>
+<label class="option"><input type="radio" name="q71" value="C">a = 2 + x ; b = a − 3</label></div></div>
+<div class="question" data-qnum="18"><strong>7.2</strong> Compléter le tableau pour x = 2 ; 5 ; 8 ; 12
+<table><thead><tr><th>Entrée x</th><th>2</th><th>5</th><th>8</th><th>12</th></tr></thead><tbody>
+<tr><th>Sortie a</th><td><input type="number" id="q72a"></td><td><input type="number" id="q72b"></td><td><input type="number" id="q72c"></td><td><input type="number" id="q72d"></td></tr>
+<tr><th>Sortie b</th><td><input type="number" id="q73a"></td><td><input type="number" id="q73b"></td><td><input type="number" id="q73c"></td><td><input type="number" id="q73d"></td></tr>
+</tbody></table></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 8 – Analyse d’une correction de la VMC</h2><div class="badge">4 points</div></div>
+<div class="media"><img src="assets/capture-09-vmc-correction.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 8.</div></div>
+<div class="question" data-qnum="19"><strong>8.1</strong> Quelle valeur de b correspond à x = 20 ?<input type="number" id="q81"></div>
+<div class="question" data-qnum="20"><strong>8.2</strong> Pourquoi faut-il calculer a avant b ?<textarea id="q82"></textarea></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 9 – Devis automatisé</h2><div class="badge">8 points</div></div>
+<div class="media"><img src="assets/capture-10-devis.png" loading="lazy" decoding="async" alt="Capture d’écran Vittascience utilisée comme support d’exercice"><div class="caption">Capture 9.</div></div><div class="code-transcrit"><strong>Texte transcrit pour améliorer la lisibilité :</strong><pre>prix_matiere = 437
+quantite = 78
+cout_emballage = 139
+cout_total = prix_matiere * quantite + cout_emballage
+print(cout_total)</pre></div>
+<div class="question" data-qnum="21"><strong>9.1</strong> Dans ce type d’exercice, nomme au moins deux variables utiles.<textarea id="q91"></textarea></div>
+<div class="question" data-qnum="22"><strong>9.2</strong> Coût total initial pour :<pre>prix_matiere = 437
+quantite = 78
+cout_emballage = 139</pre><input type="number" id="q92"></div>
+<div class="question" data-qnum="23"><strong>9.3</strong> Si cout_emballage = 5, quel devient le coût total ?<input type="number" id="q93"></div>
+<div class="question" data-qnum="24"><strong>9.4</strong> Si on ajoute remise = 26, quel est le coût total final ?<input type="number" id="q94"></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 10 – Trois situations similaires</h2><div class="badge">8 points</div></div>
+<div class="question" data-qnum="25"><strong>10.1</strong> Maquette de voiture solaire :<pre>prix_panneau = 145
+quantite = 6
+cout_assemblage = 58</pre><input type="number" id="q101"></div>
+<div class="question" data-qnum="26"><strong>10.2</strong> Boîtiers domotiques :<pre>prix_boitiers = 32
+quantite = 18
+cout_transport = 24</pre><input type="number" id="q102"></div>
+<div class="question" data-qnum="27"><strong>10.3</strong> Kits d’arrosage connectés :<pre>prix_kit = 27
+quantite = 14
+cout_capteur = 33</pre><input type="number" id="q103"></div>
+<div class="question" data-qnum="28"><strong>10.4</strong> Dans ces trois cas, qu’est-ce qui change : la logique du programme, ou seulement les noms des variables et les valeurs ?<textarea id="q104"></textarea></div>
+</section>
+
+<section class="card">
+<div class="exerciseHead"><h2>Exercice 11 – Version interactive : arrosage automatique</h2><div class="badge">8 points</div></div>
+<p>On arrose seulement si les quatre conditions suivantes sont vraies : température &gt; 25 ; luminosité &gt; 60 ; humidité du sol &lt; 40 ; temps &gt; 12.</p>
+<div class="question" data-qnum="29">
+<div class="media">
+<label>🌡 Température <input type="range" id="tempRange" min="0" max="45" value="30" oninput="updateIrrigation()"></label>
+<div class="small">Valeur : <span id="tempVal">30</span> °C</div>
+<label>☀️ Luminosité <input type="range" id="lightRange" min="0" max="100" value="75" oninput="updateIrrigation()"></label>
+<div class="small">Valeur : <span id="lightVal">75</span> %</div>
+<label>💧 Humidité du sol <input type="range" id="soilRange" min="0" max="100" value="20" oninput="updateIrrigation()"></label>
+<div class="small">Valeur : <span id="soilVal">20</span> %</div>
+<label>⏱ Temps depuis le dernier arrosage <input type="range" id="timeRange" min="0" max="48" value="18" oninput="updateIrrigation()"></label>
+<div class="small">Valeur : <span id="timeVal">18</span> h</div>
+</div>
+<div class="media">
+<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;"><div id="waterLed" style="width:34px;height:34px;border-radius:50%;background:#666;border:2px solid rgba(255,255,255,.25)"></div><div><strong>Décision :</strong> <span id="waterDecision">Arroser</span><div class="small" id="waterReason">Les conditions sont réunies.</div></div></div>
+<pre id="waterCode"></pre><button type="button" class="secondary" onclick="resetIrrigation()">Réinitialiser les valeurs par défaut</button>
+</div></div>
+<div class="question" data-qnum="30"><strong>11.1</strong> Avec les valeurs au chargement, faut-il arroser ?<div class="options">
+<label class="option"><input type="radio" name="q111" value="oui">Oui</label>
+<label class="option"><input type="radio" name="q111" value="non">Non</label></div></div>
+<div class="question" data-qnum="31"><strong>11.2</strong> Quelle variable traduit l’état de la terre ?<div class="options">
+<label class="option"><input type="radio" name="q112" value="temperature">temperature</label>
+<label class="option"><input type="radio" name="q112" value="luminosite">luminosite</label>
+<label class="option"><input type="radio" name="q112" value="humidite_sol">humidite_sol</label>
+<label class="option"><input type="radio" name="q112" value="temps">temps</label></div></div>
+<div class="question" data-qnum="32"><strong>11.3</strong> Explique quand le système doit arroser.<textarea id="q113"></textarea></div>
+<div class="question" data-qnum="33"><strong>11.4</strong> Si la terre est déjà très humide, faut-il arroser ?<div class="options">
+<label class="option"><input type="radio" name="q114" value="oui">Oui</label>
+<label class="option"><input type="radio" name="q114" value="non">Non</label></div></div>
+</section>
+
+</form>
+
+
+<section class="card">
+<h2>Mini-cours : variables, entiers, flottants et chaînes</h2>
+<p>Une <strong>variable</strong> mémorise une information. En Python, elle peut contenir plusieurs types de données.</p>
+<table>
+<thead><tr><th>Type</th><th>Exemple</th><th>Rôle</th></tr></thead>
+<tbody>
+<tr><td><span class="kbd">int</span></td><td><span class="kbd">age = 14</span></td><td>Nombre entier : quantité, compteur, nombre d’objets.</td></tr>
+<tr><td><span class="kbd">float</span></td><td><span class="kbd">distance = 12.5</span></td><td>Nombre décimal : température, longueur, prix, vitesse.</td></tr>
+<tr><td><span class="kbd">str</span></td><td><span class="kbd">nom = "Luna"</span></td><td>Texte : nom, message, étiquette, phrase.</td></tr>
+</tbody>
+</table>
+<div class="note">En Python, on écrit les nombres décimaux avec un point : <span class="kbd">4.5</span>.</div>
+
+</section>
+
+<section class="card" id="installation-python-outils">
+  <h2>Installer Python et les outils nécessaires</h2>
+
+  <div class="note">
+    <strong>Avant de commencer :</strong>
+    pour programmer en Python sur ton ordinateur, tu dois d’abord installer
+    <strong>Python</strong>. Ensuite, tu peux utiliser soit <strong>PowerShell</strong>,
+    soit un environnement de développement comme <strong>PyCharm</strong>.
+  </div>
+
+  <h3>1. Installer Python</h3>
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
+  <div class='caption'>Figure 3 : lancer l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
+  <div class='caption'>Figure 4 : progression de l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
+</div>
+"
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
+  <div class='caption'>Figure 3 : lancer l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
+  <div class='caption'>Figure 4 : progression de l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
+</div>
+"
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Étape 1 : télécharger Python'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Étape 2 : ajouter Python au PATH'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Étape 3 : installer Python'>
+  <div class='caption'>Figure 3 : lancer l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Étape 4 : installation en cours'>
+  <div class='caption'>Figure 4 : progression de l'installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Étape 5 : installation terminée'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, pressez <kbd>Win + X</kbd> puis choisissez « Windows PowerShell (Admin) ».
+</div>
+"
+<div class='media'>
+  <img src='assets/python-step1.png' alt='Installer Python – étape 1'>
+  <div class='caption'>Figure 1 : télécharger Python depuis le site officiel.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step2.png' alt='Installer Python – étape 2'>
+  <div class='caption'>Figure 2 : cocher « Add Python to PATH ».</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step3.png' alt='Installer Python – étape 3'>
+  <div class='caption'>Figure 3 : lancer l’installation.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step4.png' alt='Installer Python – étape 4'>
+  <div class='caption'>Figure 4 : installation en cours.</div>
+</div>
+<div class='media'>
+  <img src='assets/python-step5.png' alt='Installer Python – étape 5'>
+  <div class='caption'>Figure 5 : installation terminée.</div>
+</div>
+<div class='note'>
+  <strong>Astuce&nbsp;:</strong> pour ouvrir PowerShell en mode administrateur, appuyez sur <kbd>Win + X</kbd>
+  puis choisissez « Windows PowerShell (Admin) ».
+</div>
+  <p>
+    Télécharge Python depuis le site officiel :
+    <a class="resource-link" href="https://www.python.org/downloads/" target="_blank" rel="noopener">
+      Télécharger Python
+    </a>
+  </p>
+
+  <p>
+    Pendant l’installation sur Windows, pense à cocher l’option :
+    <strong>Add Python to PATH</strong>.
+  </p>
+
+  <h3>2. Installer PyCharm (facultatif mais conseillé)</h3>
+  <p>
+    Télécharge PyCharm Community depuis le site officiel :
+    <a class="resource-link" href="https://www.jetbrains.com/pycharm/download/" target="_blank" rel="noopener">
+      Télécharger PyCharm
+    </a>
+  </p>
+
+  <h3>3. Installer une bibliothèque si elle manque</h3>
+  <div class="note">
+    <strong>Important :</strong>
+    à certains moments, surtout pour les scripts ou les commandes dans
+    <strong>PowerShell</strong>, il peut être nécessaire d’ouvrir PowerShell
+    <strong>en tant qu’administrateur</strong>.
+  </div>
+
+  <p>
+    Sous Windows : fais un clic droit sur <strong>PowerShell</strong>, puis choisis
+    <strong>Exécuter en tant qu’administrateur</strong>.
+  </p>
+
+  <h3>Installer une bibliothèque si elle manque</h3>
+  <p><strong>Dans PowerShell (de préférence en administrateur si nécessaire) :</strong></p>
+  <pre>
+# Vérifie que Python est disponible.
+python --version
+
+# Installe matplotlib.
+python -m pip install matplotlib
+
+# turtle est généralement inclus avec Python.
+# Si besoin, on peut essayer :
+python -m pip install PythonTurtle
+  </pre>
+
+  <p>
+    <strong>Dans PyCharm :</strong> ouvrir le projet, puis aller dans
+    <span class="kbd">View</span> → <span class="kbd">Tool Windows</span> →
+    <span class="kbd">Python Packages</span>, chercher la bibliothèque et cliquer sur
+    <span class="kbd">Install</span>.
+  </p>
+
+  <p>
+    <a class="resource-link" href="https://www.jetbrains.com/help/pycharm/installing-uninstalling-and-upgrading-packages.html" target="_blank" rel="noopener">
+      Aide officielle pour installer des packages dans PyCharm
+    </a>
+  </p>
+</section>
+<section class="card extra">
+<h2>10 exercices supplémentaires non notés – Pour aller plus loin</h2>
+<p>Ces exercices sont progressifs. Les élèves entrent eux-mêmes les valeurs pour créer leurs variables.</p>
+
+<h3>Bonus 1 – Présentation avec une chaîne</h3>
+<pre># On demande le prénom de l'élève.
+prenom = input("Entre ton prénom : ")
+
+# On affiche une phrase personnalisée.
+print("Bonjour", prenom)</pre>
+
+<h3>Bonus 2 – Addition de deux entiers</h3>
+<pre># On demande un premier entier.
+a = int(input("Entre un premier entier : "))
+
+# On demande un deuxième entier.
+b = int(input("Entre un deuxième entier : "))
+
+# On calcule la somme.
+somme = a + b
+
+# On affiche le résultat.
+print("La somme est :", somme)</pre>
+
+<h3>Bonus 3 – Prix total avec un nombre décimal</h3>
+<pre># On demande le prix d'un objet.
+prix = float(input("Prix d'un objet en euros : "))
+
+# On demande la quantité.
+quantite = int(input("Quantité achetée : "))
+
+# On calcule le total.
+total = prix * quantite
+
+# On affiche le total.
+print("Le prix total est :", total, "euros")</pre>
+
+<h3>Bonus 4 – Kilomètres vers miles</h3>
+<pre># On demande une distance en kilomètres.
+kilometres = float(input("Distance en kilomètres : "))
+
+# On définit le facteur de conversion.
+facteur = 0.621371
+
+# On convertit en miles.
+miles = kilometres * facteur
+
+# On affiche le résultat.
+print(kilometres, "km =", miles, "miles")</pre>
+
+<h3>Bonus 5 – Celsius vers Fahrenheit</h3>
+<pre># On demande une température en degrés Celsius.
+celsius = float(input("Température en °C : "))
+
+# On convertit en degrés Fahrenheit.
+fahrenheit = celsius * 9 / 5 + 32
+
+# On affiche le résultat.
+print(celsius, "°C =", fahrenheit, "°F")</pre>
+
+<h3>Bonus 6 – Aire d’un triangle</h3>
+<pre># On demande la base du triangle.
+base = float(input("Longueur de la base : "))
+
+# On demande la hauteur du triangle.
+hauteur = float(input("Hauteur du triangle : "))
+
+# On calcule l'aire.
+aire = base * hauteur / 2
+
+# On affiche le résultat.
+print("L'aire du triangle est :", aire)</pre>
+
+<h3>Bonus 7 – Répéter un message</h3>
+<pre># On demande un mot.
+mot = input("Entre un mot : ")
+
+# On demande un nombre de répétitions.
+nombre = int(input("Combien de fois faut-il l'afficher ? "))
+
+# On répète le mot.
+print(mot * nombre)</pre>
+
+<h3>Bonus 8 – PyCharm : carré avec turtle</h3>
+<pre># On importe la bibliothèque turtle.
+import turtle
+
+# On crée une tortue.
+stylo = turtle.Turtle()
+
+# On demande la longueur du côté.
+cote = int(input("Longueur du côté du carré : "))
+
+# On trace un carré.
+for i in range(4):
+    # La tortue avance.
+    stylo.forward(cote)
+
+    # La tortue tourne à droite.
+    stylo.right(90)
+
+# On garde la fenêtre ouverte.
+turtle.done()</pre>
+
+<h3>Bonus 9 – PyCharm : triangle coloré</h3>
+<pre># On importe la bibliothèque turtle.
+import turtle
+
+# On crée une tortue.
+stylo = turtle.Turtle()
+
+# On choisit une couleur.
+stylo.color("blue")
+
+# On demande la longueur du côté.
+cote = int(input("Longueur du côté du triangle : "))
+
+# On trace un triangle équilatéral.
+for i in range(3):
+    # La tortue avance.
+    stylo.forward(cote)
+
+    # La tortue tourne de 120 degrés.
+    stylo.left(120)
+
+# On garde la fenêtre ouverte.
+turtle.done()</pre>
+
+<h3>Bonus 10 – PyCharm : spirale simple</h3>
+<pre># On importe la bibliothèque turtle.
+import turtle
+
+# On crée une tortue.
+stylo = turtle.Turtle()
+
+# On demande le nombre de segments.
+segments = int(input("Nombre de segments : "))
+
+# On trace une spirale.
+for i in range(segments):
+    # La distance augmente progressivement.
+    stylo.forward(i * 5)
+
+    # La tortue tourne à droite.
+    stylo.right(90)
+
+# On garde la fenêtre ouverte.
+turtle.done()</pre>
+</section>
+
+<section class="card"><h2>Résultat final</h2><div id="resultat" class="result"></div><p class="small">Calcul sur 60 points, puis conversion automatique sur 20.</p></section>
+<div class="footer">Document HTML interactif pour les élèves de cycle 4.</div>
+</div>
+
+<script>
+const DUREE = 55*60;
+let remaining = DUREE;
+let timerInt = null;
+function fmt(sec){ const m=String(Math.floor(sec/60)).padStart(2,'0'); const s=String(sec%60).padStart(2,'0'); return m+':'+s; }
+function updateTimer(){ const el=document.getElementById('timer'); el.textContent='⏱ Temps restant : '+fmt(remaining); el.classList.remove('warn','danger'); if(remaining<=300) el.classList.add('danger'); else if(remaining<=900) el.classList.add('warn'); }
+function startTimer(){ if(timerInt) return; updateTimer(); timerInt=setInterval(function(){ remaining--; updateTimer(); if(remaining<=0){ clearInterval(timerInt); corrigerTout(true); } },1000); }
+function readRadio(name){ const el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; }
+function norm(txt){ return (txt||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['"“”]/g,'').replace(/\s+/g,' ').trim(); }
+function addIf(cond, pts){ return cond ? pts : 0; }
+function eqNum(val,target){ return Number(val)===Number(target); }
+function updateIrrigation(){
+  const t=Number(document.getElementById('tempRange').value), l=Number(document.getElementById('lightRange').value), h=Number(document.getElementById('soilRange').value), tm=Number(document.getElementById('timeRange').value);
+  document.getElementById('tempVal').textContent=t; document.getElementById('lightVal').textContent=l; document.getElementById('soilVal').textContent=h; document.getElementById('timeVal').textContent=tm;
+  const on=(t>25 && l>60 && h<40 && tm>12), led=document.getElementById('waterLed');
+  document.getElementById('waterDecision').textContent=on?'Arroser':'Ne pas arroser'; document.getElementById('waterReason').textContent=on?'Les conditions sont réunies.':'Au moins une condition n’est pas remplie.';
+  led.style.background=on?'#39d6a1':'#666'; led.style.boxShadow=on?'0 0 18px rgba(57,214,161,.8)':'none';
+  document.getElementById('waterCode').textContent=`temperature = ${t}
+luminosite = ${l}
+humidite_sol = ${h}
+temps = ${tm}
+
+if temperature > 25 and luminosite > 60 and humidite_sol < 40 and temps > 12:
+    arroser = 1
+else:
+    arroser = 0
+
+print(arroser)`;
+}
+window.addEventListener('load', function(){ startTimer(); updateIrrigation(); });
+
+function corrigerTout(finTemps){
+  finTemps = !!finTemps;
+  let score=0, erreurs=[];
+  score += addIf(readRadio('q11')==='25.2',2); if(readRadio('q11')!=='25.2') erreurs.push('Ex.1.1 : la console affiche 25,2');
+  score += addIf(eqNum(document.getElementById('q12').value,14),2); if(!eqNum(document.getElementById('q12').value,14)) erreurs.push('Ex.1.2 : x vaut 14 à la fin');
+  const q13=norm(document.getElementById('q13').value); const q13ok=q13.includes('y') && (q13.includes('modif') || q13.includes('nouvelle') || q13.includes('calcul'));
+  score += addIf(q13ok,2); if(!q13ok) erreurs.push('Ex.1.3 : préciser que y reçoit une nouvelle valeur issue d’un calcul');
+
+  score += addIf(readRadio('q21')==='26',2); if(readRadio('q21')!=='26') erreurs.push('Ex.2.1 : la bonne réponse est 26');
+  score += addIf(eqNum(document.getElementById('q22').value,36),2); if(!eqNum(document.getElementById('q22').value,36)) erreurs.push('Ex.2.2 : x vaut 36 à la fin');
+  score += addIf(readRadio('q23')==='b',2); if(readRadio('q23')!=='b') erreurs.push('Ex.2.3 : le calcul correct est x − 2 × y');
+
+  score += addIf(eqNum(document.getElementById('q31').value,26),2); if(!eqNum(document.getElementById('q31').value,26)) erreurs.push('Ex.3.1 : la réponse validée est 26');
+  const q32=norm(document.getElementById('q32').value); const q32ok=q32.includes('26') || q32.includes('bonne reponse') || q32.includes('resultat');
+  score += addIf(q32ok,2); if(!q32ok) erreurs.push('Ex.3.2 : la capture confirme que 26 est la bonne sortie');
+
+  score += addIf(readRadio('q41')==='y',2); if(readRadio('q41')!=='y') erreurs.push('Ex.4.1 : la bonne réponse est y');
+  const q42=norm(document.getElementById('q42').value); const q42ok=(q42.includes('guillemet') || q42.includes('chaine') || q42.includes('caractere')) && q42.includes('variable');
+  score += addIf(q42ok,2); if(!q42ok) erreurs.push('Ex.4.2 : avec les guillemets, y devient du texte');
+  score += addIf(eqNum(document.getElementById('q43').value,4),2); if(!eqNum(document.getElementById('q43').value,4)) erreurs.push('Ex.4.3 : sans guillemets, la valeur affichée serait 4');
+
+  score += addIf(norm(document.getElementById('q51').value)==='y',2); if(norm(document.getElementById('q51').value)!=='y') erreurs.push('Ex.5.1 : la réponse validée est y');
+  const q52=norm(document.getElementById('q52').value); const q52ok=(q52.includes('guillemet') || q52.includes('chaine') || q52.includes('caractere')) && q52.includes('variable');
+  score += addIf(q52ok,2); if(!q52ok) erreurs.push('Ex.5.2 : le message rappelle que y n’est plus une variable mais une chaîne');
+
+  score += addIf(readRadio('q61')==='A',2); if(readRadio('q61')!=='A') erreurs.push('Ex.6.1 : l’ordre correct est A');
+  const q62=norm(document.getElementById('q62').value); const q62ok=q62.includes('deux') || q62.includes('2') || q62.includes('success');
+  score += addIf(q62ok,2); if(!q62ok) erreurs.push('Ex.6.2 : il faut afficher deux fois pour voir deux valeurs successives');
+  score += addIf(readRadio('q63')==='non',2); if(readRadio('q63')!=='non') erreurs.push('Ex.6.3 : une variable texte n’est pas forcément numérique');
+
+  score += addIf(readRadio('q71')==='A',2); if(readRadio('q71')!=='A') erreurs.push('Ex.7.1 : la lecture correcte est A');
+  const expected = {q72a:5,q72b:11,q72c:17,q72d:25,q73a:7,q73b:52,q73c:133,q73d:297};
+  Object.keys(expected).forEach(function(id){
+    const ok=eqNum(document.getElementById(id).value, expected[id]);
+    score += addIf(ok,0.75);
+    if(!ok) erreurs.push(id + ' : réponse attendue ' + expected[id]);
+  });
+
+  score += addIf(eqNum(document.getElementById('q81').value,817),2); if(!eqNum(document.getElementById('q81').value,817)) erreurs.push('Ex.8.1 : pour x = 20, b = 817');
+  const q82=norm(document.getElementById('q82').value); const q82ok=q82.includes('a') && q82.includes('b') && (q82.includes('avant') || q82.includes('ordre') || q82.includes('depend'));
+  score += addIf(q82ok,2); if(!q82ok) erreurs.push('Ex.8.2 : b dépend de a, donc on calcule a avant b');
+
+  const q91=norm(document.getElementById('q91').value); const q91ok=(q91.includes('prix') || q91.includes('quantite') || q91.includes('emballage') || q91.includes('remise'));
+  score += addIf(q91ok,2); if(!q91ok) erreurs.push('Ex.9.1 : citer au moins deux variables utiles');
+  score += addIf(eqNum(document.getElementById('q92').value,34225),2); if(!eqNum(document.getElementById('q92').value,34225)) erreurs.push('Ex.9.2 : 34225');
+  score += addIf(eqNum(document.getElementById('q93').value,34091),2); if(!eqNum(document.getElementById('q93').value,34091)) erreurs.push('Ex.9.3 : 34091');
+  score += addIf(eqNum(document.getElementById('q94').value,34065),2); if(!eqNum(document.getElementById('q94').value,34065)) erreurs.push('Ex.9.4 : 34065');
+
+  score += addIf(eqNum(document.getElementById('q101').value,928),2); if(!eqNum(document.getElementById('q101').value,928)) erreurs.push('Ex.10.1 : 928');
+  score += addIf(eqNum(document.getElementById('q102').value,600),2); if(!eqNum(document.getElementById('q102').value,600)) erreurs.push('Ex.10.2 : 600');
+  score += addIf(eqNum(document.getElementById('q103').value,411),2); if(!eqNum(document.getElementById('q103').value,411)) erreurs.push('Ex.10.3 : 411');
+  const q104=norm(document.getElementById('q104').value); const q104ok=(q104.includes('meme') || q104.includes('logique') || q104.includes('seulement')) && (q104.includes('variable') || q104.includes('valeur'));
+  score += addIf(q104ok,2); if(!q104ok) erreurs.push('Ex.10.4 : la logique reste la même ; changent surtout les noms des variables et les valeurs');
+
+  score += addIf(readRadio('q111')==='oui',2); if(readRadio('q111')!=='oui') erreurs.push('Ex.11.1 : avec les valeurs par défaut, il faut arroser');
+  score += addIf(readRadio('q112')==='humidite_sol',2); if(readRadio('q112')!=='humidite_sol') erreurs.push('Ex.11.2 : la variable est humidite_sol');
+  const q113=norm(document.getElementById('q113').value); const q113ok=q113.includes('temperature') && q113.includes('luminos') && q113.includes('humidite') && q113.includes('temps');
+  score += addIf(q113ok,2); if(!q113ok) erreurs.push('Ex.11.3 : citer les quatre conditions');
+  score += addIf(readRadio('q114')==='non',2); if(readRadio('q114')!=='non') erreurs.push('Ex.11.4 : si la terre est déjà humide, il ne faut pas arroser');
+
+  
+  const penaliteCorrection = pointsCorrectionRevelee();
+  score = Math.max(0, score - penaliteCorrection);
+  const note=(score/60)*20;
+
+  let app='À renforcer';
+  if(note>=16) app='Très bon travail'; else if(note>=12) app='Travail satisfaisant'; else if(note>=8) app='Bases présentes, mais à consolider';
+  const nom=document.getElementById('nomEleve').value.trim();
+  const box=document.getElementById('resultat');
+  box.className='result show '+(note>=10?'ok':'warn');
+  box.innerHTML='<p><strong>'+(nom||'Élève')+'</strong> : '+score.toFixed(2).replace('.',',')+' / 60, soit <strong>'+note.toFixed(1).replace('.',',')+' / 20</strong>.</p>'
+    + '<p><strong>Appréciation :</strong> '+app+'</p>' + (penaliteCorrection>0?'<p class="penalty-note">Points retirés car correction affichée : '+penaliteCorrection+' point(s).</p>':'')
+    + (finTemps?'<p><strong>Le temps est écoulé.</strong> La correction a été déclenchée automatiquement.</p>':'')
+    + (erreurs.length?'<details><summary>Réponses à retravailler</summary><ul><li>'+erreurs.join('</li><li>')+'</li></ul></details>':'<p>Bravo, tout est correct.</p>');
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function reinitialiser(){
+  if(!confirm('Réinitialiser tout le questionnaire ?')) return;
+  document.getElementById('eval').reset();
+  document.getElementById('nomEleve').value='';
+  document.getElementById('classeEleve').value='';
+  const box=document.getElementById('resultat'); box.className='result'; box.innerHTML='';
+  remaining=DUREE; updateTimer(); updateIrrigation(); window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<script>
+/* Aides et corrections par question.
+   Si l'élève affiche une correction, la question est marquée "revealed".
+   Au moment du calcul final, les points de cette question sont retirés. */
+
+const aidesParQuestion = {
+  1:"Lis directement la valeur affichée dans la console.",
+  2:"Suis la variable x jusqu’à sa dernière affectation.",
+  3:"Cherche la ligne où la variable y reçoit une nouvelle valeur.",
+  4:"Regarde la réponse qui est validée en vert.",
+  5:"Suis la dernière valeur de la variable x.",
+  6:"Repère l’opération utilisée dans la dernière affectation de y.",
+  7:"Observe la réponse surlignée en vert.",
+  8:"La capture sert à vérifier la sortie obtenue.",
+  9:"Observe si y est écrit avec ou sans guillemets.",
+  10:"Les guillemets transforment un nom de variable en texte.",
+  11:"Refais le calcul de y sans les guillemets.",
+  12:"Observe la réponse validée en vert.",
+  13:"Le message explique le rôle des guillemets.",
+  14:"L’ordre doit permettre d’afficher d’abord bonjour puis au revoir.",
+  15:"Une même variable peut changer de valeur au cours du programme.",
+  16:"Une chaîne de caractères est du texte.",
+  17:"Lis les formules correspondant aux blocs.",
+  18:"Calcule d’abord a, puis utilise a pour calculer b.",
+  19:"Lis la dernière colonne du tableau validé.",
+  20:"b utilise la valeur de a.",
+  21:"Cherche les noms des données qui peuvent changer.",
+  22:"Multiplie puis ajoute le coût d’emballage.",
+  23:"Recalcule avec le nouveau coût d’emballage.",
+  24:"Recalcule avec la remise.",
+  25:"Multiplie le prix par la quantité puis ajoute le coût.",
+  26:"Même méthode : multiplication puis addition.",
+  27:"Même méthode : multiplication puis addition.",
+  28:"Compare la structure des trois programmes.",
+  29:"Observe la décision initiale de la simulation.",
+  30:"La variable qui décrit la terre contient le mot sol.",
+  31:"Il faut citer les quatre conditions de décision.",
+  32:"Si la terre est déjà humide, l’arrosage n’est pas nécessaire."
+};
+
+const correctionsParQuestion = {
+  1:"Réponse : 25,2.",
+  2:"Réponse : x vaut 14 à la fin.",
+  3:"y est recalculée : elle reçoit une nouvelle valeur issue d’un calcul.",
+  4:"Réponse : 26.",
+  5:"Réponse : x vaut 36 à la fin.",
+  6:"Réponse : x − 2 × y.",
+  7:"Réponse : 26.",
+  8:"La capture confirme que 26 est la bonne sortie du programme.",
+  9:"Réponse : y.",
+  10:"Avec les guillemets, y est une chaîne de caractères, pas une variable.",
+  11:"Sans guillemets, la valeur affichée serait 4.",
+  12:"Réponse : y.",
+  13:"Le message rappelle que y entre guillemets est du texte.",
+  14:"Ordre : affecter bonjour → afficher → affecter au revoir → afficher.",
+  15:"Il faut afficher deux fois pour voir les deux valeurs successives.",
+  16:"Réponse : Non.",
+  17:"Réponse : a = x × 2 + 1 ; b = x × a − 3.",
+  18:"a : 5, 11, 17, 25 ; b : 7, 52, 133, 297.",
+  19:"Réponse : 817.",
+  20:"Il faut calculer a avant b car b dépend de a.",
+  21:"Variables possibles : prix_matiere, quantite, cout_emballage, remise.",
+  22:"Réponse : 34225.",
+  23:"Réponse : 34091.",
+  24:"Réponse : 34065.",
+  25:"Réponse : 928.",
+  26:"Réponse : 600.",
+  27:"Réponse : 411.",
+  28:"La logique reste la même ; changent surtout les noms des variables et les valeurs.",
+  29:"Réponse : Oui.",
+  30:"Réponse : humidite_sol.",
+  31:"On arrose si la température et la luminosité sont élevées, si le sol est sec et si le dernier arrosage est assez ancien.",
+  32:"Réponse : Non."
+};
+
+const pointsParQuestion = {
+  1:2,2:2,3:2,
+  4:2,5:2,6:2,
+  7:2,8:2,
+  9:2,10:2,11:2,
+  12:2,13:2,
+  14:2,15:2,16:2,
+  17:2,18:6,
+  19:2,20:2,
+  21:2,22:2,23:2,24:2,
+  25:2,26:2,27:2,28:2,
+  29:2,30:2,31:2,32:2
+};
+
+function injectQuestionTools(){
+  document.querySelectorAll('.question').forEach(function(q){
+    const n = Number(q.dataset.qnum);
+    if(!n || q.querySelector('.question-tools')) return;
+
+    const tools = document.createElement('div');
+    tools.className = 'question-tools';
+
+    const help = document.createElement('button');
+    help.type = 'button';
+    help.className = 'help-btn';
+    help.textContent = '💡 Aide';
+    help.onclick = function(){
+      showQuestionFeedback(q, '<strong>Aide :</strong> ' + (aidesParQuestion[n] || 'Relis la consigne et teste dans Vittascience.'));
+    };
+
+    const corr = document.createElement('button');
+    corr.type = 'button';
+    corr.className = 'corr-btn';
+    corr.textContent = '✅ Correction';
+    corr.onclick = function(){
+      q.classList.add('revealed');
+      q.dataset.revealed = '1';
+      showQuestionFeedback(q, '<strong>Correction :</strong> ' + (correctionsParQuestion[n] || 'Correction non renseignée.') + '<br><span class="penalty-note">Cette question ne rapporte plus de points.</span>');
+    };
+
+    const fb = document.createElement('div');
+    fb.className = 'question-feedback';
+
+    tools.appendChild(help);
+    tools.appendChild(corr);
+    q.appendChild(tools);
+    q.appendChild(fb);
+  });
+}
+
+function showQuestionFeedback(q, text){
+  const fb = q.querySelector('.question-feedback');
+  fb.innerHTML = text;
+  fb.classList.add('show');
+}
+
+function pointsCorrectionRevelee(){
+  let penalite = 0;
+  document.querySelectorAll('.question[data-revealed="1"]').forEach(function(q){
+    const n = Number(q.dataset.qnum);
+    penalite += pointsParQuestion[n] || 0;
+  });
+  return penalite;
+}
+
+window.addEventListener('load', injectQuestionTools);
+</script>
+
+
+<script>
+/* Fonctions avancées : démarrage, tiers temps, chrono indicatif, sauvegarde, mode enseignant, niveau dynamique */
+let chronoDemarre = false;
+let chronoVisible = true;
+let dureeChoisie = 55 * 60;
+const STORAGE_KEY = "vittascience_cycle4_reponses_v2";
+
+function lireChoixTemps(){
+  const choix = document.querySelector('input[name="choixTemps"]:checked');
+  return choix ? choix.value : "normal";
+}
+
+function demarrerEvaluation(){
+  const mode = lireChoixTemps();
+
+  if(mode === "tiers"){
+    dureeChoisie = Math.round(55 * 60 * 4 / 3);
+    chronoVisible = true;
+  } else if(mode === "libre"){
+    dureeChoisie = 55 * 60;
+    chronoVisible = false;
+  } else {
+    dureeChoisie = 55 * 60;
+    chronoVisible = true;
+  }
+
+  if(typeof remaining !== "undefined"){
+    remaining = dureeChoisie;
+  }
+
+  chronoDemarre = true;
+
+  const form = document.getElementById("eval");
+  if(form){
+    form.classList.remove("locked-before-start");
+  }
+
+  const panel = document.getElementById("startPanel");
+  if(panel){
+    panel.style.display = "none";
+  }
+
+  if(!chronoVisible){
+    const timer = document.getElementById("timer");
+    if(timer){
+      timer.textContent = "⏱ Chrono masqué – travail à ton rythme";
+      timer.className = "timer soft";
+    }
+  } else {
+    updateTimer();
+  }
+
+  activerSauvegardeAuto();
+  restaurerSauvegarde();
+  majSaveStatus("Sauvegarde automatique activée.");
+}
+
+function updateTimerAvance(){
+  const timer = document.getElementById("timer");
+  if(!timer) return;
+
+  if(!chronoVisible){
+    timer.textContent = "⏱ Chrono masqué – travail à ton rythme";
+    timer.className = "timer soft";
+    return;
+  }
+
+  if(!chronoDemarre){
+    timer.textContent = "⏱ Chrono indicatif : en attente";
+    timer.className = "timer soft";
+    return;
+  }
+
+  const minutes = Math.floor(remaining / 60).toString().padStart(2, "0");
+  const secondes = (remaining % 60).toString().padStart(2, "0");
+
+  timer.textContent = "⏱ Chrono indicatif : " + minutes + ":" + secondes;
+
+  const ratio = remaining / dureeChoisie;
+  timer.classList.remove("soft", "medium", "late", "warn", "danger");
+
+  if(ratio > 0.5){
+    timer.classList.add("soft");
+  } else if(ratio > 0.2){
+    timer.classList.add("medium");
+  } else {
+    timer.classList.add("late");
+  }
+}
+
+/* On remplace l’affichage du chrono d’origine sans rendre le temps bloquant. */
+const ancienneUpdateTimer = window.updateTimer;
+window.updateTimer = function(){
+  updateTimerAvance();
+};
+
+const ancienStartTimer = window.startTimer;
+window.startTimer = function(){
+  if(timerInt) return;
+  updateTimer();
+  timerInt = setInterval(function(){
+    if(!chronoDemarre) return;
+    if(!chronoVisible) return;
+    if(remaining > 0){
+      remaining--;
+      updateTimer();
+    } else {
+      const timer = document.getElementById("timer");
+      if(timer){
+        timer.textContent = "⏱ Temps conseillé écoulé – tu peux continuer";
+        timer.className = "timer late";
+      }
+    }
+  }, 1000);
+};
+
+function changerNiveau(niveau){
+  const note = document.getElementById("levelNote");
+  if(!note) return;
+
+  if(niveau === "5e"){
+    note.innerHTML = "Niveau 5e : travail très guidé. Les aides peuvent être utilisées pour comprendre, mais la correction enlève les points de la question.";
+  } else if(niveau === "4e"){
+    note.innerHTML = "Niveau 4e : travail guidé, mais avec justification attendue.";
+  } else {
+    note.innerHTML = "Niveau 3e : autonomie renforcée. Les justifications doivent être plus précises.";
+  }
+}
+
+function activerSauvegardeAuto(){
+  const champs = document.querySelectorAll("input, textarea");
+  champs.forEach(function(champ){
+    champ.addEventListener("input", sauvegarderReponses);
+    champ.addEventListener("change", sauvegarderReponses);
+  });
+}
+
+function sauvegarderReponses(){
+  const data = {};
+  document.querySelectorAll("input, textarea").forEach(function(el){
+    if(!el.name && !el.id) return;
+    const key = el.name || el.id;
+
+    if(el.type === "radio"){
+      if(el.checked){
+        data[key] = el.value;
+      }
+    } else {
+      data[key] = el.value;
+    }
+  });
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  majSaveStatus("Sauvegarde effectuée automatiquement.");
+}
+
+function restaurerSauvegarde(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw) return;
+
+  try{
+    const data = JSON.parse(raw);
+
+    document.querySelectorAll("input, textarea").forEach(function(el){
+      const key = el.name || el.id;
+      if(!(key in data)) return;
+
+      if(el.type === "radio"){
+        el.checked = (el.value === data[key]);
+      } else {
+        el.value = data[key];
+      }
+    });
+
+    if(typeof updateIrrigation === "function"){
+      updateIrrigation();
+    }
+
+    majSaveStatus("Réponses restaurées depuis la sauvegarde locale.");
+  } catch(e){
+    majSaveStatus("Sauvegarde trouvée, mais impossible à restaurer.");
+  }
+}
+
+function majSaveStatus(message){
+  const status = document.getElementById("saveStatus");
+  if(status){
+    status.textContent = message;
+  }
+}
+
+function effacerSauvegarde(){
+  localStorage.removeItem(STORAGE_KEY);
+  majSaveStatus("Sauvegarde locale effacée.");
+  alert("Sauvegarde locale effacée.");
+}
+
+function activerModeEnseignant(){
+  const code = prompt("Code enseignant :");
+  if(code === "GJEP"){
+    document.getElementById("teacherPanel").classList.add("show");
+  } else if(code !== null){
+    alert("Code incorrect.");
+  }
+}
+
+function afficherToutesCorrections(){
+  alert("Les corrections sont accessibles question par question avec le bouton ✅ Correction. Rappel : une correction affichée enlève les points de la question.");
+}
+
+/* Corriger sans forcer le chrono : le temps reste indicatif. */
+const ancienneCorrection = window.corrigerTout;
+window.corrigerTout = function(finTemps){
+  return ancienneCorrection(false);
+};
+</script>
+
+
+<script>
+function basculerVoletHaut(){
+  const sticky = document.querySelector('.sticky');
+  const btn = document.querySelector('.toggleTopBar');
+  if(!sticky || !btn) return;
+  sticky.classList.toggle('compact');
+  btn.textContent = sticky.classList.contains('compact') ? 'Afficher le volet' : 'Masquer le volet';
+}
+window.addEventListener('scroll', function(){
+  const sticky = document.querySelector('.sticky');
+  const btn = document.querySelector('.toggleTopBar');
+  if(!sticky || !btn) return;
+  if(window.scrollY > 120 && !sticky.classList.contains('compact')){
+    sticky.classList.add('compact');
+    btn.textContent = 'Afficher le volet';
+  }
+});
+</script>
+
+
+<script>
+/* v2 : progression, export, sauvegarde visuelle, reset arrosage */
+function calculerProgression(){
+  const questions = Array.from(document.querySelectorAll('.question'));
+  let complete = 0;
+
+  questions.forEach(function(q){
+    const inputs = Array.from(q.querySelectorAll('input, textarea')).filter(function(el){
+      return el.type !== 'button' && !el.closest('.question-tools');
+    });
+
+    let ok = false;
+    if(inputs.length === 0){
+      ok = false;
+    } else {
+      ok = inputs.some(function(el){
+        if(el.type === 'radio'){
+          return document.querySelector('input[name="'+el.name+'"]:checked') !== null;
+        }
+        return String(el.value || '').trim().length > 0;
+      });
+    }
+
+    q.dataset.complete = ok ? "1" : "0";
+    if(ok) complete++;
+  });
+
+  const total = questions.length;
+  const pct = total ? Math.round((complete / total) * 100) : 0;
+
+  const bar = document.getElementById('progressBar');
+  const txt = document.getElementById('progressText');
+
+  if(bar) bar.style.width = pct + '%';
+  if(txt) txt.textContent = 'Progression : ' + complete + ' / ' + total + ' questions';
+}
+
+function afficherToastSauvegarde(){
+  let toast = document.getElementById('saveToast');
+  if(!toast){
+    toast = document.createElement('div');
+    toast.id = 'saveToast';
+    toast.className = 'save-toast';
+    toast.textContent = '✓ Sauvegardé';
+    document.body.appendChild(toast);
+  }
+  toast.classList.add('show');
+  clearTimeout(window.__saveToastTimer);
+  window.__saveToastTimer = setTimeout(function(){
+    toast.classList.remove('show');
+  }, 2000);
+}
+
+const ancienneSauvegardeReponses = window.sauvegarderReponses;
+window.sauvegarderReponses = function(){
+  if(typeof ancienneSauvegardeReponses === 'function'){
+    ancienneSauvegardeReponses();
+  }
+  calculerProgression();
+  afficherToastSauvegarde();
+};
+
+function exporterReponses(){
+  const data = {
+    date: new Date().toISOString(),
+    titre: document.title,
+    nom: (document.getElementById('nomEleve') || {}).value || '',
+    classe: (document.getElementById('classeEleve') || {}).value || '',
+    reponses: {}
+  };
+
+  document.querySelectorAll('input, textarea').forEach(function(el){
+    if(!el.name && !el.id) return;
+    const key = el.name || el.id;
+
+    if(el.type === 'radio'){
+      if(el.checked) data.reponses[key] = el.value;
+    } else {
+      data.reponses[key] = el.value;
+    }
+  });
+
+  const contenu = JSON.stringify(data, null, 2);
+  const blob = new Blob([contenu], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const nom = (data.nom || 'eleve').replace(/[^a-zA-Z0-9_-]/g,'_');
+  a.href = url;
+  a.download = 'reponses_vittascience_' + nom + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function resetIrrigation(){
+  const values = {
+    tempRange:30,
+    lightRange:75,
+    soilRange:20,
+    timeRange:18
+  };
+  Object.keys(values).forEach(function(id){
+    const el = document.getElementById(id);
+    if(el) el.value = values[id];
+  });
+  if(typeof updateIrrigation === 'function') updateIrrigation();
+  if(typeof sauvegarderReponses === 'function') sauvegarderReponses();
+}
+
+window.addEventListener('load', function(){
+  document.querySelectorAll('input, textarea').forEach(function(el){
+    el.addEventListener('input', calculerProgression);
+    el.addEventListener('change', calculerProgression);
+  });
+  calculerProgression();
+});
+</script>
+
+
+<script>
+function corrigerQuizVideo(){
+  let score = 0;
+  const total = 3;
+
+  const q1 = document.querySelector('input[name="vquiz1"]:checked');
+  const q2 = document.querySelector('input[name="vquiz2"]:checked');
+  const q3 = document.querySelector('input[name="vquiz3"]:checked');
+
+  if(q1 && q1.value === "a") score++;
+  if(q2 && q2.value === "b") score++;
+  if(q3 && q3.value === "b") score++;
+
+  const box = document.getElementById("videoQuizResult");
+  if(!box) return;
+
+  box.className = "result show " + (score === total ? "ok" : "warn");
+  box.innerHTML =
+    "<p><strong>Mini-quiz vidéo :</strong> " + score + " / " + total + "</p>" +
+    "<p>" +
+    (score === total
+      ? "Très bien. Tu peux passer aux exercices."
+      : "Revois la vidéo ou relis le mini-cours, puis recommence.") +
+    "</p>";
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

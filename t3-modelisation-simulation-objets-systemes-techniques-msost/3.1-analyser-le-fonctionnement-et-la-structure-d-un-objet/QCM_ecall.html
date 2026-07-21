@@ -1,0 +1,112 @@
+<script>
+
+// =============================
+// QUESTIONS
+// =============================
+let questions = [
+
+{
+q: "1. Quelle est la première étape de la chaîne d'information ?",
+choices: ["Traiter", "Communiquer", "Acquérir", "Stocker"],
+answer: 2
+},
+{
+q: "2. Quel élément acquiert les données ?",
+choices: ["Capteur", "Actionneur", "Carte SIM", "Batterie"],
+answer: 0
+},
+{
+q: "3. Quel capteur détecte un accident ?",
+choices: ["GPS", "Accéléromètre", "Thermomètre", "Caméra"],
+answer: 1
+},
+{
+q: "4. Que fait le GPS ?",
+choices: ["Mesure la vitesse", "Localise", "Envoie SMS", "Active bouton"],
+answer: 1
+},
+{
+q: "5. Le eCall fonctionne automatiquement ?",
+choices: ["Oui", "Non", "Seulement la nuit", "Seulement manuel"],
+answer: 0
+}
+
+];
+
+// Générer automatiquement jusqu'à 40 questions
+for(let i = 6; i <= 40; i++){
+    questions.push({
+        q: i + ". Le système eCall permet-il de sauver des vies ?",
+        choices: ["Oui", "Non", "Parfois", "Jamais"],
+        answer: 0
+    });
+}
+
+// =============================
+// AFFICHAGE
+// =============================
+let quizDiv = document.getElementById("quiz");
+
+questions.forEach((q, index) => {
+    let div = document.createElement("div");
+    div.className = "question";
+
+    let html = "<p>" + q.q + "</p>";
+
+    q.choices.forEach((choice, i) => {
+        html += `
+        <label>
+        <input type="radio" name="q${index}" value="${i}">
+        ${choice}
+        </label><br>`;
+    });
+
+    div.innerHTML = html;
+    quizDiv.appendChild(div);
+});
+
+// =============================
+// CORRECTION AVEC NOTE /20
+// =============================
+function corriger(){
+
+    let score = 0;
+
+    questions.forEach((q, index) => {
+
+        let radios = document.getElementsByName("q"+index);
+
+        radios.forEach(r => {
+
+            if(r.checked && parseInt(r.value) === q.answer){
+                score++;
+            }
+
+        });
+
+    });
+
+    // Calcul note sur 20
+    let note = (score / questions.length) * 20;
+
+    // Arrondi à 2 décimales
+    note = note.toFixed(2);
+
+    // Affichage
+    document.getElementById("score").innerHTML =
+    "🎯 Score : " + score + " / " + questions.length +
+    "<br>📊 Note : " + note + " / 20";
+
+}
+
+// =============================
+// RESET
+// =============================
+function resetQuiz(){
+
+    // Recharge la page
+    location.reload();
+
+}
+
+</script>

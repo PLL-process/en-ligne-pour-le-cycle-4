@@ -1,0 +1,271 @@
+/* ===================================================================== */
+/* ========== EXERCICE 2 : ESCALATOR – PARTIE A (DRAG & DROP) ========== */
+/* ===================================================================== */
+
+/* Objet qui indique, pour chaque étiquette de l'escalator,
+   s'il s'agit d'un "evenement" ou d'une "action". */
+const bonnesClassesEscalator = {
+    // Une personne est détectée en bas => événement
+    "e2_personne_detectee_bas": "evenement",
+    // Le temps de fonctionnement atteint 1 minute => événement
+    "e2_temps_ecoule": "evenement",
+    // Mettre l'escalator en marche => action
+    "e2_demarrer_escalator": "action",
+    // Démarrer le minuteur => action
+    "e2_demarrer_minuteur": "action",
+    // Arrêter l'escalator => action
+    "e2_arreter_escalator": "action"
+};
+
+/* Sélection de toutes les étiquettes déplaçables de l'exercice 2 */
+const etiquettesE2 = document.querySelectorAll(".draggable-label-e2");
+/* Sélection de toutes les zones de dépôt de l'exercice 2 */
+const zonesDepotE2 = document.querySelectorAll(".dropzone-e2");
+
+/* Variable qui contiendra l'étiquette en cours de déplacement (exercice 2) */
+let etiquetteEnDeplacementE2 = null;
+
+/* Ajout des événements drag & drop pour chaque étiquette de l'escalator */
+etiquettesE2.forEach(function(etiquette) {
+    // Quand l'élève commence à déplacer une étiquette
+    etiquette.addEventListener("dragstart", function(event) {
+        // On mémorise l'étiquette en cours de déplacement
+        etiquetteEnDeplacementE2 = event.target;
+        // On diminue légèrement l'opacité pour indiquer le drag
+        event.target.style.opacity = "0.6";
+    });
+
+    // Quand le déplacement se termine (déposé ou non)
+    etiquette.addEventListener("dragend", function(event) {
+        // On remet l'opacité normale
+        event.target.style.opacity = "1";
+        // On efface la référence à l'étiquette
+        etiquetteEnDeplacementE2 = null;
+    });
+});
+
+/* Ajout des événements pour les zones de dépôt de l'exercice 2 */
+zonesDepotE2.forEach(function(zone) {
+    // Quand une étiquette est déplacée au-dessus de la zone
+    zone.addEventListener("dragover", function(event) {
+        // On empêche le comportement par défaut (sinon pas de drop)
+        event.preventDefault();
+        // On ajoute une classe visuelle pour montrer le survol
+        zone.classList.add("over");
+    });
+
+    // Quand l'étiquette quitte la zone sans être lâchée
+    zone.addEventListener("dragleave", function() {
+        // On retire la classe visuelle de survol
+        zone.classList.remove("over");
+    });
+
+    // Quand l'étiquette est lâchée dans la zone
+    zone.addEventListener("drop", function(event) {
+        // On empêche le comportement par défaut
+        event.preventDefault();
+        // On retire la classe de survol
+        zone.classList.remove("over");
+
+        // Si une étiquette est bien en cours de déplacement
+        if (etiquetteEnDeplacementE2) {
+            // On place l'étiquette dans cette zone (changement de parent)
+            zone.appendChild(etiquetteEnDeplacementE2);
+        }
+    });
+});
+
+/* Récupération des boutons et de la zone de feedback (partie A escalator) */
+const boutonCheckAE2 = document.getElementById("btn-check-a-e2");
+const boutonResetAE2 = document.getElementById("btn-reset-a-e2");
+const feedbackAE2 = document.getElementById("feedback-a-e2");
+
+/* Fonction qui vérifie le classement Événements / Actions pour l'escalator */
+function verifierPartieAE2() {
+    // Compteur de bonnes réponses
+    let bonnes = 0;
+    // Compteur du nombre total d'étiquettes posées dans les colonnes
+    let total = 0;
+    // Compteur d'erreurs
+    let erreurs = 0;
+
+    // On parcourt toutes les étiquettes de l'exercice 2
+    etiquettesE2.forEach(function(etiquette) {
+        // Récupération de l'identifiant unique de l'étiquette
+        const id = etiquette.getAttribute("data-id");
+        // Parent actuel de l'étiquette (banc ou zone de dépôt)
+        const parent = etiquette.parentElement;
+        // Type de zone par défaut
+        let typeZone = "aucun";
+
+        // Si le parent est une zone de dépôt de l'escalator
+        if (parent.classList.contains("dropzone-e2")) {
+            // On récupère le type attendu dans cette zone : "evenement" ou "action"
+            typeZone = parent.getAttribute("data-type");
+        }
+
+        // On ne corrige que les étiquettes placées dans le tableau
+        if (typeZone === "evenement" || typeZone === "action") {
+            // On incrémente le nombre total d'étiquettes prises en compte
+            total += 1;
+            // Classe attendue pour cette étiquette (événement ou action)
+            const classeAttendue = bonnesClassesEscalator[id];
+
+            // Si la zone correspond bien au type attendu
+            if (classeAttendue === typeZone) {
+                // On ajoute une bonne réponse
+                bonnes += 1;
+            } else {
+                // Sinon, on compte une erreur
+                erreurs += 1;
+            }
+        }
+    });
+
+    // Si aucune étiquette n'est encore placée
+    if (total === 0) {
+        feedbackAE2.textContent =
+            "Place au moins une étiquette dans le tableau avant de vérifier 🙂";
+        feedbackAE2.className = "feedback error";
+        return;
+    }
+
+    // Si aucune erreur
+    if (erreurs === 0 && bonnes > 0) {
+        feedbackAE2.textContent =
+            "Très bien ! Toutes les étiquettes placées pour l'escalator sont correctes ✅ (" +
+            bonnes + " / " + total + ").";
+        feedbackAE2.className = "feedback ok";
+    } else {
+        // S'il reste des erreurs
+        feedbackAE2.textContent =
+            "Il reste " + erreurs +
+            " erreur(s) dans le classement. Vérifie bien la différence entre événement et action 😉 (" +
+            bonnes + " correctement placées / " + total + ").";
+        feedbackAE2.className = "feedback error";
+    }
+}
+
+/* Fonction qui remet toutes les étiquettes de l'escalator dans le banc */
+function reinitialiserPartieAE2() {
+    // Sélection du banc d'étiquettes de l'exercice 2 (dans #exercice2)
+    const bancE2 = document.querySelector("#exercice2 .label-bank");
+
+    // On remet chaque étiquette dans ce banc
+    etiquettesE2.forEach(function(etiquette) {
+        bancE2.appendChild(etiquette);
+    });
+
+    // On efface le message de feedback
+    feedbackAE2.textContent = "";
+    // On remet la classe par défaut
+    feedbackAE2.className = "feedback";
+}
+
+/* Raccordement des boutons de la partie A (escalator) aux fonctions ci-dessus */
+boutonCheckAE2.addEventListener("click", verifierPartieAE2);
+boutonResetAE2.addEventListener("click", reinitialiserPartieAE2);
+
+/* ===================================================================== */
+/* ========== EXERCICE 2 : ESCALATOR – PARTIE B (ALGORIGRAMME) ========= */
+/* ===================================================================== */
+
+/* Tableau des bonnes réponses pour la partie B de l'escalator.
+   L'indice du tableau correspond au data-index des menus déroulants. */
+const bonnesReponsesB_E2 = [
+    "debut_e2",      // Menu 0 : bloc "Début"
+    "test_bas_e2",   // Menu 1 : test "Personne détectée en bas ?"
+    "demarrer_e2",   // Menu 2 : "Mettre l'escalator en marche"
+    "minuteur_e2",   // Menu 3 : "Démarrer un minuteur de 1 minute"
+    "arreter_e2"     // Menu 4 : "Arrêter l'escalator"
+    // Le retour à la boucle est implicite (pas de bloc "Fin")
+];
+
+/* Sélection de tous les menus déroulants superposés pour l'escalator */
+const selectsB_E2 = document.querySelectorAll(
+    "#exercice2 .flowchart-container .overlay-select-e2"
+);
+
+/* Sélection des éléments pour les boutons et la zone de feedback (partie B) */
+const boutonCheckBE2 = document.getElementById("btn-check-b-e2");
+const boutonResetBE2 = document.getElementById("btn-reset-b-e2");
+const feedbackBE2 = document.getElementById("feedback-b-e2");
+
+/* Fonction qui vérifie la complétion de l'algorigramme de l'escalator */
+function verifierPartieBE2() {
+    // Compteur de bonnes réponses
+    let bonnes = 0;
+    // Compteur d'erreurs
+    let erreurs = 0;
+    // Indicateur de menus incomplets
+    let incomplet = false;
+
+    // Parcours de tous les menus déroulants de l'escalator
+    selectsB_E2.forEach(function(select) {
+        // Index du menu (0, 1, 2, 3 ou 4)
+        const index = parseInt(select.getAttribute("data-index"), 10);
+        // Réponse choisie par l'élève
+        const valeur = select.value;
+        // Bonne réponse attendue à cette position
+        const bonne = bonnesReponsesB_E2[index];
+
+        // Si le menu est vide
+        if (valeur === "") {
+            // On signale que l'exercice est incomplet
+            incomplet = true;
+            // Bordure par défaut
+            select.style.borderColor = "#4b5563";
+        } else if (valeur === bonne) {
+            // Réponse correcte => on augmente le score
+            bonnes += 1;
+            // Bordure verte
+            select.style.borderColor = "#22c55e";
+        } else {
+            // Réponse incorrecte => on augmente le nombre d'erreurs
+            erreurs += 1;
+            // Bordure rouge
+            select.style.borderColor = "#ef4444";
+        }
+    });
+
+    // Si au moins un menu n'est pas rempli
+    if (incomplet) {
+        feedbackBE2.textContent =
+            "Complète tous les menus déroulants de l'escalator avant de vérifier 🙂";
+        feedbackBE2.className = "feedback error";
+        return;
+    }
+
+    // Si aucune erreur
+    if (erreurs === 0) {
+        feedbackBE2.textContent =
+            "Parfait ! L’algorigramme de l'escalator est correct 🎉 (" +
+            bonnes + " / " + bonnesReponsesB_E2.length + ").";
+        feedbackBE2.className = "feedback ok";
+    } else {
+        // Si des erreurs restent
+        feedbackBE2.textContent =
+            "Il reste " + erreurs +
+            " bloc(s) incorrect(s). Concentre-toi sur l'ordre des actions après la détection en bas 😉 (" +
+            bonnes + " correct(s) / " + bonnesReponsesB_E2.length + ").";
+        feedbackBE2.className = "feedback error";
+    }
+}
+
+/* Fonction qui réinitialise tous les menus déroulants de l'escalator */
+function reinitialiserPartieBE2() {
+    // On remet chaque menu sur la valeur vide
+    selectsB_E2.forEach(function(select) {
+        select.value = "";
+        // Bordure par défaut
+        select.style.borderColor = "#4b5563";
+    });
+
+    // On efface le feedback
+    feedbackBE2.textContent = "";
+    feedbackBE2.className = "feedback";
+}
+
+/* Raccordement des boutons de la partie B (escalator) aux fonctions ci-dessus */
+boutonCheckBE2.addEventListener("click", verifierPartieBE2);
+boutonResetBE2.addEventListener("click", reinitialiserPartieBE2);
