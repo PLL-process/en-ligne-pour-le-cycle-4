@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Génère index.html (navigation GitHub Pages) + README.md racine pour le repo réorganisé."""
-import os, re, sys, unicodedata, html
+"""Génère index.html (navigation GitHub Pages) + README.md racine pour le repo réorganisé.
+Inclut le support du badge NEW via nouveautes.json (spec tableau-de-bord-badge-new)."""
+import os, re, sys, unicodedata, html, json
+from datetime import datetime, timedelta
 sys.path.insert(0, os.path.dirname(__file__))
 from data_competences import COMP_BY_LEVEL, C_PARENT, THEME_TITLES
 
@@ -16,7 +18,6 @@ THEME_EMOJI = {1: "🔍", 2: "⚙️", 3: "🛠️"}
 THEME_COLOR = {1: "#61dafb", 2: "#ffb454", 3: "#81fba1"}
 NIVEAU_COLOR = {"5e": "#8fd18f", "4e": "#7db3f0", "3e": "#f0a878"}
 
-
 def slugify(s, maxlen=45):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
     s = re.sub(r"[^a-zA-Z0-9]+", "-", s).strip("-").lower()
@@ -27,14 +28,11 @@ def slugify(s, maxlen=45):
         out.append(p); total += len(p) + 1
     return "-".join(out)
 
-
 def code_dir(cnum, niveau, code):
     text, _, theme = C_PARENT[cnum]
     return os.path.join(THEME_SLUG[theme], f"{cnum}-{slugify(text)}", niveau, f"{niveau}_{code}")
 
-
 def content_files(rel_dir):
-    """Fichiers de contenu réel (hors .gitkeep) directement dans le dossier code."""
     full = os.path.join(DST, rel_dir)
     if not os.path.isdir(full):
         return []
@@ -45,6 +43,45 @@ def content_files(rel_dir):
             out.append(fn)
     return out
 
+def load_nouveautes():
+    """Charge nouveautes.json et retourne un dict code -> info (seulement si encore dans la fenêtre)."""
+    path = os.path.join(DST, "nouveautes.json")
+    if not os.path.isfile(path):
+        return {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return {}
+    result = {}
+    today = datetime.utcnow().date()
+    for entry in data.get("nouveautes", []):
+        code = entry.get("code")
+        if not code:
+            continue
+        try:
+            date_str = entry.get("date") or entry.get("date_publication")
+            pub = datetime.strptime(date_str, "%Y-%m-%d").date()
+            duree = int(entry.get("duree_jours", 21))
+            if today <= pub + timedelta(days=duree):
+                result[code] = entry
+        except Exception:
+            # en cas d'erreur de date, on affiche quand même le badge
+            result[code] = entry
+    return result
+
+NOUVEAUTES = load_nouveautes()
+
+def badge_html(code):
+    if code in NOUVEAUTES:
+        return ' <span class="badge-new" title="Nouvelle ressource">NEW</span>'
+    return ""
+
+def is_new_theme(theme_n):
+    return any(e.get("theme") == theme_n for e in NOUVEAUTES.values())
+
+def is_new_comp(cnum):
+    return any(code.startswith(cnum) or code.split("_")[1].startswith(cnum) for code in NOUVEAUTES)
 
 # ---------------------------------------------------------------- index.html
 parts = []
@@ -66,7 +103,7 @@ h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 .theme{max-width:1080px;margin:0 auto 30px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.theme>header{padding:16px 22px;font-weight:700;font-size:1.08em;border-bottom:1px solid var(--border)}
+.theme>header{padding:16px 22px;font-weight:700;font-size:1.08em;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .comp{border-bottom:1px solid rgba(39,74,138,.5)}
 .comp:last-child{border-bottom:none}
 .comp>summary{cursor:pointer;padding:13px 22px;font-weight:600;color:var(--text);list-style:none;display:flex;gap:10px;align-items:baseline}
@@ -90,6 +127,30 @@ h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .pill{font-size:.85em}
 footer{max-width:1080px;margin:34px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
 footer a{color:var(--hl)}
+
+/* ===== BADGE NEW ===== */
+.badge-new{
+  display:inline-block;
+  background:linear-gradient(135deg,#ff6b6b,#ff8e53);
+  color:#fff;
+  font-size:.65em;
+  font-weight:700;
+  padding:2px 7px;
+  border-radius:999px;
+  letter-spacing:.4px;
+  vertical-align:middle;
+  animation:pulse-new 2.4s ease-in-out infinite;
+  box-shadow:0 0 0 0 rgba(255,107,107,.5);
+}
+@keyframes pulse-new{
+  0%{box-shadow:0 0 0 0 rgba(255,107,107,.45)}
+  70%{box-shadow:0 0 0 8px rgba(255,107,107,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,107,107,0)}
+}
+@media (prefers-reduced-motion: reduce){
+  .badge-new{animation:none}
+}
+.code-line.new-resource{background:rgba(255,107,107,.07);border-radius:6px;padding-left:6px;margin-left:-6px}
 </style>
 </head>
 <body>
@@ -102,17 +163,20 @@ footer a{color:var(--hl)}
   <span><span class="dot" style="background:#f0a878"></span>3e</span>
   <span>📄 = ressource disponible</span>
   <span style="color:#5b7bb8">— = à créer</span>
+  <span><span class="badge-new">NEW</span> = nouvelle ressource</span>
 </div>
 """)
 
 total_content = 0
 for theme_n in [1, 2, 3]:
-    parts.append(f'<div class="theme"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}</header>')
+    theme_badge = badge_html(f"theme-{theme_n}") if is_new_theme(theme_n) else (" <span class=\"badge-new\">NEW</span>" if is_new_theme(theme_n) else "")
+    # simpler: show NEW on theme header if any code of this theme is new
+    theme_new = " <span class=\"badge-new\">NEW</span>" if is_new_theme(theme_n) else ""
+    parts.append(f'<div class="theme" id="theme-{theme_n}"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}{theme_new}</header>')
     for cnum in [f"C{i}" for i in range(1, 10)]:
         text, _, t = C_PARENT[cnum]
         if t != theme_n:
             continue
-        # count content in this competence
         n_files = 0
         lvl_html = []
         for niveau in ["5e", "4e", "3e"]:
@@ -121,30 +185,56 @@ for theme_n in [1, 2, 3]:
                 rel = code_dir(cnum, niveau, code)
                 files = content_files(rel)
                 full_code = f"{niveau}_{code}"
+                new_cls = " new-resource" if full_code in NOUVEAUTES else ""
+                badge = badge_html(full_code)
                 if files:
                     n_files += len([f for f in files if f != "README.md"]) or 1
                     links = " · ".join(
                         f'<a href="{html.escape(rel)}/{html.escape(fn)}">📄 {html.escape(fn if len(fn) <= 34 else fn[:31] + "…")}</a>'
                         for fn in files
                     )
-                    lines.append(f'<div class="code-line"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span>{links}</span></div>')
+                    lines.append(f'<div class="code-line{new_cls}" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}{badge}</span><span>{links}</span></div>')
                 else:
-                    lines.append(f'<div class="code-line"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span class="empty">—</span></div>')
+                    lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span class="empty">—</span></div>')
             lvl_html.append(f'<div class="lvl"><h4 style="color:{NIVEAU_COLOR[niveau]}">{niveau}</h4>{"".join(lines)}</div>')
         total_content += n_files
         count_label = f"{n_files} ressource(s)" if n_files else "à compléter"
+        # open details if any code of this competence is new
+        open_attr = " open" if any(k.startswith(cnum) or k.split("_")[-1].startswith(cnum.replace("C","")) for k in NOUVEAUTES) else ""
+        # simpler open if any full_code of this cnum is new
+        open_attr = ""
+        for niveau in ["5e", "4e", "3e"]:
+            for code, _, _ in COMP_BY_LEVEL[niveau].get(cnum, []):
+                if f"{niveau}_{code}" in NOUVEAUTES:
+                    open_attr = " open"
+                    break
         parts.append(
-            f'<details class="comp"><summary><span class="cnum">{cnum}</span>'
+            f'<details class="comp"{open_attr} id="comp-{cnum}"><summary><span class="cnum">{cnum}</span>'
             f'<span>{html.escape(text if len(text) <= 110 else text[:107] + "…")}</span>'
             f'<span class="count">{count_label}</span></summary>'
             f'<div class="levels">{"".join(lvl_html)}</div></details>'
         )
     parts.append("</div>")
 
-parts.append(f"""<footer>
+parts.append("""
+<footer>
 <p>📦 <a href="_ressources-communes/">Ressources communes</a> · 🗄️ <a href="_archive-anciennes-versions/">Archive des anciennes versions</a> · <a href="RAPPORT_MIGRATION.md">Rapport de migration</a></p>
 <p>Référentiel : BO n°9 du 29/02/2024 · Cahiers Nathan 5e/4e/3e (éd. 2024) · Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em></p>
 </footer>
+<script>
+// Ouverture automatique + scroll vers l'ancre
+(function(){
+  const hash = location.hash.slice(1);
+  if(!hash) return;
+  const el = document.getElementById(hash);
+  if(!el) return;
+  // Ouvrir le details parent
+  let parent = el.closest('details');
+  if(parent) parent.open = true;
+  // Scroll doux
+  setTimeout(() => el.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
+})();
+</script>
 </body>
 </html>
 """)
@@ -152,8 +242,9 @@ parts.append(f"""<footer>
 with open(os.path.join(DST, "index.html"), "w", encoding="utf-8") as f:
     f.write("".join(parts))
 print("index.html généré —", total_content, "entrées de contenu référencées")
+print("Badges NEW actifs :", list(NOUVEAUTES.keys()) or "aucun")
 
-# ---------------------------------------------------------------- README.md
+# ---------------------------------------------------------------- README.md (inchangé)
 readme = f"""# 🎓 En ligne pour le cycle 4 — Technologie (programme 2024)
 
 Séquences, QCM et ressources de **technologie collège (cycle 4)**, classés selon le
