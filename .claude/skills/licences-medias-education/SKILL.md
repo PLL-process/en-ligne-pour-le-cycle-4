@@ -44,3 +44,30 @@ lisibles en niveaux de gris imprimés.
 - Chaque média du lot a son entrée SOURCES_MEDIAS.md AVANT la remise.
 - Aucun média `LICENCE À VÉRIFIER` dans un fichier destiné à publication sans
   signalement explicite dans le rapport de lot.
+
+## Usage pédagogique des images — RÈGLE v2 (décision Pascal, 22/07/2026 — à entériner au Conseil du 28/07)
+
+L'image est un outil d'apprentissage à part entière au cycle 4 (double codage
+texte+visuel, soutien aux lecteurs fragiles, allophones et profils DYS,
+entraînement à la lecture de documents techniques exigée au DNB). Les agents
+sont donc ENCOURAGÉS à utiliser des images, selon trois usages :
+
+1. **IMAGE-OBJET** : l'image est ce sur quoi porte la question ou l'activité
+   (schéma à compléter, courbe à interpréter, composant à identifier, table à
+   lire). Usage prioritaire — dans les QCM, viser 6 à 8 questions illustrées
+   (pas nécessairement toutes : l'alternance maintient l'attention).
+2. **IMAGE-EXPLICATION** : l'image accompagne une correction ou une synthèse
+   pour MONTRER la réponse au lieu de seulement la dire.
+3. **IMAGE-CONTEXTE** : une illustration d'ambiance est tolérée en ouverture de
+   séquence (situation déclenchante) si elle installe le contexte réel du
+   problème — jamais au milieu d'un exercice.
+
+Reste interdit : l'image purement décorative posée à côté d'une question ou
+d'un calcul (effet « détail séduisant » : elle détourne l'attention de la
+notion) ; l'image qui REMPLACE une explication écrite ; toute image sans alt
+pertinent ; les sources illicites (section licences ci-dessus, inchangée).
+
+**Critère de contrôle de fin de lot** : pour chaque image, répondre OUI à au
+moins une de ces questions — « l'élève doit-il la LIRE pour répondre ? »,
+« aide-t-elle à COMPRENDRE la correction ? », « installe-t-elle le CONTEXTE de
+la situation déclenchante ? ». Sinon, l'image est retirée.
