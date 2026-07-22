@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Station d'alerte cyclonique connectée — 3e_C4.3 à 3e_C4.6</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🌀 Station d'alerte cyclonique connectée</h1>
+<p class="subtitle">Comprendre comment une station météo transforme des mesures en alerte qui sauve des vies</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C4.3</span>
+  <span class="badge code">3e_C4.4</span>
+  <span class="badge code">3e_C4.5</span>
+  <span class="badge code">3e_C4.6</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3 · D1.4 · D2 · D4 · D5</span>
+  <span class="badge crcn">CRCN : 1.2 · 1.3 · 3.4 · 5.2</span>
+  <span class="badge duree">⏱ 4 séances de 55 min</span>
+</div>
+
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 7 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Mercredi 26 août, Martinique.</b> Météo-France vient de placer l'île en vigilance jaune : une onde tropicale
+    s'est transformée en tempête et pourrait devenir un ouragan d'ici 48 heures. Au collège de Sainte-Luce, on se souvient
+    des dégâts de 2023 : coupures d'électricité, réseau téléphonique saturé, familles isolées dans les hauteurs sans information.</p>
+    <p>Le conseil municipal propose au collège un projet : installer sur le toit une <b>station d'alerte cyclonique autonome</b>,
+    capable de mesurer le vent, la pluie et la pression, de fonctionner sur batterie solaire, et de prévenir les habitants du
+    quartier <b>même quand Internet est coupé</b>, grâce à une sirène et à une liaison radio.</p>
+    <p>Avant de la construire, il faut comprendre <em>comment elle fonctionne de l'intérieur</em> : comment une rafale de vent
+    devient-elle un nombre dans une machine, puis une alerte sur un téléphone ?</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment la station transforme-t-elle des grandeurs physiques (vent, pluie, pression)<br>en données numériques fiables, afin de déclencher l'alerte au bon moment ?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Mes hypothèses de départ</h2>
+  <p>Avant les activités, réponds avec tes idées actuelles. Tu y reviendras à la fin : avoir changé d'avis, c'est avoir appris !</p>
+  <div class="exo">
+    <label for="hyp1"><b>1.</b> D'après toi, que se passe-t-il entre le moment où le vent souffle sur l'anémomètre et le moment où le nombre « 132 km/h » s'affiche sur un écran ?</label>
+    <textarea id="hyp1" placeholder="J'imagine que…"></textarea>
+    <label for="hyp2" style="margin-top:10px;display:block"><b>2.</b> Justifie ton idée : sur quoi t'appuies-tu (objet déjà vu, expérience, cours précédent…) ?</label>
+    <textarea id="hyp2" placeholder="Je pense cela parce que…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Référentiel officiel (programme 2024)</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C4.3</b></td><td>Décrire un OST en caractérisant sa chaîne d'information.</td><td>D1.3, D4</td><td>1, 2, R</td></tr>
+    <tr><td><b>3e_C4.4</b></td><td>Associer des grandeurs analogiques issues d'un OST à des données exploitables.</td><td>D1.3, D4</td><td>3, R</td></tr>
+    <tr><td><b>3e_C4.5</b></td><td>Représenter sous forme de données les informations de diverses natures utilisées par un OST.</td><td>D1.3, D2</td><td>4, R</td></tr>
+    <tr><td><b>3e_C4.6</b></td><td>Identifier, selon les cas, leur mise en forme, leur transmission ou leur stockage dans des fichiers (texte, image, son…).</td><td>D2, D5</td><td>5, 6, R</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> : décrire et caractériser l'organisation interne d'un objet ou d'un système technique et ses échanges avec son environnement (énergies, données) — BO n°9 du 29/02/2024.</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Choix de l'outil</h2>
+  <table class="refs">
+    <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
+    <tr><td>Simulateur HTML intégré (cette page)</td><td>Fonctionne hors connexion, sur tout appareil, sans installation — chaque élève manipule le CAN lui-même.</td><td>—</td></tr>
+    <tr><td>Arduino UNO / R4 + Grove (capteur de luminosité, LCD)</td><td>Matériel confirmé au labo : montre un vrai CAN 10 bits (valeurs 0-1023) sur une grandeur réellement mesurée.</td><td>VittaScience (simulation en ligne, gratuite, sans installation)</td></tr>
+    <tr><td>LibreOffice Calc (activité 6)</td><td>Gratuit, installé au collège : exploite le fichier de mesures CSV/ODS.</td><td>Tableau intégré à la page (aucune installation) ; XLSX fourni pour Excel</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub)">⚠ Aucun anémomètre ni baromètre Grove n'est confirmé au labo : la mesure du vent réel n'est <b>pas</b> exigée — le capteur de luminosité joue le rôle de « grandeur analogique » en version A. Compatibilités non testées signalées dans la fiche professeur.</p>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel</h4>
+      <p>Arduino UNO (ou R4 Minima) + Grove Base Shield (sélecteur <b>5 V</b>) + capteur de luminosité sur <b>A0</b> + écran LCD RGB.
+      Lire la valeur brute <code>analogRead(A0)</code> (0-1023) et l'afficher : c'est le CAN en vrai !</p>
+      <p style="color:var(--sub)">Sécurité : très basse tension uniquement, câblage vérifié par le professeur avant branchement USB.</p></div>
+    <div class="version vb"><h4>🅱 Simulation</h4>
+      <p>Sur <b>VittaScience</b> (mode Arduino), le même montage se simule en ligne : capteur analogique → valeur 0-1023 → affichage.
+      Aucun matériel, un compte n'est pas obligatoire pour tester.</p></div>
+    <div class="version vc"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans cette page : simulateur de CAN (activité 3) et jeu de données 48 h enregistré (activité 6, fichiers
+      <a href="donnees/mesures_station_48h_simulees.csv">CSV</a> · <a href="donnees/mesures_station_48h_simulees.ods">ODS</a> · <a href="donnees/mesures_station_48h_simulees.xlsx">XLSX</a>).
+      Personne n'est pénalisé si le matériel manque.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Qui fait quoi dans la station ?</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Du signal à la donnée</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Représenter en données</small><span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" data-panel="s4" role="tab" aria-selected="false">Séance 4<br><small>Fichiers &amp; réinvestissement</small><span class="done" id="done-s4"></span></button>
+</div>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🔍 Séance 1 — Qui fait quoi dans la station ?</h2>
+  <p class="question-directrice" style="color:var(--hl);font-weight:600">Question directrice : de quels éléments la station a-t-elle besoin pour « sentir », « réfléchir » et « prévenir » ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Décoder la station</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier le rôle de chaque constituant visible de la station.</div>
+      <div><b>Compétence :</b> 3e_C4.3 — caractériser la chaîne d'information d'un OST.</div>
+      <div><b>Production attendue :</b> tableau des rôles complété + 1 phrase de justification.</div>
+      <div><b>Ressources :</b> schéma annoté ci-dessous.</div>
+    </div>
+    <object class="figure" data="Images/station_alerte_annotee.svg" type="image/svg+xml" aria-label="Schéma annoté de la station d'alerte cyclonique : anémomètre, panneau solaire, pluviomètre, antenne, boîtier électronique, sirène">Schéma annoté de la station (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> observe le schéma, puis attribue à chacun des 8 éléments sa <b>fonction</b> dans la station : <b>Acquérir</b> (capter une grandeur), <b>Traiter</b> (décider), <b>Communiquer</b> (diffuser), ou <b>Alimenter</b> (fournir l'énergie). Justifie ensuite le cas du panneau solaire.</div>
+    <div class="exo">
+      <div class="assoc"><label for="a1_1">1. Anémomètre + girouette</label><select id="a1_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_2">2. Panneau solaire + batterie</label><select id="a1_2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_3">3. Pluviomètre</label><select id="a1_3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_4">4. Baromètre (dans le boîtier)</label><select id="a1_4"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_5">5. Microcontrôleur</label><select id="a1_5"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_6">6. Antenne radio</label><select id="a1_6"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_7">7. Sirène + gyrophare</label><select id="a1_7"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_8">8. Application mobile des habitants</label><select id="a1_8"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <label for="a1_just" style="display:block;margin-top:10px"><b>Justification :</b> le panneau solaire fait-il partie de la chaîne d'<em>information</em> ? Explique.</label>
+      <textarea id="a1_just" placeholder="Le panneau solaire…"></textarea>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pose-toi la question : cet élément <b>capte</b>-t-il quelque chose du monde réel (vent, pluie, pression) ? <b>décide</b>-t-il ? <b>diffuse</b>-t-il un message ? ou fournit-il seulement de l'<b>énergie</b> ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Les <b>capteurs</b> sont toujours du côté « Acquérir » : anémomètre, pluviomètre, baromètre. Il n'y a qu'<b>un seul</b> élément qui décide : celui qui contient le programme. Tout ce qui envoie l'alerte vers l'extérieur (ondes radio, son, lumière, écran) relève de « Communiquer ». Le panneau solaire, lui, ne manipule aucune information…</p></details>
+    <details class="correction"><summary>✅ Correction complète (à ouvrir après vérification)</summary>
+      <p><b>Réponses :</b> 1 → Acquérir · 2 → Alimenter · 3 → Acquérir · 4 → Acquérir · 5 → Traiter · 6 → Communiquer · 7 → Communiquer · 8 → Communiquer.</p>
+      <p><b>Méthode :</b> on classe chaque constituant selon ce qu'il fait de l'<em>information</em> : la faire entrer (capteur), la transformer en décision (microcontrôleur), la faire sortir (antenne, sirène, application).</p>
+      <p><b>Justification attendue :</b> le panneau solaire et la batterie n'appartiennent <b>pas</b> à la chaîne d'information : ils forment la <b>chaîne d'énergie</b> de la station. Sans eux la station s'éteint, mais ils ne captent, ne traitent et ne transmettent aucune information.</p>
+      <p><b>Exemple pour s'en souvenir :</b> dans ton téléphone, la batterie t'alimente mais ne « sait » rien ; c'est le processeur qui traite et l'écran/haut-parleur qui communique.</p>
+      <p><b>Limite :</b> certains éléments peuvent cumuler les rôles — l'application mobile affiche (communique) mais peut aussi traiter (calculer une moyenne). En 3e, on classe selon le rôle <em>principal</em>.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> classer le panneau solaire dans « Acquérir » parce qu'il « capte » la lumière — il capte de l'<em>énergie</em>, pas de l'<em>information</em> ; croire que l'antenne « décide » d'alerter — elle ne fait que transmettre ce que le microcontrôleur lui donne.</div>
+    <div class="retenir"><b>📌 À retenir :</b> une chaîne d'information relie trois fonctions : <b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (microcontrôleur + programme) → <b>COMMUNIQUER</b> (transmission, affichage, alarme). L'énergie est une chaîne séparée qui alimente ces trois blocs.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> au moins 7 attributions correctes sur 8 <b>et</b> une justification qui distingue information et énergie. Ton travail est sauvegardé automatiquement sur cet appareil.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Construire la chaîne d'information</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> ordonner les fonctions de la chaîne d'information et nommer la nature des signaux échangés.</div>
+      <div><b>Compétence :</b> 3e_C4.3.</div>
+      <div><b>Production attendue :</b> chaîne complète (fonctions + signaux) + schéma recopié dans le cahier.</div>
+      <div><b>Ressources :</b> schéma bloc ci-dessous (à compléter d'abord, à vérifier ensuite).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> remets les fonctions dans l'ordre de circulation de l'information, puis indique la <b>nature du signal</b> à chaque étape. Termine par l'exemple chiffré.</div>
+    <div class="exo">
+      <p><b>a) L'ordre des fonctions :</b></p>
+      <div class="assoc"><label for="a2_f1">Fonction n°1 (entrée)</label><select id="a2_f1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option></select></div>
+      <div class="assoc"><label for="a2_f2">Fonction n°2</label><select id="a2_f2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option></select></div>
+      <div class="assoc"><label for="a2_f3">Fonction n°3 (sortie)</label><select id="a2_f3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option></select></div>
+      <p style="margin-top:12px"><b>b) La nature des signaux :</b></p>
+      <div class="assoc"><label for="a2_s1">Ce qui entre dans les capteurs</label><select id="a2_s1"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
+      <div class="assoc"><label for="a2_s2">Ce qui sort des capteurs</label><select id="a2_s2"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
+      <div class="assoc"><label for="a2_s3">Ce qui circule après le traitement</label><select id="a2_s3"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
+      <p style="margin-top:12px"><b>c) L'exemple chiffré :</b> complète la condition programmée dans le microcontrôleur pour l'alerte violette (seuil officiel d'un ouragan : 118 km/h) :</p>
+      <p style="font-family:'Fira Code',monospace;background:#08132c;padding:10px;border-radius:8px">SI vent &gt; <input type="number" id="a2_seuil" style="width:90px;display:inline-block"> km/h ALORS vigilance ← violette</p>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <object class="figure" data="Images/chaine_information_station.svg" type="image/svg+xml" aria-label="Schéma bloc de la chaîne d'information : acquérir avec les capteurs, traiter avec le microcontrôleur, communiquer avec l'antenne et la sirène">Schéma bloc de la chaîne d'information (SVG)</object>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>L'information suit le chemin du monde réel vers les habitants : on <b>capte</b> d'abord, on <b>réfléchit</b> ensuite, on <b>prévient</b> enfin.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un capteur transforme une grandeur physique en <b>signal électrique</b>. Le CAN du microcontrôleur transforme ce signal en <b>nombres</b> (tu verras comment en séance 2). Après traitement, ce qui circule vers l'antenne et la sirène, ce sont des <b>données numériques</b> (le message d'alerte est leur forme finale, côté habitants).</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> Acquérir → Traiter → Communiquer. <b>b)</b> entrée capteurs : grandeurs physiques ; sortie capteurs : signal électrique analogique ; après traitement : données numériques. <b>c)</b> seuil = <b>118</b> km/h.</p>
+      <p><b>Raisonnement :</b> chaque bloc transforme la nature du signal — c'est la définition même de la chaîne d'information. Le schéma SVG ci-dessus sert d'auto-vérification : compare-le à tes réponses.</p>
+      <p><b>Exemple concret :</b> rafale à 132 km/h → l'anémomètre tourne vite → tension électrique élevée → le CAN produit le nombre 132 → 132 &gt; 118 → le microcontrôleur envoie « vigilance violette » à l'antenne et déclenche la sirène.</p>
+      <p><b>Contre-exemple :</b> si on inversait Traiter et Communiquer, la station enverrait des mesures brutes sans jamais décider d'alerter — les habitants recevraient « 132 » sans savoir quoi en faire.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre la nature du signal <em>avant</em> et <em>après</em> le capteur ; écrire un seuil « au hasard » (150, 100…) au lieu du seuil officiel de l'ouragan (118 km/h, vents soutenus).</div>
+    <div class="retenir"><b>📌 À retenir :</b> à chaque étape de la chaîne, la <b>nature du signal change</b> : grandeur physique → signal électrique → donnée numérique → message. C'est ce qui permet à une machine de « comprendre » le monde réel.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 3 fonctions dans l'ordre, les 3 natures de signaux exactes et le seuil correct (7/7).</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>⚡ Séance 2 — Du signal à la donnée : le CAN</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment une tension électrique « continue » devient-elle un nombre exact dans la mémoire de la station ?</p>
+  <object class="figure" data="Images/signal_analogique_vers_donnee.svg" type="image/svg+xml" aria-label="Schéma de la conversion analogique-numérique : courbe de tension continue, convertisseur 10 bits produisant un nombre binaire, donnée exploitable en hectopascals">Schéma de la conversion analogique → numérique (SVG)</object>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Manipuler le convertisseur analogique → numérique</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> associer une grandeur analogique à la donnée numérique produite par le CAN, et inversement.</div>
+      <div><b>Compétence :</b> 3e_C4.4 — associer des grandeurs analogiques à des données exploitables.</div>
+      <div><b>Production attendue :</b> 2 lectures de simulateur + 3 calculs vérifiés + 1 explication rédigée.</div>
+      <div><b>Ressources :</b> simulateur ci-dessous (version 🅲) — ou montage Arduino/Grove (🅰), VittaScience (🅱).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> déplace le curseur du simulateur pour reproduire les situations demandées, lis les valeurs, puis effectue les calculs. Le baromètre simulé mesure de <b>868 hPa</b> à <b>1018 hPa</b> et son CAN travaille sur <b>10 bits</b> (0 à 1023).</div>
+
+    <div class="exo">
+      <div class="simu">
+        <div>
+          <label for="simPression"><b>🌀 Pression atmosphérique réelle (à toi de la faire varier) :</b></label>
+          <input type="range" id="simPression" min="868" max="1018" value="1013" step="1" aria-describedby="simVal">
+          <p id="simVal" style="text-align:center;font-size:1.05em">Pression simulée : <b id="simP">1013</b> hPa</p>
+          <p style="font-size:.85em;color:var(--sub)">Le curseur joue le rôle du monde réel : c'est la grandeur <b>analogique</b> (elle varie continûment).</p>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">TENSION DU CAPTEUR</div>
+          <div id="simU" style="color:#61dafb;font-size:1.2em">— V</div>
+          <div class="etiquette" style="margin-top:8px">SORTIE DU CAN (10 bits)</div>
+          <div class="grand" id="simN">—</div>
+          <div id="simBin" style="color:#c68ef2;font-size:.9em">—</div>
+          <div class="etiquette" style="margin-top:8px">DONNÉE RECONSTRUITE</div>
+          <div id="simD" style="color:#81fba1;font-size:1.2em">— hPa</div>
+          <div style="margin-top:8px"><span id="simVig" class="vigilance vig-verte">pression normale</span></div>
+        </div>
+      </div>
+
+      <h4>a) Lectures au simulateur</h4>
+      <div class="assoc"><label for="a3_l1">Règle la pression sur <b>943 hPa</b> (cœur d'un ouragan). Quelle valeur N sort du CAN ?</label><input type="number" id="a3_l1" min="0" max="1023"></div>
+      <div class="assoc"><label for="a3_l2">Règle N sur sa valeur <b>maximale</b> (pression au maximum). Que vaut N ?</label><input type="number" id="a3_l2" min="0" max="1023"></div>
+
+      <h4>b) Calculs (méthode au brouillon, résultat ici)</h4>
+      <div class="assoc"><label for="a3_c1">Combien de paliers différents un CAN 10 bits peut-il distinguer ?</label><input type="number" id="a3_c1"></div>
+      <div class="assoc"><label for="a3_c2">Quelle est la précision du baromètre : (1018 − 868) ÷ 1023 ≈ … hPa par palier ? (2 décimales)</label><input type="number" step="0.01" id="a3_c2"></div>
+      <div class="assoc"><label for="a3_c3">Le CAN affiche N = 512. Quelle pression en hPa ? (arrondis à l'entier : 868 + N × 0,1466…)</label><input type="number" id="a3_c3"></div>
+
+      <h4>c) Explication</h4>
+      <label for="a3_exp">Pourquoi dit-on que la donnée numérique est une <b>approximation</b> de la grandeur réelle ? Utilise les mots <i>paliers</i> et <i>continu</i>.</label>
+      <textarea id="a3_exp" placeholder="La grandeur réelle est…"></textarea>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : place le curseur exactement sur la valeur demandée et lis l'écran du simulateur — la réponse s'affiche, il faut juste savoir <em>où</em> regarder. Pour b) : 10 bits → 2 multiplié par lui-même 10 fois.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2¹⁰ = 1024 paliers (numérotés 0 à 1023). Précision = étendue ÷ 1023 = 150 ÷ 1023. Pour N = 512 : pression = 868 + 512 × (150 ÷ 1023) ≈ 868 + 75 = 943 hPa. Remarque que c'est cohérent avec ta lecture a) !</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> à 943 hPa le CAN sort <b>N = 512</b> (à ±1 près, arrondi) ; au maximum (1018 hPa) : <b>N = 1023</b>, jamais 1024 — on compte depuis 0.</p>
+      <p><b>b)</b> 2¹⁰ = <b>1024 paliers</b> · précision = 150 ÷ 1023 ≈ <b>0,15 hPa</b> par palier · N = 512 → 868 + 512 × 0,1466 ≈ <b>943 hPa</b>.</p>
+      <p><b>Méthode générale :</b> valeur = minimum + N × (étendue ÷ 1023). C'est une simple proportionnalité : N va de 0 à 1023 pendant que la pression va de 868 à 1018 hPa.</p>
+      <p><b>c) Explication attendue :</b> la grandeur réelle est <b>continue</b> (une infinité de valeurs possibles) alors que le CAN ne dispose que de 1024 <b>paliers</b> : entre deux paliers, il choisit le plus proche. La donnée est donc une approximation — excellente ici (0,15 hPa), largement suffisante pour détecter un cyclone.</p>
+      <p><b>Exemple :</b> une pression réelle de 943,07 hPa et une autre de 943,12 hPa donneront le même N : la différence est plus petite qu'un palier.</p>
+      <p><b>Limite :</b> plus on veut de précision, plus il faut de bits (12, 16…) — mais les fichiers deviennent plus lourds et le convertisseur plus cher : c'est un choix d'ingénieur.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre 1023 paliers au lieu de 1024 (on oublie le palier 0) ; répondre N = 1024 au maximum ; diviser par 1024 au lieu de 1023 dans la formule (il y a 1023 <em>intervalles</em> entre 1024 paliers).</div>
+    <div class="retenir"><b>📌 À retenir :</b> le <b>CAN</b> (Convertisseur Analogique → Numérique) échantillonne une tension continue et produit un nombre entier sur n bits : 2ⁿ paliers. Formule : <b>valeur = min + N × (étendue ÷ (2ⁿ − 1))</b>. En anglais : ADC, <i>Analog to Digital Converter</i>.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses numériques justes sur 5 et une explication utilisant correctement « continu » et « paliers ».</div>
+    <details class="prof"><summary>🅰 Fiche montage version matériel réel (à faire avec le professeur)</summary>
+      <p><b>Matériel :</b> Arduino UNO classique <em>ou</em> UNO R4 Minima + câble USB + Grove Base Shield V2 (sélecteur sur <b>5 V</b>) + capteur de luminosité Grove sur <b>A0</b> + écran LCD RGB Grove sur <b>I2C</b>.</p>
+      <p><b>Programme (Arduino IDE) :</b> lire <code>analogRead(A0)</code> et afficher la valeur brute 0-1023 sur le LCD. En couvrant plus ou moins le capteur avec la main, on <em>voit</em> le CAN travailler.</p>
+      <p><b>Protocole de test :</b> 1. brancher le shield seul → vérifier l'alimentation ; 2. téléverser ; 3. capteur découvert = valeur haute, couvert = proche de 0 ; 4. noter 3 couples (situation, N).</p>
+      <p><b>Dépannage :</b> rien à l'écran → vérifier le connecteur I2C et la bibliothèque <code>Grove - LCD RGB Backlight</code> ; valeurs figées → mauvais port analogique ; UNO R4 : vérifier que la carte sélectionnée dans l'IDE est bien « UNO R4 Minima » (bibliothèque LCD compatible non testée au labo — <b>MATÉRIEL À CONFIRMER : prévoir l'alternative VittaScience</b>).</p>
+      <p><b>Sécurité :</b> très basse tension uniquement ; câblage vérifié avant branchement USB ; ne jamais brancher/débrancher un module sous tension.</p>
+    </details>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🗂 Séance 3 — Représenter les informations en données</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment décrire TOUT ce que « sait » la station (mesures, lieu, alerte, heure) avec des données bien organisées ?</p>
+  <object class="figure" data="Images/types_et_codage_donnees.svg" type="image/svg+xml" aria-label="Tableau des types de données de la station : nombre entier pour le vent, décimal pour la pression, texte pour la commune, booléen pour l'alerte, date et heure pour l'horodatage, et codage binaire des niveaux de vigilance sur 3 bits">Types de données de la station et codage binaire de la vigilance (SVG)</object>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Typer, nommer, coder</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> choisir le bon type de donnée, un bon descripteur, et coder une information en binaire.</div>
+      <div><b>Compétence :</b> 3e_C4.5 — représenter sous forme de données des informations de diverses natures.</div>
+      <div><b>Production attendue :</b> 6 typages + 1 enregistrement complet + le codage binaire de la vigilance.</div>
+      <div><b>Ressources :</b> schéma des types ci-dessus.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) attribue un type à chaque information ; b) construis l'enregistrement d'une mesure ; c) code les niveaux de vigilance en binaire.</div>
+    <div class="exo">
+      <h4>a) Quel type pour quelle information ?</h4>
+      <div class="assoc"><label for="a4_1">Vitesse du vent : 132</label><select id="a4_1"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+      <div class="assoc"><label for="a4_2">Pression : 987.4</label><select id="a4_2"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+      <div class="assoc"><label for="a4_3">Commune : "Sainte-Luce"</label><select id="a4_3"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+      <div class="assoc"><label for="a4_4">Sirène déclenchée ? vrai/faux</label><select id="a4_4"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+      <div class="assoc"><label for="a4_5">Moment de la mesure : 2026-08-28 14:35</label><select id="a4_5"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+      <div class="assoc"><label for="a4_6">Numéro de la station : 3</label><select id="a4_6"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option><option>date + heure</option></select></div>
+
+      <h4>b) Construire l'enregistrement</h4>
+      <p>Une mesure complète = une <b>ligne</b> de la table de données. Choisis un <b>descripteur</b> correct (nom de colonne : sans espace ni accent, explicite) pour la donnée « vitesse du vent en km/h » :</p>
+      <div class="assoc"><label for="a4_desc">Descripteur choisi</label><select id="a4_desc"><option value="">— choisir —</option><option>v</option><option>vent_kmh</option><option>la vitesse du vent</option><option>données2</option></select></div>
+
+      <h4>c) Coder la vigilance en binaire (3 bits)</h4>
+      <p>En suivant le code du schéma (verte = 000, jaune = 001, orange = 010, rouge = 011, violette = 100), code <b>rouge</b> :</p>
+      <div class="bin-inputs" role="group" aria-label="Trois bits pour coder le niveau rouge">
+        <input type="text" id="a4_b1" maxlength="1" inputmode="numeric" aria-label="bit 1">
+        <input type="text" id="a4_b2" maxlength="1" inputmode="numeric" aria-label="bit 2">
+        <input type="text" id="a4_b3" maxlength="1" inputmode="numeric" aria-label="bit 3">
+      </div>
+      <div class="assoc" style="margin-top:10px"><label for="a4_bits">Météo-France ajoute des niveaux : il en faut désormais <b>12</b>. Combien de bits au minimum ?</label><input type="number" id="a4_bits" min="1" max="16"></div>
+      <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un nombre <em>avec virgule</em> n'est pas un entier. « vrai/faux » n'a que deux valeurs possibles : c'est la définition d'un type précis. Pour c) : combien de valeurs différentes peut-on coder avec n bits ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Rouge est le 4e niveau en partant de 0 : verte=0, jaune=1, orange=2, rouge=3 → 3 en binaire s'écrit 011. Pour 12 niveaux : 3 bits → 8 valeurs (pas assez), 4 bits → 16 valeurs (suffisant).</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> vent → entier · pression → décimal · commune → texte · sirène → booléen · moment → date + heure · numéro de station → entier.</p>
+      <p><b>b)</b> <code>vent_kmh</code> : explicite (on sait ce que c'est ET l'unité), sans espace ni accent — utilisable dans tous les logiciels. <code>v</code> est trop court (illisible dans 6 mois), « la vitesse du vent » contient des espaces (source d'erreurs), « données2 » ne dit rien.</p>
+      <p><b>c)</b> rouge = <b>011</b> (car rouge est la valeur n°3 et 3 = 0×4 + 1×2 + 1×1). Pour 12 niveaux : <b>4 bits</b>, car 2³ = 8 &lt; 12 ≤ 16 = 2⁴.</p>
+      <p><b>Raisonnement à connaître :</b> pour coder V valeurs, on cherche le plus petit n tel que 2ⁿ ≥ V.</p>
+      <p><b>Exemple :</b> les 26 lettres de l'alphabet demandent 5 bits (2⁵ = 32 ≥ 26) ; c'est exactement ainsi que fonctionnent les codes informatiques comme l'ASCII (7 bits pour 128 caractères).</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> typer « 987.4 » comme entier ; choisir un descripteur avec espaces/accents ; confondre la <em>valeur</em> (3) et son <em>écriture binaire</em> (011) ; répondre « 12 bits pour 12 niveaux » (il faut compter les combinaisons, pas les niveaux !).</div>
+    <div class="retenir"><b>📌 À retenir :</b> une information se représente par une <b>donnée typée</b> (entier, décimal, texte/<i>string</i>, booléen/<i>boolean</i>, date) désignée par un <b>descripteur</b> explicite. Avec n bits on code <b>2ⁿ</b> valeurs. Un <b>enregistrement</b> = une ligne regroupant toutes les données d'un même événement.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 typages justes, le bon descripteur, le codage 011 et la réponse « 4 bits » justifiée par 2⁴ = 16.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 4 ══════════════════ -->
+<div class="seance-panel" id="s4" role="tabpanel">
+<section class="card">
+  <h2>📦 Séance 4 — Fichiers : mise en forme, transmission, stockage</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : sous quelle forme les données voyagent-elles et où sont-elles conservées ?</p>
+  <object class="figure" data="Images/transmission_stockage_fichiers.svg" type="image/svg+xml" aria-label="Parcours de la donnée : la station met en forme un fichier CSV, le transmet par radio à la passerelle puis par Internet au serveur qui stocke les fichiers, consultés par téléphones et ordinateurs ; encart des formats de fichiers csv, json, png, mp3">Parcours de la donnée : mise en forme, transmission, stockage (SVG)</object>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Le bon format pour la bonne information</h3><span class="duree">⏱ 20 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> associer chaque nature d'information à un format de fichier adapté et distinguer transmission et stockage.</div>
+      <div><b>Compétence :</b> 3e_C4.6 — identifier mise en forme, transmission, stockage dans des fichiers.</div>
+      <div><b>Production attendue :</b> 5 associations + 2 vrai/faux justifiés.</div>
+      <div><b>Ressources :</b> schéma du parcours de la donnée ci-dessus.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) choisis le format le plus adapté à chaque fichier produit par le système d'alerte ; b) réponds par vrai ou faux et corrige mentalement les affirmations fausses.</div>
+    <div class="exo">
+      <h4>a) Associer format et information</h4>
+      <div class="assoc"><label for="a5_1">Le tableau des 48 h de mesures</label><select id="a5_1"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.txt libre</option></select></div>
+      <div class="assoc"><label for="a5_2">La carte des vents à afficher sur le site</label><select id="a5_2"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.txt libre</option></select></div>
+      <div class="assoc"><label for="a5_3">Le message sonore diffusé par haut-parleur</label><select id="a5_3"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.txt libre</option></select></div>
+      <div class="assoc"><label for="a5_4">Le message d'alerte structuré envoyé à l'application (code niveau, commune, heure)</label><select id="a5_4"><option value="">— choisir —</option><option>.json</option><option>.png</option><option>.mp3</option><option>.xlsx</option></select></div>
+      <div class="assoc"><label for="a5_5">Les consignes de sécurité illustrées, à imprimer en mairie</label><select id="a5_5"><option value="">— choisir —</option><option>.pdf</option><option>.csv</option><option>.mp3</option><option>.json</option></select></div>
+      <h4>b) Vrai ou faux ?</h4>
+      <div class="assoc"><label for="a5_v1">« Quand la station transmet son fichier au serveur, le fichier disparaît de la station. »</label><select id="a5_v1"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <div class="assoc"><label for="a5_v2">« Stocker les mesures sur le serveur ET sur la carte mémoire de la station est une précaution utile en cas de cyclone. »</label><select id="a5_v2"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi ce que <em>contient</em> le fichier : des lignes et colonnes ? une image ? du son ? un petit message organisé ? un document mis en page ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Transmettre un fichier, c'est en envoyer une <b>copie</b> : l'original reste sur place. Et si l'antenne est arrachée par le vent, seule la copie <em>locale</em> (carte mémoire) survivra — d'où l'intérêt du double stockage.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> tableau → <b>.csv</b> (texte tabulé, lisible par tous les tableurs) · carte → <b>.png</b> (image) · message sonore → <b>.mp3</b> (son compressé) · message structuré → <b>.json</b> (données organisées clé:valeur, idéal entre machines) · consignes à imprimer → <b>.pdf</b> (mise en page figée).</p>
+      <p><b>b)</b> Faux : transmettre = <b>copier</b>, l'original reste sur la station. Vrai : le double stockage (local + serveur) est une <b>redondance</b> volontaire — si la liaison casse pendant le cyclone, aucune mesure n'est perdue ; on resynchronise après.</p>
+      <p><b>Exemple concret :</b> quand tu envoies une photo par messagerie, elle reste dans ta galerie — c'est exactement la même logique.</p>
+      <p><b>Limite :</b> le « meilleur » format dépend de l'usage : un .xlsx conviendrait aussi au tableau, mais le .csv, plus simple et universel, se transmet plus légèrement par radio.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire qu'un fichier transmis est « déplacé » ; choisir .png pour un tableau de nombres (les valeurs deviennent inexploitables : on ne peut plus calculer !) ; confondre .json (données) et .txt libre (aucune structure garantie).</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>mise en forme</b> = choisir un format adapté à la nature de l'information (tableau .csv/.ods, image .png/.svg, son .mp3, message structuré .json, document .pdf) · <b>transmission</b> = copier la donnée vers un autre équipement · <b>stockage</b> = la conserver (souvent en deux endroits : redondance).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 formats justes + les 2 vrai/faux corrects avec la bonne justification.</div>
+  </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Activité 6</span><h3>Enquête dans les données : la nuit du cyclone</h3><span class="duree">⏱ 35 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> exploiter une table de données réaliste pour reconstituer l'événement et vérifier le comportement de la station.</div>
+      <div><b>Compétences :</b> 3e_C4.6 (exploiter des fichiers de données) + 3e_C4.5 (lire une table structurée).</div>
+      <div><b>Production attendue :</b> 4 réponses chiffrées + 1 conclusion argumentée.</div>
+      <div><b>Ressources :</b> table ci-dessous (48 h de mesures simulées) — aussi en <a href="donnees/mesures_station_48h_simulees.csv">.csv</a>, <a href="donnees/mesures_station_48h_simulees.ods">.ods</a> (LibreOffice) et <a href="donnees/mesures_station_48h_simulees.xlsx">.xlsx</a>.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la station a enregistré 48 h de mesures pendant l'approche d'un cyclone (données <b>simulées</b> à but pédagogique). Fouille la table (ou ouvre le fichier dans LibreOffice Calc) et réponds. Chaque ligne est un <b>enregistrement</b> horodaté.</div>
+    <div class="exo">
+      <div class="table-scroll" tabindex="0" aria-label="Table des 48 heures de mesures de la station, défilable">
+        <table class="donnees" id="tableDonnees">
+          <thead><tr><th>horodatage</th><th>vent_kmh</th><th>rafale_kmh</th><th>pression_hpa</th><th>pluie_mm</th><th>vigilance</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="assoc" style="margin-top:12px"><label for="a6_1">1. À quelle heure la station est-elle passée en vigilance <b>rouge</b> ? (format JJ 28/29 puis heure, ex. « 29 à 08:00 » — écris juste l'heure du jour 29, ex. 08)</label><input type="text" id="a6_1" placeholder="heure (0-23)"></div>
+      <div class="assoc"><label for="a6_2">2. Quelle est la pression <b>minimale</b> enregistrée (en hPa, 1 décimale) ?</label><input type="number" step="0.1" id="a6_2"></div>
+      <div class="assoc"><label for="a6_3">3. Quelle rafale <b>maximale</b> la station a-t-elle mesurée (km/h) ?</label><input type="number" id="a6_3"></div>
+      <div class="assoc"><label for="a6_4">4. Combien d'heures se sont écoulées entre le passage en orange et le passage en violette ?</label><input type="number" id="a6_4"></div>
+      <label for="a6_conc" style="display:block;margin-top:10px"><b>5. Conclusion :</b> quand le vent monte, que fait la pression ? En quoi ces deux mesures <em>ensemble</em> rendent-elles l'alerte plus fiable qu'une seule ?</label>
+      <textarea id="a6_conc" placeholder="J'observe que… donc…"></textarea>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La colonne <b>vigilance</b> change de valeur à des lignes précises : repère la <em>première</em> ligne « rouge ». Pour le minimum et le maximum, parcours les colonnes — ou utilise les fonctions MIN() et MAX() dans LibreOffice.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Dans LibreOffice Calc : <code>=MIN(E3:E50)</code> pour la pression minimale, <code>=MAX(D3:D50)</code> pour la rafale. Le passage en orange se lit le jour 28, celui en violette le jour 29 : compte les lignes entre les deux (1 ligne = 1 heure).</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>1.</b> Premier « rouge » : le <b>29 à 08:00</b> (réponse attendue : 8). <b>2.</b> Pression minimale : <b>966,8 hPa</b> (dernière ligne, cœur du phénomène au plus près). <b>3.</b> Rafale maximale : <b>223 km/h</b>. <b>4.</b> Orange le 28 à 15:00, violette le 29 à 15:00 → <b>24 heures</b>.</p>
+      <p><b>Méthode :</b> une table structurée se lit par colonnes (descripteurs) et par lignes (enregistrements). Les fonctions MIN/MAX du tableur évitent les erreurs de lecture — c'est exactement pour cela que les données sont <em>structurées</em>.</p>
+      <p><b>5. Conclusion attendue :</b> quand le vent augmente, la pression <b>chute</b> (de 1012 à 967 hPa) : les deux grandeurs varient en sens inverse. En croisant deux capteurs indépendants, la station évite les fausses alertes : une rafale isolée sans chute de pression (par exemple un grain passager) ne déclenchera pas la sirène. C'est le principe de la <b>validation croisée</b> des mesures.</p>
+      <p><b>Erreur à éviter dans la conclusion :</b> écrire « la pression fait monter le vent » — on observe une <em>corrélation</em>, le cyclone est la cause des deux.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> lire la <em>dernière</em> ligne orange au lieu de la <em>première</em> rouge ; confondre vent moyen et rafale ; compter les heures en oubliant le passage de minuit (15:00 → 15:00 le lendemain = 24 h, pas 0 h !).</div>
+    <div class="retenir"><b>📌 À retenir :</b> un fichier de données structuré (descripteurs + enregistrements horodatés) permet de <b>reconstituer un événement</b>, de calculer (MIN, MAX, durées) et de <b>croiser les capteurs</b> pour fiabiliser une décision automatique.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 réponses chiffrées exactes et une conclusion qui mentionne la variation en sens inverse ET l'intérêt du croisement des mesures.</div>
+  </div>
+
+  <div class="activite" id="act7">
+    <header><span class="num">Réinvestissement</span><h3>🌊 La bouée houlographe de Sainte-Anne</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> réutiliser TOUTES les notions de la séquence dans une situation nouvelle, sans modèle à recopier.</div>
+      <div><b>Compétences :</b> 3e_C4.3 + C4.4 + C4.5 + C4.6 (bilan).</div>
+      <div><b>Production attendue :</b> chaîne d'information + calcul CAN + choix de données et de format, justifiés.</div>
+      <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la commune de Sainte-Anne installe une <b>bouée houlographe</b> : elle mesure la hauteur des vagues (houle cyclonique) grâce à un accéléromètre, et transmet ses mesures par liaison satellite aux pêcheurs et à la mairie. Réponds sans recopier les corrections précédentes : la situation a changé !</div>
+    <div class="exo">
+      <h4>a) Sa chaîne d'information</h4>
+      <div class="assoc"><label for="a7_1">Fonction « Acquérir » assurée par…</label><select id="a7_1"><option value="">— choisir —</option><option>l'accéléromètre</option><option>le microcontrôleur</option><option>l'émetteur satellite</option><option>la batterie</option></select></div>
+      <div class="assoc"><label for="a7_2">Fonction « Traiter » assurée par…</label><select id="a7_2"><option value="">— choisir —</option><option>l'accéléromètre</option><option>le microcontrôleur</option><option>l'émetteur satellite</option><option>la batterie</option></select></div>
+      <div class="assoc"><label for="a7_3">Fonction « Communiquer » assurée par…</label><select id="a7_3"><option value="">— choisir —</option><option>l'accéléromètre</option><option>le microcontrôleur</option><option>l'émetteur satellite</option><option>la batterie</option></select></div>
+      <h4>b) Son CAN</h4>
+      <p>Le capteur mesure des vagues de 0 à 12 m avec un CAN <b>8 bits</b>.</p>
+      <div class="assoc"><label for="a7_4">Combien de paliers ce CAN distingue-t-il ?</label><input type="number" id="a7_4"></div>
+      <div class="assoc"><label for="a7_5">Le CAN sort N = 170. Quelle hauteur de vague en mètres ? (arrondis au dixième : 12 × N ÷ 255)</label><input type="number" step="0.1" id="a7_5"></div>
+      <h4>c) Ses données et son fichier</h4>
+      <div class="assoc"><label for="a7_6">Type de la donnée « hauteur_m = 8.0 »</label><select id="a7_6"><option value="">— choisir —</option><option>nombre entier</option><option>nombre décimal</option><option>texte</option><option>booléen</option></select></div>
+      <div class="assoc"><label for="a7_7">Format du fichier des mesures de la journée</label><select id="a7_7"><option value="">— choisir —</option><option>.csv</option><option>.png</option><option>.mp3</option><option>.pdf</option></select></div>
+      <label for="a7_just" style="display:block;margin-top:10px"><b>d) Justifie</b> en 2-3 phrases : pourquoi la bouée stocke-t-elle aussi ses mesures sur une carte mémoire interne alors qu'elle les transmet déjà par satellite ?</label>
+      <textarea id="a7_just" placeholder="Parce que…"></textarea>
+      <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb7" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends la logique de la station : qui capte ? qui décide ? qui envoie ? Pour le CAN 8 bits : 2⁸ = ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>2⁸ = 256 paliers (0 à 255). Hauteur = 12 × 170 ÷ 255 = 8,0 m. Pour d) pense à ce qui peut arriver à une liaison satellite en plein cyclone…</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> Acquérir → accéléromètre · Traiter → microcontrôleur · Communiquer → émetteur satellite (la batterie = chaîne d'énergie, hors chaîne d'information).</p>
+      <p><b>b)</b> 2⁸ = <b>256 paliers</b> · hauteur = 12 × 170 ÷ 255 = <b>8,0 m</b> — une houle cyclonique dangereuse.</p>
+      <p><b>c)</b> 8.0 → nombre <b>décimal</b> · fichier de mesures → <b>.csv</b>.</p>
+      <p><b>d)</b> La transmission peut être interrompue (antenne endommagée, satellite saturé, forte pluie atténuant le signal). Le stockage local est une <b>redondance</b> : aucune mesure n'est perdue, on récupère et resynchronise le fichier après l'événement. Transmettre = copier ; l'original doit vivre quelque part.</p>
+      <p><b>Bilan :</b> si tu as réussi sans regarder les activités précédentes, les notions sont acquises. Sinon, note ce qui t'a manqué dans ton bilan personnel ci-dessous — c'est exactement à ça qu'il sert.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> reprendre 1024 paliers (c'était le CAN 10 bits de la station !) ; typer 8.0 en entier ; oublier que la justification d) doit parler de <em>copie</em> et de <em>risque de coupure</em>, pas seulement « c'est plus sûr ».</div>
+    <div class="retenir"><b>📌 À retenir :</b> la démarche est <b>transférable</b> : tout objet connecté (station, bouée, montre, voiture) se décrit par sa chaîne d'information, son CAN, ses données typées et ses fichiers transmis/stockés.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7 réponses justes sur 7 et une justification complète — sans avoir rouvert les corrections des activités 1 à 6.</div>
+  </div>
+</section>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 6 — rien de nouveau ici.</p>
+  <h4>1. La chaîne d'information (activités 1-2)</h4>
+  <p><b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (microcontrôleur + programme et ses seuils) → <b>COMMUNIQUER</b> (antenne, sirène, application). La chaîne d'énergie (panneau solaire, batterie) alimente ces blocs mais ne transporte aucune information. À chaque étape la nature du signal change : grandeur physique → signal électrique → donnée numérique → message.</p>
+  <h4>2. De l'analogique au numérique (activité 3)</h4>
+  <p>Le <b>CAN</b> échantillonne un signal continu et produit un entier sur n bits : <b>2ⁿ paliers</b> (10 bits → 1024 valeurs, de 0 à 1023). <b>valeur = min + N × (étendue ÷ (2ⁿ − 1))</b>. La donnée numérique est une approximation dont la précision dépend du nombre de bits.</p>
+  <h4>3. Représenter les informations en données (activité 4)</h4>
+  <p>Chaque information reçoit un <b>type</b> (entier, décimal, texte, booléen, date) et un <b>descripteur</b> explicite (<code>vent_kmh</code>). Un <b>enregistrement</b> regroupe les données d'un même instant. Avec n bits on code 2ⁿ valeurs distinctes.</p>
+  <h4>4. Fichiers : mise en forme, transmission, stockage (activités 5-6)</h4>
+  <p>Le format suit la nature de l'information : <b>.csv/.ods</b> tableau · <b>.json</b> message structuré · <b>.png/.svg</b> image · <b>.mp3</b> son · <b>.pdf</b> document. Transmettre = <b>copier</b> vers un autre équipement ; stocker = conserver, souvent en double (<b>redondance</b>) pour résister aux pannes.</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">capteur = sensor</span><span class="tag">CAN = ADC</span><span class="tag">donnée = data</span><span class="tag">booléen = boolean</span><span class="tag">chaîne de caractères = string</span><span class="tag">fichier = file</span><span class="tag">stockage = storage</span><span class="tag">téléverser = to upload</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé ? Corrige ou complète ton hypothèse avec ce que tu sais maintenant :</label>
+    <textarea id="hyp_retour" placeholder="En fait, entre le vent et l'écran, il se passe…"></textarea>
+  </div>
+  <div class="bilan-grid">
+    <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>32 questions pour vérifier toutes les notions de la séquence — avec corrections détaillées, minuteur facultatif et reprise possible.</p>
+  <a class="btn qcm" href="qcm_3e_C4.3-C4.6_station_alerte_cyclonique.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Pour aller plus loin, au choix :</p>
+  <p>🌪 <b>Défi données :</b> dans LibreOffice Calc, trace le graphique vent/pression des 48 h (Insertion → Diagramme → Ligne) : la « pince » qui se referme entre les deux courbes est la signature visuelle d'un cyclone.</p>
+  <p>📡 <b>Défi recherche :</b> comment les <em>vraies</em> stations de Météo-France Antilles transmettent-elles leurs mesures quand le réseau mobile tombe ? (piste : liaisons satellite et radio VHF).</p>
+  <p>🔧 <b>Défi maker :</b> avec le professeur, ajoute au montage Arduino un seuil qui allume la LED quand la luminosité passe sous une valeur choisie — tu viens de programmer… une alerte.</p>
+</section>
+
+<footer>
+  <p>Séquence 3e_C4.3 → 3e_C4.6 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Données embarquées (identiques aux fichiers CSV/ODS/XLSX du dossier donnees/) ══════ */
+const DATA=[["28 00:00", 37, 50, 1011.5, 0.0, "verte"], ["28 01:00", 38, 59, 1012.9, 0.0, "verte"], ["28 02:00", 34, 46, 1011.2, 0.5, "verte"], ["28 03:00", 30, 43, 1012.0, 0.7, "jaune"], ["28 04:00", 32, 50, 1012.2, 0.0, "jaune"], ["28 05:00", 40, 62, 1010.8, 0.0, "jaune"], ["28 06:00", 42, 61, 1009.9, 0.0, "jaune"], ["28 07:00", 41, 63, 1011.3, 1.8, "jaune"], ["28 08:00", 38, 63, 1009.9, 0.9, "jaune"], ["28 09:00", 42, 64, 1010.6, 1.2, "jaune"], ["28 10:00", 42, 57, 1008.6, 0.0, "jaune"], ["28 11:00", 35, 50, 1007.7, 0.0, "jaune"], ["28 12:00", 43, 62, 1007.8, 0.0, "jaune"], ["28 13:00", 40, 65, 1007.9, 1.8, "jaune"], ["28 14:00", 40, 63, 1006.1, 0.9, "jaune"], ["28 15:00", 51, 77, 1006.4, 2.7, "orange"], ["28 16:00", 51, 78, 1004.9, 0.0, "orange"], ["28 17:00", 47, 67, 1004.1, 4.5, "jaune"], ["28 18:00", 55, 78, 1004.4, 2.1, "orange"], ["28 19:00", 58, 84, 1002.6, 1.7, "orange"], ["28 20:00", 56, 79, 1002.5, 5.4, "orange"], ["28 21:00", 56, 78, 1002.6, 3.9, "orange"], ["28 22:00", 55, 75, 999.6, 5.0, "orange"], ["28 23:00", 65, 93, 998.5, 4.4, "orange"], ["29 00:00", 71, 102, 999.7, 7.4, "orange"], ["29 01:00", 62, 92, 998.0, 6.4, "orange"], ["29 02:00", 68, 99, 995.6, 6.6, "orange"], ["29 03:00", 73, 110, 996.3, 6.5, "orange"], ["29 04:00", 77, 106, 995.3, 10.4, "orange"], ["29 05:00", 78, 113, 993.4, 7.7, "orange"], ["29 06:00", 87, 124, 992.6, 10.5, "orange"], ["29 07:00", 81, 113, 989.6, 13.5, "orange"], ["29 08:00", 95, 138, 989.0, 10.3, "rouge"], ["29 09:00", 99, 145, 987.2, 13.6, "rouge"], ["29 10:00", 94, 136, 987.5, 13.0, "rouge"], ["29 11:00", 103, 146, 985.0, 18.1, "rouge"], ["29 12:00", 106, 146, 984.2, 18.7, "rouge"], ["29 13:00", 108, 150, 983.9, 19.8, "rouge"], ["29 14:00", 116, 163, 980.4, 19.2, "rouge"], ["29 15:00", 119, 168, 979.2, 20.8, "violette"], ["29 16:00", 121, 171, 977.7, 26.0, "violette"], ["29 17:00", 136, 184, 976.2, 26.6, "violette"], ["29 18:00", 133, 181, 976.3, 28.0, "violette"], ["29 19:00", 142, 201, 974.4, 28.1, "violette"], ["29 20:00", 143, 198, 971.9, 31.5, "violette"], ["29 21:00", 156, 219, 971.5, 31.8, "violette"], ["29 22:00", 158, 217, 969.6, 34.9, "violette"], ["29 23:00", 161, 223, 966.8, 37.4, "violette"]];
+
+/* ══════ Sauvegarde locale ══════ */
+const KEY = "seq_3e_C4.3-C4.6_station";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{
+    if(el.type==="radio") return;
+    o.inputs[el.id] = el.value;
+  });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o;
+  try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o = null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale (réponses, bilan, progression) ?")){
+    localStorage.removeItem(KEY); location.reload();
+  }
+});
+
+/* ══════ Onglets séances ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Simulateur CAN ══════ */
+const PMIN=868, PMAX=1018, ETENDUE=PMAX-PMIN;
+function majSimu(){
+  const p = parseInt($("simPression").value,10);
+  const n = Math.round((p-PMIN)/ETENDUE*1023);
+  const u = (n/1023*5);
+  const rec = PMIN + n*(ETENDUE/1023);
+  $("simP").textContent = p;
+  $("simU").textContent = u.toFixed(2).replace(".",",") + " V";
+  $("simN").textContent = n;
+  $("simBin").textContent = n.toString(2).padStart(10,"0");
+  $("simD").textContent = rec.toFixed(1).replace(".",",") + " hPa";
+  const vig = $("simVig");
+  let cls="vig-verte", txt="pression normale";
+  if(p<1000){cls="vig-jaune";txt="à surveiller";}
+  if(p<985){cls="vig-orange";txt="dépression marquée";}
+  if(p<975){cls="vig-rouge";txt="danger cyclonique";}
+  if(p<955){cls="vig-violette";txt="ouragan majeur";}
+  vig.className = "vigilance "+cls; vig.textContent = txt;
+}
+$("simPression").addEventListener("input", majSimu);
+
+/* ══════ Table de données ══════ */
+(function(){
+  const tb = document.querySelector("#tableDonnees tbody");
+  const frag = document.createDocumentFragment();
+  DATA.forEach(r=>{
+    const tr=document.createElement("tr");
+    const [h,v,raf,pres,plu,vig]=r;
+    [h,v,raf,String(pres).replace(".",","),String(plu).replace(".",","),vig].forEach((c,i)=>{
+      const td=document.createElement("td"); td.textContent=c;
+      if(i===5){ td.style.fontWeight="700";
+        td.style.color = {verte:"#81fba1",jaune:"#ffd66b",orange:"#ffb454",rouge:"#ff7b88",violette:"#c68ef2"}[c]||"";
+        td.style.textAlign="left";
+      }
+      tr.appendChild(td);
+    });
+    frag.appendChild(tr);
+  });
+  tb.appendChild(frag);
+})();
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = (id) => parseFloat(String($(id).value).replace(",","."));
+const txt = (id) => String($(id).value||"").trim().toLowerCase();
+const CHECKS = {
+  1: function(){
+    const attendu={a1_1:"Acquérir",a1_2:"Alimenter",a1_3:"Acquérir",a1_4:"Acquérir",a1_5:"Traiter",a1_6:"Communiquer",a1_7:"Communiquer",a1_8:"Communiquer"};
+    let ok=0, tot=8;
+    Object.entries(attendu).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const justOk = txt("a1_just").length>=15;
+    return {score:ok, total:tot, extra: justOk ? "" : " Pense à rédiger ta justification sur le panneau solaire (2 phrases minimum).", valide: ok>=7 && justOk};
+  },
+  2: function(){
+    let ok=0;
+    if($("a2_f1").value==="Acquérir") ok++;
+    if($("a2_f2").value==="Traiter") ok++;
+    if($("a2_f3").value==="Communiquer") ok++;
+    if($("a2_s1").value.startsWith("grandeurs")) ok++;
+    if($("a2_s2").value.startsWith("signal")) ok++;
+    if($("a2_s3").value.startsWith("données")) ok++;
+    if(num("a2_seuil")===118) ok++;
+    return {score:ok,total:7,valide:ok===7};
+  },
+  3: function(){
+    let ok=0;
+    if(Math.abs(num("a3_l1")-512)<=2) ok++;
+    if(num("a3_l2")===1023) ok++;
+    if(num("a3_c1")===1024) ok++;
+    if(Math.abs(num("a3_c2")-0.15)<=0.01) ok++;
+    if(Math.abs(num("a3_c3")-943)<=1) ok++;
+    const e=txt("a3_exp");
+    const expOk = e.includes("palier") && e.includes("continu");
+    return {score:ok,total:5,extra: expOk?"":" Ton explication doit utiliser les mots « paliers » et « continu ».",valide: ok===5 && expOk};
+  },
+  4: function(){
+    let ok=0;
+    const att={a4_1:"nombre entier",a4_2:"nombre décimal",a4_3:"texte",a4_4:"booléen",a4_5:"date + heure",a4_6:"nombre entier"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    if($("a4_desc").value==="vent_kmh") ok++;
+    const bin = $("a4_b1").value+$("a4_b2").value+$("a4_b3").value;
+    if(bin==="011") ok++;
+    if(num("a4_bits")===4) ok++;
+    return {score:ok,total:9,valide:ok>=8};
+  },
+  5: function(){
+    let ok=0;
+    const att={a5_1:".csv",a5_2:".png",a5_3:".mp3",a5_4:".json",a5_5:".pdf",a5_v1:"faux",a5_v2:"vrai"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:7,valide:ok===7};
+  },
+  6: function(){
+    let ok=0;
+    const h1 = txt("a6_1").replace(/[^0-9]/g,"");
+    if(h1==="8"||h1==="08") ok++;
+    if(Math.abs(num("a6_2")-966.8)<=0.11) ok++;
+    if(num("a6_3")===223) ok++;
+    if(num("a6_4")===24) ok++;
+    const c=txt("a6_conc");
+    const concOk = c.length>=30 && (c.includes("baisse")||c.includes("chute")||c.includes("diminue")||c.includes("inverse"));
+    return {score:ok,total:4,extra: concOk?"":" Ta conclusion doit décrire la baisse de pression quand le vent monte, et l'intérêt de croiser deux mesures.",valide: ok>=3 && concOk};
+  },
+  7: function(){
+    let ok=0;
+    if($("a7_1").value==="l'accéléromètre") ok++;
+    if($("a7_2").value==="le microcontrôleur") ok++;
+    if($("a7_3").value==="l'émetteur satellite") ok++;
+    if(num("a7_4")===256) ok++;
+    if(Math.abs(num("a7_5")-8.0)<=0.1) ok++;
+    if($("a7_6").value==="nombre décimal") ok++;
+    if($("a7_7").value===".csv") ok++;
+    const jOk = txt("a7_just").length>=25;
+    return {score:ok,total:7,extra: jOk?"":" N'oublie pas la justification d) : coupure possible + copie locale.",valide: ok>=6 && jOk};
+  }
+};
+const ENCOURAGE_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENCOURAGE_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENCOURAGE_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check;
+    const r=CHECKS[n]();
+    const fb=$("fb"+n);
+    const ratio=r.score/r.total;
+    let msg = `${r.score} / ${r.total} réponses correctes.`;
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENCOURAGE_OK[r.score%ENCOURAGE_OK.length] + " Tu peux maintenant comparer avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENCOURAGE_MI[r.score%ENCOURAGE_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENCOURAGE_KO[r.score%ENCOURAGE_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5,6,7].filter(k=>v[k]).length;
+  $("progTxt").textContent = `${n} / 7 activités validées`;
+  $("progFill").style.width = (n/7*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3], s3:[4], s4:[5,6,7]};
+  Object.entries(par).forEach(([s,acts])=>{
+    $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : "";
+  });
+}
+
+/* ══════ Rappel d'hypothèse dans le bilan ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majSimu(); majProgress(); majHyp();
+</script>
+</body>
+</html>

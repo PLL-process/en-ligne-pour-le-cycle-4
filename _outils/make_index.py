@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Génère index.html (navigation GitHub Pages) + README.md racine pour le repo réorganisé."""
-import os, re, sys, unicodedata, html
+import os, re, sys, unicodedata, html, json
 sys.path.insert(0, os.path.dirname(__file__))
 from data_competences import COMP_BY_LEVEL, C_PARENT, THEME_TITLES
 
@@ -15,6 +15,20 @@ THEME_SLUG = {
 THEME_EMOJI = {1: "🔍", 2: "⚙️", 3: "🛠️"}
 THEME_COLOR = {1: "#61dafb", 2: "#ffb454", 3: "#81fba1"}
 NIVEAU_COLOR = {"5e": "#8fd18f", "4e": "#7db3f0", "3e": "#f0a878"}
+
+
+# ----------------------------------------------------------------- nouveautés (badge NEW)
+# Source : nouveautes.json à la racine. Le badge est posé côté client (JS embarqué) :
+# il apparaît si la date de publication est atteinte et disparaît automatiquement
+# après duree_jours (21 par défaut), sans regénération manuelle.
+NOUVEAUTES_PATH = os.path.join(os.path.dirname(__file__), "..", "nouveautes.json")
+try:
+    with open(NOUVEAUTES_PATH, encoding="utf-8") as _f:
+        _nv = json.load(_f)
+    NOUVEAUTES = _nv.get("entrees", [])
+    NV_DUREE_DEFAUT = _nv.get("config", {}).get("duree_jours_defaut", 21)
+except FileNotFoundError:
+    NOUVEAUTES, NV_DUREE_DEFAUT = [], 21
 
 
 def slugify(s, maxlen=45):
@@ -90,6 +104,13 @@ h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .pill{font-size:.85em}
 footer{max-width:1080px;margin:34px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
 footer a{color:var(--hl)}
+/* ── badge NEW (règle obligatoire — nouveautes.json) ── */
+.badge-new{display:inline-block;background:linear-gradient(90deg,#ff7b88,#ffb454);color:#111;font-weight:700;font-size:.68em;padding:2px 8px;border-radius:999px;margin-left:6px;letter-spacing:.5px;vertical-align:middle;animation:nvpulse 2.2s ease-in-out infinite}
+@keyframes nvpulse{0%,100%{opacity:1}50%{opacity:.62}}
+@media (prefers-reduced-motion: reduce){.badge-new{animation:none}}
+@media print{.badge-new{animation:none;background:#fff;border:1.5px solid #111;color:#111}}
+.code-line.nv-cible{background:rgba(255,180,84,.1);border-radius:8px;outline:1px solid rgba(255,180,84,.45)}
+.code-line{scroll-margin-top:14px}
 </style>
 </head>
 <body>
@@ -107,7 +128,7 @@ footer a{color:var(--hl)}
 
 total_content = 0
 for theme_n in [1, 2, 3]:
-    parts.append(f'<div class="theme"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}</header>')
+    parts.append(f'<div class="theme" id="theme-{theme_n}"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}<span class="nv-theme-slot" data-theme="{theme_n}"></span></header>')
     for cnum in [f"C{i}" for i in range(1, 10)]:
         text, _, t = C_PARENT[cnum]
         if t != theme_n:
@@ -127,15 +148,15 @@ for theme_n in [1, 2, 3]:
                         f'<a href="{html.escape(rel)}/{html.escape(fn)}">📄 {html.escape(fn if len(fn) <= 34 else fn[:31] + "…")}</a>'
                         for fn in files
                     )
-                    lines.append(f'<div class="code-line"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span>{links}</span></div>')
+                    lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span>{links}</span></div>')
                 else:
-                    lines.append(f'<div class="code-line"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span class="empty">—</span></div>')
+                    lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span class="empty">—</span></div>')
             lvl_html.append(f'<div class="lvl"><h4 style="color:{NIVEAU_COLOR[niveau]}">{niveau}</h4>{"".join(lines)}</div>')
         total_content += n_files
         count_label = f"{n_files} ressource(s)" if n_files else "à compléter"
         parts.append(
-            f'<details class="comp"><summary><span class="cnum">{cnum}</span>'
-            f'<span>{html.escape(text if len(text) <= 110 else text[:107] + "…")}</span>'
+            f'<details class="comp" id="comp-{cnum}"><summary><span class="cnum">{cnum}</span>'
+            f'<span>{html.escape(text if len(text) <= 110 else text[:107] + "…")}<span class="nv-comp-slot" data-comp="{cnum}"></span></span>'
             f'<span class="count">{count_label}</span></summary>'
             f'<div class="levels">{"".join(lvl_html)}</div></details>'
         )
@@ -145,6 +166,69 @@ parts.append(f"""<footer>
 <p>📦 <a href="_ressources-communes/">Ressources communes</a> · 🗄️ <a href="_archive-anciennes-versions/">Archive des anciennes versions</a> · <a href="RAPPORT_MIGRATION.md">Rapport de migration</a></p>
 <p>Référentiel : BO n°9 du 29/02/2024 · Cahiers Nathan 5e/4e/3e (éd. 2024) · Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em></p>
 </footer>
+<script>
+/* ── Badges NEW automatiques (source : nouveautes.json, embarqué à la génération) ── */
+"use strict";
+const NOUVEAUTES = {json.dumps(NOUVEAUTES, ensure_ascii=False)};
+const NV_DUREE_DEFAUT = {NV_DUREE_DEFAUT};
+(function(){{
+  const jour = 24*3600*1000;
+  const actives = NOUVEAUTES.filter(e => {{
+    const pub = new Date(e.date_publication + "T00:00:00");
+    if (isNaN(pub) || Date.now() < pub.getTime()) return false;
+    const duree = (e.duree_jours || NV_DUREE_DEFAUT) * jour;
+    return Date.now() <= pub.getTime() + duree;
+  }});
+  if (!actives.length) return;
+  function badge() {{
+    const b = document.createElement("span");
+    b.className = "badge-new";
+    b.innerHTML = 'NEW<span class="sr-only" style="position:absolute;left:-9999px">— Nouveau</span>';
+    return b;
+  }}
+  const themesVus = new Set(), compsVus = new Set();
+  actives.forEach(e => {{
+    const ligne = document.getElementById(e.code);
+    if (ligne) {{
+      const cc = ligne.querySelector(".cc");
+      if (cc && !cc.querySelector(".badge-new")) cc.appendChild(badge());
+      /* mise en évidence des liens séquence/QCM nouveaux */
+      ligne.querySelectorAll("a").forEach(a => {{
+        const fichier = (a.getAttribute("href") || "").split("/").pop();
+        const seq = (e.sequence || "").split("/").pop(), q = (e.qcm || "").split("/").pop();
+        if ((fichier === seq || fichier === q) && !a.parentElement.querySelector(".badge-new-l-" + CSS.escape(fichier)))
+          a.insertAdjacentElement("afterend", badge());
+      }});
+    }}
+    if (e.competence && !compsVus.has(e.competence)) {{
+      compsVus.add(e.competence);
+      const slot = document.querySelector('.nv-comp-slot[data-comp="' + e.competence + '"]');
+      if (slot) slot.appendChild(badge());
+    }}
+    if (e.theme && !themesVus.has(e.theme)) {{
+      themesVus.add(e.theme);
+      const slot = document.querySelector('.nv-theme-slot[data-theme="' + e.theme + '"]');
+      if (slot) slot.appendChild(badge());
+    }}
+  }});
+}})();
+/* ── Ancres directes : #3e_C4.3 ouvre la compétence et défile jusqu'au code ── */
+(function(){{
+  function ouvrir() {{
+    const h = decodeURIComponent(location.hash.replace("#", ""));
+    if (!h) return;
+    const cible = document.getElementById(h);
+    if (!cible || !cible.classList.contains("code-line")) return;
+    const det = cible.closest("details.comp");
+    if (det) det.open = true;
+    cible.classList.add("nv-cible");
+    const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(() => cible.scrollIntoView({{behavior: reduit ? "auto" : "smooth", block: "center"}}), 60);
+  }}
+  window.addEventListener("hashchange", ouvrir);
+  ouvrir();
+}})();
+</script>
 </body>
 </html>
 """)
