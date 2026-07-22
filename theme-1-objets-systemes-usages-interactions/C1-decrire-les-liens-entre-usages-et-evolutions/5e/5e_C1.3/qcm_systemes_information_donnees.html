@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QCM (24 questions) — Systèmes d'information &amp; gestion des données — 5e (2024)</title>
+  <title>QCM (30 questions) — Systèmes d'information &amp; gestion des données — 5e (2024)</title>
   <style>
     /* Définition des variables CSS pour les couleurs (thème bleu foncé) */
     :root { --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; }
@@ -79,9 +79,10 @@
     /* Styles pour th (fond bleu foncé) */
     th { background: #1b254a; }
   </style>
+  <link rel="stylesheet" href="../../../../_assets/qcm-eleve.css">
 </head>
 <body>
-  <header><h1>QCM (24 questions) — Systèmes d'information &amp; gestion des données — 5e (2024)</h1></header>
+  <header><h1>QCM (30 questions) — Systèmes d'information &amp; gestion des données — 5e (2024)</h1></header>
   <div class="wrap">
     <!-- Section d'identification (sans q-title pour ne pas compter comme question) -->
     <div class="card">
@@ -94,7 +95,7 @@
         <!-- Input pour prénom -->
         <input id="prenom" placeholder="Prénom">
         <!-- Input pour classe -->
-        <input id="classe" placeholder="Classe (ex. 4eB)">
+        <input id="classe" placeholder="Classe (ex. 5eB)">
       </div>
       <!-- Note pour l'utilisateur -->
       <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
@@ -470,6 +471,38 @@
   <div id="fb24" class="answer"></div>
 </section>
 
+
+<section class="card" data-competence="5e_C1.3" data-points="1">
+  <p class="q-title">Dans le programme du CDI, <code>bibliotheque</code> est…</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q25" value="dict"> un dictionnaire qui associe chaque titre à une quantité</label><label><input type="radio" name="q25" value="text"> une simple chaîne de caractères</label><label><input type="radio" name="q25" value="loop"> une boucle</label><label><input type="radio" name="q25" value="display"> une fonction d’affichage</label>
+  <div class="row"><button class="btn small" onclick="aide('a25')">Aide</button><button class="btn small" onclick="checkMCQ('q25','dict','fb25',1)">Corriger</button></div><div id="a25" class="help">Un dictionnaire Python associe une clé à une valeur : ici le titre du livre et le nombre d’exemplaires.</div><div id="fb25" class="answer"></div>
+</section>
+<section class="card" data-competence="5e_C1.3" data-points="1">
+  <p class="q-title">Quelle expression vérifie que le titre existe dans le dictionnaire ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q26" value="in"> <code>titre in bibliotheque</code></label><label><input type="radio" name="q26" value="print"> <code>print(titre)</code></label><label><input type="radio" name="q26" value="plus"> <code>bibliotheque += titre</code></label><label><input type="radio" name="q26" value="none"> <code>titre = None</code></label>
+  <div class="row"><button class="btn small" onclick="aide('a26')">Aide</button><button class="btn small" onclick="checkMCQ('q26','in','fb26',1)">Corriger</button></div><div id="a26" class="help">L’opérateur <code>in</code> teste l’appartenance d’une clé à un dictionnaire.</div><div id="fb26" class="answer"></div>
+</section>
+<section class="card" data-competence="5e_C1.3" data-points="1">
+  <p class="q-title">Quelle instruction diminue de 1 le nombre d’exemplaires ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q27" value="minus"> <code>bibliotheque[titre] -= 1</code></label><label><input type="radio" name="q27" value="plus"> <code>bibliotheque[titre] += 1</code></label><label><input type="radio" name="q27" value="clear"> <code>bibliotheque = {}</code></label><label><input type="radio" name="q27" value="show"> <code>print(bibliotheque)</code></label>
+  <div class="row"><button class="btn small" onclick="aide('a27')">Aide</button><button class="btn small" onclick="checkMCQ('q27','minus','fb27',1)">Corriger</button></div><div id="a27" class="help"><code>-= 1</code> signifie : reprendre la valeur actuelle et lui retirer 1.</div><div id="fb27" class="answer"></div>
+</section>
+<section class="card" data-competence="5e_C1.3" data-points="1">
+  <p class="q-title">Quelle fonction communique un message dans la console ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q28" value="print"> <code>print()</code></label><label><input type="radio" name="q28" value="dict"> <code>dict()</code></label><label><input type="radio" name="q28" value="if"> <code>if</code></label><label><input type="radio" name="q28" value="def"> <code>def</code></label>
+  <div class="row"><button class="btn small" onclick="aide('a28')">Aide</button><button class="btn small" onclick="checkMCQ('q28','print','fb28',1)">Corriger</button></div><div id="a28" class="help"><code>print()</code> affiche une information ; il ne la sauvegarde pas durablement.</div><div id="fb28" class="answer"></div>
+</section>
+<section class="card" data-competence="5e_C1.3" data-points="1">
+  <p class="q-title">Quel symbole commence un commentaire en Python ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q29" value="hash"> <code>#</code></label><label><input type="radio" name="q29" value="slash"> <code>//</code></label><label><input type="radio" name="q29" value="star"> <code>*</code></label><label><input type="radio" name="q29" value="question"> <code>?</code></label>
+  <div class="row"><button class="btn small" onclick="aide('a29')">Aide</button><button class="btn small" onclick="checkMCQ('q29','hash','fb29',1)">Corriger</button></div><div id="a29" class="help">Le texte placé après <code>#</code> explique le programme et n’est pas exécuté.</div><div id="fb29" class="answer"></div>
+</section>
+<section class="card" data-competence="5e_C1.3" data-points="1">
+  <p class="q-title">Pour autoriser un emprunt, le programme doit vérifier…</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+  <label><input type="radio" name="q30" value="both"> que le titre existe et que la quantité est supérieure à zéro</label><label><input type="radio" name="q30" value="title"> seulement que le titre existe</label><label><input type="radio" name="q30" value="screen"> que l’écran est allumé</label><label><input type="radio" name="q30" value="name"> que le titre est court</label>
+  <div class="row"><button class="btn small" onclick="aide('a30')">Aide</button><button class="btn small" onclick="checkMCQ('q30','both','fb30',1)">Corriger</button></div><div id="a30" class="help">Un livre peut exister dans le catalogue tout en ayant une quantité égale à zéro.</div><div id="fb30" class="answer"></div>
+</section>
+
     <div class="footer">
       <!-- Texte de résumé -->
       <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
@@ -601,5 +634,7 @@
       document.querySelectorAll('.help').forEach(h => h.classList.add('show-help'));
     }
   </script>
+  <script src="qcm-corrections-5e-c1-3-c1-4.js"></script>
+  <script src="../../../../_assets/qcm-eleve.js"></script>
 </body>
 </html>
