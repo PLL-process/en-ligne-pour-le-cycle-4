@@ -1,0 +1,47 @@
+---
+name: qcm-html-accessible
+description: Créer ou compléter un QCM HTML autonome pour le dépôt cycle 4 (entraînement public ou sommatif privé). À utiliser pour tout nouveau QCM, en réutilisant la chaîne _outils/qcm_generator.py + banks_*.py quand c'est possible.
+---
+
+# QCM HTML accessible
+
+## Deux usages, deux régimes
+
+- **Entraînement (public, GitHub Pages)** : correction immédiate + explication
+  pédagogique par réponse + nouvelle tentative + conseils de révision.
+- **Sommatif (privé)** : version élève SANS correction ; correction professeur
+  dans un fichier séparé marqué `PRIVÉ — NE PAS PUBLIER` dans le manifeste du
+  lot. Une page statique publique n'est JAMAIS une protection (réponses
+  lisibles dans la source) ; un mot de passe JavaScript non plus.
+
+## Spécification par défaut
+
+Banque 20-30 questions, 15 tirées aléatoirement, 4 propositions (multi-réponses
+seulement si annoncé), mélange connaissance/application/analyse, questions sur
+schéma ou données, distracteurs plausibles, zéro double négation.
+
+Interface : champs Nom/Prénom/Classe/Groupe/Date, progression visible,
+navigation clavier complète (focus visible, fonctionnement sans souris),
+gros boutons, sauvegarde locale + reprise, score final + /20 + temps passé +
+bilan par compétence, impression A4 propre, exports PDF et JSON/CSV, remise à
+zéro, responsive téléphone/tablette/PC, messages jamais fondés sur la seule
+couleur, aria-live pour les retours.
+
+Technique : HTML5 valide, UTF-8, `lang="fr"`, aucun tracker/cookie/envoi
+distant, pondération dans des constantes nommées (`const POIDS_QCM = 0.30` …),
+commentaires français par fonction, zéro erreur console.
+
+## Procédure
+
+1. Vérifier si le sujet a déjà une banque dans `_outils/banks_*.py` (étendre
+   plutôt que dupliquer) ; sinon créer la banque puis générer.
+2. Tester : chaque bonne/mauvaise réponse, non-répondu, calcul /20, pondération,
+   reprise après fermeture, remise à zéro, exports, champs vides, valeurs limites.
+3. Consigner le test dans le rapport de lot.
+
+## Critères de réussite
+
+- Le QCM fonctionne en `file://` (hors connexion) et sur GitHub Pages.
+- Un tirage différent à chaque lancement, score exact vérifié sur 3 scénarios
+  scriptés (tout juste, tout faux, mixte connu).
+- Aucune réponse d'évaluation sommative dans un fichier destiné au site public.
