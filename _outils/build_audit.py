@@ -277,6 +277,31 @@ OVERLAY = {
                 "8 questions dédiées au QCM).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
+    "3e_C4.7": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence-projet « Internet jusqu'à Sainte-Luce » (3 séances) couvrant "
+                "3e_C4.7+C4.8 : 5 activités + réinvestissement, 3 simulateurs HTML "
+                "intégrés (paquets, jeu du routeur, panne/résilience), activité "
+                "débranchée, versions A (Filius) / B (Packet Tracer à confirmer) / C, "
+                "QCM séparé 30 q, synthèses élève/professeur, fiche pédagogique, "
+                "matrice de couverture, 4 SVG originaux CC0, rapport de tests.",
+        anomalies="Packet Tracer : comptes À CONFIRMER (version B non bloquante, "
+                  "Filius confirmé). Évaluation sommative laissée à l'enseignant.",
+        accessibilite="Clavier + skip-link, aria/alt, prefers-reduced-motion, "
+                      "impression A4, minuteur désactivable.",
+        medias="4 SVG originaux CC0 — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C4.8": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C4.7",
+        qualite="README pointeur vers la séquence mutualisée 3e_C4.7 (activités 4-5 : "
+                "jeu du routeur débranché, simulateur de panne ; 15 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

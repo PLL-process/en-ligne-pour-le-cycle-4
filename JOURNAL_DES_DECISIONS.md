@@ -89,3 +89,23 @@ les décisions de publication restent à ChatGPT.*
    2026-07-22 ; si la fusion dans `main` intervient plus tard, l'ajuster avant
    fusion. **Évaluation sommative non incluse** (à construire par l'enseignant,
    corrigé non publié).
+
+## 2026-07-22 (suite) — Thème 2 · LOT 02 « Internet jusqu'à Sainte-Luce » + unification nouveautes.json (Fable, branche `fable/theme-2/lot-02-internet-sainte-luce`)
+
+1. **LOT 02 réalisé** : séquence-projet 3e_C4.7+C4.8 (3 séances, 3 simulateurs
+   HTML intégrés — paquets, jeu du routeur, panne/résilience —, activité
+   débranchée, versions A Filius / B Packet Tracer À CONFIRMER / C), QCM 30 q
+   (15 par code), synthèses, fiche pédagogique, matrice, 4 SVG originaux CC0,
+   README pointeur 3e_C4.8. Statuts : `3e_C4.7` → COMPLET ET VALIDABLE ;
+   `3e_C4.8` → COUVERT PAR UNE SÉQUENCE MUTUALISÉE.
+2. **Conflit nouveautes.json résolu** : le Thème 3 avait fusionné dans main un
+   nouveautes.json au format différent (clé `nouveautes`, champs `date`/`url`).
+   Branche Thème 2 rebasée sur main ; **format unifié** adopté (clé `entrees`,
+   `date_publication`, `sequence`/`qcm`, `nature`, `competence`, bloc `config`)
+   avec **entrée 4e_C7.1 du Thème 3 intégralement préservée et convertie**
+   (aucune perte). Le badge NEW du tableau de bord (implémenté dans
+   make_index.py par le Thème 2) fonctionne désormais pour les deux thèmes.
+   **À entériner au Conseil du 28/07** ; si le Thème 3 préfère un autre format,
+   l'adaptation est mécanique (le générateur lit un seul fichier).
+3. **Publication** : lot-01 poussé sur GitHub par Pascal (bundle) ; lot-02
+   suit le même canal tant que la session n'est pas reliée au dépôt.

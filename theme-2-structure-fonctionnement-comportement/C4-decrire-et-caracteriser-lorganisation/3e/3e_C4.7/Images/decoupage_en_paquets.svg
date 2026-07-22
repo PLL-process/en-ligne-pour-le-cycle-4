@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Le message est découpé en paquets numérotés qui voyagent séparément</title>
+  <desc id="d">En haut, le message d'alerte complet. Il est découpé en trois paquets, chacun portant un en-tête avec l'adresse IP de destination, l'adresse source et un numéro d'ordre. Les paquets empruntent des chemins différents à travers les routeurs, arrivent parfois dans le désordre, puis sont réassemblés dans l'ordre grâce à leurs numéros chez le destinataire.</desc>
+  <rect width="940" height="440" fill="#050f24"/>
+  <text x="470" y="32" fill="#81aaff" font-size="20" font-weight="bold" text-anchor="middle">Découpé, numéroté, expédié… réassemblé !</text>
+
+  <!-- message original -->
+  <rect x="40" y="58" width="300" height="46" rx="9" fill="#173666" stroke="#ffd66b" stroke-width="2"/>
+  <text x="190" y="80" fill="#ffd66b" font-size="12" text-anchor="middle" font-weight="bold">MESSAGE : « ALERTE ROUGE SAINTE-LUCE »</text>
+  <text x="190" y="96" fill="#9bbefc" font-size="10" text-anchor="middle">trop long pour partir d'un bloc → on découpe</text>
+
+  <!-- paquets -->
+  <g font-size="10">
+    <g>
+      <rect x="40" y="130" width="94" height="64" rx="8" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+      <rect x="40" y="130" width="94" height="22" rx="8" fill="#123c66"/>
+      <text x="87" y="145" fill="#61dafb" text-anchor="middle" font-weight="bold">n°1/3 · IP dest.</text>
+      <text x="87" y="166" fill="#e4eaf5" text-anchor="middle">« ALERTE »</text>
+      <text x="87" y="184" fill="#9bbefc" text-anchor="middle">+ IP source</text>
+    </g>
+    <g>
+      <rect x="146" y="130" width="94" height="64" rx="8" fill="#0d2347" stroke="#c68ef2" stroke-width="2"/>
+      <rect x="146" y="130" width="94" height="22" rx="8" fill="#2b1a3f"/>
+      <text x="193" y="145" fill="#c68ef2" text-anchor="middle" font-weight="bold">n°2/3 · IP dest.</text>
+      <text x="193" y="166" fill="#e4eaf5" text-anchor="middle">« ROUGE »</text>
+      <text x="193" y="184" fill="#9bbefc" text-anchor="middle">+ IP source</text>
+    </g>
+    <g>
+      <rect x="252" y="130" width="94" height="64" rx="8" fill="#0d2347" stroke="#81fba1" stroke-width="2"/>
+      <rect x="252" y="130" width="94" height="22" rx="8" fill="#123322"/>
+      <text x="299" y="145" fill="#81fba1" text-anchor="middle" font-weight="bold">n°3/3 · IP dest.</text>
+      <text x="299" y="166" fill="#e4eaf5" text-anchor="middle">« SAINTE-LUCE »</text>
+      <text x="299" y="184" fill="#9bbefc" text-anchor="middle">+ IP source</text>
+    </g>
+  </g>
+
+  <!-- réseau maillé au centre -->
+  <g stroke="#274a8a" stroke-width="2">
+    <line x1="420" y1="120" x2="500" y2="180"/><line x1="500" y1="180" x2="580" y2="120"/>
+    <line x1="420" y1="240" x2="500" y2="180"/><line x1="500" y1="180" x2="580" y2="240"/>
+    <line x1="420" y1="120" x2="420" y2="240"/><line x1="580" y1="120" x2="580" y2="240"/>
+    <line x1="420" y1="120" x2="580" y2="240"/>
+  </g>
+  <g fill="#173666" stroke="#81fba1" stroke-width="2">
+    <circle cx="420" cy="120" r="15"/><circle cx="580" cy="120" r="15"/>
+    <circle cx="500" cy="180" r="15"/><circle cx="420" cy="240" r="15"/><circle cx="580" cy="240" r="15"/>
+  </g>
+  <g fill="#81fba1" font-size="10.5" text-anchor="middle" font-weight="bold">
+    <text x="420" y="124">A</text><text x="580" y="124">B</text><text x="500" y="184">C</text>
+    <text x="420" y="244">D</text><text x="580" y="244">E</text>
+  </g>
+  <!-- chemins des paquets -->
+  <g fill="none" stroke-width="2.5" stroke-dasharray="6 4">
+    <path d="M348 150 C 390 120, 400 118, 408 118 M432 116 L 568 116" stroke="#61dafb"/>
+    <path d="M348 168 C 390 180, 452 180, 486 180 M514 180 L 566 236" stroke="#c68ef2"/>
+    <path d="M348 186 C 390 230, 400 238, 406 240 M434 240 L 566 242" stroke="#81fba1"/>
+  </g>
+  <text x="500" y="278" fill="#9bbefc" font-size="10.5" text-anchor="middle">chaque paquet suit SON chemin (routes différentes)</text>
+
+  <!-- arrivée désordre -->
+  <g font-size="10.5">
+    <rect x="660" y="96" width="240" height="96" rx="10" fill="#0d2347" stroke="#274a8a"/>
+    <text x="780" y="116" fill="#ffd66b" text-anchor="middle" font-weight="bold">Arrivée (parfois dans le désordre) :</text>
+    <rect x="676" y="128" width="60" height="24" rx="5" fill="#123322" stroke="#81fba1"/><text x="706" y="144" fill="#81fba1" text-anchor="middle">n°3</text>
+    <rect x="746" y="128" width="60" height="24" rx="5" fill="#123c66" stroke="#61dafb"/><text x="776" y="144" fill="#61dafb" text-anchor="middle">n°1</text>
+    <rect x="816" y="128" width="60" height="24" rx="5" fill="#2b1a3f" stroke="#c68ef2"/><text x="846" y="144" fill="#c68ef2" text-anchor="middle">n°2</text>
+    <text x="780" y="178" fill="#9bbefc" text-anchor="middle">grâce aux numéros → remise en ordre</text>
+  </g>
+  <g font-size="11">
+    <rect x="660" y="216" width="240" height="52 " rx="10" fill="#173666" stroke="#ffd66b" stroke-width="2"/>
+    <text x="780" y="238" fill="#ffd66b" text-anchor="middle" font-weight="bold">MESSAGE RECONSTITUÉ :</text>
+    <text x="780" y="256" fill="#e4eaf5" text-anchor="middle">« ALERTE ROUGE SAINTE-LUCE » ✔</text>
+  </g>
+
+  <!-- règles -->
+  <rect x="40" y="310" width="860" height="102" rx="12" fill="#173666" stroke="#274a8a"/>
+  <text x="60" y="336" fill="#e4eaf5" font-size="12.5" font-weight="bold">Ce que contient l'en-tête de CHAQUE paquet (comme une enveloppe postale) :</text>
+  <g font-size="11.5" fill="#9bbefc">
+    <text x="60" y="360">• l'adresse <tspan fill="#61dafb" font-weight="bold">IP de destination</tspan> (où livrer) — lue par chaque routeur ;</text>
+    <text x="60" y="380">• l'adresse <tspan fill="#61dafb" font-weight="bold">IP source</tspan> (qui a envoyé — pour répondre ou redemander un paquet perdu) ;</text>
+    <text x="60" y="400">• le <tspan fill="#61dafb" font-weight="bold">numéro d'ordre</tspan> (n°2/3) — pour réassembler, détecter une perte et redemander SEULEMENT le paquet manquant.</text>
+  </g>
+</svg>
