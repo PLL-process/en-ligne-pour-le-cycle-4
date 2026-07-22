@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 320" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">La chaîne de la sirène et ses points de test</title>
+  <desc id="d">Schéma de la chaîne alimentant la sirène : batterie 12 volts, fusible, microcontrôleur avec sa sortie de commande, câble de liaison, sirène. Quatre points de test sont repérés : T1 tension aux bornes de la batterie, T2 tension après le fusible, T3 signal en sortie du microcontrôleur, T4 tension à l'entrée de la sirène. Rappel de sécurité : très basse tension uniquement.</desc>
+  <defs>
+    <marker id="car" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#61dafb"/>
+    </marker>
+  </defs>
+  <rect width="940" height="320" fill="#050f24"/>
+  <text x="470" y="32" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">La chaîne de la sirène : où mesurer pour localiser la panne ?</text>
+
+  <!-- blocs -->
+  <g font-size="12" text-anchor="middle">
+    <rect x="40" y="120" width="130" height="70" rx="10" fill="#0d2347" stroke="#81fba1" stroke-width="2.5"/>
+    <text x="105" y="150" fill="#81fba1" font-weight="bold">🔋 Batterie</text>
+    <text x="105" y="170" fill="#9bbefc" font-size="10.5">12 V</text>
+
+    <rect x="230" y="128" width="90" height="54" rx="9" fill="#0d2347" stroke="#ffd66b" stroke-width="2.5"/>
+    <text x="275" y="152" fill="#ffd66b" font-weight="bold" font-size="11.5">Fusible</text>
+    <text x="275" y="169" fill="#9bbefc" font-size="10">protection</text>
+
+    <rect x="380" y="112" width="170" height="86" rx="10" fill="#0d2347" stroke="#c68ef2" stroke-width="2.5"/>
+    <text x="465" y="140" fill="#c68ef2" font-weight="bold" font-size="11.5">Microcontrôleur</text>
+    <text x="465" y="158" fill="#9bbefc" font-size="10">reçoit l'ordre « test »</text>
+    <text x="465" y="174" fill="#9bbefc" font-size="10">et commande la sortie</text>
+
+    <rect x="610" y="128" width="110" height="54" rx="9" fill="#0d2347" stroke="#61dafb" stroke-width="2.5"/>
+    <text x="665" y="152" fill="#61dafb" font-weight="bold" font-size="11.5">Câble</text>
+    <text x="665" y="169" fill="#9bbefc" font-size="10">liaison 2 fils</text>
+
+    <rect x="780" y="120" width="120" height="70" rx="10" fill="#0d2347" stroke="#ff7b88" stroke-width="2.5"/>
+    <text x="840" y="150" fill="#ff7b88" font-weight="bold">📢 Sirène</text>
+    <text x="840" y="170" fill="#9bbefc" font-size="10.5">12 V</text>
+  </g>
+
+  <!-- liaisons -->
+  <line x1="170" y1="155" x2="224" y2="155" stroke="#61dafb" stroke-width="3.5" marker-end="url(#car)"/>
+  <line x1="320" y1="155" x2="374" y2="155" stroke="#61dafb" stroke-width="3.5" marker-end="url(#car)"/>
+  <line x1="550" y1="155" x2="604" y2="155" stroke="#61dafb" stroke-width="3.5" marker-end="url(#car)"/>
+  <line x1="720" y1="155" x2="774" y2="155" stroke="#61dafb" stroke-width="3.5" marker-end="url(#car)"/>
+
+  <!-- points de test -->
+  <g font-size="11" text-anchor="middle" font-weight="bold">
+    <circle cx="197" cy="155" r="14" fill="#3a3212" stroke="#ffd66b" stroke-width="2"/><text x="197" y="160" fill="#ffd66b">T1</text>
+    <circle cx="347" cy="155" r="14" fill="#3a3212" stroke="#ffd66b" stroke-width="2"/><text x="347" y="160" fill="#ffd66b">T2</text>
+    <circle cx="577" cy="155" r="14" fill="#3a3212" stroke="#ffd66b" stroke-width="2"/><text x="577" y="160" fill="#ffd66b">T3</text>
+    <circle cx="747" cy="155" r="14" fill="#3a3212" stroke="#ffd66b" stroke-width="2"/><text x="747" y="160" fill="#ffd66b">T4</text>
+  </g>
+  <g font-size="10.5" fill="#9bbefc" text-anchor="middle">
+    <text x="197" y="216">T1 : tension batterie</text>
+    <text x="347" y="216">T2 : tension après fusible</text>
+    <text x="577" y="216">T3 : signal de commande</text>
+    <text x="747" y="216">T4 : tension entrée sirène</text>
+  </g>
+
+  <rect x="60" y="248" width="820" height="48" rx="10" fill="#173666" stroke="#274a8a"/>
+  <text x="470" y="268" fill="#e4eaf5" font-size="12" text-anchor="middle"><tspan fill="#61dafb" font-weight="bold">Méthode :</tspan> on mesure de point en point DANS L'ORDRE ; la panne se situe entre le dernier point correct et le premier point anormal.</text>
+  <text x="470" y="288" fill="#ffd66b" font-size="11" text-anchor="middle">⚠ Sécurité : très basse tension uniquement (12 V) — jamais d'intervention sur un circuit relié au secteur.</text>
+</svg>
