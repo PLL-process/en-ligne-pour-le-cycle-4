@@ -1,0 +1,197 @@
+name: LOT pilote 5e C1.3-C1.4
+
+on:
+  push:
+    branches:
+      - draft/lot-5e-c1-3-c1-4-sequence-qcm
+    paths:
+      - .github/workflows/lot_5e_c1_3_c1_4.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  construire:
+    if: ${{ !contains(github.event.head_commit.message, '[lot-auto]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer la branche
+        uses: actions/checkout@v4
+        with:
+          ref: draft/lot-5e-c1-3-c1-4-sequence-qcm
+
+      - name: Construire les composants et améliorer les deux ressources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _assets
+
+          cat > _assets/codelab-techno.css <<'EOF'
+          .codelab-techno{--cl-bg:#071225;--cl-panel:#0c1c38;--cl-border:#31558f;--cl-text:#eaf2ff;--cl-muted:#9fb5d8;--cl-accent:#61dafb;--cl-ok:#81fba1;margin:1rem 0;border:1px solid var(--cl-border);border-radius:14px;overflow:hidden;background:var(--cl-bg);box-shadow:0 8px 22px rgba(0,0,0,.25)}
+          .codelab-toolbar{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;padding:.65rem;background:var(--cl-panel);border-bottom:1px solid var(--cl-border)}
+          .codelab-toolbar button{margin:0;padding:.45rem .7rem;border:1px solid var(--cl-border);border-radius:8px;background:#14305c;color:var(--cl-text);font:600 .82rem system-ui;cursor:pointer}
+          .codelab-toolbar button:hover,.codelab-toolbar button:focus{background:#1d4e89;outline:2px solid var(--cl-accent);outline-offset:1px}
+          .codelab-language{margin-right:auto;color:var(--cl-accent);font-weight:700;font-size:.86rem}
+          .codelab-status{color:var(--cl-ok);font-size:.8rem;min-width:9rem;text-align:right}
+          .codelab-shell{display:grid;grid-template-columns:auto minmax(0,1fr);height:430px;max-height:70vh;position:relative;background:var(--cl-bg)}
+          .codelab-lines{margin:0;padding:14px 10px 14px 8px;background:#091830;color:#6f8bb7;text-align:right;overflow:hidden;user-select:none;font:14px/1.55 'Fira Code',Consolas,monospace;border-right:1px solid var(--cl-border)}
+          .codelab-codearea{position:relative;overflow:hidden;min-width:0}
+          .codelab-highlight,.codelab-editor{position:absolute;inset:0;margin:0;padding:14px 16px;border:0;overflow:auto;white-space:pre;tab-size:4;font:14px/1.55 'Fira Code',Consolas,monospace}
+          .codelab-highlight{pointer-events:none;color:var(--cl-text);background:transparent}
+          .codelab-editor{resize:none;background:transparent;color:transparent;caret-color:#fff;-webkit-text-fill-color:transparent;outline:none}
+          .codelab-editor::selection{background:rgba(97,218,251,.32)}
+          .codelab-techno.wrap .codelab-highlight,.codelab-techno.wrap .codelab-editor{white-space:pre-wrap;overflow-wrap:anywhere}
+          .codelab-techno.fullscreen{position:fixed;inset:0;z-index:99999;margin:0;border-radius:0}
+          .codelab-techno.fullscreen .codelab-shell{height:calc(100vh - 58px);max-height:none}
+          .tok-comment{color:#7fb985}.tok-string{color:#ffd479}.tok-number{color:#c792ea}.tok-keyword{color:#82aaff;font-weight:700}.tok-fn{color:#61dafb}.tok-builtin{color:#f78c6c}
+          @media(max-width:700px){.codelab-shell{height:360px}.codelab-toolbar button{flex:1 1 auto}.codelab-status{width:100%;text-align:left}.codelab-highlight,.codelab-editor,.codelab-lines{font-size:13px}}
+          @media print{.codelab-toolbar{display:none}.codelab-shell{height:auto;max-height:none}.codelab-editor{display:none}.codelab-highlight{position:static;overflow:visible;white-space:pre-wrap}.codelab-lines{display:none}.codelab-shell{display:block}}
+          EOF
+
+          cat > _assets/codelab-techno.js <<'EOF'
+          (()=>{
+            const escapeHtml=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+            function highlightPython(code){
+              let out=escapeHtml(code);
+              out=out.replace(/(&quot;|&#39;)(.*?)(\1)/g,'<span class="tok-string">$1$2$3</span>');
+              out=out.replace(/(^|\s)(#.*)$/gm,'$1<span class="tok-comment">$2</span>');
+              out=out.replace(/\b(def|class|if|else|elif|for|while|in|and|or|not|return|import|from|as|True|False|None|try|except|with|lambda)\b/g,'<span class="tok-keyword">$1</span>');
+              out=out.replace(/\b(print|len|range|str|int|float|list|dict|set|input)\b/g,'<span class="tok-builtin">$1</span>');
+              out=out.replace(/\b(\d+(?:\.\d+)?)\b/g,'<span class="tok-number">$1</span>');
+              out=out.replace(/\b([A-Za-z_]\w*)(?=\s*\()/g,'<span class="tok-fn">$1</span>');
+              return out+'\n';
+            }
+            function init(root,index){
+              const source=root.querySelector('.codelab-source');
+              if(!source)return;
+              const initial=source.value.replace(/^\n/,'').replace(/\s+$/,'');
+              const key=root.dataset.storageKey||`codelab:${location.pathname}:${index}`;
+              const lang=root.dataset.language||'python';
+              root.innerHTML=`<div class="codelab-toolbar"><span class="codelab-language">CodeLab Techno · ${lang}</span><button type="button" data-act="copy">Copier</button><button type="button" data-act="reset">Réinitialiser</button><button type="button" data-act="smaller">A−</button><button type="button" data-act="larger">A+</button><button type="button" data-act="wrap">Retour ligne</button><button type="button" data-act="download">Exporter .py</button><button type="button" data-act="full">Plein écran</button><span class="codelab-status" aria-live="polite">Prêt</span></div><div class="codelab-shell"><pre class="codelab-lines" aria-hidden="true"></pre><div class="codelab-codearea"><pre class="codelab-highlight" aria-hidden="true"></pre><textarea class="codelab-editor" aria-label="Éditeur de programme Python" spellcheck="false"></textarea></div></div>`;
+              const editor=root.querySelector('.codelab-editor'), hi=root.querySelector('.codelab-highlight'), lines=root.querySelector('.codelab-lines'), status=root.querySelector('.codelab-status');
+              editor.value=localStorage.getItem(key)??initial;
+              let font=14, timer;
+              const render=()=>{hi.innerHTML=highlightPython(editor.value);lines.textContent=Array.from({length:Math.max(1,editor.value.split('\n').length)},(_,i)=>i+1).join('\n');hi.scrollTop=editor.scrollTop;hi.scrollLeft=editor.scrollLeft;lines.scrollTop=editor.scrollTop};
+              const save=()=>{localStorage.setItem(key,editor.value);status.textContent='Enregistré sur cet appareil';clearTimeout(timer);timer=setTimeout(()=>status.textContent='Sauvegarde automatique active',1800)};
+              editor.addEventListener('input',()=>{render();save()});
+              editor.addEventListener('scroll',render);
+              editor.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=editor.selectionStart,b=editor.selectionEnd;editor.setRangeText('    ',a,b,'end');render();save()}});
+              root.addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;const a=b.dataset.act;
+                if(a==='copy'){await navigator.clipboard.writeText(editor.value);status.textContent='Code copié'}
+                if(a==='reset'&&confirm('Revenir au programme de départ ?')){editor.value=initial;render();save()}
+                if(a==='smaller'||a==='larger'){font=Math.min(22,Math.max(11,font+(a==='larger'?1:-1)));[editor,hi,lines].forEach(x=>x.style.fontSize=font+'px')}
+                if(a==='wrap')root.classList.toggle('wrap');
+                if(a==='full'){root.classList.toggle('fullscreen');b.textContent=root.classList.contains('fullscreen')?'Quitter plein écran':'Plein écran'}
+                if(a==='download'){const blob=new Blob([editor.value],{type:'text/x-python;charset=utf-8'}),u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download=root.dataset.filename||'programme.py';link.click();URL.revokeObjectURL(u)}
+              });
+              render();save();
+            }
+            document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('.codelab-techno').forEach(init));
+          })();
+          EOF
+
+          cat > _assets/qcm-eleve.css <<'EOF'
+          .qcm-eleve-panel{position:sticky;top:0;z-index:50;margin:12px 0;padding:12px;border:1px solid #344a8a;border-radius:14px;background:rgba(15,26,61,.97);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+          .qcm-eleve-stats{display:grid;grid-template-columns:repeat(5,minmax(90px,1fr));gap:8px}.qcm-stat{padding:8px;border-radius:9px;background:#151e3a;text-align:center}.qcm-stat strong{display:block;color:#7dd3fc;font-size:1.12rem}
+          .qcm-progress{height:12px;margin:10px 0;background:#0e1630;border:1px solid #344a8a;border-radius:999px;overflow:hidden}.qcm-progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7dd3fc,#16a34a);transition:width .3s}
+          .qcm-actions,.qcm-filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.qcm-actions button,.qcm-filters button,.qcm-link{border:1px solid #344a8a;padding:6px 9px;border-radius:9px;background:#1b254a;color:#e8ecff;font-weight:600;cursor:pointer;text-decoration:none}.qcm-actions button:hover,.qcm-actions button:focus,.qcm-filters button:hover,.qcm-filters button:focus,.qcm-link:focus{outline:2px solid #7dd3fc}
+          .qcm-nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:5px;margin-top:10px}.qcm-nav button{padding:6px 2px;border-radius:7px;border:1px solid #344a8a;background:#0e1630;color:#e8ecff;cursor:pointer}.qcm-nav button[data-state="correct"]{background:#124b2b}.qcm-nav button[data-state="review"]{background:#65252b}.qcm-nav button[data-state="answered"]{background:#2b3f72}.qcm-nav button:focus{outline:2px solid #7dd3fc}
+          .qcm-hidden{display:none!important}.qcm-enrichment{margin-top:8px;padding:9px;border-left:4px solid #7dd3fc;background:#0e1630;border-radius:7px;font-weight:400}.qcm-enrichment strong{color:#d1fae5}.qcm-retain{margin-top:7px;padding:7px;border-radius:7px;background:#1b254a}
+          @media(max-width:700px){.qcm-eleve-panel{position:static}.qcm-eleve-stats{grid-template-columns:1fr 1fr}.qcm-stat:last-child{grid-column:1/-1}.qcm-actions button,.qcm-filters button,.qcm-link{flex:1 1 46%}}
+          @media print{.qcm-actions,.qcm-filters,.qcm-nav{display:none}.qcm-eleve-panel{position:static;box-shadow:none}}
+          EOF
+
+          cat > _assets/qcm-eleve.js <<'EOF'
+          (()=>{
+            const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn):fn();
+            ready(()=>{
+              const cards=[...document.querySelectorAll('section.card')]; if(!cards.length)return;
+              const key=`qcm:${location.pathname}`; let seconds=0,timer=null;
+              const sequenceUrl='sequence_C1.3-C1.4_SI_gestion_donnees.html';
+              const panel=document.createElement('section');panel.className='qcm-eleve-panel';panel.setAttribute('aria-label','Tableau de progression du QCM');
+              panel.innerHTML=`<a class="qcm-link" href="${sequenceUrl}">← Retour à la séquence</a><div class="qcm-eleve-stats"><div class="qcm-stat"><strong id="qe-answered">0</strong>Répondues</div><div class="qcm-stat"><strong id="qe-correct">0</strong>Correctes</div><div class="qcm-stat"><strong id="qe-review">0</strong>À revoir</div><div class="qcm-stat"><strong id="qe-left">${cards.length}</strong>Restantes</div><div class="qcm-stat"><strong id="qe-time">00:00</strong>Temps</div></div><div class="qcm-progress" aria-label="Progression"><span id="qe-fill"></span></div><div class="qcm-filters"><button data-filter="all">Toutes</button><button data-filter="unanswered">Non répondues</button><button data-filter="review">À revoir</button><button data-filter="correct">Correctes</button></div><div class="qcm-actions"><button id="qe-next">Question suivante non répondue</button><button id="qe-timer">Démarrer le minuteur</button><button id="qe-print">Imprimer le bilan</button><button id="qe-clear">Effacer ma progression</button></div><div class="qcm-nav" aria-label="Navigation dans les questions"></div>`;
+              const firstFooter=document.querySelector('.footer');(firstFooter||cards[0]).before(panel);
+              const nav=panel.querySelector('.qcm-nav');cards.forEach((c,i)=>{c.dataset.qIndex=i+1;const b=document.createElement('button');b.textContent=i+1;b.title=`Question ${i+1}`;b.addEventListener('click',()=>c.scrollIntoView({behavior:'smooth',block:'start'}));nav.appendChild(b)});
+              const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+              function isFilled(el){if(el.type==='radio'||el.type==='checkbox')return el.checked;return String(el.value||'').trim()!==''}
+              function state(card){const fb=card.querySelector('.answer');if(fb?.classList.contains('ok'))return'correct';if(fb?.classList.contains('ko'))return'review';return[...card.querySelectorAll('input,select,textarea')].some(isFilled)?'answered':'unanswered'}
+              function enrich(card){const fb=card.querySelector('.answer');if(!fb||(!fb.classList.contains('ok')&&!fb.classList.contains('ko'))||fb.querySelector('.qcm-enrichment'))return;const help=card.querySelector('.help')?.textContent.trim();const click=card.querySelector('button[onclick*="checkMCQ"],button[onclick*="checkSelect"],button[onclick*="checkNumber"],button[onclick*="checkTextIncludes"],button[onclick*="checkMulti"]')?.getAttribute('onclick')||'';let correct='';const m=click.match(/checkMCQ\([^,]+,\s*['"]([^'"]+)/);if(m){const input=card.querySelector(`input[value="${CSS.escape(m[1])}"]`);correct=input?.parentElement?.textContent.trim()||''}const box=document.createElement('div');box.className='qcm-enrichment';box.innerHTML=`${correct?`<p><strong>Bonne réponse :</strong> ${correct}</p>`:''}${help?`<p><strong>Pourquoi :</strong> ${help}</p>`:''}<p class="qcm-retain"><strong>À retenir :</strong> relis la notion, puis utilise « Réessayer » lorsque le bouton est proposé.</p>`;fb.appendChild(box)}
+              function snapshot(){const data={seconds,fields:{}};document.querySelectorAll('input,select,textarea').forEach((el,i)=>{if(el.closest('.qcm-eleve-panel'))return;const id=el.id||`${el.name||'field'}:${i}`;data.fields[id]=el.type==='checkbox'||el.type==='radio'?el.checked:el.value});localStorage.setItem(key,JSON.stringify(data))}
+              function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');seconds=data.seconds||0;document.querySelectorAll('input,select,textarea').forEach((el,i)=>{if(el.closest('.qcm-eleve-panel'))return;const id=el.id||`${el.name||'field'}:${i}`;if(!(id in(data.fields||{})))return;if(el.type==='checkbox'||el.type==='radio')el.checked=!!data.fields[id];else el.value=data.fields[id]})}catch(e){console.warn('Reprise QCM impossible',e)}}
+              function update(){let answered=0,correct=0,review=0;cards.forEach((c,i)=>{const s=state(c);if(s!=='unanswered')answered++;if(s==='correct')correct++;if(s==='review')review++;nav.children[i].dataset.state=s;enrich(c)});panel.querySelector('#qe-answered').textContent=answered;panel.querySelector('#qe-correct').textContent=correct;panel.querySelector('#qe-review').textContent=review;panel.querySelector('#qe-left').textContent=cards.length-answered;panel.querySelector('#qe-fill').style.width=`${Math.round(answered/cards.length*100)}%`;panel.querySelector('#qe-time').textContent=fmt(seconds);snapshot()}
+              restore();update();document.addEventListener('change',update);document.addEventListener('input',e=>{if(e.target.matches('input[type=text],input[type=number],textarea'))update()});new MutationObserver(update).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
+              panel.addEventListener('click',e=>{const f=e.target.dataset.filter;if(f){cards.forEach(c=>c.classList.toggle('qcm-hidden',f!=='all'&&state(c)!==f))}});
+              panel.querySelector('#qe-next').onclick=()=>{const c=cards.find(c=>state(c)==='unanswered');c?c.scrollIntoView({behavior:'smooth',block:'start'}):alert('Toutes les questions ont reçu une réponse.')};
+              panel.querySelector('#qe-timer').onclick=e=>{if(timer){clearInterval(timer);timer=null;e.target.textContent='Reprendre le minuteur'}else{timer=setInterval(()=>{seconds++;update()},1000);e.target.textContent='Mettre en pause'}};
+              panel.querySelector('#qe-print').onclick=()=>window.print();
+              panel.querySelector('#qe-clear').onclick=()=>{if(confirm('Effacer les réponses et la progression enregistrées sur cet appareil ?')){localStorage.removeItem(key);location.reload()}};
+            });
+          })();
+          EOF
+
+          cat > _assets/sequence-eleve.js <<'EOF'
+          (()=>{document.addEventListener('DOMContentLoaded',()=>{const key=`sequence:${location.pathname}`;const fields=[...document.querySelectorAll('input,textarea,select')].filter(e=>!e.closest('.codelab-techno'));try{const d=JSON.parse(localStorage.getItem(key)||'{}');fields.forEach((e,i)=>{const k=e.id||`${e.name||'field'}:${i}`;if(k in d)e.type==='checkbox'||e.type==='radio'?e.checked=!!d[k]:e.value=d[k]})}catch{}const save=()=>{const d={};fields.forEach((e,i)=>{const k=e.id||`${e.name||'field'}:${i}`;d[k]=e.type==='checkbox'||e.type==='radio'?e.checked:e.value});localStorage.setItem(key,JSON.stringify(d))};document.addEventListener('input',save);document.addEventListener('change',save);const note=document.createElement('div');note.style.cssText='position:fixed;right:10px;bottom:10px;z-index:90;background:#123322;color:#c9ffd7;border:1px solid #2b7a45;border-radius:9px;padding:7px 10px;font:600 .78rem system-ui';note.textContent='Sauvegarde locale active';document.body.appendChild(note);setTimeout(()=>note.style.opacity='.35',2500)})})();
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+          import re, json, datetime
+
+          base=Path('theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3')
+          seq=base/'sequence_C1.3-C1.4_SI_gestion_donnees.html'
+          qcm=base/'qcm_systemes_information_donnees.html'
+          s=seq.read_text(encoding='utf-8')
+          q=qcm.read_text(encoding='utf-8')
+
+          if 'name="viewport"' not in s:
+              s=s.replace('<meta charset="UTF-8">','<meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">',1)
+          if '_assets/codelab-techno.css' not in s:
+              s=s.replace('</head>','  <link rel="stylesheet" href="../../../../_assets/codelab-techno.css">\n</head>',1)
+          if 'Accéder au QCM d’entraînement' not in s:
+              marker='<h1>Séquence 5ᵉ : Systèmes d’information et gestion des données</h1>'
+              nav='''<div class="section" style="text-align:center;border-color:#61dafb"><strong>Parcours élève :</strong> cette séquence et son QCM sont complémentaires.<br><a href="qcm_systemes_information_donnees.html" style="display:inline-block;margin-top:8px;padding:8px 14px;border-radius:9px;background:#1d4e89;color:white;text-decoration:none">🧠 Accéder au QCM d’entraînement</a></div>'''
+              s=s.replace(marker,marker+'\n'+nav,1)
+          pat=re.compile(r'<pre><code class="language-python">(.*?)</code></pre>',re.S)
+          m=pat.search(s)
+          if m and 'codelab-techno' not in m.group(0):
+              code=m.group(1).strip('\n')
+              repl='<div class="codelab-techno" data-language="Python" data-filename="gestion_pret_cdi.py" data-storage-key="5e-c1-3-c1-4-python"><textarea class="codelab-source">'+code+'</textarea></div>'
+              s=pat.sub(repl,s,count=1)
+          if '_assets/codelab-techno.js' not in s:
+              s=s.replace('</body>','  <script src="../../../../_assets/codelab-techno.js"></script>\n  <script src="../../../../_assets/sequence-eleve.js"></script>\n</body>',1)
+          s=s.replace('Vous pouvez tester votre code avec l’un des compilateurs recommandés ci-dessous :','Vous pouvez modifier, sauvegarder, copier et exporter le programme directement dans CodeLab Techno. Les compilateurs externes restent facultatifs pour exécuter le code :')
+          seq.write_text(s,encoding='utf-8')
+
+          if '_assets/qcm-eleve.css' not in q:
+              q=q.replace('</head>','  <link rel="stylesheet" href="../../../../_assets/qcm-eleve.css">\n</head>',1)
+          q=q.replace('Classe (ex. 4eB)','Classe (ex. 5eB)')
+          if '_assets/qcm-eleve.js' not in q:
+              q=q.replace('</body>','  <script src="../../../../_assets/qcm-eleve.js"></script>\n</body>',1)
+          qcm.write_text(q,encoding='utf-8')
+
+          coverage={
+            'version':'pilote-1','date':datetime.date.today().isoformat(),
+            'sequence':seq.name,'qcm':qcm.name,
+            'regle':'Toute notion évaluée doit être enseignée ou exercée dans la séquence.',
+            'sous_themes':[
+              {'notion':'Rôle d’un système d’information','activite':'Section 1 — définition et classement','questions':[1,2,3,21,22]},
+              {'notion':'Arborescence et recherche','activite':'Organisation et gestion des fichiers','questions':[4,5,6,18,19,20,24]},
+              {'notion':'Extensions et types de fichiers','activite':'Gestion des données numériques','questions':[7,8,23]},
+              {'notion':'Capacités de stockage et conversions','activite':'Section 2 — mesurer et convertir','questions':[9,10,11]},
+              {'notion':'Stockage local, cloud, serveur et sauvegarde','activite':'Stockage et partage','questions':[12,13,14,15,16,17]},
+              {'notion':'Programme Python de prêt de livres','activite':'Section 1.b — CodeLab Techno','questions':[],'etat':'QCM à compléter avec des questions Python dans la prochaine passe'}
+            ]
+          }
+          (base/'couverture_sequence_qcm.json').write_text(json.dumps(coverage,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          (base/'RAPPORT_LOT_PILOTE.md').write_text('''# LOT pilote — 5e_C1.3–C1.4\n\n## Première passe automatisée\n\n- ajout de CodeLab Techno au programme Python ;\n- coloration syntaxique, numéros de lignes, édition, sauvegarde locale, copie, taille, retour ligne, plein écran et export `.py` ;\n- sauvegarde locale des réponses de la séquence ;\n- lien direct de la séquence vers le QCM et retour du QCM vers la séquence ;\n- correction du champ de classe `4eB` en `5eB` ;\n- tableau de progression du QCM, navigation, filtres, minuteur, impression et reprise locale ;\n- première matrice de couverture notion → activité → questions.\n\n## Restant avant validation\n\n- ajouter plusieurs questions consacrées au programme Python ;\n- enrichir chaque correction avec exemple, erreur fréquente et justification des distracteurs ;\n- vérifier les 30 conversions et alléger leur quantité si nécessaire pour le niveau 5e ;\n- tester les glisser-déposer sur écran tactile ;\n- réaliser les tests JavaScript et l’aperçu tablette.\n''',encoding='utf-8')
+          PY
+
+      - name: Enregistrer le résultat
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _assets theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3
+          git commit -m "[lot-auto] 5e C1.3-C1.4 : séquence et QCM enrichis ensemble"
+          git push origin HEAD:draft/lot-5e-c1-3-c1-4-sequence-qcm
