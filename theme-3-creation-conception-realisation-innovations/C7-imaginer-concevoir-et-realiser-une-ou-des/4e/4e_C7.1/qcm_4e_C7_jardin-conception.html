@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM d’entraînement — Conception & réalisation (4e_C7)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--text:#e4eaf5;--accent:#61dafb;--ok:#81fba1;--err:#ff7b88;--warn:#ffd66b;}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:16px;line-height:1.5}
+.container{max-width:860px;margin:0 auto}h1{color:var(--accent);text-align:center;font-size:1.5em}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
+.progress{height:10px;background:#0a1b3d;border-radius:5px;overflow:hidden;margin:10px 0}.bar{height:100%;background:linear-gradient(90deg,#61dafb,#c68ef2);width:0%;transition:.3s}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;margin:4px}.btn:hover{background:#2966b1}
+.q{display:none}.q.active{display:block}.options label{display:block;padding:8px 12px;margin:6px 0;background:#0a1b3d;border-radius:8px;cursor:pointer;border:1px solid transparent}.options label:hover{border-color:var(--accent)}
+.feedback{margin-top:12px;padding:12px;border-radius:8px;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.12);border-left:4px solid var(--ok)}.feedback.err{background:rgba(255,123,136,.12);border-left:4px solid var(--err)}
+.score{font-size:1.3em;text-align:center;margin:16px 0}.nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:16px}
+.timer{text-align:center;font-variant-numeric:tabular-nums;color:var(--warn)}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🧠 QCM d’entraînement — 4e_C7 Conception & réalisation</h1>
+<p style="text-align:center;color:#9bbefc">Jardin connecté · Organisation de projet · Solutions techniques · Choix de matériaux</p>
+
+<div class="card">
+  <div>Progression : <span id="answered">0</span> / <span id="total">28</span> · Score : <span id="score">0</span> · Note /20 : <span id="note">—</span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="timer">Temps : <span id="time">00:00</span> <button class="btn" onclick="toggleTimer()" id="timerBtn">Démarrer</button></div>
+</div>
+
+<div id="questions"></div>
+
+<div class="card nav">
+  <button class="btn" onclick="prevQ()">← Précédente</button>
+  <button class="btn" onclick="nextUnanswered()">Prochaine non répondue</button>
+  <button class="btn" onclick="nextQ()">Suivante →</button>
+</div>
+
+<div class="card" id="result" style="display:none">
+  <h2 style="color:var(--accent);text-align:center">Résultat final</h2>
+  <div class="score" id="finalScore"></div>
+  <p id="bilan"></p>
+  <button class="btn" onclick="retryErrors()">Réessayer les erreurs</button>
+  <button class="btn" onclick="location.reload()">Recommencer</button>
+  <a class="btn" href="sequence_4e_C7_jardin-conception.html">← Retour à la séquence</a>
+</div>
+</div>
+
+<script>
+const questions = [
+{q:"Quelle est la première étape logique d’un processus de conception ?",opts:["Fabriquer le prototype","Analyser le besoin et les contraintes","Choisir les couleurs","Tester uniquement"],ok:1,exp:"On commence toujours par comprendre le besoin avant d’imaginer des solutions."},
+{q:"Pourquoi découper un projet en tâches avec des durées ?",opts:["Pour aller plus vite sans réfléchir","Pour organiser le travail dans le temps et éviter les oublis","Pour impressionner le professeur","Parce que c’est obligatoire"],ok:1,exp:"Un planning clair permet de répartir le travail et de respecter les délais."},
+{q:"Une bonne solution technique doit principalement :",opts:["Être la plus chère","Répondre au besoin, être réalisable et tenir compte des contraintes","Utiliser uniquement du plastique neuf","Être invisible"],ok:1,exp:"Besoin + faisabilité + contraintes (climat, sécurité, matériaux) = critères essentiels."},
+{q:"En Martinique, quel critère est particulièrement important pour un matériau extérieur ?",opts:["La couleur vive uniquement","La résistance à l’humidité et au soleil","Le prix le plus bas possible","La transparence"],ok:1,exp:"Le climat tropical (humidité + UV) impose de choisir des matériaux durables."},
+{q:"Comparer plusieurs matériaux avant de choisir permet de :",opts:["Perdre du temps","Justifier un choix argumenté selon des critères techniques et environnementaux","Éviter de travailler","Utiliser toujours le même matériau"],ok:1,exp:"La comparaison objective évite les choix arbitraires."},
+{q:"Que signifie « réinvestissement » dans une séquence ?",opts:["Refaire exactement la même chose","Réutiliser les connaissances dans une situation nouvelle","Copier la correction","Arrêter de travailler"],ok:1,exp:"Le réinvestissement vérifie que l’élève sait transférer ce qu’il a appris."},
+{q:"Dans un planning de projet, une tâche de 55 minutes doit idéalement être :",opts:["Laissée en un bloc","Découpée si elle est trop complexe","Ignorée","Faite uniquement à la maison"],ok:1,exp:"Les tâches trop longues deviennent floues ; on les découpe."},
+{q:"Quel est un exemple de contrainte locale pour un jardin en Martinique ?",opts:["La neige","La forte chaleur et les pluies intenses","Le gel","L’absence totale d’eau"],ok:1,exp:"Le climat tropical influence directement les choix techniques."},
+{q:"Proposer deux solutions avant d’en choisir une permet de :",opts:["Compliquer inutilement","Élargir les possibilités et mieux justifier le choix final","Éviter de dessiner","Travailler seul"],ok:1,exp:"La divergence (plusieurs idées) précède la convergence (choix)."},
+{q:"Le bois de palette récupéré est souvent intéressant parce que :",opts:["Il est toujours parfait","Il est localement disponible et peut être recyclé","Il résiste parfaitement à l’eau sans traitement","Il est transparent"],ok:1,exp:"Réemploi + disponibilité locale = critères favorables (sous réserve de traitement)."},
+{q:"Un critère environnemental pour un matériau peut être :",opts:["Sa couleur","Son impact carbone ou sa possibilité de recyclage","Son prix uniquement","Sa popularité"],ok:1,exp:"Développement durable = impact environnemental pris en compte."},
+{q:"Que doit contenir une justification de choix de matériau ?",opts:["« J’aime bien »","Des critères techniques + environnementaux + contexte d’usage","Uniquement le prix","Rien"],ok:1,exp:"Une justification argumentée s’appuie sur des critères objectifs."},
+{q:"Dans le contexte du jardin connecté, une « nouvelle fonction » peut être :",opts:["Changer la couleur de la pompe","Ajouter un support de capteur plus robuste ou un indicateur visible","Supprimer le capteur","Ne rien faire"],ok:1,exp:"On ajoute une fonctionnalité qui améliore réellement le système."},
+{q:"Pourquoi sauvegarder son identité et ses réponses en localStorage ?",opts:["Pour envoyer les données à un serveur","Pour pouvoir reprendre le travail plus tard sur le même appareil","Pour tricher","Pour rien"],ok:1,exp:"La sauvegarde locale permet la reprise sans connexion ni perte de données."},
+{q:"Une activité de conception sans production de l’élève (croquis, tableau, planning…) est :",opts:["Suffisante","Incomplète selon les règles du projet","La meilleure méthode","Réservée au professeur"],ok:1,exp:"Chaque activité doit demander une production réelle de l’élève."},
+{q:"Le badge « NEW » apparaît sur la page d’accueil uniquement quand :",opts:["On crée une branche","La séquence + QCM + synthèses sont terminés, testés et publiés sur main","On écrit un README","On ouvre une PR"],ok:1,exp:"Le badge est réservé aux lots réellement finalisés et publiés."},
+{q:"Quelle est la durée par défaut d’affichage du badge NEW ?",opts:["7 jours","21 jours","Indéfiniment","1 jour"],ok:1,exp:"21 jours par défaut, configurable dans nouveautes.json."},
+{q:"Dans une fiche pédagogique, on doit trouver :",opts:["Uniquement le titre","Niveau, codes, compétences, déroulé, matériel, différenciation, évaluation","Seulement les réponses","Rien"],ok:1,exp:"La fiche inspection est complète et structurée."},
+{q:"Une matrice de couverture sert à :",opts:["Décorer","Prouver que chaque notion de la séquence est bien évaluée dans le QCM et inversement","Compter les élèves","Rien"],ok:1,exp:"Cohérence séquence ↔ QCM obligatoire."},
+{q:"Version A / B / C d’une séquence signifie :",opts:["Trois niveaux de difficulté","Matériel réel / simulation / sans matériel","Trois professeurs","Trois langues"],ok:1,exp:"Aucun élève ne doit être pénalisé par l’absence de matériel."},
+{q:"Le composant CodeLab Techno remplace :",opts:["Les images","Les simples blocs <pre><code> par un mini-éditeur intégré","Les QCM","Les synthèses"],ok:1,exp:"Éditeur pédagogique complet avec sauvegarde, export, aides, correction ligne par ligne."},
+{q:"Pour un média, l’ordre de préférence de licence est :",opts:["Google Images d’abord","SVG original > domaine public > CC0 > CC BY > CC BY-SA","N’importe quelle image","Images de manuels"],ok:1,exp:"Respect strict des licences et traçabilité dans SOURCES_MEDIAS.md."},
+{q:"Une correction de QCM doit contenir au minimum :",opts:["« Bonne réponse »","Réponse correcte + explication + raisonnement + erreur fréquente + à retenir","Rien","Seulement la lettre"],ok:1,exp:"Corrections exhaustives et pédagogiques obligatoires."},
+{q:"Le minuteur du QCM doit :",opts:["Être obligatoire et bloquant","Pouvoir être démarré / mis en pause / désactivé","Compter à l’envers seulement","Être invisible"],ok:1,exp:"Flexibilité pour l’élève (tiers-temps, travail sans contrainte)."},
+{q:"Après publication d’un lot Thème 3, l’agent doit :",opts:["Ne rien faire","Mettre à jour nouveautes.json, régénérer l’index, vérifier badge et ancre","Supprimer les anciens fichiers","Fusionner sans validation"],ok:1,exp:"Processus de publication complet et traçable."},
+{q:"Dans le Thème 3, on ne touche pas aux fichiers existants de :",opts:["Tous les thèmes","3e_C9.1 déjà présent","Rien","Le README"],ok:1,exp:"Règle stricte : n’ajouter que ses propres productions."},
+{q:"Une situation déclenchante efficace :",opts:["Donne directement la solution","Crée un besoin de comprendre relié à un objet technique crédible","Est purement théorique","Est absente"],ok:1,exp:"Elle doit motiver et contextualiser sans spoiler."},
+{q:"Le bilan personnel de l’élève demande :",opts:["Rien","Ce qu’il a appris, ce qu’il sait faire, ce qu’il doit revoir, son niveau de confiance","Seulement une note","Une photo"],ok:1,exp:"Métacognition obligatoire en fin de séquence."}
+];
+
+let current = 0, answers = {}, startTime = null, elapsed = 0, timerInterval = null, timerOn = false;
+
+function render(){
+  const cont = document.getElementById('questions');
+  cont.innerHTML = '';
+  questions.forEach((qu,i)=>{
+    const div = document.createElement('div');
+    div.className = 'card q' + (i===current?' active':'');
+    div.id = 'q'+i;
+    div.innerHTML = `<h3>Question ${i+1}</h3><p>${qu.q}</p><div class="options">${qu.opts.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}" ${answers[i]===j?'checked':''} onchange="answer(${i},${j})"> ${o}</label>`).join('')}</div><div class="feedback" id="fb${i}"></div><button class="btn" onclick="showCorr(${i})">Voir la correction</button>`;
+    cont.appendChild(div);
+  });
+  updateStats();
+}
+
+function answer(i,j){answers[i]=j;updateStats();}
+function showCorr(i){
+  const fb = document.getElementById('fb'+i);
+  const ok = answers[i]===questions[i].ok;
+  fb.className = 'feedback show '+(ok?'ok':'err');
+  fb.innerHTML = (ok?'✅ Correct : ':'❌ Incorrect. La bonne réponse est : <strong>'+questions[i].opts[questions[i].ok]+'</strong><br>') + questions[i].exp + '<br><em>À retenir : relis la notion dans la séquence.</em>';
+}
+function updateStats(){
+  const ans = Object.keys(answers).length;
+  const correct = Object.entries(answers).filter(([k,v])=>v===questions[k].ok).length;
+  document.getElementById('answered').textContent = ans;
+  document.getElementById('score').textContent = correct;
+  document.getElementById('note').textContent = ans? ((correct/questions.length*20).toFixed(1)) : '—';
+  document.getElementById('bar').style.width = (ans/questions.length*100)+'%';
+  if(ans===questions.length) showResult();
+}
+function nextQ(){if(current<questions.length-1){current++;render();}}
+function prevQ(){if(current>0){current--;render();}}
+function nextUnanswered(){for(let i=0;i<questions.length;i++){if(answers[i]===undefined){current=i;render();return;}}showResult();}
+function showResult(){
+  document.getElementById('result').style.display='block';
+  const correct = Object.entries(answers).filter(([k,v])=>v===questions[k].ok).length;
+  document.getElementById('finalScore').textContent = correct+' / '+questions.length+' — '+(correct/questions.length*20).toFixed(1)+'/20';
+  document.getElementById('bilan').textContent = correct>=20?'Excellent travail !':'Revois les notions de conception et de choix de matériaux, puis réessaie les erreurs.';
+}
+function retryErrors(){
+  const errs = Object.entries(answers).filter(([k,v])=>v!==questions[k].ok).map(([k])=>+k);
+  if(!errs.length){alert('Aucune erreur !');return;}
+  current = errs[0];render();
+}
+function toggleTimer(){
+  if(!timerOn){timerOn=true;startTime=Date.now()-elapsed;timerInterval=setInterval(updateTime,1000);document.getElementById('timerBtn').textContent='Pause';}
+  else{timerOn=false;elapsed=Date.now()-startTime;clearInterval(timerInterval);document.getElementById('timerBtn').textContent='Reprendre';}
+}
+function updateTime(){
+  const t = Math.floor((Date.now()-startTime)/1000);
+  document.getElementById('time').textContent = String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+}
+render();
+</script>
+</body>
+</html>
