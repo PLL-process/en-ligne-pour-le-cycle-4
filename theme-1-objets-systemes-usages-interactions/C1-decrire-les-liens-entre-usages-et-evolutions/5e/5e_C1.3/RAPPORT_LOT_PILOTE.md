@@ -12,6 +12,8 @@
 - navigation directe, filtres, impression, reprise locale et réessai des erreurs ;
 - interactions tactiles ajoutées aux classements ;
 - parcours de conversions organisé en 10 exercices essentiels et 20 approfondissements ;
+- activité sur les mémoires réorganisée en parcours essentiel et approfondissement ;
+- mémoire CMOS retirée du classement binaire et expliquée comme cas particulier alimenté par une pile ;
 - matrice de couverture notion → activité → questions ;
 - synthèse élève ajoutée : `synthese_eleve_5e_C1.3-C1.4.html` ;
 - synthèse professeur ajoutée : `synthese_professeur_5e_C1.3-C1.4.html`.
@@ -20,8 +22,9 @@
 
 - contrôle de présence des 30 questions et des 30 entrées de correction lors des passes précédentes ;
 - contrôle statique des liens réciproques entre séquence et QCM ;
-- contrôle statique des deux nouvelles synthèses : métadonnée viewport, structure HTML fermée, liens relatifs vers la séquence et le QCM ;
-- vérification du périmètre GitHub : aucun fichier du Thème 2 dans la Pull Request.
+- contrôle statique des deux synthèses : métadonnée viewport, structure HTML fermée, liens relatifs vers la séquence et le QCM ;
+- vérification du périmètre GitHub : aucun fichier du Thème 2 dans la Pull Request ;
+- vérification du script de progressivité par relecture statique : ciblage du titre des mémoires, séparation des termes avancés et traitement explicite de CMOS.
 
 ## Contrôles encore nécessaires avant fusion
 
@@ -31,8 +34,9 @@
 - test réel de CodeLab Techno : copie, export, réinitialisation et reprise ;
 - test des classements à la souris, au clavier et sur écran tactile ;
 - aperçu ordinateur, tablette et téléphone ;
-- vérification finale des liens et médias externes ;
-- simplification pédagogique finale de l’activité sur les mémoires, notamment le cas particulier de la mémoire CMOS.
+- vérification finale des liens et médias externes.
+
+La tentative d’exécution locale de `node --check` a rencontré une erreur transitoire de l’environnement d’exécution. Elle n’est donc pas comptabilisée comme un test réussi.
 
 ## Statut
 
