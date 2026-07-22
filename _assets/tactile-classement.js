@@ -1,0 +1,14 @@
+(()=>{document.addEventListener('DOMContentLoaded',()=>{
+  const items=[...document.querySelectorAll('.drag-item')], zones=[...document.querySelectorAll('.drop-zone,.mini-zone')];if(!items.length||!zones.length)return;
+  const key=`classement:${location.pathname}`, live=document.createElement('div');live.className='tactile-live';live.setAttribute('aria-live','polite');document.body.appendChild(live);
+  let selected=null;
+  const label=e=>(e.innerText||e.textContent||'élément').trim().replace(/\s+/g,' ');
+  const clear=()=>{items.forEach(i=>{i.classList.remove('tactile-selected');i.setAttribute('aria-pressed','false')});zones.forEach(z=>z.classList.remove('tactile-target'));selected=null};
+  const choose=item=>{clear();selected=item;item.classList.add('tactile-selected');item.setAttribute('aria-pressed','true');zones.forEach(z=>z.classList.add('tactile-target'));live.textContent=`${label(item)} sélectionné. Touchez maintenant une catégorie.`};
+  const place=zone=>{if(!selected)return;const target=zone.querySelector('ul')||zone;target.appendChild(selected);live.textContent=`${label(selected)} placé dans ${label(zone.querySelector('h4')||zone)}.`;clear();save()};
+  items.forEach((item,index)=>{item.tabIndex=0;item.setAttribute('role','button');item.setAttribute('aria-pressed','false');item.dataset.tactileId=item.dataset.tactileId||`item-${index}`;item.addEventListener('click',e=>{e.stopPropagation();selected===item?clear():choose(item)});item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selected===item?clear():choose(item)}});item.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',item.dataset.tactileId))});
+  zones.forEach((zone,index)=>{zone.tabIndex=0;zone.dataset.tactileZone=zone.id||`zone-${index}`;zone.addEventListener('click',()=>place(zone));zone.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&selected){e.preventDefault();place(zone)}});zone.addEventListener('dragover',e=>e.preventDefault());zone.addEventListener('drop',e=>{e.preventDefault();const id=e.dataTransfer.getData('text/plain'),item=items.find(i=>i.dataset.tactileId===id);if(item){selected=item;place(zone)}})});
+  function save(){const data={};items.forEach(i=>{const z=i.closest('.drop-zone,.mini-zone');data[i.dataset.tactileId]=z?.dataset.tactileZone||null});localStorage.setItem(key,JSON.stringify(data))}
+  try{const data=JSON.parse(localStorage.getItem(key)||'{}');items.forEach(i=>{const zid=data[i.dataset.tactileId];if(!zid)return;const z=zones.find(x=>x.dataset.tactileZone===zid);if(z)(z.querySelector('ul')||z).appendChild(i)})}catch(e){console.warn('Classement tactile non restauré',e)}
+  document.querySelectorAll('.drag-container').forEach(c=>{const n=document.createElement('p');n.className='tactile-help';n.textContent='Sur tablette : touchez un élément, puis touchez la catégorie choisie. Sur ordinateur, le glisser-déposer reste disponible.';c.before(n)});
+})})();
