@@ -62,3 +62,50 @@ les décisions de publication restent à ChatGPT.*
   d'entraînement public et évaluation sommative à corrigé non publié.
 - Statut de relecture : les séquences peuvent rester `A_RELIRE_PASCAL` sans
   bloquer la préparation des lots suivants.
+
+## 2026-07-22 — Thème 2 · LOT 01 « Station d'alerte cyclonique connectée » (Fable, branche `fable/theme-2/lot-01-station-alerte-cyclonique`)
+
+1. **LOT 1 réalisé** conformément à la feuille de route (P1) : séquence-projet
+   mutualisée 3e_C4.3→C4.6 (4 séances, versions A/B/C), QCM d'entraînement
+   32 q, synthèses élève/professeur, fiche pédagogique, matrice de couverture,
+   5 SVG originaux CC0, jeu de données 48 h **simulé** (CSV/ODS/XLSX),
+   rapport de tests automatisés. Périmètre limité au Thème 2 : les corrections
+   rapides hors Thème 2 listées au §4 de la feuille de route (3e_C9.1, 5e_C1.1,
+   4e_C1.4) sont laissées aux agents des thèmes concernés.
+2. **Statuts** : `3e_C4.3` → `COMPLET ET VALIDABLE` ; `3e_C4.4`, `3e_C4.5`,
+   `3e_C4.6` → `COUVERT PAR UNE SÉQUENCE MUTUALISÉE` (README pointeurs posés).
+   Audit resynchronisé via `_outils/build_audit.py` (114 codes).
+3. **Badge NEW (règle obligatoire de Pascal)** : création de `nouveautes.json`
+   (durée 21 jours par défaut) et extension de `_outils/make_index.py` :
+   badges automatiques thème/compétence/code/liens, ancres directes
+   (`index.html#3e_C4.3` ouvre la compétence et défile jusqu'au code),
+   pulsation désactivée avec `prefers-reduced-motion`, expiration automatique
+   côté client sans regénération. Fichiers partagés modifiés en conséquence
+   (make_index.py, index.html, README.md régénérés) — modification strictement
+   additive, signalée dans le manifeste du lot.
+4. **Gouvernance de publication** : sur instruction directe de Pascal
+   (2026-07-22), l'agent Fable publie lui-même le lot sur GitHub (branche
+   dédiée). La date `date_publication` de `nouveautes.json` est fixée au
+   2026-07-22 ; si la fusion dans `main` intervient plus tard, l'ajuster avant
+   fusion. **Évaluation sommative non incluse** (à construire par l'enseignant,
+   corrigé non publié).
+
+## 2026-07-22 (suite) — Thème 2 · LOT 02 « Internet jusqu'à Sainte-Luce » + unification nouveautes.json (Fable, branche `fable/theme-2/lot-02-internet-sainte-luce`)
+
+1. **LOT 02 réalisé** : séquence-projet 3e_C4.7+C4.8 (3 séances, 3 simulateurs
+   HTML intégrés — paquets, jeu du routeur, panne/résilience —, activité
+   débranchée, versions A Filius / B Packet Tracer À CONFIRMER / C), QCM 30 q
+   (15 par code), synthèses, fiche pédagogique, matrice, 4 SVG originaux CC0,
+   README pointeur 3e_C4.8. Statuts : `3e_C4.7` → COMPLET ET VALIDABLE ;
+   `3e_C4.8` → COUVERT PAR UNE SÉQUENCE MUTUALISÉE.
+2. **Conflit nouveautes.json résolu** : le Thème 3 avait fusionné dans main un
+   nouveautes.json au format différent (clé `nouveautes`, champs `date`/`url`).
+   Branche Thème 2 rebasée sur main ; **format unifié** adopté (clé `entrees`,
+   `date_publication`, `sequence`/`qcm`, `nature`, `competence`, bloc `config`)
+   avec **entrée 4e_C7.1 du Thème 3 intégralement préservée et convertie**
+   (aucune perte). Le badge NEW du tableau de bord (implémenté dans
+   make_index.py par le Thème 2) fonctionne désormais pour les deux thèmes.
+   **À entériner au Conseil du 28/07** ; si le Thème 3 préfère un autre format,
+   l'adaptation est mécanique (le générateur lit un seul fichier).
+3. **Publication** : lot-01 poussé sur GitHub par Pascal (bundle) ; lot-02
+   suit le même canal tant que la session n'est pas reliée au dépôt.

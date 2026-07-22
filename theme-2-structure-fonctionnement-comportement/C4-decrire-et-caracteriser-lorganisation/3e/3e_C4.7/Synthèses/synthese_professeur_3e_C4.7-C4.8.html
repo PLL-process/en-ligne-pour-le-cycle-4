@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Internet jusqu'à Sainte-Luce (3e_C4.7 et C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.5;font-size:.94em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.4em;color:var(--title);text-align:center}
+  h2{font-size:1.05em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:20px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .warn{color:var(--warn)}
+  code{background:#08132c;padding:1px 6px;border-radius:5px}
+  @media print{body{background:#fff;color:#111;font-size:9pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>👩‍🏫 Synthèse professeur — Internet jusqu'à Sainte-Luce (3e_C4.7 → C4.8)</h1>
+
+<div class="bloc">
+<h2 style="margin-top:0">Objectifs et articulation</h2>
+<p>Deuxième volet de la progression P1/P3 : la chaîne d'information de la station (lot 01, 3e_C4.3→C4.6) se prolonge au-delà du collège. C4.7 (circulation dans Internet, représentation du trajet, paquets) puis C4.8 (nécessité du protocole de routage, résilience) — avec activité débranchée possible, conformément au programme. Prépare l'approfondissement Filius/Packet Tracer et fait écho à 4e_C4.7 (QCM réseaux existant).</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Réponses complètes attendues</h2>
+<table>
+<tr><th>Act.</th><th>Réponses</th></tr>
+<tr><td>1</td><td>terminaux · commutateur · routeur · adresse IP unique · faux (réseau de réseaux, sans propriétaire) · vrai (le routeur est l'unique porte de sortie).</td></tr>
+<tr><td>2</td><td>Ordre : routeur collège (1) → opérateur antillais (2) → câble sous-marin (3) → atterrissage/centre d'échange (4) → routeurs français (5) → téléphone (6) ; trafic intercontinental → câbles sous-marins (~99 %).</td></tr>
+<tr><td>3</td><td>Simulateur : découpage en 3 paquets, remise en ordre par numéros. Questions : remise en ordre · redemande du seul paquet perdu · routes multiples + partage équitable du réseau.</td></tr>
+<tr><td>4</td><td>A→R4 · B→R1 · C→R3 (règle par défaut) · D→R3 (liaison R4 coupée). Justification : règles communes = interopérabilité entre routeurs hétérogènes + annonces de routes ; sans elles, chaque frontière de réseau serait un mur.</td></tr>
+<tr><td>5</td><td>Chemin initial R1→R2→R4→R5 ; après coupure : re-routage automatique (R1→R3→…) ; R5 isolé → livraison impossible (limite physique). Explication : maillage + tables mises à jour automatiquement.</td></tr>
+<tr><td>R</td><td>routeur · 2 000 paquets (3 000 000 ÷ 1 500) · câbles sous-marins successifs · redemande du seul n°1207 · faux · re-routage. Justification : protocoles communs (adressage, paquets, routage) = un réseau mondial.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Difficultés prévisibles et remédiation</h2>
+<table>
+<tr><th>Difficulté</th><th>Remédiation</th></tr>
+<tr><td>Confusion Wi-Fi / Internet / Web</td><td>Débat éclair « le Wi-Fi est en panne : Internet est-il mort ? » ; schéma des 3 notions au tableau ; test 4G.</td></tr>
+<tr><td>Idée reçue « tout passe par satellite »</td><td>Montrer une carte publique des câbles sous-marins (vidéoprojection, sans redistribution) ; chercher les câbles de la Martinique.</td></tr>
+<tr><td>Commutateur vs routeur</td><td>Analogie : couloirs internes du collège (switch) vs portail d'entrée (routeur) ; revenir au SVG.</td></tr>
+<tr><td>Table de routage lue mécaniquement</td><td>Faire verbaliser « je compare le DÉBUT de l'adresse » ; jeu débranché par équipes avec enveloppes.</td></tr>
+<tr><td>Résilience perçue comme magique</td><td>Simulateur : faire couper TOUTES les liaisons pour rencontrer la limite physique ; discuter le cas réel antillais.</td></tr>
+<tr><td>Calcul des 2 000 paquets</td><td>Rappel puissances de 10 ; faire poser 3 000 000 ÷ 1 500 = 3 000 ÷ 1,5.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Différenciation, versions, évaluation</h2>
+<ul>
+<li><b>Versions :</b> A = Filius (confirmé) avec protocole guidé dans la séquence ; B = Packet Tracer <span class="warn">(comptes À CONFIRMER — ne pas en dépendre)</span> ; C = simulateurs intégrés + jeu débranché (aucun poste requis pour l'activité 4).</li>
+<li><b>Aides graduées ×2</b> par activité ; corrections exhaustives repliables ; élèves rapides → défis bonus (tracert, 3e réseau Filius).</li>
+<li><b>Accessibilité :</b> clavier, aria/alt, prefers-reduced-motion, impression A4, simulateurs utilisables au clavier (liaisons également listées par leur nom au clic).</li>
+<li><b>QCM :</b> 30 questions (15/15), bilan par compétence → LSU (≥75 % maîtrisé, 50-74 % en cours, &lt;50 % fragile). Évaluation sommative à construire par l'enseignant, corrigé non publié.</li>
+<li><b>EMC/EDD :</b> gouvernance ouverte d'Internet, dépendance insulaire aux câbles, sobriété (congestion vs surdimensionnement).</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Prolongements</h2>
+<ul>
+<li>Vers 3e_C4.1/C4.2 (chaîne d'énergie, matériaux des infrastructures : cuivre/fibre/acier des câbles sous-marins).</li>
+<li>Vers P2 (C6/C9) : programmer l'envoi réseau de l'alerte (requête vers un serveur local en classe).</li>
+<li>Écho 4e_C4.7 : le QCM réseaux IP/NFC/Zigbee existant peut servir de rebrassage rapide en début de séance 1.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

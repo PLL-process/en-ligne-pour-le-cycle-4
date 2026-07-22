@@ -229,6 +229,79 @@ OVERLAY = {
                   "correction ; pas de situation déclenchante ni de problématique ; "
                   "vidéo YouTube intégrée (dépendance externe + RGPD à évaluer).",
     ),
+    # ── Thème 2 · LOT 01 (Fable, 2026-07-22) : Station d'alerte cyclonique ──
+    "3e_C4.3": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence-projet « Station d'alerte cyclonique connectée » (4 séances, "
+                "contexte Martinique) couvrant 3e_C4.3→C4.6 : 6 activités interactives "
+                "+ réinvestissement, simulateur de CAN intégré, versions A (Arduino/"
+                "Grove) / B (VittaScience) / C (sans matériel), QCM séparé 32 q avec "
+                "corrections exhaustives et bilan par compétence, synthèses élève (A4) "
+                "et professeur, fiche pédagogique/inspection, matrice de couverture, "
+                "5 SVG originaux CC0, jeu de données 48 h simulé (CSV/ODS/XLSX), "
+                "rapport de tests automatisés (Playwright, 40/40 + scénarios de notes).",
+        anomalies="Compatibilité LCD Grove ↔ UNO R4 Minima non testée au labo "
+                  "(MATÉRIEL À CONFIRMER — alternative VittaScience prévue). "
+                  "Évaluation sommative laissée à l'enseignant (non publiée, conforme).",
+        accessibilite="Navigation clavier + skip-link, aria/alt complets, "
+                      "prefers-reduced-motion, minuteur désactivable, impression A4.",
+        medias="5 SVG originaux (CC0) + données simulées — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C4.4": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C4.3",
+        qualite="README pointeur vers la séquence mutualisée 3e_C4.3 (activité 3 : "
+                "CAN et simulateur ; 8 questions dédiées au QCM).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C4.5": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C4.3",
+        qualite="README pointeur vers la séquence mutualisée 3e_C4.3 (activité 4 : "
+                "types, descripteurs, codage binaire ; 8 questions dédiées au QCM).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C4.6": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C4.3",
+        qualite="README pointeur vers la séquence mutualisée 3e_C4.3 (activités 5-6 : "
+                "formats, transmission, stockage, exploitation de données ; "
+                "8 questions dédiées au QCM).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C4.7": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence-projet « Internet jusqu'à Sainte-Luce » (3 séances) couvrant "
+                "3e_C4.7+C4.8 : 5 activités + réinvestissement, 3 simulateurs HTML "
+                "intégrés (paquets, jeu du routeur, panne/résilience), activité "
+                "débranchée, versions A (Filius) / B (Packet Tracer à confirmer) / C, "
+                "QCM séparé 30 q, synthèses élève/professeur, fiche pédagogique, "
+                "matrice de couverture, 4 SVG originaux CC0, rapport de tests.",
+        anomalies="Packet Tracer : comptes À CONFIRMER (version B non bloquante, "
+                  "Filius confirmé). Évaluation sommative laissée à l'enseignant.",
+        accessibilite="Clavier + skip-link, aria/alt, prefers-reduced-motion, "
+                      "impression A4, minuteur désactivable.",
+        medias="4 SVG originaux CC0 — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C4.8": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C4.7",
+        qualite="README pointeur vers la séquence mutualisée 3e_C4.7 (activités 4-5 : "
+                "jeu du routeur débranché, simulateur de panne ; 15 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

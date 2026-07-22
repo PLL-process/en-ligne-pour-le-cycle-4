@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Du signal analogique à la donnée numérique : la conversion analogique-numérique</title>
+  <desc id="d">À gauche, un capteur produit une tension analogique continue représentée par une courbe. Au centre, le convertisseur analogique-numérique (CAN) échantillonne cette tension et la transforme en nombre binaire sur 10 bits, de 0 à 1023. À droite, le microcontrôleur convertit ce nombre en donnée exploitable : une pression de 987 hectopascals.</desc>
+  <defs>
+    <marker id="fl2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#61dafb"/>
+    </marker>
+  </defs>
+  <rect width="940" height="440" fill="#050f24"/>
+  <text x="470" y="36" fill="#81aaff" font-size="21" font-weight="bold" text-anchor="middle">Du signal analogique à la donnée exploitable</text>
+
+  <!-- Bloc 1 : signal analogique -->
+  <rect x="30" y="80" width="260" height="230" rx="14" fill="#0d2347" stroke="#61dafb" stroke-width="3"/>
+  <text x="160" y="108" fill="#61dafb" font-size="14.5" font-weight="bold" text-anchor="middle">1. Signal analogique</text>
+  <text x="160" y="126" fill="#9bbefc" font-size="11" text-anchor="middle">tension du capteur (continue)</text>
+  <!-- axes -->
+  <line x1="60" y1="270" x2="264" y2="270" stroke="#274a8a" stroke-width="2"/>
+  <line x1="60" y1="270" x2="60" y2="146" stroke="#274a8a" stroke-width="2"/>
+  <text x="52" y="156" fill="#9bbefc" font-size="10" text-anchor="end">V</text>
+  <text x="262" y="286" fill="#9bbefc" font-size="10" text-anchor="end">temps</text>
+  <path d="M60 230 C 90 160, 120 250, 150 205 S 210 150, 240 210 L 262 196" fill="none" stroke="#ffd66b" stroke-width="3.5"/>
+  <!-- échantillons -->
+  <g fill="#61dafb">
+    <circle cx="90" cy="196" r="4"/><circle cx="120" cy="235" r="4"/><circle cx="150" cy="205" r="4"/>
+    <circle cx="180" cy="172" r="4"/><circle cx="210" cy="176" r="4"/><circle cx="240" cy="210" r="4"/>
+  </g>
+  <text x="160" y="300" fill="#9bbefc" font-size="10.5" text-anchor="middle" font-style="italic">points bleus = échantillons mesurés</text>
+
+  <!-- Bloc 2 : CAN -->
+  <rect x="360" y="80" width="230" height="230" rx="14" fill="#0d2347" stroke="#c68ef2" stroke-width="3"/>
+  <text x="475" y="108" fill="#c68ef2" font-size="14.5" font-weight="bold" text-anchor="middle">2. CAN</text>
+  <text x="475" y="126" fill="#9bbefc" font-size="10.5" text-anchor="middle">Convertisseur Analogique → Numérique</text>
+  <rect x="392" y="146" width="166" height="56" rx="9" fill="#173666"/>
+  <text x="475" y="168" fill="#e4eaf5" font-size="11.5" text-anchor="middle">10 bits → 2¹⁰ = 1024 paliers</text>
+  <text x="475" y="188" fill="#e4eaf5" font-size="11.5" text-anchor="middle">valeurs de 0 à 1023</text>
+  <rect x="392" y="216" width="166" height="42" rx="9" fill="#08132c" stroke="#c68ef2" stroke-width="1.5"/>
+  <text x="475" y="242" fill="#ffd66b" font-size="14" font-weight="bold" text-anchor="middle" font-family="monospace">1100101011</text>
+  <text x="475" y="284" fill="#9bbefc" font-size="11" text-anchor="middle">= 811 en décimal</text>
+
+  <!-- Bloc 3 : donnée -->
+  <rect x="660" y="80" width="250" height="230" rx="14" fill="#0d2347" stroke="#81fba1" stroke-width="3"/>
+  <text x="785" y="108" fill="#81fba1" font-size="14.5" font-weight="bold" text-anchor="middle">3. Donnée exploitable</text>
+  <text x="785" y="126" fill="#9bbefc" font-size="11" text-anchor="middle">calculée par le microcontrôleur</text>
+  <rect x="692" y="150" width="186" height="60" rx="9" fill="#123322"/>
+  <text x="785" y="176" fill="#81fba1" font-size="19" font-weight="bold" text-anchor="middle">987 hPa</text>
+  <text x="785" y="198" fill="#9bbefc" font-size="10.5" text-anchor="middle">pression atmosphérique</text>
+  <rect x="692" y="224" width="186" height="60" rx="9" fill="#173666"/>
+  <text x="785" y="248" fill="#ffd66b" font-size="11" text-anchor="middle">987 hPa &lt; seuil 1000 hPa</text>
+  <text x="785" y="270" fill="#ff7b88" font-size="12" font-weight="bold" text-anchor="middle">→ risque cyclonique !</text>
+
+  <!-- flèches -->
+  <line x1="292" y1="195" x2="354" y2="195" stroke="#61dafb" stroke-width="3.5" marker-end="url(#fl2)"/>
+  <line x1="592" y1="195" x2="654" y2="195" stroke="#61dafb" stroke-width="3.5" marker-end="url(#fl2)"/>
+
+  <!-- formule -->
+  <rect x="170" y="336" width="600" height="62" rx="12" fill="#173666" stroke="#274a8a"/>
+  <text x="470" y="362" fill="#e4eaf5" font-size="13.5" text-anchor="middle">valeur mesurée = <tspan fill="#ffd66b" font-family="monospace">N</tspan> × (plage de mesure ÷ 1023) + minimum</text>
+  <text x="470" y="384" fill="#9bbefc" font-size="11.5" text-anchor="middle">ex. : 811 × (150 ÷ 1023) + 868 ≈ 987 hPa (capteur mesurant de 868 à 1018 hPa)</text>
+
+  <text x="470" y="424" fill="#5b7bb8" font-size="11" text-anchor="middle" font-style="italic">Analogique = continu (une infinité de valeurs) · Numérique = discret (des paliers en nombre limité)</text>
+</svg>

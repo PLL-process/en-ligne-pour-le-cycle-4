@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Station d'alerte cyclonique (3e_C4.3 à C4.6)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.5;font-size:.94em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.4em;color:var(--title);text-align:center}
+  h2{font-size:1.05em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:20px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .warn{color:var(--warn)} .err{color:var(--err)} .ok{color:var(--ok)}
+  code{background:#08132c;padding:1px 6px;border-radius:5px}
+  @media print{body{background:#fff;color:#111;font-size:9pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>👩‍🏫 Synthèse professeur — Station d'alerte cyclonique connectée (3e_C4.3 → C4.6)</h1>
+
+<div class="bloc">
+<h2 style="margin-top:0">Objectifs et articulation</h2>
+<p>La séquence traite en un seul projet contextualisé (risque cyclonique en Martinique) les quatre sous-compétences C4 « information » de 3e. Progression interne : structure fonctionnelle (C4.3) → numérisation (C4.4) → structuration des données (C4.5) → cycle de vie des fichiers (C4.6), avec réinvestissement transversal (bouée houlographe). Elle prépare directement les séquences P2 (programmer l'alerte, C6/C9) et P3 (réseaux, C4.7/C4.8) de la progression annuelle 3e.</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Réponses complètes attendues</h2>
+<table>
+<tr><th>Act.</th><th>Réponses</th></tr>
+<tr><td>1</td><td>Acquérir : anémomètre/girouette, pluviomètre, baromètre · Alimenter : panneau solaire + batterie · Traiter : microcontrôleur · Communiquer : antenne, sirène/gyrophare, application. Justification : le panneau capte de l'énergie (chaîne d'énergie), pas de l'information.</td></tr>
+<tr><td>2</td><td>Acquérir → Traiter → Communiquer ; grandeurs physiques → signal électrique analogique → données numériques ; seuil = 118 km/h (vents soutenus, ouragan).</td></tr>
+<tr><td>3</td><td>N(943 hPa) = 512 ; N max = 1023 ; 2¹⁰ = 1024 paliers ; précision = 150/1023 ≈ 0,15 hPa ; N = 512 → ≈ 943 hPa ; explication continu/paliers.</td></tr>
+<tr><td>4</td><td>entier · décimal · texte · booléen · date+heure · entier ; descripteur <code>vent_kmh</code> ; rouge = 011 ; 12 niveaux → 4 bits (2⁴ = 16).</td></tr>
+<tr><td>5</td><td>.csv · .png · .mp3 · .json · .pdf ; V/F : faux (copie) · vrai (redondance).</td></tr>
+<tr><td>6</td><td>rouge : 29/08 à 08:00 · p. min : 966,8 hPa · rafale max : 223 km/h · orange→violette : 24 h · conclusion : pression et vent varient en sens inverse ; croiser deux capteurs fiabilise l'alerte (corrélation ≠ causalité).</td></tr>
+<tr><td>R</td><td>accéléromètre / microcontrôleur / émetteur satellite ; 256 paliers ; 12×170/255 = 8,0 m ; décimal ; .csv ; justification : liaison interruptible → copie locale (redondance).</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Difficultés prévisibles et remédiation</h2>
+<table>
+<tr><th>Difficulté</th><th>Remédiation proposée</th></tr>
+<tr><td>Panneau solaire classé « Acquérir »</td><td>Débat éclair : « que transporterait le fil qui en sort ? » — de l'énergie. Revenir au critère : information ou énergie ?</td></tr>
+<tr><td>1023 vs 1024 ; division par 1024</td><td>Manipuler le cas 2 bits au tableau : 00,01,10,11 → 4 paliers, max = 3, 3 intervalles. Généraliser ensuite.</td></tr>
+<tr><td>Formule de conversion appliquée mécaniquement</td><td>Faire verbaliser la proportionnalité : « N/1023 = fraction de l'étendue parcourue ». Vérifier au simulateur.</td></tr>
+<tr><td>« 12 bits pour 12 niveaux »</td><td>Table des puissances de 2 affichée en classe ; jeu rapide : « combien de bits pour 20 élèves ? 200 ? »</td></tr>
+<tr><td>Lecture de la table 48 h (passage de minuit)</td><td>Faire surligner les premières lignes de chaque niveau de vigilance ; frise chronologique au tableau.</td></tr>
+<tr><td>Élèves rapides</td><td>Bonus graphique LibreOffice ; défi : recalculer la précision d'un CAN 12 bits ; approfondissement ASCII.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Différenciation</h2>
+<ul>
+<li><b>Aides graduées</b> intégrées (niveau 1 : orientation ; niveau 2 : quasi-guidée) — inciter à les utiliser AVANT la correction.</li>
+<li><b>Groupes de besoin</b> en séance 2 : le simulateur permet un travail autonome pendant l'atelier Arduino encadré (version A).</li>
+<li><b>Élèves à besoins particuliers</b> : navigation clavier, contrastes élevés, textes alternatifs sur tous les SVG, aucune contrainte de temps (minuteur du QCM désactivable), impression possible de la synthèse.</li>
+<li><b>LSU</b> : critères observables par activité (cf. fiche pédagogique) ; l'auto-positionnement final (bilan de confiance) alimente l'entretien individuel.</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Liens avec le QCM et évaluation</h2>
+<ul>
+<li>QCM d'entraînement : 32 questions, 8 par code, couverture vérifiée par la <b>matrice de couverture</b> (aucune question hors séquence).</li>
+<li>Modes utiles en classe : « 10 questions » en rituel de début d'heure ; « révision ciblée » avant l'évaluation ; « erreurs » en AP.</li>
+<li>Note /20 indicative fournie par le QCM ; l'évaluation sommative reste à construire par l'enseignant (<span class="warn">aucune correction sommative n'est publiée dans le dépôt public — conformément à la règle du projet</span>).</li>
+<li>Bilan par compétence du QCM = base de remplissage LSU (maîtrisée ≥ 75 %, en cours 50-74 %, à retravailler &lt; 50 %).</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Approfondissements</h2>
+<ul>
+<li>Épisode réel : trajectoires cycloniques passées en Martinique (données publiques Météo-France à montrer en classe, sans les redistribuer dans le dépôt).</li>
+<li>Vers C4.7/C4.8 (P3) : « et si la station rejoignait le réseau du collège ? » — adressage IP, Filius.</li>
+<li>Vers C6/C9 (P2) : programmer réellement le seuil d'alerte sur Arduino/mBlock — le pseudo-code de l'activité 2 devient un programme.</li>
+<li>EDD : sobriété des transmissions radio basse consommation (LoRa) vs 4G ; autonomie énergétique.</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Points de vigilance matériels et logiciels</h2>
+<ul>
+<li>Version A : Arduino UNO + Grove <b>confirmés</b> ; l'affichage LCD avec UNO <b>R4 Minima</b> n'a pas été testé au labo → <span class="warn">MATÉRIEL À CONFIRMER — prévoir l'alternative VittaScience</span>.</li>
+<li>Aucun capteur météo réel (anémomètre/baromètre Grove) n'est exigé : le capteur de luminosité suffit à illustrer le CAN.</li>
+<li>Fichiers de données fournis en CSV + ODS + XLSX ; LibreOffice Calc prioritaire, Microsoft 365 jamais indispensable.</li>
+<li>Données 48 h <b>simulées</b> (générées, ordres de grandeur réalistes) : le préciser aux élèves — aucune donnée Météo-France réelle n'est redistribuée.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

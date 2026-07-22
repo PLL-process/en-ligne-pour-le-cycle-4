@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Internet jusqu'à Sainte-Luce (3e_C4.7 et C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  .savoir{border-left:4px solid var(--ok)}
+  .faire{border-left:4px solid var(--hl)}
+  .pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{
+    body{background:#fff;color:#111;font-size:8.6pt;padding:0}
+    .bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<h1>🌐 Synthèse — Internet jusqu'à Sainte-Luce</h1>
+<p class="pb">Comment l'information circule-t-elle de réseau en réseau, et pourquoi arrive-t-elle même quand une route est coupée ?</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Du réseau local à Internet (3e_C4.7)</h2>
+  <object class="schema" data="../Images/reseau_college_vers_internet.svg" type="image/svg+xml" aria-label="Réseau local du collège relié à Internet par le routeur">Schéma réseau local → Internet</object>
+  <p>Réseau local = <b>terminaux</b> + <b>commutateur</b> (relie à l'intérieur) + <b>routeur</b> (porte de sortie vers les autres réseaux). Chaque équipement a une <b>adresse IP</b> unique. <b>Internet = le réseau des réseaux</b> : une information traverse une <b>succession de réseaux</b> (local → opérateur → câbles sous-marins → destinataire). ~99 % du trafic intercontinental passe par des <b>câbles sous-marins</b> — vitaux pour la Martinique.</p>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">2. Les paquets (3e_C4.7)</h2>
+    <dl>
+      <dt>Découpage</dt><dd>tout message est découpé en <b>paquets numérotés</b>.</dd>
+      <dt>En-tête</dt><dd>IP destination + IP source + numéro d'ordre (l'« enveloppe »).</dd>
+      <dt>Voyage</dt><dd>routes parfois différentes, arrivée parfois dans le désordre.</dd>
+      <dt>Réassemblage</dt><dd>grâce aux numéros ; un paquet perdu est <b>redemandé seul</b>.</dd>
+    </dl>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">3. Le routage (3e_C4.8)</h2>
+    <dl>
+      <dt>Table de routage</dt><dd>règles « réseau de destination → prochaine sortie » ; route par défaut pour le reste.</dd>
+      <dt>Saut par saut</dt><dd>chaque routeur ne décide que du prochain saut.</dd>
+      <dt>Mise à jour automatique</dt><dd>les routeurs s'annoncent les routes ; une panne est contournée.</dd>
+      <dt>Protocole commun</dt><dd>règles partagées par TOUS les réseaux — sans elles, pas d'Internet.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc savoir">
+    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+    <ul>
+      <li>définir terminal, commutateur, routeur, adresse IP, paquet, table de routage, protocole ;</li>
+      <li>expliquer « Internet = réseau de réseaux » ;</li>
+      <li>expliquer pourquoi un protocole de routage commun est indispensable ;</li>
+      <li>expliquer la résilience (maillage + tables mises à jour) et sa limite (réseau isolé).</li>
+    </ul>
+  </div>
+  <div class="bloc faire">
+    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+    <ul>
+      <li>représenter le trajet d'une information par un schéma fléché légendé ;</li>
+      <li>appliquer une table de routage à des paquets ;</li>
+      <li>calculer un nombre de paquets (taille ÷ taille d'un paquet) ;</li>
+      <li>prévoir le comportement du réseau après une coupure.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
+  <ul>
+    <li>Confondre <b>Wi-Fi</b> (accès local sans fil), <b>Internet</b> (réseau mondial) et <b>Web</b> (un service d'Internet) ;</li>
+    <li>croire que le trafic intercontinental passe par satellite (→ câbles sous-marins !) ;</li>
+    <li>croire que tous les paquets suivent le même chemin, ou qu'une perte oblige à tout renvoyer ;</li>
+    <li>confondre <b>panne</b> (route coupée) et <b>congestion</b> (route saturée → lenteur) ;</li>
+    <li>croire que le routage peut joindre un réseau physiquement isolé.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
+  <table class="voc">
+    <tr><td>réseau → <b>network</b></td><td>routeur → <b>router</b></td><td>commutateur → <b>switch</b></td></tr>
+    <tr><td>paquet → <b>packet</b></td><td>table de routage → <b>routing table</b></td><td>protocole → <b>protocol</b></td></tr>
+    <tr><td>câble sous-marin → <b>submarine cable</b></td><td>en-tête → <b>header</b></td><td>hôte → <b>host</b></td></tr>
+  </table>
+</div>
+</div>
+</body>
+</html>

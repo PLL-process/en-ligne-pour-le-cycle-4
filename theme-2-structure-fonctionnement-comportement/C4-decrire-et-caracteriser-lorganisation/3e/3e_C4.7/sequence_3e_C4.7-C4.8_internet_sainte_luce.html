@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internet jusqu'à Sainte-Luce — 3e_C4.7 et 3e_C4.8</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🌐 Internet jusqu'à Sainte-Luce</h1>
+<p class="subtitle">Comment l'alerte de notre station traverse-t-elle les réseaux pour arriver jusqu'aux téléphones ?</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C4.7</span>
+  <span class="badge code">3e_C4.8</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D4 · D5</span>
+  <span class="badge crcn">CRCN : 1.3 · 2.2 · 5.2</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Suite de notre projet.</b> La station d'alerte cyclonique du collège fonctionne : elle mesure, décide, et sait
+    déclencher sa sirène. Mais lors de l'exercice d'évacuation de septembre, un problème est apparu : la sirène ne couvre
+    que le quartier du collège. Les familles de Rivière-Pilote, de Fort-de-France — et même la tante de Maëlle qui vit à
+    Paris — doivent recevoir l'alerte <b>sur leur téléphone, en quelques secondes</b>.</p>
+    <p>Le message d'alerte doit donc quitter le réseau du collège, traverser la Martinique, peut-être l'océan… et arriver
+    à bon port sans se perdre. Par où passe-t-il exactement ? Qui décide de son chemin ? Et que se passe-t-il si un
+    cyclone coupe un câble en route ?</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment l'information circule-t-elle de réseau en réseau à travers Internet,<br>et pourquoi arrive-t-elle à destination même quand une route est coupée ?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Mes hypothèses de départ</h2>
+  <p>Réponds avec tes idées actuelles — tu y reviendras à la fin.</p>
+  <div class="exo">
+    <label for="hyp1"><b>1.</b> D'après toi, quel chemin suit un message envoyé depuis la Martinique vers un téléphone à Paris ? (satellite ? câble ? antennes ?)</label>
+    <textarea id="hyp1" placeholder="Je pense que le message passe par…"></textarea>
+    <label for="hyp2" style="margin-top:10px;display:block"><b>2.</b> Justifie ton idée : sur quoi t'appuies-tu ?</label>
+    <textarea id="hyp2" placeholder="Je pense cela parce que…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Référentiel officiel (programme 2024)</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C4.7</b></td><td>Identifier et représenter la circulation d'une information dans le réseau Internet.</td><td>D1.3, D2, D4</td><td>1, 2, 3, R</td></tr>
+    <tr><td><b>3e_C4.8</b></td><td>Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée possible).</td><td>D2, D4, D5</td><td>4, 5, R</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> — BO n°9 du 29/02/2024. Cette séquence prolonge « Station d'alerte cyclonique » (3e_C4.3 → C4.6) : la chaîne d'information se poursuit au-delà du collège.</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Choix de l'outil</h2>
+  <table class="refs">
+    <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
+    <tr><td>Simulations HTML intégrées (paquets, routage, panne)</td><td>Aucune installation, fonctionne hors connexion, sur tout appareil — idéal aussi à la maison.</td><td>—</td></tr>
+    <tr><td>Filius (version A, au labo)</td><td>Logiciel gratuit confirmé au collège : on construit et teste un vrai petit inter-réseau avec routeurs.</td><td>Activité débranchée « jeu du routeur » (aucun poste nécessaire)</td></tr>
+    <tr><td>Cisco Packet Tracer (approfondissement)</td><td>Simulation professionnelle.</td><td>⚠ Compte à vérifier — <b>LOGICIEL À CONFIRMER : ne pas en dépendre</b>, Filius suffit.</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel / logiciel</h4>
+      <p><b>Filius</b> installé au labo : construire le réseau du collège (3 PC + switch + routeur), puis relier deux réseaux et observer le trajet des paquets (mode simulation, commande <i>ping</i>).</p></div>
+    <div class="version vb"><h4>🅱 Simulation en ligne</h4>
+      <p>Packet Tracer si les comptes sont disponibles (<b>À CONFIRMER</b>) — sinon rester sur Filius ou la version 🅲.</p></div>
+    <div class="version vc"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans cette page : simulateur de découpage en paquets (activité 3), jeu du routeur (activité 4) et simulateur de panne (activité 5). Une version imprimable du jeu du routeur permet même de jouer <b>débranché</b>, par équipes.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Par où passe le message ?</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Paquets et routage</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Quand la route casse + défi</small><span class="done" id="done-s3"></span></button>
+</div>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🏫 Séance 1 — Par où passe le message ?</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que traverse l'alerte entre la station du collège et un téléphone à Paris ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Le réseau local du collège</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les équipements d'un réseau local et leur rôle, et situer la porte de sortie vers Internet.</div>
+      <div><b>Compétence :</b> 3e_C4.7.</div>
+      <div><b>Production attendue :</b> 6 rôles attribués + 2 vrai/faux justifiés.</div>
+      <div><b>Ressources :</b> schéma du réseau ci-dessous.</div>
+    </div>
+    <object class="figure" data="Images/reseau_college_vers_internet.svg" type="image/svg+xml" aria-label="Schéma : réseau local du collège avec PC, station d'alerte, commutateur et routeur relié par fibre à Internet, représenté comme un maillage de routeurs desservant maison, mairie et réseau mobile">Schéma du réseau local relié à Internet (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> observe le schéma puis attribue son rôle à chaque équipement, et réponds aux vrai/faux.</div>
+    <div class="exo">
+      <div class="assoc"><label for="b1_1">Les ordinateurs et la station d'alerte sont des…</label><select id="b1_1"><option value="">— choisir —</option><option>terminaux</option><option>commutateurs</option><option>routeurs</option><option>serveurs</option></select></div>
+      <div class="assoc"><label for="b1_2">L'équipement qui relie les appareils DU réseau local entre eux :</label><select id="b1_2"><option value="">— choisir —</option><option>le terminal</option><option>le commutateur (switch)</option><option>le routeur</option><option>la box de la maison</option></select></div>
+      <div class="assoc"><label for="b1_3">L'équipement « porte de sortie » qui relie le réseau du collège AUX AUTRES réseaux :</label><select id="b1_3"><option value="">— choisir —</option><option>le terminal</option><option>le commutateur (switch)</option><option>le routeur</option><option>l'écran</option></select></div>
+      <div class="assoc"><label for="b1_4">Pour être joignable sur le réseau, chaque équipement possède…</label><select id="b1_4"><option value="">— choisir —</option><option>une adresse IP unique</option><option>un mot de passe</option><option>un nom d'utilisateur</option><option>une prise HDMI</option></select></div>
+      <div class="assoc"><label for="b1_5">Vrai ou faux : « Internet est un seul immense réseau appartenant à une seule entreprise. »</label><select id="b1_5"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <div class="assoc"><label for="b1_6">Vrai ou faux : « Sans routeur, le message de la station ne peut pas sortir du collège. »</label><select id="b1_6"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Sur le schéma, suis les traits : qui est relié à qui ? Le commutateur est AU MILIEU du réseau local ; le routeur est À LA FRONTIÈRE, là où part la fibre.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Terminaux = les appareils qui utilisent le réseau (PC, station, téléphone). Le commutateur distribue à l'intérieur ; le routeur fait passer d'un réseau à l'autre. « Inter-net » signifie littéralement « entre les réseaux » : des milliers de réseaux indépendants interconnectés — personne n'en est propriétaire.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Réponses :</b> terminaux · le commutateur (switch) · le routeur · une adresse IP unique · faux · vrai.</p>
+      <p><b>Raisonnement :</b> à l'intérieur d'un réseau local, le commutateur relie les terminaux entre eux. Pour sortir, tout passe par le routeur — c'est la seule frontière. Internet n'appartient à personne : c'est l'interconnexion de milliers de réseaux (collèges, opérateurs, entreprises…) qui acceptent des règles communes.</p>
+      <p><b>Exemple :</b> chez toi, la « box » joue les deux rôles à la fois : commutateur/Wi-Fi pour l'intérieur, routeur vers ton opérateur.</p>
+      <p><b>Limite :</b> certains équipements combinent plusieurs fonctions (box, point d'accès Wi-Fi) — on les classe selon la fonction étudiée.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre commutateur et routeur (le commutateur ne connaît QUE son réseau local) ; croire qu'« Internet » est une entreprise ou « le Wi-Fi » (le Wi-Fi n'est qu'un moyen d'accès sans fil au réseau local).</div>
+    <div class="retenir"><b>📌 À retenir :</b> réseau local = <b>terminaux</b> + <b>commutateur</b> (relie à l'intérieur) + <b>routeur</b> (relie aux autres réseaux). Chaque équipement a une <b>adresse IP</b>. <b>Internet = le réseau des réseaux</b>, sans propriétaire unique.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 réponses justes sur 6.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Le grand voyage : Sainte-Luce → Paris</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> représenter le trajet réel d'une information à travers Internet, du réseau local au destinataire.</div>
+      <div><b>Compétence :</b> 3e_C4.7.</div>
+      <div><b>Production attendue :</b> les 6 étapes ordonnées + schéma du trajet recopié dans le cahier + 1 idée reçue corrigée.</div>
+      <div><b>Ressources :</b> carte du trajet ci-dessous.</div>
+    </div>
+    <object class="figure" data="Images/trajet_message_martinique_monde.svg" type="image/svg+xml" aria-label="Carte stylisée : trajet du message depuis Sainte-Luce en Martinique, via le réseau de l'opérateur, un câble sous-marin transatlantique, un centre d'échange en Europe, jusqu'au téléphone du destinataire à Paris">Trajet d'un message de la Martinique vers Paris (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> l'alerte part de la station pour prévenir la tante de Maëlle à Paris. Remets les 6 étapes du voyage dans l'ordre (place un numéro de 1 à 6 devant chacune), puis réponds.</div>
+    <div class="exo">
+      <div class="assoc"><label for="b2_e1">…le message plonge dans le câble sous-marin transatlantique</label><select id="b2_e1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="b2_e2">…la station envoie l'alerte au routeur du collège</label><select id="b2_e2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="b2_e3">…le téléphone de la tante affiche la notification</label><select id="b2_e3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="b2_e4">…le message traverse le réseau de l'opérateur antillais</label><select id="b2_e4"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="b2_e5">…les routeurs français l'acheminent jusqu'à la box parisienne</label><select id="b2_e5"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="b2_e6">…il ressort au point d'atterrissage et traverse le centre d'échange européen</label><select id="b2_e6"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc" style="margin-top:10px"><label for="b2_q1">Par où passe l'essentiel (~99 %) du trafic Internet intercontinental ?</label><select id="b2_q1"><option value="">— choisir —</option><option>par les satellites</option><option>par les câbles sous-marins</option><option>par les antennes 4G</option><option>par ondes radio directes</option></select></div>
+      <label for="b2_cahier" style="display:block;margin-top:10px"><b>Dans le cahier :</b> représente le trajet par un schéma fléché (station → routeur → opérateur → câble → centre d'échange → box → téléphone), puis recopie ta légende ici :</label>
+      <textarea id="b2_cahier" placeholder="Mon schéma montre…"></textarea>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Le message part TOUJOURS du réseau local (routeur du collège = étape 1), et finit TOUJOURS chez le destinataire. Entre les deux : d'abord l'île, puis l'océan, puis l'Europe.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : collège (1) → opérateur antillais (2) → câble sous-marin (3) → point d'atterrissage/centre d'échange (4) → routeurs français (5) → téléphone (6). Les numéros du SVG t'aident à vérifier.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Ordre :</b> câble sous-marin = 3 · station→routeur = 1 · notification = 6 · opérateur antillais = 2 · routeurs français→box = 5 · atterrissage/centre d'échange = 4. Trafic intercontinental : <b>par les câbles sous-marins</b>.</p>
+      <p><b>Raisonnement :</b> l'information traverse une succession de réseaux — local, opérateur, dorsales intercontinentales, opérateur du destinataire — reliés par des routeurs. Pour une île comme la Martinique, les câbles sous-marins sont vitaux : sans eux, presque plus d'Internet.</p>
+      <p><b>Exemple concret :</b> la Martinique est notamment reliée par des câbles sous-marins vers les îles voisines, l'Amérique et l'Europe ; leur maintenance est assurée par des navires câbliers spécialisés.</p>
+      <p><b>Contre-exemple (idée reçue) :</b> le satellite existe, mais il est minoritaire : plus lent (latence) et plus cher. Il sert surtout de secours ou pour les zones sans câble.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> penser que tout passe par satellite ; oublier que le message change PLUSIEURS fois de réseau ; inverser point d'atterrissage (4) et routeurs nationaux (5).</div>
+    <div class="retenir"><b>📌 À retenir :</b> une information traverse une <b>succession de réseaux</b> reliés par des <b>routeurs</b> : local → opérateur → câbles sous-marins/dorsales → opérateur du destinataire → terminal. On sait <b>représenter ce trajet</b> par un schéma fléché légendé.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 6 étapes bien ordonnées, la bonne réponse « câbles sous-marins », et un schéma légendé dans le cahier.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>📦 Séance 2 — Paquets et routage</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment un long message voyage-t-il sans embouteiller le réseau, et qui choisit sa route ?</p>
+  <object class="figure" data="Images/decoupage_en_paquets.svg" type="image/svg+xml" aria-label="Schéma : le message d'alerte est découpé en trois paquets numérotés portant les adresses IP source et destination ; ils suivent des chemins différents, arrivent dans le désordre et sont réassemblés grâce à leurs numéros">Découpage du message en paquets et réassemblage (SVG)</object>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Découpe, expédie, réassemble !</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> comprendre le découpage en paquets numérotés et le réassemblage à l'arrivée.</div>
+      <div><b>Compétence :</b> 3e_C4.7 (+ prépare C4.8).</div>
+      <div><b>Production attendue :</b> un message réassemblé dans le simulateur + 3 questions justifiées.</div>
+      <div><b>Ressources :</b> simulateur ci-dessous.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) écris un court message d'alerte (au moins 12 caractères) et clique sur « Découper et expédier » : les paquets arrivent dans le désordre ! Remets-les dans l'ordre grâce à leur numéro, puis « Réassembler ». b) Réponds ensuite aux questions.</div>
+    <div class="exo">
+      <label for="simMsg"><b>Ton message d'alerte :</b></label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input type="text" id="simMsg" maxlength="36" value="ALERTE ROUGE SAINTE-LUCE" style="max-width:340px">
+        <button class="btn small" id="btnDecoupe" type="button">📦 Découper et expédier</button>
+      </div>
+      <div id="zonePaquets" style="margin-top:12px"></div>
+      <div id="zoneReassemble" style="margin-top:8px"></div>
+      <h4 style="margin-top:16px">Questions</h4>
+      <div class="assoc"><label for="b3_q1">À quoi sert le numéro écrit sur chaque paquet ?</label><select id="b3_q1"><option value="">— choisir —</option><option>à remettre les paquets dans l'ordre à l'arrivée</option><option>à connaître le prix d'envoi</option><option>à chiffrer le message</option><option>à choisir le Wi-Fi</option></select></div>
+      <div class="assoc"><label for="b3_q2">Le paquet n°2 s'est perdu en route. Que fait le destinataire ?</label><select id="b3_q2"><option value="">— choisir —</option><option>il redemande SEULEMENT le paquet n°2</option><option>il redemande tout le message</option><option>il abandonne la communication</option><option>il lit le message sans le n°2</option></select></div>
+      <div class="assoc"><label for="b3_q3">Pourquoi découper en paquets plutôt qu'envoyer le message d'un seul bloc ?</label><select id="b3_q3"><option value="">— choisir —</option><option>les paquets se faufilent par plusieurs routes et partagent le réseau équitablement</option><option>parce que les câbles sont trop courts</option><option>pour rendre le message secret</option><option>pour le rendre plus joli</option></select></div>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde l'en-tête de chaque paquet dans le simulateur : numéro, IP source, IP destination — comme une enveloppe postale numérotée.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Les numéros servent au réassemblage ET à détecter une perte : s'il manque le n°2 sur 3, on ne redemande que lui — c'est bien plus efficace que tout renvoyer. Et de petits paquets peuvent emprunter des routes différentes en parallèle : personne ne bloque le réseau.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> Ton message a été découpé (ici en 3 paquets), mélangé pendant le transport, puis reconstitué grâce aux numéros d'ordre — exactement comme sur le schéma.</p>
+      <p><b>b)</b> numéro → remise en ordre · paquet perdu → on redemande <b>seulement</b> le n°2 · découpage → plusieurs routes possibles + partage équitable du réseau (personne ne monopolise la ligne).</p>
+      <p><b>Exemple concret :</b> pendant une vidéo en streaming, des milliers de paquets arrivent chaque seconde, parfois dans le désordre, et ta tablette reconstruit tout sans que tu t'en aperçoives.</p>
+      <p><b>Limite :</b> pour certains usages en direct (visio, jeux), redemander un paquet perdu prendrait trop de temps : on préfère parfois l'ignorer (petite coupure d'image) plutôt qu'attendre.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire que les paquets suivent tous LE MÊME chemin ; croire qu'une perte oblige à tout renvoyer ; oublier que l'en-tête contient l'adresse de destination lue par CHAQUE routeur.</div>
+    <div class="retenir"><b>📌 À retenir :</b> sur Internet, tout message est <b>découpé en paquets numérotés</b> portant les <b>adresses IP</b> source et destination. Les paquets voyagent indépendamment, parfois par des routes différentes, et sont <b>réassemblés</b> à l'arrivée ; un paquet perdu est redemandé individuellement.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> message réassemblé au simulateur + 3 bonnes réponses.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Le jeu du routeur (débranché possible)</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> appliquer une table de routage et justifier la nécessité d'un protocole commun.</div>
+      <div><b>Compétence :</b> 3e_C4.8.</div>
+      <div><b>Production attendue :</b> 4 paquets correctement aiguillés + 1 justification rédigée.</div>
+      <div><b>Ressources :</b> schéma de la table de routage ci-dessous. Version débranchée : mêmes règles, par équipes, avec des enveloppes papier.</div>
+    </div>
+    <object class="figure" data="Images/table_routage_jeu.svg" type="image/svg+xml" aria-label="Le routeur R2 reçoit un paquet pour 203.0.113.25 ; sa table de routage indique de passer par R4 ; en cas de panne de R4 la table se met à jour et le trafic passe par R3">La table de routage du routeur R2 (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> tu ES le routeur R2. Ta table : réseau <code>198.51.100.x</code> → R1 · réseau <code>203.0.113.x</code> → R4 · tout le reste → R3. Aiguille chaque paquet, puis justifie.</div>
+    <div class="exo">
+      <div class="assoc"><label for="b4_p1">Paquet A → destination <code>203.0.113.7</code></label><select id="b4_p1"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
+      <div class="assoc"><label for="b4_p2">Paquet B → destination <code>198.51.100.42</code></label><select id="b4_p2"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
+      <div class="assoc"><label for="b4_p3">Paquet C → destination <code>172.16.9.30</code></label><select id="b4_p3"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
+      <div class="assoc"><label for="b4_p4">Paquet D → destination <code>203.0.113.199</code>, mais la liaison vers R4 vient de tomber !</label><select id="b4_p4"><option value="">— choisir —</option><option>R1</option><option>R3</option><option>R4</option></select></div>
+      <label for="b4_just" style="display:block;margin-top:10px"><b>Justifie :</b> les routeurs du monde entier sont fabriqués par des entreprises différentes. Pourquoi ont-ils absolument besoin d'un <b>protocole de routage commun</b> (mêmes règles pour tous) ?</label>
+      <textarea id="b4_just" placeholder="Sans règles communes…"></textarea>
+      <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Compare le DÉBUT de l'adresse de destination avec les réseaux de la table : <code>203.0.113.7</code> commence par <code>203.0.113</code>…</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Paquet D : la route normale (R4) est morte ; la règle « tout le reste → R3 » sert de secours le temps que les tables se mettent à jour. Pour la justification : pense à deux personnes qui ne parlent pas la même langue et doivent se transmettre un colis avec des consignes précises…</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Aiguillage :</b> A → R4 · B → R1 · C → R3 (aucune règle précise ne correspond : règle par défaut) · D → R3 (liaison R4 coupée : route de secours, les tables se mettent à jour).</p>
+      <p><b>Justification attendue :</b> un paquet traverse des dizaines de routeurs de marques et de pays différents. S'ils ne partageaient pas les mêmes règles (format des adresses, façon d'annoncer les routes, réaction aux pannes), chaque frontière serait un mur : le paquet serait perdu ou incompris. Le protocole commun garantit que <em>n'importe quel</em> routeur comprend <em>n'importe quel</em> paquet et sait annoncer ses routes aux voisins — c'est ce qui fait d'Internet UN réseau mondial au lieu d'îlots isolés.</p>
+      <p><b>Exemple :</b> c'est comme le code de la route : peu importe la marque de la voiture ou le pays du conducteur, tout le monde comprend « priorité à droite » — sinon, carambolage.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> envoyer C vers R4 « parce qu'il reste de la place » (la règle par défaut existe pour ça) ; oublier que D doit être re-routé ; justifier seulement par « c'est plus pratique » sans expliquer l'interopérabilité.</div>
+    <div class="retenir"><b>📌 À retenir :</b> chaque routeur consulte sa <b>table de routage</b> pour choisir la sortie de chaque paquet. Les tables se <b>mettent à jour automatiquement</b> (routes coupées, nouvelles routes) grâce à un <b>protocole de routage commun</b> — indispensable pour que des milliers de réseaux différents communiquent.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 aiguillages justes et une justification qui mentionne les règles communes ET la mise à jour des routes.</div>
+    <details class="prof"><summary>🅰 Version Filius (au labo, avec le professeur)</summary>
+      <p><b>Protocole :</b> 1. construire deux réseaux locaux (2 PC + switch chacun) ; 2. les relier par deux routeurs ; 3. configurer les adresses IP (ex. 192.168.1.x et 192.168.2.x) ; 4. passer en mode simulation ; 5. envoyer un <i>ping</i> d'un réseau à l'autre et observer le trajet des paquets ; 6. couper une liaison et observer l'échec puis le re-routage après reconfiguration.</p>
+      <p><b>Dépannage :</b> ping en échec → vérifier les passerelles des PC ; paquets bloqués au routeur → table de routage incomplète.</p>
+      <p><b>Version débranchée :</b> 3 équipes = 3 routeurs, enveloppes numérotées avec adresses ; chaque équipe n'a que SA table. Chronométrer la livraison, puis « couper » une équipe et refaire la partie.</p>
+    </details>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🌀 Séance 3 — Quand la route casse… et défi final</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : pourquoi Internet continue-t-il de fonctionner même quand un cyclone coupe un câble ?</p>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Coupe le câble ! (simulateur de panne)</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> constater expérimentalement la résilience du routage et l'expliquer.</div>
+      <div><b>Compétence :</b> 3e_C4.8.</div>
+      <div><b>Production attendue :</b> 2 expériences menées au simulateur + 2 réponses + 1 explication.</div>
+      <div><b>Ressources :</b> simulateur ci-dessous (réseau de 5 routeurs).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la station (reliée à R1) envoie son alerte vers la mairie (reliée à R5). a) Note le chemin choisi. b) Coupe une liaison DU chemin en cliquant dessus, et observe. c) Continue de couper : que se passe-t-il quand plus AUCUN chemin n'existe ? Réponds ensuite.</div>
+    <div class="exo">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="btn small" id="btnEnvoyer" type="button">📨 Envoyer l'alerte R1 → R5</button>
+        <button class="btn small ghost" id="btnReparer" type="button">🔧 Tout réparer</button>
+      </div>
+      <svg id="simReseau" viewBox="0 0 640 260" style="width:100%;max-width:640px;display:block;margin:0 auto;background:#08132c;border:1px solid var(--color-border,#274a8a);border-radius:12px" role="img" aria-label="Simulateur : cinq routeurs R1 à R5 reliés par des liaisons cliquables ; cliquer sur une liaison la coupe ou la répare">
+        <g id="liens" stroke-width="5" style="cursor:pointer">
+          <line data-l="R1-R2" x1="90" y1="130" x2="250" y2="60"/>
+          <line data-l="R1-R3" x1="90" y1="130" x2="250" y2="200"/>
+          <line data-l="R2-R4" x1="250" y1="60" x2="410" y2="60"/>
+          <line data-l="R3-R4" x1="250" y1="200" x2="410" y2="60"/>
+          <line data-l="R3-R5" x1="250" y1="200" x2="550" y2="130"/>
+          <line data-l="R4-R5" x1="410" y1="60" x2="550" y2="130"/>
+        </g>
+        <g font-family="Verdana" font-size="13" font-weight="bold" text-anchor="middle">
+          <circle cx="90" cy="130" r="24" fill="#173666" stroke="#61dafb" stroke-width="2.5"/><text x="90" y="135" fill="#61dafb">R1</text>
+          <circle cx="250" cy="60" r="24" fill="#173666" stroke="#81fba1" stroke-width="2.5"/><text x="250" y="65" fill="#81fba1">R2</text>
+          <circle cx="250" cy="200" r="24" fill="#173666" stroke="#81fba1" stroke-width="2.5"/><text x="250" y="205" fill="#81fba1">R3</text>
+          <circle cx="410" cy="60" r="24" fill="#173666" stroke="#81fba1" stroke-width="2.5"/><text x="410" y="65" fill="#81fba1">R4</text>
+          <circle cx="550" cy="130" r="24" fill="#173666" stroke="#c68ef2" stroke-width="2.5"/><text x="550" y="135" fill="#c68ef2">R5</text>
+        </g>
+        <text x="90" y="172" font-family="Verdana" font-size="10" fill="#9bbefc" text-anchor="middle">🌀 station</text>
+        <text x="550" y="172" font-family="Verdana" font-size="10" fill="#9bbefc" text-anchor="middle">🏛 mairie</text>
+      </svg>
+      <p id="simResultat" role="status" aria-live="polite" style="text-align:center;font-weight:600;margin:10px 0;min-height:1.4em">Clique sur « Envoyer l'alerte » pour commencer. (Astuce : clique sur une liaison pour la couper/réparer.)</p>
+      <div class="assoc"><label for="b5_q1">Tu as coupé une liaison du chemin utilisé. Qu'a fait le réseau ?</label><select id="b5_q1"><option value="">— choisir —</option><option>il a trouvé automatiquement un autre chemin</option><option>l'alerte a été définitivement perdue</option><option>il a fallu appeler un technicien</option><option>le message est resté bloqué pour toujours</option></select></div>
+      <div class="assoc"><label for="b5_q2">Quand TOUTES les routes vers R5 sont coupées, que constate-t-on ?</label><select id="b5_q2"><option value="">— choisir —</option><option>l'alerte ne peut plus être livrée : aucun protocole ne remplace un réseau physiquement isolé</option><option>l'alerte passe quand même par magie</option><option>le simulateur invente une nouvelle liaison</option><option>R5 devient R4</option></select></div>
+      <label for="b5_exp" style="display:block;margin-top:10px"><b>Explique</b> avec tes mots pourquoi Internet a été conçu ainsi (plusieurs chemins possibles + tables mises à jour) :</label>
+      <textarea id="b5_exp" placeholder="Internet résiste aux pannes parce que…"></textarea>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Fais vraiment les expériences ! Envoie, coupe la liaison utilisée (elle devient rouge), renvoie. Observe le NOUVEAU chemin affiché.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le maillage offre plusieurs chemins possibles ; le protocole de routage détecte la coupure et met à jour les tables : le trafic contourne. Mais si R5 est totalement isolé (plus aucune liaison), aucune règle ne peut l'atteindre : la résilience a une limite physique.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> Chemin initial : R1→R3→R5 (le plus court : 2 sauts seulement). <b>b)</b> Après coupure d'une liaison du chemin (ex. R3-R5) : re-routage automatique par un chemin plus long (R1→R3→R4→R5 ou R1→R2→R4→R5) — plus lent, mais l'alerte arrive. <b>c)</b> R5 isolé (R3-R5 ET R4-R5 coupées) → « livraison impossible » : le protocole ne crée pas de câbles, il exploite ceux qui existent.</p>
+      <p><b>Explication attendue :</b> Internet est <b>maillé</b> (plusieurs chemins possibles entre deux points) et les routeurs <b>s'informent mutuellement</b> des routes disponibles grâce au protocole de routage. Une panne locale est contournée automatiquement, sans intervention humaine — conception héritée des besoins de résilience des premiers réseaux. C'est vital en zone cyclonique !</p>
+      <p><b>Exemple réel :</b> quand un câble sous-marin est endommagé aux Antilles, le trafic est re-routé par les câbles voisins ; la connexion devient plus lente, mais elle survit.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire que le re-routage nécessite un technicien ; croire que le protocole peut « traverser » une coupure totale ; confondre lenteur (route de secours plus longue) et panne.</div>
+    <div class="retenir"><b>📌 À retenir :</b> le <b>maillage</b> + le <b>protocole de routage</b> (tables mises à jour automatiquement) rendent Internet <b>résilient</b> : une route coupée est contournée. Limite : un réseau physiquement isolé reste injoignable.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 2 expériences réellement menées, 2 bonnes réponses, et une explication mentionnant maillage + mise à jour des tables.</div>
+  </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Réinvestissement</span><h3>🗼 Un mail pour Tokyo</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> réutiliser toutes les notions dans une situation entièrement nouvelle, sans modèle.</div>
+      <div><b>Compétences :</b> 3e_C4.7 + C4.8 (bilan).</div>
+      <div><b>Production attendue :</b> 6 réponses + 1 justification, sans rouvrir les corrections précédentes.</div>
+      <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> depuis le lycée de Rivière-Salée, Kylian envoie à sa correspondante de Tokyo un mail avec une photo (3 000 000 octets). Les paquets transportent 1 500 octets de données chacun. Réponds sans recopier les activités précédentes.</div>
+    <div class="exo">
+      <div class="assoc"><label for="b6_1">Par quel équipement le mail SORT-il du réseau du lycée ?</label><select id="b6_1"><option value="">— choisir —</option><option>le routeur</option><option>le commutateur</option><option>l'écran du PC</option><option>la sirène</option></select></div>
+      <div class="assoc"><label for="b6_2">Combien de paquets faut-il environ pour la photo ? (3 000 000 ÷ 1 500)</label><input type="number" id="b6_2"></div>
+      <div class="assoc"><label for="b6_3">Quel support achemine l'essentiel du trajet Martinique → Japon ?</label><select id="b6_3"><option value="">— choisir —</option><option>des câbles sous-marins successifs</option><option>un satellite unique</option><option>le Bluetooth</option><option>une antenne 4G géante</option></select></div>
+      <div class="assoc"><label for="b6_4">Les paquets 1 à 2000 arrivent, sauf le n°1207. Que se passe-t-il ?</label><select id="b6_4"><option value="">— choisir —</option><option>seul le paquet n°1207 est redemandé puis réinséré à sa place</option><option>toute la photo est renvoyée</option><option>la photo s'affiche avec un trou définitif</option><option>le mail est annulé</option></select></div>
+      <div class="assoc"><label for="b6_5">Vrai ou faux : « Tous les paquets de la photo suivent forcément le même chemin. »</label><select id="b6_5"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <div class="assoc"><label for="b6_6">Un séisme endommage un câble dans le Pacifique pendant l'envoi. Le plus probable :</label><select id="b6_6"><option value="">— choisir —</option><option>les routeurs re-routent le trafic par d'autres câbles, éventuellement plus lentement</option><option>Internet s'arrête dans le monde entier</option><option>la photo revient à l'expéditeur</option><option>le Japon change d'adresse IP</option></select></div>
+      <label for="b6_just" style="display:block;margin-top:10px"><b>Justifie</b> en 2-3 phrases : pourquoi ce voyage n'est possible que parce que tous les réseaux traversés respectent les mêmes protocoles ?</label>
+      <textarea id="b6_just" placeholder="Le mail traverse des réseaux de pays et d'opérateurs différents…"></textarea>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends la logique de la séquence : sortie du réseau local → succession de réseaux → paquets numérotés → routage résilient. Le calcul est une simple division.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>3 000 000 ÷ 1 500 = 2 000 paquets. Pour la justification : adresses comprises partout + règles de transport identiques + annonces de routes — sans cela, chaque frontière de réseau serait un mur.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Réponses :</b> le routeur · <b>2 000</b> paquets · câbles sous-marins successifs · seul le n°1207 est redemandé · faux (routes possiblement différentes) · re-routage par d'autres câbles.</p>
+      <p><b>Justification :</b> le mail traverse des dizaines de réseaux d'opérateurs et de pays différents. Ils n'ont ni le même matériel ni la même langue humaine — mais ils partagent les <b>mêmes protocoles</b> : adressage IP compris par tous, découpage en paquets identique, règles de routage communes et annonces de routes mutuelles. C'est cette norme partagée qui transforme des milliers de réseaux étrangers en UN réseau mondial.</p>
+      <p><b>Bilan :</b> si tu as répondu sans rouvrir les corrections, les notions sont acquises — note le reste dans ton bilan ci-dessous.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre 200 ou 20 000 paquets (erreur de zéros) ; répondre « vrai » au chemin unique ; justifier par « c'est obligatoire » sans expliquer l'interopérabilité.</div>
+    <div class="retenir"><b>📌 À retenir :</b> la démarche est transférable à n'importe quel échange sur Internet : sortie par le routeur, découpage en paquets, succession de réseaux, routage résilient — le tout grâce à des protocoles communs.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6/6 et une justification complète, sans avoir rouvert les corrections.</div>
+  </div>
+</section>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5 — rien de nouveau ici.</p>
+  <h4>1. Du réseau local à Internet (activités 1-2)</h4>
+  <p>Un réseau local = <b>terminaux</b> + <b>commutateur</b> (relie à l'intérieur) + <b>routeur</b> (porte vers les autres réseaux). Chaque équipement a une <b>adresse IP</b>. <b>Internet est un réseau de réseaux</b> : une information traverse une succession de réseaux (local → opérateur → câbles sous-marins → opérateur du destinataire), et l'on sait représenter ce trajet par un schéma fléché. ~99 % du trafic intercontinental passe par les <b>câbles sous-marins</b>.</p>
+  <h4>2. Les paquets (activité 3)</h4>
+  <p>Tout message est <b>découpé en paquets numérotés</b> portant les adresses IP source et destination. Ils voyagent indépendamment (routes parfois différentes), sont <b>réassemblés grâce aux numéros</b>, et un paquet perdu est redemandé individuellement.</p>
+  <h4>3. Le routage et sa nécessité (activités 4-5)</h4>
+  <p>Chaque routeur aiguille les paquets grâce à sa <b>table de routage</b>, mise à jour automatiquement. Le <b>protocole de routage commun</b> est indispensable : sans règles partagées par tous les réseaux, pas de communication possible entre eux. Le <b>maillage</b> + les mises à jour rendent Internet <b>résilient</b> aux pannes — dans la limite du physique : un réseau isolé reste injoignable.</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">réseau = network</span><span class="tag">routeur = router</span><span class="tag">commutateur = switch</span><span class="tag">paquet = packet</span><span class="tag">table de routage = routing table</span><span class="tag">câble sous-marin = submarine cable</span><span class="tag">protocole = protocol</span><span class="tag">pare-feu = firewall</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé ? Corrige ou complète avec ce que tu sais maintenant :</label>
+    <textarea id="hyp_retour" placeholder="En fait, le message passe par…"></textarea>
+  </div>
+  <div class="bilan-grid">
+    <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions pour vérifier toutes les notions — corrections détaillées, minuteur facultatif, reprise possible.</p>
+  <a class="btn qcm" href="qcm_3e_C4.7-C4.8_internet_sainte_luce.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🗺 <b>Défi carte :</b> sur le site (public) de cartographie des câbles sous-marins, retrouve les câbles qui desservent la Martinique et note leurs points d'atterrissage.</p>
+  <p>⏱ <b>Défi mesure :</b> avec le professeur, lance <code>tracert</code> (Windows) vers un site français puis japonais : compte les routeurs traversés et compare.</p>
+  <p>🔧 <b>Défi Filius :</b> ajoute un 3e réseau à ton montage Filius et fais communiquer les trois — combien de routes possibles maintenant ?</p>
+</section>
+
+<footer>
+  <p>Séquence 3e_C4.7 → 3e_C4.8 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde locale ══════ */
+const KEY = "seq_3e_C4.7-C4.8_internet";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, coupees: window.__coupees || []};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__coupees = o.coupees || [];
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale (réponses, bilan, progression) ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Simulateur de paquets (activité 3) ══════ */
+let paquetsAttendus = null; // ordre correct des contenus
+$("btnDecoupe").addEventListener("click", ()=>{
+  const msg = $("simMsg").value.trim();
+  if(msg.length < 12){ $("zonePaquets").innerHTML = '<p style="color:var(--err)">Écris un message d\'au moins 12 caractères.</p>'; return; }
+  const taille = Math.ceil(msg.length/3);
+  const parts = [msg.slice(0,taille), msg.slice(taille,2*taille), msg.slice(2*taille)];
+  paquetsAttendus = parts;
+  const ordre = [2,0,1]; // arrivée volontairement dans le désordre (stable pour la reprise)
+  let html = '<p style="font-size:.9em;color:var(--sub)">📨 Les paquets arrivent (dans le désordre !). Attribue à chacun sa position finale :</p><div style="display:grid;gap:8px">';
+  ordre.forEach(i=>{
+    html += `<div class="assoc" style="background:#0d2347;border:1px solid var(--color-border,#274a8a);border-radius:9px;padding:8px 12px">
+      <span style="font-family:'Fira Code',monospace;font-size:.85em"><b style="color:#ffd66b">n°${i+1}/3</b> · IP dest. 203.0.113.25 · « ${parts[i].replace(/</g,"&lt;")} »</span>
+      <select data-paquet="${i}" aria-label="Position du paquet ${i+1}"><option value="">position…</option><option>1</option><option>2</option><option>3</option></select></div>`;
+  });
+  html += '</div><button class="btn small" id="btnReassemble" type="button" style="margin-top:8px">🧩 Réassembler</button>';
+  $("zonePaquets").innerHTML = html;
+  $("zoneReassemble").textContent = "";
+  $("btnReassemble").addEventListener("click", ()=>{
+    const sel = [...document.querySelectorAll("[data-paquet]")];
+    const okOrdre = sel.every(s => s.value !== "" && parseInt(s.value,10) === parseInt(s.dataset.paquet,10)+1);
+    if(okOrdre){
+      window.__simOk = true;
+      $("zoneReassemble").innerHTML = `<p style="color:var(--ok);font-weight:600">✔ Message reconstitué : « ${paquetsAttendus.join("").replace(/</g,"&lt;")} » — bravo, tu as fait le travail du destinataire !</p>`;
+    } else {
+      $("zoneReassemble").innerHTML = '<p style="color:var(--err)">✘ L\'ordre n\'est pas bon : relis le numéro n°…/3 de chaque paquet.</p>';
+    }
+    save(false);
+  });
+});
+
+/* ══════ Simulateur de panne (activité 5) ══════ */
+const GRAPHE = {"R1":["R2","R3"],"R2":["R1","R4"],"R3":["R1","R4","R5"],"R4":["R2","R3","R5"],"R5":["R3","R4"]};
+window.__coupees = window.__coupees || [];
+function lienCoupe(a,b){ return window.__coupees.includes(a+"-"+b) || window.__coupees.includes(b+"-"+a); }
+function chemin(){ // BFS R1 → R5
+  const file=[["R1"]], vus=new Set(["R1"]);
+  while(file.length){
+    const p=file.shift(), n=p[p.length-1];
+    if(n==="R5") return p;
+    (GRAPHE[n]||[]).forEach(v=>{ if(!vus.has(v)&&!lienCoupe(n,v)){ vus.add(v); file.push(p.concat(v)); } });
+  }
+  return null;
+}
+function majReseau(){
+  document.querySelectorAll("#liens line").forEach(l=>{
+    const coupe = window.__coupees.includes(l.dataset.l);
+    l.setAttribute("stroke", coupe ? "#ff7b88" : "#274a8a");
+    l.setAttribute("stroke-dasharray", coupe ? "6 6" : "none");
+  });
+}
+document.querySelectorAll("#liens line").forEach(l=>{
+  l.setAttribute("tabindex","0");
+  l.setAttribute("role","button");
+  l.setAttribute("aria-label","Liaison "+l.dataset.l+" — Entrée pour couper ou réparer");
+  l.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); l.dispatchEvent(new Event("click")); } });
+  l.addEventListener("click", ()=>{
+    const id=l.dataset.l, i=window.__coupees.indexOf(id);
+    if(i>=0) window.__coupees.splice(i,1); else window.__coupees.push(id);
+    majReseau(); save(false);
+    $("simResultat").textContent = (i>=0?"🔧 Liaison "+id+" réparée.":"✂ Liaison "+id+" coupée.") + " Clique sur « Envoyer l'alerte » pour tester.";
+    $("simResultat").style.color = "";
+  });
+});
+$("btnEnvoyer").addEventListener("click", ()=>{
+  const c = chemin();
+  window.__envois = (window.__envois||0)+1;
+  if(c){ $("simResultat").textContent = "📨 Alerte livrée par le chemin : " + c.join(" → ") + " ✔"; $("simResultat").style.color = "#81fba1"; if(window.__coupees.length) window.__rerouteVu = true; }
+  else { $("simResultat").textContent = "🚫 Livraison impossible : R5 est isolé, plus aucun chemin n'existe."; $("simResultat").style.color = "#ff7b88"; window.__isoleVu = true; }
+  save(false);
+});
+$("btnReparer").addEventListener("click", ()=>{ window.__coupees=[]; majReseau(); $("simResultat").textContent="🔧 Toutes les liaisons sont réparées."; $("simResultat").style.color=""; save(false); });
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = id => parseFloat(String($(id).value).replace(",","."));
+const txt = id => String($(id).value||"").trim().toLowerCase();
+const CHECKS = {
+  1: function(){
+    const att={b1_1:"terminaux",b1_2:"le commutateur (switch)",b1_3:"le routeur",b1_4:"une adresse IP unique",b1_5:"faux",b1_6:"vrai"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:6,valide:ok===6};
+  },
+  2: function(){
+    const att={b2_e1:"3",b2_e2:"1",b2_e3:"6",b2_e4:"2",b2_e5:"5",b2_e6:"4"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    if($("b2_q1").value==="par les câbles sous-marins") ok++;
+    const cOk = txt("b2_cahier").length>=20;
+    return {score:ok,total:7,extra:cOk?"":" Décris aussi ton schéma du cahier (2 phrases minimum).",valide:ok===7&&cOk};
+  },
+  3: function(){
+    let ok=0;
+    if($("b3_q1").value.startsWith("à remettre")) ok++;
+    if($("b3_q2").value.startsWith("il redemande SEULEMENT")) ok++;
+    if($("b3_q3").value.startsWith("les paquets se faufilent")) ok++;
+    const simOk = !!window.__simOk;
+    return {score:ok,total:3,extra:simOk?"":" Utilise d'abord le simulateur : découpe, remets en ordre et réassemble ton message.",valide:ok===3&&simOk};
+  },
+  4: function(){
+    let ok=0;
+    if($("b4_p1").value==="R4") ok++;
+    if($("b4_p2").value==="R1") ok++;
+    if($("b4_p3").value==="R3") ok++;
+    if($("b4_p4").value==="R3") ok++;
+    const j=txt("b4_just");
+    const jOk = j.length>=30 && (j.includes("règle")||j.includes("protocole")||j.includes("commun")||j.includes("comprend"));
+    return {score:ok,total:4,extra:jOk?"":" Ta justification doit expliquer pourquoi des règles COMMUNES sont indispensables entre routeurs différents.",valide:ok===4&&jOk};
+  },
+  5: function(){
+    let ok=0;
+    if($("b5_q1").value.startsWith("il a trouvé automatiquement")) ok++;
+    if($("b5_q2").value.startsWith("l'alerte ne peut plus")) ok++;
+    const e=txt("b5_exp");
+    const eOk = e.length>=30 && (e.includes("chemin")||e.includes("maill")||e.includes("route")) && (e.includes("table")||e.includes("jour")||e.includes("automatique"));
+    const expOk = !!window.__rerouteVu;
+    let extra="";
+    if(!expOk) extra += " Fais vraiment l'expérience : envoie, coupe une liaison du chemin, renvoie.";
+    if(!eOk) extra += " Ton explication doit citer les chemins multiples ET la mise à jour des tables.";
+    return {score:ok,total:2,extra,valide:ok===2&&eOk&&expOk};
+  },
+  6: function(){
+    let ok=0;
+    if($("b6_1").value==="le routeur") ok++;
+    if(num("b6_2")===2000) ok++;
+    if($("b6_3").value==="des câbles sous-marins successifs") ok++;
+    if($("b6_4").value.startsWith("seul le paquet")) ok++;
+    if($("b6_5").value==="faux") ok++;
+    if($("b6_6").value.startsWith("les routeurs re-routent")) ok++;
+    const jOk = txt("b6_just").length>=40;
+    return {score:ok,total:6,extra:jOk?"":" N'oublie pas la justification sur les protocoles communs.",valide:ok>=5&&jOk};
+  }
+};
+const ENCOURAGE_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENCOURAGE_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENCOURAGE_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = `${r.score} / ${r.total} réponses correctes.`;
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENCOURAGE_OK[r.score%ENCOURAGE_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENCOURAGE_MI[r.score%ENCOURAGE_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENCOURAGE_KO[r.score%ENCOURAGE_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5,6].filter(k=>v[k]).length;
+  $("progTxt").textContent = `${n} / 6 activités validées`;
+  $("progFill").style.width = (n/6*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3,4], s3:[5,6]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majReseau(); majProgress(); majHyp();
+</script>
+</body>
+</html>
