@@ -62,3 +62,30 @@ les décisions de publication restent à ChatGPT.*
   d'entraînement public et évaluation sommative à corrigé non publié.
 - Statut de relecture : les séquences peuvent rester `A_RELIRE_PASCAL` sans
   bloquer la préparation des lots suivants.
+
+## 2026-07-22 — Thème 2 · LOT 01 « Station d'alerte cyclonique connectée » (Fable, branche `fable/theme-2/lot-01-station-alerte-cyclonique`)
+
+1. **LOT 1 réalisé** conformément à la feuille de route (P1) : séquence-projet
+   mutualisée 3e_C4.3→C4.6 (4 séances, versions A/B/C), QCM d'entraînement
+   32 q, synthèses élève/professeur, fiche pédagogique, matrice de couverture,
+   5 SVG originaux CC0, jeu de données 48 h **simulé** (CSV/ODS/XLSX),
+   rapport de tests automatisés. Périmètre limité au Thème 2 : les corrections
+   rapides hors Thème 2 listées au §4 de la feuille de route (3e_C9.1, 5e_C1.1,
+   4e_C1.4) sont laissées aux agents des thèmes concernés.
+2. **Statuts** : `3e_C4.3` → `COMPLET ET VALIDABLE` ; `3e_C4.4`, `3e_C4.5`,
+   `3e_C4.6` → `COUVERT PAR UNE SÉQUENCE MUTUALISÉE` (README pointeurs posés).
+   Audit resynchronisé via `_outils/build_audit.py` (114 codes).
+3. **Badge NEW (règle obligatoire de Pascal)** : création de `nouveautes.json`
+   (durée 21 jours par défaut) et extension de `_outils/make_index.py` :
+   badges automatiques thème/compétence/code/liens, ancres directes
+   (`index.html#3e_C4.3` ouvre la compétence et défile jusqu'au code),
+   pulsation désactivée avec `prefers-reduced-motion`, expiration automatique
+   côté client sans regénération. Fichiers partagés modifiés en conséquence
+   (make_index.py, index.html, README.md régénérés) — modification strictement
+   additive, signalée dans le manifeste du lot.
+4. **Gouvernance de publication** : sur instruction directe de Pascal
+   (2026-07-22), l'agent Fable publie lui-même le lot sur GitHub (branche
+   dédiée). La date `date_publication` de `nouveautes.json` est fixée au
+   2026-07-22 ; si la fusion dans `main` intervient plus tard, l'ajuster avant
+   fusion. **Évaluation sommative non incluse** (à construire par l'enseignant,
+   corrigé non publié).
