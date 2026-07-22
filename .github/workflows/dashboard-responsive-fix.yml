@@ -1,0 +1,81 @@
+name: Corriger l'affichage responsive du tableau de bord
+
+on:
+  push:
+    branches:
+      - draft/dashboard-new-badges
+    paths:
+      - .github/workflows/dashboard-responsive-fix.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  corriger:
+    if: ${{ !contains(github.event.head_commit.message, '[dashboard-auto]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer la branche
+        uses: actions/checkout@v4
+        with:
+          ref: draft/dashboard-new-badges
+
+      - name: Corriger le générateur et régénérer l'accueil
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          path = Path('_outils/make_index.py')
+          text = path.read_text(encoding='utf-8')
+
+          replacements = {
+              '.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:6px 22px 20px}\n@media(max-width:760px){.levels{grid-template-columns:1fr}}\n.lvl{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 14px}':
+              '.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:6px 22px 20px}\n@media(max-width:980px){.levels{grid-template-columns:repeat(2,minmax(0,1fr))}}\n@media(max-width:680px){body{padding-left:8px;padding-right:8px}.levels{grid-template-columns:1fr;padding:6px 10px 16px}.comp>summary{padding:12px 10px;align-items:flex-start;flex-wrap:wrap}.comp>summary .count{width:100%;margin-left:44px}}\n.lvl{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;min-width:0;overflow:hidden}',
+              '.code-line{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px dashed rgba(39,74,138,.55);font-size:.8em}':
+              '.code-line{display:grid;grid-template-columns:minmax(64px,auto) minmax(0,1fr);gap:8px;align-items:start;padding:5px 0;border-bottom:1px dashed rgba(39,74,138,.55);font-size:.8em;min-width:0}',
+              '.code-line a{color:var(--hl);text-decoration:none}':
+              '.code-line>span:last-child{min-width:0;overflow-wrap:anywhere;word-break:break-word}\n.code-line a{color:var(--hl);text-decoration:none;overflow-wrap:anywhere;word-break:break-word}',
+              '.comp>summary .count{margin-left:auto;font-size:.75em;color:var(--hl);white-space:nowrap}':
+              '.comp>summary>span:nth-child(2){min-width:0;overflow-wrap:anywhere}\n.comp>summary .count{margin-left:auto;font-size:.75em;color:var(--hl);white-space:nowrap}'
+          }
+
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f'Motif introuvable dans make_index.py : {old[:80]}')
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          subprocess.run([sys.executable, '_outils/make_index.py'], check=True)
+
+          generated = Path('index.html').read_text(encoding='utf-8')
+          required = [
+              'repeat(3,minmax(0,1fr))',
+              '@media(max-width:980px)',
+              '@media(max-width:680px)',
+              'grid-template-columns:minmax(64px,auto) minmax(0,1fr)',
+              'overflow-wrap:anywhere',
+              '3e_C1.5'
+          ]
+          missing = [token for token in required if token not in generated]
+          if missing:
+              raise SystemExit(f'Contrôle de génération échoué : {missing}')
+
+          report = Path('docs/tests/tableau-de-bord-responsive.md')
+          report.parent.mkdir(parents=True, exist_ok=True)
+          report.write_text('''# Contrôle responsive du tableau de bord\n\n- grille 3 colonnes avec `minmax(0,1fr)` ;\n- passage à 2 colonnes sous 980 px ;\n- passage à 1 colonne sous 680 px ;\n- cartes autorisées à rétrécir avec `min-width:0` ;\n- noms de ressources autorisés à revenir à la ligne ;\n- code `3e_C1.5` toujours présent après régénération.\n\nCe correctif répond au débordement observé sur la capture fournie par Pascal.\n''', encoding='utf-8')
+          PY
+
+      - name: Enregistrer le correctif
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _outils/make_index.py index.html README.md docs/tests/tableau-de-bord-responsive.md
+          git commit -m "fix(dashboard): empêcher le débordement des colonnes [dashboard-auto]"
+          git push origin HEAD:draft/dashboard-new-badges
