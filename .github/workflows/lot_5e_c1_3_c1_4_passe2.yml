@@ -1,0 +1,161 @@
+name: LOT pilote 5e C1.3-C1.4 — passe 2
+
+on:
+  push:
+    branches:
+      - draft/lot-5e-c1-3-c1-4-sequence-qcm
+    paths:
+      - .github/workflows/lot_5e_c1_3_c1_4_passe2.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  enrichir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: draft/lot-5e-c1-3-c1-4-sequence-qcm
+
+      - name: Ajouter les corrections structurées
+        shell: bash
+        run: |
+          cat > theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3/qcm-corrections-5e-c1-3-c1-4.js <<'EOF'
+          window.QCM_CORRECTIONS = {
+            1:{answer:"collecter, stocker, traiter et diffuser l’information",reason:"Un système d’information organise tout le cycle de vie de l’information : acquisition, conservation, traitement et partage.",example:"L’ENT rassemble les devoirs, les notes et les messages, puis les rend accessibles aux personnes autorisées.",error:"Réduire un système d’information à un seul appareil ou à une seule action.",distractors:"Fabriquer, chauffer ou imprimer sont des actions techniques particulières ; elles ne définissent pas le rôle global d’un système d’information.",remember:"SI = informations + personnes + matériels + logiciels + règles de fonctionnement."},
+            2:{answer:"consulter le cahier de texte et partager des documents",reason:"L’ENT est un service numérique de consultation, d’échange et de partage destiné à la communauté scolaire.",example:"Un professeur dépose un document ; l’élève le consulte depuis la maison.",error:"Confondre l’usage du service avec la maintenance du matériel.",distractors:"Réparer, cuisiner ou nettoyer ne sont pas des fonctions de l’ENT.",remember:"L’ENT facilite l’accès et le partage d’informations scolaires."},
+            3:{answer:"des droits d’accès",reason:"Les droits déterminent qui peut lire, modifier, ajouter ou supprimer une information.",example:"L’élève peut consulter sa note, tandis que le professeur peut la saisir ou la corriger.",error:"Croire que partager signifie rendre toutes les données publiques.",distractors:"Les photocopies et le tampon ne gèrent pas les autorisations numériques ; tout rendre public supprimerait la protection des données.",remember:"Partager ne signifie pas tout montrer à tout le monde."},
+            4:{answer:"une organisation en dossiers et sous-dossiers",reason:"Une arborescence représente une organisation hiérarchique depuis une racine vers des dossiers, sous-dossiers et fichiers.",example:"Documents → Collège → 5e → Technologie → Projet.",error:"Se laisser distraire par le mot arbre au sens végétal.",distractors:"Une plante, un écran ou un câble ne décrivent pas l’organisation logique des fichiers.",remember:"Racine → dossiers → sous-dossiers → fichiers."},
+            5:{answer:"Documents/College/5e/Technologie/comptes-rendus/",reason:"Un chemin efficace va du général au particulier avec des noms explicites.",example:"Pour retrouver un travail, on suit successivement l’espace, le niveau, la matière et le type de document.",error:"Utiliser des dossiers vagues comme truc, machin ou sans titre.",distractors:"Les autres chemins ne donnent pas d’indication fiable sur le contenu ou placent le fichier dans un lieu inadapté.",remember:"Un bon classement permet de retrouver un fichier sans l’ouvrir."},
+            6:{answer:"2026-03-12_CR_jardin-connecte_seance2.odt",reason:"Le nom contient une date, un type de document, un sujet et une séance ; il reste compréhensible et triable.",example:"2026-09-15_schema-reseau_v1.png.",error:"Multiplier les mots final, vrai ou dernier sans règle de version.",distractors:"Sans titre, aaaaa ou final(3) ne renseignent ni le sujet ni la date.",remember:"Date + sujet + version = nom de fichier efficace."},
+            7:{answer:"une image",reason:"L’extension .jpg désigne un format courant d’image compressée.",example:"photo_classe.jpg s’ouvre avec une visionneuse d’images.",error:"Confondre l’extension avec le nom du fichier.",distractors:"Le son utilise par exemple .mp3, la vidéo .mp4 et le texte brut .txt.",remember:"L’extension placée après le point indique le type de fichier."},
+            8:{answer:"un fichier audio",reason:"MP3 est un format de compression du son.",example:"podcast-technologie.mp3 peut être lu par un lecteur audio.",error:"Associer MP3 à MP4 uniquement parce que les noms se ressemblent.",distractors:"Une image, un tableur ou un programme utilisent d’autres extensions.",remember:"MP3 = son ; MP4 = conteneur souvent utilisé pour la vidéo."},
+            9:{answer:"8 bits",reason:"Un octet regroupe huit positions binaires, chacune pouvant valoir 0 ou 1.",example:"01000001 comporte 8 bits et peut coder un caractère.",error:"Confondre bit et octet.",distractors:"Toute autre valeur ne correspond pas à la définition normalisée de l’octet.",remember:"1 octet = 8 bits."},
+            10:{answer:"Ko < Mo < Go < To",reason:"Les préfixes kilo, méga, giga et téra représentent des capacités de plus en plus grandes.",example:"Un texte peut peser quelques Ko, une photo quelques Mo et une vidéo plusieurs Go.",error:"Lire l’ordre à l’envers.",distractors:"Les autres propositions mélangent les unités et ne respectent pas leur ordre de grandeur.",remember:"Kilo → Méga → Giga → Téra."},
+            11:{answer:"quelques Mo",reason:"Une photo de smartphone contient des millions de pixels et nécessite généralement plusieurs mégaoctets.",example:"Une photo JPEG peut peser environ 2 à 8 Mo selon la définition et la compression.",error:"Choisir une valeur gigantesque comme plusieurs centaines de Go.",distractors:"Quelques octets sont insuffisants ; 500 Go ou 2 To correspondent à des capacités de stockage, pas à une photo ordinaire.",remember:"Texte : Ko ; photo : Mo ; longue vidéo : Go."},
+            12:{answer:"sur l’appareil lui-même",reason:"Le stockage local se trouve physiquement sur l’ordinateur, la tablette, le téléphone ou un support directement relié.",example:"Enregistrer un fichier sur le disque interne ou sur une clé USB.",error:"Confondre local et cloud.",distractors:"Un serveur distant dépend du réseau ; le cahier n’est pas un stockage numérique.",remember:"Local = sur l’appareil ou un support directement connecté."},
+            13:{answer:"des serveurs distants accessibles par Internet",reason:"Le cloud repose sur des centres de données qui stockent les fichiers et fournissent des services à distance.",example:"Un document synchronisé peut être retrouvé sur la tablette et sur l’ordinateur.",error:"Prendre le mot cloud au sens météorologique.",distractors:"Une clé USB et la mémoire vive sont locales ; un nuage météo n’est pas un service informatique.",remember:"Le cloud est distant, même si son accès paraît immédiat."},
+            14:{answer:"accéder à ses fichiers depuis plusieurs appareils connectés",reason:"La synchronisation en ligne rend les documents disponibles depuis différents appareils autorisés.",example:"Commencer un devoir au collège puis le reprendre à la maison.",error:"Croire que le cloud fonctionne sans énergie ou offre un espace illimité.",distractors:"Le service nécessite des équipements, de l’électricité, une connexion et possède toujours des limites.",remember:"Avantage principal : disponibilité et synchronisation."},
+            15:{answer:"sans connexion, l’accès peut être impossible",reason:"Un fichier uniquement distant nécessite généralement une connexion au service qui l’héberge.",example:"Dans une zone sans réseau, un document non téléchargé ne s’ouvre pas.",error:"Oublier de conserver une copie locale lorsque le réseau est incertain.",distractors:"Le cloud ne chauffe pas le clavier et n’efface pas automatiquement les photos ; le vrai risque ici est la dépendance au réseau.",remember:"Prévoir une copie hors connexion des documents importants."},
+            16:{answer:"un ordinateur qui rend un service à d’autres machines",reason:"Un serveur répond aux demandes de clients : stockage, site web, authentification ou partage de fichiers.",example:"Le serveur de l’ENT transmet la page demandée au navigateur de l’élève.",error:"Confondre le mot serveur informatique avec une personne qui sert.",distractors:"Un professeur, un câble ou un écran ne jouent pas le rôle d’un serveur réseau.",remember:"Le serveur fournit ; le client demande."},
+            17:{answer:"copier ses fichiers importants sur un autre support",reason:"Une sauvegarde crée une copie indépendante pour permettre la récupération après une panne, une erreur ou un vol.",example:"Conserver le projet sur l’ordinateur et sur un disque externe.",error:"Déplacer le fichier au lieu d’en conserver une deuxième copie.",distractors:"Renommer, mettre en gras ou imprimer ne crée pas de copie numérique de secours.",remember:"Une sauvegarde doit exister ailleurs que l’original."},
+            18:{answer:"utiliser la fonction Rechercher",reason:"La recherche filtre rapidement selon le nom, l’extension, la date ou le contenu.",example:"Rechercher *.pdf pour afficher les documents PDF.",error:"Ouvrir tous les dossiers un par un.",distractors:"Redémarrer ou secouer l’écran ne localise pas un fichier ; explorer manuellement est lent et peu fiable.",remember:"Nom, type et date sont des critères de recherche utiles."},
+            19:{answer:"la racine",reason:"La racine est le point de départ d’une arborescence.",example:"C:\\ sous Windows ou / dans de nombreux systèmes de type Unix.",error:"Confondre racine, dossier et fichier.",distractors:"Feuille et sommet sont des métaphores incomplètes ; la corbeille est un dossier particulier.",remember:"Tous les chemins partent d’une racine."},
+            20:{answer:"un dossier par matière, des noms explicites et un nettoyage régulier",reason:"Ces pratiques réduisent les doublons et facilitent la recherche.",example:"Archiver les versions anciennes dans un dossier Archives.",error:"Tout laisser sur le Bureau ou appeler tous les fichiers final.",distractors:"Le Bureau encombré et les noms identiques empêchent de distinguer les documents.",remember:"Classer, nommer, sauvegarder et archiver."},
+            21:{answer:"un petit système d’information",reason:"Le dispositif collecte une mesure, la traite, la stocke éventuellement et la communique.",example:"Le capteur produit une valeur d’humidité affichée sur un écran ou enregistrée dans un fichier.",error:"Confondre traitement de l’information et chaîne d’énergie.",distractors:"Le moteur et la pompe sont des actionneurs ; ils n’organisent pas les données.",remember:"Donnée mesurée → traitement → stockage ou affichage."},
+            22:{answer:"consulter sans pouvoir modifier",reason:"Le droit de lecture seule protège le document original tout en permettant sa consultation.",example:"Le professeur diffuse une fiche que les élèves peuvent lire mais pas remplacer.",error:"Penser que tout partage autorise automatiquement la modification.",distractors:"Supprimer, modifier ou vendre nécessitent d’autres droits et ne correspondent pas à lecture seule.",remember:"Lire, modifier et administrer sont des permissions différentes."},
+            23:{answer:"un tableur",reason:"CSV représente des données organisées en lignes et colonnes séparées par un caractère.",example:"Des mesures de température peuvent être importées dans LibreOffice Calc pour créer un graphique.",error:"Confondre CSV avec un format vidéo.",distractors:"Un lecteur vidéo, un jeu ou une imprimante ne sont pas les outils adaptés pour analyser un tableau CSV.",remember:"CSV = données tabulaires échangeables."},
+            24:{answer:"arborescence",reason:"Ce mot désigne l’organisation hiérarchique en forme d’arbre.",example:"Racine → Documents → Technologie → Projet.",error:"Répondre seulement dossier, qui ne décrit qu’un niveau.",distractors:"Les autres termes ne désignent pas l’ensemble de la structure hiérarchique.",remember:"L’arborescence décrit la structure complète des dossiers et fichiers."},
+            25:{answer:"un dictionnaire",reason:"Un dictionnaire associe une clé à une valeur ; ici, chaque titre est associé au nombre d’exemplaires.",example:"bibliotheque[\"1984\"] vaut 3.",error:"Confondre dictionnaire Python et dictionnaire de langue.",distractors:"Une chaîne contient du texte, une boucle répète des instructions et print affiche une information.",remember:"Dictionnaire = paires clé → valeur."},
+            26:{answer:"titre in bibliotheque",reason:"L’opérateur in vérifie si la clé titre existe dans le dictionnaire avant de lire sa quantité.",example:"\"1984\" in bibliotheque renvoie True si le titre est présent.",error:"Lire bibliotheque[titre] avant d’avoir vérifié l’existence de la clé.",distractors:"Les autres expressions n’effectuent pas correctement le test d’appartenance au dictionnaire.",remember:"Tester l’existence avant d’utiliser une clé."},
+            27:{answer:"bibliotheque[titre] -= 1",reason:"L’instruction retire un exemplaire à la quantité associée au titre emprunté.",example:"Si la quantité vaut 3, elle devient 2.",error:"Utiliser += 1, ce qui ajouterait un exemplaire.",distractors:"Effacer le dictionnaire, modifier le titre ou afficher la valeur ne met pas à jour le stock correctement.",remember:"-= 1 diminue une valeur de 1."},
+            28:{answer:"print()",reason:"La fonction print communique une information à l’utilisateur dans la console.",example:"print(\"Vous avez emprunté\", titre) affiche le résultat de l’opération.",error:"Croire que print stocke durablement la donnée.",distractors:"Le dictionnaire stocke, if décide et def définit une fonction ; print affiche.",remember:"Stocker et afficher sont deux fonctions différentes."},
+            29:{answer:"#",reason:"En Python, le caractère # commence un commentaire jusqu’à la fin de la ligne.",example:"# Vérifier la disponibilité explique le rôle de l’instruction suivante.",error:"Utiliser // comme dans certains autres langages.",distractors:"Les autres symboles ont d’autres significations ou provoquent une erreur de syntaxe.",remember:"Un commentaire explique le code sans être exécuté."},
+            30:{answer:"la fonction vérifie l’existence du titre et une quantité supérieure à zéro",reason:"Les deux conditions évitent une clé inexistante et interdisent un emprunt lorsque le stock est épuisé.",example:"Un livre présent avec une quantité de 0 doit être déclaré indisponible.",error:"Tester seulement l’existence du titre.",distractors:"Une condition incomplète peut accepter un stock nul ou provoquer une erreur sur une clé absente.",remember:"Une décision fiable vérifie toutes les conditions nécessaires."}
+          };
+          EOF
+
+      - name: Ajouter les six questions Python et les scripts
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, json
+          base=Path('theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3')
+          p=base/'qcm_systemes_information_donnees.html'
+          q=p.read_text(encoding='utf-8')
+          q=q.replace('QCM (24 questions)', 'QCM (30 questions)')
+          if 'name="q25"' not in q:
+              block=r'''
+          <section class="card" data-competence="5e_C1.3" data-points="1">
+            <p class="q-title">Dans le programme du CDI, <code>bibliotheque</code> est…</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+            <label><input type="radio" name="q25" value="dict"> un dictionnaire qui associe chaque titre à une quantité</label><label><input type="radio" name="q25" value="text"> une simple chaîne de caractères</label><label><input type="radio" name="q25" value="loop"> une boucle</label><label><input type="radio" name="q25" value="display"> une fonction d’affichage</label>
+            <div class="row"><button class="btn small" onclick="aide('a25')">Aide</button><button class="btn small" onclick="checkMCQ('q25','dict','fb25',1)">Corriger</button></div><div id="a25" class="help">Un dictionnaire Python associe une clé à une valeur : ici le titre du livre et le nombre d’exemplaires.</div><div id="fb25" class="answer"></div>
+          </section>
+          <section class="card" data-competence="5e_C1.3" data-points="1">
+            <p class="q-title">Quelle expression vérifie que le titre existe dans le dictionnaire ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+            <label><input type="radio" name="q26" value="in"> <code>titre in bibliotheque</code></label><label><input type="radio" name="q26" value="print"> <code>print(titre)</code></label><label><input type="radio" name="q26" value="plus"> <code>bibliotheque += titre</code></label><label><input type="radio" name="q26" value="none"> <code>titre = None</code></label>
+            <div class="row"><button class="btn small" onclick="aide('a26')">Aide</button><button class="btn small" onclick="checkMCQ('q26','in','fb26',1)">Corriger</button></div><div id="a26" class="help">L’opérateur <code>in</code> teste l’appartenance d’une clé à un dictionnaire.</div><div id="fb26" class="answer"></div>
+          </section>
+          <section class="card" data-competence="5e_C1.3" data-points="1">
+            <p class="q-title">Quelle instruction diminue de 1 le nombre d’exemplaires ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+            <label><input type="radio" name="q27" value="minus"> <code>bibliotheque[titre] -= 1</code></label><label><input type="radio" name="q27" value="plus"> <code>bibliotheque[titre] += 1</code></label><label><input type="radio" name="q27" value="clear"> <code>bibliotheque = {}</code></label><label><input type="radio" name="q27" value="show"> <code>print(bibliotheque)</code></label>
+            <div class="row"><button class="btn small" onclick="aide('a27')">Aide</button><button class="btn small" onclick="checkMCQ('q27','minus','fb27',1)">Corriger</button></div><div id="a27" class="help"><code>-= 1</code> signifie : reprendre la valeur actuelle et lui retirer 1.</div><div id="fb27" class="answer"></div>
+          </section>
+          <section class="card" data-competence="5e_C1.3" data-points="1">
+            <p class="q-title">Quelle fonction communique un message dans la console ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+            <label><input type="radio" name="q28" value="print"> <code>print()</code></label><label><input type="radio" name="q28" value="dict"> <code>dict()</code></label><label><input type="radio" name="q28" value="if"> <code>if</code></label><label><input type="radio" name="q28" value="def"> <code>def</code></label>
+            <div class="row"><button class="btn small" onclick="aide('a28')">Aide</button><button class="btn small" onclick="checkMCQ('q28','print','fb28',1)">Corriger</button></div><div id="a28" class="help"><code>print()</code> affiche une information ; il ne la sauvegarde pas durablement.</div><div id="fb28" class="answer"></div>
+          </section>
+          <section class="card" data-competence="5e_C1.3" data-points="1">
+            <p class="q-title">Quel symbole commence un commentaire en Python ?</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+            <label><input type="radio" name="q29" value="hash"> <code>#</code></label><label><input type="radio" name="q29" value="slash"> <code>//</code></label><label><input type="radio" name="q29" value="star"> <code>*</code></label><label><input type="radio" name="q29" value="question"> <code>?</code></label>
+            <div class="row"><button class="btn small" onclick="aide('a29')">Aide</button><button class="btn small" onclick="checkMCQ('q29','hash','fb29',1)">Corriger</button></div><div id="a29" class="help">Le texte placé après <code>#</code> explique le programme et n’est pas exécuté.</div><div id="fb29" class="answer"></div>
+          </section>
+          <section class="card" data-competence="5e_C1.3" data-points="1">
+            <p class="q-title">Pour autoriser un emprunt, le programme doit vérifier…</p><span class="badge">Compétence visée : 5e_C1.3</span><span class="pts">(1 pt)</span>
+            <label><input type="radio" name="q30" value="both"> que le titre existe et que la quantité est supérieure à zéro</label><label><input type="radio" name="q30" value="title"> seulement que le titre existe</label><label><input type="radio" name="q30" value="screen"> que l’écran est allumé</label><label><input type="radio" name="q30" value="name"> que le titre est court</label>
+            <div class="row"><button class="btn small" onclick="aide('a30')">Aide</button><button class="btn small" onclick="checkMCQ('q30','both','fb30',1)">Corriger</button></div><div id="a30" class="help">Un livre peut exister dans le catalogue tout en ayant une quantité égale à zéro.</div><div id="fb30" class="answer"></div>
+          </section>
+          '''
+              q=q.replace('\n    <div class="footer">\n      <!-- Texte de résumé -->', '\n'+block+'\n    <div class="footer">\n      <!-- Texte de résumé -->',1)
+          if 'qcm-corrections-5e-c1-3-c1-4.js' not in q:
+              q=q.replace('  <script src="../../../../_assets/qcm-eleve.js"></script>', '  <script src="qcm-corrections-5e-c1-3-c1-4.js"></script>\n  <script src="../../../../_assets/qcm-eleve.js"></script>')
+          p.write_text(q,encoding='utf-8')
+
+          cov=base/'couverture_sequence_qcm.json'
+          data=json.loads(cov.read_text(encoding='utf-8'))
+          for item in data['sous_themes']:
+              if item['notion']=='Programme Python de prêt de livres':
+                  item['questions']=[25,26,27,28,29,30]
+                  item['etat']='couvert dans la passe 2'
+          data['version']='pilote-2'
+          cov.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Améliorer la reprise locale et la correction affichée
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('_assets/qcm-eleve.js')
+          s=p.read_text(encoding='utf-8')
+          old="const box=document.createElement('div');box.className='qcm-enrichment';box.innerHTML=`${correct?`<p><strong>Bonne réponse :</strong> ${correct}</p>`:''}${help?`<p><strong>Pourquoi :</strong> ${help}</p>`:''}<p class=\"qcm-retain\"><strong>À retenir :</strong> relis la notion, puis utilise « Réessayer » lorsque le bouton est proposé.</p>`;fb.appendChild(box)"
+          new="const meta=(window.QCM_CORRECTIONS||{})[Number(card.dataset.qIndex)]||{};const box=document.createElement('div');box.className='qcm-enrichment';box.innerHTML=`<p><strong>Bonne réponse :</strong> ${meta.answer||correct||'Consulte l’explication ci-dessous.'}</p><p><strong>Raisonnement :</strong> ${meta.reason||help||'La réponse s’appuie sur la notion travaillée dans la séquence.'}</p>${meta.example?`<p><strong>Exemple :</strong> ${meta.example}</p>`:''}${meta.error?`<p><strong>Erreur fréquente :</strong> ${meta.error}</p>`:''}${meta.distractors?`<p><strong>Pourquoi les autres propositions ne conviennent pas :</strong> ${meta.distractors}</p>`:''}<p class=\"qcm-retain\"><strong>À retenir :</strong> ${meta.remember||'Relis la notion et réessaie sans cumuler de points.'}</p>`;fb.appendChild(box)"
+          if old not in s: raise SystemExit('Bloc enrichissement non trouvé')
+          s=s.replace(old,new,1)
+          old2="restore();update();document.addEventListener('change',update);"
+          new2="restore();setTimeout(()=>{cards.forEach(c=>{if([...c.querySelectorAll('input,select,textarea')].some(isFilled)){const b=c.querySelector('button[onclick*=\\\"checkMCQ\\\"],button[onclick*=\\\"checkSelect\\\"],button[onclick*=\\\"checkNumber\\\"],button[onclick*=\\\"checkTextIncludes\\\"],button[onclick*=\\\"checkMulti\\\"]');if(b)b.click()}});update()},0);update();document.addEventListener('change',update);"
+          if old2 not in s: raise SystemExit('Bloc reprise non trouvé')
+          s=s.replace(old2,new2,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Contrôler la passe 2
+        shell: bash
+        run: |
+          node --check _assets/qcm-eleve.js
+          node --check theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3/qcm-corrections-5e-c1-3-c1-4.js
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          base=Path('theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3')
+          q=(base/'qcm_systemes_information_donnees.html').read_text(encoding='utf-8')
+          c=(base/'qcm-corrections-5e-c1-3-c1-4.js').read_text(encoding='utf-8')
+          assert len(re.findall(r'<section class="card"',q))==30
+          assert 'QCM (30 questions)' in q
+          assert all(re.search(rf'\n\s*{i}:\{{',c) for i in range(1,31))
+          assert 'name="q30"' in q
+          print('OK : 30 questions et 30 corrections structurées')
+          PY
+
+      - name: Enregistrer la passe 2
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _assets/qcm-eleve.js theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.3
+          git commit -m "[lot-auto] compléter le QCM avec Python et 30 corrections exhaustives"
+          git push origin HEAD:draft/lot-5e-c1-3-c1-4-sequence-qcm
