@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séquence 5e — Programmer le lampadaire : lire, traduire, régler (5e_C6.1 à C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🧩 Programmer le lampadaire</h1>
+<p class="subtitle">Lire le programme, le traduire en français, régler ses paramètres — le lampadaire t'obéit</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C6.1</span><span class="badge code">5e_C6.2</span><span class="badge code">5e_C6.3</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D4</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 4 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>La mairie rappelle le collège.</b> Vos lampadaires solaires du parking fonctionnent très bien… mais les
+    riverains du lotissement voisin se plaignent : en début de soirée, quand le ciel est nuageux, le parking reste
+    sombre trop longtemps. Et le gardien voudrait que la pleine puissance dure un peu plus quand quelqu'un passe.</p>
+    <p>Le technicien sourit : <b>« Pas besoin de toucher au matériel — tout est dans le programme. »</b> Il projette
+    le programme du lampadaire à l'écran. Votre mission de 5e : <b>lire</b> ce programme (quelles données utilise-t-il,
+    que produit-il ?), le <b>traduire en français</b> pour l'expliquer à la mairie, puis <b>régler ses paramètres</b> —
+    et vérifier l'effet de chaque réglage avant de l'adopter.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment lire, traduire et régler le programme du lampadaire pour adapter son comportement —
+  sans rien casser et en évaluant chaque effet ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> à ton avis, que faut-il changer dans le programme pour que le lampadaire s'allume plus tôt le soir ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : maquette du lampadaire (carte + capteur de lumière + LED, très basse tension) et le même programme dans VittaScience/mBlock.</p>
+    <p>🅱 <b>En simulation</b> : le simulateur paramétrable intégré à la page (aucun matériel).</p>
+    <p>🅲 <b>Sans matériel</b> : le programme imprimé, l'algorithme à écrire au cahier et les effets à prédire à la main.</p>
+  </div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — Lire les données<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Traduire en français<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Régler et vérifier<span id="done-s3"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>📥 Séance 1 — Que lit et que produit le programme ? (5e_C6.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quelles données entrent dans le programme, et qu'en sort-il ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>La carte d'identité du programme</h3><span class="duree">⏱ 35 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les données UTILISÉES et PRODUITES par le programme du lampadaire, et repérer ses paramètres.</div>
+      <div><b>Compétence :</b> 5e_C6.1.</div>
+      <div><b>Production attendue :</b> 6 données classées + 2 lectures précises.</div>
+      <div><b>Ressources :</b> le programme par blocs ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/programme_blocs_lampadaire.svg" type="image/svg+xml" aria-label="Le programme par blocs du lampadaire avec ses paramètres" style="width:100%"></object>
+      <figcaption>Le vrai programme de ton lampadaire de la séquence précédente — les paramètres sont encadrés en jaune.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) classe chaque donnée (utilisée, produite, ou paramètre réglable) ; b) réponds aux deux questions de lecture fine.</div>
+    <div class="exo">
+      <h4>a) Je classe les données</h4>
+      <div class="assoc"><label for="e1_1">La luminosité mesurée par le capteur :</label><select id="e1_1"><option value="">— choisir —</option><option>donnée UTILISÉE (entrée)</option><option>donnée PRODUITE (sortie)</option><option>paramètre réglable</option></select></div>
+      <div class="assoc"><label for="e1_2">Le passage détecté (PIR) :</label><select id="e1_2"><option value="">— choisir —</option><option>donnée UTILISÉE (entrée)</option><option>donnée PRODUITE (sortie)</option><option>paramètre réglable</option></select></div>
+      <div class="assoc"><label for="e1_3">SEUIL_NUIT (= 30) :</label><select id="e1_3"><option value="">— choisir —</option><option>paramètre réglable</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option></select></div>
+      <div class="assoc"><label for="e1_4">DURÉE (= 5 s) :</label><select id="e1_4"><option value="">— choisir —</option><option>paramètre réglable</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option></select></div>
+      <div class="assoc"><label for="e1_5">L'état de la lampe (éteinte / veille / 100 %) :</label><select id="e1_5"><option value="">— choisir —</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option><option>paramètre réglable</option></select></div>
+      <div class="assoc"><label for="e1_6">Le voyant d'état du coffret :</label><select id="e1_6"><option value="">— choisir —</option><option>donnée PRODUITE (sortie)</option><option>donnée UTILISÉE (entrée)</option><option>paramètre réglable</option></select></div>
+      <h4>b) Lecture fine</h4>
+      <div class="assoc"><label for="e1_7">Quelle valeur le programme compare-t-il à la luminosité pour décider qu'il fait nuit ?</label><input type="number" id="e1_7" min="0" max="100" step="1" inputmode="numeric"></div>
+      <div class="assoc"><label for="e1_8">Combien d'états différents la lampe peut-elle prendre ?</label><select id="e1_8"><option value="">— choisir —</option><option>3 (éteinte, veille, pleine puissance)</option><option>2 (allumée, éteinte)</option><option>1 (toujours allumée)</option><option>une infinité</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Une donnée UTILISÉE entre dans le programme (capteurs, réglages) ; une donnée PRODUITE en sort (ce que le programme décide). Les PARAMÈTRES sont les valeurs encadrées en jaune : on peut les régler sans changer le programme.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Suis les blocs : « mesurer luminosité » = le programme LIT le capteur (entrée). « allumer / veille / éteindre » = le programme AGIT (sortie). SEUIL_NUIT et DURÉE sont dans des cadres jaunes : des réglages, donc des paramètres — qui sont AUSSI des données utilisées, mais on les classe « paramètre » car on peut les modifier.</p></details>
+    <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Luminosité et passage : <b>données UTILISÉES</b> (elles viennent des capteurs). SEUIL_NUIT et DURÉE :
+      <b>paramètres réglables</b> (encadrés en jaune — techniquement des entrées, mais réglables par l'humain).
+      État de la lampe et voyant : <b>données PRODUITES</b> (les décisions du programme). Le seuil vaut <b>30</b> ;
+      la lampe a <b>3 états</b>. Tu viens d'établir la « carte d'identité » du programme — c'est exactement 5e_C6.1.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> un programme UTILISE des données (capteurs + paramètres) et en PRODUIT (ordres aux actionneurs). Les paramètres sont les réglages encadrés que l'on peut modifier sans réécrire le programme.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> classer l'état de la lampe en « entrée » (c'est la DÉCISION du programme) ; croire qu'un paramètre est produit par le programme (c'est l'humain qui le règle).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 8 / 8 réponses et la carte d'identité recopiée au cahier (entrées / paramètres / sorties).</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🗣 Séance 2 — Traduire le programme en français (5e_C6.2)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment expliquer le programme à la mairie… sans montrer un seul bloc ?</p>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>L'algorithme en langage naturel</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> traduire le programme par blocs en un algorithme en langage naturel, dans le bon ordre.</div>
+      <div><b>Compétence :</b> 5e_C6.2.</div>
+      <div><b>Production attendue :</b> 6 étapes ordonnées + 3 mots-clés placés.</div>
+      <div><b>Ressources :</b> le programme par blocs de l'activité 1 (reviens-y autant que nécessaire).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) numérote les étapes de l'algorithme dans l'ordre du programme (1 à 6) ; b) place les bons mots-clés dans les phrases à trous ; c) recopie l'algorithme complet au cahier.</div>
+    <div class="exo">
+      <h4>a) Je remets l'algorithme dans l'ordre</h4>
+      <div class="assoc"><label for="o2_a">« Mesurer la luminosité ambiante » — étape n°</label><select id="o2_a"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_b">« Si la luminosité est inférieure à 30, considérer qu'il fait nuit » — étape n°</label><select id="o2_b"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_c">« Si nuit ET passage détecté : pleine puissance pendant 5 secondes » — étape n°</label><select id="o2_c"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_d">« Sinon, s'il fait nuit : mettre en veille à 30 % » — étape n°</label><select id="o2_d"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_e">« Sinon : éteindre la lampe » — étape n°</label><select id="o2_e"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_f">« Recommencer sans fin » — étape n°</label><select id="o2_f"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <h4>b) Les mots-clés de l'algorithme</h4>
+      <div class="assoc"><label for="t2_1">« … la luminosité est basse, ALORS il fait nuit » :</label><select id="t2_1"><option value="">— choisir —</option><option>SI</option><option>SINON</option><option>ET</option><option>RÉPÉTER</option></select></div>
+      <div class="assoc"><label for="t2_2">« Si nuit … passage : pleine puissance » (les DEUX conditions à la fois) :</label><select id="t2_2"><option value="">— choisir —</option><option>ET</option><option>OU</option><option>SI</option><option>SINON</option></select></div>
+      <div class="assoc"><label for="t2_3">« … : éteindre » (dans tous les autres cas) :</label><select id="t2_3"><option value="">— choisir —</option><option>SINON</option><option>SI</option><option>ET</option><option>PENDANT</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>L'algorithme suit le programme de HAUT en BAS : d'abord mesurer, puis décider s'il fait nuit, puis les trois cas de la lampe (du plus exigeant au plus simple), et enfin la boucle qui recommence.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>« ET » exige les DEUX conditions vraies en même temps (nuit ET passage). « SINON » attrape tout ce qui reste. La boucle « répéter indéfiniment » englobe tout : c'est la dernière idée à écrire (« et on recommence »).</p></details>
+    <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Ordre : mesurer (1) → décider nuit (2) → nuit ET passage : 100 % (3) → sinon si nuit : veille (4) →
+      sinon : éteindre (5) → recommencer sans fin (6). Mots-clés : <b>SI</b> · <b>ET</b> · <b>SINON</b>.
+      Cet algorithme en français dit EXACTEMENT la même chose que les blocs : c'est ça, traduire un programme (5e_C6.2) —
+      la mairie n'a pas besoin de connaître Scratch pour comprendre son lampadaire.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> un algorithme en langage naturel = les étapes du programme écrites en français, dans l'ordre, avec les mots-clés SI / ET / SINON / RÉPÉTER. Même logique, autre langage.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre ET (les deux à la fois) et OU (au moins une) ; oublier la boucle « recommencer » ; écrire les cas dans le désordre (le cas « nuit + passage » se teste AVANT le cas « nuit seule »).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 9 / 9 et l'algorithme recopié au cahier.</div>
+  </div>
+</section>
+</div>
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🎛 Séance 3 — Régler les paramètres et évaluer les effets (5e_C6.3)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que se passe-t-il quand on tourne un « bouton » du programme — et comment le prouver ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Aux commandes des paramètres — au simulateur</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> modifier SEUIL_NUIT et DURÉE, prédire l'effet, puis le VÉRIFIER au simulateur (mission de la mairie incluse).</div>
+      <div><b>Compétence :</b> 5e_C6.3.</div>
+      <div><b>Production attendue :</b> 3 prédictions + la mission mairie réussie au simulateur.</div>
+      <div><b>Ressources :</b> le document « paramètres et effets » + le simulateur.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/parametres_et_effets.svg" type="image/svg+xml" aria-label="Effets de la modification des paramètres seuil et durée" style="width:100%"></object>
+      <figcaption>Chaque paramètre est un compromis : service rendu contre énergie consommée.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) au simulateur, observe D'ABORD le comportement avec les réglages d'origine (seuil 30) ; b) MISSION MAIRIE : le soir nuageux, la luminosité vaut 45 % et le parking doit déjà être éclairé — règle SEUIL_NUIT pour y parvenir et vérifie avec la luminosité à 45 ; c) réponds aux prédictions.</div>
+    <div class="exo">
+      <h4>a) et b) Le simulateur paramétrable</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <label for="pSeuil"><b>🎛 SEUIL_NUIT :</b> <b id="pSeuilVal">30</b> %</label>
+          <input type="range" id="pSeuil" min="10" max="60" step="1" value="30">
+          <label for="pDuree"><b>⏲ DURÉE pleine puissance :</b> <b id="pDureeVal">5</b> s</label>
+          <input type="range" id="pDuree" min="2" max="10" step="1" value="5">
+          <label for="simLum"><b>☀ Luminosité ambiante :</b> <b id="simLumVal">80</b> %</label>
+          <input type="range" id="simLum" min="0" max="100" step="1" value="80">
+          <button class="btn small" id="btnPassage" type="button">🚶 Simuler un passage</button>
+          <p style="font-size:.85em;color:var(--sub)">Le passage dure le temps du paramètre DURÉE — observe le compte à rebours.</p>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">ÉTAT DU LAMPADAIRE</div>
+          <div id="simLed" style="font-size:2.6em">⚫</div>
+          <div id="simLedTxt" class="etiquette">éteint (il fait jour)</div>
+          <div id="simMission" style="font-size:.8em;margin-top:6px;color:var(--sub)">Mission mairie : non vérifiée</div>
+        </div>
+      </div>
+      <h4>c) Mes prédictions de concepteur</h4>
+      <div class="assoc"><label for="q3_1">Si on AUGMENTE SEUIL_NUIT (30 → 45), le lampadaire…</label><select id="q3_1"><option value="">— choisir —</option><option>considère qu'il fait nuit plus tôt : il s'allume plus tôt le soir, mais consomme plus</option><option>s'allume plus tard le soir</option><option>ne change rien du tout</option><option>s'éteint définitivement</option></select></div>
+      <div class="assoc"><label for="q3_2">Si on AUGMENTE la DURÉE (5 s → 10 s), chaque passage…</label><select id="q3_2"><option value="">— choisir —</option><option>éclaire plus longtemps mais consomme environ deux fois plus d'énergie</option><option>consomme moins d'énergie</option><option>rend le lampadaire plus lumineux</option><option>casse le détecteur</option></select></div>
+      <div class="assoc"><label for="q3_3">Modifier un paramètre…</label><select id="q3_3"><option value="">— choisir —</option><option>ne change pas la structure du programme, mais change son comportement</option><option>réécrit tout le programme</option><option>supprime le programme</option><option>n'a jamais aucun effet</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pour la mission : à 45 % de luminosité, le lampadaire doit dire « nuit ». Or il dit « nuit » quand luminosité &lt; SEUIL_NUIT. Quel seuil choisir pour que 45 soit « en dessous » ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il faut SEUIL_NUIT &gt; 45 (par exemple 46 ou plus). Vérifie ensuite en réglant la luminosité sur 45 : l'écran doit passer en veille. N'oublie pas de tester AUSSI le réglage d'origine (30) avant : on compare toujours « avant / après ».</p></details>
+    <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Mission : SEUIL_NUIT ≥ 46 → à 45 % de luminosité, le lampadaire passe en veille : le parking est éclairé dès le
+      soir nuageux. Prédictions : seuil ⬆ = allumage plus tôt + consommation en hausse ; durée ⬆ = confort en hausse mais
+      ≈ 2× plus d'énergie par passage ; un paramètre modifié change le COMPORTEMENT, pas la STRUCTURE. Et la règle d'or :
+      on PRÉDIT, on MODIFIE, on VÉRIFIE — jamais de réglage au hasard (5e_C6.3).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> paramètre modifié = effet à prédire PUIS à vérifier. Chaque réglage est un compromis service rendu / énergie consommée.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre « seuil plus haut » et « s'allume plus tard » (c'est l'inverse !) ; régler sans tester le comportement d'origine ; oublier que le confort des usagers compte aussi.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> mission mairie vérifiée au simulateur (réglage d'origine testé AUSSI) et 3 prédictions justes.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Réinvestissement — l'arrosage du jardin pédagogique</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> transférer la lecture de programme et le réglage de paramètre à un autre objet.</div>
+      <div><b>Compétences :</b> 5e_C6.1 → C6.3 (transfert).</div>
+      <div><b>Production attendue :</b> 4 réponses.</div>
+      <div><b>Ressources :</b> aucune — tout est dans ta tête maintenant.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> le programme de l'arrosage automatique du jardin dit : « mesurer l'humidité ; SI humidité &lt; SEUIL_SEC (= 40) : arroser pendant DURÉE_ARROSAGE (= 60 s) ; SINON : ne rien faire ; recommencer ». Réponds en concepteur.</div>
+    <div class="exo">
+      <div class="assoc"><label for="r4_1">La donnée UTILISÉE venant d'un capteur est…</label><select id="r4_1"><option value="">— choisir —</option><option>l'humidité mesurée du sol</option><option>l'arrosage déclenché</option><option>la couleur des fleurs</option><option>le prix de l'eau</option></select></div>
+      <div class="assoc"><label for="r4_2">La donnée PRODUITE par le programme est…</label><select id="r4_2"><option value="">— choisir —</option><option>l'ordre d'arroser (ou non)</option><option>l'humidité du sol</option><option>la météo de demain</option><option>le seuil SEUIL_SEC</option></select></div>
+      <div class="assoc"><label for="r4_3">Pour arroser PLUS SOUVENT (sol plus exigeant), on doit…</label><select id="r4_3"><option value="">— choisir —</option><option>augmenter SEUIL_SEC (le sol sera déclaré « sec » plus tôt)</option><option>diminuer SEUIL_SEC</option><option>débrancher le capteur</option><option>changer la couleur du tuyau</option></select></div>
+      <div class="assoc"><label for="r4_4">Avant d'adopter le nouveau réglage, on doit…</label><select id="r4_4"><option value="">— choisir —</option><option>prédire son effet puis le vérifier (simulateur ou essai contrôlé)</option><option>l'appliquer directement sans test</option><option>demander aux plantes</option><option>tout réécrire de zéro</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>C'est le même squelette que le lampadaire : capteur → SI seuil → action pendant une durée → SINON rien → répéter. Remplace « luminosité » par « humidité ».</p></details>
+    <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Humidité = donnée utilisée · ordre d'arroser = donnée produite · arroser plus souvent = AUGMENTER le seuil
+      (le sol passe « sec » plus tôt — exactement comme le seuil de nuit du lampadaire !) · et toujours : prédire →
+      modifier → vérifier. Tu retrouveras cet arrosage en 4e, avec sa chaîne complète.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> tous les objets programmés du quotidien suivent ce squelette : capteur → décision à seuil → action paramétrée → boucle. Savoir le lire, c'est savoir les régler tous.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <div class="bilan-grid">
+    <div>
+      <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
+      <p>Avais-tu deviné qu'il suffisait de changer un PARAMÈTRE — sans toucher ni au matériel, ni à la structure du programme ?</p></div>
+      <p><b>Ce que tu sais faire désormais :</b> lire la carte d'identité d'un programme (5e_C6.1), le traduire en
+      algorithme en langage naturel (5e_C6.2), et régler ses paramètres en évaluant les effets (5e_C6.3). Ton lampadaire
+      n'a plus aucun secret : tu comprends son corps (chaînes, matériaux, réseau) ET son cerveau (le programme).</p>
+      <p class="refs">Revoir l'objet complet : <a href="../../../C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html">la séquence « Le lampadaire intelligent »</a> (chaînes, données, réseau).</p>
+    </div>
+    <div class="confiance">
+      <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
+      <div class="assoc"><label for="auto1">5e_C6.1 — identifier les données :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto2">5e_C6.2 — traduire en langage naturel :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto3">5e_C6.3 — régler et évaluer :</label><select id="auto3"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <p><a class="btn qcm" href="qcm_5e_C6.1-C6.3_programmer_lampadaire.html">🧠 M'entraîner : le QCM de la séquence (30 questions)</a></p>
+      <p class="refs"><a href="Synthèses/synthese_eleve_5e_C6.1-C6.3.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_5e_C6.1-C6.3.html">👩‍🏫 Synthèse professeur</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Séquence 5e_C6.1 → C6.3 · Thème 2 · Technologie cycle 4 (programme 2024) · objet-fil « Le lampadaire intelligent »</p>
+  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_5e_C6.1-C6.3_programmer_lampadaire";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Simulateur paramétrable (activité 3) ══════ */
+window.__exp = window.__exp || {};
+let passageTimer = null;
+window.__passage = false;
+function majSim(){
+  const seuil = parseInt($("pSeuil").value,10);
+  const duree = parseInt($("pDuree").value,10);
+  const lum = parseInt($("simLum").value,10);
+  $("pSeuilVal").textContent = seuil;
+  $("pDureeVal").textContent = duree;
+  $("simLumVal").textContent = lum;
+  const nuit = lum < seuil;
+  let icone, txtEtat;
+  if(!nuit){ icone="⚫"; txtEtat="éteint (il fait jour pour ce réglage)"; }
+  else if(window.__passage){ icone="🌟"; txtEtat="PLEINE PUISSANCE (passage, " + duree + " s)"; }
+  else { icone="🌗"; txtEtat="veille (30 %) — nuit pour ce réglage"; }
+  $("simLed").textContent = icone;
+  $("simLedTxt").textContent = txtEtat;
+  if(seuil===30){ window.__exp["defaut"] = true; }
+  if(seuil>45 && lum===45 && nuit){
+    window.__exp["mission"] = seuil;
+    $("simMission").textContent = "Mission mairie : ✅ vérifiée (seuil " + seuil + ", éclairé à 45 %)";
+    $("simMission").style.color = "#81fba1";
+  } else if(!window.__exp["mission"]){
+    $("simMission").textContent = "Mission mairie : non vérifiée (seuil > 45 puis luminosité à 45)";
+  }
+  save(false);
+}
+$("pSeuil").addEventListener("input", majSim);
+$("pDuree").addEventListener("input", majSim);
+$("simLum").addEventListener("input", majSim);
+$("btnPassage").addEventListener("click", ()=>{
+  window.__passage = true; majSim();
+  clearTimeout(passageTimer);
+  passageTimer = setTimeout(()=>{ window.__passage=false; majSim(); }, parseInt($("pDuree").value,10)*1000);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = id => parseFloat(String($(id).value).replace(",","."));
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={e1_1:"donnée UTILISÉE (entrée)",e1_2:"donnée UTILISÉE (entrée)",e1_3:"paramètre réglable",
+               e1_4:"paramètre réglable",e1_5:"donnée PRODUITE (sortie)",e1_6:"donnée PRODUITE (sortie)",
+               e1_8:"3 (éteinte, veille, pleine puissance)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    if(num("e1_7")===30) ok++;
+    return {score:ok,total:8,valide:ok>=7};
+  },
+  2: function(){
+    let ok=0;
+    const att={o2_a:"1",o2_b:"2",o2_c:"3",o2_d:"4",o2_e:"5",o2_f:"6",t2_1:"SI",t2_2:"ET",t2_3:"SINON"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:9,valide:ok===9};
+  },
+  3: function(){
+    let ok=0;
+    const att={q3_1:"considère qu'il fait nuit plus tôt : il s'allume plus tôt le soir, mais consomme plus",
+               q3_2:"éclaire plus longtemps mais consomme environ deux fois plus d'énergie",
+               q3_3:"ne change pas la structure du programme, mais change son comportement"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const e=window.__exp||{};
+    const expOk = e["defaut"] && e["mission"];
+    return {score:ok,total:3,extra:expOk?"":" Fais VRAIMENT la mission au simulateur : teste le réglage d'origine (seuil 30), puis règle le seuil au-dessus de 45 et vérifie avec la luminosité à 45.",valide:ok===3&&expOk};
+  },
+  4: function(){
+    let ok=0;
+    const att={r4_1:"l'humidité mesurée du sol",r4_2:"l'ordre d'arroser (ou non)",
+               r4_3:"augmenter SEUIL_SEC (le sol sera déclaré « sec » plus tôt)",
+               r4_4:"prédire son effet puis le vérifier (simulateur ou essai contrôlé)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:4,valide:ok===4};
+  }
+};
+const ENC_OK=["Excellent : tout est validé !","Bravo, tu lis les programmes comme un concepteur !","Très bien : le lampadaire t'obéit au doigt et à l'œil."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1], s2:[2], s3:[3,4]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majSim(); majProgress(); majHyp();
+</script>
+</body>
+</html>

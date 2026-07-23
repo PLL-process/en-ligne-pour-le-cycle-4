@@ -250,3 +250,31 @@ les décisions de publication restent à ChatGPT.*
    (séance 4) — les liens y seront reportés après fusion.
 3. Le projet-fil station est bouclé : comprise (C4.3-4.6), connectée (C4.7-4.8),
    réparée (C5), programmée (C6), alimentée (C4.1-4.2).
+
+## 2026-07-23 — Thème 2 · LOT 07 « Programmer le lampadaire » (Fable, branche `fable/theme-2/lot-07-programmer-lampadaire-5e`)
+
+1. **LOT 07 réalisé — îlot 5e_C6 complet** sur l'objet-fil du LOT 05 :
+   carte d'identité du programme par blocs (C6.1), traduction en algorithme
+   en langage naturel avec SI/ET/SINON (C6.2), simulateur PARAMÉTRABLE
+   (SEUIL_NUIT, DURÉE) avec mission mairie et verrou expérientiel — réglage
+   d'origine testé PUIS réglage modifié vérifié (C6.3). QCM 30 q (10/10/10,
+   2 illustrées, réponses réparties 7/7/8/8), synthèses, fiche, matrice,
+   2 SVG CC0, tests Playwright. Statuts : 5e_C6.1 → COMPLET ET VALIDABLE ;
+   C6.2/C6.3 → COUVERTS (pointeurs).
+2. **Bilan 5e du Thème 2** : C4 (8/8) + C6 (3/3) complets sur un objet-fil
+   unique. Reste l'îlot 5e_C5 (dépannage 5e) en production future.
+3. Le générateur S4 du classeur de progression 5e est câblé sur les nouvelles
+   ressources (même commit) : séances 3-4 désormais 100 % outillées.
+
+## 2026-07-24 — Thème 2 · Retour Pascal sur LOT 06 : bonus loi d'Ohm + correctif d'affichage (Fable, branche `fable/theme-2/lot-07-programmer-lampadaire-5e`)
+
+1. **Demande Pascal** : les élèves voient peu (ou pas) la loi d'Ohm en physique
+   faute de temps → activité BONUS ajoutée à « L'énergie de la station » :
+   I = P÷U (0,5 A), chute de tension du câble U = R×I (0,2 V), choix du fusible
+   1 A (rebouclage avec le fusible de « SOS station »). Hors barre de
+   progression, aides ×2, correction complète. Pont interdisciplinaire
+   physique-technologie assumé.
+2. **Correctif d'affichage** signalé par Pascal : le bouton « M'entraîner : le
+   QCM » du bilan débordait de sa pastille sur plusieurs lignes — display:block
+   + white-space:normal appliqués aux TROIS séquences du gabarit (5e_C4.1,
+   3e_C4.1, 5e_C6.1). À reporter dans le gabarit commun pour les futurs lots.

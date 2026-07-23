@@ -47,3 +47,11 @@ pointeur 3e_C4.2 badgé ✅.
 - Google Fonts inaccessible dans le bac à sable (polices de repli, sans incidence).
 - Version 🅰 (panneau + batterie + multimètre réels) non testable en sandbox :
   annoncée comme option, très basse tension uniquement.
+
+## Complément (v2, demande Pascal)
+
+Activité bonus « Loi d'Ohm » ajoutée (I = P÷U, U = R×I, choix du fusible —
+hors barre de progression) et correctif d'affichage du bouton QCM du bilan
+(débordement multi-lignes, corrigé aussi sur les séquences 5e au même gabarit).
+Tests rejoués : bonus validé 3/3, progression inchangée (5 activités), zéro
+erreur JS, display:block confirmé sur le bouton.

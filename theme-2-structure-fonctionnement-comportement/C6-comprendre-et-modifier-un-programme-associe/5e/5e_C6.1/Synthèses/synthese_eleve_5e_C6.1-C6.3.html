@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Programmer le lampadaire (5e_C6.1 à C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>🧩 Synthèse — Programmer le lampadaire</h1>
+<p class="pb">Lire, traduire, régler : le « cerveau » du lampadaire n'a plus de secret.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Lire le programme : la carte d'identité (5e_C6.1)</h2>
+  <object class="schema" data="../Images/programme_blocs_lampadaire.svg" type="image/svg+xml" aria-label="Le programme par blocs du lampadaire">Programme par blocs</object>
+  <p>Un programme <b>UTILISE</b> des données (entrées : <b>luminosité</b> mesurée, <b>passage</b> détecté — et les
+  <b>paramètres</b> réglables <code>SEUIL_NUIT = 30</code>, <code>DURÉE = 5 s</code>) et <b>PRODUIT</b> des données
+  (sorties : l'<b>état de la lampe</b> — éteinte / veille 30 % / pleine puissance — et le voyant). La boucle
+  « répéter indéfiniment » = surveillance continue.</p>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">2. Traduire en français (5e_C6.2)</h2>
+    <p>L'<b>algorithme en langage naturel</b> dit la même logique que les blocs :</p>
+    <ul>
+      <li>1. Mesurer la luminosité ;</li>
+      <li>2. <b>SI</b> luminosité &lt; 30 : il fait nuit ;</li>
+      <li>3. <b>SI</b> nuit <b>ET</b> passage : 100 % pendant 5 s ;</li>
+      <li>4. <b>SINON</b> si nuit : veille 30 % ;</li>
+      <li>5. <b>SINON</b> : éteindre ;</li>
+      <li>6. Recommencer sans fin.</li>
+    </ul>
+    <p><b>ET</b> = les deux à la fois · <b>SINON</b> = tous les cas restants · le cas le plus précis se teste en premier.</p>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">3. Régler les paramètres (5e_C6.3)</h2>
+    <object class="schema" data="../Images/parametres_et_effets.svg" type="image/svg+xml" aria-label="Paramètres et effets">Paramètres et effets</object>
+    <dl>
+      <dt>Seuil ⬆ (30→45)</dt><dd>« nuit » plus tôt → allumage plus tôt, consommation ⬆.</dd>
+      <dt>Durée ⬆ (5→10 s)</dt><dd>confort ⬆, ≈ 2× plus d'énergie par passage.</dd>
+      <dt>La règle d'or</dt><dd><b>PRÉDIRE → MODIFIER → VÉRIFIER</b> (jamais au hasard) ; un paramètre est réversible.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc savoir">
+    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+    <ul>
+      <li>distinguer donnée utilisée / produite / paramètre ;</li>
+      <li>les mots-clés SI, ET, SINON, RÉPÉTER et leur sens exact ;</li>
+      <li>l'effet d'un seuil qui monte ou descend (le sens !) ;</li>
+      <li>qu'un paramètre change le comportement, pas la structure ;</li>
+      <li>qu'un réglage est un compromis service / énergie.</li>
+    </ul>
+  </div>
+  <div class="bloc faire">
+    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+    <ul>
+      <li>établir la carte d'identité d'un programme existant ;</li>
+      <li>traduire un programme par blocs en algorithme en français (et inversement) ;</li>
+      <li>régler un paramètre pour atteindre un objectif donné (mission mairie : seuil &gt; 45) ;</li>
+      <li>prédire un effet PUIS le vérifier au simulateur ;</li>
+      <li>transférer à un autre objet à seuil (arrosage…).</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
+  <ul>
+    <li>Classer l'état de la lampe en « entrée » (c'est la décision du programme) ;</li>
+    <li>lire ET comme OU (le comportement change du tout au tout) ;</li>
+    <li>croire que seuil ⬆ = allumage plus tard (c'est l'inverse !) ;</li>
+    <li>régler « exactement 45 » pour capturer 45 (la comparaison &lt; est stricte) ;</li>
+    <li>modifier sans tester le réglage d'origine d'abord ;</li>
+    <li>régler au hasard un objet qui rend service à tous.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
+  <table class="voc">
+    <tr><td>programme → <b>program</b></td><td>donnée → <b>data</b></td><td>paramètre → <b>parameter / setting</b></td></tr>
+    <tr><td>seuil → <b>threshold</b></td><td>algorithme → <b>algorithm</b></td><td>boucle → <b>loop</b></td></tr>
+    <tr><td>entrée → <b>input</b></td><td>sortie → <b>output</b></td><td>régler → <b>to set / to tune</b></td></tr>
+  </table>
+</div>
+</div>
+</body>
+</html>
