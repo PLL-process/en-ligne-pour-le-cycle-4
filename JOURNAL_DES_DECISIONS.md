@@ -250,3 +250,18 @@ les décisions de publication restent à ChatGPT.*
    (séance 4) — les liens y seront reportés après fusion.
 3. Le projet-fil station est bouclé : comprise (C4.3-4.6), connectée (C4.7-4.8),
    réparée (C5), programmée (C6), alimentée (C4.1-4.2).
+
+## 2026-07-23 — Thème 2 · LOT 07 « Programmer le lampadaire » (Fable, branche `fable/theme-2/lot-07-programmer-lampadaire-5e`)
+
+1. **LOT 07 réalisé — îlot 5e_C6 complet** sur l'objet-fil du LOT 05 :
+   carte d'identité du programme par blocs (C6.1), traduction en algorithme
+   en langage naturel avec SI/ET/SINON (C6.2), simulateur PARAMÉTRABLE
+   (SEUIL_NUIT, DURÉE) avec mission mairie et verrou expérientiel — réglage
+   d'origine testé PUIS réglage modifié vérifié (C6.3). QCM 30 q (10/10/10,
+   2 illustrées, réponses réparties 7/7/8/8), synthèses, fiche, matrice,
+   2 SVG CC0, tests Playwright. Statuts : 5e_C6.1 → COMPLET ET VALIDABLE ;
+   C6.2/C6.3 → COUVERTS (pointeurs).
+2. **Bilan 5e du Thème 2** : C4 (8/8) + C6 (3/3) complets sur un objet-fil
+   unique. Reste l'îlot 5e_C5 (dépannage 5e) en production future.
+3. Le générateur S4 du classeur de progression 5e est câblé sur les nouvelles
+   ressources (même commit) : séances 3-4 désormais 100 % outillées.

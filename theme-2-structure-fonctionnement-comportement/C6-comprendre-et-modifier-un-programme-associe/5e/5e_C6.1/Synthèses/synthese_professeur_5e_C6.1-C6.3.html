@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Programmer le lampadaire (5e_C6.1 à C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.5;font-size:.94em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.4em;color:var(--title);text-align:center}
+  h2{font-size:1.05em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:20px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .warn{color:var(--warn)}
+  code{background:#08132c;padding:1px 6px;border-radius:5px}
+  @media print{body{background:#fff;color:#111;font-size:9pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>👩‍🏫 Synthèse professeur — Programmer le lampadaire (5e_C6.1 → C6.3)</h1>
+
+<div class="bloc">
+<h2 style="margin-top:0">Objectifs et articulation</h2>
+<p>Îlot 5e complet de la compétence C6, sur le même objet-fil que l'îlot C4 (« Le lampadaire intelligent ») :
+les élèves retrouvent l'objet dont ils connaissent déjà les chaînes et le simulateur — ils en découvrent maintenant
+le « cerveau ». Progression stricte des trois codes : <b>C6.1</b> lire les données d'un programme EXISTANT (carte
+d'identité entrées / paramètres / sorties), <b>C6.2</b> le traduire en algorithme en langage naturel (ordre + mots-clés
+SI/ET/SINON/RÉPÉTER), <b>C6.3</b> modifier les paramètres et ÉVALUER les effets en termes de fonctionnalité
+(mission mairie au simulateur paramétrable, verrou expérientiel : réglage d'origine testé PUIS réglage modifié).
+La séquence prépare directement la 4e (compléter un programme, algorigrammes) et la 3e (modifier du Python réel).</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Réponses complètes attendues</h2>
+<table>
+<tr><th>Act.</th><th>Réponses</th></tr>
+<tr><td>1</td><td>Luminosité, passage : UTILISÉES · SEUIL_NUIT, DURÉE : paramètres · état lampe, voyant : PRODUITES · seuil = 30 · 3 états.</td></tr>
+<tr><td>2</td><td>Ordre 1-6 : mesurer → décider nuit → nuit ET passage : 100 % → sinon nuit : veille → sinon : éteindre → recommencer. Mots-clés : SI · ET · SINON.</td></tr>
+<tr><td>3</td><td>Mission : SEUIL_NUIT ≥ 46, vérifié avec luminosité 45 → veille (le verrou exige AUSSI le test du réglage d'origine 30). Prédictions : seuil ⬆ = allumage plus tôt + conso ⬆ · durée ⬆ = confort ⬆ mais ≈ 2× l'énergie par passage · paramètre = comportement change, structure inchangée.</td></tr>
+<tr><td>R</td><td>Humidité = utilisée · ordre d'arroser = produite · arroser plus souvent = AUGMENTER SEUIL_SEC · toujours prédire → modifier → vérifier.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Difficultés prévisibles et remédiation</h2>
+<table>
+<tr><th>Difficulté</th><th>Remédiation</th></tr>
+<tr><td>Sens du seuil inversé (« seuil ⬆ = allumage plus tard »)</td><td>Droite graduée au tableau : colorier la zone « nuit » (sous le seuil) et faire monter le seuil — la zone grandit.</td></tr>
+<tr><td>ET lu comme OU</td><td>Jeu des deux mains levées : la lampe ne s'allume que si LES DEUX mains sont levées ; une seule ne suffit pas.</td></tr>
+<tr><td>État de la lampe classé en entrée</td><td>Question rituelle : « qui l'a décidé ? » — si c'est le programme, c'est une sortie.</td></tr>
+<tr><td>« Exactement 45 » pour capturer 45</td><td>Vérifier au simulateur : seuil 45, luminosité 45 → toujours éteint (45 &lt; 45 est faux). Première rencontre du strict, réinvestie en 3e.</td></tr>
+<tr><td>Réglage sans point de comparaison</td><td>Vocabulaire de sciences : le réglage d'origine est le « témoin ».</td></tr>
+<tr><td>Élèves rapides</td><td>Défi : trouver DEUX réglages différents satisfaisant la mission et comparer leur consommation ; écrire l'algorithme de la sonnette connectée ; version 🅰 sur maquette VittaScience.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Versions, matériel, évaluation</h2>
+<ul>
+<li><b>Versions :</b> 🅰 maquette carte + capteur lumière + LED (<span class="warn">très basse tension uniquement</span>) avec le même programme dans VittaScience/mBlock ; 🅱 simulateur paramétrable intégré (verrou expérientiel) ; 🅲 programme imprimé + algorithme au cahier + effets prédits à la main.</li>
+<li><b>Évaluation :</b> vérificateurs intégrés ; QCM 30 q (10/10/10, 2 illustrées, réponses réparties) → bilan par code → LSU ; sommative à construire (corrigé non publié). La traduction de l'act. 2 recopiée au cahier est une trace écrite évaluable (D1.1/D1.3).</li>
+<li><b>Liens :</b> la séquence « Le lampadaire intelligent » (îlot 5e_C4 — prérequis naturel) ; 4e_C6.2 « Jardin connecté » (l'arrosage du réinvestissement y devient réel) ; CRCN 3.4 Programmer (Niv. 1-2).</li>
+<li><b>Bilan 5e du Thème 2 :</b> avec cet îlot, C4 (8/8) et C6 (3/3) de 5e sont complets — reste l'îlot 5e_C5 (SOS panne 5e, prévu).</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

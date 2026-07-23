@@ -370,6 +370,36 @@ OVERLAY = {
                 "plan de tests ; 15 questions dédiées).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
+    # ── LOT 07 (Fable) : îlot 5e_C6 « Programmer le lampadaire » ──
+    "5e_C6.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « Programmer le lampadaire » (3 séances) couvrant "
+                "l'îlot 5e_C6 sur l'objet-fil du LOT 05 : carte d'identité du "
+                "programme par blocs (données utilisées/produites/paramètres), "
+                "traduction en algorithme en langage naturel (ordre + SI/ET/"
+                "SINON), simulateur PARAMÉTRABLE avec mission mairie et verrou "
+                "expérientiel (réglage d'origine testé puis réglage modifié "
+                "vérifié). Versions A/B/C, QCM 30 q (10/10/10, 2 illustrées, "
+                "réponses réparties), synthèses, fiche, matrice, 2 SVG CC0, "
+                "rapport de tests. C4 et C6 de 5e désormais complets.",
+        anomalies="Aucune. Version A en très basse tension uniquement.",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement "
+                      "(DYS), reduced-motion, impression A4.",
+        medias="2 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    **{c: dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="5e_C6.1",
+        qualite=f"README pointeur ({d} ; 10 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ) for c, d in {
+        "5e_C6.2": "activité 2 : traduction en algorithme en langage naturel",
+        "5e_C6.3": "activité 3 : paramètres, mission mairie, effets évalués",
+    }.items()},
     # ── LOT 06 (Fable) : l'énergie de la station (3e_C4.1 + C4.2) ──
     "3e_C4.1": dict(
         statut="COMPLET ET VALIDABLE",

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Le programme par blocs du lampadaire intelligent, avec ses paramètres encadrés</title>
+  <desc id="d">Programme par blocs de style Scratch. Bloc d'événement : quand le lampadaire démarre, répéter indéfiniment. Puis : mesurer la luminosité ambiante ; si la luminosité est inférieure au paramètre SEUIL NUIT égal à 30, alors il fait nuit. Si nuit et passage détecté : allumer la lampe à pleine puissance pendant le paramètre DURÉE égal à 5 secondes. Sinon, si nuit : mettre la lampe en veille à 30 pour cent. Sinon : éteindre la lampe. À droite, deux étiquettes distinguent les DONNÉES UTILISÉES (luminosité mesurée, passage détecté, seuil nuit, durée) et les DONNÉES PRODUITES (état de la lampe : éteinte, veille ou pleine puissance).</desc>
+  <rect width="940" height="560" fill="#050f24"/>
+  <text x="470" y="30" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">Le programme du lampadaire — lis-le comme un vrai concepteur</text>
+
+  <!-- programme par blocs -->
+  <g font-size="12">
+    <rect x="40" y="52" width="380" height="34" rx="14" fill="#8a5a00" stroke="#ffd66b" stroke-width="2"/>
+    <text x="58" y="74" fill="#ffe9b0">🚩 quand le lampadaire démarre</text>
+    <rect x="60" y="90" width="360" height="30" rx="8" fill="#7a3fa0" stroke="#c68ef2" stroke-width="2"/>
+    <text x="76" y="110" fill="#efe0fb">🔁 répéter indéfiniment :</text>
+
+    <rect x="80" y="126" width="400" height="30" rx="8" fill="#1d4e89" stroke="#61dafb" stroke-width="2"/>
+    <text x="96" y="146" fill="#d9f3ff">📥 mesurer <tspan font-weight="bold">luminosité</tspan> (capteur)</text>
+
+    <rect x="80" y="162" width="470" height="30" rx="8" fill="#a05a10" stroke="#ffb454" stroke-width="2"/>
+    <text x="96" y="182" fill="#ffe9cf">❓ si luminosité &lt; <tspan font-weight="bold">SEUIL_NUIT</tspan> alors nuit = vrai</text>
+    <rect x="392" y="166" width="52" height="22" rx="11" fill="#08132c" stroke="#ffd66b" stroke-width="2"/>
+    <text x="418" y="182" fill="#ffd66b" font-weight="bold" text-anchor="middle">30</text>
+
+    <rect x="80" y="198" width="470" height="30" rx="8" fill="#a05a10" stroke="#ffb454" stroke-width="2"/>
+    <text x="96" y="218" fill="#ffe9cf">❓ si <tspan font-weight="bold">nuit</tspan> ET <tspan font-weight="bold">passage détecté</tspan> :</text>
+    <rect x="100" y="234" width="480" height="30" rx="8" fill="#2e7d32" stroke="#81fba1" stroke-width="2"/>
+    <text x="116" y="254" fill="#d9ffe3">💡 allumer lampe à 100 % pendant <tspan font-weight="bold">DURÉE</tspan> secondes</text>
+    <rect x="472" y="238" width="44" height="22" rx="11" fill="#08132c" stroke="#ffd66b" stroke-width="2"/>
+    <text x="494" y="254" fill="#ffd66b" font-weight="bold" text-anchor="middle">5</text>
+
+    <rect x="80" y="270" width="360" height="30" rx="8" fill="#a05a10" stroke="#ffb454" stroke-width="2"/>
+    <text x="96" y="290" fill="#ffe9cf">↩ sinon, si <tspan font-weight="bold">nuit</tspan> :</text>
+    <rect x="100" y="306" width="380" height="30" rx="8" fill="#2e7d32" stroke="#81fba1" stroke-width="2"/>
+    <text x="116" y="326" fill="#d9ffe3">🌗 mettre lampe en <tspan font-weight="bold">veille (30 %)</tspan></text>
+
+    <rect x="80" y="342" width="240" height="30" rx="8" fill="#a05a10" stroke="#ffb454" stroke-width="2"/>
+    <text x="96" y="362" fill="#ffe9cf">↩ sinon :</text>
+    <rect x="100" y="378" width="300" height="30" rx="8" fill="#2e7d32" stroke="#81fba1" stroke-width="2"/>
+    <text x="116" y="398" fill="#d9ffe3">⚫ <tspan font-weight="bold">éteindre</tspan> la lampe</text>
+  </g>
+
+  <!-- données -->
+  <g font-size="11">
+    <rect x="610" y="90" width="300" height="150" rx="12" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+    <text x="626" y="114" fill="#61dafb" font-weight="bold" font-size="13">📥 DONNÉES UTILISÉES (entrées)</text>
+    <text x="626" y="138" fill="#e4eaf5">• luminosité mesurée (capteur)</text>
+    <text x="626" y="158" fill="#e4eaf5">• passage détecté (détecteur PIR)</text>
+    <text x="626" y="178" fill="#ffd66b">• SEUIL_NUIT = 30 (paramètre)</text>
+    <text x="626" y="198" fill="#ffd66b">• DURÉE = 5 s (paramètre)</text>
+    <text x="626" y="224" fill="#9bbefc" font-size="9.5">Les paramètres encadrés en jaune se modifient</text>
+
+    <rect x="610" y="260" width="300" height="120" rx="12" fill="#0d2347" stroke="#81fba1" stroke-width="2"/>
+    <text x="626" y="284" fill="#81fba1" font-weight="bold" font-size="13">📤 DONNÉES PRODUITES (sorties)</text>
+    <text x="626" y="308" fill="#e4eaf5">• état de la lampe :</text>
+    <text x="646" y="328" fill="#e4eaf5">⚫ éteinte · 🌗 veille 30 % · 🌟 100 %</text>
+    <text x="626" y="352" fill="#e4eaf5">• (et le voyant d'état du coffret)</text>
+
+    <rect x="610" y="400" width="300" height="106" rx="12" fill="#173666" stroke="#274a8a"/>
+    <text x="626" y="424" fill="#c68ef2" font-weight="bold" font-size="12">🧠 Lire un programme, c'est :</text>
+    <text x="626" y="446" fill="#e4eaf5" font-size="10.5">1. repérer ce qu'il UTILISE (entrées)</text>
+    <text x="626" y="464" fill="#e4eaf5" font-size="10.5">2. repérer ce qu'il PRODUIT (sorties)</text>
+    <text x="626" y="482" fill="#e4eaf5" font-size="10.5">3. suivre les décisions SI / SINON</text>
+    <text x="626" y="500" fill="#ffd66b" font-size="10.5">4. repérer les PARAMÈTRES réglables</text>
+  </g>
+
+  <text x="470" y="540" fill="#5b7bb8" font-size="11.5" text-anchor="middle" font-style="italic">C'est le vrai comportement de ton lampadaire de la séquence précédente — le programme le rend « intelligent ».</text>
+</svg>

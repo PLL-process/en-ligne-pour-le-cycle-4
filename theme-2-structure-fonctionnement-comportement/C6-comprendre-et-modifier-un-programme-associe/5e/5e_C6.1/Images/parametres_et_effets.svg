@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 470" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Modifier un paramètre du programme et évaluer ses effets sur le lampadaire</title>
+  <desc id="d">Deux colonnes reliées par des flèches. À gauche, le paramètre SEUIL NUIT : s'il augmente de 30 à 45, le lampadaire considère qu'il fait nuit plus tôt, il s'allume donc plus tôt le soir mais consomme davantage la batterie ; s'il diminue à 15, il s'allume plus tard et économise la batterie, au risque d'un parking sombre au crépuscule. À droite, le paramètre DURÉE de pleine puissance : s'il passe de 5 à 10 secondes, l'éclairage suit mieux les passants mais chaque passage consomme deux fois plus ; s'il diminue à 2 secondes, l'économie augmente mais l'éclairage devient haché. En bas, la règle : modifier un paramètre ne change pas la structure du programme, mais change le comportement — chaque réglage est un compromis service rendu contre énergie consommée.</desc>
+  <rect width="940" height="470" fill="#050f24"/>
+  <text x="470" y="30" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">Un paramètre change → le comportement change : évalue l'effet !</text>
+
+  <g font-size="11.5">
+    <rect x="40" y="60" width="410" height="160" rx="12" fill="#0d2347" stroke="#ffd66b" stroke-width="2.5"/>
+    <text x="60" y="88" fill="#ffd66b" font-weight="bold" font-size="14">🎛 SEUIL_NUIT (défaut : 30 %)</text>
+    <text x="60" y="118" fill="#e4eaf5">⬆ 45 : « nuit » déclarée PLUS TÔT le soir</text>
+    <text x="80" y="138" fill="#81fba1">→ parking éclairé dès le crépuscule…</text>
+    <text x="80" y="156" fill="#ff7b88">→ …mais la batterie travaille plus longtemps</text>
+    <text x="60" y="184" fill="#e4eaf5">⬇ 15 : « nuit » déclarée PLUS TARD</text>
+    <text x="80" y="204" fill="#81fba1">→ économie de batterie · <tspan fill="#ff7b88">parking sombre au crépuscule</tspan></text>
+
+    <rect x="490" y="60" width="410" height="160" rx="12" fill="#0d2347" stroke="#c68ef2" stroke-width="2.5"/>
+    <text x="510" y="88" fill="#c68ef2" font-weight="bold" font-size="14">⏲ DURÉE de pleine puissance (défaut : 5 s)</text>
+    <text x="510" y="118" fill="#e4eaf5">⬆ 10 s : la lumière « suit » mieux les passants</text>
+    <text x="530" y="138" fill="#ff7b88">→ chaque passage consomme 2× plus</text>
+    <text x="510" y="166" fill="#e4eaf5">⬇ 2 s : économie maximale</text>
+    <text x="530" y="186" fill="#ff7b88">→ éclairage « haché », désagréable</text>
+    <text x="510" y="208" fill="#9bbefc" font-size="10">Le confort des usagers est aussi une fonctionnalité !</text>
+  </g>
+
+  <!-- lampadaire central avec effets -->
+  <g>
+    <rect x="455" y="250" width="10" height="130" fill="#274a8a"/>
+    <rect x="440" y="376" width="40" height="10" rx="3" fill="#274a8a"/>
+    <rect x="420" y="240" width="70" height="18" rx="7" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+    <g stroke="#ffd66b" stroke-width="1.6"><line x1="432" y1="262" x2="428" y2="272"/><line x1="455" y1="262" x2="455" y2="274"/><line x1="478" y1="262" x2="482" y2="272"/></g>
+    <text x="365" y="300" fill="#61dafb" font-size="24" text-anchor="middle">🌗</text>
+    <text x="556" y="300" fill="#ffd66b" font-size="24" text-anchor="middle">🌟</text>
+    <text x="365" y="322" fill="#9bbefc" font-size="10" text-anchor="middle">veille</text>
+    <text x="556" y="322" fill="#9bbefc" font-size="10" text-anchor="middle">pleine puissance</text>
+  </g>
+
+  <g font-size="11">
+    <rect x="60" y="252" width="240" height="120" rx="12" fill="#173666" stroke="#81fba1" stroke-width="2"/>
+    <text x="76" y="276" fill="#81fba1" font-weight="bold">✅ Modifier un paramètre :</text>
+    <text x="76" y="298" fill="#e4eaf5">• ne change PAS la structure</text>
+    <text x="76" y="316" fill="#e4eaf5">• change le COMPORTEMENT</text>
+    <text x="76" y="334" fill="#e4eaf5">• se teste TOUJOURS après</text>
+    <text x="76" y="356" fill="#9bbefc" font-size="9.5">(c'est la compétence 5e_C6.3)</text>
+    <rect x="640" y="252" width="240" height="120" rx="12" fill="#173666" stroke="#ff7b88" stroke-width="2"/>
+    <text x="656" y="276" fill="#ff7b88" font-weight="bold">⚠ Évaluer l'effet, c'est peser :</text>
+    <text x="656" y="298" fill="#e4eaf5">service rendu (lumière, confort)</text>
+    <text x="656" y="316" fill="#e4eaf5">CONTRE</text>
+    <text x="656" y="334" fill="#e4eaf5">énergie consommée (batterie)</text>
+    <text x="656" y="356" fill="#9bbefc" font-size="9.5">chaque réglage est un compromis</text>
+  </g>
+
+  <rect x="60" y="404" width="820" height="42" rx="10" fill="#173666" stroke="#274a8a"/>
+  <text x="470" y="422" fill="#e4eaf5" font-size="12" text-anchor="middle">Règle d'or du concepteur : <tspan fill="#ffd66b" font-weight="bold">un paramètre modifié = un effet à PRÉDIRE puis à VÉRIFIER</tspan> au simulateur —</text>
+  <text x="470" y="438" fill="#9bbefc" font-size="11" text-anchor="middle">jamais de réglage « au hasard » sur un objet qui rend service à tout le monde.</text>
+</svg>
