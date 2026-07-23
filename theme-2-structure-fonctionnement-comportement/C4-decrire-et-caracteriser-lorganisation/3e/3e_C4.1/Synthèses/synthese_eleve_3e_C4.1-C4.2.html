@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — L'énergie de la station (3e_C4.1 et C4.2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>🔋 Synthèse — L'énergie de la station</h1>
+<p class="pb">Élaborer une chaîne d'énergie autonome et justifier chaque matériau : le travail d'un concepteur.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Élaborer la chaîne d'énergie (3e_C4.1)</h2>
+  <object class="schema" data="../Images/chaine_energie_a_elaborer.svg" type="image/svg+xml" aria-label="Le schéma-bloc de la chaîne d'énergie de la station">Schéma-bloc de la chaîne</object>
+  <p>En 3e, la chaîne n'est plus fournie : on l'<b>élabore</b>. Schéma-bloc : <b>panneau solaire</b> (capter + convertir : lumineuse → électrique) → <b>batterie 12 V</b> (stocker : chimique) → <b>régulateur</b> (protéger la batterie, distribuer) → <b>convertisseur 12 V → 5 V</b> (adapter à la carte) — plus le <b>basculement secteur/batterie</b> (utiliser EDF tant qu'il existe, enchaîner sans coupure). Les flèches d'un schéma-bloc = <b>flux d'énergie</b>, avec leur nature annotée.</p>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">2. Dimensionner (3e_C4.1)</h2>
+    <dl>
+      <dt>Énergie nécessaire</dt><dd><code>Wh = W × h</code> — station 6 W × 72 h = <b>432 Wh</b>.</dd>
+      <dt>Capacité batterie</dt><dd><code>Ah = Wh ÷ V</code> — 432 ÷ 12 = <b>36 Ah</b> minimum.</dd>
+      <dt>Marge raisonnée</dt><dd>on retient <b>40 Ah</b> : vieillissement + imprévus, SANS surdimensionner (coût, poids, impact).</dd>
+      <dt>Vérification</dt><dd>autonomie (h) = Ah × V ÷ W — à comparer au besoin (72 h).</dd>
+    </dl>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">3. Les contraintes du site (3e_C4.2)</h2>
+    <dl>
+      <dt>💨 Vent 230 km/h</dt><dd>mât résistant, fixations renforcées.</dd>
+      <dt>🧂 Embruns salins</dt><dd>métaux protégés : galvanisé, inox, alu.</dd>
+      <dt>☀ UV tropicaux</dt><dd>plastiques traités anti-UV.</dd>
+      <dt>🌡 Chaleur + humidité</dt><dd>coffret étanche MAIS ventilé.</dd>
+      <dt>🌱 Environnement</dt><dd>recyclable, durable, réparable.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">4. Matériaux et procédés justifiés (3e_C4.2)</h2>
+  <object class="schema" data="../Images/materiaux_procedes_abaque.svg" type="image/svg+xml" aria-label="Abaque matériaux et procédés">Abaque matériaux/procédés</object>
+  <p><b>Matériau ← contraintes du site · procédé ← forme de la pièce + taille de série.</b> Mât : acier galvanisé (laminage + soudure). Coffret : polycarbonate anti-UV (injection : forme complexe + série). Support : aluminium (extrusion : profilé). Carénage unique : ABS verni (impression 3D : pas de moule). Une justification de 3e croise <b>au moins deux contraintes</b>, dont l'environnement quand c'est pertinent.</p>
+</div>
+
+<div class="cols">
+  <div class="bloc savoir">
+    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+    <ul>
+      <li>ce que signifie ÉLABORER (≠ identifier, ≠ compléter) ;</li>
+      <li>l'ordre et le rôle des blocs (dont régulateur et basculement) ;</li>
+      <li>W vs Wh, et les deux formules du dimensionnement ;</li>
+      <li>les 5 contraintes du site et leurs exigences ;</li>
+      <li>la règle procédé ← forme + série (injection / extrusion / 3D / laminage).</li>
+    </ul>
+  </div>
+  <div class="bloc faire">
+    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+    <ul>
+      <li>élaborer un schéma-bloc complet avec natures d'énergie ;</li>
+      <li>dimensionner une batterie avec marge raisonnée ;</li>
+      <li>écarter les blocs intrus d'une palette ;</li>
+      <li>choisir matériau ET procédé pour une pièce donnée ;</li>
+      <li>rédiger une justification croisant 2 contraintes ou plus.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
+  <ul>
+    <li>Placer la batterie avant le panneau (rien ne la recharge) ;</li>
+    <li>confondre W (puissance) et Wh (énergie) ;</li>
+    <li>dimensionner « pile-poil » sans marge — ou surdimensionner « pour être tranquille » ;</li>
+    <li>choisir l'acier brut « moins cher » qui rouille en quelques mois au bord de mer ;</li>
+    <li>l'injection pour une pièce unique (le moule coûte une fortune) ;</li>
+    <li>justifier par le prix ou l'apparence au lieu des contraintes.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
+  <table class="voc">
+    <tr><td>chaîne d'énergie → <b>energy chain</b></td><td>batterie → <b>battery</b></td><td>dimensionner → <b>to size</b></td></tr>
+    <tr><td>matériau → <b>material</b></td><td>procédé → <b>process</b></td><td>moulage par injection → <b>injection molding</b></td></tr>
+    <tr><td>galvanisé → <b>galvanized</b></td><td>recyclable → <b>recyclable</b></td><td>contrainte → <b>constraint</b></td></tr>
+  </table>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séquence 3e — L'énergie de la station : élaborer la chaîne, justifier les matériaux (3e_C4.1 et C4.2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🔋 L'énergie de la station</h1>
+<p class="subtitle">Élaborer la chaîne d'énergie autonome de la station d'alerte — et justifier chaque matériau face au cyclone</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C4.1</span><span class="badge code">3e_C4.2</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D3, D4, D5</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Souviens-toi de la panne…</b> Pendant l'exercice cyclone, la station d'alerte s'est tue — et l'équipe
+    de « SOS station » a réparé le câble et le fusible. Mais le rapport de la mairie pointe un problème plus grave :
+    <b>la station est branchée sur le réseau EDF</b>. Or, pendant un vrai cyclone, le réseau coupe presque toujours…
+    au moment précis où l'on a le plus besoin d'être alerté !</p>
+    <p>La mission de la 3e : <b>concevoir l'alimentation AUTONOME de la station</b> — élaborer sa chaîne d'énergie
+    (ce n'est plus fourni : c'est vous les concepteurs), la dimensionner pour tenir <b>72 heures sans réseau</b>,
+    et justifier chaque matériau face au vent, au sel, aux UV… et à la planète.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment élaborer et dimensionner une chaîne d'énergie autonome capable de tenir 72 h de cyclone —
+  et justifier le choix de chaque matériau et de son procédé de mise en forme ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> de quoi la station aura-t-elle besoin pour produire, stocker et gérer sa propre énergie ? Quels matériaux résisteront au bord de mer ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : petit panneau solaire, batterie et multimètre au labo (très basse tension uniquement) — mesures réelles de tension et de courant.</p>
+    <p>🅱 <b>En simulation</b> : le simulateur d'autonomie intégré à la page (aucun matériel).</p>
+    <p>🅲 <b>Sans matériel</b> : fiches imprimables, schéma-bloc papier et calculs à la main — tout est faisable au cahier.</p>
+  </div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — Élaborer la chaîne<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Justifier les matériaux<span id="done-s2"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>⚡ Séance 1 — Élaborer la chaîne d'énergie autonome (3e_C4.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quels blocs, dans quel ordre, pour que la station produise et gère SA propre énergie ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Le schéma-bloc, c'est toi qui l'élabores</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> élaborer le schéma-bloc de la chaîne d'énergie (choisir les bons blocs, écarter les intrus, ordonner, nommer les natures d'énergie).</div>
+      <div><b>Compétence :</b> 3e_C4.1.</div>
+      <div><b>Production attendue :</b> 5 blocs placés + 4 natures + 2 intrus identifiés.</div>
+      <div><b>Ressources :</b> le gabarit et la palette ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/chaine_energie_a_elaborer.svg" type="image/svg+xml" aria-label="Gabarit de schéma-bloc à compléter et palette de blocs disponibles" style="width:100%"></object>
+      <figcaption>Le gabarit (en haut) et la palette (en bas) — deux blocs sont des intrus.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) place chaque bloc de la palette à la bonne position du gabarit ; b) indique la nature de l'énergie à chaque étape ; c) démasque les deux intrus.</div>
+    <div class="exo">
+      <h4>a) Je place les blocs</h4>
+      <div class="assoc"><label for="b1_1">Position 1 — CAPTER + CONVERTIR :</label><select id="b1_1"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
+      <div class="assoc"><label for="b1_2">Position 2 — STOCKER :</label><select id="b1_2"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
+      <div class="assoc"><label for="b1_3">Position 3 — RÉGULER + DISTRIBUER :</label><select id="b1_3"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
+      <div class="assoc"><label for="b1_4">Position 4 — CONVERTIR POUR ALIMENTER (carte en 5 V) :</label><select id="b1_4"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
+      <div class="assoc"><label for="b1_5">Position 5 — SECOURS (avant la coupure) :</label><select id="b1_5"><option value="">— choisir —</option><option>le panneau solaire</option><option>la batterie 12 V</option><option>le régulateur de charge</option><option>le convertisseur 12 V → 5 V</option><option>le basculement secteur / batterie</option><option>l'ampoule</option><option>le haut-parleur</option></select></div>
+      <h4>b) Les natures de l'énergie</h4>
+      <div class="assoc"><label for="n1_1">À l'entrée du panneau :</label><select id="n1_1"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option><option>énergie mécanique</option></select></div>
+      <div class="assoc"><label for="n1_2">À la sortie du panneau :</label><select id="n1_2"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option><option>énergie thermique</option></select></div>
+      <div class="assoc"><label for="n1_3">Stockée dans la batterie sous forme…</label><select id="n1_3"><option value="">— choisir —</option><option>énergie chimique</option><option>énergie lumineuse</option><option>énergie mécanique</option><option>énergie sonore</option></select></div>
+      <div class="assoc"><label for="n1_4">Fournie à la carte électronique :</label><select id="n1_4"><option value="">— choisir —</option><option>énergie électrique (en 5 V)</option><option>énergie chimique</option><option>énergie lumineuse</option><option>énergie éolienne</option></select></div>
+      <h4>c) Les intrus</h4>
+      <div class="assoc"><label for="i1_a">Premier intrus :</label><select id="i1_a"><option value="">— choisir —</option><option>l'ampoule</option><option>le haut-parleur</option><option>le régulateur de charge</option><option>la batterie 12 V</option></select></div>
+      <div class="assoc"><label for="i1_b">Second intrus :</label><select id="i1_b"><option value="">— choisir —</option><option>l'ampoule</option><option>le haut-parleur</option><option>le panneau solaire</option><option>le convertisseur 12 V → 5 V</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Suis le chemin de l'énergie : d'abord on la <b>capte</b> (quel bloc transforme la lumière en électricité ?), ensuite on la <b>garde pour la nuit</b>, puis on la <b>gère sans gaspiller</b>, enfin on l'<b>adapte</b> à ce que la carte sait recevoir (5 V).</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le régulateur protège la batterie (ni surcharge, ni décharge totale). Le basculement choisit automatiquement la meilleure source TANT QUE le secteur existe. Les intrus sont des <b>actionneurs de sortie</b> : ils consomment de l'énergie, ils n'en fournissent pas à la station.</p></details>
+    <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>1 → <b>panneau solaire</b> (capte la lumière ET la convertit en électricité) · 2 → <b>batterie 12 V</b> ·
+      3 → <b>régulateur de charge</b> · 4 → <b>convertisseur 12 V → 5 V</b> · 5 → <b>basculement secteur / batterie</b>.
+      Natures : <b>lumineuse → électrique → chimique (stockée) → électrique (5 V)</b>.
+      Intrus : <b>l'ampoule et le haut-parleur</b> — des sorties, pas des sources.
+      En 5e la chaîne était fournie, en 4e on la complétait : en 3e, <b>tu l'as élaborée</b> — c'est exactement 3e_C4.1.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> élaborer une chaîne d'énergie = choisir les blocs UTILES, les ordonner selon les fonctions (capter/convertir → stocker → réguler/distribuer → convertir), et nommer la nature de l'énergie à chaque étape.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> placer la batterie avant le panneau (rien ne la rechargerait) ; oublier le régulateur (batterie détruite en quelques semaines) ; prendre les intrus (une ampoule CONSOMME, elle ne produit pas).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 11 / 11 réponses et le schéma-bloc recopié au cahier avec les natures.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Dimensionner pour tenir 72 h — au simulateur</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> calculer l'énergie nécessaire pour 72 h d'autonomie et choisir la batterie, puis VÉRIFIER au simulateur de coupure.</div>
+      <div><b>Compétence :</b> 3e_C4.1 (dimensionner, c'est élaborer sérieusement).</div>
+      <div><b>Production attendue :</b> 2 calculs + 1 choix de batterie + 2 essais au simulateur (un qui échoue, un qui réussit).</div>
+      <div><b>Ressources :</b> conso de la station : 6 W en continu ; batterie 12 V ; énergie (Wh) = puissance (W) × durée (h) ; capacité (Ah) = énergie (Wh) ÷ tension (V).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) calcule l'énergie pour 72 h puis la capacité minimale ; b) choisis la batterie du commerce ; c) au simulateur, teste D'ABORD une configuration insuffisante, PUIS ta solution — la page vérifie que tu as vraiment fait les deux essais.</div>
+    <div class="exo">
+      <h4>a) Mes calculs de concepteur</h4>
+      <div class="assoc"><label for="d2_1">Énergie nécessaire pour 72 h : 6 W × 72 h = … Wh</label><input type="number" id="d2_1" min="0" max="2000" step="1" inputmode="numeric"></div>
+      <div class="assoc"><label for="d2_2">Capacité minimale de la batterie 12 V : 432 Wh ÷ 12 V = … Ah</label><input type="number" id="d2_2" min="0" max="200" step="1" inputmode="numeric"></div>
+      <h4>b) Mon choix dans le catalogue</h4>
+      <div class="assoc"><label for="d2_3">Batterie retenue :</label><select id="d2_3"><option value="">— choisir —</option><option>40 Ah — la capacité minimale + une marge de sécurité</option><option>20 Ah — moins chère, ça devrait passer</option><option>100 Ah — on ne sait jamais, prenons énorme</option><option>36 Ah — exactement le calcul, pas un Ah de plus</option></select></div>
+      <h4>c) Le crash-test cyclone (simulateur)</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <label for="simCap"><b>🔋 Capacité de la batterie :</b> <b id="simCapVal">40</b> Ah</label>
+          <input type="range" id="simCap" min="10" max="60" step="5" value="40">
+          <label for="simConso"><b>⚡ Consommation de la station :</b> <b id="simConsoVal">6</b> W</label>
+          <input type="range" id="simConso" min="3" max="10" step="1" value="6">
+          <p style="font-size:.85em;color:var(--sub)">Scénario : cyclone → réseau EDF coupé, ciel couvert → le panneau ne recharge presque plus.</p>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">AUTONOMIE SIMULÉE</div>
+          <div id="simAuto" style="font-size:2.2em;font-weight:800">80 h</div>
+          <div id="simVerdict" class="etiquette">✅ La station tient les 72 h</div>
+        </div>
+      </div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Wh = W × h, comme des « watts pendant des heures ». Puis divise par la tension (12 V) pour passer en Ah. Compare ensuite au catalogue : que vaut une marge de sécurité ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>6 × 72 = 432 Wh. 432 ÷ 12 = 36 Ah. Une batterie vieillit et le cyclone peut durer : 36 Ah « tout juste », c'est déjà trop juste. 100 Ah tiendrait… mais coût, poids et impact environnemental explosent : dimensionner, ce n'est pas surdimensionner.</p></details>
+    <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Énergie : <b>432 Wh</b>. Capacité minimale : <b>36 Ah</b>. Choix : <b>40 Ah</b> — le minimum PLUS une marge
+      (vieillissement de la batterie, cyclone qui s'éternise), sans tomber dans le surdimensionnement (coût, poids,
+      impact environnemental d'une 100 Ah inutile). Au simulateur : 20 Ah → 20 × 12 ÷ 6 = 40 h ❌ ; 40 Ah → 80 h ✅.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> dimensionner = calculer le besoin (Wh = W × h), convertir (Ah = Wh ÷ V), puis choisir AVEC une marge raisonnée. Ni trop juste, ni démesuré.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre W (puissance) et Wh (énergie) ; prendre « exactement le calcul » sans marge ; surdimensionner « pour être tranquille » en oubliant coût et environnement.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 2 calculs justes, le bon choix, ET les deux essais réellement faits au simulateur.</div>
+  </div>
+</section>
+</div>
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🧱 Séance 2 — Justifier matériaux et procédés (3e_C4.2)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quels matériaux, mis en forme comment, pour survivre au bord de mer martiniquais — sans oublier la planète ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Lire les contraintes du site</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> associer chaque contrainte du site à l'exigence qu'elle impose aux matériaux.</div>
+      <div><b>Compétence :</b> 3e_C4.2 (les contraintes d'abord, les choix ensuite).</div>
+      <div><b>Production attendue :</b> 5 associations contrainte → exigence.</div>
+      <div><b>Ressources :</b> le document du site ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/contraintes_site_cyclonique.svg" type="image/svg+xml" aria-label="La station et les contraintes du site : vent, embruns, UV, chaleur, environnement" style="width:100%"></object>
+      <figcaption>Cinq contraintes pèsent sur chaque pièce de la station.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> pour chaque contrainte, choisis l'exigence qu'elle impose.</div>
+    <div class="exo">
+      <div class="assoc"><label for="c3_1">💨 Vent cyclonique (230 km/h) →</label><select id="c3_1"><option value="">— choisir —</option><option>des fixations renforcées et un mât très résistant</option><option>des couleurs vives</option><option>un coffret plus grand</option><option>rien de particulier</option></select></div>
+      <div class="assoc"><label for="c3_2">🧂 Embruns salins →</label><select id="c3_2"><option value="">— choisir —</option><option>des métaux protégés (galvanisé, inox ou aluminium)</option><option>de l'acier brut, moins cher</option><option>du bois vernis</option><option>plus de peinture blanche</option></select></div>
+      <div class="assoc"><label for="c3_3">☀ UV intenses →</label><select id="c3_3"><option value="">— choisir —</option><option>des plastiques traités anti-UV</option><option>n'importe quel plastique</option><option>du métal uniquement</option><option>un parasol</option></select></div>
+      <div class="assoc"><label for="c3_4">🌡 Chaleur + humidité →</label><select id="c3_4"><option value="">— choisir —</option><option>un coffret étanche MAIS ventilé</option><option>un coffret hermétique sans aération</option><option>un coffret grillagé ouvert</option><option>pas de coffret</option></select></div>
+      <div class="assoc"><label for="c3_5">🌱 Contrainte environnementale →</label><select id="c3_5"><option value="">— choisir —</option><option>des matériaux recyclables et des pièces réparables</option><option>du tout-jetable, plus simple</option><option>importer de très loin</option><option>coller toutes les pièces entre elles</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Relis les encadrés du document : chaque contrainte contient déjà sa conséquence. Le sel attaque quoi ? Les UV fragilisent quoi ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Étanche ET ventilé n'est pas contradictoire : aérations en chicane, membranes… L'électronique chauffe : sans ventilation elle cuit ; sans étanchéité elle prend l'eau tropicale.</p></details>
+    <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Vent → fixations renforcées + mât résistant · Embruns → métaux protégés · UV → plastiques traités ·
+      Chaleur/humidité → étanche MAIS ventilé · Environnement → recyclable et réparable. En 3e, on croise TOUJOURS
+      contraintes <b>techniques</b> ET <b>environnementales</b> : c'est le cœur de C4.2.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> un choix de matériau se justifie par les CONTRAINTES — jamais par « c'est joli » ou « c'est ce qu'on avait ».</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 / 5 associations.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Choisir et justifier : matériau + procédé, pièce par pièce</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> pour 4 pièces de la station, choisir le matériau ET le procédé de mise en forme, puis rédiger une justification croisée.</div>
+      <div><b>Compétence :</b> 3e_C4.2.</div>
+      <div><b>Production attendue :</b> 8 choix + 1 justification rédigée.</div>
+      <div><b>Ressources :</b> l'abaque matériaux &amp; procédés ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/materiaux_procedes_abaque.svg" type="image/svg+xml" aria-label="Abaque des matériaux et procédés pour les pièces de la station" style="width:100%"></object>
+      <figcaption>L'abaque du bureau d'études : matériau, procédé, et le POURQUOI.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) choisis matériau et procédé pour chaque pièce (l'abaque t'aide, mais des pièges rôdent) ; b) rédige la justification COMPLÈTE pour le mât : au moins deux contraintes croisées.</div>
+    <div class="exo">
+      <h4>a) Mes choix de bureau d'études</h4>
+      <div class="assoc"><label for="m4_1">🗼 Mât — matériau :</label><select id="m4_1"><option value="">— choisir —</option><option>acier galvanisé à chaud</option><option>acier brut (moins cher)</option><option>PVC ordinaire</option><option>ABS</option></select></div>
+      <div class="assoc"><label for="p4_1">🗼 Mât — procédé :</label><select id="p4_1"><option value="">— choisir —</option><option>laminage + soudure</option><option>impression 3D</option><option>moulage par injection</option><option>thermoformage</option></select></div>
+      <div class="assoc"><label for="m4_2">🧰 Coffret — matériau :</label><select id="m4_2"><option value="">— choisir —</option><option>polycarbonate traité anti-UV</option><option>PVC ordinaire</option><option>acier brut</option><option>carton traité</option></select></div>
+      <div class="assoc"><label for="p4_2">🧰 Coffret — procédé :</label><select id="p4_2"><option value="">— choisir —</option><option>moulage par injection</option><option>laminage + soudure</option><option>impression 3D</option><option>usinage dans la masse</option></select></div>
+      <div class="assoc"><label for="m4_3">📐 Support du panneau — matériau :</label><select id="m4_3"><option value="">— choisir —</option><option>aluminium</option><option>acier brut</option><option>ABS</option><option>cuivre</option></select></div>
+      <div class="assoc"><label for="p4_3">📐 Support du panneau — procédé :</label><select id="p4_3"><option value="">— choisir —</option><option>extrusion</option><option>impression 3D</option><option>moulage par injection</option><option>tissage</option></select></div>
+      <div class="assoc"><label for="m4_4">🌀 Carénage de l'anémomètre (pièce unique) — matériau :</label><select id="m4_4"><option value="">— choisir —</option><option>ABS + vernis anti-UV</option><option>acier galvanisé à chaud</option><option>verre</option><option>béton</option></select></div>
+      <div class="assoc"><label for="p4_4">🌀 Carénage — procédé :</label><select id="p4_4"><option value="">— choisir —</option><option>impression 3D</option><option>moulage par injection</option><option>laminage + soudure</option><option>extrusion</option></select></div>
+      <h4>b) Ma justification du mât (2 contraintes croisées minimum)</h4>
+      <textarea id="j4" rows="3" placeholder="Le mât est en … mis en forme par … parce que…"></textarea>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux questions à te poser : quelle CONTRAINTE domine pour cette pièce (vent ? sel ? UV ?) et combien d'exemplaires (pièce unique → impression 3D ; grande série → injection ; profilé long → extrusion).</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour le mât : le sel attaque l'acier brut (souviens-toi du lampadaire de 5e !), et le vent exige la solidité de l'acier — d'où l'acier GALVANISÉ. Ta justification doit citer les deux : « solide face au vent » ET « protégé du sel ».</p></details>
+    <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Mât : <b>acier galvanisé à chaud</b>, <b>laminage + soudure</b>. Coffret : <b>polycarbonate anti-UV</b>,
+      <b>injection</b> (forme complexe + série). Support : <b>aluminium</b>, <b>extrusion</b> (profilé). Carénage :
+      <b>ABS verni</b>, <b>impression 3D</b> (pièce unique : un moule d'injection coûterait des milliers d'euros pour
+      UNE pièce !). Justification type : « Le mât est en acier galvanisé à chaud, laminé puis soudé, car l'acier résiste
+      au vent cyclonique et la galvanisation le protège de la corrosion des embruns ; l'acier est de plus recyclable. »</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> matériau ← contraintes du site · procédé ← forme de la pièce + taille de série. Une justification de 3e croise AU MOINS deux contraintes, dont l'environnement quand c'est pertinent.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> l'acier brut « moins cher » (il rouille en quelques mois ici) ; l'injection pour une pièce unique (le moule coûte une fortune) ; justifier par le prix seul.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 8 / 8 choix et une justification citant 2 contraintes.</div>
+  </div>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Réinvestissement — la borne solaire du stade</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> transférer la démarche à un objet voisin : la borne d'éclairage solaire du stade municipal (200 exemplaires prévus).</div>
+      <div><b>Compétences :</b> 3e_C4.1 + C4.2 (transfert).</div>
+      <div><b>Production attendue :</b> 5 réponses de concepteur.</div>
+      <div><b>Ressources :</b> tout ce que tu viens d'apprendre — sans document.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la mairie veut 200 bornes solaires pour le stade. Réponds en concepteur.</div>
+    <div class="exo">
+      <div class="assoc"><label for="r5_1">Le bloc INDISPENSABLE entre le panneau et la lampe (la nuit, pas de soleil !) :</label><select id="r5_1"><option value="">— choisir —</option><option>une batterie (avec son régulateur)</option><option>une rallonge</option><option>un deuxième panneau</option><option>un interrupteur simple</option></select></div>
+      <div class="assoc"><label for="r5_2">L'énergie y est stockée sous forme…</label><select id="r5_2"><option value="">— choisir —</option><option>chimique</option><option>lumineuse</option><option>mécanique</option><option>thermique</option></select></div>
+      <div class="assoc"><label for="r5_3">Le poteau de la borne, en bord de mer :</label><select id="r5_3"><option value="">— choisir —</option><option>acier galvanisé à chaud</option><option>acier brut</option><option>carton compressé</option><option>PVC ordinaire</option></select></div>
+      <div class="assoc"><label for="r5_4">Le capot plastique, à produire en 200 exemplaires :</label><select id="r5_4"><option value="">— choisir —</option><option>moulage par injection (la série rentabilise le moule)</option><option>impression 3D une par une</option><option>sculpture à la main</option><option>découpe de récupération</option></select></div>
+      <div class="assoc"><label for="r5_5">L'argument environnemental du dossier :</label><select id="r5_5"><option value="">— choisir —</option><option>énergie solaire renouvelable + matériaux recyclables + pièces remplaçables</option><option>c'est moins cher, point final</option><option>le plastique se jette facilement</option><option>aucun argument nécessaire</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>C'est la même chaîne que la station (en plus simple) et les mêmes contraintes de site. Pour le capot : 200 exemplaires, ce n'est plus une pièce unique…</p></details>
+    <button class="btn small" data-check="5" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb5" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Batterie + régulateur · chimique · acier galvanisé · injection (à 200 exemplaires, le moule est rentabilisé —
+      l'inverse exact du carénage unique de la station !) · l'argument complet : renouvelable + recyclable + réparable.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> la démarche est transférable à tout OST autonome : élaborer la chaîne, dimensionner, justifier matériaux ET procédés selon les contraintes et la série.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> au moins 4 / 5.</div>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <div class="bilan-grid">
+    <div>
+      <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
+      <p>Compare-la à ce que tu sais maintenant : avais-tu pensé au stockage ? À la marge de sécurité ? Au sel ?</p></div>
+      <p><b>Ce que tu sais faire désormais :</b> élaborer et dimensionner une chaîne d'énergie autonome (3e_C4.1),
+      et justifier un matériau et son procédé en croisant contraintes techniques ET environnementales (3e_C4.2) —
+      la station d'alerte est enfin prête à affronter un vrai cyclone, réseau coupé ou non.</p>
+      <p class="refs">Et après ? La station complète t'attend : <a href="../3e_C4.3/sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html">ses chaînes d'information et ses données</a>,
+      <a href="../../../C5-identifier-un-dysfonctionnement-dun-objet/3e/3e_C5.1/sequence_3e_C5.1-C5.4_sos_station_reparer.html">son dépannage</a> et
+      <a href="../../../C6-comprendre-et-modifier-un-programme-associe/3e/3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">son programme d'alerte</a>.</p>
+    </div>
+    <div class="confiance">
+      <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
+      <div class="assoc"><label for="auto1">3e_C4.1 — élaborer la chaîne d'énergie :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto2">3e_C4.2 — justifier matériau et procédé :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <p><a class="btn qcm" href="qcm_3e_C4.1-C4.2_energie_station.html">🧠 M'entraîner : le QCM de la séquence (30 questions)</a></p>
+      <p class="refs"><a href="Synthèses/synthese_eleve_3e_C4.1-C4.2.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_3e_C4.1-C4.2.html">👩‍🏫 Synthèse professeur</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Séquence 3e_C4.1 + C4.2 · Thème 2 · Technologie cycle 4 (programme 2024) · projet-fil « Station d'alerte cyclonique »</p>
+  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_3e_C4.1-C4.2_energie";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Simulateur d'autonomie (activité 2) ══════ */
+window.__exp = window.__exp || {};
+function majSim(){
+  const cap = parseInt($("simCap").value,10);
+  const conso = parseInt($("simConso").value,10);
+  $("simCapVal").textContent = cap;
+  $("simConsoVal").textContent = conso;
+  const heures = Math.round(cap*12/conso);
+  $("simAuto").textContent = heures + " h";
+  const ok = heures >= 72;
+  $("simVerdict").textContent = ok ? "✅ La station tient les 72 h" : "❌ Station muette après " + heures + " h";
+  $("simVerdict").style.color = ok ? "#81fba1" : "#ff7b88";
+  $("simAuto").style.color = ok ? "#81fba1" : "#ff7b88";
+  window.__exp[ok ? "suffisant" : "insuffisant"] = heures;
+  save(false);
+}
+$("simCap").addEventListener("input", majSim);
+$("simConso").addEventListener("input", majSim);
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = id => parseFloat(String($(id).value).replace(",","."));
+const txt = id => String($(id).value||"").trim().toLowerCase();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={b1_1:"le panneau solaire",b1_2:"la batterie 12 V",b1_3:"le régulateur de charge",
+               b1_4:"le convertisseur 12 V → 5 V",b1_5:"le basculement secteur / batterie",
+               n1_1:"énergie lumineuse",n1_2:"énergie électrique",n1_3:"énergie chimique",n1_4:"énergie électrique (en 5 V)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const intrus = new Set([$("i1_a").value, $("i1_b").value]);
+    const iOk = intrus.has("l'ampoule") && intrus.has("le haut-parleur");
+    if(iOk) ok+=2;
+    return {score:ok,total:11,extra:iOk?"":" Les intrus sont les deux blocs qui CONSOMMENT sans rien fournir à la station.",valide:ok>=10&&iOk};
+  },
+  2: function(){
+    let ok=0;
+    if(num("d2_1")===432) ok++;
+    if(num("d2_2")===36) ok++;
+    if($("d2_3").value==="40 Ah — la capacité minimale + une marge de sécurité") ok++;
+    const e=window.__exp||{};
+    const expOk = e["insuffisant"]!==undefined && e["suffisant"]!==undefined;
+    return {score:ok,total:3,extra:expOk?"":" Fais VRAIMENT les deux essais au simulateur : une configuration qui échoue, puis une qui tient 72 h.",valide:ok===3&&expOk};
+  },
+  3: function(){
+    let ok=0;
+    const att={c3_1:"des fixations renforcées et un mât très résistant",c3_2:"des métaux protégés (galvanisé, inox ou aluminium)",
+               c3_3:"des plastiques traités anti-UV",c3_4:"un coffret étanche MAIS ventilé",
+               c3_5:"des matériaux recyclables et des pièces réparables"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:5,valide:ok===5};
+  },
+  4: function(){
+    let ok=0;
+    const att={m4_1:"acier galvanisé à chaud",p4_1:"laminage + soudure",m4_2:"polycarbonate traité anti-UV",p4_2:"moulage par injection",
+               m4_3:"aluminium",p4_3:"extrusion",m4_4:"ABS + vernis anti-UV",p4_4:"impression 3D"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const j=txt("j4");
+    const nb=[/vent|cyclon|solid|résist/,/sel|embrun|corros|rouille|galvani/,/recycl|environnement|durable/,/uv/].filter(rx=>rx.test(j)).length;
+    const jOk = j.length>=30 && nb>=2;
+    return {score:ok,total:8,extra:jOk?"":" Ta justification doit croiser AU MOINS deux contraintes (ex. : vent + sel, ou sel + recyclable).",valide:ok>=7&&jOk};
+  },
+  5: function(){
+    let ok=0;
+    const att={r5_1:"une batterie (avec son régulateur)",r5_2:"chimique",r5_3:"acier galvanisé à chaud",
+               r5_4:"moulage par injection (la série rentabilise le moule)",
+               r5_5:"énergie solaire renouvelable + matériaux recyclables + pièces remplaçables"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:5,valide:ok>=4};
+  }
+};
+const ENC_OK=["Excellent travail de concepteur : tout est validé !","Bravo, la démarche d'élaboration est maîtrisée !","Très bien : tu raisonnes comme un bureau d'études."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3,4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majSim(); majProgress(); majHyp();
+</script>
+</body>
+</html>

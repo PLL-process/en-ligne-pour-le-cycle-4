@@ -233,3 +233,20 @@ les décisions de publication restent à ChatGPT.*
    sur l'objet-fil station (séance 4 du générateur S4 les attend).
 4. Le triptyque 5e/4e/3e est en place dans `_progressions/` : les IA des
    Thèmes 1 et 3 peuvent remplir leurs onglets des trois classeurs.
+
+## 2026-07-23 — Thème 2 · LOT 06 « L'énergie de la station » (Fable, branche `fable/theme-2/lot-06-energie-station-3e`)
+
+1. **LOT 06 réalisé — la compétence C4 de 3e est réellement complète** :
+   3e_C4.1 (élaborer le schéma-bloc : palette avec intrus, natures,
+   dimensionnement Wh/Ah avec marge raisonnée, simulateur d'autonomie 72 h à
+   verrou expérientiel) et 3e_C4.2 (justifier matériau ET procédé : 5
+   contraintes du site, abaque, 4 pièces, justification rédigée à 2 contraintes
+   croisées, réinvestissement borne du stade en série). QCM 30 q (15/15,
+   3 illustrées, réponses réparties 8/8/7/7), synthèses, fiche, matrice,
+   3 SVG CC0, tests 23/23 (un lien inter-dossiers détecté par la suite et
+   corrigé). Statuts : 3e_C4.1 → COMPLET ET VALIDABLE ; 3e_C4.2 → COUVERT.
+2. Ce lot comble le manque signalé au journal précédent (audit « À CRÉER »)
+   et remplit l'attente du générateur S4 du classeur de progression 3e
+   (séance 4) — les liens y seront reportés après fusion.
+3. Le projet-fil station est bouclé : comprise (C4.3-4.6), connectée (C4.7-4.8),
+   réparée (C5), programmée (C6), alimentée (C4.1-4.2).
