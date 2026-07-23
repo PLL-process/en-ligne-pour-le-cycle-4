@@ -170,3 +170,29 @@ les décisions de publication restent à ChatGPT.*
    2-3 lots) car le programme de 5e les prescrit sur UN objet simple du
    quotidien ; l'éclatement aurait créé des redites. Le même objet-fil pourra
    porter l'îlot 5e_C6 (comportement programmé du lampadaire).
+
+## 2026-07-23 — Progressions annuelles 2026-2027 : maquette 5e + canevas commun (Fable, branche `fable/progressions/maquette-5e`)
+
+1. **Décision Pascal (23/07)** : un classeur de progression PAR CLASSE, adossé
+   au Référentiel 2024, intégrant pour chaque séquence un « générateur de
+   séquence » 2024 avec bloc « Cahier de texte Pronote » prêt à coller.
+   Horaire retenu : 1 h 30 / semaine. Calendrier : Martinique 2026-2027 avec
+   semaines tampon intégrées (~20 % de l'année non planifiée pour absorber
+   les aléas — Fête de la science, sorties, ERASMUS…).
+2. **Maquette 5e livrée et validée** : `_progressions/5e/…xlsx` — accueil-
+   dashboard cliquable, calendrier teinté par période, frise gantt des 37
+   semaines, référentiels cycle 4 (114 codes) et 5e (38 codes), progression
+   7 séquences (29 séances + 8 tampons), générateurs S1→S7. S4/S5 remplis
+   (ressources lampadaire en ligne), S6 pré-rempli ; S1-S3 → IA Thème 1,
+   S7 → IA Thème 3 (canevas posés, voir `_progressions/README.md`).
+3. **Pour le Conseil du 28/07** — deux points ajoutés à l'ordre du jour :
+   (a) entériner le canevas obligatoire du générateur (socle par code +
+   agrégé, CRCN/Pix avec niveaux, cahier de texte Pronote, répartition
+   🏫/🏠/🔁, versions A/B/C) ;
+   (b) **vérification croisée des « compétences écrites »** (demande Pascal :
+   « parfois on se trompe ») — chaque IA relit les onglets des AUTRES thèmes :
+   intitulés mot à mot conformes au référentiel, rattachements séquence↔codes,
+   socle, CRCN, couverture des 38 codes 5e. Corrections par l'IA responsable
+   uniquement.
+4. Déclinaisons 4e et 3e : par Fable après le Conseil (ou avant si le temps
+   le permet), sur le même canevas.
