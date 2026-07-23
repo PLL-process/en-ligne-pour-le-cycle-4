@@ -278,3 +278,34 @@ les décisions de publication restent à ChatGPT.*
    QCM » du bilan débordait de sa pastille sur plusieurs lignes — display:block
    + white-space:normal appliqués aux TROIS séquences du gabarit (5e_C4.1,
    3e_C4.1, 5e_C6.1). À reporter dans le gabarit commun pour les futurs lots.
+
+## 2026-07-24 — RÈGLE D'OR « Blocs élève obligatoires » (demande Pascal ; Fable, branche `fable/theme-2/regle-blocs-eleve`)
+
+**Règle d'or n° 4 — structure minimale de toute séquence élève** (adoptée par
+Pascal le 24/07/2026, applicable aux trois thèmes ; à inscrire au gabarit
+commun lors du Conseil du 28/07) :
+
+1. **Ouverture obligatoire** — la page commence par, dans cet ordre et avant
+   tout autre contenu : un **titre** `<h1>` (emoji + nom court de la séquence,
+   ex. « 🔋 L'énergie de la station ») puis un **sous-titre** d'une ligne qui
+   annonce la mission de l'élève (ex. « Élaborer la chaîne d'énergie autonome
+   de la station d'alerte — et justifier chaque matériau face au cyclone »).
+2. **Bloc « 🧠 Prêt·e à t'entraîner ? »** — encadré centré, présent dans CHAQUE
+   séquence élève, contenant : le nombre de questions du QCM, la mention du
+   nombre de questions illustrées (schémas à lire), et un bouton unique
+   « 🚀 Ouvrir le QCM d'entraînement » pointant vers le QCM du lot.
+3. **Bloc « 🎁 Bonus (facultatif — hors parcours obligatoire) »** — encadré
+   présent dans CHAQUE séquence élève, avec 2 à 3 défis ouverts (citoyen,
+   technique, ancrage local Martinique…) clairement hors barre de progression
+   et sans vérificateur : aucun élève ne doit être pénalisé de ne pas les faire.
+4. **Emplacement** — ces deux blocs closent la séquence : après le bilan,
+   avant le pied de page.
+
+**Application immédiate (Thème 2)** : LOT 05 déjà conforme (modèle de
+référence) ; LOT 06 (3e_C4.1-C4.2) et LOT 07 (5e_C6.1-C6.3) mis en conformité
+dans ce lot (blocs standardisés ajoutés — le défi loi d'Ohm du LOT 06 reste
+en activité bonus interne, les deux ne font pas doublon). LOTs 01-04 : déjà
+conformes. Restent NON conformes dans le Thème 2 : `3e_C6.2
+(sequence_algorigrammes_dnb.html)` et `4e_C6.2 (jardin connecté)` — contenus
+antérieurs au gabarit, à traiter dans le lot de consolidation post-Conseil.
+**Pour les Thèmes 1 et 3** : adoption à l'ordre du jour du Conseil du 28/07.
