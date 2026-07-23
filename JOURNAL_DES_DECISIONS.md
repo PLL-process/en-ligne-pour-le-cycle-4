@@ -371,3 +371,24 @@ Applicable immédiatement à toutes les intelligences artificielles du projet :
 3. Le générateur S6 du classeur de progression 5e est câblé sur les
    ressources publiées (B14, liens Pronote des séances 1 et 3) — même
    commit, formules du classeur vérifiées intactes.
+
+## 2026-07-24 — Thème 2 · LOT 09 « Le jardin connecté » (Fable, branche `fable/theme-2/lot-09-jardin-connecte-4e`)
+
+1. **LOT 09 réalisé — îlot 4e_C4 complet (9 codes)** sur le nouvel objet-fil
+   de 4e, le jardin connecté (choisi pour sa continuité avec la séquence
+   « arrosage automatique » existante de 4e_C6.2) : chaîne d'énergie et
+   transformations (C4.1-C4.2), chaîne d'information, données téléversées et
+   table structurée avec explorateur à verrou 3 bacs (C4.4-C4.6), réseau,
+   IP fixe et simulateur de dépannage à verrou 3 pannes (C4.7-C4.9), forme
+   et procédé (C4.3). QCM 30 q (7/10/10/3 par famille, 3 illustrées,
+   réponses 7/7/8/8 graine 91), synthèses, matrice, 3 SVG CC0, 8 README
+   pointeurs, tests Playwright 21/21. Règle d'or n°4 native.
+2. **Ressources existantes intégrées, pas remplacées** : les QCM
+   « automatisation premium » (C4.1), eCall (C4.4) et XXL réseaux (C4.7)
+   restent en entraînement complémentaire, référencés par les README et la
+   séquence. Les anomalies de licence du QCM XXL restent tracées (audit).
+3. Générateurs S4 ET S5 du classeur 4e câblés sur les ressources publiées
+   (même commit) ; formules du classeur vérifiées intactes.
+4. **Marche 5e → 4e assumée** : objet automatisé (lampadaire) → système
+   connecté (données qui sortent sur un réseau). Le Thème 2 couvre
+   désormais : 5e 14/14 · 4e C4 9/9 · 3e 15/15. Restent 4e_C5 et 4e_C6.

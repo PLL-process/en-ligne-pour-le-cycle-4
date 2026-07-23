@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Le réseau local du jardin connecté, avec ses adresses IP</title>
+  <desc id="d">Schéma du réseau local du collège pour le jardin connecté. Au centre, la box routeur, d'adresse 192.168.1.1, qui est la passerelle du réseau. Elle est reliée par câble à la borne wifi de la cour, qui étend la couverture jusqu'au jardin. Trois appareils sont connectés : la carte du jardin, en adresse IP FIXE 192.168.1.50, pour être toujours joignable à la même adresse ; la tablette de la classe, en adresse automatique DHCP 192.168.1.23, qui peut changer d'un jour à l'autre ; et le serveur du collège, en adresse fixe 192.168.1.10, qui héberge la table de données. Un encart rappelle les trois conditions d'une bonne communication : être dans la portée du wifi, avoir une adresse IP unique sur le réseau, et connaître la bonne passerelle. Trois pannes classiques sont listées : deux appareils avec la même adresse IP entrent en conflit ; une mauvaise passerelle isole l'appareil ; hors de portée du wifi, plus aucun signal.</desc>
+  <rect width="940" height="580" fill="#050f24"/>
+  <text x="470" y="30" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">Le réseau du jardin — chaque appareil a son adresse, comme une maison</text>
+
+  <!-- box routeur -->
+  <g font-size="11">
+    <rect x="380" y="60" width="180" height="76" rx="10" fill="#0d2347" stroke="#ffd66b" stroke-width="2.5"/>
+    <text x="470" y="84" fill="#ffd66b" font-weight="bold" text-anchor="middle">📦 BOX / ROUTEUR</text>
+    <text x="470" y="104" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.1</text>
+    <text x="470" y="122" fill="#9bbefc" text-anchor="middle" font-size="10">la PASSERELLE du réseau</text>
+
+    <!-- borne wifi -->
+    <rect x="390" y="196" width="160" height="64" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+    <text x="470" y="220" fill="#61dafb" font-weight="bold" text-anchor="middle">📶 BORNE WIFI (cour)</text>
+    <text x="470" y="240" fill="#9bbefc" text-anchor="middle" font-size="10">étend la couverture</text>
+    <text x="470" y="252" fill="#9bbefc" text-anchor="middle" font-size="10">jusqu'au jardin</text>
+    <line x1="470" y1="136" x2="470" y2="196" stroke="#5b7bb8" stroke-width="3"/>
+    <text x="482" y="170" fill="#5b7bb8" font-size="9.5">câble</text>
+
+    <!-- carte jardin -->
+    <rect x="60" y="330" width="230" height="96" rx="10" fill="#0e2e18" stroke="#81fba1" stroke-width="2.5"/>
+    <text x="175" y="354" fill="#81fba1" font-weight="bold" text-anchor="middle">🌱 CARTE DU JARDIN</text>
+    <text x="175" y="376" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.50</text>
+    <text x="175" y="396" fill="#ffd66b" text-anchor="middle" font-size="10.5" font-weight="bold">IP FIXE (paramétrée à la main)</text>
+    <text x="175" y="414" fill="#9bbefc" text-anchor="middle" font-size="10">toujours joignable à la même adresse</text>
+
+    <!-- tablette -->
+    <rect x="360" y="330" width="220" height="96" rx="10" fill="#0d2347" stroke="#c68ef2" stroke-width="2"/>
+    <text x="470" y="354" fill="#c68ef2" font-weight="bold" text-anchor="middle">📱 TABLETTE DE LA CLASSE</text>
+    <text x="470" y="376" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.23</text>
+    <text x="470" y="396" fill="#61dafb" text-anchor="middle" font-size="10.5">IP AUTOMATIQUE (DHCP)</text>
+    <text x="470" y="414" fill="#9bbefc" text-anchor="middle" font-size="10">peut changer d'un jour à l'autre</text>
+
+    <!-- serveur -->
+    <rect x="650" y="330" width="230" height="96" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2.5"/>
+    <text x="765" y="354" fill="#61dafb" font-weight="bold" text-anchor="middle">🗄 SERVEUR DU COLLÈGE</text>
+    <text x="765" y="376" fill="#e4eaf5" text-anchor="middle" font-family="monospace">192.168.1.10</text>
+    <text x="765" y="396" fill="#ffd66b" text-anchor="middle" font-size="10.5" font-weight="bold">IP FIXE</text>
+    <text x="765" y="414" fill="#9bbefc" text-anchor="middle" font-size="10">héberge la table « mesures_jardin »</text>
+
+    <!-- ondes wifi -->
+    <g stroke="#61dafb" stroke-width="2" fill="none" opacity="0.75">
+      <path d="M416 262 q-140 30 -226 68"/>
+      <path d="M470 262 q0 34 0 66"/>
+      <path d="M524 262 q140 30 226 68"/>
+    </g>
+    <text x="292" y="300" fill="#61dafb" font-size="9.5">wifi</text>
+    <text x="478" y="300" fill="#61dafb" font-size="9.5">wifi</text>
+    <text x="640" y="300" fill="#61dafb" font-size="9.5">wifi</text>
+  </g>
+
+  <!-- règles -->
+  <g font-size="11">
+    <rect x="40" y="452" width="430 " height="108" rx="12" fill="#173666" stroke="#274a8a"/>
+    <text x="58" y="478" fill="#81fba1" font-weight="bold" font-size="12.5">✅ Pour communiquer, un appareil doit :</text>
+    <text x="58" y="500" fill="#e4eaf5">1. être DANS LA PORTÉE du wifi (ou câblé)</text>
+    <text x="58" y="520" fill="#e4eaf5">2. avoir une adresse IP UNIQUE sur le réseau</text>
+    <text x="58" y="540" fill="#e4eaf5">3. connaître la bonne PASSERELLE (192.168.1.1)</text>
+
+    <rect x="490" y="452" width="420" height="108" rx="12" fill="#3d0f18" stroke="#ff7b88" stroke-width="2"/>
+    <text x="508" y="478" fill="#ff7b88" font-weight="bold" font-size="12.5">⚠ Les 3 pannes classiques :</text>
+    <text x="508" y="500" fill="#ffd9dd">• même IP sur 2 appareils → CONFLIT d'adresses</text>
+    <text x="508" y="520" fill="#ffd9dd">• mauvaise passerelle → l'appareil est ISOLÉ</text>
+    <text x="508" y="540" fill="#ffd9dd">• hors de portée wifi → plus AUCUN signal</text>
+  </g>
+</svg>
