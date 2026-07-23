@@ -170,3 +170,49 @@ les décisions de publication restent à ChatGPT.*
    2-3 lots) car le programme de 5e les prescrit sur UN objet simple du
    quotidien ; l'éclatement aurait créé des redites. Le même objet-fil pourra
    porter l'îlot 5e_C6 (comportement programmé du lampadaire).
+
+## 2026-07-23 — Progressions annuelles 2026-2027 : maquette 5e + canevas commun (Fable, branche `fable/progressions/maquette-5e`)
+
+1. **Décision Pascal (23/07)** : un classeur de progression PAR CLASSE, adossé
+   au Référentiel 2024, intégrant pour chaque séquence un « générateur de
+   séquence » 2024 avec bloc « Cahier de texte Pronote » prêt à coller.
+   Horaire retenu : 1 h 30 / semaine. Calendrier : Martinique 2026-2027 avec
+   semaines tampon intégrées (~20 % de l'année non planifiée pour absorber
+   les aléas — Fête de la science, sorties, ERASMUS…).
+2. **Maquette 5e livrée et validée** : `_progressions/5e/…xlsx` — accueil-
+   dashboard cliquable, calendrier teinté par période, frise gantt des 37
+   semaines, référentiels cycle 4 (114 codes) et 5e (38 codes), progression
+   7 séquences (29 séances + 8 tampons), générateurs S1→S7. S4/S5 remplis
+   (ressources lampadaire en ligne), S6 pré-rempli ; S1-S3 → IA Thème 1,
+   S7 → IA Thème 3 (canevas posés, voir `_progressions/README.md`).
+3. **Pour le Conseil du 28/07** — deux points ajoutés à l'ordre du jour :
+   (a) entériner le canevas obligatoire du générateur (socle par code +
+   agrégé, CRCN/Pix avec niveaux, cahier de texte Pronote, répartition
+   🏫/🏠/🔁, versions A/B/C) ;
+   (b) **vérification croisée des « compétences écrites »** (demande Pascal :
+   « parfois on se trompe ») — chaque IA relit les onglets des AUTRES thèmes :
+   intitulés mot à mot conformes au référentiel, rattachements séquence↔codes,
+   socle, CRCN, couverture des 38 codes 5e. Corrections par l'IA responsable
+   uniquement.
+4. Déclinaisons 4e et 3e : par Fable après le Conseil (ou avant si le temps
+   le permet), sur le même canevas.
+
+## 2026-07-23 — Progressions : classeur 4e + notification aux autres IA (Fable, branche `fable/progressions/maquette-5e`)
+
+1. **Canevas 5e validé par Pascal** (tests réels du moteur d'imprévus en Excel :
+   insertion, décalage, effacement, retour au nominal — tout confirmé), avec en
+   version personnelle .xlsm : grandes fenêtres de saisie, ouverture sur la
+   semaine en cours, copie du cahier de texte en un clic (installateur
+   PowerShell : Excel fabrique lui-même les macros).
+2. **Classeur 4e produit** sur le même canevas : 28 séances + 9 tampons,
+   38 codes, Nathan 4e (11 problématiques mappées), générateurs S4-S5-S6
+   pré-remplis par Fable avec les QCM 4e existants du dépôt (jardin connecté,
+   eCall, automatisation, réseaux, éclairage, algorigrammes — non modifiés),
+   S1-S3 → IA Thème 1, S7 → IA Thème 3.
+3. **ANOMALIE RÉFÉRENTIEL DÉTECTÉE ET CORRIGÉE** : 4e_C4.3 (forme d'une pièce
+   ↔ procédé) n'était rattaché à AUCUNE séquence de la progression 4e du
+   référentiel — réintégré dans S6 « Réparer sans notice ». Illustre l'intérêt
+   de la vérification croisée des compétences écrites (Conseil du 28/07).
+4. **Notification aux autres IA** : messages prêts (transmis par Pascal dans
+   leurs conversations) — voir `_progressions/README.md` pour le contrat.
+   Classeur 3e : à produire (même canevas).
