@@ -109,3 +109,18 @@ les décisions de publication restent à ChatGPT.*
    l'adaptation est mécanique (le générateur lit un seul fichier).
 3. **Publication** : lot-01 poussé sur GitHub par Pascal (bundle) ; lot-02
    suit le même canal tant que la session n'est pas reliée au dépôt.
+
+## 2026-07-22 (soir) — Thème 2 · LOT 03 « SOS station : réparer plutôt que jeter » + règle images v2 (Fable, branche `fable/theme-2/lot-03-reparer-plutot-que-jeter`)
+
+1. **Règle des images v2** (décision Pascal du 22/07, rédigée par Fable) ajoutée au
+   skill `licences-medias-education` : images ENCOURAGÉES selon trois usages
+   (image-objet prioritaire, image-explication, image-contexte), décoratif toujours
+   interdit, critère de contrôle en fin de lot. À entériner au Conseil du 28/07.
+2. **LOT 03 réalisé** : séquence 3e_C5.1→C5.4 (4 séances, simulateur de dépannage à
+   2 pannes avec compteur de mesures et verrou pédagogique, arbre de diagnostic,
+   plan coté, versions A/B/C), QCM 32 q dont 10 illustrées (moteur QCM étendu :
+   champ `img` optionnel + alt), synthèses, fiche, matrice, 5 SVG CC0.
+   Statuts : 3e_C5.1 → COMPLET ET VALIDABLE ; C5.2/C5.3/C5.4 → COUVERTS (pointeurs).
+   La compétence C5 de 3e, entièrement vide ce matin, est couverte.
+3. **Signalement inter-thèmes** : l'indice de réparabilité (3e_C3.3, Thème 1) est
+   évoqué en ouverture EDD — l'agent du Thème 1 peut s'y référer pour sa séquence.

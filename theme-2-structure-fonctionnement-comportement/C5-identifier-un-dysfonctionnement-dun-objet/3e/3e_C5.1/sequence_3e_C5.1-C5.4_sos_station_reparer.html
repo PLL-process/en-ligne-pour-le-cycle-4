@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOS station : réparer plutôt que jeter — 3e_C5.1 à 3e_C5.4</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🔧 SOS station : réparer plutôt que jeter</h1>
+<p class="subtitle">Diagnostiquer, dépanner, refabriquer — la station d'alerte doit resonner avant la prochaine alerte</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C5.1</span>
+  <span class="badge code">3e_C5.2</span>
+  <span class="badge code">3e_C5.3</span>
+  <span class="badge code">3e_C5.4</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
+  <span class="badge crcn">CRCN : 3.4 · 5.1 · 5.2</span>
+  <span class="badge duree">⏱ 4 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Lundi matin, après le passage du cyclone.</b> Le quartier a tenu bon, la station aussi… presque. Au test
+    hebdomadaire de la sirène : <b>silence total</b>. Pourtant l'application reçoit toujours les mesures de vent et de
+    pluie, et la LED du boîtier est allumée. Autre dégât visible : la girouette pend lamentablement, son support en
+    plastique a cassé net.</p>
+    <p>Le technicien de la mairie propose de « tout changer » : une station neuve coûte 1 800 €. Le club techno du
+    collège refuse : <b>« On diagnostique, on répare, on refabrique ce qui manque. »</b> La prochaine saison cyclonique
+    n'attendra pas — et jeter un système qui fonctionne à 90 % serait un gâchis absurde.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment localiser précisément l'origine d'une panne, remettre le système en état<br>et refabriquer une pièce cassée — plutôt que tout jeter ?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Mes hypothèses de départ</h2>
+  <p>Réponds avec tes idées actuelles — tu y reviendras à la fin.</p>
+  <div class="exo">
+    <label for="hyp1"><b>1.</b> La sirène ne sonne plus mais tout le reste fonctionne. D'après toi, quelles sont les causes possibles, et par laquelle commencerais-tu ?</label>
+    <textarea id="hyp1" placeholder="Je pense que la panne vient de… je commencerais par…"></textarea>
+    <label for="hyp2" style="margin-top:10px;display:block"><b>2.</b> Justifie ton idée : sur quoi t'appuies-tu ?</label>
+    <textarea id="hyp2" placeholder="Je pense cela parce que…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Référentiel officiel (programme 2024)</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C5.1</b></td><td>Formuler des hypothèses expliquant le dysfonctionnement d\'un objet technique.</td><td>D1.3, D4</td><td>1, 2, R</td></tr>
+    <tr><td><b>3e_C5.2</b></td><td>Proposer un protocole de dépannage puis de réparation.</td><td>D2, D4</td><td>3, R</td></tr>
+    <tr><td><b>3e_C5.3</b></td><td>Réaliser le dépannage ou la réparation d\'un système défectueux.</td><td>D2, D4, D5</td><td>4, R</td></tr>
+    <tr><td><b>3e_C5.4</b></td><td>Réaliser une pièce sur mesure pour réparer un objet technique.</td><td>D2, D3, D4</td><td>5</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C5</b> : identifier un dysfonctionnement d\'un objet technique et y remédier — BO n°9 du 29/02/2024. Suite directe des séquences « Station d\'alerte » (C4.3→C4.6) et « Internet jusqu\'à Sainte-Luce » (C4.7-C4.8).</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Choix de l\'outil</h2>
+  <table class="refs">
+    <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
+    <tr><td>Simulateur de dépannage intégré (cette page)</td><td>Chaque élève mesure, localise et répare virtuellement — sans risque et sans matériel.</td><td>—</td></tr>
+    <tr><td>Objets réels à diagnostiquer + multimètres</td><td>Le geste réel du dépanneur.</td><td>⚠ multimètres : <b>MATÉRIEL À CONFIRMER — prévoir l\'alternative simulation</b></td></tr>
+    <tr><td>FreeCAD (pièce sur mesure)</td><td>Gratuit, installe partout, suffisant pour modéliser le support.</td><td>SolidWorks (licence à vérifier) ; gabarit papier imprimable (aucun poste)</td></tr>
+    <tr><td>Impression 3D de la pièce</td><td>Procédé adapté à la pièce unique.</td><td>⚠ imprimante : <b>MATÉRIEL À CONFIRMER</b> — repli : découpe/assemblage de plaques</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel</h4>
+      <p>Atelier « clinique des objets » : objets en panne apportés (lampe LED, ventilateur, jouet), diagnostic au multimètre <b>(MATÉRIEL À CONFIRMER)</b>, réparation encadrée. Sécurité : très basse tension uniquement, jamais d\'objet branché au secteur.</p></div>
+    <div class="version vb"><h4>🅱 Logiciel</h4>
+      <p><b>FreeCAD</b> : modéliser le support de girouette à partir du plan coté (activité 5), exporter en STL pour une impression future.</p></div>
+    <div class="version vc"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans cette page : simulateur de dépannage (activité 4), plan coté à lire (activité 5) et gabarit papier de la pièce à tracer en vraie grandeur. Personne n\'est pénalisé.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Du symptôme aux hypothèses</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Le protocole de dépannage</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Réparer !</small><span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" data-panel="s4" role="tab" aria-selected="false">Séance 4<br><small>La pièce sur mesure + défi</small><span class="done" id="done-s4"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🔍 Séance 1 — Du symptôme aux hypothèses</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que nous apprennent les constats AVANT même d'ouvrir le boîtier ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>L'enquête commence : lire les symptômes</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> distinguer symptôme et hypothèse, et utiliser les constats pour innocenter des éléments.</div>
+      <div><b>Compétence :</b> 3e_C5.1 — formuler des hypothèses expliquant un dysfonctionnement.</div>
+      <div><b>Production attendue :</b> 4 déductions + 3 hypothèses classées.</div>
+      <div><b>Ressources :</b> relevé des symptômes ci-dessous (à LIRE pour répondre).</div>
+    </div>
+    <object class="figure" data="Images/station_en_panne_symptomes.svg" type="image/svg+xml" aria-label="Relevé des 4 symptômes après le cyclone : sirène muette, LED d'alimentation allumée, mesures encore reçues par l'application, support de girouette cassé">Relevé des symptômes de la station (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> a) à partir des constats 2 et 3 du schéma, réponds aux déductions ; b) classe ensuite les hypothèses restantes dans l'ordre où il faudra les tester.</div>
+    <div class="exo">
+      <h4>a) Ce que les constats nous apprennent</h4>
+      <div class="assoc"><label for="c1_1">Constat 2 (LED allumée) : la panne « batterie complètement vide » est…</label><select id="c1_1"><option value="">— choisir —</option><option>peu probable : le boîtier est alimenté</option><option>certaine</option><option>impossible à évaluer</option></select></div>
+      <div class="assoc"><label for="c1_2">Constat 3 (mesures reçues) : microcontrôleur et transmission radio sont…</label><select id="c1_2"><option value="">— choisir —</option><option>probablement en état de marche</option><option>certainement en panne</option><option>sans rapport avec la sirène</option></select></div>
+      <div class="assoc"><label for="c1_3">« La sirène est muette » est…</label><select id="c1_3"><option value="">— choisir —</option><option>un symptôme (on le constate)</option><option>une hypothèse (on le suppose)</option><option>un protocole</option></select></div>
+      <div class="assoc"><label for="c1_4">« Le fusible de la sirène a grillé » est…</label><select id="c1_4"><option value="">— choisir —</option><option>un symptôme (on le constate)</option><option>une hypothèse (on le suppose)</option><option>une certitude</option></select></div>
+      <h4>b) Classer les hypothèses restantes (1 = à tester en premier)</h4>
+      <p style="font-size:.88em;color:var(--sub)">Règle du dépanneur : tester d'abord ce qui est <b>simple, rapide et probable</b>.</p>
+      <div class="assoc"><label for="c1_h1">Câble boîtier→sirène arraché par le vent (contrôle visuel, 30 s)</label><select id="c1_h1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option></select></div>
+      <div class="assoc"><label for="c1_h2">Sirène elle-même détruite (test par substitution, 10 min)</label><select id="c1_h2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option></select></div>
+      <div class="assoc"><label for="c1_h3">Fusible de la sortie sirène grillé (contrôle visuel + mesure, 2 min)</label><select id="c1_h3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option></select></div>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un symptôme s'OBSERVE (on peut le montrer du doigt) ; une hypothèse s'IMAGINE (elle commence souvent par « peut-être que… »). Pour le classement : regarde les durées indiquées !</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le câble se vérifie d'un coup d'œil (n°1) ; le fusible demande d'ouvrir le boîtier (n°2) ; tester la sirène en la remplaçant est le plus long (n°3). Les constats 2 et 3 innocentent déjà la batterie ET le microcontrôleur : inutile de les suspecter en premier.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> peu probable (boîtier alimenté) · probablement en état (les mesures partent encore) · symptôme · hypothèse.</p>
+      <p><b>b)</b> câble = 1 · fusible = 2 · sirène = 3.</p>
+      <p><b>Raisonnement :</b> avant d'ouvrir quoi que ce soit, les constats éliminent des suspects — c'est le propre d'un bon diagnostic. Puis on classe les hypothèses restantes par simplicité et probabilité (après un cyclone, un câble arraché est TRÈS probable).</p>
+      <p><b>Exemple transférable :</b> ton téléphone ne charge plus → tu testes d'abord un autre câble (30 s) avant d'accuser la batterie (réparation coûteuse).</p>
+      <p><b>Limite :</b> « peu probable » n'est pas « impossible » — si les 3 hypothèses échouent, on reviendra sur les suspects innocentés.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre symptôme et hypothèse ; foncer sur l'hypothèse la plus « grave » (sirène morte) au lieu de la plus simple à tester ; oublier que des constats positifs (LED, mesures) sont aussi des indices.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>symptôme</b> = constat observable · <b>hypothèse</b> = explication supposée. Un diagnostic commence par lister TOUS les constats (même positifs), formule PLUSIEURS hypothèses, puis les classe : <b>simple → rapide → probable d'abord</b>.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7 réponses justes sur 7.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Lire l'arbre de diagnostic</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> suivre un organigramme de diagnostic et prévoir sa conclusion selon les réponses.</div>
+      <div><b>Compétence :</b> 3e_C5.1 (+ lecture d'algorigramme, lien 3e_C6.2).</div>
+      <div><b>Production attendue :</b> 3 parcours de l'arbre + 1 justification.</div>
+      <div><b>Ressources :</b> arbre de diagnostic ci-dessous (à LIRE pour répondre).</div>
+    </div>
+    <object class="figure" data="Images/arbre_diagnostic_sirene.svg" type="image/svg+xml" aria-label="Organigramme de diagnostic de la sirène muette, avec trois questions successives : LED allumée ?, ordre envoyé ?, câble intact ?">Arbre de diagnostic de la sirène (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> parcours l'arbre pour chaque situation et donne la conclusion atteinte, puis justifie l'ordre des questions.</div>
+    <div class="exo">
+      <div class="assoc"><label for="c2_1">Situation A : LED éteinte. Conclusion de l'arbre ?</label><select id="c2_1"><option value="">— choisir —</option><option>contrôler batterie et panneau solaire</option><option>remplacer la sirène</option><option>contrôler le programme</option><option>rebrancher le câble</option></select></div>
+      <div class="assoc"><label for="c2_2">Situation B : LED allumée, ordre visible dans le journal, câble arraché. Conclusion ?</label><select id="c2_2"><option value="">— choisir —</option><option>rebrancher ou remplacer le câble</option><option>remplacer la sirène</option><option>contrôler la batterie</option><option>contrôler le programme</option></select></div>
+      <div class="assoc"><label for="c2_3">Situation C : LED allumée, ordre visible, câble intact et branché. Conclusion ?</label><select id="c2_3"><option value="">— choisir —</option><option>remplacer la sirène</option><option>contrôler la batterie</option><option>rebrancher le câble</option><option>racheter une station</option></select></div>
+      <label for="c2_just" style="display:block;margin-top:10px"><b>Justifie :</b> pourquoi l'arbre pose-t-il la question de la LED EN PREMIER, et pourquoi ne faut-il changer qu'UNE chose à la fois ?</label>
+      <textarea id="c2_just" placeholder="La LED se vérifie en… Si on change deux choses à la fois…"></textarea>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis les flèches avec le doigt : à chaque losange, prends la branche OUI ou NON selon la situation décrite.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>A : premier losange → NON → branche de gauche. B : OUI, OUI, NON → action câble. C : OUI, OUI, OUI → dernier rectangle. Pour la justification : la LED est le test le plus rapide (1 seconde, sans outil) ; et si on change deux choses et que ça remarche, impossible de savoir laquelle était la panne.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>A</b> → contrôler batterie et panneau solaire · <b>B</b> → rebrancher/remplacer le câble · <b>C</b> → remplacer la sirène.</p>
+      <p><b>Justification :</b> l'arbre trie les tests du plus simple au plus coûteux : la LED se lit en 1 seconde sans démonter. Et on ne modifie qu'UNE chose à la fois : sinon, même si la panne disparaît, on ignore laquelle des modifications l'a corrigée — le diagnostic n'apprend rien, et on a peut-être remplacé un élément sain.</p>
+      <p><b>Lien avec la programmation :</b> cet arbre est un algorigramme (comme en 3e_C6.2) : losange = test, rectangle = action. Diagnostiquer, c'est exécuter un algorithme !</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> sauter une question de l'arbre ; répondre « remplacer la sirène » dès la situation B (le câble arraché suffit !) ; changer plusieurs éléments à la fois « pour aller plus vite ».</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>arbre de diagnostic</b> ordonne les tests du plus simple au plus coûteux. On suit les branches selon les réponses, et on ne modifie qu'<b>une seule chose à la fois</b> entre deux tests.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 parcours justes et une justification qui mentionne la rapidité du test LED ET la règle « une modification à la fois ».</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>📋 Séance 2 — Le protocole de dépannage</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment transformer des hypothèses en une suite de tests ordonnée, sûre et convaincante ?</p>
+  <object class="figure" data="Images/chaine_sirene_points_test.svg" type="image/svg+xml" aria-label="Chaîne de la sirène avec quatre points de test : T1 batterie, T2 après fusible, T3 sortie du microcontrôleur, T4 entrée de la sirène">La chaîne de la sirène et ses 4 points de test (SVG)</object>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Rédiger le protocole</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> ordonner et rédiger un protocole de dépannage réutilisable, en respectant les règles de sécurité.</div>
+      <div><b>Compétence :</b> 3e_C5.2 — proposer un protocole de dépannage puis de réparation.</div>
+      <div><b>Production attendue :</b> protocole ordonné + règle de localisation complétée + protocole rédigé pour une 2e panne.</div>
+      <div><b>Ressources :</b> schéma des points de test ci-dessus (à LIRE pour répondre).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) remets les étapes du protocole dans l'ordre ; b) complète la règle de localisation ; c) réponds aux questions de sécurité ; d) rédige un protocole pour la panne de la pompe du jardin connecté.</div>
+    <div class="exo">
+      <h4>a) Ordonner le protocole (1 → 5)</h4>
+      <div class="assoc"><label for="c3_e1">Mesurer aux points T1 → T4, dans l'ordre, UNE mesure à la fois</label><select id="c3_e1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="c3_e2">Inspecter visuellement (câbles, connecteurs, traces de choc)</label><select id="c3_e2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="c3_e3">Retester la sirène complètement après réparation</label><select id="c3_e3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="c3_e4">Remplacer ou réparer UNIQUEMENT l'élément localisé</label><select id="c3_e4"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="c3_e5">Rassembler les constats et relire l'arbre de diagnostic</label><select id="c3_e5"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <h4>b) La règle de localisation</h4>
+      <p>La panne se situe entre le dernier point de test <select id="c3_r1" style="width:auto;display:inline-block"><option value="">…</option><option>correct</option><option>anormal</option></select> et le premier point <select id="c3_r2" style="width:auto;display:inline-block"><option value="">…</option><option>correct</option><option>anormal</option></select>.</p>
+      <p style="font-size:.9em">Exemple : T1 = 12 V ✔, T2 = 12 V ✔, T3 = signal ✔, T4 = 0 V ✘ → l'élément suspect est <select id="c3_r3" style="width:auto;display:inline-block"><option value="">…</option><option>la batterie</option><option>le fusible</option><option>le câble</option><option>la sirène</option></select>.</p>
+      <h4>c) Sécurité</h4>
+      <div class="assoc"><label for="c3_s1">Vrai ou faux : « On peut dépanner ce circuit 12 V au collège, mais jamais un appareil branché sur le secteur 230 V. »</label><select id="c3_s1"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <h4>d) À toi : la pompe du jardin connecté ne démarre plus</h4>
+      <label for="c3_prot">Rédige un protocole en 3-4 étapes (inspire-toi de la méthode, sans la recopier mot à mot) :</label>
+      <textarea id="c3_prot" placeholder="1. J'observe… 2. Je teste… 3. …"></textarea>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un protocole commence toujours par ce qui ne demande AUCUN outil (regarder, rassembler les indices) et finit toujours par une vérification.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre logique : constats (1) → inspection visuelle (2) → mesures ordonnées (3) → réparation ciblée (4) → retest complet (5). Pour l'exemple : tout est correct jusqu'à T3, anormal à T4 → l'élément situé ENTRE T3 et T4 est le câble.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> mesures = 3 · inspection = 2 · retest = 5 · réparation = 4 · constats/arbre = 1.</p>
+      <p><b>b)</b> entre le dernier point <b>correct</b> et le premier point <b>anormal</b> ; exemple → <b>le câble</b> (entre T3 et T4).</p>
+      <p><b>c)</b> Vrai : la règle absolue du collège est « très basse tension uniquement » — le secteur 230 V peut tuer, son dépannage est réservé aux professionnels habilités.</p>
+      <p><b>d) Protocole attendu (exemple) :</b> 1. constater (la pompe ne tourne pas, le programme d'arrosage s'exécute-t-il ?) ; 2. inspecter (tuyau pincé ? connecteur débranché ?) ; 3. mesurer la tension à l'entrée de la pompe au moment de la commande ; 4. remplacer l'élément localisé puis relancer un cycle complet d'arrosage.</p>
+      <p><b>Pourquoi un protocole ÉCRIT :</b> il rend le dépannage reproductible (un autre élève peut le suivre), il évite d'oublier une étape, et il prouve la démarche — comme un protocole d'expérience en sciences.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> commencer par démonter avant d'observer ; mesurer dans le désordre (on ne peut plus localiser) ; oublier le retest final ; toucher au secteur (danger mortel — jamais au collège).</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>protocole de dépannage</b> = constats → inspection → mesures ordonnées de proche en proche → réparation du seul élément localisé → retest complet. La panne est <b>entre le dernier point correct et le premier point anormal</b>. Sécurité : <b>très basse tension uniquement</b>.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 9 réponses justes + un protocole rédigé comportant observation, test ordonné et vérification finale.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🛠 Séance 3 — Réparer ! (simulateur de dépannage)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu localiser la panne en un minimum de mesures, puis remettre la sirène en service ?</p>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>La clinique de la sirène</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> appliquer réellement le protocole : mesurer, localiser, réparer, retester.</div>
+      <div><b>Compétence :</b> 3e_C5.3 — réaliser le dépannage ou la réparation d'un système défectueux.</div>
+      <div><b>Production attendue :</b> 2 pannes résolues au simulateur + 2 questions.</div>
+      <div><b>Ressources :</b> simulateur ci-dessous — les valeurs attendues sont : T1 ≈ 12 V · T2 ≈ 12 V · T3 = signal présent · T4 ≈ 12 V pendant le test.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la panne n°1 est active. a) Mesure les points T1 → T4 <b>dans l'ordre</b> ; b) désigne l'élément défectueux ; c) remplace-le et relance le test complet. Puis résous la panne n°2. Le compteur de mesures t'indique ton efficacité : un bon dépanneur ne mesure pas au hasard !</div>
+    <div class="exo">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center">
+        <span style="font-size:.9em">Panne active : <b id="simPanneNum" style="color:var(--warn)">n°1</b></span>
+        <span style="font-size:.9em">· Mesures effectuées : <b id="simNbMesures">0</b></span>
+        <button class="btn small ghost" id="btnTestSirene" type="button">🔔 Lancer le test sirène</button>
+      </div>
+      <div id="simEtatSirene" role="status" aria-live="polite" style="text-align:center;font-weight:700;padding:10px;border-radius:10px;background:rgba(255,123,136,.12);color:#ffb0b8;margin-bottom:10px">— lance le test pour constater le symptôme —</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="zoneMesures">
+        <button class="btn small" data-mesure="T1" type="button">📏 Mesurer T1<br><small>batterie</small></button>
+        <button class="btn small" data-mesure="T2" type="button">📏 Mesurer T2<br><small>après fusible</small></button>
+        <button class="btn small" data-mesure="T3" type="button">📏 Mesurer T3<br><small>sortie µC</small></button>
+        <button class="btn small" data-mesure="T4" type="button">📏 Mesurer T4<br><small>entrée sirène</small></button>
+      </div>
+      <div id="simReleves" style="font-family:'Fira Code',monospace;font-size:.9em;background:#08132c;border-radius:10px;padding:10px 14px;margin:10px 0;min-height:2em" aria-live="polite">Relevés : (aucune mesure)</div>
+      <div class="assoc"><label for="simDiag">Mon diagnostic — l'élément défectueux est :</label><select id="simDiag"><option value="">— choisir —</option><option>la batterie</option><option>le fusible</option><option>le microcontrôleur</option><option>le câble</option><option>la sirène</option></select></div>
+      <button class="btn small" id="btnRemplacer" type="button">🔧 Remplacer cet élément puis retester</button>
+      <div id="simVerdict" role="status" aria-live="polite" style="margin-top:8px;font-weight:600;min-height:1.4em"></div>
+      <h4 style="margin-top:14px">Questions</h4>
+      <div class="assoc"><label for="c4_q1">Pour la panne n°1, combien de mesures étaient STRICTEMENT nécessaires pour localiser la panne (en mesurant dans l'ordre) ?</label><input type="number" id="c4_q1" min="1" max="8"></div>
+      <div class="assoc"><label for="c4_q2">Après remplacement, pourquoi faut-il relancer un test COMPLET plutôt que se contenter de « ça a l'air bon » ?</label><select id="c4_q2"><option value="">— choisir —</option><option>pour vérifier que le symptôme initial a disparu ET qu'aucun autre n'est apparu</option><option>pour user la batterie</option><option>parce que c'est plus amusant</option><option>ce n'est pas nécessaire</option></select></div>
+      <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Applique la règle de la séance 2 : mesure T1, puis T2, puis T3, puis T4 — et arrête-toi dès la première valeur anormale : la panne est juste avant.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Panne n°1 : T1, T2, T3 corrects puis T4 = 0 V → l'élément entre T3 et T4 est le câble. Panne n°2 : T1 = 12 V mais T2 = 0 V → l'élément entre T1 et T2 est le fusible. Dans les deux cas, 2 à 4 mesures suffisent.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Panne n°1 :</b> relevés T1 12 V · T2 12 V · T3 signal OK · T4 0 V → panne entre T3 et T4 = <b>câble</b> (arraché par le cyclone, cohérent avec l'inspection). 4 mesures nécessaires (on doit aller jusqu'à T4 pour voir l'anomalie).</p>
+      <p><b>Panne n°2 :</b> T1 12 V · T2 0 V → panne entre T1 et T2 = <b>fusible</b> (2 mesures suffisent !). Un fusible grillé après un cyclone signale souvent une surtension : le noter dans le rapport.</p>
+      <p><b>Question 2 :</b> le retest complet vérifie que le symptôme initial a disparu ET qu'aucun nouveau problème n'est apparu (un remplacement peut déranger un connecteur voisin). C'est la signature d'une réparation professionnelle.</p>
+      <p><b>Transfert version 🅰 :</b> au labo, ces mesures se font au multimètre (MATÉRIEL À CONFIRMER) sur des maquettes très basse tension, sous contrôle du professeur.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> mesurer au hasard (le compteur explose !) ; conclure « sirène morte » dès T4 = 0 V (c'est le câble juste avant qu'il faut suspecter) ; remplacer sans retester ; oublier de noter les relevés.</div>
+    <div class="retenir"><b>📌 À retenir :</b> le dépannage réel suit le protocole : mesures <b>ordonnées</b> → panne localisée <b>entre le dernier point correct et le premier anormal</b> → remplacement du seul élément en cause → <b>retest complet</b>. L'efficacité se mesure au nombre de mesures évitées.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 2 pannes résolues au simulateur (bon diagnostic + retest réussi) et les 2 questions justes.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 4 ══════ -->
+<div class="seance-panel" id="s4" role="tabpanel">
+<section class="card">
+  <h2>📐 Séance 4 — La pièce sur mesure</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment refabriquer le support de girouette pour qu'il s'adapte EXACTEMENT — et avec quel procédé ?</p>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Du plan coté à la pièce refabriquée</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> lire un plan coté, choisir un procédé de fabrication adapté et justifier le choix du matériau.</div>
+      <div><b>Compétence :</b> 3e_C5.4 — réaliser une pièce sur mesure pour réparer un objet technique.</div>
+      <div><b>Production attendue :</b> 4 cotes relevées + choix de procédé justifié + choix de matériau.</div>
+      <div><b>Ressources :</b> plan coté et comparatif des procédés ci-dessous (à LIRE pour répondre).</div>
+    </div>
+    <object class="figure" data="Images/plan_cote_support_girouette.svg" type="image/svg+xml" aria-label="Plan coté du support de girouette : platine 60 par 40 par 8 millimètres, deux trous diamètre 5 entraxe 40, fût diamètre 12 hauteur 35, alésage diamètre 6">Plan coté du support de girouette (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> a) relève les cotes demandées sur le plan ; b) choisis le procédé selon chaque contexte à l'aide du comparatif ; c) choisis le matériau.</div>
+    <div class="exo">
+      <h4>a) Relever les cotes (en mm)</h4>
+      <div class="assoc"><label for="c5_c1">Longueur de la platine</label><input type="number" id="c5_c1"></div>
+      <div class="assoc"><label for="c5_c2">Entraxe des deux trous de fixation</label><input type="number" id="c5_c2"></div>
+      <div class="assoc"><label for="c5_c3">Diamètre des trous de fixation</label><input type="number" id="c5_c3"></div>
+      <div class="assoc"><label for="c5_c4">Diamètre de l'alésage recevant l'axe de la girouette</label><input type="number" id="c5_c4"></div>
+      <p style="font-size:.88em;color:var(--sub)">💡 Sans l'entraxe exact, les vis ne tomberont jamais en face des trous du mât : c'est LA cote critique d'une pièce « sur mesure ».</p>
+      <h4>b) Choisir le procédé</h4>
+      <object class="figure" data="Images/procedes_fabrication_piece.svg" type="image/svg+xml" aria-label="Comparatif de trois procédés : impression 3D pour pièce unique et formes complexes, découpe-assemblage rapide mais formes simples, moulage rentable en grande série">Comparatif des trois procédés (SVG)</object>
+      <div class="assoc"><label for="c5_p1">Pour NOTRE pièce unique, avec son fût cylindrique et son alésage :</label><select id="c5_p1"><option value="">— choisir —</option><option>impression 3D</option><option>découpe + assemblage</option><option>moulage par injection</option></select></div>
+      <div class="assoc"><label for="c5_p2">Pour une réparation PROVISOIRE en 30 minutes, en attendant mieux :</label><select id="c5_p2"><option value="">— choisir —</option><option>impression 3D</option><option>découpe + assemblage</option><option>moulage par injection</option></select></div>
+      <div class="assoc"><label for="c5_p3">Pour le FABRICANT qui produit ce support par dizaines de milliers :</label><select id="c5_p3"><option value="">— choisir —</option><option>impression 3D</option><option>découpe + assemblage</option><option>moulage par injection</option></select></div>
+      <h4>c) Choisir le matériau</h4>
+      <div class="assoc"><label for="c5_m1">La pièce vit dehors, au soleil et aux embruns. Le meilleur choix :</label><select id="c5_m1"><option value="">— choisir —</option><option>un plastique résistant aux UV (ASA ou ABS traité)</option><option>de l'acier non protégé (rouille)</option><option>du carton plastifié</option><option>du PLA standard (se déforme à la chaleur)</option></select></div>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les cotes sont écrites en jaune sur le plan : cherche « 60 », « 40 (entraxe) », « Ø5 », « Ø6 ». Pour les procédés, relis les ✔ et ✘ du comparatif.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pièce unique + forme avec cylindre → impression 3D. Provisoire rapide → découpe. Grande série → moulage (c'est d'ailleurs le procédé d'origine). Matériau : dehors en Martinique = UV violents + sel → il faut un plastique prévu pour l'extérieur.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> longueur 60 mm · entraxe 40 mm · trous Ø5 mm · alésage Ø6 mm.</p>
+      <p><b>b)</b> notre pièce → <b>impression 3D</b> (unique, forme complexe — ⚠ imprimante du collège : MATÉRIEL À CONFIRMER, sinon découpe) · provisoire → <b>découpe + assemblage</b> · grande série → <b>moulage</b>.</p>
+      <p><b>c)</b> plastique résistant aux UV (ASA, ou ABS traité anti-UV) : l'acier nu rouille avec les embruns, le carton ne survivrait pas à la première pluie, le PLA standard ramollit au soleil tropical (60 °C au soleil direct sur un toit !).</p>
+      <p><b>Version 🅱 :</b> dans FreeCAD, la pièce se modélise en 3 opérations : esquisse du rectangle 60×40 extrudée sur 8 mm, cylindre Ø12 h35, perçages Ø5 et alésage Ø6. Export STL → impression.</p>
+      <p><b>Version 🅲 :</b> imprime le plan à l'échelle 1:1 et découpe le gabarit papier : pose-le sur le mât pour vérifier que l'entraxe tombe juste — c'est exactement le rôle d'un prototype.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre diamètre des trous (Ø5) et alésage (Ø6) ; oublier l'entraxe (la cote critique !) ; choisir l'impression 3D pour la grande série (des heures par pièce…) ; choisir un matériau sans penser à l'environnement réel de la pièce.</div>
+    <div class="retenir"><b>📌 À retenir :</b> une pièce « sur mesure » se refabrique à partir d'un <b>plan coté</b> (toutes les dimensions, dont l'<b>entraxe</b> des fixations). Le <b>procédé</b> se choisit selon forme, quantité, délai, coût et moyens ; le <b>matériau</b> selon l'environnement d'usage. Réparer prolonge la vie de l'objet : c'est un geste technique ET écologique.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 cotes exactes, 3 procédés bien choisis, le bon matériau.</div>
+  </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Réinvestissement</span><h3>🌬 Le ventilateur du CDI</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> dérouler seul·e la démarche complète de diagnostic-réparation sur un objet nouveau.</div>
+      <div><b>Compétences :</b> 3e_C5.1 + C5.2 + C5.3 (bilan).</div>
+      <div><b>Production attendue :</b> 5 réponses + 1 décision argumentée.</div>
+      <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> le ventilateur sur pied du CDI (alimentation par bloc secteur basse tension 12 V) ne tourne plus. Constats : le voyant du bloc d'alimentation est allumé ; en position 2, on entend un léger bourdonnement ; les pales tournent librement à la main. Réponds sans rouvrir les corrections.</div>
+    <div class="exo">
+      <div class="assoc"><label for="c6_1">« Le voyant du bloc est allumé » est…</label><select id="c6_1"><option value="">— choisir —</option><option>un symptôme/constat</option><option>une hypothèse</option><option>un protocole</option></select></div>
+      <div class="assoc"><label for="c6_2">Ce constat rend PEU PROBABLE l'hypothèse :</label><select id="c6_2"><option value="">— choisir —</option><option>« le bloc d'alimentation ne fournit plus rien »</option><option>« le moteur est bloqué »</option><option>« l'interrupteur est cassé »</option><option>« le condensateur du moteur est mort »</option></select></div>
+      <div class="assoc"><label for="c6_3">Le bourdonnement + les pales libres orientent plutôt vers…</label><select id="c6_3"><option value="">— choisir —</option><option>un composant du moteur défaillant (il « essaie » de tourner)</option><option>une panne de secteur</option><option>des pales bloquées</option><option>une télécommande déchargée</option></select></div>
+      <div class="assoc"><label for="c6_4">Première étape du protocole :</label><select id="c6_4"><option value="">— choisir —</option><option>rassembler les constats et inspecter visuellement sans démonter</option><option>démonter entièrement le moteur</option><option>racheter un ventilateur</option><option>secouer l'appareil</option></select></div>
+      <div class="assoc"><label for="c6_5">Vrai ou faux : « Comme l'appareil fonctionne en 12 V après son bloc secteur, on peut mesurer côté 12 V au collège, mais on ne démonte JAMAIS le bloc secteur lui-même. »</label><select id="c6_5"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
+      <label for="c6_dec" style="display:block;margin-top:10px"><b>Décision :</b> la pièce moteur coûte 12 €, un ventilateur neuf 45 €. Réparer ou jeter ? Argumente en 2-3 phrases (coût, déchets, temps, apprentissage).</label>
+      <textarea id="c6_dec" placeholder="Je choisis de… parce que…"></textarea>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends la démarche : constats → hypothèses innocentées → hypothèse la plus probable → protocole qui commence sans outil.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Voyant allumé = le bloc fournit (probablement) → suspect n°1 éliminé. Bourdonnement = le courant arrive au moteur qui n'arrive pas à démarrer → composant moteur. La règle TBT : on travaille après le bloc (12 V), jamais dedans (230 V à l'intérieur !).</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Réponses :</b> symptôme/constat · « le bloc ne fournit plus rien » · composant du moteur défaillant · rassembler les constats et inspecter · vrai.</p>
+      <p><b>Décision attendue :</b> réparer : 12 € contre 45 €, un déchet électronique évité, une compétence acquise — et le temps passé est un apprentissage, pas une perte. (Une réponse argumentée « jeter » peut être recevable si elle pèse honnêtement les critères — c'est l'argumentation qui est évaluée.)</p>
+      <p><b>Ouverture :</b> c'est exactement l'esprit de l'<b>indice de réparabilité</b> affiché sur les appareils neufs en France : plus il est haut, plus les pièces et les plans sont disponibles — un critère de choix citoyen (lien 3e_C3.3, Thème 1).</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> accuser le bloc secteur malgré son voyant allumé ; démonter avant d'observer ; oublier la règle absolue : on ne travaille jamais côté 230 V.</div>
+    <div class="retenir"><b>📌 À retenir :</b> la démarche est transférable à tout objet : constats → hypothèses classées → protocole ordonné → réparation ciblée → retest — puis décision <b>réparer/remplacer</b> argumentée (coût, environnement, faisabilité, sécurité).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5 et une décision réellement argumentée (au moins deux critères pesés).</div>
+  </div>
+</section>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5 — rien de nouveau ici.</p>
+  <h4>1. Diagnostiquer (activités 1-2)</h4>
+  <p><b>Symptôme</b> = constat observable · <b>hypothèse</b> = explication supposée. Les constats (même positifs) innocentent des éléments. On classe les hypothèses <b>simple → rapide → probable</b> et on les teste via un <b>arbre de diagnostic</b>, en ne modifiant qu'<b>une chose à la fois</b>.</p>
+  <h4>2. Le protocole (activité 3)</h4>
+  <p>Constats → inspection visuelle → <b>mesures ordonnées</b> de proche en proche (T1→T4) → réparation du seul élément localisé → <b>retest complet</b>. La panne est <b>entre le dernier point correct et le premier point anormal</b>. Un protocole écrit est reproductible et prouve la démarche.</p>
+  <h4>3. Réparer (activité 4)</h4>
+  <p>Le dépannage réel applique le protocole avec méthode : peu de mesures bien choisies valent mieux que beaucoup au hasard. Sécurité absolue : <b>très basse tension uniquement</b>, jamais le secteur 230 V.</p>
+  <h4>4. La pièce sur mesure (activité 5)</h4>
+  <p>Le <b>plan coté</b> transmet toutes les dimensions (dont l'<b>entraxe</b>, cote critique). Le <b>procédé</b> (impression 3D / découpe / moulage) se choisit selon forme, quantité, délai, coût, moyens ; le <b>matériau</b> selon l'environnement (UV, sel…). Réparer plutôt que jeter : un geste technique, économique et écologique — cf. l'indice de réparabilité.</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">panne = failure/breakdown</span><span class="tag">dépannage = troubleshooting</span><span class="tag">fusible = fuse</span><span class="tag">pièce détachée = spare part</span><span class="tag">plan coté = dimensioned drawing</span><span class="tag">entraxe = hole spacing</span><span class="tag">réparer = to repair/fix</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé ? Corrige ou complète avec ce que tu sais maintenant :</label>
+    <textarea id="hyp_retour" placeholder="En fait, pour trouver une panne, il faut…"></textarea>
+  </div>
+  <div class="bilan-grid">
+    <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>32 questions — dont 8 avec schémas à lire — pour vérifier toute la démarche du dépanneur.</p>
+  <a class="btn qcm" href="qcm_3e_C5.1-C5.4_sos_station_reparer.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>♻ <b>Défi citoyen :</b> relève l'indice de réparabilité de 3 appareils chez toi ou en magasin ; lequel choisirais-tu à qualité égale, et pourquoi ?</p>
+  <p>🖥 <b>Défi FreeCAD :</b> modélise le support de girouette d'après le plan coté et exporte le STL — le fichier pourra être imprimé dès que l'imprimante du collège sera confirmée.</p>
+  <p>🔧 <b>Défi repair café :</b> renseigne-toi : existe-t-il un « repair café » en Martinique ? Quels objets y répare-t-on le plus ?</p>
+</section>
+
+<footer>
+  <p>Séquence 3e_C5.1 → 3e_C5.4 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_3e_C5.1-C5.4_sos_station";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, sim: window.__sim || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__sim = o.sim || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Simulateur de dépannage (activité 4) ══════
+   Panne 1 : câble coupé  → T1 12 V · T2 12 V · T3 signal OK · T4 0 V
+   Panne 2 : fusible grillé → T1 12 V · T2 0 V · T3 signal OK (µC alimenté à part) · T4 0 V */
+const PANNES = [
+  {nom:"n°1", coupable:"le câble",   mesures:{T1:"12,1 V ✔",T2:"12,0 V ✔",T3:"signal présent ✔",T4:"0 V ✘ ANORMAL"}},
+  {nom:"n°2", coupable:"le fusible", mesures:{T1:"12,2 V ✔",T2:"0 V ✘ ANORMAL",T3:"signal présent ✔",T4:"0 V ✘ ANORMAL"}}
+];
+window.__sim = window.__sim || {};
+function simEtat(){ if(window.__sim.panne===undefined){ window.__sim.panne=0; window.__sim.nb=0; window.__sim.releves={}; window.__sim.resolues=[]; } return window.__sim; }
+function majSim(){
+  const s=simEtat();
+  $("simPanneNum").textContent = s.panne<PANNES.length ? PANNES[s.panne].nom : "— toutes résolues ! —";
+  $("simNbMesures").textContent = s.nb;
+  const rel = Object.entries(s.releves||{}).map(([k,v])=>k+" = "+v).join("  ·  ");
+  $("simReleves").textContent = "Relevés : " + (rel || "(aucune mesure)");
+}
+$("btnTestSirene").addEventListener("click", ()=>{
+  const s=simEtat();
+  if(s.panne>=PANNES.length){ $("simEtatSirene").textContent="🔔 SIRÈNE OPÉRATIONNELLE — test hebdomadaire validé !"; $("simEtatSirene").style.background="rgba(129,251,161,.14)"; $("simEtatSirene").style.color="#81fba1"; return; }
+  $("simEtatSirene").textContent="🔇 Test lancé… silence : la sirène ne sonne pas (panne "+PANNES[s.panne].nom+" active).";
+  $("simEtatSirene").style.background="rgba(255,123,136,.12)"; $("simEtatSirene").style.color="#ffb0b8";
+});
+document.querySelectorAll("[data-mesure]").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    const s=simEtat();
+    if(s.panne>=PANNES.length) return;
+    s.nb++; s.releves[b.dataset.mesure]=PANNES[s.panne].mesures[b.dataset.mesure];
+    majSim(); save(false);
+  });
+});
+$("btnRemplacer").addEventListener("click", ()=>{
+  const s=simEtat();
+  if(s.panne>=PANNES.length){ $("simVerdict").textContent="Tout est déjà réparé !"; return; }
+  const choix=$("simDiag").value;
+  if(!choix){ $("simVerdict").textContent="Choisis d'abord un élément à remplacer."; $("simVerdict").style.color="#ffd66b"; return; }
+  if(choix===PANNES[s.panne].coupable){
+    s.resolues.push(s.panne); s.panne++; s.releves={}; $("simDiag").value="";
+    if(s.panne<PANNES.length){
+      $("simVerdict").textContent="✔ Bonne pièce remplacée, la sirène refonctionne… mais une NOUVELLE panne ("+PANNES[s.panne].nom+") vient d'être activée pour t'entraîner : recommence la démarche !";
+      $("simVerdict").style.color="#81fba1";
+      $("simEtatSirene").textContent="— nouvelle panne active : lance le test —";
+      $("simEtatSirene").style.background="rgba(255,214,102,.12)"; $("simEtatSirene").style.color="#ffd66b";
+    } else {
+      $("simVerdict").textContent="🎉 Les 2 pannes sont résolues avec la bonne pièce à chaque fois — lance le test sirène pour la vérification finale !";
+      $("simVerdict").style.color="#81fba1";
+    }
+  } else {
+    $("simVerdict").textContent="✘ Tu as remplacé « "+choix+" »… et la sirène reste muette : cet élément était sain. Relis tes relevés (la panne est entre le dernier point correct et le premier anormal) et réessaie.";
+    $("simVerdict").style.color="#ffb0b8";
+    s.nb++; // une réparation inutile coûte cher !
+  }
+  majSim(); save(false);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = id => parseFloat(String($(id).value).replace(",","."));
+const txt = id => String($(id).value||"").trim().toLowerCase();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    if($("c1_1").value.startsWith("peu probable")) ok++;
+    if($("c1_2").value.startsWith("probablement")) ok++;
+    if($("c1_3").value.startsWith("un symptôme")) ok++;
+    if($("c1_4").value.startsWith("une hypothèse")) ok++;
+    if($("c1_h1").value==="1") ok++;
+    if($("c1_h2").value==="3") ok++;
+    if($("c1_h3").value==="2") ok++;
+    return {score:ok,total:7,valide:ok===7};
+  },
+  2: function(){
+    let ok=0;
+    if($("c2_1").value==="contrôler batterie et panneau solaire") ok++;
+    if($("c2_2").value==="rebrancher ou remplacer le câble") ok++;
+    if($("c2_3").value==="remplacer la sirène") ok++;
+    const j=txt("c2_just");
+    const jOk = j.length>=30 && (j.includes("rapide")||j.includes("simple")||j.includes("seconde")) && (j.includes("une")||j.includes("seule"));
+    return {score:ok,total:3,extra:jOk?"":" Ta justification doit citer la rapidité du test LED ET la règle « une seule modification à la fois ».",valide:ok===3&&jOk};
+  },
+  3: function(){
+    let ok=0;
+    const att={c3_e1:"3",c3_e2:"2",c3_e3:"5",c3_e4:"4",c3_e5:"1",c3_r1:"correct",c3_r2:"anormal",c3_r3:"le câble",c3_s1:"vrai"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const p=txt("c3_prot");
+    const pOk = p.length>=50 && (p.includes("observ")||p.includes("constat")||p.includes("inspect")) && (p.includes("test")||p.includes("mesur")) && (p.includes("vérif")||p.includes("retest")||p.includes("relanc"));
+    return {score:ok,total:9,extra:pOk?"":" Ton protocole doit contenir au moins : une observation, un test/mesure, et une vérification finale.",valide:ok>=8&&pOk};
+  },
+  4: function(){
+    const s=simEtat();
+    let ok=0;
+    if(num("c4_q1")===4) ok++;
+    if($("c4_q2").value.startsWith("pour vérifier")) ok++;
+    const simOk = (s.resolues||[]).length>=2;
+    return {score:ok,total:2,extra:simOk?"":" Résous d'abord les DEUX pannes au simulateur (bonne pièce remplacée à chaque fois).",valide:ok===2&&simOk};
+  },
+  5: function(){
+    let ok=0;
+    if(num("c5_c1")===60) ok++;
+    if(num("c5_c2")===40) ok++;
+    if(num("c5_c3")===5) ok++;
+    if(num("c5_c4")===6) ok++;
+    if($("c5_p1").value==="impression 3D") ok++;
+    if($("c5_p2").value==="découpe + assemblage") ok++;
+    if($("c5_p3").value==="moulage par injection") ok++;
+    if($("c5_m1").value.startsWith("un plastique résistant")) ok++;
+    return {score:ok,total:8,valide:ok===8};
+  },
+  6: function(){
+    let ok=0;
+    if($("c6_1").value==="un symptôme/constat") ok++;
+    if($("c6_2").value.startsWith("« le bloc")) ok++;
+    if($("c6_3").value.startsWith("un composant du moteur")) ok++;
+    if($("c6_4").value.startsWith("rassembler")) ok++;
+    if($("c6_5").value==="vrai") ok++;
+    const d=txt("c6_dec");
+    const dOk = d.length>=40 && ((d.match(/coût|€|prix|déchet|écolog|environ|temps|appren/g)||[]).length>=2);
+    return {score:ok,total:5,extra:dOk?"":" Ta décision doit peser au moins DEUX critères (coût, déchets, temps, apprentissage…).",valide:ok>=4&&dOk};
+  }
+};
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = `${r.score} / ${r.total} réponses correctes.`;
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5,6].filter(k=>v[k]).length;
+  $("progTxt").textContent = `${n} / 6 activités validées`;
+  $("progFill").style.width = (n/6*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3], s3:[4], s4:[5,6]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); simEtat(); majSim(); majProgress(); majHyp();
+</script>
+</body>
+</html>

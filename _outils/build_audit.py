@@ -302,6 +302,47 @@ OVERLAY = {
                 "jeu du routeur débranché, simulateur de panne ; 15 questions dédiées).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
+    # ── Thème 2 · LOT 03 (Fable, 2026-07-22) : SOS station, réparer plutôt que jeter ──
+    "3e_C5.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence-projet « SOS station : réparer plutôt que jeter » (4 séances) "
+                "couvrant 3e_C5.1→C5.4 : 5 activités + réinvestissement, simulateur de "
+                "dépannage à 2 pannes scriptées (compteur de mesures, verrou "
+                "pédagogique), arbre de diagnostic, plan coté, versions A/B/C, QCM 32 q "
+                "dont 10 illustrées (règle images v2), synthèses, fiche, matrice, 5 SVG "
+                "originaux CC0, rapport de tests.",
+        anomalies="Multimètres et imprimante 3D : MATÉRIEL À CONFIRMER (alternatives "
+                  "simulation/gabarit prévues). Évaluation sommative à l'enseignant.",
+        accessibilite="Clavier, aria/alt, reduced-motion, impression A4, minuteur "
+                      "désactivable.",
+        medias="5 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C5.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C5.1",
+        qualite="README pointeur (activité 3 : rédaction du protocole ; 8 questions).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C5.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C5.1",
+        qualite="README pointeur (activité 4 : simulateur de dépannage ; 8 questions).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C5.4": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C5.1",
+        qualite="README pointeur (activité 5 : plan coté, procédé, matériau ; 8 questions).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — SOS station : réparer plutôt que jeter (3e_C5.1 à C5.4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>🔧 Synthèse — SOS station : réparer plutôt que jeter</h1>
+<p class="pb">Comment localiser une panne, remettre le système en état et refabriquer une pièce cassée — plutôt que tout jeter ?</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Diagnostiquer (3e_C5.1)</h2>
+  <object class="schema" data="../Images/arbre_diagnostic_sirene.svg" type="image/svg+xml" aria-label="Arbre de diagnostic de la sirène muette">Arbre de diagnostic</object>
+  <p><b>Symptôme</b> = constat observable · <b>hypothèse</b> = explication supposée. Les constats positifs <b>innocentent</b> des éléments. On classe les hypothèses <b>simple → rapide → probable</b>, on suit l'<b>arbre de diagnostic</b> et on ne modifie qu'<b>une chose à la fois</b>.</p>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">2. Le protocole (3e_C5.2)</h2>
+    <dl>
+      <dt>Les 5 étapes</dt><dd>constats → inspection visuelle → mesures ordonnées → réparation ciblée → retest complet.</dd>
+      <dt>Règle de localisation</dt><dd>la panne est <b>entre le dernier point correct et le premier point anormal</b>.</dd>
+      <dt>Écrit</dt><dd>reproductible, complet, traçable.</dd>
+      <dt>Sécurité</dt><dd><b>très basse tension uniquement</b> — jamais le secteur 230 V.</dd>
+    </dl>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">3. Réparer (3e_C5.3)</h2>
+    <dl>
+      <dt>Mesurer avec méthode</dt><dd>dans l'ordre, s'arrêter à la première anomalie (peu de mesures = maîtrise).</dd>
+      <dt>Remplacer</dt><dd>le SEUL élément localisé, par une pièce de <b>mêmes caractéristiques</b>.</dd>
+      <dt>Retester</dt><dd>symptôme disparu ET fonctions voisines intactes.</dd>
+      <dt>Réfutation</dt><dd>un remplacement sans effet réfute l'hypothèse : on re-mesure.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">4. La pièce sur mesure (3e_C5.4)</h2>
+  <object class="schema" data="../Images/plan_cote_support_girouette.svg" type="image/svg+xml" aria-label="Plan coté du support de girouette">Plan coté</object>
+  <p>Le <b>plan coté</b> donne toutes les dimensions — dont l'<b>entraxe</b>, la cote critique. <b>Procédé</b> : impression 3D (pièce unique, forme complexe) · découpe (provisoire rapide) · moulage (grande série). <b>Matériau</b> selon l'environnement (UV, sel, chaleur). Prototyper d'abord (gabarit papier 1:1 !). Réparer = économie + écologie (indice de réparabilité).</p>
+</div>
+
+<div class="cols">
+  <div class="bloc savoir">
+    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+    <ul>
+      <li>distinguer symptôme et hypothèse ; classer les hypothèses ;</li>
+      <li>la règle de localisation entre points de test ;</li>
+      <li>les 5 étapes du protocole et la règle « une modification à la fois » ;</li>
+      <li>les critères de choix d'un procédé et d'un matériau ;</li>
+      <li>la règle de sécurité TBT.</li>
+    </ul>
+  </div>
+  <div class="bloc faire">
+    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+    <ul>
+      <li>lire un arbre de diagnostic et le parcourir ;</li>
+      <li>rédiger un protocole de dépannage ;</li>
+      <li>localiser une panne par mesures ordonnées et la réparer ;</li>
+      <li>relever des cotes sur un plan (entraxe, diamètres) ;</li>
+      <li>argumenter une décision réparer/remplacer.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
+  <ul>
+    <li>Confondre symptôme et hypothèse ; tester le compliqué d'abord ;</li>
+    <li>accuser l'élément qui PORTE le symptôme au lieu de celui d'AVANT le point anormal ;</li>
+    <li>changer plusieurs choses à la fois ; oublier le retest final ;</li>
+    <li>surcalibrer un fusible ou le remplacer par un fil (danger !) ;</li>
+    <li>confondre entraxe et longueur ; choisir un matériau sans penser à l'environnement ;</li>
+    <li>toucher au 230 V : JAMAIS.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
+  <table class="voc">
+    <tr><td>panne → <b>failure</b></td><td>dépannage → <b>troubleshooting</b></td><td>fusible → <b>fuse</b></td></tr>
+    <tr><td>pièce détachée → <b>spare part</b></td><td>plan coté → <b>dimensioned drawing</b></td><td>entraxe → <b>hole spacing</b></td></tr>
+    <tr><td>réparer → <b>to fix</b></td><td>multimètre → <b>multimeter</b></td><td>moulage → <b>molding</b></td></tr>
+  </table>
+</div>
+</div>
+</body>
+</html>
