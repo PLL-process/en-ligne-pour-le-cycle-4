@@ -328,3 +328,26 @@ antérieurs au gabarit, à traiter dans le lot de consolidation post-Conseil.
    contrôle obligatoire « contrôles de publication » (intégrité des classeurs
    _progressions, liens sans antislash, absence de correction d'évaluation
    sommative dans le dépôt public) que Fable tiendra prêt.
+
+## 2026-07-24 — RÈGLE D'OR N° 5 « Gouvernance du dépôt » (décision Pascal)
+
+Applicable immédiatement à toutes les intelligences artificielles du projet :
+
+1. **Le nom de la branche porte les droits.** Toute branche de travail DOIT
+   contenir le motif de son thème : `theme-1`, `theme-2` ou `theme-3`
+   (ex. `codex/theme-1/lot-x`, `fable/theme-3/lot-y`). La garde-périmètre
+   refuse toute PR dont les fichiers sortent du périmètre du motif :
+   dossier du thème + fichiers communs (index.html, README.md,
+   audit_couverture.csv/.json, nouveautes.json, JOURNAL_DES_DECISIONS.md,
+   _progressions/). `_outils/` est réservé au Thème 2 ; `.github/` à Pascal.
+2. **Main est protégé.** Aucune poussée directe : tout passe par une PR, et
+   le contrôle `perimetre` doit être vert. Une PR refusée par la garde n'est
+   pas un incident : c'est le système qui fonctionne — corriger la branche
+   (ou son nom) et re-pousser.
+3. **La fusion reste la validation manuelle de Pascal** jusqu'au Conseil du
+   28/07, qui décidera du passage éventuel à l'autonomie complète
+   (auto-merge sur contrôles verts + second contrôle « contrôles de
+   publication »), sur la base de la qualité des lots livrés.
+4. **Un refus de la garde ne se contourne jamais** (pas de fusion forcée,
+   pas de modification de `.github/`) : toute évolution des périmètres se
+   demande à Pascal et se décide au Conseil.
