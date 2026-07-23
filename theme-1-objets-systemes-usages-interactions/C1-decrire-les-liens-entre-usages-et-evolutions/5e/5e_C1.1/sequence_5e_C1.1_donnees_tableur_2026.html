@@ -17,57 +17,15 @@
   <div class="badges"><span class="badge">Niveau 5e</span><span class="badge">Code 5e_C1.1</span><span class="badge">3 séances</span><span class="badge">Socle D2 · D4</span><span class="badge">CRCN 1.3 · niveau 2</span></div>
 </header>
 <main>
-<section class="card trigger">
-  <h2>🌡️ Situation déclenchante</h2>
-  <p>À 14 h, certaines salles du collège Joseph-Lagrosillière sont jugées trop chaudes. Les relevés reçus sont mélangés, incomplets et comportent des valeurs douteuses.</p>
-  <figure><img src="Images/collecte_temperature_salles.svg" alt="Plan simplifié de quatre salles avec différentes températures"><figcaption>Une seule série de mesures peut conduire à de mauvaises décisions si elle n’est pas contrôlée.</figcaption></figure>
-  <p class="problem">Comment transformer des mesures brutes en informations fiables pour prendre une décision technique ?</p>
-</section>
-<section class="card activity a1" id="activite1">
-  <h2><span class="label">Activité 1</span>🔎 Collecter et fiabiliser</h2>
-  <p><strong>Consigne :</strong> ouvre <code>exo_tableur_debut.xlsx</code>, crée les colonnes Date, Heure, Salle, Température, Humidité et Validité, puis repère deux valeurs douteuses sans les supprimer.</p>
-  <p><strong>Production attendue :</strong> 12 relevés structurés, des unités explicites et deux anomalies justifiées.</p>
-  <details class="help"><summary>💡 Aide graduée</summary><p>Une ligne correspond à un relevé. Une température de 280 °C dans une salle est probablement une erreur. Une cellule vide n’est pas égale à zéro.</p></details>
-  <details class="correction"><summary>✅ Correction exhaustive</summary><p>Les températures sont saisies comme nombres, l’unité restant dans l’en-tête. Les valeurs 280 °C et 0 % d’humidité sont marquées « à vérifier ». Elles sont conservées pour assurer la traçabilité, mais exclues des calculs tant qu’elles ne sont pas confirmées.</p></details>
-  <div class="error"><strong>Erreurs fréquentes :</strong> écrire « 29°C » dans la cellule ; supprimer une anomalie ; mélanger dates et heures.</div>
-  <div class="remember"><strong>À retenir :</strong> une donnée fiable possède un contexte, un type, une unité et un statut de validité.</div>
-</section>
-<section class="card activity a2" id="activite2">
-  <h2><span class="label">Activité 2</span>🧮 Trier, filtrer et calculer</h2>
-  <p><strong>Consigne :</strong> trie les températures par ordre décroissant, filtre la salle de technologie, puis calcule moyenne, minimum, maximum et nombre de valeurs supérieures ou égales à 30 °C.</p>
-  <p><strong>Production attendue :</strong> quatre résultats calculés automatiquement et une phrase d’interprétation.</p>
-  <details class="help"><summary>💡 Aide graduée</summary><p>Le tri change l’ordre ; le filtre masque temporairement. Une formule commence par « = ». Exemple : <code>=MOYENNE(D2:D13)</code>.</p></details>
-  <details class="correction"><summary>✅ Correction exhaustive</summary><p>Le tri porte sur l’ensemble du tableau. Le filtre n’efface aucune ligne. Les formules utilisent uniquement les valeurs validées. <code>=NB.SI(plage;">=30")</code> compte les mesures atteignant le seuil.</p></details>
-  <div class="error"><strong>Erreurs fréquentes :</strong> trier une seule colonne ; saisir un résultat à la main ; inclure l’en-tête dans la plage.</div>
-  <div class="remember"><strong>À retenir :</strong> le tri ordonne, le filtre sélectionne et la formule résume les données.</div>
-</section>
-<section class="card activity a3" id="activite3">
-  <h2><span class="label">Activité 3</span>📈 Représenter et décider</h2>
-  <p><strong>Consigne :</strong> calcule la moyenne de chaque salle, crée un diagramme en colonnes avec unités et seuil de 30 °C, puis rédige une recommandation en cinq lignes.</p>
-  <p><strong>Production attendue :</strong> un graphique lisible et une décision fondée sur au moins deux résultats.</p>
-  <details class="help"><summary>💡 Aide graduée</summary><p>Les salles sont des catégories : le diagramme en colonnes facilite leur comparaison. Évite les effets 3D et cite des nombres précis.</p></details>
-  <details class="correction"><summary>✅ Correction exhaustive</summary><p>Le graphique comporte un titre, les noms des salles et l’unité °C. La recommandation désigne la salle prioritaire, propose une action et rappelle que 12 relevés ne suffisent pas à décrire toute l’année.</p></details>
-  <div class="error"><strong>Erreurs fréquentes :</strong> utiliser un secteur ; oublier l’unité ; conclure à partir d’une seule valeur.</div>
-  <div class="remember"><strong>À retenir :</strong> une décision fiable s’appuie sur des données contrôlées, un traitement adapté et une représentation lisible.</div>
-</section>
-<section class="card" id="bilan">
-  <h2>🧩 Bilan et auto-positionnement</h2>
-  <p>Je sais collecter des données contextualisées, repérer une anomalie, trier et filtrer un tableau, utiliser des formules et choisir une représentation adaptée.</p>
-  <p><strong>Auto-positionnement :</strong> 🟢 autonome · 🟠 encore besoin d’aide · 🔴 à reprendre avec le professeur.</p>
-  <div class="actions"><a class="button" href="synthese_eleve_5e_C1.1.html">📄 Ouvrir la synthèse élève</a></div>
-</section>
-<section class="card qcm-box" aria-labelledby="titre-qcm">
-  <h2 id="titre-qcm">🧠 Prêt·e à t’entraîner ?</h2>
-  <p>24 questions sur la collecte, le contrôle, le tri, le filtre, les formules et les graphiques, dont plusieurs questions illustrées.</p>
-  <a class="button" href="qcm_donnees_tableur.html">🚀 Ouvrir le QCM d’entraînement</a>
-</section>
-<section class="card bonus-box" aria-labelledby="titre-bonus">
-  <h2 id="titre-bonus">🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <ol><li><strong>Défi citoyen :</strong> proposer une règle de protection des données lors d’une enquête auprès des élèves.</li><li><strong>Défi technique :</strong> comparer moyenne et médiane lorsqu’une valeur extrême est présente.</li><li><strong>Défi Martinique :</strong> imaginer un protocole de mesure pendant une semaine de forte chaleur et d’humidité.</li></ol>
-  <p>Ces défis sont hors barre de progression : aucun élève n’est pénalisé de ne pas les réaliser.</p>
-</section>
+<section class="card trigger"><h2>🌡️ Situation déclenchante</h2><p>À 14 h, certaines salles du collège Joseph-Lagrosillière sont jugées trop chaudes. Les relevés reçus sont mélangés, incomplets et comportent des valeurs douteuses.</p><figure><img src="Images/collecte_temperature_salles.svg" alt="Plan simplifié de quatre salles avec différentes températures"><figcaption>Une seule série de mesures peut conduire à de mauvaises décisions si elle n’est pas contrôlée.</figcaption></figure><p class="problem">Comment transformer des mesures brutes en informations fiables pour prendre une décision technique ?</p></section>
+<section class="card activity a1" id="activite1"><h2><span class="label">Activité 1</span>🔎 Collecter et fiabiliser</h2><p><strong>Consigne :</strong> ouvre <code>exo_tableur_debut.xlsx</code>, crée les colonnes Date, Heure, Salle, Température, Humidité et Validité, puis repère deux valeurs douteuses sans les supprimer.</p><p><strong>Production attendue :</strong> 12 relevés structurés, des unités explicites et deux anomalies justifiées.</p><details class="help"><summary>💡 Aide graduée</summary><p>Une ligne correspond à un relevé. Une température de 280 °C dans une salle est probablement une erreur. Une cellule vide n’est pas égale à zéro.</p></details><details class="correction"><summary>✅ Correction exhaustive</summary><p>Les températures sont saisies comme nombres, l’unité restant dans l’en-tête. Les valeurs 280 °C et 0 % d’humidité sont marquées « à vérifier ». Elles sont conservées pour assurer la traçabilité, mais exclues des calculs tant qu’elles ne sont pas confirmées.</p></details><div class="error"><strong>Erreurs fréquentes :</strong> écrire « 29°C » dans la cellule ; supprimer une anomalie ; mélanger dates et heures.</div><div class="remember"><strong>À retenir :</strong> une donnée fiable possède un contexte, un type, une unité et un statut de validité.</div></section>
+<section class="card activity a2" id="activite2"><h2><span class="label">Activité 2</span>🧮 Trier, filtrer et calculer</h2><p><strong>Consigne :</strong> trie les températures par ordre décroissant, filtre la salle de technologie, puis calcule moyenne, minimum, maximum et nombre de valeurs supérieures ou égales à 30 °C.</p><p><strong>Production attendue :</strong> quatre résultats calculés automatiquement et une phrase d’interprétation.</p><details class="help"><summary>💡 Aide graduée</summary><p>Le tri change l’ordre ; le filtre masque temporairement. Une formule commence par « = ». Exemple : <code>=MOYENNE(D2:D13)</code>.</p></details><details class="correction"><summary>✅ Correction exhaustive</summary><p>Le tri porte sur l’ensemble du tableau. Le filtre n’efface aucune ligne. Les formules utilisent uniquement les valeurs validées. <code>=NB.SI(plage;">=30")</code> compte les mesures atteignant le seuil.</p></details><div class="error"><strong>Erreurs fréquentes :</strong> trier une seule colonne ; saisir un résultat à la main ; inclure l’en-tête dans la plage.</div><div class="remember"><strong>À retenir :</strong> le tri ordonne, le filtre sélectionne et la formule résume les données.</div></section>
+<section class="card activity a3" id="activite3"><h2><span class="label">Activité 3</span>📈 Représenter et décider</h2><p><strong>Consigne :</strong> calcule la moyenne de chaque salle, crée un diagramme en colonnes avec unités et seuil de 30 °C, puis rédige une recommandation en cinq lignes.</p><p><strong>Production attendue :</strong> un graphique lisible et une décision fondée sur au moins deux résultats.</p><details class="help"><summary>💡 Aide graduée</summary><p>Les salles sont des catégories : le diagramme en colonnes facilite leur comparaison. Évite les effets 3D et cite des nombres précis.</p></details><details class="correction"><summary>✅ Correction exhaustive</summary><p>Le graphique comporte un titre, les noms des salles et l’unité °C. La recommandation désigne la salle prioritaire, propose une action et rappelle que 12 relevés ne suffisent pas à décrire toute l’année.</p></details><div class="error"><strong>Erreurs fréquentes :</strong> utiliser un secteur ; oublier l’unité ; conclure à partir d’une seule valeur.</div><div class="remember"><strong>À retenir :</strong> une décision fiable s’appuie sur des données contrôlées, un traitement adapté et une représentation lisible.</div></section>
 <section class="card pronote"><h2>Bloc Pronote — copier-coller</h2><p><strong>Contenu :</strong> 5e_C1.1 — Collecter, contrôler, trier, filtrer, calculer et représenter des données dans un tableur. Étude du confort thermique des salles.</p><p><strong>Travail à faire :</strong> terminer le tableur, vérifier les formules et revoir la synthèse.</p></section>
 <section class="card follow"><h2>Suivi enseignant</h2><p>Durée estimée : 3 × 55 min. Prévoir un tableur compatible XLSX. Réinvestissement possible avec des mesures d’humidité du sol et de température dans un jardin connecté.</p></section>
+<section class="card" id="bilan"><h2>🧩 Bilan et auto-positionnement</h2><p>Je sais collecter des données contextualisées, repérer une anomalie, trier et filtrer un tableau, utiliser des formules et choisir une représentation adaptée.</p><p><strong>Auto-positionnement :</strong> 🟢 autonome · 🟠 encore besoin d’aide · 🔴 à reprendre avec le professeur.</p><div class="actions"><a class="button" href="synthese_eleve_5e_C1.1.html">📄 Ouvrir la synthèse élève</a></div></section>
+<section class="card qcm-box" aria-labelledby="titre-qcm"><h2 id="titre-qcm">🧠 Prêt·e à t’entraîner ?</h2><p>24 questions sur la collecte, le contrôle, le tri, le filtre, les formules et les graphiques, dont plusieurs questions illustrées.</p><a class="button" href="qcm_donnees_tableur.html">🚀 Ouvrir le QCM d’entraînement</a></section>
+<section class="card bonus-box" aria-labelledby="titre-bonus"><h2 id="titre-bonus">🎁 Bonus (facultatif — hors parcours obligatoire)</h2><ol><li><strong>Défi citoyen :</strong> proposer une règle de protection des données lors d’une enquête auprès des élèves.</li><li><strong>Défi technique :</strong> comparer moyenne et médiane lorsqu’une valeur extrême est présente.</li><li><strong>Défi Martinique :</strong> imaginer un protocole de mesure pendant une semaine de forte chaleur et d’humidité.</li></ol><p>Ces défis sont hors barre de progression : aucun élève n’est pénalisé de ne pas les réaliser.</p></section>
 </main>
 <footer><p>Ressource Thème 1 — technologie cycle 4 — version 2026.</p></footer>
 </body>
