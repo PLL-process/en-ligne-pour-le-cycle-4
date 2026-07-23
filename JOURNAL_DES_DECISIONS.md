@@ -432,3 +432,16 @@ double) : le bouton « Ouvrir le QCM d'entraînement » figure **UNE SEULE
 fois** par séquence, dans le bloc « 🧠 Prêt·e à t'entraîner ? ». Le bilan
 conserve l'auto-positionnement et les liens vers les synthèses, sans bouton
 QCM. Doublons retirés des LOTs 06, 07, 08 et 09.
+
+## 2026-07-24 — Méthode Fable consolidée en un document unique (demande Pascal ; branche `fable/theme-2/methode-fable`)
+
+`_outils/METHODE.md` : la méthode complète en trois piliers — produire un
+lot premium (les 6 règles d'or, séquence, QCM, barre qualité), livrer et
+gouverner (branches, garde-périmètre, fichiers générés, bancs d'essai,
+circuits par IA), et RÉDIGER UNE PROGRESSION ANNUELLE (calendrier réel de
+l'académie, 1 h 30/semaine, moteur d'imprévus à répercussion automatique,
+tampons, générateurs avec socle/CRCN et cahier de texte Pronote — la partie
+réutilisable chaque année). Le document fédère les six skills spécialisés
+de `.claude/skills/` ; en cas d'écart, le journal fait foi. Même contenu
+livré à Pascal en SKILL.md installable. ChatGPT et Grok sont invités à le
+lire avant toute production — à entériner au Conseil du 28/07.
