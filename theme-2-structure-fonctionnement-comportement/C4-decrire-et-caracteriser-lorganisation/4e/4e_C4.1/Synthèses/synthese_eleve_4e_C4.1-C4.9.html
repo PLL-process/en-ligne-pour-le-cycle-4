@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Le jardin connecté (4e_C4.1 à C4.9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--ko:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.55;font-size:.97em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.45em;color:var(--title);text-align:center}
+  .sous{text-align:center;color:var(--sub);margin-top:-8px}
+  h2{font-size:1.08em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:22px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .ok{color:var(--ok)}.warn{color:var(--warn)}.ko{color:var(--ko)}
+  figure{margin:10px 0;text-align:center}
+  figcaption{color:var(--sub);font-size:.85em}
+  object{width:100%;max-width:820px}
+  code{background:#08132c;padding:1px 6px;border-radius:5px;font-family:monospace}
+  @media print{body{background:#fff;color:#111;font-size:9.5pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}.ok,.warn,.ko{color:#111;font-weight:bold}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>📄 Synthèse — Le jardin connecté</h1>
+<p class="sous">4e_C4.1 → C4.9 — le dossier technique complet, à savoir refaire</p>
+
+<div class="bloc">
+<h2 style="margin-top:0">⚡ Les chaînes du jardin (C4.1 · C4.2 · C4.4)</h2>
+<ul>
+  <li><b>Chaîne d'énergie</b> : panneau (<b>alimenter</b>, lumineuse→électrique) → batterie (<b>stocker</b>, chimique) → régulateur (<b>distribuer</b>) → pompe (<b>convertir</b>, électrique→mécanique) → électrovanne (<b>distribuer l'eau</b>).</li>
+  <li>Une <b>transformation</b> = un changement de NATURE de l'énergie. Trajet complet : <b>lumineuse → électrique → chimique → électrique → mécanique</b>.</li>
+  <li><b>Chaîne d'information</b> : capteurs (<b>acquérir</b>) → carte (<b>traiter</b>) → wifi (<b>communiquer</b>) → application (<b>restituer</b>).</li>
+  <li>Trois <b>flux</b> à distinguer : énergie, matière (eau), information. Et le pont entre les chaînes : <span class="ok">la carte — l'information COMMANDE l'énergie</span>.</li>
+</ul>
+<figure><object data="../Images/chaines_jardin_connecte.svg" type="image/svg+xml" aria-label="Les deux chaînes du jardin connecté"></object></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🗄 Le voyage de la donnée (C4.5 · C4.6)</h2>
+<ul>
+  <li>Mesure <b>brute</b> (612 sur 1023) → <b>traitement</b> par la carte (612÷1023 ≈ 60 %) + <b>horodatage</b> (date, heure, capteur) → <b>téléversement</b> vers le serveur (téléverser = envoyer ; télécharger = recevoir).</li>
+  <li><b>Table structurée</b> : <span class="warn">1 ligne = 1 mesure · 1 colonne = 1 information</span>. La colonne « capteur » identifie le bac ; sans elle, tout se mélange.</li>
+  <li>La structure permet de <b>TRIER</b>, <b>FILTRER</b> et <b>TRACER</b> des courbes — c'est elle qui rend les données exploitables.</li>
+  <li>Une donnée surprenante se <b>vérifie</b> (capteur mal planté ? bac à l'abri ?) — une donnée n'est pas une vérité automatique.</li>
+</ul>
+<figure><object data="../Images/table_donnees_jardin.svg" type="image/svg+xml" aria-label="De la mesure brute à la table de données"></object></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🌐 Le réseau et ses adresses (C4.7 · C4.8 · C4.9)</h2>
+<ul>
+  <li>Chaque appareil du réseau a une <b>adresse IP unique</b> (son « numéro de maison »). <code>192.168.x.x</code> = adresses <b>locales</b>.</li>
+  <li><span class="ok">Objet qu'on doit joindre = IP FIXE</span> (carte du jardin : <code>192.168.1.50</code>, choisie <b>libre et hors plage DHCP</b>) · <span class="hl">appareil qui appelle = DHCP</span> (la tablette).</li>
+  <li>La <b>passerelle</b> (<code>192.168.1.1</code>) = la porte de sortie du réseau (la box).</li>
+  <li class="ko">Les 3 pannes classiques : même IP sur 2 appareils = CONFLIT · mauvaise passerelle = appareil ISOLÉ · hors de portée wifi = AUCUN signal.</li>
+  <li>Diagnostic méthodique : <b>un test à la fois</b> — liaison/portée, puis adresses, puis passerelle. La <b>simulation</b> permet de s'entraîner sans rien casser.</li>
+</ul>
+<figure><object data="../Images/reseau_jardin_ip.svg" type="image/svg+xml" aria-label="Le réseau local du jardin et ses adresses IP"></object></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🧩 La forme raconte le procédé (C4.3)</h2>
+<table>
+<tr><th>Indice sur la pièce</th><th>Procédé</th><th>Pourquoi</th></tr>
+<tr><td>Stries régulières en couches</td><td><b>Impression 3D</b></td><td>couches de fil fondu — idéal sur mesure, petite quantité</td></tr>
+<tr><td>Ligne de joint + nervures, grande série</td><td><b>Injection</b></td><td>moule en 2 parties, rentabilisé par des milliers de pièces</td></tr>
+<tr><td>Pièce plate, bords nets et brunis</td><td><b>Découpe laser</b></td><td>le faisceau découpe une plaque</td></tr>
+<tr><td>Trous cylindriques nets et droits</td><td><b>Perçage</b></td><td>foret guidé (perceuse à colonne)</td></tr>
+</table>
+<p><span class="warn">Le procédé se choisit par la FORME et la QUANTITÉ</span> : 3 supports sur mesure → 3D ; 10 000 boîtiers → injection.</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🎯 En une phrase</h2>
+<p style="text-align:center;font-size:1.03em">Un objet <b>connecté</b> = des chaînes d'énergie et d'information + des <b>données</b> qui voyagent vers une <b>table</b> via un <b>réseau</b> — et des pièces dont la forme raconte la fabrication.</p>
+</div>
+</div>
+</body>
+</html>

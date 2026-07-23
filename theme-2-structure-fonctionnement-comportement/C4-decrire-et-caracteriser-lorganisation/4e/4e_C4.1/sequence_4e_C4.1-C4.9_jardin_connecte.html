@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séquence 4e — Le jardin connecté : énergie, données, réseau (4e_C4.1 à C4.9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🌱 Le jardin connecté</h1>
+<p class="subtitle">Lire l'organisation complète du jardin du collège : ses chaînes, ses données, son réseau, ses pièces</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C4.1 → C4.9</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D3, D4, D5</span>
+  <span class="badge duree">⏱ 4 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Le jardin pédagogique du collège vient d'être « connecté ».</b> Trois bacs de culture, des capteurs
+    d'humidité, une pompe alimentée par un panneau solaire, une électrovanne, une carte programmable reliée au
+    wifi de la cour… et une application où chacun peut suivre les courbes d'humidité.</p>
+    <p>Le club jardin est ravi mais dépassé : <b>« On appuie sur des boutons, mais on ne comprend pas comment tout
+    ça tient ensemble. »</b> Le principal vous confie la mission de 4e : produire le <b>dossier technique</b> du
+    jardin — ses <b>chaînes d'énergie et d'information</b>, le <b>voyage de ses données</b> jusqu'à la table du
+    serveur, son <b>réseau</b> et ses adresses, et même <b>ses pièces</b>, dont la forme raconte la fabrication.
+    En 5e vous avez appris à lire UN objet simple ; cette année, vous lisez un <b>système complet</b>.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment décrire l'organisation complète d'un système connecté — de l'énergie qui l'alimente
+  aux données qu'il produit — pour pouvoir l'expliquer, l'entretenir et l'améliorer ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> d'après toi, quel chemin parcourt la mesure d'humidité du bac B entre le capteur planté dans la terre… et la courbe affichée sur la tablette ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : le vrai jardin du collège (ou une maquette capteur + pompe, <b>très basse tension uniquement</b>) et l'observation directe des constituants.</p>
+    <p>🅱 <b>En simulation</b> : les schémas interactifs, l'explorateur de table et le simulateur réseau intégrés à cette page.</p>
+    <p>🅲 <b>Sans matériel</b> : les trois documents imprimés et les tableaux à compléter au cahier.</p>
+  </div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — L'énergie<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Les données<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Le réseau<span id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4 — Les pièces<span id="done-s4"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>⚡ Séance 1 — La chaîne d'énergie du jardin (4e_C4.1 · C4.2)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : d'où vient l'énergie qui arrose les bacs — et sous quelles formes voyage-t-elle ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Suivre l'énergie du soleil jusqu'à l'eau</h3><span class="duree">⏱ 45 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> associer chaque constituant à sa fonction (C4.1) et repérer les transformations et les flux d'énergie (C4.2).</div>
+      <div><b>Compétences :</b> 4e_C4.1 et 4e_C4.2.</div>
+      <div><b>Production attendue :</b> 5 associations + 4 lectures de flux.</div>
+      <div><b>Ressources :</b> le schéma des deux chaînes ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/chaines_jardin_connecte.svg" type="image/svg+xml" aria-label="Les deux chaînes du jardin connecté : énergie et information" style="width:100%"></object>
+      <figcaption>Le dossier technique commence ici : deux chaînes, trois flux (énergie, eau, information).</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) associe chaque constituant de la chaîne d'énergie à sa fonction ; b) réponds aux questions de lecture des flux ; c) recopie la chaîne d'énergie au cahier avec les natures d'énergie.</div>
+    <div class="exo">
+      <h4>a) Chaque constituant a sa fonction (C4.1)</h4>
+      <div class="assoc"><label for="e1_1">Le panneau solaire :</label><select id="e1_1"><option value="">— choisir —</option><option>ALIMENTER : il convertit l'énergie lumineuse en énergie électrique</option><option>STOCKER l'énergie pour la nuit</option><option>DISTRIBUER l'eau vers les bacs</option><option>TRAITER les données des capteurs</option></select></div>
+      <div class="assoc"><label for="e1_2">La batterie :</label><select id="e1_2"><option value="">— choisir —</option><option>STOCKER l'énergie (sous forme chimique) pour la nuit et les jours gris</option><option>CONVERTIR l'électricité en mouvement</option><option>ACQUÉRIR l'humidité du sol</option><option>COMMUNIQUER avec le serveur</option></select></div>
+      <div class="assoc"><label for="e1_3">Le régulateur :</label><select id="e1_3"><option value="">— choisir —</option><option>DISTRIBUER l'énergie électrique en protégeant la batterie</option><option>STOCKER l'eau de pluie</option><option>RESTITUER les courbes aux élèves</option><option>convertir l'énergie mécanique en électricité</option></select></div>
+      <div class="assoc"><label for="e1_4">La pompe :</label><select id="e1_4"><option value="">— choisir —</option><option>CONVERTIR l'énergie électrique en énergie mécanique (pousser l'eau)</option><option>STOCKER l'énergie chimique</option><option>ACQUÉRIR la température de l'eau</option><option>ALIMENTER le panneau solaire</option></select></div>
+      <div class="assoc"><label for="e1_5">L'électrovanne :</label><select id="e1_5"><option value="">— choisir —</option><option>DISTRIBUER l'eau vers le bon bac, sur ordre de la carte</option><option>CONVERTIR la lumière en électricité</option><option>TRAITER la table de données</option><option>STOCKER l'énergie mécanique</option></select></div>
+      <h4>b) Lire les transformations et les flux (C4.2)</h4>
+      <div class="assoc"><label for="e1_6">Dans la POMPE, l'énergie se transforme :</label><select id="e1_6"><option value="">— choisir —</option><option>électrique → mécanique</option><option>lumineuse → chimique</option><option>mécanique → électrique</option><option>chimique → lumineuse</option></select></div>
+      <div class="assoc"><label for="e1_7">Le trajet COMPLET des natures d'énergie est :</label><select id="e1_7"><option value="">— choisir —</option><option>lumineuse → électrique → chimique → électrique → mécanique</option><option>chimique → lumineuse → mécanique → électrique</option><option>électrique → lumineuse → chimique → mécanique</option><option>mécanique → électrique → chimique → lumineuse</option></select></div>
+      <div class="assoc"><label for="e1_8">La BATTERIE transforme-t-elle l'énergie ?</label><select id="e1_8"><option value="">— choisir —</option><option>elle la STOCKE sous forme chimique (charge) puis la restitue : stockage, pas transformation d'usage</option><option>oui, elle la transforme en lumière</option><option>non, elle la détruit peu à peu</option><option>oui, elle la transforme en eau</option></select></div>
+      <div class="assoc"><label for="e1_9">Quel bloc fait le PONT entre la chaîne d'information et la chaîne d'énergie ?</label><select id="e1_9"><option value="">— choisir —</option><option>la carte programmable : son ordre d'arrosage déclenche pompe et électrovanne</option><option>le panneau solaire</option><option>le bac C</option><option>la borne wifi de la cour</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Les fonctions s'écrivent avec 5 verbes : ALIMENTER, STOCKER, DISTRIBUER, CONVERTIR… Suis la flèche orange du schéma bloc par bloc, et note la nature de l'énergie qui ENTRE et celle qui SORT.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il y a transformation quand la nature CHANGE (lumineuse→électrique dans le panneau, électrique→mécanique dans la pompe). La batterie stocke (chimique) ; le régulateur et l'électrovanne distribuent sans changer la nature. Le pont : cherche la flèche verte en pointillés.</p></details>
+    <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Panneau = alimenter/convertir (lumineuse→électrique) · batterie = stocker (chimique) · régulateur =
+      distribuer · pompe = convertir (électrique→mécanique) · électrovanne = distribuer l'eau. Trajet complet :
+      <b>lumineuse → électrique → chimique → électrique → mécanique</b>. La batterie ne transforme pas l'usage :
+      elle met l'énergie en réserve. Et le pont entre les deux chaînes, c'est <b>la carte</b> : l'information
+      COMMANDE l'énergie — c'est toute l'intelligence du jardin (et le cœur de la 4e).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> chaîne d'énergie = alimenter, distribuer, stocker, convertir. Une TRANSFORMATION = un changement de nature de l'énergie. Dans un système connecté, la chaîne d'information COMMANDE la chaîne d'énergie.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> croire que la batterie « fabrique » de l'électricité (elle la restitue) ; confondre distribuer (sans changement de nature) et convertir ; oublier le flux d'EAU, qui n'est pas un flux d'énergie électrique.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 9 / 9 et la chaîne recopiée au cahier avec les natures d'énergie.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>📡 Séance 2 — De la mesure à la table de données (4e_C4.4 · C4.5 · C4.6)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que devient la mesure du capteur entre la terre du bac B… et la courbe sur la tablette ?</p>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>La chaîne d'information du jardin</h3><span class="duree">⏱ 20 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les constituants de la chaîne d'information du jardin RÉEL et leur fonction.</div>
+      <div><b>Compétence :</b> 4e_C4.4.</div>
+      <div><b>Production attendue :</b> 4 associations.</div>
+      <div><b>Ressources :</b> le schéma des deux chaînes (activité 1, partie basse).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> associe chaque constituant à sa fonction dans la chaîne d'information, puis recopie la chaîne au cahier.</div>
+    <div class="exo">
+      <div class="assoc"><label for="i2_1">Les capteurs d'humidité (un par bac) :</label><select id="i2_1"><option value="">— choisir —</option><option>ACQUÉRIR : mesurer l'humidité du sol</option><option>TRAITER : décider d'arroser</option><option>COMMUNIQUER : téléverser les mesures</option><option>RESTITUER : afficher les courbes</option></select></div>
+      <div class="assoc"><label for="i2_2">La carte programmable :</label><select id="i2_2"><option value="">— choisir —</option><option>TRAITER : comparer au seuil, décider, transformer la mesure</option><option>ACQUÉRIR l'humidité avec ses doigts</option><option>STOCKER l'eau</option><option>DISTRIBUER l'énergie</option></select></div>
+      <div class="assoc"><label for="i2_3">Le module wifi :</label><select id="i2_3"><option value="">— choisir —</option><option>COMMUNIQUER : téléverser les mesures vers le serveur</option><option>RESTITUER les courbes</option><option>ACQUÉRIR le signal des nuages</option><option>CONVERTIR l'énergie</option></select></div>
+      <div class="assoc"><label for="i2_4">L'application sur la tablette :</label><select id="i2_4"><option value="">— choisir —</option><option>RESTITUER : afficher les courbes pour les humains</option><option>TRAITER les données à la place de la carte</option><option>ACQUÉRIR l'humidité à distance</option><option>ALIMENTER le jardin</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Quatre verbes pour la chaîne d'information : ACQUÉRIR (capter), TRAITER (calculer/décider), COMMUNIQUER (transmettre), RESTITUER (afficher). Un constituant = un verbe.</p></details>
+    <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Capteurs = acquérir · carte = traiter · wifi = communiquer · application = restituer. C'est la même
+      grammaire qu'en 5e (le lampadaire) — mais ici l'information VOYAGE hors de l'objet, vers un serveur :
+      c'est ce voyage qu'on suit dans l'activité 3.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> chaîne d'information = acquérir → traiter → communiquer → restituer. Dans un objet CONNECTÉ, l'information sort de l'objet pour rejoindre un serveur.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4 et la chaîne au cahier.</div>
+  </div>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Le voyage de la donnée — et la table qui l'attend</h3><span class="duree">⏱ 35 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> décrire la transformation d'une donnée téléversée (C4.5) et analyser la structure de la table qui la range (C4.6).</div>
+      <div><b>Compétences :</b> 4e_C4.5 et 4e_C4.6.</div>
+      <div><b>Production attendue :</b> exploration des 3 bacs + 6 réponses.</div>
+      <div><b>Ressources :</b> le document « du capteur à la table » + l'explorateur ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/table_donnees_jardin.svg" type="image/svg+xml" aria-label="De la mesure brute à la table de données du jardin" style="width:100%"></object>
+      <figcaption>La mesure brute (612) devient une donnée utile (60 %), datée, rangée dans une table structurée.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) avec l'explorateur, interroge la table pour les TROIS bacs (le compteur doit atteindre 3/3) ; b) réponds aux questions sur la transformation et la structure.</div>
+    <div class="exo">
+      <h4>a) J'interroge la table du serveur</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost bacbtn" data-bac="A" type="button">🔎 Filtrer : bac_A</button>
+          <button class="btn small ghost bacbtn" data-bac="B" type="button">🔎 Filtrer : bac_B</button>
+          <button class="btn small ghost bacbtn" data-bac="C" type="button">🔎 Filtrer : bac_C</button>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">RÉSULTAT DU FILTRE</div>
+          <div id="bacTxt" style="font-size:.9em;min-height:64px">Choisis un bac : la table est filtrée sur sa colonne « capteur »…</div>
+          <div id="bacCompteur" class="etiquette" style="margin-top:6px">bacs explorés : 0 / 3</div>
+        </div>
+      </div>
+      <h4>b) Transformation et structure</h4>
+      <div class="assoc"><label for="d3_1">La valeur brute « 612 » devient « 60 % » grâce à…</label><select id="d3_1"><option value="">— choisir —</option><option>un TRAITEMENT de la carte : 612 ÷ 1023 ≈ 60 % — la donnée devient lisible</option><option>l'évaporation de l'eau</option><option>la compression du wifi</option><option>un arrondi automatique du serveur, sans calcul</option></select></div>
+      <div class="assoc"><label for="d3_2">L'HORODATAGE ajouté à chaque mesure sert à…</label><select id="d3_2"><option value="">— choisir —</option><option>savoir QUAND la mesure a été prise : sans date, pas de courbe ni d'historique</option><option>faire joli dans la table</option><option>chiffrer la donnée</option><option>économiser la batterie</option></select></div>
+      <div class="assoc"><label for="d3_3">Dans la table, UNE LIGNE représente…</label><select id="d3_3"><option value="">— choisir —</option><option>UNE mesure complète (id, date-heure, capteur, valeur, arrosage)</option><option>un bac entier avec toutes ses mesures</option><option>une colonne mal rangée</option><option>une journée entière obligatoirement</option></select></div>
+      <div class="assoc"><label for="d3_4">Sans la colonne « capteur », …</label><select id="d3_4"><option value="">— choisir —</option><option>impossible de savoir QUEL bac a produit chaque mesure : les 3 bacs se mélangeraient</option><option>rien ne changerait</option><option>la table serait plus rapide</option><option>les plantes pousseraient moins vite</option></select></div>
+      <div class="assoc"><label for="d3_5">À 12 h 00, le bac_A a été arrosé parce que…</label><select id="d3_5"><option value="">— choisir —</option><option>son humidité (38 %) est passée SOUS le seuil de 40 %</option><option>c'était l'heure du déjeuner</option><option>le bac_C l'a demandé</option><option>la tablette était allumée</option></select></div>
+      <div class="assoc"><label for="d3_6">C'est la STRUCTURE en colonnes qui permet…</label><select id="d3_6"><option value="">— choisir —</option><option>de trier, filtrer et tracer des courbes — une info par colonne, toujours au même endroit</option><option>de rendre les données secrètes</option><option>d'éviter les pannes de wifi</option><option>d'arroser plus fort</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Suis le document de haut en bas : mesure BRUTE → transformation (calcul + horodatage) → téléversement → une LIGNE de plus dans la table. Puis regarde les lignes orangées : que disent-elles ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ligne 356 : bac_A, 38 %, « OUI (38 &lt; seuil 40) ». La règle est écrite dans la table elle-même ! Et pour le filtre : c'est la colonne « capteur » qui permet de ne garder que bac_A — sans elle, aucun tri possible.</p></details>
+    <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>612 brut → 60 % par TRAITEMENT (division par 1023) + horodatage = donnée utile et datée (C4.5). Une ligne
+      = une mesure ; une colonne = une information ; la colonne « capteur » identifie le bac ; l'arrosage se lit
+      dans la table (38 &lt; 40 → OUI). Trier, filtrer, tracer : tout vient de la STRUCTURE (C4.6). Ton filtre
+      « bac_A » a fait exactement ce que fait l'application du jardin.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> une donnée téléversée = mesure brute TRANSFORMÉE (calcul) + HORODATÉE. Une table structurée : 1 ligne = 1 mesure, 1 colonne = 1 information — c'est ce qui permet de trier, filtrer, tracer.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre la mesure brute (612) et la donnée utile (60 %) ; oublier l'horodatage ; croire qu'une ligne = un bac (c'est UNE mesure d'UN bac à UN instant).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 bacs explorés (3/3) et 6 / 6 réponses.</div>
+  </div>
+</section>
+</div>
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🌐 Séance 3 — Le réseau du jardin et ses adresses (4e_C4.7 · C4.8 · C4.9)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : pourquoi la carte du jardin a-t-elle une adresse FIXE — et que faire quand « ça ne communique plus » ?</p>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Dépanneur réseau — trois pannes à résoudre</h3><span class="duree">⏱ 45 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> comprendre l'adresse IP fixe (C4.7), résoudre des problèmes de communication (C4.8) sur la simulation fournie (C4.9).</div>
+      <div><b>Compétences :</b> 4e_C4.7, C4.8 et C4.9.</div>
+      <div><b>Production attendue :</b> 3 pannes résolues au simulateur + 4 réponses.</div>
+      <div><b>Ressources :</b> le plan du réseau ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/reseau_jardin_ip.svg" type="image/svg+xml" aria-label="Le réseau local du jardin connecté avec ses adresses IP" style="width:100%"></object>
+      <figcaption>Chaque appareil a son adresse. La carte du jardin est en IP FIXE : toujours joignable au même « numéro de maison ».</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) au simulateur, examine les 3 pannes signalées par le club jardin et désigne la cause de chacune (3/3 exigé) ; b) réponds aux questions du technicien réseau.</div>
+    <div class="exo">
+      <h4>a) La simulation de dépannage réseau</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost pannebtn" data-panne="1" type="button">🚨 Panne 1 — « plus aucune mesure n'arrive »</button>
+          <button class="btn small ghost pannebtn" data-panne="2" type="button">🚨 Panne 2 — « deux appareils se battent »</button>
+          <button class="btn small ghost pannebtn" data-panne="3" type="button">🚨 Panne 3 — « la carte est isolée »</button>
+          <div id="panneChoix" style="display:none;margin-top:8px">
+            <label for="causeSel"><b>Ta cause :</b></label>
+            <select id="causeSel"><option value="">— choisir la cause —</option>
+              <option value="portee">la carte est HORS DE PORTÉE du wifi (borne débranchée)</option>
+              <option value="conflit">CONFLIT : la tablette a reçu la même IP que la carte (192.168.1.50)</option>
+              <option value="passerelle">mauvaise PASSERELLE saisie sur la carte (192.168.9.1 au lieu de 192.168.1.1)</option>
+            </select>
+            <button class="btn small" id="btnCause" type="button">🩺 Valider ce diagnostic</button>
+          </div>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">CONSOLE DU TECHNICIEN</div>
+          <div id="panneTxt" style="font-size:.88em;min-height:76px">Choisis une panne pour afficher ses symptômes…</div>
+          <div id="panneEtat" class="etiquette" style="margin-top:6px">pannes résolues : 0 / 3</div>
+        </div>
+      </div>
+      <h4>b) Les questions du technicien</h4>
+      <div class="assoc"><label for="r4_1">Pourquoi la carte du jardin a-t-elle une IP FIXE (192.168.1.50) ?</label><select id="r4_1"><option value="">— choisir —</option><option>pour être TOUJOURS joignable à la même adresse — l'application sait où la trouver</option><option>parce que le DHCP est payant</option><option>pour aller plus vite sur internet</option><option>parce que les plantes préfèrent</option></select></div>
+      <div class="assoc"><label for="r4_2">La tablette, elle, est en DHCP (adresse automatique) car…</label><select id="r4_2"><option value="">— choisir —</option><option>elle n'a pas besoin d'être trouvée : c'est ELLE qui contacte les autres — l'automatique suffit</option><option>elle est trop vieille pour une IP fixe</option><option>le wifi l'exige toujours</option><option>c'est plus dangereux mais plus joli</option></select></div>
+      <div class="assoc"><label for="r4_3">Deux appareils avec la MÊME adresse IP sur le réseau, c'est…</label><select id="r4_3"><option value="">— choisir —</option><option>un CONFLIT d'adresses : les messages ne savent plus où aller — communication cassée</option><option>une économie d'adresses, c'est bien</option><option>possible si les appareils sont polis</option><option>obligatoire pour le wifi</option></select></div>
+      <div class="assoc"><label for="r4_4">Pour choisir une IP fixe SANS créer de conflit, on doit…</label><select id="r4_4"><option value="">— choisir —</option><option>prendre une adresse LIBRE du réseau, hors de la plage distribuée par le DHCP</option><option>copier l'adresse de la box, c'est la meilleure</option><option>prendre n'importe laquelle au hasard</option><option>demander à l'application météo</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Relis l'encart rouge du plan : 3 pannes classiques = conflit d'adresses, mauvaise passerelle, hors de portée. Chaque panne du simulateur correspond exactement à l'une des trois — les symptômes te disent laquelle.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Plus aucune mesure + borne wifi éteinte » → portée. « Deux appareils se battent + tablette affiche .50 » → conflit. « La carte pingue la borne mais pas le serveur + passerelle 192.168.9.1 » → passerelle. Une IP fixe se choisit LIBRE et HORS plage DHCP : c'est la règle du technicien.</p></details>
+    <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Panne 1 = hors de portée (borne débranchée) · panne 2 = conflit d'adresses (la tablette a pris .50) ·
+      panne 3 = mauvaise passerelle (192.168.9.1 ≠ 192.168.1.1). IP fixe pour la carte : toujours joignable au
+      même endroit — comme une boutique qui garde la même adresse. DHCP pour la tablette : elle appelle, on ne
+      l'appelle pas. Et une IP fixe se choisit libre, hors plage DHCP (C4.7). Résoudre méthodiquement ces pannes,
+      c'est C4.8 — et tu l'as fait sur une simulation fournie : C4.9.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> sur un réseau local, chaque appareil a une adresse IP UNIQUE. Objet à joindre = IP FIXE ; appareil qui appelle = DHCP. Trois pannes classiques : conflit, passerelle, portée.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> donner la même IP à deux appareils « pour simplifier » ; choisir une IP fixe DANS la plage DHCP (conflit garanti un jour) ; accuser le wifi quand c'est la passerelle.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 pannes résolues au simulateur ET 4 / 4 réponses.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 4 ══════ -->
+<div class="seance-panel" id="s4" role="tabpanel">
+<section class="card">
+  <h2>🧩 Séance 4 — La forme d'une pièce raconte sa fabrication (4e_C4.3)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : en regardant une pièce du jardin, peut-on deviner COMMENT elle a été fabriquée ?</p>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Enquête sur quatre pièces du jardin</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> mettre en relation la FORME d'une pièce (et ses indices de surface) avec son PROCÉDÉ de réalisation.</div>
+      <div><b>Compétence :</b> 4e_C4.3.</div>
+      <div><b>Production attendue :</b> 4 diagnostics + 2 justifications.</div>
+      <div><b>Ressources :</b> les descriptions d'indices ci-dessous (en 🅰, les vraies pièces circulent dans la classe).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> pour chaque pièce, lis les INDICES laissés par la fabrication, puis désigne le procédé. En 5e tu as visité l'atelier — cette année, tu raisonnes en expert : la forme PARLE.</div>
+    <div class="exo">
+      <div class="assoc"><label for="p5_1">Support de capteur : fines STRIES horizontales régulières, comme des couches empilées ; forme en volume sur mesure :</label><select id="p5_1"><option value="">— choisir —</option><option>impression 3D — les stries sont les couches de fil fondu déposées une à une</option><option>injection plastique — moule industriel</option><option>découpe laser — pièce plate</option><option>perçage — ce n'est qu'un trou</option></select></div>
+      <div class="assoc"><label for="p5_2">Boîtier de la carte : surface lisse, fines NERVURES intérieures, légère LIGNE DE JOINT tout autour, des milliers d'exemplaires identiques dans le commerce :</label><select id="p5_2"><option value="">— choisir —</option><option>injection plastique — la ligne de joint trahit le moule en deux parties</option><option>impression 3D — couche par couche</option><option>limage à la main</option><option>découpe laser</option></select></div>
+      <div class="assoc"><label for="p5_3">Platine de fixation : plaque PLATE, contours nets et légèrement brunis, coins arrondis identiques :</label><select id="p5_3"><option value="">— choisir —</option><option>découpe laser — bords nets et brunis par le faisceau, pièce plate</option><option>injection plastique</option><option>impression 3D</option><option>moulage au sable</option></select></div>
+      <div class="assoc"><label for="p5_4">Raccord d'arrosage : deux TROUS parfaitement cylindriques et perpendiculaires à la surface :</label><select id="p5_4"><option value="">— choisir —</option><option>perçage (perceuse à colonne) — trous guidés, nets et droits</option><option>découpe laser</option><option>impression 3D</option><option>ponçage</option></select></div>
+      <div class="assoc"><label for="p5_5">La LIGNE DE JOINT du boîtier prouve que…</label><select id="p5_5"><option value="">— choisir —</option><option>la pièce sort d'un MOULE en deux parties : le plastique a été injecté dedans</option><option>la pièce a été pliée en deux</option><option>quelqu'un l'a rayée au montage</option><option>c'est une pièce imprimée en 3D</option></select></div>
+      <div class="assoc"><label for="p5_6">Pourquoi le support de capteur est-il imprimé en 3D et PAS injecté ?</label><select id="p5_6"><option value="">— choisir —</option><option>il n'en faut que 3 exemplaires sur mesure : un moule d'injection coûterait une fortune pour rien</option><option>l'impression 3D est toujours plus solide</option><option>l'injection est interdite au collège</option><option>le plastique injecté fond sous la pluie</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Chaque procédé signe son travail : couches empilées = 3D · ligne de joint + nervures = injection (moule) · plat + bords brunis = laser · trou cylindrique net = perçage.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pense aussi à la QUANTITÉ : des milliers d'exemplaires identiques = moule d'injection rentabilisé ; 3 exemplaires sur mesure = impression 3D. La forme ET le nombre racontent le procédé.</p></details>
+    <button class="btn small" data-check="5" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb5" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Stries en couches → <b>impression 3D</b> · ligne de joint + nervures + grande série → <b>injection</b> ·
+      plat + bords brunis → <b>découpe laser</b> · trous cylindriques guidés → <b>perçage</b>. La ligne de joint
+      est la cicatrice du moule en deux parties ; et le CHOIX du procédé dépend de la forme ET de la quantité
+      (3 supports sur mesure = 3D ; 10 000 boîtiers = injection). En 3e, c'est toi qui feras ce choix pour tes
+      propres pièces — et qui le justifieras.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> la forme d'une pièce porte les INDICES de son procédé : couches = 3D, ligne de joint = injection, bords brunis plats = laser, trous nets = perçage. Forme + quantité → procédé.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> croire que tout ce qui est en plastique est injecté ; oublier le critère de la quantité ; confondre les stries d'impression et des rayures d'usure.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 / 6 et le tableau indices → procédés recopié au cahier.</div>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <div class="bilan-grid">
+    <div>
+      <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
+      <p>Compare avec le vrai voyage de la mesure : capteur → carte (transformation + horodatage) → wifi → table du serveur → application. Avais-tu prévu toutes les étapes ?</p></div>
+      <p><b>Ce que tu sais faire désormais :</b> lire la chaîne d'énergie et ses transformations (C4.1-C4.2),
+      la chaîne d'information (C4.4), suivre une donnée téléversée jusqu'à sa table structurée (C4.5-C4.6),
+      comprendre le réseau local et ses adresses — et le dépanner (C4.7-C4.9), et faire parler la forme des
+      pièces (C4.3). Le dossier technique du jardin est complet : le club jardin sait maintenant ce qu'il pilote.</p>
+      <p class="refs">Pour aller plus loin : <a href="../../../C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">programmer l'arrosage automatique du jardin (4e_C6)</a> · <a href="../4e_C4.7/qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html">QCM XXL réseaux (entraînement intensif C4.7)</a>.</p>
+    </div>
+    <div class="confiance">
+      <p><b>🎯 Auto-positionnement :</b> pour chaque famille, où en es-tu ?</p>
+      <div class="assoc"><label for="auto1">C4.1-C4.2 — chaîne d'énergie, transformations :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto2">C4.4-C4.6 — information, données, table :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto3">C4.7-C4.9 — réseau, IP, dépannage :</label><select id="auto3"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto4">C4.3 — forme et procédé :</label><select id="auto4"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <p><a class="btn qcm" href="qcm_4e_C4.1-C4.9_jardin_connecte.html">🧠 M'entraîner : le QCM de la séquence (30 questions)</a></p>
+      <p class="refs"><a href="Synthèses/synthese_eleve_4e_C4.1-C4.9.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_4e_C4.1-C4.9.html">👩‍🏫 Synthèse professeur</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — dont 3 avec schémas à lire — pour vérifier tout le dossier technique du jardin.</p>
+  <a class="btn qcm" href="qcm_4e_C4.1-C4.9_jardin_connecte.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>📊 <b>Défi données :</b> pendant 3 jours, relève matin et soir une grandeur de ton choix (température, hygrométrie…) et range tes mesures dans une vraie table (colonnes : horodatage, lieu, valeur). Trace la courbe !</p>
+  <p>🌐 <b>Défi réseau :</b> avec l'accord d'un adulte, retrouve l'adresse IP de la box et celle de ton téléphone dans les réglages wifi. Sont-elles dans la même « famille » (192.168…) ?</p>
+  <p>🔍 <b>Défi ligne de joint :</b> trouve chez toi 3 objets en plastique moulé et repère leur ligne de joint. L'un d'eux a-t-il aussi des nervures cachées à l'intérieur ?</p>
+</section>
+
+<footer>
+  <p>Séquence 4e_C4.1 → C4.9 · Thème 2 · Technologie cycle 4 (programme 2024) · objet-fil « Le jardin connecté »</p>
+  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_4e_C4.1-C4.9_jardin_connecte";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Explorateur de table (activité 3) ══════ */
+window.__exp = window.__exp || {};
+const BACS = {
+  A:"SELECT * WHERE capteur = « bac_A » → 2 mesures : 07:00 → 52 % (pas d'arrosage) · 12:00 → 38 % → ARROSAGE DÉCLENCHÉ (38 < 40). Moyenne du jour : 45 %.",
+  B:"SELECT * WHERE capteur = « bac_B » → 2 mesures : 07:00 → 60 % · 12:00 → 47 %. Aucun arrosage : le bac B garde bien l'eau. Moyenne : 53,5 %.",
+  C:"SELECT * WHERE capteur = « bac_C » → 2 mesures : 07:00 → 71 % · 17:00 → 34 % → ARROSAGE DÉCLENCHÉ. Grosse chute l'après-midi : bac en plein soleil ? Moyenne : 52,5 %."
+};
+function majBacs(){
+  const e = window.__exp.bacs || {};
+  const n = Object.keys(e).length;
+  $("bacCompteur").textContent = "bacs explorés : " + n + " / 3";
+  if(n===3){ window.__exp.table = true; }
+}
+document.querySelectorAll(".bacbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const b = btn.dataset.bac;
+    window.__exp.bacs = window.__exp.bacs || {};
+    window.__exp.bacs[b] = true;
+    $("bacTxt").textContent = BACS[b];
+    majBacs(); save(false);
+  });
+});
+
+/* ══════ Simulateur réseau (activité 4) ══════ */
+const PANNES = {
+  1:{sym:"SYMPTÔMES : plus AUCUNE mesure n'arrive depuis ce matin. La carte ne répond à rien. Détail relevé : la borne wifi de la cour est ÉTEINTE (prise débranchée par l'orage).",cause:"portee",
+     ok:"Exact : hors de portée (borne éteinte) = plus aucun signal. On rebranche la borne, tout revient."},
+  2:{sym:"SYMPTÔMES : les mesures arrivent par à-coups, la connexion saute sans arrêt. Détail relevé : la tablette du club affiche… 192.168.1.50 — la MÊME adresse que la carte du jardin !",cause:"conflit",
+     ok:"Exact : conflit d'adresses — deux appareils au même « numéro de maison ». On sort le .50 de la plage DHCP, et chacun retrouve son adresse."},
+  3:{sym:"SYMPTÔMES : la carte communique avec la borne wifi (le ping local marche)… mais rien n'atteint le serveur. Détail relevé : passerelle configurée = 192.168.9.1 au lieu de 192.168.1.1.",cause:"passerelle",
+     ok:"Exact : mauvaise passerelle — la carte ne sait plus par quelle porte sortir. On corrige en .1.1, le serveur reçoit à nouveau."}
+};
+let panneCourante = null;
+document.querySelectorAll(".pannebtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    panneCourante = btn.dataset.panne;
+    $("panneTxt").textContent = PANNES[panneCourante].sym;
+    $("panneChoix").style.display = "block";
+    $("causeSel").value = "";
+  });
+});
+function majPannes(){
+  const e = window.__exp.pannes || {};
+  const n = Object.keys(e).length;
+  $("panneEtat").textContent = n===3 ? "3 / 3 — réseau réparé ✅" : "pannes résolues : " + n + " / 3";
+  if(n===3){ window.__exp.reseau = true; }
+}
+$("btnCause").addEventListener("click", ()=>{
+  if(!panneCourante) return;
+  const choix = $("causeSel").value;
+  if(!choix){ $("panneTxt").textContent = "Choisis d'abord une cause dans la liste."; return; }
+  const p = PANNES[panneCourante];
+  if(choix === p.cause){
+    window.__exp.pannes = window.__exp.pannes || {};
+    window.__exp.pannes[panneCourante] = true;
+    $("panneTxt").textContent = "✅ " + p.ok;
+  } else {
+    $("panneTxt").textContent = "❌ Ce n'est pas ça — relis les SYMPTÔMES et l'encart rouge du plan, puis re-diagnostique. (Un technicien se trompe, mais il re-teste !)";
+  }
+  majPannes(); save(false);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={e1_1:"ALIMENTER : il convertit l'énergie lumineuse en énergie électrique",
+               e1_2:"STOCKER l'énergie (sous forme chimique) pour la nuit et les jours gris",
+               e1_3:"DISTRIBUER l'énergie électrique en protégeant la batterie",
+               e1_4:"CONVERTIR l'énergie électrique en énergie mécanique (pousser l'eau)",
+               e1_5:"DISTRIBUER l'eau vers le bon bac, sur ordre de la carte",
+               e1_6:"électrique → mécanique",
+               e1_7:"lumineuse → électrique → chimique → électrique → mécanique",
+               e1_8:"elle la STOCKE sous forme chimique (charge) puis la restitue : stockage, pas transformation d'usage",
+               e1_9:"la carte programmable : son ordre d'arrosage déclenche pompe et électrovanne"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:9,valide:ok>=8};
+  },
+  2: function(){
+    let ok=0;
+    const att={i2_1:"ACQUÉRIR : mesurer l'humidité du sol",
+               i2_2:"TRAITER : comparer au seuil, décider, transformer la mesure",
+               i2_3:"COMMUNIQUER : téléverser les mesures vers le serveur",
+               i2_4:"RESTITUER : afficher les courbes pour les humains"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:4,valide:ok===4};
+  },
+  3: function(){
+    let ok=0;
+    const att={d3_1:"un TRAITEMENT de la carte : 612 ÷ 1023 ≈ 60 % — la donnée devient lisible",
+               d3_2:"savoir QUAND la mesure a été prise : sans date, pas de courbe ni d'historique",
+               d3_3:"UNE mesure complète (id, date-heure, capteur, valeur, arrosage)",
+               d3_4:"impossible de savoir QUEL bac a produit chaque mesure : les 3 bacs se mélangeraient",
+               d3_5:"son humidité (38 %) est passée SOUS le seuil de 40 %",
+               d3_6:"de trier, filtrer et tracer des courbes — une info par colonne, toujours au même endroit"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.table);
+    return {score:ok,total:6,extra:expOk?"":" Explore VRAIMENT les 3 bacs avec le filtre (compteur 3/3) : c'est le geste qui fait comprendre la table.",valide:ok>=5&&expOk};
+  },
+  4: function(){
+    let ok=0;
+    const att={r4_1:"pour être TOUJOURS joignable à la même adresse — l'application sait où la trouver",
+               r4_2:"elle n'a pas besoin d'être trouvée : c'est ELLE qui contacte les autres — l'automatique suffit",
+               r4_3:"un CONFLIT d'adresses : les messages ne savent plus où aller — communication cassée",
+               r4_4:"prendre une adresse LIBRE du réseau, hors de la plage distribuée par le DHCP"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.reseau);
+    return {score:ok,total:4,extra:expOk?"":" Résous les 3 pannes au simulateur (3/3) : le diagnostic réseau s'apprend en diagnostiquant.",valide:ok===4&&expOk};
+  },
+  5: function(){
+    let ok=0;
+    const att={p5_1:"impression 3D — les stries sont les couches de fil fondu déposées une à une",
+               p5_2:"injection plastique — la ligne de joint trahit le moule en deux parties",
+               p5_3:"découpe laser — bords nets et brunis par le faisceau, pièce plate",
+               p5_4:"perçage (perceuse à colonne) — trous guidés, nets et droits",
+               p5_5:"la pièce sort d'un MOULE en deux parties : le plastique a été injecté dedans",
+               p5_6:"il n'en faut que 3 exemplaires sur mesure : un moule d'injection coûterait une fortune pour rien"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:6,valide:ok>=5};
+  }
+};
+const ENC_OK=["Excellent : tout est validé !","Bravo, le dossier technique avance !","Très bien : le club jardin peut compter sur toi."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1], s2:[2,3], s3:[4], s4:[5]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majBacs(); majPannes(); majProgress(); majHyp();
+</script>
+</body>
+</html>

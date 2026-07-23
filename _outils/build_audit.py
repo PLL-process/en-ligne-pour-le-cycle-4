@@ -158,36 +158,64 @@ OVERLAY = {
         anomalies="Pas de séquence, pas de synthèse, pas de projet. Un QCM isolé ne "
                   "constitue pas une séquence.",
     ),
+    # ── LOT 09 (Fable) : îlot 4e_C4 « Le jardin connecté » ──
     "4e_C4.1": dict(
-        statut="PARTIEL",
-        sequence=False, qcm=True, projet=False, synthese=False,
-        evaluation=False, correction=True, situation=False, problematique=False,
-        qualite="QCM « automatisation premium » (5,5 Ko seulement).",
-        anomalies="Gabarit ${q.img} présent dans le code (images de questions non "
-                  "résolues) ; très léger : à étoffer ou fusionner dans une vraie séquence.",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « Le jardin connecté » (4 séances) couvrant l'îlot "
+                "4e_C4 entier (9 codes) : chaîne d'énergie et transformations "
+                "(C4.1-C4.2), chaîne d'information, données téléversées et "
+                "table structurée avec explorateur à verrou (C4.4-C4.6), "
+                "réseau/IP fixe et simulateur de dépannage à verrou 3 pannes "
+                "(C4.7-C4.9), forme et procédé (C4.3). QCM 30 q (7/10/10/3, "
+                "3 illustrées, réponses réparties 7/7/8/8), synthèses, "
+                "matrice, 3 SVG CC0, rapport 21/21. Règle n°4 appliquée. "
+                "L'ancien QCM « automatisation premium » reste en ressource "
+                "complémentaire dans le dossier.",
+        anomalies="Aucune sur le lot. L'ancien QCM automatisation conserve son "
+                  "gabarit ${q.img} non résolu (consolidation post-Conseil).",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement "
+                      "(DYS), reduced-motion, impression A4.",
+        medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
     ),
     "4e_C4.4": dict(
-        statut="PARTIEL",
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=False, qcm=True, projet=False, synthese=False,
         evaluation=False, correction=True, situation=False, problematique=False,
-        qualite="QCM eCall 40 questions (chaîne d'information d'une voiture) — bon support, "
-                "correctement rattaché : 4e_C4.4 = « Identifier les constituants de la chaîne "
-                "d'information d'un objet réel et les associer à leur fonction » "
-                "(rattachement confirmé par la gouvernance le 21/07/2026).",
-        anomalies="Pas de séquence d'accueil autour du QCM (situation déclenchante, "
-                  "synthèse, projet à créer).",
+        mutualise_avec="4e_C4.1",
+        qualite="README pointeur (séance 2 : chaîne d'information du jardin) "
+                "+ QCM eCall 40 q existant conservé en entraînement "
+                "complémentaire (rattachement confirmé le 21/07/2026).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C4.7": dict(
-        statut="PARTIEL",
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=False, qcm=True, projet=False, synthese=False,
         evaluation=False, correction=True, situation=False, problematique=False,
-        qualite="QCM XXL réseaux 77 questions (fusion) + 9 images réseau.",
-        anomalies="Pas de séquence ni d'activité Filius alors que le code porte sur les "
-                  "composants d'un réseau local ; licences des images *_hd.jpg "
-                  "(bluetooth_projecteur, rfid_tag_portique, zigbee_mesh…) non "
-                  "documentées — LICENCE À VÉRIFIER ; doc3_schema_parcours.png (2,6 Mo) "
-                  "placé ici « faute de certitude » d'après le rapport de migration.",
+        mutualise_avec="4e_C4.1",
+        qualite="README pointeur (séance 3 : IP fixe, réseau du jardin) + QCM "
+                "XXL réseaux 77 q existant conservé en entraînement intensif.",
+        anomalies="Héritées du QCM XXL existant : licences des images *_hd.jpg "
+                  "non documentées — LICENCE À VÉRIFIER (consolidation "
+                  "post-Conseil) ; doc3_schema_parcours.png (2,6 Mo) à trier.",
+        accessibilite="s.o.", medias="Images du QCM XXL : à documenter.",
     ),
+    **{c: dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C4.1",
+        qualite=f"README pointeur ({d}).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ) for c, d in {
+        "4e_C4.2": "séance 1 : transformations et flux d'énergie",
+        "4e_C4.3": "séance 4 : la forme d'une pièce raconte son procédé",
+        "4e_C4.5": "séance 2 : transformation des données téléversées",
+        "4e_C4.6": "séance 2 : structure de table, explorateur avec verrou",
+        "4e_C4.8": "séance 3 : résolution des 3 pannes de communication",
+        "4e_C4.9": "séance 3 : simulation de réseau fournie et complétée",
+    }.items()},
     "4e_C6.2": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
