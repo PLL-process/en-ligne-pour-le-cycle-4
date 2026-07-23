@@ -41,7 +41,7 @@
   .btn:hover,.btn:focus-visible{background:var(--btn-h)}
   .btn.small{padding:6px 12px;font-size:.82em}
   .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
-  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
   .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
   .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
   .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
@@ -302,6 +302,35 @@
     <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre W (puissance) et Wh (énergie) ; prendre « exactement le calcul » sans marge ; surdimensionner « pour être tranquille » en oubliant coût et environnement.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> les 2 calculs justes, le bon choix, ET les deux essais réellement faits au simulateur.</div>
   </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Bonus</span><h3>La loi d'Ohm au chevet de la station — pont avec la physique</h3><span class="duree">⏱ 20 min (facultatif)</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> utiliser U = R × I sur un cas RÉEL de la station : le courant consommé, la chute de tension dans le câble, le choix du fusible.</div>
+      <div><b>Pont interdisciplinaire :</b> physique-chimie (électricité) — souvent survolée faute de temps : ici, elle sert à quelque chose de concret.</div>
+      <div><b>Production attendue :</b> 3 calculs de technicien.</div>
+      <div><b>Ressources :</b> P = U × I (puissance) · U = R × I (loi d'Ohm) · la station consomme 6 W sous 12 V · le câble mesure R = 0,4 Ω.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) calcule le courant absorbé par la station ; b) calcule la tension « perdue » dans le câble grâce à la loi d'Ohm ; c) choisis le fusible qui protège sans gêner.</div>
+    <div class="exo">
+      <div class="assoc"><label for="b6_1">a) Courant absorbé : I = P ÷ U = 6 W ÷ 12 V = … A</label><input type="number" id="b6_1" min="0" max="10" step="0.1" inputmode="decimal"></div>
+      <div class="assoc"><label for="b6_2">b) Chute de tension dans le câble : U = R × I = 0,4 Ω × 0,5 A = … V</label><input type="number" id="b6_2" min="0" max="5" step="0.1" inputmode="decimal"></div>
+      <div class="assoc"><label for="b6_3">c) Quel fusible choisir pour protéger la ligne (courant normal : 0,5 A) ?</label><select id="b6_3"><option value="">— choisir —</option><option>1 A : au-dessus du courant normal, il fond seulement en cas d'anomalie</option><option>0,5 A : exactement le courant normal</option><option>10 A : très large, aucun risque de fondre</option><option>0,1 A : le plus sensible possible</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux formules seulement : P = U × I (donc I = P ÷ U) et la loi d'Ohm U = R × I. Remplace par les valeurs et pose l'opération.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>I = 6 ÷ 12 = 0,5 A. Puis U = 0,4 × 0,5 = 0,2 V : le câble « vole » 0,2 V à la station — négligeable ici, mais c'est pour ça qu'on limite la longueur des câbles. Le fusible : à 0,5 A pile, il fondrait en fonctionnement normal ; à 10 A, il laisserait passer un court-circuit destructeur. Souviens-toi du fusible de « SOS station » !</p></details>
+    <button class="btn small" data-check="6" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb6" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>I = P ÷ U = 6 ÷ 12 = <b>0,5 A</b>. Chute dans le câble : U = R × I = 0,4 × 0,5 = <b>0,2 V</b> — la loi d'Ohm
+      n'est pas une formule abstraite : elle explique pourquoi un câble trop long ou trop fin « mange » la tension.
+      Fusible : <b>1 A</b> — au-dessus du courant normal (0,5 A) pour ne pas fondre sans raison, assez bas pour couper
+      net un court-circuit. C'est exactement le fusible que l'équipe « SOS station » avait remplacé !</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> P = U × I et U = R × I suffisent pour dimensionner courant, câble et fusible. La physique et la technologie sont les deux faces du même objet.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> confondre P (watts) et I (ampères) ; choisir un fusible « exactement » au courant normal (il fond tout le temps) ou énorme (il ne protège plus rien).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 / 3 — activité bonus : elle ne compte pas dans la barre de progression, mais elle compte pour ta culture de technicien !</div>
+  </div>
 </section>
 </div>
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -552,6 +581,14 @@ const CHECKS = {
                r5_5:"énergie solaire renouvelable + matériaux recyclables + pièces remplaçables"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     return {score:ok,total:5,valide:ok>=4};
+  }
+,
+  6: function(){
+    let ok=0;
+    if(num("b6_1")===0.5) ok++;
+    if(num("b6_2")===0.2) ok++;
+    if($("b6_3").value==="1 A : au-dessus du courant normal, il fond seulement en cas d'anomalie") ok++;
+    return {score:ok,total:3,valide:ok===3};
   }
 };
 const ENC_OK=["Excellent travail de concepteur : tout est validé !","Bravo, la démarche d'élaboration est maîtrisée !","Très bien : tu raisonnes comme un bureau d'études."];

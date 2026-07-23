@@ -265,3 +265,16 @@ les décisions de publication restent à ChatGPT.*
    unique. Reste l'îlot 5e_C5 (dépannage 5e) en production future.
 3. Le générateur S4 du classeur de progression 5e est câblé sur les nouvelles
    ressources (même commit) : séances 3-4 désormais 100 % outillées.
+
+## 2026-07-24 — Thème 2 · Retour Pascal sur LOT 06 : bonus loi d'Ohm + correctif d'affichage (Fable, branche `fable/theme-2/lot-07-programmer-lampadaire-5e`)
+
+1. **Demande Pascal** : les élèves voient peu (ou pas) la loi d'Ohm en physique
+   faute de temps → activité BONUS ajoutée à « L'énergie de la station » :
+   I = P÷U (0,5 A), chute de tension du câble U = R×I (0,2 V), choix du fusible
+   1 A (rebouclage avec le fusible de « SOS station »). Hors barre de
+   progression, aides ×2, correction complète. Pont interdisciplinaire
+   physique-technologie assumé.
+2. **Correctif d'affichage** signalé par Pascal : le bouton « M'entraîner : le
+   QCM » du bilan débordait de sa pastille sur plusieurs lignes — display:block
+   + white-space:normal appliqués aux TROIS séquences du gabarit (5e_C4.1,
+   3e_C4.1, 5e_C6.1). À reporter dans le gabarit commun pour les futurs lots.
