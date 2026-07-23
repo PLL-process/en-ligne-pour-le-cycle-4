@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Script autonome v2 — Remplissage des onglets S7 (Thème 3) des progressions 5e et 4e.
-Corrigé après banc d'essai Fable (23/07/2026).
+Script autonome v3 — Remplissage des onglets S7 (Thème 3) des progressions 5e et 4e.
+Corrigé après banc d'essai Fable v2 (23/07/2026).
+Préserve le préfixe « ■ Séance n — semaine Sxx ».
 
 Usage (depuis la racine du dépôt) :
     python _progressions/remplir_S7_theme3.py
-
-Règles strictes :
-- N'écrit QUE sur les cellules autorisées (carte exacte du retour banc d'essai)
-- Ne touche ni en-tête fusionné, ni colonne A/B/C du tableau de compétences
-- Ne touche pas à la ligne de suivi enseignant
-- Garde-fou : vérifie A18 avant toute écriture
 """
 
 from openpyxl import load_workbook
@@ -31,11 +26,9 @@ def ecrire_si_possible(ws, cell, value):
     try:
         ws[cell] = value
     except AttributeError:
-        # Cellule fusionnée en lecture seule → on ignore silencieusement
         print(f"  [ignoré] {cell} est une cellule fusionnée")
 
 def remplir_identification(ws, data):
-    """Remplit uniquement les champs Identification autorisés."""
     mapping = {
         "B5": data.get("situation_declenchante"),
         "B6": data.get("prerequis"),
@@ -49,19 +42,20 @@ def remplir_identification(ws, data):
             ecrire_si_possible(ws, cell, value)
 
 def remplir_colonne_D_competences(ws, mapping_codes, start_row, end_row):
-    """Remplit uniquement la colonne D (Travaillée en) du tableau des compétences."""
     for row in range(start_row, end_row + 1):
-        code = ws.cell(row=row, column=1).value  # colonne A
+        code = ws.cell(row=row, column=1).value
         if code and code in mapping_codes:
             ecrire_si_possible(ws, f"D{row}", mapping_codes[code])
 
 def remplir_seance(ws, start_row, seance):
-    """Remplit un bloc de séance de 9 lignes à partir de start_row."""
-    # A{R} : titre de séance (on ne remplace que la partie titre si possible)
-    # On laisse le préfixe existant et on n'écrit que si nécessaire
+    """Remplit un bloc de séance de 9 lignes à partir de start_row.
+    Préserve le préfixe « ■ Séance n — semaine Sxx »."""
     if seance.get("titre_seance"):
-        # On tente d'écrire le titre complet en A (fusionné) — si échec, on ignore
-        ecrire_si_possible(ws, f"A{start_row}", seance["titre_seance"])
+        actuel = str(ws[f"A{start_row}"].value or "")
+        prefixe = actuel.split("— — —")[0].rstrip()  # « ■ Séance n — semaine Sxx »
+        brut = seance["titre_seance"]
+        titre = brut.split("—", 1)[-1].strip() if "—" in brut else brut
+        ecrire_si_possible(ws, f"A{start_row}", f"{prefixe} — — — {titre}")
 
     ecrire_si_possible(ws, f"B{start_row + 1}", seance.get("question_directrice", ""))
     ecrire_si_possible(ws, f"B{start_row + 2}", seance.get("activites_supports", ""))
@@ -92,18 +86,15 @@ def traiter_classeur(path, niveau, data_niveau):
 
     print(f"Remplissage S7 ({niveau})...")
 
-    # 1. Identification
     remplir_identification(ws, data_niveau)
 
-    # 2. Colonne D du tableau des compétences
     if niveau == "5e":
         remplir_colonne_D_competences(ws, data_niveau.get("codes_seances", {}), 18, 29)
         seances_rows = [32, 41, 50, 59, 68, 77]
-    else:  # 4e
+    else:
         remplir_colonne_D_competences(ws, data_niveau.get("codes_seances", {}), 18, 31)
         seances_rows = [34, 43, 52, 61, 70, 79]
 
-    # 3. Déroulé des 6 séances
     seances = data_niveau.get("seances", [])
     for i, start_row in enumerate(seances_rows):
         if i < len(seances):
