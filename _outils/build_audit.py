@@ -400,6 +400,40 @@ OVERLAY = {
         "5e_C6.2": "activité 2 : traduction en algorithme en langage naturel",
         "5e_C6.3": "activité 3 : paramètres, mission mairie, effets évalués",
     }.items()},
+    # ── LOT 08 (Fable) : îlot 5e_C5 « Dépanner le lampadaire » ──
+    "5e_C5.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « Dépanner le lampadaire » (3 séances) clôturant "
+                "l'îlot 5e du Thème 2 sur l'objet-fil des LOTs 05/07 : "
+                "inspection visuelle interactive (6 zones, verrou 6/6, "
+                "symptôme vs cause, fausse piste du panneau sale), réparation "
+                "au protocole fourni (simulateur pas à pas avec remise à zéro "
+                "pédagogique, verrou : test final exigé), atelier de "
+                "fabrication (4 postes, familles additif/enlèvement, sécurité "
+                "atelier), réinvestissement vélo. Versions A/B/C, QCM 30 q "
+                "(10/10/10, 3 illustrées, réponses réparties 8/7/7/8), "
+                "synthèses, fiche, matrice, 3 SVG CC0, rapport 22/22. "
+                "Règles d'or n°4 (blocs élève) appliquée. C4+C5+C6 de 5e "
+                "complets : la 5e du Thème 2 est bouclée.",
+        anomalies="Aucune. Version A en très basse tension uniquement — "
+                  "le secteur est explicitement interdit.",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement "
+                      "(DYS), reduced-motion, impression A4.",
+        medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    **{c: dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="5e_C5.1",
+        qualite=f"README pointeur ({d} ; 10 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ) for c, d in {
+        "5e_C5.2": "séance 2 : réparation au protocole, simulateur avec verrou",
+        "5e_C5.3": "séance 3 : atelier de fabrication, procédés et sécurité",
+    }.items()},
     # ── LOT 06 (Fable) : l'énergie de la station (3e_C4.1 + C4.2) ──
     "3e_C4.1": dict(
         statut="COMPLET ET VALIDABLE",

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séquence 5e — Dépanner le lampadaire : observer, réparer, refabriquer (5e_C5.1 à C5.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🔧 Dépanner le lampadaire</h1>
+<p class="subtitle">Observer la panne, réparer selon le protocole, refabriquer la pièce à l'atelier — réparer plutôt que jeter</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C5.1</span><span class="badge code">5e_C5.2</span><span class="badge code">5e_C5.3</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D3, D4, D5</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 4 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Lundi matin, le gardien vous attend devant le parking.</b> « La lampe n°3 est restée éteinte toute la nuit —
+    même quand je suis passé dessous. Les deux autres fonctionnent normalement. » Il y a eu un gros orage ce week-end.</p>
+    <p>Le technicien de la mairie ne peut passer que vendredi. Il vous envoie un message : <b>« Vous connaissez ce
+    lampadaire mieux que personne — vous l'avez étudié et programmé. Inspectez-le À DISTANCE ET DES YEUX d'abord,
+    je vous envoie le protocole de réparation. Et si une pièce est cassée, l'atelier de fabrication de la commune
+    peut la refaire. »</b> Votre mission de 5e : <b>repérer</b> ce qui cloche (avec les yeux !), <b>réparer</b> en
+    suivant le protocole à la lettre, et <b>découvrir l'atelier</b> qui refabrique la pièce manquante.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment remettre en service le lampadaire n°3 — sans danger, sans casser davantage,
+  et sans rien jeter qui puisse être réparé ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> après l'orage, quelle est selon toi la cause la plus probable de la panne ? Où chercherais-tu en premier ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : la maquette du lampadaire (carte + capteur + LED, <b>très basse tension uniquement — jamais le secteur</b>) volontairement « mise en panne » par le professeur.</p>
+    <p>🅱 <b>En simulation</b> : l'inspecteur visuel et le simulateur de réparation intégrés à cette page (aucun matériel).</p>
+    <p>🅲 <b>Sans matériel</b> : les documents imprimés, l'inspection sur l'image et le protocole à remettre en ordre au cahier.</p>
+  </div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — Ouvrir l'œil<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Réparer au protocole<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — L'atelier de fabrication<span id="done-s3"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>👀 Séance 1 — Repérer la pièce défectueuse… avec les yeux (5e_C5.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que peut-on découvrir sur une panne SANS rien démonter ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>L'inspection visuelle du lampadaire n°3</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> examiner les 6 zones de l'objet, classer chaque observation (normal / anomalie) et désigner la ou les pièces défectueuses.</div>
+      <div><b>Compétence :</b> 5e_C5.1.</div>
+      <div><b>Production attendue :</b> 6 zones examinées + 6 classements + la pièce désignée.</div>
+      <div><b>Ressources :</b> l'image d'inspection + le témoignage du gardien.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/lampadaire_six_zones.svg" type="image/svg+xml" aria-label="Le lampadaire en panne avec six zones numérotées à inspecter" style="width:100%"></object>
+      <figcaption>Le lampadaire n°3 photographié lundi matin. Examine chaque zone numérotée AVANT de répondre.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) clique sur les 6 zones de l'inspecteur pour noter ce que tu VOIS (le compteur doit atteindre 6/6) ; b) classe chaque observation ; c) désigne la pièce défectueuse et réponds à la question de sécurité.</div>
+    <div class="exo">
+      <h4>a) J'examine zone par zone</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost zonebtn" data-zone="1" type="button">🔍 Zone 1 — panneau solaire</button>
+          <button class="btn small ghost zonebtn" data-zone="2" type="button">🔍 Zone 2 — lanterne LED</button>
+          <button class="btn small ghost zonebtn" data-zone="3" type="button">🔍 Zone 3 — capot du capteur</button>
+          <button class="btn small ghost zonebtn" data-zone="4" type="button">🔍 Zone 4 — détecteur de passage</button>
+          <button class="btn small ghost zonebtn" data-zone="5" type="button">🔍 Zone 5 — coffret et voyant</button>
+          <button class="btn small ghost zonebtn" data-zone="6" type="button">🔍 Zone 6 — câble et connecteur</button>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">CARNET D'INSPECTION</div>
+          <div id="inspTxt" style="font-size:.92em;min-height:64px">Clique sur une zone pour l'examiner de près…</div>
+          <div id="inspCompteur" class="etiquette" style="margin-top:6px">zones examinées : 0 / 6</div>
+        </div>
+      </div>
+      <h4>b) Je classe mes observations</h4>
+      <div class="assoc"><label for="z1">Zone 1 — poussière et feuilles sur le panneau :</label><select id="z1"><option value="">— choisir —</option><option>anomalie À NOTER (gêne la recharge, mais n'éteint pas tout)</option><option>état normal, rien à signaler</option><option>panne principale certaine</option></select></div>
+      <div class="assoc"><label for="z2">Zone 2 — lanterne LED, aspect extérieur :</label><select id="z2"><option value="">— choisir —</option><option>état normal, rien à signaler</option><option>anomalie À NOTER</option><option>panne principale certaine</option></select></div>
+      <div class="assoc"><label for="z3">Zone 3 — capot du capteur :</label><select id="z3"><option value="">— choisir —</option><option>anomalie GRAVE : capot fissuré, l'eau de l'orage a pu entrer</option><option>état normal, rien à signaler</option><option>simple trace de doigt</option></select></div>
+      <div class="assoc"><label for="z4">Zone 4 — détecteur de passage :</label><select id="z4"><option value="">— choisir —</option><option>état normal, rien à signaler</option><option>anomalie GRAVE</option><option>il a disparu</option></select></div>
+      <div class="assoc"><label for="z5">Zone 5 — voyant du coffret :</label><select id="z5"><option value="">— choisir —</option><option>anomalie GRAVE : voyant éteint alors qu'il devrait être vert</option><option>état normal, rien à signaler</option><option>le voyant est décoratif</option></select></div>
+      <div class="assoc"><label for="z6">Zone 6 — câble du capteur :</label><select id="z6"><option value="">— choisir —</option><option>anomalie GRAVE : le câble pend, débranché de sa borne</option><option>état normal, un câble pend toujours un peu</option><option>simple salissure</option></select></div>
+      <h4>c) Je conclus mon inspection</h4>
+      <div class="assoc"><label for="c1_1">La pièce défectueuse la plus probable est…</label><select id="c1_1"><option value="">— choisir —</option><option>l'ensemble capteur : capot fissuré + câble débranché (l'orage a tout aggravé)</option><option>le panneau solaire, car il est sale</option><option>la lanterne LED, car elle est éteinte</option><option>le mât, car il est vertical</option></select></div>
+      <div class="assoc"><label for="c1_2">Avant de TOUCHER quoi que ce soit pour réparer, on doit…</label><select id="c1_2"><option value="">— choisir —</option><option>couper l'alimentation (interrupteur batterie) et prévenir un adulte</option><option>tirer sur le câble pour vérifier</option><option>arroser le capteur pour le nettoyer</option><option>démonter tout le coffret pour voir</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Une ANOMALIE, c'est ce qui est différent de l'état normal : un capot doit être lisse et fermé, un câble doit être branché, le voyant doit être vert. Compare chaque zone à « comment ce devrait être ».</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Trois indices convergent : capot fissuré (zone 3) → l'eau est entrée → connecteur abîmé/débranché (zone 6) → le coffret signale un problème (voyant éteint, zone 5). Le panneau sale (zone 1) est une anomalie à noter… mais les DEUX autres lampes au même endroit fonctionnent : ce n'est pas lui qui éteint tout.</p></details>
+    <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Zones 2 et 4 : <b>normales</b>. Zone 1 : <b>anomalie à noter</b> (nettoyer le panneau, mais ce n'est pas la panne —
+      les lampes voisines, aussi exposées, fonctionnent). Zones 3, 5, 6 : <b>anomalies graves</b> qui racontent une histoire :
+      le capot fissuré a laissé entrer l'eau de l'orage, le connecteur a lâché, le coffret le signale par son voyant éteint.
+      Pièce défectueuse : <b>l'ensemble capteur (capot + câble)</b>. Et avant de toucher : <b>couper l'alimentation et
+      prévenir un adulte</b> — même en très basse tension, c'est LE réflexe du dépanneur (5e_C5.1).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> l'inspection visuelle, c'est examiner zone par zone SANS démonter, comparer à l'état normal, noter ce qu'on VOIT et désigner la pièce suspecte. La panne laisse presque toujours un indice visible.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> accuser la première saleté venue (le panneau sale n'éteint pas la lampe) ; confondre « la lampe est éteinte » (le symptôme) avec la cause ; toucher avant d'avoir coupé l'alimentation.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 zones examinées (6/6 au carnet), 8/8 réponses, et le tableau d'inspection recopié au cahier.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🔧 Séance 2 — Réparer en suivant le protocole fourni (5e_C5.2)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : pourquoi suivre un protocole À LA LETTRE plutôt que bricoler au hasard ?</p>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>La réparation, étape par étape</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> remettre le protocole en ordre, puis l'exécuter au simulateur — dans l'ordre, sans sauter d'étape — jusqu'au test final réussi.</div>
+      <div><b>Compétence :</b> 5e_C5.2.</div>
+      <div><b>Production attendue :</b> protocole ordonné (6 étapes) + réparation simulée réussie + 2 questions de compréhension.</div>
+      <div><b>Ressources :</b> le protocole du technicien ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/protocole_six_etapes.svg" type="image/svg+xml" aria-label="Le protocole de réparation fourni en six étapes ordonnées" style="width:100%"></object>
+      <figcaption>Le protocole envoyé par le technicien. La sécurité est TOUJOURS l'étape n°1.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) sans regarder le document, remets les étapes dans l'ordre (puis vérifie avec le protocole) ; b) exécute la réparation au simulateur en cliquant les étapes DANS L'ORDRE — une erreur remet à zéro, comme en vrai on s'arrête et on réfléchit ; c) réponds aux questions du dépanneur.</div>
+    <div class="exo">
+      <h4>a) Je remets le protocole en ordre</h4>
+      <div class="assoc"><label for="o2_a">« Rebrancher le câble du capteur (jusqu'au clic) » — étape n°</label><select id="o2_a"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_b">« Couper l'alimentation (interrupteur batterie) » — étape n°</label><select id="o2_b"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_c">« Tester : cacher le capteur, la lampe doit passer en veille » — étape n°</label><select id="o2_c"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_d">« Inspecter et sécher le connecteur » — étape n°</label><select id="o2_d"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_e">« Remettre l'alimentation (voyant vert) » — étape n°</label><select id="o2_e"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o2_f">« Remplacer le capot fissuré par la pièce neuve » — étape n°</label><select id="o2_f"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <h4>b) J'exécute la réparation au simulateur</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost repbtn" data-etape="1" type="button">🔌 Couper l'alimentation</button>
+          <button class="btn small ghost repbtn" data-etape="2" type="button">🔍 Inspecter / sécher le connecteur</button>
+          <button class="btn small ghost repbtn" data-etape="3" type="button">🔗 Rebrancher le câble</button>
+          <button class="btn small ghost repbtn" data-etape="4" type="button">🧩 Remplacer le capot</button>
+          <button class="btn small ghost repbtn" data-etape="5" type="button">⚡ Remettre l'alimentation</button>
+          <button class="btn small ghost repbtn" data-etape="6" type="button">✋ Tester (cacher le capteur)</button>
+          <button class="btn small ghost" id="btnRepReset" type="button">↺ Recommencer la réparation</button>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">CHANTIER — LAMPADAIRE N°3</div>
+          <div id="repIcone" style="font-size:2.4em">🚧</div>
+          <div id="repTxt" style="font-size:.9em;min-height:58px">Prêt ? La bonne PREMIÈRE étape est affichée dans le protocole…</div>
+          <div id="repEtat" class="etiquette" style="margin-top:6px">étapes réussies : 0 / 6</div>
+        </div>
+      </div>
+      <h4>c) Les questions du dépanneur</h4>
+      <div class="assoc"><label for="q2_1">Pourquoi couper l'alimentation AVANT tout le reste ?</label><select id="q2_1"><option value="">— choisir —</option><option>pour travailler sans risque : jamais les mains dans un circuit alimenté, même en très basse tension</option><option>pour économiser la batterie pendant la réparation</option><option>parce que la lampe éblouit</option><option>ce n'est pas vraiment nécessaire</option></select></div>
+      <div class="assoc"><label for="q2_2">Pourquoi le TEST final fait-il partie du protocole ?</label><select id="q2_2"><option value="">— choisir —</option><option>parce que seul le test PROUVE que la réparation a réussi</option><option>pour user un peu la lampe neuve</option><option>par simple tradition</option><option>pour faire plaisir au gardien</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le protocole raconte une histoire logique : se protéger → comprendre l'état des pièces → remettre en état → protéger pour l'avenir → réalimenter → prouver. Quelle étape ne peut PAS venir avant les autres ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre : couper (1) → inspecter/sécher (2) → rebrancher (3) → remplacer le capot (4) → réalimenter (5) → tester (6). Au simulateur, si tu cliques une étape trop tôt, le chantier repart à zéro : c'est voulu — un vrai dépanneur ne « tente » pas une étape au hasard.</p></details>
+    <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Ordre : <b>couper l'alimentation (1)</b> — la sécurité n'attend jamais — puis <b>inspecter/sécher (2)</b>,
+      <b>rebrancher (3)</b>, <b>remplacer le capot (4)</b> pour que la panne ne revienne pas à la prochaine pluie,
+      <b>réalimenter (5)</b> et <b>tester (6)</b> : cacher le capteur simule la nuit, la lampe doit passer en veille.
+      Couper d'abord = travailler sans risque ; tester à la fin = PROUVER la réussite. Suivre un protocole fourni,
+      c'est exactement la compétence 5e_C5.2 — en 3e, tu apprendras à É-CRI-RE ces protocoles toi-même.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> un protocole de réparation = des étapes ordonnées, écrites par quelqu'un qui connaît l'objet ET les dangers. On le suit dans l'ordre, sans sauter d'étape, et on finit TOUJOURS par le test.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> rebrancher avant d'avoir coupé l'alimentation ; oublier le capot (la panne reviendrait) ; déclarer « réparé » sans avoir testé.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 8/8 réponses ET la réparation simulée menée jusqu'au « 6/6 — lampadaire réparé ».</div>
+  </div>
+</section>
+</div>
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🏭 Séance 3 — L'atelier qui refabrique les pièces (5e_C5.3)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que faire quand la pièce cassée ne se vend plus nulle part ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Visite de l'atelier de fabrication de la commune</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> découvrir les 4 postes de l'atelier, associer chaque procédé à ce qu'il sait faire, et choisir le bon procédé pour le capot.</div>
+      <div><b>Compétence :</b> 5e_C5.3.</div>
+      <div><b>Production attendue :</b> 4 associations + 3 choix raisonnés.</div>
+      <div><b>Ressources :</b> le plan de l'atelier ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/atelier_procedes.svg" type="image/svg+xml" aria-label="Les quatre postes de l'atelier de fabrication et leurs procédés" style="width:100%"></object>
+      <figcaption>L'atelier partenaire de la commune. Deux grandes familles : AJOUTER de la matière, ou EN ENLEVER.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) associe chaque besoin au bon poste de l'atelier ; b) réponds aux questions du fabricant ; c) au cahier, note les deux familles de procédés avec un exemple chacune.</div>
+    <div class="exo">
+      <h4>a) Le bon poste pour chaque besoin</h4>
+      <div class="assoc"><label for="a3_1">Refaire le capot du capteur (pièce en volume, introuvable en magasin) :</label><select id="a3_1"><option value="">— choisir —</option><option>imprimante 3D (on ajoute la matière couche par couche)</option><option>découpeuse laser</option><option>perceuse à colonne</option><option>établi de façonnage</option></select></div>
+      <div class="assoc"><label for="a3_2">Découper un joint PLAT dans une plaque souple :</label><select id="a3_2"><option value="">— choisir —</option><option>découpeuse laser (on enlève la matière en découpant)</option><option>imprimante 3D</option><option>perceuse à colonne</option><option>établi de façonnage</option></select></div>
+      <div class="assoc"><label for="a3_3">Percer deux trous de fixation bien verticaux :</label><select id="a3_3"><option value="">— choisir —</option><option>perceuse à colonne (des trous précis et guidés)</option><option>imprimante 3D</option><option>découpeuse laser</option><option>établi de façonnage</option></select></div>
+      <div class="assoc"><label for="a3_4">Adoucir les bords de la pièce fraîchement imprimée :</label><select id="a3_4"><option value="">— choisir —</option><option>établi de façonnage (lime et ponçage de finition)</option><option>imprimante 3D</option><option>découpeuse laser</option><option>perceuse à colonne</option></select></div>
+      <h4>b) Les questions du fabricant</h4>
+      <div class="assoc"><label for="q3_1">L'impression 3D et la découpe laser appartiennent à deux familles différentes car…</label><select id="q3_1"><option value="">— choisir —</option><option>l'une AJOUTE de la matière (couche par couche), l'autre en ENLÈVE (dans une plaque)</option><option>l'une est électrique et pas l'autre</option><option>l'une est réservée aux adultes, l'autre aux élèves</option><option>il n'y a aucune différence</option></select></div>
+      <div class="assoc"><label for="q3_2">Pourquoi la découpeuse laser ne peut-elle PAS produire le capot ?</label><select id="q3_2"><option value="">— choisir —</option><option>parce qu'elle découpe des plaques : la pièce reste plate, or le capot est en volume</option><option>parce qu'elle est trop lente</option><option>parce que le plexiglas est interdit</option><option>elle le pourrait très bien</option></select></div>
+      <div class="assoc"><label for="q3_3">Dans l'atelier, avant d'utiliser une machine, il faut…</label><select id="q3_3"><option value="">— choisir —</option><option>mettre ses lunettes, attacher ses cheveux, et attendre l'autorisation ET la présence d'un adulte</option><option>appuyer sur tous les boutons pour tester</option><option>juste aller vite pour libérer le poste</option><option>rien de particulier</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pose-toi UNE question par besoin : la pièce est-elle en VOLUME (3D) ou PLATE (laser) ? S'agit-il d'un TROU (perceuse) ou d'une FINITION (établi) ?</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le capot enveloppe le capteur : c'est un objet en volume → seule l'imprimante 3D, qui construit couche par couche, peut le produire à l'unité. La laser découpe dans une plaque : parfait pour un joint, impossible pour une coque.</p></details>
+    <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Capot → <b>imprimante 3D</b> · joint plat → <b>découpeuse laser</b> · trous → <b>perceuse à colonne</b> ·
+      finition → <b>établi</b>. Deux familles : <b>ajouter</b> la matière (impression 3D) ou <b>l'enlever</b>
+      (découpe, perçage, ponçage). La laser ne fait que du plat — le capot est une coque en volume. Et à l'atelier,
+      la sécurité passe avant tout : lunettes, cheveux attachés, autorisation + adulte présent (5e_C5.3).
+      La pièce sera imprimée en PETG, un plastique qui supporte le soleil et la pluie — tu justifieras ce genre
+      de choix en 3e.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> un atelier de fabrication permet de REFAIRE une pièce au lieu de jeter l'objet. Deux familles de procédés : AJOUTER de la matière (impression 3D) ou EN ENLEVER (découper, percer, poncer).</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> croire que l'imprimante 3D fait tout (elle est lente, et le plat se découpe bien mieux) ; oublier la finition ; toucher une machine sans autorisation.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7/7 et les deux familles notées au cahier avec un exemple chacune.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Réinvestissement — le vélo du collège</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> transférer la démarche complète du dépanneur à un autre objet.</div>
+      <div><b>Compétences :</b> 5e_C5.1 → C5.3 (transfert).</div>
+      <div><b>Production attendue :</b> 4 réponses.</div>
+      <div><b>Ressources :</b> aucune — la démarche est dans ta tête maintenant.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> le feu arrière du vélo du collège ne s'allume plus. Son support en plastique est cassé et la pile est peut-être morte. Applique la démarche du dépanneur.</div>
+    <div class="exo">
+      <div class="assoc"><label for="r4_1">La PREMIÈRE chose à faire est…</label><select id="r4_1"><option value="">— choisir —</option><option>inspecter visuellement : support cassé, contacts verdis, ampoule noircie… sans forcer sur rien</option><option>acheter un vélo neuf</option><option>démonter tout le feu immédiatement</option><option>secouer le vélo pour voir</option></select></div>
+      <div class="assoc"><label for="r4_2">Avant de changer la pile, par sécurité et par méthode, on…</label><select id="r4_2"><option value="">— choisir —</option><option>suit l'ordre du protocole : ouvrir le boîtier comme indiqué, sortir la pile usagée, respecter le sens + et −</option><option>force le boîtier avec un tournevis n'importe où</option><option>met deux piles pour plus de puissance</option><option>mouille les contacts pour mieux conduire</option></select></div>
+      <div class="assoc"><label for="r4_3">Le support en plastique cassé, introuvable en magasin, peut être…</label><select id="r4_3"><option value="">— choisir —</option><option>réimprimé en 3D à l'atelier de la commune, à l'unité et sur mesure</option><option>remplacé par du ruban adhésif pour toujours</option><option>ignoré : le feu tiendra bien tout seul</option><option>découpé dans une plaque plate à la laser</option></select></div>
+      <div class="assoc"><label for="r4_4">La réparation est terminée quand…</label><select id="r4_4"><option value="">— choisir —</option><option>le test final réussit : le feu s'allume et tient sur son support</option><option>toutes les pièces sont rangées</option><option>on a refermé le boîtier, peu importe le reste</option><option>le gardien dit merci</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>C'est la même démarche que le lampadaire : OBSERVER d'abord (sans casser), RÉPARER dans l'ordre du protocole, REFABRIQUER ce qui manque, et PROUVER par le test.</p></details>
+    <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Observer d'abord · suivre le protocole (sens des piles compris !) · réimprimer le support en 3D — une coque en
+      volume, donc pas de laser · et le test final qui PROUVE. Quatre réflexes, un seul métier : dépanneur. Tu viens
+      de boucler la démarche complète : elle te servira pour TOUS les objets techniques de ta vie.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> observer → réparer au protocole → refabriquer si besoin → tester. Réparer plutôt que jeter, c'est bon pour le porte-monnaie ET pour la planète.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <div class="bilan-grid">
+    <div>
+      <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
+      <p>Avais-tu pensé à l'orage, au capot fissuré, au câble ? L'inspection t'a-t-elle donné raison ?</p></div>
+      <p><b>Ce que tu sais faire désormais :</b> repérer une pièce défectueuse avec les yeux (5e_C5.1), réparer en
+      suivant un protocole fourni — sécurité d'abord, test à la fin (5e_C5.2), et t'orienter dans un atelier de
+      fabrication pour refaire une pièce plutôt que jeter l'objet (5e_C5.3). Ton lampadaire est réparé — et la
+      démarche du dépanneur est à toi pour la vie.</p>
+      <p class="refs">Revoir l'objet complet : <a href="../../../C4-decrire-et-caracteriser-lorganisation/5e/5e_C4.1/sequence_5e_C4.1-C4.8_lampadaire_intelligent.html">« Le lampadaire intelligent »</a> · <a href="../../../C6-comprendre-et-modifier-un-programme-associe/5e/5e_C6.1/sequence_5e_C6.1-C6.3_programmer_lampadaire.html">« Programmer le lampadaire »</a>.</p>
+    </div>
+    <div class="confiance">
+      <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
+      <div class="assoc"><label for="auto1">5e_C5.1 — repérer une pièce défectueuse :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto2">5e_C5.2 — réparer selon un protocole :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto3">5e_C5.3 — connaître les procédés de l'atelier :</label><select id="auto3"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <p><a class="btn qcm" href="qcm_5e_C5.1-C5.3_depanner_lampadaire.html">🧠 M'entraîner : le QCM de la séquence (30 questions)</a></p>
+      <p class="refs"><a href="Synthèses/synthese_eleve_5e_C5.1-C5.3.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_5e_C5.1-C5.3.html">👩‍🏫 Synthèse professeur</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — dont 3 avec schémas à lire — pour vérifier toute la démarche du dépanneur.</p>
+  <a class="btn qcm" href="qcm_5e_C5.1-C5.3_depanner_lampadaire.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🕵 <b>Défi détective :</b> trouve chez toi un objet qui ne fonctionne plus et note 3 observations PUREMENT visuelles — sans l'ouvrir ni le brancher. Ta liste ferait-elle gagner du temps à un réparateur ?</p>
+  <p>📐 <b>Défi conception :</b> dessine sur papier quadrillé le capot de rechange du capteur, avec ses dimensions en millimètres — c'est la première étape avant toute impression 3D.</p>
+  <p>👨‍👩‍👧 <b>Défi famille :</b> demande à un adulte la dernière chose qu'il a réparée lui-même : quelle panne, quel outil, quelle pièce ? La réparation est un savoir qui se transmet.</p>
+</section>
+
+<footer>
+  <p>Séquence 5e_C5.1 → C5.3 · Thème 2 · Technologie cycle 4 (programme 2024) · objet-fil « Le lampadaire intelligent »</p>
+  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰 — jamais le secteur</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_5e_C5.1-C5.3_depanner_lampadaire";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Inspecteur visuel (activité 1) ══════ */
+window.__exp = window.__exp || {};
+const ZONES = {
+  1:"Zone 1 — panneau solaire : une couche de poussière et deux feuilles collées après l'orage. Les lampes n°1 et n°2, juste à côté, sont aussi sales… et fonctionnent.",
+  2:"Zone 2 — lanterne LED : vitre propre, aucune trace noire, aucun impact. Rien d'anormal à l'œil.",
+  3:"Zone 3 — capot du capteur de luminosité : une FISSURE nette traverse le capot. À l'intérieur, des gouttelettes de condensation.",
+  4:"Zone 4 — détecteur de passage : lentille propre, boîtier intact, bien fixé. Rien d'anormal à l'œil.",
+  5:"Zone 5 — coffret : le voyant d'état est ÉTEINT. D'habitude, il est vert fixe. Le coffret signale un problème.",
+  6:"Zone 6 — câble du capteur : le câble PEND sous le coffret, connecteur sorti de la borne « CAPTEUR ». Le connecteur est humide."
+};
+function majInspecteur(){
+  const e = window.__exp.zones || {};
+  const n = Object.keys(e).length;
+  $("inspCompteur").textContent = "zones examinées : " + n + " / 6";
+  if(n===6){ window.__exp.inspection = true; }
+}
+document.querySelectorAll(".zonebtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const z = btn.dataset.zone;
+    window.__exp.zones = window.__exp.zones || {};
+    window.__exp.zones[z] = true;
+    $("inspTxt").textContent = ZONES[z];
+    majInspecteur(); save(false);
+  });
+});
+
+/* ══════ Simulateur de réparation (activité 2) ══════ */
+const REP_TXT = {
+  1:"Alimentation coupée : le circuit est mort, tu peux travailler sans risque.",
+  2:"Connecteur inspecté et séché : les contacts sont propres, rien de tordu.",
+  3:"CLIC ! Le câble du capteur est rebranché sur sa borne.",
+  4:"Capot neuf clipsé : le capteur est de nouveau à l'abri de la pluie.",
+  5:"Alimentation remise : le voyant du coffret repasse au VERT.",
+  6:"Main sur le capteur… la lampe passe en VEILLE : réparation PROUVÉE !"
+};
+function repInit(){
+  window.__repEtape = 0;
+  $("repIcone").textContent="🚧";
+  $("repTxt").textContent="Prêt ? La bonne PREMIÈRE étape est affichée dans le protocole…";
+  $("repEtat").textContent="étapes réussies : 0 / 6";
+}
+document.querySelectorAll(".repbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const e = parseInt(btn.dataset.etape,10);
+    const attendu = (window.__repEtape||0) + 1;
+    if(e === attendu){
+      window.__repEtape = e;
+      $("repTxt").textContent = REP_TXT[e];
+      $("repEtat").textContent = "étapes réussies : " + e + " / 6";
+      $("repIcone").textContent = e===6 ? "🌗" : ["","🔌","🔍","🔗","🧩","⚡"][e];
+      if(e===6){
+        window.__exp.repare = true;
+        $("repEtat").textContent = "6 / 6 — lampadaire RÉPARÉ ✅";
+      }
+    } else {
+      window.__repEtape = 0;
+      $("repIcone").textContent="⛔";
+      $("repTxt").textContent="Mauvais moment pour cette étape ! Comme en vrai : on s'arrête, on relit le protocole… et on reprend depuis le début.";
+      $("repEtat").textContent="étapes réussies : 0 / 6";
+    }
+    save(false);
+  });
+});
+$("btnRepReset").addEventListener("click", ()=>{ repInit(); save(false); });
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={z1:"anomalie À NOTER (gêne la recharge, mais n'éteint pas tout)",
+               z2:"état normal, rien à signaler",
+               z3:"anomalie GRAVE : capot fissuré, l'eau de l'orage a pu entrer",
+               z4:"état normal, rien à signaler",
+               z5:"anomalie GRAVE : voyant éteint alors qu'il devrait être vert",
+               z6:"anomalie GRAVE : le câble pend, débranché de sa borne",
+               c1_1:"l'ensemble capteur : capot fissuré + câble débranché (l'orage a tout aggravé)",
+               c1_2:"couper l'alimentation (interrupteur batterie) et prévenir un adulte"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.inspection);
+    return {score:ok,total:8,extra:expOk?"":" Examine VRAIMENT les 6 zones au carnet d'inspection (compteur 6/6) : un dépanneur regarde avant de conclure.",valide:ok>=7&&expOk};
+  },
+  2: function(){
+    let ok=0;
+    const att={o2_a:"3",o2_b:"1",o2_c:"6",o2_d:"2",o2_e:"5",o2_f:"4",
+               q2_1:"pour travailler sans risque : jamais les mains dans un circuit alimenté, même en très basse tension",
+               q2_2:"parce que seul le test PROUVE que la réparation a réussi"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.repare);
+    return {score:ok,total:8,extra:expOk?"":" Mène la réparation simulée jusqu'au 6/6 : clique les étapes dans l'ordre du protocole.",valide:ok>=7&&expOk};
+  },
+  3: function(){
+    let ok=0;
+    const att={a3_1:"imprimante 3D (on ajoute la matière couche par couche)",
+               a3_2:"découpeuse laser (on enlève la matière en découpant)",
+               a3_3:"perceuse à colonne (des trous précis et guidés)",
+               a3_4:"établi de façonnage (lime et ponçage de finition)",
+               q3_1:"l'une AJOUTE de la matière (couche par couche), l'autre en ENLÈVE (dans une plaque)",
+               q3_2:"parce qu'elle découpe des plaques : la pièce reste plate, or le capot est en volume",
+               q3_3:"mettre ses lunettes, attacher ses cheveux, et attendre l'autorisation ET la présence d'un adulte"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:7,valide:ok>=6};
+  },
+  4: function(){
+    let ok=0;
+    const att={r4_1:"inspecter visuellement : support cassé, contacts verdis, ampoule noircie… sans forcer sur rien",
+               r4_2:"suit l'ordre du protocole : ouvrir le boîtier comme indiqué, sortir la pile usagée, respecter le sens + et −",
+               r4_3:"réimprimé en 3D à l'atelier de la commune, à l'unité et sur mesure",
+               r4_4:"le test final réussit : le feu s'allume et tient sur son support"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:4,valide:ok===4};
+  }
+};
+const ENC_OK=["Excellent : tout est validé !","Bravo, tu as les réflexes du dépanneur !","Très bien : le lampadaire n°3 te dit merci."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1], s2:[2], s3:[3,4]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); repInit(); if(window.__exp && window.__exp.repare){ $("repEtat").textContent="6 / 6 — lampadaire RÉPARÉ ✅ (déjà fait)"; }
+majInspecteur(); majProgress(); majHyp();
+</script>
+</body>
+</html>
