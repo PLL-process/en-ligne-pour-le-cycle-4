@@ -44,7 +44,10 @@ def slugify(s, maxlen=45):
 
 def code_dir(cnum, niveau, code):
     text, _, theme = C_PARENT[cnum]
-    return os.path.join(THEME_SLUG[theme], f"{cnum}-{slugify(text)}", niveau, f"{niveau}_{code}")
+    # "/" explicite (jamais os.path.join) : ce chemin sert d'URL dans index.html,
+    # et sous Windows os.path.join produirait des "\" qui cassent tous les liens
+    # sur GitHub Pages. os.path.join(DST, rel) accepte les "/" sur tous les OS.
+    return "/".join([THEME_SLUG[theme], f"{cnum}-{slugify(text)}", niveau, f"{niveau}_{code}"])
 
 
 def content_files(rel_dir):

@@ -485,7 +485,9 @@ def fichiers_reels(rel_dir):
         for f in files:
             if f == ".gitkeep":
                 continue
-            out.append(os.path.relpath(os.path.join(base, f), full))
+            # normalisation "/" : sous Windows, relpath produit des "\" qui
+            # pollueraient audit_couverture.json (chemins non portables)
+            out.append(os.path.relpath(os.path.join(base, f), full).replace(os.sep, "/"))
     return sorted(out)
 
 
