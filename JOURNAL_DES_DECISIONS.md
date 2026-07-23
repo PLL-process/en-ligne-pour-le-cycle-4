@@ -392,3 +392,43 @@ Applicable immédiatement à toutes les intelligences artificielles du projet :
 4. **Marche 5e → 4e assumée** : objet automatisé (lampadaire) → système
    connecté (données qui sortent sur un réseau). Le Thème 2 couvre
    désormais : 5e 14/14 · 4e C4 9/9 · 3e 15/15. Restent 4e_C5 et 4e_C6.
+
+## 2026-07-24 — RÈGLE D'OR N° 6 « Convention des chaînes » + complément règle n° 4 (demande Pascal ; Fable, branche `fable/theme-2/regle-or-6-convention-chaines`)
+
+**Règle d'or n° 6 — disposition des chaînes dans tous les schémas** (proposée
+par Pascal, adoptée le 24/07/2026 ; à faire adopter par les Thèmes 1 et 3 au
+Conseil du 28/07) :
+
+1. Dans tout schéma représentant les deux chaînes, la **chaîne d'INFORMATION
+   se place EN HAUT** et la **chaîne d'ÉNERGIE EN BAS**, conformément à la
+   convention de la discipline (manuels, sujets de DNB).
+2. La **flèche d'ORDRE descend** de la chaîne d'information vers la chaîne
+   d'énergie — la disposition porte le sens : la commande au-dessus de la
+   puissance (« le cerveau commande les muscles »).
+3. Justification cognitive : cohérence spatiale avec tous les autres supports
+   que rencontre l'élève (charge cognitive réduite, mémoire spatiale fiable
+   en situation d'examen) ; la question métacognitive utile est « pourquoi
+   l'information est-elle en haut ? », pas « pourquoi est-ce inversé ici ? ».
+
+**Application immédiate** : les 2 SVG non conformes du Thème 2 corrigés
+(`chaines_energie_information_lampadaire.svg` LOT 05,
+`chaines_jardin_connecte.svg` LOT 09 — desc accessibles mises à jour, flèche
+d'ordre descendante, convention explicitée dans l'image). Le schéma existant
+de 4e_C6.2 était déjà conforme.
+
+4. **Volet élève (demande Pascal)** : chaque fois qu'une consigne fait
+   TRACER ou RECOPIER les chaînes, un encadré « 📐 Règle d'or du schéma »
+   rappelle la convention avec sa formulation canonique : « l'INFORMATION
+   en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau
+   au-dessus des muscles, la commande au-dessus de la puissance. La
+   disposition EST une leçon : elle montre qui commande, sans un mot. »
+   Inséré dans les LOTs 05 (act. chaîne d'énergie, références haut/bas du
+   schéma corrigées après l'inversion du SVG) et 09 (NB complet act. 1,
+   rappel court act. 2, synthèse élève). À intégrer au gabarit commun pour
+   tous les futurs lots des trois thèmes.
+
+**Complément à la règle d'or n° 4** (signalé par Pascal : bouton QCM en
+double) : le bouton « Ouvrir le QCM d'entraînement » figure **UNE SEULE
+fois** par séquence, dans le bloc « 🧠 Prêt·e à t'entraîner ? ». Le bilan
+conserve l'auto-positionnement et les liens vers les synthèses, sans bouton
+QCM. Doublons retirés des LOTs 06, 07, 08 et 09.
