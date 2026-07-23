@@ -124,3 +124,24 @@ les décisions de publication restent à ChatGPT.*
    La compétence C5 de 3e, entièrement vide ce matin, est couverte.
 3. **Signalement inter-thèmes** : l'indice de réparabilité (3e_C3.3, Thème 1) est
    évoqué en ouverture EDD — l'agent du Thème 1 peut s'y référer pour sa séquence.
+
+## 2026-07-23 — Thème 2 · LOT 04 « Programmer l'alerte » + CodeLab Techno + règle A/B/C (Fable, branche `fable/theme-2/lot-04-programmer-alerte`)
+
+1. **CodeLab Techno implémenté** (composant commun prévu par le prompt maître) :
+   coloration Python, gutter synchronisé, A−/A+, retour à la ligne, plein écran,
+   export .py, import, sauvegarde locale automatique, surlignage de lignes piloté
+   par les consignes, comparaison avec la version d'origine. Réutilisable par les
+   trois thèmes (le code vit dans la séquence 3e_C6.1, extraction possible vers
+   _ressources-communes sur décision du Conseil).
+2. **LOT 04 réalisé** : 3e_C6.1 → COMPLET ET VALIDABLE ; 3e_C6.3 → COUVERT
+   (pointeur). 3e_C6.2 volontairement non traité (séquence Algorigrammes DNB
+   existante, non modifiée, liée en révision) : la compétence C6 de 3e est
+   complète sans doublon. Innovation : les vérificateurs des activités 3-4
+   analysent le code réellement écrit par l'élève dans l'éditeur.
+3. **Règle d'or « Trois façons de vivre la séquence » (A/B/C)** (décision Pascal
+   du 23/07) inscrite au skill sequence-pedagogique-engageante, avec la nuance
+   « quand c'est possible » et l'exigence de justification en fiche pédagogique
+   en cas d'omission. À entériner au Conseil du 28/07.
+4. **Bilan 3e du Thème 2 après ce lot** : C4 (8/8), C5 (4/4), C6 (3/3, dont 1
+   préexistant) = 15 codes de 3e couverts — la part 3e du Thème 2 est complète
+   pour la rentrée 2026. Reste (seconde vague) : îlots 5e et 4e.
