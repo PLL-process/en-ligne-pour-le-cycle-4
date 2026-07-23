@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM d’entraînement — Dépanner le lampadaire : observer, réparer, refabriquer (5e_C5.1 à C5.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:'Fira Code',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<h1>🧠 QCM d’entraînement — Dépanner le lampadaire</h1>
+<p class="subtitle">Inspection visuelle, protocole de réparation, procédés de l’atelier de fabrication</p>
+<div class="badges">
+  <span class="badge niveau">5e</span>
+  <span class="badge code">5e_C5.1</span><span class="badge code">5e_C5.2</span><span class="badge code">5e_C5.3</span>
+  <span class="badge theme">30 questions · schémas à lire · corrections détaillées</span>
+</div>
+<p style="text-align:center"><a href="sequence_5e_C5.1-C5.3_depanner_lampadaire.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C5.1">5e_C5.1 — Repérer une pièce défectueuse</option>
+      <option value="C5.2">5e_C5.2 — Réparer selon un protocole</option>
+      <option value="C5.3">5e_C5.3 — Les procédés de l’atelier</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 5e_C5.1 → C5.3 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence_5e_C5.1-C5.3_depanner_lampadaire.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (10 C5.1 + 10 C5.2 + 10 C5.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ C5.1 — repérer visuellement une pièce défectueuse (10 q) ═══ */
+{c:"C5.1",n:"Inspection visuelle",q:"L'inspection visuelle d'un objet en panne consiste à…",
+ img:{src:"Images/lampadaire_six_zones.svg",alt:"Le lampadaire en panne avec six zones numérotées à inspecter"},
+ o:["démonter toutes les pièces une par une","secouer l'objet pour entendre ce qui bouge","remplacer directement la pièce la plus chère","examiner l'objet zone par zone, avec les yeux, SANS rien démonter"],r:3,
+ expl:"Inspecter visuellement, c'est regarder méthodiquement chaque zone et noter ce que l'on VOIT, avant de toucher quoi que ce soit. La panne laisse presque toujours un indice visible.",
+ ex:"Sur le lampadaire n°3 : capot fissuré, câble pendu, voyant éteint — trois indices trouvés sans un seul tournevis.",
+ err:"Confondre inspecter (observer) et intervenir (démonter).",
+ d:["Démonter sans avoir observé, c'est risquer de casser davantage — et de perdre les indices.","Secouer peut aggraver la panne et ne dit pas OÙ est le problème.","Remplacer au hasard coûte cher et ne s'appuie sur aucune observation.",""],
+ ret:"Inspection visuelle = examiner zone par zone, sans démonter."},
+{c:"C5.1",n:"Symptôme et cause",q:"« La lampe n°3 est restée éteinte toute la nuit » : cette phrase décrit…",
+ o:["la cause exacte de la panne","le SYMPTÔME de la panne — il reste à trouver sa cause","la pièce à remplacer","une réparation déjà terminée"],r:1,
+ expl:"Ce que l'on constate (la lampe éteinte) est le symptôme. La cause (câble débranché, capot fissuré…) est ce qui le PROVOQUE : c'est elle que l'inspection doit trouver.",
+ ex:"Chez le médecin : la fièvre est le symptôme, l'infection est la cause.",
+ err:"S'arrêter au symptôme et « réparer » au hasard.",
+ d:["La lampe éteinte ne dit pas POURQUOI elle est éteinte : dix causes différentes sont possibles.","","Aucune pièce n'est encore désignée : il faut inspecter d'abord.","Rien n'a encore été réparé : on n'en est qu'au constat."],
+ ret:"Symptôme = ce qu'on constate · cause = ce qui le provoque."},
+{c:"C5.1",n:"Capot fissuré",q:"Le capot du capteur est fissuré après l'orage. Pourquoi est-ce une anomalie GRAVE ?",
+ o:["l'eau peut entrer et abîmer le capteur et son connecteur","une fissure, c'est seulement moche","le capot sert uniquement de décoration","cela rend la lampe plus lumineuse"],r:0,
+ expl:"Le capot protège le capteur de la pluie. Fissuré, il laisse entrer l'eau : condensation, contacts oxydés, connecteur qui lâche — c'est probablement la racine de toute la panne.",
+ ex:"Sur le lampadaire n°3, des gouttelettes sont visibles À L'INTÉRIEUR du capot : l'eau est bel et bien entrée.",
+ err:"Sous-estimer une « petite » fissure sur une pièce de PROTECTION.",
+ d:["","Une fissure sur une pièce d'étanchéité n'est jamais qu'esthétique.","Le capot est une protection contre l'eau et les chocs, pas un décor.","Aucun rapport : le capot ne produit pas de lumière."],
+ ret:"Une pièce de protection fissurée = porte ouverte à la panne."},
+{c:"C5.1",n:"Voyant éteint",q:"Le voyant du coffret, habituellement vert, est éteint. Qu'en déduit un bon observateur ?",
+ o:["le voyant est purement décoratif","il fait jour, c'est normal","le coffret signale un problème : c'est un indice précieux à noter","quelqu'un a volé le voyant"],r:2,
+ expl:"Un voyant d'état est fait pour être regardé : vert = tout va bien, éteint ou rouge = problème. C'est l'objet lui-même qui aide son dépanneur.",
+ ex:"Ta box internet fait pareil : ses voyants changent de couleur pour te dire où ça coince.",
+ err:"Ignorer les voyants — alors qu'ils sont là exprès.",
+ d:["S'il était décoratif, il ne changerait jamais d'état.","Le voyant d'état fonctionne jour et nuit : éteint n'est pas « normal ».","","L'inspection montre le voyant en place — il est éteint, pas absent."],
+ ret:"Les voyants d'état parlent : toujours les lire pendant l'inspection."},
+{c:"C5.1",n:"Panneau sale",q:"Le panneau solaire est sale… mais les lampes n°1 et n°2, aussi sales, fonctionnent. Conclusion ?",
+ o:["la saleté est forcément la cause de la panne","la saleté est une anomalie à noter, mais ce n'est probablement PAS la cause de la panne","les lampes n°1 et n°2 vont tomber en panne dans la minute","il faut remplacer le panneau immédiatement"],r:1,
+ expl:"Comparer avec des objets identiques qui fonctionnent est un raisonnement puissant : si la saleté éteignait les lampes, les trois seraient éteintes. On note l'anomalie (à nettoyer) mais on cherche ailleurs.",
+ ex:"C'est l'enquête du détective : un suspect présent sur les trois scènes… dont deux sans crime, n'est pas le coupable.",
+ err:"Accuser la première anomalie venue sans comparer.",
+ d:["Les lampes voisines, aussi sales, fonctionnent : la saleté seule n'explique pas la panne.","","Rien ne l'indique : elles fonctionnent normalement.","Nettoyer suffit — remplacer serait du gaspillage."],
+ ret:"Comparer avec l'état normal (ou les objets voisins) évite les fausses pistes."},
+{c:"C5.1",n:"Câble débranché",q:"Le câble du capteur PEND sous le coffret, connecteur sorti de sa borne. C'est…",
+ o:["une anomalie franche : ce câble devrait être branché sur la borne « CAPTEUR »","normal : un câble pend toujours un peu","une simple salissure","la preuve que le capteur est mort"],r:0,
+ expl:"Un câble a une place précise : branché sur sa borne. Un connecteur qui pend est une anomalie évidente — et elle explique très bien que le programme ne reçoive plus la luminosité.",
+ ex:"Sans capteur branché, le lampadaire « croit » ce que dit son programme par défaut : il ne sait plus s'il fait nuit.",
+ err:"Confondre « pend un peu » (jeu normal du câble) et « connecteur SORTI de la borne ».",
+ d:["","Le mou d'un câble est normal ; un connecteur SORTI de sa borne ne l'est jamais.","Une salissure ne débranche pas un connecteur.","Le capteur est peut-être intact : c'est sa LIAISON qui est coupée — on le saura au test."],
+ ret:"Chaque câble a sa borne : un connecteur sorti = anomalie certaine."},
+{c:"C5.1",n:"Observer avant d'agir",q:"Quel est le BON ordre du dépanneur ?",
+ o:["démonter → observer → remonter → espérer","remplacer des pièces au hasard jusqu'à ce que ça marche","secouer l'objet puis taper dessus doucement","observer et noter → couper l'alimentation → intervenir selon le protocole → tester"],r:3,
+ expl:"On observe D'ABORD (les indices sont fragiles), on se met en sécurité, on intervient méthodiquement, et on PROUVE par le test. Cet ordre protège l'objet et le dépanneur.",
+ ex:"C'est exactement le déroulé de la séquence : inspection (S1) → protocole (S2) → test final.",
+ err:"Se précipiter sur le tournevis avant d'avoir regardé.",
+ d:["Démonter d'abord détruit les indices (quel câble était où ?).","Le hasard coûte cher et ne comprend rien : la panne reviendra.","Taper n'est pas une méthode — et peut créer une seconde panne.",""],
+ ret:"Observer → sécuriser → intervenir → tester : l'ordre ne change jamais."},
+{c:"C5.1",n:"Sécurité d'abord",q:"Avant de TOUCHER un circuit pour réparer — même en très basse tension — on doit…",
+ o:["mettre des gants de cuisine et continuer","travailler vite pour limiter les risques","couper l'alimentation et prévenir un adulte","toucher d'une seule main, ça suffit"],r:2,
+ expl:"Le réflexe absolu du dépanneur : jamais les mains dans un circuit alimenté. On coupe, on vérifie que c'est coupé, et un adulte est au courant. En TBT le risque est faible — le réflexe doit pourtant devenir automatique.",
+ ex:"Étape n°1 du protocole du technicien : « couper l'alimentation ». Toujours n°1, jamais n°2.",
+ err:"Croire que « très basse tension » = « aucune précaution ».",
+ d:["Des gants inadaptés donnent une fausse confiance et gênent les gestes.","La précipitation est la première cause d'accident et de casse.","","C'est une précaution d'électricien pour d'autres situations — elle ne remplace JAMAIS la coupure."],
+ ret:"Couper l'alimentation avant de toucher : le réflexe n°1, même en TBT."},
+{c:"C5.1",n:"État normal",q:"Pour repérer une anomalie, il faut comparer ce que l'on voit avec…",
+ o:["la couleur préférée du gardien","le prix de l'objet","l'état NORMAL de l'objet (photo, notice, objet identique qui fonctionne)","la météo du jour"],r:2,
+ expl:"Une anomalie n'existe que par rapport à une référence : capot LISSE, câble BRANCHÉ, voyant VERT. Sans connaître l'état normal, impossible de dire ce qui cloche.",
+ ex:"Les lampes n°1 et n°2, identiques et fonctionnelles, ont servi de référence pour juger la n°3.",
+ err:"Inspecter sans savoir à quoi l'objet doit ressembler en bon état.",
+ d:["Les goûts du gardien ne définissent pas l'état technique de l'objet.","Le prix ne dit pas si un câble doit pendre ou non.","","La météo explique peut-être la panne (l'orage !) mais ne définit pas l'état normal."],
+ ret:"Anomalie = écart par rapport à l'état normal de référence."},
+{c:"C5.1",n:"Des faits, pas des avis",q:"Dans son carnet d'inspection, le dépanneur note « capot fissuré, gouttelettes à l'intérieur » plutôt que « le capteur est mort ». Pourquoi ?",
+ o:["c'est plus long, donc plus professionnel","pour embêter le technicien","parce qu'il n'a pas le droit d'avoir un avis","il note des FAITS observables ; « capteur mort » est une conclusion que rien ne prouve encore"],r:3,
+ expl:"L'inspection recueille des observations vérifiables. Les conclusions viennent APRÈS, quand les faits convergent — le capteur est peut-être intact, seul son câble étant débranché.",
+ ex:"« Le voyant est éteint » est un fait ; « la batterie est morte » est une hypothèse à tester.",
+ err:"Mélanger ce que l'on voit et ce que l'on suppose.",
+ d:["La longueur n'y change rien : c'est la nature (fait vs avis) qui compte.","Au contraire : des faits précis font gagner du temps au technicien.","Le dépanneur fait des hypothèses — mais il les sépare de ses observations.",""],
+ ret:"Le carnet d'inspection contient des faits ; les hypothèses viennent après."},
+/* ═══ C5.2 — réparer en suivant un protocole fourni (10 q) ═══ */
+{c:"C5.2",n:"Étape numéro 1",q:"Dans le protocole de réparation, quelle est TOUJOURS l'étape n°1 ?",
+ img:{src:"Images/protocole_six_etapes.svg",alt:"Le protocole de réparation fourni en six étapes ordonnées"},
+ o:["tester la réparation","couper l'alimentation","rebrancher le câble","remplacer le capot"],r:1,
+ expl:"La sécurité n'attend pas : on coupe l'alimentation AVANT tout geste sur le circuit. C'est l'étape sur fond rouge du protocole — celle qu'on ne discute jamais.",
+ ex:"Même un professionnel pressé commence par là : c'est ce qui lui permet de vieillir dans le métier.",
+ err:"Se jeter sur la « vraie » réparation en oubliant la coupure.",
+ d:["Le test PROUVE la réparation : c'est la DERNIÈRE étape, pas la première.","","Rebrancher un câble dans un circuit alimenté, c'est justement ce qu'on s'interdit.","Le capot vient à son heure (étape 4) — après la coupure et le rebranchement."],
+ ret:"Étape n°1, toujours : couper l'alimentation."},
+{c:"C5.2",n:"Un protocole, c'est…",q:"Un protocole de réparation, c'est…",
+ o:["une suite d'étapes ORDONNÉES, écrite par quelqu'un qui connaît l'objet et ses dangers","une liste de conseils facultatifs à picorer","une publicité pour des pièces neuves","un document réservé aux ingénieurs"],r:0,
+ expl:"Le protocole encapsule l'expérience de son auteur : le bon ordre, les pièges, les sécurités. Le suivre, c'est profiter de cette expérience sans avoir à refaire ses erreurs.",
+ ex:"Le technicien connaît le lampadaire par cœur : son protocole met la coupure en n°1 et le test en n°6 — rien n'est là par hasard.",
+ err:"Traiter le protocole comme une suggestion.",
+ d:["","Rien n'y est facultatif : chaque étape existe pour une raison précise.","Le protocole fait au contraire durer les pièces existantes.","En 5e, tu SUIS un protocole fourni ; en 3e, tu apprendras à en écrire."],
+ ret:"Protocole = étapes ordonnées + expérience de l'auteur."},
+{c:"C5.2",n:"Sauter une étape ?",q:"Pourquoi ne saute-t-on JAMAIS d'étape dans un protocole ?",
+ o:["chaque étape prépare la suivante : en sauter une, c'est risquer l'échec, la casse ou l'accident","pour faire durer le plaisir","parce que c'est noté dans le règlement du collège","on peut sauter celles qui semblent inutiles"],r:0,
+ expl:"Sécher le connecteur AVANT de rebrancher, couper AVANT de toucher, capot AVANT de réalimenter : chaque étape rend la suivante possible et sûre. L'ordre EST l'information.",
+ ex:"Au simulateur, une étape jouée trop tôt remet le chantier à zéro — comme en vrai, où l'erreur peut coûter bien plus.",
+ err:"Se croire plus malin que l'auteur du protocole.",
+ d:["","Le protocole vise l'efficacité, pas la lenteur.","C'est une règle du métier, pas un règlement scolaire.","« Semble inutile » ≠ « est inutile » : l'auteur sait pourquoi l'étape existe."],
+ ret:"L'ordre des étapes EST une information : on le respecte."},
+{c:"C5.2",n:"Le sens du connecteur",q:"Au moment de rebrancher le câble du capteur, le connecteur résiste. Que fait-on ?",
+ o:["on pousse plus fort, il finira par rentrer","on l'enfonce avec un marteau, doucement","on vérifie son SENS et son état — un connecteur ne se force jamais","on coupe le détrompeur qui gêne"],r:2,
+ expl:"Les connecteurs ont un sens (détrompeur) précisément pour empêcher les erreurs de branchement. S'il résiste, c'est qu'il est mal orienté, sale ou abîmé : forcer casserait la borne.",
+ ex:"Comme une prise USB : mal orientée, elle résiste — la retourner suffit.",
+ err:"Confondre « fermement » (jusqu'au clic) et « en forçant ».",
+ d:["Forcer casse la borne : une panne à 2 € devient une réparation à 50 €.","Le marteau et l'électronique ne se rencontrent jamais en bonne compagnie.","","Le détrompeur est une SÉCURITÉ : le supprimer garantit de futures erreurs."],
+ ret:"Un connecteur s'oriente et se clipse — il ne se force jamais."},
+{c:"C5.2",n:"Pourquoi le capot ?",q:"Le lampadaire refonctionnerait sans doute avec le câble rebranché seul. Pourquoi le protocole impose-t-il AUSSI de remplacer le capot fissuré ?",
+ o:["pour vendre des capots","sans capot étanche, l'eau rentrera à la prochaine pluie : la panne reviendrait","parce que le neuf est plus joli","aucune raison, c'est une étape décorative"],r:1,
+ expl:"Réparer, ce n'est pas seulement faire repartir : c'est empêcher la panne de REVENIR. Traiter la cause racine (le capot qui laisse entrer l'eau) et pas seulement la conséquence (le câble).",
+ ex:"Recoller une rustine sans retirer le clou du pneu : la crevaison revient au premier tour de roue.",
+ err:"Réparer la conséquence en laissant la cause en place.",
+ d:["Le protocole défend l'objet, pas un vendeur.","","L'esthétique n'est pas la question : l'étanchéité, si.","Chaque étape d'un protocole a sa raison — celle-ci évite la récidive."],
+ ret:"Réparer = traiter la cause racine, pas seulement la conséquence."},
+{c:"C5.2",n:"Le voyant au réveil",q:"Étape 5 : on remet l'alimentation… et le voyant du coffret reste éteint. Que dit le protocole de l'esprit du dépanneur ?",
+ o:["déclarer la réparation terminée quand même","secouer le coffret jusqu'au vert","retirer le voyant pour ne plus le voir","s'arrêter et reprendre l'inspection : autre chose est en cause"],r:3,
+ expl:"Le voyant éteint au réalimentage signifie que le problème n'est pas (entièrement) résolu. On ne force pas la suite : on ré-observe, on cherche le deuxième indice.",
+ ex:"Batterie déchargée par la panne ? Fusible ? Autre connecteur ? L'inspection reprend, méthodique.",
+ err:"S'entêter dans le protocole quand la réalité le contredit.",
+ d:["Terminer sans voyant vert, c'est livrer une panne en cours.","La violence n'a jamais réparé un circuit.","Cacher l'information ne supprime pas le problème — et prive le prochain dépanneur d'un indice.",""],
+ ret:"Si la réalité contredit l'étape : on s'arrête et on ré-observe."},
+{c:"C5.2",n:"La preuve par le test",q:"Étape 6 : cacher le capteur avec la main. Pourquoi ce geste teste-t-il la réparation ?",
+ o:["c'est un geste de politesse envers le lampadaire","cela nettoie le capteur","cela recharge la batterie","cacher le capteur simule la nuit : la lampe doit passer en veille si toute la chaîne refonctionne"],r:3,
+ expl:"Main sur le capteur = luminosité proche de zéro = « nuit » pour le programme. Si la lampe passe en veille, c'est que capteur → câble → coffret → programme → lampe refonctionnent EN ENTIER.",
+ ex:"Un seul geste teste toute la chaîne d'information — c'est un test malin, rapide et sans danger.",
+ err:"Tester au petit bonheur, ou pas du tout.",
+ d:["Le test a un but technique précis : simuler la nuit.","On nettoie à l'étape d'inspection — ici on TESTE.","La recharge vient du panneau solaire, pas de la main.",""],
+ ret:"Un bon test simule la situation réelle et vérifie TOUTE la chaîne."},
+{c:"C5.2",n:"TBT et secteur",q:"Le lampadaire fonctionne en très basse tension (12 V). Et le secteur de la maison (230 V) ?",
+ o:["danger MORTEL : on n'y touche jamais — adulte qualifié uniquement","c'est pareil, juste un peu plus fort","on peut y toucher avec des chaussures épaisses","le 230 V n'existe plus depuis 2020"],r:0,
+ expl:"En TBT (≤ 50 V), le risque est faible — on coupe quand même, par réflexe. Le secteur 230 V, lui, tue. La frontière est absolue : nos réparations d'élèves restent en TBT, toujours.",
+ ex:"Toutes les manipulations de la séquence (maquette, capteur, LED) sont en TBT. Le secteur n'entre jamais dans la salle de techno.",
+ err:"Croire que les réflexes TBT autorisent à toucher au secteur.",
+ d:["","230 V n'est pas « un peu plus » que 12 V : c'est un autre monde de danger.","Aucune astuce vestimentaire n'autorise à toucher au secteur.","Le 230 V alimente toujours nos prises — raison de plus pour le respecter."],
+ ret:"TBT pour nous · 230 V = adulte qualifié uniquement, sans exception."},
+{c:"C5.2",n:"Suivre, puis comprendre",q:"En 5e on SUIT un protocole fourni. Quel est l'intérêt de le COMPRENDRE en plus de le suivre ?",
+ o:["aucun : suivre suffit toujours","comprendre chaque étape permet de détecter une anomalie en cours de route — et prépare à écrire ses propres protocoles en 3e","cela permet surtout de briller en société","comprendre est réservé au professeur"],r:1,
+ expl:"Le dépanneur qui comprend POURQUOI il coupe l'alimentation saura réagir si quelque chose d'imprévu survient. Et en 3e, c'est toi qui rédigeras des protocoles de test.",
+ ex:"À la question « pourquoi le capot ? », tu sais répondre : cause racine. C'est ça, comprendre.",
+ err:"Exécuter mécaniquement sans réfléchir à la raison des étapes.",
+ d:["Suivre sans comprendre marche… jusqu'à l'imprévu.","","L'objectif est technique, pas mondain.","La compréhension est l'objectif de TOUS : c'est même la définition d'apprendre."],
+ ret:"Suivre ET comprendre : le protocole d'aujourd'hui prépare celui que tu écriras."},
+{c:"C5.2",n:"Réparer plutôt que jeter",q:"Réparer le lampadaire plutôt que le remplacer, c'est un choix…",
+ o:["uniquement sentimental","plus polluant que le remplacement","économique ET écologique : moins de dépenses, moins de déchets, moins de matières premières extraites","impossible : on ne répare plus rien de nos jours"],r:2,
+ expl:"Un lampadaire neuf, c'est des matériaux, du transport, des déchets. Une réparation à quelques euros (un connecteur, un capot imprimé) évite tout cela — et l'objet repart pour des années.",
+ ex:"Coût de la réparation du n°3 : un capot imprimé en PETG et dix minutes de protocole. Coût d'un lampadaire neuf : sans comparaison.",
+ err:"Croire le remplacement toujours plus simple ou plus « moderne ».",
+ d:["L'argument est très concret : argent, ressources, déchets.","C'est l'inverse : fabriquer du neuf pollue bien plus que réparer.","","Cette séquence prouve le contraire — et l'indice de réparabilité y encourage."],
+ ret:"Réparer plutôt que jeter : bon pour le budget ET pour la planète."},
+/* ═══ C5.3 — découvrir les procédés d'un atelier de fabrication (10 q) ═══ */
+{c:"C5.3",n:"L'imprimante 3D",q:"Comment l'imprimante 3D fabrique-t-elle une pièce ?",
+ img:{src:"Images/atelier_procedes.svg",alt:"Les quatre postes de l'atelier de fabrication et leurs procédés"},
+ o:["en AJOUTANT de la matière, fil fondu déposé couche par couche","en creusant un bloc de plastique plein","en découpant une plaque au laser","en soufflant du plastique comme du verre"],r:0,
+ expl:"L'impression 3D est un procédé ADDITIF : la pièce naît de rien, couche après couche de fil fondu. C'est ce qui permet des formes en volume impossibles autrement.",
+ ex:"Le capot du capteur : une coque arrondie, imprimée à l'unité en une heure environ.",
+ err:"Confondre procédés additifs (on ajoute) et par enlèvement (on retire).",
+ d:["","Creuser un bloc, c'est de l'usinage — un procédé par ENLÈVEMENT.","La découpe laser travaille des plaques : c'est le poste d'à côté.","Le soufflage existe (bouteilles !) mais ce n'est pas le principe de l'imprimante 3D."],
+ ret:"Impression 3D = procédé ADDITIF, couche par couche."},
+{c:"C5.3",n:"La découpeuse laser",q:"La découpeuse laser est idéale pour…",
+ o:["des coques en volume comme le capot","des pièces PLATES découpées dans une plaque : joints, plaques, supports fins","recharger les batteries","peindre les pièces en couleur"],r:1,
+ expl:"Le laser suit un tracé et découpe la plaque : rapide, précis… mais le résultat reste PLAT. Parfait pour un joint, impossible pour une coque en volume.",
+ ex:"Un joint d'étanchéité pour le coffret : découpé en quelques secondes dans une plaque souple.",
+ err:"Demander du volume à une machine qui ne fait que du plat.",
+ d:["Une plaque découpée reste plate : pour le volume, voir l'imprimante 3D.","","Le laser découpe, il n'alimente rien.","La couleur, c'est une autre histoire — après la fabrication."],
+ ret:"Laser = pièces plates, vite et précisément."},
+{c:"C5.3",n:"Le bon procédé pour le capot",q:"Le capot du capteur (coque en volume, introuvable en magasin) sera refabriqué…",
+ o:["à la découpeuse laser","à la perceuse à colonne","à l'imprimante 3D : seule machine de l'atelier qui produit une pièce en VOLUME à l'unité","avec du ruban adhésif renforcé"],r:2,
+ expl:"Pièce en volume + exemplaire unique + forme sur mesure = impression 3D. C'est exactement le cas d'usage où elle est imbattable.",
+ ex:"Fichier 3D dessiné à l'ordinateur, une heure d'impression, un peu de ponçage à l'établi : capot neuf.",
+ err:"Choisir la machine par habitude plutôt que d'après la PIÈCE.",
+ d:["La laser ne produit que du plat : une coque lui est impossible.","La perceuse fait des trous — elle ne crée pas de pièce.","","L'adhésif dépanne un soir : il ne protège ni de la pluie ni du soleil durablement."],
+ ret:"Le choix du procédé découle de la pièce : volume + unité = 3D."},
+{c:"C5.3",n:"La perceuse à colonne",q:"Pourquoi utiliser la perceuse À COLONNE plutôt qu'une perceuse à main pour les trous de fixation ?",
+ o:["elle fait des trous carrés","elle est plus jolie dans l'atelier","elle perce sans toucher la pièce","le guidage vertical donne des trous précis, perpendiculaires et au bon endroit"],r:3,
+ expl:"La colonne guide la descente du foret : verticalité parfaite, profondeur contrôlée, pièce bloquée. À main levée, le foret « promène » — sur une petite pièce, c'est la casse assurée.",
+ ex:"Les deux trous de fixation du nouveau capot : percés bien droits, ils tomberont pile en face des vis.",
+ err:"Percer une petite pièce à main levée « pour aller vite ».",
+ d:["Les trous d'un foret sont ronds — colonne ou pas.","Son intérêt est technique : le guidage.","Le foret touche bel et bien la pièce : c'est le contact qui enlève la matière.",""],
+ ret:"Perceuse à colonne = trous guidés, précis, perpendiculaires."},
+{c:"C5.3",n:"L'établi de façonnage",q:"La pièce sort de l'imprimante 3D. À quoi sert l'établi de façonnage ensuite ?",
+ o:["à la recycler immédiatement","à la peindre en doré","à la FINITION : limer, poncer, ébavurer les bords pour ajuster et adoucir","à rien : une pièce de machine est toujours parfaite"],r:2,
+ expl:"Aucune machine ne livre une pièce parfaitement finie : petites bavures, bords vifs, ajustage au dixième. La main, la lime et le papier de verre terminent le travail.",
+ ex:"Le capot imprimé frotte un peu au clipsage : trois allers-retours de lime, et il se clipse parfaitement.",
+ err:"Croire la fabrication terminée à la sortie de la machine.",
+ d:["La recycler ? Elle vient juste de naître !","La peinture est une option esthétique, pas une étape de façonnage obligatoire.","","Même les pièces industrielles passent par des finitions."],
+ ret:"Après la machine, la main : la finition fait la qualité."},
+{c:"C5.3",n:"Deux familles",q:"Les procédés de l'atelier se rangent en deux grandes familles :",
+ o:["AJOUTER de la matière (impression 3D) ou EN ENLEVER (découpe, perçage, ponçage)","les procédés chers et les procédés gratuits","les machines bruyantes et les silencieuses","les procédés anciens et les modernes"],r:0,
+ expl:"C'est LA classification à retenir : additif (la pièce se construit) contre enlèvement (la pièce se dégage d'une matière de départ). Chaque famille a ses forces.",
+ ex:"Capot : additif (3D). Joint : enlèvement (laser). Trous : enlèvement (perceuse). Finition : enlèvement (ponçage).",
+ err:"Classer les machines par leur allure plutôt que par leur PRINCIPE.",
+ d:["","Le coût varie, mais ce n'est pas un principe technique.","Le bruit non plus n'est pas un principe de fabrication.","L'âge n'y change rien : percer est antique ET moderne."],
+ ret:"Deux familles : procédés ADDITIFS et procédés par ENLÈVEMENT."},
+{c:"C5.3",n:"Sécurité atelier",q:"Avant d'utiliser une machine de l'atelier, il faut…",
+ o:["juste crier « j'y vais ! » assez fort","savoir courir vite en cas de problème","rien : les machines modernes sont inoffensives","lunettes de protection, cheveux attachés, ET l'autorisation + la présence d'un adulte"],r:3,
+ expl:"Trois protections qui ne se négocient pas : les yeux (copeaux, éclats), les cheveux et vêtements (pièces en rotation), et l'encadrement adulte. L'atelier est un lieu génial PARCE QUE ses règles sont strictes.",
+ ex:"Même règle au collège, au fablab de la commune et dans l'industrie : la sécurité est le premier « procédé ».",
+ err:"Considérer les règles de l'atelier comme des formalités.",
+ d:["Prévenir ne remplace ni les lunettes ni l'autorisation.","On ne court pas dans un atelier — on PRÉVIENT les problèmes.","Toute machine qui coupe, perce ou chauffe mérite le respect.",""],
+ ret:"Atelier : lunettes + cheveux attachés + autorisation et adulte présent."},
+{c:"C5.3",n:"Pièce introuvable",q:"La pièce cassée ne se vend plus nulle part. Grâce à l'atelier de fabrication, on peut…",
+ o:["seulement pleurer sur l'objet perdu","la REFABRIQUER à l'unité et sur mesure, au lieu de jeter tout l'objet","racheter l'objet entier, c'est la seule issue","interdire à l'objet de tomber en panne"],r:1,
+ expl:"C'est la révolution des ateliers de fabrication : la pièce détachée introuvable n'est plus une condamnation. On la dessine (ou on trouve le fichier) et on la produit à l'unité.",
+ ex:"Capots, boutons, charnières, supports : les pièces plastiques cassées sont les premières candidates à la réimpression.",
+ err:"Jeter un objet entier pour une pièce de quelques grammes.",
+ d:["L'atelier transforme la tristesse en projet de fabrication.","","Racheter reste possible — mais ce n'est plus la SEULE issue, ni la meilleure.","Les pannes arriveront toujours : c'est la réponse qui change."],
+ ret:"Atelier de fabrication = la pièce introuvable se refabrique."},
+{c:"C5.3",n:"Le bon matériau",q:"Pour un capot qui vivra dehors (soleil, pluie, chaleur), l'atelier conseille d'imprimer en PETG plutôt qu'en plastique basique. Pourquoi ?",
+ o:["le PETG est fluorescent la nuit","c'est le seul plastique de couleur grise","le PETG est comestible","le PETG résiste mieux aux UV et à l'humidité : la pièce durera dehors"],r:3,
+ expl:"Même en 5e, on découvre qu'un matériau se choisit selon les CONTRAINTES d'usage : dehors = UV + pluie + chaleur. Le PETG y résiste bien mieux que le PLA basique des impressions d'essai.",
+ ex:"Un capot en PLA blanchirait et se déformerait au soleil de Martinique en quelques mois.",
+ err:"Imprimer tout en PLA par habitude, sans penser à l'usage.",
+ d:["La fluorescence n'a rien à voir avec la résistance au climat.","Le PETG existe en toutes les couleurs.","On parle de techno, pas de cuisine !",""],
+ ret:"Le matériau se choisit selon les contraintes d'usage (tu approfondiras en 3e)."},
+{c:"C5.3",n:"Un atelier pour tous",q:"L'atelier de fabrication de la commune (fablab) est un lieu…",
+ o:["PARTAGÉ : habitants, écoles et associations y fabriquent et réparent, aidés par des encadrants","réservé aux ingénieurs diplômés","secret, dont il ne faut pas parler","où l'on ne fait que regarder les machines"],r:0,
+ expl:"Fab-lab = « laboratoire de fabrication » : un atelier ouvert où l'on apprend en faisant, encadré. Beaucoup de communes en ont un — souvent avec des créneaux pour les collèges.",
+ ex:"C'est là que le capot du lampadaire n°3 a été réimprimé — peut-être par des élèves comme toi.",
+ err:"Croire la fabrication réservée aux usines et aux experts.",
+ d:["","Sa mission est exactement inverse : ouvrir la fabrication à tous.","Les fablabs adorent qu'on parle d'eux — et qu'on vienne.","On y VIENT pour fabriquer : les machines sont là pour servir."],
+ ret:"Le fablab est un atelier partagé : fabriquer et réparer y est ouvert à tous."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_5e_C5.1-C5.3_depanner_lampadaire";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={ "C5.1":"5e_C5.1 — Repérer une pièce défectueuse", "C5.2":"5e_C5.2 — Réparer selon un protocole", "C5.3":"5e_C5.3 — Les procédés de l’atelier" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Lire, traduire et régler un programme : le lampadaire n\'a plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+</body>
+</html>

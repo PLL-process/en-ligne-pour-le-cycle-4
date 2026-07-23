@@ -351,3 +351,23 @@ Applicable immédiatement à toutes les intelligences artificielles du projet :
 4. **Un refus de la garde ne se contourne jamais** (pas de fusion forcée,
    pas de modification de `.github/`) : toute évolution des périmètres se
    demande à Pascal et se décide au Conseil.
+
+## 2026-07-24 — Thème 2 · LOT 08 « Dépanner le lampadaire » (Fable, branche `fable/theme-2/lot-08-depanner-lampadaire-5e`)
+
+1. **LOT 08 réalisé — îlot 5e_C5 complet**, troisième et dernier volet de
+   l'objet-fil « Lampadaire intelligent » : inspection visuelle interactive
+   (6 zones, verrou expérientiel 6/6, distinction symptôme/cause, fausse
+   piste du panneau sale traitée par comparaison), réparation en suivant le
+   protocole fourni (simulateur pas à pas — une étape jouée trop tôt remet
+   le chantier à zéro, volontairement ; verrou : test final exigé),
+   découverte des procédés de l'atelier de fabrication (4 postes, familles
+   additif/enlèvement, sécurité atelier), réinvestissement (vélo). QCM 30 q
+   (10/10/10, 3 illustrées, réponses réparties 8/7/7/8 graine 83),
+   synthèses, fiche, matrice, 3 SVG CC0, tests Playwright 22/22.
+   Règle d'or n°4 appliquée dès la conception. Statuts : 5e_C5.1 → COMPLET ;
+   C5.2/C5.3 → COUVERTS (pointeurs).
+2. **La 5e du Thème 2 est bouclée** : C4 (8/8) + C5 (3/3) + C6 (3/3) sur un
+   objet-fil unique, décrit → programmé → dépanné. Restent les îlots de 4e.
+3. Le générateur S6 du classeur de progression 5e est câblé sur les
+   ressources publiées (B14, liens Pronote des séances 1 et 3) — même
+   commit, formules du classeur vérifiées intactes.
