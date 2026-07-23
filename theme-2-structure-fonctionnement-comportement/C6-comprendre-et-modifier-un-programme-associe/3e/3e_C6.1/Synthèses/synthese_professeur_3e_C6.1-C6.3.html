@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Programmer l'alerte (3e_C6.1 et C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.5;font-size:.94em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.4em;color:var(--title);text-align:center}
+  h2{font-size:1.05em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:20px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .warn{color:var(--warn)}
+  code{background:#08132c;padding:1px 6px;border-radius:5px}
+  @media print{body{background:#fff;color:#111;font-size:9pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>👩‍🏫 Synthèse professeur — Programmer l'alerte (3e_C6.1 + C6.3)</h1>
+
+<div class="bloc">
+<h2 style="margin-top:0">Objectifs et articulation</h2>
+<p>Quatrième volet du projet-fil : la station comprise (C4), connectée (C4.7-8) et réparée (C5) reçoit une amélioration logicielle. C6.1 (carte d'identité entrées/sorties, trace) puis C6.3 (modification de paramètre, nouvelle fonctionnalité, plan de tests). Le code <b>3e_C6.2 n'est pas traité ici</b> : il est couvert par la séquence existante « Algorigrammes DNB » (liée en révision) — la compétence C6 de 3e est ainsi complète sans doublon. Support : l'éditeur <b>CodeLab Techno</b> (composant commun du projet, première implémentation complète), en Python réel.</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Réponses complètes attendues</h2>
+<table>
+<tr><th>Act.</th><th>Réponses</th></tr>
+<tr><td>1</td><td>utilisée · utilisée · produite · produite · utilisée · produite ; vent lu ligne 6 ; message fabriqué ligne 21.</td></tr>
+<tr><td>2</td><td>A : rouge, True. B : rouge — 118 &gt; 118 faux (opérateur strict), 118 &gt; 90 vrai. Justification citant le &gt; strict.</td></tr>
+<tr><td>3</td><td>Ligne 2 → <code>SEUIL_ORANGE = 60</code> (vérifié dans CodeLab) ; 55 → verte/jaune ; intérêt des constantes : un seul point de modification.</td></tr>
+<tr><td>4</td><td>4 ajouts : init False · True en violette ET orange (pas rouge !) · bloc final indenté. Le vérificateur analyse le code de l'élève et liste ce qui manque.</td></tr>
+<tr><td>5</td><td>55 verte/jaune · 60 verte/jaune (frontière) · 61 orange+gyro · 118 rouge+sirène · 119 violette+les deux ; bug = &gt;= au lieu de &gt; ; frontières = seuls points discriminants.</td></tr>
+<tr><td>R</td><td>utilisée · produite · vert (4.0 &gt; 4 faux) · ligne 1 · 2,9/3,0/3,1 · un elif intermédiaire testé après le cas le plus fort.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Difficultés prévisibles et remédiation</h2>
+<table>
+<tr><th>Difficulté</th><th>Remédiation</th></tr>
+<tr><td>&gt; lu comme ≥ (frontières)</td><td>Rituel : « 5 &gt; 5, vrai ou faux ? » à l'oral ; revenir à la droite graduée.</td></tr>
+<tr><td>elif : plusieurs branches « actives »</td><td>Jeu de rôle : 3 élèves-tests en file, le premier qui dit OUI ferme la porte aux suivants.</td></tr>
+<tr><td>Indentation perçue comme décorative</td><td>Démonstration au vidéoprojecteur : désindenter gyrophare_actif = True et tracer — gyrophare toujours allumé.</td></tr>
+<tr><td>Vérificateur act. 4 : « il manque… »</td><td>Le message liste précisément l'ajout manquant : apprendre à le LIRE (comme un message d'erreur Python).</td></tr>
+<tr><td>Élèves rapides</td><td>Bonus Python réel (input/print), défi pression (condition croisée), transposition mBot2.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">CodeLab, versions, évaluation</h2>
+<ul>
+<li><b>CodeLab Techno</b> : coloration Python, gutter synchronisé, A−/A+, retour à la ligne, plein écran, export .py, import, sauvegarde locale auto, surlignage de lignes piloté par les consignes, comparaison avec la version d'origine. Conforme au standard du projet — réutilisable par les autres thèmes.</li>
+<li><b>Versions :</b> 🅰 maquette Arduino/Grove (potentiomètre = vent, buzzer = sirène, LED = gyrophare) ; 🅱 VittaScience/mBlock ; 🅲 complète dans la page (CodeLab + plan de tests à la main).</li>
+<li><b>Évaluation :</b> vérificateurs intégrés (dont l'analyse du code réel de l'élève en act. 3-4) ; QCM 30 q (15/15) → LSU ; sommative à construire, corrigé non publié.</li>
+<li><b>Prolongements :</b> 3e_C9 (écrire un programme complet, Thème 3 — signalé à l'agent concerné) ; EPI maths (inéquations, intervalles).</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

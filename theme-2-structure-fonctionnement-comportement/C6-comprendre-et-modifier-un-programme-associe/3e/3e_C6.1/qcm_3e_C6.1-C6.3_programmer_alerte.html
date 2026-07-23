@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM d'entraînement — Programmer l'alerte : données, modification et tests (3e_C6.1 et C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:'Fira Code',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<h1>🧠 QCM d'entraînement — Programmer l'alerte</h1>
+<p class="subtitle">Données utilisées et produites, modification du programme, plan de tests</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">3e_C6.1</span><span class="badge code">3e_C6.3</span>
+  <span class="badge theme">30 questions · programmes et schémas à lire · corrections détaillées</span>
+</div>
+<p style="text-align:center"><a href="sequence_3e_C6.1-C6.3_programmer_alerte.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C6.1">3e_C6.1 — Données utilisées et produites</option>
+      <option value="C6.3">3e_C6.3 — Modifier et tester</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d'entraînement 3e_C6.1 + C6.3 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence_3e_C6.1-C6.3_programmer_alerte.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions LOT 04 — 30 questions (15 C6.1 + 15 C6.3), 6 illustrées (règle images v2) */
+const QUESTIONS = [
+/* ═══ C6.1 — données utilisées/produites (15 q) ═══ */
+{c:"C6.1",n:"Donnée utilisée",q:"Dans le programme de la station, vent_kmh = lire_capteur(\"anemometre\"). vent_kmh est une donnée…",
+ img:{src:"Images/programme_entrees_sorties.svg",alt:"Schéma des données utilisées en entrée et produites en sortie du programme d'alerte"},
+ o:["utilisée : sa valeur vient de l'extérieur (capteur)","produite : le programme l'invente","décorative","interdite en Python"],r:0,
+ expl:"Une donnée UTILISÉE entre dans le programme depuis l'extérieur : capteur, constante, saisie. Le programme la lit, il ne la crée pas.",
+ ex:"Sur le schéma, vent_kmh arrive à gauche, côté entrées, depuis l'anémomètre.",
+ err:"Confondre « le programme range la valeur dans une variable » avec « le programme produit la donnée ».",
+ d:["","La valeur 132 vient du monde réel, pas d'un calcul du programme.","Aucune donnée n'est décorative dans un programme.","C'est une variable parfaitement valide."],
+ ret:"Donnée utilisée = lue depuis l'extérieur (capteur, constante, saisie)."},
+{c:"C6.1",n:"Donnée produite",q:"Toujours dans ce programme, message = \"Vigilance \" + vigilance. message est une donnée…",
+ o:["produite : le programme la fabrique par un calcul","utilisée : elle vient d'un capteur","ni l'un ni l'autre","c'est une constante"],r:0,
+ expl:"Une donnée PRODUITE est créée ou transformée par le programme : résultat d'un calcul, commande d'actionneur, message. Ici, la concaténation fabrique le texte.",
+ ex:"Le message part ensuite vers l'application : c'est une sortie du programme vers le reste du système.",
+ err:"Croire qu'une donnée textuelle « ne compte pas » : un message est une sortie à part entière.",
+ d:["","Aucun capteur ne fournit un message tout fait.","Toute variable d'un programme est utilisée et/ou produite.","Sa valeur change selon la vigilance : ce n'est pas une constante."],
+ ret:"Donnée produite = créée par le programme (résultat, commande, message)."},
+{c:"C6.1",n:"Pourquoi identifier les données",q:"Pourquoi identifier les données utilisées et produites AVANT de modifier un programme (C6.1) ?",
+ o:["Pour savoir ce qu'on risque de casser : d'autres parties du système dépendent des sorties","Pour faire joli dans le cahier","Parce que Python l'exige","C'est inutile si on est rapide"],r:0,
+ expl:"C'est la carte d'identité de la fonctionnalité : les sorties du programme (message, commandes) sont les ENTRÉES d'autres éléments (application, sirène). Modifier à l'aveugle peut casser toute la chaîne.",
+ ex:"Supprimer la ligne du message couperait l'alerte sur les téléphones — même si la sirène locale marche toujours.",
+ err:"Foncer modifier « juste une petite ligne » sans vue d'ensemble.",
+ d:["","L'enjeu est technique, pas esthétique.","Python n'exige rien de tel : c'est une MÉTHODE humaine.","La rapidité sans carte, c'est l'accident assuré."],
+ ret:"Identifier entrées/sorties = savoir ce que la modification peut impacter ailleurs."},
+{c:"C6.1",n:"Constante",q:"SEUIL_OURAGAN = 118 est écrit en MAJUSCULES en tête de programme. Pourquoi ?",
+ o:["C'est la convention pour une constante : une valeur de réglage qu'on ne modifie qu'en un seul endroit","Parce que les majuscules crient","Pour que le programme aille plus vite","C'est un bug"],r:0,
+ expl:"Les majuscules signalent une constante nommée : un paramètre de la fonctionnalité, regroupé en tête, modifiable en un unique endroit. C'est ce qui rend la modification de paramètre (C6.3) sûre.",
+ ex:"Passer le seuil orange de 50 à 60 = changer UNE ligne, sans toucher aux tests.",
+ err:"Écrire les valeurs « en dur » dans les tests : pour changer un seuil, il faudrait les chercher partout.",
+ d:["","La convention aide le LECTEUR humain, pas le haut-parleur.","Aucun effet sur la vitesse.","C'est au contraire une bonne pratique."],
+ ret:"Constante nommée (MAJUSCULES) = paramètre modifiable en un seul point."},
+{c:"C6.1",n:"Trace simple",q:"Programme de la station (seuils 50/90/118, tests avec >) : pour vent_kmh = 95, que vaut vigilance ?",
+ o:["\"rouge\" (95 > 90, et le test ouragan a échoué avant)","\"orange\"","\"violette\"","\"verte\""],r:0,
+ expl:"On descend les tests dans l'ordre : 95 > 118 ? non. 95 > 90 ? OUI → rouge, et les elif suivants sont ignorés.",
+ ex:"C'est la trace de l'activité 2, situation A.",
+ err:"Tester « dans le désordre » ou continuer après un test vrai.",
+ d:["","95 dépasse aussi 50, mais le test rouge passe AVANT le test orange.","95 ne dépasse pas 118.","95 dépasse largement 50 : une branche s'active forcément."],
+ ret:"Les elif se testent dans l'ordre et s'arrêtent au premier vrai."},
+{c:"C6.1",n:"Valeur frontière",q:"Même programme : pour vent_kmh = 118 EXACTEMENT, que vaut vigilance ?",
+ o:["\"rouge\" : 118 > 118 est faux (l'opérateur > est strict), mais 118 > 90 est vrai","\"violette\" : 118 atteint le seuil ouragan","\"orange\"","le programme plante"],r:0,
+ expl:"L'opérateur > est STRICT : l'égalité ne le satisfait pas. 118 > 118 est faux, donc on passe au test suivant : 118 > 90 → rouge. Pour violette, il faut 119 ou plus.",
+ ex:"C'est LE piège des valeurs frontières — celui que le plan de tests vise en priorité.",
+ err:"Lire > comme ≥ : la confusion la plus fréquente (et la plus sournoise) en programmation.",
+ d:["","« Atteindre » ne suffit pas : il faudrait >= pour inclure l'égalité.","118 dépasse 90 : la branche rouge capte la valeur.","Aucune erreur : le programme répond, simplement pas ce qu'on croit."],
+ ret:"> est strict : à la frontière exacte, le test échoue. C'est là que > et >= diffèrent."},
+{c:"C6.1",n:"Rôle du elif",q:"Dans if / elif / elif, que se passe-t-il quand un test est VRAI ?",
+ o:["Sa branche s'exécute et tous les elif suivants sont ignorés","Tous les tests suivants s'exécutent quand même","Le programme s'arrête définitivement","Les tests recommencent depuis le début"],r:0,
+ expl:"if/elif forme UNE structure : un seul chemin est emprunté — le premier dont le test est vrai. C'est pourquoi l'ordre des tests (du plus fort au plus faible) est crucial.",
+ ex:"vent = 130 : la branche violette s'exécute ; les tests rouge et orange ne sont même pas évalués.",
+ err:"Croire que plusieurs branches peuvent s'activer en même temps.",
+ d:["","Ce serait le comportement de ifs INDÉPENDANTS, pas de elif.","Le programme continue après la structure (message, commandes).","Aucune boucle ici."],
+ ret:"if/elif = un seul chemin : le premier test vrai gagne, les autres sont ignorés."},
+{c:"C6.1",n:"Ordre des tests",q:"Pourquoi le programme teste-t-il vent > 118 AVANT vent > 90 et vent > 50 ?",
+ img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme testant les seuils du plus fort au plus faible : 118, puis 90, puis 50"},
+ o:["Parce qu'avec elif, un ouragan à 130 serait sinon capté par le test > 50 et classé orange","Par ordre alphabétique","Parce que 118 est plus joli","L'ordre n'a aucune importance"],r:0,
+ expl:"130 dépasse TOUS les seuils. Si on testait > 50 en premier, la branche orange capterait l'ouragan et les autres tests seraient ignorés. On teste donc du plus fort au plus faible.",
+ ex:"L'algorigramme montre cet ordre : ouragan → rouge → orange.",
+ err:"Ranger les tests « dans l'ordre croissant » qui paraît naturel — et classer tous les cyclones en orange.",
+ d:["","Aucun rapport avec l'alphabet.","!","Avec elif, l'ordre change complètement le résultat."],
+ ret:"Avec des elif sur des seuils, tester du plus FORT au plus FAIBLE."},
+{c:"C6.1",n:"Donnée lue non utilisée",q:"Le programme lit pression_hpa mais ne s'en sert dans aucun test. Que peut-on dire ?",
+ o:["C'est une entrée disponible mais inexploitée — une piste d'amélioration (validation croisée vent+pression)","C'est une erreur qui empêche le programme de fonctionner","La pression est donc inutile en météo","Il faut supprimer le baromètre"],r:0,
+ expl:"Lire une donnée sans l'exploiter ne fait pas planter le programme — mais c'est un potentiel gâché : croiser vent ET pression fiabiliserait l'alerte (souviens-toi de l'enquête de la séquence C4).",
+ ex:"Le bonus « défi pression » propose justement d'écrire cette condition croisée.",
+ err:"Confondre « non utilisé dans la décision » et « erreur de programme ».",
+ d:["","Le programme fonctionne : la variable est juste inexploitée.","La pression est un excellent indicateur — c'est le programme qui est incomplet.","Le capteur pourra servir dès la v3 !"],
+ ret:"Identifier les données révèle aussi les entrées INEXPLOITÉES : des pistes d'amélioration."},
+{c:"C6.1",n:"Sorties vers le système",q:"Quelles sont les TROIS données produites par le programme d'alerte v1 ?",
+ img:{src:"Images/programme_entrees_sorties.svg",alt:"Schéma montrant les trois sorties : vigilance, sirene_active, message"},
+ o:["vigilance, sirene_active, message","vent_kmh, pression_hpa, SEUIL_ORANGE","anemometre, barometre, sirene","50, 90, 118"],r:0,
+ expl:"Le programme calcule le niveau (vigilance), décide de la commande (sirene_active) et fabrique le message. Les trois partent vers le reste du système.",
+ ex:"Côté droit du schéma : les trois flèches vertes de sortie.",
+ err:"Mélanger noms de variables, noms de capteurs et valeurs.",
+ d:["","Ce sont les ENTRÉES du programme.","Ce sont des périphériques, pas des données.","Ce sont les valeurs des constantes."],
+ ret:"Les sorties de la v1 : vigilance (résultat), sirene_active (commande), message (information)."},
+{c:"C6.1",n:"Lire avant modifier",q:"Le club veut modifier un programme écrit par un ancien élève parti au lycée. Première chose à faire :",
+ o:["Le lire entièrement et établir sa carte d'identité (entrées/sorties, seuils, structure)","Tout effacer et repartir de zéro","Modifier au hasard et voir","Attendre son retour"],r:0,
+ expl:"C6.1 est LE préalable : comprendre avant d'agir. Un programme lisible (constantes nommées, structure claire) se transmet — c'est pour cela qu'on soigne l'écriture.",
+ ex:"Vous venez de le faire avec le programme v1 : activités 1 et 2 avant toute modification.",
+ err:"Réécrire de zéro « parce que c'est plus simple » : on perd les corrections de bugs accumulées.",
+ d:["","Repartir de zéro jette des mois de mise au point.","Le hasard n'est pas une méthode.","Le programme doit vivre sans son auteur : c'est l'intérêt du code clair."],
+ ret:"Comprendre (C6.1) avant de modifier (C6.3) : toujours dans cet ordre."},
+{c:"C6.1",n:"Variable réutilisée",q:"vigilance est produite ligne 13 puis UTILISÉE ligne 21 (dans le message). Est-ce contradictoire ?",
+ o:["Non : une donnée produite peut être réutilisée ensuite par le même programme","Oui : une variable est soit entrée soit sortie, jamais les deux","Oui : Python l'interdit","Non, mais c'est un bug"],r:0,
+ expl:"Le flux des données traverse le programme : on PRODUIT vigilance (décision), puis on l'UTILISE pour fabriquer le message. Vis-à-vis de l'extérieur, vigilance reste une donnée produite par la fonctionnalité.",
+ ex:"Comme en cuisine : la pâte est produite par le mélange, puis utilisée par la cuisson.",
+ err:"Vouloir des cases étanches : c'est le point de vue (programme entier vs ligne) qui définit entrée/sortie.",
+ d:["","Le classement se fait au niveau de la FONCTIONNALITÉ : ce qui vient de l'extérieur vs ce qui en sort.","Python fait ça en permanence.","C'est le fonctionnement normal d'un calcul en chaîne."],
+ ret:"Au sein du programme, une donnée produite peut être réutilisée ; le classement C6.1 se fait vis-à-vis de l'extérieur."},
+{c:"C6.1",n:"Initialisation",q:"Pourquoi le programme écrit-il vigilance = \"verte\" et sirene_active = False AVANT les tests ?",
+ o:["Pour garantir un état sûr par défaut : si aucun test n'est vrai, les sorties ont quand même une valeur","Pour gaspiller des lignes","Parce que verte est la couleur préférée du maire","C'est une erreur"],r:0,
+ expl:"L'initialisation donne l'état « au repos » : vent faible → aucun test vrai → les valeurs par défaut (verte, sirène éteinte) s'appliquent. Sans elle, les variables n'existeraient même pas dans ce cas.",
+ ex:"Tu as reproduit ce modèle avec gyrophare_actif = False (activité 4, ajout ①).",
+ err:"Initialiser un actionneur à True « pour tester » : une sirène qui hurle par défaut !",
+ d:["","Deux lignes qui évitent un plantage, ce n'est pas du gaspillage.","La sécurité, pas l'esthétique.","C'est une bonne pratique fondamentale."],
+ ret:"Initialiser les sorties à un état SÛR avant les décisions : actionneurs au repos par défaut."},
+{c:"C6.1",n:"Fonctionnalité",q:"Au sens du programme 2024, la « fonctionnalité » associée à ce programme est :",
+ o:["Déclencher l'alerte adaptée au vent mesuré","Compter les lignes de code","Faire joli sur GitHub","Remplacer Météo-France"],r:0,
+ expl:"Une fonctionnalité est un SERVICE rendu par l'objet technique : ici, transformer une mesure de vent en alerte graduée. Le programme est le moyen ; la fonctionnalité est le but.",
+ ex:"Même fonctionnalité, autres moyens possibles : blocs mBlock, Arduino C++ — le service rendu reste identique.",
+ err:"Confondre le code (moyen) et la fonctionnalité (service rendu à l'utilisateur).",
+ d:["","Le nombre de lignes n'intéresse personne.","Le dépôt sert le service, pas l'inverse.","La station complète Météo-France localement, elle ne la remplace pas."],
+ ret:"Fonctionnalité = service rendu ; le programme n'est que sa réalisation."},
+{c:"C6.1",n:"Transfert",q:"Programme de la bouée : hauteur_m = lire_capteur(\"houlographe\") puis drapeau calculé puis envoyer(...). Ses entrées/sorties ?",
+ o:["Entrées : hauteur_m et SEUIL_HOULE · Sorties : drapeau et le message envoyé","Tout est entrée","Tout est sortie","Impossible à dire sans exécuter"],r:0,
+ expl:"Même analyse que la station : ce qui vient de l'extérieur (capteur, constante) = utilisé ; ce qui est calculé et transmis = produit. La méthode se transfère à tout programme.",
+ ex:"C'est le réinvestissement de la séquence — appliqué ici en une question.",
+ err:"Croire qu'il faut exécuter pour analyser : la LECTURE suffit pour la carte d'identité.",
+ d:["","drapeau est calculé par le programme.","hauteur_m vient du capteur.","La carte d'identité s'établit en lisant, pas en exécutant."],
+ ret:"La carte d'identité entrées/sorties s'établit par la lecture, sur n'importe quel programme."},
+/* ═══ C6.3 — modifier et tester (15 q) ═══ */
+{c:"C6.3",n:"Modifier un paramètre",q:"Pour passer le seuil orange de 50 à 60 km/h, la modification correcte est :",
+ o:["SEUIL_ORANGE = 60 (une seule ligne, la constante)","Chercher tous les 50 du programme et les remplacer","Réécrire tout le programme","Ajouter un deuxième programme"],r:0,
+ expl:"Le paramètre vit dans sa constante : UNE ligne à changer, effet garanti partout où elle est utilisée. Remplacer « tous les 50 » toucherait peut-être un 50 qui n'a rien à voir.",
+ ex:"Activité 3 : la ligne 2 devient SEUIL_ORANGE = 60, rien d'autre ne bouge.",
+ err:"Le rechercher-remplacer aveugle : l'arme de destruction massive du débutant.",
+ d:["","Un 50 peut apparaître ailleurs avec un autre sens.","Disproportionné et risqué.","Deux programmes pour un seuil ?!"],
+ ret:"Modifier un paramètre = changer SA constante, en un seul point."},
+{c:"C6.3",n:"Prédire l'effet",q:"Après SEUIL_ORANGE = 60, que devient un vent de 55 km/h (avant : orange) ?",
+ o:["Plus aucune branche ne s'active : verte/jaune","Toujours orange","Rouge","Violette"],r:0,
+ expl:"Toute modification s'accompagne d'une PRÉDICTION : 55 > 60 est faux, donc plus d'orange. Prédire avant, vérifier après — c'est la boucle de C6.3.",
+ ex:"Trace : 55>118 non, 55>90 non, 55>60 non → valeurs par défaut.",
+ err:"Modifier sans re-tracer : « ça devrait aller »… jusqu'au jour d'alerte.",
+ d:["","L'ancien seuil n'existe plus.","55 < 90.","55 < 118."],
+ ret:"Après chaque modification : re-tracer les cas concernés."},
+{c:"C6.3",n:"Imiter le modèle",q:"Pour ajouter gyrophare_actif, la séquence conseille d'imiter la gestion de sirene_active. Pourquoi ?",
+ o:["Le programme a déjà un modèle qui marche : initialisation → décision → commande ; l'imiter garantit la cohérence","Parce que copier est toujours bien","Pour faire plus de lignes","Il ne fallait pas imiter"],r:0,
+ expl:"Réutiliser les motifs existants d'un programme (patterns) : le nouveau code s'intègre au style et à la logique en place, et les futurs lecteurs s'y retrouvent.",
+ ex:"gyrophare_actif = False (comme sirene_active), True dans les bonnes branches, if final de commande.",
+ err:"Inventer une logique différente pour chaque ajout : le programme devient illisible.",
+ d:["","On imite un modèle VALIDÉ, pas n'importe quoi.","La concision reste une qualité.","La cohérence interne est une vertu cardinale du code."],
+ ret:"Étendre un programme = imiter ses motifs validés (initialisation → décision → commande)."},
+{c:"C6.3",n:"Indentation",q:"En Python, la ligne gyrophare_actif = True doit être INDENTÉE (4 espaces) dans sa branche. Sinon ?",
+ o:["Elle sort de la branche : exécutée dans tous les cas — le gyrophare s'allumerait toujours","Rien ne change","Python ajoute l'indentation tout seul","Le programme devient plus rapide"],r:0,
+ expl:"En Python, l'indentation EST la structure : elle dit quelles lignes appartiennent à quelle branche. Une ligne désindentée quitte le bloc conditionnel et s'exécute inconditionnellement.",
+ ex:"gyrophare_actif = True collé à la marge = gyrophare allumé même par temps calme — belle panique dans le quartier.",
+ err:"Traiter l'indentation comme de la déco : c'est du SENS.",
+ d:["","La position change radicalement le comportement.","Python signale IndentationError ou exécute autre chose — il ne devine pas.","La vitesse n'a rien à voir."],
+ ret:"En Python, l'indentation fait partie du langage : elle délimite les blocs."},
+{c:"C6.3",n:"Lire l'algorigramme",q:"D'après l'algorigramme de l'alerte graduée, en vigilance ROUGE, quels actionneurs sont actifs ?",
+ img:{src:"Images/algorigramme_alerte_graduee.svg",alt:"Algorigramme : violette = sirène et gyrophare, rouge = sirène seule, orange = gyrophare seul"},
+ o:["La sirène seule (gyrophare éteint)","Le gyrophare seul","Les deux","Aucun"],r:0,
+ expl:"L'algorigramme est la SPÉCIFICATION : violette = les deux, rouge = sirène seule, orange = gyrophare seul. Le code doit s'y conformer — pas l'inverse.",
+ ex:"C'est pour cela que l'activité 4 interdit gyrophare_actif = True dans la branche rouge.",
+ err:"Coder « ce qui semble logique » au lieu de suivre la spécification.",
+ d:["","Le gyrophare seul, c'est l'orange.","Les deux, c'est la violette.","Rouge est une alerte sérieuse : la sirène sonne."],
+ ret:"On implémente une SPÉCIFICATION (algorigramme), pas une intuition."},
+{c:"C6.3",n:"Jeu d'essai",q:"Qu'est-ce qu'un « jeu d'essai » ?",
+ img:{src:"Images/plan_de_tests_jeux_essai.svg",alt:"Tableau de jeux d'essai : entrée, sortie attendue, sortie obtenue, verdict"},
+ o:["Une entrée choisie + la sortie attendue calculée à la main + la comparaison avec la sortie obtenue","Un essai « pour voir » sans rien noter","Un jeu vidéo éducatif","Une répétition de théâtre"],r:0,
+ expl:"Le jeu d'essai a trois colonnes obligatoires : entrée, sortie ATTENDUE (calculée à la main AVANT), sortie obtenue. Sans l'attendu, on ne teste pas : on regarde.",
+ ex:"vent = 61 → attendu : orange + gyrophare → obtenu : idem → ✔.",
+ err:"Exécuter puis déclarer « ça a l'air bon » : sans attendu, aucun verdict possible.",
+ d:["","Sans sortie attendue notée, ce n'est pas un test.","Non — quoique tester puisse être ludique !","Rien à voir."],
+ ret:"Jeu d'essai = entrée + sortie attendue (à la main) + sortie obtenue + verdict."},
+{c:"C6.3",n:"Valeurs frontières",q:"Pourquoi le plan de tests choisit-il 49/50/51 et 117/118/119 plutôt que 30, 75, 200 ?",
+ img:{src:"Images/plan_de_tests_jeux_essai.svg",alt:"Plan de tests visant les valeurs frontières autour des seuils"},
+ o:["Les frontières sont les seuls points où > et >= diffèrent : c'est là que les bugs se cachent","Ce sont des nombres porte-bonheur","Pour économiser l'encre","Au hasard"],r:0,
+ expl:"Loin des seuils, un programme correct et un programme bogué répondent pareil. À la frontière exacte (50, 118), la moindre confusion >/>= apparaît immédiatement.",
+ ex:"Le test n°4 du schéma (118) démasque le bug >= alors que 200 ne l'aurait jamais vu.",
+ err:"Choisir des valeurs « variées » mais toutes loin des seuils : couverture illusoire.",
+ d:["","Aucune magie, que de la logique.","!","Le choix est au contraire ultra-ciblé."],
+ ret:"Tester AUX frontières : seuil-1, seuil, seuil+1."},
+{c:"C6.3",n:"Diagnostiquer par le test",q:"Attendu à vent=118 : rouge. Obtenu : violette. Quelle est la cause la plus probable ?",
+ o:["Un >= à la place d'un > dans le test ouragan","Le capteur ment","Python compte mal","Le gyrophare est cassé"],r:0,
+ expl:"Le symptôme (frontière incluse à tort) signe l'opérateur large : vent >= 118 rend l'égalité vraie. Le plan de tests ne dit pas seulement « bug » : il ORIENTE vers la cause.",
+ ex:"Une seule frontière décalée = suspect n°1 : l'opérateur de comparaison.",
+ err:"Accuser la machine : dans 99,9 % des cas, le bug est dans le code, pas dans Python.",
+ d:["","Le jeu d'essai fournit l'entrée directement : le capteur n'intervient pas.","Les comparaisons de Python sont fiables.","Le gyrophare est un ACTIONNEUR : il n'influence pas la décision."],
+ ret:"Un échec de test aux frontières oriente vers l'opérateur de comparaison."},
+{c:"C6.3",n:"Non-régression",q:"Ta v2 (gyrophare) passe ses nouveaux tests. Pourquoi rejouer AUSSI les anciens tests de la sirène ?",
+ o:["Pour vérifier la non-régression : la modification ne doit pas casser ce qui marchait","Par nostalgie","Pour user le clavier","C'est inutile"],r:0,
+ expl:"Tester la non-régression = re-vérifier l'existant après chaque modification. En ajoutant le gyrophare, une erreur d'indentation aurait pu déplacer une ligne de la sirène.",
+ ex:"Les pros rejouent TOUTE leur batterie de tests à chaque version — souvent automatiquement.",
+ err:"Ne tester que la nouveauté : les régressions sont les bugs les plus fréquents en entreprise.",
+ d:["","La sécurité du quartier, pas la nostalgie.","!","C'est au contraire la moitié de la validation."],
+ ret:"Après toute modification : tester le NOUVEAU et re-tester l'ANCIEN (non-régression)."},
+{c:"C6.3",n:"Un seul échec",q:"Sur tes 5 jeux d'essai, 4 passent et 1 échoue. Verdict sur la version ?",
+ o:["Refusée : un seul échec suffit, on corrige puis on rejoue TOUT le plan","Acceptée : 4/5 c'est une bonne note","Acceptée si on cache le test raté","On supprime le test qui échoue"],r:0,
+ expl:"Un test n'est pas un contrôle noté : c'est une preuve binaire. Un échec = un comportement faux qui frappera en situation réelle — précisément à 118 km/h, au pire moment.",
+ ex:"Le bug >= : invisible 364 jours par an, catastrophique le jour de l'ouragan à 118.",
+ err:"Raisonner en pourcentage : 80 % de tests OK = 100 % de programme refusé.",
+ d:["","Les 4/5 ne consolent pas les habitants mal alertés.","Cacher un échec, c'est mentir au système ET aux gens.","Supprimer le test ne supprime pas le bug !"],
+ ret:"Validation = TOUS les tests passent. Un échec → corriger → tout rejouer."},
+{c:"C6.3",n:"Tester sans machine",q:"En version 🅲 (sans matériel), peut-on quand même TESTER le programme modifié ?",
+ o:["Oui : en calculant les sorties attendues à la main et en traçant le code — la méthode est la même","Non, tester exige toujours un ordinateur","Non, il faut attendre le professeur","Oui, mais ça ne compte pas"],r:0,
+ expl:"La trace manuelle EST une exécution — par un humain. Plan de tests, attendus, verdicts : toute la méthode fonctionne sur papier ; la machine ne fait que l'accélérer.",
+ ex:"L'activité 5 valide ta v2 entièrement à la main ; la version 🅰 ne fait que confirmer sur la maquette.",
+ err:"Croire que « tester » = « appuyer sur Exécuter » : c'est calculer l'attendu qui teste.",
+ d:["","Dijkstra traçait ses programmes à la main bien avant les écrans.","La méthode est autonome.","La validation à la main compte pleinement : c'est la même logique."],
+ ret:"Tester = comparer attendu et obtenu ; la trace manuelle est un vrai test."},
+{c:"C6.3",n:"L'erreur d'indentation",q:"Python affiche IndentationError: expected an indented block après if gyrophare_actif:. Que faire ?",
+ o:["Indenter de 4 espaces la ligne suivante (activer_gyrophare()) qui doit appartenir au bloc","Supprimer le if","Réinstaller Python","Ignorer le message"],r:0,
+ expl:"Le message d'erreur DIT le problème : après un if, Python attend un bloc indenté. Lire le message (nom + ligne) est la première compétence du débogueur.",
+ ex:"if gyrophare_actif: ⏎ [4 espaces] activer_gyrophare().",
+ err:"Paniquer devant le message au lieu de le lire — il donne littéralement la solution.",
+ d:["","Le if est nécessaire : c'est la commande conditionnelle.","Python va très bien.","Le programme ne tournera pas tant que l'erreur persiste."],
+ ret:"Lire le message d'erreur : type + ligne = la moitié de la correction."},
+{c:"C6.3",n:"Modifier vs valider",q:"Quelle phrase résume la compétence C6.3 complète ?",
+ o:["Modifier au bon endroit (paramètre ou structure), prédire l'effet, puis PROUVER par un plan de tests que tout fonctionne","Écrire le plus de lignes possible","Modifier vite et publier aussitôt","Tester uniquement quand ça a l'air cassé"],r:0,
+ expl:"C6.3 associe indissociablement modifier ET tester : la modification sans validation est un pari ; la version n'existe qu'une fois les tests passés.",
+ ex:"Ta v2 : 4 ajouts + plan de tests aux frontières + non-régression = fonctionnalité livrée.",
+ err:"Considérer les tests comme une option « si on a le temps ».",
+ d:["","La qualité ne se mesure pas en lignes.","Publier sans tests = tester en production… sur de vrais habitants.","Attendre la casse, c'est déjà trop tard pour une alerte cyclonique."],
+ ret:"C6.3 = modifier + tester, indissociables : la preuve fait partie de la modification."},
+{c:"C6.3",n:"Étendre la structure",q:"Pour ajouter un niveau « jaune » entre verte et orange, la bonne approche est :",
+ o:["Ajouter un elif vent_kmh > SEUIL_JAUNE en DERNIER test (le plus faible), avec sa constante et ses jeux d'essai","Ajouter un if indépendant n'importe où","Changer le sens de tous les tests","Recopier le programme entier une deuxième fois"],r:0,
+ expl:"L'extension suit les règles apprises : nouvelle constante nommée, elif inséré À SA PLACE dans l'ordre décroissant des seuils, et jeux d'essai aux nouvelles frontières.",
+ ex:"Exactement le raisonnement du réinvestissement (drapeau orange de la bouée).",
+ err:"Un if indépendant s'exécuterait EN PLUS de la branche déjà choisie : deux niveaux à la fois !",
+ d:["","Un if séparé casse la logique « un seul chemin ».","Le sens des tests est correct : c'est l'ordre qui compte.","Dupliquer le programme double les bugs futurs."],
+ ret:"Étendre = nouvelle constante + elif à la bonne place dans l'ordre + tests aux nouvelles frontières."},
+{c:"C6.3",n:"Sauvegarder et versionner",q:"Avant de modifier le programme, CodeLab conserve la version d'origine (bouton Réinitialiser / Comparer). Pourquoi est-ce essentiel ?",
+ o:["Pour pouvoir revenir en arrière et comparer si la modification échoue : c'est le principe du versionnage","Pour occuper de la mémoire","Parce que la v1 est parfaite","Ce n'est pas essentiel"],r:0,
+ expl:"Toute modification doit être réversible : garder la version précédente permet de comparer (qu'ai-je changé ?) et de restaurer en cas d'échec. C'est le principe que les professionnels industrialisent avec Git.",
+ ex:"Le bouton « Comparer avec la version d'origine » de CodeLab compte les lignes qui diffèrent — un mini-diff.",
+ err:"Écraser la seule copie du programme qui marchait : plus de retour possible.",
+ d:["","Quelques kilo-octets pour une assurance totale.","La v1 avait justement une fonctionnalité manquante !","Sans filet, une erreur de modification peut coûter la fonctionnalité entière."],
+ ret:"Toujours garder la version qui marche : comparer et pouvoir revenir en arrière."},
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_3e_C6.1-C6.3_programmer";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={ "C6.1":"3e_C6.1 — Données utilisées et produites", "C6.3":"3e_C6.3 — Modifier et tester" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Lire, modifier et tester un programme n'a plus de secret pour toi — tu es prêt·e pour l'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programmer l'alerte — 3e_C6.1 et 3e_C6.3</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+
+  /* ══ CodeLab Techno ══ */
+  .codelab{background:#08132c;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:14px 0}
+  .cl-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 14px;background:#0d2347;border-bottom:1px solid var(--border);font-size:.82em}
+  .cl-head .cl-name{font-weight:700;color:var(--hl)}
+  .cl-head .cl-lang{background:#173666;border-radius:7px;padding:2px 9px;color:#ffd66b}
+  .cl-head .cl-lines{color:var(--sub)}
+  .cl-head .cl-saved{margin-left:auto;color:var(--ok);min-width:11em;text-align:right}
+  .cl-tools{display:flex;gap:6px;flex-wrap:wrap;padding:7px 12px;background:#0a1b3d;border-bottom:1px solid var(--border)}
+  .cl-tools button,.cl-tools label{background:#173666;border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:4px 10px;font-size:.78em;cursor:pointer;font-family:inherit}
+  .cl-tools button:hover{background:#1d4e89}
+  .cl-body{display:flex;max-height:430px;overflow:auto;position:relative}
+  .cl-gutter{user-select:none;text-align:right;padding:12px 8px 12px 12px;color:#5b7bb8;background:#0a1b3d;font-family:'Fira Code',monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;border-right:1px solid var(--border)}
+  .cl-gutter .cl-ln-hl{background:rgba(255,214,102,.25);color:#ffd66b;display:block;border-radius:3px}
+  .cl-editwrap{position:relative;flex:1;min-width:0}
+  .cl-hl,.cl-ta{margin:0;padding:12px 14px;font-family:'Fira Code',monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;tab-size:4;min-height:100%;box-sizing:border-box}
+  .codelab.cl-wrap-on .cl-hl,.codelab.cl-wrap-on .cl-ta{white-space:pre-wrap;word-break:break-all}
+  .cl-hl{position:absolute;inset:0;pointer-events:none;color:#d7e6ff;overflow:hidden}
+  .cl-ta{position:relative;width:100%;background:transparent;color:transparent;caret-color:#fff;border:none;outline:none;resize:none;overflow:hidden;display:block}
+  .cl-hl .k{color:#c68ef2;font-weight:600}.cl-hl .s{color:#81fba1}.cl-hl .c{color:#5b7bb8;font-style:italic}.cl-hl .n{color:#ffb454}.cl-hl .f{color:#61dafb}
+  .cl-hl .cl-line-hl{background:rgba(255,214,102,.14);display:inline-block;width:100%}
+  .codelab:fullscreen{border-radius:0}
+  .codelab:fullscreen .cl-body{max-height:none;height:calc(100vh - 92px)}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>💻 Programmer l'alerte</h1>
+<p class="subtitle">Lire, modifier et valider le programme de la station — pour une alerte graduée plus intelligente</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C6.1</span>
+  <span class="badge code">3e_C6.3</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D4</span>
+  <span class="badge crcn">CRCN : 3.4 Programmer</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>La station est réparée, la sirène resonne.</b> Mais à la réunion de quartier, une habitante soulève un vrai
+    problème : « Votre sirène, c'est tout ou rien. Elle hurle pareil pour un coup de vent et pour un ouragan — du coup,
+    plus personne ne la prend au sérieux. » Le maire confirme : lors du dernier épisode orange, la moitié du quartier
+    a ignoré l'alerte.</p>
+    <p>Le club techno décide d'améliorer la <b>fonctionnalité d'alerte</b> : une alerte <b>graduée</b> — gyrophare seul
+    en orange, sirène en rouge, les deux en violet. Pas besoin de changer le matériel (le gyrophare est déjà branché) :
+    tout se joue dans le <b>programme</b>. Encore faut-il le comprendre avant de le modifier… et prouver, tests à
+    l'appui, que la nouvelle version fonctionne.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment modifier le programme de la station pour créer une alerte graduée —<br>sans casser ce qui fonctionne, et en prouvant que la modification est correcte ?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Mes hypothèses de départ</h2>
+  <div class="exo">
+    <label for="hyp1"><b>1.</b> D'après toi, que faut-il connaître d'un programme AVANT de le modifier sans risque ?</label>
+    <textarea id="hyp1" placeholder="Avant de modifier, il faut…"></textarea>
+    <label for="hyp2" style="margin-top:10px;display:block"><b>2.</b> Et après la modification, comment être sûr·e qu'on n'a rien cassé ?</label>
+    <textarea id="hyp2" placeholder="Pour vérifier, je…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Référentiel officiel (programme 2024)</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C6.1</b></td><td>Déterminer les données utilisées et produites par un programme associé à une fonctionnalité en vue de le modifier.</td><td>D1.3, D2</td><td>1, 2, R</td></tr>
+    <tr><td><b>3e_C6.3</b></td><td>Modifier et tester le programme associé à une nouvelle fonctionnalité d'un OST.</td><td>D2, D4</td><td>3, 4, 5, R</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C6</b> — BO n°9 du 29/02/2024. Le code <b>3e_C6.2</b> (traduire en algorigramme) est déjà couvert par la séquence existante <a href="../3e_C6.2/sequence_algorigrammes_dnb.html">« Algorigrammes DNB »</a> — révision conseillée avant la séance 2.</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Choix de l'outil</h2>
+  <table class="refs">
+    <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
+    <tr><td><b>CodeLab Techno</b> (éditeur intégré à cette page)</td><td>Le composant commun du projet : édition directe, coloration, sauvegarde locale, export .py — chaque élève manipule le vrai texte du programme, même à la maison.</td><td>—</td></tr>
+    <tr><td>mBlock 5 / VittaScience (versions A-B)</td><td>Exécution réelle sur la maquette Arduino de la station ou en simulation.</td><td>Python + PyCharm pour les plus avancés</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub)">Le langage utilisé est Python (syntaxe réelle). L'exécution n'est pas indispensable : CodeLab permet de lire, modifier, comparer, sauvegarder et exporter — la validation se fait par les jeux d'essai calculés à la main (séance 3), puis sur machine en version A/B.</p>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel</h4>
+      <p>Maquette de la station (Arduino UNO + Grove, LED = gyrophare, buzzer = sirène) : téléverser le programme modifié (mBlock ou Arduino IDE) et dérouler le plan de tests en soufflant… sur le capteur simulé (potentiomètre = vent).</p></div>
+    <div class="version vb"><h4>🅱 Simulation</h4>
+      <p><b>VittaScience</b> ou <b>mBlock</b> : recréer l'algorithme en blocs, exécuter les 5 jeux d'essai virtuellement.</p></div>
+    <div class="version vc"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans cette page : CodeLab Techno pour lire et modifier le programme, et le plan de tests « à la main » (activité 5) pour valider — la méthode professionnelle, machine ou pas.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Lire le programme</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Le modifier</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Le valider + défi</small><span class="done" id="done-s3"></span></button>
+</div>
+
+<section class="card">
+  <h2>⌨ Le programme de la station — CodeLab Techno</h2>
+  <p style="font-size:.9em;color:var(--sub)">C'est LE document de travail des trois séances. Tu peux le modifier, il se sauvegarde tout seul sur cet appareil ; « Réinitialiser » restaure la version d'origine.</p>
+  <div class="codelab" id="codelab">
+    <div class="cl-head">
+      <span class="cl-name">CodeLab Techno</span>
+      <span class="cl-lang">Python</span>
+      <span class="cl-lines" id="clLines">— lignes</span>
+      <span class="cl-saved" id="clSaved">●</span>
+    </div>
+    <div class="cl-tools" role="toolbar" aria-label="Outils de l'éditeur">
+      <button type="button" id="clCopy">📋 Copier</button>
+      <button type="button" id="clResetBtn">↺ Réinitialiser</button>
+      <button type="button" id="clFontMinus" aria-label="Réduire la taille du texte">A−</button>
+      <button type="button" id="clFontPlus" aria-label="Agrandir la taille du texte">A+</button>
+      <button type="button" id="clWrap" aria-pressed="false">↩ Ligne</button>
+      <button type="button" id="clFull">⛶ Plein écran</button>
+      <button type="button" id="clExport">💾 Exporter .py</button>
+      <label for="clImport" style="cursor:pointer">📂 Importer<input type="file" id="clImport" accept=".py,.txt" style="display:none"></label>
+      <button type="button" id="clForget">🗑 Effacer la sauvegarde</button>
+      <button type="button" id="clUnhl">✨ Effacer le surlignage</button>
+    </div>
+    <div class="cl-body">
+      <div class="cl-gutter" id="clGutter" aria-hidden="true"></div>
+      <div class="cl-editwrap">
+        <pre class="cl-hl" id="clHl" aria-hidden="true"></pre>
+        <textarea class="cl-ta" id="clTa" spellcheck="false" aria-label="Éditeur de programme Python de la station"></textarea>
+      </div>
+    </div>
+  </div>
+  <details style="margin-top:6px"><summary>🔍 Comparer avec la version d'origine</summary>
+    <p style="font-size:.85em" id="clDiffInfo">—</p>
+    <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:'Fira Code',monospace;font-size:.82em;overflow:auto;color:#7d9bd6" id="clOrig"></pre>
+  </details>
+</section>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>📖 Séance 1 — Lire le programme avant d'y toucher</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quelles données ce programme utilise-t-il, et lesquelles produit-il ?</p>
+  <object class="figure" data="Images/programme_entrees_sorties.svg" type="image/svg+xml" aria-label="Schéma : données utilisées en entrée du programme (vent, pression, seuil) et données produites en sortie (vigilance, état de la sirène, message)">Données utilisées et produites par le programme (SVG)</object>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>La carte d'identité du programme</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les données utilisées (entrées) et produites (sorties) par le programme d'alerte.</div>
+      <div><b>Compétence :</b> 3e_C6.1.</div>
+      <div><b>Production attendue :</b> 6 classements + 2 numéros de lignes relevés dans CodeLab.</div>
+      <div><b>Ressources :</b> le programme dans CodeLab ci-dessus + le schéma entrées/sorties.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> <button class="btn small ghost" type="button" data-hl="6-7">✨ Surligner les lignes 6-7</button> <button class="btn small ghost" type="button" data-hl="20-23">✨ Surligner les lignes 20-23</button> — lis le programme dans CodeLab, puis classe chaque donnée et relève les lignes demandées.</div>
+    <div class="exo">
+      <div class="assoc"><label for="d1_1"><code>vent_kmh</code> est une donnée…</label><select id="d1_1"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d1_2"><code>SEUIL_OURAGAN</code> est une donnée…</label><select id="d1_2"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d1_3"><code>vigilance</code> est une donnée…</label><select id="d1_3"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d1_4"><code>sirene_active</code> est une donnée…</label><select id="d1_4"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d1_5"><code>pression_hpa</code> est une donnée…</label><select id="d1_5"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d1_6"><code>message</code> est une donnée…</label><select id="d1_6"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d1_l1">À quelle ligne la donnée <code>vent_kmh</code> est-elle LUE depuis le capteur ?</label><input type="number" id="d1_l1" min="1" max="30"></div>
+      <div class="assoc"><label for="d1_l2">À quelle ligne le <code>message</code> est-il fabriqué (produit) ?</label><input type="number" id="d1_l2" min="1" max="30"></div>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Une donnée UTILISÉE arrive de l'extérieur (capteur, constante) ; une donnée PRODUITE est créée par le programme (à gauche d'un « = » calculé). Utilise les boutons ✨ pour surligner les lignes dans CodeLab.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><code>vent_kmh</code> et <code>pression_hpa</code> viennent de <code>lire_capteur(...)</code> (lignes 6-7) ; <code>SEUIL_*</code> sont des constantes (lignes 2-4) : tout cela est UTILISÉ. <code>vigilance</code>, <code>sirene_active</code> et <code>message</code> sont créés par le programme : PRODUITS. Le message est fabriqué ligne 21.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Classements :</b> vent_kmh → utilisée · SEUIL_OURAGAN → utilisée · vigilance → produite · sirene_active → produite · pression_hpa → utilisée · message → produite. <b>Lignes :</b> vent_kmh lu ligne <b>6</b> ; message fabriqué ligne <b>21</b>.</p>
+      <p><b>Méthode :</b> pour chaque variable, on cherche D'OÙ vient sa valeur : capteur/constante = entrée ; calculée par le programme = sortie. Remarque : <code>pression_hpa</code> est lue mais pas encore exploitée par la décision — une piste d'amélioration future (validation croisée, cf. séquence C4.3) !</p>
+      <p><b>Pourquoi c'est crucial :</b> modifier un programme sans connaître ses entrées/sorties, c'est opérer sans radiographie : on risque de casser une donnée dont une AUTRE partie du système a besoin (le message part vers l'application !).</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> classer <code>vigilance</code> en « utilisée » parce qu'elle apparaît dans le message (elle est d'abord PRODUITE, puis réutilisée) ; confondre le numéro de ligne du surlignage avec celui du gutter après avoir modifié le programme.</div>
+    <div class="retenir"><b>📌 À retenir :</b> avant toute modification, on établit la <b>carte d'identité</b> du programme : données <b>utilisées</b> (capteurs, constantes, saisies) et données <b>produites</b> (résultats, commandes, messages). C'est la compétence C6.1 — le préalable de toute modification sûre.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 8 réponses justes sur 8.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Tracer l'exécution à la main</h3><span class="duree">⏱ 20 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> prédire les sorties du programme pour des entrées données — sans l'exécuter.</div>
+      <div><b>Compétence :</b> 3e_C6.1 (+ prépare la validation de C6.3).</div>
+      <div><b>Production attendue :</b> 2 traces d'exécution + 1 justification.</div>
+      <div><b>Ressources :</b> le programme dans CodeLab — <button class="btn small ghost" type="button" data-hl="12-18">✨ Surligner les lignes 12-18</button></div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> suis le programme ligne à ligne « dans ta tête » (ou au brouillon) pour chaque situation, et donne les valeurs produites.</div>
+    <div class="exo">
+      <p><b>Situation A :</b> <code>vent_kmh = 95</code></p>
+      <div class="assoc"><label for="d2_a1">vigilance =</label><select id="d2_a1"><option value="">— choisir —</option><option>"verte"</option><option>"orange"</option><option>"rouge"</option><option>"violette"</option></select></div>
+      <div class="assoc"><label for="d2_a2">sirene_active =</label><select id="d2_a2"><option value="">— choisir —</option><option>True</option><option>False</option></select></div>
+      <p style="margin-top:10px"><b>Situation B (piège classique) :</b> <code>vent_kmh = 118</code> exactement</p>
+      <div class="assoc"><label for="d2_b1">vigilance =</label><select id="d2_b1"><option value="">— choisir —</option><option>"verte"</option><option>"orange"</option><option>"rouge"</option><option>"violette"</option></select></div>
+      <label for="d2_just" style="display:block;margin-top:8px"><b>Justifie</b> la situation B en citant l'opérateur de comparaison de la ligne 12 :</label>
+      <textarea id="d2_just" placeholder="À la ligne 12, le test est vent_kmh > 118, or…"></textarea>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Descends les tests dans l'ordre : 95 est-il &gt; 118 ? Non → suivant. 95 &gt; 90 ? … Le PREMIER test vrai gagne, les suivants sont ignorés (c'est le rôle de <code>elif</code>).</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>A : 95 &gt; 90 → rouge, sirène True. B : 118 &gt; 118 est FAUX (l'opérateur &gt; est strict !) → on passe au test suivant : 118 &gt; 90 → rouge. Pour avoir violette il faut 119 ou plus.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>A :</b> vigilance = "rouge", sirene_active = True. <b>B :</b> vigilance = <b>"rouge"</b> — car ligne 12 le test est <code>vent_kmh &gt; SEUIL_OURAGAN</code> avec un <b>&gt; strict</b> : 118 &gt; 118 est faux. C'est exactement le genre de « valeur frontière » qui piège les programmes (et les programmeurs) — on le retrouvera dans le plan de tests.</p>
+      <p><b>Méthode de la trace :</b> une ligne à la fois, en notant la valeur de chaque variable — c'est ce que fait la machine, ni plus ni moins.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre « violette » en B (confondre &gt; et ≥) ; oublier qu'après un test vrai, les <code>elif</code> suivants sont ignorés ; tracer de tête sans noter les valeurs.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>tracer</b> = exécuter le programme à la main pour prédire ses sorties. Les <b>valeurs frontières</b> (égalité aux seuils) sont les cas à tracer en priorité — l'opérateur &gt; est strict, ≥ ne l'est pas.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 réponses justes et une justification citant le &gt; strict.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>✏ Séance 2 — Modifier le programme</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment ajouter l'alerte graduée sans casser l'existant ?</p>
+  <object class="figure" data="Images/algorigramme_alerte_graduee.svg" type="image/svg+xml" aria-label="Algorigramme de l'alerte graduée : trois tests successifs sur le vent, du seuil ouragan au seuil orange, avec sirène et gyrophare selon le niveau">L'algorigramme de la nouvelle fonctionnalité (SVG)</object>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Premier geste : modifier un paramètre</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> modifier un paramètre du programme et prédire l'effet de la modification.</div>
+      <div><b>Compétence :</b> 3e_C6.3.</div>
+      <div><b>Production attendue :</b> le seuil modifié dans CodeLab + l'effet prédit.</div>
+      <div><b>Ressources :</b> CodeLab — <button class="btn small ghost" type="button" data-hl="2-4">✨ Surligner les lignes 2-4</button></div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> Météo-France recalibre ses niveaux : le seuil orange passe de 50 à <b>60 km/h</b>. Dans CodeLab, <b>modifie la ligne 2</b> en conséquence, puis réponds.</div>
+    <div class="exo">
+      <div class="assoc"><label for="d3_1">Après ta modification, un vent de 55 km/h déclenche…</label><select id="d3_1"><option value="">— choisir —</option><option>vigilance verte/jaune (rien)</option><option>vigilance orange</option><option>vigilance rouge</option></select></div>
+      <div class="assoc"><label for="d3_2">Quel est l'intérêt d'avoir écrit les seuils dans des CONSTANTES en tête de programme (lignes 2-4) plutôt que « en dur » dans les tests ?</label><select id="d3_2"><option value="">— choisir —</option><option>une seule ligne à modifier, aucun risque d'oublier une occurrence</option><option>ça rend le programme plus long</option><option>c'est obligatoire en Python</option><option>aucun intérêt</option></select></div>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses (je vérifie aussi ta ligne 2 dans CodeLab !)</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>La ligne 2 est <code>SEUIL_ORANGE = 50</code> : remplace juste la valeur. Puis trace : 55 &gt; 60 ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Avec SEUIL_ORANGE = 60 : 55 &gt; 60 est faux → aucune branche ne se déclenche → verte/jaune. Un seuil dans une constante se change en UN endroit ; « en dur », il faudrait le chercher partout — et en oublier un = bug garanti.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p>Ligne 2 : <code>SEUIL_ORANGE = 60</code>. Un vent de 55 km/h ne déclenche plus rien (55 &gt; 60 faux) → <b>verte/jaune</b>. Intérêt des constantes : <b>un seul point de modification</b> — c'est une règle d'or de la programmation (et la raison pour laquelle la ligne s'appelle SEUIL_ORANGE et pas x).</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> modifier le 50 dans le test au lieu de la constante ; répondre « orange » sans re-tracer avec la nouvelle valeur.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>modifier un paramètre</b> = changer une valeur SANS toucher à la structure. Les <b>constantes nommées</b> rendent la modification sûre : un seul endroit à changer, un effet prévisible qu'on vérifie par une trace.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> ligne 2 réellement modifiée dans CodeLab + 2 réponses justes.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>La nouvelle fonctionnalité : le gyrophare gradué</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> compléter le programme pour implémenter l'alerte graduée de l'algorigramme.</div>
+      <div><b>Compétence :</b> 3e_C6.3 — modifier le programme associé à une nouvelle fonctionnalité.</div>
+      <div><b>Production attendue :</b> le programme v2 complet dans CodeLab (4 ajouts).</div>
+      <div><b>Ressources :</b> l'algorigramme ci-dessus — c'est TA spécification.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> implémente l'algorigramme dans CodeLab, en 4 ajouts :
+      ① après la ligne 10, crée la variable <code>gyrophare_actif = False</code> ;
+      ② dans la branche <b>violette</b>, ajoute <code>gyrophare_actif = True</code> ;
+      ③ dans la branche <b>orange</b>, ajoute <code>gyrophare_actif = True</code> ;
+      ④ à la fin du programme, ajoute le bloc <code>if gyrophare_actif:</code> / <code>    activer_gyrophare()</code>.
+      ⚠ Respecte l'indentation (4 espaces) — en Python, elle fait partie du langage !</div>
+    <div class="exo">
+      <button class="btn small" data-check="4" style="margin-top:2px">✔ Vérifier mon programme (analyse du contenu de CodeLab)</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde comment <code>sirene_active</code> est gérée : créée à False (ligne 10), passée à True dans les bonnes branches, testée à la fin. <code>gyrophare_actif</code> suit EXACTEMENT le même modèle.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>① <code>gyrophare_actif = False</code> sous la ligne 10 (même colonne, sans indentation). ② et ③ : à l'intérieur des branches, la ligne commence par 4 espaces. ④ tout en bas :<br><code>if gyrophare_actif:</code><br><code>    activer_gyrophare()</code></p></details>
+    <details class="correction"><summary>✅ Correction commentée ligne par ligne (programme v2 complet)</summary>
+      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:'Fira Code',monospace;font-size:.8em;overflow:auto;color:#d7e6ff"># Station d'alerte cyclonique — programme d'alerte v2
+SEUIL_ORANGE = 60          # seuil recalibré (activité 3)
+SEUIL_ROUGE = 90
+SEUIL_OURAGAN = 118
+
+vent_kmh = lire_capteur("anemometre")     # entrée : vent mesuré
+pression_hpa = lire_capteur("barometre")  # entrée : pression (non utilisée ici)
+
+vigilance = "verte"        # sorties initialisées « au repos »
+sirene_active = False
+gyrophare_actif = False    # ① nouvelle sortie, False par défaut
+
+if vent_kmh &gt; SEUIL_OURAGAN:      # du plus fort au plus faible !
+    vigilance = "violette"
+    sirene_active = True
+    gyrophare_actif = True        # ② violette : les DEUX actionneurs
+elif vent_kmh &gt; SEUIL_ROUGE:
+    vigilance = "rouge"
+    sirene_active = True          # rouge : sirène seule (inchangé)
+elif vent_kmh &gt; SEUIL_ORANGE:
+    vigilance = "orange"
+    gyrophare_actif = True        # ③ orange : gyrophare seul
+
+message = "Vigilance " + vigilance
+envoyer(message)
+if sirene_active:
+    activer_sirene()
+if gyrophare_actif:               # ④ nouveau bloc de commande
+    activer_gyrophare()</pre>
+      <p><b>Pourquoi initialiser à False (①) :</b> par sécurité, les actionneurs sont « au repos » par défaut — seule une condition explicite les active. <b>Pourquoi l'ordre des tests :</b> du plus fort au plus faible, sinon un ouragan serait capté par « &gt; 60 » avant d'atteindre son test. <b>Pourquoi ④ à la fin :</b> la décision d'abord, la commande ensuite — comme pour la sirène.</p>
+      <p><b>Erreur de message possible :</b> si Python affichait <code>IndentationError</code>, c'est qu'une ligne de branche n'a pas ses 4 espaces — l'indentation EST la structure du programme.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier l'initialisation à False (le gyrophare resterait allumé d'un cycle sur l'autre !) ; mauvaise indentation (la ligne sort de la branche) ; ajouter gyrophare_actif = True dans la branche ROUGE (relis l'algorigramme : rouge = sirène seule).</div>
+    <div class="retenir"><b>📌 À retenir :</b> une nouvelle fonctionnalité s'implémente en suivant une <b>spécification</b> (ici l'algorigramme) et en imitant les <b>modèles existants</b> du programme (sirene_active). Toujours : initialisation sûre → décision → commande.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 4 ajouts présents et bien placés (le vérificateur analyse ton code), indentation correcte.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🧪 Séance 3 — Prouver que ça marche : le plan de tests</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment être SÛR que la v2 fait ce qu'on attend — et n'a rien cassé ?</p>
+  <object class="figure" data="Images/plan_de_tests_jeux_essai.svg" type="image/svg+xml" aria-label="Plan de tests avec cinq jeux d'essai encadrant les seuils : 45, 50, 51, 118, 119 ; le test à 118 révèle un bug">Le plan de tests et ses jeux d'essai (SVG)</object>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Dérouler le plan de tests</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> valider le programme v2 par des jeux d'essai calculés à la main, en visant les valeurs frontières.</div>
+      <div><b>Compétence :</b> 3e_C6.3 — tester et valider la modification.</div>
+      <div><b>Production attendue :</b> 5 sorties attendues + le diagnostic d'un bug.</div>
+      <div><b>Ressources :</b> TON programme v2 dans CodeLab (seuil orange = 60) + le schéma du plan de tests.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) calcule À LA MAIN la sortie attendue de ta v2 pour chaque jeu d'essai ; b) analyse ensuite le bug du schéma.</div>
+    <div class="exo">
+      <h4>a) Sorties attendues de TA v2 (seuil orange = 60)</h4>
+      <div class="assoc"><label for="d5_1">vent = 55 →</label><select id="d5_1"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
+      <div class="assoc"><label for="d5_2">vent = 60 (frontière !) →</label><select id="d5_2"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
+      <div class="assoc"><label for="d5_3">vent = 61 →</label><select id="d5_3"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
+      <div class="assoc"><label for="d5_4">vent = 118 (frontière !) →</label><select id="d5_4"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
+      <div class="assoc"><label for="d5_5">vent = 119 →</label><select id="d5_5"><option value="">— choisir —</option><option>verte/jaune, rien</option><option>orange + gyrophare</option><option>rouge + sirène</option><option>violette + les deux</option></select></div>
+      <h4>b) Le bug du schéma</h4>
+      <div class="assoc"><label for="d5_6">Sur le schéma, le test n°4 (vent = 118) obtient « violette » au lieu de « rouge ». La cause la plus probable dans le code testé :</label><select id="d5_6"><option value="">— choisir —</option><option>quelqu'un a écrit >= 118 au lieu de > 118</option><option>le capteur est cassé</option><option>Python ne sait pas comparer</option><option>118 est un nombre spécial</option></select></div>
+      <div class="assoc"><label for="d5_7">Pourquoi les jeux d'essai visent-ils les valeurs 49/50/51 ou 117/118/119 plutôt que 30, 75, 200 ?</label><select id="d5_7"><option value="">— choisir —</option><option>les erreurs se cachent aux frontières : c'est là que > et >= diffèrent</option><option>ce sont des nombres plus jolis</option><option>pour aller plus vite</option><option>par tradition</option></select></div>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour chaque valeur, redéroule les tests de TA v2 dans l'ordre (rappel : tous les &gt; sont stricts, et ton seuil orange vaut 60 depuis l'activité 3).</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>55 : rien (55&gt;60 faux). 60 : rien (60&gt;60 faux — frontière !). 61 : orange+gyro. 118 : rouge+sirène (118&gt;118 faux, 118&gt;90 vrai). 119 : violette+les deux. Le schéma obtient violette à 118 : seul un ≥ l'explique.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> 55 → verte/jaune · 60 → verte/jaune (60 &gt; 60 est faux : frontière exclue) · 61 → orange + gyrophare · 118 → rouge + sirène · 119 → violette + les deux.</p>
+      <p><b>b)</b> ≥ au lieu de &gt; : avec <code>vent_kmh &gt;= 118</code>, la valeur 118 bascule en violette — exactement l'écart constaté. Les frontières sont les SEULS points où &gt; et ≥ diffèrent : c'est pourquoi un bon plan de tests les vise systématiquement (49/50/51…). Tester 30, 75, 200 ne distinguerait jamais les deux opérateurs.</p>
+      <p><b>La règle professionnelle :</b> sortie ATTENDUE calculée à la main AVANT l'exécution, sinon on ne teste pas, on constate. Verdict ✔/✘ pour chaque jeu, et un seul ✘ suffit à refuser la version.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> répondre « orange » pour 60 (oublier que &gt; est strict) ; répondre « violette » pour 118 ; choisir des jeux d'essai loin des seuils « pour faire varié ».</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>valider</b> = dérouler un <b>plan de tests</b> : jeux d'essai visant les <b>valeurs frontières</b>, sortie attendue calculée À LA MAIN, verdict ✔/✘. Une modification n'est terminée que lorsque TOUS les tests passent — y compris ceux des anciennes fonctions (non-régression).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7 réponses justes sur 7.</div>
+  </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Réinvestissement</span><h3>🌊 Le programme de la bouée</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> réutiliser toute la démarche C6.1 → C6.3 sur un programme jamais vu.</div>
+      <div><b>Compétences :</b> 3e_C6.1 + C6.3 (bilan).</div>
+      <div><b>Production attendue :</b> 6 réponses, sans rouvrir les corrections.</div>
+      <div><b>Ressources :</b> uniquement le programme ci-dessous — c'est volontaire !</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme. Lis-le, puis réponds.</div>
+    <div class="exo">
+      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:'Fira Code',monospace;font-size:.85em;overflow:auto;color:#d7e6ff">SEUIL_HOULE = 4
+hauteur_m = lire_capteur("houlographe")
+drapeau = "vert"
+if hauteur_m &gt; SEUIL_HOULE:
+    drapeau = "rouge"
+envoyer("Baignade : " + drapeau)</pre>
+      <div class="assoc"><label for="d6_1"><code>hauteur_m</code> est une donnée…</label><select id="d6_1"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d6_2"><code>drapeau</code> est une donnée…</label><select id="d6_2"><option value="">— choisir —</option><option>utilisée (entrée)</option><option>produite (sortie)</option></select></div>
+      <div class="assoc"><label for="d6_3">Trace : hauteur_m = 4.0 exactement → drapeau =</label><select id="d6_3"><option value="">— choisir —</option><option>"vert"</option><option>"rouge"</option></select></div>
+      <div class="assoc"><label for="d6_4">La mairie veut passer le seuil à 3 m. Quelle ligne modifier ?</label><input type="number" id="d6_4" min="1" max="6"></div>
+      <div class="assoc"><label for="d6_5">Après cette modification, quel TRIO de jeux d'essai est le plus pertinent ?</label><select id="d6_5"><option value="">— choisir —</option><option>2,9 · 3,0 · 3,1</option><option>1 · 5 · 10</option><option>0 · 100 · 1000</option><option>3 · 3 · 3</option></select></div>
+      <div class="assoc"><label for="d6_6">On ajoute un drapeau « orange » entre 2 m et 3 m. Quelle structure faut-il introduire ?</label><select id="d6_6"><option value="">— choisir —</option><option>un elif intermédiaire, testé APRÈS le cas le plus fort</option><option>un deuxième programme complet</option><option>supprimer le if existant</option><option>une boucle infinie</option></select></div>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Applique la check-list dans l'ordre : entrées/sorties → trace (attention à la frontière !) → paramètre → plan de tests → structure.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>4.0 &gt; 4 est faux → vert. Le seuil est ligne 1. Les jeux d'essai encadrent le NOUVEAU seuil (3) : 2,9/3,0/3,1. Pour l'orange : un elif, en testant du plus fort au plus faible (comme l'alerte graduée !).</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p>utilisée · produite · <b>"vert"</b> (4.0 &gt; 4 faux, frontière) · ligne <b>1</b> · <b>2,9 · 3,0 · 3,1</b> · <b>un elif intermédiaire</b> testé après le cas le plus fort.</p>
+      <p><b>Bilan :</b> tu viens de dérouler seul·e la démarche complète — carte d'identité, trace, modification de paramètre, plan de tests aux frontières, extension de structure. C'est exactement C6.1 + C6.3, transférées à un programme inconnu.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> « rouge » à 4.0 (encore la frontière !) ; jeux d'essai autour de l'ANCIEN seuil (4) au lieu du nouveau (3) ; vouloir réécrire tout le programme pour ajouter un niveau.</div>
+    <div class="retenir"><b>📌 À retenir :</b> la démarche est transférable à tout programme : <b>identifier les données → tracer → modifier au bon endroit → tester aux frontières</b>.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6/6 sans avoir rouvert les corrections.</div>
+  </div>
+</section>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5 — rien de nouveau ici.</p>
+  <h4>1. La carte d'identité du programme (activités 1-2 — C6.1)</h4>
+  <p>Avant de modifier : identifier les données <b>utilisées</b> (capteurs, constantes) et <b>produites</b> (résultats, commandes, messages), puis <b>tracer</b> l'exécution à la main pour prédire les sorties. Les <b>elif</b> s'arrêtent au premier test vrai ; l'opérateur <b>&gt;</b> est strict.</p>
+  <h4>2. Modifier sans casser (activités 3-4 — C6.3)</h4>
+  <p>Modifier un <b>paramètre</b> = changer une constante nommée (un seul point de modification). Implémenter une <b>nouvelle fonctionnalité</b> = suivre une spécification (algorigramme) en imitant les modèles existants : initialisation sûre (False) → décision (branches, du plus fort au plus faible) → commande (if final). En Python, l'<b>indentation</b> fait partie du langage.</p>
+  <h4>3. Valider (activité 5 — C6.3)</h4>
+  <p><b>Plan de tests</b> : jeux d'essai visant les <b>valeurs frontières</b>, sortie attendue calculée <b>à la main avant</b> l'exécution, verdict ✔/✘. Un seul ✘ refuse la version ; on reteste aussi l'ancien comportement (<b>non-régression</b>).</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">donnée d'entrée = input</span><span class="tag">donnée de sortie = output</span><span class="tag">constante = constant</span><span class="tag">seuil = threshold</span><span class="tag">jeu d'essai = test case</span><span class="tag">bogue = bug</span><span class="tag">tracer = to trace</span><span class="tag">indentation = indentation</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé ? Complète avec ce que tu sais maintenant :</label>
+    <textarea id="hyp_retour" placeholder="Avant de modifier un programme, il faut en fait…"></textarea>
+  </div>
+  <div class="bilan-grid">
+    <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — dont des programmes et schémas à lire — pour vérifier toute la démarche.</p>
+  <a class="btn qcm" href="qcm_3e_C6.1-C6.3_programmer_alerte.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🐍 <b>Défi Python réel :</b> recopie ta v2 dans un vrai Python (PyCharm ou console) en remplaçant <code>lire_capteur(...)</code> par <code>float(input("vent ? "))</code> et les <code>activer_*()</code> par des <code>print(...)</code> : déroule ton plan de tests pour de vrai !</p>
+  <p>📊 <b>Défi pression :</b> le programme lit <code>pression_hpa</code> mais ne s'en sert pas. Propose (sur papier) une condition qui croise vent ET pression pour fiabiliser l'alerte — souviens-toi de la séquence C4.3.</p>
+  <p>🤖 <b>Défi mBot2 :</b> transpose l'alerte graduée sur le mBot2 : LED orange/rouge/violette selon la distance mesurée par l'ultrason.</p>
+</section>
+
+<footer>
+  <p>Séquence 3e_C6.1 → 3e_C6.3 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Programme initial ══════ */
+const PROGRAMME_V1 = `# Station d'alerte cyclonique — programme d'alerte v1
+SEUIL_ORANGE = 50
+SEUIL_ROUGE = 90
+SEUIL_OURAGAN = 118
+
+vent_kmh = lire_capteur("anemometre")
+pression_hpa = lire_capteur("barometre")
+
+vigilance = "verte"
+sirene_active = False
+
+if vent_kmh > SEUIL_OURAGAN:
+    vigilance = "violette"
+    sirene_active = True
+elif vent_kmh > SEUIL_ROUGE:
+    vigilance = "rouge"
+    sirene_active = True
+elif vent_kmh > SEUIL_ORANGE:
+    vigilance = "orange"
+
+message = "Vigilance " + vigilance
+envoyer(message)
+if sirene_active:
+    activer_sirene()`;
+
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_3e_C6.1-C6.3_programmer";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, code: $("clTa").value, fs: window.__clFs||14};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio" && el.id!=="clTa") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    $("clSaved").textContent = "● Travail sauvegardé sur cet appareil";
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  if(typeof o.code === "string" && o.code.length) $("clTa").value = o.code;
+  window.__clFs = o.fs || 14;
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale (réponses ET programme) ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ CodeLab Techno ══════ */
+function escapeHtml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function coloriseCode(seg){
+  return seg
+    .replace(/\b(if|elif|else|True|False|and|or|not|def|return|while|for|in|import)\b/g, '<span class="k">$1</span>')
+    .replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="n">$1</span>')
+    .replace(/\b(lire_capteur|envoyer|activer_sirene|activer_gyrophare|print|input|float)\b/g, '<span class="f">$1</span>');
+}
+function colorise(line){
+  let l = escapeHtml(line);
+  const ci = l.indexOf("#");
+  let comment = "";
+  if(ci >= 0){ comment = '<span class="c">'+l.slice(ci)+'</span>'; l = l.slice(0,ci); }
+  const parts = l.split(/(&quot;.*?&quot;)/g);
+  l = parts.map(p => p.startsWith("&quot;") ? '<span class="s">'+p+'</span>' : coloriseCode(p)).join("");
+  return l + comment;
+}
+window.__clFs = 14;
+window.__clHlRange = null;
+function clRender(){
+  const code = $("clTa").value;
+  const lines = code.split("\n");
+  $("clLines").textContent = lines.length + " lignes";
+  const range = window.__clHlRange || [0,-1];
+  const a = range[0], b = range[1];
+  $("clGutter").innerHTML = lines.map(function(_,i){
+    const n=i+1; const cls = (n>=a&&n<=b) ? ' class="cl-ln-hl"' : '';
+    return '<span'+cls+'>'+n+'</span>';
+  }).join("\n");
+  $("clHl").innerHTML = lines.map(function(l,i){
+    const n=i+1; const inner = colorise(l) || "&nbsp;";
+    return (n>=a&&n<=b) ? '<span class="cl-line-hl">'+inner+'</span>' : inner;
+  }).join("\n") + "\n";
+  const ta=$("clTa"); ta.style.height="auto"; ta.style.height=ta.scrollHeight+"px";
+  document.getElementById("codelab").style.setProperty("--cl-fs", window.__clFs+"px");
+  clDiff();
+}
+function clDiff(){
+  const cur=$("clTa").value.split("\n"), ini=PROGRAMME_V1.split("\n");
+  let changed=0;
+  const max=Math.max(cur.length,ini.length);
+  for(let i=0;i<max;i++){ if((cur[i]||"")!==(ini[i]||"")) changed++; }
+  $("clDiffInfo").textContent = changed===0 ? "Ton programme est identique à la version d'origine." :
+    changed + " ligne(s) diffèrent de la version d'origine (affichée ci-dessous).";
+  $("clOrig").textContent = PROGRAMME_V1;
+}
+$("clTa").addEventListener("input", clRender);
+$("clCopy").addEventListener("click", async ()=>{
+  try{ await navigator.clipboard.writeText($("clTa").value); $("clSaved").textContent="📋 Programme copié !"; }
+  catch(e){ $("clTa").select(); document.execCommand("copy"); }
+});
+$("clResetBtn").addEventListener("click", ()=>{
+  if(confirm("Réinitialiser le programme à la version d'origine ? Tes modifications seront perdues.")){
+    $("clTa").value = PROGRAMME_V1; clRender(); save(false);
+  }
+});
+$("clFontMinus").addEventListener("click", ()=>{ window.__clFs=Math.max(10,window.__clFs-1); clRender(); save(false); });
+$("clFontPlus").addEventListener("click", ()=>{ window.__clFs=Math.min(22,window.__clFs+1); clRender(); save(false); });
+$("clWrap").addEventListener("click", e=>{
+  const cl=document.getElementById("codelab");
+  cl.classList.toggle("cl-wrap-on");
+  e.currentTarget.setAttribute("aria-pressed", String(cl.classList.contains("cl-wrap-on")));
+  clRender();
+});
+$("clFull").addEventListener("click", ()=>{
+  const cl=document.getElementById("codelab");
+  if(document.fullscreenElement) document.exitFullscreen();
+  else if(cl.requestFullscreen) cl.requestFullscreen();
+});
+$("clExport").addEventListener("click", ()=>{
+  const blob=new Blob([$("clTa").value],{type:"text/x-python"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download="station_alerte_v2.py"; a.click();
+  URL.revokeObjectURL(a.href);
+});
+$("clImport").addEventListener("change", e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{ $("clTa").value=String(r.result); clRender(); save(false); };
+  r.readAsText(f);
+});
+$("clForget").addEventListener("click", ()=>{
+  if(confirm("Effacer la sauvegarde du programme (les réponses aux activités sont conservées) ?")){
+    $("clTa").value = PROGRAMME_V1; clRender(); save(false);
+  }
+});
+$("clUnhl").addEventListener("click", ()=>{ window.__clHlRange=null; clRender(); });
+document.querySelectorAll("[data-hl]").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    const parts=b.dataset.hl.split("-");
+    window.__clHlRange=[parseInt(parts[0],10), parseInt(parts[1],10)]; clRender();
+    document.getElementById("codelab").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth", block:"center"});
+  });
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = id => parseFloat(String($(id).value).replace(",","."));
+const txt = id => String($(id).value||"").trim().toLowerCase();
+function codeSansCommentaires(){ return $("clTa").value.split("\n").map(l=>l.split("#")[0]).join("\n"); }
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={d1_1:"utilisée (entrée)",d1_2:"utilisée (entrée)",d1_3:"produite (sortie)",d1_4:"produite (sortie)",d1_5:"utilisée (entrée)",d1_6:"produite (sortie)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    if(num("d1_l1")===6) ok++;
+    if(num("d1_l2")===21) ok++;
+    return {score:ok,total:8,valide:ok===8};
+  },
+  2: function(){
+    let ok=0;
+    if($("d2_a1").value==='"rouge"') ok++;
+    if($("d2_a2").value==="True") ok++;
+    if($("d2_b1").value==='"rouge"') ok++;
+    const j=txt("d2_just");
+    const jOk = j.length>=20 && (j.includes("strict")||j.includes("supérieur")||j.includes(">")) && (j.includes("faux")||j.includes("pas")||j.includes("égal"));
+    return {score:ok,total:3,extra:jOk?"":" Ta justification doit expliquer que 118 > 118 est FAUX car l'opérateur > est strict.",valide:ok===3&&jOk};
+  },
+  3: function(){
+    let ok=0;
+    const code=codeSansCommentaires();
+    const seuilOk = /SEUIL_ORANGE\s*=\s*60\b/.test(code);
+    if(seuilOk) ok++;
+    if($("d3_1").value==="vigilance verte/jaune (rien)") ok++;
+    if($("d3_2").value.indexOf("une seule ligne")===0) ok++;
+    return {score:ok,total:3,extra:seuilOk?"":" Je ne trouve pas SEUIL_ORANGE = 60 dans CodeLab : modifie la ligne 2 !",valide:ok===3};
+  },
+  4: function(){
+    const code=codeSansCommentaires();
+    const checks=[
+      [/gyrophare_actif\s*=\s*False/.test(code), "l'initialisation gyrophare_actif = False (ajout ①)"],
+      [(code.match(/gyrophare_actif\s*=\s*True/g)||[]).length>=2, "les DEUX passages à True (violette ② ET orange ③)"],
+      [/if\s+gyrophare_actif\s*:/.test(code), "le bloc final if gyrophare_actif: (ajout ④)"],
+      [/if\s+gyrophare_actif\s*:\s*\n\s{4,}activer_gyrophare\s*\(\s*\)/.test(code), "activer_gyrophare() INDENTÉ sous le if final"],
+      [/vigilance\s*=\s*"violette"[\s\S]{0,120}?gyrophare_actif\s*=\s*True/.test(code), "gyrophare_actif = True DANS la branche violette"],
+      [/vigilance\s*=\s*"orange"[\s\S]{0,80}?gyrophare_actif\s*=\s*True/.test(code), "gyrophare_actif = True DANS la branche orange"],
+      [!/vigilance\s*=\s*"rouge"[\s\S]{0,80}?gyrophare_actif\s*=\s*True/.test(code), "PAS de gyrophare dans la branche rouge (relis l'algorigramme)"]
+    ];
+    const ok=checks.filter(c=>c[0]).length;
+    const manque=checks.filter(c=>!c[0]).map(c=>c[1]);
+    return {score:ok,total:checks.length,extra:manque.length?" Il manque : "+manque.join(" ; ")+".":"",valide:ok===checks.length};
+  },
+  5: function(){
+    let ok=0;
+    const att={d5_1:"verte/jaune, rien",d5_2:"verte/jaune, rien",d5_3:"orange + gyrophare",d5_4:"rouge + sirène",d5_5:"violette + les deux"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    if($("d5_6").value.indexOf("quelqu'un a écrit")===0) ok++;
+    if($("d5_7").value.indexOf("les erreurs se cachent")===0) ok++;
+    return {score:ok,total:7,valide:ok===7};
+  },
+  6: function(){
+    let ok=0;
+    if($("d6_1").value==="utilisée (entrée)") ok++;
+    if($("d6_2").value==="produite (sortie)") ok++;
+    if($("d6_3").value==='"vert"') ok++;
+    if(num("d6_4")===1) ok++;
+    if($("d6_5").value==="2,9 · 3,0 · 3,1") ok++;
+    if($("d6_6").value.indexOf("un elif")===0) ok++;
+    return {score:ok,total:6,valide:ok>=5};
+  }
+};
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " points validés.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5,6].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 6 activités validées";
+  $("progFill").style.width = (n/6*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3,4], s3:[5,6]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+$("clTa").value = PROGRAMME_V1;
+restore();
+clRender(); majProgress(); majHyp();
+$("clSaved").textContent = "● prêt — sauvegarde automatique";
+</script>
+</body>
+</html>

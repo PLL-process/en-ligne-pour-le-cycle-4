@@ -343,6 +343,33 @@ OVERLAY = {
         qualite="README pointeur (activité 5 : plan coté, procédé, matériau ; 8 questions).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
+    # ── Thème 2 · LOT 04 (Fable, 2026-07-23) : Programmer l'alerte ──
+    "3e_C6.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence-projet « Programmer l'alerte » (3 séances) couvrant "
+                "3e_C6.1+C6.3 : éditeur CodeLab Techno complet (première "
+                "implémentation du composant commun), programme Python réel, "
+                "vérification du code effectivement écrit par l'élève (act. 3-4), "
+                "plan de tests aux frontières, versions A/B/C, QCM 30 q dont 6 "
+                "illustrées, synthèses, fiche, matrice, 3 SVG CC0, rapport de tests. "
+                "3e_C6.2 volontairement non traité (couvert par la séquence "
+                "Algorigrammes DNB existante, non modifiée).",
+        anomalies="Aucune. Exécution Python réelle proposée en bonus uniquement.",
+        accessibilite="Clavier, aria/alt, A−/A+ et retour à la ligne dans CodeLab, "
+                      "reduced-motion, impression A4, minuteur désactivable.",
+        medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C6.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C6.1",
+        qualite="README pointeur (activités 3-5 : modification, implémentation, "
+                "plan de tests ; 15 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

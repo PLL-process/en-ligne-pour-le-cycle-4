@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Programmer l'alerte (3e_C6.1 et C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>💻 Synthèse — Programmer l'alerte</h1>
+<p class="pb">Comment modifier le programme de la station sans rien casser — et le prouver par des tests ?</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. La carte d'identité du programme (3e_C6.1)</h2>
+  <object class="schema" data="../Images/programme_entrees_sorties.svg" type="image/svg+xml" aria-label="Données utilisées et produites par le programme">Entrées/sorties du programme</object>
+  <p>Données <b>utilisées</b> = lues de l'extérieur (capteurs, constantes) · données <b>produites</b> = créées par le programme (résultat, commande, message). <b>Tracer</b> = exécuter à la main pour prédire les sorties. Les <code>elif</code> s'arrêtent au <b>premier test vrai</b> → on teste les seuils du plus FORT au plus FAIBLE. L'opérateur <code>&gt;</code> est <b>strict</b> : à la frontière exacte, le test échoue.</p>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">2. Modifier (3e_C6.3)</h2>
+    <dl>
+      <dt>Paramètre</dt><dd>changer la <b>constante nommée</b> (<code>SEUIL_ORANGE = 60</code>) : un seul point de modification.</dd>
+      <dt>Nouvelle fonctionnalité</dt><dd>suivre la <b>spécification</b> (algorigramme) en imitant les modèles existants : initialisation sûre (<code>False</code>) → décision (branches) → commande (<code>if</code> final).</dd>
+      <dt>Indentation</dt><dd>en Python elle EST la structure : 4 espaces = « dans la branche ».</dd>
+    </dl>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">3. Valider (3e_C6.3)</h2>
+    <dl>
+      <dt>Jeu d'essai</dt><dd>entrée + sortie <b>attendue calculée à la main AVANT</b> + sortie obtenue + verdict ✔/✘.</dd>
+      <dt>Frontières</dt><dd>tester seuil−1, seuil, seuil+1 : seuls points où <code>&gt;</code> et <code>&gt;=</code> diffèrent.</dd>
+      <dt>Non-régression</dt><dd>re-tester AUSSI l'ancien comportement.</dd>
+      <dt>Verdict</dt><dd>UN échec = version refusée → corriger → tout rejouer.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc savoir">
+    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+    <ul>
+      <li>définir donnée utilisée / produite, constante, jeu d'essai, non-régression ;</li>
+      <li>expliquer le fonctionnement de if/elif et l'ordre des seuils ;</li>
+      <li>expliquer pourquoi &gt; est strict et pourquoi on teste aux frontières ;</li>
+      <li>pourquoi on lit un programme AVANT de le modifier.</li>
+    </ul>
+  </div>
+  <div class="bloc faire">
+    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+    <ul>
+      <li>établir la carte d'identité entrées/sorties d'un programme ;</li>
+      <li>tracer une exécution à la main ;</li>
+      <li>modifier un paramètre et prédire l'effet ;</li>
+      <li>ajouter une fonctionnalité en imitant un modèle existant ;</li>
+      <li>construire et dérouler un plan de tests aux frontières.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
+  <ul>
+    <li>Lire <code>&gt;</code> comme <code>&gt;=</code> (LE piège des frontières : 118 &gt; 118 est FAUX) ;</li>
+    <li>tester les seuils dans l'ordre croissant avec des elif (l'ouragan serait classé orange !) ;</li>
+    <li>oublier l'initialisation à <code>False</code> ou l'indentation des branches ;</li>
+    <li>« tester » sans avoir calculé la sortie attendue à la main ;</li>
+    <li>ne tester que la nouveauté et oublier la non-régression ;</li>
+    <li>accepter une version avec un test en échec (4/5 = refusé !).</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
+  <table class="voc">
+    <tr><td>entrée → <b>input</b></td><td>sortie → <b>output</b></td><td>seuil → <b>threshold</b></td></tr>
+    <tr><td>constante → <b>constant</b></td><td>jeu d'essai → <b>test case</b></td><td>bogue → <b>bug</b></td></tr>
+    <tr><td>tracer → <b>to trace</b></td><td>non-régression → <b>regression testing</b></td><td>indentation → <b>indentation</b></td></tr>
+  </table>
+</div>
+</div>
+</body>
+</html>

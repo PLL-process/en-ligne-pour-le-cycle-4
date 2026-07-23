@@ -56,3 +56,25 @@ navigation clavier complète, étiquetage des versions A/B/C.
   `inventaire_materiel.csv` ou alternative B/C.
 - Cohérence problématique ↔ activités ↔ évaluation vérifiable en relisant
   uniquement ces trois sections.
+
+## Règle d'or « Trois façons de vivre la séquence » (décision Pascal, 23/07/2026 — à entériner au Conseil du 28/07)
+
+Toute séquence mettant en jeu du matériel, un logiciel ou une manipulation
+propose — quand c'est possible — un encadré visuel « 🔀 Trois façons de vivre
+la séquence » avec trois cartes :
+
+- **🅰 Matériel réel** : la manipulation authentique (matériel confirmé du
+  labo, sécurité TBT, protocole) ; tout matériel non confirmé est marqué
+  « MATÉRIEL À CONFIRMER — prévoir une alternative par simulation » ;
+- **🅱 Simulation / logiciel** : l'équivalent numérique (VittaScience, Filius,
+  mBlock, FreeCAD…), gratuit et sans compte obligatoire de préférence ;
+- **🅲 Sans matériel** : tout est dans la page (simulateurs HTML intégrés,
+  données enregistrées, gabarits imprimables) — AUCUN élève n'est pénalisé
+  par l'absence de matériel, y compris à la maison.
+
+Les trois versions visent les MÊMES objectifs d'apprentissage : la version 🅲
+n'est jamais un lot de consolation, c'est un chemin complet. L'encadré se place
+après « Choix de l'outil », avant les séances (modèle : séquences du Thème 2,
+ex. 3e_C4.3 « Station d'alerte cyclonique »). Si une séquence est entièrement
+débranchée par nature, l'encadré peut être omis — le signaler dans la fiche
+pédagogique.
