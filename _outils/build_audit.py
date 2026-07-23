@@ -370,6 +370,34 @@ OVERLAY = {
                 "plan de tests ; 15 questions dédiées).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
+    # ── LOT 06 (Fable) : l'énergie de la station (3e_C4.1 + C4.2) ──
+    "3e_C4.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « L'énergie de la station » (2 séances) clôturant la "
+                "compétence C4 de 3e : élaboration du schéma-bloc (palette avec "
+                "intrus, natures), dimensionnement (Wh, Ah, marge raisonnée) "
+                "vérifié au simulateur d'autonomie 72 h (verrou expérientiel : "
+                "essai insuffisant ET suffisant exigés), contraintes du site, "
+                "choix justifiés matériau/procédé (abaque), réinvestissement "
+                "borne du stade. Versions A/B/C, QCM 30 q (15/15, 3 illustrées, "
+                "réponses réparties), synthèses, fiche, matrice, 3 SVG CC0, "
+                "rapport de tests. Comble le manque détecté par l'audit.",
+        anomalies="Aucune. Version A en très basse tension uniquement.",
+        accessibilite="Clavier, aria/alt, listes déroulantes (DYS), "
+                      "reduced-motion, impression A4, minuteur désactivable.",
+        medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C4.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C4.1",
+        qualite="README pointeur (activités 3-4 : contraintes du site, choix "
+                "justifiés matériau/procédé ; 15 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
     # ── LOT 05 (Fable) : îlot 5e complet de la compétence C4 ──
     "5e_C4.1": dict(
         statut="COMPLET ET VALIDABLE",
