@@ -145,3 +145,28 @@ les décisions de publication restent à ChatGPT.*
 4. **Bilan 3e du Thème 2 après ce lot** : C4 (8/8), C5 (4/4), C6 (3/3, dont 1
    préexistant) = 15 codes de 3e couverts — la part 3e du Thème 2 est complète
    pour la rentrée 2026. Reste (seconde vague) : îlots 5e et 4e.
+
+## 2026-07-23 — Thème 2 · Correctif QCM LOT 03 & 04 + LOT 05 « Le lampadaire intelligent » (Fable, branches `fable/theme-2/lot-04-programmer-alerte` et `fable/theme-2/lot-05-lampadaire-intelligent-5e`)
+
+1. **Correctif qualité (commit dédié sur la branche lot-04)** : les banques des
+   QCM LOT 03 (déjà publié) et LOT 04 plaçaient la bonne réponse toujours en
+   position A — le moteur n'effectue pas de mélange à l'affichage, un élève
+   l'aurait repéré en trois questions. Permutation déterministe appliquée
+   (répartition 8/8/8/8 et 7/8/7/8), champ `d` permuté à l'identique, aucun
+   contenu pédagogique modifié. Les QCM LOT 01, 02 et 05 sont équilibrés.
+   **Point de vigilance pour le Conseil du 28/07** : contrôle « répartition
+   des bonnes réponses » à ajouter au skill controle-qualite-lot.
+2. **LOT 05 réalisé — îlot 5e COMPLET de la compétence C4** (les 8 codes du
+   niveau sur un objet-fil unique, le lampadaire solaire du parking) :
+   séquence 5 séances (fonctions/solutions + matériaux, chaîne d'énergie et
+   natures, chaîne d'information avec simulateur interactif à verrou
+   expérientiel, descripteurs et données, réseau local + jeu du courrier
+   débranché prescrit par C4.8, réinvestissement sonnette connectée),
+   QCM 32 q (4 par code, 6 illustrées, en-tête standard), synthèses ×2,
+   fiche, matrice 1-32, 3 SVG CC0, 7 README pointeurs, versions A/B/C.
+   Statuts : 5e_C4.1 → COMPLET ET VALIDABLE ; 5e_C4.2→C4.8 → COUVERTS.
+   Première entrée 5e du Thème 2 : langue et guidage calibrés 12 ans.
+3. **Choix pédagogique assumé** : un seul lot pour les 8 codes (au lieu de
+   2-3 lots) car le programme de 5e les prescrit sur UN objet simple du
+   quotidien ; l'éclatement aurait créé des redites. Le même objet-fil pourra
+   porter l'îlot 5e_C6 (comportement programmé du lampadaire).

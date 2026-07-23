@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Le lampadaire intelligent (5e_C4.1 à C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>💡 Synthèse — Le lampadaire intelligent</h1>
+<p class="pb">Comment un objet technique capte, décide, agit — et comment on le décrit avec des données ?</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Fonctions et solutions techniques (5e_C4.1) · Matériaux (5e_C4.4)</h2>
+  <object class="schema" data="../Images/lampadaire_fonctions_solutions.svg" type="image/svg+xml" aria-label="Lampadaire annoté : fonctions techniques et solutions techniques">Lampadaire : fonctions et solutions</object>
+  <p>Une <b>fonction technique</b> = CE QUE l'objet doit faire (« éclairer », « stocker l'énergie »). Une <b>solution technique</b> = l'ÉLÉMENT choisi pour le faire (bloc de LED, batterie). Une même fonction peut avoir <b>plusieurs solutions</b> : on choisit selon des <b>critères</b> (consommation, coût, durée de vie, environnement). Chaque <b>matériau</b> est choisi pour ses propriétés : <b>acier galvanisé</b> (mât : solide, traité anti-rouille), <b>polycarbonate</b> (vitre : transparent, très résistant), <b>aluminium</b> (léger, ne rouille pas), <b>cuivre</b> (câbles : excellent conducteur, gainé d'isolant).</p>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">2. Les DEUX chaînes de l'objet (5e_C4.2, C4.3, C4.5)</h2>
+  <object class="schema" data="../Images/chaines_energie_information_lampadaire.svg" type="image/svg+xml" aria-label="Chaîne d'énergie et chaîne d'information du lampadaire">Les deux chaînes du lampadaire</object>
+  <p><b>Chaîne d'ÉNERGIE</b> : panneau solaire (capter + convertir) → batterie (stocker) → régulateur + interrupteur (distribuer) → bloc LED (convertir). Natures d'énergie : <b>lumineuse → électrique → chimique → électrique → lumineuse</b>. <b>Chaîne d'INFORMATION</b> : capteurs (<b>acquérir</b>) → carte électronique (<b>traiter</b> : <code>SI nuit ET passage → allumer fort</code>) → ordre au bloc LED (<b>commander</b>). L'information <b>commande</b> l'énergie : l'énergie fait fonctionner, l'information rend « intelligent ».</p>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">3. Décrire par des données (5e_C4.6)</h2>
+    <dl>
+      <dt>Descripteur</dt><dd>une caractéristique choisie pour décrire l'objet : <code>numero</code>, <code>batterie_pct</code>, <code>etat</code>, <code>annee_pose</code>…</dd>
+      <dt>Type</dt><dd>nombre, texte, date, vrai/faux — il dit ce qu'on a le droit de faire (calculer, trier…).</dd>
+      <dt>Format</dt><dd>la règle d'écriture : <code>batterie_pct</code> = nombre entier de 0 à 100, sans unité écrite.</dd>
+    </dl>
+    <p>Dans un tableau : <b>une ligne = un objet complet</b>, <b>une colonne = un descripteur</b>. Des données bien décrites peuvent être triées, comparées, transmises.</p>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">4. Le réseau local (5e_C4.7, C4.8)</h2>
+    <object class="schema" data="../Images/reseau_local_college_5e.svg" type="image/svg+xml" aria-label="Réseau local du collège : terminaux, commutateur, borne Wi-Fi, serveur">Réseau local du collège</object>
+    <dl>
+      <dt>Composants</dt><dd><b>terminaux</b> (PC, tablettes, imprimante), <b>commutateur</b> (relie tout le monde), <b>borne Wi-Fi</b> (accès sans fil), <b>serveur</b> (stocke les dossiers) ; liaisons <b>filaires</b> (câbles) et <b>sans fil</b>.</dd>
+      <dt>Identification</dt><dd>pour communiquer, chaque terminal doit avoir un <b>nom et une adresse UNIQUES</b> — comme un courrier : sans destinataire unique, impossible de livrer !</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc savoir">
+    <h2 style="margin-top:0">✅ Je dois savoir</h2>
+    <ul>
+      <li>distinguer fonction technique et solution technique ;</li>
+      <li>citer les blocs des deux chaînes et la nature des énergies à chaque étape ;</li>
+      <li>associer un matériau à une propriété utile (anti-rouille, conducteur, transparent…) ;</li>
+      <li>définir descripteur, type et format d'une donnée ;</li>
+      <li>nommer les composants d'un réseau local et expliquer pourquoi on identifie les terminaux.</li>
+    </ul>
+  </div>
+  <div class="bloc faire">
+    <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+    <ul>
+      <li>annoter un objet réel : fonctions ↔ solutions ↔ matériaux ;</li>
+      <li>compléter une chaîne d'énergie ou d'information FOURNIE ;</li>
+      <li>prédire le comportement du lampadaire (jour / nuit / nuit + passage) ;</li>
+      <li>lire et compléter un tableau de descripteurs, choisir un bon format ;</li>
+      <li>retrouver le chemin d'un message sur le schéma du réseau du collège.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Erreurs à éviter</h2>
+  <ul>
+    <li>Confondre fonction (ce qu'il faut faire) et solution (l'élément choisi) ;</li>
+    <li>croire que la batterie « fabrique » de l'énergie : elle la <b>stocke</b> (sous forme chimique) ;</li>
+    <li>mettre la LED dans la chaîne d'information : elle reçoit l'ordre, elle ne décide pas ;</li>
+    <li>écrire un descripteur flou (« batterie » sans type ni format : 12 ? 12 % ? faible ?) ;</li>
+    <li>confondre commutateur (relie en filaire) et borne Wi-Fi (accès sans fil) ;</li>
+    <li>donner le même nom à deux terminaux : le réseau ne sait plus à qui livrer.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire FR / EN</h2>
+  <table class="voc">
+    <tr><td>capteur → <b>sensor</b></td><td>batterie → <b>battery</b></td><td>réseau → <b>network</b></td></tr>
+    <tr><td>donnée → <b>data</b></td><td>serveur → <b>server</b></td><td>sans fil → <b>wireless</b></td></tr>
+    <tr><td>commutateur → <b>switch</b></td><td>matériau → <b>material</b></td><td>énergie → <b>energy</b></td></tr>
+  </table>
+</div>
+</div>
+</body>
+</html>
