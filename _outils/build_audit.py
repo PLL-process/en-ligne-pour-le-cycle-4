@@ -370,6 +370,42 @@ OVERLAY = {
                 "plan de tests ; 15 questions dédiées).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
+    # ── LOT 05 (Fable) : îlot 5e complet de la compétence C4 ──
+    "5e_C4.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence-îlot « Le lampadaire intelligent » (5 séances) couvrant "
+                "les 8 codes 5e de la compétence C4 sur un objet-fil unique : "
+                "fonctions/solutions + matériaux, chaîne d'énergie et natures, "
+                "chaîne d'information avec simulateur interactif (verrou "
+                "expérientiel : jour/nuit/nuit+passage), descripteurs et données "
+                "(table des 6 lampadaires), réseau local et jeu du courrier "
+                "débranché (prescription C4.8), réinvestissement sonnette "
+                "connectée. Versions A/B/C, QCM 32 q (4 par code) dont 6 "
+                "illustrées, synthèses, fiche, matrice, 3 SVG CC0, rapport de "
+                "tests. Première entrée 5e du Thème 2, langue calibrée 12 ans.",
+        anomalies="Aucune.",
+        accessibilite="Clavier, aria/alt, listes déroulantes (DYS), "
+                      "reduced-motion, impression A4, minuteur désactivable.",
+        medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    **{f"5e_C4.{i}": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="5e_C4.1",
+        qualite=f"README pointeur ({detail} ; 4 questions dédiées).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ) for i, detail in {
+        2: "activité 2 : chaîne d'énergie fournie à compléter",
+        3: "activité 2 : natures des énergies à chaque étape",
+        4: "activité 1 : matériaux et critères de choix",
+        5: "activité 3 : chaîne d'information + simulateur",
+        6: "activité 4 : descripteurs, types, formats",
+        7: "activité 5 : composants du réseau local",
+        8: "activité 6 : jeu du courrier débranché",
+    }.items()},
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

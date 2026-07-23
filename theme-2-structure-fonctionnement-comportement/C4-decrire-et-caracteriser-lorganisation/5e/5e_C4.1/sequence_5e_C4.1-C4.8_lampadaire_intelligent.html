@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le lampadaire intelligent — 5e_C4.1 à 5e_C4.8</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>💡 Le lampadaire intelligent</h1>
+<p class="subtitle">Énergie, information, matériaux, réseau : tous les secrets du lampadaire solaire du parking</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C4.1</span><span class="badge code">5e_C4.2</span><span class="badge code">5e_C4.3</span><span class="badge code">5e_C4.4</span>
+  <span class="badge code">5e_C4.5</span><span class="badge code">5e_C4.6</span><span class="badge code">5e_C4.7</span><span class="badge code">5e_C4.8</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D4, D5</span>
+  <span class="badge duree">⏱ 5 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 7 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Réunion au collège de Sainte-Luce.</b> Le parking est sombre le soir : les parents attendent dans le noir,
+    et brancher un lampadaire classique coûterait cher en tranchées et en électricité. La mairie propose d'installer
+    des <b>lampadaires solaires intelligents</b> : ils captent l'énergie du soleil le jour, la stockent, et la nuit
+    ils s'allument doucement en veille — puis à pleine puissance <b>seulement quand quelqu'un passe</b>.</p>
+    <p>Avant de voter le projet, le conseil du collège demande à la classe de 5e : <b>« Expliquez-nous comment ça
+    marche »</b> — d'où vient l'énergie, comment le lampadaire « sait » qu'il fait nuit et que quelqu'un passe,
+    en quoi il est fait pour résister au climat de la Martinique, et comment la mairie surveillera à distance
+    l'état de tout le parc de lampadaires.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment le lampadaire capte, stocke et utilise-t-il son énergie,<br>et comment « décide-t-il » tout seul de s'allumer au bon moment ?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Mes hypothèses de départ</h2>
+  <div class="exo">
+    <label for="hyp1"><b>1.</b> À ton avis, comment le lampadaire « sait-il » qu'il doit s'allumer ?</label>
+    <textarea id="hyp1" placeholder="Je pense que…"></textarea>
+    <label for="hyp2" style="margin-top:10px;display:block"><b>2.</b> Et où trouve-t-il son énergie la nuit, quand il n'y a plus de soleil ?</label>
+    <textarea id="hyp2" placeholder="La nuit, l'énergie vient de…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Référentiel officiel (programme 2024)</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Activités</th></tr>
+    <tr><td><b>5e_C4.1</b></td><td>Associer des solutions techniques à une ou des fonctions techniques.</td><td>1, R</td></tr>
+    <tr><td><b>5e_C4.2</b></td><td>Identifier des constituants de la chaîne d'énergie d'un objet technique.</td><td>2, R</td></tr>
+    <tr><td><b>5e_C4.3</b></td><td>Indiquer la nature des énergies en entrée et en sortie des constituants.</td><td>2, R</td></tr>
+    <tr><td><b>5e_C4.4</b></td><td>Identifier les principaux matériaux constitutifs d'un OST.</td><td>1, R</td></tr>
+    <tr><td><b>5e_C4.5</b></td><td>Identifier des constituants de la chaîne d'information d'un OST.</td><td>3, R</td></tr>
+    <tr><td><b>5e_C4.6</b></td><td>Déterminer des descripteurs permettant de décrire des objets sous forme de données.</td><td>4</td></tr>
+    <tr><td><b>5e_C4.7</b></td><td>Identifier les composants qui constituent un réseau local.</td><td>5</td></tr>
+    <tr><td><b>5e_C4.8</b></td><td>Justifier la nécessité d'identifier les terminaux pour communiquer sur un réseau local (activité débranchée).</td><td>6</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétence parente <b>C4</b> — BO n°9 du 29/02/2024. Cette séquence 5e prépare les séquences 3e du même thème (« Station d'alerte cyclonique », « Internet jusqu'à Sainte-Luce »).</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Choix de l'outil</h2>
+  <table class="refs">
+    <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
+    <tr><td>Simulateur de lampadaire intégré (cette page)</td><td>Chaque élève fait la nuit, le jour et les passages lui-même — sans matériel, même à la maison.</td><td>—</td></tr>
+    <tr><td>Arduino UNO + Grove : capteur de luminosité, détecteur PIR, module LED</td><td>Matériel CONFIRMÉ au labo : le vrai lampadaire en maquette.</td><td>VittaScience (simulation en ligne gratuite)</td></tr>
+    <tr><td>Filius (séance 5)</td><td>Logiciel confirmé : construire le réseau local en le manipulant.</td><td>Jeu du courrier débranché (aucun poste nécessaire)</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel</h4>
+      <p>Maquette Grove : capteur de luminosité + détecteur PIR + module LED sur Arduino UNO. On couvre le capteur (= la nuit), on agite la main (= un passage) : la LED réagit comme le vrai lampadaire. Très basse tension, câblage vérifié par le professeur.</p></div>
+    <div class="version vb"><h4>🅱 Simulation</h4>
+      <p><b>VittaScience</b> : le même montage en ligne, sans matériel. <b>Filius</b> pour construire le réseau local de la séance 5.</p></div>
+    <div class="version vc"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans cette page : simulateur de lampadaire (activité 3), table des lampadaires (activité 4), jeu du courrier (activité 6). Personne n'est pénalisé.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Qui fait quoi ? En quoi ?</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Le chemin de l'énergie</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Le lampadaire décide</small><span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" data-panel="s4" role="tab" aria-selected="false">Séance 4<br><small>Ranger les infos du parc</small><span class="done" id="done-s4"></span></button>
+  <button class="seance-tab" data-panel="s5" role="tab" aria-selected="false">Séance 5<br><small>Tous en réseau + défi</small><span class="done" id="done-s5"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🔍 Séance 1 — Qui fait quoi ? Et en quoi c'est fait ?</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quelles fonctions le lampadaire doit-il remplir, et quels éléments (en quels matériaux) s'en chargent ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Fonctions, solutions… et matériaux</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> associer chaque fonction technique à sa solution technique, et identifier les matériaux principaux.</div>
+      <div><b>Compétences :</b> 5e_C4.1 + 5e_C4.4.</div>
+      <div><b>Production attendue :</b> 5 associations + 4 matériaux + 1 justification.</div>
+      <div><b>Ressources :</b> le schéma annoté ci-dessous (à LIRE pour répondre).</div>
+    </div>
+    <object class="figure" data="Images/lampadaire_fonctions_solutions.svg" type="image/svg+xml" aria-label="Lampadaire solaire annoté reliant chaque fonction technique à sa solution : panneau solaire, bloc LED, carte électronique, batterie, capteurs, mât">Le lampadaire annoté : fonctions et solutions (SVG)</object>
+    <div class="consigne"><b>Consigne :</b> a) associe chaque fonction à sa solution ; b) trouve le matériau principal de chaque élément ; c) justifie le choix du mât.</div>
+    <div class="exo">
+      <h4>a) Fonctions → solutions</h4>
+      <div class="assoc"><label for="e1_1">Capter l'énergie du soleil</label><select id="e1_1"><option value="">— choisir —</option><option>le panneau solaire</option><option>le bloc de LED</option><option>la batterie</option><option>la carte électronique</option></select></div>
+      <div class="assoc"><label for="e1_2">Stocker l'énergie pour la nuit</label><select id="e1_2"><option value="">— choisir —</option><option>le panneau solaire</option><option>le bloc de LED</option><option>la batterie</option><option>la carte électronique</option></select></div>
+      <div class="assoc"><label for="e1_3">Éclairer le parking</label><select id="e1_3"><option value="">— choisir —</option><option>le panneau solaire</option><option>le bloc de LED</option><option>la batterie</option><option>la carte électronique</option></select></div>
+      <div class="assoc"><label for="e1_4">Décider d'allumer ou non</label><select id="e1_4"><option value="">— choisir —</option><option>le panneau solaire</option><option>le bloc de LED</option><option>la batterie</option><option>la carte électronique</option></select></div>
+      <div class="assoc"><label for="e1_5">Détecter un passage</label><select id="e1_5"><option value="">— choisir —</option><option>le détecteur de mouvement (PIR)</option><option>le capteur de luminosité</option><option>la batterie</option><option>le mât</option></select></div>
+      <h4>b) De quoi c'est fait ?</h4>
+      <div class="assoc"><label for="e1_m1">Le mât (dehors, vent, pluie, embruns)</label><select id="e1_m1"><option value="">— choisir —</option><option>acier galvanisé (traité contre la rouille)</option><option>carton renforcé</option><option>bois brut</option><option>verre</option></select></div>
+      <div class="assoc"><label for="e1_m2">La vitre qui protège les LED</label><select id="e1_m2"><option value="">— choisir —</option><option>polycarbonate (plastique transparent très résistant)</option><option>acier</option><option>coton</option><option>caoutchouc</option></select></div>
+      <div class="assoc"><label for="e1_m3">Le corps du luminaire (léger, ne rouille pas)</label><select id="e1_m3"><option value="">— choisir —</option><option>aluminium</option><option>plomb</option><option>béton</option><option>laine</option></select></div>
+      <div class="assoc"><label for="e1_m4">Les fils électriques (bon conducteur)</label><select id="e1_m4"><option value="">— choisir —</option><option>cuivre (gainé de plastique isolant)</option><option>bois</option><option>verre</option><option>coton</option></select></div>
+      <label for="e1_just" style="display:block;margin-top:8px"><b>c) Justifie :</b> pourquoi de l'acier « galvanisé » pour le mât, en Martinique ?</label>
+      <textarea id="e1_just" placeholder="Près de la mer, l'air contient…"></textarea>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Une FONCTION dit ce que l'objet doit faire (« éclairer ») ; la SOLUTION est l'élément choisi pour le faire (« bloc de LED »). Le schéma donne toutes les paires ! Pour les matériaux : pense au lieu de vie de chaque pièce.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Galvanisé = recouvert de zinc pour empêcher la rouille. Près de la mer, l'air salé (les embruns) fait rouiller l'acier nu très vite — le zinc fait bouclier.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> panneau solaire · batterie · bloc de LED · carte électronique · détecteur de mouvement (PIR).</p>
+      <p><b>b)</b> acier galvanisé · polycarbonate · aluminium · cuivre gainé.</p>
+      <p><b>c)</b> L'air marin transporte du sel (embruns) qui fait rouiller l'acier nu. La galvanisation (couche de zinc) protège le mât : il dure des années au lieu de quelques mois. Le choix d'un matériau dépend TOUJOURS de l'endroit où vit la pièce.</p>
+      <p><b>Exemple :</b> même logique pour un vélo laissé dehors : cadre alu ou acier peint, jamais d'acier nu.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre fonction (« éclairer ») et solution (« LED ») ; croire que le panneau solaire éclaire (il capte !) ; choisir un matériau sans penser au climat.</div>
+    <div class="retenir"><b>📌 À retenir :</b> une <b>fonction technique</b> = ce que l'objet doit faire ; une <b>solution technique</b> = l'élément choisi pour le faire. Les <b>matériaux</b> (acier galvanisé, aluminium, polycarbonate, cuivre…) sont choisis selon leur rôle ET leur environnement.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 9 réponses justes + une justification qui parle du sel/des embruns.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>⚡ Séance 2 — Le chemin de l'énergie</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment l'énergie du soleil de midi devient-elle la lumière de minuit ?</p>
+  <object class="figure" data="Images/chaines_energie_information_lampadaire.svg" type="image/svg+xml" aria-label="Les deux chaînes du lampadaire : chaîne d'énergie (capter-convertir, stocker, distribuer, convertir) et chaîne d'information (acquérir, traiter, commander)">Les deux chaînes du lampadaire (SVG)</object>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Remonter la chaîne d'énergie</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les constituants de la chaîne d'énergie et la nature des énergies à chaque étape.</div>
+      <div><b>Compétences :</b> 5e_C4.2 + 5e_C4.3.</div>
+      <div><b>Production attendue :</b> chaîne ordonnée + 5 natures d'énergie + schéma recopié au cahier.</div>
+      <div><b>Ressources :</b> la partie HAUTE du schéma ci-dessus (à LIRE pour répondre).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) remets les constituants dans l'ordre du chemin de l'énergie ; b) indique la nature de l'énergie à chaque étape ; c) recopie la chaîne au cahier avec ses flèches.</div>
+    <div class="exo">
+      <h4>a) L'ordre des constituants (1 = premier)</h4>
+      <div class="assoc"><label for="e2_o1">La batterie</label><select id="e2_o1"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+      <div class="assoc"><label for="e2_o2">Le panneau solaire</label><select id="e2_o2"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+      <div class="assoc"><label for="e2_o3">Le bloc de LED</label><select id="e2_o3"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+      <div class="assoc"><label for="e2_o4">Le régulateur + l'interrupteur commandé</label><select id="e2_o4"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+      <h4>b) La nature des énergies</h4>
+      <div class="assoc"><label for="e2_n1">Ce qui ENTRE dans le panneau solaire</label><select id="e2_n1"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option></select></div>
+      <div class="assoc"><label for="e2_n2">Ce qui SORT du panneau solaire</label><select id="e2_n2"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option></select></div>
+      <div class="assoc"><label for="e2_n3">Sous quelle forme la batterie STOCKE l'énergie</label><select id="e2_n3"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option></select></div>
+      <div class="assoc"><label for="e2_n4">Ce qui ENTRE dans le bloc de LED</label><select id="e2_n4"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option></select></div>
+      <div class="assoc"><label for="e2_n5">Ce qui SORT du bloc de LED</label><select id="e2_n5"><option value="">— choisir —</option><option>énergie lumineuse</option><option>énergie électrique</option><option>énergie chimique</option></select></div>
+      <label for="e2_cahier" style="display:block;margin-top:8px"><b>c)</b> Recopie la chaîne au cahier, puis résume-la ici en une ligne (avec des flèches →) :</label>
+      <textarea id="e2_cahier" placeholder="soleil → panneau → …"></textarea>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis le chemin de l'énergie comme une goutte d'eau : d'où vient-elle ? où passe-t-elle ? où finit-elle ? Le schéma du haut donne l'ordre exact.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Panneau (1) → batterie (2) → régulateur (3) → LED (4). Énergies : lumineuse ENTRE dans le panneau, électrique en SORT ; la batterie stocke en chimique ; la LED reçoit de l'électrique et produit de la lumineuse.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> panneau = 1 · batterie = 2 · régulateur/interrupteur = 3 · LED = 4.</p>
+      <p><b>b)</b> lumineuse → électrique → chimique (stockage) → électrique → lumineuse.</p>
+      <p><b>c)</b> soleil → panneau (capte + convertit) → batterie (stocke) → régulateur (distribue) → LED (convertit) → lumière.</p>
+      <p><b>À remarquer :</b> l'énergie change de NATURE à chaque conversion — et chaque conversion en perd un peu (chaleur). C'est pourquoi on choisit des LED : elles convertissent très efficacement.</p>
+      <p><b>Exemple :</b> ta trottinette électrique suit une chaîne cousine : prise → chargeur → batterie (chimique) → moteur (mécanique).</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> mettre la batterie en premier (l'énergie vient du SOLEIL) ; croire que la batterie stocke « de l'électricité » telle quelle (elle stocke sous forme chimique) ; oublier que la LED convertit.</div>
+    <div class="retenir"><b>📌 À retenir :</b> la <b>chaîne d'énergie</b> du lampadaire : <b>capter/convertir</b> (panneau) → <b>stocker</b> (batterie) → <b>distribuer</b> (régulateur) → <b>convertir</b> (LED). À chaque étape on sait dire la <b>nature</b> de l'énergie : lumineuse, électrique, chimique.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> l'ordre 4/4, les natures 5/5, et la chaîne recopiée au cahier.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🧠 Séance 3 — Le lampadaire décide tout seul</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment le lampadaire « sait-il » qu'il fait nuit et que quelqu'un passe ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>La chaîne d'information en direct</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les constituants de la chaîne d'information et vérifier la règle de décision au simulateur.</div>
+      <div><b>Compétence :</b> 5e_C4.5.</div>
+      <div><b>Production attendue :</b> 3 constituants + 4 expériences au simulateur + règle complétée.</div>
+      <div><b>Ressources :</b> la partie BASSE du schéma des deux chaînes + le simulateur ci-dessous.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) identifie les constituants ; b) fais les 4 expériences au simulateur et note l'état de la LED ; c) complète la règle de décision.</div>
+    <div class="exo">
+      <h4>a) Les constituants de la chaîne d'information</h4>
+      <div class="assoc"><label for="e3_1">ACQUÉRIR est assuré par…</label><select id="e3_1"><option value="">— choisir —</option><option>le capteur de luminosité et le détecteur de mouvement</option><option>la batterie</option><option>le bloc de LED</option><option>le mât</option></select></div>
+      <div class="assoc"><label for="e3_2">TRAITER est assuré par…</label><select id="e3_2"><option value="">— choisir —</option><option>la carte électronique</option><option>le panneau solaire</option><option>la vitre</option><option>le régulateur</option></select></div>
+      <div class="assoc"><label for="e3_3">La COMMANDE part vers…</label><select id="e3_3"><option value="">— choisir —</option><option>le bloc de LED (via l'interrupteur commandé)</option><option>le panneau solaire</option><option>le mât</option><option>la pluie</option></select></div>
+      <h4>b) Aux commandes du simulateur !</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <label for="simJour"><b>☀ Lumière du jour :</b></label>
+          <input type="range" id="simJour" min="0" max="100" value="80" aria-describedby="simJourVal">
+          <p id="simJourVal" style="text-align:center">Luminosité ambiante : <b id="simLum">80</b> % <span id="simJN" style="color:var(--warn)">(jour)</span></p>
+          <button class="btn small" id="btnPassage" type="button">🚶 Simuler un passage</button>
+          <p style="font-size:.85em;color:var(--sub)">Le passage dure 5 secondes, comme devant un vrai détecteur PIR.</p>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">ÉTAT DU LAMPADAIRE</div>
+          <div id="simLed" style="font-size:2.6em">⚫</div>
+          <div id="simLedTxt" class="etiquette">éteint</div>
+        </div>
+      </div>
+      <div class="assoc"><label for="e3_e1">Expérience 1 — plein jour (80 %), sans passage : la LED est…</label><select id="e3_e1"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e2">Expérience 2 — nuit (10 %), sans passage : la LED est…</label><select id="e3_e2"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e3">Expérience 3 — nuit (10 %) + passage : la LED est…</label><select id="e3_e3"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <div class="assoc"><label for="e3_e4">Expérience 4 — plein jour (80 %) + passage : la LED est…</label><select id="e3_e4"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
+      <h4>c) La règle de décision</h4>
+      <p>SI il fait <select id="e3_r1" style="width:auto;display:inline-block"><option value="">…</option><option>nuit</option><option>jour</option></select> ET que quelqu'un <select id="e3_r2" style="width:auto;display:inline-block"><option value="">…</option><option>passe</option><option>dort</option></select> ALORS pleine puissance ; SI nuit sans passage ALORS <select id="e3_r3" style="width:auto;display:inline-block"><option value="">…</option><option>veille</option><option>pleine puissance</option><option>éteint</option></select>.</p>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Fais VRAIMENT les 4 expériences : bouge le curseur, clique « passage », regarde la LED. Les capteurs « sentent », la carte « réfléchit », la LED « obéit ».</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le jour, jamais de lumière (même avec un passage : ce serait du gaspillage). La nuit : veille à 30 % pour rassurer ; passage → 100 % pendant 5 s, puis retour en veille.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> capteurs (luminosité + PIR) · carte électronique · bloc de LED via l'interrupteur commandé.</p>
+      <p><b>b)</b> jour sans passage : éteinte · nuit sans passage : veille · nuit + passage : pleine puissance · jour + passage : éteinte (pas de gaspillage !).</p>
+      <p><b>c)</b> SI <b>nuit</b> ET <b>passe</b> → pleine puissance ; nuit sans passage → <b>veille</b>.</p>
+      <p><b>Le lien avec la séance 2 :</b> la chaîne d'information COMMANDE la chaîne d'énergie (la flèche verte du schéma) : les capteurs et la carte décident, l'énergie exécute. C'est ça, un objet « intelligent ».</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire que le capteur décide (il ne fait que mesurer) ; répondre « pleine puissance » pour jour+passage (la règle vérifie D'ABORD la nuit) ; confondre chaîne d'information et chaîne d'énergie.</div>
+    <div class="retenir"><b>📌 À retenir :</b> la <b>chaîne d'information</b> : <b>ACQUÉRIR</b> (capteurs) → <b>TRAITER</b> (carte + règle SI…ALORS) → <b>COMMANDER</b> (ordre à la LED). Elle commande la chaîne d'énergie : c'est elle qui rend l'objet « intelligent ».</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 constituants + 4 expériences réellement faites + la règle complète.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 4 ══════ -->
+<div class="seance-panel" id="s4" role="tabpanel">
+<section class="card">
+  <h2>🗂 Séance 4 — Ranger les infos du parc de lampadaires</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment la mairie surveille-t-elle 6 lampadaires sans se déplacer ?</p>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>La table des lampadaires</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> choisir de bons descripteurs et lire une table de données pour décrire des objets.</div>
+      <div><b>Compétence :</b> 5e_C4.6.</div>
+      <div><b>Production attendue :</b> 3 choix de descripteurs + 4 lectures de table.</div>
+      <div><b>Ressources :</b> la table ci-dessous, envoyée chaque soir par les lampadaires à la mairie.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> chaque ligne décrit UN lampadaire ; chaque colonne est un <b>descripteur</b>. a) juge les descripteurs ; b) réponds aux questions en lisant la table.</div>
+    <div class="exo">
+      <div class="table-scroll" tabindex="0" aria-label="Table des six lampadaires du parc">
+        <table class="donnees">
+          <thead><tr><th>id</th><th>emplacement</th><th>batterie_pct</th><th>etat</th><th>annee_pose</th></tr></thead>
+          <tbody>
+            <tr><td>L1</td><td style="text-align:left">entrée parking</td><td>85</td><td style="text-align:left;color:#81fba1">OK</td><td>2024</td></tr>
+            <tr><td>L2</td><td style="text-align:left">allée centrale</td><td>78</td><td style="text-align:left;color:#81fba1">OK</td><td>2024</td></tr>
+            <tr><td>L3</td><td style="text-align:left">fond du parking</td><td>12</td><td style="text-align:left;color:#ffd66b">batterie faible</td><td>2024</td></tr>
+            <tr><td>L4</td><td style="text-align:left">portail vélos</td><td>91</td><td style="text-align:left;color:#81fba1">OK</td><td>2025</td></tr>
+            <tr><td>L5</td><td style="text-align:left">arrêt de bus</td><td>66</td><td style="text-align:left;color:#ff7b88">LED en panne</td><td>2023</td></tr>
+            <tr><td>L6</td><td style="text-align:left">local à vélos</td><td>74</td><td style="text-align:left;color:#81fba1">OK</td><td>2025</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4>a) Bien choisir les descripteurs</h4>
+      <div class="assoc"><label for="e4_1">Pour la colonne « niveau de batterie », le meilleur descripteur est…</label><select id="e4_1"><option value="">— choisir —</option><option>batterie_pct (clair + unité, sans espace)</option><option>b</option><option>la batterie du lampadaire</option><option>truc2</option></select></div>
+      <div class="assoc"><label for="e4_2">« batterie_pct » contient des données de quel type ?</label><select id="e4_2"><option value="">— choisir —</option><option>des nombres</option><option>du texte</option><option>des images</option><option>des sons</option></select></div>
+      <div class="assoc"><label for="e4_3">Pour ajouter la couleur du mât, on créerait…</label><select id="e4_3"><option value="">— choisir —</option><option>une nouvelle colonne « couleur_mat »</option><option>une nouvelle ligne</option><option>un nouveau tableau entier</option><option>rien, c'est impossible</option></select></div>
+      <h4>b) Lire la table</h4>
+      <div class="assoc"><label for="e4_4">Quel lampadaire faut-il dépanner en priorité (il n'éclaire plus du tout) ?</label><select id="e4_4"><option value="">— choisir —</option><option>L5</option><option>L1</option><option>L3</option><option>L6</option></select></div>
+      <div class="assoc"><label for="e4_5">Quel lampadaire a la batterie la plus faible ?</label><select id="e4_5"><option value="">— choisir —</option><option>L3</option><option>L4</option><option>L2</option><option>L5</option></select></div>
+      <div class="assoc"><label for="e4_6">Combien de lampadaires ont été posés en 2025 ?</label><input type="number" id="e4_6" min="0" max="6"></div>
+      <div class="assoc"><label for="e4_7">La ligne « L4 · portail vélos · 91 · OK · 2025 » décrit…</label><select id="e4_7"><option value="">— choisir —</option><option>UN lampadaire complet (toutes ses données)</option><option>tous les lampadaires</option><option>une seule donnée</option><option>la mairie</option></select></div>
+      <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Un bon descripteur est court, clair et sans espace. Pour la lecture : « n'éclaire plus » = cherche dans la colonne <b>etat</b> ; « batterie la plus faible » = le plus petit nombre de <b>batterie_pct</b>.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>L5 a « LED en panne » (il n'éclaire plus) ; L3 a 12 % (batterie faible mais il éclaire encore un peu) : les deux problèmes sont différents ! 2025 : L4 et L6, donc 2.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> batterie_pct · des nombres · une nouvelle colonne « couleur_mat ».</p>
+      <p><b>b)</b> L5 (LED en panne = n'éclaire plus) · L3 (12 %) · 2 (L4 et L6) · UN lampadaire complet.</p>
+      <p><b>Pourquoi c'est puissant :</b> avec 5 descripteurs bien choisis, la mairie surveille tout le parc depuis un bureau — et pourrait le faire pour 600 lampadaires aussi facilement que pour 6. Les descripteurs sont le « plan de rangement » des données.</p>
+      <p><b>Lien futur :</b> en 3e, tu retrouveras ces tables pour la station météo (48 h de mesures) — mêmes règles, plus de données !</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre L3 (batterie faible mais fonctionne) et L5 (LED morte : priorité !) ; choisir un descripteur avec des espaces ; confondre ligne (un objet) et colonne (une caractéristique).</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>descripteur</b> = le nom d'une caractéristique (colonne), court, clair, sans espace, avec son unité si besoin. Une <b>ligne</b> décrit UN objet complet. Bien décrits, des objets se surveillent, se trient et se comparent facilement.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7 réponses justes sur 7.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 5 ══════ -->
+<div class="seance-panel" id="s5" role="tabpanel">
+<section class="card">
+  <h2>🌐 Séance 5 — Tous en réseau… et défi final</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment les équipements du collège se parlent-ils — et comment se reconnaissent-ils ?</p>
+  <object class="figure" data="Images/reseau_local_college_5e.svg" type="image/svg+xml" aria-label="Réseau local du collège : PC et imprimante reliés par câbles au commutateur, borne Wi-Fi desservant des tablettes, serveur du collège ; chaque équipement porte un nom unique">Le réseau local du collège (SVG)</object>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Les habitants du réseau local</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier les composants d'un réseau local et distinguer liaisons filaires et sans fil.</div>
+      <div><b>Compétence :</b> 5e_C4.7.</div>
+      <div><b>Production attendue :</b> 6 identifications.</div>
+      <div><b>Ressources :</b> le schéma du réseau ci-dessus (à LIRE pour répondre).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> observe le schéma et réponds.</div>
+    <div class="exo">
+      <div class="assoc"><label for="e5_1">Les PC, tablettes et l'imprimante sont des…</label><select id="e5_1"><option value="">— choisir —</option><option>terminaux</option><option>commutateurs</option><option>serveurs</option><option>bornes</option></select></div>
+      <div class="assoc"><label for="e5_2">L'équipement qui relie tout le monde au centre :</label><select id="e5_2"><option value="">— choisir —</option><option>le commutateur</option><option>la borne Wi-Fi</option><option>le serveur</option><option>l'imprimante</option></select></div>
+      <div class="assoc"><label for="e5_3">L'équipement qui permet l'accès SANS FIL :</label><select id="e5_3"><option value="">— choisir —</option><option>la borne Wi-Fi</option><option>le commutateur</option><option>le serveur</option><option>le câble</option></select></div>
+      <div class="assoc"><label for="e5_4">L'équipement qui stocke les dossiers des classes :</label><select id="e5_4"><option value="">— choisir —</option><option>le serveur</option><option>la borne Wi-Fi</option><option>la tablette</option><option>le mât</option></select></div>
+      <div class="assoc"><label for="e5_5">PC-TECHNO-01 est relié au réseau par…</label><select id="e5_5"><option value="">— choisir —</option><option>une liaison filaire (câble)</option><option>une liaison sans fil</option><option>un tuyau d'eau</option><option>rien</option></select></div>
+      <div class="assoc"><label for="e5_6">TABLETTE-07 est reliée au réseau par…</label><select id="e5_6"><option value="">— choisir —</option><option>une liaison sans fil (Wi-Fi)</option><option>une liaison filaire</option><option>une rallonge</option><option>le serveur</option></select></div>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis les traits du schéma : trait plein = câble ; petits traits = ondes Wi-Fi. Les « terminaux » sont les appareils qu'on utilise.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Terminaux : PC, tablettes, imprimante. Le commutateur est la « gare de triage » centrale. La borne Wi-Fi transforme le réseau filaire en ondes. Le serveur stocke pour tout le monde.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p>terminaux · le commutateur · la borne Wi-Fi · le serveur · filaire · sans fil.</p>
+      <p><b>Version 🅰/🅱 :</b> dans Filius, construis ce réseau (3 PC + switch + serveur) et fais s'envoyer des messages — tu VERRAS les données circuler.</p>
+      <p><b>Ouverture :</b> nos lampadaires aussi peuvent rejoindre un réseau (c'est comme ça que la mairie reçoit leur table chaque soir !) — et en 3e, tu verras comment l'information sort du réseau local vers Internet.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> confondre commutateur et borne Wi-Fi ; croire que « Wi-Fi » = « Internet » (le Wi-Fi est juste l'accès sans fil AU réseau local) ; oublier que l'imprimante est aussi un terminal.</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>réseau local</b> = des <b>terminaux</b> (PC, tablettes, imprimantes) reliés par un <b>commutateur</b> (câbles) et une <b>borne Wi-Fi</b> (sans fil), souvent avec un <b>serveur</b> qui stocke pour tous.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 réponses justes sur 6.</div>
+  </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Activité 6</span><h3>Le jeu du courrier (débranché)</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> justifier pourquoi chaque terminal doit être identifié de façon unique pour communiquer.</div>
+      <div><b>Compétence :</b> 5e_C4.8 (activité débranchée).</div>
+      <div><b>Production attendue :</b> 3 livraisons + 2 réponses + 1 justification.</div>
+      <div><b>Ressources :</b> l'annuaire du réseau ci-dessous. En classe : même jeu avec des enveloppes, par équipes !</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> tu es le commutateur ! L'annuaire du réseau : <b>PC-TECHNO-01</b> (prof), <b>TABLETTE-07</b> (élève), <b>IMPRIMANTE-CDI</b>, <b>SERVEUR-COLLEGE</b>. Livre chaque message au bon destinataire, puis réponds.</div>
+    <div class="exo">
+      <div class="assoc"><label for="e6_1">Message « IMPRIME ce document » → à livrer à…</label><select id="e6_1"><option value="">— choisir —</option><option>IMPRIMANTE-CDI</option><option>TABLETTE-07</option><option>PC-TECHNO-01</option><option>SERVEUR-COLLEGE</option></select></div>
+      <div class="assoc"><label for="e6_2">Message « ENREGISTRE mon exposé dans le dossier de la classe » → à livrer à…</label><select id="e6_2"><option value="">— choisir —</option><option>SERVEUR-COLLEGE</option><option>IMPRIMANTE-CDI</option><option>TABLETTE-07</option><option>PC-TECHNO-01</option></select></div>
+      <div class="assoc"><label for="e6_3">Message du prof « OUVRE l'exercice n°3 » destiné à l'élève → à livrer à…</label><select id="e6_3"><option value="">— choisir —</option><option>TABLETTE-07</option><option>SERVEUR-COLLEGE</option><option>IMPRIMANTE-CDI</option><option>PC-TECHNO-01</option></select></div>
+      <div class="assoc"><label for="e6_4">Catastrophe : DEUX tablettes s'appellent toutes les deux « TABLETTE-07 ». Que se passe-t-il ?</label><select id="e6_4"><option value="">— choisir —</option><option>le réseau ne sait plus à qui livrer : conflit, messages perdus ou livrés au mauvais endroit</option><option>rien, ça marche quand même</option><option>les tablettes fusionnent</option><option>le Wi-Fi devient plus rapide</option></select></div>
+      <div class="assoc"><label for="e6_5">Un message SANS destinataire écrit dessus…</label><select id="e6_5"><option value="">— choisir —</option><option>ne peut pas être livré (comme une lettre sans adresse)</option><option>arrive partout</option><option>arrive au hasard, c'est bien aussi</option><option>se transforme en imprimé</option></select></div>
+      <label for="e6_just" style="display:block;margin-top:8px"><b>Justifie</b> en une phrase : pourquoi chaque terminal doit-il avoir un nom (une identification) UNIQUE sur le réseau ?</label>
+      <textarea id="e6_just" placeholder="Si deux appareils ont le même nom…"></textarea>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Lis le CONTENU de chaque message : qui peut rendre ce service ? Imprimer → … Stocker → … Et pense au facteur : que fait-il d'une lettre sans adresse ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Deux « TABLETTE-07 » = deux maisons avec la même adresse : le facteur livre au hasard ou renonce. C'est exactement pour ça que chaque équipement reçoit une identification unique.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p>IMPRIMANTE-CDI · SERVEUR-COLLEGE · TABLETTE-07 · conflit (livraisons impossibles ou erronées) · ne peut pas être livré.</p>
+      <p><b>Justification attendue :</b> pour livrer un message au BON appareil, le réseau doit pouvoir le désigner sans ambiguïté — donc chaque terminal a un nom/une adresse UNIQUE. Deux identiques = le réseau ne peut plus choisir.</p>
+      <p><b>En vrai :</b> cette identification unique existe : c'est l'adresse (tu la verras de près en 4e et en 3e). Ton jeu d'enveloppes reproduit exactement le travail du commutateur.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> livrer « OUVRE l'exercice » au serveur (c'est l'élève qui doit l'ouvrir !) ; croire qu'un doublon de nom « marche quand même » ; oublier qu'une imprimante est identifiée comme les autres.</div>
+    <div class="retenir"><b>📌 À retenir :</b> sur un réseau, chaque terminal a une <b>identification unique</b> (nom, adresse). Sans elle : impossible de livrer les messages — comme un courrier sans adresse. Deux identiques = <b>conflit</b>.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes + une justification claire sur l'unicité.</div>
+  </div>
+
+  <div class="activite" id="act7">
+    <header><span class="num">Réinvestissement</span><h3>🔔 La sonnette connectée du portail</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> réutiliser TOUTES les notions sur un objet jamais étudié.</div>
+      <div><b>Compétences :</b> 5e_C4.1 → C4.5 + C4.7 (bilan).</div>
+      <div><b>Production attendue :</b> 6 réponses, sans rouvrir les corrections.</div>
+      <div><b>Ressources :</b> uniquement l'énoncé — c'est volontaire !</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> le collège installe une sonnette connectée au portail : bouton + petite caméra, alimentée par pile, reliée en Wi-Fi ; quand on appuie, la sonnerie retentit à la vie scolaire et l'image s'affiche. Réponds sans regarder les activités précédentes.</div>
+    <div class="exo">
+      <div class="assoc"><label for="e7_1">FONCTION « prévenir la vie scolaire » — la SOLUTION est…</label><select id="e7_1"><option value="">— choisir —</option><option>la sonnerie (haut-parleur) de la vie scolaire</option><option>la pile</option><option>le portail</option><option>la pluie</option></select></div>
+      <div class="assoc"><label for="e7_2">Dans la chaîne d'ÉNERGIE de la sonnette, la pile assure la fonction…</label><select id="e7_2"><option value="">— choisir —</option><option>stocker</option><option>convertir en lumière</option><option>acquérir</option><option>décider</option></select></div>
+      <div class="assoc"><label for="e7_3">L'énergie qui SORT du haut-parleur de la sonnerie est…</label><select id="e7_3"><option value="">— choisir —</option><option>sonore</option><option>chimique</option><option>lumineuse</option><option>musculaire</option></select></div>
+      <div class="assoc"><label for="e7_4">Dans la chaîne d'INFORMATION, le bouton-poussoir assure…</label><select id="e7_4"><option value="">— choisir —</option><option>ACQUÉRIR (il capte l'appui)</option><option>TRAITER</option><option>COMMANDER</option><option>STOCKER l'énergie</option></select></div>
+      <div class="assoc"><label for="e7_5">Le boîtier extérieur de la sonnette sera de préférence en…</label><select id="e7_5"><option value="">— choisir —</option><option>plastique résistant aux UV et à la pluie</option><option>carton</option><option>sucre</option><option>acier non protégé</option></select></div>
+      <div class="assoc"><label for="e7_6">La sonnette rejoint le réseau du collège par…</label><select id="e7_6"><option value="">— choisir —</option><option>la borne Wi-Fi (liaison sans fil), avec un nom unique sur le réseau</option><option>un tuyau</option><option>le serveur directement par magie</option><option>elle ne peut pas</option></select></div>
+      <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb7" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends tes outils un par un : fonction→solution, chaîne d'énergie, nature des énergies, chaîne d'information, matériaux selon l'environnement, réseau.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La pile STOCKE (comme la batterie du lampadaire). Le bouton est un CAPTEUR d'appui. Dehors = UV + pluie → plastique d'extérieur. Sans fil = borne Wi-Fi + nom unique.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p>la sonnerie · stocker · sonore · ACQUÉRIR · plastique résistant UV/pluie · borne Wi-Fi avec un nom unique.</p>
+      <p><b>Bilan :</b> tu viens d'analyser un objet inconnu avec TOUS les outils de la séquence — fonctions, chaînes, matériaux, réseau. C'est exactement ce que le conseil du collège demandait pour le lampadaire !</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> dire que la pile « décide » ; oublier que le son est une énergie ; choisir le matériau sans penser à la pluie ; brancher la sonnette « directement au serveur ».</div>
+    <div class="retenir"><b>📌 À retenir :</b> la démarche marche pour TOUT objet technique : fonctions → solutions, chaîne d'énergie (+ natures), chaîne d'information, matériaux selon l'environnement, place dans le réseau.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6/6 sans avoir rouvert les corrections.</div>
+  </div>
+</section>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 6.</p>
+  <h4>1. Fonctions, solutions, matériaux (activité 1)</h4>
+  <p><b>Fonction technique</b> = ce que l'objet doit faire · <b>solution technique</b> = l'élément choisi pour le faire. Les <b>matériaux</b> se choisissent selon le rôle ET l'environnement (acier galvanisé contre les embruns, aluminium léger, polycarbonate transparent et solide, cuivre conducteur).</p>
+  <h4>2. La chaîne d'énergie (activité 2)</h4>
+  <p><b>Capter/convertir</b> (panneau) → <b>stocker</b> (batterie, sous forme chimique) → <b>distribuer</b> (régulateur) → <b>convertir</b> (LED). On sait dire la <b>nature</b> de l'énergie à chaque étape : lumineuse, électrique, chimique, sonore…</p>
+  <h4>3. La chaîne d'information (activité 3)</h4>
+  <p><b>Acquérir</b> (capteurs) → <b>traiter</b> (carte + règle SI…ALORS) → <b>commander</b> (LED). La chaîne d'information COMMANDE la chaîne d'énergie : c'est elle qui rend l'objet intelligent.</p>
+  <h4>4. Décrire par des données (activité 4)</h4>
+  <p>Des <b>descripteurs</b> bien choisis (courts, clairs, sans espace) forment les colonnes d'une table ; chaque <b>ligne</b> décrit un objet complet. On peut alors trier, comparer, surveiller à distance.</p>
+  <h4>5. Le réseau local (activités 5-6)</h4>
+  <p><b>Terminaux</b> + <b>commutateur</b> (filaire) + <b>borne Wi-Fi</b> (sans fil) + <b>serveur</b>. Chaque terminal a une <b>identification unique</b> — sans elle, impossible de livrer les messages (jeu du courrier !).</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">fonction = function</span><span class="tag">solution = solution</span><span class="tag">énergie = energy</span><span class="tag">batterie = battery</span><span class="tag">capteur = sensor</span><span class="tag">réseau = network</span><span class="tag">sans fil = wireless</span><span class="tag">serveur = server</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé ? Complète avec ce que tu sais maintenant :</label>
+    <textarea id="hyp_retour" placeholder="En fait, le lampadaire s'allume parce que…"></textarea>
+  </div>
+  <div class="bilan-grid">
+    <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>32 questions — avec des schémas à lire — pour vérifier tout ce que tu sais sur le lampadaire.</p>
+  <a class="btn qcm" href="qcm_5e_C4.1-C4.8_lampadaire_intelligent.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🔦 <b>Défi maquette :</b> avec le professeur, monte le lampadaire Grove (capteur luminosité + PIR + LED) et retrouve les 4 expériences de l'activité 3 en vrai.</p>
+  <p>🏠 <b>Défi maison :</b> choisis un objet chez toi (réveil, ventilateur, console…) et dessine SA chaîne d'énergie avec les natures — montre-la à la classe.</p>
+  <p>🌐 <b>Défi Filius :</b> reconstruis le réseau du collège dans Filius et envoie un message de PC-TECHNO-01 vers TABLETTE-07.</p>
+</section>
+
+<footer>
+  <p>Séquence 5e_C4.1 → 5e_C4.8 · Thème 2 — Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_5e_C4.1-C4.8_lampadaire";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Simulateur de lampadaire (activité 3) ══════ */
+window.__exp = window.__exp || {};   // trace des situations réellement observées
+let passageTimer = null;
+window.__passage = false;
+function majLampe(){
+  const lum = parseInt($("simJour").value,10);
+  const nuit = lum < 30;
+  $("simLum").textContent = lum;
+  $("simJN").textContent = nuit ? "(nuit)" : "(jour)";
+  $("simJN").style.color = nuit ? "#c68ef2" : "#ffd66b";
+  let etat, icone, txtEtat;
+  if(!nuit){ etat="eteint"; icone="⚫"; txtEtat="éteint (il fait jour)"; }
+  else if(window.__passage){ etat="fort"; icone="🌟"; txtEtat="PLEINE PUISSANCE (passage détecté)"; }
+  else { etat="veille"; icone="🌗"; txtEtat="veille (30 %) — nuit calme"; }
+  $("simLed").textContent = icone;
+  $("simLedTxt").textContent = txtEtat;
+  // trace des expériences observées
+  const cle = (nuit?"nuit":"jour") + (window.__passage?"+passage":"");
+  window.__exp[cle] = etat;
+  save(false);
+}
+$("simJour").addEventListener("input", majLampe);
+$("btnPassage").addEventListener("click", ()=>{
+  window.__passage = true; majLampe();
+  clearTimeout(passageTimer);
+  passageTimer = setTimeout(()=>{ window.__passage=false; majLampe(); }, 5000);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const num = id => parseFloat(String($(id).value).replace(",","."));
+const txt = id => String($(id).value||"").trim().toLowerCase();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={e1_1:"le panneau solaire",e1_2:"la batterie",e1_3:"le bloc de LED",e1_4:"la carte électronique",e1_5:"le détecteur de mouvement (PIR)",
+               e1_m1:"acier galvanisé (traité contre la rouille)",e1_m2:"polycarbonate (plastique transparent très résistant)",e1_m3:"aluminium",e1_m4:"cuivre (gainé de plastique isolant)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const j=txt("e1_just");
+    const jOk = j.length>=15 && (j.includes("sel")||j.includes("embrun")||j.includes("rouille")||j.includes("mer"));
+    return {score:ok,total:9,extra:jOk?"":" Ta justification doit parler du sel marin (embruns) et de la rouille.",valide:ok>=8&&jOk};
+  },
+  2: function(){
+    let ok=0;
+    const att={e2_o1:"2",e2_o2:"1",e2_o3:"4",e2_o4:"3",
+               e2_n1:"énergie lumineuse",e2_n2:"énergie électrique",e2_n3:"énergie chimique",e2_n4:"énergie électrique",e2_n5:"énergie lumineuse"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const cOk = txt("e2_cahier").length>=15 && txt("e2_cahier").includes("→");
+    return {score:ok,total:9,extra:cOk?"":" Résume aussi ta chaîne avec des flèches → (et recopie-la au cahier).",valide:ok===9&&cOk};
+  },
+  3: function(){
+    let ok=0;
+    const att={e3_1:"le capteur de luminosité et le détecteur de mouvement",e3_2:"la carte électronique",e3_3:"le bloc de LED (via l'interrupteur commandé)",
+               e3_e1:"éteinte",e3_e2:"en veille (faible)",e3_e3:"à pleine puissance",e3_e4:"éteinte",
+               e3_r1:"nuit",e3_r2:"passe",e3_r3:"veille"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const e=window.__exp||{};
+    const expOk = e["jour"]!==undefined && e["nuit"]!==undefined && e["nuit+passage"]!==undefined;
+    return {score:ok,total:10,extra:expOk?"":" Fais VRAIMENT les expériences au simulateur : jour, nuit, et nuit + passage.",valide:ok===10&&expOk};
+  },
+  4: function(){
+    let ok=0;
+    const att={e4_1:"batterie_pct (clair + unité, sans espace)",e4_2:"des nombres",e4_3:"une nouvelle colonne « couleur_mat »",
+               e4_4:"L5",e4_5:"L3",e4_7:"UN lampadaire complet (toutes ses données)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    if(num("e4_6")===2) ok++;
+    return {score:ok,total:7,valide:ok===7};
+  },
+  5: function(){
+    let ok=0;
+    const att={e5_1:"terminaux",e5_2:"le commutateur",e5_3:"la borne Wi-Fi",e5_4:"le serveur",e5_5:"une liaison filaire (câble)",e5_6:"une liaison sans fil (Wi-Fi)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:6,valide:ok===6};
+  },
+  6: function(){
+    let ok=0;
+    const att={e6_1:"IMPRIMANTE-CDI",e6_2:"SERVEUR-COLLEGE",e6_3:"TABLETTE-07",
+               e6_4:"le réseau ne sait plus à qui livrer : conflit, messages perdus ou livrés au mauvais endroit",
+               e6_5:"ne peut pas être livré (comme une lettre sans adresse)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const j=txt("e6_just");
+    const jOk = j.length>=20 && (j.includes("unique")||j.includes("même nom")||j.includes("livrer")||j.includes("confond"));
+    return {score:ok,total:5,extra:jOk?"":" Ta justification doit expliquer le problème des noms identiques pour la livraison.",valide:ok===5&&jOk};
+  },
+  7: function(){
+    let ok=0;
+    const att={e7_1:"la sonnerie (haut-parleur) de la vie scolaire",e7_2:"stocker",e7_3:"sonore",
+               e7_4:"ACQUÉRIR (il capte l'appui)",e7_5:"plastique résistant aux UV et à la pluie",
+               e7_6:"la borne Wi-Fi (liaison sans fil), avec un nom unique sur le réseau"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:6,valide:ok>=5};
+  }
+};
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5,6,7].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 7 activités validées";
+  $("progFill").style.width = (n/7*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1], s2:[2], s3:[3], s4:[4], s5:[5,6,7]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majLampe(); majProgress(); majHyp();
+</script>
+</body>
+</html>
