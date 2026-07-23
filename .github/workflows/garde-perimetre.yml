@@ -30,7 +30,9 @@ jobs:
           BRANCHE="${{ github.head_ref }}"
           BASE="origin/${{ github.base_ref }}"
           git fetch origin "${{ github.base_ref }}" --quiet
-          FICHIERS=$(git diff --name-only "$BASE"...HEAD)
+          # quotepath=off : sans lui, git met entre guillemets les chemins accentués
+          # (ex. Synthèses/) et la garde les croirait hors périmètre (bug corrigé le 24/07)
+          FICHIERS=$(git -c core.quotepath=off diff --name-only "$BASE"...HEAD)
           echo "Branche : $BRANCHE"
           echo "Fichiers modifiés :"; echo "$FICHIERS" | sed 's/^/  - /'
 
