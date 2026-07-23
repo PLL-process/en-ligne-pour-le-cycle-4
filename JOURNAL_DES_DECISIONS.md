@@ -216,3 +216,20 @@ les décisions de publication restent à ChatGPT.*
 4. **Notification aux autres IA** : messages prêts (transmis par Pascal dans
    leurs conversations) — voir `_progressions/README.md` pour le contrat.
    Classeur 3e : à produire (même canevas).
+
+## 2026-07-23 — Progressions : classeur 3e (année DNB) — le triptyque est complet (Fable, branche `fable/progressions/classeur-3e`)
+
+1. **Classeur 3e produit** : 9 séquences · 30 séances + 4 tampons + 3 semaines
+   RÉVISIONS DNB (S35-S37, rien de neuf après début juin). AJUSTEMENT assumé :
+   le référentiel prévoyait 35 séances, intenables à 1 h 30/sem avec le DNB —
+   compressions documentées séquence par séquence, à entériner au Conseil.
+2. Générateurs S4-S5-S6 REMPLIS avec les 4 séquences Thème 2 en ligne (station
+   cyclonique, Internet Sainte-Luce, SOS station, Programmer l'alerte) et
+   cahiers de texte Pronote rédigés. S7-S8-S9 (fil rouge) → IA Thème 3 ;
+   S1-S3 → IA Thème 1.
+3. **CORRECTION du journal du 23/07 (LOT 04)** : le bilan « C4 de 3e : 8/8 »
+   était inexact — 3e_C4.1 (élaborer la chaîne d'énergie) et 3e_C4.2 (justifier
+   matériau/procédé) sont À CRÉER (audit). Prochain lot Thème 2 : ces 2 codes,
+   sur l'objet-fil station (séance 4 du générateur S4 les attend).
+4. Le triptyque 5e/4e/3e est en place dans `_progressions/` : les IA des
+   Thèmes 1 et 3 peuvent remplir leurs onglets des trois classeurs.

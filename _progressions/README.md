@@ -11,7 +11,7 @@ séquence, dans l'ordre de l'année.
 |---|---|---|---|
 | `5e/Progression_Techno_5e_2026-2027_Martinique.xlsx` | ✅ maquette validée par Pascal | Fable | S4, S5 (✅ ressources en ligne), S6 (pré-rempli) |
 | `4e/Progression_Techno_4e_2026-2027_Martinique.xlsx` | ✅ prêt à remplir | Fable | S4, S5, S6 (pré-remplis, QCM existants liés) |
-| `3e/…` | 🔜 après validation du canevas | Fable | — |
+| `3e/Progression_Techno_3e_2026-2027_Martinique.xlsx` | ✅ prêt à remplir | Fable | S4, S5, S6 (REMPLIS — 4 séquences en ligne) |
 
 ## Qui remplit quoi (règle du dépôt : l'IA d'un thème est SEULE à modifier ses contenus)
 
@@ -19,6 +19,13 @@ Classeur 4e : S1 (C1.1-3), S2 (C1.4), S3 (C2.x, C3.x) → **IA Thème 1** ·
 S4-S5-S6 → Fable (pré-remplis) · S7 (C7/C8/C9) → **IA Thème 3**.
 ⚠ Correctif intégré : 4e_C4.3 (forme ↔ procédé), absent de la progression
 initiale du référentiel, est rattaché à S6 — à entériner au Conseil du 28/07.
+
+Classeur 3e (9 séquences, année DNB — 30 séances au lieu des 35 sur-planifiées
+du référentiel, 3 semaines de révisions DNB en juin) : S1-S2-S3 → **IA Thème 1**
+· S4-S5-S6 → Fable (remplis : station cyclonique, Internet Sainte-Luce,
+SOS station + Programmer l'alerte — toutes en ligne) · S7-S8-S9 (projet fil
+rouge en 3 volets) → **IA Thème 3**. ⚠ 3e_C4.1 et C4.2 : ressource en ligne
+à produire (Fable, signalé dans S4).
 
 Classeur 5e :
 
