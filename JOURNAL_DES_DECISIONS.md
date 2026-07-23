@@ -416,6 +416,17 @@ Conseil du 28/07) :
 d'ordre descendante, convention explicitée dans l'image). Le schéma existant
 de 4e_C6.2 était déjà conforme.
 
+4. **Volet élève (demande Pascal)** : chaque fois qu'une consigne fait
+   TRACER ou RECOPIER les chaînes, un encadré « 📐 Règle d'or du schéma »
+   rappelle la convention avec sa formulation canonique : « l'INFORMATION
+   en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau
+   au-dessus des muscles, la commande au-dessus de la puissance. La
+   disposition EST une leçon : elle montre qui commande, sans un mot. »
+   Inséré dans les LOTs 05 (act. chaîne d'énergie, références haut/bas du
+   schéma corrigées après l'inversion du SVG) et 09 (NB complet act. 1,
+   rappel court act. 2, synthèse élève). À intégrer au gabarit commun pour
+   tous les futurs lots des trois thèmes.
+
 **Complément à la règle d'or n° 4** (signalé par Pascal : bouton QCM en
 double) : le bouton « Ouvrir le QCM d'entraînement » figure **UNE SEULE
 fois** par séquence, dans le bloc « 🧠 Prêt·e à t'entraîner ? ». Le bilan
