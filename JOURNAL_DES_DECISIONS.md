@@ -196,3 +196,23 @@ les décisions de publication restent à ChatGPT.*
    uniquement.
 4. Déclinaisons 4e et 3e : par Fable après le Conseil (ou avant si le temps
    le permet), sur le même canevas.
+
+## 2026-07-23 — Progressions : classeur 4e + notification aux autres IA (Fable, branche `fable/progressions/maquette-5e`)
+
+1. **Canevas 5e validé par Pascal** (tests réels du moteur d'imprévus en Excel :
+   insertion, décalage, effacement, retour au nominal — tout confirmé), avec en
+   version personnelle .xlsm : grandes fenêtres de saisie, ouverture sur la
+   semaine en cours, copie du cahier de texte en un clic (installateur
+   PowerShell : Excel fabrique lui-même les macros).
+2. **Classeur 4e produit** sur le même canevas : 28 séances + 9 tampons,
+   38 codes, Nathan 4e (11 problématiques mappées), générateurs S4-S5-S6
+   pré-remplis par Fable avec les QCM 4e existants du dépôt (jardin connecté,
+   eCall, automatisation, réseaux, éclairage, algorigrammes — non modifiés),
+   S1-S3 → IA Thème 1, S7 → IA Thème 3.
+3. **ANOMALIE RÉFÉRENTIEL DÉTECTÉE ET CORRIGÉE** : 4e_C4.3 (forme d'une pièce
+   ↔ procédé) n'était rattaché à AUCUNE séquence de la progression 4e du
+   référentiel — réintégré dans S6 « Réparer sans notice ». Illustre l'intérêt
+   de la vérification croisée des compétences écrites (Conseil du 28/07).
+4. **Notification aux autres IA** : messages prêts (transmis par Pascal dans
+   leurs conversations) — voir `_progressions/README.md` pour le contrat.
+   Classeur 3e : à produire (même canevas).
