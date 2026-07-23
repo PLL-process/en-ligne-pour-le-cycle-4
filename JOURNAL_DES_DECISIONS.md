@@ -309,3 +309,22 @@ conformes. Restent NON conformes dans le Thème 2 : `3e_C6.2
 (sequence_algorigrammes_dnb.html)` et `4e_C6.2 (jardin connecté)` — contenus
 antérieurs au gabarit, à traiter dans le lot de consolidation post-Conseil.
 **Pour les Thèmes 1 et 3** : adoption à l'ordre du jour du Conseil du 28/07.
+
+## 2026-07-24 — Gouvernance : garde-périmètre installée + décision d'autonomie reportée au Conseil (Pascal & Fable)
+
+1. **Garde-périmètre active** (PR #33) : chaque PR vers main est vérifiée —
+   une branche contenant `theme-1`/`theme-2`/`theme-3` ne peut modifier que
+   le dossier de son thème (+ fichiers communs : index, README, audit,
+   nouveautes.json, journal, _progressions/). `.github/` est intouchable
+   depuis une branche de thème. Le thème 2 conserve `_outils/`.
+   **Convention à respecter par toutes les IA : le nom de la branche porte le
+   thème** (ex. `codex/theme-1/…`, `fable/theme-2/…`, `fable/theme-3/…`).
+2. **Protection de main** : fusion uniquement par PR (ruleset actif) ; le
+   contrôle `perimetre` sera rendu obligatoire dès sa première exécution.
+3. **Décision de Pascal** : jusqu'au Conseil du 28/07, la fusion reste sa
+   validation manuelle. À l'ordre du jour du Conseil : bilan de qualité des
+   lots livrés par thème ; si concluant, passage à l'autonomie complète
+   (auto-merge quand les contrôles sont verts), conditionné à un second
+   contrôle obligatoire « contrôles de publication » (intégrité des classeurs
+   _progressions, liens sans antislash, absence de correction d'évaluation
+   sommative dans le dépôt public) que Fable tiendra prêt.
