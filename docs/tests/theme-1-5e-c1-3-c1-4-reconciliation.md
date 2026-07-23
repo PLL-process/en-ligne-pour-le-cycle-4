@@ -6,47 +6,32 @@ Date de reprise : 23 juillet 2026.
 
 Reprendre le lot pilote `5e_C1.3–C1.4` au-dessus du `main` courant sans écraser les lots déjà publiés dans les Thèmes 2 et 3, puis aligner son QCM sur le moteur JavaScript commun et sur l’en-tête standard obligatoire.
 
-## Source fonctionnelle à reprendre
+## État actuel
 
-Ancienne branche : `codex/theme-1/lot-5e-c1-3-c1-4-finalisation`.
-
-Fichiers pédagogiques à réintégrer et contrôler :
-
-- `sequence_C1.3-C1.4_SI_gestion_donnees.html` ;
-- `qcm_systemes_information_donnees.html` ;
-- `qcm-corrections-5e-c1-3-c1-4.js` ;
-- `synthese_eleve_5e_C1.3-C1.4.html` ;
-- `synthese_professeur_5e_C1.3-C1.4.html` ;
-- `couverture_sequence_qcm.json` ;
-- `RAPPORT_LOT_PILOTE.md`.
-
-Les anciens composants génériques `_assets/qcm-eleve.*` ne doivent pas être réintroduits comme moteur concurrent. Le QCM doit réutiliser le moteur commun actuellement employé par les QCM du Thème 2.
+- Branche : `codex/theme-1/lot-5e-c1-3-c1-4-reconciliation-v2`.
+- La séquence principale `sequence_C1.3-C1.4_SI_gestion_donnees.html` a été réintégrée depuis l’ancienne branche de finalisation.
+- Les six SVG originaux, les deux synthèses, la matrice de couverture et `SOURCES_MEDIAS.md` sont présents.
+- Le QCM historique n’est pas réintroduit tel quel : son moteur doit être remplacé par le moteur commun du Thème 2 conformément au skill `qcm-html-accessible`.
 
 ## Contrôles bloquants
 
-1. En-tête standard : titre, sous-titre, badges, retour vers la séquence et identité sauvegardée.
-2. Carte `Ma progression` : barre et sept compteurs permanents.
-3. Minuteur : démarrer, pause, reprendre et mode sans minuteur.
-4. Modes : parcours complet, dix questions, révision ciblée, erreurs et questions marquées.
-5. Corrections exhaustives : réponse, explication, exemple, erreur fréquente et notion à retenir.
-6. Sauvegarde et reprise après fermeture.
-7. Navigation clavier, focus visible, souris et tactile.
-8. Responsive : ordinateur, tablette et téléphone.
-9. Images v2 : image-objet, image-explication ou image-contexte seulement ; texte alternatif obligatoire ; aucune image décorative.
-10. Liens réciproques entre séquence, QCM et synthèses.
-11. Aucun fichier du Thème 2 modifié par ce lot.
-12. Ajout à `nouveautes.json`, régénération de l’index et badge `NEW` seulement après publication réelle.
+1. Intégrer les six SVG dans les activités, corrections et questions qui les utilisent réellement.
+2. Vérifier au moins trois activités progressives avec consigne, production attendue, aide, correction, exemple, erreur fréquente et À retenir.
+3. Migrer le QCM vers l’en-tête standard : identité, sept compteurs, minuteur, modes de travail, navigation et résultat.
+4. Réutiliser le moteur JavaScript de référence du Thème 2 ; ne pas réintroduire `_assets/qcm-eleve.*` comme moteur concurrent.
+5. Garantir des corrections exhaustives : réponse, explication, exemple, erreur fréquente et notion à retenir.
+6. Tester sauvegarde/reprise, minuteur, clavier, souris, tactile et responsive.
+7. Contrôler les images v2 : image-objet, image-explication ou image-contexte seulement ; texte alternatif obligatoire ; aucune image décorative.
+8. Vérifier les liens réciproques entre séquence, QCM et synthèses.
+9. Ne modifier aucun fichier du Thème 2.
+10. Mettre à jour `nouveautes.json` et régénérer l’index seulement après validation complète.
 
-## Test automatisé ajouté
+## Tests réellement effectués
 
-Le script `_outils/test_lot_theme1_5e_c1_3_c1_4.py` vérifie statiquement la présence des fichiers, les principaux marqueurs de l’en-tête standard, les sept compteurs, les modes, les textes alternatifs, les liens réciproques et la présence d’au moins trois activités.
+- validation XML des six SVG ;
+- présence de `title`, `desc` et `role="img"` ;
+- poids de chaque SVG très inférieur à 300 Ko ;
+- périmètre contrôlé : aucun fichier du Thème 2 modifié ;
+- présence vérifiée de la séquence principale sur la branche de réconciliation.
 
-Ce test statique ne valide pas à lui seul le minuteur, la sauvegarde, le tactile ou le rendu responsive. Ces contrôles doivent être exécutés dans un navigateur réel et consignés dans le rapport du lot.
-
-## État de cette reprise
-
-- nouvelle branche créée depuis le `main` courant ;
-- script d’audit statique ajouté ;
-- réintégration des pages pédagogiques et migration vers le moteur commun encore à effectuer ;
-- aucun test fonctionnel déclaré réussi à ce stade ;
-- aucune publication dans `main` pendant cette étape.
+Le script `_outils/test_lot_theme1_5e_c1_3_c1_4.py` est présent mais doit être relancé après migration du QCM. Aucun test fonctionnel navigateur n’est encore déclaré réussi.
