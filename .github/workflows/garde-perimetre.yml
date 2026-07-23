@@ -1,0 +1,68 @@
+name: Garde-périmètre des thèmes
+
+# Chaque intelligence artificielle ne peut modifier que son propre thème.
+# Le thème est déduit du NOM DE LA BRANCHE de la PR :
+#   ...theme-1... -> theme-1-.../
+#   ...theme-2... -> theme-2-.../ (+ _outils/)
+#   ...theme-3... -> theme-3-.../
+#   ...progressions... -> _progressions/ uniquement (+ fichiers communs)
+# Fichiers communs autorisés pour tous : fichiers régénérés (index, README,
+# audit), nouveautes.json, journal, et les classeurs _progressions/.
+# Toute modification de .github/ est refusée (réservée à Pascal, dont les
+# branches sans motif thème passent avec un simple avertissement).
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  perimetre:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Vérifier le périmètre
+        shell: bash
+        run: |
+          set -euo pipefail
+          BRANCHE="${{ github.head_ref }}"
+          BASE="origin/${{ github.base_ref }}"
+          git fetch origin "${{ github.base_ref }}" --quiet
+          FICHIERS=$(git diff --name-only "$BASE"...HEAD)
+          echo "Branche : $BRANCHE"
+          echo "Fichiers modifiés :"; echo "$FICHIERS" | sed 's/^/  - /'
+
+          COMMUNS='^(index\.html|README\.md|audit_couverture\.(csv|json)|nouveautes\.json|JOURNAL_DES_DECISIONS\.md|_progressions/)'
+
+          case "$BRANCHE" in
+            *theme-1*) PERIMETRE='^theme-1-' ; QUI="Thème 1" ;;
+            *theme-2*) PERIMETRE='^(theme-2-|_outils/)' ; QUI="Thème 2" ;;
+            *theme-3*) PERIMETRE='^theme-3-' ; QUI="Thème 3" ;;
+            *progressions*) PERIMETRE='^$' ; QUI="Progressions (fichiers communs uniquement)" ;;
+            *)
+              echo "::warning::Branche sans motif de thème ($BRANCHE) : garde non appliquée (branche du propriétaire)."
+              exit 0 ;;
+          esac
+          echo "Périmètre appliqué : $QUI"
+
+          ERREURS=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if echo "$f" | grep -qE '^\.github/'; then
+              echo "::error file=$f::Modification de .github/ interdite depuis une branche de thème."
+              ERREURS=1; continue
+            fi
+            if echo "$f" | grep -qE "$PERIMETRE" || echo "$f" | grep -qE "$COMMUNS"; then
+              continue
+            fi
+            echo "::error file=$f::Hors périmètre pour $QUI."
+            ERREURS=1
+          done <<< "$FICHIERS"
+
+          if [ "$ERREURS" -ne 0 ]; then
+            echo "ÉCHEC : cette PR modifie des fichiers hors du périmètre de sa branche."
+            exit 1
+          fi
+          echo "OK : tous les fichiers modifiés sont dans le périmètre."
