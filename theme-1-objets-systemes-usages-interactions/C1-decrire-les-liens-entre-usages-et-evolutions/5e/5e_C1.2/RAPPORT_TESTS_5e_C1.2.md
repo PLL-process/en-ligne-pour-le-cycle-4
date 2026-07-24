@@ -4,7 +4,7 @@ Date : 24 juillet 2026
 
 ## Contrôles réellement exécutés
 
-Les fichiers ont été relus depuis la branche GitHub après création.
+Les fichiers ont été relus depuis la branche GitHub après chaque mise à jour.
 
 ### Séquence élève
 
@@ -20,23 +20,38 @@ Les fichiers ont été relus depuis la branche GitHub après création.
 - deux images SVG avec textes alternatifs ;
 - liens relatifs vers les deux images et le QCM vérifiés statiquement.
 
+### QCM migré vers le moteur commun
+
+- en-tête standard vérifié : titre, sous-titre, badges niveau/code/nombre de questions et lien de retour ;
+- quatre champs d’identité présents : Nom, Prénom, Classe, Date ;
+- carte « Ma progression » avec les sept compteurs permanents ;
+- minuteur avec démarrage, pause et option sans minuteur ;
+- quatre modes de travail : complet, 10 questions, erreurs, questions marquées ;
+- grille de navigation, marquage « À revoir », validation et bilan final présents ;
+- banque de 24 questions vérifiée statiquement ;
+- chaque question contient une explication, un exemple, une erreur fréquente et un « À retenir » ;
+- sauvegarde locale et reprise présentes dans le code ;
+- styles responsive, focus visible et impression A4 présents ;
+- l’ancien moteur concurrent a été entièrement remplacé.
+
 ### Paquet pédagogique
 
 - synthèse élève créée ;
 - synthèse professeur créée ;
 - fiche pédagogique créée ;
-- QCM séparé de 24 questions déjà présent ;
-- registre `SOURCES_MEDIAS.md` déjà présent.
+- QCM séparé de 24 questions migré ;
+- registre `SOURCES_MEDIAS.md` présent.
 
-## Tests non déclarés
+## Tests non déclarés comme réussis
 
-Les tests suivants n’ont pas été exécutés dans ce lot à ce stade :
+Les vérifications suivantes restent à exécuter avant de qualifier le paquet de « complet et validable » :
 
-- exécution fonctionnelle dans Chromium, Firefox ou Edge ;
-- navigation complète au clavier ;
+- exécution fonctionnelle réelle dans Chromium, Firefox ou Edge ;
+- parcours complet au clavier sans souris ;
+- scénarios scriptés tout juste, tout faux et mixte connu ;
+- fermeture puis reprise réelle depuis le stockage local ;
 - test tactile réel ;
 - test d’impression physique ;
-- validation des liens sur GitHub Pages après fusion ;
-- fonctionnement complet du moteur JavaScript du QCM.
+- validation des liens sur GitHub Pages après fusion.
 
-Ils devront être exécutés avant de qualifier le paquet de « complet et validable » dans l’audit final.
+Aucun de ces tests n’est déclaré réussi tant qu’il n’a pas été réellement exécuté.
