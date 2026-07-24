@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajuster le programme du jardin (4e_C6.1 · C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>📈 Ajuster le programme du jardin</h1>
+<p class="subtitle">Lire les relevés, déduire les modifications (hystérésis, plage horaire), puis tester et valider SANS rien casser — la panne n'est plus dans les pièces, elle est dans les lignes</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C6.1</span><span class="badge code">4e_C6.3</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D4</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 4 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Trois semaines après le remplacement du capteur (merci pour lui !), la présidente du club jardin
+    revient — avec une clé USB.</b> « Le jardin arrose de nouveau… mais quelque chose cloche. J'ai exporté
+    les relevés de la semaine : regardez le mardi. La pompe a démarré <b>47 fois entre 6 h et 9 h</b> —
+    des à-coups d'une minute, on l'entend claquer depuis la classe. Et mercredi, l'arrosage est parti
+    à <b>13 h, en plein soleil</b> : la moitié de l'eau s'est évaporée avant de toucher les racines. »</p>
+    <p>Le technicien confirme au téléphone : <b>« Le matériel est sain — vous l'avez prouvé au dernier
+    dépannage. Cette fois, le défaut est dans le PROGRAMME. Analysez les données, déduisez les
+    modifications… et surtout : TESTEZ-les en simulation avant de toucher au vrai jardin. On ne
+    modifie jamais un système qui marche sans filet. »</b></p>
+    <p>Votre mission de 4e : <b>analyser</b> les relevés, <b>déduire</b> les modifications du programme,
+    puis <b>tester et valider</b> — en simulé d'abord, en réel ensuite.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment corriger un programme qui « marche »… mais qui fatigue la pompe et
+  gaspille l'eau — sans risquer de casser ce qui fonctionne ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> la pompe démarre 47 fois en trois heures autour du seuil
+    de 40 %. Qu'est-ce qui, dans le programme, peut provoquer ce « clignotement » ? Et comment l'éviter ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : la maquette du jardin (carte + capteur + pompe, <b>très basse tension
+    uniquement — jamais le secteur</b>) et son programme à modifier sous Vittascience/mBlock — après
+    sauvegarde du programme d'origine.</p>
+    <p>🅱 <b>En simulation</b> : le banc de test à scénarios intégré à cette page (aucun matériel).</p>
+    <p>🅲 <b>Sans matériel</b> : les relevés imprimés, l'algorithme à compléter au cahier et le tableau
+    des scénarios de test.</p>
+  </div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — Analyser et déduire<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Tester et valider<span id="done-s2"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🔎 Séance 1 — Analyser les données, déduire les modifications (4e_C6.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que racontent les relevés d'un système — et comment les transformer en corrections du programme ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Lire les relevés comme un détective des données</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> repérer les deux anomalies dans les relevés de la semaine et relier chacune à sa cause DANS le programme.</div>
+      <div><b>Compétence :</b> 4e_C6.1 — analyser les données et en déduire des modifications à apporter au programme.</div>
+      <div><b>Production attendue :</b> 2 anomalies nommées + 2 causes logicielles désignées.</div>
+      <div><b>Ressources :</b> la courbe des relevés du mardi et du mercredi.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/releves_jardin.svg" type="image/svg+xml" aria-label="Courbe des relevés : l'humidité oscille autour du seuil unique de 40 % avec 47 démarrages de pompe entre 6 h et 9 h, et un arrosage part à 13 h en plein soleil" style="width:100%"></object>
+      <figcaption>Les relevés de la clé USB. Deux anomalies s'y cachent — les données ne mentent pas, elles RACONTENT.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) observe la courbe et ses annotations ; b) qualifie chaque constat ; c) relie chaque anomalie à sa cause dans le programme.</div>
+    <div class="exo">
+      <h4>a) Je qualifie mes constats</h4>
+      <div class="assoc"><label for="c1_1">Mardi, 6 h-9 h : la pompe démarre et s'arrête 47 fois, par à-coups d'une minute. C'est…</label><select id="c1_1"><option value="">— choisir —</option><option>une anomalie : la pompe « bat » autour du seuil — usure mécanique et à-coups inutiles</option><option>un fonctionnement normal d'arrosage</option><option>la preuve que le capteur est encore cassé</option></select></div>
+      <div class="assoc"><label for="c1_2">Mercredi, 13 h : un arrosage part en plein soleil. C'est…</label><select id="c1_2"><option value="">— choisir —</option><option>une anomalie : l'eau s'évapore avant d'agir — gaspillage et efficacité réduite</option><option>le meilleur moment pour arroser</option><option>une panne de la pompe</option></select></div>
+      <div class="assoc"><label for="c1_3">Jeudi, 22 h : la pompe démarre à 34 % d'humidité et s'arrête après l'arrosage. C'est…</label><select id="c1_3"><option value="">— choisir —</option><option>un fonctionnement normal : sol sec, heure fraîche, arrosage justifié</option><option>une anomalie de plus</option><option>impossible à interpréter</option></select></div>
+      <h4>b) Je relie chaque anomalie à sa cause dans le programme</h4>
+      <div class="assoc"><label for="c1_4">La pompe « bat » autour de 40 % parce que le programme…</label><select id="c1_4"><option value="">— choisir —</option><option>utilise UN SEUL seuil : dès que la mesure oscille autour de 40 %, la commande bascule ON/OFF sans arrêt</option><option>est écrit dans le mauvais langage</option><option>tourne trop vite sur la carte</option><option>a été piraté</option></select></div>
+      <div class="assoc"><label for="c1_5">L'arrosage part à 13 h parce que le programme…</label><select id="c1_5"><option value="">— choisir —</option><option>ne tient compte QUE de l'humidité : aucune condition d'horaire ne retient l'arrosage aux heures chaudes</option><option>préfère le soleil</option><option>confond les jours de la semaine</option><option>manque de mémoire</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Une anomalie de DONNÉES se repère en comparant au comportement attendu : une pompe doit arroser franchement puis se reposer — pas claquer 47 fois. Et un bon arrosage évite les heures où l'eau s'évapore. Cherche ce qui, dans les RÈGLES du programme, autorise ces comportements.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Autour de 40 %, la mesure vibre naturellement : 39,8… 40,1… 39,9. Avec UN seul seuil à 40 %, chaque vibration inverse la commande → la pompe bat. Et si la seule règle est « humidité < 40 % → arroser », rien n'empêche 13 h : le programme ne SAIT pas qu'il fait chaud — personne ne le lui a écrit.</p></details>
+    <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Anomalie n°1 : la pompe <b>bat</b> (47 démarrages) — cause : <b>seuil unique</b> à 40 %, la mesure qui
+      vibre autour fait basculer la commande en permanence. Anomalie n°2 : arrosage à <b>13 h</b> — cause :
+      <b>aucune condition horaire</b> dans le programme. Le jeudi 22 h est NORMAL : sol sec + heure fraîche.
+      Les données ne disent pas « c'est cassé » : elles disent <b>OÙ le programme est incomplet</b> (4e_C6.1).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> analyser des données = comparer le comportement OBSERVÉ au comportement ATTENDU, puis remonter de chaque écart à la règle du programme qui l'autorise. Les relevés sont la loupe du programmeur.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> accuser le matériel alors que les données désignent une règle ; « corriger » ce qui est normal (le jeudi 22 h) ; lire une valeur isolée au lieu d'une TENDANCE.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5, et les 2 anomalies + leurs causes recopiées au cahier.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Déduire les modifications : deux seuils et une plage horaire</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> traduire chaque anomalie en modification PRÉCISE du programme : l'hystérésis (deux seuils) et la plage horaire.</div>
+      <div><b>Compétence :</b> 4e_C6.1 (suite) — de l'analyse à la spécification de la modification.</div>
+      <div><b>Production attendue :</b> l'algorithme corrigé, complété ligne à ligne.</div>
+      <div><b>Ressources :</b> le schéma de l'hystérésis (un seuil vs deux seuils).</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/hysteresis_deux_seuils.svg" type="image/svg+xml" aria-label="Comparaison entre un seuil unique à 40 pour cent qui fait battre la pompe et deux seuils à 35 et 45 pour cent qui la stabilisent" style="width:100%"></object>
+      <figcaption>Le remède au battement : DEUX seuils au lieu d'un. La pompe démarre sous 35 %, ne s'arrête qu'au-dessus de 45 % — entre les deux, elle ne change pas d'avis.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> complète l'algorithme corrigé du jardin en choisissant chaque ligne. Les valeurs retenues par le club : démarrage sous <b>35 %</b>, arrêt au-dessus de <b>45 %</b>, arrosage autorisé <b>avant 8 h ou après 17 h</b> uniquement.</div>
+    <div class="exo">
+      <div class="assoc"><label for="a2_1">LIGNE 1 — la pompe DÉMARRE si…</label><select id="a2_1"><option value="">— choisir —</option><option>humidité inférieure à 35 % ET heure hors des heures chaudes (avant 8 h ou après 17 h)</option><option>humidité inférieure à 40 %, comme avant</option><option>humidité inférieure à 45 %</option><option>la présidente appuie sur un bouton</option></select></div>
+      <div class="assoc"><label for="a2_2">LIGNE 2 — la pompe S'ARRÊTE si…</label><select id="a2_2"><option value="">— choisir —</option><option>humidité supérieure à 45 %</option><option>humidité supérieure à 35 %</option><option>humidité supérieure à 40 %, comme avant</option><option>il fait nuit</option></select></div>
+      <div class="assoc"><label for="a2_3">ENTRE 35 % et 45 %, la pompe…</label><select id="a2_3"><option value="">— choisir —</option><option>garde son état : allumée si elle arrosait, éteinte si elle se reposait — c'est l'hystérésis qui supprime le battement</option><option>clignote lentement</option><option>choisit au hasard</option><option>s'arrête toujours</option></select></div>
+      <div class="assoc"><label for="a2_4">Le rôle de la plage horaire (avant 8 h ou après 17 h) est de…</label><select id="a2_4"><option value="">— choisir —</option><option>retenir l'arrosage aux heures chaudes : l'eau versée tôt ou tard atteint les racines au lieu de s'évaporer</option><option>faire des économies d'électricité la nuit</option><option>compliquer le programme pour le plaisir</option><option>éteindre l'écran à midi</option></select></div>
+      <div class="assoc"><label for="a2_5">Un sol à 30 % à 13 h : que fait le programme corrigé ?</label><select id="a2_5"><option value="">— choisir —</option><option>il ATTEND 17 h pour arroser : sécheresse repérée, mais l'eau serait perdue en plein soleil</option><option>il arrose immédiatement : 30 %, c'est urgent</option><option>il éteint le capteur</option><option>il envoie un e-mail</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>L'hystérésis, c'est deux portes : une porte d'ENTRÉE en arrosage (35 %) et une porte de SORTIE (45 %). Tant qu'on est entre les deux, on ne change pas d'avis. La plage horaire est un ET de plus dans la condition de démarrage — pas dans celle d'arrêt : un arrosage en cours peut toujours se terminer.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pourquoi 35 et 45 (et pas 39,9/40,1) ? Parce que l'ÉCART entre les seuils doit être plus grand que la vibration naturelle de la mesure (±1 à 2 %) : avec 10 points d'écart, le battement est impossible. Et à 30 % à 13 h : la condition « heure » est fausse → pas de démarrage — le programme n'oublie pas la sécheresse, il la traite à 17 h.</p></details>
+    <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Algorithme corrigé : <b>SI</b> humidité &lt; 35 % <b>ET</b> (heure &lt; 8 h <b>OU</b> heure &gt; 17 h)
+      <b>ALORS</b> pompe ON · <b>SI</b> humidité &gt; 45 % <b>ALORS</b> pompe OFF · entre les deux, l'état
+      <b>ne change pas</b> (hystérésis). L'écart 35/45 dépasse largement la vibration de la mesure : plus de
+      battement. La plage horaire retient l'eau aux heures d'évaporation. Chaque MODIFICATION répond à UNE
+      anomalie des relevés — c'est toute la logique de 4e_C6.1.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> une modification de programme se SPÉCIFIE : hystérésis = deux seuils écartés de plus que la vibration de la mesure (démarrer &lt; 35 %, arrêter &gt; 45 %) ; plage horaire = une condition ET sur le démarrage. Une anomalie → une modification précise.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> resserrer les deux seuils (39/41 : le battement revient) ; mettre la condition horaire sur l'ARRÊT (un arrosage en cours doit pouvoir finir) ; modifier « au feeling » sans relier à une anomalie.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5/5, et l'algorithme corrigé recopié au cahier en 3 lignes SI/ALORS.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🧪 Séance 2 — Tester et valider, en simulé puis en réel (4e_C6.3)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment modifier un système qui marche… sans risquer de le casser ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Le banc de test : quatre scénarios avant le vrai jardin</h3><span class="duree">⏱ 40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> appliquer la méthode de validation — sauvegarder, modifier, jouer les 4 scénarios en simulation, puis valider en réel sans régression.</div>
+      <div><b>Compétence :</b> 4e_C6.3 — tester et valider, dans un environnement simulé ou réel, une modification du programme.</div>
+      <div><b>Production attendue :</b> les 4 scénarios joués au banc (verrou) + le tableau des résultats + 2 questions de méthode.</div>
+      <div><b>Ressources :</b> l'image de la méthode de validation en 5 étapes.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/banc_test_scenarios.svg" type="image/svg+xml" aria-label="La méthode de validation en cinq étapes : sauvegarder le programme, modifier, tester les quatre scénarios en simulation, valider en réel sur le plant témoin, vérifier la non-régression" style="width:100%"></object>
+      <figcaption>La méthode du club : on ne touche JAMAIS au programme du vrai jardin sans sauvegarde… ni sans scénarios de test.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) joue les QUATRE scénarios au banc de test (dans l'ordre de ton choix — chacun vérifie une règle différente) ; b) note l'état de la pompe attendu pour chacun ; c) réponds aux questions de méthode.</div>
+    <div class="exo">
+      <h4>a) Je joue mes scénarios au banc de test</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost scenbtn" data-scen="1" type="button">🌡 Scénario 1 — 33 % à 6 h (pompe éteinte)</button>
+          <button class="btn small ghost scenbtn" data-scen="2" type="button">🌡 Scénario 2 — 38 % à 6 h 30 (pompe DÉJÀ allumée)</button>
+          <button class="btn small ghost scenbtn" data-scen="3" type="button">🌡 Scénario 3 — 46 % à 7 h (pompe allumée)</button>
+          <button class="btn small ghost scenbtn" data-scen="4" type="button">🌡 Scénario 4 — 33 % à 13 h (pompe éteinte)</button>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">BANC DE TEST DU PROGRAMME CORRIGÉ <span id="scenIcone">🧪</span></div>
+          <div id="scenTxt" style="font-size:.92em;min-height:64px">Le programme corrigé est chargé en SIMULATION (le vrai jardin n'est pas touché). Joue les 4 scénarios — chacun teste une règle différente.</div>
+          <div id="scenEtat" class="etiquette" style="margin-top:6px">scénarios joués : 0 / 4</div>
+          <button class="btn small ghost" id="btnScenReset" type="button">↺ Rejouer les scénarios</button>
+        </div>
+      </div>
+      <h4>b) Je note le verdict de chaque scénario</h4>
+      <div class="assoc"><label for="s3_1">Scénario 1 (33 % à 6 h, pompe éteinte) → la pompe…</label><select id="s3_1"><option value="">— choisir —</option><option>DÉMARRE : humidité sous 35 % ET heure hors des heures chaudes — les deux conditions sont réunies</option><option>reste éteinte : 33 % n'est pas assez sec</option><option>clignote</option></select></div>
+      <div class="assoc"><label for="s3_2">Scénario 2 (38 % à 6 h 30, pompe déjà allumée) → la pompe…</label><select id="s3_2"><option value="">— choisir —</option><option>RESTE ALLUMÉE : 38 % est entre les deux seuils, l'hystérésis garde l'état — le battement a disparu</option><option>s'arrête net : 38 % dépasse 35 %</option><option>redémarre deux fois</option></select></div>
+      <div class="assoc"><label for="s3_3">Scénario 3 (46 % à 7 h, pompe allumée) → la pompe…</label><select id="s3_3"><option value="">— choisir —</option><option>S'ARRÊTE : 46 % dépasse le seuil d'arrêt de 45 % — le sol a assez bu</option><option>continue : il n'est pas encore 8 h</option><option>attend 17 h</option></select></div>
+      <div class="assoc"><label for="s3_4">Scénario 4 (33 % à 13 h, pompe éteinte) → la pompe…</label><select id="s3_4"><option value="">— choisir —</option><option>RESTE ÉTEINTE : la sécheresse est repérée, mais la plage horaire retient l'arrosage jusqu'à 17 h</option><option>démarre : 33 %, c'est urgent</option><option>démarre à moitié</option></select></div>
+      <h4>c) Les questions de la validation</h4>
+      <div class="assoc"><label for="q3_1">Pourquoi SAUVEGARDER le programme d'origine AVANT de modifier ?</label><select id="q3_1"><option value="">— choisir —</option><option>pour pouvoir revenir en arrière si la modification échoue : un système qui marchait ne doit jamais être perdu</option><option>pour remplir la clé USB</option><option>c'est inutile, on se souvient du programme</option><option>pour le vendre plus tard</option></select></div>
+      <div class="assoc"><label for="q3_2">Après la validation en réel, on vérifie la « NON-RÉGRESSION », c'est-à-dire…</label><select id="q3_2"><option value="">— choisir —</option><option>que tout ce qui marchait AVANT marche ENCORE : l'arrosage normal (scénarios 1 et 3) n'a pas été cassé par les nouveautés</option><option>que la pompe est plus silencieuse</option><option>que le programme est plus court</option><option>que l'écran est plus lumineux</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Chaque scénario vérifie UNE règle : le démarrage (1), l'hystérésis (2), l'arrêt (3), la plage horaire (4). Relis l'algorithme de l'activité 2 ligne par ligne : la réponse de chaque scénario s'y lit directement.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le scénario 2 est LE test de l'hystérésis : à 38 %, l'ancien programme aurait basculé (au-dessous de 40 → ON, au-dessus → OFF, au gré des vibrations). Le nouveau garde l'état. Et le scénario 4 est LE test de la plage horaire : même très sec, 13 h = pas d'arrosage — rendez-vous à 17 h. Si les 4 verdicts sont bons en SIMULATION, alors seulement on passe au réel — sur le plant témoin d'abord.</p></details>
+    <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Scénario 1 : <b>DÉMARRE</b> (33 &lt; 35 ET 6 h hors heures chaudes) · Scénario 2 : <b>RESTE ALLUMÉE</b>
+      (38 entre 35 et 45 : hystérésis) · Scénario 3 : <b>S'ARRÊTE</b> (46 &gt; 45) · Scénario 4 : <b>RESTE
+      ÉTEINTE</b> (plage horaire). Puis : validation en réel sur le PLANT TÉMOIN, et non-régression — ce qui
+      marchait marche encore. Sauvegarder avant, simuler, valider en réel, vérifier l'existant : c'est la
+      méthode professionnelle de 4e_C6.3.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> on ne modifie JAMAIS un programme qui marche sans filet : 1) sauvegarder l'origine, 2) modifier, 3) tester en SIMULATION avec des scénarios qui couvrent chaque règle, 4) valider en RÉEL sur un périmètre limité (plant témoin), 5) vérifier la non-régression.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> modifier directement le vrai jardin « pour gagner du temps » ; tester un seul scénario (« ça a l'air bon ») ; oublier la non-régression — la nouveauté qui casse l'ancien est le bug le plus fréquent du monde réel.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 scénarios joués au banc (4/4), 6/6 réponses, et le tableau scénario→verdict recopié au cahier.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Réinvestissement — le lampadaire clignote au crépuscule</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> transférer l'analyse de données et l'hystérésis sur un autre objet, sans aide.</div>
+      <div><b>Compétence :</b> 4e_C6.1 + C6.3 (transfert).</div>
+      <div><b>Production attendue :</b> 4 décisions correctes.</div>
+      <div><b>Ressources :</b> aucune — le raisonnement est le même, seul l'objet change.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> les relevés du lampadaire de 5e montrent qu'il s'allume et s'éteint 30 fois au crépuscule, autour de son seuil unique de 30 lux. Transpose ta démarche.</div>
+    <div class="exo">
+      <div class="assoc"><label for="r4_1">La cause du clignotement au crépuscule est…</label><select id="r4_1"><option value="">— choisir —</option><option>le seuil UNIQUE : la lumière qui décroît lentement vibre autour de 30 lux et fait basculer la commande — exactement comme la pompe qui battait</option><option>une ampoule fatiguée</option><option>le vent</option><option>les passants</option></select></div>
+      <div class="assoc"><label for="r4_2">La modification à déduire des relevés est…</label><select id="r4_2"><option value="">— choisir —</option><option>une hystérésis : allumer sous 20 lux, éteindre au-dessus de 40 lux — l'écart absorbe la vibration</option><option>un seuil unique à 29 lux</option><option>retirer le capteur de lumière</option><option>peindre le lampadaire</option></select></div>
+      <div class="assoc"><label for="r4_3">Avant de charger la modification dans le lampadaire, on…</label><select id="r4_3"><option value="">— choisir —</option><option>sauvegarde le programme d'origine puis on teste les scénarios en simulation (19 lux, 30 lux, 41 lux)</option><option>modifie directement : c'est un petit changement</option><option>attend l'année prochaine</option><option>change l'ampoule</option></select></div>
+      <div class="assoc"><label for="r4_4">La validation finale du lampadaire, c'est…</label><select id="r4_4"><option value="">— choisir —</option><option>un crépuscule RÉEL sans clignotement, et l'allumage/extinction normal qui fonctionne toujours (non-régression)</option><option>un programme plus long qu'avant</option><option>l'avis du gardien seulement</option><option>une photo du lampadaire</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pompe qui bat autour de 40 %, lampe qui clignote autour de 30 lux : le MÊME motif dans les données, le MÊME remède dans le programme. La démarche complète — analyser, déduire, sauvegarder, simuler, valider — se transporte d'un objet à l'autre : c'est ça, une compétence.</p></details>
+    <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Seuil unique → clignotement ; hystérésis 20/40 lux → stabilité ; sauvegarde + scénarios simulés avant
+      le réel ; validation = crépuscule réel stable + non-régression. Le motif « mesure qui vibre autour d'un
+      seuil unique » se retrouve partout : thermostats, pompes, éclairages — tu sauras désormais le reconnaître
+      dans les données ET le corriger dans le programme.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> le motif « battement autour d'un seuil unique » et son remède (l'hystérésis) valent pour tous les systèmes à mesure et commande. Analyser → déduire → tester → valider : la boucle du programmeur responsable.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <div class="bilan-grid">
+    <div>
+      <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
+      <p>Avais-tu deviné le seuil unique ? Et pensé qu'il faudrait TESTER avant de toucher au vrai jardin ?</p></div>
+      <p><b>Ce que tu sais faire désormais :</b> analyser les relevés d'un système et en déduire des
+      modifications précises du programme — hystérésis, plage horaire (4e_C6.1), puis tester et valider
+      ces modifications en simulation et en réel, sauvegarde et non-régression comprises (4e_C6.3).
+      Le jardin arrose désormais aux bonnes heures, sans battement — et la pompe te remercie.</p>
+      <p class="refs">L'histoire complète du jardin : <a href="../../../C5-identifier-un-dysfonctionnement-dun-objet/4e/4e_C5.1/sequence_4e_C5.1-C5.3_depanner_jardin.html">« SOS jardin connecté » (le dépannage matériel)</a> · <a href="../4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">« L'arrosage automatique » (compléter le programme — 4e_C6.2)</a> · <a href="../../../C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html">« Le jardin connecté » (structure et chaînes)</a>.</p>
+    </div>
+    <div class="confiance">
+      <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
+      <div class="assoc"><label for="auto1">4e_C6.1 — analyser les données, déduire les modifications :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto2">4e_C6.3 — tester et valider une modification :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <p class="refs"><a href="Synthèses/synthese_eleve_4e_C6.1-C6.3.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_4e_C6.1-C6.3.html">👩‍🏫 Synthèse professeur</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — dont 3 avec schémas à lire — pour vérifier l'analyse des données, l'hystérésis et la méthode de validation.</p>
+  <a class="btn qcm" href="qcm_4e_C6.1-C6.3_ajuster_programme_jardin.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>📊 <b>Défi données :</b> trouve chez toi un appareil à seuil (chauffe-eau, climatiseur, réfrigérateur) et observe : bat-il ? À ton avis, quels sont ses DEUX seuils cachés ?</p>
+  <p>🧮 <b>Défi réglage :</b> le club hésite entre les seuils 35/45 et 30/50. Écris deux arguments pour chaque choix (fréquence des arrosages, confort des plantes, consommation d'eau) — il n'y a pas UNE bonne réponse, il y a un COMPROMIS à défendre.</p>
+  <p>👨‍👩‍👧 <b>Défi famille :</b> demande à un adulte s'il a déjà vu une mise à jour « casser » quelque chose qui marchait (téléphone, box, voiture). La non-régression, maintenant, tu sais pourquoi elle existe.</p>
+</section>
+
+<footer>
+  <p>Séquence 4e_C6.1 · C6.3 · Thème 2 · Technologie cycle 4 (programme 2024) · objet-fil « Le jardin connecté » · 4e_C6.2 couvert par la séquence modèle existante</p>
+  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰 — jamais le secteur</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_4e_C6.1-C6.3_ajuster_programme_jardin";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Banc de test (activité 3) — 4 scénarios, ordre libre, verrou quand tout est joué ══════ */
+window.__exp = window.__exp || {};
+const SCEN_TXT = {
+  1:"Scénario 1 — 33 % à 6 h, pompe éteinte : humidité SOUS 35 % ET heure hors des heures chaudes → les deux conditions de démarrage sont vraies. La pompe DÉMARRE. ✔ Règle testée : le démarrage.",
+  2:"Scénario 2 — 38 % à 6 h 30, pompe DÉJÀ allumée : 38 % est ENTRE les deux seuils (35-45). L'hystérésis garde l'état : la pompe RESTE ALLUMÉE, sans un seul à-coup. ✔ Règle testée : l'hystérésis — le battement a disparu.",
+  3:"Scénario 3 — 46 % à 7 h, pompe allumée : 46 % dépasse le seuil d'arrêt de 45 %. La pompe S'ARRÊTE : le sol a assez bu. ✔ Règle testée : l'arrêt.",
+  4:"Scénario 4 — 33 % à 13 h, pompe éteinte : la sécheresse est bien repérée… mais 13 h est dans les heures chaudes. La pompe RESTE ÉTEINTE — rendez-vous à 17 h. ✔ Règle testée : la plage horaire."
+};
+function majBanc(){
+  const s = window.__exp.scens || {};
+  const n = Object.keys(s).length;
+  $("scenEtat").textContent = "scénarios joués : " + n + " / 4";
+  if(n===4){
+    window.__exp.scen = true;
+    $("scenEtat").textContent = "4 / 4 — programme corrigé VALIDÉ en simulation ✅";
+    $("scenIcone").textContent = "✅";
+  }
+}
+document.querySelectorAll(".scenbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n = btn.dataset.scen;
+    window.__exp.scens = window.__exp.scens || {};
+    window.__exp.scens[n] = true;
+    $("scenTxt").textContent = SCEN_TXT[n];
+    $("scenIcone").textContent = ["","🌱","💧","🛑","☀"][n] || "🧪";
+    majBanc(); save(false);
+  });
+});
+$("btnScenReset").addEventListener("click", ()=>{
+  window.__exp.scens = {}; window.__exp.scen = false;
+  $("scenIcone").textContent="🧪";
+  $("scenTxt").textContent="Le programme corrigé est chargé en SIMULATION (le vrai jardin n'est pas touché). Joue les 4 scénarios — chacun teste une règle différente.";
+  majBanc(); save(false);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={c1_1:"une anomalie : la pompe « bat » autour du seuil — usure mécanique et à-coups inutiles",
+               c1_2:"une anomalie : l'eau s'évapore avant d'agir — gaspillage et efficacité réduite",
+               c1_3:"un fonctionnement normal : sol sec, heure fraîche, arrosage justifié",
+               c1_4:"utilise UN SEUL seuil : dès que la mesure oscille autour de 40 %, la commande bascule ON/OFF sans arrêt",
+               c1_5:"ne tient compte QUE de l'humidité : aucune condition d'horaire ne retient l'arrosage aux heures chaudes"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:5,valide:ok>=4};
+  },
+  2: function(){
+    let ok=0;
+    const att={a2_1:"humidité inférieure à 35 % ET heure hors des heures chaudes (avant 8 h ou après 17 h)",
+               a2_2:"humidité supérieure à 45 %",
+               a2_3:"garde son état : allumée si elle arrosait, éteinte si elle se reposait — c'est l'hystérésis qui supprime le battement",
+               a2_4:"retenir l'arrosage aux heures chaudes : l'eau versée tôt ou tard atteint les racines au lieu de s'évaporer",
+               a2_5:"il ATTEND 17 h pour arroser : sécheresse repérée, mais l'eau serait perdue en plein soleil"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:5,valide:ok>=4};
+  },
+  3: function(){
+    let ok=0;
+    const att={s3_1:"DÉMARRE : humidité sous 35 % ET heure hors des heures chaudes — les deux conditions sont réunies",
+               s3_2:"RESTE ALLUMÉE : 38 % est entre les deux seuils, l'hystérésis garde l'état — le battement a disparu",
+               s3_3:"S'ARRÊTE : 46 % dépasse le seuil d'arrêt de 45 % — le sol a assez bu",
+               s3_4:"RESTE ÉTEINTE : la sécheresse est repérée, mais la plage horaire retient l'arrosage jusqu'à 17 h",
+               q3_1:"pour pouvoir revenir en arrière si la modification échoue : un système qui marchait ne doit jamais être perdu",
+               q3_2:"que tout ce qui marchait AVANT marche ENCORE : l'arrosage normal (scénarios 1 et 3) n'a pas été cassé par les nouveautés"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.scen);
+    return {score:ok,total:6,extra:expOk?"":" Joue VRAIMENT les 4 scénarios au banc de test (4/4) : une modification se valide, elle ne se devine pas.",valide:ok>=5&&expOk};
+  },
+  4: function(){
+    let ok=0;
+    const att={r4_1:"le seuil UNIQUE : la lumière qui décroît lentement vibre autour de 30 lux et fait basculer la commande — exactement comme la pompe qui battait",
+               r4_2:"une hystérésis : allumer sous 20 lux, éteindre au-dessus de 40 lux — l'écart absorbe la vibration",
+               r4_3:"sauvegarde le programme d'origine puis on teste les scénarios en simulation (19 lux, 30 lux, 41 lux)",
+               r4_4:"un crépuscule RÉEL sans clignotement, et l'allumage/extinction normal qui fonctionne toujours (non-régression)"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:4,valide:ok===4};
+  }
+};
+const ENC_OK=["Excellent : tout est validé !","Bravo, tu penses comme un programmeur responsable !","Très bien : la pompe du jardin te doit ses roulements."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3,4]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp && window.__exp.scen){ $("scenEtat").textContent="4 / 4 — programme corrigé VALIDÉ en simulation ✅ (déjà fait)"; $("scenIcone").textContent="✅"; }
+else { majBanc(); }
+majProgress(); majHyp();
+</script>
+
+</body>
+</html>

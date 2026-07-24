@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Ajuster le programme du jardin (4e_C6.1 · C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--ko:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.55;font-size:.97em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.45em;color:var(--title);text-align:center}
+  .sous{text-align:center;color:var(--sub);margin-top:-8px}
+  h2{font-size:1.08em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:22px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .ok{color:var(--ok)}.warn{color:var(--warn)}.ko{color:var(--ko)}
+  .vocab b{color:var(--hl)}
+  figure{margin:10px 0;text-align:center}
+  figcaption{color:var(--sub);font-size:.85em}
+  object{width:100%;max-width:820px}
+  @media print{body{background:#fff;color:#111;font-size:9.5pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}.ok,.warn,.ko{color:#111;font-weight:bold}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>👩‍🏫 Synthèse professeur — Ajuster le programme du jardin</h1>
+<p class="sous">4e_C6.1 · 4e_C6.3 — objectifs, attendus, remédiations (document enseignant)</p>
+
+<div class="bloc">
+<h2 style="margin-top:0">Objectifs et articulation</h2>
+<ul>
+  <li><b>Périmètre du lot</b> : 4e_C6.1 (analyser les données → déduire les modifications) et 4e_C6.3 (tester/valider). <b>4e_C6.2 n'est pas traité ici</b> : il est couvert par la séquence modèle existante « Jardin connecté — arrosage automatique » (compléter un programme), référencée au bilan et non modifiée.</li>
+  <li><b>Objet-fil bouclé</b> : structure (C4, LOT 09) → programme (C6.2) → dépannage matériel (C5, LOT 10) → ajustement par les données (ce lot). La panne du LOT 10 (« capteur qui ment ») a innocenté le matériel : les anomalies restantes sont logicielles — la frontière matériel/logiciel devient explicite.</li>
+  <li><b>Progressivité C6 dans le cycle</b> : 5e = lire et écrire le programme du lampadaire (LOT 07) ; 4e = le corriger À PARTIR DES DONNÉES avec méthode de validation ; 3e = programmer l'alerte multi-conditions (LOT 04). L'hystérésis introduite ici est réinvestie au transfert (lampadaire) et préfigure les régulations de 3e.</li>
+  <li><b>Verrou expérientiel</b> : le vérificateur de l'activité 3 exige les 4 scénarios joués au banc (`__exp.scen`) — la validation s'ÉPROUVE.</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Réponses complètes attendues</h2>
+<ul>
+  <li><b>Act. 1</b> — anomalies : battement (47 démarrages, cause : seuil unique + mesure qui vibre) et arrosage 13 h (cause : aucune condition horaire) ; jeudi 22 h = NORMAL (référence).</li>
+  <li><b>Act. 2</b> — algorithme corrigé : SI humidité &lt; 35 % ET (heure &lt; 8 h OU heure &gt; 17 h) ALORS pompe ON · SI humidité &gt; 45 % ALORS pompe OFF · entre les deux : état conservé. Écart 35/45 &gt; vibration (±1-2 %) ; condition horaire sur le démarrage SEULEMENT. 30 % à 13 h → attendre 17 h.</li>
+  <li><b>Act. 3</b> — verdicts : S1 DÉMARRE · S2 RESTE ON (hystérésis) · S3 S'ARRÊTE · S4 RESTE OFF (plage). Sauvegarde = retour arrière possible ; non-régression = les scénarios 1 et 3 rejouent l'existant.</li>
+  <li><b>Act. 4</b> (transfert lampadaire) — seuil unique → clignotement ; hystérésis 20/40 lux ; sauvegarde + scénarios 19/30/41 lux ; validation = crépuscule réel stable + non-régression.</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Difficultés prévisibles et remédiation</h2>
+<ul>
+  <li><b>L'hystérésis contre-intuitive</b> (« entre les seuils, il fait QUOI ? ») : mimer avec la classe — un élève « pompe » ne change d'avis qu'aux portes 35/45 ; la zone du milieu, c'est « je continue ce que je faisais ».</li>
+  <li><b>Condition horaire posée sur l'arrêt</b> : faire dérouler le contre-exemple (départ 7 h 55 → pompe prisonnière jusqu'à 17 h) — l'absurde convainc mieux que la règle.</li>
+  <li><b>« Un essai réussi = validé »</b> : montrer que l'ANCIEN programme réussit aussi le scénario 1 — seuls les scénarios 2 et 4 séparent l'ancien du nouveau.</li>
+  <li><b>Confusion 4e_C6.2 / ce lot</b> : C6.2 = COMPLÉTER un programme (séquence modèle) ; ici = le MODIFIER d'après les données et VALIDER. Annoncer la frontière en début de séance 1.</li>
+  <li><b>EBEP / DYS</b> : listes déroulantes exclusivement, banc de test au clic (ordre libre), aides niveau 1 (reformulation) et 2 (raisonnement déroulé).</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Versions, matériel, évaluation</h2>
+<ul>
+  <li><b>🅰 Matériel réel</b> : maquette jardin (carte, capteur, pompe 12 V — TBT uniquement) et programme sous Vittascience/mBlock : sauvegarder le fichier d'origine, coder l'hystérésis + la plage, tester au verre d'eau sur le PLANT TÉMOIN. <b>Le secteur 230 V n'est jamais manipulé.</b></li>
+  <li><b>🅱 Simulation</b> : banc de test intégré (aucun matériel). <b>🅲 Sans matériel</b> : relevés imprimés, algorithme au cahier, tableau des scénarios.</li>
+  <li><b>Formative</b> : vérificateurs + verrou + auto-positionnement. <b>Entraînement</b> : QCM 30 q (15 C6.1 + 15 C6.3, 3 illustrées, réponses réparties 8/7/7/8).</li>
+  <li><b>Sommative</b> : à construire par l'enseignant (aucun corrigé sommatif publié). Items suggérés : relevés inédits à diagnostiquer (réfrigérateur qui bat autour de 4 °C) ; écrire les scénarios de test d'une hystérésis donnée.</li>
+  <li><b>LSU</b> : saisie par code (C6.1 analyse/déduction · C6.3 test/validation) via les critères affichés.</li>
+</ul>
+</div>
+
+</div>
+</body>
+</html>

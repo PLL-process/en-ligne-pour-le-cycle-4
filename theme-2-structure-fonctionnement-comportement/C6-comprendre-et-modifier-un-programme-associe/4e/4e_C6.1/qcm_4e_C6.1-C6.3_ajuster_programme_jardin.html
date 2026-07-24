@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM d’entraînement — Ajuster le programme du jardin (4e_C6.1 · C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:'Fira Code',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<h1>🧠 QCM d’entraînement — Ajuster le programme du jardin</h1>
+<p class="subtitle">Analyser les relevés, l'hystérésis et la plage horaire, la méthode de test et de validation</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C6.1</span><span class="badge code">4e_C6.3</span>
+  <span class="badge theme">30 questions · schémas à lire · corrections détaillées</span>
+</div>
+<p style="text-align:center"><a href="sequence_4e_C6.1-C6.3_ajuster_programme_jardin.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C6.1">4e_C6.1 — Analyser les données, déduire les modifications</option>
+      <option value="C6.3">4e_C6.3 — Tester et valider une modification</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C6.1 · C6.3 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence_4e_C6.1-C6.3_ajuster_programme_jardin.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ C6.1 ═══ */
+{c:"C6.1",n:"Ce que crient les relevés",q:"Les relevés du mardi montrent 47 démarrages de pompe entre 6 h et 9 h, par à-coups d'une minute. Que révèlent ces données ?",
+ img:{src:"Images/releves_jardin.svg",alt:"Courbe des relevés : l'humidité vibre autour du seuil unique de 40 % et la pompe démarre 47 fois entre 6 h et 9 h"},
+ o:["que le jardin a besoin de 47 arrosages","que la pompe est neuve et pleine d'énergie","que le capteur est encore encroûté","la pompe « bat » autour du seuil : un comportement anormal qui désigne une règle du programme, pas une pièce"],r:3,
+ expl:"Une pompe saine arrose franchement puis se repose. 47 démarrages en 3 heures est un MOTIF dans les données : le battement autour d'un seuil — et ce motif pointe vers le programme, pas vers le matériel.",
+ ex:"Le dépannage précédent a prouvé le matériel sain : quand les pièces sont innocentées, les données accusent les règles.",
+ err:"Chercher une pièce cassée alors que les données dessinent un motif LOGICIEL.",
+ d:["Des à-coups d'une minute n'arrosent rien : l'eau n'a pas le temps d'atteindre les racines.","Une pompe qui claque 47 fois s'use prématurément : ce n'est pas de la vitalité, c'est de la maltraitance.","Le capteur vient d'être remplacé et le test final l'a prouvé sain : la mesure vibre NORMALEMENT autour de 40 %.",""],
+ ret:"Un motif anormal dans les données désigne une RÈGLE du programme à corriger."},
+{c:"C6.1",n:"Définition de l'analyse",q:"« Analyser les données » d'un système technique, c'est…",
+ o:["regarder uniquement la dernière valeur","recopier tous les chiffres dans un tableau","supprimer les valeurs qui dérangent","comparer le comportement OBSERVÉ dans les relevés au comportement ATTENDU, puis remonter de chaque écart à sa cause"],r:3,
+ expl:"L'analyse confronte deux choses : ce que le système FAIT (les relevés) et ce qu'il DEVRAIT faire (arroser franchement, aux bonnes heures). Chaque écart devient une piste de modification.",
+ ex:"Attendu : un arrosage franc à heure fraîche. Observé : 47 à-coups + un arrosage à 13 h. Deux écarts → deux modifications.",
+ err:"Confondre « lire des chiffres » et « analyser » : sans référence au comportement attendu, les chiffres ne disent rien.",
+ d:["La dernière valeur est un instantané ; les anomalies vivent dans les TENDANCES.","Recopier n'interprète pas : le tableau n'est que le point de départ.","Supprimer des données, c'est se mentir : les valeurs « qui dérangent » sont précisément les indices.",""],
+ ret:"Analyser = observé vs attendu, puis de l'écart à la cause."},
+{c:"C6.1",n:"Ne pas tout « corriger »",q:"Jeudi 22 h : la pompe démarre à 34 % d'humidité et s'arrête après l'arrosage. Que fait l'analyste ?",
+ o:["il éteint le jardin la nuit","il le corrige aussi, par précaution","il classe ce relevé comme NORMAL : sol sec, heure fraîche, arrosage franc — on ne corrige pas ce qui marche","il supprime ce relevé du fichier"],r:2,
+ expl:"L'analyse sépare le bon grain de l'ivraie : corriger un comportement sain, c'est risquer de le casser. Le jeudi 22 h est exactement ce que le jardin DOIT faire.",
+ ex:"Le médecin ne soigne pas les organes sains — il les note « RAS » et concentre le traitement sur le reste.",
+ err:"La sur-correction : à force de tout retoucher, on introduit des bugs dans ce qui fonctionnait.",
+ d:["Éteindre la nuit priverait le jardin de ses meilleures heures d'arrosage.","« Par précaution » est l'inverse de la méthode : chaque modification doit répondre à une anomalie PROUVÉE.","","Supprimer un relevé sain fausse l'analyse : il sert de RÉFÉRENCE du comportement attendu."],
+ ret:"On ne modifie que ce que les données accusent — le normal sert de référence."},
+{c:"C6.1",n:"La cause du battement",q:"POURQUOI un seuil unique à 40 % fait-il battre la pompe ?",
+ o:["parce que 40 est un nombre pair","la mesure vibre naturellement autour de 40 % (39,8… 40,1…) : chaque vibration inverse la commande ON/OFF","parce que la pompe est trop puissante","parce que le programme tourne trop lentement"],r:1,
+ expl:"Toute mesure réelle vibre légèrement. Avec un seul seuil, la frontière ON/OFF passe en plein milieu de cette vibration : la commande bascule au rythme du bruit de mesure.",
+ ex:"39,9 % → ON. Une minute plus tard, 40,1 % → OFF. Puis 39,8 % → ON… 47 fois de suite.",
+ err:"Chercher la cause dans le matériel : c'est la GÉOMÉTRIE de la règle (une seule frontière) qui fabrique le battement.",
+ d:["La parité du nombre n'a aucun effet : 41 % ou 39 % battrait tout autant.","","Une pompe moins puissante battrait aussi — elle claquerait juste moins fort.","La vitesse d'exécution n'y change rien : plus le programme est rapide, plus il bat vite."],
+ ret:"Seuil unique + mesure qui vibre = commande qui bat. La cause est dans la règle."},
+{c:"C6.1",n:"Le remède en image",q:"Sur le schéma, le programme corrigé utilise DEUX seuils (35 % et 45 %). Entre les deux, que fait la pompe ?",
+ img:{src:"Images/hysteresis_deux_seuils.svg",alt:"Comparaison entre le seuil unique qui fait battre la pompe et les deux seuils 35 et 45 pour cent qui la stabilisent"},
+ o:["elle GARDE son état — allumée si elle arrosait, éteinte sinon : c'est l'hystérésis, la zone où l'on ne change pas d'avis","elle clignote lentement","elle s'arrête obligatoirement","elle choisit selon la météo"],r:0,
+ expl:"L'hystérésis crée une « zone calme » entre les deux seuils : la vibration de la mesure s'y promène sans jamais toucher une frontière de décision — le battement devient impossible.",
+ ex:"Pompe allumée à 34 % ; la mesure monte à 38, 41, 44… elle reste allumée ; à 45,1 % : arrêt franc.",
+ err:"Croire que « entre les deux seuils » est une troisième commande : c'est une zone de MÉMOIRE, pas d'action.",
+ d:["","Le clignotement est justement ce que l'hystérésis supprime.","S'arrêter systématiquement entre les seuils recréerait des à-coups à chaque passage à 44 %.","La météo n'est pas dans cette règle : entre les seuils, seul l'état PRÉCÉDENT décide."],
+ ret:"Hystérésis = deux seuils + une zone où l'état se conserve."},
+{c:"C6.1",n:"Choisir l'écart",q:"Pourquoi 35/45 plutôt que 39/41 pour les deux seuils ?",
+ o:["pour faire travailler la pompe davantage","parce que 35 et 45 finissent par 5","l'écart entre les seuils doit DÉPASSER la vibration naturelle de la mesure : avec 2 points, le battement reviendrait","les valeurs n'ont aucune importance"],r:2,
+ expl:"La zone calme n'est efficace que si la vibration (±1 à 2 %) tient TOUT ENTIÈRE dedans. 39/41 offre 2 points de refuge — la vibration en déborde ; 35/45 en offre 10 — le battement est étouffé.",
+ ex:"Vibration de ±1,5 % autour de 40 : elle franchit 39 ET 41 en permanence, mais ne touche jamais ni 35 ni 45.",
+ err:"Resserrer les seuils « pour plus de précision » : la précision d'affichage n'est pas la stabilité de commande.",
+ d:["L'objectif est l'inverse : moins de démarrages, des arrosages plus francs.","Le chiffre des unités est décoratif : c'est l'ÉCART qui protège, pas la terminaison.","","Elles décident de tout : 39/41 rejouerait le battement, 10/90 n'arroserait presque jamais — le réglage est un compromis réfléchi."],
+ ret:"Écart entre seuils > vibration de la mesure : c'est la condition d'efficacité de l'hystérésis."},
+{c:"C6.1",n:"L'arrosage de 13 h",q:"L'arrosage part à 13 h en plein soleil parce que le programme d'origine…",
+ o:["ne contient AUCUNE condition d'horaire : seule l'humidité décide, et rien ne retient l'eau aux heures chaudes","aime la chaleur","a été réglé sur un autre fuseau horaire","confond les jours"],r:0,
+ expl:"Un programme ne fait que ce qu'on lui écrit : sans règle sur l'heure, « sol sec à 13 h » déclenche l'arrosage comme à 6 h. L'anomalie ne vient pas d'un bug, mais d'une règle MANQUANTE.",
+ ex:"La règle d'origine tient en une ligne : SI humidité < 40 % ALORS arroser. L'heure n'y apparaît nulle part.",
+ err:"Imaginer que le programme « devrait savoir » qu'il fait chaud : il ne sait que ce que ses conditions testent.",
+ d:["","Un programme n'a pas de préférences : il applique des règles, toutes écrites par des humains.","L'horloge de la carte est à l'heure : c'est la CONDITION horaire qui n'existe pas.","Aucune notion de jour n'intervient ici : la règle est identique tous les jours… c'est bien le problème."],
+ ret:"Une anomalie peut venir d'une règle MANQUANTE : le programme ignore ce qu'on ne lui teste pas."},
+{c:"C6.1",n:"Où placer la condition horaire",q:"La plage horaire (avant 8 h ou après 17 h) se place sur la condition de DÉMARRAGE, pas sur celle d'arrêt, parce que…",
+ o:["c'est plus joli dans le code","l'arrêt n'a pas de condition du tout","le programme ne peut tester l'heure qu'une fois","un arrosage en cours doit pouvoir se TERMINER : on empêche de commencer aux heures chaudes, jamais de finir"],r:3,
+ expl:"Bloquer l'arrêt par l'horaire créerait un piège : une pompe partie à 7 h 55 resterait allumée jusqu'à 17 h ! La condition horaire filtre les DÉPARTS ; l'arrêt reste piloté par l'humidité seule.",
+ ex:"Départ à 7 h 50, sol saturé à 8 h 10 : la pompe s'arrête à 8 h 10 — l'humidité commande l'arrêt, l'heure n'a rien à y dire.",
+ err:"Symétriser les conditions « par logique » : chaque règle a SA bonne place, dictée par le comportement voulu.",
+ d:["L'esthétique du code n'arrose rien : seul le comportement compte.","L'arrêt a bien une condition : humidité > 45 % — elle suffit.","Le programme teste l'heure autant de fois que nécessaire, à chaque tour de boucle.",""],
+ ret:"Plage horaire = un ET sur le démarrage. L'arrêt reste à l'humidité : un arrosage commencé peut finir."},
+{c:"C6.1",n:"Sécheresse à midi",q:"Programme corrigé, sol à 30 % à 13 h. Que se passe-t-il ?",
+ o:["le capteur s'éteint pour économiser","arrosage immédiat : 30 %, c'est une urgence absolue","le programme envoie une alerte à la mairie","rien pour l'instant : la sécheresse est repérée, mais l'arrosage attendra 17 h — l'eau de 13 h serait perdue en évaporation"],r:3,
+ expl:"Le programme corrigé arbitre : arroser à 13 h donnerait l'ILLUSION d'agir en gaspillant l'eau. Attendre 17 h sert mieux la plante — la condition horaire encode ce raisonnement d'agronome.",
+ ex:"À 17 h 01, humidité toujours < 35 % et heure redevenue valide : la pompe démarre — l'eau de la citerne va aux racines, pas au soleil.",
+ err:"Confondre « réagir vite » et « agir utilement » : quelques heures d'attente font gagner la moitié de l'eau.",
+ d:["Le capteur continue de mesurer : c'est justement lui qui déclenchera l'arrosage à 17 h.","L'urgence apparente mène au gaspillage : l'évaporation confisquerait l'essentiel de l'arrosage.","Aucune règle d'alerte n'existe dans ce programme — et 30 % à midi n'est pas une catastrophe pour quelques heures.",""],
+ ret:"Le programme corrigé n'ignore pas la sécheresse : il la traite au BON moment."},
+{c:"C6.1",n:"Valeur isolée ou tendance",q:"Pour repérer le battement, il fallait regarder…",
+ o:["la couleur de la courbe","une seule mesure prise à 7 h","la TENDANCE sur plusieurs heures (47 démarrages entre 6 h et 9 h) — une valeur isolée n'aurait rien montré","le prix de la pompe"],r:2,
+ expl:"À 7 h précises, l'humidité vaut « environ 40 % » — parfaitement banal. C'est la RÉPÉTITION des basculements sur trois heures qui dessine l'anomalie : les motifs vivent dans la durée.",
+ ex:"Un seul battement de cœur ne dit rien ; c'est l'électrocardiogramme sur la durée qui révèle l'arythmie.",
+ err:"Diagnostiquer sur un instantané : les données d'un système s'analysent en SÉRIES.",
+ d:["La couleur est un choix d'affichage : l'information est dans la FORME de la courbe.","Une mesure unique à 7 h afficherait ~40 % : rien d'alarmant sans les 46 autres démarrages autour.","","Le prix ne figure pas dans les relevés — et n'explique aucun comportement."],
+ ret:"Les anomalies logicielles se lisent dans les TENDANCES, pas dans les valeurs isolées."},
+{c:"C6.1",n:"Le coût du battement",q:"Pourquoi le battement de la pompe est-il grave, alors que « le jardin est quand même arrosé » ?",
+ o:["parce que le bruit dérange la classe, uniquement","il ne l'est pas : 47 démarrages, c'est du zèle","chaque démarrage use la mécanique (à-coups, échauffement) et les micro-arrosages n'atteignent pas les racines","parce que cela consomme la mémoire de la carte"],r:2,
+ expl:"Un moteur souffre surtout à ses DÉMARRAGES (pointe de courant, à-coup mécanique). 47 démarrages pour le travail d'un seul, c'est vieillir la pompe 47 fois plus vite — pour un arrosage superficiel.",
+ ex:"Une voiture qui démarre et cale 47 fois par trajet n'irait pas loin — ni longtemps.",
+ err:"Juger un système au seul résultat visible (« c'est arrosé ») sans regarder le COÛT du chemin.",
+ d:["Le bruit est le symptôme audible — l'usure et le gaspillage sont les vrais dégâts.","Le zèle n'existe pas en mécanique : chaque cycle inutile est de l'usure pure.","","La mémoire n'est pas en cause : le programme est petit ; c'est la MÉCANIQUE qui trinque."],
+ ret:"Les démarrages usent : un programme qui fait battre un actionneur maltraite le matériel."},
+{c:"C6.1",n:"De l'anomalie à la modification",q:"La bonne façon de passer de l'analyse aux modifications est…",
+ o:["réécrire tout le programme de zéro, c'est plus sûr","UNE modification précise par anomalie prouvée : l'hystérésis pour le battement, la plage horaire pour l'arrosage de 13 h","ajouter dix règles d'un coup, on triera ensuite","changer les valeurs au hasard jusqu'à ce que ça marche"],r:1,
+ expl:"Chaque modification doit se justifier par une anomalie et se tester séparément. Réponse ciblée = effet traçable : si un test échoue ensuite, on sait QUELLE modification interroger.",
+ ex:"Deux anomalies → deux modifications → quatre scénarios de test. La chaîne analyse→modification→test reste lisible.",
+ err:"La refonte totale « par prudence » : elle jette le comportement éprouvé avec le défaut, et rend les tests impossibles à interpréter.",
+ d:["Réécrire de zéro détruit des années de comportement validé pour corriger deux lignes.","","Dix règles simultanées = dix suspects à chaque symptôme : le tri promis ne vient jamais.","Le hasard sans analyse, c'est le remplacement de pièces au hasard version logicielle."],
+ ret:"Une anomalie prouvée → une modification ciblée → un test dédié."},
+{c:"C6.1",n:"Ligne de démarrage",q:"Dans le programme corrigé, la pompe DÉMARRE si…",
+ o:["humidité < 35 % ET heure hors des heures chaudes (avant 8 h ou après 17 h)","humidité < 40 %, comme avant","humidité < 45 %, pour arroser plus souvent","l'écran est allumé"],r:0,
+ expl:"La ligne de démarrage cumule les deux corrections : le seuil bas de l'hystérésis (35 %) ET le filtre horaire. Les deux conditions doivent être vraies ensemble — c'est le sens du ET.",
+ ex:"33 % à 6 h : vrai ET vrai → départ. 33 % à 13 h : vrai ET faux → on attend.",
+ err:"Oublier qu'un ET exige TOUTES ses conditions : une seule fausse suffit à retenir la pompe.",
+ d:["","40 % était le seuil unique fautif : le garder referait battre la pompe.","45 % est le seuil d'ARRÊT : démarrer à 45 % arroserait un sol déjà correct.","L'écran n'est pas une condition d'arrosage — heureusement pour les nuits sans écran."],
+ ret:"Démarrage : humidité < 35 % ET heure autorisée. Le ET exige tout."},
+{c:"C6.1",n:"Ligne d'arrêt",q:"Dans le programme corrigé, la pompe S'ARRÊTE si…",
+ o:["humidité > 45 % — sans condition d'heure : un arrosage commencé peut toujours se terminer","humidité > 35 %","il est plus de 8 h, quelle que soit l'humidité","la présidente applaudit"],r:0,
+ expl:"L'arrêt n'écoute que le sol : 45 % franchis = le sol a bu, on coupe. Aucun filtre horaire ici — sinon des arrosages resteraient prisonniers de la plage.",
+ ex:"Départ 7 h 50, sol à 46 % à 8 h 05 : arrêt à 8 h 05. L'heure n'a pas son mot à dire sur la fin.",
+ err:"Recopier la structure du démarrage sur l'arrêt : les deux lignes ont des rôles différents, donc des conditions différentes.",
+ d:["","35 % est le seuil de DÉMARRAGE : arrêter à 35 % laisserait le sol à peine humecté et rallumerait aussitôt — le battement en pire.","Couper à 8 h pile pourrait interrompre un arrosage utile en plein milieu.","Le programme ne teste que des grandeurs mesurées — l'enthousiasme n'en fait pas partie."],
+ ret:"Arrêt : humidité > 45 %, point. La fin d'arrosage appartient au sol."},
+{c:"C6.1",n:"Le journal de bord du système",q:"Pourquoi le club a-t-il bien fait d'EXPORTER les relevés au lieu d'observer le jardin « à l'œil » ?",
+ o:["l'observation directe est interdite","les fichiers sont plus jolis que le jardin","pour remplir la clé USB","les relevés gardent la trace de TOUT, y compris la nuit et les 47 démarrages qu'aucun œil n'aurait comptés"],r:3,
+ expl:"Un système s'exprime dans ses données : les relevés voient à 6 h du matin, comptent 47 démarrages sans se tromper, et se relisent autant de fois que nécessaire. L'œil humain n'a ni cette patience ni cette mémoire.",
+ ex:"Personne n'était au jardin mardi à 6 h — la clé USB, si.",
+ err:"Se fier au ressenti (« la pompe fait un drôle de bruit ») sans données : impossible d'en déduire une modification PRÉCISE.",
+ d:["Observer reste utile et permis — mais insuffisant pour compter, dater et comparer.","La beauté du fichier importe peu : sa COMPLÉTUDE fait sa valeur.","La clé USB est un moyen de transport, pas un objectif.",""],
+ ret:"Les relevés sont la mémoire complète du système : l'analyse commence par eux."},
+/* ═══ C6.3 ═══ */
+{c:"C6.3",n:"La méthode en 5 étapes",q:"La méthode complète de modification sans casse est…",
+ img:{src:"Images/banc_test_scenarios.svg",alt:"La méthode de validation en cinq étapes : sauvegarder, modifier, simuler les scénarios, valider en réel sur le plant témoin, vérifier la non-régression"},
+ o:["modifier → espérer → recommencer","sauvegarder l'origine → modifier → tester en simulation → valider en réel sur un périmètre limité → vérifier la non-régression","tester d'abord, modifier ensuite","valider en réel directement, la simulation est pour les débutants"],r:1,
+ expl:"Chaque étape protège la suivante : la sauvegarde permet le retour arrière, la simulation attrape les erreurs sans risque, le plant témoin limite les dégâts du réel, la non-régression protège l'existant.",
+ ex:"Le club a suivi les 5 étapes : le vrai jardin n'a jamais été en danger, même si le programme corrigé avait été faux.",
+ err:"Sauter des étapes « parce que la modification est petite » : les petites modifications cassent autant que les grandes.",
+ d:["« Espérer » n'est pas une étape de validation — c'est son absence.","","On ne peut tester que ce qui existe : la modification précède ses tests (mais la sauvegarde précède tout).","La simulation est l'outil des PROFESSIONNELS : avions, centrales, fusées — tout se simule avant le réel."],
+ ret:"Sauvegarder → modifier → simuler → réel limité → non-régression : les 5 marches de la validation."},
+{c:"C6.3",n:"La sauvegarde d'abord",q:"Pourquoi sauvegarder le programme d'ORIGINE avant toute modification ?",
+ o:["pour pouvoir revenir en arrière si la modification échoue : un système qui marchait ne doit jamais être perdu","pour occuper de l'espace disque","parce que les programmes s'effacent tout seuls","pour prouver qu'on travaille"],r:0,
+ expl:"La sauvegarde est une assurance : quoi qu'il arrive ensuite — bug, erreur de seuil, fausse manœuvre — le comportement d'hier reste restaurable en une minute. Sans elle, une erreur peut coûter le système entier.",
+ ex:"Si l'hystérésis avait été mal codée, recharger la sauvegarde aurait rendu au jardin son programme d'avant, le temps de corriger.",
+ err:"« Je me souviens du programme » : la mémoire humaine ne restaure pas un fichier — la sauvegarde, si.",
+ d:["","L'espace occupé est dérisoire ; la valeur assurée est immense.","Les programmes ne s'effacent pas seuls — mais les humains qui les modifient font des erreurs.","La preuve du travail, c'est le système validé ; la sauvegarde, elle, est un filet de sécurité."],
+ ret:"Sauvegarder avant de modifier = pouvoir toujours revenir au dernier état qui marchait."},
+{c:"C6.3",n:"Simuler avant le réel",q:"Pourquoi tester la modification en SIMULATION avant de toucher au vrai jardin ?",
+ o:["la simulation attrape les erreurs SANS conséquence : une faute au banc de test ne coûte ni eau, ni pompe, ni tomates","la simulation est plus amusante","le vrai jardin est trop loin","pour éviter de sortir de la classe"],r:0,
+ expl:"Dans le simulateur, un seuil inversé ou un ET oublié se voit immédiatement — et ne casse rien. Le réel, lui, fait payer chaque erreur : eau gaspillée, pompe maltraitée, plants stressés.",
+ ex:"Un élève avait inversé 35 et 45 : le banc l'a montré au scénario 3 (la pompe ne s'arrêtait plus). Corrigé en deux minutes, zéro dégât.",
+ err:"« On verra bien en vrai » : le réel est un très mauvais endroit pour découvrir ses erreurs.",
+ d:["","L'agrément est un bonus ; la fonction de la simulation est la sécurité de l'essai.","La distance n'est pas l'argument : même un jardin à deux mètres mérite la simulation d'abord.","La simulation n'est pas une commodité de confort : c'est une étape de MÉTHODE, où qu'on soit."],
+ ret:"La simulation est le terrain d'essai où les erreurs sont gratuites."},
+{c:"C6.3",n:"Le scénario de l'hystérésis",q:"Le scénario « 38 % à 6 h 30, pompe DÉJÀ allumée » teste spécifiquement…",
+ o:["la couleur de l'écran","le démarrage de la pompe","la plage horaire","l'hystérésis : entre 35 et 45 %, la pompe doit GARDER son état — l'ancien programme aurait basculé"],r:3,
+ expl:"38 % est le cœur de la zone calme : le nouveau programme doit y conserver l'état (pompe allumée reste allumée). C'est LE point où l'ancien programme battait — donc LE scénario qui prouve la guérison.",
+ ex:"Verdict attendu : RESTE ALLUMÉE. Si la pompe s'arrêtait à 38 %, l'hystérésis serait mal codée.",
+ err:"Tester seulement les cas « faciles » (très sec, très humide) et rater la zone intermédiaire — là où vivait le bug.",
+ d:["Aucun scénario ne teste l'écran : les scénarios visent les RÈGLES modifiées.","Le démarrage se teste à 33 % pompe ÉTEINTE (scénario 1) : conditions franchement sous le seuil bas.","La plage horaire se teste à 13 h (scénario 4) : ici, 6 h 30 est une heure autorisée.",""],
+ ret:"Le scénario de l'hystérésis vise la zone ENTRE les seuils, pompe dans chaque état."},
+{c:"C6.3",n:"Le scénario de 13 h",q:"Le scénario « 33 % à 13 h, pompe éteinte » vérifie que…",
+ o:["le capteur fonctionne à midi","la pompe démarre dès que le sol est sec","la plage horaire retient bien l'arrosage aux heures chaudes, MÊME sol très sec — verdict attendu : la pompe reste éteinte","le programme connaît la date"],r:2,
+ expl:"C'est le test de la règle ajoutée : 33 % réclamerait un arrosage… que 13 h doit interdire. Si la pompe démarrait, la condition horaire serait absente ou mal placée.",
+ ex:"Verdict attendu : RESTE ÉTEINTE — rendez-vous à 17 h. Exactement l'anomalie du mercredi, rejouée pour prouver sa disparition.",
+ err:"Écrire des scénarios qui ne peuvent que réussir : un bon scénario attaque précisément la règle qu'il teste.",
+ d:["Le capteur mesure à toute heure : ce n'est pas lui qu'on teste, c'est la RÈGLE.","« Démarrer dès que sec » est l'ANCIEN comportement — celui que la modification supprime.","","La date n'intervient pas : seule l'HEURE est testée par la plage."],
+ ret:"Chaque scénario rejoue une anomalie d'origine pour prouver qu'elle a disparu."},
+{c:"C6.3",n:"Couvrir toutes les règles",q:"Pourquoi QUATRE scénarios, et pas un seul ?",
+ o:["pour faire durer la séance","chaque scénario teste UNE règle (démarrage, hystérésis, arrêt, plage horaire) : un seul cas laisserait trois règles sans preuve","parce que quatre élèves voulaient jouer","un seul suffirait, les autres sont décoratifs"],r:1,
+ expl:"Une modification touche plusieurs règles ; chaque règle mérite SON test. La couverture des scénarios, c'est la carte des preuves : une règle non testée est une règle non validée.",
+ ex:"Tester seulement « 33 % à 6 h → démarre » ne dit RIEN de l'arrêt, de l'hystérésis ni de la plage : trois bugs pourraient s'y cacher.",
+ err:"Conclure « ça marche » après un unique essai réussi — l'illusion de validation la plus répandue.",
+ d:["La durée n'est pas l'objectif : la COUVERTURE l'est. Quatre scénarios bien choisis suffisent ici.","","Le nombre vient des règles à prouver, pas des volontaires.","Retirer un scénario, c'est accepter une règle sur parole."],
+ ret:"Autant de scénarios que de règles modifiées : la couverture fait la validation."},
+{c:"C6.3",n:"Verdict du scénario 3",q:"Scénario « 46 % à 7 h, pompe allumée » : le verdict attendu du programme corrigé est…",
+ o:["la pompe continue jusqu'à 8 h","la pompe S'ARRÊTE : 46 % dépasse le seuil d'arrêt de 45 % — le sol a assez bu","la pompe accélère","la pompe attend 17 h pour s'arrêter"],r:1,
+ expl:"L'arrêt n'écoute que l'humidité : 46 > 45 → OFF, immédiatement. Ni l'heure ni l'état précédent n'ont voix au chapitre au-dessus du seuil haut.",
+ ex:"Si la pompe continuait, le banc révélerait une condition d'arrêt mal codée — à corriger AVANT le réel.",
+ err:"Appliquer la plage horaire à l'arrêt : elle ne concerne que le démarrage.",
+ d:["Continuer jusqu'à 8 h noierait le sol : l'heure ne pilote pas la fin d'arrosage.","","« Accélérer » n'existe pas dans ce programme : la pompe est allumée ou éteinte.","Attendre 17 h pour s'arrêter inonderait le jardin : la plage retient les DÉPARTS, jamais les arrêts."],
+ ret:"Au-dessus de 45 % : arrêt franc, quelle que soit l'heure."},
+{c:"C6.3",n:"Le plant témoin",q:"La validation en réel commence « sur le plant témoin ». Pourquoi ce périmètre limité ?",
+ o:["parce que le plant témoin est le préféré du club","si le programme corrigé cache encore une erreur, elle ne coûtera qu'UN plant — pas la récolte entière","pour économiser le câble","le réel complet est interdit aux 4e"],r:1,
+ expl:"Le passage simulé→réel garde une part d'inconnu (vraie pompe, vrai sol, vrais délais). Le périmètre limité borne le risque : on expose le minimum le temps de confirmer, puis on généralise.",
+ ex:"Les hôpitaux font pareil : un nouveau logiciel se déploie d'abord sur UN service, jamais sur tout l'établissement d'un coup.",
+ err:"Passer de la simulation à TOUT le système d'un coup : c'est remettre en jeu ce que la simulation avait protégé.",
+ d:["L'affection n'entre pas en jeu : le témoin est choisi pour être REPRÉSENTATIF et sacrifiable.","","Le câblage est identique : c'est le RISQUE qu'on limite, pas le matériel.","Rien d'interdit : c'est au contraire la méthode pro, à la portée des 4e."],
+ ret:"Réel limité d'abord : on expose peu, on confirme, PUIS on généralise."},
+{c:"C6.3",n:"La non-régression",q:"Vérifier la « NON-RÉGRESSION » après la modification, c'est vérifier que…",
+ o:["la pompe fait moins de bruit","le programme est devenu plus rapide","le code est plus court qu'avant","tout ce qui marchait AVANT marche ENCORE : les nouveautés n'ont pas cassé l'arrosage normal"],r:3,
+ expl:"Le bug le plus sournois n'est pas la nouveauté qui rate — c'est la nouveauté qui casse l'ancien. La non-régression rejoue les comportements d'HIER (arrosage franc, arrêt au bon niveau) pour prouver qu'ils ont survécu.",
+ ex:"Les scénarios 1 et 3 sont des tests de non-régression : démarrer sur sol sec et s'arrêter sur sol humide existaient déjà avant la modification.",
+ err:"Ne tester QUE les nouveautés : l'hystérésis peut fonctionner ET avoir cassé le démarrage si un seuil a été mal recopié.",
+ d:["Le silence est une CONSÉQUENCE espérée de l'anti-battement — la non-régression, elle, protège les fonctions d'origine.","La vitesse n'était pas l'objectif — et un programme plus rapide qui n'arrose plus est une régression.","La longueur du code n'est pas un critère de validation.",""],
+ ret:"Non-régression = les acquis d'hier survivent aux nouveautés d'aujourd'hui."},
+{c:"C6.3",n:"Un scénario échoue",q:"Au banc, le scénario 3 échoue : la pompe ne s'arrête pas à 46 %. Que fait-on ?",
+ o:["on supprime le scénario 3, il est trop sévère","on passe quand même au réel : 3 scénarios sur 4, c'est bien","on CORRIGE le programme et on REJOUE tous les scénarios — le réel attendra que la simulation soit parfaite","on accuse le simulateur"],r:2,
+ expl:"Un échec au banc est une VICTOIRE de la méthode : l'erreur est attrapée gratuitement. On corrige, puis on rejoue TOUT (la correction a pu déplacer le problème) — et seulement alors, le réel.",
+ ex:"Seuil d'arrêt tapé « 65 » au lieu de « 45 » : deux caractères corrigés, quatre scénarios rejoués, zéro tomate en danger.",
+ err:"Négocier avec les tests (« 3/4, ça passe ») : un scénario échoué = une règle fausse = un système qui déraillera.",
+ d:["Supprimer le test ne répare pas la règle : cela supprime juste le messager.","3/4 signifie qu'UNE règle est fausse — et c'est peut-être celle qui inondera le jardin.","","Le simulateur applique le programme tel qu'il est écrit : le message désagréable est exact."],
+ ret:"Échec au banc → corriger → TOUT rejouer. Le réel n'accepte que des simulations parfaites."},
+{c:"C6.3",n:"L'illusion du premier essai",q:"« J'ai essayé une fois, la pompe a démarré : c'est validé. » Le problème de ce raisonnement est…",
+ o:["aucun : un essai réussi valide tout","un essai ne teste qu'UNE règle dans UNE situation : l'arrêt, l'hystérésis et la plage horaire restent sans preuve","il fallait essayer deux fois la même chose","il fallait le faire un mardi"],r:1,
+ expl:"La validation est une COUVERTURE, pas une anecdote : chaque règle modifiée exige son scénario. Un démarrage réussi ne dit rien de ce que fera la pompe à 46 %… ni à 13 h.",
+ ex:"L'ancien programme aurait AUSSI réussi ce test-là : démarrer sur sol sec, il savait faire. C'est ailleurs qu'il fallait le piéger.",
+ err:"Confondre « j'ai vu marcher une fois » et « j'ai prouvé que ça marche » — le raccourci qui remplit les jardins noyés.",
+ d:["Un essai unique valide exactement une trajectoire — les bugs vivent dans les autres.","","Répéter la MÊME situation n'ajoute aucune couverture : il faut varier les scénarios.","Le jour de la semaine n'est pas une variable du programme."],
+ ret:"Valider = couvrir toutes les règles, pas réussir une fois."},
+{c:"C6.3",n:"La validation finale",q:"La validation FINALE du jardin corrigé, c'est…",
+ o:["l'avis enthousiaste de la présidente","un programme qui compile sans erreur","des relevés RÉELS propres : arrosages francs aux bonnes heures, zéro battement, et l'arrosage normal toujours au rendez-vous","une semaine sans regarder les données"],r:2,
+ expl:"La boucle se referme là où elle a commencé : dans les DONNÉES. Les relevés d'après-modification doivent montrer la disparition des deux anomalies ET la survie du comportement normal — la preuve par les mêmes juges qui avaient accusé.",
+ ex:"Nouveaux relevés du mardi suivant : 2 démarrages francs (6 h 40 et 18 h 15), rien à 13 h malgré un sol sec à midi. Dossier clos.",
+ err:"Valider « au ressenti » : la même rigueur de données qui a trouvé le bug doit certifier sa disparition.",
+ d:["L'enthousiasme fait plaisir ; les relevés font foi.","Compiler prouve la syntaxe, pas le comportement : un programme faux compile très bien.","","Ne plus regarder les données, c'est fermer les yeux — la surveillance continue APRÈS la validation."],
+ ret:"La validation finale se lit dans les relevés réels : anomalies disparues, normal préservé."},
+{c:"C6.3",n:"Le retour arrière",q:"Malgré tout, le programme corrigé se comporte mal en réel. Grâce à l'étape 1 de la méthode, on peut…",
+ o:["RECHARGER la sauvegarde d'origine : le jardin retrouve en une minute son comportement d'avant, le temps de comprendre","racheter une carte neuve","réécrire le programme de mémoire","laisser le jardin sans programme"],r:0,
+ expl:"C'est le « retour arrière » (rollback) : la sauvegarde faite AVANT la modification redevient le programme actif. Le système retrouve son état connu, et l'équipe enquête sans pression.",
+ ex:"Recharger l'ancien programme, relire les scénarios, trouver l'écart simulé/réel (un délai de pompe ?), corriger, re-valider.",
+ err:"Improviser une correction en urgence SUR le système en difficulté : on empile les erreurs. Le rollback d'abord, l'analyse ensuite.",
+ d:["","La carte n'a rien : c'est le programme qui déraille — et il se remplace en une minute.","La mémoire humaine reconstituerait un programme APPROXIMATIF : la sauvegarde est exacte.","Sans programme, plus d'arrosage du tout : le rollback existe justement pour éviter ce vide."],
+ ret:"Rollback : recharger la sauvegarde, retrouver l'état connu, enquêter sereinement."},
+{c:"C6.3",n:"Transfert au lampadaire",q:"Pour valider l'hystérésis du lampadaire (allumer < 20 lux, éteindre > 40 lux), les scénarios de simulation pertinents sont…",
+ o:["19 lux (doit allumer), 30 lux dans chaque état (doit garder l'état), 41 lux (doit éteindre)","uniquement minuit en pleine obscurité","uniquement midi en plein soleil","50 essais à la même luminosité"],r:0,
+ expl:"Même logique que le jardin : un scénario sous le seuil bas, un DANS la zone calme (dans chaque état !), un au-dessus du seuil haut. Trois valeurs bien choisies couvrent les trois règles.",
+ ex:"30 lux lampe allumée → reste allumée ; 30 lux lampe éteinte → reste éteinte : LE double test qui prouve l'hystérésis.",
+ err:"Tester seulement les extrêmes (nuit noire, plein jour) : le bug du clignotement vivait au CRÉPUSCULE, dans la zone intermédiaire.",
+ d:["","Minuit teste un cas trivial que même l'ancien programme réussissait.","Midi aussi : les extrêmes ne discriminent pas l'ancien du nouveau.","Répéter la même valeur n'ajoute rien : la couverture vient de la VARIÉTÉ des scénarios."],
+ ret:"Scénarios d'hystérésis : sous le bas, DANS la zone (deux états), au-dessus du haut."},
+{c:"C6.3",n:"Le piège du raccourci",q:"« La modification est toute petite, je la charge directement dans le vrai jardin. » Pourquoi est-ce LE piège n°1 ?",
+ o:["parce qu'il faut toujours être deux","aucun piège : les petites modifications sont sans risque","parce que charger un programme est très long","la taille d'une modification ne dit rien de ses effets : deux caractères inversés suffisent à noyer un jardin — la méthode ne se négocie pas"],r:3,
+ expl:"« 35 » tapé « 53 », un < devenu >, un ET devenu OU : les catastrophes logicielles tiennent en un caractère. La méthode (sauvegarde, simulation, réel limité) coûte vingt minutes ; l'accident coûte le système.",
+ ex:"Un seuil d'arrêt à 65 % au lieu de 45 % : la pompe viderait la citerne sur un sol saturé — deux caractères.",
+ err:"Indexer la prudence sur la taille du changement au lieu de l'indexer sur l'ENJEU du système.",
+ d:["Être deux aide (relecture !) mais ne remplace ni la sauvegarde ni la simulation.","« Petit changement, petit risque » est une intuition fausse célèbre : l'histoire des pannes informatiques la dément chaque semaine.","Le chargement prend une minute : ce n'est pas la durée qui impose la méthode, c'est le risque.",""],
+ ret:"Aucune modification n'est « trop petite » pour la méthode : l'enjeu décide, pas la taille."}
+];
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C6.1-C6.3_ajuster_programme_jardin";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={ "C6.1":"4e_C6.1 — Analyser les données, déduire les modifications", "C6.3":"4e_C6.3 — Tester et valider une modification" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Analyser, corriger, valider : le programme du jardin n\'a plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+</body>
+</html>
