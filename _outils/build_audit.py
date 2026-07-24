@@ -526,6 +526,50 @@ OVERLAY = {
         7: "activité 5 : composants du réseau local",
         8: "activité 6 : jeu du courrier débranché",
     }.items()},
+    "4e_C5.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « SOS jardin connecté » (3 séances) ouvrant l'îlot C5 de 4e sur "
+                "l'objet-fil du LOT 09 : le protocole de diagnostic est PROPOSÉ par l'élève "
+                "(6 tests ordonnés puis exécutés au poste de diagnostic, verrou 6/6, capteur "
+                "menteur démasqué par le test discriminant mesure/réalité), remplacement en "
+                "autonomie SANS protocole affiché (vignettes non numérotées, simulateur à "
+                "verrou, photo + comparaison + test final à l'eau), choix multicritère du "
+                "procédé (impression 3D PETG, gamme, jeu fonctionnel 10,2/10,0), "
+                "réinvestissement lampe du CDI (frontière TBT/secteur). Versions A/B/C, "
+                "QCM 30 q (10/10/10, 3 illustrées, réponses réparties 8/7/7/8, graine 42), "
+                "synthèses, fiche, matrice, 3 SVG CC0, rapport 23/23. Règles d'or n°4 "
+                "appliquée ; _outils/fix_r.js recréé et commité. La panne « capteur qui "
+                "ment » prépare le LOT C6 (corriger le programme).",
+        anomalies="Aucune. Version A en très basse tension uniquement — le secteur est "
+                  "explicitement interdit (y compris au réinvestissement).",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement (DYS), "
+                      "reduced-motion, impression A4.",
+        medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
+    ),
+    "4e_C5.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C5.1",
+        qualite="README pointeur (séance 2 : remplacement en autonomie sans protocole "
+                "affiché, simulateur avec verrou ; 10 questions dédiées).",
+        anomalies="Aucune.",
+        accessibilite="s.o.",
+        medias="s.o.",
+    ),
+    "4e_C5.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C5.1",
+        qualite="README pointeur (séance 3 : choix multicritère des procédés, gamme, jeu "
+                "fonctionnel, sécurité atelier ; 10 questions dédiées).",
+        anomalies="Aucune.",
+        accessibilite="s.o.",
+        medias="s.o.",
+    ),
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

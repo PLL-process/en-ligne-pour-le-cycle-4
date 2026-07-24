@@ -445,3 +445,29 @@ réutilisable chaque année). Le document fédère les six skills spécialisés
 de `.claude/skills/` ; en cas d'écart, le journal fait foi. Même contenu
 livré à Pascal en SKILL.md installable. ChatGPT et Grok sont invités à le
 lire avant toute production — à entériner au Conseil du 28/07.
+
+## 2026-07-24 — Thème 2 · LOT 10 « SOS jardin connecté » (Fable, branche `fable/theme-2/lot-10-depanner-jardin-4e`)
+
+1. **LOT 10 réalisé — l'îlot C5 de 4e ouvre sur l'objet-fil du niveau** (le jardin
+   connecté des LOTs 09 et 4e_C6.2) : 4e_C5.1 → COMPLET ET VALIDABLE ;
+   4e_C5.2 et 4e_C5.3 → COUVERT (pointeurs). Progressivité 5e→4e assumée : le
+   protocole n'est plus FOURNI (LOT 08), il est PROPOSÉ par l'élève — 6 tests
+   ordonnés puis exécutés au poste de diagnostic (verrou 6/6, capteur menteur
+   démasqué par le test discriminant mesure/réalité) ; remplacement en
+   autonomie SANS protocole affiché (vignettes non numérotées, photo,
+   comparaison, test final à l'eau, verrou 6/6) ; choix multicritère du
+   procédé (impression 3D PETG, gamme, jeu fonctionnel), réinvestissement
+   lampe du CDI avec frontière TBT/secteur nommée. QCM 30 q (10/10/10,
+   3 illustrées, 8/7/7/8 graine 42), synthèses, fiche, matrice, 3 SVG CC0,
+   rapport 23/23 (Playwright réel). La panne « capteur qui ment » amorce le
+   LOT 11 (4e_C6.1/C6.3 : corriger le programme).
+2. **`_outils/fix_r.js` recréé et commité** : l'outil de répartition des
+   bonnes réponses, cité par la méthode et utilisé aux LOTs 01-09, n'avait
+   jamais été commité. Version reconstruite : permutation déterministe
+   (mulberry32 + Fisher-Yates, graine en argument), quotas équilibrés
+   (écart max 1), échange `o[0]↔o[t]` / `d[0]↔d[t]`, réécriture du bloc
+   `const QUESTIONS` à clés ordonnées. Usage :
+   `node _outils/fix_r.js <fichier.html> <graine>`.
+3. **Conseil des IA avancé au 25/07/2026, 8 h (heure de Martinique)**
+   (décision Pascal, 24/07) : tous les points « à entériner au Conseil du
+   28/07 » du présent journal sont réputés portés à l'ordre du jour du 25/07.

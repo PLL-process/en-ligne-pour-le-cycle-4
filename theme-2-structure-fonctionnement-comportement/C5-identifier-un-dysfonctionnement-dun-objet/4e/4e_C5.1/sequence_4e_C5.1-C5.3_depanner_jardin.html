@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOS jardin connecté — Dépanner (4e_C5.1 à C5.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>🚑 SOS jardin connecté</h1>
+<p class="subtitle">Proposer le protocole de diagnostic, remplacer la pièce en autonomie, refabriquer le support cassé — le dépanneur de 4e ne reçoit plus le protocole : il le construit</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C5.1</span><span class="badge code">4e_C5.2</span><span class="badge code">4e_C5.3</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3, D2, D3, D4, D5</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 4 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Mardi matin, la présidente du club jardin vous attend devant le carré potager, l'air grave.</b>
+    « Regardez les tomates : flétries. Le week-end a été le plus chaud du carême, et le jardin connecté
+    n'a PAS arrosé. Le pire ? L'écran du coffret affiche <b>“Humidité du sol : 78 % — ARROSAGE : OK”</b>.
+    Il dit que tout va bien… pendant que tout sèche. »</p>
+    <p>Le technicien de la mairie répond au téléphone : <b>« Vous êtes les 4e qui avez étudié et programmé
+    ce jardin. Cette fois, je ne vous envoie PAS de protocole tout fait : c'est VOUS qui allez le proposer.
+    Trouvez la cause avec des tests qui prouvent, remplacez la pièce fautive — je vous fournis la pièce,
+    pas la méthode — et si quelque chose casse au passage, l'atelier du collège sait refabriquer. »</b></p>
+    <p>Votre mission de 4e : <b>proposer</b> le protocole de diagnostic, <b>remplacer</b> la pièce
+    défectueuse en autonomie, et <b>choisir le procédé</b> pour refabriquer ce qui manque.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Pourquoi le jardin qui affiche « tout va bien » laisse-t-il mourir ses tomates —
+  et comment le remettre en service par nous-mêmes, preuves à l'appui ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> l'écran dit « humide », mais le sol craque de sécheresse.
+    Quelle est selon toi la cause la plus probable ? Quel serait TON premier test ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : la maquette du jardin connecté (carte + capteur d'humidité + pompe,
+    <b>très basse tension uniquement — jamais le secteur</b>), volontairement « mise en panne » par le
+    professeur (capteur enrobé d'une croûte de terre séchée).</p>
+    <p>🅱 <b>En simulation</b> : le poste de diagnostic et le simulateur de remplacement intégrés à cette
+    page (aucun matériel nécessaire).</p>
+    <p>🅲 <b>Sans matériel</b> : les documents imprimés, le protocole à construire au cahier et les
+    images d'inspection de cette page.</p>
+  </div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — Proposer le protocole<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Remplacer sans filet<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Refabriquer à l'atelier<span id="done-s3"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🧭 Séance 1 — Proposer le protocole de diagnostic (4e_C5.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment PROUVER l'origine d'une panne — au lieu de la deviner ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Du symptôme au protocole : construis TA méthode</h3><span class="duree">⏱ 45 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> lister les causes possibles, ordonner des tests discriminants du plus rapide au plus long, puis exécuter SON protocole jusqu'à isoler la cause.</div>
+      <div><b>Compétence :</b> 4e_C5.1 — proposer un protocole permettant de vérifier l'origine d'un dysfonctionnement.</div>
+      <div><b>Production attendue :</b> protocole ordonné (6 tests) + cause isolée par le simulateur + 2 questions de méthode.</div>
+      <div><b>Ressources :</b> l'image des symptômes + les résultats de tes tests au poste de diagnostic.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/jardin_symptomes.svg" type="image/svg+xml" aria-label="Le jardin connecté en panne : plants flétris, réservoir plein, écran affichant humidité 78 % et arrosage OK, pompe muette, capteur planté en terre" style="width:100%"></object>
+      <figcaption>Le carré potager mardi matin. Trois faits se contredisent : sol sec, réservoir plein, écran « tout va bien ». Observe AVANT de répondre.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) observe l'image et retiens les faits ; b) remets les 6 tests dans l'ordre du bon protocole (règle du dépanneur : du test le plus RAPIDE au plus long, la sécurité avant tout démontage) ; c) exécute TON protocole au poste de diagnostic (une erreur d'ordre remet à zéro) jusqu'à isoler la cause ; d) réponds aux 2 questions de méthode.</div>
+    <div class="exo">
+      <h4>b) J'ordonne mes 6 tests (du 1er au 6e)</h4>
+      <div class="assoc"><label for="o1_a">« Observer et relever les symptômes, sans rien toucher » est le test n°…</label><select id="o1_a"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o1_b">« Vérifier de mes yeux le niveau du réservoir » est le test n°…</label><select id="o1_b"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o1_c">« Comparer la mesure de l'écran (78 % humide) à l'état RÉEL du sol » est le test n°…</label><select id="o1_c"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o1_d">« Lancer la marche forcée de la pompe (très basse tension) pour tester pompe et tuyau » est le test n°…</label><select id="o1_d"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o1_e">« Couper l'alimentation, puis examiner le capteur de près » est le test n°…</label><select id="o1_e"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="o1_f">« Conclure : désigner la cause et la pièce à remplacer » est le test n°…</label><select id="o1_f"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <h4>c) J'exécute MON protocole au poste de diagnostic</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost diagbtn" data-etape="4" type="button">🚿 Marche forcée de la pompe (TBT)</button>
+          <button class="btn small ghost diagbtn" data-etape="1" type="button">👀 Observer et relever les symptômes</button>
+          <button class="btn small ghost diagbtn" data-etape="6" type="button">🎯 Conclure : désigner la cause</button>
+          <button class="btn small ghost diagbtn" data-etape="2" type="button">🪣 Vérifier le niveau du réservoir</button>
+          <button class="btn small ghost diagbtn" data-etape="5" type="button">🔌 Couper l'alimentation + examiner le capteur</button>
+          <button class="btn small ghost diagbtn" data-etape="3" type="button">🌡 Comparer la mesure écran / sol réel</button>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">POSTE DE DIAGNOSTIC <span id="diagIcone">🧭</span></div>
+          <div id="diagTxt" style="font-size:.92em;min-height:64px">Prêt ? Clique les tests DANS L'ORDRE de ton protocole. Une erreur d'ordre remet le diagnostic à zéro — comme en vrai, on s'arrête et on réfléchit.</div>
+          <div id="diagEtat" class="etiquette" style="margin-top:6px">tests réussis : 0 / 6</div>
+          <button class="btn small ghost" id="btnDiagReset" type="button">↺ Recommencer le diagnostic</button>
+        </div>
+      </div>
+      <h4>d) Les questions du dépanneur</h4>
+      <div class="assoc"><label for="q1_1">Quel test a DÉMASQUÉ le coupable (le test « discriminant ») ?</label><select id="q1_1"><option value="">— choisir —</option><option>comparer la mesure de l'écran (78 % humide) au sol réel, sec et craquelé</option><option>vérifier le niveau du réservoir</option><option>observer les plants flétris</option><option>couper l'alimentation</option></select></div>
+      <div class="assoc"><label for="q1_2">Pourquoi placer les tests RAPIDES en premier dans le protocole ?</label><select id="q1_2"><option value="">— choisir —</option><option>chaque test rapide peut éliminer une cause en quelques secondes, avant d'engager les tests longs ou un démontage</option><option>parce que les tests longs sont interdits</option><option>pour finir la séance plus tôt</option><option>l'ordre des tests n'a aucune importance</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le protocole du dépanneur commence toujours par ce qui ne coûte rien : REGARDER. Puis il teste du plus rapide au plus long. On ne démonte jamais en premier — et on coupe l'alimentation AVANT d'approcher les mains d'un composant.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Trois faits se contredisent : le sol CRAQUE, le réservoir est PLEIN, l'écran dit « 78 % humide ». Qui ment ? Celui qui MESURE. Si la marche forcée fait couler l'eau (pompe et tuyau innocents), il ne reste qu'un suspect : le capteur d'humidité, qui répète « humide » — donc le programme ne commande jamais l'arrosage.</p></details>
+    <button class="btn small" data-check="1" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Ordre du protocole : <b>1</b> observer sans toucher · <b>2</b> réservoir (10 secondes, de ses yeux) ·
+      <b>3</b> comparer mesure/réalité — c'est le test <b>discriminant</b> : « 78 % humide » sur un sol qui craque,
+      le capteur MENT · <b>4</b> marche forcée : l'eau coule, pompe et tuyau sont innocentés · <b>5</b> alimentation
+      coupée, examen de près : les électrodes du capteur sont prises dans une <b>croûte de terre et de calcaire</b>
+      qui bloque la mesure · <b>6</b> conclusion : capteur d'humidité défectueux, à remplacer. La logique du
+      protocole : chaque test <b>élimine</b> un suspect, du test le plus rapide au plus engageant (4e_C5.1).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> en 4e, on ne reçoit plus le protocole : on le PROPOSE. Un bon protocole liste les causes possibles, puis les teste une par une — tests rapides d'abord, sécurité avant tout démontage, et chaque test doit pouvoir INNOCENTER ou ACCUSER un composant (test discriminant).</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> croire l'écran sur parole (une mesure peut mentir) ; démonter en premier ; changer une pièce au hasard « pour voir » ; oublier de couper l'alimentation avant d'approcher les composants.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> diagnostic mené au poste jusqu'à 6/6, 8/8 réponses, et TON protocole recopié au cahier en 6 lignes numérotées.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🔧 Séance 2 — Remplacer la pièce… sans protocole fourni (4e_C5.2)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment remplacer une pièce PROPREMENT quand personne ne te donne la marche à suivre ?</p>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>Le remplacement en autonomie : méthode et preuves</h3><span class="duree">⏱ 45 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> organiser soi-même le remplacement du capteur (la pièce neuve est fournie, PAS la méthode), l'exécuter au simulateur et prouver la réparation par un test final.</div>
+      <div><b>Compétence :</b> 4e_C5.2 — remplacer une pièce défectueuse sans protocole fourni.</div>
+      <div><b>Production attendue :</b> ordre des 6 gestes construit + remplacement simulé réussi + 2 questions de méthode.</div>
+      <div><b>Ressources :</b> les vignettes des gestes (non ordonnées — c'est fait exprès !).</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/remplacement_capteur.svg" type="image/svg+xml" aria-label="Six vignettes non ordonnées montrant les gestes du remplacement du capteur d'humidité, avec le rappel très basse tension uniquement" style="width:100%"></object>
+      <figcaption>Les 6 gestes du remplacement — présentés DANS LE DÉSORDRE. En 4e, c'est toi qui construis l'ordre.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) construis TON ordre des 6 gestes (indice : la sécurité ouvre, la preuve ferme) ; b) exécute le remplacement au simulateur — aucun protocole ne s'affiche, une erreur d'ordre remet à zéro ; c) réponds aux questions du dépanneur autonome.</div>
+    <div class="exo">
+      <h4>a) Je construis mon ordre de remplacement</h4>
+      <div class="assoc"><label for="r2_a">« Couper l'alimentation et PHOTOGRAPHIER le branchement » est le geste n°…</label><select id="r2_a"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="r2_b">« Débrancher le connecteur et extraire l'ancien capteur » est le geste n°…</label><select id="r2_b"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="r2_c">« Comparer capteur neuf et ancien : broches, longueur, repères » est le geste n°…</label><select id="r2_c"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="r2_d">« Installer le neuf et rebrancher À L'IDENTIQUE grâce à la photo » est le geste n°…</label><select id="r2_d"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="r2_e">« Remettre l'alimentation » est le geste n°…</label><select id="r2_e"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <div class="assoc"><label for="r2_f">« TEST FINAL : verser de l'eau au pied du plant témoin, la mesure doit chuter et la pompe s'amorcer » est le geste n°…</label><select id="r2_f"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      <h4>b) J'exécute mon remplacement au simulateur</h4>
+      <div class="simu" style="margin:10px 0">
+        <div>
+          <button class="btn small ghost rempbtn" data-etape="3" type="button">🔍 Comparer neuf / ancien</button>
+          <button class="btn small ghost rempbtn" data-etape="6" type="button">🧪 Test final au plant témoin</button>
+          <button class="btn small ghost rempbtn" data-etape="1" type="button">🔌📸 Couper l'alim + photo du branchement</button>
+          <button class="btn small ghost rempbtn" data-etape="5" type="button">⚡ Remettre l'alimentation</button>
+          <button class="btn small ghost rempbtn" data-etape="2" type="button">🪛 Débrancher et extraire l'ancien</button>
+          <button class="btn small ghost rempbtn" data-etape="4" type="button">🧩 Installer et rebrancher selon la photo</button>
+        </div>
+        <div class="simu-ecran" aria-live="polite">
+          <div class="etiquette">ÉTABLI DU CLUB JARDIN <span id="rempIcone">🧰</span></div>
+          <div id="rempTxt" style="font-size:.92em;min-height:64px">Le capteur neuf est sur l'établi. AUCUN protocole ne s'affichera : clique les gestes dans l'ordre que TU as construit.</div>
+          <div id="rempEtat" class="etiquette" style="margin-top:6px">gestes réussis : 0 / 6</div>
+          <button class="btn small ghost" id="btnRempReset" type="button">↺ Recommencer le remplacement</button>
+        </div>
+      </div>
+      <h4>c) Les questions du dépanneur autonome</h4>
+      <div class="assoc"><label for="q2_1">Pourquoi photographier le branchement AVANT de débrancher ?</label><select id="q2_1"><option value="">— choisir —</option><option>la photo remplace le protocole absent : elle garantit un remontage à l'identique</option><option>pour décorer le compte du club jardin</option><option>parce que les photos réparent les capteurs</option><option>pour prouver qu'on a travaillé</option></select></div>
+      <div class="assoc"><label for="q2_2">Pourquoi comparer le capteur neuf et l'ancien AVANT de monter le neuf ?</label><select id="q2_2"><option value="">— choisir —</option><option>vérifier la compatibilité (broches, dimensions) évite un démontage de plus si la pièce ne convient pas</option><option>pour choisir le plus joli des deux</option><option>c'est inutile, une pièce neuve convient toujours</option><option>pour les peser</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Sans protocole, la MÉTHODE te protège : la sécurité OUVRE toujours (couper l'alimentation), la preuve FERME toujours (le test final). Entre les deux : retirer l'ancien, vérifier le neuf, monter, réalimenter — et la photo est ta mémoire.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ordre complet : couper + photo → extraire → comparer → monter selon la photo → réalimenter → tester. Pourquoi comparer en 3e position et pas après le montage ? Parce qu'une pièce incompatible découverte APRÈS montage oblige à tout refaire. Et pourquoi un test final À L'EAU ? Parce que seule une VRAIE variation d'humidité prouve que la chaîne capteur → carte → pompe fonctionne de bout en bout.</p></details>
+    <button class="btn small" data-check="2" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Ordre : <b>1</b> couper l'alimentation + photographier (sécurité + mémoire) · <b>2</b> débrancher, extraire
+      l'ancien capteur · <b>3</b> comparer neuf/ancien AVANT montage (compatibilité) · <b>4</b> installer et rebrancher
+      à l'identique grâce à la photo · <b>5</b> réalimenter · <b>6</b> test final : de l'eau au pied du plant témoin →
+      la mesure chute de 78 % à ~35 %, la pompe s'amorce, le goutte-à-goutte coule. La réparation n'est pas « finie
+      quand c'est remonté » : elle est finie quand c'est <b>PROUVÉ</b> (4e_C5.2).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> remplacer sans protocole = remplacer AVEC une méthode : sécurité d'abord (couper l'alimentation), photo avant tout débranchement, comparaison neuf/ancien avant montage, remontage en ordre inverse, et TEST FINAL qui prouve. La méthode remplace le document.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> débrancher sans photo (« je m'en souviendrai »… non) ; monter la pièce neuve sans l'avoir comparée ; déclarer la réparation finie sans test ; travailler sous tension « parce que c'est rapide ».</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> remplacement simulé mené jusqu'à 6/6 sans protocole affiché, 8/8 réponses, et ta méthode en 6 gestes recopiée au cahier.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🏭 Séance 3 — Choisir le procédé et refabriquer (4e_C5.3)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quand une pièce n'existe plus en magasin, comment CHOISIR la façon de la refabriquer ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Le clip-support cassé : quel procédé pour le refaire ?</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> comparer trois procédés candidats selon des critères (forme, tenue au jardin, temps, matériel du labo), choisir en justifiant, et ordonner la mini-gamme de fabrication.</div>
+      <div><b>Compétence :</b> 4e_C5.3 — choisir les procédés de réalisation et les mettre en œuvre.</div>
+      <div><b>Production attendue :</b> un choix de procédé justifié + la gamme dans l'ordre + la règle de sécurité de l'atelier.</div>
+      <div><b>Ressources :</b> l'image des trois procédés candidats et de leurs critères.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/choix_procedes_support.svg" type="image/svg+xml" aria-label="Trois procédés candidats pour refabriquer le clip-support du capteur : impression 3D en PETG, découpe et pliage de PVC, taille dans le bois, comparés selon la forme, la tenue au jardin et le temps" style="width:100%"></object>
+      <figcaption>Mauvaise nouvelle en extrayant l'ancien capteur : son clip-support a cassé — et le fabricant ne le vend plus. Bonne nouvelle : l'atelier du collège a trois façons de le refaire.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> a) choisis le procédé adapté à CHAQUE critère (le clip a une forme en volume avec des ergots élastiques ; il vivra dehors, au soleil et à l'arrosage) ; b) remets la mini-gamme de fabrication dans l'ordre ; c) rappelle la règle de sécurité de l'atelier.</div>
+    <div class="exo">
+      <h4>a) Je choisis en croisant les critères</h4>
+      <div class="assoc"><label for="a3_1">Pour une forme EN VOLUME avec ergots élastiques (le clip), le procédé adapté est…</label><select id="a3_1"><option value="">— choisir —</option><option>l'impression 3D : elle construit les volumes complexes couche par couche, en une seule pièce</option><option>la découpe-pliage de PVC : parfaite pour les volumes à ergots</option><option>la taille dans le bois : rapide pour les petites pièces élastiques</option><option>aucun procédé ne peut faire un clip</option></select></div>
+      <div class="assoc"><label for="a3_2">Pourquoi la découpe-pliage de plaque est-elle écartée pour CE clip ?</label><select id="a3_2"><option value="">— choisir —</option><option>elle produit des pièces issues d'une plaque pliée — pas un volume avec ergots élastiques qui s'enclenchent</option><option>parce que la plieuse est en panne</option><option>parce que le PVC n'existe pas en plaque</option><option>parce que plier est interdit en 4e</option></select></div>
+      <div class="assoc"><label for="a3_3">Le clip vivra au jardin (soleil, arrosage). On imprime en PETG plutôt qu'en PLA car…</label><select id="a3_3"><option value="">— choisir —</option><option>le PETG supporte mieux la chaleur, l'humidité et les UV — le PLA se déforme et vieillit vite dehors</option><option>le PETG est plus joli</option><option>le PLA est réservé aux professeurs</option><option>le PETG s'imprime sans imprimante</option></select></div>
+      <div class="assoc"><label for="a3_4">La PREMIÈRE opération de la fabrication est…</label><select id="a3_4"><option value="">— choisir —</option><option>mesurer l'ancien clip au pied à coulisse (même cassé, il porte toutes les cotes)</option><option>lancer l'impression au hasard et ajuster ensuite</option><option>peindre le futur clip</option><option>jeter l'ancien clip</option></select></div>
+      <h4>b) La mini-gamme, puis la sécurité</h4>
+      <div class="assoc"><label for="q3_1">La mini-gamme complète, dans l'ordre, est…</label><select id="q3_1"><option value="">— choisir —</option><option>mesurer → modéliser en 3D (avec le jeu) → imprimer → ébavurer et ajuster → monter et tester</option><option>imprimer → mesurer → modéliser → monter → ajuster</option><option>monter → tester → mesurer → imprimer</option><option>modéliser → jeter l'ancien → deviner les cotes → imprimer</option></select></div>
+      <div class="assoc"><label for="q3_2">Le trou du clip fait 10,0 mm pour un capteur de 10,0 mm : on modélise le trou à…</label><select id="q3_2"><option value="">— choisir —</option><option>environ 10,2 mm : le jeu fonctionnel permet au capteur de s'enclencher sans forcer</option><option>10,0 mm exactement : les cotes ne se discutent pas</option><option>9,8 mm pour serrer très fort</option><option>15 mm pour être tranquille</option></select></div>
+      <div class="assoc"><label for="q3_3">Avant d'utiliser une machine de l'atelier, la règle est…</label><select id="q3_3"><option value="">— choisir —</option><option>lunettes, cheveux attachés, autorisation ET présence d'un adulte — jamais seul·e sur une machine</option><option>aller vite pour libérer la machine</option><option>retirer les protections pour mieux voir</option><option>souffler les copeaux à la bouche</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le procédé se choisit en croisant : la FORME de la pièce (plate ? pliée ? en volume ?), le MATÉRIAU qui convient à son environnement, et le TEMPS/matériel disponibles. Une forme en volume avec ergots ne peut pas sortir d'une plaque pliée.</p></details>
+    <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Au jardin, le soleil tape et l'arrosage mouille : le PLA (qui ramollit vers 55-60 °C et vieillit aux UV) tiendrait quelques semaines ; le PETG tient des années. Et la gamme commence TOUJOURS par la mesure : l'ancien clip cassé, recollé le temps d'un relevé, porte toutes les cotes dont le modèle 3D a besoin — plus le jeu (10,2 mm pour 10,0 mm) pour que ça s'enclenche sans forcer.</p></details>
+    <button class="btn small" data-check="3" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Forme en volume + ergots élastiques → <b>impression 3D</b> ; la découpe-pliage est écartée (elle produit des
+      pièces de plaque) ; matériau : <b>PETG</b>, qui tient chaleur, humidité et UV du jardin, là où le PLA se déforme.
+      Gamme : <b>mesurer</b> (pied à coulisse sur l'ancien clip) → <b>modéliser</b> avec le jeu fonctionnel (10,2 mm
+      pour un capteur de 10,0) → <b>imprimer</b> → <b>ébavurer/ajuster</b> → <b>monter et tester</b>. Et à l'atelier :
+      lunettes, cheveux attachés, adulte présent — toujours (4e_C5.3).</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> choisir un procédé = croiser la FORME de la pièce, le MATÉRIAU adapté à son environnement, le TEMPS et le matériel disponibles. La fabrication suit une gamme ordonnée qui commence par MESURER — et le jeu fonctionnel se prévoit dès la modélisation.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques :</b> choisir le procédé « préféré » au lieu du procédé adapté ; imprimer en PLA une pièce d'extérieur ; modéliser sans jeu (« ça rentrera bien ») ; commencer par imprimer au lieu de mesurer.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 7/7 réponses, et le tableau « critère → procédé retenu » recopié au cahier avec ta justification en une phrase.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Réinvestissement — la lampe du CDI t'appelle</h3><span class="duree">⏱ 15 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> transposer la démarche complète (protocole → remplacement → refabrication) sur un objet différent, sans aide.</div>
+      <div><b>Compétence :</b> 4e_C5.1 + C5.2 + C5.3 (transfert).</div>
+      <div><b>Production attendue :</b> 4 décisions de dépanneur, transposées correctement.</div>
+      <div><b>Ressources :</b> aucune — c'est un transfert : tout est déjà dans ta tête.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> la lampe de bureau du CDI ne s'allume plus (ampoule LED neuve fournie par la documentaliste, bouton-poussoir fendu). Transpose ta démarche.</div>
+    <div class="exo">
+      <div class="assoc"><label for="r4_1">Ton protocole commence par…</label><select id="r4_1"><option value="">— choisir —</option><option>observer sans toucher, puis tester la prise avec un autre appareil : les tests rapides éliminent d'abord les causes simples</option><option>démonter entièrement la lampe pour tout voir</option><option>changer l'ampoule immédiatement sans tester</option><option>acheter une lampe neuve</option></select></div>
+      <div class="assoc"><label for="r4_2">Pour remplacer l'ampoule fournie SANS protocole, ton premier geste est…</label><select id="r4_2"><option value="">— choisir —</option><option>débrancher la lampe du secteur — et faire appel à un adulte : le 230 V n'est JAMAIS pour nous</option><option>dévisser l'ampoule lampe branchée, c'est plus rapide</option><option>secouer la lampe</option><option>mouiller l'ampoule pour la refroidir</option></select></div>
+      <div class="assoc"><label for="r4_3">La preuve que ta réparation est terminée :</label><select id="r4_3"><option value="">— choisir —</option><option>le test final réussit : la lampe s'allume et s'éteint normalement au bouton</option><option>l'ampoule est vissée, donc c'est fini</option><option>la lampe est plus belle qu'avant</option><option>personne ne s'est plaint</option></select></div>
+      <div class="assoc"><label for="r4_4">Le bouton-poussoir fendu, introuvable en magasin, sera…</label><select id="r4_4"><option value="">— choisir —</option><option>mesuré au pied à coulisse puis réimprimé en 3D à l'atelier, à l'unité et sur mesure</option><option>remplacé par du ruban adhésif pour toujours</option><option>ignoré : un bouton fendu fonctionne très bien</option><option>commandé même s'il n'existe plus</option></select></div>
+    </div>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Même démarche, autre objet : tests rapides d'abord, sécurité avant tout geste, preuve à la fin, refabrication sur mesure quand le commerce ne suit plus. ATTENTION : la lampe du CDI est branchée sur le SECTEUR — ce n'est plus de la très basse tension : on débranche, et un adulte intervient.</p></details>
+    <button class="btn small" data-check="4" type="button">✅ Vérifier mes réponses</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS la vérification)</summary>
+      <p>Observer puis tester la prise (protocole, tests rapides d'abord) · débrancher ET adulte — le 230 V du secteur
+      est un danger mortel, notre terrain est la très basse tension uniquement · le test final prouve · le bouton
+      se mesure et se réimprime. La démarche du dépanneur est transférable à TOUT objet — c'est ça, une compétence.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> protocole → remplacement méthodique → preuve → refabrication : la démarche vaut pour le jardin, la lampe, le vélo… Réparer plutôt que jeter, c'est bon pour le porte-monnaie ET pour la planète.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 / 4.</div>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de la séquence</h2>
+  <div class="bilan-grid">
+    <div>
+      <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
+      <p>Avais-tu soupçonné le capteur menteur ? Ton premier test était-il rapide et discriminant ?</p></div>
+      <p><b>Ce que tu sais faire désormais :</b> proposer un protocole de diagnostic qui PROUVE l'origine d'une
+      panne (4e_C5.1), remplacer une pièce en autonomie — méthode, photo, comparaison, test final (4e_C5.2), et
+      choisir le procédé pour refabriquer une pièce introuvable (4e_C5.3). Le jardin arrose de nouveau — et cette
+      fois, c'est TA méthode qui l'a sauvé.</p>
+      <p class="refs">Revoir l'objet complet : <a href="../../../C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/sequence_4e_C4.1-C4.9_jardin_connecte.html">« Le jardin connecté » (structure et chaînes)</a> · <a href="../../../C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">« L'arrosage automatique » (le programme)</a>.</p>
+    </div>
+    <div class="confiance">
+      <p><b>🎯 Auto-positionnement :</b> pour chaque compétence, où en es-tu ?</p>
+      <div class="assoc"><label for="auto1">4e_C5.1 — proposer un protocole de diagnostic :</label><select id="auto1"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto2">4e_C5.2 — remplacer une pièce sans protocole :</label><select id="auto2"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <div class="assoc"><label for="auto3">4e_C5.3 — choisir les procédés de réalisation :</label><select id="auto3"><option value="">— choisir —</option><option>🔴 fragile</option><option>🟡 en cours</option><option>🟢 solide</option><option>⭐ expert</option></select></div>
+      <p class="refs"><a href="Synthèses/synthese_eleve_4e_C5.1-C5.3.html">📄 Synthèse élève</a> · <a href="Synthèses/synthese_professeur_4e_C5.1-C5.3.html">👩‍🏫 Synthèse professeur</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — dont 3 avec schémas à lire — pour vérifier toute la démarche du dépanneur autonome.</p>
+  <a class="btn qcm" href="qcm_4e_C5.1-C5.3_depanner_jardin.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🕵 <b>Défi protocole :</b> choisis un objet en panne chez toi et rédige le protocole de diagnostic en 5 tests, du plus rapide au plus long — SANS le réaliser. Un adulte le validerait-il ?</p>
+  <p>📐 <b>Défi conception :</b> dessine le clip-support du capteur sur papier quadrillé, avec ses cotes en millimètres ET le jeu fonctionnel annoté — le dessin qui précède toute impression 3D.</p>
+  <p>👨‍👩‍👧 <b>Défi famille :</b> demande à un adulte s'il a déjà réparé quelque chose SANS notice : quelle méthode a-t-il inventée ? La photo avant démontage, il connaissait ?</p>
+</section>
+
+<footer>
+  <p>Séquence 4e_C5.1 → C5.3 · Thème 2 · Technologie cycle 4 (programme 2024) · objet-fil « Le jardin connecté »</p>
+  <p>Fonctionne hors ligne après le premier chargement · sauvegarde locale automatique · aucune donnée envoyée sur un serveur · très basse tension uniquement pour la version 🅰 — jamais le secteur</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_4e_C5.1-C5.3_depanner_jardin";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Poste de diagnostic (activité 1) — l'élève exécute SON protocole ══════ */
+window.__exp = window.__exp || {};
+const DIAG_TXT = {
+  1:"Relevé des symptômes : plants flétris, sol qui craque, pompe silencieuse, écran « Humidité 78 % — ARROSAGE OK », voyant de la carte VERT. Trois faits se contredisent déjà…",
+  2:"Réservoir vérifié DE TES YEUX : il est plein aux trois quarts. Cause « réservoir vide » ÉLIMINÉE en dix secondes.",
+  3:"Test discriminant : l'écran affiche 78 % d'humidité… mais la terre CRAQUE sous les doigts et se soulève en poussière. La mesure MENT → le capteur d'humidité devient le suspect n°1.",
+  4:"Marche forcée (très basse tension) : la pompe RONRONNE, l'eau coule au goutte-à-goutte. Pompe et tuyau sont INNOCENTÉS — le problème est bien en amont, dans la mesure.",
+  5:"Alimentation coupée, capteur extrait du sol : les électrodes sont prises dans une CROÛTE de terre séchée et de calcaire. Voilà pourquoi il répète « humide » depuis des jours !",
+  6:"CONCLUSION prouvée : le capteur d'humidité encroûté renvoie une fausse mesure → la carte croit le sol humide → elle ne commande jamais la pompe. Pièce à remplacer : LE CAPTEUR."
+};
+function diagInit(){
+  window.__diagEtape = 0;
+  $("diagIcone").textContent="🧭";
+  $("diagTxt").textContent="Prêt ? Clique les tests DANS L'ORDRE de ton protocole. Une erreur d'ordre remet le diagnostic à zéro — comme en vrai, on s'arrête et on réfléchit.";
+  $("diagEtat").textContent="tests réussis : 0 / 6";
+}
+document.querySelectorAll(".diagbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const e = parseInt(btn.dataset.etape,10);
+    const attendu = (window.__diagEtape||0) + 1;
+    if(e === attendu){
+      window.__diagEtape = e;
+      $("diagTxt").textContent = DIAG_TXT[e];
+      $("diagEtat").textContent = "tests réussis : " + e + " / 6";
+      $("diagIcone").textContent = e===6 ? "🎯" : ["","👀","🪣","🌡","🚿","🔍"][e];
+      if(e===6){
+        window.__exp.diag = true;
+        $("diagEtat").textContent = "6 / 6 — cause ISOLÉE : capteur d'humidité ✅";
+      }
+    } else {
+      window.__diagEtape = 0;
+      $("diagIcone").textContent="⛔";
+      $("diagTxt").textContent="Ce test n'est pas au bon moment ! Un protocole va du plus rapide au plus engageant, et la sécurité précède tout démontage. On reprend depuis le début — c'est comme ça qu'on construit une méthode.";
+      $("diagEtat").textContent="tests réussis : 0 / 6";
+    }
+    save(false);
+  });
+});
+$("btnDiagReset").addEventListener("click", ()=>{ diagInit(); save(false); });
+
+/* ══════ Simulateur de remplacement (activité 2) — sans protocole affiché ══════ */
+const REMP_TXT = {
+  1:"Alimentation coupée + PHOTO du branchement prise : le circuit est mort, et ta mémoire est dans la poche. Deux protections d'un seul geste.",
+  2:"Connecteur débranché, ancien capteur extrait… et sa croûte de terre vient avec. On comprend mieux la fausse mesure !",
+  3:"Comparaison neuf/ancien : mêmes 3 broches, même longueur, même repère de sens. La pièce fournie est COMPATIBLE — le montage peut commencer.",
+  4:"Capteur neuf installé, connecteur rebranché À L'IDENTIQUE grâce à la photo. Sans elle, tu aurais hésité sur le sens…",
+  5:"Alimentation remise : la carte redémarre, l'écran affiche maintenant « Humidité : 31 % » — une valeur enfin crédible pour un sol sec.",
+  6:"TEST FINAL : un verre d'eau au pied du plant témoin… la mesure grimpe, repasse le seuil, la pompe S'AMORCE, le goutte-à-goutte coule. Réparation PROUVÉE !"
+};
+function rempInit(){
+  window.__rempEtape = 0;
+  $("rempIcone").textContent="🧰";
+  $("rempTxt").textContent="Le capteur neuf est sur l'établi. AUCUN protocole ne s'affichera : clique les gestes dans l'ordre que TU as construit.";
+  $("rempEtat").textContent="gestes réussis : 0 / 6";
+}
+document.querySelectorAll(".rempbtn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const e = parseInt(btn.dataset.etape,10);
+    const attendu = (window.__rempEtape||0) + 1;
+    if(e === attendu){
+      window.__rempEtape = e;
+      $("rempTxt").textContent = REMP_TXT[e];
+      $("rempEtat").textContent = "gestes réussis : " + e + " / 6";
+      $("rempIcone").textContent = e===6 ? "🌱" : ["","🔌","🪛","🔍","🧩","⚡"][e];
+      if(e===6){
+        window.__exp.remplace = true;
+        $("rempEtat").textContent = "6 / 6 — capteur remplacé, réparation PROUVÉE ✅";
+      }
+    } else {
+      window.__rempEtape = 0;
+      $("rempIcone").textContent="⛔";
+      $("rempTxt").textContent="Mauvais moment pour ce geste ! Souviens-toi de la méthode : la sécurité OUVRE, la preuve FERME. On repose tout et on reprend depuis le début.";
+      $("rempEtat").textContent="gestes réussis : 0 / 6";
+    }
+    save(false);
+  });
+});
+$("btnRempReset").addEventListener("click", ()=>{ rempInit(); save(false); });
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={o1_a:"1",o1_b:"2",o1_c:"3",o1_d:"4",o1_e:"5",o1_f:"6",
+               q1_1:"comparer la mesure de l'écran (78 % humide) au sol réel, sec et craquelé",
+               q1_2:"chaque test rapide peut éliminer une cause en quelques secondes, avant d'engager les tests longs ou un démontage"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.diag);
+    return {score:ok,total:8,extra:expOk?"":" Exécute VRAIMENT ton protocole au poste de diagnostic (6/6) : un protocole s'éprouve, il ne se récite pas.",valide:ok>=7&&expOk};
+  },
+  2: function(){
+    let ok=0;
+    const att={r2_a:"1",r2_b:"2",r2_c:"3",r2_d:"4",r2_e:"5",r2_f:"6",
+               q2_1:"la photo remplace le protocole absent : elle garantit un remontage à l'identique",
+               q2_2:"vérifier la compatibilité (broches, dimensions) évite un démontage de plus si la pièce ne convient pas"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const expOk = !!(window.__exp && window.__exp.remplace);
+    return {score:ok,total:8,extra:expOk?"":" Mène le remplacement simulé jusqu'au 6/6 — sans protocole affiché, c'est TA méthode qui compte.",valide:ok>=7&&expOk};
+  },
+  3: function(){
+    let ok=0;
+    const att={a3_1:"l'impression 3D : elle construit les volumes complexes couche par couche, en une seule pièce",
+               a3_2:"elle produit des pièces issues d'une plaque pliée — pas un volume avec ergots élastiques qui s'enclenchent",
+               a3_3:"le PETG supporte mieux la chaleur, l'humidité et les UV — le PLA se déforme et vieillit vite dehors",
+               a3_4:"mesurer l'ancien clip au pied à coulisse (même cassé, il porte toutes les cotes)",
+               q3_1:"mesurer → modéliser en 3D (avec le jeu) → imprimer → ébavurer et ajuster → monter et tester",
+               q3_2:"environ 10,2 mm : le jeu fonctionnel permet au capteur de s'enclencher sans forcer",
+               q3_3:"lunettes, cheveux attachés, autorisation ET présence d'un adulte — jamais seul·e sur une machine"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:7,valide:ok>=6};
+  },
+  4: function(){
+    let ok=0;
+    const att={r4_1:"observer sans toucher, puis tester la prise avec un autre appareil : les tests rapides éliminent d'abord les causes simples",
+               r4_2:"débrancher la lampe du secteur — et faire appel à un adulte : le 230 V n'est JAMAIS pour nous",
+               r4_3:"le test final réussit : la lampe s'allume et s'éteint normalement au bouton",
+               r4_4:"mesuré au pied à coulisse puis réimprimé en 3D à l'atelier, à l'unité et sur mesure"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:4,valide:ok===4};
+  }
+};
+const ENC_OK=["Excellent : tout est validé !","Bravo, tu as la méthode du dépanneur autonome !","Très bien : les tomates du club jardin te disent merci."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1], s2:[2], s3:[3,4]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); diagInit(); rempInit();
+if(window.__exp && window.__exp.diag){ $("diagEtat").textContent="6 / 6 — cause ISOLÉE : capteur d'humidité ✅ (déjà fait)"; }
+if(window.__exp && window.__exp.remplace){ $("rempEtat").textContent="6 / 6 — capteur remplacé, réparation PROUVÉE ✅ (déjà fait)"; }
+majProgress(); majHyp();
+</script>
+
+</body>
+</html>
