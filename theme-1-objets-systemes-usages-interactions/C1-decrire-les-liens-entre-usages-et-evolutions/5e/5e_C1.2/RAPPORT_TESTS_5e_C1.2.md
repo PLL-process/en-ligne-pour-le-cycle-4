@@ -42,6 +42,19 @@ Les fichiers ont été relus depuis la branche GitHub après chaque mise à jour
 - vérification que la banque annoncée comporte bien 24 questions et qu’aucun second moteur QCM n’est conservé dans le fichier ;
 - vérification du périmètre : les fichiers relus et modifiés restent dans le dossier du Thème 1.
 
+### Contrôle de périmètre GitHub exécuté le 24 juillet 2026
+
+La liste complète des fichiers modifiés dans la PR #51 a été récupérée via l’API GitHub puis contrôlée. Les six chemins modifiés sont tous situés dans `theme-1-objets-systemes-usages-interactions/.../5e/5e_C1.2/` :
+
+1. `FICHE_PEDAGOGIQUE_5e_C1.2.md` ;
+2. `MIGRATION_QCM_5e_C1.2.md` ;
+3. `RAPPORT_TESTS_5e_C1.2.md` ;
+4. `qcm_principes_techniques.html` ;
+5. `synthese_eleve_5e_C1.2.html` ;
+6. `synthese_professeur_5e_C1.2.html`.
+
+Résultat : aucune modification détectée dans les Thèmes 2 ou 3, dans `.github/` ou dans `_outils/`.
+
 ### Paquet pédagogique
 
 - synthèse élève créée ;
