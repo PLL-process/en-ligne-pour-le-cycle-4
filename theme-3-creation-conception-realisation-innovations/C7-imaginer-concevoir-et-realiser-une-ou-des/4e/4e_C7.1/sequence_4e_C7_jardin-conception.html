@@ -15,7 +15,7 @@ h2{color:var(--color-heading);font-size:1.12em;margin-top:0}h3{color:var(--color
 .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-style:italic}
 .problematique{font-size:1.12em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:14px 18px;border-radius:12px;text-align:center}
 .exo{background:var(--color-panel2);border:1px solid var(--color-border);border-radius:12px;padding:16px;margin:12px 0}.exo h4{margin:0 0 8px;color:#fff}
-.btn{background:var(--color-button);color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit}.btn:hover{background:var(--color-button-hover)}.btn.small{padding:5px 11px;font-size:.82em}
+.btn{background:var(--color-button);color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:var(--color-button-hover)}.btn.small{padding:5px 11px;font-size:.82em}
 .feedback{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.88em;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}.feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
 table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--color-border);padding:8px 10px;text-align:left}table.refs th{background:var(--color-input-bg);color:var(--color-highlight)}
 .tag{display:inline-block;background:var(--color-input-bg);border:1px solid var(--color-input-border);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px}
@@ -24,6 +24,7 @@ table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,tab
 .retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
 input,select,textarea{background:var(--color-input-bg);border:1px solid var(--color-input-border);color:var(--color-text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%;max-width:100%}
 footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:16px;margin-top:12px}
 @media(max-width:640px){section.card{padding:16px}}
 </style>
 </head>
@@ -139,10 +140,20 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
   <p>Mon niveau de confiance (1-4) : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
+<!-- RÈGLE D'OR N°4 — Blocs élève obligatoires -->
 <section class="card" style="text-align:center">
-  <h2>🧠 QCM d’entraînement</h2>
-  <p>Entraîne-toi sur les notions de conception, organisation de projet et choix de matériaux.</p>
-  <a class="btn" href="qcm_4e_C7_jardin-conception.html">Ouvrir le QCM d’entraînement</a>
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>25 questions pour vérifier les notions de conception, organisation de projet et choix de matériaux — avec corrections détaillées.</p>
+  <a class="btn" href="qcm_4e_C7_jardin-conception.html" style="margin-top:8px">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <div class="bonus">
+    <p><strong>Défi citoyen :</strong> Propose une solution qui utilise uniquement des matériaux de récupération disponibles dans ton quartier ou au collège.</p>
+    <p><strong>Défi technique :</strong> Ajoute un critère de test supplémentaire (ex. résistance au vent) et écris l’étape correspondante du protocole.</p>
+    <p><strong>Ancrage Martinique :</strong> Quelles plantes locales (balisier, hibiscus…) pourraient bénéficier d’un suivi d’humidité automatisé dans le jardin du collège ? Justifie en 3 phrases.</p>
+  </div>
 </section>
 
 <footer>TechnoQuest — Thème 3 · 4e_C7 · Jardin connecté · Cycle 4 (2024) · Agent Grok</footer>
@@ -157,7 +168,6 @@ function sauvegarderHypothese(){
   localStorage.setItem('techno_4e_C7_hypothese', document.getElementById('hypothese').value);
   alert('Hypothèse enregistrée.');
 }
-// Restauration
 try{
   const id = JSON.parse(localStorage.getItem('techno_4e_C7_identite')||'{}');
   if(id.nom) document.getElementById('eleveNom').value = id.nom;
