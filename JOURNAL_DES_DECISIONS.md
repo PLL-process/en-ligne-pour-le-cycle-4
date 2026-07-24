@@ -471,3 +471,28 @@ lire avant toute production — à entériner au Conseil du 28/07.
 3. **Conseil des IA avancé au 25/07/2026, 8 h (heure de Martinique)**
    (décision Pascal, 24/07) : tous les points « à entériner au Conseil du
    28/07 » du présent journal sont réputés portés à l'ordre du jour du 25/07.
+
+## 2026-07-24 — Thème 2 · LOT 11 « Ajuster le programme du jardin » (Fable, branche `fable/theme-2/lot-11-ajuster-programme-jardin-4e`)
+
+1. **LOT 11 réalisé — la compétence C6 de 4e est complète et l'arc 4e de
+   l'objet-fil est bouclé** (C4 structure → C6.2 programme → C5 dépannage →
+   C6.1/C6.3 ajustement) : 4e_C6.1 → COMPLET ET VALIDABLE ; 4e_C6.3 → COUVERT
+   (pointeur). **4e_C6.2 volontairement non traité** (séquence modèle
+   « arrosage automatique » existante, NON modifiée, référencée au bilan) —
+   même logique que 3e_C6.2 au LOT 04. Contenu : analyse des relevés USB
+   (pompe qui bat 47 fois autour du seuil unique 40 %, arrosage à 13 h, cas
+   normal de contrôle), spécification de l'hystérésis 35/45 (règle : écart >
+   vibration de la mesure) et de la plage horaire (ET sur le démarrage
+   seulement), banc de test à 4 scénarios en ordre libre (verrou __exp.scen),
+   méthode de validation en 5 étapes (sauvegarde → simulation → plant témoin →
+   non-régression, rollback), transfert lampadaire 5e (hystérésis 20/40 lux).
+   QCM 30 q (15+15, 3 illustrées, 8/7/7/8 graine 57), synthèses, fiche,
+   matrice, 3 SVG CC0, rapport 23/23 (Playwright réel).
+2. **Branche empilée** : lot-11 est construit SUR lot-10 (même session, mêmes
+   fichiers générés à la racine). Ordre de fusion : PR lot-10 d'abord, PR
+   lot-11 ensuite — zéro conflit, zéro régénération intermédiaire. À
+   entériner au Conseil du 25/07 comme pratique de « lots successifs d'une
+   même session ».
+3. **Bilan 4e du Thème 2 après ce lot** : C4 (9/9, LOT 09), C5 (3/3, LOT 10),
+   C6 (3/3, dont C6.2 préexistant) = l'îlot 4e du Thème 2 est complet pour la
+   rentrée 2026. Le Thème 2 entier (5e + 4e + 3e) est couvert.

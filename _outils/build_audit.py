@@ -570,6 +570,41 @@ OVERLAY = {
         accessibilite="s.o.",
         medias="s.o.",
     ),
+    "4e_C6.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « Ajuster le programme du jardin » (2 séances) clôturant l'arc "
+                "4e de l'objet-fil (C4 structure → C6.2 programme → C5 dépannage → ce "
+                "lot) : analyse des relevés USB (pompe qui bat 47 fois autour du seuil "
+                "unique, arrosage à 13 h, cas normal de contrôle), spécification de "
+                "l'hystérésis 35/45 (écart > vibration) et de la plage horaire (ET sur "
+                "le démarrage seulement), banc de test à 4 scénarios en ordre libre "
+                "(verrou __exp.scen), méthode de validation en 5 étapes (sauvegarde, "
+                "simulation, plant témoin, non-régression, rollback), transfert "
+                "lampadaire (hystérésis 20/40 lux). Versions A/B/C, QCM 30 q (15+15, "
+                "3 illustrées, réponses réparties 8/7/7/8, graine 57), synthèses, fiche, "
+                "matrice, 3 SVG CC0, rapport 23/23 (Playwright réel). Règle d'or n°4 "
+                "appliquée. 4e_C6.2 volontairement non traité (séquence modèle existante, "
+                "non modifiée, référencée au bilan) : la compétence C6 de 4e est complète.",
+        anomalies="Aucune. Version A en très basse tension uniquement — le secteur est "
+                  "explicitement interdit.",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement (DYS), "
+                      "reduced-motion, impression A4.",
+        medias="3 SVG originaux CC0 (2 image-objet + 1 image-explication) — "
+               "SOURCES_MEDIAS.md complet.",
+    ),
+    "4e_C6.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C6.1",
+        qualite="README pointeur (séance 2 : méthode de validation en 5 étapes, banc de "
+                "test à scénarios avec verrou ; 15 questions dédiées).",
+        anomalies="Aucune.",
+        accessibilite="s.o.",
+        medias="s.o.",
+    ),
 }
 
 # Codes couverts par mutualisation déclarée dans le dépôt (README pointeurs)

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Ajuster le programme du jardin (4e_C6.1 · C6.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--ko:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.55;font-size:.97em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.45em;color:var(--title);text-align:center}
+  .sous{text-align:center;color:var(--sub);margin-top:-8px}
+  h2{font-size:1.08em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:22px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .ok{color:var(--ok)}.warn{color:var(--warn)}.ko{color:var(--ko)}
+  .vocab b{color:var(--hl)}
+  figure{margin:10px 0;text-align:center}
+  figcaption{color:var(--sub);font-size:.85em}
+  object{width:100%;max-width:820px}
+  @media print{body{background:#fff;color:#111;font-size:9.5pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}.ok,.warn,.ko{color:#111;font-weight:bold}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>📄 Synthèse — Ajuster le programme du jardin</h1>
+<p class="sous">4e_C6.1 · 4e_C6.3 — ce qu'il faut retenir (et savoir refaire)</p>
+
+<div class="bloc">
+<h2 style="margin-top:0">🔎 4e_C6.1 — Analyser les données, déduire les modifications</h2>
+<ul>
+  <li><b>Analyser</b> = comparer le comportement <b>OBSERVÉ</b> (les relevés) au comportement <b>ATTENDU</b>, puis remonter de chaque écart à la <b>règle</b> du programme qui l'autorise.</li>
+  <li>Les anomalies se lisent dans les <b>TENDANCES</b> (47 démarrages en 3 h), pas dans une valeur isolée — et on ne « corrige » jamais un comportement <b>normal</b>.</li>
+  <li><b>Le battement</b> : un seuil UNIQUE + une mesure qui vibre = une commande qui bascule sans arrêt. Conséquences : usure de la pompe, micro-arrosages inutiles.</li>
+  <li><b>Le remède : l'hystérésis</b> — deux seuils (démarrer &lt; 35 %, arrêter &gt; 45 %) et, entre les deux, une zone où l'état <b>ne change pas</b>. Règle du réglage : l'<b>écart</b> entre les seuils dépasse la vibration de la mesure.</li>
+  <li><b>La plage horaire</b> : une condition <b>ET</b> sur le <b>démarrage</b> (avant 8 h ou après 17 h) — jamais sur l'arrêt : un arrosage commencé peut toujours se terminer.</li>
+  <li>Une anomalie peut venir d'une règle <b>MANQUANTE</b> : le programme ignore ce qu'on ne lui teste pas (il ne « sait » pas qu'il fait chaud à 13 h).</li>
+  <li>Méthode : <b>une anomalie prouvée → une modification précise</b> — jamais de refonte « au feeling ».</li>
+</ul>
+<figure><object data="../Images/hysteresis_deux_seuils.svg" type="image/svg+xml" aria-label="Un seuil unique fait battre la pompe ; deux seuils la stabilisent"></object>
+<figcaption>Un seuil… ou deux : le schéma à savoir refaire.</figcaption></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🧪 4e_C6.3 — Tester et valider, en simulé puis en réel</h2>
+<ul>
+  <li><b>La méthode en 5 étapes</b> : 1) <b>sauvegarder</b> le programme d'origine · 2) modifier · 3) <b>tester en SIMULATION</b> · 4) valider en <b>réel limité</b> (plant témoin) · 5) vérifier la <b>non-régression</b>.</li>
+  <li>La <b>sauvegarde</b> permet le <b>retour arrière</b> (rollback) : quoi qu'il arrive, l'état qui marchait se restaure en une minute.</li>
+  <li>La <b>simulation</b> attrape les erreurs SANS conséquence — le réel, lui, fait payer chacune (eau, pompe, plants).</li>
+  <li><b>Un scénario par règle</b> : démarrage (33 % à 6 h → ON), hystérésis (38 % pompe allumée → reste ON), arrêt (46 % → OFF), plage horaire (33 % à 13 h → reste OFF). Un seul verdict faux → on corrige et on <b>rejoue tout</b>.</li>
+  <li><b>Non-régression</b> : tout ce qui marchait AVANT marche ENCORE — le bug le plus sournois est la nouveauté qui casse l'ancien.</li>
+  <li>La <b>validation finale</b> se lit dans les relevés RÉELS : anomalies disparues, comportement normal préservé.</li>
+  <li>⚠ Aucune modification n'est « trop petite » pour la méthode : deux caractères inversés suffisent à noyer un jardin.</li>
+</ul>
+</div>
+
+<div class="bloc vocab">
+<h2 style="margin-top:0">🗣 Vocabulaire (FR — EN)</h2>
+<p><b>donnée</b> — data · <b>relevé</b> — log/record · <b>seuil</b> — threshold · <b>hystérésis</b> — hysteresis ·
+<b>battement</b> — chattering · <b>plage horaire</b> — time window · <b>sauvegarde</b> — backup ·
+<b>simulation</b> — simulation · <b>scénario de test</b> — test case · <b>valider</b> — to validate ·
+<b>non-régression</b> — non-regression · <b>retour arrière</b> — rollback</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">⚠ Erreurs fréquentes</h2>
+<ul>
+  <li class="ko">Accuser le matériel quand les données dessinent un motif logiciel — ou corriger ce qui est normal.</li>
+  <li class="ko">Resserrer les deux seuils (39/41) : le battement revient — l'écart doit dépasser la vibration.</li>
+  <li class="ko">Mettre la condition horaire sur l'ARRÊT : un arrosage commencé doit pouvoir finir.</li>
+  <li class="ko">Modifier le vrai système directement, tester un seul scénario, oublier la non-régression.</li>
+  <li class="ko">« La modification est petite, pas besoin de méthode » — le piège n°1.</li>
+</ul>
+<p class="ok" style="margin:8px 0 0">➡ L'histoire complète du jardin : la structure (4e_C4), le programme (4e_C6.2), le dépannage (4e_C5), et maintenant l'ajustement par les données — l'objet-fil de la 4e est bouclé.</p>
+</div>
+
+</div>
+</body>
+</html>
