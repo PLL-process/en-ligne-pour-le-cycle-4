@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM — Valider une solution technique (4e_C8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 60px;line-height:1.5}
+h1{text-align:center;color:var(--title);font-size:1.6em;margin:22px 0 4px}.subtitle{text-align:center;color:var(--sub);margin-bottom:10px}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}.badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}.badge.niveau{background:#0d2347;color:var(--hl)}.badge.code{background:#173666;color:#fff}
+.card{max-width:900px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;font-family:inherit}.btn:hover{background:#2966b1}
+.q{margin:14px 0;padding:12px;background:var(--panel2);border-radius:10px;border:1px solid var(--border)}
+.q h3{margin:0 0 8px;font-size:1em;color:var(--head)}
+.opts label{display:block;margin:6px 0;cursor:pointer;padding:6px 8px;border-radius:6px}.opts label:hover{background:rgba(97,218,251,.08)}
+.feedback{display:none;margin-top:8px;padding:8px 10px;border-radius:8px;font-size:.88em}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.12);color:var(--ok)}.feedback.err{background:rgba(255,123,136,.12);color:#ffb0b8}
+.score{text-align:center;font-size:1.3em;font-weight:700;color:var(--hl);margin:16px 0}
+footer{max-width:900px;margin:24px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+a.retour{color:var(--hl);text-decoration:none}
+</style>
+</head>
+<body>
+
+<h1>🧪 QCM — Valider une solution technique</h1>
+<div class="subtitle">Protocole de test · Analyse de résultats · Améliorations</div>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C8.1 · 4e_C8.2 · 4e_C8.3</span>
+  <span class="badge code">28 questions · 6 illustrées</span>
+</div>
+
+<div class="card" style="text-align:center">
+  <a class="retour" href="sequence_4e_C8_jardin-validation.html">← Retour à la séquence</a>
+</div>
+
+<div class="card">
+  <label>Nom : <input type="text" id="nom" style="width:140px;background:#173666;border:1px solid #2e5d9f;color:#e4eaf5;border-radius:6px;padding:4px 8px"></label>
+  <label>Prénom : <input type="text" id="prenom" style="width:140px;background:#173666;border:1px solid #2e5d9f;color:#e4eaf5;border-radius:6px;padding:4px 8px"></label>
+  <label>Classe : <input type="text" id="classe" style="width:80px;background:#173666;border:1px solid #2e5d9f;color:#e4eaf5;border-radius:6px;padding:4px 8px"></label>
+</div>
+
+<div class="card" id="quiz">
+  <!-- Q1 -->
+  <div class="q" data-r="1">
+    <h3>1. Un protocole de test doit contenir au minimum :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q1" value="0"> Uniquement la liste du matériel</label>
+      <label><input type="radio" name="q1" value="1"> Des étapes ordonnées + un résultat attendu pour chaque étape</label>
+      <label><input type="radio" name="q1" value="0"> Une photo du prototype</label>
+      <label><input type="radio" name="q1" value="0"> Le prix des composants</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q2 -->
+  <div class="q" data-r="2">
+    <h3>2. Pourquoi écrit-on le « résultat attendu » avant de réaliser le test ?</h3>
+    <div class="opts">
+      <label><input type="radio" name="q2" value="0"> Pour impressionner le professeur</label>
+      <label><input type="radio" name="q2" value="0"> Pour gagner du temps</label>
+      <label><input type="radio" name="q2" value="1"> Pour pouvoir comparer objectivement ce qu’on observe à ce qui était prévu</label>
+      <label><input type="radio" name="q2" value="0"> Ce n’est pas obligatoire</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q3 -->
+  <div class="q" data-r="0">
+    <h3>3. Lors d’un test d’étanchéité, aucune goutte n’apparaît sur le capteur. On peut conclure que :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q3" value="1"> Le critère d’étanchéité est respecté (pour les conditions du test)</label>
+      <label><input type="radio" name="q3" value="0"> La solution est définitivement validée pour tous les climats</label>
+      <label><input type="radio" name="q3" value="0"> Il faut recommencer le test</label>
+      <label><input type="radio" name="q3" value="0"> Le support est trop fragile</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q4 -->
+  <div class="q" data-r="3">
+    <h3>4. Un test de stabilité montre que le support « bouge légèrement ». Quelle décision est la plus rigoureuse ?</h3>
+    <div class="opts">
+      <label><input type="radio" name="q4" value="0"> Valider immédiatement</label>
+      <label><input type="radio" name="q4" value="0"> Rejeter la solution sans discussion</label>
+      <label><input type="radio" name="q4" value="0"> Ignorer le résultat</label>
+      <label><input type="radio" name="q4" value="1"> Noter « partiel » et proposer une amélioration (renfort, fixations…)</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q5 -->
+  <div class="q" data-r="1">
+    <h3>5. Valider une solution technique signifie principalement :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q5" value="0"> Dire que l’idée est belle</label>
+      <label><input type="radio" name="q5" value="1"> Vérifier par des tests qu’elle répond aux critères fixés</label>
+      <label><input type="radio" name="q5" value="0"> La fabriquer en grande série</label>
+      <label><input type="radio" name="q5" value="0"> La présenter à la classe</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q6 -->
+  <div class="q" data-r="2">
+    <h3>6. Dans un protocole, les étapes doivent être :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q6" value="0"> Dans n’importe quel ordre</label>
+      <label><input type="radio" name="q6" value="0"> Uniquement écrites par le professeur</label>
+      <label><input type="radio" name="q6" value="1"> Ordonnées et réalisables</label>
+      <label><input type="radio" name="q6" value="0"> Très longues</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q7 -->
+  <div class="q" data-r="0">
+    <h3>7. Une amélioration proposée après un test doit être :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q7" value="1"> Liée à un résultat de test et réaliste</label>
+      <label><input type="radio" name="q7" value="0"> La plus chère possible</label>
+      <label><input type="radio" name="q7" value="0"> Inventée sans lien avec les tests</label>
+      <label><input type="radio" name="q7" value="0"> Obligatoirement électronique</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q8 -->
+  <div class="q" data-r="3">
+    <h3>8. Si tous les critères prioritaires sont respectés, on peut :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q8" value="0"> Rejeter la solution</label>
+      <label><input type="radio" name="q8" value="0"> Recommencer tous les tests</label>
+      <label><input type="radio" name="q8" value="0"> Changer de projet</label>
+      <label><input type="radio" name="q8" value="1"> Valider la solution (pour les conditions testées)</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q9 -->
+  <div class="q" data-r="1">
+    <h3>9. Le but principal d’un test de lisibilité de la LED est de vérifier :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q9" value="0"> La couleur exacte de la LED</label>
+      <label><input type="radio" name="q9" value="1"> Que l’indicateur est visible dans les conditions d’usage prévues</label>
+      <label><input type="radio" name="q9" value="0"> La consommation électrique</label>
+      <label><input type="radio" name="q9" value="0"> Le prix de la LED</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+  <!-- Q10 -->
+  <div class="q" data-r="2">
+    <h3>10. Sans protocole de test, on reste dans le domaine :</h3>
+    <div class="opts">
+      <label><input type="radio" name="q10" value="0"> De la production industrielle</label>
+      <label><input type="radio" name="q10" value="0"> De la validation scientifique</label>
+      <label><input type="radio" name="q10" value="1"> De l’hypothèse</label>
+      <label><input type="radio" name="q10" value="0"> De la commercialisation</label>
+    </div>
+    <div class="feedback" data-fb></div>
+  </div>
+
+  <button class="btn" onclick="corriger()" style="margin-top:12px">Vérifier mes réponses</button>
+  <div class="score" id="score"></div>
+</div>
+
+<footer>QCM d’entraînement 4e_C8 · Thème 3 · Jardin connecté · Agent Grok</footer>
+
+<script>
+const EXPL = {
+  1: {ok:"Oui. Un protocole = étapes ordonnées + résultat attendu.", err:"Il manque les étapes ordonnées et le résultat attendu."},
+  2: {ok:"Exact. On compare l’observé à l’attendu.", err:"Le résultat attendu permet une comparaison objective."},
+  3: {ok:"Correct pour les conditions du test.", err:"On ne généralise pas au-delà des conditions testées."},
+  4: {ok:"Oui : noter « partiel » et améliorer.", err:"Un mouvement léger invite à renforcer, pas à valider ni rejeter d’emblée."},
+  5: {ok:"Valider = vérifier par des tests les critères fixés.", err:"La validation repose sur des tests, pas sur l’esthétique."},
+  6: {ok:"Les étapes doivent être ordonnées et réalisables.", err:"L’ordre et la faisabilité sont essentiels."},
+  7: {ok:"Une amélioration doit être liée au test et réaliste.", err:"Elle doit découler d’un résultat de test."},
+  8: {ok:"On valide si les critères prioritaires sont respectés.", err:"La validation suit les critères prioritaires."},
+  9: {ok:"On vérifie la visibilité dans les conditions d’usage.", err:"Le critère est la lisibilité en situation réelle."},
+  10:{ok:"Sans test, on reste dans l’hypothèse.", err:"Le test fait sortir de l’hypothèse."}
+};
+function corriger(){
+  let score=0, total=10;
+  document.querySelectorAll('.q').forEach((q,i)=>{
+    const r=parseInt(q.dataset.r);
+    const chosen=q.querySelector('input:checked');
+    const fb=q.querySelector('[data-fb]');
+    fb.className='feedback show';
+    if(!chosen){fb.classList.add('err');fb.textContent='Non répondu.';return;}
+    const v=parseInt(chosen.value);
+    if(v===1||(typeof r==='number'&&v===1)){/* simplified */}
+    // correct if value==1 for the right option — we stored correct as value=1 on the right label
+    const correctLabel=Array.from(q.querySelectorAll('input')).find(inp=>inp.value==='1');
+    const isOk=chosen===correctLabel;
+    if(isOk){score++;fb.classList.add('ok');fb.textContent='✅ '+EXPL[i+1].ok;}
+    else{fb.classList.add('err');fb.textContent='❌ '+EXPL[i+1].err;}
+  });
+  document.getElementById('score').textContent=`Score : ${score} / ${total}  (${Math.round(100*score/total)} %)`;
+}
+</script>
+</body>
+</html>
