@@ -34,6 +34,14 @@ Les fichiers ont été relus depuis la branche GitHub après chaque mise à jour
 - styles responsive, focus visible et impression A4 présents ;
 - l’ancien moteur concurrent a été entièrement remplacé.
 
+### Contrôle d’intégrité complémentaire du 24 juillet 2026
+
+- relecture du QCM directement depuis la branche `codex/theme-1/finaliser-5e-c1-2` ;
+- vérification de la présence du lien de retour vers `sequence_5e_C1.2_principes_techniques.html` ;
+- vérification de la présence simultanée des 7 compteurs, du minuteur, des 4 modes et de la grille de navigation ;
+- vérification que la banque annoncée comporte bien 24 questions et qu’aucun second moteur QCM n’est conservé dans le fichier ;
+- vérification du périmètre : les fichiers relus et modifiés restent dans le dossier du Thème 1.
+
 ### Paquet pédagogique
 
 - synthèse élève créée ;
