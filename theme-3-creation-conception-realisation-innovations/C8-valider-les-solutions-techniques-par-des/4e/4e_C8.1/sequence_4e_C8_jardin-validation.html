@@ -6,23 +6,22 @@
 <title>Jardin connecté — Valider une solution technique (4e_C8)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88;}
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
 *{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
 h1{font-size:1.7em;text-align:center;margin:24px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
 .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}.badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}.badge.niveau{background:#0d2347;color:var(--hl)}.badge.theme{background:#2b1a3f;color:var(--head)}.badge.code{background:#173666;color:#fff}
 section.card{max-width:940px;margin:0 auto 20px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
-h2{color:var(--head);font-size:1.12em;margin-top:0}h3{color:var(--sub);font-size:1em}
+h2{color:var(--head);font-size:1.12em;margin-top:0}
 .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-style:italic}
 .problematique{font-size:1.12em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:14px 18px;border-radius:12px;text-align:center}
 .exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0}.exo h4{margin:0 0 8px;color:#fff}
-.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit}.btn:hover{background:#2966b1}.btn.small{padding:5px 11px;font-size:.82em}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}.btn.small{padding:5px 11px;font-size:.82em}
 .retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
-.aide{background:rgba(97,218,251,.08);border:1px dashed var(--hl);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.9em}
 table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
-input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%;max-width:100%}
-footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:16px;margin-top:12px}
 .schema{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;margin:12px 0}
-.schema svg{max-width:100%;height:auto}
+footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
 @media(max-width:640px){section.card{padding:16px}}
 </style>
 </head>
@@ -54,10 +53,9 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
-  <p class="declencheur">Après avoir conçu un support de capteur d’humidité pour le jardin du collège, l’équipe doit maintenant vérifier que la solution fonctionne vraiment. Avant de fabriquer plusieurs exemplaires, on décide de réaliser un protocole de tests simple (mesure de stabilité, résistance à la pluie, lisibilité de l’indicateur). Les résultats détermineront si la solution peut être validée ou doit être améliorée.</p>
+  <p class="declencheur">Après avoir conçu un support de capteur d’humidité pour le jardin du collège, l’équipe doit maintenant vérifier que la solution fonctionne vraiment. Avant de fabriquer plusieurs exemplaires, on décide de réaliser un protocole de tests simple (stabilité, résistance à la pluie, lisibilité de l’indicateur). Les résultats détermineront si la solution peut être validée ou doit être améliorée.</p>
   <div class="schema">
-    <!-- IMAGE-CONTEXTE : schéma simple de test -->
-    <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma d’un protocole de test : support + capteur + indicateur LED sous une simulation de pluie">
+    <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma d’un protocole de test : support + capteur + indicateur LED sous simulation de pluie">
       <rect x="20" y="40" width="120" height="80" rx="8" fill="#1d4e89" stroke="#61dafb" stroke-width="2"/>
       <text x="80" y="85" text-anchor="middle" fill="#e4eaf5" font-size="12">Support</text>
       <circle cx="200" cy="80" r="28" fill="#0d2347" stroke="#81fba1" stroke-width="2"/>
@@ -67,7 +65,7 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
       <path d="M60 20 Q80 5 100 20" stroke="#61dafb" stroke-width="2" fill="none"/>
       <text x="80" y="15" text-anchor="middle" fill="#9bbefc" font-size="10">Test pluie</text>
     </svg>
-    <p style="font-size:.8em;color:#9bbefc;margin:8px 0 0">Schéma du protocole de validation (support + capteur + indicateur)</p>
+    <p style="font-size:.8em;color:#9bbefc;margin:8px 0 0">Schéma du protocole de validation (IMAGE-CONTEXTE)</p>
   </div>
 </section>
 
@@ -104,7 +102,6 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
   <div class="exo">
     <h4>Objectif</h4>
     <p>Interpréter des résultats de test et décider si la solution est validée.</p>
-    <p><strong>Consigne :</strong> Voici les résultats obtenus par une équipe. Analyse-les.</p>
     <table class="refs">
       <tr><th>Test</th><th>Résultat observé</th><th>Conforme ?</th></tr>
       <tr><td>Stabilité (secouer 10 s)</td><td>Le support bouge légèrement</td><td><select><option>—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
@@ -148,30 +145,39 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
 </section>
 
 <section class="card" style="text-align:center">
-  <h2>🧠 QCM d’entraînement</h2>
-  <p>Entraîne-toi sur les notions de validation, protocole de test et analyse de résultats.</p>
-  <a class="btn" href="qcm_4e_C8_jardin-validation.html">Ouvrir le QCM d’entraînement</a>
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>28 questions pour vérifier les notions de validation, protocole de test et analyse de résultats — avec corrections détaillées et 6 questions illustrées.</p>
+  <a class="btn" href="qcm_4e_C8_jardin-validation.html" style="margin-top:8px">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <div class="bonus">
+    <p><strong>Défi citoyen :</strong> Propose un protocole de test qui pourrait être utiliséutilisé par d’autres collèges de Martinique (même climat, mêmes contraintes).</p>
+    <p><strong>Défi technique :</strong> Ajoute un critère de test « facilité de montage par un élève de 6e » et écris l’étape correspondante.</p>
+    <p><strong>Ancrage Martinique :</strong> Quels aléas climatiques locaux (pluie torrentielle, vent, sel marin) devraient figurer dans un protocole de validation d’un objet extérieur au collège ?</p>
+  </div>
 </section>
 
 <footer>TechnoQuest — Thème 3 · 4e_C8 · Jardin connecté · Cycle 4 (2024) · Agent Grok</footer>
 
 <script>
 function sauvegarderIdentite(){
-  const data = {nom:document.getElementById('eleveNom').value, prenom:document.getElementById('elevePrenom').value, classe:document.getElementById('eleveClasse').value};
-  localStorage.setItem('techno_4e_C8_identite', JSON.stringify(data));
+  const data={nom:document.getElementById('eleveNom').value,prenom:document.getElementById('elevePrenom').value,classe:document.getElementById('eleveClasse').value};
+  localStorage.setItem('techno_4e_C8_identite',JSON.stringify(data));
   alert('Identité sauvegardée localement.');
 }
 function sauvegarderHypothese(){
-  localStorage.setItem('techno_4e_C8_hypothese', document.getElementById('hypothese').value);
+  localStorage.setItem('techno_4e_C8_hypothese',document.getElementById('hypothese').value);
   alert('Hypothèse enregistrée.');
 }
 try{
-  const id = JSON.parse(localStorage.getItem('techno_4e_C8_identite')||'{}');
-  if(id.nom) document.getElementById('eleveNom').value = id.nom;
-  if(id.prenom) document.getElementById('elevePrenom').value = id.prenom;
-  if(id.classe) document.getElementById('eleveClasse').value = id.classe;
-  const hyp = localStorage.getItem('techno_4e_C8_hypothese');
-  if(hyp) document.getElementById('hypothese').value = hyp;
+  const id=JSON.parse(localStorage.getItem('techno_4e_C8_identite')||'{}');
+  if(id.nom)document.getElementById('eleveNom').value=id.nom;
+  if(id.prenom)document.getElementById('elevePrenom').value=id.prenom;
+  if(id.classe)document.getElementById('eleveClasse').value=id.classe;
+  const hyp=localStorage.getItem('techno_4e_C8_hypothese');
+  if(hyp)document.getElementById('hypothese').value=hyp;
 }catch(e){}
 </script>
 </body>
