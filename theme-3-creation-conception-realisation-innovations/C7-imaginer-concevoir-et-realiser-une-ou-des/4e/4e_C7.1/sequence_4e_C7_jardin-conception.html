@@ -3,180 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jardin connecté — Concevoir et réaliser une amélioration (4e_C7)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<title>Jardin connecté — Concevoir et réaliser (4e_C7) · CRCN règle 7</title>
 <style>
-:root{--color-bg:#050f24;--color-panel:#0d2347;--color-panel2:#0a1b3d;--color-border:#274a8a;--color-title:#81aaff;--color-subtitle:#9bbefc;--color-heading:#c68ef2;--color-text:#e4eaf5;--color-input-bg:#173666;--color-input-border:#2e5d9f;--color-button:#1d4e89;--color-button-hover:#2966b1;--color-highlight:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88;}
-*{box-sizing:border-box}body{background:var(--color-bg);color:var(--color-text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
-h1{font-size:1.7em;text-align:center;margin:24px 0 4px;color:var(--color-title)}.subtitle{text-align:center;color:var(--color-subtitle);margin-bottom:8px}
-.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}.badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--color-border)}.badge.niveau{background:#0d2347;color:var(--color-highlight)}.badge.theme{background:#2b1a3f;color:var(--color-heading)}.badge.code{background:#173666;color:#fff}
-section.card{max-width:940px;margin:0 auto 20px;background:var(--color-panel);border:1px solid var(--color-border);border-radius:16px;padding:20px 24px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
-h2{color:var(--color-heading);font-size:1.12em;margin-top:0}h3{color:var(--color-subtitle);font-size:1em}
-.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-style:italic}
-.problematique{font-size:1.12em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:14px 18px;border-radius:12px;text-align:center}
-.exo{background:var(--color-panel2);border:1px solid var(--color-border);border-radius:12px;padding:16px;margin:12px 0}.exo h4{margin:0 0 8px;color:#fff}
-.btn{background:var(--color-button);color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:var(--color-button-hover)}.btn.small{padding:5px 11px;font-size:.82em}
-.feedback{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.88em;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}.feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
-table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--color-border);padding:8px 10px;text-align:left}table.refs th{background:var(--color-input-bg);color:var(--color-highlight)}
-.tag{display:inline-block;background:var(--color-input-bg);border:1px solid var(--color-input-border);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px}
-.progress{height:8px;background:#0a1b3d;border-radius:4px;overflow:hidden;margin:12px 0}.progress-bar{height:100%;background:linear-gradient(90deg,#61dafb,#c68ef2);width:0%;transition:width .4s}
-.aide{background:rgba(97,218,251,.08);border:1px dashed var(--color-highlight);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.9em}
-.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
-input,select,textarea{background:var(--color-input-bg);border:1px solid var(--color-input-border);color:var(--color-text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%;max-width:100%}
-footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
-.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:16px;margin-top:12px}
-@media(max-width:640px){section.card{padding:16px}}
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--crcn:#7ee0c3}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.72em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:920px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+h2{color:var(--head);font-size:1.05em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px;border-radius:10px;text-align:center}
+.crcn{background:rgba(126,224,195,.08);border:1px solid #2a6b5a;border-radius:10px;padding:12px;margin:8px 0;font-size:.88em}
+.crcn h3{margin:0 0 6px;color:var(--crcn);font-size:.92em}
+.crcn dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px}.crcn dt{font-weight:600;color:#9fd}.crcn dd{margin:0}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:8px 0}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:8px 12px;margin:8px 0}
+table.refs{width:100%;border-collapse:collapse;font-size:.84em}th,td{border:1px solid var(--border);padding:6px 8px}th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:6px;padding:5px 8px;width:100%;font-family:inherit}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:10px;padding:12px}
+footer{text-align:center;color:#5b7bb8;font-size:.78em;margin-top:24px}
 </style>
 </head>
 <body>
+<h1>🛠️ Jardin connecté — Concevoir et réaliser</h1>
+<div class="subtitle">Solution technique pour un espace vert scolaire à New York</div>
+<div class="badges"><span class="badge">4e</span><span class="badge">Thème 3</span><span class="badge">4e_C7</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
 
-<h1>🛠️ Jardin connecté — Concevoir et réaliser une amélioration</h1>
-<div class="subtitle">Comment imaginer, choisir et réaliser une solution technique simple pour améliorer l’arrosage ou le suivi d’un espace vert scolaire à New York ?</div>
-<div class="badges">
-  <span class="badge niveau">4e</span>
-  <span class="badge theme">Thème 3 — Création, conception, réalisation</span>
-  <span class="badge code">4e_C7.1 · 4e_C7.2 · 4e_C7.3</span>
-  <span class="badge theme">Ancrage New York</span>
+<section class="card">
+<h2>📋 En-tête</h2>
+<table class="refs"><tr><th>Codes</th><td>4e_C7.1 · C7.2 · C7.3</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Durée</th><td>4 × 55 min</td></tr><tr><th>Ancrage</th><td>New York — school garden / rooftop</td></tr></table>
+<label>Nom <input id="eleveNom" style="width:110px"></label> <label>Prénom <input id="elevePrenom" style="width:110px"></label> <label>Classe <input id="eleveClasse" style="width:60px"></label>
+<button class="btn" type="button" onclick="sauvegarderIdentite()">💾</button>
+</section>
+
+<section class="card">
+<h2>📖 Situation</h2>
+<p class="declencheur">Jardin scolaire à New York : améliorer arrosage / suivi (support capteur, abri, indicateur) face au gel, à la pluie, au vent urbain et avec du réemploi local.</p>
+</section>
+
+<section class="card">
+<h2>❓ Problématique</h2>
+<p class="problematique">Comment imaginer, choisir et réaliser une solution technique simple pour un espace vert scolaire à New York ?</p>
+</section>
+
+<section class="card">
+<h2>🎯 CRCN (règle d’or n°7)</h2>
+<div class="crcn"><h3>3.1 Documents textuels · N2</h3>
+<dl><dt>Repère</dt><dd>Produire des contenus textuels structurés (listes, tableaux)</dd>
+<dt>Action</dt><dd>Compléter le planning et justifier le choix d’une solution</dd>
+<dt>Trace</dt><dd>Planning renseigné + paragraphe de choix A/B</dd></dl></div>
+<div class="crcn"><h3>1.2 Gérer des données · N1–2</h3>
+<dl><dt>Repère</dt><dd>Sauvegarder et retrouver des données</dd>
+<dt>Action</dt><dd>Enregistrer identité et hypothèse, les reprendre en séance 2</dd>
+<dt>Trace</dt><dd>localStorage techno_4e_C7_* (démo de reprise)</dd></dl></div>
+<p style="font-size:.85em;color:var(--sub)">CRCN 3.4 Programmer → séquence <b>4e_C9</b> (même objet-fil). Pas de CRCN décoratif.</p>
+</section>
+
+<section class="card">
+<h2>💡 Hypothèse</h2>
+<textarea id="hypothese" rows="2" placeholder="Mon idée… parce que…"></textarea>
+<button class="btn" type="button" style="margin-top:6px" onclick="sauvegarderHypothese()">Enregistrer</button>
+</section>
+
+<section class="card">
+<h2>🔧 1 — Organiser (C7.1) · trace CRCN 3.1</h2>
+<div class="exo">
+<table class="refs"><tr><th>#</th><th>Tâche</th><th>min</th></tr>
+<tr><td>1</td><td><input placeholder="Besoin"></td><td>15</td></tr>
+<tr><td>2</td><td><input placeholder="2 solutions"></td><td>25</td></tr>
+<tr><td>3</td><td><input placeholder="Matériau"></td><td>20</td></tr>
+<tr><td>4</td><td><input placeholder="Prototype"></td><td>40</td></tr></table>
+<div class="retenir"><b>À retenir :</b> tâches + durée + ordre logique.</div>
 </div>
-
-<section class="card">
-  <h2>📋 En-tête pédagogique</h2>
-  <table class="refs">
-    <tr><th>Niveau / Codes</th><td>4e — 4e_C7.1, 4e_C7.2, 4e_C7.3</td></tr>
-    <tr><th>Compétence principale</th><td>C7 — Imaginer, concevoir et réaliser une ou des solutions en réponse à un besoin</td></tr>
-    <tr><th>Domaines du socle</th><td>D2 · D3 · D4 · D5</td></tr>
-    <tr><th>Durée indicative</th><td>4 × 55 min</td></tr>
-    <tr><th>Ancrage territorial</th><td>New York — jardin / toit végétalisé scolaire (school garden / rooftop)</td></tr>
-  </table>
-  <div style="margin-top:14px">
-    <label>Nom : <input type="text" id="eleveNom" placeholder="Nom" style="width:140px"></label>
-    <label>Prénom : <input type="text" id="elevePrenom" placeholder="Prénom" style="width:140px"></label>
-    <label>Classe : <input type="text" id="eleveClasse" placeholder="4eX" style="width:80px"></label>
-    <button class="btn small" onclick="sauvegarderIdentite()">💾 Sauvegarder</button>
-  </div>
-  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-  <p style="font-size:.85em;color:var(--color-subtitle)">Progression : <span id="progressText">0 %</span></p>
 </section>
 
 <section class="card">
-  <h2>📖 Situation déclenchante</h2>
-  <p class="declencheur">Un établissement scolaire à New York souhaite améliorer son jardin pédagogique (cour ou toit végétalisé). L’arrosage actuel est manuel ou trop gourmand en eau. Les élèves de 4e sont chargés de proposer et de réaliser une amélioration concrète (support de capteur, abri simple, indicateur visuel, ou extension du système existant) en tenant compte du climat new-yorkais : hivers froids (gel), pluies, vents urbains, pollution, variations saisonnières et matériaux disponibles localement (récupération urbaine, filières de réemploi).</p>
+<h2>✏️ 2 — Solutions (C7.2)</h2>
+<div class="exo">
+<textarea rows="4" placeholder="Solution A…\nSolution B…\nJe choisis… parce que…"></textarea>
+<div class="retenir"><b>À retenir :</b> besoin + faisabilité + contraintes NY.</div>
+</div>
 </section>
 
 <section class="card">
-  <h2>❓ Problématique</h2>
-  <p class="problematique">Comment imaginer, choisir et réaliser une solution technique simple pour améliorer l’arrosage ou le suivi d’un espace vert scolaire à New York, en tenant compte des contraintes locales ?</p>
+<h2>🧱 3 — Matériaux (C7.3)</h2>
+<div class="exo">
+<table class="refs"><tr><th>Matériau</th><th>Humidité/gel</th><th>Découpe</th><th>Impact</th></tr>
+<tr><td>Bois palette</td><td><select><option>—</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select></td><td><select><option>—</option><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></td><td><select><option>—</option><option>Élevé</option><option>Moyen</option><option>Faible</option></select></td></tr>
+<tr><td>Plastique récup</td><td><select><option>—</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select></td><td><select><option>—</option><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></td><td><select><option>—</option><option>Élevé</option><option>Moyen</option><option>Faible</option></select></td></tr>
+<tr><td>Carton renforcé</td><td><select><option>—</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select></td><td><select><option>—</option><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></td><td><select><option>—</option><option>Élevé</option><option>Moyen</option><option>Faible</option></select></td></tr></table>
+<div class="retenir"><b>À retenir :</b> le « meilleur » matériau dépend du gel, de la pluie et du réemploi urbain.</div>
+</div>
 </section>
 
 <section class="card">
-  <h2>💡 Hypothèses initiales</h2>
-  <p>Formule ta première idée et justifie-la. Tu pourras la modifier après les activités.</p>
-  <textarea id="hypothese" rows="3" placeholder="Mon idée : ... parce que ..."></textarea>
-  <button class="btn small" style="margin-top:8px" onclick="sauvegarderHypothese()">Enregistrer mon hypothèse</button>
+<h2>🔄 Réinvestissement</h2>
+<div class="exo"><textarea rows="2" placeholder="Amélioration supplémentaire…"></textarea></div>
 </section>
 
 <section class="card">
-  <h2>🔧 Activité 1 — Organiser le processus de conception (4e_C7.1)</h2>
-  <div class="exo">
-    <h4>Objectif</h4>
-    <p>Découper le projet en tâches claires et ordonnées dans le temps.</p>
-    <p><strong>Consigne :</strong> Complète le planning ci-dessous (tâches + durée estimée). Production attendue : planning validé.</p>
-    <table class="refs">
-      <tr><th>Étape</th><th>Tâche</th><th>Durée (min)</th></tr>
-      <tr><td>1</td><td><input type="text" placeholder="Analyser le besoin..."></td><td><input type="number" value="15" style="width:70px"></td></tr>
-      <tr><td>2</td><td><input type="text" placeholder="Proposer 2 solutions..."></td><td><input type="number" value="25" style="width:70px"></td></tr>
-      <tr><td>3</td><td><input type="text" placeholder="Choisir un matériau..."></td><td><input type="number" value="20" style="width:70px"></td></tr>
-      <tr><td>4</td><td><input type="text" placeholder="Prototyper / tester..."></td><td><input type="number" value="40" style="width:70px"></td></tr>
-    </table>
-    <div class="aide"><strong>Aide 1 :</strong> Commence toujours par « comprendre le besoin » avant de fabriquer.</div>
-    <div class="aide" style="display:none" id="aide1b"><strong>Aide 2 :</strong> Une tâche trop longue (> 30 min) doit être découpée.</div>
-    <button class="btn small" onclick="document.getElementById('aide1b').style.display='block'">Afficher aide niveau 2</button>
-    <div class="retenir"><strong>À retenir :</strong> Un processus de conception efficace = tâches identifiées + durée réaliste + ordre logique.</div>
-  </div>
+<h2>📝 Synthèse</h2>
+<p>Besoin → idées → choix critères → réalisation. CRCN 3.1 et 1.2 prouvés par <b>traces</b> (planning, choix écrit, sauvegarde), pas par l’ouverture d’un écran.</p>
 </section>
 
 <section class="card">
-  <h2>✏️ Activité 2 — Proposer des solutions techniques (4e_C7.2)</h2>
-  <div class="exo">
-    <h4>Objectif</h4>
-    <p>Imaginer au moins deux solutions pour ajouter une fonction (ex. : support de capteur d’humidité plus robuste, indicateur LED visible de loin, abri anti-pluie / anti-gel pour l’électronique).</p>
-    <p><strong>Consigne :</strong> Dessine ou décris 2 solutions (croquis + 3 mots-clés chacune). Choisis-en une et justifie.</p>
-    <textarea rows="4" placeholder="Solution A : ...\nSolution B : ...\nJe choisis A parce que..."></textarea>
-    <div class="retenir"><strong>À retenir :</strong> Une bonne solution répond au besoin, est réalisable avec le matériel disponible et respecte les contraintes (sécurité, climat new-yorkais, coût).</div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>🧱 Activité 3 — Comparer et choisir un matériau (4e_C7.3)</h2>
-  <div class="exo">
-    <h4>Objectif</h4>
-    <p>Comparer 3 matériaux selon des critères techniques et environnementaux.</p>
-    <table class="refs">
-      <tr><th>Matériau</th><th>Résistance humidité / gel</th><th>Facilité de découpe</th><th>Impact local / recyclage</th><th>Choix ?</th></tr>
-      <tr><td>Bois (palette)</td><td><select><option>—</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select></td><td><select><option>—</option><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></td><td><select><option>—</option><option>Élevé</option><option>Moyen</option><option>Faible</option></select></td><td><input type="radio" name="mat"></td></tr>
-      <tr><td>Plastique (boîte récup)</td><td><select><option>—</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select></td><td><select><option>—</option><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></td><td><select><option>—</option><option>Élevé</option><option>Moyen</option><option>Faible</option></select></td><td><input type="radio" name="mat"></td></tr>
-      <tr><td>Carton renforcé</td><td><select><option>—</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select></td><td><select><option>—</option><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></td><td><select><option>—</option><option>Élevé</option><option>Moyen</option><option>Faible</option></select></td><td><input type="radio" name="mat"></td></tr>
-    </table>
-    <div class="retenir"><strong>À retenir :</strong> Le « meilleur » matériau dépend du contexte new-yorkais (gel hivernal, pluie, vent urbain, matériaux de réemploi disponibles en ville).</div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>🔄 Activité de réinvestissement</h2>
-  <div class="exo">
-    <p>À partir de la solution choisie, propose une amélioration supplémentaire (ex. : LED de statut, support réglable, protection anti-gel). Justifie en 3 phrases maximum.</p>
-    <textarea rows="3" placeholder="Amélioration proposée..."></textarea>
-  </div>
-</section>
-
-<section class="card">
-  <h2>📝 Synthèse intégrée</h2>
-  <p>Un projet technique se construit en étapes ordonnées. On commence par analyser le besoin, on imagine plusieurs solutions, on choisit selon des critères (techniques + environnementaux), puis on réalise et on teste. À New York, le climat (gel, pluie, vent urbain) et la densification urbaine influencent fortement le choix des matériaux et des protections.</p>
-</section>
-
-<section class="card">
-  <h2>🙋 Bilan personnel</h2>
-  <p>Ce que j’ai appris : <input type="text" style="width:100%"></p>
-  <p>Ce que je sais maintenant faire : <input type="text" style="width:100%"></p>
-  <p>Ce que je dois encore revoir : <input type="text" style="width:100%"></p>
-  <p>Mon niveau de confiance (1-4) : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+<h2>🙋 Bilan</h2>
+<p>Appris : <input></p><p>Je sais : <input></p><p>À revoir : <input></p>
+Confiance CRCN 3.1 : <select><option>1</option><option>2</option><option>3</option><option>4</option></select>
 </section>
 
 <section class="card" style="text-align:center">
-  <h2>🧠 Prêt·e à t'entraîner ?</h2>
-  <p>28 questions pour vérifier les notions de conception, organisation de projet et choix de matériaux — avec corrections détaillées.</p>
-  <a class="btn" href="qcm_4e_C7_jardin-conception.html" style="margin-top:8px">🚀 Ouvrir le QCM d'entraînement</a>
+<h2>🧠 Prêt·e à t'entraîner ?</h2>
+<p>28 questions — conception et matériaux.</p>
+<a class="btn" href="qcm_4e_C7_jardin-conception.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
 <section class="card">
-  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <div class="bonus">
-    <p><strong>Défi citoyen :</strong> Propose une solution qui utilise uniquement des matériaux de récupération disponibles dans un quartier new-yorkais (réemploi, recycleries, palettes de chantier).</p>
-    <p><strong>Défi technique :</strong> Ajoute un critère de test « résistance au gel » ou « tenue au vent de canyon urbain » et écris l’étape correspondante du protocole.</p>
-    <p><strong>Ancrage New York :</strong> Quels espaces verts urbains (rooftop gardens, community gardens, schoolyards) pourraient bénéficier d’un suivi d’humidité automatisé ? Justifie en 3 phrases.</p>
-  </div>
+<h2>🎁 Bonus (facultatif)</h2>
+<div class="bonus">
+<p><b>Citoyen :</b> solution 100 % réemploi de quartier new-yorkais.</p>
+<p><b>Technique :</b> critère test « résistance au gel » ou « vent de canyon ».</p>
+<p><b>New York :</b> quels rooftop / community gardens pour un suivi d’humidité ?</p>
+</div>
 </section>
-
-<footer>TechnoQuest — Thème 3 · 4e_C7 · Jardin connecté · Ancrage New York · Cycle 4 (2024) · Agent Grok</footer>
-
+<footer>TechnoQuest · 4e_C7 · New York · CRCN règle 7 · Grok</footer>
 <script>
-function sauvegarderIdentite(){
-  const data = {nom:document.getElementById('eleveNom').value, prenom:document.getElementById('elevePrenom').value, classe:document.getElementById('eleveClasse').value};
-  localStorage.setItem('techno_4e_C7_identite', JSON.stringify(data));
-  alert('Identité sauvegardée localement.');
-}
-function sauvegarderHypothese(){
-  localStorage.setItem('techno_4e_C7_hypothese', document.getElementById('hypothese').value);
-  alert('Hypothèse enregistrée.');
-}
-try{
-  const id = JSON.parse(localStorage.getItem('techno_4e_C7_identite')||'{}');
-  if(id.nom) document.getElementById('eleveNom').value = id.nom;
-  if(id.prenom) document.getElementById('elevePrenom').value = id.prenom;
-  if(id.classe) document.getElementById('eleveClasse').value = id.classe;
-  const hyp = localStorage.getItem('techno_4e_C7_hypothese');
-  if(hyp) document.getElementById('hypothese').value = hyp;
-}catch(e){}
+function sauvegarderIdentite(){localStorage.setItem('techno_4e_C7_identite',JSON.stringify({nom:eleveNom.value,prenom:elevePrenom.value,classe:eleveClasse.value}));alert('Trace CRCN 1.2 : identité sauvegardée.');}
+function sauvegarderHypothese(){localStorage.setItem('techno_4e_C7_hypothese',hypothese.value);alert('Trace CRCN 1.2 : hypothèse sauvegardée.');}
+try{var id=JSON.parse(localStorage.getItem('techno_4e_C7_identite')||'{}');if(id.nom)eleveNom.value=id.nom;if(id.prenom)elevePrenom.value=id.prenom;if(id.classe)eleveClasse.value=id.classe;var h=localStorage.getItem('techno_4e_C7_hypothese');if(h)hypothese.value=h;}catch(e){}
 </script>
 </body>
 </html>
