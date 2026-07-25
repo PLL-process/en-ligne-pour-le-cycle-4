@@ -1,28 +1,26 @@
 # Sources des médias — 5e_C1.3–C1.4
 
-Date de contrôle : 23/07/2026
+Date de contrôle : 25/07/2026
 
 ## Règle appliquée
 
-Chaque image doit remplir au moins une fonction pédagogique :
+Chaque média remplit une fonction pédagogique identifiable. Les médias décoratifs ont été retirés. Les fichiers nécessaires sont locaux, disposent d’un texte alternatif dans la séquence et restent lisibles en niveaux de gris.
 
-- **IMAGE-OBJET** : l’élève doit la lire pour répondre ;
-- **IMAGE-EXPLICATION** : elle aide à comprendre une correction ou une synthèse ;
-- **IMAGE-CONTEXTE** : elle installe la situation déclenchante en ouverture.
+## Médias locaux
 
-Toute image seulement décorative est retirée. Chaque image doit disposer d’un texte alternatif pertinent, rester lisible en niveaux de gris et peser moins de 300 Ko.
+| Fichier | Nature | Auteur | Licence / statut | Usage | Accessibilité |
+|---|---|---|---|---|---|
+| `Images/schema_systeme_information_velos.svg` | Schéma vectoriel original | Équipe du projet pédagogique | Création originale du dépôt | Représenter acteurs, collecte, traitement, stockage et diffusion | Texte alternatif présent ; poids inférieur à 3 Ko |
+| `Images/arborescence_donnees_velos.svg` | Schéma vectoriel original | Équipe du projet pédagogique | Création originale du dépôt | Interpréter une organisation hiérarchique de dossiers et fichiers | Texte alternatif présent ; poids inférieur à 3 Ko |
 
-## État de la réconciliation
+## Données
 
-Les anciennes images de supports de stockage ne sont pas encore réintégrées sur la branche de réconciliation. Elles seront remplacées ou redessinées en SVG originaux lorsqu’elles servent réellement à identifier, comparer ou classer un support.
+| Fichier | Nature | Provenance | Données personnelles | Usage |
+|---|---|---|---|---|
+| `donnees_velos_hangzhou_simulees.csv` | Jeu de données tabulaires | Données entièrement inventées pour l’apprentissage | Aucune | Saisie, tri, filtre et interprétation dans un tableur |
 
-| Média prévu | Usage | Source/licence | État |
-|---|---|---|---|
-| Schéma d’un système d’information du CDI | IMAGE-OBJET | SVG original du projet — CC0 | À produire |
-| Arborescence de fichiers à interpréter | IMAGE-OBJET | SVG original du projet — CC0 | À produire |
-| Comparaison de capacités de stockage | IMAGE-OBJET | SVG original du projet — CC0 | À produire |
-| Schéma stockage local / serveur distant | IMAGE-EXPLICATION | SVG original du projet — CC0 | À produire |
-| Extrait annoté du programme Python | IMAGE-EXPLICATION | HTML/CSS original du projet — CC0 | À produire |
-| Stratégie de sauvegarde multi-supports | IMAGE-OBJET | SVG original du projet — CC0 | À produire |
+## Déclaration
 
-Aucun hotlinking ni média issu de Google Images, d’un manuel scolaire ou d’une source sans licence identifiable ne sera utilisé.
+- Aucun visuel, tableau ou exercice du *Cahier PIX 2026 — Delagrave* n’est reproduit.
+- La structure pédagogique générale peut être inspirée des exigences publiques du CRCN et de PIX, mais les scénarios, valeurs, consignes, corrections et médias de ce lot sont originaux.
+- Aucun hotlinking ni appel à une image distante n’est nécessaire au fonctionnement de la séquence.
