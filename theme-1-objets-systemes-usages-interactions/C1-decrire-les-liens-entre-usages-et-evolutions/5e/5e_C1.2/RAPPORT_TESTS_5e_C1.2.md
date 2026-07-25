@@ -92,6 +92,14 @@ Résultat : le périmètre du lot reste strictement conforme après reprise des 
 - manifeste Markdown et manifeste JSON créés ;
 - journal local de lot créé.
 
+### Recontrôle automatisé du diff — 25 juillet 2026
+
+- la liste des fichiers de la PR #51 a été interrogée une nouvelle fois par l’API GitHub ;
+- neuf fichiers sont toujours présents dans le diff ;
+- les neuf chemins appartiennent exclusivement au dossier `5e_C1.2` du Thème 1 ;
+- aucune dérive vers les Thèmes 2 ou 3, `.github/`, `_outils/` ou un fichier partagé racine n’a été détectée ;
+- ce contrôle a été ajouté au rapport dans le commit `test(theme1): consigner le recontrôle de périmètre de la PR 51`.
+
 ## Tests non déclarés comme réussis
 
 Les vérifications suivantes restent à exécuter avant de qualifier le paquet de « complet et validable » :
