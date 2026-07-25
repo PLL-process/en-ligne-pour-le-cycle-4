@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM d'entraînement — Valider une solution technique (4e_C8)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--text:#e4eaf5;--accent:#61dafb;--ok:#81fba1;--err:#ff7b88;--warn:#ffd66b}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:16px;line-height:1.5}
+.container{max-width:860px;margin:0 auto}h1{color:var(--accent);text-align:center;font-size:1.5em}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
+.progress{height:10px;background:#0a1b3d;border-radius:5px;overflow:hidden;margin:10px 0}.bar{height:100%;background:linear-gradient(90deg,#61dafb,#c68ef2);width:0%;transition:.3s}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;margin:4px}.btn:hover{background:#2966b1}
+.q{display:none}.q.active{display:block}.options label{display:block;padding:8px 12px;margin:6px 0;background:#0a1b3d;border-radius:8px;cursor:pointer;border:1px solid transparent}.options label:hover{border-color:var(--accent)}
+.feedback{margin-top:12px;padding:12px;border-radius:8px;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.12);border-left:4px solid var(--ok)}.feedback.err{background:rgba(255,123,136,.12);border-left:4px solid var(--err)}
+.score{font-size:1.3em;text-align:center;margin:16px 0}.nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:16px}
+.timer{text-align:center;font-variant-numeric:tabular-nums;color:var(--warn)}
+.identity{display:flex;flex-wrap:wrap;gap:8px;align-items:center}input[type=text]{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.75em;border:1px solid var(--border);margin:2px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🧪 QCM d'entraînement — 4e_C8 Validation</h1>
+<p style="text-align:center;color:#9bbefc">Jardin connecté · Protocole de test · Analyse de résultats · Décision de validation · Martinique</p>
+<p style="text-align:center"><span class="badge">4e</span> <span class="badge">Thème 3</span> <span class="badge">4e_C8.1 · C8.2 · C8.3</span> <span class="badge">28 questions</span></p>
+
+<div class="card">
+  <div class="identity">
+    <label>Nom <input type="text" id="nom" placeholder="Nom"></label>
+    <label>Prénom <input type="text" id="prenom" placeholder="Prénom"></label>
+    <label>Classe <input type="text" id="classe" placeholder="4eX" style="width:70px"></label>
+    <button class="btn" onclick="saveId()">💾 Sauvegarder</button>
+  </div>
+</div>
+
+<div class="card">
+  <div>Progression : <span id="answered">0</span> / <span id="total">28</span> · Score : <span id="score">0</span> · Note /20 : <span id="note">—</span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="timer">Temps : <span id="time">00:00</span>
+    <button class="btn" onclick="toggleTimer()" id="timerBtn">Démarrer</button>
+    <button class="btn" onclick="disableTimer()">Sans minuteur</button>
+  </div>
+</div>
+
+<div id="questions"></div>
+
+<div class="card nav">
+  <button class="btn" onclick="prevQ()">← Précédente</button>
+  <button class="btn" onclick="nextUnanswered()">Prochaine non répondue</button>
+  <button class="btn" onclick="nextQ()">Suivante →</button>
+  <button class="btn" onclick="showResult()">Voir le bilan</button>
+</div>
+
+<div class="card" id="result" style="display:none">
+  <h2 style="color:var(--accent);text-align:center">Résultat final</h2>
+  <div class="score" id="finalScore"></div>
+  <p id="bilan"></p>
+  <button class="btn" onclick="retryErrors()">Réessayer les erreurs</button>
+  <button class="btn" onclick="location.reload()">Recommencer</button>
+  <a class="btn" href="sequence_4e_C8_jardin-validation.html">← Retour à la séquence</a>
+</div>
+</div>
+
+<script>
+const questions = [
+{q:"Qu'est-ce qu'un protocole de test ?",opts:["Une liste de courses","Un ensemble ordonné d'étapes avec résultat attendu pour chaque étape","Un dessin libre","Un simple avis personnel"],ok:1,exp:"Un protocole = étapes numérotées + actions + résultats attendus. C'est la base de la validation technique."},
+{q:"Pourquoi tester avant de fabriquer plusieurs exemplaires ?",opts:["Pour perdre du temps","Pour vérifier que la solution marche vraiment avant de généraliser","Parce que le professeur l'exige","Pour décorer le cahier"],ok:1,exp:"On valide une solution avant de la produire en série pour éviter de propager un défaut."},
+{q:"Dans un protocole, chaque étape doit contenir au minimum :",opts:["Une couleur","Une action et un résultat attendu","Un emoji","Un prix"],ok:1,exp:"Sans résultat attendu, on ne peut pas décider si le test est réussi."},
+{q:"En Martinique, quel aléa climatique doit souvent figurer dans un test d'objet extérieur ?",opts:["La neige","Pluie torrentielle, vent fort, humidité, sel marin","Le gel permanent","L'absence totale de soleil"],ok:1,exp:"Le climat tropical (pluie, vent, UV, sel) impose des critères de validation réalistes."},
+{q:"On valide une solution technique uniquement si :",opts:["Elle est jolie","Les critères prioritaires du protocole sont respectés","Elle est la plus chère","Personne n'a d'avis contraire"],ok:1,exp:"La validation repose sur des critères explicités avant les tests, pas sur l'intuition."},
+{q:"Que faire si un test est « partiel » (ex. : support qui bouge légèrement) ?",opts:["Ignorer","Décider si le critère est prioritaire, puis améliorer ou accepter avec réserve","Toujours rejeter","Toujours valider"],ok:1,exp:"Un résultat partiel appelle une analyse : priorité du critère + proposition d'amélioration."},
+{q:"Quelle est la bonne suite logique ?",opts:["Fabriquer → tester → imaginer","Concevoir → tester (protocole) → analyser → décider (valider / améliorer / rejeter)","Tester sans protocole → fabriquer","Valider sans test"],ok:1,exp:"Conception puis validation structurée : c'est le cœur de C8."},
+{q:"Un résultat observé « aucune goutte sur le capteur » après 30 s d'eau signifie :",opts:["Échec total","Conformité probable pour le critère étanchéité","Qu'il faut refaire en 230 V","Rien"],ok:1,exp:"Le résultat correspond au résultat attendu du test d'étanchéité."},
+{q:"Pourquoi écrire le résultat attendu AVANT de tester ?",opts:["Pour tricher","Pour juger objectivement, sans modifier les critères après coup","Pour décorer","Ce n'est pas utile"],ok:1,exp:"Les critères a priori évitent le biais de confirmation."},
+{q:"Une amélioration proposée après test doit être :",opts:["Abstraite","Réaliste, testable et liée à un résultat de test","Uniquement esthétique","Inutile"],ok:1,exp:"Chaque amélioration doit répondre à un défaut observé et rester vérifiable."},
+{q:"Version A / B / C d'une séance de validation signifie :",opts:["Trois notes","Matériel réel / simulation / papier sans matériel","Trois professeurs","Trois langues"],ok:1,exp:"Aucun élève n'est bloqué par l'absence de matériel."},
+{q:"Sécurité : pour les tests de maquette en classe, on utilise :",opts:["Le secteur 230 V","Très basse tension uniquement","Des outils tranchants sans protection","Rien de particulier"],ok:1,exp:"Règle de sécurité : pas de branchement secteur pour les prototypes élèves."},
+{q:"Analyser un tableau de résultats, c'est :",opts:["Compter les cases","Comparer résultat observé / résultat attendu et juger la conformité","Choisir au hasard","Copier le voisin"],ok:1,exp:"L'analyse est comparative et argumentée."},
+{q:"Décision possible après tests :",opts:["Seulement « validée »","Validée / À améliorer / Rejetée","Seulement « rejetée »","Aucune"],ok:1,exp:"Trois issues classiques selon le respect des critères."},
+{q:"Pourquoi un protocole réutilisable par d'autres collèges de Martinique est utile ?",opts:["Pour rien","Même climat et contraintes proches → partage de bonnes pratiques","Parce que c'est obligatoire au DNB","Pour remplacer le professeur"],ok:1,exp:"Ancrage territorial + mutualisation entre établissements."},
+{q:"Le critère « lisibilité de la LED à 3 m en plein soleil » teste :",opts:["Le prix","La performance d'usage en conditions réelles (visibilité)","La couleur du support","Le poids"],ok:1,exp:"Un indicateur illisible en conditions réelles n'est pas une solution validée."},
+{q:"Si le support « bouge légèrement » au secouement 10 s :",opts:["On ignore","On note non conforme ou partiel selon le seuil fixé, puis on propose un renfort","On valide quand même","On change de sujet"],ok:1,exp:"Le seuil de tolérance doit être défini dans le protocole."},
+{q:"Que signifie « valider » en technologie (C8) ?",opts:["Dire que c'est bien","Prouver par des tests organisés que la solution répond au besoin et aux contraintes","Fabriquer vite","Dessiner"],ok:1,exp:"Validation = preuve, pas opinion."},
+{q:"Un protocole sans critère de réussite est :",opts:["Suffisant","Incomplet : on ne peut pas décider","Meilleur","Réservé au professeur"],ok:1,exp:"Sans critère, le test ne produit pas de décision."},
+{q:"Réinvestissement : inventer un critère « résistance au vent » implique :",opts:["Rien","Écrire l'étape + le résultat attendu dans le protocole","Supprimer les autres tests","Changer de projet"],ok:1,exp:"Tout nouveau critère s'intègre dans le même format de protocole."},
+{q:"Le bilan personnel de fin de séquence demande :",opts:["Rien","Ce que j'ai appris, ce que je sais faire, ce que je dois revoir, mon niveau de confiance","Seulement une note","Une photo"],ok:1,exp:"Métacognition obligatoire (Rule 4 / bilan)."},
+{q:"Sans test, on reste dans le domaine :",opts:["De la preuve","De l'hypothèse","De la validation","De la fabrication en série"],ok:1,exp:"Phrase clé de la synthèse : sans test = hypothèse."},
+{q:"Quel outil numérique peut aider à tracer un protocole (CRCN) ?",opts:["Un jeu vidéo","Tableur ou document structuré (étapes, résultats, décision)","Un réseau social","Rien"],ok:1,exp:"Produire et organiser des données de test = compétence numérique réelle."},
+{q:"Une production évaluable pour C8 est :",opts:["Écouter en silence","Protocole + tableau de résultats + décision argumentée + améliorations","Un doodle","Une note orale seule"],ok:1,exp:"La compétence pratique se prouve par une production, pas seulement par un QCM."},
+{q:"Pourquoi ne pas brancher un prototype élève sur le 230 V ?",opts:["Parce que c'est trop lent","Risque électrique : on reste en très basse tension","Parce que ça coûte cher","Ce n'est pas interdit"],ok:1,exp:"Sécurité non négociable en collège."},
+{q:"Le lien entre C7 (concevoir) et C8 (valider) est :",opts:["Aucun","On conçoit d'abord, puis on prouve par tests que la solution tient","On valide avant de concevoir","On programme seulement"],ok:1,exp:"Chaîne T3 : imaginer/concevoir (C7) → valider (C8) → programmer/mettre au point (C9)."},
+{q:"Un QCM d'entraînement sert principalement à :",opts:["Noter définitivement","S'entraîner et identifier les notions à revoir, avec corrections détaillées","Remplacer la fabrication","Remplacer le professeur"],ok:1,exp:"Formative : score + corrections + réessai des erreurs."},
+{q:"Ancrage Martinique : un objet extérieur au collège doit être testé notamment face à :",opts:["La neige","Pluie intense, vent, UV, éventuel sel marin","Le permafrost","L'absence de chaleur"],ok:1,exp:"Les contraintes locales orientent les critères de validation."}
+];
+
+let current=0, answers={}, startTime=null, elapsed=0, timerInterval=null, timerOn=false, timerDisabled=false;
+const KEY='techno_4e_C8_qcm';
+
+function saveId(){
+  const d={nom:document.getElementById('nom').value,prenom:document.getElementById('prenom').value,classe:document.getElementById('classe').value};
+  localStorage.setItem(KEY+'_id',JSON.stringify(d));
+  alert('Identité sauvegardée.');
+}
+function loadId(){
+  try{const d=JSON.parse(localStorage.getItem(KEY+'_id')||'{}');
+  if(d.nom)document.getElementById('nom').value=d.nom;
+  if(d.prenom)document.getElementById('prenom').value=d.prenom;
+  if(d.classe)document.getElementById('classe').value=d.classe;}catch(e){}
+  try{answers=JSON.parse(localStorage.getItem(KEY+'_ans')||'{}');}catch(e){answers={}}
+}
+function persist(){localStorage.setItem(KEY+'_ans',JSON.stringify(answers));}
+
+function render(){
+  const cont=document.getElementById('questions');
+  cont.innerHTML='';
+  questions.forEach((qu,i)=>{
+    const div=document.createElement('div');
+    div.className='card q'+(i===current?' active':'');
+    div.id='q'+i;
+    div.innerHTML=`<h3>Question ${i+1} / ${questions.length}</h3><p>${qu.q}</p><div class="options">${qu.opts.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}" ${answers[i]===j?'checked':''} onchange="answer(${i},${j})"> ${o}</label>`).join('')}</div><div class="feedback" id="fb${i}"></div><button class="btn" onclick="showCorr(${i})">Voir la correction</button>`;
+    cont.appendChild(div);
+  });
+  updateStats();
+}
+function answer(i,j){answers[i]=j;persist();updateStats();}
+function showCorr(i){
+  const fb=document.getElementById('fb'+i);
+  const ok=answers[i]===questions[i].ok;
+  fb.className='feedback show '+(ok?'ok':'err');
+  fb.innerHTML=(ok?'✅ Correct. ':'❌ Incorrect. Bonne réponse : <strong>'+questions[i].opts[questions[i].ok]+'</strong><br>')+questions[i].exp+'<br><em>À retenir : un protocole + des critères = une validation crédible.</em>';
+}
+function updateStats(){
+  const ans=Object.keys(answers).length;
+  const correct=Object.entries(answers).filter(([k,v])=>+v===questions[k].ok).length;
+  document.getElementById('answered').textContent=ans;
+  document.getElementById('score').textContent=correct;
+  document.getElementById('note').textContent=ans?((correct/questions.length*20).toFixed(1)):'—';
+  document.getElementById('bar').style.width=(ans/questions.length*100)+'%';
+}
+function nextQ(){if(current<questions.length-1){current++;render();}}
+function prevQ(){if(current>0){current--;render();}}
+function nextUnanswered(){for(let i=0;i<questions.length;i++){if(answers[i]===undefined){current=i;render();return;}}showResult();}
+function showResult(){
+  document.getElementById('result').style.display='block';
+  const correct=Object.entries(answers).filter(([k,v])=>+v===questions[k].ok).length;
+  document.getElementById('finalScore').textContent=correct+' / '+questions.length+' — '+(correct/questions.length*20).toFixed(1)+'/20';
+  document.getElementById('bilan').textContent=correct>=22?'Excellent : tu maîtrises protocole, analyse et décision de validation.':correct>=16?'Bien : revois les notions de critères et d\'amélioration liée aux tests.':'Revois la séquence (protocole, conformité, décision), puis réessaie les erreurs.';
+}
+function retryErrors(){
+  const errs=Object.entries(answers).filter(([k,v])=>+v!==questions[k].ok).map(([k])=>+k);
+  if(!errs.length){alert('Aucune erreur !');return;}
+  current=errs[0];render();document.getElementById('result').style.display='none';
+}
+function toggleTimer(){
+  if(timerDisabled)return;
+  if(!timerOn){timerOn=true;startTime=Date.now()-elapsed;timerInterval=setInterval(updateTime,1000);document.getElementById('timerBtn').textContent='Pause';}
+  else{timerOn=false;elapsed=Date.now()-startTime;clearInterval(timerInterval);document.getElementById('timerBtn').textContent='Reprendre';}
+}
+function disableTimer(){timerDisabled=true;timerOn=false;clearInterval(timerInterval);document.getElementById('timerBtn').disabled=true;document.getElementById('time').textContent='—';}
+function updateTime(){const t=Math.floor((Date.now()-startTime)/1000);document.getElementById('time').textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');}
+loadId();render();
+</script>
+</body>
+</html>
