@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM d'entraînement — Programmer & mettre au point (4e_C9)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--text:#e4eaf5;--accent:#61dafb;--ok:#81fba1;--err:#ff7b88;--warn:#ffd66b}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:16px;line-height:1.5}
+.container{max-width:860px;margin:0 auto}h1{color:var(--accent);text-align:center;font-size:1.5em}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0}
+.progress{height:10px;background:#0a1b3d;border-radius:5px;overflow:hidden;margin:10px 0}.bar{height:100%;background:linear-gradient(90deg,#61dafb,#c68ef2);width:0%;transition:.3s}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;margin:4px}.btn:hover{background:#2966b1}
+.q{display:none}.q.active{display:block}.options label{display:block;padding:8px 12px;margin:6px 0;background:#0a1b3d;border-radius:8px;cursor:pointer;border:1px solid transparent}.options label:hover{border-color:var(--accent)}
+.feedback{margin-top:12px;padding:12px;border-radius:8px;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.12);border-left:4px solid var(--ok)}.feedback.err{background:rgba(255,123,136,.12);border-left:4px solid var(--err)}
+.score{font-size:1.3em;text-align:center;margin:16px 0}.nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:16px}
+.timer{text-align:center;font-variant-numeric:tabular-nums;color:var(--warn)}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.75em;border:1px solid var(--border);margin:2px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>💻 QCM d'entraînement — 4e_C9 Programme</h1>
+<p style="text-align:center;color:#9bbefc">Jardin connecté · New York · Concevoir · Tester · Mettre au point</p>
+<p style="text-align:center"><span class="badge">4e</span> <span class="badge">Thème 3</span> <span class="badge">4e_C9.1 · C9.2 · C9.3</span> <span class="badge">28 questions</span></p>
+
+<div class="card">
+  <div>Progression : <span id="answered">0</span> / <span id="total">28</span> · Score : <span id="score">0</span> · Note /20 : <span id="note">—</span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="timer">Temps : <span id="time">00:00</span> <button class="btn" onclick="toggleTimer()" id="timerBtn">Démarrer</button></div>
+</div>
+
+<div id="questions"></div>
+
+<div class="card nav">
+  <button class="btn" onclick="prevQ()">← Précédente</button>
+  <button class="btn" onclick="nextUnanswered()">Prochaine non répondue</button>
+  <button class="btn" onclick="nextQ()">Suivante →</button>
+  <button class="btn" onclick="showResult()">Voir le bilan</button>
+</div>
+
+<div class="card" id="result" style="display:none">
+  <h2 style="color:var(--accent);text-align:center">Résultat final</h2>
+  <div class="score" id="finalScore"></div>
+  <p id="bilan"></p>
+  <button class="btn" onclick="retryErrors()">Réessayer les erreurs</button>
+  <button class="btn" onclick="location.reload()">Recommencer</button>
+  <a class="btn" href="sequence_4e_C9_jardin-programme.html">← Retour à la séquence</a>
+</div>
+</div>
+
+<script>
+const questions = [
+{q:"Quelle est la première étape pour écrire un programme de commande ?",opts:["Brancher le 230 V","Traduire la règle en langage naturel / pseudo-code","Acheter un robot","Ignorer les tests"],ok:1,exp:"On clarifie d'abord la règle métier avant de coder."},
+{q:"Une variable dans un programme sert à :",opts:["Décorer le code","Stocker une valeur qui peut changer (ex. : humidité H)","Remplacer les tests","Rien"],ok:1,exp:"H, SEUIL, heure sont des variables typiques."},
+{q:"L'instruction SI … ALORS … SINON permet de :",opts:["Uniquement compter","Prendre une décision selon une condition","Allumer le secteur","Remplacer le matériel"],ok:1,exp:"C'est la structure de base d'une règle de commande."},
+{q:"Pourquoi tester plusieurs scénarios ?",opts:["Pour perdre du temps","Parce qu'un seul cas ne prouve pas le comportement général","Parce que c'est interdit d'en faire un","Pour décorer"],ok:1,exp:"Sol sec, sol humide, nuit, bord de seuil : couverture minimale."},
+{q:"Un résultat attendu dans un test de programme, c'est :",opts:["Une opinion","Ce que le programme DOIT faire dans ce scénario","Le prix du capteur","Rien"],ok:1,exp:"Sans attendu, on ne peut pas juger OK/KO."},
+{q:"La pompe qui s'allume et s'éteint sans arrêt près du seuil indique :",opts:["Un succès","Souvent un seuil unique trop sensible (mesure qui vibre)","Que le gel est parfait","Rien à corriger"],ok:1,exp:"Bug classique → hystérésis (deux seuils)."},
+{q:"L'hystérésis consiste à :",opts:["Supprimer le programme","Utiliser deux seuils (ex. ON si H&lt;35, OFF si H&gt;45)","Arroser toujours","Mesurer une seule fois"],ok:1,exp:"Évite les oscillations autour d'une valeur unique."},
+{q:"À New York, une plage horaire d'arrosage est utile parce que :",opts:["Il n'y a jamais de pluie","On évite d'arroser la nuit / hors usage raisonnable, et on tient compte du contexte urbain","Le gel n'existe pas","Les immeubles n'ont pas d'ombre"],ok:1,exp:"Contrainte locale + économie d'eau + usage."},
+{q:"Mettre au point un programme, c'est :",opts:["Le jeter","Identifier l'écart observé/attendu, corriger, retester","Ne jamais tester","Coder sans condition"],ok:1,exp:"Boucle : tester → analyser → corriger → retester."},
+{q:"Un scénario « sol sec, 23 h » avec plage 6h–10h doit donner :",opts:["Pompe ON","Pompe OFF (hors plage)","Court-circuit","Rien"],ok:1,exp:"La condition horaire bloque l'arrosage nocturne."},
+{q:"Écrire d'abord en pseudo-code permet de :",opts:["Compliquer","Clarifier la logique avant la syntaxe d'un langage","Éviter de réfléchir","Remplacer les tests"],ok:1,exp:"Moins d'erreurs de conception."},
+{q:"Si H = 39 et SEUIL = 40, avec SI H &lt; SEUIL → pompe ON :",opts:["Pompe OFF","Pompe ON","Erreur de syntaxe","Indéterminé"],ok:1,exp:"39 &lt; 40 est vrai."},
+{q:"Retester après correction sert à :",opts:["Rien","Vérifier que le bug est corrigé et qu'on n'a pas cassé un autre cas","Perdre du temps","Désactiver la pompe"],ok:1,exp:"Non-régression + validation du correctif."},
+{q:"Une valeur de capteur H = −5 est :",opts:["Normale","Absurde : le programme devrait la détecter (bonus robustesse)","Idéale pour arroser","Obligatoire"],ok:1,exp:"Plage physique 0–100 % typique."},
+{q:"Le lien C7 → C8 → C9 sur le jardin est :",opts:["Aucun","Concevoir la solution → la valider → programmer la fonction","Programmer d'abord sans besoin","Valider sans tests"],ok:1,exp:"Chaîne Thème 3 sur l'objet-fil."},
+{q:"Une production évaluable pour C9 est :",opts:["Écouter en silence","Pseudo-code + tableau de scénarios + correctif d'hystérésis","Un doodle","Une note orale seule"],ok:1,exp:"Preuve par production, pas seulement QCM."},
+{q:"Sécurité : le programme élève pilote :",opts:["Le secteur 230 V","Un actionneur en très basse tension / simulation","Un four industriel","Rien de particulier"],ok:1,exp:"TBT uniquement en collège."},
+{q:"Transférer la logique vers un lampadaire, c'est :",opts:["Impossible","Réinvestissement : mêmes structures (seuils, hystérésis) sur une autre grandeur","Changer de thème obligatoire","Supprimer les variables"],ok:1,exp:"Transfert de compétence."},
+{q:"Combien de scénarios minimum pour un test sérieux ?",opts:["1","Plusieurs cas représentatifs (sec/humide, bord de seuil, hors plage)","0","100 obligatoires"],ok:1,exp:"Couverture des cas limites."},
+{q:"SI H &lt; 35 ALORS ON ; SI H &gt; 45 ALORS OFF : entre 35 et 45 :",opts:["Toujours ON","L'état précédent est souvent conservé (zone morte)","Court-circuit","Erreur"],ok:1,exp:"Principe de l'hystérésis."},
+{q:"Un QCM d'entraînement sert à :",opts:["Noter définitivement seul","S'entraîner avec corrections et identifier les notions à revoir","Remplacer la mise au point réelle","Interdire les tests"],ok:1,exp:"Formative."},
+{q:"Ancrage New York : le gel influence le programme parce que :",opts:["Il n'y a jamais de gel","On peut décider de suspendre l'arrosage ou d'adapter les règles en hiver","Le gel augmente l'humidité toujours","Rien"],ok:1,exp:"Règle métier liée au climat local."},
+{q:"Une condition composée (humidité ET heure) s'exprime avec :",opts:["Uniquement SINON","ET / conditions combinées dans le SI","Aucune variable","Le 230 V"],ok:1,exp:"ET sur le démarrage typique."},
+{q:"Documenter un bug, c'est noter :",opts:["« Ça marche pas » sans détail","Scénario, observé, attendu, hypothèse de cause","Seulement la date","Rien"],ok:1,exp:"Traçabilité de la mise au point."},
+{q:"Le bilan personnel demande :",opts:["Rien","Ce que j'ai appris, ce que je sais faire, ce que je dois revoir, mon niveau de confiance","Seulement une note","Une photo"],ok:1,exp:"Métacognition (Rule 4)."},
+{q:"Sans test, un programme reste :",opts:["Validé","Une hypothèse non prouvée","Toujours correct","Inutile à écrire"],ok:1,exp:"Comme en C8 : sans test = hypothèse."},
+{q:"CRCN mobilisé ici :",opts:["Aucun","Résoudre un problème technique / créer un contenu numérique simple","Uniquement le sport","Rien de numérique"],ok:1,exp:"Programmer et tester = compétence numérique."},
+{q:"Objectif final du lot C9 sur le jardin :",opts:["Décorer le rooftop","Un programme testé et mis au point qui pilote la nouvelle fonction","Supprimer le capteur","Ignorer C7 et C8"],ok:1,exp:"Boucler la chaîne conception → validation → programme."}
+];
+
+let current=0, answers={}, startTime=null, elapsed=0, timerInterval=null, timerOn=false;
+const KEY='techno_4e_C9_qcm';
+try{answers=JSON.parse(localStorage.getItem(KEY+'_ans')||'{}');}catch(e){answers={}}
+
+function render(){
+  const cont=document.getElementById('questions');
+  cont.innerHTML='';
+  questions.forEach((qu,i)=>{
+    const div=document.createElement('div');
+    div.className='card q'+(i===current?' active':'');
+    div.innerHTML=`<h3>Question ${i+1} / ${questions.length}</h3><p>${qu.q}</p><div class="options">${qu.opts.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}" ${answers[i]===j?'checked':''} onchange="answer(${i},${j})"> ${o}</label>`).join('')}</div><div class="feedback" id="fb${i}"></div><button class="btn" onclick="showCorr(${i})">Voir la correction</button>`;
+    cont.appendChild(div);
+  });
+  updateStats();
+}
+function answer(i,j){answers[i]=j;localStorage.setItem(KEY+'_ans',JSON.stringify(answers));updateStats();}
+function showCorr(i){
+  const fb=document.getElementById('fb'+i);
+  const ok=answers[i]===questions[i].ok;
+  fb.className='feedback show '+(ok?'ok':'err');
+  fb.innerHTML=(ok?'✅ Correct. ':'❌ Incorrect. Bonne réponse : <strong>'+questions[i].opts[questions[i].ok]+'</strong><br>')+questions[i].exp;
+}
+function updateStats(){
+  const ans=Object.keys(answers).length;
+  const correct=Object.entries(answers).filter(([k,v])=>+v===questions[k].ok).length;
+  document.getElementById('answered').textContent=ans;
+  document.getElementById('score').textContent=correct;
+  document.getElementById('note').textContent=ans?((correct/questions.length*20).toFixed(1)):'—';
+  document.getElementById('bar').style.width=(ans/questions.length*100)+'%';
+}
+function nextQ(){if(current<questions.length-1){current++;render();}}
+function prevQ(){if(current>0){current--;render();}}
+function nextUnanswered(){for(let i=0;i<questions.length;i++){if(answers[i]===undefined){current=i;render();return;}}showResult();}
+function showResult(){
+  document.getElementById('result').style.display='block';
+  const correct=Object.entries(answers).filter(([k,v])=>+v===questions[k].ok).length;
+  document.getElementById('finalScore').textContent=correct+' / '+questions.length+' — '+(correct/questions.length*20).toFixed(1)+'/20';
+  document.getElementById('bilan').textContent=correct>=22?'Excellent : conception, tests et mise au point maîtrisés.':correct>=16?'Bien : revois hystérésis et scénarios de test.':'Revois la séquence C9, puis réessaie les erreurs.';
+}
+function retryErrors(){
+  const errs=Object.entries(answers).filter(([k,v])=>+v!==questions[k].ok).map(([k])=>+k);
+  if(!errs.length){alert('Aucune erreur !');return;}
+  current=errs[0];render();document.getElementById('result').style.display='none';
+}
+function toggleTimer(){
+  if(!timerOn){timerOn=true;startTime=Date.now()-elapsed;timerInterval=setInterval(()=>{const t=Math.floor((Date.now()-startTime)/1000);document.getElementById('time').textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');},1000);document.getElementById('timerBtn').textContent='Pause';}
+  else{timerOn=false;elapsed=Date.now()-startTime;clearInterval(timerInterval);document.getElementById('timerBtn').textContent='Reprendre';}
+}
+render();
+</script>
+</body>
+</html>
