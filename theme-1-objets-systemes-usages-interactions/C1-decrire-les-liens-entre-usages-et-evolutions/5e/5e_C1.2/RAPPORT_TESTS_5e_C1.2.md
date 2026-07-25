@@ -44,16 +44,23 @@ Les fichiers ont été relus depuis la branche GitHub après chaque mise à jour
 
 ### Contrôle de périmètre GitHub exécuté le 24 juillet 2026
 
-La liste complète des fichiers modifiés dans la PR #51 a été récupérée via l’API GitHub puis contrôlée. Les six chemins modifiés sont tous situés dans `theme-1-objets-systemes-usages-interactions/.../5e/5e_C1.2/` :
+La liste complète des fichiers modifiés dans la PR #51 a été récupérée via l’API GitHub puis contrôlée. Les chemins pédagogiques modifiés sont tous situés dans `theme-1-objets-systemes-usages-interactions/.../5e/5e_C1.2/` :
 
 1. `FICHE_PEDAGOGIQUE_5e_C1.2.md` ;
 2. `MIGRATION_QCM_5e_C1.2.md` ;
 3. `RAPPORT_TESTS_5e_C1.2.md` ;
 4. `qcm_principes_techniques.html` ;
 5. `synthese_eleve_5e_C1.2.html` ;
-6. `synthese_professeur_5e_C1.2.html`.
+6. `synthese_professeur_5e_C1.2.html` ;
+7. `MANIFESTE_LOT_5e_C1.2.md`.
 
 Résultat : aucune modification détectée dans les Thèmes 2 ou 3, dans `.github/` ou dans `_outils/`.
+
+### Manifeste de livraison
+
+- un manifeste consolidé du lot a été créé ;
+- il inventorie les ressources, les règles appliquées, le périmètre et les étapes restantes ;
+- la règle d’or n°6 est explicitement déclarée non applicable à cette séquence, car aucune activité ne demande de tracer ou recopier les deux chaînes.
 
 ### Paquet pédagogique
 
@@ -61,7 +68,8 @@ Résultat : aucune modification détectée dans les Thèmes 2 ou 3, dans `.githu
 - synthèse professeur créée ;
 - fiche pédagogique créée ;
 - QCM séparé de 24 questions migré ;
-- registre `SOURCES_MEDIAS.md` présent.
+- registre `SOURCES_MEDIAS.md` présent ;
+- manifeste de lot créé.
 
 ## Tests non déclarés comme réussis
 
