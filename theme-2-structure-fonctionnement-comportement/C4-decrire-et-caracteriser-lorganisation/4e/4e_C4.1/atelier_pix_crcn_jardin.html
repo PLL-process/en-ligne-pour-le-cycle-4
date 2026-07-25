@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 Atelier Pix — Les données du jardin connecté (4e)</title>
+<style>
+:root{--bleu:#1F3864;--bleu2:#5B8DEF;--jaune:#F4C542;--orange:#C55A11;--vert:#375623;--fond:#F7F9FC}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--fond);color:#222;line-height:1.55}
+header{background:var(--bleu);color:#fff;padding:22px 6vw}
+header h1{margin:0 0 6px;font-size:1.5rem}
+header p{margin:0;opacity:.92}
+.badge{display:inline-block;background:var(--bleu2);color:#fff;border-radius:999px;padding:2px 12px;font-size:.8rem;margin:8px 6px 0 0}
+main{max-width:960px;margin:0 auto;padding:18px 4vw 60px}
+.regle{border:3px solid var(--bleu);border-radius:12px;background:#EAF1FB;padding:14px 18px;margin:20px 0;font-weight:600}
+.atelier{background:#fff;border:2px solid #D8E0EC;border-radius:14px;margin:26px 0;overflow:hidden}
+.atelier>h2{background:var(--bleu2);color:#fff;margin:0;padding:12px 18px;font-size:1.15rem}
+.corps{padding:16px 20px}
+.cartouche{border:2px solid var(--orange);border-radius:10px;background:#FDF3E7;padding:12px 16px;margin:0 0 16px;font-size:.92rem}
+.cartouche b{color:var(--orange)}
+.cartouche .rep{font-style:italic}
+.doc{border:2px solid #C9D6EA;border-radius:10px;background:#F4F8FF;padding:12px 16px;margin:14px 0}
+.doc h3{margin:0 0 8px;color:var(--bleu);font-size:1rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border:1px solid #B9C7DC;padding:5px 8px;text-align:center}
+th{background:var(--bleu);color:#fff}
+th button{background:var(--jaune);border:none;border-radius:6px;padding:2px 8px;margin-left:6px;cursor:pointer;font-weight:bold}
+th button:focus{outline:3px solid #fff}
+pre{background:#0e2038;color:#EAF1FB;border-radius:10px;padding:14px;overflow-x:auto;font-size:.95rem}
+pre select{font-size:.95rem}
+label{display:block;margin:12px 0 4px;font-weight:bold}
+select{padding:6px 10px;border:2px solid var(--bleu2);border-radius:8px;font-family:inherit;max-width:100%}
+select:focus{outline:3px solid var(--jaune)}
+.verif{background:var(--vert);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:14px}
+.verif:focus{outline:3px solid var(--jaune)}
+.retour{margin-top:10px;font-weight:bold;min-height:1.4em}
+.ok{color:var(--vert)}.ko{color:#C00000}
+.trace{background:#fff;border:2px dashed var(--vert);border-radius:12px;padding:16px 20px;margin:30px 0}
+textarea{width:100%;min-height:170px;font-family:'Courier New',monospace;font-size:.85rem;border:1px solid #B9C7DC;border-radius:8px;padding:10px}
+.gen{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-weight:bold;cursor:pointer}
+footer{text-align:center;color:#667;padding:20px;font-size:.85rem}
+@media print{header{background:#fff;color:#000}.verif,.gen,th button{display:none}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<h1>🧪 Atelier Pix — Les données du jardin connecté</h1>
+<p><b>Ta mission :</b> prouver trois compétences numériques du CRCN <em>en situation réelle</em>, sur les données de NOTRE jardin — puis générer ta trace à montrer au professeur.</p>
+<span class="badge">4e</span><span class="badge">CRCN 1.3 · 3.4 · 5.1</span><span class="badge">Arc jardin connecté</span><span class="badge">⏱ ~35 min</span>
+</header>
+<main>
+
+<div class="regle">📌 <b>Règle d'or CRCN de ce site :</b> une compétence numérique n'est jamais décorative. Ici, chaque atelier annonce la compétence exacte, le niveau visé, le repère officiel, <b>ce que tu fais d'observable</b> et <b>la trace que tu produis</b>. Utiliser un ordinateur n'est pas une compétence — <em>prouver</em> ce que tu sais faire, oui.</div>
+
+<!-- ══════════ ATELIER 1 ══════════ -->
+<section class="atelier" aria-labelledby="a1t">
+<h2 id="a1t">Atelier 1 — Le tableau qui dit la vérité 📊</h2>
+<div class="corps">
+<div class="cartouche">
+<b>CRCN 1.3 — Traiter des données</b> · Niveaux visés : 2-3<br>
+<span class="rep">Repères officiels : « Insérer, saisir, et trier des données dans un tableur pour les exploiter. » (niv. 2) · « Appliquer une formule simple pour résoudre un problème. » (niv. 3)</span><br>
+<b>Action observable :</b> trier réellement le tableau ci-dessous et exploiter le résultat. <b>Trace :</b> tes tris sont enregistrés + tes réponses. <b>Réussite :</b> 3 bonnes réponses sur 3.
+</div>
+<p><b>Situation.</b> Mme Berthé, la gestionnaire, veut savoir si l'arrosage automatique gaspille l'eau. Tu disposes des relevés téléversés par la maquette du jardin.</p>
+<div class="doc"><h3>Doc 1 — Relevés du jardin (extrait, mercredi)</h3>
+<table id="tbl" aria-label="Relevés du jardin : heure, humidité, pompe">
+<thead><tr>
+<th scope="col">Heure <button type="button" onclick="trier(0)" aria-label="Trier par heure">⇅</button></th>
+<th scope="col">Humidité (%) <button type="button" onclick="trier(1)" aria-label="Trier par humidité">⇅</button></th>
+<th scope="col">Pompe <button type="button" onclick="trier(2)" aria-label="Trier par état de la pompe">⇅</button></th>
+</tr></thead>
+<tbody></tbody>
+</table>
+</div>
+<label for="q1a">1. Pour saisir un relevé oublié de 16 h dans le tableur, sur quoi cliques-tu d'abord ?</label>
+<select id="q1a"><option value="">— choisis —</option><option>La barre de formule</option><option value="ok">La cellule vide où la donnée doit apparaître</option><option>Le bouton « Trier »</option><option>La référence de la colonne</option></select>
+<label for="q1b">2. Trie la colonne Humidité en ordre CROISSANT (avec le bouton ⇅). Quelle heure arrive en première ligne ?</label>
+<select id="q1b"><option value="">— choisis —</option><option>06 h</option><option value="ok">13 h</option><option>10 h</option><option>18 h</option></select>
+<label for="q1c">3. Quelle formule donne l'humidité MOYENNE de la journée (valeurs en C2 à C9) ?</label>
+<select id="q1c"><option value="">— choisis —</option><option>=SOMME(C2:C9)</option><option value="ok">=MOYENNE(C2:C9)</option><option>=MAX(C2:C9)</option><option>=MOYENNE(C2+C9)</option></select>
+<button class="verif" type="button" onclick="verifier(1)">✅ Vérifier l'atelier 1</button>
+<p class="retour" id="r1" role="status"></p>
+</div>
+</section>
+
+<!-- ══════════ ATELIER 2 ══════════ -->
+<section class="atelier" aria-labelledby="a2t">
+<h2 id="a2t">Atelier 2 — Répare l'algorithme de la pompe 🔧</h2>
+<div class="corps">
+<div class="cartouche">
+<b>CRCN 3.4 — Programmer</b> · Niveau visé : 3<br>
+<span class="rep">Repère officiel : « Modifier un algorithme simple en faisant évoluer ses éléments de programmation. »</span><br>
+<b>Action observable :</b> compléter l'algorithme d'hystérésis pour supprimer le battement de la pompe. <b>Trace :</b> l'algorithme complété est enregistré. <b>Réussite :</b> les 3 éléments corrects.
+</div>
+<p><b>Situation.</b> La pompe s'allume et s'éteint sans arrêt autour du seuil unique de 40 %. Le technicien propose DEUX seuils (35 et 45). Complète son algorithme :</p>
+<div class="doc"><h3>Doc 2 — Algorithme à compléter</h3>
+<pre>SI humidité <select id="q2a" aria-label="comparateur du seuil bas"><option value="">…</option><option value="ok">&lt; 35</option><option>&gt; 35</option><option>= 40</option><option>&lt; 45</option></select> ALORS
+    <select id="q2b" aria-label="action seuil bas"><option value="">…</option><option value="ok">DÉMARRER la pompe</option><option>ARRÊTER la pompe</option><option>ATTENDRE 5 s</option></select>
+SINON SI humidité ≥ 45 ALORS
+    ARRÊTER la pompe
+SINON
+    <select id="q2c" aria-label="action entre les deux seuils"><option value="">…</option><option>DÉMARRER la pompe</option><option value="ok">NE RIEN CHANGER (garder l'état)</option><option>ARRÊTER la pompe</option></select>
+FIN SI</pre>
+</div>
+<button class="verif" type="button" onclick="verifier(2)">✅ Vérifier l'atelier 2</button>
+<p class="retour" id="r2" role="status"></p>
+</div>
+</section>
+
+<!-- ══════════ ATELIER 3 ══════════ -->
+<section class="atelier" aria-labelledby="a3t">
+<h2 id="a3t">Atelier 3 — La carte a disparu ! 🕵️</h2>
+<div class="corps">
+<div class="cartouche">
+<b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé : 3<br>
+<span class="rep">Repère officiel : « Identifier des problèmes techniques liés à un environnement informatique. »</span><br>
+<b>Action observable :</b> ordonner une démarche de dépannage du plus simple au plus coûteux. <b>Trace :</b> ta démarche ordonnée est enregistrée. <b>Réussite :</b> ordre logique complet + cause identifiée.
+</div>
+<p><b>Situation.</b> Au moment de téléverser le programme corrigé, la carte du jardin n'apparaît plus dans la liste des ports du logiciel. Ordonne la démarche du technicien (du test le plus simple au plus lourd) :</p>
+<label for="q3a">Étape 1 :</label>
+<select id="q3a"><option value="">— choisis —</option><option value="ok">Vérifier que le câble USB est bien branché des deux côtés</option><option>Réinstaller complètement le logiciel</option><option>Tester avec une autre carte</option><option>Changer d'ordinateur</option></select>
+<label for="q3b">Étape 2 :</label>
+<select id="q3b"><option value="">— choisis —</option><option>Changer d'ordinateur</option><option value="ok">Essayer un autre port USB, puis un autre câble</option><option>Racheter une carte</option><option>Débrancher le capteur d'humidité</option></select>
+<label for="q3c">Étape 3 :</label>
+<select id="q3c"><option value="">— choisis —</option><option value="ok">Redémarrer le logiciel, puis l'ordinateur</option><option>Racheter une carte</option><option>Appeler immédiatement un réparateur</option></select>
+<label for="q3d">Étape 4 (si rien n'a marché) :</label>
+<select id="q3d"><option value="">— choisis —</option><option>Abandonner le projet</option><option value="ok">Tester la MÊME chaîne avec une AUTRE carte pour isoler la panne</option><option>Réinstaller le système d'exploitation</option></select>
+<label for="q3e">Le câble fonctionne sur une autre carte, et une autre carte fonctionne avec ce câble sur ce port. Le coupable le plus probable est…</label>
+<select id="q3e"><option value="">— choisis —</option><option>Le câble USB</option><option>Le port USB de l'ordinateur</option><option value="ok">La carte du jardin elle-même</option><option>Le logiciel</option></select>
+<button class="verif" type="button" onclick="verifier(3)">✅ Vérifier l'atelier 3</button>
+<p class="retour" id="r3" role="status"></p>
+</div>
+</section>
+
+<!-- ══════════ TRACE ══════════ -->
+<div class="trace">
+<h2>📋 Ma trace Pix (à montrer au professeur)</h2>
+<p>Quand tes trois ateliers sont vérifiés, génère ta trace : elle prouve <b>ce que tu as fait</b> (tris réels, algorithme, démarche) — c'est elle qui justifie la validation CRCN dans Pronote.</p>
+<label for="eleve">Ton prénom et l'initiale de ton nom :</label>
+<select id="eleve" style="display:none"></select>
+<input id="nom" type="text" style="padding:8px;border:2px solid var(--bleu2);border-radius:8px" placeholder="Ex. : Maëlys D." aria-label="Prénom et initiale">
+<p><button class="gen" type="button" onclick="genererTrace()">📋 Générer ma trace Pix</button></p>
+<textarea id="sortie" readonly aria-label="Trace générée à copier"></textarea>
+</div>
+
+</main>
+<footer>Atelier original CC0 — site « En ligne pour le cycle 4 » · Exercices inventés pour le jardin connecté (format inspiré des cahiers d'entraînement Pix, contenus 100 % originaux) · Fonctionne hors connexion, aucune donnée envoyée.</footer>
+
+<script>
+"use strict";
+const CLE = "atelier_pix_4e_jardin";
+const DONNEES = [["06 h",62,"OFF"],["08 h",55,"OFF"],["10 h",47,"OFF"],["12 h",38,"ON"],["13 h",33,"ON"],["14 h",41,"ON"],["16 h",52,"OFF"],["18 h",58,"OFF"]];
+let etat = JSON.parse(localStorage.getItem(CLE) || "{}");
+etat.tris = etat.tris || []; etat.reponses = etat.reponses || {}; etat.scores = etat.scores || {};
+
+function rendre(lignes){
+  const tb = document.querySelector("#tbl tbody"); tb.innerHTML = "";
+  for (const l of lignes){ const tr = document.createElement("tr");
+    l.forEach(v => { const td = document.createElement("td"); td.textContent = v; tr.appendChild(td); }); tb.appendChild(tr); }
+}
+let affichage = DONNEES.slice(); let sens = [1,1,1];
+function trier(col){
+  affichage.sort((a,b)=> (typeof a[col]==="number" ? a[col]-b[col] : String(a[col]).localeCompare(String(b[col]))) * sens[col]);
+  etat.tris.push({colonne:["Heure","Humidité","Pompe"][col], sens: sens[col]===1?"croissant":"décroissant", quand:new Date().toLocaleTimeString()});
+  sens[col] *= -1; rendre(affichage); sauver();
+}
+const ATELIERS = {1:["q1a","q1b","q1c"], 2:["q2a","q2b","q2c"], 3:["q3a","q3b","q3c","q3d","q3e"]};
+function verifier(n){
+  const ids = ATELIERS[n]; let bons = 0;
+  for (const id of ids){ const s = document.getElementById(id); etat.reponses[id] = s.options[s.selectedIndex]?.text || ""; if (s.value === "ok") bons++; }
+  etat.scores[n] = bons + "/" + ids.length;
+  const r = document.getElementById("r" + n);
+  if (n===1 && !etat.tris.length){ r.textContent = "🔎 Utilise d'abord VRAIMENT le bouton de tri de la colonne Humidité — l'atelier trace tes manipulations !"; r.className = "retour ko"; return; }
+  r.textContent = bons === ids.length ? "✔ Atelier réussi (" + etat.scores[n] + ") — compétence observable, trace enregistrée." : "✘ " + etat.scores[n] + " — corrige puis re-vérifie (aide : relis le cartouche CRCN).";
+  r.className = "retour " + (bons === ids.length ? "ok" : "ko");
+  sauver();
+}
+function genererTrace(){
+  const nom = document.getElementById("nom").value.trim() || "(non renseigné)";
+  etat.nom = nom; sauver();
+  const l = [];
+  l.push("TRACE PIX — Atelier « Les données du jardin connecté » (4e)");
+  l.push("Élève : " + nom + " · Généré le " + new Date().toLocaleString());
+  l.push("");
+  l.push("CRCN 1.3 Traiter des données (niv. 2-3) — score " + (etat.scores[1]||"—"));
+  l.push("  Tris réellement effectués : " + (etat.tris.map(t=>t.colonne+" ("+t.sens+")").join(", ") || "aucun"));
+  l.push("CRCN 3.4 Programmer (niv. 3) — score " + (etat.scores[2]||"—"));
+  l.push("  Algorithme complété : SI humidité " + (etat.reponses.q2a||"…") + " ALORS " + (etat.reponses.q2b||"…") + " / SINON " + (etat.reponses.q2c||"…"));
+  l.push("CRCN 5.1 Résoudre des problèmes techniques (niv. 3) — score " + (etat.scores[3]||"—"));
+  l.push("  Démarche : 1) " + (etat.reponses.q3a||"…") + " 2) " + (etat.reponses.q3b||"…") + " 3) " + (etat.reponses.q3c||"…") + " 4) " + (etat.reponses.q3d||"…"));
+  l.push("  Diagnostic final : " + (etat.reponses.q3e||"…"));
+  document.getElementById("sortie").value = l.join("\n");
+}
+function sauver(){ localStorage.setItem(CLE, JSON.stringify(etat)); }
+rendre(DONNEES);
+if (etat.nom) document.getElementById("nom").value = etat.nom;
+for (const [id, txt] of Object.entries(etat.reponses)){ const s = document.getElementById(id); if (s) for (const o of s.options) if (o.text === txt) s.value = o.value || o.text; }
+</script>
+</body>
+</html>

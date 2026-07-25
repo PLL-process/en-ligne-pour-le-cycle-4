@@ -504,3 +504,22 @@ de la règle d'or n°6 dans les 3 séquences 3e_C4 ; compression de `4e_C4.7/Ima
 (2,6 Mo → < 300 Ko) ; ajout de 3 illustrations SVG originales CC0 (une par arc : 4e_C4 stockage/transformation,
 4e_C5 capteur encroûté, 5e_C6 seuil jour/nuit) branchées sur les questions correspondantes, SOURCES_MEDIAS
 des lots mis à jour. Constat aggravant (test Playwright réel) : `qcm_automatisation_premium.html` contient ~40 images HOTLINKÉES qui ne chargent pas (violation règle d'or n°1). Décision en attente du Conseil : archivage des 7 anciens QCM sans localStorage, premium en tête.
+
+## Règle d'or n°7 — CRCN observable, tracé, justifié (25/07/2026, carte blanche de Pascal)
+Toute association CRCN déclarée dans une ressource du dépôt DOIT comporter les cinq éléments :
+1. la **compétence exacte** du cadre (code + intitulé officiel, ex. « 3.4 Programmer ») ;
+2. le **niveau de maîtrise visé** (cycle 4 : viser surtout 2 à 4) ;
+3. le **repère pour enseigner** correspondant, cité VERBATIM (libellé Pronote/Pix du document d'accompagnement) ;
+4. une **action observable** de l'élève (ce qu'il fait réellement, pas « utilise l'ordinateur ») ;
+5. une **trace produite** (fichier, réponse enregistrée, manipulation tracée, export) avec critère de réussite.
+Pas de CRCN décoratif : sans action observable ni trace, la compétence est au mieux « travaillée », jamais « évaluée ».
+Ressource étalon : `theme-2/.../4e/4e_C4.1/atelier_pix_crcn_jardin.html` (LOT 13).
+
+## LOT 13 — Atelier Pix du jardin connecté + règle d'or n°7 (25/07/2026)
+Carte blanche de Pascal. Création d'un atelier CRCN 100 % original (format inspiré des cahiers
+d'entraînement Pix, contenus inventés dans l'univers du jardin) : 3 exercices — 1.3 Traiter des données
+(tri RÉEL du tableau, tracé), 3.4 Programmer (algorithme d'hystérésis à compléter), 5.1 Résoudre des
+problèmes techniques (démarche de dépannage ordonnée) — chacun avec cartouche complet règle n°7,
+générateur de « trace Pix » à montrer au professeur, hors ligne, listes déroulantes (DYS), sauvegarde
+localStorage. Lien ajouté au bloc Bonus de la séquence 4e_C4. Avis Copilot intégré : le CRCN devient
+VISIBLE dans les pages web elles-mêmes.
