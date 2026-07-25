@@ -1,4 +1,20 @@
-# 📓 Journal des décisions — écosystème cycle 4
+# 📖 JOURNAL DES DÉCISIONS
+
+## 🗂 Registre central des règles d'or (règle n°10 — à consulter AVANT toute numérotation)
+| N° | Titre | Rédacteur | Statut |
+|----|-------|-----------|--------|
+| 1 | Images v2 — SVG originaux CC0, jamais décoratives | Fondatrices (Pascal + Fable) | ✅ En vigueur |
+| 2 | En-tête QCM standard (gabarit LOT 01) | Fondatrices | ✅ En vigueur |
+| 3 | Versions 🅰 réel / 🅱 simulation / 🅲 sans matériel | Fondatrices | ✅ En vigueur |
+| 4 | Blocs élève obligatoires (mission, 🧠 entraînement, 🎁 bonus) | Fondatrices | ✅ En vigueur |
+| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur |
+| 6 | Convention des chaînes : information en haut, énergie en bas | Fondatrices | ✅ En vigueur |
+| 7 | CRCN observable, tracé, justifié | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
+| 8 | Représentations technologiques utiles, progressives, traçables | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
+| 9 | Représentations — formalisation détaillée (cadre d'application) | Codex (Thème 1) | 🔄 PR à fusionner |
+| 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | 🔄 Cette PR |
+
+Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
 *À relire au début de chaque session de travail. Une entrée par décision
 structurante. Les décisions « pédagogiques ou matérielles » restent à Pascal ;
@@ -540,3 +556,15 @@ Pierre angulaire de la discipline, validée par Pascal. Toute représentation d'
 4. **CONVENTIONNELLE** — légendes obligatoires, symboles normalisés quand ils existent, et règle n°6 pour
    les chaînes (information en haut, énergie en bas, l'ordre qui descend).
 Gouvernance inter-thèmes (25/07/2026) : cette règle de Fable porte le n°8 ; la règle d'or n°9 est la formalisation détaillée de Codex (`theme-1/.../REGLE_OR_9_REPRESENTATIONS_TECHNOLOGIQUES.md`), qui la complète — principe (n°8) et cadre d'application (n°9) sont cohérents et se citent mutuellement.
+
+## Règle d'or n°10 — Le journal fait foi (25/07/2026, sur décision de Pascal)
+Le fichier `JOURNAL_DES_DECISIONS.md` est la mémoire officielle et l'autorité du dépôt. Quatre obligations :
+1. **Lecture avant travail** : tout rédacteur (humain ou IA) lit le journal depuis `main` à jour AVANT de produire.
+   Nul ne peut invoquer l'ignorance d'une décision consignée.
+2. **Entrée par lot** : chaque lot ajoute son entrée au journal DANS LE MÊME COMMIT que le travail (date, contenu,
+   décisions, tests réellement exécutés). Un lot sans entrée au journal est réputé inexistant.
+3. **Réservation des transversaux** : tout numéro, nom ou convention transversale (règle d'or, standard, gabarit)
+   se réserve dans le Registre central en tête de journal AVANT usage — leçon de la collision 8/9 du 25/07/2026.
+4. **Accusé de lecture** : un nouveau rédacteur qui rejoint le projet prouve sa lecture en citant la dernière
+   entrée du journal.
+Le registre central des règles d'or (tableau en tête de fichier) est instauré par la présente règle.
