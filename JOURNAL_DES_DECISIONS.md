@@ -524,7 +524,7 @@ générateur de « trace Pix » à montrer au professeur, hors ligne, listes dé
 localStorage. Lien ajouté au bloc Bonus de la séquence 4e_C4. Avis Copilot intégré : le CRCN devient
 VISIBLE dans les pages web elles-mêmes.
 
-## Règle d'or n°8 — Représentations technologiques utiles, progressives et traçables (25/07/2026)
+## Règle d'or n°9 — Représentations technologiques utiles, progressives et traçables (25/07/2026)
 Pierre angulaire de la discipline, validée par Pascal. Toute représentation d'une ressource du dépôt doit être :
 1. **UTILE** — elle répond à un besoin précis (comprendre, communiquer, concevoir, valider), jamais décorative.
    Le bon outil pour la bonne question : croquis à main levée pour l'idée, schéma normalisé pour l'explication,
@@ -539,4 +539,4 @@ Pierre angulaire de la discipline, validée par Pascal. Toute représentation d'
    n'est pas en produire un : les deux se distinguent dans la fiche de séquence.
 4. **CONVENTIONNELLE** — légendes obligatoires, symboles normalisés quand ils existent, et règle n°6 pour
    les chaînes (information en haut, énergie en bas, l'ordre qui descend).
-La règle n°9 est RÉSERVÉE (annonce de Pascal — à consigner à sa validation).
+Numérotation corrigée le 25/07/2026 à la demande de Pascal (relecture PR #68) : cette règle porte le n°9, le n°8 restant attribué à la règle déjà actée par ailleurs.
