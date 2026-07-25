@@ -58,6 +58,16 @@ La liste complète des fichiers modifiés dans la PR #51 a été récupérée un
 
 Résultat : aucune modification détectée dans les Thèmes 2 ou 3, dans `.github/` ou dans `_outils/`.
 
+### Recontrôle de périmètre GitHub exécuté le 25 juillet 2026
+
+- la liste des fichiers modifiés de la PR #51 a été récupérée de nouveau via l’API GitHub après la reprise de connexion ;
+- le total reste de neuf fichiers ;
+- les neuf chemins correspondent exactement à la liste ci-dessus ;
+- aucun fichier racine, aucun fichier des Thèmes 2 ou 3, aucun fichier de `.github/` et aucun script de `_outils/` n’apparaît dans le diff ;
+- la PR reste déclarée fusionnable par GitHub au moment du contrôle.
+
+Résultat : le périmètre du lot reste strictement conforme après reprise des travaux.
+
 ### Validation structurée du manifeste — 25 juillet 2026
 
 - le fichier `MANIFESTE_LOT_5e_C1.2.json` a été relu et décodé via l’API GitHub sans erreur de structure ;
