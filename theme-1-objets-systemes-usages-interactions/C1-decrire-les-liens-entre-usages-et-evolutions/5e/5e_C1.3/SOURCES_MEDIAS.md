@@ -1,26 +1,23 @@
-# Sources des médias — 5e_C1.3–C1.4
+# Sources et médias — 5e_C1.3–C1.4
 
-Date de contrôle : 25/07/2026
+## Médias originaux
 
-## Règle appliquée
+| Fichier | Usage | Statut | Poids indicatif |
+|---|---|---|---|
+| `Images/schema_systeme_information_velos.svg` | Comprendre le rôle des acteurs, données, traitements, réseau et stockage | SVG original créé pour le lot ; aucun média externe | < 3 Ko |
+| `Images/arborescence_donnees_velos.svg` | Visualiser l’organisation des dossiers | SVG original créé pour le lot ; aucun média externe | < 2 Ko |
+| `Images/extrait_donnees_velos.svg` | Question illustrée et règle de priorité | SVG original créé pour le lot ; aucun média externe | < 4 Ko |
 
-Chaque média remplit une fonction pédagogique identifiable. Les médias décoratifs ont été retirés. Les fichiers nécessaires sont locaux, disposent d’un texte alternatif dans la séquence et restent lisibles en niveaux de gris.
-
-## Médias locaux
-
-| Fichier | Nature | Auteur | Licence / statut | Usage | Accessibilité |
-|---|---|---|---|---|---|
-| `Images/schema_systeme_information_velos.svg` | Schéma vectoriel original | Équipe du projet pédagogique | Création originale du dépôt | Représenter acteurs, collecte, traitement, stockage et diffusion | Texte alternatif présent ; poids inférieur à 3 Ko |
-| `Images/arborescence_donnees_velos.svg` | Schéma vectoriel original | Équipe du projet pédagogique | Création originale du dépôt | Interpréter une organisation hiérarchique de dossiers et fichiers | Texte alternatif présent ; poids inférieur à 3 Ko |
+Les SVG sont locaux, légers, imprimables en niveaux de gris et possèdent un titre, une description ou un texte alternatif dans les pages HTML.
 
 ## Données
 
-| Fichier | Nature | Provenance | Données personnelles | Usage |
-|---|---|---|---|---|
-| `donnees_velos_hangzhou_simulees.csv` | Jeu de données tabulaires | Données entièrement inventées pour l’apprentissage | Aucune | Saisie, tri, filtre et interprétation dans un tableur |
+`donnees_velos_hangzhou_simulees.csv` est un jeu entièrement inventé pour l’apprentissage. Les stations, identifiants et valeurs ne décrivent aucun service réel. Le fichier ne contient aucune donnée personnelle.
 
-## Déclaration
+## Inspiration CRCN / PIX
 
-- Aucun visuel, tableau ou exercice du *Cahier PIX 2026 — Delagrave* n’est reproduit.
-- La structure pédagogique générale peut être inspirée des exigences publiques du CRCN et de PIX, mais les scénarios, valeurs, consignes, corrections et médias de ce lot sont originaux.
-- Aucun hotlinking ni appel à une image distante n’est nécessaire au fonctionnement de la séquence.
+Le *Cahier PIX 2026* a été consulté uniquement pour la progressivité des niveaux et les repères associés aux compétences CRCN 1.2 et 1.3. Aucun exercice, tableau, illustration ou correction éditoriale n’est reproduit. Les scénarios, données, consignes, corrections et médias du lot sont originaux.
+
+## Retrait des anciens médias
+
+Les sept fichiers `image_extraite_01.png` à `image_extraite_07.png`, lourds et sans documentation de licence suffisante, sont retirés du lot. Ils sont remplacés par les trois SVG originaux ci-dessus.
