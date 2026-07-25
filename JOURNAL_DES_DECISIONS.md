@@ -496,3 +496,11 @@ lire avant toute production — à entériner au Conseil du 28/07.
 3. **Bilan 4e du Thème 2 après ce lot** : C4 (9/9, LOT 09), C5 (3/3, LOT 10),
    C6 (3/3, dont C6.2 préexistant) = l'îlot 4e du Thème 2 est complet pour la
    rentrée 2026. Le Thème 2 entier (5e + 4e + 3e) est couvert.
+
+## LOT 12 — Correctifs & illustrations Thème 2 (25/07/2026)
+Suite à l'audit tranche 1 (Conseil des IA) : correction du QCM `4e_C4.1/qcm_automatisation_premium.html`
+(image `undefined` sur les questions non illustrées — garde `if (q.img)`) ; insertion de l'encadré canonique
+de la règle d'or n°6 dans les 3 séquences 3e_C4 ; compression de `4e_C4.7/Images/doc3_schema_parcours.png`
+(2,6 Mo → < 300 Ko) ; ajout de 3 illustrations SVG originales CC0 (une par arc : 4e_C4 stockage/transformation,
+4e_C5 capteur encroûté, 5e_C6 seuil jour/nuit) branchées sur les questions correspondantes, SOURCES_MEDIAS
+des lots mis à jour. Constat aggravant (test Playwright réel) : `qcm_automatisation_premium.html` contient ~40 images HOTLINKÉES qui ne chargent pas (violation règle d'or n°1). Décision en attente du Conseil : archivage des 7 anciens QCM sans localStorage, premium en tête.

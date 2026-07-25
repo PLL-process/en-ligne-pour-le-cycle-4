@@ -14,3 +14,4 @@ Alt/desc intégrés à chaque SVG et aux balises d'appel ; lisibilité en niveau
 vérifiée (étiquettes textuelles systématiques, verdicts doublés en toutes lettres —
 jamais la couleur seule) ; valeurs électriques cohérentes (12 V TBT — le secteur 230 V
 n'apparaît que comme interdit).
+- `Images/capteur_humidite_croute.svg` — schéma original (LOT 12) : capteur d'humidité encroûté, fausse mesure. Auteur : Claude/Fable. Licence : CC0. 25/07/2026.
