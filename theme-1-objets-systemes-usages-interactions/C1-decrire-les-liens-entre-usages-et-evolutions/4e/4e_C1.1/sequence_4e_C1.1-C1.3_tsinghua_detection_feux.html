@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tsinghua — Concevoir avant de connecter : détecter les feux</title>
+<style>
+:root{--bg:#071426;--panel:#10284a;--panel2:#0b1d36;--ink:#eef6ff;--muted:#b9cae2;--accent:#64d8ff;--ok:#8bf0a5;--warn:#ffd166;--danger:#ff8a8a;--border:#315b8f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.58}.page{max-width:1050px;margin:auto;padding:22px}.hero,.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;margin:16px 0}.hero{text-align:center;background:linear-gradient(145deg,#10284a,#15355d)}h1{margin:.2rem 0;color:var(--accent);font-size:clamp(1.55rem,5vw,2.35rem)}h2{color:var(--accent)}h3{color:#b9eaff}.mission{font-size:1.08rem;color:#fff}.badge{display:inline-block;border:1px solid var(--accent);border-radius:999px;padding:.25rem .65rem;margin:.2rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.notice{border-left:5px solid var(--warn)}.crcn{border-left:5px solid var(--ok)}.ethique{border-left:5px solid var(--danger)}table{width:100%;border-collapse:collapse;min-width:680px}th,td{border:1px solid var(--border);padding:.65rem;vertical-align:top}th{background:#17365f}.scroll{overflow-x:auto}code{background:#05101f;padding:.15rem .35rem;border-radius:5px;color:#b7ecff}.trace{background:var(--panel2);padding:12px;border-radius:10px}.btn{display:inline-block;background:#1769aa;color:#fff;text-decoration:none;padding:.7rem 1rem;border-radius:10px;font-weight:700}.btn:focus{outline:3px solid #fff;outline-offset:3px}details{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px;margin:10px 0}summary{cursor:pointer;font-weight:700;color:var(--ok)}textarea{width:100%;min-height:90px;background:#071a30;color:#fff;border:1px solid var(--border);border-radius:9px;padding:10px}footer{text-align:center;color:var(--muted);padding:20px}@media print{body{background:white;color:black}.hero,.card,details{background:white;border-color:#777}.btn{display:none}h1,h2,h3{color:black}.page{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<main class="page">
+<!-- Ouverture obligatoire : titre puis mission. -->
+<header class="hero">
+<p><span class="badge">4e</span><span class="badge">Thème 1</span><span class="badge">Pékin 北京 — Běijīng</span><span class="badge">Tsinghua 清华大学</span></p>
+<h1>🔥 Concevoir avant de connecter : détecter les feux</h1>
+<p class="mission">Ta mission : comprendre pourquoi un système électronique de détection existe, ce que les secours attendent réellement et quelles contraintes doivent être établies avant d’étudier ses capteurs, son énergie ou son programme.</p>
+</header>
+
+<section class="card notice">
+<h2>Situation déclenchante</h2>
+<p>Le 24 juillet 2026, le ministère de l’Intérieur annonçait que plus de 50 000 hectares avaient brûlé en France depuis le début de l’année et que 32 feux étaient encore en cours. Une équipe fictive d’élèves-ingénieurs inspirée du département d’ingénierie électronique de l’université Tsinghua doit préparer un système de détection précoce. Elle ne commence pas par choisir une caméra ou un microcontrôleur : elle commence par comprendre le besoin.</p>
+<h3>Problématique</h3>
+<p><strong>Quelles données, quels usages et quelles contraintes faut-il définir pour détecter rapidement un départ de feu sans multiplier les fausses alertes ni remplacer la décision humaine ?</strong></p>
+</section>
+
+<section class="card">
+<h2>Activité 1 — Lire les données avant de calculer</h2>
+<p>Télécharge le fichier <a class="btn" href="donnees_feux_impacts_4e.csv">📊 Données feux et impacts</a>, puis ouvre-le dans un tableur.</p>
+<ol>
+<li>Repère les colonnes <em>date</em>, <em>territoire</em>, <em>indicateur</em>, <em>valeur</em>, <em>unité</em>, <em>source</em> et <em>statut</em>.</li>
+<li>Filtre les lignes concernant la France en 2026.</li>
+<li>Explique pourquoi les valeurs « 50 000 ha », « 32 feux » et « 50 % » ne doivent pas être additionnées.</li>
+<li>Ajoute une colonne <code>comparable_avec_CO2</code> et saisis <code>oui</code> ou <code>non</code>.</li>
+</ol>
+<div class="trace"><strong>Production attendue :</strong> fichier ODS/XLSX transformé + capture du filtre + justification de trois lignes.</div>
+<details><summary>Correction exhaustive</summary><p>Les trois valeurs n’ont pas la même unité ni le même sens : 50 000 ha est une surface cumulée minimale, 32 est un état instantané du nombre de feux en cours, 50 % est une proportion nationale de départs liés à une imprudence. Les additionner serait une erreur de sens, même si le tableur accepte techniquement l’opération.</p></details>
+</section>
+
+<section class="card">
+<h2>Activité 2 — Construire une estimation, puis en annoncer les limites</h2>
+<p>Le JRC/EFFIS indique qu’en 2023 environ 504 002 ha ont brûlé dans l’Union européenne et que ces feux ont produit une estimation d’environ 20 Mt de CO₂.</p>
+<ol>
+<li>Convertis 20 Mt de CO₂ en tonnes : <code>=20*1000000</code>.</li>
+<li>Calcule un ratio moyen européen 2023 : <code>tonnes de CO₂ / hectares brûlés</code>.</li>
+<li>Utilise ce ratio comme <strong>proxy pédagogique</strong> pour 50 000 ha en France en 2026.</li>
+<li>Arrondis le résultat à trois chiffres significatifs.</li>
+<li>Insère une cellule d’avertissement : « estimation par proxy européen 2023, non officielle pour la France 2026 ».</li>
+</ol>
+<div class="trace"><strong>Production attendue :</strong> feuille de calcul contenant les formules, le résultat et l’avertissement méthodologique.</div>
+<details><summary>Correction exhaustive</summary><p>Ratio : 20 000 000 / 504 002 ≈ <strong>39,68 tCO₂/ha</strong>. Estimation pédagogique : 50 000 × 39,68 ≈ <strong>1,98 million de tonnes de CO₂</strong>. Ce résultat ne tient pas compte du type de végétation, de l’humidité, de la sévérité du feu, de la biomasse réellement consumée ni du devenir du carbone après le feu. Il ne doit jamais être présenté comme une mesure officielle de 2026.</p></details>
+</section>
+
+<section class="card">
+<h2>Activité 3 — Comparer à des activités humaines sans confondre les périmètres</h2>
+<div class="scroll"><table><thead><tr><th>Activité</th><th>Facteur fourni</th><th>Formule d’équivalence</th><th>Question critique</th></tr></thead><tbody>
+<tr><td>Voiture thermique moyenne diesel</td><td>0,142 kgCO₂e/km</td><td><code>kgCO₂e_estimés / 0,142</code></td><td>Le facteur inclut-il la fabrication ?</td></tr>
+<tr><td>TGV</td><td>0,00293 kgCO₂e/passager-km</td><td><code>kgCO₂e_estimés / 0,00293</code></td><td>Compare-t-on un véhicule-km ou un passager-km ?</td></tr>
+<tr><td>Avion moyen-long courrier</td><td>0,167 kgCO₂e/passager-km</td><td><code>kgCO₂e_estimés / 0,167</code></td><td>Les traînées de condensation sont-elles incluses ?</td></tr>
+<tr><td>Repas avec du bœuf</td><td>4,97 kgCO₂e/repas</td><td><code>kgCO₂e_estimés / 4,97</code></td><td>Un repas type représente-t-il tous les régimes alimentaires ?</td></tr>
+</tbody></table></div>
+<p>Construis un graphique en barres. Son titre doit contenir le mot <strong>équivalences</strong>, et non « mêmes impacts ».</p>
+<details><summary>Correction et ordres de grandeur</summary><p>À partir de l’estimation de 1,984 MtCO₂, on obtient environ 14,0 milliards de km en voiture thermique, 677 milliards de passager-km en TGV, 11,9 milliards de passager-km en avion moyen-long courrier ou 399 millions de repas avec du bœuf. Ces équivalences rendent une quantité plus lisible ; elles ne rendent pas les phénomènes identiques.</p></details>
+</section>
+
+<section class="card crcn">
+<h2>📌 CRCN observable, tracé et justifié</h2>
+<p><strong>Compétence exacte :</strong> CRCN 1.3 — Traiter des données.</p>
+<p><strong>Niveau visé :</strong> niveau 2.</p>
+<p><strong>Repère pour enseigner verbatim :</strong> « Insérer, saisir et trier des données dans un tableur pour les exploiter. »</p>
+<p><strong>Action observable :</strong> importer le CSV, insérer deux colonnes, saisir les statuts, filtrer, écrire les formules et produire un graphique.</p>
+<p><strong>Trace produite :</strong> fichier ODS/XLSX transformé, capture du filtre, graphique et export PDF avec avertissement méthodologique.</p>
+<p><strong>Principe :</strong> utiliser un ordinateur n’est pas une compétence ; la compétence est démontrée par les transformations et les traces.</p>
+</section>
+
+<section class="card">
+<h2>Activité 4 — Passer du nombre au besoin technique</h2>
+<p>À partir des données et des risques d’erreur, complète le tableau.</p>
+<div class="scroll"><table><thead><tr><th>Besoin ou difficulté</th><th>Information nécessaire</th><th>Contrainte à formuler</th><th>Question préparant le Thème 2</th></tr></thead><tbody>
+<tr><td>Détecter tôt</td><td>Température, fumée, image, vent</td><td>Temps de détection maximal</td><td>Comment acquérir ces grandeurs ?</td></tr>
+<tr><td>Limiter les fausses alertes</td><td>Croisement de plusieurs indices</td><td>Seuil de confiance</td><td>Comment traiter les données ?</td></tr>
+<tr><td>Transmettre depuis une zone isolée</td><td>Position, heure, niveau d’alerte</td><td>Portée et continuité de communication</td><td>Comment communiquer ?</td></tr>
+<tr><td>Fonctionner longtemps</td><td>Niveau de batterie</td><td>Autonomie minimale</td><td>Comment alimenter le système ?</td></tr>
+</tbody></table></div>
+<p>Rédige ensuite cinq exigences vérifiables. Exemple : « Le système doit transmettre une alerte horodatée en moins de 30 secondes après confirmation par deux indices indépendants. »</p>
+<div class="trace"><strong>Production attendue :</strong> tableau besoin–information–contrainte et cinq exigences mesurables. Cette production préparera l’analyse fonctionnelle du Thème 2 et le cahier des charges du Thème 3.</div>
+</section>
+
+<section class="card ethique">
+<h2>Garde-fous humains</h2>
+<ul><li>Une alerte automatique doit pouvoir être vérifiée par un opérateur.</li><li>Une caméra tournée vers une forêt ne doit pas devenir un outil de surveillance injustifiée des personnes.</li><li>Une absence de donnée n’est pas la preuve d’une absence de feu.</li><li>La prévention et les comportements humains restent indispensables : la technologie ne remplace ni la vigilance ni les secours.</li></ul>
+</section>
+
+<section class="card">
+<h2>Bilan</h2>
+<p>Un système technique n’existe pas parce qu’un capteur ou une intelligence artificielle est disponible. Il existe pour répondre à un besoin identifié dans une situation d’usage. Les données permettent de comprendre l’ampleur du problème, mais leur unité, leur source et leur incertitude doivent être explicitées. Les contraintes formulées ici prépareront l’étude du fonctionnement dans le Thème 2 puis la conception et la validation dans le Thème 3.</p>
+</section>
+
+<section class="card">
+<h2>🧠 Prêt·e à t’entraîner ?</h2>
+<p>Le QCM séparé comportera 30 questions, dont des questions illustrées sur les sources, les unités, les formules, les besoins et les contraintes.</p>
+<p><em>Le bouton sera activé après la création et le test du QCM afin d’éviter tout lien cassé.</em></p>
+</section>
+
+<section class="card">
+<h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<ul><li>Proposer une adaptation pour une zone montagneuse ou pour la Martinique.</li><li>Imaginer une stratégie sans caméra afin de limiter la collecte d’images.</li><li>Comparer le coût d’une tour fixe, d’un drone et d’un réseau de capteurs sans supposer que la solution la plus spectaculaire est la meilleure.</li></ul>
+</section>
+
+<footer>Ressource originale — Thème 1 — données institutionnelles citées dans SOURCES_DONNEES_FEUX_4e.md.</footer>
+</main>
+<script>
+// Sauvegarde locale des zones de texte afin de conserver une trace de travail.
+document.querySelectorAll('textarea').forEach((zone,index)=>{
+  const cle='t1_4e_feux_'+index;
+  zone.value=localStorage.getItem(cle)||'';
+  zone.addEventListener('input',()=>localStorage.setItem(cle,zone.value));
+});
+</script>
+</body>
+</html>
