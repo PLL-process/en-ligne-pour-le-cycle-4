@@ -1,6 +1,6 @@
 # Rapport de tests — lot 5e_C1.2
 
-Date : 24 juillet 2026
+Date : 25 juillet 2026
 
 ## Contrôles réellement exécutés
 
@@ -57,6 +57,13 @@ La liste complète des fichiers modifiés dans la PR #51 a été récupérée un
 9. `synthese_professeur_5e_C1.2.html`.
 
 Résultat : aucune modification détectée dans les Thèmes 2 ou 3, dans `.github/` ou dans `_outils/`.
+
+### Validation structurée du manifeste — 25 juillet 2026
+
+- le fichier `MANIFESTE_LOT_5e_C1.2.json` a été relu et décodé via l’API GitHub sans erreur de structure ;
+- les champs obligatoires du lot ont été vérifiés : code, niveau, thème, compétence, séquence, QCM, synthèses, règles, périmètre et tests ;
+- l’entrée préparée pour `nouveautes.json` cible uniquement `5e_C1.2`, le Thème 1 et les chemins du dossier dédié ;
+- les étapes restantes sont explicitement conservées dans le manifeste et ne sont pas déclarées terminées.
 
 ### Manifeste de livraison
 
