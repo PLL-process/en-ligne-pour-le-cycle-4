@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tsinghua — Robots, drones et IA face aux feux</title>
+<style>
+:root{--bg:#071321;--panel:#102844;--panel2:#0b1d33;--ink:#eef6ff;--muted:#b8c9df;--accent:#72ddff;--ok:#8ef2aa;--warn:#ffd56a;--danger:#ff9494;--border:#31577f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.58}.page{max-width:1080px;margin:auto;padding:22px}.hero,.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;margin:16px 0}.hero{text-align:center;background:linear-gradient(145deg,#102844,#17395f)}h1{font-size:clamp(1.55rem,5vw,2.4rem);color:var(--accent);margin:.2rem 0}h2{color:var(--accent)}h3{color:#c3ecff}.mission{font-size:1.08rem}.badge{display:inline-block;border:1px solid var(--accent);border-radius:999px;padding:.25rem .65rem;margin:.2rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.notice{border-left:5px solid var(--warn)}.crcn{border-left:5px solid var(--ok)}.ethique{border-left:5px solid var(--danger)}.trace{background:var(--panel2);border-radius:10px;padding:12px}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:720px}th,td{border:1px solid var(--border);padding:.65rem;vertical-align:top}th{background:#17385e}code{background:#06101d;color:#c5f2ff;padding:.15rem .35rem;border-radius:5px}details{background:var(--panel2);border:1px solid var(--border);padding:10px;border-radius:10px;margin:10px 0}summary{cursor:pointer;color:var(--ok);font-weight:700}.btn{display:inline-block;background:#176da8;color:#fff;text-decoration:none;padding:.7rem 1rem;border-radius:10px;font-weight:700}.btn:focus{outline:3px solid #fff;outline-offset:3px}footer{text-align:center;color:var(--muted);padding:20px}@media print{body{background:white;color:black}.hero,.card,details{background:white;border-color:#777}h1,h2,h3{color:black}.btn{display:none}.page{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<p><span class="badge">3e</span><span class="badge">Thème 1</span><span class="badge">Pékin 北京 — Běijīng</span><span class="badge">Tsinghua 清华大学</span></p>
+<h1>🤖 Robots, drones et IA face aux feux</h1>
+<p class="mission">Ta mission : établir ce que les données permettent réellement d’affirmer, puis définir pourquoi et sous quelles contraintes un robot ou un drone pourrait aider les secours sans remplacer l’expertise humaine.</p>
+</header>
+
+<section class="card notice">
+<h2>Situation déclenchante</h2>
+<p>Les feux de végétation de 2026 en France ont touché de vastes surfaces. Les services de secours utilisent déjà plusieurs familles de moyens : surveillance humaine, satellites, capteurs, aéronefs, cartographie et systèmes de communication. Une équipe fictive inspirée des recherches de Tsinghua en automatisation et robotique doit étudier un robot mobile et un drone de reconnaissance. Avant tout programme ou prototype, elle doit comprendre le besoin, les usages réels, les impacts, les limites et les données disponibles.</p>
+<h3>Problématique</h3>
+<p><strong>Comment utiliser des données fiables pour définir le besoin et les contraintes d’un système robotique de lutte contre les feux, tout en évitant les comparaisons trompeuses et les décisions automatiques injustifiées ?</strong></p>
+</section>
+
+<section class="card">
+<h2>Activité 1 — Construire une matrice de comparabilité</h2>
+<p>Télécharge <a class="btn" href="donnees_impacts_feux_activites_conflit_3e.csv">📊 le jeu de données</a>, puis ouvre-le dans un tableur.</p>
+<ol>
+<li>Insère une colonne <code>meme_unite</code>.</li>
+<li>Insère une colonne <code>meme_periode</code>.</li>
+<li>Insère une colonne <code>meme_perimetre</code>.</li>
+<li>Insère une colonne <code>comparaison_directe_possible</code>.</li>
+<li>Pour chaque ligne, saisis <code>oui</code>, <code>non</code> ou <code>a_verifier</code>, puis justifie au moins quatre décisions.</li>
+</ol>
+<div class="trace"><strong>Production attendue :</strong> fichier ODS/XLSX transformé, filtre sur les lignes comparables et tableau PDF des justifications.</div>
+<details><summary>Correction exhaustive</summary><p>Une surface en hectares n’est pas directement comparable à une émission en MtCO₂, une masse de débris ou un pourcentage de végétation perdue. Les facteurs en kgCO₂e par km ou par repas peuvent servir à calculer des équivalences uniquement après conversion d’une quantité totale en kgCO₂e. Les indicateurs du conflit à Gaza décrivent d’autres dimensions environnementales ; les convertir arbitrairement en CO₂e serait scientifiquement injustifié.</p></details>
+</section>
+
+<section class="card">
+<h2>Activité 2 — Calculer un proxy carbone et le critiquer</h2>
+<p>Le JRC/EFFIS indique qu’en 2023 environ 504 002 ha ont brûlé dans l’Union européenne et que les émissions ont été estimées à environ 20 Mt de CO₂.</p>
+<ol>
+<li>Calcule le ratio moyen : <code>20 000 000 / 504 002</code>.</li>
+<li>Applique ce ratio aux 50 000 ha annoncés en France au 24 juillet 2026.</li>
+<li>Convertis le résultat en kgCO₂.</li>
+<li>Calcule des équivalences avec la voiture thermique, le TGV, l’avion et les repas avec du bœuf.</li>
+<li>Produis un graphique en barres et ajoute une note méthodologique.</li>
+</ol>
+<div class="trace"><strong>Production attendue :</strong> feuille de calcul avec formules visibles, graphique et encadré « limites du proxy ».</div>
+<details><summary>Correction exhaustive</summary><p>Le ratio est d’environ <strong>39,68 tCO₂/ha</strong>. Le proxy appliqué à 50 000 ha donne environ <strong>1,984 MtCO₂</strong>. Les équivalences approchent 14,0 milliards de km en voiture thermique, 677 milliards de passager-km en TGV, 11,9 milliards de passager-km en avion moyen-long courrier et 399 millions de repas avec du bœuf. Ces résultats sont des ordres de grandeur pédagogiques, pas une estimation officielle des émissions françaises de 2026.</p><p>Le ratio moyen masque la végétation, l’humidité, l’intensité du feu, la biomasse consumée, les émissions autres que le CO₂ et la récupération future des écosystèmes.</p></details>
+</section>
+
+<section class="card ethique">
+<h2>Activité 3 — Étudier l’impact environnemental d’un conflit sans comparer les souffrances</h2>
+<p>Le Programme des Nations Unies pour l’environnement a publié des évaluations sur Gaza. Elles décrivent notamment l’augmentation des débris, les dommages aux bâtiments, les pertes de végétation, les risques pour l’eau, les sols et la santé.</p>
+<ol>
+<li>Filtre les lignes de catégorie <code>conflit</code>.</li>
+<li>Calcule l’augmentation des débris entre 2024 et 2025.</li>
+<li>Calcule le taux d’augmentation.</li>
+<li>À partir d’une base estimée de 250 000 bâtiments, calcule 78 %.</li>
+<li>Calcule un ratio moyen « tonnes de débris par bâtiment endommagé ou détruit », puis rédige trois raisons expliquant pourquoi cette moyenne est fragile.</li>
+<li>Explique pourquoi les pertes de cultures, les débris et la pollution de l’eau ne peuvent pas être remplacés par un seul chiffre carbone.</li>
+</ol>
+<details><summary>Correction exhaustive</summary><p>Les débris passent de 39 à 61 millions de tonnes : augmentation de <strong>22 millions de tonnes</strong>, soit environ <strong>56,4 %</strong>. 78 % de 250 000 bâtiments représentent environ <strong>195 000 bâtiments</strong>. Le ratio moyen serait d’environ <strong>313 tonnes de débris par bâtiment touché</strong>.</p><p>Cette moyenne est fragile car les bâtiments ont des tailles différentes, les niveaux de dommage ne sont pas identiques, la masse des infrastructures non résidentielles est incluse de manière variable et les estimations reposent en partie sur la télédétection. Elle ne décrit ni la toxicité, ni l’amiante, ni les munitions non explosées, ni la contamination de l’eau.</p></details>
+<div class="trace"><strong>Phrase éthique obligatoire :</strong> « Nous comparons des indicateurs et des méthodes de mesure ; nous ne comparons ni la valeur des vies, ni la gravité des souffrances, ni la légitimité des victimes. »</div>
+</section>
+
+<section class="card crcn">
+<h2>📌 CRCN observable, tracé et justifié</h2>
+<p><strong>Compétence exacte :</strong> CRCN 1.3 — Traiter des données.</p>
+<p><strong>Niveau visé :</strong> niveau 2 consolidé, avec exigence d’interprétation de 3e.</p>
+<p><strong>Repère pour enseigner verbatim :</strong> « Insérer, saisir et trier des données dans un tableur pour les exploiter. »</p>
+<p><strong>Action observable :</strong> insérer quatre colonnes, saisir des statuts, filtrer, convertir les unités, écrire des formules, calculer des taux et produire un graphique.</p>
+<p><strong>Trace produite :</strong> ODS/XLSX transformé, matrice de comparabilité, graphique, export PDF et conclusion méthodologique.</p>
+<p><strong>Principe :</strong> utiliser un ordinateur n’est pas une compétence. La validation porte sur les transformations, les calculs, les choix de comparaison et les traces conservées.</p>
+</section>
+
+<section class="card">
+<h2>Activité 4 — Définir le besoin d’un système robotique</h2>
+<p>Les données montrent l’ampleur et la diversité des impacts. Elles ne disent pas automatiquement quel robot construire. Compare quatre familles de solutions.</p>
+<div class="scroll"><table><thead><tr><th>Solution</th><th>Usage possible</th><th>Limites</th><th>Données nécessaires</th><th>Contrôle humain</th></tr></thead><tbody>
+<tr><td>Drone thermique</td><td>Repérer un point chaud, cartographier</td><td>Vent, fumée, autonomie, espace aérien</td><td>Image thermique, position, batterie</td><td>Validation de l’alerte et du vol</td></tr>
+<tr><td>Robot terrestre</td><td>Explorer une zone dangereuse, mesurer</td><td>Relief, obstacles, chaleur, communication</td><td>Distance, température, vidéo, inclinaison</td><td>Arrêt d’urgence et reprise manuelle</td></tr>
+<tr><td>Réseau fixe de capteurs</td><td>Surveiller en continu</td><td>Maintenance, portée, fausses alertes</td><td>Température, humidité, fumée, vent</td><td>Confirmation avant alerte majeure</td></tr>
+<tr><td>Satellite</td><td>Observer de vastes surfaces</td><td>Résolution, revisite, nuages</td><td>Image, anomalie thermique</td><td>Interprétation par des spécialistes</td></tr>
+</tbody></table></div>
+<p>Choisis une combinaison de deux solutions. Justifie ton choix par le besoin, les usages, les contraintes, le coût, la sécurité, l’environnement, les données et la décision humaine.</p>
+<div class="trace"><strong>Production attendue :</strong> argumentaire de 12 lignes et tableau de six exigences vérifiables.</div>
+</section>
+
+<section class="card">
+<h2>Activité 5 — Préparer les Thèmes 2 et 3 sans les anticiper artificiellement</h2>
+<div class="grid">
+<article><h3>Questions transmises au Thème 2</h3><ul><li>Quelles grandeurs acquérir ?</li><li>Comment traiter plusieurs indices ?</li><li>Comment transmettre malgré la perte de réseau ?</li><li>Comment gérer l’énergie et l’autonomie ?</li><li>Comment garantir une alerte fiable ?</li></ul></article>
+<article><h3>Éléments transmis au Thème 3</h3><ul><li>besoin reformulé ;</li><li>utilisateurs et situations d’usage ;</li><li>contraintes hiérarchisées ;</li><li>critères de réussite ;</li><li>scénarios de panne ;</li><li>règles de contrôle humain.</li></ul></article>
+</div>
+<p>Rédige un mini-cahier des charges comprenant au moins : autonomie, portée, vitesse, détection, arrêt d’urgence, protection des données et reprise de contrôle.</p>
+</section>
+
+<section class="card">
+<h2>Bilan</h2>
+<p>Une technologie pertinente commence par un besoin réel, des usages observés, des données correctement interprétées et des contraintes vérifiables. Un nombre produit par un tableur reste dépendant de sa source, de son unité et de son périmètre. Les robots, drones et systèmes d’IA peuvent réduire l’exposition humaine et améliorer l’information, mais ils ne suppriment ni l’incertitude ni la responsabilité de décision.</p>
+</section>
+
+<section class="card">
+<h2>🧠 Prêt·e à t’entraîner ?</h2>
+<p>Le QCM séparé comportera 30 questions sur les unités, les périmètres, les calculs, les biais de moyenne, les usages robotiques et le contrôle humain.</p>
+<p><em>Le bouton sera ajouté après création et test du QCM pour ne pas publier de lien cassé.</em></p>
+</section>
+
+<section class="card">
+<h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+<ul><li>Adapter le système au relief et aux réseaux de la Martinique.</li><li>Proposer un scénario dans lequel la meilleure solution n’est pas un robot.</li><li>Comparer une alerte fondée sur un seuil unique à une alerte fondée sur plusieurs indices.</li></ul>
+</section>
+
+<footer>Ressource originale — Thème 1 — sources et limites dans SOURCES_DONNEES_IMPACTS_3e.md.</footer>
+</main>
+</body>
+</html>
