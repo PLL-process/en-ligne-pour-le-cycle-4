@@ -6,6 +6,7 @@
 - **Thème** : 3 — Création, conception, réalisation, innovations
 - **Programme** : Technologie Cycle 4 (BO n°9 du 29 février 2024)
 - **Durée** : 4 × 55 min
+- **Ancrage territorial** : **New York** (school garden / rooftop garden)
 
 ## Compétences et connaissances
 - **C7** : Imaginer, concevoir et réaliser une ou des solutions…
@@ -21,10 +22,10 @@
 - Expérience préalable possible avec le « Jardin connecté » (4e_C6.2)
 
 ## Situation déclenchante
-Le collège souhaite améliorer son jardin pédagogique. Les élèves proposent et réalisent une amélioration concrète (support, abri, indicateur) en tenant compte du climat martiniquais.
+Un établissement scolaire à New York souhaite améliorer son jardin pédagogique (cour ou toit végétalisé). Les élèves proposent et réalisent une amélioration concrète (support, abri, indicateur) en tenant compte du climat new-yorkais (gel, pluie, vent urbain).
 
 ## Problématique
-Comment imaginer, choisir et réaliser une solution technique simple pour améliorer l’arrosage ou le suivi d’un espace vert du collège, en tenant compte des contraintes locales ?
+Comment imaginer, choisir et réaliser une solution technique simple pour améliorer l’arrosage ou le suivi d’un espace vert scolaire à New York, en tenant compte des contraintes locales ?
 
 ## Déroulé séance par séance
 1. **Séance 1** : Situation + hypothèses + Activité 1 (planning)
@@ -49,7 +50,7 @@ Aides progressives (niveau 1 / 2), tableaux pré-structurés, possibilité de di
 - Critères LSU : organisation du travail, argumentation, prise en compte des contraintes
 
 ## Bilan et prolongements
-Lien naturel vers la réalisation (C7.5+) et vers la programmation (C9 / 3e).
+Lien naturel vers la validation (C8) et vers la programmation (C9).
 
 ---
-Document produit dans le cadre du projet « En ligne pour le cycle 4 » — Agent Grok (Thème 3)
+Document produit dans le cadre du projet « En ligne pour le cycle 4 » — Agent Grok (Thème 3) — Ancrage New York
