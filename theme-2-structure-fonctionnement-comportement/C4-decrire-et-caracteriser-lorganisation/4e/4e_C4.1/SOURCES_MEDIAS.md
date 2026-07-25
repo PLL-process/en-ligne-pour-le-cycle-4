@@ -13,3 +13,4 @@ de Google Images ou de site tiers ; aucun hotlinking.
 Alt/desc intégrés à chaque SVG et aux balises d'appel ; lisibilité en niveaux de gris
 vérifiée (étiquettes textuelles systématiques) ; adresses IP en plage locale 192.168.x.x ;
 valeurs électriques cohérentes (12 V TBT).
+- `Images/energie_stockage_transformation.svg` — schéma original (LOT 12) : stockage (batterie) vs transformation (pompe). Auteur : Claude/Fable. Licence : CC0. 25/07/2026.

@@ -496,3 +496,47 @@ lire avant toute production — à entériner au Conseil du 28/07.
 3. **Bilan 4e du Thème 2 après ce lot** : C4 (9/9, LOT 09), C5 (3/3, LOT 10),
    C6 (3/3, dont C6.2 préexistant) = l'îlot 4e du Thème 2 est complet pour la
    rentrée 2026. Le Thème 2 entier (5e + 4e + 3e) est couvert.
+
+## LOT 12 — Correctifs & illustrations Thème 2 (25/07/2026)
+Suite à l'audit tranche 1 (Conseil des IA) : correction du QCM `4e_C4.1/qcm_automatisation_premium.html`
+(image `undefined` sur les questions non illustrées — garde `if (q.img)`) ; insertion de l'encadré canonique
+de la règle d'or n°6 dans les 3 séquences 3e_C4 ; compression de `4e_C4.7/Images/doc3_schema_parcours.png`
+(2,6 Mo → < 300 Ko) ; ajout de 3 illustrations SVG originales CC0 (une par arc : 4e_C4 stockage/transformation,
+4e_C5 capteur encroûté, 5e_C6 seuil jour/nuit) branchées sur les questions correspondantes, SOURCES_MEDIAS
+des lots mis à jour. Constat aggravant (test Playwright réel) : `qcm_automatisation_premium.html` contient ~40 images HOTLINKÉES qui ne chargent pas (violation règle d'or n°1). Décision en attente du Conseil : archivage des 7 anciens QCM sans localStorage, premium en tête.
+
+## Règle d'or n°7 — CRCN observable, tracé, justifié (25/07/2026, carte blanche de Pascal)
+Toute association CRCN déclarée dans une ressource du dépôt DOIT comporter les cinq éléments :
+1. la **compétence exacte** du cadre (code + intitulé officiel, ex. « 3.4 Programmer ») ;
+2. le **niveau de maîtrise visé** (cycle 4 : viser surtout 2 à 4) ;
+3. le **repère pour enseigner** correspondant, cité VERBATIM (libellé Pronote/Pix du document d'accompagnement) ;
+4. une **action observable** de l'élève (ce qu'il fait réellement, pas « utilise l'ordinateur ») ;
+5. une **trace produite** (fichier, réponse enregistrée, manipulation tracée, export) avec critère de réussite.
+Pas de CRCN décoratif : sans action observable ni trace, la compétence est au mieux « travaillée », jamais « évaluée ».
+Ressource étalon : `theme-2/.../4e/4e_C4.1/atelier_pix_crcn_jardin.html` (LOT 13).
+
+## LOT 13 — Atelier Pix du jardin connecté + règle d'or n°7 (25/07/2026)
+Carte blanche de Pascal. Création d'un atelier CRCN 100 % original (format inspiré des cahiers
+d'entraînement Pix, contenus inventés dans l'univers du jardin) : 3 exercices — 1.3 Traiter des données
+(tri RÉEL du tableau, tracé), 3.4 Programmer (algorithme d'hystérésis à compléter), 5.1 Résoudre des
+problèmes techniques (démarche de dépannage ordonnée) — chacun avec cartouche complet règle n°7,
+générateur de « trace Pix » à montrer au professeur, hors ligne, listes déroulantes (DYS), sauvegarde
+localStorage. Lien ajouté au bloc Bonus de la séquence 4e_C4. Avis Copilot intégré : le CRCN devient
+VISIBLE dans les pages web elles-mêmes.
+
+## Règle d'or n°8 — Représentations technologiques utiles, progressives et traçables (25/07/2026)
+Pierre angulaire de la discipline, validée par Pascal. Toute représentation d'une ressource du dépôt doit être :
+1. **UTILE** — elle répond à un besoin précis (comprendre, communiquer, concevoir, valider), jamais décorative.
+   Le bon outil pour la bonne question : croquis à main levée pour l'idée, schéma normalisé pour l'explication,
+   diagramme fonctionnel pour l'organisation, modèle 3D/CAO pour la fabrication, graphique pour les données.
+   Une représentation qui n'apprend rien est supprimée.
+2. **PROGRESSIVE** — échelle du cycle : 5e LIT et COMPLÈTE des représentations fournies ; 4e CHOISIT le mode
+   adapté et PRODUIT avec guidage ; 3e ÉLABORE seul (schéma-bloc, croquis coté, algorigramme) et JUSTIFIE son
+   choix. Une même situation monte en gamme d'un niveau à l'autre.
+3. **TRAÇABLE** — l'élève PRODUIT (papier photographié, fichier CAO, capture, export) ; la production est
+   conservable, évaluable, reliée aux compétences (C2 du programme, D1.3 du socle « utiliser et produire des
+   représentations d'objets » / « passer d'un langage à un autre », CRCN 3.2 si numérique). Lire un schéma
+   n'est pas en produire un : les deux se distinguent dans la fiche de séquence.
+4. **CONVENTIONNELLE** — légendes obligatoires, symboles normalisés quand ils existent, et règle n°6 pour
+   les chaînes (information en haut, énergie en bas, l'ordre qui descend).
+Gouvernance inter-thèmes (25/07/2026) : cette règle de Fable porte le n°8 ; la règle d'or n°9 est la formalisation détaillée de Codex (`theme-1/.../REGLE_OR_9_REPRESENTATIONS_TECHNOLOGIQUES.md`), qui la complète — principe (n°8) et cadre d'application (n°9) sont cohérents et se citent mutuellement.

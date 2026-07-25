@@ -202,7 +202,7 @@ let div = document.createElement("div");
 div.className = "question";
 
 let html = `<h3>${index+1}. ${q.q}</h3>`;
-html += `<img src="${q.img}"><br>`;
+if (q.img) html += `<img src="${q.img}" alt=""><br>`;
 html += `<p class="competence">🎯 ${q.comp}</p>`;
 
 q.options.forEach((opt,i)=>{
