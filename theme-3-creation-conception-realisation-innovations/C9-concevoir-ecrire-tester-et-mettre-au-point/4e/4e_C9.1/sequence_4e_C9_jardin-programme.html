@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jardin connecté — Programmer et mettre au point (4e_C9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.7em;text-align:center;margin:24px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}.badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}.badge.niveau{background:#0d2347;color:var(--hl)}.badge.theme{background:#2b1a3f;color:var(--head)}.badge.code{background:#173666;color:#fff}
+section.card{max-width:940px;margin:0 auto 20px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+h2{color:var(--head);font-size:1.12em;margin-top:0}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-style:italic}
+.problematique{font-size:1.12em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:14px 18px;border-radius:12px;text-align:center}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}.btn.small{padding:5px 11px;font-size:.82em}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
+.codebox{font-family:'Fira Code',monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:14px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:16px;margin-top:12px}
+footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
+@media(max-width:640px){section.card{padding:16px}}
+</style>
+</head>
+<body>
+
+<h1>💻 Jardin connecté — Programmer et mettre au point</h1>
+<div class="subtitle">Écrire, tester et corriger le programme qui pilote la nouvelle fonction du jardin scolaire à New York</div>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation</span>
+  <span class="badge code">4e_C9.1 · 4e_C9.2 · 4e_C9.3</span>
+  <span class="badge theme">Ancrage New York</span>
+</div>
+
+<section class="card">
+  <h2>📋 En-tête pédagogique</h2>
+  <table class="refs">
+    <tr><th>Niveau / Codes</th><td>4e — 4e_C9.1, 4e_C9.2, 4e_C9.3</td></tr>
+    <tr><th>Compétence principale</th><td>C9 — Concevoir, écrire, tester et mettre au point un programme</td></tr>
+    <tr><th>Domaines du socle</th><td>D2 · D4 · D5</td></tr>
+    <tr><th>Durée indicative</th><td>3 × 55 min</td></tr>
+    <tr><th>Ancrage</th><td>New York — school garden / rooftop · suite C7–C8</td></tr>
+  </table>
+  <div style="margin-top:14px">
+    <label>Nom : <input type="text" id="eleveNom" placeholder="Nom" style="width:140px"></label>
+    <label>Prénom : <input type="text" id="elevePrenom" placeholder="Prénom" style="width:140px"></label>
+    <label>Classe : <input type="text" id="eleveClasse" placeholder="4eX" style="width:80px"></label>
+    <button class="btn small" onclick="sauvegarderIdentite()">💾 Sauvegarder</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <p class="declencheur">Le support de capteur a été conçu (C7) et validé (C8). Il reste à écrire le programme qui décide d’arroser ou non selon l’humidité mesurée. À New York, le gel hivernal et les pluies d’automne imposent des seuils et une plage horaire raisonnables : on ne veut pas arroser sous la pluie ni la nuit en plein hiver. Tu es chargé d’écrire, tester et mettre au point ce programme.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment concevoir, écrire, tester et mettre au point un programme simple qui pilote correctement une nouvelle fonction d’un objet connecté ?</p>
+</section>
+
+<section class="card">
+  <h2>💡 Hypothèses initiales</h2>
+  <p>Avant de coder, formule ce que le programme doit faire (en langage naturel).</p>
+  <textarea id="hypothese" rows="3" placeholder="SI humidité &lt; seuil ALORS arroser, SINON…"></textarea>
+  <button class="btn small" style="margin-top:8px" onclick="sauvegarderHypothese()">Enregistrer</button>
+</section>
+
+<section class="card">
+  <h2>🔧 Activité 1 — Concevoir et écrire le programme (4e_C9.1)</h2>
+  <div class="exo">
+    <h4>Objectif</h4>
+    <p>Traduire la règle de décision en un algorithme puis en un programme simple (pseudo-code ou blocs).</p>
+    <p><strong>Consigne :</strong> Complète le pseudo-code ci-dessous pour un seuil d’humidité de 40 % et une pompe (ou LED) d’arrosage.</p>
+    <div class="codebox">SEUIL = 40
+mesurer humidité → H
+SI H &lt; SEUIL ALORS
+    allumer pompe
+SINON
+    éteindre pompe
+FIN SI</div>
+    <p style="margin-top:12px">Modifie le programme pour ajouter une <strong>plage horaire</strong> (ex. : arroser seulement entre 6 h et 10 h) :</p>
+    <textarea rows="6" id="prog1" placeholder="Écris ton pseudo-code modifié…"></textarea>
+    <div class="retenir"><strong>À retenir :</strong> Un programme = variables + conditions (SI) + actions. On écrit d’abord en langage naturel, puis on code.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📊 Activité 2 — Tester le programme (4e_C9.2)</h2>
+  <div class="exo">
+    <h4>Objectif</h4>
+    <p>Vérifier le comportement du programme avec des scénarios de test.</p>
+    <table class="refs">
+      <tr><th>Scénario</th><th>H (%)</th><th>Heure</th><th>Résultat attendu</th><th>Observé</th></tr>
+      <tr><td>Sol sec, matin</td><td>25</td><td>8 h</td><td>Pompe ON</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
+      <tr><td>Sol humide</td><td>55</td><td>8 h</td><td>Pompe OFF</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
+      <tr><td>Sol sec, nuit</td><td>25</td><td>23 h</td><td>Pompe OFF (plage)</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
+      <tr><td>Juste sous le seuil</td><td>39</td><td>7 h</td><td>Pompe ON</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
+    </table>
+    <div class="retenir"><strong>À retenir :</strong> Tester = scénarios + résultat attendu + résultat observé. Un seul scénario ne suffit pas.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✏️ Activité 3 — Mettre au point (4e_C9.3)</h2>
+  <div class="exo">
+    <h4>Objectif</h4>
+    <p>Corriger un bug et améliorer le programme (hystérésis anti-clignotement).</p>
+    <p><strong>Bug observé :</strong> près du seuil 40 %, la pompe s’allume et s’éteint sans arrêt (mesure qui « vibre »).</p>
+    <p><strong>Consigne :</strong> Propose une correction avec deux seuils (ex. : allumer si H &lt; 35, éteindre si H &gt; 45).</p>
+    <textarea rows="5" id="prog3" placeholder="Pseudo-code avec hystérésis…"></textarea>
+    <div class="retenir"><strong>À retenir :</strong> Mettre au point = identifier l’écart observé/attendu, corriger, retester. L’hystérésis évite les oscillations autour d’un seuil unique.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 Activité de réinvestissement</h2>
+  <div class="exo">
+    <p>Adapte la même logique à un <strong>lampadaire</strong> (seuil de luminosité + hystérésis). Écris 5 lignes de pseudo-code.</p>
+    <textarea rows="4" placeholder="SEUIL_BAS / SEUIL_HAUT / SI …"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse intégrée</h2>
+  <p>Concevoir un programme, c’est traduire une règle en variables et conditions. Le tester, c’est le confronter à des scénarios. Le mettre au point, c’est corriger les écarts (bugs, oscillations) jusqu’à ce que le comportement soit conforme. À New York, la plage horaire et le gel influencent les règles métier du jardin connecté.</p>
+</section>
+
+<section class="card">
+  <h2>🙋 Bilan personnel</h2>
+  <p>Ce que j’ai appris : <input type="text" style="width:100%"></p>
+  <p>Ce que je sais maintenant faire : <input type="text" style="width:100%"></p>
+  <p>Ce que je dois encore revoir : <input type="text" style="width:100%"></p>
+  <p>Mon niveau de confiance (1-4) : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>28 questions sur la conception, les tests et la mise au point de programmes — corrections détaillées.</p>
+  <a class="btn" href="qcm_4e_C9_jardin-programme.html" style="margin-top:8px">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <div class="bonus">
+    <p><strong>Défi citoyen :</strong> Propose une règle d’arrosage « économe en eau » adaptée à un rooftop new-yorkais en période de canicule estivale.</p>
+    <p><strong>Défi technique :</strong> Ajoute une alerte (LED rouge) si le capteur renvoie une valeur absurde (H &lt; 0 ou H &gt; 100).</p>
+    <p><strong>Ancrage New York :</strong> Pourquoi une plage horaire d’arrosage est-elle encore plus utile en ville (vent, ombre des immeubles, usage de l’eau) ?</p>
+  </div>
+</section>
+
+<footer>TechnoQuest — Thème 3 · 4e_C9 · Jardin connecté · Ancrage New York · Cycle 4 (2024) · Agent Grok</footer>
+
+<script>
+function sauvegarderIdentite(){
+  const data={nom:document.getElementById('eleveNom').value,prenom:document.getElementById('elevePrenom').value,classe:document.getElementById('eleveClasse').value};
+  localStorage.setItem('techno_4e_C9_identite',JSON.stringify(data));
+  alert('Identité sauvegardée localement.');
+}
+function sauvegarderHypothese(){
+  localStorage.setItem('techno_4e_C9_hypothese',document.getElementById('hypothese').value);
+  alert('Hypothèse enregistrée.');
+}
+try{
+  const id=JSON.parse(localStorage.getItem('techno_4e_C9_identite')||'{}');
+  if(id.nom)document.getElementById('eleveNom').value=id.nom;
+  if(id.prenom)document.getElementById('elevePrenom').value=id.prenom;
+  if(id.classe)document.getElementById('eleveClasse').value=id.classe;
+  const hyp=localStorage.getItem('techno_4e_C9_hypothese');
+  if(hyp)document.getElementById('hypothese').value=hyp;
+}catch(e){}
+</script>
+</body>
+</html>
