@@ -100,6 +100,16 @@ Résultat : le périmètre du lot reste strictement conforme après reprise des 
 - aucune dérive vers les Thèmes 2 ou 3, `.github/`, `_outils/` ou un fichier partagé racine n’a été détectée ;
 - ce contrôle a été ajouté au rapport dans le commit `test(theme1): consigner le recontrôle de périmètre de la PR 51`.
 
+### Reprise de travail après interruption réseau — 25 juillet 2026
+
+- la PR #51 a été réinterrogée après rétablissement de la connexion ;
+- GitHub retourne toujours exactement neuf fichiers modifiés ;
+- chaque chemin est strictement contenu dans le dossier `5e_C1.2` du Thème 1 ;
+- aucun fichier des Thèmes 2 et 3, aucun fichier de `.github/`, aucun script de `_outils/` et aucun fichier racine partagé n’est présent dans le diff ;
+- le contrôle a été effectué via l’API GitHub, sans dépendre du poste local de Pascal.
+
+Résultat : la reprise n’a introduit aucune dérive de périmètre et le lot peut poursuivre sa finalisation sur la même branche.
+
 ## Tests non déclarés comme réussis
 
 Les vérifications suivantes restent à exécuter avant de qualifier le paquet de « complet et validable » :
