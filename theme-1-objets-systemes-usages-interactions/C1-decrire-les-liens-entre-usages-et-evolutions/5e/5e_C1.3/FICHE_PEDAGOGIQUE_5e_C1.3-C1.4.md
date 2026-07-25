@@ -2,88 +2,79 @@
 
 ## Identification
 
-- **Niveau** : 5e
 - **Thème** : 1 — Objets, systèmes, usages et interactions
-- **Compétences technologiques** :
+- **Niveau** : 5e
+- **Compétences** :
   - `5e_C1.3` — Décrire le rôle des systèmes d’information dans le partage d’information.
   - `5e_C1.4` — Recenser des données, les identifier, les classer, les représenter, les stocker et les retrouver dans une arborescence.
-- **Ancrage territorial principal** : Hangzhou 杭州 — *Hángzhōu*, Chine.
-- **Ouverture** : transfert raisonné vers une commune martiniquaise.
-- **Durée indicative** : 3 séances de 55 minutes.
+- **Durée** : 3 séances de 55 minutes
+- **Ancrage territorial principal** : Hangzhou 杭州 — *Hángzhōu*
+- **Transfert** : Fort-de-France ou Sainte-Luce
+- **Données** : scénario et valeurs entièrement simulés
 
 ## Situation déclenchante
 
-Un service fictif de vélos partagés à Hangzhou doit repérer les stations presque vides, organiser les données reçues et transmettre une information utile à l’équipe de réapprovisionnement. Les données utilisées sont entièrement simulées.
+Une équipe scolaire fictive prépare un service de vélos partagés. Les fichiers sont mal nommés, les dossiers mélangés et les données difficiles à exploiter. L’élève doit reconstruire un système d’information compréhensible et réutilisable.
 
 ## Problématique
 
-**Comment un système d’information transforme-t-il des données de stations en informations utiles, puis comment organiser ces données pour les retrouver, les comparer et les partager ?**
+**Comment un système d’information permet-il de collecter, organiser, stocker, retrouver et exploiter des données afin de rendre un service fiable ?**
 
-## Déroulé
+## Séances et productions
 
-### Séance 1 — Comprendre le système d’information
+| Séance | Activité principale | Production attendue |
+|---|---|---|
+| 1 | Identifier les acteurs, données, traitements, supports et informations | Tableau acteur / donnée / traitement / information |
+| 2 | Construire l’arborescence, nommer, versionner et sauvegarder | Capture de l’arborescence + archive ZIP |
+| 3 | Importer, saisir, trier, filtrer et interpréter le CSV | ODS/XLSX transformé + PDF + conclusion |
 
-- identifier les acteurs, les matériels, les logiciels, les données et les règles ;
-- distinguer collecter, stocker, traiter et diffuser ;
-- compléter le schéma du système d’information.
+## 📌 Règle d’or n°7 — CRCN observable, tracé et justifié
 
-**Production** : schéma annoté et tableau « élément / rôle ».
+| Champ | CRCN 1.2 | CRCN 1.3 |
+|---|---|---|
+| **Compétence exacte** | Gérer des données | Traiter des données |
+| **Niveau visé** | 2 | 2 |
+| **Repère verbatim** | « Sauvegarder des fichiers dans l’ordinateur utilisé et dans un espace de stockage partagé et sécurisé, afin de pouvoir les réutiliser. » | « Insérer, saisir et trier des données dans un tableur pour les exploiter. » |
+| **Action observable** | Créer une arborescence, renommer, déplacer et sauvegarder les fichiers dans deux espaces | Insérer une colonne, saisir les statuts, trier et filtrer |
+| **Trace produite** | Capture + ZIP | ODS/XLSX + PDF |
 
-### Séance 2 — Organiser et retrouver les données
-
-- créer une arborescence cohérente ;
-- appliquer une règle de nommage ;
-- distinguer dossier, fichier, nom et extension ;
-- conserver le fichier original.
-
-**Production** : capture ou export PDF de l’arborescence et fichiers correctement nommés.
-
-### Séance 3 — Traiter et interpréter
-
-- ouvrir le CSV simulé ;
-- insérer une colonne de priorité ;
-- saisir les priorités selon une règle fournie ;
-- trier puis filtrer ;
-- rédiger une recommandation et discuter la transférabilité vers la Martinique.
-
-**Production** : fichier ODS/XLSX transformé et export PDF argumenté.
-
-## CRCN observable, tracé et justifié
-
-| Compétence exacte | Niveau visé | Repère pour enseigner | Action observable | Trace produite |
-|---|---:|---|---|---|
-| CRCN 1.2 — Gérer des données | 2 | « Sauvegarder des fichiers dans l’ordinateur utilisé et les retrouver. » | Créer une arborescence, enregistrer les fichiers dans les dossiers prévus et appliquer une règle de nommage. | Capture ou PDF de l’arborescence et ensemble de fichiers correctement classés. |
-| CRCN 1.3 — Traiter des données | 2 | « Insérer, saisir et trier des données dans un tableur pour les exploiter. » | Insérer une colonne, saisir une priorité, trier, filtrer et interpréter les lignes retenues. | Fichier ODS/XLSX modifié et export PDF contenant le tableau filtré et la recommandation. |
-
-**Principe de contrôle** : utiliser un ordinateur n’est pas une compétence. La validation repose sur les transformations visibles et sur les traces conservées.
+**Principe obligatoire :** utiliser un ordinateur n’est pas une compétence. La validation repose sur les opérations visibles et sur la trace remise.
 
 ## Différenciation
 
-- arborescence partiellement fournie pour les élèves ayant besoin d’étayage ;
-- règle de priorité proposée sous forme d’algorithme en langage naturel ;
-- tableau de vocabulaire : donnée, information, traitement, diffusion, dossier, fichier, extension ;
-- approfondissement : proposer une autre règle de priorité et comparer les résultats ;
-- version sans tableur : cartes imprimées à classer, puis tableau papier à filtrer manuellement.
+- **Parcours A** : manipulation complète avec gestionnaire de fichiers, tableur et espace partagé.
+- **Parcours B** : arborescence partiellement préparée et fichier déjà importé.
+- **Parcours C** : classement papier et tableau imprimé ; les connaissances sont travaillées, mais le CRCN n’est pas validé sans trace numérique.
+- **Approfondissement** : ajouter une règle de priorité, justifier son intérêt et proposer un protocole de collecte réel.
 
-## Aides et erreurs fréquentes
-
-- **Aide** : distinguer « trier » — changer l’ordre — et « filtrer » — ne garder que certaines lignes.
-- **Erreur fréquente** : écraser le fichier original au lieu d’enregistrer une copie de travail.
-- **Erreur fréquente** : classer tous les documents dans un seul dossier.
-- **Erreur fréquente** : confondre une donnée brute avec une information déjà interprétée.
-
-## Évaluation
+## Critères de réussite
 
 | Indicateur | Non acquis | En cours | Acquis |
 |---|---|---|---|
-| Décrire le rôle d’un système d’information | Cite seulement un appareil | Identifie plusieurs éléments | Relie acteurs, données, traitements et diffusion |
-| Organiser les données | Fichiers non classés | Classement partiel | Arborescence et nommage cohérents |
-| Traiter les données | Consultation seulement | Une transformation réalisée | Saisie, tri, filtre et interprétation justifiée |
-| Justifier une trace CRCN | Aucune trace | Trace incomplète | Fichier transformé et export clairement identifiés |
+| Décrire le système d’information | Liste d’éléments sans rôle | Quelques rôles identifiés | Acteurs, données, traitements, réseau, stockage et information reliés |
+| Organiser les fichiers | Dossiers vagues ou fichiers mélangés | Arborescence partielle | Structure imposée, noms stables, versions et double sauvegarde |
+| Traiter les données | CSV non transformé | Une partie des opérations | Colonne, saisie, tri, filtre et export vérifiables |
+| Argumenter le transfert | Copie sans adaptation | Une contrainte évoquée | Au moins trois contraintes territoriales justifiées |
+
+## Matériel
+
+- ordinateur avec gestionnaire de fichiers ;
+- LibreOffice Calc ou Excel ;
+- espace partagé sécurisé lorsque disponible ;
+- version papier de secours ;
+- ressources HTML et SVG locales.
 
 ## Sécurité et données personnelles
 
-- aucune donnée personnelle réelle ;
-- jeu de données entièrement simulé ;
-- aucun compte élève obligatoire ;
-- travail possible hors connexion après téléchargement des ressources.
+- aucune donnée personnelle n’est nécessaire ;
+- les identifiants représentent uniquement des vélos fictifs ;
+- aucun mot de passe n’est saisi dans les fichiers d’activité ;
+- les espaces partagés doivent être ceux autorisés par l’établissement.
+
+## Liens
+
+- `sequence_C1.3-C1.4_SI_gestion_donnees.html`
+- `qcm_systemes_information_donnees.html`
+- `synthese_eleve_5e_C1.3-C1.4.html`
+- `synthese_professeur_5e_C1.3-C1.4.html`
+- `donnees_velos_hangzhou_simulees.csv`
