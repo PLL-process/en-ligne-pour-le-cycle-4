@@ -523,3 +523,20 @@ problèmes techniques (démarche de dépannage ordonnée) — chacun avec cartou
 générateur de « trace Pix » à montrer au professeur, hors ligne, listes déroulantes (DYS), sauvegarde
 localStorage. Lien ajouté au bloc Bonus de la séquence 4e_C4. Avis Copilot intégré : le CRCN devient
 VISIBLE dans les pages web elles-mêmes.
+
+## Règle d'or n°8 — Représentations technologiques utiles, progressives et traçables (25/07/2026)
+Pierre angulaire de la discipline, validée par Pascal. Toute représentation d'une ressource du dépôt doit être :
+1. **UTILE** — elle répond à un besoin précis (comprendre, communiquer, concevoir, valider), jamais décorative.
+   Le bon outil pour la bonne question : croquis à main levée pour l'idée, schéma normalisé pour l'explication,
+   diagramme fonctionnel pour l'organisation, modèle 3D/CAO pour la fabrication, graphique pour les données.
+   Une représentation qui n'apprend rien est supprimée.
+2. **PROGRESSIVE** — échelle du cycle : 5e LIT et COMPLÈTE des représentations fournies ; 4e CHOISIT le mode
+   adapté et PRODUIT avec guidage ; 3e ÉLABORE seul (schéma-bloc, croquis coté, algorigramme) et JUSTIFIE son
+   choix. Une même situation monte en gamme d'un niveau à l'autre.
+3. **TRAÇABLE** — l'élève PRODUIT (papier photographié, fichier CAO, capture, export) ; la production est
+   conservable, évaluable, reliée aux compétences (C2 du programme, D1.3 du socle « utiliser et produire des
+   représentations d'objets » / « passer d'un langage à un autre », CRCN 3.2 si numérique). Lire un schéma
+   n'est pas en produire un : les deux se distinguent dans la fiche de séquence.
+4. **CONVENTIONNELLE** — légendes obligatoires, symboles normalisés quand ils existent, et règle n°6 pour
+   les chaînes (information en haut, énergie en bas, l'ordre qui descend).
+La règle n°9 est RÉSERVÉE (annonce de Pascal — à consigner à sa validation).
