@@ -1,41 +1,72 @@
-# Rapport de tests — 5e_C1.3–C1.4
+# Rapport de tests — lot 5e_C1.3–C1.4
 
 Date : 25 juillet 2026
 
 Branche : `codex/theme-1/conformite-5e-c1-3-c1-4`
 
-## Séquence testée
+## Ressources testées
 
-`sequence_C1.3-C1.4_SI_gestion_donnees.html`
+- `sequence_C1.3-C1.4_SI_gestion_donnees.html`
+- `qcm_systemes_information_donnees.html`
+- `donnees_velos_hangzhou_simulees.csv`
+- trois SVG originaux
+- synthèses élève et professeur
 
-## Résultat
+## Séquence — 23 contrôles sur 23 réussis
 
-**23 contrôles sur 23 réussis** sur la version autonome reconstruite.
+- aucune dépendance CSS, JS ou police externe ;
+- titre, mission, situation déclenchante et problématique ;
+- trois séances progressives ;
+- deux blocs CRCN contenant compétence exacte, niveau, repère verbatim, action observable et trace ;
+- principe « utiliser un ordinateur n’est pas une compétence » ;
+- règle d’or n°4 : bilan, bloc QCM unique, bonus, pied de page ;
+- un seul bouton vers le QCM ;
+- liens locaux vers QCM, synthèses, CSV et images ;
+- CSV : 8 lignes de données, 7 colonnes ;
+- règle de priorité vérifiée : V-104, V-105, V-108 et V-112 ;
+- sauvegarde locale des trois réponses textuelles ;
+- aucun débordement à 320, 768 et 1440 px ;
+- PDF A4 généré : 197 265 octets ;
+- aucune erreur console.
 
-## Contrôles réellement exécutés
+## QCM — 35 contrôles sur 35 réussis
 
-- chargement de la page sans dépendance `_assets` ;
-- absence des six références cassées signalées par l’audit ;
-- titre avec ancrage Chine et mission immédiatement lisible ;
-- situation déclenchante, problématique et trois activités progressives ;
-- productions attendues, aides, corrections, exemples et erreurs fréquentes ;
-- deux blocs CRCN contenant chacun : compétence exacte, niveau visé, repère, action observable et trace ;
-- présence de la phrase « utiliser un ordinateur n’est pas une compétence » ;
-- lien vers le CSV local ;
-- présence du fichier CSV et cohérence des colonnes ;
-- deux SVG locaux accessibles ;
-- un seul bouton QCM ;
-- ordre `Bilan → QCM → Bonus → pied de page` ;
-- sauvegarde locale des champs de réponse de la séquence ;
-- affichage sans débordement horizontal à 320 px ;
-- affichage sans débordement horizontal à 768 px ;
-- affichage sans débordement horizontal à 1440 px ;
-- génération d’un PDF A4 ;
-- aucun appel obligatoire à une police, une image ou un script distant.
+- 30 questions et 3 questions illustrées ;
+- répartition des bonnes réponses : A 8, B 8, C 7, D 7 ;
+- quatre champs d’identité ;
+- sept compteurs ;
+- cinq modes de travail ;
+- grille de 30 questions ;
+- minuteur : démarrage, pause et reprise ;
+- mode 10 questions ;
+- révision ciblée « traitement des données » : 9 questions ;
+- mode questions marquées ;
+- identité sauvegardée ;
+- sélection et validation au clavier ;
+- scénario tout juste : 30/30, 20,0/20 ;
+- scénario tout faux : 0/30, 0,0/20 ;
+- scénario mixte : 15/30, 10,0/20 ;
+- réessai des 15 erreurs ;
+- bilan sur cinq catégories ;
+- corrections détaillées : explication, exemple, erreur fréquente, à retenir ;
+- aucun débordement à 320, 768 et 1440 px ;
+- PDF A4 généré : 202 680 octets ;
+- aucune erreur console.
 
-## Données contrôlées
+## Synthèses — 24 contrôles sur 24 réussis
 
-Le fichier `donnees_velos_hangzhou_simulees.csv` contient uniquement des données inventées pour l’apprentissage. Aucune donnée personnelle n’est présente.
+- titre et liens de retour ;
+- affichage à 320, 768 et 1440 px ;
+- aucun débordement après correction du tableau CRCN de la synthèse élève ;
+- aucune erreur console ;
+- contenu aligné sur les trois séances, sans ancien développement Python hors parcours.
+
+## Médias
+
+- trois SVG locaux : environ 1,8 à 3,2 Ko ;
+- textes alternatifs présents ;
+- aucune image externe ;
+- retrait des sept PNG lourds et non documentés.
 
 ## Contrôles non déclarés comme réussis
 
@@ -43,9 +74,8 @@ Le fichier `donnees_velos_hangzhou_simulees.csv` contient uniquement des donnée
 - ouverture du CSV dans LibreOffice Calc sur les postes du collège ;
 - essai tactile sur appareil physique ;
 - impression sur imprimante physique ;
-- validation des liens après publication sur GitHub Pages ;
-- tests du QCM modernisé, qui sera traité séparément dans ce lot avant passage en revue.
+- validation des liens après publication sur GitHub Pages.
 
-## Conclusion provisoire
+## Conclusion
 
-La nouvelle séquence et ses ressources locales sont conformes. Le lot reste en cours tant que le QCM commun, les synthèses, le manifeste et les fichiers d’intégration ne sont pas tous contrôlés.
+Le paquet est fonctionnel, accessible et conforme aux règles d’or n°4 et n°7. La règle n°6 n’est pas applicable : aucune consigne ne demande de tracer les chaînes d’information et d’énergie.
