@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM — Mini-projet 5e</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--text:#e4eaf5;--accent:#61dafb;--ok:#81fba1;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:14px;line-height:1.45}
+.container{max-width:800px;margin:0 auto}h1{color:var(--accent);text-align:center;font-size:1.3em}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}
+.progress{height:8px;background:#0a1b3d;border-radius:4px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,#61dafb,#c68ef2);width:0%}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:600;margin:3px}
+.q{display:none}.q.active{display:block}.options label{display:block;padding:7px 10px;margin:4px 0;background:#0a1b3d;border-radius:8px;cursor:pointer}
+.feedback{margin-top:8px;padding:8px;border-radius:8px;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.12)}.feedback.err{background:rgba(255,123,136,.12)}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🧠 QCM — Mini-projet objet scolaire (5e)</h1>
+<p style="text-align:center;color:#9bbefc">C7 · C8 · C9 · New York · 24 questions</p>
+<div class="card"> <span id="answered">0</span>/24 · Score <span id="score">0</span> · /20 <span id="note">—</span>
+<div class="progress"><div class="bar" id="bar"></div></div></div>
+<div id="questions"></div>
+<div class="card">
+<button class="btn" onclick="prevQ()">←</button>
+<button class="btn" onclick="nextUnanswered()">Non répondue</button>
+<button class="btn" onclick="nextQ()">→</button>
+<button class="btn" onclick="showResult()">Bilan</button>
+</div>
+<div class="card" id="result" style="display:none">
+<div id="finalScore" style="text-align:center;font-size:1.15em"></div>
+<p id="bilan"></p>
+<button class="btn" onclick="retryErrors()">Erreurs</button>
+<a class="btn" href="sequence_5e_C7_mini-projet-objet.html">← Séquence</a>
+</div>
+</div>
+<script>
+const questions=[
+{q:"Par quoi commence un mini-projet ?",opts:["Fabriquer tout de suite","Comprendre le besoin","Choisir la couleur","Ignorer les utilisateurs"],ok:1,exp:"Le besoin guide tout."},
+{q:"Pourquoi deux solutions ?",opts:["Perdre du temps","Mieux choisir ensuite","Interdit d'en faire une","Décorer"],ok:1,exp:"Plusieurs idées = meilleur choix."},
+{q:"Un planning sert à :",opts:["Rien","Organiser les tâches","Remplacer les tests","Éviter de réfléchir"],ok:1,exp:"Moins d'oublis."},
+{q:"Valider, c'est :",opts:["Dire que c'est joli","Tester avec un protocole","Jeter","Ne rien faire"],ok:1,exp:"Test = preuve."},
+{q:"Résultat attendu =",opts:["Une opinion","Ce qui doit se passer","Le prix","Rien"],ok:1,exp:"Sans attendu, on ne juge pas."},
+{q:"LED qui ne s'allume pas →",opts:["Valider quand même","Non conforme + améliorer","Ignorer","Changer d'école"],ok:1,exp:"Écart → amélioration."},
+{q:"Programme simple :",opts:["Que des dessins","SI … ALORS …","Le 230 V","Aucune règle"],ok:1,exp:"Condition + action."},
+{q:"SI occupée → LED rouge ; place libre →",opts:["Toujours rouge","Pas rouge (autre règle)","Court-circuit","Obligé sans SINON"],ok:1,exp:"Définir aussi le cas libre."},
+{q:"Indicateur dans un hall NY utile car :",opts:["Jamais d'élèves","Hall fréquenté : info visible vite","Pas de sacs","Pas besoin d'objets"],ok:1,exp:"Contexte urbain dense."},
+{q:"Mettre au point =",opts:["Abandonner","Corriger après test raté puis retester","Ne jamais tester","Coder sans SI"],ok:1,exp:"Boucle correction."},
+{q:"Choisir un matériau :",opts:["La mode seule","Résistance, facilité, contexte","Le hasard","La pub"],ok:1,exp:"Critères objectifs."},
+{q:"A / B / C =",opts:["Trois notes","Matériel / simulation / papier","Trois langues","Trois profs"],ok:1,exp:"Personne bloqué."},
+{q:"Sécurité :",opts:["Secteur 230 V","TBT ou simulation","Rien","Outils sans règle"],ok:1,exp:"TBT uniquement."},
+{q:"C7 → C8 → C9 :",opts:["Aucun lien","Imaginer → valider → programmer","Programmer d'abord","Valider sans idée"],ok:1,exp:"Chaîne mini-projet."},
+{q:"Production C7 :",opts:["Rien","Planning + 2 solutions + choix","Écouter seulement","Note orale seule"],ok:1,exp:"Preuve écrite."},
+{q:"Protocole vague =",opts:["Parfait","Incomplet","Meilleur","OK sans détail"],ok:1,exp:"Étapes + attendus."},
+{q:"Réinvestir sur un casier =",opts:["Copier sans comprendre","Même logique SI sur un autre objet","Changer de matière","Abandonner"],ok:1,exp:"Transfert."},
+{q:"Sans test =",opts:["Preuve","Hypothèse","Validation","Série industrielle"],ok:1,exp:"Sans test = hypothèse."},
+{q:"Bilan personnel =",opts:["Rien","Appris / sais faire / à revoir","Seule la note","Photo"],ok:1,exp:"Métacognition."},
+{q:"Bouton QCM dans la séquence :",opts:["Dix fois","Une seule fois","Jamais","À chaque activité"],ok:1,exp:"Règle d'or n°4."},
+{q:"Améliorer un objet part de :",opts:["Idée au hasard","Besoin réel de l'école","Publicité","Rien"],ok:1,exp:"Situation ancrée."},
+{q:"LED visible à 2 m teste :",opts:["Le prix","L'usage réel","La marque","Le poids"],ok:1,exp:"Critère d'usage."},
+{q:"CRCN :",opts:["Aucun","Résoudre un problème / créer un contenu simple","Sport seulement","Rien de numérique"],ok:1,exp:"Compétence numérique légère."},
+{q:"Objectif du mini-projet :",opts:["Décorer seulement","Imaginer → tester → règle SI sur un objet réel","Ignorer C8","Remplacer le prof"],ok:1,exp:"Couverture C7-C8-C9."}
+];
+let current=0,answers={};
+try{answers=JSON.parse(localStorage.getItem('t5empq')||'{}')}catch(e){}
+function render(){
+ const c=document.getElementById('questions');c.innerHTML='';
+ questions.forEach((qu,i)=>{const d=document.createElement('div');d.className='card q'+(i===current?' active':'');
+ d.innerHTML='<h3>Q'+(i+1)+'/24</h3><p>'+qu.q+'</p><div class="options">'+qu.opts.map(function(o,j){return '<label><input type="radio" name="q'+i+'" value="'+j+'" '+(answers[i]===j?'checked':'')+' onchange="answer('+i+','+j+')"> '+o+'</label>'}).join('')+'</div><div class="feedback" id="fb'+i+'"></div><button class="btn" onclick="showCorr('+i+')">Correction</button>';
+ c.appendChild(d)});
+ updateStats();
+}
+function answer(i,j){answers[i]=j;localStorage.setItem('t5empq',JSON.stringify(answers));updateStats()}
+function showCorr(i){var fb=document.getElementById('fb'+i),ok=answers[i]===questions[i].ok;fb.className='feedback show '+(ok?'ok':'err');fb.innerHTML=(ok?'✅ ':'❌ <strong>'+questions[i].opts[questions[i].ok]+'</strong><br>')+questions[i].exp}
+function updateStats(){var a=Object.keys(answers).length,c=Object.entries(answers).filter(function(e){return +e[1]===questions[e[0]].ok}).length;answered.textContent=a;score.textContent=c;note.textContent=a?((c/24*20).toFixed(1)):'—';bar.style.width=(a/24*100)+'%'}
+function nextQ(){if(current<23){current++;render()}}function prevQ(){if(current>0){current--;render()}}
+function nextUnanswered(){for(var i=0;i<24;i++)if(answers[i]===undefined){current=i;render();return}showResult()}
+function showResult(){result.style.display='block';var c=Object.entries(answers).filter(function(e){return +e[1]===questions[e[0]].ok}).length;finalScore.textContent=c+'/24 — '+(c/24*20).toFixed(1)+'/20';bilan.textContent=c>=18?'Très bien !':c>=12?'Revois validation et SI.':'Relis la séquence.'}
+function retryErrors(){var e=Object.entries(answers).filter(function(x){return +x[1]!==questions[x[0]].ok}).map(function(x){return +x[0]});if(!e.length){alert('Aucune erreur');return}current=e[0];render();result.style.display='none'}
+render();
+</script>
+</body>
+</html>
