@@ -110,6 +110,15 @@ Résultat : le périmètre du lot reste strictement conforme après reprise des 
 
 Résultat : la reprise n’a introduit aucune dérive de périmètre et le lot peut poursuivre sa finalisation sur la même branche.
 
+### Workflow GitHub de garde de périmètre — 25 juillet 2026
+
+- le workflow `Garde-périmètre des thèmes` a été interrogé pour le commit `84065face2f00d28f5cc53e4a831113038cafe60` ;
+- exécution GitHub Actions n°46, identifiant `30148931090` ;
+- statut : `completed` ;
+- conclusion : `success`.
+
+Résultat : la garde de périmètre automatisée est réellement verte sur le commit contrôlé. Ce résultat ne vaut pas encore pour les futurs commits ajoutant les fichiers racine ou régénérés ; une nouvelle exécution verte sera exigée avant le passage en Ready for review.
+
 ## Tests non déclarés comme réussis
 
 Les vérifications suivantes restent à exécuter avant de qualifier le paquet de « complet et validable » :
