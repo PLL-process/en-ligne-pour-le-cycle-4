@@ -57,35 +57,36 @@ Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directem
 
 ## Test supplémentaire — répartition des bonnes réponses
 
-Le champ d’index de bonne réponse de chacune des 30 questions a été relevé directement dans la banque JavaScript, puis compté par position d’option.
+Le champ d’index de bonne réponse de chacune des 30 questions a été relevé directement dans la banque JavaScript après permutation des options, puis compté par position.
 
 | Position correcte | Nombre observé | Résultat |
 |---|---:|---:|
-| A — index `0` | 10 | ⚠️ Déséquilibré |
-| B — index `1` | 17 | ❌ Surreprésenté |
-| C — index `2` | 3 | ❌ Sous-représenté |
-| D — index `3` | 0 | ❌ Jamais utilisé |
+| A — index `0` | 8 | ✅ Équilibré |
+| B — index `1` | 8 | ✅ Équilibré |
+| C — index `2` | 7 | ✅ Équilibré |
+| D — index `3` | 7 | ✅ Équilibré |
 
-**Bilan du test de répartition : échec.** La banque ne doit pas être livrée en l’état : la position B contient plus de la moitié des bonnes réponses et la position D n’est jamais correcte. Les options et leurs index doivent être permutés sans modifier le contenu pédagogique, puis le comptage doit être réexécuté avant le passage en Ready for review.
+**Bilan du test de répartition : réussi.** La distribution est désormais A/B/C/D = **8/8/7/7**. Le contenu pédagogique et les explications ont été conservés ; seules les positions des options ont été permutées. Correction enregistrée dans le commit `bad96eb3eab736e83e5068986770a5c8658b0cc9`.
 
 ## Résultat — garde de périmètre
 
 | Contrôle exécuté | Résultat | Preuve |
 |---|---:|---|
 | Garde de périmètre GitHub Actions | ✅ Réussi | exécution n°109 sur le commit `321b6882e6afb7916528533542a2b5c5eeda214f` |
+| Liste des fichiers modifiés de la PR | ✅ Réussi | contrôle GitHub du 26/07/2026 : uniquement Thème 1 ; aucun contenu des Thèmes 2 et 3 |
 
 ## Contrôles restant à exécuter avant passage en Ready for review
 
-- équilibrage des positions de bonnes réponses, puis nouveau comptage ;
 - validation HTML avec un outil dédié ;
 - navigation clavier complète dans un navigateur ;
 - essais responsive aux largeurs 320 px, 768 px et 1440 px ;
 - impression A4 ou export PDF ;
 - vérification des contrastes ;
 - tests fonctionnels réels du moteur QCM : identité, sauvegarde, reprise, sept compteurs, minuteur, modes, navigation, corrections, bilan par compétence et impression ;
-- ajout du lot dans `JOURNAL_DES_DECISIONS.md` et `nouveautes.json` ;
-- régénération de l’audit et de l’index par les scripts autorisés.
+- ajout du lot dans `JOURNAL_DES_DECISIONS.md` et `nouveautes.json` racine ;
+- régénération de l’audit et de l’index par les scripts autorisés ;
+- nouvelle garde de périmètre sur le commit final.
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles** et la garde de périmètre était verte sur le commit cité. Le test supplémentaire de distribution des bonnes réponses a toutefois révélé un **défaut bloquant réel** : répartition A/B/C/D = **10/17/3/0**. Le lot reste en brouillon jusqu’à correction de ce déséquilibre, exécution des essais fonctionnels, mise à jour du journal et de `nouveautes.json`, puis régénération des fichiers communs.
+La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
