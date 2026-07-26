@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QCM 5e — Choisir une solution de livraison à Shanghai</title>
+<style>
+:root{font-family:system-ui,sans-serif;line-height:1.5}body{max-width:980px;margin:auto;padding:1rem}header,main,section{margin-block:1rem}.panel,.question,.resultat{border:2px solid currentColor;border-radius:12px;padding:1rem}.identite,.compteurs,.commandes{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}label{font-weight:700}input,select,button{font:inherit;padding:.65rem}button{cursor:pointer;border:2px solid currentColor;border-radius:10px}.reponses label{display:block;font-weight:400;border:1px solid currentColor;border-radius:8px;padding:.6rem;margin:.45rem 0}.correction{margin-top:1rem;padding:.8rem;border-left:5px solid currentColor}.masque{display:none}.navigation{display:flex;gap:.6rem;justify-content:space-between;flex-wrap:wrap}.question-nav{display:flex;gap:.35rem;flex-wrap:wrap}.question-nav button{min-width:2.5rem}.actuelle{outline:4px double currentColor}.marquee{font-weight:700}.badges{display:flex;gap:.5rem;flex-wrap:wrap}.badge{border:1px solid currentColor;border-radius:999px;padding:.2rem .6rem}@media(max-width:520px){body{padding:.5rem}.navigation button{flex:1}}@media print{button,.commandes,.question-nav{display:none!important}.masque{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+<h1>🧠 QCM d’entraînement — Shanghai 上海 Shànghǎi</h1>
+<p>Comparer des solutions techniques, interpréter des données, raisonner sur le cycle de vie et justifier une décision multicritère.</p>
+<div class="badges"><span class="badge">5e</span><span class="badge">C3.1 à C3.4</span><span class="badge">30 questions</span></div>
+<p><a href="sequence_5e_C3.1-C3.4_shanghai.html">← Retour à la séquence</a></p>
+</header>
+<main>
+<section class="panel" aria-labelledby="parametres">
+<h2 id="parametres">Identité et mode de travail</h2>
+<div class="identite">
+<label>Nom<input id="nom" autocomplete="name"></label>
+<label>Classe<input id="classe" value="5e"></label>
+<label>Mode<select id="mode"><option value="entrainement">Entraînement avec correction</option><option value="examen">Examen sans correction immédiate</option></select></label>
+</div>
+<div class="commandes"><button id="reprendre">Reprendre la sauvegarde</button><button id="recommencer">Recommencer</button><button id="imprimer">Imprimer le bilan</button></div>
+</section>
+<section class="panel" aria-live="polite">
+<h2>Progression</h2>
+<div class="compteurs">
+<div>Question <strong id="cQuestion">1/30</strong></div><div>Répondues <strong id="cRepondues">0</strong></div><div>Correctes <strong id="cCorrectes">0</strong></div><div>Incorrectes <strong id="cIncorrectes">0</strong></div><div>Restantes <strong id="cRestantes">30</strong></div><div>À revoir <strong id="cMarquees">0</strong></div><div>Temps <strong id="cTemps">00:00</strong></div>
+</div>
+</section>
+<section id="zoneQuestion" class="question" tabindex="-1"></section>
+<div class="navigation"><button id="precedente">← Précédente</button><button id="marquer">☆ Marquer à revoir</button><button id="valider">Valider la réponse</button><button id="suivante">Suivante →</button></div>
+<nav class="question-nav" id="navigation" aria-label="Accès direct aux questions"></nav>
+<section id="resultat" class="resultat masque" aria-live="polite"></section>
+</main>
+<script>
+const questions=[
+['C3.1','Avant de comparer deux valeurs, quelle vérification est prioritaire ?',['Leur couleur','La grandeur et l’unité','Leur ordre dans le tableau','Le nombre de chiffres'],1,'Deux nombres sont comparables si la grandeur et l’unité sont compatibles.'],
+['C3.1','Quelle donnée indique la masse transportable ?',['Charge utile','Autonomie','Bruit','Rayon de braquage'],0,'La charge utile est la masse maximale transportable.'],
+['C3.1','Pourquoi ne pas additionner 55 km et 18 Wh/km ?',['Valeurs trop petites','Grandeurs différentes','Données simulées','Calcul trop long'],1,'Distance et consommation par distance sont des grandeurs différentes.'],
+['C3.1','Que doit préciser un graphique ?',['Une décoration','Les unités','La marque','Le logiciel'],1,'Les unités rendent les axes interprétables.'],
+['C3.1','« Données simulées » signifie :',['Données secrètes','Données pédagogiques, non commerciales réelles','Données inutiles','Données forcément officielles'],1,'Elles servent à apprendre sans être présentées comme mesures réelles.'],
+['C3.1','Quelle comparaison est rigoureuse ?',['Le robot est meilleur','Le vélo-cargo consomme moins par km dans ce jeu simulé','L’électrique est sans impact','La fourgonnette gagne'],1,'Une comparaison précise l’indicateur et le périmètre.'],
+['C3.1','Peut-on additionner directement une note sur 5 et une note sur 10 ?',['Oui','Non, il faut une échelle commune','Oui pour le même véhicule','Jamais de notes'],1,'Les échelles doivent être harmonisées.'],
+['C3.1','Quelle phrase évite une conclusion excessive ?',['Le vélo-cargo est écologique','Le robot est parfait','La fourgonnette transporte plus mais consomme plus','L’électrique est sans impact'],2,'Une conclusion prudente relie plusieurs indicateurs.'],
+['C3.2','Pour la maniabilité en rues étroites, quels indicateurs choisir ?',['Rayon de braquage et adaptation aux ruelles','Durée de vie et bruit','Masse et recyclage','Autonomie et coût seulement'],0,'Ces deux indicateurs répondent directement à la maniabilité.'],
+['C3.2','Quel graphique compare la consommation de trois solutions ?',['Diagramme en barres','Carte sans légende','Dessin décoratif','Frise'],0,'Les barres comparent clairement des catégories.'],
+['C3.2','Pourquoi éviter deux unités sur un même axe ?',['Économiser l’encre','Éviter une lecture trompeuse','Les axes sont interdits','Le titre suffit'],1,'Un axe doit garder une unité cohérente.'],
+['C3.2','Quelle phrase interprète deux indicateurs ?',['Le robot est petit','La fourgonnette charge plus mais consomme plus','Le vélo existe','Shanghai est une ville'],1,'Elle met en évidence un compromis.'],
+['C3.2','Quel élément n’est pas un critère mesurable ?',['Autonomie en km','Bruit en dBA','J’aime sa forme, sans échelle','Freinage en m'],2,'Une préférence sans échelle n’est pas mesurable.'],
+['C3.2','À quoi sert un tableau comparatif ?',['Cacher les écarts','Organiser plusieurs critères','Remplacer toute justification','Imposer une solution'],1,'Il organise les données pour raisonner.'],
+['C3.2','Un véhicule plus lourd est-il toujours préférable ?',['Oui','Non, cela dépend du besoin','Oui s’il est électrique','Tout objet lourd est interdit'],1,'Une caractéristique n’est pertinente qu’au regard du besoin.'],
+['C3.2','Quel titre est le plus précis ?',['Graphique','Comparaison','Consommation simulée en Wh/km des trois solutions','Shanghai'],2,'Le titre indique grandeur, unité et périmètre.'],
+['C3.3','Quelle étape appartient au cycle de vie ?',['Réparation','Seulement usage','Seulement recyclage','Publicité'],0,'Entretien et réparation prolongent l’usage.'],
+['C3.3','Pourquoi recyclable ne signifie pas automatiquement faible impact ?',['Le recyclage n’existe pas','Il faut considérer tout le cycle de vie','Tous les matériaux sont identiques','Le mot est interdit'],1,'Matériaux, fabrication, transport, usage et fin de vie comptent.'],
+['C3.3','Quel indicateur renseigne la prolongation d’usage ?',['Réparabilité','Couleur','Vitesse du site','Nom du fabricant'],0,'La réparabilité mesure la possibilité de réparer.'],
+['C3.3','Quel compromis est bien formulé ?',['La fourgonnette utilise plus de matière mais transporte plus','Elle est forcément mauvaise','Le vélo n’a aucun impact','Le robot résout tout'],0,'Un compromis présente avantage et limite.'],
+['C3.3','Après utilisation, quelle étape est logique ?',['Entretien ou réparation','Matières premières','QCM','Suppression immédiate'],0,'Réparer peut prolonger la durée de vie.'],
+['C3.3','Pourquoi la durée de vie estimée est-elle utile ?',['Elle remplace tout','Elle aide à raisonner sur les renouvellements','Elle donne la vitesse','Elle indique la pluie'],1,'Elle renseigne les remplacements dans le temps.'],
+['C3.3','Que faire avec des données incomplètes ?',['Signaler les limites et demander des mesures','Choisir au hasard','Inventer','Supprimer les critères'],0,'Une décision responsable explicite les incertitudes.'],
+['C3.4','À quoi sert un coefficient ?',['Pondérer l’importance du critère','Décorer','Changer l’unité','Remplacer la note'],0,'Le coefficient traduit la priorité du critère.'],
+['C3.4','Si la pluie est une contrainte majeure :',['Augmenter son coefficient et justifier','Ignorer','Donner 5 partout','Supprimer la matrice'],0,'La pondération doit traduire le contexte.'],
+['C3.4','Pourquoi deux groupes peuvent-ils classer différemment ?',['La méthode est inutile','Priorités et coefficients différents','Les nombres changent seuls','Le tableau est faux'],1,'Des priorités argumentées peuvent différer.'],
+['C3.4','La matrice remplace-t-elle le jugement ?',['Oui','Non, elle rend le raisonnement visible','Oui si le score est grand','Elle ne doit jamais servir'],1,'C’est une aide à la décision, pas un automatisme.'],
+['C3.4','Quel argument est solide pour Sainte-Luce ?',['Ce qui marche à Shanghai marche partout','Réexaminer pente, pluie, distances et pièces','Les territoires sont identiques','Le coût suffit'],1,'Le transfert exige une adaptation au territoire.'],
+['C3.4','Si deux scores sont proches :',['Analyser critères sensibles et incertitudes','Choisir la première ligne','Additionner les unités','Effacer les coefficients'],0,'Il faut vérifier la robustesse du choix.'],
+['C3.4','Quelle production montre une décision justifiée ?',['Un score seul','Matrice, calculs et argumentaire avec limites','Image sans légende','Nom du véhicule'],1,'La trace doit rendre le raisonnement vérifiable.']
+];
+const etat={index:0,reponses:Array(30).fill(null),validees:Array(30).fill(false),marquees:Array(30).fill(false),debut:Date.now()};
+const cle='qcm-shanghai-c3-v1';
+const $=id=>document.getElementById(id);
+function sauvegarder(){localStorage.setItem(cle,JSON.stringify({...etat,nom:$('nom').value,classe:$('classe').value,mode:$('mode').value}));}
+function afficher(){const q=questions[etat.index],rep=etat.reponses[etat.index];$('zoneQuestion').innerHTML=`<p class="marquee">Question ${etat.index+1} sur 30 · ${q[0]}</p><h2>${q[1]}</h2><div class="reponses">${q[2].map((r,i)=>`<label><input type="radio" name="rep" value="${i}" ${rep===i?'checked':''} ${etat.validees[etat.index]?'disabled':''}> ${r}</label>`).join('')}</div><div id="correction" class="correction ${etat.validees[etat.index]&&$('mode').value==='entrainement'?'':'masque'}"><strong>${rep===q[3]?'Bonne réponse.':'Réponse à revoir.'}</strong> ${q[4]}</div>`;actualiser();$('zoneQuestion').focus();}
+function actualiser(){const repondues=etat.reponses.filter(x=>x!==null).length,correctes=etat.validees.filter((v,i)=>v&&etat.reponses[i]===questions[i][3]).length,incorrectes=etat.validees.filter((v,i)=>v&&etat.reponses[i]!==questions[i][3]).length;$('cQuestion').textContent=`${etat.index+1}/30`;$('cRepondues').textContent=repondues;$('cCorrectes').textContent=correctes;$('cIncorrectes').textContent=incorrectes;$('cRestantes').textContent=30-repondues;$('cMarquees').textContent=etat.marquees.filter(Boolean).length;$('navigation').innerHTML=questions.map((q,i)=>`<button aria-label="Question ${i+1}" class="${i===etat.index?'actuelle':''}" data-i="${i}">${etat.marquees[i]?'☆':''}${i+1}${etat.validees[i]?'✓':''}</button>`).join('');document.querySelectorAll('#navigation button').forEach(b=>b.onclick=()=>{etat.index=Number(b.dataset.i);afficher()});}
+function valider(){const c=document.querySelector('input[name=rep]:checked');if(!c)return;etat.reponses[etat.index]=Number(c.value);etat.validees[etat.index]=true;sauvegarder();afficher();if(etat.validees.every(Boolean))bilan();}
+function bilan(){const par={};questions.forEach((q,i)=>{par[q[0]]??={ok:0,total:0};par[q[0]].total++;if(etat.reponses[i]===q[3])par[q[0]].ok++;});const total=Object.values(par).reduce((s,v)=>s+v.ok,0);$('resultat').classList.remove('masque');$('resultat').innerHTML=`<h2>Bilan</h2><p><strong>${$('nom').value||'Élève'}</strong> — score ${total}/30.</p><ul>${Object.entries(par).map(([c,v])=>`<li>${c} : ${v.ok}/${v.total}</li>`).join('')}</ul><p>Reprends en priorité les compétences sous 70 % et justifie oralement une réponse corrigée.</p>`;}
+document.addEventListener('change',e=>{if(e.target.name==='rep')etat.reponses[etat.index]=Number(e.target.value);sauvegarder();actualiser();});$('valider').onclick=valider;$('precedente').onclick=()=>{etat.index=Math.max(0,etat.index-1);afficher()};$('suivante').onclick=()=>{etat.index=Math.min(29,etat.index+1);afficher()};$('marquer').onclick=()=>{etat.marquees[etat.index]=!etat.marquees[etat.index];sauvegarder();actualiser()};$('recommencer').onclick=()=>{localStorage.removeItem(cle);location.reload()};$('reprendre').onclick=()=>{const s=JSON.parse(localStorage.getItem(cle)||'null');if(s){Object.assign(etat,s);$('nom').value=s.nom||'';$('classe').value=s.classe||'5e';$('mode').value=s.mode||'entrainement';afficher()}};$('imprimer').onclick=()=>{bilan();print()};$('mode').onchange=afficher;document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('suivante').click();if(e.key==='ArrowLeft')$('precedente').click();if(e.key==='Enter'&&e.ctrlKey)valider();});setInterval(()=>{const s=Math.floor((Date.now()-etat.debut)/1000);$('cTemps').textContent=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;},1000);afficher();
+</script>
+</body>
+</html>
