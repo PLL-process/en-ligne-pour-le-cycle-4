@@ -55,6 +55,12 @@ Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directem
 
 **Bilan du contrôle statique du QCM : 16/16 réussis.**
 
+## Résultat — garde de périmètre
+
+| Contrôle exécuté | Résultat | Preuve |
+|---|---:|---|
+| Garde de périmètre GitHub Actions | ✅ Réussi | exécution n°109 sur le commit `321b6882e6afb7916528533542a2b5c5eeda214f` |
+
 ## Contrôles restant à exécuter avant passage en Ready for review
 
 - validation HTML avec un outil dédié ;
@@ -63,10 +69,9 @@ Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directem
 - impression A4 ou export PDF ;
 - vérification des contrastes ;
 - tests fonctionnels réels du moteur QCM : identité, sauvegarde, reprise, sept compteurs, minuteur, modes, navigation, corrections, bilan par compétence et impression ;
-- exécution de la garde de périmètre ;
 - ajout du lot dans `JOURNAL_DES_DECISIONS.md` et `nouveautes.json` ;
 - régénération de l’audit et de l’index par les scripts autorisés.
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent désormais leur structure pédagogique complète. Les contrôles statiques réellement exécutés totalisent **31 réussites sur 31 contrôles**. Le lot reste en brouillon tant que les essais fonctionnels, la garde de périmètre, le journal, `nouveautes.json` et les fichiers générés ne sont pas finalisés.
+La séquence et le QCM séparé possèdent désormais leur structure pédagogique complète. Les contrôles statiques réellement exécutés totalisent **31 réussites sur 31 contrôles** et la garde de périmètre est **verte**. Le lot reste en brouillon tant que les essais fonctionnels, le journal, `nouveautes.json` et les fichiers générés ne sont pas finalisés.
