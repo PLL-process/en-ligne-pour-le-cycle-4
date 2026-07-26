@@ -4,7 +4,8 @@
 **Branche contrôlée :** `codex/theme-1/shanghai-c3-fiche-pedagogique-v1`  
 **Fichiers contrôlés :**
 - `sequence_5e_C3.1-C3.4_shanghai.html` ;
-- `qcm_5e_C3.1-C3.4_shanghai.html`.
+- `qcm_5e_C3.1-C3.4_shanghai.html` ;
+- `nouveautes.json` local du lot.
 
 ## Méthode
 
@@ -81,11 +82,12 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 | Contrôle exécuté | Résultat | Preuve observée |
 |---|---:|---|
 | Relecture de la PR #75 par le connecteur GitHub | ✅ Réussi | PR ouverte, en brouillon, `mergeable: true` |
-| Vérification de la tête de branche | ✅ Réussi | tête observée avant cette actualisation : `baecf034e0c6ca2aa593e8b3b382994c21e08bd0` |
+| Vérification de la tête de branche | ✅ Réussi | tête observée avant cette actualisation : `873ee97ef629812fd6e672b478b7e45292d0ec5a` |
 | Nouvelle énumération du périmètre | ✅ Réussi | 12 chemins modifiés, tous sous `theme-1-objets-systemes-usages-interactions/` |
-| Contrôle des statuts GitHub publiés sur la tête | ℹ️ Aucun statut publié | l’API de statut combiné ne retourne aucun contexte sur cette tête ; ce constat ne remplace pas la garde finale obligatoire |
+| Contrôle du manifeste local NEW | ✅ Réussi | quatre entrées distinctes `5e_C3.1`, `5e_C3.2`, `5e_C3.3`, `5e_C3.4`, durée de badge 21 jours et chemins relatifs cohérents vers la séquence et le QCM |
+| Préservation des statuts de mutualisation | ✅ Réussi | `5e_C3.1` est déclaré `sequence` ; `5e_C3.2` à `5e_C3.4` sont déclarés `mutualisation` |
 
-Cette actualisation ne revendique pas de nouveau test navigateur. Elle confirme seulement l’état GitHub effectivement observé avant le commit documentaire courant.
+Cette actualisation ne revendique pas de nouveau test navigateur. Elle confirme uniquement les contrôles GitHub et documentaires effectivement observés avant le commit courant.
 
 ## Contrôles restant à exécuter avant passage en Ready for review
 
@@ -101,4 +103,4 @@ Cette actualisation ne revendique pas de nouveau test navigateur. Elle confirme 
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. La garde de périmètre de la tête `baa93f4d2e459ba764a2102064760f5daacf3c06` est verte sur l’exécution n°119, et les 12 fichiers alors modifiés restent strictement dans le Thème 1. Le contrôle GitHub supplémentaire a confirmé une PR fusionnable, toujours en brouillon, et un périmètre de 12 fichiers exclusivement dans le Thème 1. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
+La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. La garde de périmètre de la tête `baa93f4d2e459ba764a2102064760f5daacf3c06` est verte sur l’exécution n°119. Le contrôle GitHub du 26/07/2026 confirme une PR fusionnable, toujours en brouillon, avec 12 fichiers exclusivement dans le Thème 1. Le manifeste local NEW contient bien les quatre codes du lot et conserve la distinction entre séquence pilote et mutualisations. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
