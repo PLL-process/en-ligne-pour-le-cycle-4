@@ -76,6 +76,17 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 | Liste des fichiers modifiés de la PR | ✅ Réussi | contrôle GitHub du 26/07/2026 : 12 fichiers, tous situés dans le Thème 1 ; aucun contenu des Thèmes 2 et 3 |
 | État de fusion GitHub avant le présent commit documentaire | ✅ Réussi | PR #75 déclarée fusionnable sans conflit (`mergeable: true`) |
 
+## Actualisation GitHub réellement exécutée le 26/07/2026
+
+| Contrôle exécuté | Résultat | Preuve observée |
+|---|---:|---|
+| Relecture de la PR #75 par le connecteur GitHub | ✅ Réussi | PR ouverte, en brouillon, `mergeable: true` |
+| Vérification de la tête de branche | ✅ Réussi | tête observée avant cette actualisation : `baecf034e0c6ca2aa593e8b3b382994c21e08bd0` |
+| Nouvelle énumération du périmètre | ✅ Réussi | 12 chemins modifiés, tous sous `theme-1-objets-systemes-usages-interactions/` |
+| Contrôle des statuts GitHub publiés sur la tête | ℹ️ Aucun statut publié | l’API de statut combiné ne retourne aucun contexte sur cette tête ; ce constat ne remplace pas la garde finale obligatoire |
+
+Cette actualisation ne revendique pas de nouveau test navigateur. Elle confirme seulement l’état GitHub effectivement observé avant le commit documentaire courant.
+
 ## Contrôles restant à exécuter avant passage en Ready for review
 
 - validation HTML avec un outil dédié ;
@@ -90,4 +101,4 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. La garde de périmètre de la tête `baa93f4d2e459ba764a2102064760f5daacf3c06` est verte sur l’exécution n°119, et les 12 fichiers alors modifiés restent strictement dans le Thème 1. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
+La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. La garde de périmètre de la tête `baa93f4d2e459ba764a2102064760f5daacf3c06` est verte sur l’exécution n°119, et les 12 fichiers alors modifiés restent strictement dans le Thème 1. Le contrôle GitHub supplémentaire a confirmé une PR fusionnable, toujours en brouillon, et un périmètre de 12 fichiers exclusivement dans le Thème 1. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
