@@ -72,7 +72,7 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 
 | Contrôle exécuté | Résultat | Preuve |
 |---|---:|---|
-| Garde de périmètre GitHub Actions | ✅ Réussi | exécution n°109 sur le commit `321b6882e6afb7916528533542a2b5c5eeda214f` |
+| Garde de périmètre GitHub Actions sur la tête actuelle | ✅ Réussi | exécution n°118, workflow `Garde-périmètre des thèmes`, commit `ab6e75b445a3eff497b64fcaf91c5632ac8a0c12` |
 | Liste des fichiers modifiés de la PR | ✅ Réussi | contrôle GitHub du 26/07/2026 : uniquement Thème 1 ; aucun contenu des Thèmes 2 et 3 |
 
 ## Contrôles restant à exécuter avant passage en Ready for review
@@ -89,4 +89,4 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
+La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. La garde de périmètre de la tête actuelle est verte sur l’exécution n°118. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
