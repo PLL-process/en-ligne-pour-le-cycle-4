@@ -55,6 +55,19 @@ Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directem
 
 **Bilan du contrôle statique du QCM : 16/16 réussis.**
 
+## Test supplémentaire — répartition des bonnes réponses
+
+Le champ d’index de bonne réponse de chacune des 30 questions a été relevé directement dans la banque JavaScript, puis compté par position d’option.
+
+| Position correcte | Nombre observé | Résultat |
+|---|---:|---:|
+| A — index `0` | 10 | ⚠️ Déséquilibré |
+| B — index `1` | 17 | ❌ Surreprésenté |
+| C — index `2` | 3 | ❌ Sous-représenté |
+| D — index `3` | 0 | ❌ Jamais utilisé |
+
+**Bilan du test de répartition : échec.** La banque ne doit pas être livrée en l’état : la position B contient plus de la moitié des bonnes réponses et la position D n’est jamais correcte. Les options et leurs index doivent être permutés sans modifier le contenu pédagogique, puis le comptage doit être réexécuté avant le passage en Ready for review.
+
 ## Résultat — garde de périmètre
 
 | Contrôle exécuté | Résultat | Preuve |
@@ -63,6 +76,7 @@ Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directem
 
 ## Contrôles restant à exécuter avant passage en Ready for review
 
+- équilibrage des positions de bonnes réponses, puis nouveau comptage ;
 - validation HTML avec un outil dédié ;
 - navigation clavier complète dans un navigateur ;
 - essais responsive aux largeurs 320 px, 768 px et 1440 px ;
@@ -74,4 +88,4 @@ Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directem
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent désormais leur structure pédagogique complète. Les contrôles statiques réellement exécutés totalisent **31 réussites sur 31 contrôles** et la garde de périmètre est **verte**. Le lot reste en brouillon tant que les essais fonctionnels, le journal, `nouveautes.json` et les fichiers générés ne sont pas finalisés.
+La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles** et la garde de périmètre était verte sur le commit cité. Le test supplémentaire de distribution des bonnes réponses a toutefois révélé un **défaut bloquant réel** : répartition A/B/C/D = **10/17/3/0**. Le lot reste en brouillon jusqu’à correction de ce déséquilibre, exécution des essais fonctionnels, mise à jour du journal et de `nouveautes.json`, puis régénération des fichiers communs.
