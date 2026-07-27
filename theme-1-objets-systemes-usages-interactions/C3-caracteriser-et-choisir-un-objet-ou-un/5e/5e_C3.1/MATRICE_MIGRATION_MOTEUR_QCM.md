@@ -1,8 +1,8 @@
-# Matrice de migration — QCM Shanghai vers le moteur JavaScript commun
+# Matrice de conformité — QCM Shanghai et référence fonctionnelle du Thème 2
 
 ## Objet
 
-Ce document fixe le contrat de migration du fichier `qcm_5e_C3.1-C3.4_shanghai.html` vers le moteur JavaScript commun de référence du Thème 2, sans modifier les contenus du Thème 2 ni créer de moteur concurrent.
+Ce document fixe le contrat de conformité du fichier `qcm_5e_C3.1-C3.4_shanghai.html` par rapport au QCM de référence du Thème 2, sans modifier les contenus du Thème 2 ni créer de moteur concurrent.
 
 ## État réellement observé le 27 juillet 2026
 
@@ -18,9 +18,8 @@ Le fichier QCM de la branche `codex/theme-1/shanghai-c3-fiche-pedagogique-v1` a 
 | Sauvegarde et reprise | logique `localStorage` intégrée |
 | Navigation | séquentielle et directe intégrées |
 | Bilan par compétence | présent |
-| Moteur externe mutualisé | absent |
-| Moteur autonome interne | présent dans un bloc `<script>` |
-| Séparation données / moteur | absente |
+| Architecture JavaScript | moteur fonctionnel interne au fichier |
+| Séparation banque / logique | non exigée par le fichier de référence contrôlé |
 
 ## Audit direct du fichier de référence du Thème 2
 
@@ -30,43 +29,22 @@ Le fichier suivant a été contrôlé directement sur `main` :
 
 Résultat vérifiable :
 
-- l’interface standard attendue est bien présente : identité, sept compteurs, minuteur, modes, navigation, corrections détaillées, reprise, bilan, responsive et impression ;
+- l’interface standard attendue est présente : identité, sept compteurs, minuteur, modes, navigation, corrections détaillées, reprise, bilan, responsive et impression ;
 - le fichier ne charge pas de moteur JavaScript externe partagé ;
 - sa banque de questions et sa logique d’exécution sont intégrées dans un bloc `<script>` interne au même fichier ;
-- aucun chemin de moteur commun externe n’a donc pu être déduit honnêtement de ce fichier de référence.
+- aucun chemin de moteur mutualisé externe n’existe dans cette référence contrôlée.
 
-Conséquence : la migration ne doit pas inventer un chemin de script ni prétendre utiliser une ressource mutualisée inexistante. Le prochain travail doit identifier un autre fichier explicitement désigné comme moteur partagé, ou appliquer fidèlement l’architecture fonctionnelle du QCM de référence sans modifier le Thème 2.
+## Arbitrage technique fondé sur la référence réelle
 
-## Cible obligatoire
+Dans ce dépôt, l’expression « moteur JavaScript commun du Thème 2 » est interprétée comme **le modèle fonctionnel de référence du Thème 2**, et non comme une ressource externe inexistante.
 
-La migration doit conserver la banque de 30 questions et les textes pédagogiques du lot, mais remplacer la logique d’exécution autonome par le moteur commun déjà utilisé dans le Thème 2 dès que son chemin exact aura été établi.
+Conséquences :
 
-Le fichier final doit respecter les points suivants :
-
-1. charger explicitement le moteur commun de référence si une ressource externe réellement existante est identifiée ;
-2. ne contenir aucune copie concurrente des fonctions génériques de sauvegarde, affichage, progression, validation, navigation ou bilan ;
-3. isoler la configuration propre au lot Shanghai : identifiant, titre, niveau, compétences, banque de questions et options d’affichage ;
-4. conserver les 30 corrections détaillées ;
-5. conserver les deux modes de travail ;
-6. conserver les sept compteurs ;
-7. conserver la sauvegarde, la reprise et le recommencement ;
-8. conserver le minuteur, le marquage à revoir et la navigation clavier ;
-9. conserver le bilan par compétence `C3.1` à `C3.4` ;
-10. conserver l’impression et le responsive ;
-11. ne modifier aucun fichier du Thème 2 ;
-12. ne créer aucun second moteur partagé dans le Thème 1.
-
-## Fonctions internes à retirer après branchement effectif du moteur commun
-
-Les fonctions suivantes ont été observées dans le moteur autonome actuel et ne devront plus être redéfinies localement après migration :
-
-- `sauvegarder` ;
-- `afficher` ;
-- `actualiser` ;
-- `valider` ;
-- `bilan`.
-
-Toute autre fonction générique de navigation, minuterie, reprise, impression ou gestion d’état présente dans le bloc interne devra suivre la même règle.
+1. ne pas inventer de balise `<script src="…">` ni de chemin de moteur partagé ;
+2. ne pas modifier le Thème 2 ;
+3. conserver une seule logique d’exécution dans le QCM Shanghai ;
+4. vérifier que cette logique reproduit les fonctions attendues de la référence : identité, sauvegarde, reprise, sept compteurs, minuteur, modes, navigation, corrections détaillées, bilan par compétence, responsive, clavier et impression ;
+5. ne créer aucun second fichier moteur partagé dans le Thème 1.
 
 ## Éléments propres au lot à conserver
 
@@ -79,12 +57,11 @@ Toute autre fonction générique de navigation, minuterie, reprise, impression o
 - vocabulaire Shanghai–Martinique et mention explicite des données simulées ;
 - explications de correction existantes.
 
-## Tests à exécuter après migration
+## Tests fonctionnels restant à exécuter
 
 | Test réel attendu | Critère de réussite |
 |---|---|
 | Chargement de la page | aucune erreur JavaScript dans la console |
-| Chargement du moteur commun | ressource trouvée, aucune erreur 404 |
 | Comptage des questions | 30 questions accessibles |
 | Identité | nom et classe conservés après sauvegarde/reprise |
 | Modes | entraînement et examen produisent les comportements attendus |
@@ -98,15 +75,13 @@ Toute autre fonction générique de navigation, minuterie, reprise, impression o
 | Impression | bilan lisible en A4 |
 | Responsive | contrôlé à 320 px, 768 px et 1440 px |
 | Persistance | sauvegarde, fermeture, réouverture et reprise réussies |
-| Architecture | aucune fonction générique du moteur redéfinie localement |
 
 ## Critère de sortie
 
-La migration ne pourra être déclarée terminée que lorsque :
+La conformité architecturale est considérée comme établie par comparaison directe avec la référence réelle du Thème 2. La PR ne pourra toutefois passer en Ready for review qu’après :
 
-- le chemin exact du moteur commun aura été vérifié sur `main`, ou l’absence de ressource externe aura été formellement arbitrée à partir d’une référence explicite ;
-- le QCM chargera ce moteur si ce moteur existe réellement ;
-- le moteur autonome intégré aura été supprimé seulement après disponibilité d’un remplacement fonctionnel vérifié ;
-- les tests fonctionnels ci-dessus auront réellement été exécutés et consignés dans `RAPPORT_TESTS_REELS.md` ;
-- la garde de périmètre restera verte ;
-- la PR restera limitée au Thème 1 et aux seuls fichiers communs explicitement autorisés.
+- les tests fonctionnels ci-dessus réellement exécutés et consignés dans `RAPPORT_TESTS_REELS.md` ;
+- le rebase sur `origin/main` ;
+- la mise à jour des fichiers racine autorisés ;
+- la régénération de l’audit et de l’index par les scripts autorisés ;
+- une garde de périmètre finale verte.
