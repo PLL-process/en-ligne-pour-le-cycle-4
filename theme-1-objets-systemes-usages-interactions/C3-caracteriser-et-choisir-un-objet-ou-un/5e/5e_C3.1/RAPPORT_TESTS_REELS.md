@@ -1,6 +1,6 @@
 # Rapport des tests réellement exécutés — Shanghai 5e_C3.1 à C3.4
 
-**Date d’exécution :** 2026-07-26  
+**Date d’exécution :** 2026-07-26, actualisation GitHub le 2026-07-27  
 **Branche contrôlée :** `codex/theme-1/shanghai-c3-fiche-pedagogique-v1`  
 **Fichiers contrôlés :**
 - `sequence_5e_C3.1-C3.4_shanghai.html` ;
@@ -77,23 +77,23 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 | Liste des fichiers modifiés de la PR | ✅ Réussi | contrôle GitHub du 26/07/2026 : 12 fichiers, tous situés dans le Thème 1 ; aucun contenu des Thèmes 2 et 3 |
 | État de fusion GitHub avant le présent commit documentaire | ✅ Réussi | PR #75 déclarée fusionnable sans conflit (`mergeable: true`) |
 
-## Actualisation GitHub réellement exécutée le 26/07/2026
+## Actualisation GitHub réellement exécutée le 27/07/2026
 
 | Contrôle exécuté | Résultat | Preuve observée |
 |---|---:|---|
-| Relecture de la PR #75 par le connecteur GitHub | ✅ Réussi | PR ouverte, en brouillon, `mergeable: true` |
-| Vérification de la tête de branche | ✅ Réussi | tête observée : `d4aa9964a9637abf9302dffea3743e9a656fe54f` |
-| Comparaison avec `main` | ✅ Réussi | branche observée à 21 commits en avance et 0 commit en retard |
-| Nouvelle énumération du périmètre | ✅ Réussi | 12 chemins modifiés, tous sous `theme-1-objets-systemes-usages-interactions/` |
+| Relecture de la PR #75 par le connecteur GitHub | ✅ Réussi | PR ouverte, en brouillon et fusionnable sans conflit |
+| Vérification de la tête de branche avant ce commit documentaire | ✅ Réussi | tête observée : `0531b139bcefa106ff965beccfcb466cbb796e4a` |
+| Comparaison avec `main` | ⚠️ Rebase requis | branche observée à 22 commits en avance et 2 commits en retard ; statut GitHub `diverged` |
+| Nouvelle énumération du périmètre | ✅ Réussi | 12 chemins modifiés, tous sous `theme-1-objets-systemes-usages-interactions/C3-.../5e/` |
 | Contrôle des zones interdites | ✅ Réussi | aucun chemin sous `_outils/`, `.github/`, `theme-2-structure-fonctionnement-comportement/` ou `theme-3-creation-conception-realisation-innovations/` |
-| Contrôle du manifeste local NEW | ✅ Réussi | quatre entrées distinctes `5e_C3.1`, `5e_C3.2`, `5e_C3.3`, `5e_C3.4`, durée de badge 21 jours et chemins relatifs cohérents vers la séquence et le QCM |
-| Préservation des statuts de mutualisation | ✅ Réussi | `5e_C3.1` est déclaré `sequence` ; `5e_C3.2` à `5e_C3.4` sont déclarés `mutualisation` |
-| Statut CI sur la tête observée | ℹ️ Aucun statut publié | aucun test CI supplémentaire n’est revendiqué pour `d4aa9964a9637abf9302dffea3743e9a656fe54f` |
+| Taille du lot observée | ✅ Conforme | 12 fichiers ; 918 ajouts ; aucune suppression dans le diff comparé |
+| Statut CI sur la tête observée | ℹ️ Non revendiqué | aucun nouveau test CI n’a été exécuté dans cette actualisation documentaire |
 
-Cette actualisation ne revendique pas de nouveau test navigateur. Elle confirme uniquement les contrôles GitHub et documentaires effectivement observés avant le commit courant.
+Cette actualisation ne revendique aucun nouveau test navigateur. Elle consigne seulement les contrôles GitHub effectivement observés et rend explicite le rebase désormais nécessaire avant livraison.
 
 ## Contrôles restant à exécuter avant passage en Ready for review
 
+- rebaser la branche sur `origin/main` ;
 - validation HTML avec un outil dédié ;
 - navigation clavier complète dans un navigateur ;
 - essais responsive aux largeurs 320 px, 768 px et 1440 px ;
@@ -106,4 +106,4 @@ Cette actualisation ne revendique pas de nouveau test navigateur. Elle confirme 
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**. Le défaut bloquant de distribution des bonnes réponses a été corrigé et le nouveau comptage est **8/8/7/7**. La garde de périmètre de la tête `baa93f4d2e459ba764a2102064760f5daacf3c06` est verte sur l’exécution n°119. Le contrôle GitHub le plus récent confirme une PR fusionnable, toujours en brouillon, avec une branche à **21 commits en avance et 0 en retard**, et 12 fichiers exclusivement dans le Thème 1. Le manifeste local NEW contient bien les quatre codes du lot et conserve la distinction entre séquence pilote et mutualisations. Le lot reste en brouillon jusqu’aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
+La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles** et la répartition des réponses est **8/8/7/7**. La garde de périmètre déjà exécutée est verte sur l’exécution n°119. Le contrôle GitHub du 27 juillet 2026 confirme une PR fusionnable et un périmètre strictement limité au Thème 1, mais la branche est désormais **2 commits en retard sur `main`**. Le lot reste donc en brouillon jusqu’au rebase, aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
