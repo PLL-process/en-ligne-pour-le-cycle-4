@@ -82,8 +82,9 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 | Contrôle exécuté | Résultat | Preuve observée |
 |---|---:|---|
 | Relecture de la PR #75 par le connecteur GitHub | ✅ Réussi | PR ouverte, en brouillon et fusionnable sans conflit |
-| Vérification de la tête de branche avant ce commit documentaire | ✅ Réussi | tête observée : `dd9398dda0d684983cd25d0a9343843ef213f6df` |
-| Comparaison avec `main` | ⚠️ Rebase requis | branche observée à 23 commits en avance et 2 commits en retard ; statut GitHub `diverged` |
+| Vérification de la tête de branche avant cette actualisation | ✅ Réussi | tête observée : `afbe9d15b0ab39e2d7d84b6fc5d5bc4d96c6e101` |
+| Comparaison avec `main` | ⚠️ Rebase requis | branche observée à 24 commits en avance et 2 commits en retard ; statut GitHub `diverged` |
+| Base courante observée | ✅ Vérifié | `main` à `62bea7dbbbafb4950b277174a65640e2dd6d29f9` ; base commune à `5a88c357343cc7116b7af35d6abf6704265149fc` |
 | Nouvelle énumération du périmètre | ✅ Réussi | 12 chemins modifiés, tous sous `theme-1-objets-systemes-usages-interactions/C3-.../5e/` |
 | Contrôle des zones interdites | ✅ Réussi | aucun chemin sous `_outils/`, `.github/`, `theme-2-structure-fonctionnement-comportement/` ou `theme-3-creation-conception-realisation-innovations/` |
 | Détail du lot comparé | ✅ Conforme | 12 fichiers ; 918 ajouts ; aucune suppression |
