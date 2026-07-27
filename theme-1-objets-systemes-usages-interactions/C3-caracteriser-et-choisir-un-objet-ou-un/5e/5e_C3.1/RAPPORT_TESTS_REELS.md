@@ -74,7 +74,7 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 | Contrôle exécuté | Résultat | Preuve |
 |---|---:|---|
 | Garde de périmètre GitHub Actions sur la tête `baa93f4d2e459ba764a2102064760f5daacf3c06` | ✅ Réussi | exécution n°119, workflow `Garde-périmètre des thèmes`, état `completed`, conclusion `success` |
-| Liste des fichiers modifiés de la PR | ✅ Réussi | contrôle GitHub du 26/07/2026 : 12 fichiers, tous situés dans le Thème 1 ; aucun contenu des Thèmes 2 et 3 |
+| Liste des fichiers modifiés de la PR | ✅ Réussi | contrôle GitHub du 27/07/2026 : 12 fichiers, tous situés dans le Thème 1 ; aucun contenu des Thèmes 2 et 3 |
 | État de fusion GitHub avant le présent commit documentaire | ✅ Réussi | PR #75 déclarée fusionnable sans conflit (`mergeable: true`) |
 
 ## Actualisation GitHub réellement exécutée le 27/07/2026
@@ -82,14 +82,14 @@ Le champ d’index de bonne réponse de chacune des 30 questions a été relevé
 | Contrôle exécuté | Résultat | Preuve observée |
 |---|---:|---|
 | Relecture de la PR #75 par le connecteur GitHub | ✅ Réussi | PR ouverte, en brouillon et fusionnable sans conflit |
-| Vérification de la tête de branche avant ce commit documentaire | ✅ Réussi | tête observée : `0531b139bcefa106ff965beccfcb466cbb796e4a` |
-| Comparaison avec `main` | ⚠️ Rebase requis | branche observée à 22 commits en avance et 2 commits en retard ; statut GitHub `diverged` |
+| Vérification de la tête de branche avant ce commit documentaire | ✅ Réussi | tête observée : `dd9398dda0d684983cd25d0a9343843ef213f6df` |
+| Comparaison avec `main` | ⚠️ Rebase requis | branche observée à 23 commits en avance et 2 commits en retard ; statut GitHub `diverged` |
 | Nouvelle énumération du périmètre | ✅ Réussi | 12 chemins modifiés, tous sous `theme-1-objets-systemes-usages-interactions/C3-.../5e/` |
 | Contrôle des zones interdites | ✅ Réussi | aucun chemin sous `_outils/`, `.github/`, `theme-2-structure-fonctionnement-comportement/` ou `theme-3-creation-conception-realisation-innovations/` |
-| Taille du lot observée | ✅ Conforme | 12 fichiers ; 918 ajouts ; aucune suppression dans le diff comparé |
+| Détail du lot comparé | ✅ Conforme | 12 fichiers ; 918 ajouts ; aucune suppression |
 | Statut CI sur la tête observée | ℹ️ Non revendiqué | aucun nouveau test CI n’a été exécuté dans cette actualisation documentaire |
 
-Cette actualisation ne revendique aucun nouveau test navigateur. Elle consigne seulement les contrôles GitHub effectivement observés et rend explicite le rebase désormais nécessaire avant livraison.
+Cette actualisation ne revendique aucun nouveau test navigateur. Elle consigne seulement les contrôles GitHub effectivement observés et rend explicite le rebase nécessaire avant livraison.
 
 ## Contrôles restant à exécuter avant passage en Ready for review
 
