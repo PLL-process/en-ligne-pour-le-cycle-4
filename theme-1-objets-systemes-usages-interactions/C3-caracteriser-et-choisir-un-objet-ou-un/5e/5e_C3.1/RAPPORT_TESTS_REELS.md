@@ -121,9 +121,22 @@ Les quatre liens de chaque pointeur utilisent les mêmes chemins relatifs valide
 
 **Bilan du contrôle des pointeurs : 3/3 fichiers conformes.**
 
+## Test réellement exécuté — conformité au moteur JavaScript commun du Thème 2
+
+Le fichier `qcm_5e_C3.1-C3.4_shanghai.html` a été relu directement depuis la branche le 27/07/2026 afin de vérifier l’exigence « réutiliser le moteur JavaScript de référence du Thème 2, sans moteur concurrent ».
+
+| Contrôle exécuté | Résultat | Preuve observée |
+|---|---:|---|
+| Référence explicite à un moteur JavaScript commun | ❌ Échec | aucune balise `<script src="…">` vers un moteur mutualisé n’est présente |
+| Absence de moteur concurrent intégré au fichier | ❌ Échec | le QCM contient ses propres fonctions `sauvegarder`, `afficher`, `actualiser`, `valider` et `bilan` dans un bloc `<script>` interne |
+| Séparation banque de questions / moteur commun | ❌ Échec | les questions et toute la logique d’exécution sont regroupées dans le même fichier autonome |
+
+**Bilan du contrôle du moteur commun : 0/3 réussi.** Le QCM possède bien les fonctions attendues, mais il ne respecte pas encore l’architecture imposée fondée sur le moteur commun du Thème 2. Cette non-conformité est bloquante pour le passage en Ready for review et doit être corrigée avant les tests fonctionnels finaux.
+
 ## Contrôles restant à exécuter avant passage en Ready for review
 
 - rebaser la branche sur `origin/main` ;
+- migrer le QCM vers le moteur JavaScript commun du Thème 2 et supprimer le moteur concurrent intégré ;
 - validation HTML avec un outil dédié ;
 - navigation clavier complète dans un navigateur ;
 - essais responsive aux largeurs 320 px, 768 px et 1440 px ;
@@ -136,4 +149,4 @@ Les quatre liens de chaque pointeur utilisent les mêmes chemins relatifs valide
 
 ## Conclusion
 
-La séquence, le QCM séparé et le jeu de données CSV possèdent leur structure pédagogique complète. Les contrôles statiques totalisent **37 réussites sur 37 contrôles** : 15 pour la séquence, 16 pour le QCM et 6 pour le CSV. La répartition des réponses est **8/8/7/7** et les trois pointeurs de mutualisation sont conformes. La garde de périmètre déjà exécutée est verte sur l’exécution n°119. Le contrôle GitHub du 27 juillet 2026 confirme un périmètre strictement limité au Thème 1, mais la branche reste à rebaser sur `main`. Le lot demeure donc en brouillon jusqu’au rebase, aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
+La séquence, le QCM séparé et le jeu de données CSV possèdent leur structure pédagogique complète. Les contrôles statiques totalisent **37 réussites sur 37 contrôles** : 15 pour la séquence, 16 pour le QCM et 6 pour le CSV. La répartition des réponses est **8/8/7/7** et les trois pointeurs de mutualisation sont conformes. La garde de périmètre déjà exécutée est verte sur l’exécution n°119. Le contrôle GitHub du 27 juillet 2026 confirme un périmètre strictement limité au Thème 1. En revanche, le contrôle architectural ajouté le 27 juillet relève **3 échecs sur 3** concernant l’usage du moteur JavaScript commun du Thème 2. Le lot demeure donc en brouillon jusqu’à la migration du QCM, au rebase, aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
