@@ -5,12 +5,28 @@
 **Fichiers contrôlés :**
 - `sequence_5e_C3.1-C3.4_shanghai.html` ;
 - `qcm_5e_C3.1-C3.4_shanghai.html` ;
+- `donnees_vehicules_dernier_kilometre_shanghai_simulees.csv` ;
 - `nouveautes.json` local du lot ;
 - les pointeurs `5e_C3.2/README.md`, `5e_C3.3/README.md` et `5e_C3.4/README.md`.
 
 ## Méthode
 
 Contrôle statique manuel effectué sur les contenus UTF-8 récupérés directement depuis la branche GitHub. Ce rapport ne revendique aucun test navigateur, aucune simulation de lecteur d’écran et aucune impression PDF tant que ces essais n’ont pas été réellement exécutés.
+
+## Test réellement exécuté — jeu de données CSV simulées
+
+Le fichier CSV référencé par la séquence et la fiche pédagogique a été récupéré directement depuis la branche puis relu ligne par ligne.
+
+| Contrôle exécuté | Résultat | Preuve observée |
+|---|---:|---|
+| Fichier présent au chemin annoncé | ✅ Réussi | `donnees_vehicules_dernier_kilometre_shanghai_simulees.csv` |
+| Encodage textuel lisible | ✅ Réussi | contenu UTF-8 récupéré par le connecteur GitHub |
+| Séparateur homogène | ✅ Réussi | point-virgule sur l’en-tête et les trois lignes de données |
+| Nombre de solutions | ✅ Réussi | 3 lignes : vélo-cargo, fourgonnette électrique, robot mobile |
+| Cohérence avec les activités | ✅ Réussi | charge utile, autonomie, freinage, braquage, bruit, énergie, durée de vie, réparabilité, matière recyclée, ruelles et pluie |
+| Caractère simulé explicite | ✅ Réussi | nature pédagogique indiquée dans les documents du lot ; aucune donnée commerciale revendiquée |
+
+**Bilan du contrôle CSV : 6/6 réussis.**
 
 ## Résultats — séquence
 
@@ -120,4 +136,4 @@ Les quatre liens de chaque pointeur utilisent les mêmes chemins relatifs valide
 
 ## Conclusion
 
-La séquence et le QCM séparé possèdent leur structure pédagogique complète. Les contrôles statiques de structure totalisent **31 réussites sur 31 contrôles**, la répartition des réponses est **8/8/7/7** et les trois pointeurs de mutualisation sont conformes. La garde de périmètre déjà exécutée est verte sur l’exécution n°119. Le contrôle GitHub du 27 juillet 2026 confirme un périmètre strictement limité au Thème 1, mais la branche reste à rebaser sur `main`. Le lot demeure donc en brouillon jusqu’au rebase, aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
+La séquence, le QCM séparé et le jeu de données CSV possèdent leur structure pédagogique complète. Les contrôles statiques totalisent **37 réussites sur 37 contrôles** : 15 pour la séquence, 16 pour le QCM et 6 pour le CSV. La répartition des réponses est **8/8/7/7** et les trois pointeurs de mutualisation sont conformes. La garde de périmètre déjà exécutée est verte sur l’exécution n°119. Le contrôle GitHub du 27 juillet 2026 confirme un périmètre strictement limité au Thème 1, mais la branche reste à rebaser sur `main`. Le lot demeure donc en brouillon jusqu’au rebase, aux essais fonctionnels réels, à la mise à jour des deux fichiers racine, à la régénération des fichiers communs et à la garde finale.
