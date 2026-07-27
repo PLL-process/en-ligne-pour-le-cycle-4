@@ -22,13 +22,28 @@ Le fichier QCM de la branche `codex/theme-1/shanghai-c3-fiche-pedagogique-v1` a 
 | Moteur autonome interne | présent dans un bloc `<script>` |
 | Séparation données / moteur | absente |
 
+## Audit direct du fichier de référence du Thème 2
+
+Le fichier suivant a été contrôlé directement sur `main` :
+
+`theme-2-structure-fonctionnement-comportement/C5-identifier-un-dysfonctionnement-dun-objet/5e/5e_C5.1/qcm_5e_C5.1-C5.3_depanner_lampadaire.html`
+
+Résultat vérifiable :
+
+- l’interface standard attendue est bien présente : identité, sept compteurs, minuteur, modes, navigation, corrections détaillées, reprise, bilan, responsive et impression ;
+- le fichier ne charge pas de moteur JavaScript externe partagé ;
+- sa banque de questions et sa logique d’exécution sont intégrées dans un bloc `<script>` interne au même fichier ;
+- aucun chemin de moteur commun externe n’a donc pu être déduit honnêtement de ce fichier de référence.
+
+Conséquence : la migration ne doit pas inventer un chemin de script ni prétendre utiliser une ressource mutualisée inexistante. Le prochain travail doit identifier un autre fichier explicitement désigné comme moteur partagé, ou appliquer fidèlement l’architecture fonctionnelle du QCM de référence sans modifier le Thème 2.
+
 ## Cible obligatoire
 
-La migration doit conserver la banque de 30 questions et les textes pédagogiques du lot, mais remplacer la logique d’exécution autonome par le moteur commun déjà utilisé dans le Thème 2.
+La migration doit conserver la banque de 30 questions et les textes pédagogiques du lot, mais remplacer la logique d’exécution autonome par le moteur commun déjà utilisé dans le Thème 2 dès que son chemin exact aura été établi.
 
 Le fichier final doit respecter les points suivants :
 
-1. charger explicitement le moteur commun de référence ;
+1. charger explicitement le moteur commun de référence si une ressource externe réellement existante est identifiée ;
 2. ne contenir aucune copie concurrente des fonctions génériques de sauvegarde, affichage, progression, validation, navigation ou bilan ;
 3. isoler la configuration propre au lot Shanghai : identifiant, titre, niveau, compétences, banque de questions et options d’affichage ;
 4. conserver les 30 corrections détaillées ;
@@ -89,9 +104,9 @@ Toute autre fonction générique de navigation, minuterie, reprise, impression o
 
 La migration ne pourra être déclarée terminée que lorsque :
 
-- le chemin exact du moteur commun aura été vérifié sur `main` ;
-- le QCM chargera ce moteur ;
-- le moteur autonome intégré aura été supprimé ;
+- le chemin exact du moteur commun aura été vérifié sur `main`, ou l’absence de ressource externe aura été formellement arbitrée à partir d’une référence explicite ;
+- le QCM chargera ce moteur si ce moteur existe réellement ;
+- le moteur autonome intégré aura été supprimé seulement après disponibilité d’un remplacement fonctionnel vérifié ;
 - les tests fonctionnels ci-dessus auront réellement été exécutés et consignés dans `RAPPORT_TESTS_REELS.md` ;
 - la garde de périmètre restera verte ;
 - la PR restera limitée au Thème 1 et aux seuls fichiers communs explicitement autorisés.
