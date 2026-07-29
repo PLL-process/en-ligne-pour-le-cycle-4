@@ -12,4 +12,5 @@ Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
 Le code source affiché (programme v1/v2, programme de la bouée) est une création
 originale du lot, en Python réel, avec fonctions fictives explicites
 (lire_capteur, envoyer, activer_*). Alt/desc dans chaque SVG ; symboles
-d'algorigramme conformes à ceux de `_ressources-communes/Images/algorigramme_*.svg`.
+d'algorigramme conformes à ceux de
+`_ressources-communes/Images/Ressources transversales/algorigramme-symbole-*.svg`.

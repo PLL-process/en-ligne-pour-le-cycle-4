@@ -131,7 +131,8 @@ OVERLAY = {
                 "+ activité bonus 2FA + QCM 24 q + README de traçabilité soigné.",
         anomalies="L'activité bonus référence images/tab_key.png et "
                   "images/indentation_error.png : le premier est en fait dans "
-                  "_ressources-communes/Images/, le second n'existe nulle part dans le "
+                  "_ressources-communes/Images/Ressources transversales/"
+                  "touche-tabulation.png, le second n'existe nulle part dans le "
                   "dépôt (lien cassé) ; pas de grille LSU ni de différenciation "
                   "formalisées ; pas de version professeur/inspection séparée.",
         accessibilite="Bonne (V16 annoncée accessible) — à contre-vérifier au clavier.",
@@ -143,7 +144,8 @@ OVERLAY = {
         evaluation=True, correction=True, situation=True, problematique=True,
         qualite="Séquence « Numérique, société, économie, environnement, santé » + QCM 24 q.",
         anomalies="Lien PDF cassé au format DOS 8.3 (DELAGR~1.PDF) — le fichier visé est "
-                  "_ressources-communes/delagrave_affiche_l_ecologie_du_numerique_college.pdf ; "
+                  "_ressources-communes/Ressources pédagogiques/Programme 2024/"
+                  "affiche-ecologie-numerique-delagrave.pdf ; "
                   "cette affiche est un document éditeur (Delagrave) : licence de "
                   "rediffusion À VÉRIFIER ; pas de différenciation.",
         accessibilite="À vérifier.",
