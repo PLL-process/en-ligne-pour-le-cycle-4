@@ -154,8 +154,8 @@ Anomalie mineure : **`_outils/__pycache__/*.pyc` sont versionnés** (à ajouter 
 |---|---|---|
 | `3e_C9.1/vittascience_variables.html` | 17 images en `assets/…` alors qu'elles sont dans `Images/` | remplacement `assets/` → `Images/` (1 passe) |
 | `5e_C1.1/sequence.html` | `C11_exo_tableur_debut.xlsx` (fichier réel : `exo_tableur_debut.xlsx`) + 6 gabarits `{{sensor_icon}}` etc. | corriger le nom ; remplacer les gabarits par de vrais SVG |
-| `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` | `images/tab_key.png` (existe dans `_ressources-communes/Images/`) et `images/indentation_error.png` (**n'existe nulle part**) | chemin relatif vers ressources communes ; recréer l'image manquante |
-| `3e_C1.5/sequence-….html` | `DELAGR~1.PDF` (nom court DOS 8.3) | pointer vers `_ressources-communes/delagrave_….pdf` **après** vérification de la licence |
+| `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` | `images/tab_key.png` (le visuel existe sous `_ressources-communes/Images/Ressources transversales/touche-tabulation.png`) et `images/indentation_error.png` (**n'existe nulle part**) | chemin relatif vers ressources communes ; recréer l'image manquante |
+| `3e_C1.5/sequence-….html` | `DELAGR~1.PDF` (nom court DOS 8.3) | pointer vers `_ressources-communes/Ressources pédagogiques/Programme 2024/affiche-ecologie-numerique-delagrave.pdf` **après** vérification de la licence |
 | `4e_C4.1/qcm_automatisation_premium.html` | gabarit `${q.img}` non résolu | fournir les images ou retirer le champ |
 
 *(Faux positifs exclus : gabarits JavaScript volontaires vérifiés un à un.)*
@@ -170,7 +170,7 @@ Anomalie mineure : **`_outils/__pycache__/*.pyc` sont versionnés** (à ajouter 
    non publiée.
 2. **Licences médias** : aucun `SOURCES_MEDIAS.md` n'existe. À documenter en
    priorité : 9 images réseau de 4e_C4.7 (`*_hd.jpg`), 8 PNG de 5e_C1.3, affiche
-   Delagrave (3e_C1.5), `porte_logique_*.png` et `creative_commons_icons_hd.jpg`
+   Delagrave (3e_C1.5), `porte-logique-*.png` et `icones-creative-commons.jpg`
    des ressources communes, captures Vittascience/mBlock de 3e_C9.1 (captures
    d'interface : usage pédagogique généralement toléré, à consigner quand même).
 3. **Dépendances externes** : Google Fonts (jardin connecté), cdnjs (highlight.js),
