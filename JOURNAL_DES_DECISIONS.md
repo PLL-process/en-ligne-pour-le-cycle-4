@@ -609,3 +609,22 @@ Le registre central des règles d'or (tableau en tête de fichier) est instauré
    page au défilement, liens cibles existants sur disque, un seul bouton QCM
    conservé par séquence, titres conformes à la charte, zéro erreur JS) —
    résultats consignés dans le message de livraison.
+
+## 2026-07-29 — Correctif : recâblage des classeurs 5e/4e (.xlsm) — régression PR #80 (Fable, branche `fable/theme-2/recablage-classeurs-5e-4e`)
+
+1. **Constat (revue du 29/07)** : les classeurs `.xlsm` reconstruits (PR #80)
+   dataient d'avant la mise en ligne des LOTs 07-11 — 5e S4 pointait encore
+   « îlot 5e_C6 🔜 », 5e S6 « À produire », 4e S4/S5/S6 « séquence 🔜 » avec
+   les seuls anciens QCM. Le classeur 3e était intact.
+2. **Correctif appliqué** : 18 cellules recâblées (11 en 5e — S4 : Programmer
+   le lampadaire LOT 07 ; S6 : SOS panne LOT 08 · 7 en 4e — S4/S5 : Le jardin
+   connecté LOT 09 + atelier Pix LOT 13 ; S6 : SOS jardin LOT 10 + Ajuster le
+   programme LOT 11). Méthode : remplacements de SOUS-CHAÎNES ciblés — la
+   pédagogie pré-remplie des déroulés n'est PAS réécrite ; les anciens QCM
+   restent cités « en complément ». Gardes de structure avant écriture
+   (S6!A18, libellés A4/A14) ; abandon si une chaîne attendue manque.
+3. **Banc d'essai (protocole S7) réellement exécuté**, sur copies PUIS
+   contre-vérifié sur les fichiers réels vs origin/main : comparaison cellule
+   à cellule de TOUS les onglets non ciblés = 0 écart ; formules préservées
+   (Calendrier 78/77, Frise 334, Progression 15) ; `vbaProject.bin` identique
+   à l'octet près (macros intactes) ; openpyxl sans `data_only`.
