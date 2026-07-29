@@ -11,8 +11,9 @@
 | 6 | Convention des chaînes : information en haut, énergie en bas | Fondatrices | ✅ En vigueur |
 | 7 | CRCN observable, tracé, justifié | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
 | 8 | Représentations technologiques utiles, progressives, traçables | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
-| 9 | Représentations — formalisation détaillée (cadre d'application) | Codex (Thème 1) | 🔄 PR à fusionner |
-| 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | 🔄 Cette PR |
+| 9 | Représentations — formalisation détaillée (cadre d'application) | Codex (Thème 1) | ✅ Fusionnée (PR #74) |
+| 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | ✅ Fusionnée (PR #72) |
+| 11 | Navigation persistante et retour à l'accueil | ChatGPT (`docs/specifications/regle-or-11-navigation-retour-accueil.md`) | ✅ Fusionnée (PR #76) — appliquée au Thème 2 par le lot d'harmonisation |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -568,3 +569,43 @@ Le fichier `JOURNAL_DES_DECISIONS.md` est la mémoire officielle et l'autorité 
 4. **Accusé de lecture** : un nouveau rédacteur qui rejoint le projet prouve sa lecture en citant la dernière
    entrée du journal.
 Le registre central des règles d'or (tableau en tête de fichier) est instauré par la présente règle.
+
+## 2026-07-29 — Thème 2 · Lot d'harmonisation « titres charte + navigation règle n°11 » (Fable, branche `fable/theme-2/harmonisation-titres-navigation`)
+
+1. **Charte des titres appliquée** (validée par Pascal, carte blanche du 26/07) :
+   les 11 séquences, 11 QCM et l'atelier Pix du Thème 2 portent désormais
+   `Thème 2 · Martinique — <niveau> · S<n> : <nom court>` en h1 et `<title>`
+   (codes entre parenthèses dans le `<title>`). Le `S<n>` est aligné sur les
+   onglets des classeurs de progression : 3e S4 (énergie + station), S5
+   (Internet Sainte-Luce), S6 (SOS station + Programmer l'alerte) ; 4e S4-S5
+   (jardin connecté), S6 (SOS jardin + Ajuster le programme) ; 5e S4-S5
+   (lampadaire), S4 (programmer), S6 (SOS panne). AUCUN nom de fichier ni URL
+   modifié. Les ressources héritées d'autres auteurs (premium, eCall, XXL,
+   algorigrammes, éclairage, arrosage C6.2, DNB 3e_C6.2) sont INTOUCHÉES.
+2. **Règle d'or n°11 appliquée au Thème 2** : barre de navigation collante
+   `⌂ Accueil` sur les 45 pages Fable du thème (+ `← Séquence` sur QCM,
+   synthèses et atelier). Écart assumé et documenté : lien RELATIF vers
+   l'index (et non l'URL absolue de la règle) pour préserver le
+   fonctionnement 100 % hors ligne du gabarit — l'esprit (retour en un clic,
+   clavier, contraste, focus, pas de nouvel onglet, masqué à l'impression)
+   est intégralement respecté. Registre central mis à jour (règles 9, 10, 11
+   → fusionnées).
+3. **METHODE.md enrichie** : préalables obligatoires (journal + registre,
+   lecture de `_ressources-communes/`, doctrine « obligatoire sur classique,
+   bonus sur trouvaille », skills externes = fond / règles d'or = forme) et
+   section « Titres et navigation » documentant la charte.
+4. **REVUE DU THÈME 2 (constats, nouvelle panoplie de skills)** :
+   - Couverture : le Thème 2 (C4/C5/C6 des trois niveaux) est COMPLET —
+     conformité règle n°4 revérifiée sur les LOTs 10 et 11 (un seul bouton
+     QCM, blocs 🧠 et 🎁 présents).
+   - **RÉGRESSION à corriger (hors périmètre de ce lot)** : les nouveaux
+     classeurs `.xlsm` (PR #80) ont PERDU le câblage des séquences récentes —
+     5e S6 sans aucun lien, 4e S4/S5/S6 ne pointant que vers les anciens QCM.
+     À recâbler par un correctif dédié avec banc d'essai openpyxl
+     (protocole du LOT S7). Les liens du classeur 3e sont intacts.
+   - `docs/specifications/` (règle 11) est un emplacement nouveau introduit
+     par ChatGPT ; à confirmer comme convention pour les règles longues.
+5. **Tests réels** : suite Playwright dédiée (navigation visible en haut de
+   page au défilement, liens cibles existants sur disque, un seul bouton QCM
+   conservé par séquence, titres conformes à la charte, zéro erreur JS) —
+   résultats consignés dans le message de livraison.

@@ -6,6 +6,28 @@ Référence des décisions : `JOURNAL_DES_DECISIONS.md` à la racine du dépôt.
 
 ## Pilier 1 — Produire un lot pédagogique premium
 
+### Avant de concevoir (préalables obligatoires)
+
+1. **Lire le journal depuis un main à jour** (règle d'or n°10 : le journal
+   fait foi) et consulter le registre central des règles d'or en tête de
+   fichier — les règles 7 à 11 sont postérieures à ce document.
+2. **Lire `_ressources-communes/`** : documents institutionnels (programme
+   2024, socle, CRCN, cahiers Pix, guides matériels) et sources d'inspiration
+   déposés par Pascal. Toute séquence s'y adosse ; tout CRCN déclaré suit la
+   règle n°7 (compétence exacte + niveau + repère verbatim + action
+   observable + trace).
+3. **Doctrine logicielle : « obligatoire sur classique, bonus sur
+   trouvaille »** — le parcours obligatoire d'une activité repose sur les
+   logiciels classiques que les élèves ont réellement (Tinkercad, ArduBlock,
+   Blockly@rduino, Vittascience, Filius, Cisco Packet Tracer, mBlock,
+   Arduino IDE, Sweet Home 3D, FreeCAD) ; les trouvailles et pilotes
+   (Velcio, Flowcode, Blender, CADAM…) n'apparaissent qu'en bloc 🎁 Bonus.
+4. **Skills externes = FOND, règles d'or = FORME** : les skills
+   pédagogiques installés (explicit-instruction, questioning-discussion,
+   curriculum-assessment-cycle4, self-regulated-learning, k12…) nourrissent
+   la conception ; en cas d'écart de forme, les règles d'or et le présent
+   document font foi.
+
 ### Le lot est un ensemble INDIVISIBLE
 
 Un lot = séquence HTML interactive + QCM séparé (~30 q) + synthèse élève +
@@ -38,6 +60,20 @@ séquence sans son QCM ni ses synthèses.
    en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles,
    la commande au-dessus de la puissance. La disposition EST une leçon :
    elle montre qui commande, sans un mot. »
+
+### Titres et navigation (charte harmonisée, juillet 2026)
+
+- **Charte des titres** (h1 + `<title>`) pour séquences, QCM et ateliers du
+  Thème 2 : `Thème 2 · Martinique — <niveau> · S<n> : <nom court>` — le
+  `S<n>` est ALIGNÉ sur l'onglet du classeur de progression du niveau
+  (S4-S5 quand la séquence couvre deux créneaux ; le `<title>` ajoute les
+  codes entre parenthèses). Les NOMS DE FICHIERS et URLs ne changent
+  JAMAIS (liens déjà câblés).
+- **Navigation (règle d'or n°11)** : chaque page porte une barre collante
+  `⌂ Accueil` (lien RELATIF vers l'index racine — relatif et non absolu
+  pour préserver le fonctionnement hors ligne, esprit de la règle conservé)
+  et, sur les QCM, synthèses et ateliers, `← Séquence`. Clavier, focus
+  visible, masquée à l'impression.
 
 ### La séquence
 
