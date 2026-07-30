@@ -7,14 +7,14 @@
 | 2 | En-tête QCM standard (gabarit LOT 01) | Fondatrices | ✅ En vigueur |
 | 3 | Versions 🅰 réel / 🅱 simulation / 🅲 sans matériel | Fondatrices | ✅ En vigueur |
 | 4 | Blocs élève obligatoires (mission, 🧠 entraînement, 🎁 bonus) | Fondatrices | ✅ En vigueur |
-| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur |
+| 5 | Gouvernance des livraisons (lot indivisible, tests réels) | Fondatrices | ✅ En vigueur — amendée le 30/07/2026 : autonomie de poussée pour Fable (voir entrée du jour) |
 | 6 | Convention des chaînes : information en haut, énergie en bas | Fondatrices | ✅ En vigueur |
 | 7 | CRCN observable, tracé, justifié | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
 | 8 | Représentations technologiques utiles, progressives, traçables | Fable (Thème 2) | ✅ Fusionnée (PR #71) |
 | 9 | Représentations — formalisation détaillée (cadre d'application) | Codex (Thème 1) | ✅ Fusionnée (PR #74) |
 | 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | ✅ Fusionnée (PR #72) |
 | 11 | Navigation persistante et retour à l'accueil | ChatGPT (`docs/specifications/regle-or-11-navigation-retour-accueil.md`) | ✅ Fusionnée (PR #76) — appliquée au Thème 2 par le lot d'harmonisation |
-| 12 | Cycle de vie des ressources héritées (badge 🛠, archivage à la livraison) | Fable, validée par Pascal (30/07/2026) | 🔄 Cette PR |
+| 12 | Cycle de vie des ressources héritées (badge 🛠, archivage à la livraison) | Fable, validée par Pascal (30/07/2026) | ✅ Fusionnée (PR #86) |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -785,3 +785,31 @@ Le trio visuel du voyage est complet : la station, le train, le terminus.
    fonctionnel mais à revoir — pédagogie, ergonomie, design ; refonte prévue
    dans l'arc (le lien variables→robot, salué par Pascal, sera renforcé).
 4. **Tests réels** : suite Playwright dédiée (rapport dans le dossier).
+
+## 2026-07-30 — AMENDEMENT DE LA RÈGLE D'OR N°5 : autonomie de poussée pour Fable (décision Pascal, branche `fable/infra/regle-5-autonomie`)
+
+Pascal amende le volet « livraison » de la règle n°5 : « tu vas pouvoir
+pousser en toute autonomie, vu qu'il n'y a que toi et moi à travailler
+dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
+
+1. **Fable pousse ses branches et ouvre ses PRs en autonomie.** Le circuit
+   bundle → Downloads → poussée manuelle par Pascal sort du chemin nominal ;
+   il reste le plan B documenté (jeton expiré, pont fermé).
+2. **Rien d'autre ne change.** La fusion reste la validation manuelle de
+   Pascal après lecture ; `main` reste protégé ; la garde-périmètre
+   (contrôle `perimetre`) reste en place et ne se contourne jamais ;
+   `.github/`, rulesets et paramètres du dépôt restent à Pascal.
+3. **Le droit est porté par un jeton à grain fin** créé par Pascal le
+   30/07/2026 : dépôt unique `en-ligne-pour-le-cycle-4`, permissions
+   minimales (Contenu et Demandes de tirage en lecture/écriture,
+   Métadonnées en lecture seule, Compte : aucune), expiration 30 jours
+   (29/08/2026). Renouvellement à échéance, sur décision de Pascal.
+4. **Hygiène du secret** : le jeton transite par fichier via le pont
+   (`Downloads/fable_token.txt`, supprimé par Pascal après
+   provisionnement) ; il ne s'écrit jamais dans la conversation, jamais
+   dans le dépôt, jamais dans les rapports. Le bac à sable étant éphémère,
+   une perte se répare en rejouant le provisionnement par fichier.
+5. **Première application : la présente PR**, poussée et ouverte par Fable —
+   l'amendement qui se publie lui-même. (La branche `arc-variables-5e`,
+   d'abord réservée à ce rôle symbolique, avait été poussée et fusionnée
+   entre-temps par Pascal en PR #97 : l'îlot 5e_C9 est en ligne.)
