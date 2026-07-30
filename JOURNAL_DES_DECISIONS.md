@@ -15,7 +15,11 @@
 | 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | ✅ Fusionnée (PR #72) |
 | 11 | Navigation persistante et retour à l'accueil | ChatGPT (`docs/specifications/regle-or-11-navigation-retour-accueil.md`) | ✅ Fusionnée (PR #76) — appliquée au Thème 2 par le lot d'harmonisation |
 | 12 | Cycle de vie des ressources héritées (badge 🛠, archivage à la livraison) | Fable, validée par Pascal (30/07/2026) | ✅ Fusionnée (PR #86) |
-| 13 | Code coloré façon IDE — palette commune des listings Python | Fable, sur demande de Pascal (30/07/2026) | 🔄 PR en cours (branche `fable/theme-3/code-colore-ide`) |
+| 13 | Code coloré façon IDE — palette commune des listings Python | Fable, sur demande de Pascal (30/07/2026) | ✅ Fusionnée (PR #101) |
+| 14 | Aucun exercice muet (retour immédiat gradué : encoches, messages, verrous) | Fable, sur audit de Pascal (30/07/2026) | 🔄 PR en cours (branche `fable/theme-2/regles-14-17`) |
+| 15 | Zéro papier obligatoire (toute production a son champ sauvegardé, Bonus compris) | Fable, sur audit de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
+| 16 | Blocs ↔ Python dans la page (éditeur embarqué, gabarit canonique `_outils/gabarits/`) | Fable, sur décision de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
+| 17 | 55 minutes pleines (densité vérifiée par séance, geste de code par séance de programmation) | Fable, sur audit de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -934,3 +938,42 @@ dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
    Empilement : cette branche contient le volet navigation ; à fusionner
    APRÈS les PR theme-3 du jour (je rebaserai s'il faut réconcilier le
    journal — les deux blocs seront conservés).
+
+
+## 2026-07-30 — RÈGLES D'OR N°14 À 17 : l'audit de Pascal devient loi (branche `fable/theme-2/regles-14-17`)
+
+Pascal, en lisant les séquences (jardin 4e_C6.2, puis 4e_C9 « jardin-programme »
+du Thème 3), a énoncé en une journée ce qui manquait partout. Quatre règles,
+numéros 14-17 réservés au registre (règle n°10) :
+
+1. **N°14 — Aucun exercice muet.** Tout exercice donne un retour immédiat,
+   gradué et bienveillant : encoches ✔/✘ par question (champ coloré), message
+   🎉 « Bravo » / 🟡 « il y a du très bon » / 🔴 « pas de panique » qui invite
+   à re-vérifier, verrous expérientiels pour les gestes (éditeur ouvert, banc
+   exécuté, simulateur déroulé). Un champ libre n'est jamais « corrigé » par
+   simulation : présence vérifiée + sauvegarde + correction à déplier.
+2. **N°15 — Zéro papier obligatoire.** Toute production demandée à l'élève —
+   Bonus et défis COMPRIS — a son champ dans la page, sauvegardé localement
+   (motif : « je tombe sur zéro papier », Pascal). Le cahier reste possible
+   (version 🅲), jamais requis.
+3. **N°16 — Blocs ↔ Python, dans la page.** Toute activité de programmation
+   embarque l'éditeur Vittascience (mode mixte) et fait vivre LES DEUX SENS :
+   construire en blocs → lire le Python généré ; modifier le Python → observer
+   les blocs. Le gabarit canonique vit dans
+   `_outils/gabarits/vittascience_embed.html` (source de vérité unique,
+   CSS et suivi compris) : on l'INJECTE À LA CONCEPTION — jamais d'inclusion
+   dynamique à l'exécution, pour préserver le standard « page monofichier
+   hors ligne » (arbitrage rendu sur l'idée de « routine » de Pascal : oui au
+   gabarit unique, non à l'appel à l'exécution).
+4. **N°17 — 55 minutes pleines.** Une séance = 55 minutes réelles : des
+   activités vérifiées en nombre suffisant (l'audit fondateur : « 3 × 55 min
+   pour 6 questions et 2 curseurs »), un chronométrage indicatif par activité,
+   au moins un GESTE de code vérifié par séance de programmation (ordonner,
+   compléter, écrire), et un Bonus outillé (champ + éditeur) pour les rapides.
+5. **Typographie des problématiques** (au METHODE) : espace insécable avant
+   « ? ; : ! » — jamais de ponctuation orpheline en bout de ligne (signalement
+   Pascal sur le « ? » isolé du 4e_C9).
+6. **Application** : natives dans l'arc variables, le jardin 4e_C6.2 v2 et les
+   retrofits du jour ; les quatre séquences Thème 3 héritées d'une session
+   parallèle (3e_C7, 4e_C7, 4e_C8, 4e_C9 — champs muets, sans éditeur) passent
+   en tête de la file de mise en conformité, 4e_C9 en premier (lot suivant).

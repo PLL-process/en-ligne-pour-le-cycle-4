@@ -253,6 +253,29 @@ reste monochrome (la couleur est réservée aux listings, pour garder sa force).
 Référence : règle d'or n°13 au journal (entrée du 30/07/2026, PR de la
 branche `fable/theme-3/code-colore-ide`).
 
+## L'exercice vivant (règles d'or n°14, 15, 17)
+
+Aucun exercice muet : encoches ✔/✘ par question, messages gradués
+(🎉 / 🟡 / 🔴) qui encouragent à re-vérifier, verrous expérientiels pour les
+gestes. Toute production demandée a son champ sauvegardé dans la page — Bonus
+et défis compris (zéro papier obligatoire ; le cahier reste une option 🅲).
+Une séance remplit ses 55 minutes : chronométrage indicatif par activité,
+au moins un geste de code vérifié (ordonner / compléter / écrire) par séance
+de programmation, Bonus outillé pour les rapides.
+
+## Blocs ↔ Python (règle d'or n°16)
+
+L'éditeur Vittascience embarqué (mode mixte) est le pont : construire en
+blocs → LIRE le Python généré ; modifier le Python → OBSERVER les blocs.
+Gabarit canonique : `_outils/gabarits/vittascience_embed.html` (barre 🧪
+voyante, CSS, suivi `__exp`) — à INJECTER à la conception, jamais à inclure
+dynamiquement (chaque page reste monofichier hors ligne).
+
+## Typographie française des titres et problématiques
+
+Espace insécable (`&nbsp;`) avant « ? ; : ! » dans les titres, problématiques
+et phrases mises en avant — jamais de ponctuation orpheline en bout de ligne.
+
 ## L'esprit de la méthode
 
 Ultra premium, ultra pédagogique : l'élève vit une histoire vraie, manipule
