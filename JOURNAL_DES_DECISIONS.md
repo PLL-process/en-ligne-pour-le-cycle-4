@@ -669,3 +669,17 @@ Le registre central des règles d'or (tableau en tête de fichier) est instauré
    (CSS `.badge-herit`, infobulle) ; `_archive-anciennes-versions/` (déjà
    référencé au pied de l'index) est le lieu d'archivage officiel — aucun
    nouveau dossier créé. Test réel : index régénéré, 9 badges présents.
+
+## 2026-07-30 — Infra : la garde-périmètre apprend la règle n°12 (Fable, branche `fable/infra/garde-regle-12`, poussée par Pascal)
+
+La garde a refusé la PR #87 (arc variables 3e) — À RAISON : elle appliquait le
+régime d'avant la règle n°12. Or l'archivage (`_archive-anciennes-versions/`)
+et les registres transversaux (`_outils/heritees.json`, statuts OVERLAY dans
+`_outils/build_audit.py`) font désormais partie de CHAQUE lot, quel que soit
+le thème. Ces trois chemins rejoignent les fichiers COMMUNS de la garde.
+Le reste du régime est inchangé (`_outils/` complet reste réservé aux
+branches Thème 2 ; `.github/` reste refusé depuis toute branche de thème).
+Vérification réelle : simulation locale du nouveau régime sur les fichiers
+exacts de la PR #87 → 0 refus. Rappel opérationnel : un « Re-run » rejoue
+l'ANCIEN workflow — après fusion du présent correctif, fermer/rouvrir la
+PR #87 pour un nouveau déclenchement.
