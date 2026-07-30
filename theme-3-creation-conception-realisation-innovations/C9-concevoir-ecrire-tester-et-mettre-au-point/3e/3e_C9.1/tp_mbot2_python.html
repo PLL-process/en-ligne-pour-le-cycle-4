@@ -16,6 +16,17 @@ But : métadonnées + styles globaux (thème sombre, cartes, tokens, tableaux…
   --cyan:#67e8f9; --violet:#a78bfa; --gold:#f6c549; --green:#34d399; --red:#ef4444; --orange:#f59e0b;
   --outline:rgba(255,255,255,.16);
 }
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;background:rgba(13,18,38,.93);border-bottom:1px solid var(--outline);backdrop-filter:blur(6px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--outline);border-radius:999px;background:var(--glass);color:var(--muted);font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:var(--cyan);color:var(--cyan)}
+/* règle d'or n°13 — code coloré façon IDE (palette locale du TP) */
+.py-var{color:var(--cyan)}
+.py-str{color:var(--green)}
+.py-num{color:var(--orange)}
+.py-kw{color:var(--violet);font-weight:600}
+.py-op{color:var(--gold);font-weight:600}
+.py-com{color:var(--muted);font-style:italic}
+.py-lno{color:#5b6ea8}
 *{box-sizing:border-box} html,body{margin:0;height:100%}
 body{
   background:
@@ -168,6 +179,7 @@ pre.code, pre.code-correction{background:#0c1224;border:1px solid var(--outline)
 🟦 SECTION 2 — CORPS DU DOCUMENT HTML (tout le contenu visible)
 =========================================================================== -->
 <body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C9.1_variables_types_systemes.html">← Séquence Variables (3e_C9.1)</a></nav>
 <header>
   <h1>✨ TP mBot2 & Python — Séquence complète v4.5 (Élève 3e)</h1>
   <p class="small">Thème sombre • API colorée • Mémento Python • Aides contextuelles • Étiquettes à trous • Score /20</p>
@@ -2472,5 +2484,34 @@ makeTokensDraggable(); // ✅ rend les étiquettes réellement déplaçables
 
 </script>
 <!-- ===================== Fin SECTION 3 — SCRIPT JAVASCRIPT ===================== -->
+<script>
+/* règle d'or n°13 : coloration façon IDE des listings (retrofit — refonte complète prévue, ressource héritée) */
+(function(){
+function pyc(src){
+  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const KW = /^(print|def|return|if|elif|else|while|for|in|and|or|not|True|False|None|import|from|as|time|int|float|str|input|range|break|continue)$/;
+  return src.split("\n").map(line => {
+    let out = "", m;
+    const re = /"[^"]*"|'[^']*'|#.*$|\d+(?:\.\d+)?|[A-Za-z_\u00C0-\u017F][A-Za-z0-9_\u00C0-\u017F]*|\s+|./g;
+    while((m = re.exec(line))){
+      const t = m[0]; let cls = "";
+      if(t[0] === '"' || t[0] === "'") cls = "py-str";
+      else if(t[0] === "#") cls = "py-com";
+      else if(/^\d/.test(t)) cls = "py-num";
+      else if(/^[A-Za-z_\u00C0-\u017F]/.test(t)) cls = KW.test(t) ? "py-kw" : "py-var";
+      else if(/^[=+\-*\/<>%!]/.test(t)) cls = "py-op";
+      out += cls ? '<span class="' + cls + '">' + esc(t) + '</span>' : esc(t);
+    }
+    return out;
+  }).join("\n");
+}
+function colorAll(){
+  document.querySelectorAll("pre:not([data-pyc])").forEach(e => { e.setAttribute("data-pyc","1"); e.innerHTML = pyc(e.textContent); });
+}
+colorAll();
+window.addEventListener("load", colorAll);
+new MutationObserver(() => colorAll()).observe(document.body, {childList: true, subtree: true});
+})();
+</script>
 </body>
 </html>
