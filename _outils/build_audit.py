@@ -246,18 +246,21 @@ OVERLAY = {
                   "d'entraînement plus qu'une séquence au sens du gabarit Jardin connecté.",
     ),
     "3e_C9.1": dict(
-        statut="À CORRIGER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
-        evaluation=True, correction=True, situation=False, problematique=False,
-        qualite="Riche : vittascience_variables.html (97 Ko, évaluation interactive "
-                "Python/Vittascience), TP mBot2 Python (114 Ko), QCM 24 q, 15 images, "
-                "README complet.",
-        anomalies="17 liens d'images cassés dans vittascience_variables.html : le HTML "
-                  "référence assets/… alors que les fichiers sont dans Images/ "
-                  "(correction en une passe de remplacement) ; capture-06, capture-07 et "
-                  "capture-02→05 partiellement non référencées à revérifier après "
-                  "correction ; pas de situation déclenchante ni de problématique ; "
-                  "vidéo YouTube intégrée (dépendance externe + RGPD à évaluer).",
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Atelier « Variables, types et systèmes » (Arc variables, Thème 3 · "
+                "New York) : refonte complète de la ressource Vittascience héritée — "
+                "4 séances, 5 activités, simulateur de mémoire pas-à-pas (verrou 6 "
+                "étapes), motif prédire→tester→reporter sur l'éditeur Vittascience "
+                "EMBARQUÉ (3 iframes mode mixte), chasse aux 3 bugs du panneau MTA, "
+                "banc de mise au point 4 tests avec cas limite, QCM 30 q (8/8/7/7, "
+                "3 illustrées), synthèses, 3 SVG originaux CC0, TP mBot2 conservé "
+                "en prolongement 🅰.",
+        anomalies="Ancienne ressource archivée (règle n°12) avec stub de redirection "
+                  "sur l'URL historique ; qcm_python_variables.html (24 q) hérité "
+                  "encore en place — remplacement possible par le QCM 30 q ; l'iframe "
+                  "Vittascience exige une connexion (versions 🅲 hors ligne prévues).",
     ),
     # ── Thème 2 · LOT 01 (Fable, 2026-07-22) : Station d'alerte cyclonique ──
     "3e_C4.3": dict(
