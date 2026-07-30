@@ -813,3 +813,22 @@ dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
    l'amendement qui se publie lui-même. (La branche `arc-variables-5e`,
    d'abord réservée à ce rôle symbolique, avait été poussée et fusionnée
    entre-temps par Pascal en PR #97 : l'îlot 5e_C9 est en ligne.)
+
+## 2026-07-30 — Thème 3 · Ergonomie des éditeurs embarqués 🧪 (Fable, branche `fable/theme-3/ergonomie-editeurs-vs`)
+
+1. **Retour de Pascal (deux fois — signal fort)** : sur l'atelier 3e_C9.1, ni
+   l'éditeur Vittascience embarqué, ni le simulateur de mémoire, ni les tables
+   de suivi ne se laissent trouver. Diagnostic : les barres `details.vs`
+   repliées ressemblaient à des lignes discrètes ; rien n'indiquait qu'un
+   éditeur complet dort dessous.
+2. **Correctif (séquences 3e_C9.1 et 5e_C9.1, mêmes styles)** : barres 🧪
+   restylées — bordure cyan, halo, appel « ▼ CLIQUE ICI — l'éditeur Python
+   s'ouvre dans la page, rien à installer » en pulsation douce (désactivée si
+   `prefers-reduced-motion`), bascule « ▲ replier » à l'ouverture. Le bloc
+   « façons de vivre l'atelier » nomme désormais l'EMPLACEMENT de chaque
+   outil (séance + activité du simulateur, des tables de suivi, des barres 🧪).
+3. **Tests réels** : suite ciblée 15/15 (styles calculés, pulsation, dépliage,
+   verrou `__exp.vs1`, mentions) + régression complète 5e 27/27. La suite 3e
+   d'origine a péri dans la réinitialisation du bac à sable (à reconstituer).
+4. **Première livraison du circuit autonome** (règle n°5 amendée, PR #98) :
+   branche poussée et PR ouverte par Fable ; lecture et fusion par Pascal.
