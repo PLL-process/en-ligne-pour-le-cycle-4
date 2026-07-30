@@ -906,3 +906,31 @@ dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
 5. **Tests réels** : suite retrofit 11/11 (éditeurs du Bonus en place, nav
    du TP, cibles des liens, 23/23 listings présents colorés, zéro erreur
    JS) + régressions 17/17, 11/11, 27/27, 15/15.
+
+## 2026-07-30 — Thème 2 · Densification du « Jardin connecté » 4e_C6.2 (Fable, branche `fable/theme-2/jardin-densification`, empilée sur `jardin-navigation`)
+
+1. **Audit de Pascal, implacable** : 3 séances de 55 min ne totalisaient que
+   6 questions et 2 curseurs, sans AUCUN code à toucher (ni blocs ni Python)
+   pour une compétence nommée « COMPLÉTER UN PROGRAMME » ; et le « niveau de
+   maîtrise visé » restait imprécis. Ses trois formats demandés : code
+   prérempli, blocs en désordre à ordonner, Python à trous.
+2. **Refonte v2 (règle n°12)** : v1 archivée dans `_archive-anciennes-versions/
+   C6-comprendre-et-modifier-un-programme-associe/4e_C6.2/` (+ README) ; URL
+   et nom de fichier INCHANGÉS. La v2 garde l'histoire, les 3 séances, le
+   simulateur de pompe et la fiche professeur (code GJEP, assumé « loquet de
+   confort » avec avertissement), et passe à **8 activités vérifiées** :
+   chaîne d'info · capteur analogique 0-1023 → % · **blocs en désordre**
+   (table de positions, DYS-compatible) · décision + cas frontière ·
+   **Python à trous** (3 trous dans le programme FOURNI) · banc de tests
+   T1/T2/T3 (frontière 30 pile) · cahier des charges avec preuves · impact.
+   3 éditeurs Vittascience embarqués (S1, S2, Bonus), verrous expérientiels,
+   encoches ✔/✘, moteur de sauvegarde KEY, règles 4/6/7/11/13 natives.
+3. **Référentiel précisé** : « niveau de maîtrise visé » détaillé par séance
+   (découverte → consolidation → validation-évaluation LSU), capacité
+   observable reformulée (remettre en ordre, compléter, exécuter, prouver).
+4. **Titre charte** : « Thème 2 · Martinique — 4e · Atelier : Le jardin
+   connecté — arrosage automatique (4e_C6.2) ».
+5. **Tests réels** : suite dédiée **27/27** (rapport dans le dossier).
+   Empilement : cette branche contient le volet navigation ; à fusionner
+   APRÈS les PR theme-3 du jour (je rebaserai s'il faut réconcilier le
+   journal — les deux blocs seront conservés).
