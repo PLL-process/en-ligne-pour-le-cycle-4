@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · New York — 5e · Atelier : La boîte étiquetée (5e_C9.1 → C9.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+
+figure{width:100%;margin:14px 0}
+figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
+details.vs{border:1.5px solid #274a8a;border-radius:12px;margin:14px 0;background:#0a1b3d}
+details.vs>summary{cursor:pointer;padding:12px 16px;font-weight:600;color:#61dafb;list-style:none}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:#0d2347}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
+.mem-wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1.2fr);gap:14px;margin:12px 0}
+@media(max-width:680px){.mem-wrap{grid-template-columns:1fr}}
+.mem-code{background:#08132c;border:1px solid #274a8a;border-radius:10px;padding:10px;font-family:'Fira Code',monospace;font-size:.95em}
+.mem-code div{padding:5px 8px;border-radius:6px}
+.mem-code div.cur{background:#173666;outline:1.5px solid #ffd66b}
+.mem-boxes{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;background:#0d2347;border:1px solid #c68ef2;border-radius:10px;padding:14px}
+.mem-box{min-width:104px;border:2px solid #61dafb;border-radius:8px;background:#0a1b3d;text-align:center;padding-bottom:8px}
+.mem-box .lbl{display:block;background:#173666;color:#61dafb;font-weight:700;font-size:.8em;border-radius:6px 6px 0 0;padding:3px}
+.mem-box .val{font-family:'Fira Code',monospace;font-size:1.3em;color:#ffd66b;display:block;padding:8px 6px 0}
+.mem-box.chg .val{color:#81fba1}
+.mem-ecran{margin-top:10px;background:#111;border:2px solid #ffd66b;border-radius:8px;color:#ffb454;font-family:'Fira Code',monospace;padding:8px 12px;min-height:1.4em}
+.bench{border:1px solid #274a8a;border-radius:12px;overflow:hidden;margin:12px 0}
+.bench table{width:100%;border-collapse:collapse;font-size:.9em}
+.bench th,.bench td{border-bottom:1px solid #274a8a;padding:8px 10px;text-align:center}
+.bench th{background:#173666;color:#61dafb}
+.bench .res{font-weight:700}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>Thème 3 · New York — 5e · Atelier : La boîte étiquetée</h1>
+<p class="subtitle">Le compteur du Cyclone, le grand-huit centenaire de Coney Island, affiche n'importe quoi — apprends à lire un programme comme un technicien</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C9.1 → C9.3</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation</span>
+  <span class="badge socle">Socle : D1.3, D2, D4 · CRCN 3.4 Programmer (Niv. 1-2)</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Coney Island, au bout de la ligne Q du métro de New York.</b> Là, face à l'océan, tourne
+    depuis 1927 le <b>Cyclone</b> : un grand-huit en bois, classé monument historique, que les
+    New-Yorkais adorent. Un train de <b>24 places</b>, des files d'attente immenses… et un
+    <b>compteur de places libres</b> flambant neuf, installé cet été.</p>
+    <p>Sauf que le compteur délire : il affiche <b>« 87 places libres »</b> pour un train de 24 sièges,
+    et parfois la barrière laisse entrer des visiteurs alors que le train est COMPLET. Le responsable
+    du parc écrit à votre classe, jumelée avec une école de Brooklyn : <b>« Le programme est court,
+    il est joint à ce message. Quelqu'un peut-il le LIRE et me dire ce qui ne va pas ? »</b></p>
+    <p>Lire un programme, le tester, le corriger : c'est un métier — et il commence par un secret
+    que 9 collégiens sur 10 ignorent : <b>la variable, une simple boîte étiquetée</b>.</p>
+  </div>
+  <figure>
+    <img class="figure" src="../../3e/3e_C9.1/Images/coney_island_stillwell_entree_ccby.jpg" alt="L'entrée de la station Coney Island–Stillwell Avenue avec les grandes lettres CONEY ISLAND sur la façade historique" loading="lazy">
+    <figcaption>Ton terrain de mission : Coney Island, terminus de la ligne Q — sa gare de 1919, sa plage… et son grand-huit. <span style="color:#5b7bb8">Photo : Kidfly182, licence CC BY 4.0, via Wikimedia Commons — image redimensionnée.</span></figcaption>
+  </figure>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment lire un programme fourni, le tester pour vérifier qu'il répond au besoin,
+  puis le modifier et le régler — sans rien casser ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> d'après toi, comment un programme peut-il « compter » les places restantes du manège ? Où garde-t-il le nombre en mémoire ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre l'atelier</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience relié à une carte réelle (<b>très basse tension uniquement</b>) — une LED joue la barrière.</p>
+    <p>🅱 <b>En simulation</b> : le simulateur de mémoire de la page + l'éditeur Python Vittascience <b>embarqué</b>. C'est le parcours principal.</p>
+    <p>🅲 <b>Sans matériel</b> : les schémas + les tables de suivi à compléter au cahier.</p>
+  </div>
+  <div class="retenir"><b>📡 La méthode de l'atelier — prédire → tester → reporter :</b> tu PRÉDIS d'abord
+  (sans ordinateur), tu TESTES ensuite, tu REPORTES ce que tu as vu. Se tromper en prédisant
+  n'enlève rien : c'est là qu'on apprend le plus.</div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — La boîte<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Lire et tester<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Modifier et régler<span id="done-s3"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>📦 Séance 1 — La variable : une boîte étiquetée (5e_C9.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : où le programme range-t-il le nombre de places — et que devient l'ancien nombre ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Exécute le compteur À LA MAIN</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> découvrir que chaque variable est une boîte étiquetée, et que le signe = RANGE une valeur dedans.</div>
+      <div><b>Compétence :</b> 5e_C9.1 (analyser un programme simple fourni).</div>
+      <div><b>Production attendue :</b> les 4 étapes exécutées + 3 réponses.</div>
+      <div><b>Ressources :</b> le document 1 + le simulateur.</div>
+    </div>
+    <figure>
+      <object class="figure" data="Images/compteur_cyclone_boites.svg" type="image/svg+xml" aria-label="Le compteur du Cyclone : le programme, les boîtes de la mémoire, le panneau" style="width:100%"></object>
+      <figcaption>Document 1 — Le programme, la mémoire (des boîtes étiquetées), le panneau.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> clique sur <b>« ▶ Étape suivante »</b> pour exécuter le programme
+    du compteur LIGNE PAR LIGNE. Regarde les boîtes se remplir et changer. Déroule les 4 étapes
+    (c'est ton badge 🔓), puis réponds.</div>
+    <div class="mem-wrap">
+      <div class="mem-code" id="memCode" aria-label="Programme à exécuter pas à pas">
+        <div data-l="0">places = 24</div>
+        <div data-l="1">montes = 3</div>
+        <div data-l="2">places = places - montes</div>
+        <div data-l="3">print(places)</div>
+      </div>
+      <div>
+        <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:#5b7bb8">— la mémoire est vide : lance l'exécution —</em></div>
+        <div class="mem-ecran" id="memEcran" aria-label="Écran du panneau"></div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="memNext" type="button">▶ Étape suivante</button>
+          <button class="btn ghost" id="memRestart" type="button">↺ Recommencer</button>
+          <span id="memBadge" style="align-self:center;color:var(--ok);font-weight:700"></span>
+        </div>
+      </div>
+    </div>
+    <div class="exo">
+      <label>1. Après la ligne 3, la boîte <code>places</code> contient :
+      <select id="a1q1"><option value="">— je choisis —</option><option>24</option><option>21</option><option>24 et 21</option><option>3</option></select></label>
+      <label>2. Où est passé le 24 qui était dans la boîte ?
+      <select id="a1q2"><option value="">— je choisis —</option><option>il a été REMPLACÉ par 21 — une boîte ne garde qu'UNE valeur</option><option>il est caché derrière le 21</option><option>il est parti dans la boîte montes</option><option>il s'affiche à l'écran</option></select></label>
+      <label>3. En Python, le signe <code>=</code> veut dire :
+      <select id="a1q3"><option value="">— je choisis —</option><option>« est égal à », comme en maths</option><option>« RANGE cette valeur dans la boîte »</option><option>« compare les deux nombres »</option><option>« affiche le résultat »</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Rejoue le simulateur et regarde UNIQUEMENT la boîte <code>places</code> à la ligne 3 : combien de nombres vois-tu dedans en même temps ?</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Ligne 3 : Python calcule d'abord la partie DROITE (places − montes = 24 − 3 = 21), puis il RANGE 21 dans la boîte de gauche. Le 24 est remplacé : perdu, comme quand tu réécris par-dessus un mot effacé.</p></details>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+      <p>1. <b>21</b> (24 − 3). 2. Le 24 est <b>remplacé</b> : une boîte ne contient jamais qu'une seule
+      valeur. 3. <code>=</code> signifie <b>« range dans la boîte »</b> — c'est LE point qui différencie
+      Python des maths, et la clé de tout l'atelier.</p>
+      <p><b>Erreur classique :</b> croire que la boîte « se souvient » des anciennes valeurs. Non :
+      pour garder une trace, il faudrait la recopier AVANT dans une autre boîte.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> une variable = une boîte avec une ÉTIQUETTE (son nom) et UNE valeur. Le signe <code>=</code> RANGE (et remplace).</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> je peux dire ce que contient chaque boîte après chaque ligne.</p>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>La table de suivi — ta méthode du doigt</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> suivre un programme SANS ordinateur, avec une table (une colonne par boîte).</div>
+      <div><b>Compétence :</b> 5e_C9.1.</div>
+      <div><b>Production attendue :</b> 4 cases de la table.</div>
+      <div><b>Ressources :</b> ton doigt, ta tête — pas l'ordinateur.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> une deuxième journée au Cyclone. SANS exécuter, suis les boîtes
+    ligne par ligne avec ton doigt et complète.</div>
+    <pre class="code">places = 24
+montes = 5
+places = places - montes
+descendus = 2
+places = places + descendus</pre>
+    <div class="exo">
+      <label>1. Après la ligne 3, <code>places</code> vaut :
+      <select id="a2q1"><option value="">—</option><option>24</option><option>19</option><option>29</option><option>5</option></select></label>
+      <label>2. Que fait la ligne 5 ?
+      <select id="a2q2"><option value="">—</option><option>elle AJOUTE les 2 places libérées par ceux qui descendent</option><option>elle enlève encore 2 places</option><option>elle efface la boîte places</option><option>elle affiche le résultat</option></select></label>
+      <label>3. À la fin, <code>places</code> vaut :
+      <select id="a2q3"><option value="">—</option><option>17</option><option>19</option><option>21</option><option>large : 24</option></select></label>
+      <label>4. Combien de fois le contenu de la boîte <code>places</code> a-t-il changé (ligne 1 comprise) ?
+      <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais deux colonnes au brouillon : <code>places</code> et <code>montes/descendus</code>. Remplis ligne par ligne, sans sauter.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>L3 : 24 − 5 = 19 → dans places. L5 : 19 + 2 = 21 → dans places. La boîte a reçu 24, puis 19, puis 21 : trois rangements.</p></details>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>1. <b>19</b>. 2. La ligne 5 <b>ajoute</b> les places libérées — des visiteurs descendent, des sièges
+      se libèrent. 3. <b>21</b>. 4. <b>3 fois</b> (24 → 19 → 21). Tu viens de lire un vrai petit programme
+      de gestion — avec la seule méthode qui ne trompe jamais : la table de suivi.</p>
+      <p><b>Erreur classique :</b> oublier que la ligne 5 repart de 19 (la valeur COURANTE), pas de 24.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> pour lire un programme : la TABLE DE SUIVI — une colonne par boîte, une ligne par instruction, le doigt qui suit.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> ma table donne le même résultat que l'ordinateur (vérifie-le en séance 2 !).</p>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🔎 Séance 2 — Lire et TESTER le programme fourni (5e_C9.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : le programme du responsable répond-il au besoin ? Comment le PROUVER ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter, dans l'éditeur embarqué</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> exécuter tes premiers programmes dans le VRAI éditeur — et découvrir le piège des guillemets.</div>
+      <div><b>Compétence :</b> 5e_C9.1 · CRCN 3.4 (Niv. 1-2) — trace : tes reports enregistrés dans la page.</div>
+      <div><b>Production attendue :</b> 2 prédictions + 2 tests réels + 2 reports.</div>
+      <div><b>Ressources :</b> l'éditeur Python Vittascience ci-dessous.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> ① PRÉDIS chaque résultat. ② OUVRE l'éditeur, recopie, exécute.
+    ③ REPORTE ce que la console affiche vraiment.</div>
+    <div class="exo">
+      <p><b>Expérience A :</b> <code>print(20 + 4)</code></p>
+      <label>① Je prédis :
+      <select id="a3p1"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
+      <p><b>Expérience B :</b> <code>print("20" + "4")</code></p>
+      <label>① Je prédis :
+      <select id="a3p2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
+    </div>
+    <details class="vs" id="vs1">
+      <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes deux expériences ici</summary>
+      <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. Recopie, puis ▶. (L'éditeur a besoin d'Internet ; tout le reste de la page marche hors ligne.)</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué"></iframe>
+    </details>
+    <div class="exo">
+      <p><b>③ Je reporte :</b></p>
+      <label>Expérience A a affiché :
+      <select id="a3r1"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
+      <label>Expérience B a affiché :
+      <select id="a3r2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
+      <label>Conclusion — entre guillemets, « 20 » et « 4 » sont :
+      <select id="a3r3"><option value="">—</option><option>des nombres qu'on additionne</option><option>du TEXTE que le + COLLE bout à bout</option><option>des erreurs</option><option>des noms de boîtes</option></select></label>
+      <label>Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…
+      <select id="a3r4"><option value="">—</option><option>des guillemets autour des nombres</option><option>trop de visiteurs</option><option>la mauvaise étiquette de boîte</option><option>un écran trop petit</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde bien les guillemets. En Python, TOUT ce qui est entre guillemets est du TEXTE — même des chiffres.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Sans éditeur (version 🅲) : applique la règle. 20 + 4 = deux nombres → addition → 24. « 20 » + « 4 » = deux textes → collage → « 204 ». Reporte ces valeurs.</p></details>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>A : <b>24</b> (addition de nombres). B : <b>204</b> — pas deux-cent-quatre : le TEXTE « 20 » collé
+      au TEXTE « 4 ». Entre guillemets = texte, et le + COLLE les textes. Un compteur qui « colle » au lieu
+      de calculer : voilà comment on affiche n'importe quoi.</p>
+      <p><b>Erreur classique :</b> penser que « ce sont les mêmes chiffres, donc c'est pareil ». Pour
+      l'ordinateur, 4 se calcule ; « 4 » s'affiche.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> entre guillemets = TEXTE. Le + additionne les nombres, mais COLLE les textes.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> je sais prédire le résultat d'un + rien qu'en regardant les guillemets.</p>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Le programme du responsable : réponds-il au besoin ?</h3><span class="duree">⏱ 30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> TESTER un programme fourni sur plusieurs cas et conclure : répond-il au besoin, oui ou non ?</div>
+      <div><b>Compétence :</b> 5e_C9.1 (tester s'il répond au besoin ou au problème posé).</div>
+      <div><b>Production attendue :</b> 3 tests exécutés + le verdict.</div>
+      <div><b>Ressources :</b> le programme fourni + le banc de tests intégré.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> voici le programme JOINT au message du responsable. Le besoin :
+    « après chaque embarquement, afficher le bon nombre de places libres ». Exécute les 3 tests du banc
+    (badge 🔓), compare « attendu » et « obtenu », puis rends ton verdict.</div>
+    <pre class="code">places = 24
+montes = 3
+descendus = 2
+places = places - montes
+places = places - descendus
+print("Places libres :", places)</pre>
+    <div class="bench">
+      <table aria-label="Banc de tests du programme du compteur">
+        <tr><th>Test</th><th>montes</th><th>descendus</th><th>Attendu</th><th>Obtenu</th><th></th></tr>
+        <tr><td>T1 — personne ne bouge</td><td>0</td><td>0</td><td>24</td><td class="res" id="bt1">—</td><td><button class="btn ghost bench-run" data-t="1" type="button">▶</button></td></tr>
+        <tr><td>T2 — 3 montent, 0 descend</td><td>3</td><td>0</td><td>21</td><td class="res" id="bt2">—</td><td><button class="btn ghost bench-run" data-t="2" type="button">▶</button></td></tr>
+        <tr><td>T3 — 3 montent, 2 DESCENDENT</td><td>3</td><td>2</td><td>23</td><td class="res" id="bt3">—</td><td><button class="btn ghost bench-run" data-t="3" type="button">▶</button></td></tr>
+      </table>
+    </div>
+    <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
+    <div class="exo">
+      <label>1. Le test T3 montre que le programme :
+      <select id="a4q1"><option value="">—</option><option>SOUSTRAIT les descendus au lieu de les AJOUTER (19 au lieu de 23)</option><option>fonctionne parfaitement</option><option>affiche du texte collé</option><option>ne démarre pas</option></select></label>
+      <label>2. Quelqu'un qui DESCEND du manège, ça devrait :
+      <select id="a4q2"><option value="">—</option><option>LIBÉRER une place (donc places + descendus)</option><option>occuper une place de plus</option><option>ne rien changer</option><option>fermer la barrière</option></select></label>
+      <label>3. Ton verdict de technicien :
+      <select id="a4q3"><option value="">—</option><option>le programme NE répond PAS au besoin : la ligne 5 doit devenir places = places + descendus</option><option>le programme répond au besoin</option><option>impossible de conclure</option><option>il faut changer d'ordinateur</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde T3 : « attendu 23 » mais qu'as-tu OBTENU ? Puis relis la ligne 5 : un moins… pour des gens qui LIBÈRENT des places ?</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Le technicien compare toujours ATTENDU (ce que le besoin demande) et OBTENU (ce que le programme fait). S'ils diffèrent sur UN SEUL test, le programme ne répond pas au besoin — même s'il « marche » sur les autres.</p></details>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>T1 → 24 ✔, T2 → 21 ✔, T3 → <b>19 au lieu de 23</b> ✘ : la ligne 5 SOUSTRAIT les descendus alors
+      qu'ils LIBÈRENT des places. Verdict : le programme <b>ne répond pas au besoin</b> ; la ligne 5 doit
+      devenir <code>places = places + descendus</code>. Un seul test qui échoue suffit à conclure.</p>
+      <p><b>Erreur classique :</b> s'arrêter après T1 et T2 (« ça marche ! ») — le bug attendait le
+      premier visiteur qui descend. C'est POUR ÇA qu'on teste plusieurs cas.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> tester un programme = comparer ATTENDU et OBTENU sur PLUSIEURS cas. Un seul écart = le programme ne répond pas au besoin.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> je sais dire lequel des 3 tests a démasqué le bug, et pourquoi.</p>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🔧 Séance 3 — Modifier le programme, régler la barrière (5e_C9.2 · C9.3)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu corriger le compteur — puis faire OBÉIR la barrière à ta variable ?</p>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Corriger, adapter… puis commander la barrière</h3><span class="duree">⏱ 45 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> modifier le programme fourni (C9.2) puis réaliser et mettre au point le programme de la barrière (C9.3).</div>
+      <div><b>Compétences :</b> 5e_C9.2 et 5e_C9.3.</div>
+      <div><b>Production attendue :</b> 2 modifications + le réglage de la barrière (3 tests).</div>
+      <div><b>Ressources :</b> le document 2 + le banc de la barrière + l'éditeur.</div>
+    </div>
+    <div class="consigne"><b>Consigne — partie ① MODIFIER :</b> le responsable valide ton diagnostic et
+    annonce du neuf : le Cyclone reçoit un nouveau train de <b>32 places</b>. Deux modifications à faire.</div>
+    <div class="exo">
+      <label>1. Pour corriger le bug des descendus, la ligne 5 devient :
+      <select id="a5q1"><option value="">—</option><option>places = places + descendus</option><option>places = places - descendus</option><option>places = descendus - places</option><option>descendus = places</option></select></label>
+      <label>2. Pour le nouveau train de 32 places, il faut modifier :
+      <select id="a5q2"><option value="">—</option><option>la ligne 1 : places = 32</option><option>la ligne 2 : montes = 32</option><option>la ligne 6 : print(32)</option><option>toutes les lignes</option></select></label>
+      <label>3. Pourquoi ne change-t-on QUE cette ligne-là ?
+      <select id="a5q3"><option value="">—</option><option>parce que le nombre de sièges n'est écrit qu'à UN endroit : au remplissage initial de la boîte</option><option>parce que c'est la ligne la plus courte</option><option>parce que Python interdit de changer les autres</option><option>par superstition de technicien</option></select></label>
+    </div>
+    <figure>
+      <object class="figure" data="Images/barriere_cyclone_condition.svg" type="image/svg+xml" aria-label="La barrière du Cyclone commandée par la variable places, avec le banc de trois tests" style="width:100%"></object>
+      <figcaption>Document 2 — Ta variable commande la barrière : l'information en haut, l'énergie en bas, l'ordre qui descend.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne — partie ② RÉGLER LA BARRIÈRE :</b> la barrière obéit à la règle
+    <code>SI places &gt; 0 → OUVRIR, SINON → FERMER</code>. Exécute les 3 tests du banc (badge 🔓) —
+    et méfie-toi du troisième…</div>
+    <div class="bench">
+      <table aria-label="Banc de tests de la barrière">
+        <tr><th>Test</th><th>places</th><th>Attendu</th><th>Obtenu</th><th></th></tr>
+        <tr><td>B1 — il reste 10 places</td><td>10</td><td>OUVERTE</td><td class="res" id="bb1">—</td><td><button class="btn ghost bench-barr" data-t="1" type="button">▶</button></td></tr>
+        <tr><td>B2 — train tout neuf</td><td>32</td><td>OUVERTE</td><td class="res" id="bb2">—</td><td><button class="btn ghost bench-barr" data-t="2" type="button">▶</button></td></tr>
+        <tr><td>B3 — LE CAS LIMITE : complet</td><td>0</td><td>FERMÉE</td><td class="res" id="bb3">—</td><td><button class="btn ghost bench-barr" data-t="3" type="button">▶</button></td></tr>
+      </table>
+    </div>
+    <p id="barrBadge" style="color:var(--ok);font-weight:700"></p>
+    <div class="exo">
+      <label>4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :
+      <select id="a5q4"><option value="">—</option><option>FAUSSE — donc la barrière se ferme : exactement ce qu'on veut</option><option>vraie — la barrière s'ouvre</option><option>impossible à calculer</option><option>une erreur</option></select></label>
+      <label>5. Pourquoi le test B3 est-il LE plus important ?
+      <select id="a5q5"><option value="">—</option><option>c'est le cas FRONTIÈRE : c'est là que les visiteurs de trop passeraient si la règle était mal écrite</option><option>parce que 0 est un joli nombre</option><option>il ne l'est pas, B1 suffit</option><option>parce qu'il est le dernier de la liste</option></select></label>
+    </div>
+    <details class="vs" id="vs2">
+      <summary>🧪 Pour aller au bout : recopie le compteur corrigé dans l'éditeur et vérifie tes 3 tests</summary>
+      <p class="vs-note">Écris le programme avec tes deux modifications, exécute avec les valeurs des tests — la console doit dire comme toi. Version 🅰 : branche une LED qui joue la barrière (très basse tension).</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué — programme corrigé"></iframe>
+    </details>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Partie ① : qui LIBÈRE des places, le + ou le − ? Partie ② : 0 &gt; 0… vrai ou faux ? Compte sur tes doigts.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un réglage se prouve par des tests choisis À L'AVANCE : un cas normal, un cas facile, et le cas FRONTIÈRE (ici : zéro pile). Si les trois passent, la barrière est réglée. C'est la même idée que le grand banc de tests que tu retrouveras en 3e.</p></details>
+    <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+    <p class="feedback" id="fb5" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>① Ligne 5 → <code>places = places + descendus</code> ; nouveau train → <b>ligne 1</b> :
+      <code>places = 32</code> — et seulement elle, car le nombre de sièges n'est écrit qu'à UN endroit
+      (c'est la force des variables !). ② B1 OUVERTE ✔, B2 OUVERTE ✔, B3 : 0 &gt; 0 est FAUX →
+      <b>FERMÉE</b> ✔ — le cas frontière protège le manège du visiteur de trop.</p>
+      <p><b>Erreur classique :</b> écrire <code>places &gt;= 0</code> « pour être sûr » : à zéro place, la
+      barrière resterait OUVERTE. Aux frontières, chaque signe compte.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> modifier un programme = changer LA bonne ligne, puis RE-TESTER tous les cas — surtout la frontière. Et une variable peut commander un objet réel : l'information commande l'énergie.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> mes 3 tests de barrière passent, cas limite compris, et je sais expliquer pourquoi on ne change que la ligne 1 pour le nouveau train.</p>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de l'atelier</h2>
+  <div class="exo">
+    <p><b>🔁 Retour sur ton hypothèse de départ</b> (« où le programme garde-t-il le nombre ? ») :</p>
+    <p class="hyp-recall" id="hypRecall"></p>
+    <label for="bilanTxt"><b>✍ Ce que je répondrais maintenant :</b></label>
+    <textarea id="bilanTxt" rows="3" placeholder="Le nombre est rangé dans… et le signe = sert à…"></textarea>
+  </div>
+  <div class="auto-eval">
+    <p><b>🚦 Je me positionne</b> (🔴 pas encore · 🟡 avec aide · 🟢 seul·e · ⭐ je peux l'expliquer) :</p>
+    <div class="ae-row"><span>📦 Je sais suivre les boîtes d'un programme avec la table de suivi</span><span class="ae-btns" data-k="BOI"></span></div>
+    <div class="ae-row"><span>🔎 Je sais tester un programme fourni et dire s'il répond au besoin</span><span class="ae-btns" data-k="LIR"></span></div>
+    <div class="ae-row"><span>🔧 Je sais modifier la bonne ligne et régler avec un banc de tests</span><span class="ae-btns" data-k="MOD"></span></div>
+  </div>
+  <div class="donnees">
+    <p><b>🧭 Et après ?</b> En 3e, le même voyage t'attend en plus grand :
+    <a href="../../3e/3e_C9.1/sequence_3e_C9.1_variables_types_systemes.html">l'atelier « Variables, types
+    et systèmes »</a> — le panneau du métro, les types, les fonctions et le grand banc de mise au point.
+    Tu y reconnaîtras tes boîtes.</p>
+  </div>
+</section>
+
+<section class="card" id="entrainement">
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>Le QCM de l'atelier t'attend : <b>30 questions</b> (dont <b>3 illustrées</b>), en 3 familles —
+  la boîte, lire et tester, modifier et régler. Corrections détaillées qui expliquent chaque piège,
+  sauvegarde automatique.</p>
+  <a class="btn qcm" href="qcm_5e_C9.1-C9.3_boite_etiquetee.html">🧠 M'entraîner avec le QCM (30 questions)</a>
+</section>
+
+<section class="card" id="bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Trois défis ouverts, sans vérificateur :</p>
+  <p><b>🍽 Défi famille :</b> prends trois boîtes de cuisine, étiquette-les <code>places</code>,
+  <code>montes</code>, <code>descendus</code>, et des papiers pour les valeurs. Fais exécuter le programme
+  de l'activité 2 à quelqu'un de ta famille — toi, tu es l'ordinateur qui lit les lignes. L'ancienne
+  valeur va à la poubelle : si on te demande pourquoi, tu sauras répondre.</p>
+  <p><b>🎟 Défi compteur de classe :</b> dans l'éditeur, écris le compteur de TA classe (28 élèves ?
+  écris-le pour que le professeur n'ait qu'UNE ligne à changer l'an prochain).</p>
+  <p><b>🎢 Défi curieux :</b> le vrai Cyclone a ouvert en 1927 et il est toujours en bois. Dans l'éditeur,
+  calcule son âge avec une variable <code>annee = 2026</code> — puis écris le programme pour que le calcul
+  reste juste TOUTES les années suivantes.</p>
+</section>
+
+<footer class="footer">
+  <p>Atelier 5e_C9.1 → C9.3 · Thème 3 · New York — Arc variables, marche 5e (la marche 3e est en ligne).
+  Page unique hors-ligne (éditeur embarqué : connexion requise), sauvegarde locale uniquement — aucune donnée
+  envoyée. Images : SVG originaux CC0 ; photo Coney Island : Kidfly182, CC BY 4.0 (Wikimedia Commons).</p>
+</footer>
+<script>
+(function(){
+"use strict";
+const KEY = "seq_5e_C9.1-C9.3_boite_etiquetee";
+const $ = id => document.getElementById(id);
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".seance-tab").forEach(x => {x.classList.remove("active");x.setAttribute("aria-selected","false");});
+  document.querySelectorAll(".seance-panel").forEach(x => x.classList.remove("active"));
+  t.classList.add("active"); t.setAttribute("aria-selected","true");
+  document.getElementById(t.dataset.panel).classList.add("active");
+  window.scrollTo({top: document.getElementById("seances").offsetTop - 60, behavior: "smooth"});
+}));
+document.querySelectorAll(".ae-btns").forEach(w => {
+  ["🔴","🟡","🟢","⭐"].forEach(e => {
+    const b = document.createElement("button"); b.type="button"; b.textContent=e; b.className="ae-b";
+    b.addEventListener("click", () => {w.querySelectorAll(".ae-b").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); save();});
+    w.appendChild(b);
+  });
+});
+window.__exp = window.__exp || {};
+const PROG = [
+  {boxes:{places:"24"}, chg:"places", ecran:""},
+  {boxes:{places:"24", montes:"3"}, chg:"montes", ecran:""},
+  {boxes:{places:"21", montes:"3"}, chg:"places", ecran:""},
+  {boxes:{places:"21", montes:"3"}, chg:"", ecran:"21"}
+];
+let step = -1;
+function renderMem(){
+  const bx = $("memBoxes");
+  document.querySelectorAll("#memCode div").forEach(d => d.classList.toggle("cur", +d.dataset.l === step));
+  if(step < 0){ bx.innerHTML = '<em style="color:#5b7bb8">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
+  const st = PROG[step];
+  bx.innerHTML = Object.entries(st.boxes).map(([k,v]) =>
+    `<span class="mem-box${k===st.chg?" chg":""}"><span class="lbl">${k}</span><span class="val">${v}</span></span>`).join("");
+  $("memEcran").textContent = st.ecran;
+  if(step === PROG.length - 1){ window.__exp.memoire = true; $("memBadge").textContent = "🔓 badge d'exécution obtenu !"; save(); }
+}
+$("memNext").addEventListener("click", () => { if(step < PROG.length - 1){ step++; renderMem(); } });
+$("memRestart").addEventListener("click", () => { step = -1; renderMem(); });
+["vs1","vs2"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+/* banc compteur (act4) : programme FOURNI avec le bug (soustrait les descendus) */
+function fnCompteur(montes, descendus){ let places = 24; places = places - montes; places = places - descendus; return places; }
+const B4 = {1:[0,0,24], 2:[3,0,21], 3:[3,2,23]};
+window.__exp.b4 = window.__exp.b4 || {};
+document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click", () => {
+  const t = b.dataset.t, [m, d, att] = B4[t];
+  const got = fnCompteur(m, d), cell = $("bt"+t);
+  cell.textContent = got + (got === att ? " ✔" : " ✘ (attendu " + att + ")");
+  cell.style.color = got === att ? "var(--ok)" : "var(--ko)";
+  window.__exp.b4[t] = true;
+  if(Object.keys(window.__exp.b4).length === 3){ window.__exp.testsLire = true; $("benchBadge").textContent = "🔓 badge de test obtenu — les 3 cas sont exécutés !"; }
+  save();
+}));
+/* banc barrière (act5) */
+function fnBarriere(places){ return places > 0 ? "OUVERTE" : "FERMÉE"; }
+const B5 = {1:[10,"OUVERTE"], 2:[32,"OUVERTE"], 3:[0,"FERMÉE"]};
+window.__exp.b5 = window.__exp.b5 || {};
+document.querySelectorAll(".bench-barr").forEach(b => b.addEventListener("click", () => {
+  const t = b.dataset.t, [p, att] = B5[t];
+  const got = fnBarriere(p), cell = $("bb"+t);
+  cell.textContent = got + (got === att ? " ✔" : " ✘");
+  cell.style.color = got === att ? "var(--ok)" : "var(--ko)";
+  window.__exp.b5[t] = true;
+  if(Object.keys(window.__exp.b5).length === 3){ window.__exp.testsBarriere = true; $("barrBadge").textContent = "🔓 badge de réglage obtenu — cas limite compris !"; }
+  save();
+}));
+function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); return good; }
+const CHECKS = {
+  1(){ let s = 0;
+    s += sv("a1q1","21"); s += sv("a1q2","il a été REMPLACÉ par 21 — une boîte ne garde qu'UNE valeur");
+    s += sv("a1q3","« RANGE cette valeur dans la boîte »");
+    return {score: s, total: 3, exp: !!window.__exp.memoire, expMsg: "Déroule les 4 étapes du simulateur (▶) pour obtenir ton badge 🔓."};
+  },
+  2(){ let s = 0;
+    s += sv("a2q1","19"); s += sv("a2q2","elle AJOUTE les 2 places libérées par ceux qui descendent");
+    s += sv("a2q3","21"); s += sv("a2q4","3 fois");
+    return {score: s, total: 4, exp: true};
+  },
+  3(){ let s = 0;
+    ["a3p1","a3p2"].forEach(id => { const e = $(id); if(e.value) s++; e.classList.toggle("ok", !!e.value); });
+    s += sv("a3r1","24"); s += sv("a3r2","204");
+    s += sv("a3r3","du TEXTE que le + COLLE bout à bout");
+    s += sv("a3r4","des guillemets autour des nombres");
+    return {score: s, total: 6, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur embarqué (🧪) et exécute tes 2 expériences avant de reporter."};
+  },
+  4(){ let s = 0;
+    s += sv("a4q1","SOUSTRAIT les descendus au lieu de les AJOUTER (19 au lieu de 23)");
+    s += sv("a4q2","LIBÉRER une place (donc places + descendus)");
+    s += sv("a4q3","le programme NE répond PAS au besoin : la ligne 5 doit devenir places = places + descendus");
+    return {score: s, total: 3, exp: !!window.__exp.testsLire, expMsg: "Exécute les 3 tests du banc (▶) avant de rendre ton verdict."};
+  },
+  5(){ let s = 0;
+    s += sv("a5q1","places = places + descendus"); s += sv("a5q2","la ligne 1 : places = 32");
+    s += sv("a5q3","parce que le nombre de sièges n'est écrit qu'à UN endroit : au remplissage initial de la boîte");
+    s += sv("a5q4","FAUSSE — donc la barrière se ferme : exactement ce qu'on veut");
+    s += sv("a5q5","c'est le cas FRONTIÈRE : c'est là que les visiteurs de trop passeraient si la règle était mal écrite");
+    return {score: s, total: 5, exp: !!window.__exp.testsBarriere, expMsg: "Exécute les 3 tests de la barrière (▶) — le cas limite B3 compris."};
+  }
+};
+const par = {s: []};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "✔ Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour consolider."; fb.className = "feedback ok";
+    if(!par.s.includes(n)){ par.s.push(n); } }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — regarde l'aide niveau 1, puis corrige ce qui est rouge."; fb.className = "feedback warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends le document de l'activité, puis l'aide niveau 2."; fb.className = "feedback ko"; }
+  updateProg(); save();
+}));
+function updateProg(){
+  const n = par.s.length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n * 20) + "%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const map = {s1:["1","2"], s2:["3","4"], s3:["5"]};
+  Object.entries(map).forEach(([p, acts]) => { const d = $("done-" + p); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
+}
+function save(){
+  const o = {inputs: {}, par, exp: window.__exp || {}, ae: {}};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.textContent; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Travail sauvegardé sur CET ordinateur (" + new Date().toLocaleTimeString() + ")"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  (o.par && o.par.s || []).forEach(n => { if(!par.s.includes(n)) par.s.push(n); });
+  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+  if(window.__exp.memoire){ step = PROG.length - 1; renderMem(); }
+  if(window.__exp.testsLire){ $("benchBadge").textContent = "🔓 badge de test obtenu — les 3 cas sont exécutés !"; }
+  if(window.__exp.testsBarriere){ $("barrBadge").textContent = "🔓 badge de réglage obtenu — cas limite compris !"; }
+  Object.entries(o.ae || {}).forEach(([k, v]) => {
+    const w = document.querySelector('.ae-btns[data-k="' + k + '"]');
+    if(w) w.querySelectorAll(".ae-b").forEach(b => b.classList.toggle("sel", b.textContent === v));
+  });
+  updateProg();
+  const h = $("hyp1"), r = $("hypRecall");
+  if(h && r && h.value) r.textContent = "« " + h.value + " »";
+}
+$("btnSave").addEventListener("click", save);
+$("btnPrint").addEventListener("click", () => window.print());
+$("btnReset").addEventListener("click", () => { if(confirm("Effacer ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); } });
+document.addEventListener("change", e => {
+  if(e.target.matches("input, select, textarea")) save();
+  if(e.target.id === "hyp1"){ const r = $("hypRecall"); if(r) r.textContent = "« " + e.target.value + " »"; }
+});
+restore();
+const h = $("hyp1"), r = $("hypRecall");
+if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse de départ apparaîtra ici)";
+})();
+</script>
+</body>
+</html>

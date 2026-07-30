@@ -763,3 +763,25 @@ rapatriement par le pont, compression 1400 px. Intégrée en tête du bloc
 🎁 Bonus (la façade de 1919, reliée au défi convertisseurs). La candidate
 CC BY-NC-ND initialement écartée reste écartée — remplacée proprement.
 Le trio visuel du voyage est complet : la station, le train, le terminus.
+
+## 2026-07-30 — Thème 3 · Arc variables, marche 5e : « La boîte étiquetée » (Fable, branche `fable/theme-3/arc-variables-5e`)
+
+1. **Marche 5e livrée — l'îlot 5e_C9 passe de vide à complet** : 5e_C9.1 →
+   COMPLET ET VALIDABLE ; 5e_C9.2 et C9.3 → COUVERT (README pointeurs).
+   Ancrage : le compteur de places du Cyclone de Coney Island (terminus de la
+   ligne Q — continuité avec l'atelier 3e, photo d'entrée de gare MUTUALISÉE,
+   non dupliquée). Fidélité au référentiel 5e : analyser et TESTER un
+   programme FOURNI (banc attendu/obtenu, bug des « descendus » soustraits),
+   le MODIFIER (la bonne ligne, non-régression), RÉALISER/METTRE AU POINT la
+   barrière commandée (condition, cas limite zéro pile — miroir 5e du cas
+   limite « air ≥ 100 » de 3e : la spirale règle n°8 en acte).
+2. **Standard Vittascience embarqué** (2 iframes) + prédire→tester→reporter ;
+   verrous : simulateur 4 étapes, éditeur ouvert, 2 bancs de tests 3/3.
+   QCM 30 q (BOI/LIR/MOD 10/10/10, graine 53, réponses 8/7/7/8, 3 illustrées,
+   réfutation de chaque distracteur). 2 SVG originaux CC0 (compteur-boîtes,
+   barrière avec règle n°6 : l'ordre qui descend). Synthèses ×2, fiche,
+   matrice 23 lignes, manifest.
+3. **TP mBot2 v4.5 inscrit aux héritées 🛠** (demande Pascal du jour) :
+   fonctionnel mais à revoir — pédagogie, ergonomie, design ; refonte prévue
+   dans l'arc (le lien variables→robot, salué par Pascal, sera renforcé).
+4. **Tests réels** : suite Playwright dédiée (rapport dans le dossier).

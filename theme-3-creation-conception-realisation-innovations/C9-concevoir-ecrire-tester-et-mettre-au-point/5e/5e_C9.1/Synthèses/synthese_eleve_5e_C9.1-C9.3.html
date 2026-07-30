@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — La boîte étiquetée (5e_C9.1 → C9.3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--ko:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.55;font-size:.97em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.45em;color:var(--title);text-align:center}
+  .sous{text-align:center;color:var(--sub);margin-top:-8px}
+  h2{font-size:1.08em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:22px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .ok{color:var(--ok)}.warn{color:var(--warn)}.ko{color:var(--ko)}
+  figure{margin:10px 0;text-align:center}
+  object{width:100%;max-width:820px}
+  code{background:#08132c;padding:1px 6px;border-radius:5px;font-family:monospace}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+  #navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+  #navharm a:hover{border-color:#61dafb;color:#61dafb}
+  @media print{body{background:#fff;color:#111;font-size:9.5pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}.ok,.warn,.ko{color:#111;font-weight:bold}#navharm{display:none}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_5e_C9.1-C9.3_boite_etiquetee.html">← Séquence</a></nav>
+<div class="page">
+<h1>📄 Synthèse — La boîte étiquetée</h1>
+<p class="sous">5e_C9.1 → C9.3 · Thème 3 · New York — ce qu'il faut savoir refaire</p>
+
+<div class="bloc">
+<h2 style="margin-top:0">📦 La variable (5e_C9.1)</h2>
+<ul>
+  <li>Une variable = <b>une boîte de la mémoire</b> : une ÉTIQUETTE (son nom) + <b>UNE seule valeur</b>.</li>
+  <li>Le signe <code>=</code> veut dire <span class="warn">« RANGE cette valeur dans la boîte »</span> — et il <b>remplace</b> l'ancienne (perdue !).</li>
+  <li><code>places = places - montes</code> se lit <b>de droite à gauche</b> : je calcule d'abord, je range ensuite.</li>
+  <li><code>total = total + 2</code> répété = le motif <b>compteur</b> (la boîte accumule).</li>
+  <li>Pour lire un programme : la <b>table de suivi</b> — une colonne par boîte, le doigt qui suit ligne par ligne.</li>
+  <li class="ko">Piège : entre guillemets, <code>"20" + "4"</code> donne <code>"204"</code> — du TEXTE collé, pas une addition !</li>
+</ul>
+<figure><object data="../Images/compteur_cyclone_boites.svg" type="image/svg+xml" aria-label="Le compteur du Cyclone : programme, boîtes, panneau"></object></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🔎 Lire et TESTER un programme fourni (5e_C9.1)</h2>
+<ul>
+  <li>Tester = <b>comparer</b> : ce que le besoin ATTEND ↔ ce que la console DONNE, sur <b>plusieurs cas</b>.</li>
+  <li><span class="ko">UN SEUL test raté suffit</span> : le programme ne répond pas au besoin (le bug du Cyclone dormait jusqu'au premier visiteur qui descend…).</li>
+  <li>L'ordinateur obéit au PROGRAMME, pas au besoin : un écart accuse une <b>ligne</b> — à trouver avec la table de suivi.</li>
+  <li>Le bon diagnostic se communique : <b>comportement + ligne coupable + test qui le prouve</b>.</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🔧 Modifier et régler (5e_C9.2 · C9.3)</h2>
+<ul>
+  <li>Modifier = changer <b>LA bonne ligne</b> (le nombre de sièges n'est écrit qu'à UN endroit : c'est la force des variables) — puis <span class="ok">REJOUER TOUS les tests</span> (la non-régression).</li>
+  <li>La <b>condition</b> <code>SI places &gt; 0 → OUVRIR sinon FERMER</code> : le programme lit une boîte et <b>décide</b>.</li>
+  <li class="warn">LE test le plus important : la FRONTIÈRE (places = 0 pile). 0 &gt; 0 est FAUX → barrière FERMÉE : c'est ce qu'on veut. Avec <code>&gt;=</code>, le visiteur de trop entrerait !</li>
+  <li>Ta variable <b>commande un objet réel</b> : compteur → programme → moteur de la barrière — l'information en haut, l'énergie en bas, <b>l'ordre qui descend</b> (📐 règle du schéma).</li>
+  <li>Réglé = <b>tous les tests verts</b>, frontière comprise — pas « ça a marché une fois ».</li>
+</ul>
+<figure><object data="../Images/barriere_cyclone_condition.svg" type="image/svg+xml" aria-label="La barrière commandée par la variable places et son banc de tests"></object></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🎯 En une phrase</h2>
+<p style="text-align:center;font-size:1.03em">Une variable est une <b>boîte étiquetée</b> que le <code>=</code> remplit ; lire un programme, c'est <b>suivre les boîtes</b> ; le tester, c'est <b>comparer attendu et obtenu</b> ; et il n'est réglé que quand <b>tous les tests passent</b> — le cas frontière en premier.</p>
+</div>
+</div>
+</body>
+</html>
