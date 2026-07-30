@@ -36,7 +36,10 @@ jobs:
           echo "Branche : $BRANCHE"
           echo "Fichiers modifiés :"; echo "$FICHIERS" | sed 's/^/  - /'
 
-          COMMUNS='^(index\.html|README\.md|audit_couverture\.(csv|json)|nouveautes\.json|JOURNAL_DES_DECISIONS\.md|_progressions/)'
+          # Règle d'or n°12 (30/07/2026) : l'archivage (_archive-anciennes-versions/) et les registres
+          # transversaux (_outils/heritees.json, statuts OVERLAY dans _outils/build_audit.py) font partie
+          # de CHAQUE lot, quel que soit le thème — ils rejoignent donc les fichiers communs.
+          COMMUNS='^(index\.html|README\.md|audit_couverture\.(csv|json)|nouveautes\.json|JOURNAL_DES_DECISIONS\.md|_progressions/|_archive-anciennes-versions/|_outils/heritees\.json|_outils/build_audit\.py)'
 
           case "$BRANCHE" in
             *theme-1*) PERIMETRE='^theme-1-' ; QUI="Thème 1" ;;
