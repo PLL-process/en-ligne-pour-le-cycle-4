@@ -30,6 +30,16 @@ try:
 except FileNotFoundError:
     NOUVEAUTES, NV_DUREE_DEFAUT = [], 21
 
+# ── Ressources héritées (règle d'or n°12) : badge 🛠 « modernisation prévue ».
+# Source : _outils/heritees.json. Une entrée se retire quand le remplaçant est
+# livré et l'ancienne version archivée dans _archive-anciennes-versions/.
+HERITEES_PATH = os.path.join(os.path.dirname(__file__), "heritees.json")
+try:
+    with open(HERITEES_PATH, encoding="utf-8") as _f:
+        HERITEES = set(json.load(_f).get("heritees", []))
+except FileNotFoundError:
+    HERITEES = set()
+
 
 def slugify(s, maxlen=45):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
@@ -107,6 +117,8 @@ h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .pill{font-size:.85em}
 footer{max-width:1080px;margin:34px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
 footer a{color:var(--hl)}
+/* ── badge héritée 🛠 (règle d'or n°12 — _outils/heritees.json) ── */
+.badge-herit{margin-left:4px;cursor:help;font-size:.8em;filter:grayscale(.2)}
 /* ── badge NEW (règle obligatoire — nouveautes.json) ── */
 .badge-new{display:inline-block;background:linear-gradient(90deg,#ff7b88,#ffb454);color:#111;font-weight:700;font-size:.68em;padding:2px 8px;border-radius:999px;margin-left:6px;letter-spacing:.5px;vertical-align:middle;animation:nvpulse 2.2s ease-in-out infinite}
 @keyframes nvpulse{0%,100%{opacity:1}50%{opacity:.62}}
@@ -149,6 +161,8 @@ for theme_n in [1, 2, 3]:
                     n_files += len([f for f in files if f != "README.md"]) or 1
                     links = " · ".join(
                         f'<a href="{html.escape(rel)}/{html.escape(fn)}">📄 {html.escape(fn if len(fn) <= 34 else fn[:31] + "…")}</a>'
+                        + ('<span class="badge-herit" title="Ressource héritée — modernisation prévue (règle d\'or n°12)">🛠</span>'
+                           if f"{rel}/{fn}" in HERITEES else "")
                         for fn in files
                     )
                     lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span>{links}</span></div>')
