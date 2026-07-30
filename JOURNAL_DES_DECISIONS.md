@@ -671,3 +671,55 @@ Le registre central des règles d'or (tableau en tête de fichier) est instauré
    nouveau dossier créé. Test réel : index régénéré, 9 badges présents.
 
 
+
+## 2026-07-30 — Infra : la garde-périmètre apprend la règle n°12 (Fable, branche `fable/infra/garde-regle-12`, PR #88)
+
+La garde a refusé la PR #87 (arc variables 3e) — À RAISON : elle appliquait le
+régime d'avant la règle n°12. Or l'archivage (`_archive-anciennes-versions/`)
+et les registres transversaux (`_outils/heritees.json`, statuts OVERLAY dans
+`_outils/build_audit.py`) font désormais partie de CHAQUE lot, quel que soit
+le thème. Ces trois chemins rejoignent les fichiers COMMUNS de la garde.
+Le reste du régime est inchangé (`_outils/` complet reste réservé aux
+branches Thème 2 ; `.github/` reste refusé depuis toute branche de thème).
+Vérification réelle : simulation locale du nouveau régime sur les fichiers
+exacts de la PR #87 → 0 refus.
+
+## 2026-07-30 — Thème 3 · Arc variables, marche 3e : refonte de « Vittascience variables » (Fable, branche `fable/theme-3/arc-variables-3e-refonte`, PR #87)
+
+1. **Premier lot Fable sur le Thème 3 · New York depuis la levée du périmètre**,
+   et PREMIÈRE APPLICATION de la règle d'or n°12 : l'atelier
+   « Variables, types et systèmes » (3e_C9.1 → COMPLET ET VALIDABLE) refond la
+   ressource héritée `vittascience_variables.html` (enquête Vittascience
+   adaptée Pascal, désignée indispensable). L'ancienne version + ses captures
+   PNG sont ARCHIVÉES (`_archive-anciennes-versions/C7_C9_…/3e_C9.1/`,
+   README pointeur) ; l'URL historique porte un **stub de redirection**
+   (complément pratique à la règle n°12 quand une URL a pu circuler) ;
+   l'entrée `heritees.json` est retirée (8 badges 🛠 restants).
+2. **Contenu** : 4 séances / 5 activités — simulateur de MÉMOIRE pas-à-pas
+   (la variable = boîte étiquetée, verrou 6 étapes) ; table de suivi ;
+   types et piège des guillemets en **prédire → tester → reporter** sur
+   l'**éditeur Vittascience EMBARQUÉ** (standard Pascal : 3 iframes mode
+   mixte, verrous d'ouverture) ; chasse aux 3 bugs du panneau du métro
+   (96 St) avec preuve par la console ; algorithme → fonction → **banc de
+   mise au point** (4 tests, cas limite 100 tranché par le besoin,
+   non-régression). QCM 30 q (VAR/TYP/PRG/MAP 8/8/7/7, graine 47, 3
+   illustrées), synthèses ×2, fiche, matrice 25 lignes, 3 SVG CC0 (aucune
+   capture d'écran), README refondu. La substance pédagogique de la
+   ressource d'origine (guillemets, VMC→ventilation de station, devis→
+   MetroCard, conversions) est PRÉSERVÉE et new-yorkisée ; la vidéo YouTube
+   n'est pas reprise (dépendance externe + RGPD, consultable aux archives).
+3. **Tests réels** : 30/30 PASS (rapport dans le dossier) — verrous fermés
+   puis ouverts, sauvegarde/restauration, répartition QCM, stub, archive,
+   zéro erreur JS.
+4. **À suivre** : marches 5e (« la boîte qu'on lit ») et 4e (« types et
+   décisions ») du même arc ; remplacement éventuel du QCM hérité 24 q
+   (`qcm_python_variables.html`, conservé en complément).
+
+## 2026-07-30 — Journal : restauration des deux entrées perdues lors de la résolution de conflit de la PR #87 (Fable)
+
+La résolution web du conflit sur ce fichier (PR #87) a conservé un seul côté :
+les entrées « Infra garde règle n°12 » (PR #88) et « Arc variables 3e »
+(PR #87) avaient disparu de main. Restaurées ci-dessus à l'identique.
+Leçon consignée : lors d'une résolution de conflit sur le JOURNAL, on
+GARDE TOUJOURS LES DEUX BLOCS (fichier à ajout permanent) — et côté méthode,
+ne plus laisser deux branches vivantes toucher le journal simultanément.
