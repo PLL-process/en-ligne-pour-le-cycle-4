@@ -165,6 +165,17 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 .mem-code{background:#08132c;border:1px solid #274a8a;border-radius:10px;padding:10px;font-family:'Fira Code',monospace;font-size:.9em}
 .mem-code div{padding:4px 8px;border-radius:6px}
 .mem-code div.cur{background:#173666;outline:1.5px solid #ffd66b}
+/* règle d'or n°13 — code coloré façon IDE (palette commune) */
+.py-var{color:var(--hl)}
+.py-str{color:var(--ok)}
+.py-num{color:var(--energie)}
+.py-kw{color:var(--head);font-weight:600}
+.py-op{color:var(--warn);font-weight:600}
+.py-com{color:#5b7bb8;font-style:italic}
+.py-lno{color:#4a6ca8}
+.val.py-str{color:var(--ok)}
+.val.py-num{color:var(--energie)}
+.py-legende{font-size:.8em;color:#9bbefc;margin:6px 0 0;font-family:'Fira Code',monospace}
 .mem-boxes{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;background:#0d2347;border:1px solid #c68ef2;border-radius:10px;padding:14px}
 .mem-box{min-width:104px;border:2px solid #61dafb;border-radius:8px;background:#0a1b3d;text-align:center;padding-bottom:8px}
 .mem-box .lbl{display:block;background:#173666;color:#61dafb;font-weight:700;font-size:.8em;border-radius:6px 6px 0 0;padding:3px}
@@ -326,6 +337,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
         <div data-l="4">message = train + " - " + quai</div>
         <div data-l="5">print(message, minutes, "min")</div>
       </div>
+      <p class="py-legende">🎨 Lis le code en couleurs : <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
       <div>
         <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:#5b7bb8">— la mémoire est vide : lance l'exécution —</em></div>
         <div class="mem-ecran" id="memEcran" aria-label="Écran du panneau"></div>
@@ -720,7 +732,7 @@ function renderMem(){
   if(step < 0){ bx.innerHTML = '<em style="color:#5b7bb8">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
   const st = PROG[step];
   bx.innerHTML = Object.entries(st.boxes).map(([k,v]) =>
-    `<span class="mem-box${k===st.chg?" chg":""}"><span class="lbl">${k}</span><span class="val">${v}</span></span>`).join("");
+    `<span class="mem-box${k===st.chg?" chg":""}"><span class="lbl">${k}</span><span class="val ${String(v)[0]==='"'?"py-str":"py-num"}">${v}</span></span>`).join("");
   $("memEcran").textContent = st.ecran;
   if(step === PROG.length - 1){ window.__exp.memoire = true; $("memBadge").textContent = "🔓 badge d'exécution obtenu !"; save(); }
 }
@@ -746,6 +758,30 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
 }));
 
 /* ── vérificateurs ── */
+/* règle d'or n°13 : coloration façon IDE des listings */
+function pyc(src){
+  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const KW = /^(print|def|return|if|elif|else|while|for|in|and|or|not|True|False|int|float|str|input|range)$/;
+  return src.split("\n").map(line => {
+    let out = "", m;
+    const lno = line.match(/^(\s*\d+\s\s+)/);
+    if(lno){ out += '<span class="py-lno">' + esc(lno[1]) + '</span>'; line = line.slice(lno[1].length); }
+    const re = /"[^"]*"|#.*$|▢\d*|\d+(?:\.\d+)?|[A-Za-z_\u00C0-\u017F][A-Za-z0-9_\u00C0-\u017F]*|\s+|./g;
+    while((m = re.exec(line))){
+      const t = m[0]; let cls = "";
+      if(t[0] === '"') cls = "py-str";
+      else if(t[0] === "#") cls = "py-com";
+      else if(t[0] === "▢") cls = "";
+      else if(/^\d/.test(t)) cls = "py-num";
+      else if(/^[A-Za-z_\u00C0-\u017F]/.test(t)) cls = KW.test(t) ? "py-kw" : "py-var";
+      else if(/^[=+\-*\/<>%]/.test(t)) cls = "py-op";
+      out += cls ? '<span class="' + cls + '">' + esc(t) + '</span>' : esc(t);
+    }
+    return out;
+  }).join("\n");
+}
+document.querySelectorAll("pre.code, #memCode > div").forEach(e => { e.innerHTML = pyc(e.textContent); });
+
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "\u2714" : "\u2718"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
 const CHECKS = {
