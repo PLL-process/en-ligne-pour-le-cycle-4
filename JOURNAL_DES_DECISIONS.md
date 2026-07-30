@@ -723,3 +723,16 @@ les entrées « Infra garde règle n°12 » (PR #88) et « Arc variables 3e »
 Leçon consignée : lors d'une résolution de conflit sur le JOURNAL, on
 GARDE TOUJOURS LES DEUX BLOCS (fichier à ajout permanent) — et côté méthode,
 ne plus laisser deux branches vivantes toucher le journal simultanément.
+
+## 2026-07-30 — Thème 3 · Enrichissement demandé par Pascal : le plan de la ligne Q dans la situation déclenchante (Fable, branche `fable/theme-3/carte-ligne-q`, empilée sur la restauration du journal)
+
+Sur retour enthousiaste de Pascal (« je voyage déjà ») : ajout d'une image v2
+`ligne_q_plan_simplifie.svg` (SVG original CC0, conventions des plans de
+transport, AUCUN élément copié du plan MTA protégé) dans la situation
+déclenchante de l'atelier 3e_C9.1 — repère 📍 « TU ES ICI » sur 96 St
+(pulsation douce), tracé jaune jusqu'à Coney Island, ce que la ligne dessert,
+encart « express/local », clin d'œil ingénierie (2e Avenue ouverte en 2017)
+et question de lecture du plan (règle n°8 : représentation utile, à lire).
+Branche EMPILÉE sur `fable/theme-2/journal-restauration-30-07` (leçon du
+conflit : jamais deux branches indépendantes sur le journal) — ordre de
+fusion : restauration d'abord, carte ensuite.
