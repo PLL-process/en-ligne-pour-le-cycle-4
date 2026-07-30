@@ -143,10 +143,15 @@
 
 figure{width:100%;margin:14px 0}
 figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
-details.vs{border:1.5px solid #274a8a;border-radius:12px;margin:14px 0;background:#0a1b3d}
-details.vs>summary{cursor:pointer;padding:12px 16px;font-weight:600;color:#61dafb;list-style:none}
+/* éditeur Vittascience embarqué — barre volontairement voyante (retour Pascal 30/07 : introuvable repliée) */
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:18px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
 details.vs>summary::-webkit-details-marker{display:none}
-details.vs>summary:hover{background:#0d2347}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur Python s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
 details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
 details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
 .mem-wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1.2fr);gap:14px;margin:12px 0}
@@ -241,7 +246,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
     <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience relié à une carte réelle (<b>très basse tension uniquement</b>) — une LED joue la barrière.</p>
-    <p>🅱 <b>En simulation</b> : le simulateur de mémoire de la page + l'éditeur Python Vittascience <b>embarqué</b>. C'est le parcours principal.</p>
+    <p>🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python Vittascience <b>embarqué</b> : cherche les <b>barres 🧪 bleues</b> des séances 2 et 3, un clic les déplie. C'est le parcours principal.</p>
     <p>🅲 <b>Sans matériel</b> : les schémas + les tables de suivi à compléter au cahier.</p>
   </div>
   <div class="retenir"><b>📡 La méthode de l'atelier — prédire → tester → reporter :</b> tu PRÉDIS d'abord
