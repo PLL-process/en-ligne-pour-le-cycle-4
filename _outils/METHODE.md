@@ -37,7 +37,20 @@ JSON + README pointeurs pour les codes mutualisés + entrées nouveautes.json +
 mise à jour OVERLAY (audit) + entrée au journal. On ne livre jamais une
 séquence sans son QCM ni ses synthèses.
 
-### Les 6 règles d'or (texte complet au journal)
+### Les règles d'or (registre complet en tête du journal — 12 à ce jour)
+
+Les six fondatrices sont détaillées ci-dessous ; s'y ajoutent :
+**7** CRCN observable, tracé, justifié (5 éléments obligatoires) ·
+**8/9** représentations technologiques utiles, progressives, traçables
+(principe Fable + cadre Codex) · **10** le journal fait foi (lecture avant
+travail, entrée par lot, réservation des numéros au registre) ·
+**11** navigation persistante ⌂ Accueil (+ ← Séquence) sur toute page ·
+**12** cycle de vie des héritées : badge 🛠 « modernisation prévue »
+(`_outils/heritees.json`) tant que le remplaçant n'existe pas, archivage
+dans `_archive-anciennes-versions/` DANS LE MÊME COMMIT que la livraison du
+remplaçant, avec mise à jour de tous les câblages — jamais de suppression.
+
+### Les 6 règles d'or fondatrices (texte complet au journal)
 
 1. **Images v2** : chaque image est un document à LIRE (jamais décorative),
    SVG original CC0 avec title/desc accessibles. Jamais Google Images, jamais
@@ -63,8 +76,12 @@ séquence sans son QCM ni ses synthèses.
 
 ### Titres et navigation (charte harmonisée, juillet 2026)
 
-- **Charte des titres** (h1 + `<title>`) pour séquences, QCM et ateliers du
-  Thème 2 : `Thème 2 · Martinique — <niveau> · S<n> : <nom court>` — le
+- **Charte des titres** (h1 + `<title>`) pour séquences, QCM et ateliers,
+  généralisée aux trois thèmes (§IV du projet pédagogique, lecture PAR THÈME
+  validée par Pascal le 30/07/2026 : chaque année, les trois villes) :
+  `Thème <n> · <ville> — <niveau> · S<n> : <nom court>` avec Thème 1 ·
+  Chine, Thème 2 · Martinique, Thème 3 · New York ; pour une ressource sans
+  créneau de classeur, remplacer `S<n>` par `Atelier`. Pour le Thème 2 : le
   `S<n>` est ALIGNÉ sur l'onglet du classeur de progression du niveau
   (S4-S5 quand la séquence couvre deux créneaux ; le `<title>` ajoute les
   codes entre parenthèses). Les NOMS DE FICHIERS et URLs ne changent
@@ -88,6 +105,14 @@ séquence sans son QCM ni ses synthèses.
   2 niveaux, vérificateur, correction complète repliée, « à retenir »,
   pièges classiques, critère de réussite → bilan avec auto-positionnement
   par code → blocs règle n°4.
+- **Programmation : éditeur Vittascience EMBARQUÉ** (standard demandé par
+  Pascal, 30/07/2026) : toute séquence de programmation intègre l'éditeur
+  directement dans la page (iframe `fr.vittascience.com/python/?mode=mixed&
+  console=bottom` — blocs + Python côte à côte), jamais un simple lien
+  sortant. L'iframe étant hors de notre page, le verrou suit le motif
+  **prédire → tester dans l'éditeur → reporter** : l'élève prédit (liste
+  déroulante), exécute, puis reporte la valeur observée — une valeur que
+  seule l'exécution révèle.
 - **Verrous expérientiels** : les manipulations obligatoires (simulateur,
   exploration) sont tracées (`window.__exp`) et EXIGÉES par le vérificateur —
   l'élève doit vraiment faire l'expérience, pas seulement répondre.

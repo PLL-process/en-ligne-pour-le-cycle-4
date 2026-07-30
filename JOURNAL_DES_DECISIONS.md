@@ -14,6 +14,7 @@
 | 9 | Représentations — formalisation détaillée (cadre d'application) | Codex (Thème 1) | ✅ Fusionnée (PR #74) |
 | 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | ✅ Fusionnée (PR #72) |
 | 11 | Navigation persistante et retour à l'accueil | ChatGPT (`docs/specifications/regle-or-11-navigation-retour-accueil.md`) | ✅ Fusionnée (PR #76) — appliquée au Thème 2 par le lot d'harmonisation |
+| 12 | Cycle de vie des ressources héritées (badge 🛠, archivage à la livraison) | Fable, validée par Pascal (30/07/2026) | 🔄 Cette PR |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -628,3 +629,43 @@ Le registre central des règles d'or (tableau en tête de fichier) est instauré
    à cellule de TOUS les onglets non ciblés = 0 écart ; formules préservées
    (Calendrier 78/77, Frise 334, Progression 15) ; `vbaProject.bin` identique
    à l'octet près (macros intactes) ; openpyxl sans `data_only`.
+
+## 2026-07-30 — Règle d'or n°12 « Cycle de vie des ressources héritées » + arbitrages fondateurs (Pascal & Fable, branche `fable/theme-2/regle-12-archives-outillage`)
+
+1. **RÈGLE D'OR N°12 (validée par Pascal)** — que faire des séquences
+   existantes d'avant le projet, sans jamais aborder une rentrée avec un
+   mélange ambigu de ressources premium et datées :
+   - **On n'archive qu'à la livraison du remplaçant.** Le lot qui livre la
+     ressource premium déplace l'ancienne vers `_archive-anciennes-versions/`
+     DANS LE MÊME COMMIT, avec README « remplacée par → lien » et mise à
+     jour de TOUS les câblages (classeurs, README, séquences). Jamais de
+     suppression sèche.
+   - **En attendant leur tour**, les héritées restent en place et portent le
+     badge 🛠 « ressource héritée — modernisation prévue » dans l'index
+     (source : `_outils/heritees.json`, liste éditable ; 9 entrées posées :
+     7 anciens QCM sans localStorage, séquence algorigrammes DNB,
+     vittascience_variables).
+   - **Une exception nommée** : `vittascience_variables.html` (3e_C9.1) est
+     héritée mais INDISPENSABLE (enquête Vittascience améliorée par Pascal,
+     donnée à tous les niveaux) — elle sera REFONDUE, pas simplement
+     archivée : arc « variables » en trois marches (5e/4e/3e) ancré New York.
+2. **Arbitrage §IV du projet pédagogique (décision Pascal, 30/07/2026)** :
+   lecture PAR THÈME officialisée — Thème 1 · Chine, Thème 2 · Martinique,
+   Thème 3 · New York, chaque élève traverse les trois villes chaque année ;
+   la ligne « chaque niveau explore un thème » du §IV est à corriger dans le
+   document (version corrigée fournie à Pascal pour `_ressources-communes/`).
+   La charte des titres est généralisée en conséquence :
+   `Thème <n> · <ville> — <niveau> · S<n> : <nom court>` (`Atelier` si pas
+   de créneau de classeur).
+3. **Standard « éditeur embarqué » (instruction Pascal)** : toute séquence de
+   programmation intègre l'éditeur Vittascience DANS la page (iframe mode
+   mixte) ; verrou adapté au cross-origin : prédire → tester → reporter.
+   Consigné dans METHODE.md.
+4. **Reprise des Thèmes 1 et 3 par Fable confirmée par Pascal** (« puisque tu
+   vas reprendre les thèmes 1 et 3 ») — la mention du journal limitant Fable
+   au Thème 2 est levée ; les circuits de livraison et la garde-périmètre
+   restent inchangés (une branche par thème, motif du thème dans le nom).
+5. **Outillage** : `make_index.py` charge `heritees.json` et pose le badge 🛠
+   (CSS `.badge-herit`, infobulle) ; `_archive-anciennes-versions/` (déjà
+   référencé au pied de l'index) est le lieu d'archivage officiel — aucun
+   nouveau dossier créé. Test réel : index régénéré, 9 badges présents.
