@@ -228,6 +228,31 @@ lot), `licences-medias-education` (médias et SOURCES_MEDIAS.md),
 En cas d'écart entre un skill ancien et les règles d'or du journal, LE
 JOURNAL FAIT FOI (les règles n°4 et n°6 sont postérieures à ces skills).
 
+## Code coloré façon IDE (règle d'or n°13)
+
+Tout LISTING de programme affiché dans une ressource (simulateur de mémoire,
+`pre.code`, valeurs des boîtes) est colorisé comme dans un vrai IDE, avec la
+palette commune du site — sans dépendance externe (aucun CDN : les pages
+restent 100 % hors ligne) :
+
+| Famille | Classe | Couleur |
+|---|---|---|
+| variables | `.py-var` | cyan `var(--hl)` |
+| chaînes `"…"` | `.py-str` | vert `var(--ok)` |
+| nombres | `.py-num` | orange `var(--energie)` |
+| mots-clés (`print`, `def`, `if`…) | `.py-kw` | violet `var(--head)`, gras |
+| `=` et opérateurs | `.py-op` | jaune `var(--warn)`, gras |
+| commentaires `#` | `.py-com` | gris bleu, italique |
+| numéros de ligne pédagogiques | `.py-lno` | bleu discret |
+
+Le colorisateur est la petite fonction `pyc()` embarquée dans la page (elle
+tokenise : chaînes → commentaires → nombres → identifiants → opérateurs) et
+s'applique au chargement à `pre.code` et `#memCode > div`. Une légende 🎨
+accompagne le PREMIER listing de la page. Le `<code>` en ligne dans la prose
+reste monochrome (la couleur est réservée aux listings, pour garder sa force).
+Référence : règle d'or n°13 au journal (entrée du 30/07/2026, PR de la
+branche `fable/theme-3/code-colore-ide`).
+
 ## L'esprit de la méthode
 
 Ultra premium, ultra pédagogique : l'élève vit une histoire vraie, manipule
