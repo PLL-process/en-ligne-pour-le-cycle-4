@@ -598,6 +598,11 @@ print("Places libres :", places)</pre>
   <p><b>🎢 Défi curieux :</b> le vrai Cyclone a ouvert en 1927 et il est toujours en bois. Dans l'éditeur,
   calcule son âge avec une variable <code>annee = 2026</code> — puis écris le programme pour que le calcul
   reste juste TOUTES les années suivantes.</p>
+    <details class="vs" id="vs3">
+      <summary>🧪 L'éditeur du Bonus — code tes défis ici, sans quitter la page</summary>
+      <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+    </details>
 </section>
 
 <footer class="footer">
@@ -644,7 +649,7 @@ function renderMem(){
 }
 $("memNext").addEventListener("click", () => { if(step < PROG.length - 1){ step++; renderMem(); } });
 $("memRestart").addEventListener("click", () => { step = -1; renderMem(); });
-["vs1","vs2"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
 /* banc compteur (act4) : programme FOURNI avec le bug (soustrait les descendus) */
 function fnCompteur(montes, descendus){ let places = 24; places = places - montes; places = places - descendus; return places; }
 const B4 = {1:[0,0,24], 2:[3,0,21], 3:[3,2,23]};

@@ -880,3 +880,29 @@ dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
    vagues de modernisation (règle n°12).
 4. **Tests réels** : suite dédiée 17/17 (spans posés, couleurs calculées,
    légende, textes intacts, badges) + régressions 11/11, 27/27, 15/15.
+
+## 2026-07-30 — Thème 3 · Bonus outillés + retrofit du TP mBot2 (Fable, branche `fable/theme-3/bonus-editeur-retrofit-tp`, empilée sur `code-colore-ide`)
+
+1. **Retour de Pascal** : le défi du Bonus 3e dit « dans l'éditeur embarqué »…
+   mais le bloc Bonus n'en avait pas. Corrigé : éditeur Vittascience embarqué
+   AU BAS du bloc 🎁 des deux séquences de l'arc (3e : vs4 · 5e : vs3),
+   même standard replié + appel « CLIQUE ICI ».
+2. **TP mBot2 v4.5 (héritée 🛠)** — retrofit en attendant la refonte :
+   navigation règle n°11 (⌂ Accueil + ← Séquence Variables 3e_C9.1) ;
+   règle n°13 appliquée à ses listings via colorisateur + MutationObserver
+   (la page re-génère ses <pre> : les nouveaux venus sont colorés à
+   l'apparition), palette MAPPÉE sur les jetons locaux du TP (cyan/violet/
+   or/vert/orange) — alignement complet sur la palette du site à la refonte.
+3. **Jardin connecté 4e_C6.2** (séquence modèle historique) : navigation
+   règle n°11 ajoutée — volet livré par la branche `fable/theme-2/
+   jardin-navigation` (fichier seul ; l'entrée de journal voyage ici,
+   même précédent que la PR méthode du jour). Constat au passage : le
+   « code enseignant » de sa fiche professeur (GJEP) est lisible dans la
+   source publique — loquet de confort, PAS une protection ; rappel :
+   aucune correction sommative confidentielle dans le dépôt public.
+4. **« Appliquer à tous les documents »** (demande Pascal) : la
+   généralisation des règles 11 et 13 aux autres ressources à listings se
+   fera par vagues (règle n°12), TP mBot2 refondu en tête.
+5. **Tests réels** : suite retrofit 11/11 (éditeurs du Bonus en place, nav
+   du TP, cibles des liens, 23/23 listings présents colorés, zéro erreur
+   JS) + régressions 17/17, 11/11, 27/27, 15/15.
