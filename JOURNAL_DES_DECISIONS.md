@@ -746,6 +746,8 @@ légende) + image traitée en document à LIRE. Processus réel : Pascal fournit
 les PAGES sources (.mhtml Flickr), Fable extrait et audite les licences.
 Résultat : mezzanine 96 St (MTA « SAS_2665 », CC BY 2.0, avec LE panneau LED
 de la situation déclenchante !) INTÉGRÉE en ouverture ; écartées et tracées :
-CC BY-ND (+ visages identifiables), CC BY-NC-ND (trop restrictive) ; photo du
-train R160 en attente de sa page source (pas de provenance, pas de
-publication).
+CC BY-ND (+ visages identifiables), CC BY-NC-ND (trop restrictive) . Le train
+R160 a retrouvé sa page source grâce à Pascal (Flickr MTA 31863535272,
+« 86th Street Second Av. Subway Station Unveiled », CC BY 2.0, 30/12/2016) :
+INTÉGRÉ en ouverture de la séance 3 — preuve que la règle tient : pas de
+provenance, pas de publication ; provenance retrouvée, publication.
