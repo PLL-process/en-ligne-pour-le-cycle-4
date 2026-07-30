@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Variables, types et systèmes (3e_C9.1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 50px;line-height:1.5;font-size:.94em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.4em;color:var(--title);text-align:center}
+  h2{font-size:1.05em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:20px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .warn{color:var(--warn)}
+  code{background:#08132c;padding:1px 6px;border-radius:5px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+  #navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+  #navharm a:hover{border-color:#61dafb;color:#61dafb}
+  @media print{body{background:#fff;color:#111;font-size:9pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}#navharm{display:none}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C9.1_variables_types_systemes.html">← Séquence</a></nav>
+<div class="page">
+<h1>👩‍🏫 Synthèse professeur — Variables, types et systèmes (3e_C9.1)</h1>
+
+<div class="bloc">
+<h2 style="margin-top:0">Genèse, objectifs et articulation</h2>
+<p>Refonte complète de la ressource « Vittascience – variables » (enquête Vittascience adaptée par
+P. Gouacide, donnée aux trois niveaux face à un constat massif : <b>les élèves manipulent des blocs depuis
+la 6e sans avoir conceptualisé la variable</b>). Première marche « 3e » de l'arc variables du Thème 3
+(New York) — les déclinaisons 5e et 4e suivront le même fil. L'atelier couvre 3e_C9.1 dans son
+intégralité : élaborer un algorithme → le traduire en programme structuré (fonction) → le tester et le
+mettre au point. L'<b>éditeur Python Vittascience est embarqué dans la page</b> (mode mixte blocs+texte,
+console) ; le verrou pédagogique suit le motif <b>prédire → tester → reporter</b>, adapté au cross-origin.
+L'ancienne ressource est archivée (règle d'or n°12), un stub de redirection préserve l'URL historique.</p>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Réponses complètes attendues</h2>
+<table>
+<tr><th>Act.</th><th>Réponses</th></tr>
+<tr><td>1</td><td>minutes=3 · l'ancien 4 est PERDU (affecter=remplacer) · <code>=</code> = « range dans la boîte » · lecture droite→gauche. <b>Verrou :</b> 6 étapes du simulateur déroulées.</td></tr>
+<tr><td>2</td><td>Table : passages 0→3→5, groupe 3→2 ; la boîte passages change 3 fois ; motif = compteur/accumulation.</td></tr>
+<tr><td>3</td><td>A→7 · B→34 (concaténation) · C→« Train Q 3 min » · + entre str = collage · bug panneau : "4"+"1"→"41 min". <b>Verrou :</b> éditeur ouvert + reports exacts.</td></tr>
+<tr><td>4</td><td>Bug1 L3 (<code>2 + 1</code> sans guillemets) · Bug2 L5 (1.8, point décimal) · Bug3 : "21"−1 = TypeError (str−int) · affichage final : <code>Q - 96 St - 2 min | 25.0 C</code>. <b>Verrou :</b> éditeur (preuve console).</td></tr>
+<tr><td>5</td><td>▢1 <code>&gt;</code> · ▢2 3 · ▢3 1 · fonction = rejouable/testable · T4 renvoie 1 (bug frontière) · correction <code>&gt;=</code> · puis REJOUER les 4 tests. <b>Verrou :</b> 4 tests exécutés au banc.</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Difficultés prévisibles et remédiation</h2>
+<table>
+<tr><th>Difficulté</th><th>Remédiation</th></tr>
+<tr><td>« x = x + 1 est impossible en maths »</td><td>Rejouer le simulateur : ce n'est pas une équation, c'est un ORDRE (calcule à droite, range à gauche).</td></tr>
+<tr><td>« "5" et 5, c'est pareil »</td><td>Faire exécuter <code>"5" + "5"</code> puis <code>5 + 5</code> dans l'éditeur : le choc des résultats vaut dix explications.</td></tr>
+<tr><td>La virgule décimale française</td><td>Ancrer « la virgule sépare, le point décimale » — et montrer l'erreur réelle produite par 1,8.</td></tr>
+<tr><td>Prédictions systématiquement copiées sur le voisin</td><td>Rappeler que la prédiction n'est PAS notée : c'est l'écart qui enseigne. Les reports, eux, doivent être exacts.</td></tr>
+<tr><td>« Ça marche, j'ai fini » (une exécution réussie)</td><td>Renvoyer au document 3 : fini = TOUS les tests verts, frontière comprise. Exiger le banc avant validation.</td></tr>
+<tr><td>Élèves rapides</td><td>Défis bonus (convertisseurs avec banc de tests écrit AVANT, MetroCard avec cas limites) ; TP mBot2 (version 🅰).</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">Versions, évaluation, CRCN, liens</h2>
+<ul>
+<li><b>Versions :</b> 🅰 éditeur Vittascience → carte réelle (Arduino/mBot2, <span class="warn">très basse tension uniquement</span>) avec le TP mBot2 du dossier ; 🅱 éditeur embarqué dans la page (parcours principal, connexion requise pour l'iframe seule) ; 🅲 simulateur de mémoire + tables de suivi au cahier (100 % hors ligne).</li>
+<li><b>Évaluation :</b> vérificateurs intégrés (5 activités, verrous expérientiels) ; QCM 30 q (VAR 8 / TYP 8 / PRG 7 / MAP 7, 3 illustrées, réponses réparties 8/7/7/8) → positionnement par famille ; sommative à construire (corrigé jamais publié). L'ancien « questionnaire noté » de la ressource héritée reste consultable aux archives.</li>
+<li><b>CRCN (règle n°7) :</b> 3.4 Programmer, Niv. 3 — repère : « écrire et mettre au point un programme » ; action observable : l'élève exécute ses expériences dans l'éditeur embarqué et corrige un programme bugué ; trace : réponses et badges enregistrés dans la page (sauvegarde locale), programme corrigé dans l'éditeur.</li>
+<li><b>Liens :</b> TP mBot2 (même dossier) · « Ajuster le programme du jardin » 4e_C6.1 (hystérésis, non-régression — même culture du test) · CodeLab « Programmer l'alerte » 3e_C6.1 · l'arc variables 5e/4e (à venir).</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

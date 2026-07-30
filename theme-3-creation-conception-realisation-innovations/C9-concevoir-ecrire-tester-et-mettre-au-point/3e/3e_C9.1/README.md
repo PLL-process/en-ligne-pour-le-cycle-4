@@ -1,39 +1,24 @@
-# 3e_C9.1 — Vittascience cycle 4 : variables, types et systèmes programmés
+# 3e_C9.1 — Atelier « Variables, types et systèmes » (Thème 3 · New York)
 
 > Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire
 > en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point.
 
-Fichier HTML interactif pour une séance/évaluation de technologie 3e (thème 3, programmation).
+## Ressources
 
-## Contenu
+* **`sequence_3e_C9.1_variables_types_systemes.html`** — l'atelier complet (4 séances, 5 activités) :
+  simulateur de mémoire pas-à-pas, motif **prédire → tester → reporter** sur l'**éditeur Python
+  Vittascience embarqué**, chasse aux bugs du panneau du métro new-yorkais, banc de mise au point
+  (cas limite compris). Sauvegarde locale, DYS, verrous expérientiels.
+* **`qcm_3e_C9.1_variables_types_systemes.html`** — QCM 30 q (variables / types / lecture de
+  programme / mise au point), corrections détaillées, 3 illustrées.
+* **`Synthèses/`** — synthèse élève (imprimable A4) et synthèse professeur (réponses, remédiations, CRCN).
+* **`fiche_pedagogique_3e_C9.1.md`**, **`matrice_couverture_3e_C9.1.csv`**, **`SOURCES_MEDIAS.md`**.
+* **`tp_mbot2_python.html`** — TP robot réel (version 🅰, très basse tension), prolongement de l'atelier.
+* `qcm_python_variables.html` — QCM hérité (24 q), conservé en complément.
 
-* Questionnaire avec aides et corrections.
-* Correction affichée = points retirés pour la question.
-* Choix du temps : standard, tiers-temps, sans chrono.
-* Chronomètre indicatif et non bloquant.
-* Sauvegarde automatique locale, export des réponses en JSON.
-* Panneaux pliables d'expérimentation Vittascience dans les exercices concernés.
-* Interface Python intégrée pour les exercices variables/types.
-* Interface Arduino intégrée pour l'exercice d'arrosage automatique (à rapprocher de la
-  séquence complète « Jardin connecté » ajoutée dans `theme-2.../C6.../4e/4e_C6.2/`).
-* Vidéo YouTube intégrée derrière un bouton repliable, avec mini-quiz non noté.
-* Mode enseignant : code `GJEP`.
-* Images externalisées dans `Images/` pour alléger le HTML.
+## Histoire (règle d'or n°12)
 
-## Autre ressource dans ce dossier
-
-`tp_mbot2_python.html` — TP mBot2/Python (élève 3e), même compétence C9.1 (version la plus
-aboutie conservée ; les versions précédentes sont dans `_archive-anciennes-versions/`).
-
-## Publication GitHub Pages
-
-Le dépôt entier est déjà publié via GitHub Pages. Lien direct de cette séance :
-
-👉 `https://pll-process.github.io/en-ligne-pour-le-cycle-4/theme-3-creation-conception-realisation-innovations/C9-concevoir-ecrire-tester-et-mettre-au-point/3e/3e_C9.1/vittascience_variables.html`
-
-## Historique des versions
-
-* **v1 (`vittascience_variables.html`, conservée)** — version complète de référence.
-* v2 « améliorée » et v3 « corrigée » — la v3 s'est révélée être une redirection vers la v1 ;
-  les deux sont conservées dans `_archive-anciennes-versions/` pour mémoire, sans être reliées
-  depuis cette page.
+Cet atelier est la **refonte** de la ressource « Vittascience – variables » (enquête Vittascience
+adaptée P. Gouacide, utilisée aux trois niveaux). L'ancienne version est archivée dans
+`_archive-anciennes-versions/C7_C9_…/3e_C9.1/` ; son URL historique redirige vers l'atelier.
+Les marches 5e et 4e de l'**arc variables** suivront le même fil New York.

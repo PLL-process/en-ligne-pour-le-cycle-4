@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Les quatre types de valeurs en Python et le piège des guillemets</title>
+  <desc id="d">Quatre cartes présentent les types Python. int : nombre entier, exemples 4, -2, 96 — on peut calculer avec. float : nombre à virgule, exemples 3.5, 20.8 — la virgule s'écrit avec un point. str : chaîne de caractères, exemples "Q", "96 St", "34" — TOUT ce qui est entre guillemets est du TEXTE, même des chiffres. bool : booléen, True ou False — le résultat d'un test. En dessous, le piège des guillemets : 3 + 4 donne 7 (addition de nombres) mais "3" + "4" donne "34" (collage de textes, la concaténation). Le type décide de ce que fait le signe plus.</desc>
+  <rect width="940" height="560" fill="#050f24"/>
+  <text x="470" y="32" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">Le TYPE d'une valeur décide de ce qu'on peut en faire</text>
+
+  <g font-size="12">
+    <rect x="30" y="60" width="208" height="150" rx="12" fill="#0d2347" stroke="#81fba1" stroke-width="2.5"/>
+    <text x="134" y="88" fill="#81fba1" font-size="17" font-weight="bold" text-anchor="middle" font-family="monospace">int</text>
+    <text x="134" y="110" fill="#e4eaf5" text-anchor="middle">nombre ENTIER</text>
+    <text x="134" y="136" fill="#ffd66b" text-anchor="middle" font-family="monospace">4   -2   96</text>
+    <text x="134" y="164" fill="#9bbefc" font-size="10.5" text-anchor="middle">✔ on peut CALCULER avec</text>
+    <text x="134" y="182" fill="#9bbefc" font-size="10.5" text-anchor="middle">(+ − × ÷ et comparer)</text>
+
+    <rect x="264" y="60" width="208" height="150" rx="12" fill="#0d2347" stroke="#61dafb" stroke-width="2.5"/>
+    <text x="368" y="88" fill="#61dafb" font-size="17" font-weight="bold" text-anchor="middle" font-family="monospace">float</text>
+    <text x="368" y="110" fill="#e4eaf5" text-anchor="middle">nombre À VIRGULE</text>
+    <text x="368" y="136" fill="#ffd66b" text-anchor="middle" font-family="monospace">3.5   20.8</text>
+    <text x="368" y="164" fill="#9bbefc" font-size="10.5" text-anchor="middle">⚠ la virgule s'écrit avec</text>
+    <text x="368" y="182" fill="#9bbefc" font-size="10.5" text-anchor="middle">un POINT (3.5, jamais 3,5)</text>
+
+    <rect x="498" y="60" width="208" height="150" rx="12" fill="#0d2347" stroke="#ffd66b" stroke-width="2.5"/>
+    <text x="602" y="88" fill="#ffd66b" font-size="17" font-weight="bold" text-anchor="middle" font-family="monospace">str</text>
+    <text x="602" y="110" fill="#e4eaf5" text-anchor="middle">TEXTE (chaîne)</text>
+    <text x="602" y="136" fill="#ffd66b" text-anchor="middle" font-family="monospace">"Q"  "96 St"  "34"</text>
+    <text x="602" y="164" fill="#ff7b88" font-size="10.5" font-weight="bold" text-anchor="middle">⚠ entre guillemets = TEXTE</text>
+    <text x="602" y="182" fill="#ff7b88" font-size="10.5" text-anchor="middle">même si ce sont des chiffres !</text>
+
+    <rect x="732" y="60" width="178" height="150" rx="12" fill="#0d2347" stroke="#c68ef2" stroke-width="2.5"/>
+    <text x="821" y="88" fill="#c68ef2" font-size="17" font-weight="bold" text-anchor="middle" font-family="monospace">bool</text>
+    <text x="821" y="110" fill="#e4eaf5" text-anchor="middle">VRAI ou FAUX</text>
+    <text x="821" y="136" fill="#ffd66b" text-anchor="middle" font-family="monospace">True  False</text>
+    <text x="821" y="164" fill="#9bbefc" font-size="10.5" text-anchor="middle">le résultat d'un test</text>
+    <text x="821" y="182" fill="#9bbefc" font-size="10.5" text-anchor="middle" font-family="monospace">retard &gt; 5 → True</text>
+  </g>
+
+  <!-- le piège -->
+  <text x="470" y="262" fill="#ff7b88" font-size="16" font-weight="bold" text-anchor="middle">🎯 LE PIÈGE DES GUILLEMETS — la même touche +, deux effets</text>
+  <g font-family="monospace" font-size="16">
+    <rect x="90" y="286" width="350" height="130" rx="12" fill="#0e2e18" stroke="#81fba1" stroke-width="2.5"/>
+    <text x="265" y="318" fill="#e4eaf5" text-anchor="middle">3 + 4</text>
+    <text x="265" y="346" fill="#81fba1" font-size="26" font-weight="bold" text-anchor="middle">7</text>
+    <text x="265" y="380" fill="#9bbefc" font-size="11" font-family="Verdana" text-anchor="middle">int + int → le + ADDITIONNE</text>
+    <text x="265" y="400" fill="#81fba1" font-size="11" font-family="Verdana" text-anchor="middle" font-weight="bold">une ADDITION</text>
+
+    <rect x="500" y="286" width="350" height="130" rx="12" fill="#3a1020" stroke="#ff7b88" stroke-width="2.5"/>
+    <text x="675" y="318" fill="#e4eaf5" text-anchor="middle">"3" + "4"</text>
+    <text x="675" y="346" fill="#ff7b88" font-size="26" font-weight="bold" text-anchor="middle">"34"</text>
+    <text x="675" y="380" fill="#9bbefc" font-size="11" font-family="Verdana" text-anchor="middle">str + str → le + COLLE bout à bout</text>
+    <text x="675" y="400" fill="#ff7b88" font-size="11" font-family="Verdana" text-anchor="middle" font-weight="bold">une CONCATÉNATION</text>
+  </g>
+
+  <rect x="90" y="446" width="760 " height="66" rx="12" fill="#173666" stroke="#274a8a"/>
+  <text x="470" y="474" fill="#e4eaf5" font-size="13" text-anchor="middle"><tspan fill="#61dafb" font-weight="bold">À retenir :</tspan> avant de calculer, demande-toi TOUJOURS « quel est le TYPE de cette valeur ? »</text>
+  <text x="470" y="498" fill="#9bbefc" font-size="12" text-anchor="middle">Un doute ? <tspan font-family="monospace" fill="#ffd66b">type(x)</tspan> te répond — et <tspan font-family="monospace" fill="#ffd66b">int("34")</tspan> transforme le texte en nombre.</text>
+  <text x="470" y="540" fill="#5b7bb8" font-size="11.5" text-anchor="middle" font-style="italic">À toi de prédire : que donne "1" + "2" ? Et int("1") + int("2") ? Vérifie ensuite dans l'éditeur.</text>
+</svg>

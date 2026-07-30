@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · New York — 3e · Atelier : Variables, types et systèmes (3e_C9.1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+
+/* éditeur Vittascience embarqué */
+details.vs{border:1.5px solid #274a8a;border-radius:12px;margin:14px 0;background:#0a1b3d}
+details.vs>summary{cursor:pointer;padding:12px 16px;font-weight:600;color:#61dafb;list-style:none}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:#0d2347}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
+/* simulateur mémoire */
+.mem-wrap{display:grid;grid-template-columns:minmax(220px,1fr) minmax(220px,1.2fr);gap:14px;margin:12px 0}
+@media(max-width:680px){.mem-wrap{grid-template-columns:1fr}}
+.mem-code{background:#08132c;border:1px solid #274a8a;border-radius:10px;padding:10px;font-family:'Fira Code',monospace;font-size:.9em}
+.mem-code div{padding:4px 8px;border-radius:6px}
+.mem-code div.cur{background:#173666;outline:1.5px solid #ffd66b}
+.mem-boxes{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;background:#0d2347;border:1px solid #c68ef2;border-radius:10px;padding:14px}
+.mem-box{min-width:104px;border:2px solid #61dafb;border-radius:8px;background:#0a1b3d;text-align:center;padding-bottom:8px}
+.mem-box .lbl{display:block;background:#173666;color:#61dafb;font-weight:700;font-size:.8em;border-radius:6px 6px 0 0;padding:3px}
+.mem-box .val{font-family:'Fira Code',monospace;font-size:1.25em;color:#ffd66b;display:block;padding:8px 6px 0}
+.mem-box.chg .val{color:#81fba1}
+.mem-ecran{margin-top:10px;background:#111;border:2px solid #ffd66b;border-radius:8px;color:#ffb454;font-family:'Fira Code',monospace;padding:8px 12px;min-height:1.4em}
+/* banc de tests */
+.bench{border:1px solid #274a8a;border-radius:12px;overflow:hidden;margin:12px 0}
+.bench table{width:100%;border-collapse:collapse;font-size:.88em}
+.bench th,.bench td{border-bottom:1px solid #274a8a;padding:8px 10px;text-align:center}
+.bench th{background:#173666;color:#61dafb}
+.bench .res{font-weight:700}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>Thème 3 · New York — 3e · Atelier : Variables, types et systèmes</h1>
+<p class="subtitle">Le panneau du quai 96 St affiche n'importe quoi — répare le programme, et deviens celui ou celle qui COMPREND les variables</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C9.1</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation</span>
+  <span class="badge socle">Socle : D1.3, D2, D4 · CRCN 3.4 Programmer (Niv. 3)</span>
+  <span class="badge duree">⏱ 4 séances de 55 min</span>
+</div>
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>New York, station 96th Street, 7 h 42.</b> Sur le quai, le panneau lumineux annonce :
+    <b>« Train Q — 412 min »</b>. Quatre cent douze minutes ?! Les voyageurs rient, la MTA
+    (le métro new-yorkais) beaucoup moins. Le stagiaire qui a modifié le programme du panneau
+    est reparti en laissant un code plein de bugs.</p>
+    <p>Ton collège est jumelé avec une classe de Manhattan, et leur professeur vous met au défi :
+    <b>« Nos élèves n'ont pas trouvé les bugs. Vos élèves de Martinique feront-ils mieux ? »</b>
+    Pour gagner, il faut d'abord maîtriser ce que 9 collégiens sur 10 croient connaître sans
+    la comprendre : <b>la variable</b>. Puis ses <b>types</b>. Puis la <b>mise au point</b> —
+    l'art de prouver qu'un programme marche VRAIMENT.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment élaborer un algorithme, le traduire en un programme structuré,
+  puis le tester et le mettre au point — sans se faire piéger par ses propres variables ?</p>
+  <div class="exo">
+    <label for="hyp1"><b>✍ Mon hypothèse :</b> d'après toi, que se passe-t-il dans la mémoire de l'ordinateur quand un programme exécute <code>minutes = 4</code> puis <code>minutes = minutes - 1</code> ? Où va l'ancien 4 ?</label>
+    <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre l'atelier</h2>
+  <div class="donnees">
+    <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience piloté vers une carte réelle (Arduino/mBot2 du collège, <b>très basse tension uniquement</b> — le TP mBot2 du dossier prolonge cet atelier).</p>
+    <p>🅱 <b>En simulation</b> : l'éditeur Python Vittascience est <b>embarqué dans cette page</b> — blocs et Python côte à côte, console intégrée. C'est le parcours principal.</p>
+    <p>🅲 <b>Sans matériel</b> : le simulateur de mémoire de la page + les tables de suivi à compléter au cahier.</p>
+  </div>
+  <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter :</b> à chaque exercice,
+  tu PRÉDIS d'abord le résultat (sans ordinateur), tu TESTES ensuite dans l'éditeur embarqué,
+  puis tu REPORTES ce que tu as observé. La prédiction ratée n'est pas une erreur : c'est l'endroit
+  exact où ton cerveau apprend.</div>
+</section>
+
+<div class="seance-tabs" role="tablist" id="seances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1 — La boîte étiquetée<span id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2 — Les types<span id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3 — Le panneau bugué<span id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4 — Mise au point<span id="done-s4"></span></button>
+</div>
+
+<!-- ══════ SÉANCE 1 ══════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>📦 Séance 1 — La variable : une boîte étiquetée (3e_C9.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que se passe-t-il RÉELLEMENT dans la mémoire quand un programme s'exécute ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Exécute le programme À LA MAIN — le simulateur de mémoire</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> comprendre qu'une variable est une boîte étiquetée, et qu'affecter = REMPLACER son contenu.</div>
+      <div><b>Compétence :</b> 3e_C9.1 (analyser avant d'élaborer).</div>
+      <div><b>Production attendue :</b> les 6 étapes exécutées + 4 lectures de mémoire.</div>
+      <div><b>Ressources :</b> le simulateur ci-dessous + le document 1.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/memoire_boites_etiquetees.svg" type="image/svg+xml" aria-label="Une variable est une boîte étiquetée dans la mémoire" style="width:100%"></object>
+      <figcaption>Document 1 — La mémoire vue comme une armoire de boîtes étiquetées.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> clique sur <b>« ▶ Étape suivante »</b> pour exécuter le programme du panneau LIGNE PAR LIGNE, en regardant les boîtes changer. Tu dois dérouler les 6 étapes (c'est ton badge d'exécution 🔓), puis répondre aux questions.</div>
+    <div class="mem-wrap">
+      <div class="mem-code" id="memCode" aria-label="Programme à exécuter pas à pas">
+        <div data-l="0">train = "Q"</div>
+        <div data-l="1">minutes = 4</div>
+        <div data-l="2">quai = "96 St"</div>
+        <div data-l="3">minutes = minutes - 1</div>
+        <div data-l="4">message = train + " - " + quai</div>
+        <div data-l="5">print(message, minutes, "min")</div>
+      </div>
+      <div>
+        <div class="mem-boxes" id="memBoxes" aria-live="polite"><em style="color:#5b7bb8">— la mémoire est vide : lance l'exécution —</em></div>
+        <div class="mem-ecran" id="memEcran" aria-label="Écran du panneau"></div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="memNext" type="button">▶ Étape suivante</button>
+          <button class="btn ghost" id="memRestart" type="button">↺ Recommencer</button>
+          <span id="memBadge" style="align-self:center;color:var(--ok);font-weight:700"></span>
+        </div>
+      </div>
+    </div>
+    <div class="exo">
+      <p><b>Après l'exécution complète, réponds :</b></p>
+      <label>1. Après la ligne <code>minutes = minutes - 1</code>, que contient la boîte <code>minutes</code> ?
+      <select id="a1q1"><option value="">— je choisis —</option><option>4</option><option>3</option><option>4 et 3 en même temps</option><option>rien, elle est vidée</option></select></label>
+      <label>2. Où est passé l'ancien contenu (le 4) ?
+      <select id="a1q2"><option value="">— je choisis —</option><option>il est rangé dans une autre boîte</option><option>il est perdu : affecter, c'est REMPLACER</option><option>il reste derrière le 3</option><option>il retourne dans le programme</option></select></label>
+      <label>3. Le signe <code>=</code> en Python signifie :
+      <select id="a1q3"><option value="">— je choisis —</option><option>« est égal à », comme en maths</option><option>« mets cette valeur dans la boîte »</option><option>« compare les deux côtés »</option><option>« affiche à l'écran »</option></select></label>
+      <label>4. <code>minutes = minutes - 1</code> se lit :
+      <select id="a1q4"><option value="">— je choisis —</option><option>de gauche à droite, comme une phrase</option><option>de droite à gauche : je CALCULE d'abord, je RANGE ensuite</option><option>dans n'importe quel sens</option><option>c'est une équation impossible</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le simulateur : à la ligne 4, la boîte <code>minutes</code> a-t-elle DEUX valeurs, ou une seule ? Une boîte ne contient jamais qu'UNE valeur à la fois.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Pour la question 4 : Python commence par calculer TOUT ce qui est à droite du <code>=</code> (il lit <code>minutes</code>, trouve 4, calcule 4 − 1 = 3). Ce n'est qu'À LA FIN qu'il range le résultat dans la boîte de gauche. C'est pour ça que la même variable peut être des deux côtés sans contradiction.</p></details>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+      <p>1. <b>3</b> — le calcul 4 − 1 est rangé dans la boîte. 2. <b>Il est perdu</b> : affecter,
+      c'est remplacer le contenu ; l'ordinateur n'a pas de corbeille pour les anciennes valeurs.
+      3. <b>« Mets cette valeur dans la boîte »</b> — c'est le sens le plus important de tout l'atelier :
+      en Python, <code>=</code> n'est PAS le égal des maths (le égal de comparaison s'écrit <code>==</code>).
+      4. <b>De droite à gauche</b> — calcule d'abord, range ensuite.</p>
+      <p><b>Erreur classique :</b> lire <code>x = x + 1</code> comme une équation (« impossible, x ne peut pas
+      être égal à x+1 ! »). Ce n'est pas une équation : c'est un ORDRE donné à la mémoire.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> une variable = une boîte avec une ÉTIQUETTE (le nom) et UN SEUL contenu (la valeur). <code>=</code> signifie « range dedans » — et il REMPLACE ce qui s'y trouvait.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> je peux dire ce que contient chaque boîte après CHAQUE ligne, sans exécuter.</p>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>La table de suivi — la méthode du technicien</h3><span class="duree">⏱ 25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> suivre les valeurs d'un programme ligne par ligne AVEC UNE TABLE — la méthode qui marche à tous les coups.</div>
+      <div><b>Compétence :</b> 3e_C9.1.</div>
+      <div><b>Production attendue :</b> la table de suivi complète (6 cases).</div>
+      <div><b>Ressources :</b> le programme ci-dessous, ton cerveau, PAS l'ordinateur.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> voici le programme du compteur de voyageurs du tourniquet. SANS l'exécuter, complète la table de suivi : la valeur de chaque variable APRÈS chaque ligne.</div>
+    <pre class="code">passages = 0
+groupe = 3
+passages = passages + groupe
+groupe = groupe - 1
+passages = passages + groupe</pre>
+    <div class="exo">
+      <label>Après la ligne 3, <code>passages</code> vaut :
+      <select id="a2q1"><option value="">—</option><option>0</option><option>3</option><option>6</option><option>« passages + groupe »</option></select></label>
+      <label>Après la ligne 4, <code>groupe</code> vaut :
+      <select id="a2q2"><option value="">—</option><option>3</option><option>2</option><option>1</option><option>0</option></select></label>
+      <label>Après la ligne 5, <code>passages</code> vaut :
+      <select id="a2q3"><option value="">—</option><option>3</option><option>5</option><option>6</option><option>8</option></select></label>
+      <label>Combien de FOIS la boîte <code>passages</code> a-t-elle changé de contenu (ligne 1 comprise) ?
+      <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
+      <label>Quelle phrase décrit le rôle de ce programme ?
+      <select id="a2q5"><option value="">—</option><option>il compte des passages en accumulant dans une variable</option><option>il compare deux nombres</option><option>il affiche un message</option><option>il efface la mémoire</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais ta table au brouillon : deux colonnes (<code>passages</code>, <code>groupe</code>), une ligne par ligne de programme. Remplis case par case, sans sauter.</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Ligne 3 : à droite, <code>passages + groupe</code> = 0 + 3 = 3 → je range 3 dans <code>passages</code>. Ligne 4 : <code>groupe - 1</code> = 3 − 1 = 2 → dans <code>groupe</code>. Ligne 5 : 3 + 2 = 5 → dans <code>passages</code>. La table ne ment jamais.</p></details>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Table de suivi : L1 → passages=0 · L2 → groupe=3 · L3 → passages=<b>3</b> · L4 → groupe=<b>2</b> ·
+      L5 → passages=<b>5</b>. La boîte <code>passages</code> a changé <b>3 fois</b> (0, puis 3, puis 5).
+      Le programme <b>accumule</b> : c'est le motif « compteur », le plus utile de toute la programmation
+      (points d'un jeu, voyageurs d'une station, mesures d'un capteur…).</p>
+      <p><b>Erreur classique :</b> répondre 6 à la ligne 5 en utilisant l'ANCIEN groupe (3) — la table
+      de suivi t'oblige à utiliser la valeur COURANTE (2). C'est exactement pour ça qu'elle existe.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> pour lire un programme, je tiens la TABLE DE SUIVI : une colonne par variable, une ligne par instruction. C'est la méthode de l'activité 1, sur papier.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> ma table donne la même chose que l'ordinateur — vérifie-le en recopiant le programme dans l'éditeur de la séance 2 !</p>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 2 ══════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🏷 Séance 2 — Les types : nombre ou texte ? (3e_C9.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : pourquoi le panneau affiche-t-il « 412 min » — et quel rapport avec des guillemets ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter : le piège des guillemets</h3><span class="duree">⏱ 55 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> distinguer les types (int, float, str, bool) et découvrir EXPÉRIMENTALEMENT ce que fait <code>+</code> selon le type.</div>
+      <div><b>Compétence :</b> 3e_C9.1 · CRCN 3.4 Programmer (Niv. 3) — trace : tes reports d'expérience enregistrés dans la page.</div>
+      <div><b>Production attendue :</b> 3 prédictions + 3 tests réels + 3 reports.</div>
+      <div><b>Ressources :</b> le document 2 + l'éditeur Python EMBARQUÉ ci-dessous.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/types_python_familles.svg" type="image/svg+xml" aria-label="Les quatre types de valeurs en Python et le piège des guillemets" style="width:100%"></object>
+      <figcaption>Document 2 — Quatre types, et la double vie du signe +.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> pour chaque expérience : ① PRÉDIS le résultat (sans ordinateur) ; ② OUVRE l'éditeur, recopie le code, exécute ; ③ REPORTE ce que la console a VRAIMENT affiché. Ta prédiction peut être fausse — ton report, lui, doit être exact.</div>
+    <div class="exo">
+      <p><b>Expérience A :</b> <code>print(3 + 4)</code></p>
+      <label>① Je prédis :
+      <select id="a3p1"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <p><b>Expérience B :</b> <code>print("3" + "4")</code></p>
+      <label>① Je prédis :
+      <select id="a3p2"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <p><b>Expérience C :</b> <code>print("Train " + "Q", 2 + 1, "min")</code></p>
+      <label>① Je prédis :
+      <select id="a3p3"><option value="">—</option><option>Train Q 3 min</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>une erreur</option></select></label>
+    </div>
+    <details class="vs" id="vs1">
+      <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes trois expériences ici</summary>
+      <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. Recopie chaque ligne puis clique ▶. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué"></iframe>
+    </details>
+    <div class="exo">
+      <p><b>③ Je reporte ce que la console a affiché :</b></p>
+      <label>Expérience A a affiché :
+      <select id="a3r1"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <label>Expérience B a affiché :
+      <select id="a3r2"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
+      <label>Expérience C a affiché :
+      <select id="a3r3"><option value="">—</option><option>Train Q 3 min</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>une erreur</option></select></label>
+      <label>Conclusion — que fait <code>+</code> entre deux <b>textes</b> (str) ?
+      <select id="a3r4"><option value="">—</option><option>il additionne leurs valeurs</option><option>il les COLLE bout à bout (concaténation)</option><option>il provoque toujours une erreur</option><option>il les compare</option></select></label>
+      <label>Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Le panneau affiche donc :
+      <select id="a3r5"><option value="">—</option><option>5 min</option><option>41 min… voilà d'où viennent les minutes fantômes !</option><option>une erreur</option><option>4 min</option></select></label>
+    </div>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le document 2 : la carte <b>str</b> dit « entre guillemets = TEXTE, même si ce sont des chiffres ». Que fait <code>+</code> avec deux textes ?</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Si tu n'arrives pas à ouvrir l'éditeur (pas de réseau), utilise la version 🅲 : applique la règle du document 2 — <code>3 + 4</code> (deux int) → addition → 7 ; <code>"3" + "4"</code> (deux str) → collage → <code>"34"</code>. Puis reporte ces valeurs.</p></details>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>A : <b>7</b> (int + int = addition). B : <b>34</b> — pas « trente-quatre » : le TEXTE « 34 »,
+      les deux caractères collés (concaténation). C : <b>Train Q 3 min</b> — <code>"Train " + "Q"</code>
+      colle les textes, <code>2 + 1</code> additionne les nombres, et la virgule de <code>print</code>
+      insère les espaces. Conclusion : <b>le + colle les str, additionne les int/float</b>. Le bug :
+      <code>"4" + "1"</code> donne <b>"41"</b> → « 41 min ». Avec « 412 min », le stagiaire avait collé
+      « 4 », « 1 » et « 2 »…</p>
+      <p><b>Erreur classique :</b> croire que <code>"5"</code> et <code>5</code> sont pareils « puisque c'est
+      le même chiffre ». Pour l'ordinateur, l'un se calcule, l'autre s'affiche. <code>int("5")</code>
+      fait passer du texte au nombre — c'est le décodeur.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> le TYPE décide de ce que fait l'opération. int/float → le + additionne ; str → le + colle (concaténation). En cas de doute : <code>type(x)</code>.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> je peux prédire le résultat de <code>x + y</code> rien qu'en regardant les guillemets.</p>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 3 ══════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🚇 Séance 3 — Répare le panneau du quai 96 St (3e_C9.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu trouver les TROIS bugs que la classe de Manhattan a manqués ?</p>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>La chasse aux bugs — analyse le programme du stagiaire</h3><span class="duree">⏱ 55 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> analyser un programme réel, localiser 3 bugs de natures différentes, les corriger, PROUVER la correction dans l'éditeur.</div>
+      <div><b>Compétence :</b> 3e_C9.1 (tester, mettre au point).</div>
+      <div><b>Production attendue :</b> 3 bugs identifiés et corrigés + test réel.</div>
+      <div><b>Ressources :</b> le programme du panneau + l'éditeur embarqué.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> voici le programme laissé par le stagiaire. Le panneau doit afficher <code>Q - 96 St - 3 min</code> et la température en °C. Trouve les 3 bugs 🔎 : pour chacun, choisis sa LIGNE puis sa CORRECTION. Termine en assemblant le programme corrigé dans l'éditeur pour PROUVER qu'il affiche la bonne chose (badge 🔓).</div>
+    <pre class="code">1  train = "Q"
+2  quai = "96 St"
+3  minutes = "2" + "1"
+4  temperature_f = 77
+5  temperature_c = (temperature_f - 32) / 1,8
+6  message = train + " - " + quai
+7  minutes = minutes - 1
+8  print(message, minutes, "min |", temperature_c, "C")</pre>
+    <div class="exo">
+      <p><b>🔎 Bug n°1 — les minutes fantômes.</b></p>
+      <label>Il se cache à la ligne :
+      <select id="a4b1l"><option value="">—</option><option>1</option><option>3</option><option>6</option><option>8</option></select></label>
+      <label>La correction :
+      <select id="a4b1c"><option value="">—</option><option>minutes = 2 + 1 (des nombres, pas des textes)</option><option>minutes = "2 + 1"</option><option>minutes = "21"</option><option>supprimer la ligne</option></select></label>
+      <p><b>🔎 Bug n°2 — la virgule qui fâche Python.</b></p>
+      <label>Il se cache à la ligne :
+      <select id="a4b2l"><option value="">—</option><option>4</option><option>5</option><option>6</option><option>7</option></select></label>
+      <label>La correction :
+      <select id="a4b2c"><option value="">—</option><option>écrire 1.8 : en Python, la virgule décimale est un POINT</option><option>écrire 18 sans virgule</option><option>mettre 1,8 entre guillemets</option><option>remplacer / par ×</option></select></label>
+      <p><b>🔎 Bug n°3 — le calcul impossible.</b> Même corrigée en <code>2 + 1</code>… la ligne 7 va planter si on garde la ligne 3 d'origine.</p>
+      <label>Pourquoi <code>minutes - 1</code> plantait-il avec la version d'origine ?
+      <select id="a4b3c"><option value="">—</option><option>on ne peut pas soustraire un nombre d'un TEXTE ("21" - 1 → erreur de type)</option><option>7 est un numéro de ligne interdit</option><option>minutes est écrit en minuscules</option><option>il manque des parenthèses</option></select></label>
+      <label>Une fois les 3 bugs corrigés, la ligne 8 affiche :
+      <select id="a4b4"><option value="">—</option><option>Q - 96 St - 2 min | 25.0 C</option><option>Q - 96 St - 21 min | 25.0 C</option><option>Q96St2min25C</option><option>une erreur</option></select></label>
+    </div>
+    <details class="vs" id="vs2">
+      <summary>🧪 Assemble et exécute le programme CORRIGÉ ici — la preuve par la console 🔓</summary>
+      <p class="vs-note">Recopie le programme avec tes 3 corrections, exécute, et compare avec ta réponse ci-dessus. C'est ton badge d'exécution : la vérification de l'activité l'exige.</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué — programme corrigé"></iframe>
+    </details>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Bug 1 : séance 2, expérience B. Bug 2 : document 2, carte <b>float</b>. Bug 3 : quel est le TYPE de <code>minutes</code> après la ligne 3 d'origine ?</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Chasse aux bugs méthodique : ① je tiens la table de suivi avec les TYPES (<code>minutes : str "21"</code> ← alerte !) ; ② je repère les opérations impossibles (str − int) ; ③ je corrige UNE chose à la fois et je réexécute à chaque fois. Un bug corrigé peut en révéler un autre — c'est normal, c'est la mise au point.</p></details>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>Bug 1 : <b>ligne 3</b>, <code>"2" + "1"</code> colle les textes → <code>"21"</code> ; correction :
+      <code>minutes = 2 + 1</code>. Bug 2 : <b>ligne 5</b>, <code>1,8</code> — en Python la virgule sépare des
+      éléments, elle ne fait pas les décimales ; correction : <code>1.8</code>. Bug 3 : avec la ligne 3
+      d'origine, <code>minutes</code> est un TEXTE, et <code>"21" - 1</code> déclenche une erreur de type
+      (TypeError) — on ne soustrait pas un nombre d'un texte. Programme corrigé : minutes = 3 puis 3 − 1 = 2,
+      (77 − 32)/1.8 = 25.0 → <b>Q - 96 St - 2 min | 25.0 C</b>.</p>
+      <p><b>Erreur classique :</b> corriger le bug 1 et s'arrêter là parce que « ça a l'air bon » — sans
+      exécuter, le bug 2 attend tranquillement la ligne 5. On ne déclare jamais un programme réparé
+      sans l'avoir RÉEXÉCUTÉ en entier.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> les 3 familles de bugs du débutant : le TEXTE déguisé en nombre (guillemets), la VIRGULE décimale (c'est un point), l'OPÉRATION impossible entre types. La table de suivi avec les types les attrape tous.</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> mon programme corrigé affiche exactement <code>Q - 96 St - 2 min | 25.0 C</code> dans la console.</p>
+  </div>
+</section>
+</div>
+
+<!-- ══════ SÉANCE 4 ══════ -->
+<div class="seance-panel" id="s4" role="tabpanel">
+<section class="card">
+  <h2>🌬 Séance 4 — Du besoin au programme testé : la ventilation de la station (3e_C9.1)</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment PROUVER qu'un programme répond au besoin — et pas seulement qu'il « a marché une fois » ?</p>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Élaborer, traduire, mettre au point — le banc de tests</h3><span class="duree">⏱ 55 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> élaborer un algorithme, le traduire en fonction Python, puis le mettre au point avec un banc de tests — cas limites compris.</div>
+      <div><b>Compétence :</b> 3e_C9.1 en entier (élaborer → traduire → tester → mettre au point).</div>
+      <div><b>Production attendue :</b> fonction complétée + 4 tests exécutés + le cas limite tranché.</div>
+      <div><b>Ressources :</b> le document 3 + le banc de tests intégré.</div>
+    </div>
+    <figure class="figure">
+      <object data="Images/ventilation_station_algo.svg" type="image/svg+xml" aria-label="De l'algorithme au programme structuré et testé" style="width:100%"></object>
+      <figcaption>Document 3 — Élaborer, traduire, mettre au point : le trajet complet du besoin au programme prouvé.</figcaption>
+    </figure>
+    <div class="consigne"><b>Consigne :</b> la MTA veut automatiser la ventilation de la station : <b>air pollué (indice &gt; 100) → à fond (3) ; sinon, train qui arrive → moyen (2) ; sinon → doux (1)</b>. ① Complète la traduction Python. ② Exécute les 4 tests du banc (ton badge 🔓). ③ Tranche le cas limite.</div>
+    <div class="exo">
+      <p><b>① La traduction — complète la fonction :</b></p>
+      <pre class="code">def vitesse_ventilation(air, train_arrive):
+    if air ▢1 100:
+        return ▢2
+    elif train_arrive:
+        return 2
+    else:
+        return ▢3</pre>
+      <label>▢1 :
+      <select id="a5t1"><option value="">—</option><option>&gt;</option><option>&lt;</option><option>==</option><option>=</option></select></label>
+      <label>▢2 :
+      <select id="a5t2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>"3"</option></select></label>
+      <label>▢3 :
+      <select id="a5t3"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
+      <label>Pourquoi une FONCTION plutôt que du code en vrac ?
+      <select id="a5t4"><option value="">—</option><option>on peut l'appeler mille fois avec des valeurs différentes, et la tester séparément</option><option>c'est plus joli</option><option>Python l'exige toujours</option><option>ça rend le programme plus rapide</option></select></label>
+    </div>
+    <div class="consigne"><b>② Le banc de mise au point :</b> exécute les 4 tests (dans l'ordre que tu veux) en cliquant ▶ — la page calcule ce que TA fonction (celle du document 3, avec <code>air &gt; 100</code>) renvoie vraiment.</div>
+    <div class="bench">
+      <table aria-label="Banc de tests de la fonction vitesse_ventilation">
+        <tr><th>Test</th><th>air</th><th>train_arrive</th><th>Attendu (besoin)</th><th>Obtenu</th><th></th></tr>
+        <tr><td>T1 — heure de pointe polluée</td><td>150</td><td>False</td><td>3</td><td class="res" id="bt1">—</td><td><button class="btn ghost bench-run" data-t="1" type="button">▶</button></td></tr>
+        <tr><td>T2 — un train approche</td><td>60</td><td>True</td><td>2</td><td class="res" id="bt2">—</td><td><button class="btn ghost bench-run" data-t="2" type="button">▶</button></td></tr>
+        <tr><td>T3 — nuit calme</td><td>40</td><td>False</td><td>1</td><td class="res" id="bt3">—</td><td><button class="btn ghost bench-run" data-t="3" type="button">▶</button></td></tr>
+        <tr><td>T4 — LE CAS LIMITE</td><td>100</td><td>False</td><td>?</td><td class="res" id="bt4">—</td><td><button class="btn ghost bench-run" data-t="4" type="button">▶</button></td></tr>
+      </table>
+    </div>
+    <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
+    <div class="exo">
+      <p><b>③ Tranche le cas limite :</b> la MTA précise son besoin : « à 100 exactement, l'air est déjà trop pollué : il faut ventiler à fond ».</p>
+      <label>Le test T4 a montré que la fonction renvoie :
+      <select id="a5q1"><option value="">—</option><option>3</option><option>2</option><option>1</option><option>une erreur</option></select></label>
+      <label>Pour respecter le besoin, il faut corriger la condition en :
+      <select id="a5q2"><option value="">—</option><option>air &gt;= 100</option><option>air &gt; 99.9</option><option>air == 100</option><option>air &lt; 100</option></select></label>
+      <label>Après cette correction, que DOIT-on faire ?
+      <select id="a5q3"><option value="">—</option><option>rien, la correction est évidente</option><option>rejouer TOUS les tests du banc, pas seulement T4</option><option>supprimer le test T4</option><option>changer aussi les autres return</option></select></label>
+    </div>
+    <details class="vs" id="vs3">
+      <summary>🧪 Pour aller au bout : recopie la fonction corrigée et ton banc de tests dans l'éditeur</summary>
+      <p class="vs-note">Écris la fonction avec <code>&gt;=</code>, puis appelle-la : <code>print(vitesse_ventilation(150, False))</code>, etc. Quatre lignes d'appel = ton banc de tests personnel, réutilisable à chaque modification.</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué — fonction et tests"></iframe>
+    </details>
+    <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>▢1 : « pollué » = l'indice DÉPASSE 100. ▢2 : « à fond », c'est la plus grande vitesse. Pour le T4 : 100 &gt; 100, c'est vrai ou faux ?</p></details>
+    <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><p>Un banc de tests s'écrit AVANT de croire le programme fini : un test par cas du besoin + un test par FRONTIÈRE (ici, exactement 100). Si le besoin dit « à partir de 100 », la condition est <code>&gt;=</code>. Et après toute correction, on rejoue tout : une correction peut casser ailleurs (c'est la non-régression, comme au jardin connecté de 4e).</p></details>
+    <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+    <p class="feedback" id="fb5" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary>
+      <p>① <code>if air &gt; 100: return 3</code> / <code>else: return 1</code> — et une fonction parce
+      qu'elle se REJOUE et se teste à volonté. ② T1→3 ✔, T2→2 ✔, T3→1 ✔, T4→<b>1</b> : avec
+      <code>&gt;</code>, 100 n'est pas « supérieur à 100 », donc la station ventile doucement dans un air
+      déjà pollué. ③ Correction <code>&gt;=</code>, puis on REJOUE LES QUATRE TESTS : T1, T2, T3 doivent
+      toujours passer (non-régression) et T4 renvoie désormais 3.</p>
+      <p><b>Erreur classique :</b> écrire <code>air = 100</code> dans la condition — un seul <code>=</code>
+      AFFECTE (il remplirait la boîte !), c'est <code>==</code> qui compare. Python te sauvera par une
+      erreur… mais pas dans tous les langages.</p>
+    </details>
+    <div class="retenir"><b>🧠 À retenir :</b> élaborer (algorithme en français) → traduire (fonction qui reçoit des variables et renvoie un résultat) → mettre au point (banc de tests écrit À L'AVANCE, cas limites compris, rejoué après CHAQUE correction).</div>
+    <p class="critere"><b>🎯 Critère de réussite :</b> mes 4 tests passent, y compris le cas limite — et je sais expliquer pourquoi on rejoue tout après une correction.</p>
+  </div>
+</section>
+</div>
+
+<section class="card" id="bilan">
+  <h2>🏁 Bilan de l'atelier</h2>
+  <div class="exo">
+    <p><b>🔁 Retour sur ton hypothèse de départ</b> (« où va l'ancien 4 ? ») :</p>
+    <p class="hyp-recall" id="hypRecall"></p>
+    <label for="bilanTxt"><b>✍ Ce que je répondrais maintenant :</b></label>
+    <textarea id="bilanTxt" rows="3" placeholder="L'ancienne valeur est… parce que affecter, c'est…"></textarea>
+  </div>
+  <div class="auto-eval">
+    <p><b>🚦 Je me positionne</b> (🔴 pas encore · 🟡 avec aide · 🟢 seul·e · ⭐ je peux l'expliquer) :</p>
+    <div class="ae-row"><span>📦 Je sais suivre les variables d'un programme avec une table de suivi</span><span class="ae-btns" data-k="VAR"></span></div>
+    <div class="ae-row"><span>🏷 Je reconnais les types et je prédis ce que fait + selon les guillemets</span><span class="ae-btns" data-k="TYP"></span></div>
+    <div class="ae-row"><span>🔎 Je sais chasser un bug méthodiquement (types, virgule, opération impossible)</span><span class="ae-btns" data-k="PRG"></span></div>
+    <div class="ae-row"><span>🌬 Je sais traduire un algorithme en fonction et la prouver au banc de tests</span><span class="ae-btns" data-k="MAP"></span></div>
+  </div>
+  <div class="donnees">
+    <p><b>🧭 Et après ?</b> Le TP <a href="tp_mbot2_python.html">mBot2 en Python</a> fait rouler tes variables
+    sur un vrai robot (version 🅰). En 4e, tu as programmé <a href="../../../../theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html">l'arrosage du jardin connecté</a> —
+    relis-le : tu y verras des variables partout, maintenant que tu sais les voir.</p>
+  </div>
+</section>
+
+<section class="card" id="entrainement">
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>Le QCM de l'atelier t'attend : <b>30 questions</b> (dont <b>3 illustrées</b>), réparties en
+  4 familles — variables, types, lecture de programme, mise au point. Corrections détaillées,
+  réfutation de chaque piège, sauvegarde automatique : le meilleur thermomètre avant l'évaluation.</p>
+  <a class="btn qcm" href="qcm_3e_C9.1_variables_types_systemes.html">🧠 M'entraîner avec le QCM (30 questions)</a>
+</section>
+
+<section class="card" id="bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Trois défis ouverts, sans vérificateur — pour le plaisir d'aller plus loin :</p>
+  <p><b>🗽 Défi convertisseur :</b> dans l'éditeur embarqué, écris <code>miles_vers_km(d)</code> (1 mile = 1.609 km)
+  et <code>fahrenheit_vers_celsius(t)</code> — puis convertis un marathon de New York (26.2 miles) et la canicule
+  de juillet (98 °F). Bonus du bonus : écris ton banc de tests AVANT les fonctions.</p>
+  <p><b>🎫 Défi MetroCard :</b> une carte coûte 1 $, chaque trajet 2.90 $. Écris <code>prix_total(nb_trajets)</code>,
+  puis ajoute la règle « au-delà de 12 trajets par semaine, les suivants sont gratuits ». Quels cas limites
+  ton banc de tests doit-il couvrir ?</p>
+  <p><b>👨‍👩‍👧 Défi famille :</b> avec trois vraies boîtes de cuisine étiquetées <code>train</code>,
+  <code>minutes</code>, <code>quai</code> et des papiers comme valeurs, fais exécuter le programme de
+  l'activité 1 à quelqu'un de ta famille — toi, tu joues le processeur qui lit les lignes. S'il comprend
+  pourquoi l'ancien papier va à la poubelle, vous avez gagné tous les deux.</p>
+</section>
+
+<footer class="footer">
+  <p>Atelier 3e_C9.1 · Thème 3 · New York — refonte de la ressource « Vittascience : variables » (enquête
+  Vittascience adaptée par P. Gouacide, reconstruite au gabarit du dépôt). Page unique hors-ligne (éditeur
+  embarqué : connexion requise), sauvegarde locale uniquement — aucune donnée envoyée. Images : SVG originaux CC0.</p>
+</footer>
+<script>
+(function(){
+"use strict";
+const KEY = "seq_3e_C9.1_variables_types_systemes";
+const $ = id => document.getElementById(id);
+
+/* ── onglets séances ── */
+document.querySelectorAll(".seance-tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".seance-tab").forEach(x => {x.classList.remove("active");x.setAttribute("aria-selected","false");});
+  document.querySelectorAll(".seance-panel").forEach(x => x.classList.remove("active"));
+  t.classList.add("active"); t.setAttribute("aria-selected","true");
+  document.getElementById(t.dataset.panel).classList.add("active");
+  window.scrollTo({top: document.getElementById("seances").offsetTop - 60, behavior: "smooth"});
+}));
+
+/* ── auto-éval 🔴🟡🟢⭐ ── */
+document.querySelectorAll(".ae-btns").forEach(w => {
+  ["🔴","🟡","🟢","⭐"].forEach(e => {
+    const b = document.createElement("button"); b.type="button"; b.textContent=e; b.className="ae-b";
+    b.addEventListener("click", () => {w.querySelectorAll(".ae-b").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); save();});
+    w.appendChild(b);
+  });
+});
+
+/* ── simulateur de mémoire (verrou act1) ── */
+window.__exp = window.__exp || {};
+const PROG = [
+  {boxes:{train:'"Q"'}, chg:"train", ecran:""},
+  {boxes:{train:'"Q"', minutes:"4"}, chg:"minutes", ecran:""},
+  {boxes:{train:'"Q"', minutes:"4", quai:'"96 St"'}, chg:"quai", ecran:""},
+  {boxes:{train:'"Q"', minutes:"3", quai:'"96 St"'}, chg:"minutes", ecran:""},
+  {boxes:{train:'"Q"', minutes:"3", quai:'"96 St"', message:'"Q - 96 St"'}, chg:"message", ecran:""},
+  {boxes:{train:'"Q"', minutes:"3", quai:'"96 St"', message:'"Q - 96 St"'}, chg:"", ecran:"Q - 96 St 3 min"}
+];
+let step = -1;
+function renderMem(){
+  const bx = $("memBoxes");
+  document.querySelectorAll("#memCode div").forEach(d => d.classList.toggle("cur", +d.dataset.l === step));
+  if(step < 0){ bx.innerHTML = '<em style="color:#5b7bb8">— la mémoire est vide : lance l\'exécution —</em>'; $("memEcran").textContent=""; return; }
+  const st = PROG[step];
+  bx.innerHTML = Object.entries(st.boxes).map(([k,v]) =>
+    `<span class="mem-box${k===st.chg?" chg":""}"><span class="lbl">${k}</span><span class="val">${v}</span></span>`).join("");
+  $("memEcran").textContent = st.ecran;
+  if(step === PROG.length - 1){ window.__exp.memoire = true; $("memBadge").textContent = "🔓 badge d'exécution obtenu !"; save(); }
+}
+$("memNext").addEventListener("click", () => { if(step < PROG.length - 1){ step++; renderMem(); } });
+$("memRestart").addEventListener("click", () => { step = -1; renderMem(); });
+
+/* ── suivi ouverture éditeurs (act3/act4) ── */
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+
+/* ── banc de tests (verrou act5) ── */
+function fnVentil(air, train){ if(air > 100) return 3; if(train) return 2; return 1; }
+const BENCH = {1:[150,false,3], 2:[60,true,2], 3:[40,false,1], 4:[100,false,null]};
+window.__exp.bench = window.__exp.bench || {};
+document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click", () => {
+  const t = b.dataset.t, [air, tr, att] = BENCH[t];
+  const got = fnVentil(air, tr);
+  const cell = $("bt"+t);
+  if(att === null){ cell.textContent = got + " ⚠"; cell.style.color = "var(--warn)"; }
+  else { cell.textContent = got + (got === att ? " ✔" : " ✘"); cell.style.color = got === att ? "var(--ok)" : "var(--ko)"; }
+  window.__exp.bench[t] = true;
+  if(Object.keys(window.__exp.bench).length === 4){ window.__exp.tests = true; $("benchBadge").textContent = "🔓 badge de mise au point obtenu — les 4 tests sont exécutés !"; }
+  save();
+}));
+
+/* ── vérificateurs ── */
+function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); return good; }
+const CHECKS = {
+  1(){ let s = 0;
+    s += sv("a1q1","3"); s += sv("a1q2","il est perdu : affecter, c'est REMPLACER");
+    s += sv("a1q3","« mets cette valeur dans la boîte »");
+    s += sv("a1q4","de droite à gauche : je CALCULE d'abord, je RANGE ensuite");
+    const exp = !!window.__exp.memoire;
+    return {score: s, total: 4, exp, expMsg: "Déroule les 6 étapes du simulateur (▶) pour obtenir ton badge d'exécution 🔓."};
+  },
+  2(){ let s = 0;
+    s += sv("a2q1","3"); s += sv("a2q2","2"); s += sv("a2q3","5"); s += sv("a2q4","3 fois");
+    s += sv("a2q5","il compte des passages en accumulant dans une variable");
+    return {score: s, total: 5, exp: true};
+  },
+  3(){ let s = 0;
+    ["a3p1","a3p2","a3p3"].forEach(id => { const e = $(id); if(e.value) s++; e.classList.toggle("ok", !!e.value); });
+    s += sv("a3r1","7"); s += sv("a3r2","34"); s += sv("a3r3","Train Q 3 min");
+    s += sv("a3r4","il les COLLE bout à bout (concaténation)");
+    s += sv("a3r5","41 min… voilà d'où viennent les minutes fantômes !");
+    const exp = !!window.__exp.vs1;
+    return {score: s, total: 8, exp, expMsg: "Ouvre l'éditeur embarqué (🧪) et exécute tes 3 expériences avant de reporter."};
+  },
+  4(){ let s = 0;
+    s += sv("a4b1l","3"); s += sv("a4b1c","minutes = 2 + 1 (des nombres, pas des textes)");
+    s += sv("a4b2l","5"); s += sv("a4b2c","écrire 1.8 : en Python, la virgule décimale est un POINT");
+    s += sv("a4b3c","on ne peut pas soustraire un nombre d'un TEXTE (\"21\" - 1 → erreur de type)");
+    s += sv("a4b4","Q - 96 St - 2 min | 25.0 C");
+    const exp = !!window.__exp.vs2;
+    return {score: s, total: 6, exp, expMsg: "Assemble le programme corrigé dans l'éditeur (🧪) — la preuve par la console est obligatoire."};
+  },
+  5(){ let s = 0;
+    s += sv("a5t1",">"); s += sv("a5t2","3"); s += sv("a5t3","1");
+    s += sv("a5t4","on peut l'appeler mille fois avec des valeurs différentes, et la tester séparément");
+    s += sv("a5q1","1"); s += sv("a5q2","air >= 100");
+    s += sv("a5q3","rejouer TOUS les tests du banc, pas seulement T4");
+    const exp = !!window.__exp.tests;
+    return {score: s, total: 7, exp, expMsg: "Exécute les 4 tests du banc (▶) — le cas limite T4 compris."};
+  }
+};
+const par = {s: []};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "✔ Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour consolider."; fb.className = "feedback ok";
+    if(!par.s.includes(n)){ par.s.push(n); } }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — regarde l'aide niveau 1, puis corrige ce qui est rouge."; fb.className = "feedback warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends le document de l'activité, puis l'aide niveau 2."; fb.className = "feedback ko"; }
+  updateProg(); save();
+}));
+function updateProg(){
+  const n = par.s.length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n * 20) + "%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const map = {s1:["1","2"], s2:["3"], s3:["4"], s4:["5"]};
+  Object.entries(map).forEach(([p, acts]) => { const d = $("done-" + p); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
+}
+
+/* ── sauvegarde ── */
+function save(){
+  const o = {inputs: {}, par, exp: window.__exp || {}, ae: {}};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  document.querySelectorAll(".ae-btns").forEach(w => { const s = w.querySelector(".sel"); if(s) o.ae[w.dataset.k] = s.textContent; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Travail sauvegardé sur CET ordinateur (" + new Date().toLocaleTimeString() + ")"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  (o.par && o.par.s || []).forEach(n => { if(!par.s.includes(n)) par.s.push(n); });
+  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+  if(window.__exp.memoire){ step = PROG.length - 1; renderMem(); }
+  if(window.__exp.tests){ $("benchBadge").textContent = "🔓 badge de mise au point obtenu — les 4 tests sont exécutés !"; }
+  Object.entries(o.ae || {}).forEach(([k, v]) => {
+    const w = document.querySelector('.ae-btns[data-k="' + k + '"]');
+    if(w) w.querySelectorAll(".ae-b").forEach(b => b.classList.toggle("sel", b.textContent === v));
+  });
+  updateProg();
+  const h = $("hyp1"), r = $("hypRecall");
+  if(h && r && h.value) r.textContent = "« " + h.value + " »";
+}
+$("btnSave").addEventListener("click", save);
+$("btnPrint").addEventListener("click", () => window.print());
+$("btnReset").addEventListener("click", () => { if(confirm("Effacer ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); } });
+document.addEventListener("change", e => {
+  if(e.target.matches("input, select, textarea")) save();
+  if(e.target.id === "hyp1"){ const r = $("hypRecall"); if(r) r.textContent = "« " + e.target.value + " »"; }
+});
+restore();
+const h = $("hyp1"), r = $("hypRecall");
+if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse de départ apparaîtra ici — retourne l'écrire si besoin)";
+})();
+</script>
+</body>
+</html>
