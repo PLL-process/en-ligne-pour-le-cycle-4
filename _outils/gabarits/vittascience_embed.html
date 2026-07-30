@@ -1,0 +1,32 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+  GABARIT CANONIQUE — éditeur Vittascience embarqué (règles d'or n°13 et n°16)
+  Source de vérité unique : on COPIE ce bloc à la conception (générateur ou
+  copier-coller), on remplace les {PLACEHOLDERS}, et on l'adapte si besoin.
+  JAMAIS d'inclusion dynamique à l'exécution : chaque page reste monofichier
+  et fonctionne hors ligne (seul l'iframe exige une connexion).
+  Ne pas oublier :
+   1. le CSS details.vs (barre voyante « CLIQUE ICI », pulsation douce) ;
+   2. l'enregistrement du suivi :  ["vs1","vs2",…].forEach(id => { const d =
+      document.getElementById(id); if(d) d.addEventListener("toggle", () =>
+      { if(d.open){ window.__exp[id] = true; save(); } }); });
+   3. le verrou éventuel dans le vérificateur : exp: !!window.__exp.vs1.
+═══════════════════════════════════════════════════════════════════ -->
+<details class="vs" id="{ID}">
+  <summary>🧪 {TITRE — ex. : Recopie ton programme complété ici et exécute-le}</summary>
+  <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. {NOTE
+  SPÉCIFIQUE — consigne blocs↔Python de l'activité}. (Connexion Internet nécessaire pour l'éditeur ;
+  le reste de la page fonctionne hors ligne.)</p>
+  <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué ({CONTEXTE})"></iframe>
+</details>
+<!-- CSS à embarquer avec le gabarit (copier dans le <style> de la page) :
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:18px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
+-->
