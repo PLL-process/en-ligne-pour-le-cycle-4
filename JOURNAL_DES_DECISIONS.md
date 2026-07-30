@@ -670,33 +670,4 @@ Le registre central des règles d'or (tableau en tête de fichier) est instauré
    référencé au pied de l'index) est le lieu d'archivage officiel — aucun
    nouveau dossier créé. Test réel : index régénéré, 9 badges présents.
 
-## 2026-07-30 — Thème 3 · Arc variables, marche 3e : refonte de « Vittascience variables » (Fable, branche `fable/theme-3/arc-variables-3e-refonte`)
 
-1. **Premier lot Fable sur le Thème 3 · New York depuis la levée du périmètre**,
-   et PREMIÈRE APPLICATION de la règle d'or n°12 : l'atelier
-   « Variables, types et systèmes » (3e_C9.1 → COMPLET ET VALIDABLE) refond la
-   ressource héritée `vittascience_variables.html` (enquête Vittascience
-   adaptée Pascal, désignée indispensable). L'ancienne version + ses captures
-   PNG sont ARCHIVÉES (`_archive-anciennes-versions/C7_C9_…/3e_C9.1/`,
-   README pointeur) ; l'URL historique porte un **stub de redirection**
-   (complément pratique à la règle n°12 quand une URL a pu circuler) ;
-   l'entrée `heritees.json` est retirée (8 badges 🛠 restants).
-2. **Contenu** : 4 séances / 5 activités — simulateur de MÉMOIRE pas-à-pas
-   (la variable = boîte étiquetée, verrou 6 étapes) ; table de suivi ;
-   types et piège des guillemets en **prédire → tester → reporter** sur
-   l'**éditeur Vittascience EMBARQUÉ** (standard Pascal : 3 iframes mode
-   mixte, verrous d'ouverture) ; chasse aux 3 bugs du panneau du métro
-   (96 St) avec preuve par la console ; algorithme → fonction → **banc de
-   mise au point** (4 tests, cas limite 100 tranché par le besoin,
-   non-régression). QCM 30 q (VAR/TYP/PRG/MAP 8/8/7/7, graine 47, 3
-   illustrées), synthèses ×2, fiche, matrice 25 lignes, 3 SVG CC0 (aucune
-   capture d'écran), README refondu. La substance pédagogique de la
-   ressource d'origine (guillemets, VMC→ventilation de station, devis→
-   MetroCard, conversions) est PRÉSERVÉE et new-yorkisée ; la vidéo YouTube
-   n'est pas reprise (dépendance externe + RGPD, consultable aux archives).
-3. **Tests réels** : 30/30 PASS (rapport dans le dossier) — verrous fermés
-   puis ouverts, sauvegarde/restauration, répartition QCM, stub, archive,
-   zéro erreur JS.
-4. **À suivre** : marches 5e (« la boîte qu'on lit ») et 4e (« types et
-   décisions ») du même arc ; remplacement éventuel du QCM hérité 24 q
-   (`qcm_python_variables.html`, conservé en complément).
