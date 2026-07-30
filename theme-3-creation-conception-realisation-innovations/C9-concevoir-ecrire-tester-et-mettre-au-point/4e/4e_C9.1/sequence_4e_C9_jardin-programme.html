@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jardin connecté — Programmer et mettre au point (4e_C9)</title>
+<title>Thème 3 · New York — 4e · Atelier : Jardin connecté — programmer et mettre au point (4e_C9.1-C9.3)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
@@ -23,9 +23,45 @@ input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--te
 .bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:16px;margin-top:12px}
 footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
 @media(max-width:640px){section.card{padding:16px}}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}
+.qmark.ok{color:var(--ok)}
+.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}
+.py-str{color:var(--ok)}
+.py-num{color:#ffb454}
+.py-kw{color:var(--head);font-weight:600}
+.py-op{color:var(--warn);font-weight:600}
+.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:'Fira Code',monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:18px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{text-align:center;color:#5b7bb8;font-size:.8em;min-height:1.2em}
 </style>
 </head>
 <body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_4e_C9_jardin-programme.html">🧠 QCM</a></nav>
 
 <h1>💻 Jardin connecté — Programmer et mettre au point</h1>
 <div class="subtitle">Écrire, tester et corriger le programme qui pilote la nouvelle fonction du jardin scolaire à New York</div>
@@ -49,7 +85,7 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
     <label>Nom : <input type="text" id="eleveNom" placeholder="Nom" style="width:140px"></label>
     <label>Prénom : <input type="text" id="elevePrenom" placeholder="Prénom" style="width:140px"></label>
     <label>Classe : <input type="text" id="eleveClasse" placeholder="4eX" style="width:80px"></label>
-    <button class="btn small" onclick="sauvegarderIdentite()">💾 Sauvegarder</button>
+    <span class="saved-note" id="savedNote"></span>
   </div>
 </section>
 
@@ -60,14 +96,14 @@ footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-s
 
 <section class="card">
   <h2>❓ Problématique</h2>
-  <p class="problematique">Comment concevoir, écrire, tester et mettre au point un programme simple qui pilote correctement une nouvelle fonction d’un objet connecté ?</p>
+  <p class="problematique">Comment concevoir, écrire, tester et mettre au point un programme simple qui pilote correctement une nouvelle fonction d’un objet connecté&nbsp;?</p>
 </section>
 
 <section class="card">
   <h2>💡 Hypothèses initiales</h2>
   <p>Avant de coder, formule ce que le programme doit faire (en langage naturel).</p>
   <textarea id="hypothese" rows="3" placeholder="SI humidité &lt; seuil ALORS arroser, SINON…"></textarea>
-  <button class="btn small" style="margin-top:8px" onclick="sauvegarderHypothese()">Enregistrer</button>
+  <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
 <section class="card">
@@ -85,6 +121,32 @@ SINON
 FIN SI</div>
     <p style="margin-top:12px">Modifie le programme pour ajouter une <strong>plage horaire</strong> (ex. : arroser seulement entre 6 h et 10 h) :</p>
     <textarea rows="6" id="prog1" placeholder="Écris ton pseudo-code modifié…"></textarea>
+    <details class="vs" id="vs1">
+      <summary>🧪 Écris et exécute ton programme ici — en blocs, puis lis le Python (et inversement)</summary>
+      <p class="vs-note">Construis d'abord la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire à droite ; puis modifie directement le Python (change le seuil, l'heure) et regarde les blocs suivre. Sans capteur réel : <code>H = 25</code> et <code>heure = 8</code>, et <code>print("POMPE ON")</code> à la place de la pompe.</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 1)"></iframe>
+    </details>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <p class="feedback" id="fb1" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS ton essai)</summary><div>
+<pre class="code codebox" style="white-space:pre">SEUIL = 40
+mesurer humidité → H
+lire heure → heure
+SI H &lt; SEUIL ET heure &gt;= 6 ET heure &lt;= 10 ALORS
+    allumer pompe
+SINON
+    éteindre pompe
+FIN SI</pre>
+<p>En Python (à essayer dans l'éditeur 🧪)&nbsp;:</p>
+<pre class="code codebox" style="white-space:pre">seuil = 40
+H = 25
+heure = 8
+if H &lt; seuil and heure &gt;= 6 and heure &lt;= 10:
+    print("POMPE ON")
+else:
+    print("POMPE OFF")</pre>
+<p>La plage horaire s'ajoute par un <b>ET</b> dans la condition — on COMPLÈTE le programme, on ne le réécrit pas.</p></div></details>
+    <p class="py-legende">🎨 Lis le code en couleurs&nbsp;: <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
     <div class="retenir"><strong>À retenir :</strong> Un programme = variables + conditions (SI) + actions. On écrit d’abord en langage naturel, puis on code.</div>
   </div>
 </section>
@@ -95,13 +157,17 @@ FIN SI</div>
     <h4>Objectif</h4>
     <p>Vérifier le comportement du programme avec des scénarios de test.</p>
     <table class="refs">
-      <tr><th>Scénario</th><th>H (%)</th><th>Heure</th><th>Résultat attendu</th><th>Observé</th></tr>
-      <tr><td>Sol sec, matin</td><td>25</td><td>8 h</td><td>Pompe ON</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
-      <tr><td>Sol humide</td><td>55</td><td>8 h</td><td>Pompe OFF</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
-      <tr><td>Sol sec, nuit</td><td>25</td><td>23 h</td><td>Pompe OFF (plage)</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
-      <tr><td>Juste sous le seuil</td><td>39</td><td>7 h</td><td>Pompe ON</td><td><select><option>—</option><option>OK</option><option>KO</option></select></td></tr>
+      <tr><th>Scénario</th><th>H (%)</th><th>Heure</th><th>TA prédiction (programme corrigé)</th></tr>
+      <tr><td>Sol sec, matin</td><td>25</td><td>8 h</td><td><select id="a2s1"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
+      <tr><td>Sol humide</td><td>55</td><td>8 h</td><td><select id="a2s2"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
+      <tr><td>Sol sec, nuit</td><td>25</td><td>23 h</td><td><select id="a2s3"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
+      <tr><td>Juste sous le seuil</td><td>39</td><td>7 h</td><td><select id="a2s4"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
     </table>
-    <div class="retenir"><strong>À retenir :</strong> Tester = scénarios + résultat attendu + résultat observé. Un seul scénario ne suffit pas.</div>
+    <p style="font-size:.88em;color:var(--sub)">Puis TESTE chaque scénario dans l'éditeur 🧪 de l'activité 1 (change <code>H</code> et <code>heure</code>) et REPORTE : la console confirme-t-elle tes prédictions&nbsp;?</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <p class="feedback" id="fb2" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary><div><p>ON · OFF · OFF (23 h est hors plage, même sol sec&nbsp;!) · ON (39 &lt; 40, à 7 h dans la plage — le scénario FRONTIÈRE, le plus précieux du banc). Tester = scénarios + attendu + observé, et toujours un cas frontière.</p></div></details>
+    <div class="retenir"><strong>À retenir :</strong> Tester = scénarios + résultat attendu + résultat observé. Un seul scénario ne suffit pas — et le cas frontière est le plus important.</div>
   </div>
 </section>
 
@@ -113,6 +179,21 @@ FIN SI</div>
     <p><strong>Bug observé :</strong> près du seuil 40 %, la pompe s’allume et s’éteint sans arrêt (mesure qui « vibre »).</p>
     <p><strong>Consigne :</strong> Propose une correction avec deux seuils (ex. : allumer si H &lt; 35, éteindre si H &gt; 45).</p>
     <textarea rows="5" id="prog3" placeholder="Pseudo-code avec hystérésis…"></textarea>
+    <details class="vs" id="vs2">
+      <summary>🧪 Mets au point ton hystérésis ici — Python fourni à compléter</summary>
+      <p class="vs-note">Recopie ce départ dans l'éditeur et complète les conditions&nbsp;: <code>etat = "OFF"</code> puis, dans la boucle, allumer si <code>H &lt; 35</code>, éteindre si <code>H &gt; 45</code> — entre les deux, NE RIEN CHANGER (c'est ça, l'hystérésis). Fais « vibrer » H autour de 40 et observe la console&nbsp;: plus de clignotement.</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
+    </details>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <p class="feedback" id="fb3" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<pre class="code codebox" style="white-space:pre">SEUIL_BAS = 35
+SEUIL_HAUT = 45
+SI H &lt; SEUIL_BAS ALORS
+    allumer pompe
+SINON SI H &gt; SEUIL_HAUT ALORS
+    éteindre pompe
+FIN SI   # entre 35 et 45 : on ne change RIEN — fini le clignotement</pre></div></details>
     <div class="retenir"><strong>À retenir :</strong> Mettre au point = identifier l’écart observé/attendu, corriger, retester. L’hystérésis évite les oscillations autour d’un seuil unique.</div>
   </div>
 </section>
@@ -121,7 +202,19 @@ FIN SI</div>
   <h2>🔄 Activité de réinvestissement</h2>
   <div class="exo">
     <p>Adapte la même logique à un <strong>lampadaire</strong> (seuil de luminosité + hystérésis). Écris 5 lignes de pseudo-code.</p>
-    <textarea rows="4" placeholder="SEUIL_BAS / SEUIL_HAUT / SI …"></textarea>
+    <textarea rows="4" id="reinv" placeholder="SEUIL_BAS / SEUIL_HAUT / SI …"></textarea>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité</button>
+    <p class="feedback" id="fb4" role="status"></p>
+    <details class="correction"><summary>📖 Correction complète</summary><div>
+<pre class="code codebox" style="white-space:pre">SEUIL_BAS = 20
+SEUIL_HAUT = 60
+mesurer luminosité → L
+SI L &lt; SEUIL_BAS ALORS
+    allumer lampadaire
+SINON SI L &gt; SEUIL_HAUT ALORS
+    éteindre lampadaire
+FIN SI</pre>
+<p>Même squelette que la pompe&nbsp;: seule la grandeur mesurée change. C'est LA force d'une structure bien conçue. (Le lampadaire complet t'attend en 5e_C4 du Thème 2.)</p></div></details>
   </div>
 </section>
 
@@ -132,10 +225,10 @@ FIN SI</div>
 
 <section class="card">
   <h2>🙋 Bilan personnel</h2>
-  <p>Ce que j’ai appris : <input type="text" style="width:100%"></p>
-  <p>Ce que je sais maintenant faire : <input type="text" style="width:100%"></p>
-  <p>Ce que je dois encore revoir : <input type="text" style="width:100%"></p>
-  <p>Mon niveau de confiance (1-4) : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+  <p>Ce que j’ai appris : <input type="text" id="bilan1" style="width:100%"></p>
+  <p>Ce que je sais maintenant faire : <input type="text" id="bilan2" style="width:100%"></p>
+  <p>Ce que je dois encore revoir : <input type="text" id="bilan3" style="width:100%"></p>
+  <p>Mon niveau de confiance (1-4) : <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
 <section class="card" style="text-align:center">
@@ -148,31 +241,93 @@ FIN SI</div>
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
   <div class="bonus">
     <p><strong>Défi citoyen :</strong> Propose une règle d’arrosage « économe en eau » adaptée à un rooftop new-yorkais en période de canicule estivale.</p>
-    <p><strong>Défi technique :</strong> Ajoute une alerte (LED rouge) si le capteur renvoie une valeur absurde (H &lt; 0 ou H &gt; 100).</p>
-    <p><strong>Ancrage New York :</strong> Pourquoi une plage horaire d’arrosage est-elle encore plus utile en ville (vent, ombre des immeubles, usage de l’eau) ?</p>
+    <textarea rows="3" id="defi1" placeholder="Ma règle économe (seuils, horaires, pluie…) — sauvegardée dans la page"></textarea>
+    <p style="margin-top:14px"><strong>Défi technique :</strong> Ajoute une alerte (LED rouge) si le capteur renvoie une valeur absurde (H &lt; 0 ou H &gt; 100) — code-la dans l'éditeur ci-dessous.</p>
+    <details class="vs" id="vs3">
+      <summary>🧪 L'éditeur du Bonus — code ton alerte ici, sans quitter la page</summary>
+      <p class="vs-note">Départ&nbsp;: <code>H = 250</code> (capteur débranché&nbsp;!) — écris la condition qui affiche <code>ALERTE CAPTEUR</code> quand H sort de 0-100. Blocs ou Python, comme tu préfères&nbsp;: les deux se répondent.</p>
+      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+    </details>
+    <p style="margin-top:8px"><strong>Ancrage New York :</strong> Pourquoi une plage horaire d’arrosage est-elle encore plus utile en ville (vent, ombre des immeubles, usage de l’eau)&nbsp;?</p>
+    <textarea rows="2" id="defi3" placeholder="Tes idées — sauvegardées dans la page"></textarea>
   </div>
 </section>
 
-<footer>TechnoQuest — Thème 3 · 4e_C9 · Jardin connecté · Ancrage New York · Cycle 4 (2024) · Agent Grok</footer>
+<footer>TechnoQuest — Thème 3 · 4e_C9 · Jardin connecté · Ancrage New York · Cycle 4 (2024) · v1 Agent Grok — v2 mise en conformité règles 11/13/14/15/16/17 (Fable, 30/07/2026, v1 archivée règle n°12). Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
 
 <script>
-function sauvegarderIdentite(){
-  const data={nom:document.getElementById('eleveNom').value,prenom:document.getElementById('elevePrenom').value,classe:document.getElementById('eleveClasse').value};
-  localStorage.setItem('techno_4e_C9_identite',JSON.stringify(data));
-  alert('Identité sauvegardée localement.');
+(function(){
+"use strict";
+const KEY = "seq_4e_C9_jardin_programme";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+/* règle n°13 : coloration des listings */
+function pyc(src){
+  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const KW = /^(print|def|return|if|elif|else|while|for|in|and|or|not|True|False|SI|SINON|ALORS|FIN|ET|OU|mesurer|lire|allumer|éteindre|input|range)$/;
+  return src.split("\n").map(line => {
+    let out = "", m;
+    const re = /"[^"]*"|#.*$|\d+(?:\.\d+)?|[A-Za-z_À-ſ][A-Za-z0-9_À-ſ]*|\s+|./g;
+    while((m = re.exec(line))){
+      const t = m[0]; let cls = "";
+      if(t[0] === '"') cls = "py-str";
+      else if(t[0] === "#") cls = "py-com";
+      else if(/^\d/.test(t)) cls = "py-num";
+      else if(/^[A-Za-z_À-ſ]/.test(t)) cls = KW.test(t) ? "py-kw" : "py-var";
+      else if(/^[=+\-*\/<>%→]/.test(t)) cls = "py-op";
+      out += cls ? '<span class="' + cls + '">' + esc(t) + '</span>' : esc(t);
+    }
+    return out;
+  }).join("\n");
 }
-function sauvegarderHypothese(){
-  localStorage.setItem('techno_4e_C9_hypothese',document.getElementById('hypothese').value);
-  alert('Hypothèse enregistrée.');
+document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = pyc(e.textContent); });
+
+/* suivi des éditeurs (règle n°16) */
+["vs1","vs2","vs3"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+
+/* vérificateurs (règle n°14) */
+function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
+function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+const CHECKS = {
+  1(){ const s = pres("prog1", 20);
+    return {score: s, total: 1, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur 🧪 et exécute ta version (blocs puis Python) avant de valider — c'est le test qui fait foi."};
+  },
+  2(){ let s = 0;
+    s += sv("a2s1","Pompe ON"); s += sv("a2s2","Pompe OFF"); s += sv("a2s3","Pompe OFF"); s += sv("a2s4","Pompe ON");
+    return {score: s, total: 4, exp: true};
+  },
+  3(){ const s = pres("prog3", 20);
+    return {score: s, total: 1, exp: !!window.__exp.vs2, expMsg: "Ouvre l'éditeur 🧪 et fais vibrer H autour de 40 pour VOIR l'hystérésis avant de valider."};
+  },
+  4(){ return {score: pres("reinv", 20), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+/* sauvegarde locale (règle n°15) */
+function save(){
+  const o = {inputs: {}, exp: window.__exp || {}};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
 }
-try{
-  const id=JSON.parse(localStorage.getItem('techno_4e_C9_identite')||'{}');
-  if(id.nom)document.getElementById('eleveNom').value=id.nom;
-  if(id.prenom)document.getElementById('elevePrenom').value=id.prenom;
-  if(id.classe)document.getElementById('eleveClasse').value=id.classe;
-  const hyp=localStorage.getItem('techno_4e_C9_hypothese');
-  if(hyp)document.getElementById('hypothese').value=hyp;
-}catch(e){}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+}
+document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+restore();
+})();
 </script>
 </body>
 </html>

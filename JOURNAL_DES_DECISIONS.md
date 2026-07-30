@@ -977,3 +977,24 @@ numéros 14-17 réservés au registre (règle n°10) :
    retrofits du jour ; les quatre séquences Thème 3 héritées d'une session
    parallèle (3e_C7, 4e_C7, 4e_C8, 4e_C9 — champs muets, sans éditeur) passent
    en tête de la file de mise en conformité, 4e_C9 en premier (lot suivant).
+
+## 2026-07-30 — Thème 3 · Mise en conformité du 4e_C9 « jardin-programme » (Fable, branche `fable/theme-3/conformite-4e-c9`)
+
+1. **Première application des règles n°14-17** (lot précédent), sur la page
+   que Pascal lisait : la séquence 4e_C9 d'une session parallèle (v1 « Agent
+   Grok », 176 lignes — champs muets, deux sauvegardes sur six via alert(),
+   aucun éditeur, listings monochromes, pas de navigation, « ? » orphelin).
+   V1 archivée (règle n°12), URL inchangée, contenu et voix CONSERVÉS
+   (l'hystérésis est une excellente idée — elle est gardée et outillée).
+2. **Conformité complète** : nav ⌂+QCM (11) · listings colorés + légende (13) ·
+   4 vérificateurs à encoches et messages gradués, verrous éditeur sur les
+   activités 1 et 3 (14) · TOUS les champs sauvegardés, alert() supprimés,
+   Bonus doté de champs ET d'un éditeur pour le défi technique (15) ·
+   3 éditeurs Vittascience avec consignes blocs↔Python DANS LES DEUX SENS
+   (16) · l'activité 2 devient une PRÉDICTION vérifiée (4 scénarios, dont la
+   frontière 39/40) à confronter à l'éditeur (17 : geste de code par séance).
+3. **Typographie** : « objet connecté&nbsp;? » — plus de ponctuation orpheline.
+4. **Tests réels : 19/19** (Playwright mobile — verrous, encoches mixtes sur
+   l'erreur volontaire « nuit », restauration bonus compris, zéro alert).
+5. **File de conformité restante** (même session parallèle) : 3e_C7, 4e_C7,
+   4e_C8 (+ QCMs à auditer) — prochaine vague.
