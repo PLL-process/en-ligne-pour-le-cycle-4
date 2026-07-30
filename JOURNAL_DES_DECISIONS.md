@@ -15,6 +15,7 @@
 | 10 | Le journal fait foi (la présente règle) | Fable, sur décision de Pascal | ✅ Fusionnée (PR #72) |
 | 11 | Navigation persistante et retour à l'accueil | ChatGPT (`docs/specifications/regle-or-11-navigation-retour-accueil.md`) | ✅ Fusionnée (PR #76) — appliquée au Thème 2 par le lot d'harmonisation |
 | 12 | Cycle de vie des ressources héritées (badge 🛠, archivage à la livraison) | Fable, validée par Pascal (30/07/2026) | ✅ Fusionnée (PR #86) |
+| 13 | Code coloré façon IDE — palette commune des listings Python | Fable, sur demande de Pascal (30/07/2026) | 🔄 PR en cours (branche `fable/theme-3/code-colore-ide`) |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -855,3 +856,27 @@ dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
    15/15 (barres 🧪). Capture validée : encoche rattachée à SA question.
 4. Empilement (pas de branche parallèle sur les mêmes fichiers) : cette
    branche contient le lot « barres 🧪 » — fusionner les PR dans l'ordre.
+
+
+## 2026-07-30 — RÈGLE D'OR N°13 « Code coloré façon IDE » (demande Pascal, branche `fable/theme-3/code-colore-ide`, empilée sur `encoches-verification`)
+
+1. **Demande de Pascal** : « J'aimerais avoir des couleurs pour les variables,
+   constantes…, comme un IDE, par exemple Sublime Text ou PyCharm. Il serait
+   nécessaire d'établir une règle d'or par rapport à ça. » Numéro 13 réservé
+   au registre (règle n°10).
+2. **La règle** : tout listing de programme affiché est colorisé selon la
+   palette commune du site — variables cyan, chaînes vertes, nombres orange,
+   mots-clés violets gras, `=`/opérateurs jaunes gras, commentaires gris
+   italique, numéros de ligne discrets. AUCUNE dépendance externe (pas de
+   highlight.js/CDN : versions 🅲 hors ligne intactes) : un colorisateur
+   embarqué `pyc()` de ~20 lignes, appliqué à `pre.code` et aux lignes du
+   simulateur. Le `<code>` en ligne de la prose reste monochrome. Une
+   légende 🎨 accompagne le premier listing de chaque page. Palette et
+   doctrine documentées dans `_outils/METHODE.md`.
+3. **Application immédiate** : séquences 3e_C9.1 et 5e_C9.1 (simulateurs,
+   5 listings `pre.code`, valeurs des boîtes mémoire typées-colorées :
+   texte vert / nombre orange — le TYPE devient visible, renfort direct de
+   la séance types). Généralisation aux autres ressources : au fil des
+   vagues de modernisation (règle n°12).
+4. **Tests réels** : suite dédiée 17/17 (spans posés, couleurs calculées,
+   légende, textes intacts, badges) + régressions 11/11, 27/27, 15/15.
