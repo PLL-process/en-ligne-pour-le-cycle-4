@@ -262,6 +262,32 @@ OVERLAY = {
                   "encore en place — remplacement possible par le QCM 30 q ; l'iframe "
                   "Vittascience exige une connexion (versions 🅲 hors ligne prévues).",
     ),
+    # ── Thème 3 · Arc variables, marche 5e (Fable, 2026-07-30) ──
+    "5e_C9.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Atelier « La boîte étiquetée » (Arc variables, marche 5e — le "
+                "compteur du Cyclone de Coney Island) : 3 séances / 5 activités, "
+                "simulateur de mémoire (verrou 4 étapes), prédire→tester→reporter "
+                "sur éditeur Vittascience EMBARQUÉ, banc de tests du programme "
+                "FOURNI (bug des descendus), modification ciblée + barrière "
+                "commandée (banc 3 tests, cas limite zéro), QCM 30 q (10/10/10, "
+                "3 illustrées), synthèses, fiche, matrice, 2 SVG CC0, photo Coney "
+                "mutualisée avec l'atelier 3e.",
+        anomalies="",
+    ),
+    "5e_C9.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        qualite="Modifier le programme fourni : séance 3 (activité 5 ①) de "
+                "l'atelier « La boîte étiquetée » — README pointeur.",
+    ),
+    "5e_C9.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        qualite="Réaliser et mettre au point la barrière commandée : séance 3 "
+                "(activité 5 ②) de l'atelier « La boîte étiquetée » — README "
+                "pointeur.",
+    ),
     # ── Thème 2 · LOT 01 (Fable, 2026-07-22) : Station d'alerte cyclonique ──
     "3e_C4.3": dict(
         statut="COMPLET ET VALIDABLE",
