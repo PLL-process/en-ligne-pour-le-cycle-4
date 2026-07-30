@@ -751,3 +751,15 @@ R160 a retrouvé sa page source grâce à Pascal (Flickr MTA 31863535272,
 « 86th Street Second Av. Subway Station Unveiled », CC BY 2.0, 30/12/2016) :
 INTÉGRÉ en ouverture de la séance 3 — preuve que la règle tient : pas de
 provenance, pas de publication ; provenance retrouvée, publication.
+
+## 2026-07-30 — Thème 3 · La 3e photo : Coney Island, cueillie PAR Fable dans le navigateur de Pascal (branche `fable/theme-3/coney-terminus`)
+
+Première récolte de média via l'extension Claude in Chrome (installée ce jour
+par Pascal) : recherche Wikimedia Commons pilotée dans son navigateur,
+sélection de « Coney Island Stillwell Avenue Entrance 001.jpg » (Kidfly182,
+CC BY 4.0 — licence vérifiée SUR la fiche du fichier, attribution officielle
+fournie par la boîte « Download this file »), téléchargement 3840 px,
+rapatriement par le pont, compression 1400 px. Intégrée en tête du bloc
+🎁 Bonus (la façade de 1919, reliée au défi convertisseurs). La candidate
+CC BY-NC-ND initialement écartée reste écartée — remplacée proprement.
+Le trio visuel du voyage est complet : la station, le train, le terminus.
