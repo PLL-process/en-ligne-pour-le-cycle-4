@@ -10,7 +10,7 @@
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
     --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
     --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
-    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --ko:#ff7b88; --energie:#ffb454;
   }
   *{box-sizing:border-box}
   body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
@@ -92,6 +92,13 @@
   .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
   .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
   .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  .feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+  .feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+  select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+  select.ko,input.ko,textarea.ko{border-color:var(--ko)!important;box-shadow:0 0 0 1.5px var(--ko)}
+  .qmark{font-weight:700;margin-left:8px;font-size:1.05em}
+  .qmark.ok{color:var(--ok)}
+  .qmark.ko{color:var(--ko)}
   img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
   @media(max-width:700px){.simu{grid-template-columns:1fr}}
@@ -739,7 +746,8 @@ document.querySelectorAll(".bench-run").forEach(b => b.addEventListener("click",
 }));
 
 /* ── vérificateurs ── */
-function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); return good; }
+function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "\u2714" : "\u2718"; m.className = "qmark " + (state ? "ok" : "ko"); } }
+function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
 const CHECKS = {
   1(){ let s = 0;
     s += sv("a1q1","3"); s += sv("a1q2","il est perdu : affecter, c'est REMPLACER");
@@ -754,7 +762,7 @@ const CHECKS = {
     return {score: s, total: 5, exp: true};
   },
   3(){ let s = 0;
-    ["a3p1","a3p2","a3p3"].forEach(id => { const e = $(id); if(e.value) s++; e.classList.toggle("ok", !!e.value); });
+    ["a3p1","a3p2","a3p3"].forEach(id => { const e = $(id); if(e.value) s++; e.classList.toggle("ok", !!e.value); qmark(e, e.value ? true : null); });
     s += sv("a3r1","7"); s += sv("a3r2","34"); s += sv("a3r3","Train Q 3 min");
     s += sv("a3r4","il les COLLE bout à bout (concaténation)");
     s += sv("a3r5","41 min… voilà d'où viennent les minutes fantômes !");
@@ -781,11 +789,11 @@ const CHECKS = {
 const par = {s: []};
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
-  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "✔ Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour consolider."; fb.className = "feedback ok";
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Toutes les encoches sont vertes. Ouvre la correction pour consolider, puis passe à la suite."; fb.className = "feedback show ok";
     if(!par.s.includes(n)){ par.s.push(n); } }
-  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — regarde l'aide niveau 1, puis corrige ce qui est rouge."; fb.className = "feedback warn"; }
-  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends le document de l'activité, puis l'aide niveau 2."; fb.className = "feedback ko"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder : reprends ces questions avec l'aide niveau 1, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : relis le document de l'activité, corrige les réponses marquées ✘ (l'aide niveau 2 te guide pas à pas), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   updateProg(); save();
 }));
 function updateProg(){

@@ -832,3 +832,26 @@ dessus. Moi, je vais lire les séquences et je vais te donner mon retour. »
    d'origine a péri dans la réinitialisation du bac à sable (à reconstituer).
 4. **Première livraison du circuit autonome** (règle n°5 amendée, PR #98) :
    branche poussée et PR ouverte par Fable ; lecture et fusion par Pascal.
+
+## 2026-07-30 — Thème 3 · Encoches de vérification question par question (Fable, branche `fable/theme-3/encoches-verification`, empilée sur `ergonomie-editeurs-vs`)
+
+1. **Retour de Pascal** : après « Vérifier l'activité », impossible de savoir
+   si on a réussi sans lire toute la correction — « ce serait bien cool
+   d'avoir des encoches vertes en face des réponses », et un mot qui
+   encourage. Diagnostic en creusant : DEUX bugs dormants — le paragraphe
+   de retour était `display:none` (la classe `show` n'était jamais posée,
+   et `warn`/`ko` n'avaient aucun style) et les classes `ok`/`ko` posées
+   sur les champs n'avaient AUCUNE règle CSS. Le bouton ne montrait donc
+   rigoureusement rien.
+2. **Correctif (séquences 3e_C9.1 et 5e_C9.1)** : encoche ✔ verte / ✘ rose
+   au bout de chaque question + bordure du champ colorée ; messages enfin
+   visibles et ENCOURAGEANTS, gradués : 🎉 « Bravo — activité validée ! » /
+   🟡 « il y a du très bon ! Les encoches ✘ te montrent où regarder » /
+   🔴 « pas de panique : … re-vérifie quand tu veux » ; le verrou 🔒
+   expérientiel s'affiche aussi. Variable `--ko` manquante ajoutée en 3e
+   (le banc d'essai y référençait `var(--ko)` indéfini).
+3. **Tests réels** : suite dédiée 11/11 (verrou visible, encoches mixtes,
+   couleur calculée, 🎉 à 4/4, parcours 5e) + régressions 27/27 (5e) et
+   15/15 (barres 🧪). Capture validée : encoche rattachée à SA question.
+4. Empilement (pas de branche parallèle sur les mêmes fichiers) : cette
+   branche contient le lot « barres 🧪 » — fusionner les PR dans l'ordre.
