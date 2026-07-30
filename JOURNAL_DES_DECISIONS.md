@@ -736,3 +736,18 @@ et question de lecture du plan (règle n°8 : représentation utile, à lire).
 Branche EMPILÉE sur `fable/theme-2/journal-restauration-30-07` (leçon du
 conflit : jamais deux branches indépendantes sur le journal) — ordre de
 fusion : restauration d'abord, carte ensuite.
+
+## 2026-07-30 — Thème 3 · Photos réelles dans l'atelier 3e_C9.1 (carte blanche Pascal ; Fable, même branche `fable/theme-3/carte-ligne-q`)
+
+Précision de la règle n°1 actée avec Pascal : les PHOTOS authentiquement
+libres sont bienvenues quand licence vérifiée À LA SOURCE + fichier téléchargé
+dans le dépôt (jamais de hotlink) + attribution complète (SOURCES_MEDIAS et
+légende) + image traitée en document à LIRE. Processus réel : Pascal fournit
+les PAGES sources (.mhtml Flickr), Fable extrait et audite les licences.
+Résultat : mezzanine 96 St (MTA « SAS_2665 », CC BY 2.0, avec LE panneau LED
+de la situation déclenchante !) INTÉGRÉE en ouverture ; écartées et tracées :
+CC BY-ND (+ visages identifiables), CC BY-NC-ND (trop restrictive) . Le train
+R160 a retrouvé sa page source grâce à Pascal (Flickr MTA 31863535272,
+« 86th Street Second Av. Subway Station Unveiled », CC BY 2.0, 30/12/2016) :
+INTÉGRÉ en ouverture de la séance 3 — preuve que la règle tient : pas de
+provenance, pas de publication ; provenance retrouvée, publication.
