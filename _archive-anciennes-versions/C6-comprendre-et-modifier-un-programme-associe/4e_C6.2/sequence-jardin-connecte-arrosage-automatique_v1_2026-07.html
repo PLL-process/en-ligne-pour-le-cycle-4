@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jardin connecté — Programmer un arrosage automatique (4e_C6.2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-bg:#050f24; --color-panel:#0d2347; --color-panel2:#0a1b3d; --color-border:#274a8a;
+    --color-title:#81aaff; --color-subtitle:#9bbefc; --color-heading:#c68ef2; --color-text:#e4eaf5;
+    --color-input-bg:#173666; --color-input-border:#2e5d9f; --color-button:#1d4e89; --color-button-hover:#2966b1;
+    --color-highlight:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--color-bg);color:var(--color-text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 60px;line-height:1.55}
+  h1{font-size:1.8em;text-align:center;margin:26px 0 4px;color:var(--color-title)}
+  .subtitle{text-align:center;color:var(--color-subtitle);margin-bottom:6px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--color-border)}
+  .badge.niveau{background:#0d2347;color:var(--color-highlight)}
+  .badge.theme{background:#2b1a3f;color:var(--color-heading)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  section.card{max-width:920px;margin:0 auto 22px;background:var(--color-panel);border:1px solid var(--color-border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--color-heading);font-size:1.15em;margin-top:0;display:flex;align-items:center;gap:8px}
+  h3{color:var(--color-subtitle);font-size:1.02em;margin-bottom:8px}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-style:italic}
+  .problematique{font-size:1.15em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  .sous-problemes{list-style:none;padding:0;margin:14px 0 0;counter-reset:sp}
+  .sous-problemes li{counter-increment:sp;padding:9px 0 9px 38px;position:relative;border-bottom:1px dashed var(--color-border)}
+  .sous-problemes li:last-child{border-bottom:none}
+  .sous-problemes li::before{content:counter(sp);position:absolute;left:0;top:8px;width:24px;height:24px;border-radius:50%;background:var(--color-input-bg);color:var(--color-highlight);font-size:.8em;font-weight:700;display:flex;align-items:center;justify-content:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.86em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--color-border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--color-input-bg);color:var(--color-highlight)}
+  .tag{display:inline-block;background:var(--color-input-bg);border:1px solid var(--color-input-border);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .seance-tab{flex:1;min-width:140px;padding:10px;border-radius:10px;background:var(--color-input-bg);border:1px solid var(--color-input-border);cursor:pointer;text-align:center;font-size:.86em;font-weight:600}
+  .seance-tab.active{background:var(--color-button);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .question-directrice{color:var(--color-highlight);font-weight:600;margin-bottom:10px}
+  .exo{background:var(--color-panel2);border:1px solid var(--color-border);border-radius:12px;padding:16px 18px;margin:12px 0}
+  .exo h4{margin:0 0 8px;color:#fff;font-size:.98em}
+  select, input[type=text]{background:var(--color-input-bg);border:1px solid var(--color-input-border);color:var(--color-text);border-radius:8px;padding:6px 10px;font-family:inherit}
+  input[type=range]{width:100%}
+  .simu{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+  @media(max-width:640px){.simu{grid-template-columns:1fr}}
+  .pot{text-align:center;font-size:3.2em;transition:filter .4s}
+  .pompe-etat{text-align:center;font-weight:700;padding:10px;border-radius:10px;margin-top:8px}
+  .pompe-on{background:rgba(129,251,161,.15);color:var(--ok)}
+  .pompe-off{background:rgba(255,123,136,.12);color:#ffb0b8}
+  .algo-bloc{background:#08132c;border:1px dashed var(--color-input-border);border-radius:10px;padding:14px;font-family:'Fira Code',monospace;font-size:.86em;color:#d7e6ff}
+  .algo-bloc .blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--color-highlight)}
+  .btn{background:var(--color-button);color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit}
+  .btn:hover{background:var(--color-button-hover)}
+  .btn.small{padding:5px 11px;font-size:.82em}
+  .feedback{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.88em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .diagram{width:100%;border-radius:12px;border:1px solid var(--color-border);margin:10px 0}
+  details.synthese{background:#0a1b3d;border:1px solid var(--color-border);border-radius:12px;padding:12px 16px}
+  details.synthese summary{cursor:pointer;color:var(--color-highlight);font-weight:600}
+  .eval-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;font-size:.8em}
+  @media(max-width:700px){.eval-grid{grid-template-columns:1fr 1fr}}
+  .eval-grid div{padding:10px;border-radius:10px;text-align:center;font-weight:600}
+  .n1{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .n2{background:rgba(255,214,102,.14);color:var(--warn)}
+  .n3{background:rgba(97,218,251,.14);color:var(--color-highlight)}
+  .n4{background:rgba(129,251,161,.14);color:var(--ok)}
+  footer{max-width:920px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
+  #teacherPanel{display:none;margin-top:16px;background:#1c1030;border:1px solid #6a3fa0;border-radius:12px;padding:16px 18px}
+  #teacherPanel.show{display:block}
+  #teacherPanel h3{color:#e2b8ff}
+  #navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -20px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--color-border)}
+  #navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--color-border);border-radius:999px;background:var(--color-panel);color:var(--color-subtitle);font-size:.92em;text-decoration:none;line-height:1.2}
+  #navharm a:hover{border-color:var(--color-highlight);color:var(--color-highlight)}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+
+<h1>🌱 Jardin connecté — Programmer un arrosage automatique</h1>
+<div class="subtitle">Comment concevoir un système capable d'arroser automatiquement une plante en fonction de l'humidité du sol ?</div>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
+  <span class="badge code">4e_C6.2</span>
+  <span class="badge socle">D1.3 · D2 · D4</span>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <p class="declencheur">Pendant les vacances scolaires, les plantes du collège ne sont pas toujours arrosées.
+  Certaines reçoivent trop d'eau, d'autres pas assez. Le collège souhaite disposer d'un système capable
+  de surveiller l'humidité du sol et d'arroser uniquement lorsque cela est nécessaire.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment concevoir un système capable d'arroser automatiquement une plante en fonction de l'humidité du sol ?</p>
+  <h3 style="margin-top:18px">Problèmes intermédiaires (un par séance)</h3>
+  <ol class="sous-problemes">
+    <li>Comment mesurer l'humidité du sol et transmettre cette information ?</li>
+    <li>Comment décider si la plante doit être arrosée, et commander la pompe ?</li>
+    <li>Comment vérifier que le système répond au besoin, et quel est son impact ?</li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>🎯 Mission</h2>
+  <p><strong>Votre mission :</strong> compléter et tester le programme d'un prototype d'arrosage automatique
+  capable de déclencher une pompe lorsque le sol devient trop sec.</p>
+  <p><strong>Production attendue :</strong> un programme commenté et fonctionnel, le schéma des chaînes
+  d'information et d'énergie complété, et un court compte-rendu justifiant le seuil choisi.</p>
+</section>
+
+<section class="card">
+  <h2>📋 Référentiel (2024)</h2>
+  <table class="refs">
+    <tr><th>Compétence générale</th><td>C6 — Comprendre et modifier un programme associé à une fonctionnalité d'un objet ou d'un système technique</td></tr>
+    <tr><th>Sous-compétence</th><td><strong>4e_C6.2</strong> — Compléter un programme pour répondre à une fonctionnalité d'un OST</td></tr>
+    <tr><th>Compétences mobilisées</th><td><span class="tag">4e_C6.2</span><span class="tag">4e_C4.1</span> chaîne d'énergie <span class="tag">4e_C4.5</span> transformation des données <span class="tag">4e_C1.4</span> usage raisonné</td></tr>
+    <tr><th>Connaissances associées</th><td>Instruction conditionnelle, capteur analogique, seuil, structuration d'un programme par blocs</td></tr>
+    <tr><th>Capacité attendue (observable)</th><td>Compléter une condition (seuil d'humidité) dans un programme fourni, puis tester son comportement</td></tr>
+    <tr><th>Niveau de maîtrise visé</th><td>Entraînement → consolidation (séance 2), évaluation (séance 3)</td></tr>
+    <tr><th>Domaines du socle</th><td>D1.3 (langage informatique) · D2 (méthodes/outils) · D4 (systèmes techniques) — et D3/D5 pour le volet impact (séance 3)</td></tr>
+    <tr><th>Compétence numérique (CRCN)</th><td>Création de contenu — <em>Programmer</em> (niveau 3) · Information et données — <em>Traiter des données</em></td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>🗺️ Chaînes fonctionnelles</h2>
+  <img class="diagram" src="Images/schema_chaines_arrosage.svg" alt="Schéma des chaînes d'information et d'énergie du système d'arrosage automatique" loading="lazy">
+  <p style="font-size:.88em;color:var(--color-subtitle)">La carte Arduino relie les deux chaînes : elle <em>traite</em> l'information reçue du capteur puis <em>commande</em> le relais qui alimente la pompe.</p>
+</section>
+
+<section class="card">
+  <h2>🧭 Déroulé — 3 séances</h2>
+  <div class="seance-tabs">
+    <div class="seance-tab active" onclick="showSeance(1,this)">Séance 1<br><span style="font-weight:400">Mesurer</span></div>
+    <div class="seance-tab" onclick="showSeance(2,this)">Séance 2<br><span style="font-weight:400">Programmer</span></div>
+    <div class="seance-tab" onclick="showSeance(3,this)">Séance 3<br><span style="font-weight:400">Valider & discuter</span></div>
+  </div>
+
+  <!-- SEANCE 1 -->
+  <div class="seance-panel active" id="seance1">
+    <p class="question-directrice">Question directrice : comment mesurer l'humidité du sol et transmettre cette information ?</p>
+    <div class="exo">
+      <h4>Exercice 1 — Associer chaque élément à son rôle dans la chaîne d'information</h4>
+      <p>Complète les 3 cases avec le bon élément.</p>
+      <p>Le <select id="q1a"><option value="">—</option><option>capteur d'humidité</option><option>écran LCD</option><option>carte Arduino</option></select>
+      <strong>acquiert</strong> l'information.</p>
+      <p>La <select id="q1b"><option value="">—</option><option>capteur d'humidité</option><option>écran LCD</option><option>carte Arduino</option></select>
+      <strong>traite</strong> l'information reçue.</p>
+      <p>L'<select id="q1c"><option value="">—</option><option>capteur d'humidité</option><option>écran LCD</option><option>carte Arduino</option></select>
+      <strong>communique</strong> l'état du sol à l'utilisateur.</p>
+      <button class="btn small" onclick="corrigeQ1()">✅ Vérifier</button>
+      <div class="feedback" id="fbQ1"></div>
+    </div>
+  </div>
+
+  <!-- SEANCE 2 -->
+  <div class="seance-panel" id="seance2">
+    <p class="question-directrice">Question directrice : comment décider si la plante doit être arrosée, et commander la pompe ?</p>
+    <div class="exo">
+      <h4>Exercice 2 — Compléter l'algorithme (4e_C6.2)</h4>
+      <p>Le programme existant compare l'humidité mesurée à un seuil. Complète la condition en langage naturel, puis en pseudo-code.</p>
+      <p><strong>En langage naturel :</strong> Si l'humidité du sol est
+        <select id="q2sens"><option value="">—</option><option value="inf">inférieure</option><option value="sup">supérieure</option></select>
+        au seuil, alors on <select id="q2action"><option value="">—</option><option value="active">active</option><option value="coupe">coupe</option></select> la pompe.</p>
+      <div class="algo-bloc">SI humidite <span class="blank" id="pcSigne">…</span> seuil ALORS<br>&nbsp;&nbsp;&nbsp;&nbsp;pompe <span class="blank" id="pcAction">…</span><br>SINON<br>&nbsp;&nbsp;&nbsp;&nbsp;pompe = ARRET<br>FIN SI</div>
+      <button class="btn small" onclick="corrigeQ2()">✅ Vérifier</button>
+      <div class="feedback" id="fbQ2"></div>
+    </div>
+
+    <div class="exo">
+      <h4>Exercice 3 — Simulation : teste ton seuil</h4>
+      <p>Règle le seuil d'arrosage, puis fais varier l'humidité mesurée pour observer le comportement de la pompe.</p>
+      <div class="simu">
+        <div>
+          <label>🎚️ Seuil d'arrosage : <span id="seuilVal">30</span> %<br>
+            <input type="range" id="seuilRange" min="0" max="100" value="30" oninput="updateArrosage()"></label>
+          <label style="margin-top:10px;display:block">💧 Humidité mesurée : <span id="humVal">45</span> %<br>
+            <input type="range" id="humRange" min="0" max="100" value="45" oninput="updateArrosage()"></label>
+        </div>
+        <div>
+          <div class="pot" id="potEmoji">🪴</div>
+          <div class="pompe-etat pompe-off" id="pompeEtat">Pompe à l'arrêt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEANCE 3 -->
+  <div class="seance-panel" id="seance3">
+    <p class="question-directrice">Question directrice : le système répond-il au besoin, et quel est son impact ?</p>
+    <div class="exo">
+      <h4>Exercice 4 — Validation par rapport au cahier des charges</h4>
+      <table class="refs">
+        <tr><th>Fonction / contrainte</th><th>Critère</th><th>Niveau attendu</th></tr>
+        <tr><td>Détecter un sol sec</td><td>Valeur d'humidité</td><td>Seuil réglable</td></tr>
+        <tr><td>Arroser la plante</td><td>Déclenchement</td><td>Uniquement si nécessaire</td></tr>
+        <tr><td>Économiser l'eau</td><td>Consommation</td><td>Pas d'arrosage inutile</td></tr>
+        <tr><td>Fonctionner en sécurité</td><td>Tension d'alimentation</td><td>Très basse tension (pile 9V)</td></tr>
+      </table>
+    </div>
+    <div class="exo">
+      <h4>Exercice 5 — Impact environnemental (à discuter en groupe)</h4>
+      <p>En quoi ce système peut-il permettre de <strong>consommer moins d'eau</strong> qu'un arrosage manuel ou programmé
+      à heure fixe ? Note 2 arguments, puis compare avec la classe.</p>
+      <textarea rows="3" style="width:100%;background:var(--color-input-bg);border:1px solid var(--color-input-border);border-radius:8px;color:var(--color-text);padding:8px;font-family:inherit" placeholder="Tes arguments ici…"></textarea>
+      <p style="font-size:.85em;color:var(--color-subtitle);margin-top:8px">💡 Pour aller plus loin en 3e : une version plus complète de ce système (température + luminosité + humidité + délai) t'attend dans la séquence <em>« Vittascience — variables » (3e_C9.1)</em>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <details class="synthese">
+    <summary>Afficher la trace écrite</summary>
+    <p style="margin-top:10px">Un système automatisé enchaîne deux circuits complémentaires : la <strong>chaîne d'information</strong>
+    (un capteur acquiert une donnée, la carte la traite, un écran ou un voyant communique un état) et la
+    <strong>chaîne d'énergie</strong> (une alimentation fournit l'énergie, un relais la distribue, un moteur la convertit
+    en mouvement pour agir sur le réel). Un programme <strong>complète une fonctionnalité existante</strong> lorsqu'il
+    ajoute ou ajuste une <em>instruction conditionnelle</em> (SI … ALORS … SINON) sans réécrire tout le programme.
+    Le choix d'un seuil est un compromis technique : trop bas, la plante manque d'eau ; trop haut, on gaspille de l'eau.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>✅ Évaluation</h2>
+  <p>Grille de maîtrise (LSU) appliquée à la compétence <strong>4e_C6.2</strong> :</p>
+  <div class="eval-grid">
+    <div class="n1">1 — Insuffisante<br><span style="font-weight:400">La condition n'est pas complétée, même avec de l'aide</span></div>
+    <div class="n2">2 — Fragile<br><span style="font-weight:400">La condition est complétée avec une aide importante</span></div>
+    <div class="n3">3 — Satisfaisante<br><span style="font-weight:400">La condition est complétée et testée seul(e)</span></div>
+    <div class="n4">4 — Très bonne<br><span style="font-weight:400">La condition est complétée, testée, et le seuil est justifié</span></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧩 Différenciation</h2>
+  <p><strong>Aide :</strong> pour l'exercice 2, un schéma-bloc pré-rempli à 3 cases (capteur → carte → pompe) peut être
+  fourni avant de passer au pseudo-code.</p>
+  <p><strong>Approfondissement :</strong> ajouter une deuxième condition (ex. ne pas arroser la nuit) et adapter
+  l'algorigramme en conséquence — lien direct vers la version multi-conditions de 3e_C9.1.</p>
+</section>
+
+<section class="card">
+  <h2>🌍 EDD, sécurité, citoyenneté</h2>
+  <p>💧 Économie d'eau (arrosage uniquement si nécessaire) · 🔋 Sécurité électrique (très basse tension, pile 9V,
+  pas de secteur) · ♻️ Réemploi possible du prototype d'une année sur l'autre.</p>
+</section>
+
+<p style="text-align:center;margin:20px 0"><button class="btn small" onclick="activerModeEnseignant()">🔑 Mode enseignant</button></p>
+<section class="card" id="teacherPanel">
+  <h3>Fiche professeur (code : GJEP)</h3>
+  <p><strong>Corrigé séance 1 :</strong> capteur d'humidité → acquiert · carte Arduino → traite · écran LCD → communique.</p>
+  <p><strong>Corrigé séance 2 :</strong> SI humidite <strong>&lt;</strong> seuil ALORS pompe <strong>= MARCHE</strong>.</p>
+  <p><strong>Repère de progressivité 2024 :</strong> cette séance travaille prioritairement 4e_C6.2 ; elle prépare
+  4e_C6.3 (tester/valider une modification) et le futur 3e_C9.1 (algorithme multi-conditions, déjà présent
+  dans le fichier Vittascience 3e).</p>
+  <p><strong>Matériel :</strong> 1 carte Arduino (ou simulation Vittascience), 1 capteur d'humidité de sol, 1 relais,
+  1 petite pompe 5V ou DEL de substitution, 1 écran LCD ou moniteur série.</p>
+</section>
+
+<footer>TechnoQuest — Jardin connecté · Technologie Cycle 4 (2024) · Thème 2 · 4e_C6.2</footer>
+
+<script>
+function showSeance(n, el){
+  document.querySelectorAll('.seance-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.seance-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('seance'+n).classList.add('active');
+  el.classList.add('active');
+}
+
+function corrigeQ1(){
+  const a = document.getElementById('q1a').value;
+  const b = document.getElementById('q1b').value;
+  const c = document.getElementById('q1c').value;
+  const ok = a==="capteur d'humidité" && b==="carte Arduino" && c==="écran LCD";
+  const fb = document.getElementById('fbQ1');
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'err');
+  fb.textContent = ok ? '🎉 Exact : capteur → acquiert, carte → traite, écran → communique.'
+                       : '⚠️ Pas tout à fait — rappelle-toi : acquérir se fait avec le capteur, traiter avec la carte.';
+}
+
+function corrigeQ2(){
+  const sens = document.getElementById('q2sens').value;
+  const action = document.getElementById('q2action').value;
+  const ok = sens==='inf' && action==='active';
+  document.getElementById('pcSigne').textContent = sens==='inf' ? '<' : (sens==='sup' ? '>' : '…');
+  document.getElementById('pcAction').textContent = action==='active' ? '= MARCHE' : (action==='coupe' ? '= ARRET' : '…');
+  const fb = document.getElementById('fbQ2');
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'err');
+  fb.textContent = ok ? '🎉 Exact : si l’humidité est INFÉRIEURE au seuil, le sol est sec, on ACTIVE la pompe.'
+                       : '⚠️ Réfléchis à ce que veut dire un sol « sec » pour l’humidité mesurée.';
+}
+
+function updateArrosage(){
+  const seuil = +document.getElementById('seuilRange').value;
+  const hum = +document.getElementById('humRange').value;
+  document.getElementById('seuilVal').textContent = seuil;
+  document.getElementById('humVal').textContent = hum;
+  const arrose = hum < seuil;
+  const etat = document.getElementById('pompeEtat');
+  const pot = document.getElementById('potEmoji');
+  if(arrose){
+    etat.textContent = '💧 Pompe en marche — sol détecté sec';
+    etat.className = 'pompe-etat pompe-on';
+    pot.style.filter = 'grayscale(0.7) brightness(0.8)';
+  } else {
+    etat.textContent = 'Pompe à l’arrêt — sol suffisamment humide';
+    etat.className = 'pompe-etat pompe-off';
+    pot.style.filter = 'none';
+  }
+}
+updateArrosage();
+
+function activerModeEnseignant(){
+  const code = prompt('Code enseignant :');
+  if(code === 'GJEP'){
+    document.getElementById('teacherPanel').classList.add('show');
+    document.getElementById('teacherPanel').scrollIntoView({behavior:'smooth'});
+  } else if(code !== null){
+    alert('Code incorrect.');
+  }
+}
+</script>
+</body>
+</html>
