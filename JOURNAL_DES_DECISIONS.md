@@ -1035,3 +1035,32 @@ des règles 1-17 :
    variables, et les futures séquences DNB/CRCN (gabarits des skills v2).
 5. Numéro 18 réservé au registre (règle n°10) ; entrée et registre dans le
    même commit.
+
+5. **Formulation opératoire (précision exigée par Pascal — aucune place au
+   doute, à l'imagination ou à l'erreur)** :
+   a. TOUTE séquence comporte, dans cet ordre, un temps « FAIRE » (l'élève
+      manipule un dispositif de la page ou du réel — simulateur, banc,
+      curseurs, maquette TBT — AVANT toute définition) puis un temps
+      « COMPRENDRE » (le concept est nommé dans un « À retenir ») puis un
+      temps « REFAIRE » (réinvestissement du concept dans une production
+      vérifiée). Une séquence sans ces trois temps est NON CONFORME.
+   b. Toute séquence de programmation contient AU MINIMUM : un exercice de
+      représentation schématique (algorigramme, diagramme de flux, chaîne
+      règle 6 — construire, compléter OU corriger, correction exhaustive
+      bloc par bloc) ET un exercice de code par blocs AVEC son double
+      (blocs → lire le texte OU texte → observer les blocs).
+   c. Répétition espacée mesurable : chaque concept-clé (variable,
+      condition, boucle, chaîne, seuil, cas frontière…) apparaît dans AU
+      MOINS DEUX habillages différents sur l'année du niveau (deux
+      environnements parmi Vittascience, mBlock 5, Blockly, ArduBlock,
+      Arduino, Flowcode, ou deux représentations différentes) — la matrice
+      de couverture du lot en fait foi.
+   d. Les synthèses NOMMENT le concept invariant en une phrase du type :
+      « ce que tu viens de refaire avec X, tu l'avais déjà fait avec Y —
+      le concept commun s'appelle Z ».
+   e. Contrôle : ces quatre points entrent dans la check-list de fin de lot
+      (contrôle qualité) et dans la fiche pédagogique ; un écart se justifie
+      PAR ÉCRIT au journal, sinon il se corrige.
+6. Numéro 18 réservé au registre (règle n°10) ; entrée et registre dans le
+   même commit ; formulation opératoire ajoutée le même jour à la demande
+   de précision de Pascal.
