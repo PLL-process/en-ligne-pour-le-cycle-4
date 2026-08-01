@@ -1155,3 +1155,41 @@ structure conservées :
    règle 18 des familles C4/C5 (les trois temps y EXISTENT déjà par les
    verrous — seule la déclaration manque) ; câblage 18c (matrice des
    habillages par concept) lors du prochain lot de fond.
+
+## 2026-08-01 — Thème 1 · VAGUE 3 de la revue générale : conformité socle (Fable, branche `fable/theme-1/vague-3-conformite-socle`)
+
+Troisième vague de la mission « revue de toutes les séquences ». Le Thème 1
+(lots hérités Codex/ChatGPT) était le plus en retard sur le socle commun.
+Le périmètre « autre auteur » est levé par la mission explicite de Pascal ;
+les retouches sont ADDITIVES et minimales — voix, contenus et mécaniques de
+chaque auteur conservés (aucune refonte, aucune archive).
+
+1. **Navigation règle n°11** ajoutée aux 8 séquences qui n'en avaient pas
+   (3e_C1.1, 3e_C1.5, 4e_C1.1, 4e_C1.4, 5e_C1.1/sequence.html, 5e_C1.2,
+   5e_C1.3, 5e_C2.1) : ⌂ Accueil + 🧠 QCM quand le dossier en contient un.
+2. **Zéro alert() au Thème 1** (règle n°14) : les 8 alert() de 4e_C1.4 et
+   5e_C1.1 remplacés par des messages inline `role="status"` non bloquants
+   (sauvegarde, export, pop-ups, contrôle 5.b, test d'accessibilité).
+3. **Règle n°1** : l'image hotlinkée de 4e_C1.4 (touche Tab via
+   github.io) remplacée par un SVG original inline avec title/desc.
+4. **Contrats règle n°18** posés sur les 3 séquences dont j'ai pu nommer
+   les trois temps avec certitude (3e_C1.1, 4e_C1.1 — manipulation
+   tableur réelle AVANT le formalisme, concepts nommés « comparabilité »
+   et « proxy », réinvestissement sur nouveau contexte ; 4e_C1.4 —
+   exercices interactifs → concepts cyber → stratégie personnelle 5.b).
+5. **Cinq bugs JS dormants corrigés** (découverts par les tests réels,
+   présents AVANT toute retouche) : `'<!DOCTYPE html>↵'` littéral qui
+   tuait les deux fonctions d'export de 5e_C1.1 · accolade manquante de
+   `toggle()` (l'accordéon était mort) · affectations sur chaînage
+   optionnel `?.textContent =` (syntaxe invalide, bloc entier mort) ·
+   `saveBtn` inexistant qui plantait le câblage SAVE/LOAD/PDF de 4e_C1.4
+   (bouton 💾 ajouté : la sauvegarde locale refonctionne, règle n°15) ·
+   `startTime` non défini au onload.
+6. **Tests réels : 29/29** (rapport
+   `theme-1-…/_gouvernance/rapport_tests_vague3_conformite_socle.md`).
+7. **Reste à faire au Thème 1** (vagues ultérieures, coordination Codex
+   souhaitable) : vérificateurs à encoches et sauvegarde généralisée sur
+   les pages qui n'en ont pas (3e_C1.1, 4e_C1.1, 5e_C1.2, 5e_C2.1),
+   contrats règle 18 des séquences restantes, doubles blocs↔texte là où
+   la programmation apparaît (4e_C1.4 : test URL Python), et
+   l'éclaircissement 5e_C1.1 (deux fichiers séquence coexistent).

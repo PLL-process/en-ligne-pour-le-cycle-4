@@ -390,6 +390,10 @@
   </style>
 </head>
 <body>
+<nav aria-label="Navigation du site" style="position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a">
+<a href="../../../../index.html" style="display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2">⌂ Accueil</a><a href="qcm_cybersecurite_usage_raisonne.html" style="display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2">🧠 QCM</a>
+</nav>
+
 <div class="scorebar">
   <div class="scorebar-inner">
     <div>💻 <strong>Séquence 4e — Cybersécurité</strong></div>
@@ -412,6 +416,7 @@
       <span class="score-pill">⏱️ <span id="chrono">00:00</span></span>
       <span class="score-pill">🏁 <strong id="scoreTotal">0</strong>/65</span>
       <button class="btn" id="btnRecalc">🔄 Recalculer</button>
+      <button class="btn" id="saveBtn">💾 Sauvegarder</button>
       <button class="btn" id="btnPDF">📄 PDF</button>
     </div>
   </div>
@@ -449,6 +454,16 @@
     <h2>❓ Problématique</h2>
     <p>Comment protéger mes données, mes comptes et ma e‑réputation tout en utilisant des services numériques (e-mails, réseaux sociaux, etc.) ?</p>
     <div class="response-label">Ta réponse ici 👇</div><textarea id="pbm"></textarea>
+  </div>
+
+  <!-- Contrat règle 18 -->
+  <div class="section panel">
+    <h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+    <div style="background:rgba(129,170,255,.10);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.94em">
+      <p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu manipules d'abord — quizz interactifs, glisser-déposer, testeur de mots de passe, code Python HTTP/HTTPS — avant toute définition.</p>
+      <p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les corrections nomment les concepts&nbsp;: donnée personnelle, authentification forte (2FA), trace numérique, hameçonnage.</p>
+      <p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis tout dans TA stratégie personnelle (5.b) et l'activité bonus immersive 2FA — ce que tu refais pour tes propres comptes, tu l'as déjà fait dans les exercices&nbsp;: le concept commun s'appelle la défense en profondeur.</p>
+    </div>
   </div>
 
   <!-- Compétences -->
@@ -842,9 +857,15 @@
 
     <p><strong>Rappel :</strong> En Python, l'<em>indentation</em> (décalage vers la droite) n'est pas décorative : c'est une <strong>règle obligatoire</strong> qui définit les blocs (<code>if</code>, <code>for</code>, <code>while</code>, <code>def</code>…).<br> La touche <span class="kbd">Tab</span> insère souvent <strong>4 espaces</strong>. Ne mélange pas Tab et espaces dans un même fichier.</p>
 <figure>
-  <img src="https://pll-process.github.io/en-ligne-pour-le-cycle-4/C1_C3_Les-objets-et-les-systèmes-techniques/Images/tab_key.png"
-       alt="Touche Tab du clavier"
-       style="max-width:100px;width:100%;border:1px solid #2a5796;border-radius:5px"/>
+  <svg viewBox="0 0 120 70" role="img" aria-labelledby="tabkey-t tabkey-d" style="max-width:120px;width:100%;display:block">
+    <title id="tabkey-t">Touche Tab du clavier</title>
+    <desc id="tabkey-d">Une touche rectangulaire de clavier portant le mot Tab et deux flèches horizontales opposées, chacune butée sur une barre verticale</desc>
+    <rect x="4" y="6" width="112" height="58" rx="9" fill="#12305d" stroke="#2a5796" stroke-width="2"/>
+    <rect x="8" y="10" width="104" height="46" rx="7" fill="#1a3f77"/>
+    <text x="60" y="32" text-anchor="middle" fill="#e4eaf5" font-size="15" font-family="monospace" font-weight="bold">Tab</text>
+    <path d="M28 46 h20 m0 0 l-6 -4 m6 4 l-6 4 M52 42 v8" stroke="#9bbefc" stroke-width="2" fill="none"/>
+    <path d="M92 46 h-20 m0 0 l6 -4 m-6 4 l6 4 M68 42 v8" stroke="#9bbefc" stroke-width="2" fill="none" transform="translate(0,0)"/>
+  </svg>
   <figcaption>🔎 <strong>Touche Tab</strong> — Située à gauche du A sur la plupart des claviers.</figcaption>
 </figure>
 
@@ -2381,8 +2402,8 @@ function checkDragDrop(section) {
 
   // 🧮 MAJ score (1a notée sur 4 → 6 paires = 4 pts)
   const points = Math.round((correct / 6) * 4);
-  document.getElementById('score1a')?.textContent = `${points}/4`;
-  document.getElementById('result1a')?.textContent = `${correct}/6`;
+  { const s1a = document.getElementById('score1a'); if(s1a) s1a.textContent = `${points}/4`; }
+  { const r1a = document.getElementById('result1a'); if(r1a) r1a.textContent = `${correct}/6`; }
   const corr = document.getElementById('correction1a');
   if (corr) corr.style.display = 'block';
 
@@ -2415,9 +2436,10 @@ function checkDragDrop(section) {
 // (Tu peux laisser ce petit contrôle pour 5.b, il est indépendant)
 document.getElementById('chk5')?.addEventListener('click', () => {
   const v = (document.getElementById('q5b')?.value || '').trim();
-  if (v.length < 120) {
-    alert("Ta stratégie 5.b est un peu courte. Vise 3–4 phrases concrètes 👍");
-  }
+  const q5b = document.getElementById('q5b');
+  let m5 = document.getElementById('msg5b');
+  if(!m5 && q5b){ m5 = document.createElement('p'); m5.id='msg5b'; m5.setAttribute('role','status'); m5.style.cssText='margin-top:6px;padding:8px 12px;border-radius:8px;font-size:.9em;background:rgba(255,214,102,.13);color:#ffd66b'; q5b.insertAdjacentElement('afterend', m5); }
+  if(m5){ m5.textContent = (v.length < 120) ? "🟡 Ta stratégie 5.b est un peu courte. Vise 3–4 phrases concrètes 👍" : "🎉 Stratégie étoffée — bien joué !"; }
 });
 
   
@@ -2455,7 +2477,7 @@ function recalc(){
   const max = W.s1 + W.s2 + W.s3 + W.s4 + W.s5 + W.s6;
   const pct = Math.max(0, Math.min(100, Math.round(100*total/max)));
   document.getElementById('scoreTotal').textContent = total;
-  document.getElementById('scoreTotal2').textContent = total;
+  { const st2 = document.getElementById('scoreTotal2'); if (st2) st2.textContent = total; }
   const bar = document.getElementById('prog');
   if (bar) bar.style.width = pct + '%';
 }
@@ -2521,7 +2543,10 @@ function score6(){
         student: document.getElementById('studentName').value,
         scores, chrono
       }));
-      alert('💾 Sauvegardé !');
+      const sb = document.getElementById('saveBtn');
+      let ms = document.getElementById('msgSave');
+      if(!ms && sb){ ms = document.createElement('span'); ms.id='msgSave'; ms.setAttribute('role','status'); ms.style.cssText='margin-left:8px;color:#81fba1;font-size:.9em'; sb.insertAdjacentElement('afterend', ms); }
+      if(ms){ ms.textContent='💾 Sauvegardé !'; setTimeout(()=>{ ms.textContent=''; }, 3000); }
     };
 
 
@@ -2541,12 +2566,15 @@ function score6(){
     document.getElementById('accessibility-test')?.addEventListener('click', () => {
       // Simple axe-core simulation
       const errors = document.querySelectorAll('[required]:not([aria-label]), input:not([id])');
-      alert(`Accessibilité: ${errors.length} erreurs trouvées`);
+      const ab = document.getElementById('accessibility-test');
+      let ma = document.getElementById('msgAccess');
+      if(!ma && ab){ ma = document.createElement('span'); ma.id='msgAccess'; ma.setAttribute('role','status'); ma.style.cssText='margin-left:8px;color:#9bbefc;font-size:.9em'; ab.insertAdjacentElement('afterend', ma); }
+      if(ma){ ma.textContent = `Accessibilité : ${errors.length} point(s) à vérifier`; }
     });
 
     // PERF REPORT
     window.onload = () => {
-      console.log(`🚀 Chargé en ${performance.now() - startTime}ms`);
+      console.log(`🚀 Chargé en ${Math.round(performance.now())} ms`);
     };
 
 </script>

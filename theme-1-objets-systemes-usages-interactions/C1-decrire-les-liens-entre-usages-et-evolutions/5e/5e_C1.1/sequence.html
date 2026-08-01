@@ -182,6 +182,15 @@
   </style>
   <script>
     /* Sauvegarde et chargement des réponses via localStorage */
+    function msgStatut(txt, couleur){
+      var m = document.getElementById('msgStatutC11');
+      if(!m){ m = document.createElement('div'); m.id='msgStatutC11'; m.setAttribute('role','status');
+        m.style.cssText='position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:2000;padding:9px 16px;border-radius:10px;font-size:.92em;background:#0d2347;border:1px solid #274a8a;color:'+(couleur||'#81fba1');
+        document.body.appendChild(m); }
+      m.style.color = couleur||'#81fba1';
+      m.textContent = txt;
+      clearTimeout(m._t); m._t = setTimeout(function(){ m.textContent=''; }, 4000);
+    }
     function saveProgress() {
       var inputs = document.querySelectorAll('input, textarea');
       inputs.forEach(function(elem) {
@@ -189,7 +198,7 @@
           localStorage.setItem(elem.id, elem.value);
         }
       });
-      alert('Votre travail a été sauvegardé.');
+      msgStatut('💾 Votre travail a été sauvegardé.');
     }
     function loadProgress() {
       var inputs = document.querySelectorAll('input, textarea');
@@ -218,7 +227,7 @@
   </script>
 
 <script>
-function toggle(id){var btn=document.querySelector('[aria-controls="'+id+'"]');{ var e=document.getElementById(id); if(!e) return; e.style.display=(e.style.display==='none'?'block':'none'); if(btn){btn.setAttribute('aria-expanded', e.style.display==='block'?'true':'false');} }
+function toggle(id){var btn=document.querySelector('[aria-controls="'+id+'"]');{ var e=document.getElementById(id); if(!e) return; e.style.display=(e.style.display==='none'?'block':'none'); if(btn){btn.setAttribute('aria-expanded', e.style.display==='block'?'true':'false');} } }
 </script>
 
 
@@ -252,8 +261,7 @@ function exportFilledHtml(){
       }
     }
     // Sérialise le clone en texte HTML
-    var htmlText = '<!DOCTYPE html>
-' + docClone.outerHTML;
+    var htmlText = '<!DOCTYPE html>\n' + docClone.outerHTML;
     // Crée un blob et déclenche le téléchargement
     var blob = new Blob([htmlText], {type:'text/html;charset=utf-8'});
     var a = document.createElement('a');
@@ -263,7 +271,7 @@ function exportFilledHtml(){
     a.click();
     setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }catch(e){
-    alert('Export impossible: ' + e.message);
+    msgStatut('Export impossible : ' + e.message, '#ff7b88');
   }
 }
 </script>
@@ -286,14 +294,13 @@ function exportToNewTab(){
         else{ elClone.setAttribute('value', el.value); }
       }else if(tag==='select'){ elClone.selectedIndex = el.selectedIndex; }
     }
-    var htmlText = '<!DOCTYPE html>
-' + docClone.outerHTML;
+    var htmlText = '<!DOCTYPE html>\n' + docClone.outerHTML;
     var dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlText);
     var win = window.open(dataUrl, '_blank');
-    if(!win){ alert('Autorisez les fenêtres surgissantes (pop-ups), puis réessayez.'); }
-    else{ setTimeout(function(){ alert('Dans l’onglet ouvert : Ctrl+S pour choisir le dossier.'); }, 400); }
+    if(!win){ msgStatut('Autorisez les fenêtres surgissantes (pop-ups), puis réessayez.', '#ffd66b'); }
+    else{ setTimeout(function(){ msgStatut('Dans l’onglet ouvert : Ctrl+S pour choisir le dossier.', '#9bbefc'); }, 400); }
   }catch(e){
-    alert('Export (nouvel onglet) impossible : ' + e.message);
+    msgStatut('Export (nouvel onglet) impossible : ' + e.message, '#ff7b88');
   }
 }
 </script>
@@ -363,6 +370,10 @@ window.addEventListener('load', loadClassicPhotos);
 
 </head>
 <body>
+<nav aria-label="Navigation du site" style="position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a">
+<a href="../../../../index.html" style="display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2">⌂ Accueil</a><a href="qcm_donnees_tableur.html" style="display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2">🧠 QCM</a>
+</nav>
+
 <a href="#contenu" class="skip-link">Aller au contenu principal</a>
 
 
