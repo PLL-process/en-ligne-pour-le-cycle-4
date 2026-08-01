@@ -140,6 +140,8 @@
     details{border-color:#999;background:#fff}
     a{color:#111}
   }
+select.ok,input.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
 </style>
 </head>
 <body>
@@ -192,6 +194,15 @@
     le programme du lampadaire à l'écran. Votre mission de 5e : <b>lire</b> ce programme (quelles données utilise-t-il,
     que produit-il ?), le <b>traduire en français</b> pour l'expliquer à la mairie, puis <b>régler ses paramètres</b> —
     et vérifier l'effet de chaque réglage avant de l'adopter.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+  <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em">
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">FAIRE pour comprendre&nbsp;:</b> tu observes le programme RÉEL du lampadaire et tu manipules ses paramètres au simulateur — avant toute définition.</p>
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: donnée, paramètre, condition, boucle — et chaque étape a sa FORME d'algorigramme.</p>
+  <p style="margin:0"><b style="color:var(--hl)">REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la lecture en concepteur sur l'arrosage du jardin (activité 4) — même concept, autre habit.</p>
   </div>
 </section>
 
@@ -282,7 +293,20 @@
       <div><b>Production attendue :</b> 6 étapes ordonnées + 3 mots-clés placés.</div>
       <div><b>Ressources :</b> le programme par blocs de l'activité 1 (reviens-y autant que nécessaire).</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> a) numérote les étapes de l'algorithme dans l'ordre du programme (1 à 6) ; b) place les bons mots-clés dans les phrases à trous ; c) recopie l'algorithme complet au cahier.</div>
+    <div class="consigne"><b>Consigne :</b> a) numérote les étapes de l'algorithme dans l'ordre du programme (1 à 6) ; b) place les bons mots-clés dans les phrases à trous ; c) recopie l'algorithme complet au cahier ; d) associe chaque étape à sa FORME d'algorigramme.</div>
+    <div class="exo">
+      <h4>d) Chaque étape a sa forme — l'algorigramme du lampadaire (règle n°18)</h4>
+      <p>Un algorithme se DESSINE aussi. Dans un algorigramme, chaque famille d'étapes a sa forme&nbsp;: associe.</p>
+      <div class="assoc"><label for="ag1">« Mesurer la luminosité ambiante » se dessine avec…</label><select id="ag1"><option value="">— choisir —</option><option>▭ un rectangle (traitement : entrée de la donnée)</option><option>◇ un losange (décision)</option><option>⬭ une ellipse (début/fin)</option></select></div>
+      <div class="assoc"><label for="ag2">« SI la luminosité est inférieure à 30… » se dessine avec…</label><select id="ag2"><option value="">— choisir —</option><option>◇ un losange (décision : une question, deux sorties OUI/NON)</option><option>▭ un rectangle (traitement)</option><option>⬭ une ellipse (début/fin)</option></select></div>
+      <div class="assoc"><label for="ag3">« Allumer la lampe en veille » se dessine avec…</label><select id="ag3"><option value="">— choisir —</option><option>▭ un rectangle (action commandée à l'actionneur)</option><option>◇ un losange (décision)</option><option>⬭ une ellipse (début/fin)</option></select></div>
+      <div class="assoc"><label for="ag4">« Recommencer depuis la mesure » se dessine avec…</label><select id="ag4"><option value="">— choisir —</option><option>↺ une flèche qui REMONTE vers la mesure (la boucle)</option><option>⬭ une ellipse FIN (le programme s'arrête)</option><option>◇ un losange de plus</option></select></div>
+      <button class="btn small" data-check="5" type="button">✅ Vérifier les formes</button>
+      <p class="feedback" id="fb5" role="status"></p>
+      <details class="correction"><summary>📖 Correction bloc par bloc</summary>
+        <p><b>Mesurer</b> → ▭ rectangle&nbsp;: c'est l'ENTRÉE de l'information dans le programme. <b>SI luminosité &lt; 30</b> → ◇ losange&nbsp;: une décision a toujours DEUX sorties (OUI/NON) — jamais une seule. <b>Allumer la veille</b> → ▭ rectangle&nbsp;: la SORTIE, l'ordre donné à l'actionneur. <b>Recommencer</b> → ↺ la flèche qui remonte&nbsp;: un lampadaire ne s'arrête jamais, son algorigramme n'a pas d'ellipse FIN — c'est la boucle qui surveille en continu. Le programme par blocs de l'activité 1 et cet algorigramme disent LA MÊME CHOSE en deux langages.</p>
+      </details>
+    </div>
     <div class="exo">
       <h4>a) Je remets l'algorithme dans l'ordre</h4>
       <div class="assoc"><label for="o2_a">« Mesurer la luminosité ambiante » — étape n°</label><select id="o2_a"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
@@ -402,6 +426,7 @@
 
 <section class="card" id="bilan">
   <h2>🏁 Bilan de la séquence</h2>
+  <div class="retenir" style="margin-bottom:12px"><b>🔁 Le concept invariant (règle n°18)&nbsp;:</b> ce que tu viens de refaire avec l'<b>arrosage du jardin</b>, tu l'avais déjà fait avec le <b>lampadaire</b> — le concept commun s'appelle la <b>structure d'un programme</b> (données d'entrée, paramètres, conditions, boucle). Blocs, langage naturel, algorigramme&nbsp;: trois habits, un seul concept.</div>
   <div class="bilan-grid">
     <div>
       <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
@@ -553,6 +578,19 @@ const CHECKS = {
                r4_3:"augmenter SEUIL_SEC (le sol sera déclaré « sec » plus tôt)",
                r4_4:"prédire son effet puis le vérifier (simulateur ou essai contrôlé)"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    return {score:ok,total:4,valide:ok===4};
+  },
+  5: function(){
+    let ok=0;
+    const att={ag1:"▭ un rectangle (traitement : entrée de la donnée)",
+               ag2:"◇ un losange (décision : une question, deux sorties OUI/NON)",
+               ag3:"▭ un rectangle (action commandée à l'actionneur)",
+               ag4:"↺ une flèche qui REMONTE vers la mesure (la boucle)"};
+    Object.entries(att).forEach(([id,v])=>{
+      const e=$(id); const good=e.value===v;
+      e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+      if(good) ok++;
+    });
     return {score:ok,total:4,valide:ok===4};
   }
 };
