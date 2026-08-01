@@ -140,6 +140,8 @@
     details{border-color:#999;background:#fff}
     a{color:#111}
   }
+select.ok,input.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
 </style>
 </head>
 <body>
@@ -196,6 +198,15 @@
     modifie jamais un système qui marche sans filet. »</b></p>
     <p>Votre mission de 4e : <b>analyser</b> les relevés, <b>déduire</b> les modifications du programme,
     puis <b>tester et valider</b> — en simulé d'abord, en réel ensuite.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+  <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em">
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">FAIRE pour comprendre&nbsp;:</b> tu analyses de VRAIS relevés et tu joues les scénarios au banc de test intégré — avant toute définition de l'hystérésis.</p>
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: hystérésis, plage horaire, non-régression — et l'algorigramme les DESSINE.</p>
+  <p style="margin:0"><b style="color:var(--hl)">REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis les deux seuils sur le lampadaire du crépuscule (activité 4) — même concept, autre habit.</p>
   </div>
 </section>
 
@@ -282,7 +293,22 @@
       <object data="Images/hysteresis_deux_seuils.svg" type="image/svg+xml" aria-label="Comparaison entre un seuil unique à 40 pour cent qui fait battre la pompe et deux seuils à 35 et 45 pour cent qui la stabilisent" style="width:100%"></object>
       <figcaption>Le remède au battement : DEUX seuils au lieu d'un. La pompe démarre sous 35 %, ne s'arrête qu'au-dessus de 45 % — entre les deux, elle ne change pas d'avis.</figcaption>
     </figure>
-    <div class="consigne"><b>Consigne :</b> complète l'algorithme corrigé du jardin en choisissant chaque ligne. Les valeurs retenues par le club : démarrage sous <b>35 %</b>, arrêt au-dessus de <b>45 %</b>, arrosage autorisé <b>avant 8 h ou après 17 h</b> uniquement.</div>
+    <div class="exo">
+      <h4>a) D'abord le dessin — l'algorigramme du programme corrigé (règle n°18)</h4>
+      <p>Avant les lignes de code, remets les blocs dans l'ordre (numérote de 1 à 6)&nbsp;:</p>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">⬭ début</span><select id="ag1" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>DÉBUT (au démarrage du système)</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag2" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Mesurer l'humidité H et lire l'heure</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision 1</span><select id="ag3" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>H &lt; 35 ET (heure &lt; 8 OU heure &gt; 17)&nbsp;? → OUI&nbsp;: pompe ON</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision 2</span><select id="ag4" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>SINON, H &gt; 45&nbsp;? → OUI&nbsp;: pompe OFF</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag5" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Entre 35 et 45&nbsp;: NE RIEN CHANGER (l'hystérésis garde l'état)</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">↺ boucle</span><select id="ag6" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Revenir à la mesure (le système surveille en continu)</span></div>
+      <button class="btn small" data-check="5" type="button">✅ Vérifier l'algorigramme</button>
+      <p class="feedback" id="fb5" role="status"></p>
+      <details class="correction"><summary>📖 Correction bloc par bloc</summary>
+        <p><b>1 — DÉBUT</b> (terminal). <b>2 — Mesurer H et lire l'heure</b> (rectangle&nbsp;: les ENTRÉES). <b>3 — Première décision</b> (losange&nbsp;: le ET de la plage horaire vit DANS la question de démarrage). <b>4 — Deuxième décision</b> (l'arrêt a SON propre seuil&nbsp;: 45 %). <b>5 — Entre les deux, ne rien changer</b> (le rectangle le plus important&nbsp;: l'hystérésis est un NON-changement). <b>6 — La boucle</b> qui remonte&nbsp;: le programme repart mesurer. Deux losanges au lieu d'un&nbsp;: c'est ÇA, la modification — et elle se voit mieux en dessin qu'en lignes.</p>
+      </details>
+    </div>
+    <div class="consigne"><b>Consigne (suite) :</b> complète maintenant l'algorithme corrigé du jardin en choisissant chaque ligne. Les valeurs retenues par le club : démarrage sous <b>35 %</b>, arrêt au-dessus de <b>45 %</b>, arrosage autorisé <b>avant 8 h ou après 17 h</b> uniquement.</div>
     <div class="exo">
       <div class="assoc"><label for="a2_1">LIGNE 1 — la pompe DÉMARRE si…</label><select id="a2_1"><option value="">— choisir —</option><option>humidité inférieure à 35 % ET heure hors des heures chaudes (avant 8 h ou après 17 h)</option><option>humidité inférieure à 40 %, comme avant</option><option>humidité inférieure à 45 %</option><option>la présidente appuie sur un bouton</option></select></div>
       <div class="assoc"><label for="a2_2">LIGNE 2 — la pompe S'ARRÊTE si…</label><select id="a2_2"><option value="">— choisir —</option><option>humidité supérieure à 45 %</option><option>humidité supérieure à 35 %</option><option>humidité supérieure à 40 %, comme avant</option><option>il fait nuit</option></select></div>
@@ -400,6 +426,7 @@
 
 <section class="card" id="bilan">
   <h2>🏁 Bilan de la séquence</h2>
+  <div class="retenir" style="margin-bottom:12px"><b>🔁 Le concept invariant (règle n°18)&nbsp;:</b> ce que tu viens de refaire avec le <b>lampadaire du crépuscule</b>, tu l'avais déjà fait avec la <b>pompe du jardin</b> — le concept commun s'appelle l'<b>hystérésis (comparaison à deux seuils)</b>. Il se dessine en algorigramme, s'écrit en lignes SI/ALORS, et se teste au banc&nbsp;: trois habits, un seul concept.</div>
   <div class="bilan-grid">
     <div>
       <div id="rappelHyp" style="display:none"><b>🔙 Ton hypothèse de départ :</b> <span id="hypRappelTxt" style="font-style:italic"></span>
@@ -557,6 +584,15 @@ const CHECKS = {
                r4_4:"un crépuscule RÉEL sans clignotement, et l'allumage/extinction normal qui fonctionne toujours (non-régression)"};
     Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
     return {score:ok,total:4,valide:ok===4};
+  },
+  5: function(){
+    let ok=0;
+    [["ag1","1"],["ag2","2"],["ag3","3"],["ag4","4"],["ag5","5"],["ag6","6"]].forEach(([id,v])=>{
+      const e=$(id); const good=e.value===v;
+      e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+      if(good) ok++;
+    });
+    return {score:ok,total:6,valide:ok===6};
   }
 };
 const ENC_OK=["Excellent : tout est validé !","Bravo, tu penses comme un programmeur responsable !","Très bien : la pompe du jardin te doit ses roulements."];

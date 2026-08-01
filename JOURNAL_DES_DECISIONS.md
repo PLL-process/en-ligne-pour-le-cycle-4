@@ -1121,3 +1121,37 @@ carte ; la file officielle du 30/07 (3e_C7, 4e_C7, 4e_C8) passe en premier,
    alert() résiduel du 4e_C6.2, compléments 3e_C9.1/5e_C9.1 côté Thème 3) ;
    Vague 3 = Thème 1 (le plus en retard : pas de nav, champs muets,
    alert(), hotlink d'image en 4e_C1.4 — coordination Codex à prévoir).
+
+## 2026-08-01 — Thème 2 · VAGUE 2 de la revue générale : la famille C6 passe à la règle n°18 (Fable, branche `fable/theme-2/vague-2-regle-18`)
+
+Suite de la mission « revue de toutes les séquences » (voir l'entrée Vague 1).
+Les séquences C6 du Thème 2 étaient déjà conformes 11/14/15/17 ; il leur
+manquait les éléments PROPRES à la règle n°18. Éditions additives, voix et
+structure conservées :
+
+1. **Contrats de séquence 🔁** (18a) en tête des quatre pages : 3e_C6.1
+   « alerte graduée », 4e_C6.1 « ajuster le programme », 5e_C6.1
+   « programmer le lampadaire », 4e_C6.2 « arrosage automatique » — chacun
+   nomme SON temps FAIRE (relevés réels, banc, simulateur, prototype), son
+   COMPRENDRE et son REFAIRE effectifs.
+2. **Représentations schématiques** (18b) : 4e_C6.1 gagne l'algorigramme du
+   programme corrigé (6 blocs à ordonner — les DEUX losanges de l'hystérésis,
+   le bloc « ne rien changer », la boucle ; correction bloc par bloc ;
+   vérificateur n°5 avec encoches ok/ko, hors barre de progression pour ne
+   pas casser le « x / 4 ») ; 5e_C6.1 gagne l'exercice « chaque étape a sa
+   forme » (▭/◇/↺ — dont « pas d'ellipse FIN : un lampadaire ne s'arrête
+   jamais »). 3e_C6.1 avait déjà son atelier algorigramme (rien de forcé).
+3. **Phrases d'invariant** (18d) dans les quatre bilans/synthèses :
+   hystérésis (4e_C6.1), structure d'un programme (5e_C6.1), structure
+   conditionnelle paramétrée (3e_C6.1), comparaison à un seuil (4e_C6.2).
+4. **Nettoyage** : dernier alert() du Thème 2 supprimé (loquet enseignant du
+   4e_C6.2 — message inline non bloquant) ; styles ok/ko ajoutés là où les
+   nouvelles encoches en avaient besoin.
+5. **Tests réels : 22/22** (rapport `theme-2-…/rapport_tests_vague2_regle18_C6.md`) —
+   nouveaux vérificateurs (réussite ET erreur volontaire), régression des
+   vérificateurs existants, barre de progression intacte, persistance après
+   rechargement (debounce 600 ms respecté), zéro erreur JS, zéro alert.
+6. **Reste à faire au Thème 2** (vague ultérieure, même mission) : contrats
+   règle 18 des familles C4/C5 (les trois temps y EXISTENT déjà par les
+   verrous — seule la déclaration manque) ; câblage 18c (matrice des
+   habillages par concept) lors du prochain lot de fond.

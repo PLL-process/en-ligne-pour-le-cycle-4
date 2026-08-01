@@ -158,7 +158,15 @@
   <p class="declencheur">Pendant les vacances, les plantes du collège ne sont pas toujours arrosées. En Martinique,
   le carême peut être rude : certaines reçoivent trop d'eau, d'autres pas assez — et l'eau coûte cher. Le collège
   dispose d'un prototype d'arrosage automatique… mais son programme est INCOMPLET : à toi de le compléter,
-  de le tester et de prouver qu'il répond au besoin.</p>
+  de le tester et de prouver qu'il répond au besoin.</p></section>
+
+<section class="card">
+  <h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+  <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em">
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">FAIRE pour comprendre&nbsp;:</b> tu manipules le prototype dans la page (capteur simulé, banc de tests) — avant toute définition.</p>
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: chaîne d'information, chaîne d'énergie, instruction conditionnelle, cas frontière.</p>
+  <p style="margin:0"><b style="color:var(--hl)">REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la condition à seuil dans les défis (hystérésis, capteur absurde) — même concept, autre habit.</p>
+  </div>
 </section>
 
 <section class="card">
@@ -440,6 +448,7 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
     <b>Compléter un programme</b> (4e_C6.2), c'est ajouter ou ajuster une <b>instruction conditionnelle</b>
     (SI … ALORS … SINON) sans tout réécrire — puis <b>prouver</b> le comportement par un banc de tests dont le cas
     frontière. Le choix du seuil est un compromis technique : trop bas, la plante a soif ; trop haut, on gaspille.</p>
+    <p><b>🔁 Le concept invariant (règle n°18)&nbsp;:</b> ce que tu as refait dans les défis (hystérésis, garde-fou du capteur), tu l'avais déjà fait en complétant l'arrosage — le concept commun s'appelle la <b>comparaison à un seuil</b>&nbsp;: elle se dessine (algorigramme, chaînes de la règle n°6), se code en blocs et se lit en Python.</p>
   </div></details>
 </section>
 
@@ -647,7 +656,7 @@ document.querySelectorAll(".ae-btns").forEach(w => {
 $("btnTeacher").addEventListener("click", () => {
   const code = prompt("Code enseignant :");
   if(code === "GJEP"){ $("teacherPanel").classList.add("show"); $("teacherPanel").scrollIntoView({behavior:"smooth"}); }
-  else if(code !== null){ alert("Code incorrect."); }
+  else if(code !== null){ const b=$("btnTeacher"); let m=b.nextElementSibling; if(!(m&&m.classList&&m.classList.contains("tmsg"))){ m=document.createElement("span"); m.className="tmsg"; m.style.cssText="margin-left:8px;color:var(--err,#ff7b88);font-size:.85em"; b.insertAdjacentElement("afterend", m); } m.textContent="Code incorrect."; setTimeout(()=>{ m.textContent=""; }, 3000); }
 });
 
 /* ── sauvegarde locale ── */
