@@ -3,172 +3,393 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Capteur de confort scolaire — New York (3e · C7-C8)</title>
+<title>Thème 3 · New York — 3e · Atelier : Capteur de confort scolaire — concevoir et valider (3e_C7.1 · 3e_C8.1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--crcn:#7ee0c3}
-*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.5}
-h1{font-size:1.45em;text-align:center;margin:20px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
-.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 11px;border-radius:999px;font-size:.72em;font-weight:600;border:1px solid var(--border);background:#173666}
-section.card{max-width:900px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
-h2{color:var(--head);font-size:1.05em;margin:0 0 10px}
-.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px;border-radius:0 10px 10px 0;font-style:italic}
-.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px;border-radius:10px;text-align:center}
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88;--crcn:#7ee0c3}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Poppins',system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
 .crcn{background:rgba(126,224,195,.08);border:1px solid #2a6b5a;border-radius:10px;padding:12px;margin:10px 0;font-size:.9em}
 .crcn h3{margin:0 0 6px;color:var(--crcn);font-size:.95em}
 .crcn dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px}.crcn dt{font-weight:600;color:#9fd}.crcn dd{margin:0}
-.exo{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:8px 0}
-.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
-.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:8px 12px;margin:8px 0}
-table.refs{width:100%;border-collapse:collapse;font-size:.84em}th,td{border:1px solid var(--border);padding:6px 8px}th{background:#173666;color:var(--hl)}
-input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:6px;padding:5px 8px;width:100%;font-family:inherit}
-.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:10px;padding:12px}
-footer{text-align:center;color:#5b7bb8;font-size:.78em;margin-top:24px}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:'Fira Code',monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:'Fira Code',monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.simu input[type=range]{width:min(420px,90%)}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.on{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.tval{font-family:'Fira Code',monospace;font-size:1.3em;color:var(--hl)}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
 </style>
 </head>
 <body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_3e_C7_capteur-confort-ny.html">🧠 QCM</a></nav>
 
 <h1>🌡️ Capteur de confort scolaire — New York</h1>
-<div class="subtitle">Concevoir et valider une solution pour signaler la surchauffe d’une salle (îlot de chaleur urbain)</div>
-<div class="badges"><span class="badge">3e</span><span class="badge">Thème 3</span><span class="badge">3e_C7 · 3e_C8</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
+<div class="subtitle">Concevoir et valider une solution pour signaler la surchauffe d'une salle (îlot de chaleur urbain)</div>
+<div class="badges"><span class="badge">3e</span><span class="badge">Thème 3 — Création, conception, réalisation</span><span class="badge">3e_C7.1 · 3e_C8.1</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
 
 <section class="card">
 <h2>📋 En-tête pédagogique</h2>
 <table class="refs">
 <tr><th>Codes</th><td>3e_C7.1 (principal) · 3e_C8.1 (mutualisé)</td></tr>
 <tr><th>Durée</th><td>4 × 55 min</td></tr>
-<tr><th>Socle</th><td>D2 (méthodes) · D4 (systèmes techniques) · D5 (formations de la personne)</td></tr>
-<tr><th>Ancrage</th><td>New York — collège en zone d’îlot de chaleur (rooftop / cour asphaltée)</td></tr>
+<tr><th>Socle</th><td>D2 (méthodes) · D4 (systèmes techniques) · D5 (représentations du monde)</td></tr>
+<tr><th>Ancrage</th><td>New York — collège en zone d'îlot de chaleur (rooftop / cour asphaltée)</td></tr>
 </table>
-<label>Nom <input id="n" style="width:110px"></label>
-<label>Prénom <input id="p" style="width:110px"></label>
-<label>Classe <input id="c" style="width:70px"></label>
-<button class="btn" type="button" onclick="localStorage.setItem('t3e_cc',JSON.stringify({n:n.value,p:p.value,c:c.value}));alert('Identité enregistrée')">💾</button>
+<div style="margin-top:12px">
+<label>Nom&nbsp;: <input id="eleveNom" style="width:130px"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px"></label>
+<span class="saved-note" id="savedNote"></span>
+</div>
+</section>
+
+<section class="card">
+<h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+<div class="contrat18">
+<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par MANIPULER le simulateur thermique (activité 0) — avant toute définition.</p>
+<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> chaque geste débouche sur un «&nbsp;À retenir&nbsp;» qui NOMME le concept (seuil, protocole, hystérésis…).</p>
+<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le concept sur un NOUVEAU cas (l'humidité du local archives) — même squelette, autre habit.</p>
+</div>
 </section>
 
 <section class="card">
 <h2>📖 Situation déclenchante</h2>
-<p class="declencheur">En juin, plusieurs salles du collège à New York dépassent 30 °C l’après-midi. Le personnel demande un <strong>indicateur simple</strong> : alerte visuelle (LED) quand la température dépasse un seuil de confort. Tu dois <em>concevoir</em> la solution (C7) puis la <em>valider</em> par des tests (C8). La programmation fine pourra s’appuyer sur les ressources 3e_C9 existantes.</p>
+<p class="declencheur">En juin, plusieurs salles du collège à New York dépassent 30&nbsp;°C l'après-midi. Le personnel demande un <strong>indicateur simple</strong>&nbsp;: alerte visuelle (LED) quand la température dépasse un seuil de confort. Tu dois <em>concevoir</em> la solution (C7) puis la <em>valider</em> par des tests (C8). La programmation fine pourra s'appuyer sur les ressources 3e_C9 existantes.</p>
 </section>
 
 <section class="card">
 <h2>❓ Problématique</h2>
-<p class="problematique">Comment concevoir et valider une solution technique qui signale le dépassement d’un seuil de température dans une salle scolaire exposée à l’îlot de chaleur urbain ?</p>
+<p class="problematique">Comment concevoir et valider une solution technique qui signale le dépassement d'un seuil de température dans une salle scolaire exposée à l'îlot de chaleur urbain&nbsp;?</p>
 </section>
 
 <section class="card">
-<h2>🎯 CRCN mobilisés (règle d’or n°7)</h2>
+<h2>🎯 CRCN mobilisés (règle d'or n°7)</h2>
 <div class="crcn">
 <h3>CRCN 3.4 — Programmer · Niveau 2 (visé) / Niveau 3 (extension)</h3>
 <dl>
 <dt>Repère</dt><dd>Réaliser un programme simple · Mettre au point et exécuter un programme simple commandant un système numérique (repères CRCN / PIX)</dd>
-<dt>Action observable</dt><dd>L’élève écrit un algorithme SI température &gt; seuil ALORS alerte, le confronte à 4 scénarios chiffrés, corrige au moins un écart</dd>
-<dt>Trace</dt><dd>Pseudo-code enregistré (localStorage ou copie cahier) + tableau de tests renseigné (attendu / observé / décision)</dd>
+<dt>Action observable</dt><dd>L'élève ordonne l'algorigramme, écrit l'algorithme SI température &gt; seuil ALORS alerte, le confronte à 4 scénarios chiffrés, corrige au moins un écart</dd>
+<dt>Trace</dt><dd>Algorigramme ordonné + pseudo-code enregistré (localStorage) + tableau de tests renseigné (attendu / observé / décision)</dd>
 </dl>
 </div>
 <div class="crcn">
 <h3>CRCN 1.3 — Traiter des données · Niveau 2</h3>
 <dl>
 <dt>Repère</dt><dd>Insérer, saisir et trier des données dans un tableur / tableau pour les exploiter</dd>
-<dt>Action observable</dt><dd>L’élève saisit 4 mesures (T °C, seuil, décision) et justifie la validation ou le rejet</dd>
-<dt>Trace</dt><dd>Tableau de protocole de test complété dans la séquence (ou export CSV personnel)</dd>
+<dt>Action observable</dt><dd>L'élève saisit 4 mesures (T&nbsp;°C, seuil, décision) et justifie la validation ou le rejet</dd>
+<dt>Trace</dt><dd>Tableau de protocole de test complété dans la séquence (sauvegardé localement)</dd>
 </dl>
 </div>
 <div class="crcn">
 <h3>CRCN 5.1 — Résoudre des problèmes techniques · Niveau 2</h3>
 <dl>
-<dt>Repère</dt><dd>Résoudre des problèmes empêchant l’accès à un service numérique usuel / dysfonctionnement simple</dd>
-<dt>Action observable</dt><dd>Face à un scénario « LED éteinte alors que T &gt; seuil », l’élève propose une cause probable et un test discriminant</dd>
-<dt>Trace</dt><dd>Fiche diagnostic (cause hypothétique + test + résultat) dans l’activité 3</dd>
+<dt>Repère</dt><dd>Résoudre des problèmes empêchant l'accès à un service numérique usuel / dysfonctionnement simple</dd>
+<dt>Action observable</dt><dd>Face à un scénario «&nbsp;LED éteinte alors que T &gt; seuil&nbsp;», l'élève propose une cause probable et un test discriminant</dd>
+<dt>Trace</dt><dd>Fiche diagnostic (cause hypothétique + test + résultat) dans l'activité 3</dd>
 </dl>
 </div>
-<p style="font-size:.85em;color:#9bbefc;margin:8px 0 0">« Utiliser un ordinateur » n’est <strong>pas</strong> une compétence CRCN. Ici chaque compétence a une action et une trace.</p>
+<p style="font-size:.85em;color:#9bbefc;margin:8px 0 0">«&nbsp;Utiliser un ordinateur&nbsp;» n'est <strong>pas</strong> une compétence CRCN. Ici chaque compétence a une action et une trace.</p>
 </section>
 
 <section class="card">
 <h2>💡 Hypothèse de départ</h2>
 <textarea id="hyp" rows="2" placeholder="Je pense que la solution doit… parce que…"></textarea>
-<button class="btn" type="button" style="margin-top:6px" onclick="localStorage.setItem('t3e_cc_hyp',hyp.value)">Enregistrer</button>
+<p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
 <section class="card">
-<h2>🔧 Activité 1 — Concevoir (C7)</h2>
+<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur thermique <span class="chrono">⏱ 10 min</span></h2>
 <div class="exo">
-<p><strong>Besoin :</strong> alerter si T &gt; 28 °C (seuil de confort retenu pour la salle).</p>
-<p>Propose <strong>deux solutions</strong> (matériel TBT ou simulation) et choisis-en une avec 2 critères (coût, lisibilité, robustesse…).</p>
-<textarea rows="4" placeholder="Solution A…\nSolution B…\nChoix + critères…"></textarea>
-<div class="retenir"><strong>À retenir :</strong> concevoir = besoin → idées → choix justifié (pas une idée unique).</div>
+<p><strong>Consigne&nbsp;:</strong> AVANT toute définition, fais varier la température de la salle avec le curseur. Observe la LED d'alerte. Franchis le seuil dans les deux sens (monter PUIS redescendre).</p>
+<div class="simu">
+<p>Température de la salle&nbsp;: <span class="tval" id="tval">24&nbsp;°C</span></p>
+<input type="range" id="simT" min="15" max="40" value="24" step="1" aria-label="Température simulée de la salle en degrés Celsius">
+<p style="margin:10px 0 4px">LED d'alerte&nbsp;: <span class="led" id="simLed" role="img" aria-label="LED d'alerte"></span> <span id="simEtat" style="font-weight:600">éteinte</span></p>
+<p style="font-size:.82em;color:var(--sub)">Le seuil est caché quelque part entre 25 et 30&nbsp;°C… à toi de le trouver en manipulant.</p>
+</div>
+<p style="margin-top:10px">Q1 — À partir de quelle température la LED s'allume-t-elle&nbsp;?
+<select id="a0q1" style="width:auto"><option value="">— je choisis —</option><option>26 °C</option><option>28 °C</option><option>30 °C</option><option>32 °C</option></select></p>
+<p>Q2 — Quand tu REDESCENDS sous cette température, la LED…
+<select id="a0q2" style="width:auto"><option value="">— je choisis —</option><option>reste allumée pour toujours</option><option>s'éteint aussitôt</option><option>clignote sans fin</option></select></p>
+<button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+<p class="feedback" id="fb0" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS ton essai)</summary><div>
+<p>La LED s'allume dès que T dépasse <b>28&nbsp;°C</b> (le seuil de confort retenu) et s'éteint dès qu'on repasse dessous. Ce que tu viens de FAIRE à la main, c'est exactement ce que le programme fera tout seul&nbsp;: <b>comparer une mesure à un seuil</b>.</p></div></details>
+<div class="retenir"><strong>À retenir (COMPRENDRE)&nbsp;:</strong> un <b>seuil</b> est la valeur qui sépare deux comportements (alerte / pas d'alerte). Tu l'as trouvé en manipulant — c'est le «&nbsp;faire pour comprendre&nbsp;».</div>
 </div>
 </section>
 
 <section class="card">
-<h2>🧪 Activité 2 — Valider par des tests (C8) + CRCN 1.3</h2>
+<h2>🔧 Activité 1 — Concevoir (C7) <span class="chrono">⏱ 20 min</span></h2>
 <div class="exo">
-<p>Protocole minimal (remplis les cases) — <em>trace CRCN 1.3</em> :</p>
+<p><strong>Besoin&nbsp;:</strong> alerter si T &gt; 28&nbsp;°C (seuil de confort trouvé au simulateur).</p>
+<p>Propose <strong>deux solutions</strong> (matériel TBT — très basse tension uniquement — ou simulation) et choisis-en une avec 2 critères (coût, lisibilité, robustesse…).</p>
+<textarea rows="4" id="a1sol" placeholder="Solution A…&#10;Solution B…&#10;Choix + 2 critères…"></textarea>
+<button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+<p class="feedback" id="fb1" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<p>Exemples attendus&nbsp;: <b>A</b>&nbsp;— carte micro:bit + capteur T + LED (TBT, programmable, lisible)&nbsp;; <b>B</b>&nbsp;— thermomètre à alcool + pastille couleur (sans énergie, mais personne ne surveille). Choix justifié par 2 critères EXPLICITES, par exemple&nbsp;: fiabilité de la lecture + alerte visible sans surveillance → solution A. Concevoir, ce n'est jamais une idée unique&nbsp;: c'est un choix argumenté entre plusieurs.</p></div></details>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> concevoir = besoin → idées → choix justifié (pas une idée unique).</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🧪 Activité 2 — Valider par des tests (C8) + CRCN 1.3 <span class="chrono">⏱ 25 min</span></h2>
+<div class="exo">
+<p>Protocole minimal — <em>trace CRCN 1.3</em>. Pour chaque scénario, PRÉDIS le comportement attendu, puis VÉRIFIE-le au simulateur de l'activité 0 (règle le curseur sur la valeur du scénario) et note ce que tu observes.</p>
 <table class="refs">
-<tr><th>Scénario</th><th>T (°C)</th><th>Attendu</th><th>Observé</th><th>OK ?</th></tr>
-<tr><td>Salle fraîche</td><td>22</td><td>Pas d’alerte</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Seuil exact</td><td>28</td><td>À préciser (règle)</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Surchauffe</td><td>32</td><td>Alerte ON</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Retour au frais</td><td>24</td><td>Alerte OFF</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><th>Scénario</th><th>T (°C)</th><th>Ta prédiction</th><th>Observé au simulateur</th></tr>
+<tr><td>Salle fraîche</td><td>22</td><td><select id="a2p1"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o1"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Seuil exact</td><td>28</td><td><select id="a2p2"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o2"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Surchauffe</td><td>32</td><td><select id="a2p3"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o3"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Retour au frais</td><td>24</td><td><select id="a2p4"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o4"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
 </table>
-<p>Décision globale : <select><option>—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
-<div class="retenir"><strong>À retenir :</strong> sans résultat attendu écrit, on ne valide pas.</div>
+<p style="margin-top:8px">Décision globale&nbsp;: <select id="a2dec" style="width:auto"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+<p class="feedback" id="fb2" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<p>22&nbsp;°C → OFF · 28&nbsp;°C → OFF (la règle est «&nbsp;strictement supérieur à 28&nbsp;»&nbsp;: à 28 exactement, pas d'alerte — c'est le scénario FRONTIÈRE, le plus précieux du banc) · 32&nbsp;°C → ON · 24&nbsp;°C → OFF. Comportement conforme au besoin → décision <b>Validée</b>. Tester = scénarios + attendu + observé, et TOUJOURS un cas frontière.</p></div></details>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> sans résultat attendu écrit AVANT le test, on ne valide rien. Le cas frontière (T = seuil) est le plus important.</div>
 </div>
 </section>
 
 <section class="card">
-<h2>💻 Activité 3 — Algorithme + mise au point (CRCN 3.4)</h2>
+<h2>📐 Activité 3 — L'algorigramme, puis le code (CRCN 3.4) <span class="chrono">⏱ 30 min</span></h2>
 <div class="exo">
-<p>Écris le pseudo-code (trace CRCN 3.4) :</p>
-<textarea rows="5" id="algo" placeholder="SEUIL = 28\nmesurer T\nSI T &gt; SEUIL ALORS\n  allumer LED alerte\nSINON\n  éteindre LED\nFIN SI"></textarea>
-<p><strong>Bug possible :</strong> près de 28 °C, la LED clignote. Propose une correction (hystérésis ou seuil OFF différent).</p>
-<textarea rows="3" placeholder="Correction…"></textarea>
-<p><strong>Diagnostic (CRCN 5.1) :</strong> LED éteinte alors que T = 33 °C. Cause probable + test discriminant :</p>
-<textarea rows="2" placeholder="Cause… Test…"></textarea>
-<div class="retenir"><strong>À retenir :</strong> mettre au point = écart observé → hypothèse → test → correction → retest.</div>
+<h4>3a — Remets l'algorigramme en ordre (représentation schématique, règle n°18)</h4>
+<p>Le raisonnement que tu as FAIT à la main au simulateur se dessine. Numérote les blocs de 1 à 5 pour reconstruire l'algorigramme de l'alerte&nbsp;:</p>
+<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage du capteur)</span></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Mesurer la température T de la salle</span></div>
+<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>T &gt; 28&nbsp;?</span></div>
+<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → allumer la LED d'alerte</span></div>
+<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → éteindre la LED, puis revenir à la mesure</span></div>
+<button class="btn check" data-check="3" type="button">✅ Vérifier l'algorigramme</button>
+<p class="feedback" id="fb3" role="status"></p>
+<details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
+<p><b>1 — DÉBUT</b> (ellipse&nbsp;: un algorigramme commence toujours par un terminal). <b>2 — Mesurer T</b> (rectangle&nbsp;: un traitement — c'est l'ENTRÉE de la donnée). <b>3 — T &gt; 28&nbsp;?</b> (losange&nbsp;: une DÉCISION a toujours deux sorties, OUI et NON — jamais une seule). <b>4 — OUI → LED allumée</b> (rectangle&nbsp;: la SORTIE côté alerte). <b>5 — NON → LED éteinte puis retour à la mesure</b> (la flèche qui REMONTE fait la boucle&nbsp;: le capteur surveille en continu). Entrée → décision → sorties → boucle&nbsp;: les quatre familles de blocs y sont.</p></div></details>
+<h4 style="margin-top:16px">3b — Écris le pseudo-code, puis fais-le vivre en blocs ↔ Python</h4>
+<textarea rows="5" id="algo" placeholder="SEUIL = 28&#10;mesurer T&#10;SI T &gt; SEUIL ALORS&#10;  allumer LED alerte&#10;SINON&#10;  éteindre LED&#10;FIN SI"></textarea>
+<details class="vs" id="vs1">
+<summary>🧪 Code ton alerte ici — en blocs, puis lis le Python (et inversement)</summary>
+<p class="vs-note">Construis d'abord la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis modifie directement le Python (change le seuil à 26) et regarde les blocs suivre. Sans capteur réel&nbsp;: <code>T = 32</code> et <code>print("ALERTE")</code> à la place de la LED. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
+<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
+</details>
+<p><strong>Bug possible&nbsp;:</strong> près de 28&nbsp;°C, la LED clignote. Propose une correction (hystérésis ou seuil OFF différent)&nbsp;:</p>
+<textarea rows="3" id="a3hys" placeholder="Correction…"></textarea>
+<p><strong>Diagnostic (CRCN 5.1)&nbsp;:</strong> LED éteinte alors que T = 33&nbsp;°C. Cause probable + test discriminant&nbsp;:</p>
+<textarea rows="2" id="a3diag" placeholder="Cause… Test…"></textarea>
+<button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 3b</button>
+<p class="feedback" id="fb4" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<pre class="codebox">seuil = 28
+T = 32
+if T &gt; seuil:
+    print("ALERTE")
+else:
+    print("ok")</pre>
+<p><b>Hystérésis&nbsp;:</b> allumer si T &gt; 29, éteindre si T &lt; 27 — entre les deux on ne change rien, fini le clignotement (écart &gt; bruit de mesure). <b>Diagnostic&nbsp;:</b> cause probable = capteur débranché ou seuil mal saisi&nbsp;; test discriminant = afficher la valeur mesurée&nbsp;: si elle est absurde, c'est le capteur&nbsp;; si elle est bonne, c'est la condition.</p></div></details>
+<p class="py-legende">🎨 Lis le code en couleurs&nbsp;: <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> mettre au point = écart observé → hypothèse → test → correction → retest. L'algorigramme et le code disent LA MÊME CHOSE en deux langages.</div>
 </div>
 </section>
 
 <section class="card">
-<h2>🔄 Réinvestissement</h2>
+<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ 15 min</span></h2>
 <div class="exo">
-<p>Adapte la même logique à un <strong>seuil d’humidité</strong> pour un local archives (éviter moisissures). 4 lignes de pseudo-code.</p>
-<textarea rows="3"></textarea>
+<p>Adapte la même logique à un <strong>seuil d'humidité</strong> pour un local archives (éviter les moisissures&nbsp;: alerte si H &gt; 60&nbsp;%). 4 lignes de pseudo-code&nbsp;:</p>
+<textarea rows="4" id="reinv" placeholder="SEUIL = 60&#10;mesurer H&#10;SI …"></textarea>
+<button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+<p class="feedback" id="fb5" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<pre class="codebox">SEUIL = 60
+mesurer humidité → H
+SI H &gt; SEUIL ALORS
+    allumer LED alerte
+SINON
+    éteindre LED
+FIN SI</pre>
+<p>Ce que tu viens de refaire avec l'<b>humidité</b>, tu l'avais déjà fait avec la <b>température</b> — le concept commun s'appelle la <b>comparaison à un seuil</b>. Seule la grandeur mesurée change&nbsp;: c'est LA force d'une structure bien conçue.</p></div></details>
+<div class="retenir"><strong>À retenir (REFAIRE)&nbsp;:</strong> réinvestir un concept sur un nouveau cas, c'est la preuve qu'on l'a compris — et c'est comme ça qu'on le retient.</div>
 </div>
 </section>
 
 <section class="card">
 <h2>📝 Synthèse</h2>
-<p>Concevoir (C7) puis valider (C8) une alerte de confort : besoin ancré (îlot de chaleur NY) → deux solutions → protocole de test → algorithme SI → correction. Les compétences CRCN 3.4, 1.3 et 5.1 sont prouvées par des <strong>traces</strong> (tableau, pseudo-code, fiche diagnostic), pas par le simple usage d’un écran.</p>
+<p>Concevoir (C7) puis valider (C8) une alerte de confort&nbsp;: besoin ancré (îlot de chaleur NY) → deux solutions → protocole de test → algorigramme → algorithme SI → correction. Tu as d'abord <b>FAIT</b> (simulateur), puis <b>COMPRIS</b> (le concept de seuil), puis <b>REFAIT</b> (l'humidité des archives)&nbsp;: ce que tu as refait avec l'humidité, tu l'avais fait avec la température — le concept invariant s'appelle la <b>comparaison à un seuil</b>, et il se dessine (algorigramme) comme il se code (blocs ou Python). Les compétences CRCN 3.4, 1.3 et 5.1 sont prouvées par des <strong>traces</strong> (tableau, algorigramme, pseudo-code, fiche diagnostic), pas par le simple usage d'un écran.</p>
 </section>
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
-<p>J’ai appris : <input></p>
-<p>Je sais faire (observable) : <input></p>
-<p>À revoir : <input></p>
-<p>Confiance CRCN 3.4 (1-4) : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+<p>J'ai appris&nbsp;: <input id="bilan1"></p>
+<p>Je sais faire (observable)&nbsp;: <input id="bilan2"></p>
+<p>À revoir&nbsp;: <input id="bilan3"></p>
+<p>Confiance CRCN 3.4 (1-4)&nbsp;: <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
 <section class="card" style="text-align:center">
-<h2>🧠 Prêt·e à t'entraîner ?</h2>
+<h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
 <p>26 questions — conception, validation, CRCN 3.4 / 1.3 / 5.1.</p>
 <a class="btn" href="qcm_3e_C7_capteur-confort-ny.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
 <section class="card">
-<h2>🎁 Bonus (facultatif)</h2>
+<h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <div class="bonus">
-<p><strong>Citoyen :</strong> Quelles mesures urbaines (arbres, toits clairs) réduisent l’îlot de chaleur autour d’une école new-yorkaise ?</p>
-<p><strong>Technique :</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26 °C, alerte à 28 °C).</p>
-<p><strong>CRCN 3.4 N3 :</strong> Propose une hystérésis 27 / 29 et justifie pourquoi cela stabilise l’alerte.</p>
+<p><strong>Citoyen&nbsp;:</strong> Quelles mesures urbaines (arbres, toits clairs) réduisent l'îlot de chaleur autour d'une école new-yorkaise&nbsp;?</p>
+<textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page"></textarea>
+<p style="margin-top:12px"><strong>Technique&nbsp;:</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26&nbsp;°C, alerte à 28&nbsp;°C) — code-le dans l'éditeur ci-dessous.</p>
+<details class="vs" id="vs2">
+<summary>🧪 L'éditeur du Bonus — code ta pré-alerte ici, sans quitter la page</summary>
+<p class="vs-note">Départ&nbsp;: <code>T = 27</code> — écris les DEUX conditions (elif&nbsp;!)&nbsp;: <code>PRÉ-ALERTE</code> entre 26 et 28, <code>ALERTE</code> au-delà de 28. Blocs ou Python, comme tu préfères&nbsp;: les deux se répondent.</p>
+<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+</details>
+<p style="margin-top:8px"><strong>CRCN 3.4 N3&nbsp;:</strong> Propose une hystérésis 27 / 29 et justifie pourquoi cela stabilise l'alerte&nbsp;:</p>
+<textarea rows="2" id="defi3" placeholder="Ta justification — sauvegardée dans la page"></textarea>
 </div>
 </section>
 
-<footer>TechnoQuest · Thème 3 · 3e_C7/C8 · Capteur confort · New York · CRCN règle 7 · Grok · 2026-07-25</footer>
+<footer>TechnoQuest · Thème 3 · 3e_C7/C8 · Capteur confort · New York · CRCN règle 7 · v1 Grok — v2 mise en conformité règles 11/13/14/15/16/17/18 (Fable, 01/08/2026, v1 archivée règle n°12). Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
+
 <script>
-try{var d=JSON.parse(localStorage.getItem('t3e_cc')||'{}');if(d.n)n.value=d.n;if(d.p)p.value=d.p;if(d.c)c.value=d.c;
-var h=localStorage.getItem('t3e_cc_hyp');if(h)hyp.value=h;}catch(e){}
+(function(){
+"use strict";
+const KEY = "seq_3e_C7_capteur_confort";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+/* règle n°13 : coloration des listings */
+function pyc(src){
+  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const KW = /^(print|def|return|if|elif|else|while|for|in|and|or|not|True|False|SI|SINON|ALORS|FIN|ET|OU|mesurer|lire|allumer|éteindre|input|range)$/;
+  return src.split("\n").map(line => {
+    let out = "", m;
+    const re = /"[^"]*"|#.*$|\d+(?:\.\d+)?|[A-Za-z_À-ſ][A-Za-z0-9_À-ſ]*|\s+|./g;
+    while((m = re.exec(line))){
+      const t = m[0]; let cls = "";
+      if(t[0] === '"') cls = "py-str";
+      else if(t[0] === "#") cls = "py-com";
+      else if(/^\d/.test(t)) cls = "py-num";
+      else if(/^[A-Za-z_À-ſ]/.test(t)) cls = KW.test(t) ? "py-kw" : "py-var";
+      else if(/^[=+\-*\/<>%→]/.test(t)) cls = "py-op";
+      out += cls ? '<span class="' + cls + '">' + esc(t) + '</span>' : esc(t);
+    }
+    return out;
+  }).join("\n");
+}
+document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = pyc(e.textContent); });
+
+/* simulateur (FAIRE — règle n°18) : verrou = franchir le seuil dans les deux sens */
+const SEUIL = 28;
+let dernierEtat = null;
+function majSim(){
+  const t = parseInt($("simT").value, 10);
+  $("tval").textContent = t + " °C";
+  const on = t > SEUIL;
+  $("simLed").classList.toggle("on", on);
+  $("simEtat").textContent = on ? "ALERTE — salle trop chaude" : "éteinte";
+  if(dernierEtat !== null && dernierEtat !== on){
+    window.__exp.simMontee = window.__exp.simMontee || on;
+    window.__exp.simDescente = window.__exp.simDescente || !on;
+    save();
+  }
+  dernierEtat = on;
+}
+$("simT").addEventListener("input", majSim);
+majSim();
+
+/* suivi des éditeurs (règle n°16) */
+["vs1","vs2"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+
+/* vérificateurs (règle n°14) */
+function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
+function sv(id, ok){ const e = $(id); if(!e) return false; const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim()); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+const CHECKS = {
+  0(){ let s = 0; s += sv("a0q1","28 °C"); s += sv("a0q2","s'éteint aussitôt");
+    return {score: s, total: 2, exp: !!(window.__exp.simMontee && window.__exp.simDescente), expMsg: "Manipule d'abord le curseur : franchis le seuil en MONTANT puis en DESCENDANT — c'est l'expérience qui fait foi."}; },
+  1(){ return {score: pres("a1sol", 30), total: 1, exp: true}; },
+  2(){ let s = 0;
+    s += sv("a2p1","Alerte OFF"); s += sv("a2p2","Alerte OFF"); s += sv("a2p3","Alerte ON"); s += sv("a2p4","Alerte OFF");
+    s += sv("a2o1","LED éteinte"); s += sv("a2o2","LED éteinte"); s += sv("a2o3","LED allumée"); s += sv("a2o4","LED éteinte");
+    s += sv("a2dec","Validée");
+    return {score: s, total: 9, exp: true}; },
+  3(){ let s = 0; s += sv("a3o1","1"); s += sv("a3o2","2"); s += sv("a3o3","3"); s += sv("a3o4","4"); s += sv("a3o5","5");
+    return {score: s, total: 5, exp: true}; },
+  4(){ let s = 0; s += pres("algo", 25); s += pres("a3hys", 15); s += pres("a3diag", 15);
+    return {score: s, total: 3, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur 🧪 et exécute ton alerte (blocs puis Python) avant de valider — c'est le test qui fait foi."}; },
+  5(){ return {score: pres("reinv", 25), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+/* sauvegarde locale (règle n°15) */
+function save(){
+  const o = {inputs: {}, exp: window.__exp || {}};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id && e.type !== "range") o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+}
+document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+restore();
+})();
 </script>
 </body>
 </html>

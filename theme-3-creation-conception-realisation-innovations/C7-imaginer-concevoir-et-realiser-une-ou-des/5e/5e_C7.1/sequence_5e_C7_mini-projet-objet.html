@@ -3,116 +3,331 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mini-projet — Améliorer un objet scolaire (5e · C7-C8-C9)</title>
+<title>Thème 3 · New York — 5e · Atelier : Mini-projet — améliorer un objet du collège (5e_C7 · C8 · C9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b}
-*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
-h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
-.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}.badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border);background:#173666}
-section.card{max-width:900px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px}
-h2{color:var(--head);font-size:1.05em;margin-top:0}
-.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px;border-radius:0 10px 10px 0;font-style:italic}
-.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px;border-radius:10px;text-align:center}
-.exo{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:8px 0}
-.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
-.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:8px 12px;margin:8px 0}
-table.refs{width:100%;border-collapse:collapse;font-size:.85em}th,td{border:1px solid var(--border);padding:6px 8px}th{background:#173666;color:var(--hl)}
-input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:6px;padding:5px 8px;width:100%;font-family:inherit}
-.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:10px;padding:12px}
-footer{text-align:center;color:#5b7bb8;font-size:.8em;margin-top:24px}
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Poppins',system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:'Fira Code',monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:'Fira Code',monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
 </style>
 </head>
 <body>
-<h1>🛠️ Mini-projet — Améliorer un objet scolaire</h1>
-<div class="subtitle">Imaginer, valider et programmer une petite amélioration pour un objet du collège à New York</div>
-<div class="badges"><span class="badge">5e</span><span class="badge">Thème 3</span><span class="badge">C7 · C8 · C9</span><span class="badge">New York</span></div>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_5e_C7_mini-projet.html">🧠 QCM</a></nav>
+
+<h1>🎒 Mini-projet — l'indicateur de rangement du hall</h1>
+<div class="subtitle">Imaginer, valider par des tests, puis écrire une règle de programme simple — New York</div>
+<div class="badges"><span class="badge">5e</span><span class="badge">Thème 3 — Création, conception, réalisation</span><span class="badge">5e_C7 · 5e_C8 · 5e_C9</span><span class="badge">New York</span></div>
 
 <section class="card">
-<h2>📋 En-tête</h2>
-<table class="refs"><tr><th>Durée</th><td>6 × 55 min</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Ancrage</th><td>New York — hall d'une middle school</td></tr></table>
-<label>Nom <input id="n" style="width:110px"></label> <label>Prénom <input id="p" style="width:110px"></label> <label>Classe <input id="c" style="width:60px"></label>
-<button class="btn" onclick="localStorage.setItem('t5emp',JSON.stringify({n:n.value,p:p.value,c:c.value}))">💾</button>
+<h2>📋 En-tête pédagogique</h2>
+<table class="refs"><tr><th>Codes</th><td>5e_C7 · 5e_C8 · 5e_C9 (mini-projet fil rouge)</td></tr><tr><th>Durée</th><td>6 × 55 min</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Ancrage</th><td>New York — hall d'une middle school</td></tr></table>
+<div style="margin-top:12px">
+<label>Nom&nbsp;: <input id="eleveNom" style="width:130px"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px"></label>
+<span class="saved-note" id="savedNote"></span>
+</div>
 </section>
 
 <section class="card">
-<h2>📖 Situation</h2>
-<p class="declencheur">Dans le hall de l'école à New York, les sacs s'entassent. On te demande un <strong>indicateur simple</strong> : place de rangement libre ou occupée (LED + bouton ou capteur). Tu imagines, tu testes, tu écris une règle SI.</p>
+<h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+<div class="contrat18">
+<p style="margin:0 0 6px"><b>FAIRE pour comprendre&nbsp;:</b> tu commences par APPUYER sur le bouton du simulateur (activité 0) et regarder la LED changer — avant toute règle écrite.</p>
+<p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: capteur, état, règle SI.</p>
+<p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la même règle SI sur un NOUVEAU cas (le casier de bibliothèque) — même squelette, autre habit.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>📖 Situation déclenchante</h2>
+<p class="declencheur">Dans le hall de l'école à New York, les sacs s'entassent. On te demande un <strong>indicateur simple</strong>&nbsp;: place de rangement libre ou occupée (LED + bouton ou capteur). Tu imagines, tu testes, tu écris une règle SI.</p>
 </section>
 
 <section class="card">
 <h2>❓ Problématique</h2>
-<p class="problematique">Comment améliorer un objet scolaire : imaginer, valider par des tests, puis écrire une règle de programme simple ?</p>
+<p class="problematique">Comment améliorer un objet scolaire&nbsp;: imaginer, valider par des tests, puis écrire une règle de programme simple&nbsp;?</p>
 </section>
 
 <section class="card">
 <h2>💡 Idée de départ</h2>
 <textarea id="hyp" rows="2" placeholder="Je propose… parce que…"></textarea>
+<p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
 <section class="card">
-<h2>🔧 1 — Imaginer (C7)</h2>
+<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur de place <span class="chrono">⏱ 10 min</span></h2>
 <div class="exo">
+<p><strong>Consigne&nbsp;:</strong> AVANT toute règle écrite, pose et enlève un sac plusieurs fois. Observe la LED.</p>
+<div class="simu">
+<p><button class="btn" id="simBtn" type="button">🎒 Poser / enlever le sac</button></p>
+<p style="margin:10px 0 4px">Place&nbsp;: <b id="simPlace">libre</b> &nbsp;·&nbsp; LED&nbsp;: <span class="led verte" id="simLed" role="img" aria-label="LED d'état de la place"></span></p>
+<p style="font-size:.82em;color:var(--sub)">Fais au moins deux allers-retours (poser PUIS enlever, deux fois).</p>
+</div>
+<p style="margin-top:10px">Q1 — Quand la place est OCCUPÉE, la LED est…
+<select id="a0q1" style="width:auto"><option value="">— je choisis —</option><option>rouge</option><option>verte</option><option>éteinte</option></select></p>
+<p>Q2 — Qu'est-ce qui JOUE LE RÔLE du capteur dans ce simulateur&nbsp;?
+<select id="a0q2" style="width:auto"><option value="">— je choisis —</option><option>Le bouton qu'on presse</option><option>La LED qui s'allume</option><option>L'écran de l'ordinateur</option></select></p>
+<button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+<p class="feedback" id="fb0" role="status"></p>
+<details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS tes essais)</summary><div>
+<p>Place occupée → LED <b>rouge</b>&nbsp;; place libre → LED <b>verte</b>. Le <b>bouton</b> joue le rôle du capteur&nbsp;: il DÉTECTE l'état (sac posé ou non). La LED est l'actionneur&nbsp;: elle AFFICHE la décision. Tu viens de faire fonctionner, à la main, la chaîne capteur → décision → affichage.</p></div></details>
+<div class="retenir"><strong>À retenir (COMPRENDRE)&nbsp;:</strong> un <b>capteur</b> détecte un état, une <b>règle SI</b> décide, un <b>actionneur</b> (LED) montre la décision. Tu l'as vécu avant de le nommer.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🔧 Activité 1 — Imaginer (C7) <span class="chrono">⏱ 30 min</span></h2>
+<div class="exo">
+<h4>1a — Ton planning</h4>
 <table class="refs"><tr><th>#</th><th>Tâche</th><th>min</th></tr>
-<tr><td>1</td><td><input placeholder="Besoin"></td><td>20</td></tr>
-<tr><td>2</td><td><input placeholder="2 solutions"></td><td>25</td></tr>
-<tr><td>3</td><td><input placeholder="Matériau"></td><td>20</td></tr>
-<tr><td>4</td><td><input placeholder="Prototype"></td><td>40</td></tr></table>
-<textarea rows="3" placeholder="Solution A… / B… / Je choisis…"></textarea>
-<div class="retenir"><b>À retenir :</b> organiser → plusieurs idées → choix avec critères.</div>
+<tr><td>1</td><td><input id="a1t1" placeholder="Besoin"></td><td>20</td></tr>
+<tr><td>2</td><td><input id="a1t2" placeholder="2 solutions"></td><td>25</td></tr>
+<tr><td>3</td><td><input id="a1t3" placeholder="Matériau"></td><td>20</td></tr>
+<tr><td>4</td><td><input id="a1t4" placeholder="Prototype"></td><td>40</td></tr></table>
+<h4 style="margin-top:12px">1b — Tes deux solutions et ton choix</h4>
+<textarea rows="3" id="a1sol" placeholder="Solution A… / Solution B… / Je choisis… parce que…"></textarea>
+<button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+<p class="feedback" id="fb1" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div><p>Exemples&nbsp;: <b>A</b> — bouton-poussoir sous la tablette + LED&nbsp;; <b>B</b> — capteur de distance qui «&nbsp;voit&nbsp;» le sac. Choix argumenté par un critère nommé (simplicité, prix, solidité dans un hall fréquenté). Organiser → plusieurs idées → choix avec critères&nbsp;: une seule idée n'est pas une conception.</p></div></details>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> organiser → plusieurs idées → choix avec critères.</div>
 </div>
 </section>
 
 <section class="card">
-<h2>🧪 2 — Valider (C8)</h2>
+<h2>🧪 Activité 2 — Valider (C8) <span class="chrono">⏱ 25 min</span></h2>
 <div class="exo">
-<table class="refs"><tr><th>Test</th><th>Attendu</th><th>OK ?</th></tr>
-<tr><td>Activer</td><td>LED ON</td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Relâcher</td><td>LED OFF</td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Visible à 2 m</td><td>Oui</td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr></table>
-Décision : <select><option>—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select>
-<div class="retenir"><b>À retenir :</b> on valide si les tests importants réussissent.</div>
+<p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de l'activité 0 (pose / enlève le sac) et compare&nbsp;:</p>
+<table class="refs"><tr><th>Test</th><th>Attendu</th><th>Le simulateur confirme-t-il&nbsp;?</th></tr>
+<tr><td>Poser le sac</td><td><select id="a2a1"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c1"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Enlever le sac</td><td><select id="a2a2"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c2"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Visible à 2 m</td><td>Oui (LED assez brillante)</td><td><select id="a2c3"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr></table>
+<p style="margin-top:8px">Décision&nbsp;: <select id="a2dec" style="width:auto"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+<p class="feedback" id="fb2" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div><p>Poser → LED <b>rouge</b> · Enlever → LED <b>verte</b> · Visible → Oui. Tout est conforme → décision <b>Validée</b>. On valide seulement si les tests importants réussissent — et chaque test a son résultat attendu ÉCRIT AVANT d'essayer.</p></div></details>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> on valide si les tests importants réussissent — attendu d'abord, observé ensuite.</div>
 </div>
 </section>
 
 <section class="card">
-<h2>💻 3 — Programme simple (C9)</h2>
+<h2>💻 Activité 3 — La règle SI en schéma, puis en programme (C9) <span class="chrono">⏱ 30 min</span></h2>
 <div class="exo">
-<textarea rows="5" placeholder="SI place occupée ALORS\n  LED rouge\nSINON\n  LED verte\nFIN SI"></textarea>
-<div class="retenir"><b>À retenir :</b> SI + action ; tester avec des cas concrets.</div>
+<h4>3a — Remets l'algorigramme en ordre (représentation schématique, règle n°18)</h4>
+<p>Ce que le simulateur FAIT se dessine. Numérote les blocs de 1 à 5&nbsp;:</p>
+<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage de l'indicateur)</span></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Lire le capteur (sac posé ou non)</span></div>
+<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Place occupée&nbsp;?</span></div>
+<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → LED rouge</span></div>
+<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → LED verte, puis revenir à la lecture</span></div>
+<button class="btn check" data-check="3" type="button">✅ Vérifier l'algorigramme</button>
+<p class="feedback" id="fb3" role="status"></p>
+<details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
+<p><b>1 — DÉBUT</b> (un algorigramme commence par un terminal). <b>2 — Lire le capteur</b> (rectangle&nbsp;: l'ENTRÉE de l'information). <b>3 — Place occupée&nbsp;?</b> (losange&nbsp;: la DÉCISION, toujours deux sorties). <b>4 — OUI → rouge</b> et <b>5 — NON → verte, puis retour</b>&nbsp;: la flèche qui remonte fait la BOUCLE — l'indicateur surveille en continu, comme le simulateur que tu as manipulé.</p></div></details>
+<h4 style="margin-top:14px">3b — Écris la règle, puis fais-la vivre en blocs ↔ Python</h4>
+<textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI"></textarea>
+<details class="vs" id="vs1">
+<summary>🧪 Code ta règle ici — en blocs, puis lis le Python (et inversement)</summary>
+<p class="vs-note">Construis la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis change le Python (<code>occupee = True</code> puis <code>False</code>) et regarde les blocs suivre. Sans LED réelle&nbsp;: <code>print("ROUGE")</code> et <code>print("VERT")</code>. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
+<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
+</details>
+<button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 3b</button>
+<p class="feedback" id="fb4" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<pre class="codebox">occupee = True
+if occupee:
+    print("ROUGE")
+else:
+    print("VERT")</pre>
+<p>La règle SI a exactement la forme du losange de l'algorigramme&nbsp;: une question, deux chemins. Schéma et code disent LA MÊME CHOSE en deux langages.</p></div></details>
+<p class="py-legende">🎨 Lis le code en couleurs&nbsp;: <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
+<div class="retenir"><strong>À retenir&nbsp;:</strong> SI + action&nbsp;; tester avec des cas concrets. L'algorigramme et le programme sont deux habits du même raisonnement.</div>
 </div>
 </section>
 
 <section class="card">
-<h2>🔄 Réinvestissement</h2>
-<div class="exo"><p>Même logique pour un casier de bibliothèque (livre présent / absent).</p><textarea rows="3"></textarea></div>
+<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ 15 min</span></h2>
+<div class="exo">
+<p>Même logique pour un <b>casier de bibliothèque</b> (livre présent / absent). Écris la règle SI (4 lignes)&nbsp;:</p>
+<textarea rows="4" id="reinv" placeholder="SI livre présent ALORS&#10;  …&#10;SINON&#10;  …"></textarea>
+<button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+<p class="feedback" id="fb5" role="status"></p>
+<details class="correction"><summary>📖 Correction complète</summary><div>
+<pre class="codebox">SI livre présent ALORS
+    LED verte (disponible)
+SINON
+    LED rouge (emprunté)
+FIN SI</pre>
+<p>Ce que tu viens de refaire avec le <b>casier</b>, tu l'avais déjà fait avec la <b>place de rangement</b> — le concept commun s'appelle la <b>règle SI (condition à deux chemins)</b>. Change le capteur, garde la règle.</p></div></details>
+<div class="retenir"><strong>À retenir (REFAIRE)&nbsp;:</strong> réinvestir la règle sur un autre objet, c'est la preuve qu'on l'a comprise.</div>
+</div>
 </section>
 
 <section class="card">
 <h2>📝 Synthèse</h2>
-<p>Améliorer un objet = <b>imaginer (C7)</b> → <b>tester (C8)</b> → <b>règle SI (C9)</b>. On part d'un vrai besoin de l'école à New York.</p>
+<p>Améliorer un objet = <b>imaginer (C7)</b> → <b>tester (C8)</b> → <b>règle SI (C9)</b>, à partir d'un vrai besoin de l'école à New York. Tu as d'abord <b>FAIT</b> (le simulateur de place), puis <b>COMPRIS</b> (capteur, décision, actionneur — et leur dessin en algorigramme), puis <b>REFAIT</b> (le casier de bibliothèque)&nbsp;: le concept invariant s'appelle la <b>règle SI</b>, et tu le retrouveras toute l'année sous d'autres habits (blocs, Python, algorigrammes).</p>
 </section>
 
 <section class="card">
-<h2>🙋 Bilan</h2>
-<p>Appris : <input></p><p>Je sais : <input></p><p>À revoir : <input></p>
-Confiance : <select><option>1</option><option>2</option><option>3</option><option>4</option></select>
+<h2>🙋 Bilan personnel</h2>
+<p>J'ai appris&nbsp;: <input id="bilan1"></p><p>Je sais faire&nbsp;: <input id="bilan2"></p><p>À revoir&nbsp;: <input id="bilan3"></p>
+<p>Confiance (1-4)&nbsp;: <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
 <section class="card" style="text-align:center">
-<h2>🧠 Prêt·e à t'entraîner ?</h2>
+<h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
 <p>24 questions — conception, validation, programme.</p>
 <a class="btn" href="qcm_5e_C7_mini-projet.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
 <section class="card">
-<h2>🎁 Bonus (facultatif)</h2>
+<h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <div class="bonus">
-<p><b>Citoyen :</b> Quel autre objet du collège améliorer ?</p>
-<p><b>Technique :</b> Ajoute un test « tenue si on secoue le support ».</p>
-<p><b>New York :</b> Pourquoi un indicateur visible est utile dans un hall fréquenté ?</p>
+<p><b>Citoyen&nbsp;:</b> Quel autre objet du collège améliorer, et pour quel besoin&nbsp;?</p>
+<textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page"></textarea>
+<p style="margin-top:10px"><b>Technique&nbsp;:</b> Ajoute un test «&nbsp;tenue si on secoue le support&nbsp;» (étape + résultat attendu)&nbsp;:</p>
+<textarea rows="2" id="defi2" placeholder="Ton test — sauvegardé dans la page"></textarea>
+<p style="margin-top:10px"><b>New York&nbsp;:</b> Pourquoi un indicateur visible est-il utile dans un hall très fréquenté&nbsp;?</p>
+<textarea rows="2" id="defi3" placeholder="Ton explication — sauvegardée dans la page"></textarea>
 </div>
 </section>
-<footer>TechnoQuest · Thème 3 · 5e C7-C8-C9 · New York · Grok</footer>
-<script>try{const d=JSON.parse(localStorage.getItem('t5emp')||'{}');if(d.n)n.value=d.n;if(d.p)p.value=d.p;if(d.c)c.value=d.c}catch(e){}</script>
+
+<footer>TechnoQuest · Thème 3 · 5e C7-C8-C9 · New York · v1 Grok — v2 mise en conformité règles 11/13/14/15/16/17/18 (Fable, 01/08/2026, v1 archivée règle n°12). Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_5e_C7_mini_projet";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+/* règle n°13 : coloration des listings */
+function pyc(src){
+  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const KW = /^(print|def|return|if|elif|else|while|for|in|and|or|not|True|False|SI|SINON|ALORS|FIN|ET|OU|mesurer|lire|allumer|éteindre|input|range)$/;
+  return src.split("\n").map(line => {
+    let out = "", m;
+    const re = /"[^"]*"|#.*$|\d+(?:\.\d+)?|[A-Za-z_À-ſ][A-Za-z0-9_À-ſ]*|\s+|./g;
+    while((m = re.exec(line))){
+      const t = m[0]; let cls = "";
+      if(t[0] === '"') cls = "py-str";
+      else if(t[0] === "#") cls = "py-com";
+      else if(/^\d/.test(t)) cls = "py-num";
+      else if(/^[A-Za-z_À-ſ]/.test(t)) cls = KW.test(t) ? "py-kw" : "py-var";
+      else if(/^[=+\-*\/<>%→]/.test(t)) cls = "py-op";
+      out += cls ? '<span class="' + cls + '">' + esc(t) + '</span>' : esc(t);
+    }
+    return out;
+  }).join("\n");
+}
+document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = pyc(e.textContent); });
+
+/* simulateur (FAIRE — règle n°18) : verrou = 2 allers-retours (4 bascules) */
+let occupee = false, bascules = 0;
+$("simBtn").addEventListener("click", () => {
+  occupee = !occupee; bascules++;
+  $("simPlace").textContent = occupee ? "OCCUPÉE" : "libre";
+  const led = $("simLed");
+  led.classList.toggle("rouge", occupee);
+  led.classList.toggle("verte", !occupee);
+  if(bascules >= 4){ window.__exp.sim = true; }
+  save();
+});
+
+/* suivi des éditeurs (règle n°16) */
+["vs1"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
+
+/* vérificateurs (règle n°14) */
+function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
+function sv(id, ok){ const e = $(id); if(!e) return 0; const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim()); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+const CHECKS = {
+  0(){ let s = 0; s += sv("a0q1","rouge"); s += sv("a0q2","Le bouton qu'on presse");
+    return {score: s, total: 2, exp: !!window.__exp.sim, expMsg: "Pose et enlève d'abord le sac (deux allers-retours complets) — c'est l'expérience qui fait foi."}; },
+  1(){ let s = 0; s += pres("a1t1", 5); s += pres("a1t2", 5); s += pres("a1t3", 5); s += pres("a1t4", 5); s += pres("a1sol", 30);
+    return {score: s, total: 5, exp: true}; },
+  2(){ let s = 0; s += sv("a2a1","LED rouge"); s += sv("a2a2","LED verte"); s += sv("a2c1","Oui"); s += sv("a2c2","Oui"); s += sv("a2c3","Oui"); s += sv("a2dec","Validée");
+    return {score: s, total: 6, exp: true}; },
+  3(){ let s = 0; s += sv("a3o1","1"); s += sv("a3o2","2"); s += sv("a3o3","3"); s += sv("a3o4","4"); s += sv("a3o5","5");
+    return {score: s, total: 5, exp: true}; },
+  4(){ return {score: pres("prog", 25), total: 1, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur 🧪 et exécute ta règle (blocs puis Python) avant de valider — c'est le test qui fait foi."}; },
+  5(){ return {score: pres("reinv", 25), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+/* sauvegarde locale (règle n°15) */
+function save(){
+  const o = {inputs: {}, exp: window.__exp || {}};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
+  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+}
+document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+restore();
+})();
+</script>
 </body>
 </html>

@@ -1064,3 +1064,60 @@ des règles 1-17 :
 6. Numéro 18 réservé au registre (règle n°10) ; entrée et registre dans le
    même commit ; formulation opératoire ajoutée le même jour à la demande
    de précision de Pascal.
+
+## 2026-08-01 — Thème 3 · VAGUE 1 de la revue générale : conformité C7/C8 + première application PLEINE de la règle n°18 (Fable, branche `fable/theme-3/vague-1-conformite-r18-c7-c8`)
+
+Mission de Pascal du jour : « passe en revue TOUTES les séquences du dépôt,
+une par une — vérifie les trois temps FAIRE→COMPRENDRE→REFAIRE, ajoute les
+représentations schématiques et les doubles blocs↔texte manquants ». Un audit
+automatisé des 31 séquences (marqueurs 11/13/14/15/16/17/18) a dressé la
+carte ; la file officielle du 30/07 (3e_C7, 4e_C7, 4e_C8) passe en premier,
+élargie à 5e_C7 (même famille v1 « Grok » : champs muets, alert(), aucun
+éditeur, aucune manipulation).
+
+1. **Quatre refontes v2 complètes** (v1 archivées dans
+   `_archive-anciennes-versions/theme-3/`, URLs inchangées, contenu et voix
+   CONSERVÉS — cartouches CRCN règle 7, ancrage New York, SVG image-objet du
+   4e_C8 gardés tels quels) : 3e_C7.1 « capteur confort », 4e_C7.1 « jardin
+   conception », 5e_C7.1 « mini-projet du hall », 4e_C8.1 « jardin
+   validation ».
+2. **Les trois temps de la règle n°18, structurels** : chaque page ouvre sur
+   un bloc « 🔁 Contrat de la séquence » et une activité 0 « FAIRE d'abord »
+   AVANT toute définition — simulateur thermique à curseur (3e_C7, verrou :
+   franchir le seuil dans les deux sens), banc météo NY (4e_C7, verrou :
+   3 essais), simulateur de place à LED (5e_C7, verrou : 2 allers-retours),
+   banc de tests virtuel dont la nuit de gel qui fissure l'attache (4e_C8,
+   verrou : 3 tests). COMPRENDRE : les « À retenir » nomment le concept
+   (seuil, contrainte/critère, règle SI, protocole). REFAIRE : réinvestissement
+   vérifié sur un cas neuf (humidité des archives, jardinière de Brooklyn,
+   casier de bibliothèque, critère « vent de canyon ») avec la phrase
+   canonique 18d « ce que tu viens de refaire avec X… le concept commun
+   s'appelle Z » dans chaque correction ET chaque synthèse.
+3. **Représentations schématiques partout (18b)** : un exercice
+   d'algorigramme / diagramme de flux « remettre en ordre » à correction
+   exhaustive bloc par bloc dans CHAQUE séquence (alerte 3e_C7, démarche de
+   projet 4e_C7, règle SI 5e_C7, protocole de validation 4e_C8 — les
+   corrections nomment entrées, traitements, décisions et la boucle qui
+   remonte). Doubles blocs↔texte (16/18b) : éditeurs Vittascience mixtes
+   dans les deux séquences à programmation (3e_C7, 5e_C7), consignes dans
+   LES DEUX SENS, verrous __exp.
+4. **Rattrapage complet 11/13/14/15/17** sur les quatre pages : nav ⌂+QCM,
+   colorisation des listings + légende, encoches ✔/✘ et messages gradués
+   🎉/🟡/🔴, tous les champs (Bonus compris) sauvegardés
+   (`seq_<code>_<slug>`), zéro alert(), chronos ⏱ par activité.
+5. **4e_C9.1 complété règle 18** (édition additive) : contrat de séquence,
+   exercice d'algorigramme de l'arrosage (check 6, correction bloc par
+   bloc), phrase d'invariant 18d en synthèse. Régression vérifiée.
+6. **Tests réels : 57/57** (suite Playwright dédiée, rapport dans
+   `theme-3-…/_notes/rapport_tests_vague1_conformite_r18.md`) : verrous
+   avant/après manipulation, encoches mixtes sur erreurs volontaires,
+   messages gradués, restauration localStorage (champs + __exp), liens QCM,
+   zéro erreur JS, zéro alert.
+7. **Gouvernance** : audit et index régénérés sur l'arbre du jour ;
+   4 entrées nouveautes.json. Le périmètre « autre auteur » est levé par la
+   mission explicite de Pascal (les v1 Grok sont archivées, pas écrasées).
+8. **File des vagues suivantes** (même mission) : Vague 2 = Thème 2
+   (algorigrammes manquants dans 4e_C6.1 et 5e_C6.1, contrats règle 18,
+   alert() résiduel du 4e_C6.2, compléments 3e_C9.1/5e_C9.1 côté Thème 3) ;
+   Vague 3 = Thème 1 (le plus en retard : pas de nav, champs muets,
+   alert(), hotlink d'image en 4e_C1.4 — coordination Codex à prévoir).

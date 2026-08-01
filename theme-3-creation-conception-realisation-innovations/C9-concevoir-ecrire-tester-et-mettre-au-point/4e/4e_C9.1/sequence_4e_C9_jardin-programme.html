@@ -90,6 +90,15 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 </section>
 
 <section class="card">
+  <h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
+  <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em">
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">FAIRE pour comprendre&nbsp;:</b> tu écris et EXÉCUTES ton programme dans l'éditeur 🧪 (blocs puis Python) avant toute définition.</p>
+  <p style="margin:0 0 6px"><b style="color:var(--hl)">COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: condition, plage, cas frontière, hystérésis — et l'algorigramme les DESSINE.</p>
+  <p style="margin:0"><b style="color:var(--hl)">REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le même squelette sur le lampadaire (réinvestissement) — même concept, autre habit.</p>
+  </div>
+</section>
+
+<section class="card">
   <h2>📖 Situation déclenchante</h2>
   <p class="declencheur">Le support de capteur a été conçu (C7) et validé (C8). Il reste à écrire le programme qui décide d’arroser ou non selon l’humidité mesurée. À New York, le gel hivernal et les pluies d’automne imposent des seuils et une plage horaire raisonnables : on ne veut pas arroser sous la pluie ni la nuit en plein hiver. Tu es chargé d’écrire, tester et mettre au point ce programme.</p>
 </section>
@@ -119,7 +128,17 @@ SI H &lt; SEUIL ALORS
 SINON
     éteindre pompe
 FIN SI</div>
-    <p style="margin-top:12px">Modifie le programme pour ajouter une <strong>plage horaire</strong> (ex. : arroser seulement entre 6 h et 10 h) :</p>
+    <p style="margin-top:12px"><strong>D'abord le dessin (règle n°18)&nbsp;:</strong> numérote les blocs de l'algorigramme de l'arrosage, de 1 à 5&nbsp;:</p>
+    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">⬭ début</span><select id="ag1" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage du système)</span></div>
+    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag2" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Mesurer l'humidité H et lire l'heure</span></div>
+    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision</span><select id="ag3" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>H &lt; 40 ET heure entre 6 et 10&nbsp;?</span></div>
+    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ action OUI</span><select id="ag4" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → allumer la pompe</span></div>
+    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ action NON</span><select id="ag5" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → éteindre la pompe, puis revenir à la mesure</span></div>
+    <button class="btn check" data-check="6" type="button">✅ Vérifier l'algorigramme</button>
+    <p class="feedback" id="fb6" role="status"></p>
+    <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
+    <p><b>1 — DÉBUT</b> (terminal). <b>2 — Mesurer H et lire l'heure</b> (rectangle&nbsp;: les ENTRÉES). <b>3 — H &lt; 40 ET heure entre 6 et 10&nbsp;?</b> (losange&nbsp;: la décision — le ET de la plage horaire vit DANS la question). <b>4 — OUI → pompe ON</b> et <b>5 — NON → pompe OFF puis retour</b>&nbsp;: la flèche qui remonte fait la boucle de surveillance. C'est exactement le programme que tu vas écrire — dessiné.</p></div></details>
+    <p style="margin-top:12px">Modifie maintenant le programme pour ajouter une <strong>plage horaire</strong> (ex. : arroser seulement entre 6 h et 10 h) :</p>
     <textarea rows="6" id="prog1" placeholder="Écris ton pseudo-code modifié…"></textarea>
     <details class="vs" id="vs1">
       <summary>🧪 Écris et exécute ton programme ici — en blocs, puis lis le Python (et inversement)</summary>
@@ -220,7 +239,7 @@ FIN SI</pre>
 
 <section class="card">
   <h2>📝 Synthèse intégrée</h2>
-  <p>Concevoir un programme, c’est traduire une règle en variables et conditions. Le tester, c’est le confronter à des scénarios. Le mettre au point, c’est corriger les écarts (bugs, oscillations) jusqu’à ce que le comportement soit conforme. À New York, la plage horaire et le gel influencent les règles métier du jardin connecté.</p>
+  <p>Concevoir un programme, c’est traduire une règle en variables et conditions. Le tester, c’est le confronter à des scénarios. Le mettre au point, c’est corriger les écarts (bugs, oscillations) jusqu’à ce que le comportement soit conforme. À New York, la plage horaire et le gel influencent les règles métier du jardin connecté. Et ce que tu viens de refaire avec le <b>lampadaire</b>, tu l'avais déjà fait avec la <b>pompe du jardin</b> — le concept commun s'appelle la <b>comparaison à un seuil (avec hystérésis)</b>&nbsp;: il se dessine en algorigramme comme il s'écrit en blocs ou en Python (règle n°18).</p>
 </section>
 
 <section class="card">
@@ -301,7 +320,9 @@ const CHECKS = {
   3(){ const s = pres("prog3", 20);
     return {score: s, total: 1, exp: !!window.__exp.vs2, expMsg: "Ouvre l'éditeur 🧪 et fais vibrer H autour de 40 pour VOIR l'hystérésis avant de valider."};
   },
-  4(){ return {score: pres("reinv", 20), total: 1, exp: true}; }
+  4(){ return {score: pres("reinv", 20), total: 1, exp: true}; },
+  6(){ let s = 0; s += sv("ag1","1"); s += sv("ag2","2"); s += sv("ag3","3"); s += sv("ag4","4"); s += sv("ag5","5");
+    return {score: s, total: 5, exp: true}; }
 };
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
