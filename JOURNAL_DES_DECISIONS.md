@@ -20,6 +20,7 @@
 | 15 | Zéro papier obligatoire (toute production a son champ sauvegardé, Bonus compris) | Fable, sur audit de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
 | 16 | Blocs ↔ Python dans la page (éditeur embarqué, gabarit canonique `_outils/gabarits/`) | Fable, sur décision de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
 | 17 | 55 minutes pleines (densité vérifiée par séance, geste de code par séance de programmation) | Fable, sur audit de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
+| 18 | « Faire pour comprendre, comprendre pour faire » — répétition des représentations schématiques et du code par blocs, va-et-vient action ↔ conceptualisation | Pascal (credo fondateur, 01/08/2026), rédaction Fable | 🔄 PR en cours (branche `fable/infra/regle-18-faire-comprendre`) |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -998,3 +999,39 @@ numéros 14-17 réservés au registre (règle n°10) :
    l'erreur volontaire « nuit », restauration bonus compris, zéro alert).
 5. **File de conformité restante** (même session parallèle) : 3e_C7, 4e_C7,
    4e_C8 (+ QCMs à auditer) — prochaine vague.
+
+
+## 2026-08-01 — RÈGLE D'OR N°18 « Faire pour comprendre, comprendre pour faire » (credo de Pascal, branche `fable/infra/regle-18-faire-comprendre`)
+
+Pascal énonce la clef de voûte de la discipline, qui devient la règle-mère
+des règles 1-17 :
+
+1. **Le credo** : « Faire pour comprendre → l'élève manipule, expérimente,
+   modélise, teste. Comprendre pour faire → il réinvestit pour concevoir,
+   améliorer, programmer, fabriquer. » Alternance permanente entre action et
+   conceptualisation — c'est l'esprit du cycle 4, et c'est déjà l'ADN de nos
+   verrous expérientiels, du motif prédire→tester→reporter et des bancs de
+   tests. Cette règle le rend OBLIGATOIRE et NOMMÉ.
+2. **La répétition assumée** : les élèves comprennent par la répétition
+   espacée des mêmes gestes sous des habits différents. Deux familles de
+   gestes sont à répéter dans CHAQUE séquence qui s'y prête :
+   - **les représentations schématiques** — algorigrammes et diagrammes de
+     flux (construire, compléter, corriger — correction exhaustive bloc par
+     bloc : entrées-sorties, traitements, décisions, tests), chaînes
+     d'information/énergie (règle 6), croquis et schémas (règles 8-9) ;
+   - **la programmation par blocs ET son double textuel** — le va-et-vient
+     blocs ↔ code (règle 16) se pratique dans des environnements variés :
+     Vittascience (standard embarqué), mBlock 5 (mBot2), Blockly, ArduBlock
+     et Arduino (cartes réelles, très basse tension), Flowcode — le CONCEPT
+     est invariant, l'habillage change : c'est ça qui fait comprendre.
+3. **Le contrat de séquence** : chaque séquence déclare explicitement ses
+   deux temps — au moins un moment « faire pour comprendre » (manipulation
+   AVANT le formalisme) et un moment « comprendre pour faire »
+   (réinvestissement conceptuel dans une production). Les corrections et
+   synthèses nomment le concept invariant derrière le geste répété.
+4. **Chantiers d'application immédiats** : l'atelier algorigramme interactif
+   (diagrams.net / vérification par étapes — demandes Pascal des 30-31/07),
+   la refonte du TP mBot2 (mBlock 5 ↔ Python), la marche 4e de l'arc
+   variables, et les futures séquences DNB/CRCN (gabarits des skills v2).
+5. Numéro 18 réservé au registre (règle n°10) ; entrée et registre dans le
+   même commit.
