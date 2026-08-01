@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jardin connecté — Valider (4e_C8) · CRCN règle 7</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--crcn:#7ee0c3}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.72em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:920px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+h2{color:var(--head);font-size:1.05em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px;border-radius:10px;text-align:center}
+.crcn{background:rgba(126,224,195,.08);border:1px solid #2a6b5a;border-radius:10px;padding:12px;margin:8px 0;font-size:.88em}
+.crcn h3{margin:0 0 6px;color:var(--crcn);font-size:.92em}
+.crcn dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px}.crcn dt{font-weight:600;color:#9fd}.crcn dd{margin:0}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:8px 0}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:8px 12px;margin:8px 0}
+table.refs{width:100%;border-collapse:collapse;font-size:.84em}th,td{border:1px solid var(--border);padding:6px 8px}th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:6px;padding:5px 8px;width:100%;font-family:inherit}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:10px;padding:12px}
+.schema{background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;margin:10px 0}
+footer{text-align:center;color:#5b7bb8;font-size:.78em;margin-top:24px}
+</style>
+</head>
+<body>
+<h1>🧪 Jardin connecté — Valider une solution</h1>
+<div class="subtitle">Protocole de tests avant de généraliser — New York</div>
+<div class="badges"><span class="badge">4e</span><span class="badge">Thème 3</span><span class="badge">4e_C8</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
+
+<section class="card">
+<h2>📋 En-tête</h2>
+<table class="refs"><tr><th>Codes</th><td>4e_C8.1 · C8.2 · C8.3</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Durée</th><td>3 × 55 min</td></tr><tr><th>Ancrage</th><td>New York — school garden / rooftop</td></tr></table>
+<label>Nom <input id="eleveNom" style="width:110px"></label> <label>Prénom <input id="elevePrenom" style="width:110px"></label> <label>Classe <input id="eleveClasse" style="width:60px"></label>
+<button class="btn" type="button" onclick="sauvegarderIdentite()">💾</button>
+</section>
+
+<section class="card">
+<h2>📖 Situation</h2>
+<p class="declencheur">Support de capteur conçu (C7) pour un jardin scolaire new-yorkais. Avant de le généraliser : protocole de tests (stabilité, pluie, gel, LED, vent urbain).</p>
+<div class="schema">
+<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+<title id="t">Protocole de validation : support, capteur, LED</title>
+<desc id="d">Trois blocs liés : Support → Capteur → LED, avec flèche de test pluie/gel au-dessus</desc>
+<rect x="20" y="35" width="100" height="55" rx="6" fill="#1d4e89" stroke="#61dafb"/>
+<text x="70" y="68" text-anchor="middle" fill="#e4eaf5" font-size="12">Support</text>
+<circle cx="180" cy="62" r="26" fill="#0d2347" stroke="#81fba1"/>
+<text x="180" y="66" text-anchor="middle" fill="#81fba1" font-size="11">Capteur</text>
+<rect x="250" y="40" width="90" height="45" rx="6" fill="#2b1a3f" stroke="#c68ef2"/>
+<text x="295" y="68" text-anchor="middle" fill="#c68ef2" font-size="11">LED</text>
+<path d="M70 20 Q95 8 120 20" stroke="#61dafb" fill="none" stroke-width="2"/>
+<text x="95" y="12" text-anchor="middle" fill="#9bbefc" font-size="10">Test pluie / gel</text>
+</svg>
+<p style="font-size:.78em;color:#9bbefc;margin:6px 0 0">IMAGE-OBJET — schéma à lire pour comprendre le protocole</p>
+</div>
+</section>
+
+<section class="card">
+<h2>❓ Problématique</h2>
+<p class="problematique">Comment vérifier par des tests simples qu’une solution répond au besoin et aux contraintes avant de la généraliser ?</p>
+</section>
+
+<section class="card">
+<h2>🎯 CRCN (règle d’or n°7)</h2>
+<div class="crcn"><h3>1.3 Traiter des données · N2–3</h3>
+<dl><dt>Repère</dt><dd>Organiser des données et en tirer une décision</dd>
+<dt>Action</dt><dd>Renseigner protocole + tableau observé / conformité</dd>
+<dt>Trace</dt><dd>Tableau ≥ 3 lignes + décision Validée / À améliorer / Rejetée</dd></dl></div>
+<div class="crcn"><h3>5.1 Résoudre des problèmes techniques · N2</h3>
+<dl><dt>Repère</dt><dd>Isoler une cause probable face à un dysfonctionnement simple</dd>
+<dt>Action</dt><dd>Formuler cause + test discriminant si écart</dd>
+<dt>Trace</dt><dd>Fiche diagnostic (cause · test · résultat)</dd></dl></div>
+</section>
+
+<section class="card">
+<h2>💡 Hypothèse</h2>
+<textarea id="hypothese" rows="2" placeholder="Je pense que le support tiendra / ne tiendra pas parce que…"></textarea>
+<button class="btn" type="button" style="margin-top:6px" onclick="sauvegarderHypothese()">Enregistrer</button>
+</section>
+
+<section class="card">
+<h2>🔧 1 — Protocole de test (C8.1) · trace CRCN 1.3</h2>
+<div class="exo">
+<p><b>Consigne :</b> complète le protocole (étapes + résultat attendu). Cette table <b>est</b> la représentation du raisonnement de validation.</p>
+<table class="refs"><tr><th>#</th><th>Action</th><th>Résultat attendu</th></tr>
+<tr><td>1</td><td><input placeholder="Fixer le support…"></td><td><input placeholder="Reste stable"></td></tr>
+<tr><td>2</td><td><input placeholder="Simuler pluie…"></td><td><input placeholder="Aucune infiltration"></td></tr>
+<tr><td>3</td><td><input placeholder="Vérifier LED…"></td><td><input placeholder="S’allume correctement"></td></tr>
+<tr><td>4</td><td><input placeholder="Test gel / vent…"></td><td><input placeholder="…"></td></tr></table>
+<div class="retenir"><b>À retenir :</b> protocole = étapes ordonnées + résultat attendu pour chaque étape.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>📊 2 — Analyser les résultats (C8.2)</h2>
+<div class="exo">
+<table class="refs"><tr><th>Test</th><th>Observé</th><th>Conforme ?</th></tr>
+<tr><td>Stabilité 10 s</td><td>Bougé légèrement</td><td><select><option>—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
+<tr><td>Étanchéité 30 s</td><td>Aucune goutte</td><td><select><option>—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
+<tr><td>LED à 3 m</td><td>Visible plein soleil</td><td><select><option>—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr></table>
+<p style="margin-top:10px">Décision : <select><option>—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<div class="retenir"><b>À retenir :</b> on valide seulement si les critères prioritaires sont respectés.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>✏️ 3 — Améliorations (C8.3)</h2>
+<div class="exo">
+<textarea rows="3" placeholder="Amélioration 1…\nAmélioration 2…\nJustification liée à un résultat de test…"></textarea>
+<div class="retenir"><b>À retenir :</b> une amélioration = réaliste + testable + liée à un résultat.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🔄 Réinvestissement</h2>
+<div class="exo">
+<p>Nouveau critère adapté à New York (gel, vent de canyon, pollution…). Écris l’étape + résultat attendu.</p>
+<textarea rows="2" placeholder="Critère + étape + attendu…"></textarea>
+</div>
+</section>
+
+<section class="card">
+<h2>📝 Synthèse</h2>
+<p>Valider = protocole + résultats objectifs + décision. Sans test, on reste dans l’hypothèse. Le <b>tableau de tests</b> est une représentation technologique utile et traçable (règle 8 anticipée). CRCN 1.3 et 5.1 se prouvent par ces traces, pas par l’ouverture d’un fichier.</p>
+</section>
+
+<section class="card">
+<h2>🙋 Bilan</h2>
+<p>Appris : <input></p><p>Je sais : <input></p><p>À revoir : <input></p>
+Confiance CRCN 1.3 : <select><option>1</option><option>2</option><option>3</option><option>4</option></select>
+</section>
+
+<section class="card" style="text-align:center">
+<h2>🧠 Prêt·e à t'entraîner ?</h2>
+<p>28 questions — validation et protocoles.</p>
+<a class="btn" href="qcm_4e_C8_jardin-validation.html">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+<h2>🎁 Bonus (facultatif)</h2>
+<div class="bonus">
+<p><b>Citoyen :</b> protocole réutilisable par d’autres écoles de New York.</p>
+<p><b>Technique :</b> critère « montage par un élève de 6e ».</p>
+<p><b>New York :</b> quels aléas (gel, canyon, pollution, saisons) dans un protocole rooftop ?</p>
+</div>
+</section>
+<footer>TechnoQuest · 4e_C8 · New York · CRCN règle 7 · Anticipation règle 8 · Grok</footer>
+<script>
+function sauvegarderIdentite(){localStorage.setItem('techno_4e_C8_identite',JSON.stringify({nom:eleveNom.value,prenom:elevePrenom.value,classe:eleveClasse.value}));alert('Identité sauvegardée.');}
+function sauvegarderHypothese(){localStorage.setItem('techno_4e_C8_hypothese',hypothese.value);alert('Hypothèse enregistrée.');}
+try{var id=JSON.parse(localStorage.getItem('techno_4e_C8_identite')||'{}');if(id.nom)eleveNom.value=id.nom;if(id.prenom)elevePrenom.value=id.prenom;if(id.classe)eleveClasse.value=id.classe;var h=localStorage.getItem('techno_4e_C8_hypothese');if(h)hypothese.value=h;}catch(e){}
+</script>
+</body>
+</html>

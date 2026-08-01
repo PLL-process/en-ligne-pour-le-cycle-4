@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capteur de confort scolaire — New York (3e · C7-C8)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--crcn:#7ee0c3}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.5}
+h1{font-size:1.45em;text-align:center;margin:20px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 11px;border-radius:999px;font-size:.72em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:900px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+h2{color:var(--head);font-size:1.05em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px;border-radius:10px;text-align:center}
+.crcn{background:rgba(126,224,195,.08);border:1px solid #2a6b5a;border-radius:10px;padding:12px;margin:10px 0;font-size:.9em}
+.crcn h3{margin:0 0 6px;color:var(--crcn);font-size:.95em}
+.crcn dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px}.crcn dt{font-weight:600;color:#9fd}.crcn dd{margin:0}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:8px 0}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:8px 12px;margin:8px 0}
+table.refs{width:100%;border-collapse:collapse;font-size:.84em}th,td{border:1px solid var(--border);padding:6px 8px}th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:6px;padding:5px 8px;width:100%;font-family:inherit}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:10px;padding:12px}
+footer{text-align:center;color:#5b7bb8;font-size:.78em;margin-top:24px}
+</style>
+</head>
+<body>
+
+<h1>🌡️ Capteur de confort scolaire — New York</h1>
+<div class="subtitle">Concevoir et valider une solution pour signaler la surchauffe d’une salle (îlot de chaleur urbain)</div>
+<div class="badges"><span class="badge">3e</span><span class="badge">Thème 3</span><span class="badge">3e_C7 · 3e_C8</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
+
+<section class="card">
+<h2>📋 En-tête pédagogique</h2>
+<table class="refs">
+<tr><th>Codes</th><td>3e_C7.1 (principal) · 3e_C8.1 (mutualisé)</td></tr>
+<tr><th>Durée</th><td>4 × 55 min</td></tr>
+<tr><th>Socle</th><td>D2 (méthodes) · D4 (systèmes techniques) · D5 (formations de la personne)</td></tr>
+<tr><th>Ancrage</th><td>New York — collège en zone d’îlot de chaleur (rooftop / cour asphaltée)</td></tr>
+</table>
+<label>Nom <input id="n" style="width:110px"></label>
+<label>Prénom <input id="p" style="width:110px"></label>
+<label>Classe <input id="c" style="width:70px"></label>
+<button class="btn" type="button" onclick="localStorage.setItem('t3e_cc',JSON.stringify({n:n.value,p:p.value,c:c.value}));alert('Identité enregistrée')">💾</button>
+</section>
+
+<section class="card">
+<h2>📖 Situation déclenchante</h2>
+<p class="declencheur">En juin, plusieurs salles du collège à New York dépassent 30 °C l’après-midi. Le personnel demande un <strong>indicateur simple</strong> : alerte visuelle (LED) quand la température dépasse un seuil de confort. Tu dois <em>concevoir</em> la solution (C7) puis la <em>valider</em> par des tests (C8). La programmation fine pourra s’appuyer sur les ressources 3e_C9 existantes.</p>
+</section>
+
+<section class="card">
+<h2>❓ Problématique</h2>
+<p class="problematique">Comment concevoir et valider une solution technique qui signale le dépassement d’un seuil de température dans une salle scolaire exposée à l’îlot de chaleur urbain ?</p>
+</section>
+
+<section class="card">
+<h2>🎯 CRCN mobilisés (règle d’or n°7)</h2>
+<div class="crcn">
+<h3>CRCN 3.4 — Programmer · Niveau 2 (visé) / Niveau 3 (extension)</h3>
+<dl>
+<dt>Repère</dt><dd>Réaliser un programme simple · Mettre au point et exécuter un programme simple commandant un système numérique (repères CRCN / PIX)</dd>
+<dt>Action observable</dt><dd>L’élève écrit un algorithme SI température &gt; seuil ALORS alerte, le confronte à 4 scénarios chiffrés, corrige au moins un écart</dd>
+<dt>Trace</dt><dd>Pseudo-code enregistré (localStorage ou copie cahier) + tableau de tests renseigné (attendu / observé / décision)</dd>
+</dl>
+</div>
+<div class="crcn">
+<h3>CRCN 1.3 — Traiter des données · Niveau 2</h3>
+<dl>
+<dt>Repère</dt><dd>Insérer, saisir et trier des données dans un tableur / tableau pour les exploiter</dd>
+<dt>Action observable</dt><dd>L’élève saisit 4 mesures (T °C, seuil, décision) et justifie la validation ou le rejet</dd>
+<dt>Trace</dt><dd>Tableau de protocole de test complété dans la séquence (ou export CSV personnel)</dd>
+</dl>
+</div>
+<div class="crcn">
+<h3>CRCN 5.1 — Résoudre des problèmes techniques · Niveau 2</h3>
+<dl>
+<dt>Repère</dt><dd>Résoudre des problèmes empêchant l’accès à un service numérique usuel / dysfonctionnement simple</dd>
+<dt>Action observable</dt><dd>Face à un scénario « LED éteinte alors que T &gt; seuil », l’élève propose une cause probable et un test discriminant</dd>
+<dt>Trace</dt><dd>Fiche diagnostic (cause hypothétique + test + résultat) dans l’activité 3</dd>
+</dl>
+</div>
+<p style="font-size:.85em;color:#9bbefc;margin:8px 0 0">« Utiliser un ordinateur » n’est <strong>pas</strong> une compétence CRCN. Ici chaque compétence a une action et une trace.</p>
+</section>
+
+<section class="card">
+<h2>💡 Hypothèse de départ</h2>
+<textarea id="hyp" rows="2" placeholder="Je pense que la solution doit… parce que…"></textarea>
+<button class="btn" type="button" style="margin-top:6px" onclick="localStorage.setItem('t3e_cc_hyp',hyp.value)">Enregistrer</button>
+</section>
+
+<section class="card">
+<h2>🔧 Activité 1 — Concevoir (C7)</h2>
+<div class="exo">
+<p><strong>Besoin :</strong> alerter si T &gt; 28 °C (seuil de confort retenu pour la salle).</p>
+<p>Propose <strong>deux solutions</strong> (matériel TBT ou simulation) et choisis-en une avec 2 critères (coût, lisibilité, robustesse…).</p>
+<textarea rows="4" placeholder="Solution A…\nSolution B…\nChoix + critères…"></textarea>
+<div class="retenir"><strong>À retenir :</strong> concevoir = besoin → idées → choix justifié (pas une idée unique).</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🧪 Activité 2 — Valider par des tests (C8) + CRCN 1.3</h2>
+<div class="exo">
+<p>Protocole minimal (remplis les cases) — <em>trace CRCN 1.3</em> :</p>
+<table class="refs">
+<tr><th>Scénario</th><th>T (°C)</th><th>Attendu</th><th>Observé</th><th>OK ?</th></tr>
+<tr><td>Salle fraîche</td><td>22</td><td>Pas d’alerte</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Seuil exact</td><td>28</td><td>À préciser (règle)</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Surchauffe</td><td>32</td><td>Alerte ON</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Retour au frais</td><td>24</td><td>Alerte OFF</td><td><input placeholder="…"></td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+</table>
+<p>Décision globale : <select><option>—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<div class="retenir"><strong>À retenir :</strong> sans résultat attendu écrit, on ne valide pas.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>💻 Activité 3 — Algorithme + mise au point (CRCN 3.4)</h2>
+<div class="exo">
+<p>Écris le pseudo-code (trace CRCN 3.4) :</p>
+<textarea rows="5" id="algo" placeholder="SEUIL = 28\nmesurer T\nSI T &gt; SEUIL ALORS\n  allumer LED alerte\nSINON\n  éteindre LED\nFIN SI"></textarea>
+<p><strong>Bug possible :</strong> près de 28 °C, la LED clignote. Propose une correction (hystérésis ou seuil OFF différent).</p>
+<textarea rows="3" placeholder="Correction…"></textarea>
+<p><strong>Diagnostic (CRCN 5.1) :</strong> LED éteinte alors que T = 33 °C. Cause probable + test discriminant :</p>
+<textarea rows="2" placeholder="Cause… Test…"></textarea>
+<div class="retenir"><strong>À retenir :</strong> mettre au point = écart observé → hypothèse → test → correction → retest.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🔄 Réinvestissement</h2>
+<div class="exo">
+<p>Adapte la même logique à un <strong>seuil d’humidité</strong> pour un local archives (éviter moisissures). 4 lignes de pseudo-code.</p>
+<textarea rows="3"></textarea>
+</div>
+</section>
+
+<section class="card">
+<h2>📝 Synthèse</h2>
+<p>Concevoir (C7) puis valider (C8) une alerte de confort : besoin ancré (îlot de chaleur NY) → deux solutions → protocole de test → algorithme SI → correction. Les compétences CRCN 3.4, 1.3 et 5.1 sont prouvées par des <strong>traces</strong> (tableau, pseudo-code, fiche diagnostic), pas par le simple usage d’un écran.</p>
+</section>
+
+<section class="card">
+<h2>🙋 Bilan personnel</h2>
+<p>J’ai appris : <input></p>
+<p>Je sais faire (observable) : <input></p>
+<p>À revoir : <input></p>
+<p>Confiance CRCN 3.4 (1-4) : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+</section>
+
+<section class="card" style="text-align:center">
+<h2>🧠 Prêt·e à t'entraîner ?</h2>
+<p>26 questions — conception, validation, CRCN 3.4 / 1.3 / 5.1.</p>
+<a class="btn" href="qcm_3e_C7_capteur-confort-ny.html">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+<h2>🎁 Bonus (facultatif)</h2>
+<div class="bonus">
+<p><strong>Citoyen :</strong> Quelles mesures urbaines (arbres, toits clairs) réduisent l’îlot de chaleur autour d’une école new-yorkaise ?</p>
+<p><strong>Technique :</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26 °C, alerte à 28 °C).</p>
+<p><strong>CRCN 3.4 N3 :</strong> Propose une hystérésis 27 / 29 et justifie pourquoi cela stabilise l’alerte.</p>
+</div>
+</section>
+
+<footer>TechnoQuest · Thème 3 · 3e_C7/C8 · Capteur confort · New York · CRCN règle 7 · Grok · 2026-07-25</footer>
+<script>
+try{var d=JSON.parse(localStorage.getItem('t3e_cc')||'{}');if(d.n)n.value=d.n;if(d.p)p.value=d.p;if(d.c)c.value=d.c;
+var h=localStorage.getItem('t3e_cc_hyp');if(h)hyp.value=h;}catch(e){}
+</script>
+</body>
+</html>

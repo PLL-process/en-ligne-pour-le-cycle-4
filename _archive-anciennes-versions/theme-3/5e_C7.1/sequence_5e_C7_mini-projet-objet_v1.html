@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini-projet — Améliorer un objet scolaire (5e · C7-C8-C9)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}.badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:900px;margin:0 auto 16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px}
+h2{color:var(--head);font-size:1.05em;margin-top:0}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px;border-radius:10px;text-align:center}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px;margin:8px 0}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:8px 12px;margin:8px 0}
+table.refs{width:100%;border-collapse:collapse;font-size:.85em}th,td{border:1px solid var(--border);padding:6px 8px}th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:6px;padding:5px 8px;width:100%;font-family:inherit}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:10px;padding:12px}
+footer{text-align:center;color:#5b7bb8;font-size:.8em;margin-top:24px}
+</style>
+</head>
+<body>
+<h1>🛠️ Mini-projet — Améliorer un objet scolaire</h1>
+<div class="subtitle">Imaginer, valider et programmer une petite amélioration pour un objet du collège à New York</div>
+<div class="badges"><span class="badge">5e</span><span class="badge">Thème 3</span><span class="badge">C7 · C8 · C9</span><span class="badge">New York</span></div>
+
+<section class="card">
+<h2>📋 En-tête</h2>
+<table class="refs"><tr><th>Durée</th><td>6 × 55 min</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Ancrage</th><td>New York — hall d'une middle school</td></tr></table>
+<label>Nom <input id="n" style="width:110px"></label> <label>Prénom <input id="p" style="width:110px"></label> <label>Classe <input id="c" style="width:60px"></label>
+<button class="btn" onclick="localStorage.setItem('t5emp',JSON.stringify({n:n.value,p:p.value,c:c.value}))">💾</button>
+</section>
+
+<section class="card">
+<h2>📖 Situation</h2>
+<p class="declencheur">Dans le hall de l'école à New York, les sacs s'entassent. On te demande un <strong>indicateur simple</strong> : place de rangement libre ou occupée (LED + bouton ou capteur). Tu imagines, tu testes, tu écris une règle SI.</p>
+</section>
+
+<section class="card">
+<h2>❓ Problématique</h2>
+<p class="problematique">Comment améliorer un objet scolaire : imaginer, valider par des tests, puis écrire une règle de programme simple ?</p>
+</section>
+
+<section class="card">
+<h2>💡 Idée de départ</h2>
+<textarea id="hyp" rows="2" placeholder="Je propose… parce que…"></textarea>
+</section>
+
+<section class="card">
+<h2>🔧 1 — Imaginer (C7)</h2>
+<div class="exo">
+<table class="refs"><tr><th>#</th><th>Tâche</th><th>min</th></tr>
+<tr><td>1</td><td><input placeholder="Besoin"></td><td>20</td></tr>
+<tr><td>2</td><td><input placeholder="2 solutions"></td><td>25</td></tr>
+<tr><td>3</td><td><input placeholder="Matériau"></td><td>20</td></tr>
+<tr><td>4</td><td><input placeholder="Prototype"></td><td>40</td></tr></table>
+<textarea rows="3" placeholder="Solution A… / B… / Je choisis…"></textarea>
+<div class="retenir"><b>À retenir :</b> organiser → plusieurs idées → choix avec critères.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🧪 2 — Valider (C8)</h2>
+<div class="exo">
+<table class="refs"><tr><th>Test</th><th>Attendu</th><th>OK ?</th></tr>
+<tr><td>Activer</td><td>LED ON</td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Relâcher</td><td>LED OFF</td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Visible à 2 m</td><td>Oui</td><td><select><option>—</option><option>Oui</option><option>Non</option></select></td></tr></table>
+Décision : <select><option>—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select>
+<div class="retenir"><b>À retenir :</b> on valide si les tests importants réussissent.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>💻 3 — Programme simple (C9)</h2>
+<div class="exo">
+<textarea rows="5" placeholder="SI place occupée ALORS\n  LED rouge\nSINON\n  LED verte\nFIN SI"></textarea>
+<div class="retenir"><b>À retenir :</b> SI + action ; tester avec des cas concrets.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>🔄 Réinvestissement</h2>
+<div class="exo"><p>Même logique pour un casier de bibliothèque (livre présent / absent).</p><textarea rows="3"></textarea></div>
+</section>
+
+<section class="card">
+<h2>📝 Synthèse</h2>
+<p>Améliorer un objet = <b>imaginer (C7)</b> → <b>tester (C8)</b> → <b>règle SI (C9)</b>. On part d'un vrai besoin de l'école à New York.</p>
+</section>
+
+<section class="card">
+<h2>🙋 Bilan</h2>
+<p>Appris : <input></p><p>Je sais : <input></p><p>À revoir : <input></p>
+Confiance : <select><option>1</option><option>2</option><option>3</option><option>4</option></select>
+</section>
+
+<section class="card" style="text-align:center">
+<h2>🧠 Prêt·e à t'entraîner ?</h2>
+<p>24 questions — conception, validation, programme.</p>
+<a class="btn" href="qcm_5e_C7_mini-projet.html">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+<h2>🎁 Bonus (facultatif)</h2>
+<div class="bonus">
+<p><b>Citoyen :</b> Quel autre objet du collège améliorer ?</p>
+<p><b>Technique :</b> Ajoute un test « tenue si on secoue le support ».</p>
+<p><b>New York :</b> Pourquoi un indicateur visible est utile dans un hall fréquenté ?</p>
+</div>
+</section>
+<footer>TechnoQuest · Thème 3 · 5e C7-C8-C9 · New York · Grok</footer>
+<script>try{const d=JSON.parse(localStorage.getItem('t5emp')||'{}');if(d.n)n.value=d.n;if(d.p)p.value=d.p;if(d.c)c.value=d.c}catch(e){}</script>
+</body>
+</html>
