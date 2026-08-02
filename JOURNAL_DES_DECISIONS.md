@@ -1155,3 +1155,22 @@ structure conservées :
    règle 18 des familles C4/C5 (les trois temps y EXISTENT déjà par les
    verrous — seule la déclaration manque) ; câblage 18c (matrice des
    habillages par concept) lors du prochain lot de fond.
+
+## 2026-08-02 — Thème 2 · Audit Book Train : six règles d'or candidates + lot 4e_C4.1 Book Train en draft (Fable, branche `Fable/Thème-2/Book-Train-NYPL`)
+
+- **Lot Book Train NYPL → Schœlcher** (`4e_C4.1_book-train/`, codes 4e_C4.1 · C4.2 · C4.4) livré en **PR draft** :
+  la séquence et les schémas sont complets ; le QCM et les synthèses arrivent avant toute fusion (lot indivisible, règle n°5).
+- **Six règles d'or candidates** issues de l'audit de Pascal (`_outils/REGLES_OR_CANDIDATES.md`, numéros à réserver au registre) :
+  navigation cliquable + retour en haut · compétences affichées code + libellé intégral · consignes avec document de
+  référence nommé · lisibilité en diagonale (une idée par ligne) · nommage élève `sujet_classe_NOM_Prenom` ·
+  notation homogène des compétences.
+- **Débat de notation tranché (option conservatrice)** : la convention en vigueur `4e_C4.1` (README, générateur xlsx)
+  est MAINTENUE ; la proposition de format compact `4C4.1` reste consignée avec son coût chiffré (≈ 91 HTML + 126 MD)
+  pour arbitrage ultérieur. Chasse immédiate : les codes NUS (`C4.1` sans niveau), ambigus par définition.
+- **Décisions didactiques du lot** : le diagramme fonctionnel = fonctions techniques ↔ solutions techniques
+  (2 colonnes, rappel 5e_C4.1) ; la colonne « fonction d'usage » n'apparaît qu'en 3e (schéma-bloc, 3e_C4.1) —
+  déclinaison 5e/4e/3e du Book Train actée comme perspective. Les blocs fonctionnels ne contiennent QUE fonction et
+  solution technique : les énergies d'entrée/sortie sont le travail de l'élève (4e_C4.2). Distinction des acteurs :
+  magasinier (sous-sol) ≠ bibliothécaire du comptoir (3ᵉ étage).
+- **Outillage** : `_outils/audit_conformite.py` (sondes RC-1→RC-6 réexécutables) + `_outils/AUDIT_GLOBAL.md`
+  (état initial : 112 HTML · 156 MD du périmètre vivant). L'audit est un instrument permanent, pas un événement.
