@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 560" font-family="Segoe UI, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Chaîne d'information du Book Train de la New York Public Library</title>
+<desc id="d">Schéma fonctionnel horizontal en trois blocs situés en haut : Acquérir (terminal de commande du lecteur, capteurs de station le long du rail, capteur de wagonnet vacant au poste de chargement), Traiter (automate PLC et serveur central qui comparent la position mesurée à la destination programmée dans chaque wagonnet), Communiquer (ordres envoyés au variateur du moteur, affichage au comptoir de distribution et signal de wagonnet disponible). La sortie utile est une information : le livre demandé est arrivé au comptoir du troisième étage. Une flèche d'ordre rouge descend depuis le bloc Communiquer vers un rappel de la chaîne d'énergie situé en bas du schéma, conformément à la convention : l'information en haut, l'énergie en bas, la flèche d'ordre qui descend.</desc>
+
+<style>
+  .flux-anime{animation:flux 1.1s linear infinite}
+  @keyframes flux{to{stroke-dashoffset:-32}}
+  @media (prefers-reduced-motion:reduce){.flux-anime{animation:none}}
+</style>
+
+<!-- fond -->
+<rect x="0" y="0" width="1060" height="560" fill="#fdfcf8"/>
+<text x="30" y="42" font-size="26" font-weight="bold" font-family="Georgia, serif" fill="#2d3a46">🧠 Chaîne d'information du Book Train</text>
+<text x="30" y="66" font-size="15" fill="#5a6068" font-style="italic">De la commande du lecteur à l'ordre donné aux moteurs · le « cerveau » du système</text>
+
+<defs>
+  <marker id="fleche" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 z" fill="#20242e"/>
+  </marker>
+  <marker id="fleche-ordre" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 z" fill="#8f221d"/>
+  </marker>
+  <marker id="fleche-info" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 z" fill="#2d3a46"/>
+  </marker>
+</defs>
+
+<!-- ============ CHAÎNE D'INFORMATION (en haut) ============ -->
+<!-- Entrées : les grandeurs captées -->
+<g font-size="12.5" fill="#5a6068">
+  <text x="36" y="118">demande du lecteur</text>
+  <text x="36" y="160">position du wagonnet</text>
+  <text x="36" y="202">wagonnet libre ou non</text>
+  <line x1="176" y1="113" x2="216" y2="113" stroke="#2d3a46" stroke-width="2.5" marker-end="url(#fleche-info)"/>
+  <line x1="176" y1="155" x2="216" y2="155" stroke="#2d3a46" stroke-width="2.5" marker-end="url(#fleche-info)"/>
+  <line x1="176" y1="197" x2="216" y2="197" stroke="#2d3a46" stroke-width="2.5" marker-end="url(#fleche-info)"/>
+</g>
+
+<!-- Bloc ACQUÉRIR -->
+<g>
+  <rect x="220" y="90" width="230" height="150" rx="10" fill="#fff" stroke="#2d3a46" stroke-width="3"/>
+  <rect x="220" y="90" width="230" height="34" rx="10" fill="#2d3a46"/>
+  <text x="335" y="113" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">ACQUÉRIR</text>
+  <text x="335" y="146" font-size="13.5" text-anchor="middle" fill="#20242e">① Terminal de commande</text>
+  <text x="335" y="163" font-size="12.5" text-anchor="middle" fill="#5a6068">(salle de lecture, 3ᵉ étage)</text>
+  <text x="335" y="186" font-size="13.5" text-anchor="middle" fill="#20242e">② Capteurs de station</text>
+  <text x="335" y="203" font-size="12.5" text-anchor="middle" fill="#5a6068">le long du rail (≈ 290 m)</text>
+  <text x="335" y="226" font-size="13.5" text-anchor="middle" fill="#20242e">③ Capteur « wagonnet vacant »</text>
+</g>
+
+<line x1="450" y1="165" x2="490" y2="165" stroke="#2d3a46" stroke-width="3" marker-end="url(#fleche-info)"/>
+<text x="470" y="152" font-size="11.5" fill="#5a6068" text-anchor="middle">signaux</text>
+
+<!-- Bloc TRAITER -->
+<g>
+  <rect x="494" y="90" width="230" height="150" rx="10" fill="#fff" stroke="#2d3a46" stroke-width="3"/>
+  <rect x="494" y="90" width="230" height="34" rx="10" fill="#2d3a46"/>
+  <text x="609" y="113" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">TRAITER</text>
+  <text x="609" y="146" font-size="13.5" text-anchor="middle" fill="#20242e">Automate (PLC) + serveur central</text>
+  <text x="609" y="170" font-size="13" text-anchor="middle" fill="#20242e">compare en permanence :</text>
+  <text x="609" y="190" font-size="13" font-weight="bold" text-anchor="middle" fill="#20242e">position mesurée = destination</text>
+  <text x="609" y="207" font-size="13" font-weight="bold" text-anchor="middle" fill="#20242e">programmée ?</text>
+  <text x="609" y="228" font-size="12" text-anchor="middle" fill="#5a6068">+ aiguille les 24 wagonnets sans collision</text>
+</g>
+
+<line x1="724" y1="165" x2="764" y2="165" stroke="#2d3a46" stroke-width="3" marker-end="url(#fleche-info)"/>
+<text x="744" y="152" font-size="11.5" fill="#5a6068" text-anchor="middle">décisions</text>
+
+<!-- Bloc COMMUNIQUER -->
+<g>
+  <rect x="768" y="90" width="262" height="150" rx="10" fill="#fff" stroke="#2d3a46" stroke-width="3"/>
+  <rect x="768" y="90" width="262" height="34" rx="10" fill="#2d3a46"/>
+  <text x="899" y="113" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">COMMUNIQUER</text>
+  <text x="899" y="146" font-size="13.5" text-anchor="middle" fill="#20242e">① Ordres au variateur du moteur</text>
+  <text x="899" y="163" font-size="12.5" text-anchor="middle" fill="#5a6068">(démarrer, ralentir, s'arrêter en station)</text>
+  <text x="899" y="186" font-size="13.5" text-anchor="middle" fill="#20242e">② Affichage au comptoir</text>
+  <text x="899" y="203" font-size="12.5" text-anchor="middle" fill="#5a6068">(« votre livre arrive »)</text>
+  <text x="899" y="226" font-size="13.5" text-anchor="middle" fill="#20242e">③ Signal « wagonnet disponible »</text>
+</g>
+
+<!-- Sortie utile : information -->
+<line x1="899" y1="240" x2="899" y2="276" stroke="#2d3a46" stroke-width="3" marker-end="url(#fleche-info)"/>
+<g>
+  <rect x="700" y="280" width="330" height="64" rx="32" fill="#eef3f7" stroke="#2d3a46" stroke-width="3"/>
+  <text x="865" y="307" font-size="15" font-weight="bold" fill="#2d3a46" text-anchor="middle">📚 INFORMATION UTILE : le livre demandé</text>
+  <text x="865" y="328" font-size="13.5" fill="#2d3a46" text-anchor="middle">est arrivé au comptoir du 3ᵉ étage</text>
+</g>
+
+<!-- Boucle de retour capteurs (rétroaction) -->
+<path d="M 609 240 V 262 H 335 V 244" fill="none" stroke="#7a5e28" stroke-width="2.5" class="flux-anime" stroke-dasharray="7 4" marker-end="url(#fleche)"/>
+<text x="472" y="256" font-size="12" fill="#7a5e28" text-anchor="middle" font-style="italic">rétroaction : les capteurs re-mesurent en continu</text>
+
+<!-- Flèche d'ORDRE : elle sort du bloc COMMUNIQUER (jamais d'Acquérir ni de Traiter) et descend -->
+<path d="M 1030 210 H 1046 V 472 H 796" fill="none" stroke="#8f221d" stroke-width="3.5" class="flux-anime" stroke-dasharray="10 6" marker-end="url(#fleche-ordre)"/>
+<text x="1036" y="356" font-size="14" font-weight="bold" fill="#8f221d" text-anchor="end">ORDRE</text>
+<text x="1036" y="373" font-size="12.5" fill="#8f221d" text-anchor="end">émis par Communiquer :</text>
+<text x="1036" y="389" font-size="12.5" fill="#8f221d" text-anchor="end">l'information commande,</text>
+<text x="1036" y="405" font-size="12.5" fill="#8f221d" text-anchor="end">l'énergie exécute</text>
+
+<!-- séparation info / énergie -->
+<line x1="20" y1="390" x2="240" y2="390" stroke="#a8823c" stroke-width="1.5" stroke-dasharray="4 6"/>
+<line x1="370" y1="390" x2="1040" y2="390" stroke="#a8823c" stroke-width="1.5" stroke-dasharray="4 6"/>
+<text x="380" y="410" font-size="12.5" fill="#a8823c" font-style="italic">— au-dessus : l'information décide · en dessous : l'énergie exécute —</text>
+
+<!-- ============ Zone ÉNERGIE (en bas, rappel) ============ -->
+<rect x="150" y="434" width="640" height="76" rx="10" fill="#fbf0ef" stroke="#c0322b" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="470" y="462" font-size="15" font-weight="bold" fill="#8f221d" text-anchor="middle">CHAÎNE D'ÉNERGIE (rappel)</text>
+<text x="470" y="484" font-size="13.5" fill="#8f221d" text-anchor="middle">Alimenter (13,2 kV AC) → Distribuer (24 V DC) → Convertir (moteur) → Transmettre (galets)</text>
+<text x="470" y="502" font-size="12.5" fill="#8f221d" text-anchor="middle" font-style="italic">→ Action : déplacer le wagonnet (voir schéma « Chaîne d'énergie »)</text>
+
+<!-- légende -->
+<g font-size="12.5" fill="#20242e">
+  <line x1="820" y1="410" x2="860" y2="410" stroke="#2d3a46" stroke-width="3" marker-end="url(#fleche-info)"/>
+  <text x="868" y="415">flux d'informations</text>
+  <line x1="820" y1="436" x2="860" y2="436" stroke="#8f221d" stroke-width="3" class="flux-anime" stroke-dasharray="9 5" marker-end="url(#fleche-ordre)"/>
+  <text x="868" y="441">ordre (information → énergie)</text>
+  <line x1="820" y1="462" x2="860" y2="462" stroke="#7a5e28" stroke-width="2.5" class="flux-anime" stroke-dasharray="7 4" marker-end="url(#fleche)"/>
+  <text x="868" y="467">rétroaction (mesure continue)</text>
+</g>
+
+<text x="30" y="548" font-size="11" fill="#8a929c">Schéma original CC0 — séquence « Book Train » · convention du dépôt : information en haut, énergie en bas, la flèche d'ordre descend.</text>
+</svg>
