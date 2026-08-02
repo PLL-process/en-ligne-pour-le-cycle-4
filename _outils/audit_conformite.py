@@ -6,9 +6,9 @@ import re, sys, os
 from pathlib import Path
 
 RACINE = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
-ANCIEN_CODE = re.compile(r'[3-6]e[_ ]?C\d\.\d')            # 4e_C4.1, 5e C4.1…
+ANCIEN_CODE = re.compile(r'\b[3-6]C\d\.\d')                 # format compact non adopté (4C4.1)
 CODE_NU     = re.compile(r'(?<![3-6CA-Za-z])C\d\.\d')       # C4.1 sans niveau
-BON_CODE    = re.compile(r'\b[3-6]C\d\.\d')                 # 4C4.1
+BON_CODE    = re.compile(r'[3-6]e[_ ]?C\d\.\d')              # 4e_C4.1 : convention du dépôt
 REF_SPATIALE= re.compile(r'ci-dessus|ci-dessous|Fig\.|figure|schéma|document de référence|récit|tableau ci|image ci', re.I)
 
 def audit_html(p):
@@ -39,8 +39,7 @@ def audit_html(p):
         res["RC5"] = "–"
     # RC-6 notation
     anciens, nus = len(ANCIEN_CODE.findall(t)), len(set(CODE_NU.findall(t)))
-    res["RC6"] = "✅" if not anciens else f"❌{anciens}"
-    if anciens == 0 and nus and not BON_CODE.search(t): res["RC6"] = f"⚠️{nus} nus"
+    res["RC6"] = "✅" if (not anciens and not nus) else (f"❌{anciens} compacts" if anciens else f"⚠️{nus} nus")
     return res
 
 def audit_md(p):

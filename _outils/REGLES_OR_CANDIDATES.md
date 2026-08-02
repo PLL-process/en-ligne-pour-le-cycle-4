@@ -30,7 +30,10 @@ Tout fichier rendu se nomme `sujet_classe_NOM_Prenom.extension`
   4e chaînes à compléter + flux (4C4.1/4C4.2/4C4.4) · 3e élaboration du schéma-bloc (3C4.1).
 - Distinction des acteurs : magasinier (sous-sol) ≠ bibliothécaire du comptoir (3e étage).
 
-## RC-6 · Notation unique des compétences
-Toute compétence se note NIVEAU + CODE, sans « e » ni underscore : `5C4.1`, `4C4.2`, `3C4.1`.
-Ce format s'applique aux titres, badges, fiches, QCM, matrices, noms de dossiers et de fichiers.
-Audit de mise en conformité sur tous les thèmes.
+## RC-6 · Notation homogène des compétences (+ proposition de migration à arbitrer)
+La convention EN VIGUEUR du dépôt est `NIVEAUe_CX.Y` (`5e_C4.1`, `4e_C4.2`), documentée au README
+(ambiguïté Nathan levée par le préfixe). Règle immédiate : AUCUN code nu (`C4.1` sans niveau),
+aucune notation mixte — audit sur tous les thèmes.
+**Proposition de migration** (à trancher au JOURNAL_DES_DECISIONS) : format compact `4C4.1`
+(plus court, triable, grepable). Coût mesuré : ~91 HTML + ~126 MD + README + générateur xlsx
++ noms de dossiers. Migration 100 % scriptable via `_outils/audit_conformite.py` étendu.
