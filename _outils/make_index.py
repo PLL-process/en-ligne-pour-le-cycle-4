@@ -60,6 +60,21 @@ def code_dir(cnum, niveau, code):
     return "/".join([THEME_SLUG[theme], f"{cnum}-{slugify(text)}", niveau, f"{niveau}_{code}"])
 
 
+def lot_sibling_dirs(cnum, niveau, code):
+    """Dossiers freres de lots : {niveau}_{code}_<slug> (un dossier = un lot,
+    arbitrage Pascal 02/08/2026 - ex. 4e_C4.1_book-train a cote de 4e_C4.1)."""
+    base = code_dir(cnum, niveau, code)
+    parent_rel = base.rsplit("/", 1)[0]
+    parent_full = os.path.join(DST, parent_rel)
+    prefix = f"{niveau}_{code}_"
+    out = []
+    if os.path.isdir(parent_full):
+        for d in sorted(os.listdir(parent_full)):
+            if d.startswith(prefix) and os.path.isdir(os.path.join(parent_full, d)):
+                out.append(parent_rel + "/" + d)
+    return out
+
+
 def content_files(rel_dir):
     """Fichiers de contenu réel (hors .gitkeep) directement dans le dossier code."""
     full = os.path.join(DST, rel_dir)
@@ -155,15 +170,17 @@ for theme_n in [1, 2, 3]:
             lines = []
             for code, ctext, _ in COMP_BY_LEVEL[niveau][cnum]:
                 rel = code_dir(cnum, niveau, code)
-                files = content_files(rel)
+                paires = [(rel, fn) for fn in content_files(rel)]
+                for rel2 in lot_sibling_dirs(cnum, niveau, code):
+                    paires += [(rel2, fn) for fn in content_files(rel2)]
                 full_code = f"{niveau}_{code}"
-                if files:
-                    n_files += len([f for f in files if f != "README.md"]) or 1
+                if paires:
+                    n_files += len([f for _, f in paires if f != "README.md"]) or 1
                     links = " · ".join(
-                        f'<a href="{html.escape(rel)}/{html.escape(fn)}">📄 {html.escape(fn if len(fn) <= 34 else fn[:31] + "…")}</a>'
+                        f'<a href="{html.escape(r)}/{html.escape(fn)}">📄 {html.escape(fn if len(fn) <= 34 else fn[:31] + "…")}</a>'
                         + ('<span class="badge-herit" title="Ressource héritée — modernisation prévue (règle d\'or n°12)">🛠</span>'
-                           if f"{rel}/{fn}" in HERITEES else "")
-                        for fn in files
+                           if f"{r}/{fn}" in HERITEES else "")
+                        for r, fn in paires
                     )
                     lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span>{links}</span></div>')
                 else:
