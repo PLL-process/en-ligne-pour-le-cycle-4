@@ -560,7 +560,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   <div class="carte">
     <h3>Activité 1.1 — Le trajet d'un livre, dans l'ordre</h3>
     <details class="aide1"><summary>📖 Rappel de la mission (situation déclenchante)</summary><div class="contenu"><p>« Quand un lecteur commande un livre depuis la Rose Main Reading Room, au 3ᵉ étage, l'ouvrage doit traverser un tunnel, grimper le long des murs et franchir les plafonds… en restant parfaitement à plat. »</p><p><strong>Attention, deux personnes différentes</strong> encadrent le voyage : au sous-sol, le <strong>magasinier</strong> des stacks charge la nacelle ; au 3ᵉ étage, le <strong>bibliothécaire du comptoir</strong> reçoit le livre et prévient le lecteur.</p></div></details>
-    <p class="competence-visee">🎯 <strong>4e_C4.4</strong> — Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction.</p>
+    <p class="competence-visee">🎯 <strong>4e_C4 (compétence-mère — mise en route)</strong> — Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données) : tu remets d'abord le fonctionnement global dans l'ordre, avant d'identifier les chaînes (activités suivantes, 4e_C4.1 · 4e_C4.4).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> le carnet de l'ingénieur est tombé, les étapes sont mélangées ! Pour chaque position (de 1 à 6), choisis l'étape qui s'y déroule. <strong>Document de référence :</strong> le <strong>schéma d'ensemble ci-dessus</strong> et le récit de la mission — les positions 1 à 6 suivent le voyage du livre, de la demande du lecteur jusqu'au comptoir du 3ᵉ étage.</div>
     <div id="exo11">
       <div class="ligne-exo"><span class="num">1</span><label class="visually-hidden" for="e11a">Étape 1</label>
@@ -1757,6 +1757,20 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     });
   });
   activer(typeof etat.__onglet === "number" ? etat.__onglet : 0);
+  /* Plan de mission : un lien #seance-N doit ACTIVER l'onglet (panneau masqué) puis défiler (RC-1). */
+  Array.prototype.slice.call(document.querySelectorAll('a[href^="#seance-"]')).forEach(function(a){
+    a.addEventListener("click", function(ev){
+      var cible = document.getElementById(a.getAttribute("href").slice(1));
+      if(!cible) return;
+      var sec = cible.closest(".panneau");
+      var i = panneaux.indexOf(sec);
+      if(i >= 0){
+        ev.preventDefault();
+        activer(i);
+        setTimeout(function(){ cible.scrollIntoView({behavior:"smooth", block:"start"}); }, 80);
+      }
+    });
+  });
   window.addEventListener("resize", function(){
     var actif = onglets.findIndex(function(t){ return t.getAttribute("aria-selected")==="true"; });
     placerWagonnet(actif < 0 ? 0 : actif);
