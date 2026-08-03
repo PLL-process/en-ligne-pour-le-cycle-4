@@ -21,6 +21,9 @@
 | 16 | Blocs ↔ Python dans la page (éditeur embarqué, gabarit canonique `_outils/gabarits/`) | Fable, sur décision de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
 | 17 | 55 minutes pleines (densité vérifiée par séance, geste de code par séance de programmation) | Fable, sur audit de Pascal (30/07/2026) | 🔄 PR en cours (idem) |
 | 18 | « Faire pour comprendre, comprendre pour faire » — répétition des représentations schématiques et du code par blocs, va-et-vient action ↔ conceptualisation | Pascal (credo fondateur, 01/08/2026), rédaction Fable | 🔄 PR en cours (branche `fable/infra/regle-18-faire-comprendre`) |
+| 19 | Consignes a l infinitif (verbe d action en tete de chaque consigne) | ChatGPT/Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
+| 20 | Guides logiciels inclusifs pas-a-pas (A->H, captures, aucune etape implicite) | Fable (candidate referencee par les lots Book Train) | 🕐 Candidate - numero regularise le 02/08/2026, a enteriner |
+| 21 | Convocation systematique des skills - avant toute creation d exercice et toute redaction relevant des trois themes, convoquer les skills pertinents (curriculum-assessment-cycle4, methode-fable, explicit-instruction, questioning-discussion, dnb-technologie, skill-crcn-2026, manuels-2024-mecaniques) et faire arbitrer toute etiquette de competence par _outils/data_competences.py ; aucun code pose de memoire | Pascal (decision du 02/08/2026), redaction Fable | 🔄 PR en cours |
 
 Règle de réservation : tout nouveau numéro se prend ICI, dans ce tableau, par une PR dédiée ou en tête du lot qui l'introduit — jamais dans son coin.
 
@@ -1174,3 +1177,15 @@ structure conservées :
   magasinier (sous-sol) ≠ bibliothécaire du comptoir (3ᵉ étage).
 - **Outillage** : `_outils/audit_conformite.py` (sondes RC-1→RC-6 réexécutables) + `_outils/AUDIT_GLOBAL.md`
   (état initial : 112 HTML · 156 MD du périmètre vivant). L'audit est un instrument permanent, pas un événement.
+## 2026-08-02 - Regle d or n(o)21 : convocation systematique des skills (Fable, branche `fable/infra/regle-21-convocation-skills`)
+
+- **Origine (clause 8)** : l etiquette de l activite 1.1 du Book Train avait ete posee de memoire
+  (`4e_C4.4` au lieu de la competence-mere `4e_C4`), alors que le skill `curriculum-assessment-cycle4`
+  existait precisement pour cet arbitrage (corrige en PR #117). L erreur vecue devient la regle.
+- **Regle n(o)21 (decision de Pascal)** : avant toute creation d exercice et toute redaction relevant
+  des trois themes, l agent convoque explicitement les skills pertinents et fait arbitrer chaque
+  etiquette de competence par `_outils/data_competences.py`. Aucun code pose de memoire, aucun
+  document redige sans ses skills.
+- **Regularisation du registre** : les candidates n(o)19 (consignes a l infinitif) et n(o)20 (guides
+  logiciels inclusifs), referencees par les lots sans reservation, prennent officiellement leurs
+  numeros au tableau avec statut Candidate - a enteriner par Pascal.
