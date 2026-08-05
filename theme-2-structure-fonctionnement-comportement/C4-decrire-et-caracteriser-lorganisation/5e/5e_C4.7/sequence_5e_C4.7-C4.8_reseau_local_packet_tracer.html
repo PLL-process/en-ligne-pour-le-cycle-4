@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 5e · Atelier : Le réseau de la salle techno (5e_C4.7 · 5e_C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+
+<style>
+.cartouche-crcn{border:2px solid var(--energie);border-radius:10px;background:rgba(255,180,84,.08);padding:12px 15px;margin:12px 0;font-size:.88em}
+.ligne-exo{margin:10px 0}
+.ligne-exo label{display:block;font-size:.92em;margin-bottom:4px}
+</style>
+
+<a class="skip-link" href="#seances">Aller directement aux séances</a>
+<h1>🌐 Le réseau de la salle techno — l'enquête de l'imprimante folle</h1>
+<p class="subtitle">Thème 2 · Martinique — 5e · Atelier : composants et topologie d'un réseau local, identification des terminaux (Cisco Packet Tracer 8.2)</p>
+<div class="badges">
+  <span class="badge niveau">5e — cycle 4</span>
+  <span class="badge code">5e_C4.7</span>
+  <span class="badge code">5e_C4.8</span>
+  <span class="badge theme">Thème 2 · Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D2 · D4</span>
+  <span class="badge crcn">CRCN : 5.1 (niv. 2)</span>
+  <span class="badge duree">3 séances de 55 min</span>
+</div>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="5e …"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+</div>
+<p class="saved-note" id="savedNote" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
+  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>🚨 La situation : l'imprimante imprime le devoir… de quelqu'un d'autre</h2>
+  <div class="declencheur">
+    <p>Mardi matin, salle de technologie du collège, à Sainte-Luce. Une élève de 5eB envoie son compte
+    rendu vers l'imprimante de la salle… et rien ne sort. Dix minutes plus tard, c'est le compte rendu
+    d'un AUTRE élève qui sort — deux fois. M. Firmin, le gestionnaire du réseau du collège, passe la
+    tête par la porte&nbsp;: <em>«&nbsp;J'ai seize ordinateurs, une imprimante, une borne WiFi, une tablette et
+    maintenant vos téléphones qui veulent se connecter… Il me faut des experts pour remettre de l'ordre.
+    Vous me reconstruisez le réseau de la salle, et vous me PROUVEZ que chaque message arrive au bon
+    appareil.&nbsp;»</em></p>
+    <p><b>Ta mission d'expert&nbsp;:</b> comprendre comment les messages circulent entre les appareils,
+    reconstruire le réseau de la salle dans le simulateur <b>Cisco Packet Tracer</b> (le même logiciel
+    que les vrais techniciens réseau), y connecter même une tablette et un smartphone, et fournir la
+    preuve que la livraison est fiable.</p>
+  </div>
+  <p class="problematique">Comment organiser et identifier les appareils de la salle pour que chaque message arrive, à coup sûr, au bon destinataire&nbsp;?</p>
+  <div class="exo">
+    <label for="hyp1"><b>💭 Ton hypothèse de départ</b> (avant d'apprendre quoi que ce soit — on y reviendra au bilan)&nbsp;: d'après toi, comment un message envoyé par un ordinateur peut-il arriver au MAUVAIS appareil&nbsp;?</label>
+    <textarea id="hyp1" placeholder="Je pense que le message est arrivé au mauvais endroit parce que…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧰 Trois façons de vivre l'atelier</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec M. Firmin ou le professeur&nbsp;: observer les prises réseau murales de la salle, suivre un câble jusqu'au boîtier à prises multiples, repérer la borne WiFi au plafond. <b>Regarder seulement&nbsp;:</b> on ne touche JAMAIS au réseau du collège — c'est justement pour cela qu'on s'entraîne dans un simulateur.</p></div>
+    <div class="version vb"><h4>🅱 Simulation (le cœur de l'atelier)</h4><p>Construire le réseau complet dans <b>Cisco Packet Tracer 8.2</b>, poste par poste, câble par câble — puis le tester avec de vrais messages. Toutes les captures de cette page viennent du vrai logiciel.</p></div>
+    <div class="version vc"><h4>🅲 Sans ordinateur</h4><p>Jouer le réseau en vrai avec le jeu du facteur (activité 1), lire les schémas de la page (identiques à l'écran du logiciel), et utiliser le mini-simulateur d'enveloppe intégré à l'activité 5.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Les trois séances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="seance1" id="tab-s1">Séance 1<br>À quoi ressemble un réseau&nbsp;?<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance2" id="tab-s2">Séance 2<br>Construire dans Packet Tracer<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance3" id="tab-s3">Séance 3<br>Identifier et prouver<span class="done" id="done-s3"></span></button>
+</div>
+
+<!-- ═══════════════════════ SÉANCE 1 ═══════════════════════ -->
+<div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
+
+<div class="activite">
+  <header><span class="num">Activité 1</span><h3>Le facteur du réseau — on joue avant d'apprendre</h3><span class="duree">⏱ ≈ 20 min</span></header>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> découvrir, en jouant, pourquoi une livraison a besoin d'un destinataire clairement identifié.</div>
+    <div><b>Compétence&nbsp;:</b> 5e_C4.8 — Justifier la nécessité d'identifier les terminaux pour communiquer sur un réseau local (activité débranchée et vérification par un outil de simulation).</div>
+    <div><b>Production&nbsp;:</b> les rôles du jeu associés aux mots du réseau + une règle rédigée.</div>
+    <div><b>Ressources&nbsp;:</b> 5 cartes-prénoms, des enveloppes, le schéma «&nbsp;Le facteur du réseau&nbsp;» ci-dessous.</div>
+  </div>
+  <div class="consigne"><b>Consigne (on joue d'abord, on nomme ensuite)&nbsp;:</b> former un groupe de six&nbsp;: un
+  <b>facteur</b> debout au centre, quatre <b>destinataires</b> assis aux quatre coins, un <b>observateur</b> qui note.
+  <br>① <b>Manche 1&nbsp;:</b> chaque destinataire reçoit une carte-prénom différente. L'observateur écrit un mot,
+  le glisse dans une enveloppe, écrit un prénom dessus et la donne au facteur. Livrer. Facile&nbsp;?
+  <br>② <b>Manche 2&nbsp;:</b> donner À DEUX destinataires la même carte-prénom (deux «&nbsp;Maël&nbsp;»). Envoyer une
+  enveloppe «&nbsp;pour Maël&nbsp;». Observer le facteur…
+  <br>③ <b>Manche 3&nbsp;:</b> envoyer une enveloppe SANS nom. Observer encore.
+  <br>Puis répondre ci-dessous.</div>
+  <figure style="margin:14px 0">
+    <img src="Images/facteur_doublon_adresse.svg" alt="Deux scènes du jeu du facteur : à gauche, trois maisons numérotées 10, 20 et 30 — la livraison vers la maison 30 se fait sans hésiter ; à droite, deux maisons portent toutes les deux le numéro 20 et le facteur, bloqué devant un grand point d'interrogation, ne sait pas laquelle choisir. Règle : dans une même rue chaque maison a un numéro unique, dans un même réseau chaque terminal a une adresse unique." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Le jeu que tu viens de vivre, dessiné — garde cette image en tête pour TOUTE la séquence.</figcaption>
+  </figure>
+  <div class="exo">
+    <h4>Ce que le jeu vient de te montrer</h4>
+    <div class="ligne-exo"><label for="e1_1">Manche 2 — quand deux destinataires portent le même prénom, le facteur…</label>
+      <select id="e1_1"><option value="">— je choisis —</option>
+        <option>livre toujours au premier assis à sa droite</option>
+        <option>ne peut plus choisir&nbsp;: la livraison devient un pari</option>
+        <option>livre aux deux, c'est plus sûr</option>
+        <option>refuse de travailler et rend sa casquette</option></select></div>
+    <div class="ligne-exo"><label for="e1_2">Manche 3 — une enveloppe sans nom…</label>
+      <select id="e1_2"><option value="">— je choisis —</option>
+        <option>arrive quand même, le facteur devine</option>
+        <option>est livrée au professeur</option>
+        <option>ne peut pas être livrée du tout</option></select></div>
+    <div class="ligne-exo"><label for="e1_3">Dans le vrai réseau de la salle, qui joue le rôle du facteur (celui qui reçoit tout et redistribue)&nbsp;?</label>
+      <select id="e1_3"><option value="">— je choisis —</option>
+        <option>l'écran du professeur</option>
+        <option>le boîtier central où arrivent tous les câbles</option>
+        <option>la souris de chaque poste</option>
+        <option>le câble le plus long</option></select></div>
+    <div class="ligne-exo"><label for="e1_4">Et qui joue le rôle des destinataires&nbsp;?</label>
+      <select id="e1_4"><option value="">— je choisis —</option>
+        <option>les appareils qui envoient ou reçoivent les messages (ordinateurs, imprimante, tablette…)</option>
+        <option>les fenêtres de la salle</option>
+        <option>uniquement l'imprimante</option></select></div>
+    <div class="ligne-exo"><label for="e1_just">Rédiger la règle du jeu en une phrase, pour M. Firmin (utiliser le mot «&nbsp;unique&nbsp;»)&nbsp;:</label>
+      <textarea id="e1_just" placeholder="Pour que chaque message arrive au bon destinataire, il faut que…"></textarea></div>
+    <button class="btn small" data-check="1">✔ Vérifier mes réponses</button>
+    <div class="feedback" id="fb1" role="status"></div>
+  </div>
+  <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Repense aux trois manches&nbsp;: tout va bien quand chaque destinataire a un nom À LUI. Le problème arrive dès que deux personnes se ressemblent «&nbsp;sur l'étiquette&nbsp;». Le facteur, lui, ne devine jamais&nbsp;: il lit ce qui est écrit, c'est tout.</p></details>
+  <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le boîtier central où arrivent tous les câbles de la salle s'appelle un <b>commutateur</b> — tu vas le voir à l'activité 2. Les appareils qui envoient/reçoivent (PC, imprimante, tablette, smartphone) s'appellent des <b>terminaux</b>. La règle&nbsp;: chaque terminal doit être identifié de façon <b>unique</b>.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p>Manche 2&nbsp;: le facteur <b>ne peut plus choisir</b> — deux destinataires identiques rendent la livraison
+    incertaine (le message peut arriver au mauvais «&nbsp;Maël&nbsp;»). Manche 3&nbsp;: sans nom, <b>aucune livraison
+    possible</b>. Dans la salle, le facteur = <b>le boîtier central où arrivent tous les câbles</b> (son vrai nom&nbsp;:
+    le commutateur), et les destinataires = <b>les appareils qui envoient ou reçoivent</b> (leur vrai nom&nbsp;: les
+    terminaux). Règle attendue&nbsp;: <em>«&nbsp;pour que chaque message arrive au bon destinataire, chaque appareil doit
+    porter une identification <b>unique</b>&nbsp;»</em>.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> croire que le facteur «&nbsp;connaît&nbsp;» les gens (il ne fait que LIRE l'étiquette)&nbsp;; croire qu'une livraison au hasard «&nbsp;finira bien par arriver&nbsp;».</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> une livraison fiable exige un destinataire identifié de façon <b>unique</b>. C'est vrai pour le courrier… et pour tous les messages d'un réseau.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 4 bonnes réponses + une règle qui contient «&nbsp;unique&nbsp;».</div>
+</div>
+
+<div class="activite">
+  <header><span class="num">Activité 2</span><h3>Les appareils de la salle — apprendre leurs vrais noms</h3><span class="duree">⏱ ≈ 25 min</span></header>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> nommer les composants d'un réseau local et reconnaître sa forme (sa topologie).</div>
+    <div><b>Compétence&nbsp;:</b> 5e_C4.7 — Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie.</div>
+    <div><b>Production&nbsp;:</b> le schéma du réseau lu et complété (6 identifications + 1 comptage).</div>
+    <div><b>Ressources&nbsp;:</b> le schéma d'ensemble ci-dessous — c'est le réseau que TU construiras en séance 2.</div>
+  </div>
+  <div class="consigne"><b>Consigne&nbsp;:</b> lire le schéma d'ensemble ci-dessous (c'est l'écran du simulateur, reconstitué trait
+  pour trait), puis identifier chaque élément dans l'exercice. Les mots nouveaux sont dans l'encadré «&nbsp;les 4 mots du réseau&nbsp;».</div>
+  <div class="retenir"><b>🆕 Les 4 mots du réseau (les seuls à connaître en 5e)&nbsp;:</b><br>
+  • un <b>terminal</b>&nbsp;: un appareil qui envoie ou reçoit des messages (ordinateur, imprimante, tablette, smartphone…) — les «&nbsp;destinataires&nbsp;» du jeu&nbsp;;<br>
+  • un <b>commutateur</b>&nbsp;: le boîtier central qui reçoit tous les câbles et redistribue chaque message vers le bon terminal — le «&nbsp;facteur&nbsp;»&nbsp;;<br>
+  • une <b>liaison filaire</b>&nbsp;: un câble entre un terminal et le commutateur&nbsp;;<br>
+  • une <b>liaison sans fil (WiFi)</b>&nbsp;: une liaison par ondes radio, grâce à un <b>point d'accès</b> (la borne WiFi).</div>
+  <figure style="margin:14px 0">
+    <img src="Images/reseau_salle_techno_topologie.svg" alt="Le réseau de la salle de technologie dans l'espace logique de Packet Tracer : au centre le commutateur Switch0, relié par des traits pleins (liaisons filaires) à PC0, PC1 et au point d'accès AccessPoint0 ; le point d'accès est relié par des pointillés (liaisons sans fil) au portable Laptop0, à la tablette TabletPC0 et au smartphone Smartphone0. Chaque appareil porte son nom et son adresse. L'ensemble dessine une étoile." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Le schéma d'ensemble du réseau de la salle — reconstitué d'après l'écran réel de Packet Tracer 8.2.</figcaption>
+  </figure>
+  <div class="exo">
+    <h4>Lire le schéma d'ensemble</h4>
+    <div class="ligne-exo"><label for="e2_1">PC0, PC1, le portable, la tablette, le smartphone et l'imprimante de la salle sont des…</label>
+      <select id="e2_1"><option value="">— je choisis —</option><option>commutateurs</option><option>terminaux</option><option>liaisons</option><option>points d'accès</option></select></div>
+    <div class="ligne-exo"><label for="e2_2">Switch0, le boîtier central où arrivent les traits pleins, est…</label>
+      <select id="e2_2"><option value="">— je choisis —</option><option>le commutateur</option><option>un terminal</option><option>la box internet de la salle</option><option>un gros câble</option></select></div>
+    <div class="ligne-exo"><label for="e2_3">Un trait PLEIN entre PC0 et Switch0 représente…</label>
+      <select id="e2_3"><option value="">— je choisis —</option><option>une liaison sans fil (WiFi)</option><option>une liaison filaire (un câble)</option><option>un mur de la salle</option></select></div>
+    <div class="ligne-exo"><label for="e2_4">Un trait en POINTILLÉS entre le point d'accès et la tablette représente…</label>
+      <select id="e2_4"><option value="">— je choisis —</option><option>une liaison filaire (un câble)</option><option>un câble cassé</option><option>une liaison sans fil (WiFi)</option></select></div>
+    <div class="ligne-exo"><label for="e2_5">AccessPoint0, qui relie le monde du câble et le monde des ondes, est…</label>
+      <select id="e2_5"><option value="">— je choisis —</option><option>le point d'accès (la borne WiFi)</option><option>un deuxième commutateur</option><option>un terminal comme les autres</option></select></div>
+    <div class="ligne-exo"><label for="e2_6">Compter sur le schéma&nbsp;: combien de TERMINAUX ce réseau compte-t-il&nbsp;?</label>
+      <select id="e2_6"><option value="">— je choisis —</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></div>
+    <div class="ligne-exo"><label for="e2_7">Tous les chemins passent par le centre&nbsp;: cette forme de réseau s'appelle…</label>
+      <select id="e2_7"><option value="">— je choisis —</option><option>une topologie en ligne</option><option>une topologie en étoile</option><option>une topologie en cercle</option><option>un labyrinthe</option></select></div>
+    <button class="btn small" data-check="2">✔ Vérifier mes réponses</button>
+    <div class="feedback" id="fb2" role="status"></div>
+  </div>
+  <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprendre le jeu de l'activité 1&nbsp;: les destinataires = les appareils qui reçoivent (les <b>terminaux</b>)&nbsp;; le facteur = le boîtier central (le <b>commutateur</b>). Trait plein = câble qu'on peut toucher&nbsp;; pointillés = ondes invisibles.</p></details>
+  <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour compter les terminaux&nbsp;: PC0, PC1, Laptop0, TabletPC0, Smartphone0 — le commutateur et le point d'accès ne comptent PAS&nbsp;: ils ne sont ni expéditeurs ni destinataires des messages, ils les font passer. Relie tous les appareils au centre par la pensée&nbsp;: on dirait une étoile ⭐.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p>PC, portable, tablette, smartphone, imprimante = des <b>terminaux</b>. Switch0 = <b>le commutateur</b>.
+    Trait plein = <b>liaison filaire</b>&nbsp;; pointillés = <b>liaison sans fil (WiFi)</b>. AccessPoint0 = <b>le point
+    d'accès</b>. Le schéma montre <b>5</b> terminaux (PC0, PC1, Laptop0, TabletPC0, Smartphone0). La forme, où tout
+    passe par le centre, est la <b>topologie en étoile</b> — la plus courante dans les écoles et les entreprises,
+    car si UNE branche casse, les autres continuent de fonctionner.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> compter le commutateur ou le point d'accès parmi les terminaux&nbsp;; croire que le WiFi «&nbsp;n'a pas besoin&nbsp;» du point d'accès&nbsp;; oublier que le smartphone, en cours de techno, est un terminal comme un autre.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> un réseau local = des <b>terminaux</b> + un <b>commutateur</b> + des <b>liaisons</b> (filaires ou sans fil via le <b>point d'accès</b>). Quand tout passe par le centre, la <b>topologie</b> est «&nbsp;en étoile&nbsp;».</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 7 bonnes réponses sur 7.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════ SÉANCE 2 ═══════════════════════ -->
+<div class="seance-panel" id="seance2" role="tabpanel" aria-labelledby="tab-s2">
+
+<div class="activite">
+  <header><span class="num">Activité 3</span><h3>Construire le réseau dans Packet Tracer — le guide qui ne saute aucune étape</h3><span class="duree">⏱ ≈ 45 min</span></header>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> assembler le réseau complet de la salle (composants + liaisons) dans le simulateur.</div>
+    <div><b>Compétence&nbsp;:</b> 5e_C4.7 — Identifier les composants qui constituent un réseau local (terminaux, commutateurs, liaisons filaires et sans fil (WiFi)) et sa topologie.</div>
+    <div><b>Production&nbsp;:</b> ton fichier <b>reseau_5X_NOM_Prenom.pkt</b> + 4 relevés faits DANS le logiciel.</div>
+    <div><b>Ressources&nbsp;:</b> Cisco Packet Tracer 8.2 (un poste pour deux) — guide A→H ci-dessous, capture par capture.</div>
+  </div>
+  <div class="consigne"><b>Consigne&nbsp;:</b> suivre le guide étape par étape, à deux&nbsp;: l'un manipule («&nbsp;pilote&nbsp;»), l'autre lit le guide à voix haute («&nbsp;copilote&nbsp;») — échanger les rôles à l'étape E. Les questions 🔎 se répondent en OBSERVANT ton écran&nbsp;: elles prouvent que tu as vraiment fait la manipulation.</div>
+
+  <h4>🧭 Étape A — Ouvrir Packet Tracer et reconnaître l'écran</h4>
+  <p>Lancer <b>Cisco Packet Tracer</b> (se connecter avec le compte de la classe si le logiciel le demande). Repérer les 4 zones&nbsp;:</p>
+  <figure style="margin:10px 0">
+    <img src="Images/pt_interface_annotee.svg" alt="La fenêtre de Packet Tracer avec quatre zones numérotées : 1 la barre de menus en haut (File, Edit, Options…), 2 le grand espace de travail logique blanc au centre, 3 la palette d'équipements en bas à gauche avec ses deux rangées d'icônes de catégories, 4 les onglets Realtime et Simulation en bas à droite." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">L'écran d'accueil, reconstitué d'après Packet Tracer 8.2 — tes 4 zones de travail.</figcaption>
+  </figure>
+
+  <h4>🧭 Étape B — Poser le commutateur (le facteur d'abord&nbsp;!)</h4>
+  <p>Dans la palette (zone ③)&nbsp;: cliquer sur la catégorie <b>Network Devices</b> (1ʳᵉ icône de la rangée du haut), puis sur la sous-famille <b>Switches</b> (2ᵉ icône de la rangée du bas). Dans la liste des modèles, attraper le <b>2960</b> et le GLISSER au centre de l'espace blanc. Il s'appelle automatiquement <b>Switch0</b>.</p>
+
+  <h4>🧭 Étape C — Poser les terminaux filaires</h4>
+  <p>Catégorie <b>End Devices</b> (2ᵉ icône de la rangée du haut)&nbsp;: glisser un <b>PC</b> en haut à gauche, puis un
+  deuxième <b>PC</b> en bas à gauche. Ils se nomment <b>PC0</b> et <b>PC1</b>. Laisser de la place à droite pour la partie WiFi.</p>
+
+  <h4>🧭 Étape D — Câbler (le geste le plus important de l'année)</h4>
+  <p>Catégorie <b>Connections</b> (l'éclair ⚡), puis choisir le câble <b>Copper Straight-Through</b> (« câble cuivre
+  droit »&nbsp;: le trait plein). Ensuite&nbsp;: cliquer sur <b>PC0</b> → choisir sa prise <b>FastEthernet0</b>&nbsp;;
+  cliquer sur <b>Switch0</b> → choisir la prise <b>FastEthernet0/1</b>. Recommencer&nbsp;: PC1 (FastEthernet0) → Switch0 (<b>FastEthernet0/2</b>).</p>
+  <figure style="margin:10px 0">
+    <img src="Images/pt_cablage_menus.svg" alt="Les deux menus de câblage : celui du PC propose RS 232, USB0, USB1 et FastEthernet0 (la prise réseau, entourée en vert) ; celui du commutateur liste Console, FastEthernet0/1 à 0/24 puis GigabitEthernet0/1 et 0/2, avec FastEthernet0/1 entouré. À droite, la légende des triangles : orange, la prise démarre ; vert, la liaison fonctionne ; rouge, problème. En bas, le résumé du geste en quatre temps." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Les menus exacts qui s'ouvrent en câblant — et le code couleur des triangles.</figcaption>
+  </figure>
+  <div class="exo">
+    <div class="ligne-exo"><label for="e3_ports">🔎 Relevé n°1 — dans le menu de Switch0, compter&nbsp;: combien de prises «&nbsp;FastEthernet&nbsp;» sont proposées&nbsp;?</label>
+      <select id="e3_ports"><option value="">— je choisis —</option><option>2</option><option>8</option><option>16</option><option>24</option><option>48</option></select></div>
+    <div class="ligne-exo"><label for="e3_tri">🔎 Relevé n°2 — juste après le branchement, puis quelques secondes plus tard, les triangles au bout du câble sont…</label>
+      <select id="e3_tri"><option value="">— je choisis —</option><option>verts tout de suite</option><option>orange, puis verts</option><option>rouges, puis orange</option><option>invisibles</option></select></div>
+  </div>
+
+  <h4>🧭 Étape E — Poser le point d'accès et nommer le réseau WiFi (échange des rôles&nbsp;!)</h4>
+  <p>Catégorie <b>Network Devices</b> → sous-famille <b>Wireless Devices</b> (l'icône ondes)&nbsp;: glisser un
+  <b>AP-PT</b> en haut à droite. Le relier au commutateur&nbsp;: câble droit, du <b>Port 0</b> du point d'accès vers
+  <b>FastEthernet0/3</b> de Switch0. Puis cliquer sur le point d'accès → onglet <b>Config</b> → <b>Port 1</b> →
+  dans le champ <b>SSID</b>, remplacer «&nbsp;Default&nbsp;» par <b>TECHNO-C4</b>.</p>
+
+  <h4>🧭 Étape F — Le portable passe au WiFi (l'opération «&nbsp;carte réseau&nbsp;»)</h4>
+  <p>Glisser un <b>Laptop</b> (End Devices) en bas à droite. Puis, dans sa fenêtre, onglet <b>Physical</b>&nbsp;:
+  ① l'ÉTEINDRE (bouton rond sur le côté)&nbsp;; ② glisser le module filaire HORS de sa baie&nbsp;; ③ glisser le module
+  WiFi <b>WPC300N</b> DANS la baie&nbsp;; ④ le RALLUMER. Enfin&nbsp;: onglet <b>Desktop</b> → <b>PC Wireless</b> →
+  onglet <b>Connect</b> → cliquer la ligne <b>TECHNO-C4</b> → bouton <b>Connect</b>.</p>
+  <figure style="margin:10px 0">
+    <img src="Images/pt_wifi_ssid_module.svg" alt="Trois fenêtres reconstituées : la configuration du point d'accès avec le champ SSID rempli TECHNO-C4 et Port Status sur On ; la fenêtre PC Wireless onglet Connect où la ligne TECHNO-C4 apparaît avec un signal de 47 % et le bouton Connect ; et le portable vu de côté avec les étapes numérotées — éteindre, sortir le module filaire, insérer le module WiFi WPC300N, rallumer." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Nommer le réseau (SSID), équiper le portable, le connecter — les trois fenêtres du vrai logiciel.</figcaption>
+  </figure>
+  <div class="exo">
+    <div class="ligne-exo"><label for="e3_signal">🔎 Relevé n°3 — dans l'onglet Connect, quel pourcentage de signal ta ligne TECHNO-C4 affiche-t-elle&nbsp;? (écrire le nombre vu sur TON écran)</label>
+      <input type="number" id="e3_signal" min="1" max="100" placeholder="ex. 47"></div>
+  </div>
+
+  <h4>🧭 Étape G — La tablette et le smartphone entrent en scène 🎉</h4>
+  <p>Dans <b>End Devices</b>, glisser une <b>Tablet</b> en haut au centre et un <b>Smartphone</b> en bas au centre.
+  Pour chacun&nbsp;: onglet <b>Config</b> → <b>Wireless0</b> → remplacer le SSID «&nbsp;Default&nbsp;» par <b>TECHNO-C4</b>.
+  Des liaisons en pointillés apparaissent vers le point d'accès&nbsp;: ils ont rejoint le réseau, sans aucun câble.</p>
+  <div class="exo">
+    <div class="ligne-exo"><label for="e3_pointilles">🔎 Relevé n°4 — compter sur TON écran&nbsp;: combien de liaisons en pointillés partent du point d'accès&nbsp;?</label>
+      <select id="e3_pointilles"><option value="">— je choisis —</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+  </div>
+
+  <h4>🧭 Étape H — Enregistrer (toujours, tout de suite)</h4>
+  <p>Menu <b>File</b> → <b>Save As…</b> → nommer le fichier <b>reseau_5X_NOM_Prenom.pkt</b> (remplacer 5X par ta
+  classe, sans espaces ni accents — ex. <span style="font-family:'Fira Code',monospace">reseau_5B_PAYET_Chloe.pkt</span>) et l'enregistrer dans le dossier de la classe.</p>
+
+  <div class="exo">
+    <h4>Dernier contrôle avant validation</h4>
+    <div class="ligne-exo"><label for="e3_cable">Quel câble as-tu utilisé pour TOUTES les liaisons filaires&nbsp;?</label>
+      <select id="e3_cable"><option value="">— je choisis —</option><option>Console (le câble bleu clair)</option><option>Copper Straight-Through (le câble cuivre droit)</option><option>Fiber (la fibre orange)</option><option>n'importe lequel, ça marche pareil</option></select></div>
+    <div class="ligne-exo"><label for="e3_pourquoi_ap">Sans le point d'accès, la tablette pourrait-elle rejoindre ce réseau&nbsp;?</label>
+      <select id="e3_pourquoi_ap"><option value="">— je choisis —</option><option>oui, le WiFi se connecte tout seul au commutateur</option><option>non&nbsp;: c'est le point d'accès qui fait le pont entre les ondes et le réseau câblé</option><option>oui, si elle est assez proche de PC0</option></select></div>
+    <button class="btn small" data-check="3">✔ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3" role="status"></div>
+  </div>
+  <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Perdu dans la palette&nbsp;? Zone ③, rangée du HAUT = les grandes catégories (Network Devices, End Devices, … l'éclair Connections)&nbsp;; rangée du BAS = les sous-familles. Le nom du modèle s'affiche sous la liste quand tu poses la souris dessus. Pour les relevés 🔎&nbsp;: la réponse est sur TON écran, pas dans ta mémoire.</p></details>
+  <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Étape D&nbsp;: si ton câble n'a pas de menu, tu as pris le câble «&nbsp;Automatic&nbsp;» (l'éclair orange) — recommencer avec Copper Straight-Through. Étape F&nbsp;: la baie du portable est sur le CÔTÉ (vue de profil)&nbsp;; il faut vraiment éteindre avant de changer le module, sinon rien ne bouge. Étape G&nbsp;: le SSID doit être écrit EXACTEMENT pareil&nbsp;: TECHNO-C4 (tiret compris).</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p>Relevé 1&nbsp;: le menu du 2960 liste <b>24</b> prises FastEthernet (0/1 à 0/24) — de quoi câbler toute la salle.
+    Relevé 2&nbsp;: triangles <b>orange puis verts</b> (la prise «&nbsp;démarre&nbsp;», puis la liaison fonctionne).
+    Relevé 3&nbsp;: le signal dépend de la distance tablette↔borne sur ton plan — toute valeur entre 1 et 100&nbsp;% lue
+    à l'écran est bonne. Relevé 4&nbsp;: <b>3</b> liaisons pointillées (portable, tablette, smartphone).
+    Câble&nbsp;: <b>Copper Straight-Through</b> pour PC↔commutateur et point d'accès↔commutateur.
+    Sans point d'accès&nbsp;: <b>non</b> — c'est lui qui fait le pont ondes ↔ câble.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> prendre le câble «&nbsp;Automatic&nbsp;» et ne pas voir les menus de prises&nbsp;; brancher deux appareils sur la MÊME prise du commutateur (impossible&nbsp;: une prise = un câble)&nbsp;; écrire «&nbsp;techno-c4&nbsp;» en minuscules dans le SSID&nbsp;; oublier d'enregistrer.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> construire un réseau local = poser le <b>commutateur</b>, poser les <b>terminaux</b>, tirer les <b>liaisons</b> (câble droit vers une prise LIBRE), ajouter le <b>point d'accès</b> et son nom de réseau (SSID) pour les terminaux sans fil.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> les 4 relevés 🔎 justes + les 2 questions de contrôle + ton fichier .pkt enregistré au bon nom.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════ SÉANCE 3 ═══════════════════════ -->
+<div class="seance-panel" id="seance3" role="tabpanel" aria-labelledby="tab-s3">
+
+<div class="activite">
+  <header><span class="num">Activité 4</span><h3>Une adresse pour chacun — la rue 192.168.10</h3><span class="duree">⏱ ≈ 20 min</span></header>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> donner à chaque terminal une identification unique&nbsp;: son adresse IP.</div>
+    <div><b>Compétence&nbsp;:</b> 5e_C4.8 — Justifier la nécessité d'identifier les terminaux pour communiquer sur un réseau local (activité débranchée et vérification par un outil de simulation).</div>
+    <div><b>Production&nbsp;:</b> les 5 terminaux du fichier .pkt adressés selon la table de la salle.</div>
+    <div><b>Ressources&nbsp;:</b> la capture «&nbsp;IP Configuration&nbsp;» et l'analogie de la rue, ci-dessous.</div>
+  </div>
+  <div class="consigne"><b>Consigne&nbsp;:</b> observer d'abord l'image de la rue (en haut à droite de la capture), puis, dans
+  Packet Tracer, ouvrir chaque terminal&nbsp;: onglet <b>Desktop</b> → <b>IP Configuration</b> → cocher <b>Static</b> →
+  taper l'adresse de la table. Faire les cinq, puis répondre.</div>
+  <figure style="margin:14px 0">
+    <img src="Images/pt_ip_configuration.svg" alt="À gauche, la fenêtre IP Configuration de PC0 dans Packet Tracer : interface FastEthernet0, choix Static coché, IPv4 Address 192.168.10.10, Subnet Mask 255.255.255.0 rempli automatiquement avec la note « laisse-la telle quelle, tu l'étudieras en 4e ». À droite, l'analogie : la rue 192.168.10 avec cinq maisons numérotées 10, 20, 30, 40, 50 — les trois premiers nombres sont le nom de la rue commun à tous, le dernier est le numéro de maison, unique. En bas, la table d'adressage complète de la salle." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">La fenêtre exacte du logiciel, et l'image à garder en tête&nbsp;: une rue, des numéros de maison.</figcaption>
+  </figure>
+  <div class="exo">
+    <div class="ligne-exo"><label for="e4_1">Dans l'adresse 192.168.10.<b>40</b> de la tablette, que représentent les trois premiers nombres «&nbsp;192.168.10&nbsp;»&nbsp;?</label>
+      <select id="e4_1"><option value="">— je choisis —</option><option>le numéro de maison de la tablette</option><option>le nom de la rue, commun à tous les appareils de la salle</option><option>le mot de passe du WiFi</option><option>la marque de la tablette</option></select></div>
+    <div class="ligne-exo"><label for="e4_2">Et le dernier nombre («&nbsp;40&nbsp;»)&nbsp;?</label>
+      <select id="e4_2"><option value="">— je choisis —</option><option>le nom de la rue</option><option>l'âge de l'appareil</option><option>le numéro de maison de la tablette — unique dans la rue</option></select></div>
+    <div class="ligne-exo"><label for="e4_3">Le smartphone doit recevoir une adresse. Laquelle convient&nbsp;?</label>
+      <select id="e4_3"><option value="">— je choisis —</option><option>192.168.10.20 (déjà prise par PC1, mais il est éteint)</option><option>192.168.10.50 — dans la même rue, avec un numéro encore libre</option><option>10.0.0.50 — une autre rue, c'est plus original</option></select></div>
+    <div class="ligne-exo"><label for="e4_4">Dans quelle fenêtre du terminal tape-t-on cette adresse&nbsp;?</label>
+      <select id="e4_4"><option value="">— je choisis —</option><option>Desktop → IP Configuration, en cochant Static</option><option>Physical, en changeant le module</option><option>Config → Port 1 du point d'accès</option></select></div>
+    <div class="ligne-exo"><label for="e4_just">M. Firmin te demande&nbsp;: «&nbsp;pourquoi je ne peux pas donner le même dernier nombre à deux appareils&nbsp;?&nbsp;». Répondre en une phrase (penser au facteur…)&nbsp;:</label>
+      <textarea id="e4_just" placeholder="Parce que si deux appareils ont la même adresse…"></textarea></div>
+    <button class="btn small" data-check="4">✔ Vérifier mes réponses</button>
+    <div class="feedback" id="fb4" role="status"></div>
+  </div>
+  <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarder l'image de la rue&nbsp;: TOUTES les maisons partagent le même panneau «&nbsp;192.168.10&nbsp;», et chacune a SON numéro. L'adresse IP fonctionne exactement pareil&nbsp;: rue commune + numéro personnel.</p></details>
+  <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>192.168.10.20 est déjà l'adresse de PC1&nbsp;: même éteint, il garde son adresse — la reprendre créerait un doublon dès qu'il se rallume (revoir la manche 2 du jeu du facteur&nbsp;!). 10.0.0.50 est une AUTRE rue&nbsp;: le facteur de notre rue ne dessert pas cette maison-là.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p>«&nbsp;192.168.10&nbsp;» = <b>le nom de la rue</b>, commun à toute la salle. Le dernier nombre = <b>le numéro de
+    maison, unique</b>. Pour le smartphone&nbsp;: <b>192.168.10.50</b> (même rue, numéro libre). On tape l'adresse dans
+    <b>Desktop → IP Configuration → Static</b>. Justification attendue&nbsp;: avec deux adresses identiques, le réseau
+    ne peut plus distinguer les deux appareils&nbsp;: la livraison devient incertaine ou échoue — comme le facteur face
+    à deux maisons «&nbsp;20&nbsp;».</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> changer AUSSI les trois premiers nombres (l'appareil change alors de «&nbsp;rue&nbsp;» et ne reçoit plus rien)&nbsp;; toucher à la case Subnet Mask (elle se remplit seule&nbsp;: 255.255.255.0)&nbsp;; croire qu'un appareil éteint «&nbsp;libère&nbsp;» son adresse.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> l'<b>adresse IP</b> identifie chaque terminal&nbsp;: trois premiers nombres = la «&nbsp;rue&nbsp;» commune au réseau, dernier nombre = le «&nbsp;numéro de maison&nbsp;», <b>unique</b>.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 4 bonnes réponses + une justification qui relie doublon et livraison.</div>
+</div>
+
+<div class="activite">
+  <header><span class="num">Activité 5</span><h3>La preuve par le message — ping, enveloppe… et la panne interdite</h3><span class="duree">⏱ ≈ 25 min</span></header>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> prouver que le réseau livre correctement — et vérifier ce qui casse quand deux adresses sont identiques.</div>
+    <div><b>Compétence&nbsp;:</b> 5e_C4.8 — Justifier la nécessité d'identifier les terminaux (vérification par un outil de simulation) · CRCN 5.1 (voir cartouche).</div>
+    <div><b>Production&nbsp;:</b> deux tests ping relevés + le trajet de l'enveloppe observé (dans Packet Tracer ET dans le mini-simulateur ci-dessous).</div>
+    <div><b>Ressources&nbsp;:</b> la capture «&nbsp;ping + Simulation&nbsp;», le mini-simulateur d'enveloppe intégré.</div>
+  </div>
+  <div class="cartouche-crcn">
+    <b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé&nbsp;: 2<br>
+    <span style="font-style:italic">Repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;»</span><br>
+    <b>Action observable&nbsp;:</b> provoquer volontairement un doublon d'adresse, constater l'échec de livraison, puis rétablir la bonne adresse.
+    <b>Trace&nbsp;:</b> tes deux expériences du mini-simulateur sont enregistrées dans la page + tes relevés de ping.
+    <b>Réussite&nbsp;:</b> vérificateur de l'activité 5 au vert.
+  </div>
+  <div class="consigne"><b>Consigne — trois preuves à rapporter&nbsp;:</b>
+  <br>① <b>Le ping.</b> Dans Packet Tracer, ouvrir PC0 → Desktop → <b>Command Prompt</b>, taper
+  <span style="font-family:'Fira Code',monospace">ping 192.168.10.20</span> et lire la réponse. Recommencer vers le smartphone&nbsp;:
+  <span style="font-family:'Fira Code',monospace">ping 192.168.10.50</span>. Comparer les temps.
+  <br>② <b>L'enveloppe.</b> Passer en mode <b>Simulation</b> (en bas à droite), prendre l'outil enveloppe
+  «&nbsp;Add Simple PDU&nbsp;», cliquer PC0 puis PC1, et avancer pas à pas avec ⏭ <b>Capture/Forward</b>. Observer OÙ l'enveloppe s'arrête.
+  <br>③ <b>La panne interdite.</b> Donner à la tablette l'adresse de PC1 (192.168.10.20), refaire le ping vers .20… puis
+  REMETTRE 192.168.10.40. Utiliser aussi le mini-simulateur ci-dessous pour rejouer la panne sans risque.</div>
+  <figure style="margin:14px 0">
+    <img src="Images/pt_ping_simulation.svg" alt="À gauche, le terminal de PC0 : la commande ping 192.168.10.20 reçoit quatre réponses Reply from en moins d'une milliseconde avec zéro pour cent de perte, puis le ping vers le smartphone 192.168.10.50 reçoit quatre réponses en 57 à 260 millisecondes — le WiFi répond plus lentement que le câble. À droite, le mode Simulation : l'enveloppe verte est posée sur Switch0 entre PC0 et PC1, et la liste d'événements affiche 0,001 PC0, 0,002 Switch0, 0,003 PC1. En bas, la conclusion : le message passe toujours par le centre de l'étoile, qui lit l'adresse et choisit la bonne branche." style="width:100%;border-radius:12px;border:1px solid var(--border)">
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Les deux preuves, telles qu'elles s'affichent réellement dans Packet Tracer 8.2.</figcaption>
+  </figure>
+
+  <div class="exo" id="miniSimBloc">
+    <h4>🎮 Mini-simulateur — l'enveloppe dans l'étoile (à faire, il compte pour la validation)</h4>
+    <p style="font-size:.9em">Choisir un destinataire, envoyer l'enveloppe, la regarder passer par le commutateur. Puis cocher «&nbsp;panne&nbsp;: doublon d'adresse&nbsp;» et recommencer…</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+      <label for="simDest" style="font-size:.9em"><b>Destinataire&nbsp;:</b></label>
+      <select id="simDest" style="max-width:260px">
+        <option value="20">PC1 — 192.168.10.20</option>
+        <option value="30">Portable — 192.168.10.30</option>
+        <option value="50">Smartphone — 192.168.10.50</option>
+      </select>
+      <label style="font-size:.9em"><input type="checkbox" id="simDoublon"> 💥 panne&nbsp;: la tablette prend AUSSI l'adresse choisie (doublon)</label>
+      <button class="btn small" id="btnSimSend" type="button">✉ Envoyer l'enveloppe</button>
+    </div>
+    <svg viewBox="0 0 700 210" style="width:100%;background:#08132c;border:1px solid var(--border);border-radius:10px" aria-label="Mini-simulateur : PC0 à gauche, le commutateur au centre, trois destinataires à droite ; l'enveloppe avance pas à pas" role="img">
+      <line x1="120" y1="105" x2="330" y2="105" stroke="#2f6590" stroke-width="4"/>
+      <line x1="370" y1="105" x2="580" y2="45" stroke="#2f6590" stroke-width="4"/>
+      <line x1="370" y1="105" x2="580" y2="105" stroke="#5b7bb8" stroke-width="3" stroke-dasharray="4 7"/>
+      <line x1="370" y1="105" x2="580" y2="165" stroke="#5b7bb8" stroke-width="3" stroke-dasharray="4 7"/>
+      <rect x="60" y="85" width="60" height="40" rx="6" fill="#173666" stroke="#2e5d9f"/><text x="90" y="109" text-anchor="middle" font-size="12" fill="#e4eaf5">PC0</text>
+      <rect x="330" y="85" width="70" height="40" rx="6" fill="#1d4e89" stroke="#61dafb"/><text x="365" y="109" text-anchor="middle" font-size="11" fill="#e4eaf5">Switch0</text>
+      <rect x="580" y="25" width="90" height="40" rx="6" fill="#173666" stroke="#2e5d9f"/><text x="625" y="49" text-anchor="middle" font-size="11" fill="#e4eaf5">PC1 · .20</text>
+      <rect x="580" y="85" width="90" height="40" rx="6" fill="#173666" stroke="#2e5d9f"/><text x="625" y="109" text-anchor="middle" font-size="11" fill="#e4eaf5">Portable · .30</text>
+      <rect x="580" y="145" width="90" height="40" rx="6" fill="#173666" stroke="#2e5d9f"/><text x="625" y="169" text-anchor="middle" font-size="11" fill="#e4eaf5">Tél. · .50</text>
+      <g id="simEnv" style="visibility:hidden">
+        <rect x="-14" y="-10" width="28" height="20" rx="3" fill="#e9f7d8" stroke="#5a8f21" stroke-width="2"/>
+        <path d="M-14 -10 L0 2 L14 -10" fill="none" stroke="#5a8f21" stroke-width="2"/>
+      </g>
+      <text id="simMsg" x="350" y="200" text-anchor="middle" font-size="13" fill="#ffd66b"></text>
+    </svg>
+    <div class="ligne-exo" style="margin-top:10px"><label for="e5_env">Dans le mini-simulateur ET dans Packet Tracer, par où l'enveloppe passe-t-elle TOUJOURS&nbsp;?</label>
+      <select id="e5_env"><option value="">— je choisis —</option><option>directement de PC0 au destinataire, en ligne droite</option><option>par le commutateur, le centre de l'étoile</option><option>par l'imprimante</option></select></div>
+  </div>
+
+  <div class="exo">
+    <h4>Relevés de preuves</h4>
+    <div class="ligne-exo"><label for="e5_1">Le ping vers PC1 (câble) répond «&nbsp;Reply from 192.168.10.20&nbsp;». Cela prouve que…</label>
+      <select id="e5_1"><option value="">— je choisis —</option><option>l'aller ET le retour du message fonctionnent</option><option>PC1 est allumé, c'est tout</option><option>le WiFi est en panne</option><option>rien du tout</option></select></div>
+    <div class="ligne-exo"><label for="e5_2">Comparer les temps&nbsp;: filaire «&nbsp;&lt;1ms&nbsp;», WiFi «&nbsp;57 à 260&nbsp;ms&nbsp;». Conclusion&nbsp;?</label>
+      <select id="e5_2"><option value="">— je choisis —</option><option>le WiFi est plus rapide que le câble</option><option>le câble est plus rapide et plus régulier que le WiFi</option><option>les deux vont exactement à la même vitesse</option></select></div>
+    <div class="ligne-exo"><label for="e5_3">Pendant la panne interdite (tablette ET PC1 en .20), le réseau…</label>
+      <select id="e5_3"><option value="">— je choisis —</option><option>continue de livrer parfaitement</option><option>ne sait plus qui est «&nbsp;.20&nbsp;»&nbsp;: livraisons perdues ou au mauvais appareil</option><option>éteint la tablette automatiquement</option></select></div>
+    <div class="ligne-exo"><label for="e5_4">Cette expérience VÉRIFIE la règle découverte au jeu du facteur. Laquelle&nbsp;?</label>
+      <select id="e5_4"><option value="">— je choisis —</option><option>chaque terminal doit avoir une adresse unique dans le réseau</option><option>les enveloppes doivent être vertes</option><option>il faut éteindre les appareils la nuit</option></select></div>
+    <button class="btn small" data-check="5">✔ Vérifier l'activité 5</button>
+    <div class="feedback" id="fb5" role="status"></div>
+  </div>
+  <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>«&nbsp;Reply from&nbsp;» veut dire «&nbsp;réponse de&nbsp;»&nbsp;: le message est ARRIVÉ, et la réponse est REVENUE. Pour le mini-simulateur&nbsp;: faire vraiment les DEUX essais (normal + doublon), le vérificateur le sait.</p></details>
+  <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le WiFi voyage par ondes, partagées avec toute la salle&nbsp;: c'est pratique (pas de câble) mais plus lent et plus variable que le cuivre. Le doublon&nbsp;: deux appareils répondent au même nom — le commutateur livre «&nbsp;au petit bonheur&nbsp;», exactement comme le facteur de la manche 2.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p>L'enveloppe passe TOUJOURS <b>par le commutateur</b>&nbsp;: il lit l'adresse de destination et choisit la bonne
+    branche de l'étoile (Event List&nbsp;: PC0 → Switch0 → PC1). «&nbsp;Reply from&nbsp;» prouve <b>l'aller ET le
+    retour</b>. Le câble est <b>plus rapide et plus régulier</b> que le WiFi (moins de 1&nbsp;ms contre 57 à
+    260&nbsp;ms). Avec le doublon, le réseau <b>ne sait plus qui est .20</b>&nbsp;: la livraison n'est plus fiable — ce
+    qui VÉRIFIE la règle&nbsp;: <b>une adresse unique par terminal</b>. C'est exactement ce que demandait la
+    compétence&nbsp;: justifier par une activité débranchée (le facteur) PUIS vérifier par un outil de simulation
+    (Packet Tracer). Mission accomplie pour M. Firmin&nbsp;!</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> lancer le ping AVANT d'avoir mis les adresses (Request timed out garanti)&nbsp;; oublier de REMETTRE la bonne adresse après la panne interdite&nbsp;; confondre «&nbsp;Reply from&nbsp;» (réponse) et «&nbsp;Request timed out&nbsp;» (pas de réponse).</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> le <b>ping</b> est le test de livraison du réseau&nbsp;: une réponse «&nbsp;Reply from&nbsp;» prouve l'aller-retour. En mode <b>Simulation</b>, l'enveloppe montre le trajet réel&nbsp;: terminal → commutateur → terminal. Un <b>doublon d'adresse</b> casse la livraison — l'adresse unique n'est pas une politesse, c'est une nécessité.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 5 bonnes réponses + les DEUX expériences du mini-simulateur réellement faites.</div>
+</div>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5.</p>
+  <h4>1. Les composants du réseau local (activités 1-2)</h4>
+  <p>Un réseau local relie des <b>terminaux</b> (PC, imprimante, tablette, smartphone…) grâce à un <b>commutateur</b>
+  — le «&nbsp;facteur&nbsp;» qui redistribue les messages — par des <b>liaisons filaires</b> (câbles) ou <b>sans fil
+  (WiFi)</b> via un <b>point d'accès</b>. Quand tout passe par le centre, la <b>topologie</b> est «&nbsp;en étoile&nbsp;».</p>
+  <h4>2. Construire le réseau (activité 3)</h4>
+  <p>Dans Packet Tracer&nbsp;: palette → glisser les appareils → câble <b>Copper Straight-Through</b> d'une prise
+  (FastEthernet0 côté PC) vers une prise LIBRE du commutateur (FastEthernet0/1…0/24). Le WiFi passe par le point
+  d'accès et son nom de réseau, le <b>SSID</b>.</p>
+  <h4>3. Identifier les terminaux (activités 4-5)</h4>
+  <p>Chaque terminal reçoit une <b>adresse IP</b>&nbsp;: la «&nbsp;rue&nbsp;» commune (192.168.10) + un «&nbsp;numéro de
+  maison&nbsp;» <b>unique</b>. Le <b>ping</b> prouve la livraison («&nbsp;Reply from&nbsp;» = aller-retour réussi)&nbsp;;
+  l'enveloppe du mode Simulation montre le trajet par le commutateur&nbsp;; un doublon d'adresse casse la livraison.</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">réseau = network</span><span class="tag">commutateur = switch</span><span class="tag">sans fil = wireless</span><span class="tag">liaison = link</span><span class="tag">point d'accès = access point</span><span class="tag">adresse = address</span><span class="tag">enveloppe/paquet = packet</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ&nbsp;:</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé&nbsp;? Compléter avec ce que tu sais maintenant&nbsp;:</label>
+    <textarea id="hyp_retour" placeholder="En fait, le message arrivait au mauvais appareil parce que…"></textarea>
+  </div>
+  <h4>Je me positionne, code par code</h4>
+  <div class="bilan-grid">
+    <div>
+      <p style="margin-bottom:4px"><b>5e_C4.7</b> — identifier les composants d'un réseau local et sa topologie&nbsp;:</p>
+      <select id="pos_c47"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je confonds encore les composants</option>
+        <option>🟠 Maîtrise fragile — j'en reconnais certains</option>
+        <option>🟢 Maîtrise satisfaisante — je les identifie tous + l'étoile</option>
+        <option>⭐ Très bonne maîtrise — je sais expliquer le rôle de chacun</option></select>
+    </div>
+    <div>
+      <p style="margin-bottom:4px"><b>5e_C4.8</b> — justifier la nécessité d'identifier les terminaux&nbsp;:</p>
+      <select id="pos_c48"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je ne vois pas le problème du doublon</option>
+        <option>🟠 Maîtrise fragile — je comprends avec de l'aide</option>
+        <option>🟢 Maîtrise satisfaisante — je justifie l'adresse unique et je sais la vérifier au ping</option>
+        <option>⭐ Très bonne maîtrise — j'explique la panne du doublon avec la simulation</option></select>
+    </div>
+  </div>
+  <div class="bilan-grid" style="margin-top:10px">
+    <div><label for="bilan1"><b>Ce que j'ai appris&nbsp;:</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire&nbsp;:</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir&nbsp;:</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance&nbsp;:</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>30 questions — dont 4 illustrées par les schémas du vrai logiciel — pour vérifier tout ce que tu sais sur le réseau de la salle.</p>
+  <a class="btn qcm" href="qcm_5e_C4.7-C4.8_reseau_local.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🕵️ <b>Défi enquête&nbsp;:</b> dessiner le réseau de TA maison (box, téléphones, console, TV…)&nbsp;: qui est terminal&nbsp;? où est le point d'accès&nbsp;? quelles liaisons sont filaires, lesquelles sont WiFi&nbsp;?</p>
+  <p>📱 <b>Défi vrai smartphone&nbsp;:</b> avec l'accord d'un adulte, retrouver l'adresse IP réelle de ton téléphone (Paramètres → WiFi → détails du réseau) — reconnaître la «&nbsp;rue&nbsp;» et le «&nbsp;numéro de maison&nbsp;».</p>
+  <p>🖧 <b>Défi Filius&nbsp;:</b> reconstruire le réseau de la salle dans le logiciel libre Filius (gratuit, installable à la maison) et envoyer un message de PC0 vers le smartphone.</p>
+</section>
+
+<footer>
+  <p>Séquence 5e_C4.7 · 5e_C4.8 — Thème 2 · Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Captures reconstituées d'après Cisco Packet Tracer 8.2 (schémas originaux CC0 — aucune capture propriétaire). Cisco et Packet Tracer sont des marques de Cisco Systems, Inc.</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_5e_C4.7-C4.8_reseau_pt";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  document.querySelectorAll("input[type=checkbox][id]").forEach(c=>{ o.inputs["chk_"+c.id]=c.checked?"1":""; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    if(id.indexOf("chk_")===0){ const c=$(id.slice(4)); if(c) c.checked = v==="1"; return; }
+    const el=$(id); if(el) el.value=v;
+  });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Mini-simulateur d'enveloppe (activité 5) — verrou expérientiel ══════ */
+window.__exp = window.__exp || {};
+const SIM_POS = {
+  start:[90,80], sw:[365,80],
+  d20:[625,45], d30:[625,105], d50:[625,169], tablette:[625,169]
+};
+let simBusy=false;
+function simPlace(x,y){ const e=$("simEnv"); e.setAttribute("transform","translate("+x+" "+(y-22)+")"); e.style.visibility="visible"; }
+$("btnSimSend").addEventListener("click", ()=>{
+  if(simBusy) return; simBusy=true;
+  const dest=$("simDest").value, doublon=$("simDoublon").checked;
+  const target = dest==="20" ? SIM_POS.d20 : dest==="30" ? SIM_POS.d30 : SIM_POS.d50;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const step2 = ()=>{
+    if(doublon){
+      simPlace((SIM_POS.sw[0]+target[0])/2, (SIM_POS.sw[1]+target[1])/2);
+      $("simMsg").textContent = "💥 DEUX appareils répondent « ."+dest+" » : le commutateur ne sait plus qui livrer — message perdu !";
+      window.__exp["livraison_doublon"] = true;
+    } else {
+      simPlace(target[0]-60, target[1]);
+      $("simMsg").textContent = "✔ Livré ! Trajet : PC0 → Switch0 → ."+dest+" — le commutateur a lu l'adresse et choisi la bonne branche.";
+      window.__exp["livraison_ok"] = true;
+    }
+    save(false); simBusy=false;
+  };
+  $("simMsg").textContent = "L'enveloppe part de PC0…";
+  simPlace(SIM_POS.start[0]+40, SIM_POS.start[1]);
+  setTimeout(()=>{
+    simPlace(SIM_POS.sw[0], SIM_POS.sw[1]);
+    $("simMsg").textContent = "…elle arrive au commutateur, qui LIT l'adresse « ."+dest+" »…";
+    setTimeout(step2, reduced?150:900);
+  }, reduced?150:900);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const txt = id => String($(id).value||"").replace(/\u00a0/g," ").trim().toLowerCase();
+const val = id => String($(id).value||"").replace(/\u00a0/g," ").replace(/\s+/g," ").trim();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={e1_1:"ne peut plus choisir : la livraison devient un pari",
+               e1_2:"ne peut pas être livrée du tout",
+               e1_3:"le boîtier central où arrivent tous les câbles",
+               e1_4:"les appareils qui envoient ou reçoivent les messages (ordinateurs, imprimante, tablette…)"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const j=txt("e1_just");
+    const jOk = j.length>=15 && j.includes("unique");
+    return {score:ok,total:4,extra:jOk?"":" Ta règle doit contenir le mot « unique ».",valide:ok===4&&jOk};
+  },
+  2: function(){
+    let ok=0;
+    const att={e2_1:"terminaux",e2_2:"le commutateur",e2_3:"une liaison filaire (un câble)",
+               e2_4:"une liaison sans fil (WiFi)",e2_5:"le point d'accès (la borne WiFi)",e2_6:"5",
+               e2_7:"une topologie en étoile"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:7,valide:ok===7};
+  },
+  3: function(){
+    let ok=0;
+    const att={e3_ports:"24",e3_tri:"orange, puis verts",e3_pointilles:"3",
+               e3_cable:"Copper Straight-Through (le câble cuivre droit)",
+               e3_pourquoi_ap:"non : c'est le point d'accès qui fait le pont entre les ondes et le réseau câblé"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const sig = parseFloat($("e3_signal").value);
+    const sigOk = !isNaN(sig) && sig>=1 && sig<=100;
+    if(sigOk) ok++;
+    return {score:ok,total:6,extra:sigOk?"":" Le relevé n°3 se lit sur TON écran, dans l'onglet Connect (un nombre entre 1 et 100).",valide:ok===6};
+  },
+  4: function(){
+    let ok=0;
+    const att={e4_1:"le nom de la rue, commun à tous les appareils de la salle",
+               e4_2:"le numéro de maison de la tablette — unique dans la rue",
+               e4_3:"192.168.10.50 — dans la même rue, avec un numéro encore libre",
+               e4_4:"Desktop → IP Configuration, en cochant Static"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const j=txt("e4_just");
+    const jOk = j.length>=20 && (j.includes("unique")||j.includes("doublon")||j.includes("même adresse")||j.includes("confond")||j.includes("mauvais"));
+    return {score:ok,total:4,extra:jOk?"":" Ta réponse doit relier le doublon d'adresse au problème de livraison.",valide:ok===4&&jOk};
+  },
+  5: function(){
+    let ok=0;
+    const att={e5_env:"par le commutateur, le centre de l'étoile",
+               e5_1:"l'aller ET le retour du message fonctionnent",
+               e5_2:"le câble est plus rapide et plus régulier que le WiFi",
+               e5_3:"ne sait plus qui est « .20 » : livraisons perdues ou au mauvais appareil",
+               e5_4:"chaque terminal doit avoir une adresse unique dans le réseau"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const e=window.__exp||{};
+    const expOk = e["livraison_ok"] && e["livraison_doublon"];
+    return {score:ok,total:5,extra:expOk?"":" Fais VRAIMENT les deux essais du mini-simulateur : une livraison normale ET une livraison avec doublon.",valide:ok===5&&expOk};
+  }
+};
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3], s3:[4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majProgress(); majHyp();
+</script>
+</body>
+</html>

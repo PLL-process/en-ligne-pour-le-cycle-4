@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 5e · Atelier : QCM — Le réseau de la salle techno (5e_C4.7 · 5e_C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:'Fira Code',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C4.7-C4.8_reseau_local_packet_tracer.html">← Séquence</a></nav>
+<h1>Thème 2 · Martinique — 5e · Atelier : QCM — Le réseau de la salle techno</h1>
+<p class="subtitle">Composants et topologie du réseau local (16 q) · identifier les terminaux pour communiquer (14 q) — d’après le montage Packet Tracer de la séquence</p>
+<div class="badges">
+  <span class="badge niveau">5e</span>
+  <span class="badge code">5e_C4.7</span><span class="badge code">5e_C4.8</span>
+  <span class="badge theme">30 questions · 6 illustrées par les schémas du vrai logiciel · corrections détaillées</span>
+</div>
+<p style="text-align:center"><a href="sequence_5e_C4.7-C4.8_reseau_local_packet_tracer.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C4.7">5e_C4.7 — Composants et topologie du réseau local</option>
+      <option value="C4.8">5e_C4.8 — Identifier les terminaux pour communiquer</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 5e_C4.7 · 5e_C4.8 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence_5e_C4.7-C4.8_reseau_local_packet_tracer.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — lot réseau 5e : 30 questions (5e_C4.7 : 16 · 5e_C4.8 : 14), 6 illustrées (règle images v2) */
+const QUESTIONS = [
+/* ═══ C4.7 ═══ */
+{c:"C4.7",n:"Qu'est-ce qu'un terminal",q:"Dans le réseau de la salle techno, lequel de ces éléments est un TERMINAL ?",
+ o:["le nom TECHNO-C4","le commutateur","le câble entre PC0 et Switch0","l'ordinateur portable"],r:3,
+ expl:"Un terminal est un appareil qui ENVOIE ou REÇOIT des messages : ordinateur, imprimante, tablette, smartphone… Ce sont les « destinataires » du jeu du facteur.",
+ ex:"Quand tu envoies un document à l'imprimante, deux terminaux communiquent : ton PC et l'imprimante.",
+ err:"Appeler « terminal » tout ce qui est branché — le commutateur et les câbles transportent les messages, ils n'en sont ni l'expéditeur ni le destinataire.",
+ d:["TECHNO-C4 est le nom du réseau WiFi (le SSID), pas un appareil.","Le commutateur redistribue les messages : c'est le « facteur », pas un destinataire.","Un câble est une LIAISON : il transporte, il ne reçoit rien pour lui.",""],
+ ret:"Terminal = appareil qui envoie ou reçoit des messages (PC, imprimante, tablette, smartphone…)."},
+{c:"C4.7",n:"Reconnaître le commutateur",q:"Sur le schéma du réseau de la salle, quel élément est le COMMUTATEUR ?",
+ img:{src:"Images/reseau_salle_techno_topologie.svg",alt:"Le réseau de la salle : Switch0 au centre, relié par des traits pleins à PC0, PC1 et AccessPoint0 ; le point d'accès est relié en pointillés au portable, à la tablette et au smartphone"},
+ o:["Smartphone0, en bas","PC0, en haut à gauche","AccessPoint0, avec ses ondes","Switch0, le boîtier central où arrivent tous les traits pleins"],r:3,
+ expl:"Le commutateur est le centre de l'étoile : TOUS les câbles y arrivent, et c'est lui qui redistribue chaque message vers le bon terminal.",
+ ex:"Dans Packet Tracer, son modèle s'appelle 2960 et il se nomme automatiquement Switch0.",
+ err:"Confondre le commutateur avec le point d'accès : les deux « distribuent », mais le point d'accès ne s'occupe que du sans-fil.",
+ d:["Le smartphone est un terminal sans fil.","PC0 est un terminal : il envoie et reçoit, il ne redistribue rien.","AccessPoint0 est le point d'accès WiFi : il fait le pont ondes ↔ câble.",""],
+ ret:"Le commutateur = le boîtier central du réseau filaire, le « facteur » qui redistribue les messages."},
+{c:"C4.7",n:"Le rôle du commutateur",q:"Que FAIT exactement le commutateur quand un message arrive ?",
+ o:["il lit l'adresse de destination et envoie le message vers le bon terminal","il ouvre le message pour vérifier son contenu","il envoie une copie du message à tout le collège","il stocke le message jusqu'au lendemain"],r:0,
+ expl:"Comme le facteur du jeu : il ne lit QUE l'étiquette (l'adresse de destination), jamais le contenu, et choisit la bonne branche de l'étoile.",
+ ex:"En mode Simulation, l'enveloppe s'arrête sur Switch0, puis repart vers le destinataire — c'est ce choix qu'on observe.",
+ err:"Croire que le commutateur « lit le courrier » : il ne regarde que l'adresse, c'est ce qui le rend rapide.",
+ d:["","Il ne lit jamais le contenu — uniquement l'adresse, comme un facteur honnête.","Envoyer à tout le monde serait le contraire d'une livraison : l'adresse sert justement à choisir UN destinataire.","Il transmet en une fraction de seconde, il ne stocke pas les messages."],
+ ret:"Le commutateur lit l'ADRESSE DE DESTINATION et choisit la bonne branche — rien d'autre."},
+{c:"C4.7",n:"Le point d'accès",q:"À quoi sert le point d'accès (la borne WiFi) dans le réseau de la salle ?",
+ o:["à faire le pont entre les appareils sans fil et le réseau câblé","à remplacer le commutateur","à recharger la tablette à distance","à imprimer plus vite"],r:0,
+ expl:"Le point d'accès transforme les messages du monde des ondes (WiFi) vers le monde du câble, et inversement. Sans lui, la tablette et le smartphone resteraient isolés.",
+ ex:"Dans notre montage, AccessPoint0 est câblé au commutateur (prise FastEthernet0/3) et diffuse le réseau TECHNO-C4.",
+ err:"Croire que le WiFi se connecte « tout seul » au réseau : il faut toujours un point d'accès quelque part.",
+ d:["","Il complète le commutateur mais ne le remplace pas : lui-même est CÂBLÉ au commutateur.","Le WiFi transporte des messages, pas de l'énergie : aucune recharge par les ondes de la borne.","La vitesse d'impression ne dépend pas de la borne."],
+ ret:"Point d'accès = le pont entre les terminaux sans fil et le réseau câblé."},
+{c:"C4.7",n:"Traits pleins, pointillés",q:"Sur le schéma, que signifient les traits en POINTILLÉS entre le point d'accès et la tablette ?",
+ img:{src:"Images/reseau_salle_techno_topologie.svg",alt:"Le réseau de la salle : traits pleins entre Switch0, PC0, PC1 et le point d'accès ; traits pointillés entre le point d'accès et le portable, la tablette et le smartphone"},
+ o:["une liaison filaire","une liaison sans fil (WiFi)","un câble en panne","une liaison plus rapide que le câble"],r:1,
+ expl:"Convention du logiciel : trait PLEIN = câble (liaison filaire), POINTILLÉS = ondes (liaison sans fil). La tablette n'a aucun câble : elle parle au point d'accès par ondes radio.",
+ ex:"Sur ton montage, trois liaisons pointillées partent du point d'accès : portable, tablette, smartphone.",
+ err:"Croire que pointillés = « cassé » : c'est simplement la façon de dessiner l'invisible (les ondes).",
+ d:["Une liaison filaire se dessine en trait PLEIN.","","Rien n'est en panne : les pointillés sont la convention normale du sans-fil.","C'est l'inverse : le test ping montre que le câble répond plus vite que le WiFi."],
+ ret:"Trait plein = liaison filaire · pointillés = liaison sans fil (WiFi)."},
+{c:"C4.7",n:"Compter les terminaux",q:"Notre réseau contient : PC0, PC1, Switch0, AccessPoint0, Laptop0, TabletPC0 et Smartphone0. Combien de TERMINAUX ?",
+ o:["5","7","6","2"],r:0,
+ expl:"Les terminaux sont les appareils qui envoient/reçoivent : PC0, PC1, Laptop0, TabletPC0, Smartphone0 — cinq. Le commutateur et le point d'accès font circuler les messages, ils ne comptent pas.",
+ ex:"Si on ajoutait l'imprimante de la salle, on passerait à 6 terminaux.",
+ err:"Compter TOUS les appareils du schéma sans trier leur rôle.",
+ d:["","7 compte le commutateur et le point d'accès, qui ne sont pas des terminaux.","6 en compte un de trop (le commutateur OU le point d'accès).","2 ne compte que les PC en oubliant portable, tablette et smartphone."],
+ ret:"Pour compter les terminaux : je garde les appareils qui envoient ou reçoivent, j'écarte commutateur et point d'accès."},
+{c:"C4.7",n:"La topologie en étoile",q:"Tous les appareils de la salle sont reliés à un centre unique (le commutateur). Comment s'appelle cette organisation ?",
+ o:["une topologie en escalier","une topologie en ligne","une topologie en cercle","une topologie en étoile"],r:3,
+ expl:"La TOPOLOGIE est la « forme » du réseau. Quand toutes les liaisons partent d'un centre, on dit qu'il est en étoile — c'est l'organisation des écoles et des entreprises.",
+ ex:"Notre schéma : 6 branches autour de Switch0, comme les branches d'une étoile.",
+ err:"Confondre la topologie (la FORME du réseau) avec le nombre d'appareils.",
+ d:["« En escalier » n'existe pas — c'est un piège !","En ligne, les appareils seraient enchaînés l'un derrière l'autre — un seul câble coupé et tout s'arrête.","En cercle (anneau), chaque appareil serait relié au suivant, sans centre.",""],
+ ret:"Topologie = la forme du réseau. Tout passe par le centre → topologie en ÉTOILE."},
+{c:"C4.7",n:"L'avantage de l'étoile",q:"Le câble de PC1 est arraché. Que se passe-t-il pour les AUTRES appareils de l'étoile ?",
+ o:["l'imprimante imprime tout en double","tout le réseau s'arrête","seul le WiFi s'arrête","ils continuent de communiquer normalement"],r:3,
+ expl:"C'est LA force de l'étoile : chaque terminal a sa propre branche. Une branche cassée n'isole que son terminal — le centre et les autres branches continuent.",
+ ex:"PC1 muet, mais PC0 pingue toujours le smartphone : vérifié dans le simulateur.",
+ err:"Croire qu'une panne « se propage » dans toute l'étoile : c'était le défaut des vieilles topologies en ligne.",
+ d:["Le nombre de copies n'a aucun lien avec un câble arraché.","Seul PC1 est isolé : le reste de l'étoile vit sa vie.","Le WiFi passe par le point d'accès, dont le câble n'a rien : il continue.",""],
+ ret:"En étoile, une branche cassée n'isole QU'UN terminal — les autres continuent."},
+{c:"C4.7",n:"Le smartphone, un terminal ?",q:"En cours de techno, le smartphone connecté au réseau TECHNO-C4 est…",
+ o:["un terminal sans fil, comme le portable et la tablette","un point d'accès de secours","une liaison","un commutateur de poche"],r:0,
+ expl:"Dès qu'un appareil envoie et reçoit des messages sur le réseau, c'est un terminal — téléphone compris. Sa liaison est simplement sans fil.",
+ ex:"Notre ping vers 192.168.10.50 : le smartphone a répondu 4 fois, comme un terminal sérieux.",
+ err:"Croire qu'un téléphone est « à part » : sur le réseau, il suit exactement les mêmes règles que les autres terminaux.",
+ d:["","Un vrai téléphone peut servir de point d'accès (partage de connexion), mais ce n'est pas son rôle ici : il est client du réseau.","Une liaison relie deux équipements ; le téléphone est un des appareils reliés.","Il ne redistribue pas les messages des autres : ce n'est pas un commutateur."],
+ ret:"Tout appareil qui envoie/reçoit sur le réseau est un terminal — le smartphone aussi."},
+{c:"C4.7",n:"L'imprimante",q:"L'imprimante de la salle, branchée au commutateur, est-elle un composant du réseau local ? Lequel ?",
+ o:["oui : un commutateur (elle a plusieurs bacs)","non : elle n'utilise pas le réseau","oui : un terminal (elle reçoit les documents à imprimer)","oui : une liaison (le papier sort d'elle)"],r:2,
+ expl:"L'imprimante reçoit des messages (les documents) : c'est un terminal. C'est d'ailleurs elle qui a lancé toute l'enquête de M. Firmin !",
+ ex:"Sans identification unique de l'imprimante, ton compte rendu peut sortir… sur une autre imprimante du collège.",
+ err:"Oublier les terminaux « qui ne font que recevoir » : imprimante, enceinte connectée, écran de projection…",
+ d:["Ses bacs à papier n'ont rien à voir avec la redistribution de messages.","Elle est branchée au commutateur et reçoit des documents : elle utilise pleinement le réseau.","","Le papier n'est pas une liaison réseau — la liaison, c'est son câble."],
+ ret:"Un terminal peut surtout RECEVOIR : l'imprimante est le terminal-réception type."},
+{c:"C4.7",n:"Le bon câble",q:"Dans Packet Tracer, quel câble choisir pour relier PC0 au commutateur ?",
+ img:{src:"Images/pt_cablage_menus.svg",alt:"Les menus de câblage de Packet Tracer : menu du PC avec RS 232, USB0, USB1, FastEthernet0 ; menu du commutateur avec ses 24 prises FastEthernet ; légende des triangles orange, vert, rouge ; icône du câble droit Copper Straight-Through"},
+ o:["Fiber (le trait orange)","Console (le câble bleu clair)","Automatic (l'éclair orange)","Copper Straight-Through (le câble cuivre droit, trait plein)"],r:3,
+ expl:"Pour relier un terminal au commutateur, on utilise le câble cuivre DROIT : Copper Straight-Through — le trait plein noir de la palette Connections.",
+ ex:"Même choix pour relier le point d'accès au commutateur.",
+ err:"Prendre « Automatic » : le logiciel choisit à ta place et tu n'apprends rien — en plus, aucun menu de prises ne s'ouvre.",
+ d:["La fibre optique existe, mais pas pour relier un PC de salle de classe au commutateur.","Console sert à CONFIGURER un équipement, pas à transporter les messages du réseau.","Automatic choisit à ta place : interdit dans notre atelier, on apprend le vrai geste.",""],
+ ret:"Terminal ↔ commutateur = câble cuivre droit (Copper Straight-Through)."},
+{c:"C4.7",n:"La prise du PC",q:"En cliquant sur PC0 avec le câble en main, le menu propose : RS 232, USB0, USB1, FastEthernet0. Laquelle est la prise RÉSEAU ?",
+ o:["FastEthernet0","USB0","RS 232","n'importe laquelle"],r:0,
+ expl:"FastEthernet0 est la carte réseau du PC — la prise où se branche le câble du réseau. RS 232 et USB servent à brancher des périphériques (souris, imprimante locale…), pas le réseau.",
+ ex:"Côté commutateur, les prises s'appellent FastEthernet0/1, 0/2… jusqu'à 0/24.",
+ err:"Brancher le réseau « dans n'importe quel trou » : chaque prise a un métier.",
+ d:["","USB sert aux périphériques (clé, souris…), pas à la liaison réseau.","RS 232 est une vieille prise de configuration.","Non : seule FastEthernet0 est reliée à la carte réseau du PC."],
+ ret:"La prise réseau d'un PC s'appelle FastEthernet0 — retiens « Ethernet » = réseau filaire."},
+{c:"C4.7",n:"Les 24 prises",q:"Le menu du commutateur 2960 liste FastEthernet0/1 jusqu'à FastEthernet0/24. Qu'est-ce que cela signifie ?",
+ o:["il possède 24 prises : on peut câbler jusqu'à 24 appareils","il ne peut servir que 24 minutes","il faut 24 câbles pour UN appareil","c'est la vitesse : 24 messages par seconde"],r:0,
+ expl:"Chaque ligne du menu est une prise physique du boîtier. 24 prises = jusqu'à 24 liaisons filaires — de quoi câbler toute la salle sur UN commutateur.",
+ ex:"Notre montage n'utilise que 3 prises (PC0, PC1, point d'accès) : il en reste 21 de libres.",
+ err:"Brancher deux câbles sur la même prise : impossible, une prise = un câble.",
+ d:["","Le temps n'a rien à voir : il travaille jour et nuit.","C'est l'inverse : un appareil = UN câble vers UNE prise.","La vitesse se mesure en débit (des millions de bits par seconde), pas en « messages »."],
+ ret:"Un commutateur possède un nombre limité de prises (ici 24) : une prise = un câble = un appareil."},
+{c:"C4.7",n:"Les triangles",q:"Juste après un branchement, les petits triangles au bout du câble sont ORANGE. Quelques secondes plus tard ils deviennent VERTS. Que s'est-il passé ?",
+ o:["le logiciel a corrigé notre erreur de câble","le câble a chauffé, puis refroidi","la prise a démarré, puis la liaison est devenue opérationnelle","la couleur change selon l'heure"],r:2,
+ expl:"Code couleur du logiciel : ORANGE = la prise s'initialise (elle « démarre »), VERT = la liaison fonctionne. ROUGE = problème (mauvais câble, prise éteinte…).",
+ ex:"Le vrai matériel fait pareil : les petites lumières d'un commutateur clignotent à la mise en route.",
+ err:"Paniquer devant l'orange : il suffit d'attendre quelques secondes.",
+ d:["Un mauvais câble resterait ROUGE : rien n'est corrigé automatiquement.","Aucune chaleur là-dedans : c'est un code d'état, pas un thermomètre.","","L'heure n'y est pour rien : seule l'état de la liaison compte."],
+ ret:"Triangles : orange = démarre · vert = ça marche · rouge = problème."},
+{c:"C4.7",n:"Le SSID",q:"Dans la configuration du point d'accès, on a remplacé « Default » par « TECHNO-C4 » dans le champ SSID. Qu'avons-nous changé ?",
+ o:["le NOM du réseau WiFi, que les appareils voient dans leur liste","le mot de passe du WiFi","l'adresse du commutateur","la couleur des ondes"],r:0,
+ expl:"Le SSID est le nom que le point d'accès diffuse autour de lui. C'est ce nom que le portable, la tablette et le smartphone cherchent pour se connecter.",
+ ex:"Chez toi, la box diffuse aussi un SSID (Livebox-XXXX, Freebox-XXXX…).",
+ err:"Confondre le NOM du réseau (SSID) et le MOT DE PASSE (que nous n'avons pas mis ici : Authentication était sur Disabled).",
+ d:["","Le mot de passe est un autre champ (WEP/WPA) — resté désactivé dans notre exercice.","Le commutateur n'a rien demandé : le SSID appartient au point d'accès.","Les ondes n'ont pas de couleur — jolie image, mauvaise réponse."],
+ ret:"SSID = le nom du réseau WiFi, diffusé par le point d'accès."},
+{c:"C4.7",n:"L'opération module WiFi",q:"Pour donner le WiFi au portable dans Packet Tracer, quel est le BON ordre des gestes ?",
+ o:["éteindre → retirer le module filaire → insérer le module WiFi → rallumer","insérer le module WiFi par-dessus le filaire, tout allumé","secouer le portable pour faire tomber le module","taper TECHNO-C4 dans le terminal"],r:0,
+ expl:"Comme sur un vrai ordinateur : on n'échange pas une carte sous tension. Éteindre, échanger le module (baie latérale), rallumer — puis connecter via PC Wireless.",
+ ex:"Le module WiFi s'appelle WPC300N ; après redémarrage, l'onglet Connect affiche TECHNO-C4.",
+ err:"Oublier d'éteindre : le logiciel refuse silencieusement le changement de module.",
+ d:["","La baie n'accueille qu'UN module : il faut d'abord sortir le filaire — et machine éteinte.","Aucun geste brusque ne remplace la procédure : c'est un simulateur, pas un videur de tirelire.","Le terminal sert aux commandes réseau (ping), pas au montage matériel."],
+ ret:"Changer un module : ÉTEINDRE → échanger → RALLUMER. Toujours."},
+/* ═══ C4.8 ═══ */
+{c:"C4.8",n:"L'enveloppe sans nom",q:"Au jeu du facteur, une enveloppe SANS destinataire ne peut pas être livrée. Que nous apprend cette manche sur les réseaux ?",
+ o:["le facteur manque de motivation","un message doit porter l'identification de son destinataire pour être livré","les enveloppes doivent être plus grandes","il faut crier le message dans la salle"],r:1,
+ expl:"Sans destinataire identifié, aucune livraison possible : c'est vrai pour le courrier ET pour chaque message du réseau, qui porte toujours une adresse de destination.",
+ ex:"L'enveloppe du mode Simulation porte les adresses source et destination — le commutateur lit la seconde.",
+ err:"Croire que le réseau « devine » le destinataire : il ne fait que lire des adresses.",
+ d:["La motivation n'y changerait rien : sans étiquette, choisir serait un pari.","","La taille de l'enveloppe ne remplace pas l'adresse.","Crier = envoyer à tout le monde : le contraire d'une livraison au BON destinataire."],
+ ret:"Tout message porte l'identification de son destinataire — sinon, pas de livraison."},
+{c:"C4.8",n:"Le doublon du facteur",q:"Sur l'image, deux maisons portent le numéro 20. Le facteur a une enveloppe « pour la maison 20 ». Que fait-il ?",
+ img:{src:"Images/facteur_doublon_adresse.svg",alt:"À gauche, trois maisons numérotées 10, 20, 30 : la livraison vers la 30 se fait sans hésiter. À droite, deux maisons portent toutes les deux le numéro 20 : le facteur, devant un grand point d'interrogation, ne sait pas laquelle choisir"},
+ o:["il livre aux deux maisons","il livre à la maison la plus proche, c'est la règle","il ne peut pas choisir : la livraison n'est plus fiable","il attend que l'une des maisons déménage"],r:2,
+ expl:"Deux destinataires identiques rendent le choix impossible : le message peut se perdre ou arriver au mauvais endroit. C'est exactement la panne de l'imprimante de M. Firmin.",
+ ex:"Dans Packet Tracer, quand la tablette a pris l'adresse de PC1, le ping vers .20 est devenu incertain.",
+ err:"Inventer une « règle du plus proche » : elle n'existe pas — le réseau exige des identifications uniques.",
+ d:["Livrer en double n'est pas livrer : le message devait atteindre UN destinataire précis.","Aucune règle du plus proche n'existe : le résultat devient un hasard, donc une panne.","","Le réseau n'attend pas : les messages partent maintenant."],
+ ret:"Un doublon d'identification = une livraison qui n'est plus fiable."},
+{c:"C4.8",n:"Lire une adresse IP",q:"Dans l'adresse 192.168.10.30 du portable, que représentent les trois premiers nombres « 192.168.10 » ?",
+ o:["le nombre de terminaux du réseau","le numéro personnel du portable","le mot de passe du WiFi","la « rue » : la partie commune à tous les appareils du réseau de la salle"],r:3,
+ expl:"L'adresse IP se lit comme une adresse postale : les trois premiers nombres nomment le réseau (la « rue », commune à tous), le dernier identifie l'appareil (le « numéro de maison »).",
+ ex:"PC0 : 192.168.10.10 · PC1 : 192.168.10.20 · tablette : 192.168.10.40 — même rue, numéros différents.",
+ err:"Changer les trois premiers nombres en donnant une adresse : l'appareil « déménage » dans une autre rue et ne reçoit plus rien.",
+ d:["Le nombre de terminaux ne s'écrit nulle part dans l'adresse.","Le numéro personnel est le DERNIER nombre (ici .30).","Le mot de passe WiFi n'a rien à voir avec l'adresse IP.",""],
+ ret:"Adresse IP = rue commune (3 premiers nombres) + numéro de maison unique (dernier nombre)."},
+{c:"C4.8",n:"Choisir une adresse",q:"PC0 = .10, PC1 = .20, portable = .30, tablette = .40. Quelle adresse donner au smartphone ?",
+ o:["192.168.10.20","192.168.10.50","10.0.0.50","la même que la tablette, ils sont amis"],r:1,
+ expl:"Il faut rester dans la même « rue » (192.168.10) et prendre un « numéro de maison » encore LIBRE : 50 convient parfaitement.",
+ ex:"C'est l'adresse que nous avons donnée au smartphone dans le montage — et son ping a répondu.",
+ err:"Réutiliser un numéro déjà pris « parce que l'appareil est éteint » : l'adresse reste attribuée.",
+ d:["20 est déjà l'adresse de PC1 : ce serait le doublon du facteur.","","10.0.0.50 est une autre rue : le smartphone serait injoignable dans notre réseau.","« Être amis » ne change rien : une adresse = UN appareil."],
+ ret:"Nouvelle adresse = même rue + numéro libre. Jamais de numéro déjà pris."},
+{c:"C4.8",n:"Où taper l'adresse",q:"Dans Packet Tracer, où entre-t-on l'adresse IP d'un terminal ?",
+ o:["sur l'étiquette du câble","Physical, en changeant le module","dans le champ SSID du point d'accès","Desktop → IP Configuration, en cochant Static"],r:3,
+ expl:"Chaque terminal a son bureau (Desktop) ; IP Configuration est l'application des adresses. « Static » signifie : c'est NOUS qui choisissons l'adresse, selon la table de la salle.",
+ ex:"PC0 → Desktop → IP Configuration → Static → 192.168.10.10.",
+ err:"Chercher l'adresse dans la fenêtre du point d'accès : l'adresse appartient au TERMINAL.",
+ d:["Les câbles ne portent pas d'étiquette d'adresse : l'adresse est DANS le terminal.","Physical sert au matériel (modules, bouton marche/arrêt), pas aux adresses.","Le SSID est le nom du réseau WiFi — pas une adresse de terminal.",""],
+ ret:"Adresse IP d'un terminal : Desktop → IP Configuration → Static."},
+{c:"C4.8",n:"Le doublon, version réseau",q:"Deux terminaux du même réseau peuvent-ils porter la MÊME adresse IP ?",
+ o:["oui, s'ils appartiennent au même élève","oui, si l'un des deux est un téléphone","non : la livraison ne serait plus fiable","oui, le mercredi"],r:2,
+ expl:"L'adresse identifie le destinataire. En double, le réseau ne sait plus qui est qui : messages perdus ou livrés au mauvais appareil — la règle du facteur, vérifiée en simulation.",
+ ex:"Notre « panne interdite » : tablette ET PC1 en .20 → le ping vers .20 devient incertain.",
+ err:"Penser que « ça se voit » tout de suite : le doublon peut rester silencieux… jusqu'à la mauvaise livraison.",
+ d:["Le propriétaire n'a aucune importance : c'est l'appareil qui porte l'adresse.","Téléphone ou pas, la règle est la même pour tous les terminaux.","","Aucun jour de la semaine ne suspend les règles des réseaux !"],
+ ret:"Une adresse = UN terminal. Le doublon casse la fiabilité de la livraison."},
+{c:"C4.8",n:"Éteint mais adressé",q:"PC1 est éteint. Puis-je donner son adresse 192.168.10.20 à la tablette « en attendant » ?",
+ o:["oui : éteint, il n'a plus d'adresse","non : dès que PC1 se rallumera, le réseau aura un doublon","oui : la tablette est prioritaire","non : une tablette ne peut pas avoir d'adresse"],r:1,
+ expl:"L'adresse attribuée reste celle de PC1, allumé ou non. La « prêter » prépare une panne : au réveil de PC1, deux appareils répondront au même numéro.",
+ ex:"C'est une vraie panne de collège : un poste « oublié » se rallume après les vacances… et le réseau devient fou.",
+ err:"Confondre « éteint » et « désinscrit » : éteindre un appareil ne libère pas son identité.",
+ d:["Éteint, il garde son adresse — comme ta maison garde son numéro pendant les vacances.","","Il n'existe pas de « priorité » entre terminaux : seulement des adresses uniques.","La tablette a évidemment droit à une adresse… mais à la SIENNE (.40)."],
+ ret:"Éteindre ne libère pas l'adresse : on ne « prête » jamais une adresse déjà attribuée."},
+{c:"C4.8",n:"Lire la fenêtre",q:"D'après la fenêtre IP Configuration reconstituée, quelle est l'adresse de PC0 ?",
+ img:{src:"Images/pt_ip_configuration.svg",alt:"La fenêtre IP Configuration de PC0 : interface FastEthernet0, Static coché, IPv4 Address 192.168.10.10, Subnet Mask 255.255.255.0 ; à droite, la rue 192.168.10 et ses cinq maisons numérotées"},
+ o:["192.168.10.20","255.255.255.0","192.168.10.10","FastEthernet0"],r:2,
+ expl:"L'adresse se lit dans le champ « IPv4 Address » : 192.168.10.10. La ligne 255.255.255.0 est le masque (la case qui se remplit toute seule), et FastEthernet0 est le nom de la prise.",
+ ex:"Rue 192.168.10, maison n°10 : la première maison de notre table d'adressage.",
+ err:"Confondre les champs de la fenêtre : adresse, masque et interface racontent trois choses différentes.",
+ d:["192.168.10.20 est l'adresse de PC1, pas de PC0.","255.255.255.0 est le contenu de la case « Subnet Mask » — pas l'adresse.","","FastEthernet0 est la PRISE du PC, pas son adresse."],
+ ret:"L'adresse du terminal se lit dans le champ IPv4 Address."},
+{c:"C4.8",n:"La case mystère",q:"Sous l'adresse, la case « Subnet Mask » s'est remplie toute seule : 255.255.255.0. Que fait-on en 5e ?",
+ o:["on l'efface pour gagner de la place","on la remplace par son prénom","on la laisse telle quelle : elle sert à délimiter la « rue », on l'étudiera en 4e","on y recopie l'adresse du commutateur"],r:2,
+ expl:"Ce masque délimite la partie « rue » de l'adresse. En 5e, il suffit de savoir qu'il se remplit automatiquement et qu'on n'y touche pas — sa vraie étude arrive en 4e (paramétrer une adresse IP fixe).",
+ ex:"Tous nos terminaux affichent le même masque : normal, ils habitent la même rue.",
+ err:"Modifier cette case « pour essayer » : l'appareil peut se retrouver dans une rue imaginaire.",
+ d:["L'effacer prive l'appareil de sa définition de « rue » : plus de communication.","Un prénom n'est pas une valeur de masque — la fenêtre le refuserait.","","L'adresse du commutateur n'a rien à faire dans cette case."],
+ ret:"Subnet Mask : la case qui se remplit seule. On la laisse — rendez-vous en 4e."},
+{c:"C4.8",n:"À quoi sert le ping",q:"Que fait la commande « ping 192.168.10.20 » tapée sur PC0 ?",
+ o:["elle éteint PC1 à distance","elle envoie des messages-tests à PC1 et attend ses réponses","elle imprime la page en cours","elle change l'adresse de PC0"],r:1,
+ expl:"Le ping est le test de livraison du réseau : PC0 envoie 4 petits messages à l'adresse indiquée et chronomètre les réponses. Réponse reçue = la liaison fonctionne dans les deux sens.",
+ ex:"« Reply from 192.168.10.20 : time<1ms » — PC1 a répondu en moins d'une milliseconde.",
+ err:"Croire que le ping « répare » : il ne fait que MESURER. C'est le thermomètre, pas le médicament.",
+ d:["Le ping ne commande rien à distance : il interroge, poliment.","","Aucun lien avec l'impression — même si l'enquête a commencé par une imprimante !","Le ping ne modifie aucune adresse : il les UTILISE."],
+ ret:"ping = le test de livraison : messages envoyés, réponses chronométrées."},
+{c:"C4.8",n:"Reply from",q:"Après un ping, PC0 affiche « Reply from 192.168.10.20: bytes=32 time<1ms ». Comment l'interpréter ?",
+ o:["le message est parti mais on ignore s'il est arrivé","PC1 a répondu : l'aller ET le retour fonctionnent","PC1 refuse la connexion","le réseau est en panne"],r:1,
+ expl:"« Reply from » = « réponse de ». Pour qu'une réponse revienne, il faut que le message soit ARRIVÉ puis que la réponse ait fait le chemin INVERSE : deux trajets prouvés d'un coup.",
+ ex:"L'échec s'écrirait « Request timed out » : demande expirée, aucune réponse.",
+ err:"Confondre « Reply from » (succès) et « Request timed out » (échec).",
+ d:["La réponse PROUVE l'arrivée : c'est tout l'intérêt du ping.","","Un refus n'afficherait pas une réponse en 1 ms.","Une panne donnerait « Request timed out » et 100 % de perte."],
+ ret:"« Reply from » = aller-retour réussi · « Request timed out » = pas de réponse."},
+{c:"C4.8",n:"Le trajet de l'enveloppe",q:"En mode Simulation, la liste d'événements affiche : 0.001 PC0 → 0.002 Switch0 → 0.003 PC1. Que prouve-t-elle ?",
+ img:{src:"Images/pt_ping_simulation.svg",alt:"Le terminal de PC0 avec le ping réussi vers 192.168.10.20 et vers le smartphone, et le mode Simulation où l'enveloppe est posée sur Switch0 avec la liste d'événements PC0, Switch0, PC1"},
+ o:["le commutateur a gardé le message","le message va directement de PC0 à PC1","le message visite tous les terminaux du réseau","le message passe par le commutateur avant d'atteindre PC1"],r:3,
+ expl:"Trois lignes, trois étapes : le message quitte PC0, passe par le commutateur (qui lit l'adresse), puis atteint PC1. Dans une étoile, TOUT transite par le centre.",
+ ex:"L'enveloppe visible sur Switch0 dans la capture : l'instant où le facteur lit l'étiquette.",
+ err:"Imaginer une ligne droite entre deux PC : elle n'existe pas, il n'y a pas de câble direct entre eux.",
+ d:["0.003 PC1 : le message est bien reparti — rien n'a été gardé.","Aucun câble direct ne relie PC0 à PC1 : impossible d'éviter le centre.","Le commutateur envoie vers UNE branche, pas vers tout le monde.",""],
+ ret:"Event List = le film du trajet : terminal → commutateur → terminal."},
+{c:"C4.8",n:"Câble contre WiFi",q:"Nos mesures : ping filaire « <1ms », ping WiFi « 57 à 260 ms ». Quelle conclusion honnête ?",
+ o:["le WiFi est plus rapide, les nombres le prouvent","la liaison filaire répond plus vite et plus régulièrement que le WiFi","les deux liaisons sont identiques","le smartphone est cassé"],r:1,
+ expl:"Moins de 1 ms contre 57 à 260 ms : le câble est net et constant, les ondes sont partagées et variables. Les deux LIVRENT (0 % de perte), mais pas au même rythme.",
+ ex:"Voilà pourquoi les salles informatiques restent câblées, et pourquoi ta visio saccade parfois en WiFi.",
+ err:"Lire « 260 » comme mieux que « 1 » : en temps de réponse, PETIT = RAPIDE.",
+ d:["C'est l'inverse : un temps PETIT est un temps RAPIDE.","","57 à 260 ms contre <1 ms : tout sauf identique.","Le smartphone a répondu 4 fois sur 4 : il va très bien, il est juste en WiFi."],
+ ret:"Filaire : rapide et régulier. WiFi : pratique mais plus lent et variable. Les deux livrent."},
+{c:"C4.8",n:"La démarche complète",q:"Pour convaincre M. Firmin que « chaque terminal doit avoir une adresse unique », qu'avons-nous fait, dans l'ordre ?",
+ o:["demandé la réponse au smartphone","récité la règle par cœur, sans preuve","découvert la règle en débranché (jeu du facteur), puis VÉRIFIÉ en simulation (doublon + ping)","cherché la règle dans le règlement intérieur"],r:2,
+ expl:"C'est exactement la compétence 5e_C4.8 : JUSTIFIER par une activité débranchée, puis VÉRIFIER par un outil de simulation. Jouer pour comprendre, simuler pour prouver.",
+ ex:"Manche 2 du facteur = l'hypothèse · panne interdite dans Packet Tracer = la vérification.",
+ err:"S'arrêter au jeu : sans vérification par l'outil, la règle resterait une impression.",
+ d:["Le smartphone était un COBAYE de l'expérience, pas la source de la réponse.","Une règle récitée sans preuve ne convainc ni un gestionnaire réseau… ni un professeur.","","Le règlement intérieur parle des téléphones en classe — pas des adresses IP !"],
+ ret:"La démarche : découvrir en débranché → vérifier en simulation. C'est la compétence 5e_C4.8 entière."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_5e_C4.7-C4.8_reseau_pt";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C4.7":"5e_C4.7 — Composants et topologie du réseau local",
+  "C4.8":"5e_C4.8 — Identifier les terminaux pour communiquer" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+</body>
+</html>

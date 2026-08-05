@@ -1189,3 +1189,35 @@ structure conservées :
 - **Regularisation du registre** : les candidates n(o)19 (consignes a l infinitif) et n(o)20 (guides
   logiciels inclusifs), referencees par les lots sans reservation, prennent officiellement leurs
   numeros au tableau avec statut Candidate - a enteriner par Pascal.
+
+## 2026-08-05 — Thème 2 · Lot réseau 5e « Le réseau de la salle techno » : fusion d'une esquisse ChatGPT + captures RÉELLES Packet Tracer (Fable, branche `fable/theme-2/lot-reseau-5e-packet-tracer`)
+
+- **Origine** : Pascal apporte une esquisse ChatGPT de 3 séances réseaux (5e/4e/3e, Packet Tracer) avec
+  consigne « profiler et faire la fusion ». Audit préalable (skills convoqués, règle n°21 ; codes arbitrés
+  par `_outils/data_competences.py`) : vocabulaire de 4e/3e plaqué sur la 5e (masque, passerelle, table de
+  routage dans le « vocabulaire obligatoire »), captures d'écran INVENTÉES (SVG génériques sans rapport avec
+  le vrai logiciel), version « 9.0.0 » fictive, corrigés lisibles en clair dans le source, aucun élément du
+  gabarit de lot. Conservé de l'esquisse : la trame débranché→simulation, le jeu du facteur, le scénario de
+  l'imprimante ; tout le reste reconstruit méthode Fable.
+- **Première du dépôt — captures pilotées en conditions réelles** : Fable a pris la main sur le poste de
+  Pascal (pilotage à distance autorisé), construit le réseau complet dans **Cisco Packet Tracer 8.2**
+  (2960, 2 PC, AP-PT SSID TECHNO-C4, portable à module WPC300N, et — demande des élèves — tablette et
+  smartphone), adressé les 5 terminaux (.10→.50), validé ping filaire (<1 ms) et WiFi (57-260 ms), suivi
+  l'enveloppe PDU en mode Simulation, puis sauvegardé le fichier maître `5e_reseau_local_TECHNO-C4.pkt`.
+  Obstacles vécus et consignés pour les collègues : connexion Cisco obligatoire (pas de mode invité en
+  8.2.0), clavier AZERTY refusant les chiffres dans le terminal (contourné par collage), fenêtre de
+  connexion = fermeture du logiciel. Les captures ont ensuite été RECONSTITUÉES en 7 SVG originaux CC0
+  (règles n°1 + n°20) fidèles aux écrans constatés : palette, menus de prises (24 ports), triangles,
+  SSID, module WiFi, IP Configuration, transcriptions ping exactes, Event List.
+- **Le lot** (`theme-2/.../5e/5e_C4.7/`) : séquence 3 séances (jeu du facteur amélioré — prénoms puis
+  doublon —, topologie, guide inclusif A→H, adressage par l'analogie de la rue, preuves ping/Simulation,
+  panne interdite du doublon, mini-simulateur d'enveloppe à verrou expérientiel), QCM 30 q (16/14,
+  6 illustrées, 8/7/7/8 graine 5478), synthèses élève/professeur, fiche, matrice 30 lignes, SOURCES_MEDIAS,
+  manifest, cartouche CRCN 5.1 niv. 2 (règle n°7), rapport de tests **Playwright 30/30 réellement
+  exécutés** (verrous refus/validation compris). Garde-fou de progressivité écrit noir sur blanc :
+  vocabulaire strictement 5e, masque montré comme « case qui se remplit toute seule », rendez-vous en 4e.
+- **Statuts d'audit** : 5e_C4.7 passe de COUVERT (mutualisé lampadaire) à **COMPLET ET VALIDABLE**
+  (dossier principal du lot) ; 5e_C4.8 reste COUVERT, mutualisé désormais vers 5e_C4.7 ; le lampadaire
+  (5e_C4.1) n'est PAS modifié — il reste la première rencontre, l'atelier approfondit. OVERLAY mis à jour,
+  audit et index régénérés. Note pour le lot 3e « Internet jusqu'à Sainte-Luce » : sa version B « Packet
+  Tracer à confirmer » est désormais CONFIRMÉE (8.2 opérationnel sur poste enseignant).

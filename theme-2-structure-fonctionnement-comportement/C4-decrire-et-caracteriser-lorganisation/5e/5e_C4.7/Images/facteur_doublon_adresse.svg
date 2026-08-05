@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 500" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Le jeu du facteur : pourquoi deux maisons ne peuvent pas porter le même numéro</title>
+<desc id="d">Scène en deux temps. À gauche, la situation normale : le facteur tient une enveloppe marquée « à : maison 30 » ; trois maisons numérotées 10, 20 et 30 bordent la rue 192.168.10 ; une flèche verte va sans hésiter de l'enveloppe à la maison 30. À droite, la situation de panne : deux maisons portent toutes les deux le numéro 20 ; le facteur tient une enveloppe « à : maison 20 » et deux flèches rouges en pointillés partent vers les deux maisons avec un grand point d'interrogation — impossible de choisir. La règle est écrite en dessous : dans une même rue, chaque maison doit avoir un numéro UNIQUE ; dans un même réseau, chaque terminal doit avoir une adresse UNIQUE.</desc>
+<rect width="1080" height="500" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="498" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Le facteur du réseau : livrer, c'est facile… tant que les numéros sont UNIQUES</text>
+
+<defs>
+  <g id="maison">
+    <rect x="-30" y="0" width="60" height="42" fill="#e8edf1" stroke="#48677f" stroke-width="2"/>
+    <polygon points="-36,0 0,-26 36,0" fill="#c0322b"/>
+    <rect x="-9" y="18" width="18" height="24" fill="#48677f"/>
+  </g>
+  <g id="facteur">
+    <circle cx="0" cy="-34" r="12" fill="#f3c78a" stroke="#8a6d1c" stroke-width="2"/>
+    <path d="M-14 -40 a14 9 0 0 1 28 0 z" fill="#12335e"/>
+    <rect x="-13" y="-22" width="26" height="34" rx="8" fill="#2966b1"/>
+    <rect x="-15" y="12" width="12" height="22" fill="#12335e"/>
+    <rect x="3" y="12" width="12" height="22" fill="#12335e"/>
+    <rect x="14" y="-16" width="20" height="15" rx="2" fill="#faf6ec" stroke="#a8823c" stroke-width="2"/>
+    <path d="M14 -16 l10 7 l10 -7" fill="none" stroke="#a8823c" stroke-width="2"/>
+  </g>
+  <marker id="mfv" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#1e9d55"/></marker>
+  <marker id="mfr" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#c0322b"/></marker>
+</defs>
+
+<!-- ============ scène 1 : ça marche ============ -->
+<rect x="30" y="60" width="500" height="330" rx="12" fill="#f2fbf5" stroke="#1e9d55" stroke-width="2"/>
+<text x="280" y="90" text-anchor="middle" font-size="15" font-weight="bold" fill="#116a3c">✔ Numéros tous différents : livraison sans hésiter</text>
+<use href="#facteur" x="110" y="200"/>
+<text x="110" y="248" text-anchor="middle" font-size="12" fill="#31475a">le facteur</text>
+<rect x="60" y="120" width="130" height="34" rx="8" fill="#faf6ec" stroke="#a8823c" stroke-width="2"/>
+<text x="125" y="142" text-anchor="middle" font-size="13" font-weight="bold" fill="#5c4a14">à : maison 30</text>
+<use href="#maison" x="280" y="220"/><text x="280" y="285" text-anchor="middle" font-size="14" font-weight="bold" fill="#12335e">10</text>
+<use href="#maison" x="380" y="220"/><text x="380" y="285" text-anchor="middle" font-size="14" font-weight="bold" fill="#12335e">20</text>
+<use href="#maison" x="480" y="220"/><text x="480" y="285" text-anchor="middle" font-size="14" font-weight="bold" fill="#12335e">30</text>
+<path d="M150 190 q170 -60 310 -5" fill="none" stroke="#1e9d55" stroke-width="4" marker-end="url(#mfv)"/>
+<rect x="60" y="320" width="440" height="46" rx="8" fill="#ffffff" stroke="#1e9d55"/>
+<text x="280" y="340" text-anchor="middle" font-size="12.5" fill="#116a3c">L'enveloppe porte le numéro du DESTINATAIRE :</text>
+<text x="280" y="358" text-anchor="middle" font-size="12.5" fill="#116a3c">un seul « 30 » dans la rue → une seule livraison possible.</text>
+
+<!-- ============ scène 2 : le doublon ============ -->
+<rect x="550" y="60" width="500" height="330" rx="12" fill="#fdf1f1" stroke="#c0322b" stroke-width="2"/>
+<text x="800" y="90" text-anchor="middle" font-size="15" font-weight="bold" fill="#8f221d">✘ DEUX maisons « 20 » : le facteur est bloqué</text>
+<use href="#facteur" x="630" y="200"/>
+<rect x="580" y="120" width="130" height="34" rx="8" fill="#faf6ec" stroke="#a8823c" stroke-width="2"/>
+<text x="645" y="142" text-anchor="middle" font-size="13" font-weight="bold" fill="#5c4a14">à : maison 20</text>
+<use href="#maison" x="820" y="180"/><text x="820" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#8f221d">20</text>
+<use href="#maison" x="960" y="260"/><text x="960" y="325" text-anchor="middle" font-size="14" font-weight="bold" fill="#8f221d">20</text>
+<path d="M668 180 q80 -40 118 -20" fill="none" stroke="#c0322b" stroke-width="3.5" stroke-dasharray="8 6" marker-end="url(#mfr)"/>
+<path d="M668 200 q160 30 258 45" fill="none" stroke="#c0322b" stroke-width="3.5" stroke-dasharray="8 6" marker-end="url(#mfr)"/>
+<text x="795" y="150" text-anchor="middle" font-size="34" font-weight="bold" fill="#c0322b">?</text>
+<rect x="580" y="320" width="440" height="46" rx="8" fill="#ffffff" stroke="#c0322b"/>
+<text x="800" y="340" text-anchor="middle" font-size="12.5" fill="#8f221d">Deux destinataires possibles : le message peut se perdre</text>
+<text x="800" y="358" text-anchor="middle" font-size="12.5" fill="#8f221d">ou arriver chez la MAUVAISE personne. La livraison n'est plus fiable.</text>
+
+<!-- règle -->
+<rect x="30" y="410" width="1020" height="70" rx="12" fill="#eef6ff" stroke="#4d8bc2" stroke-width="2"/>
+<text x="540" y="438" text-anchor="middle" font-size="16" font-weight="bold" fill="#12335e">La règle découverte en jouant :</text>
+<text x="540" y="464" text-anchor="middle" font-size="14.5" fill="#222">dans une même rue, chaque maison a un numéro UNIQUE — dans un même réseau, chaque terminal a une adresse UNIQUE.</text>
+</svg>
