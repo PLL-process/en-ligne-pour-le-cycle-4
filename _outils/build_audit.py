@@ -554,9 +554,42 @@ OVERLAY = {
         4: "activité 1 : matériaux et critères de choix",
         5: "activité 3 : chaîne d'information + simulateur",
         6: "activité 4 : descripteurs, types, formats",
-        7: "activité 5 : composants du réseau local",
-        8: "activité 6 : jeu du courrier débranché",
     }.items()},
+    "5e_C4.7": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Atelier dédié « Le réseau de la salle techno » (3 séances) couvrant "
+                "5e_C4.7+C4.8 avec Cisco Packet Tracer 8.2 embarqué en pratique "
+                "guidée : jeu du facteur débranché, lecture de topologie, "
+                "construction complète du réseau (guide inclusif A→H, règle n°20, "
+                "figures reconstituées d'après le vrai logiciel — 24 ports, "
+                "triangles, SSID, module WPC300N), adressage IP par l'analogie de "
+                "la rue, preuves ping/Simulation, panne du doublon, mini-simulateur "
+                "d'enveloppe à verrou expérientiel, tablette et smartphone dans le "
+                "montage. QCM 30 q (16/14, 6 illustrées, réponses 8/7/7/8), "
+                "synthèses élève/professeur, fiche, matrice, 7 SVG CC0, fichier "
+                ".pkt maître, cartouche CRCN 5.1 (règle n°7), rapport de tests. "
+                "Approfondit les act. 5-6 du lampadaire (5e_C4.1) ; vocabulaire "
+                "strictement 5e (masque/passerelle/routage exclus, réservés 4e/3e).",
+        anomalies="Aucune.",
+        accessibilite="Clavier + skip-link, aria/alt, listes déroulantes (DYS), "
+                      "reduced-motion (mini-simulateur compris), impression A4, "
+                      "minuteur QCM désactivable.",
+        medias="7 SVG originaux CC0 (reconstitutions fidèles Packet Tracer 8.2) "
+               "+ fichier .pkt maître — SOURCES_MEDIAS.md complet.",
+    ),
+    "5e_C4.8": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="5e_C4.7",
+        qualite="README pointeur vers l'atelier réseau mutualisé 5e_C4.7 "
+                "(act. 1, 4, 5 : jeu du facteur, adressage, preuves par "
+                "simulation ; 14 questions dédiées) ; l'activité 6 du lampadaire "
+                "(5e_C4.1) reste la première rencontre.",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
     "4e_C5.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,

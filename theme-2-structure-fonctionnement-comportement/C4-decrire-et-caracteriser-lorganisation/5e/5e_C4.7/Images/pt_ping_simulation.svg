@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">La preuve que le réseau fonctionne : le test ping dans le terminal, et l'enveloppe du mode Simulation arrêtée sur le commutateur</title>
+<desc id="d">Panneau de gauche : le terminal Command Prompt de PC0, fond noir, avec la transcription réelle du test — la commande ping 192.168.10.20 obtient quatre réponses Reply from en moins d'une milliseconde et zéro pour cent de perte ; en dessous, la commande ping 192.168.10.50 vers le smartphone en WiFi obtient aussi quatre réponses mais en 57 à 260 millisecondes. Panneau de droite : l'espace logique en mode Simulation — l'enveloppe verte du paquet est posée sur le commutateur Switch0, entre PC0 et PC1, et la liste d'événements Event List affiche trois lignes horodatées : 0,001 seconde PC0, 0,002 seconde Switch0, 0,003 seconde PC1. En bas, la conclusion : le message passe toujours par le centre de l'étoile, qui lit l'adresse et choisit la bonne branche.</desc>
+<rect width="1080" height="660" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="658" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Deux preuves : la RÉPONSE du ping, et le TRAJET de l'enveloppe</text>
+
+<!-- ===== terminal ===== -->
+<rect x="30" y="60" width="500" height="440" rx="6" fill="#101820" stroke="#637b8e" stroke-width="2"/>
+<rect x="30" y="60" width="500" height="28" fill="#2b3b47"/>
+<text x="46" y="79" font-size="13" fill="#ffffff">PC0 — Desktop → Command Prompt</text>
+<g font-family="Consolas, monospace" font-size="13" fill="#d9f5e7">
+  <text x="48" y="112">C:\&gt; ping 192.168.10.20</text>
+  <text x="48" y="140">Pinging 192.168.10.20 with 32 bytes of data:</text>
+  <text x="48" y="166">Reply from 192.168.10.20: bytes=32 time&lt;1ms TTL=128</text>
+  <text x="48" y="188">Reply from 192.168.10.20: bytes=32 time&lt;1ms TTL=128</text>
+  <text x="48" y="210">Reply from 192.168.10.20: bytes=32 time&lt;1ms TTL=128</text>
+  <text x="48" y="232">Reply from 192.168.10.20: bytes=32 time&lt;1ms TTL=128</text>
+  <text x="48" y="260">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
+  <text x="48" y="304" fill="#9fd8f1">C:\&gt; ping 192.168.10.50</text>
+  <text x="48" y="330" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=260ms TTL=128</text>
+  <text x="48" y="352" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=57ms  TTL=128</text>
+  <text x="48" y="374" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=76ms  TTL=128</text>
+  <text x="48" y="396" fill="#9fd8f1">Reply from 192.168.10.50: bytes=32 time=92ms  TTL=128</text>
+  <text x="48" y="424" fill="#9fd8f1">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
+</g>
+<g font-size="12.5">
+  <rect x="330" y="150" width="188" height="46" rx="8" fill="#0f2e1c" stroke="#1e9d55"/>
+  <text x="424" y="169" text-anchor="middle" fill="#81fba1" font-weight="bold">« Reply from » = PC1 répond !</text>
+  <text x="424" y="187" text-anchor="middle" fill="#81fba1">filaire : moins de 1 ms</text>
+  <rect x="330" y="336" width="188" height="46" rx="8" fill="#102737" stroke="#4d8bc2"/>
+  <text x="424" y="355" text-anchor="middle" fill="#9fd8f1" font-weight="bold">le smartphone répond aussi</text>
+  <text x="424" y="373" text-anchor="middle" fill="#9fd8f1">WiFi : 57 à 260 ms — plus lent !</text>
+</g>
+<text x="280" y="478" text-anchor="middle" font-size="12.5" fill="#ffd66b">Compare : la liaison filaire répond plus de 50 fois plus vite que le WiFi.</text>
+
+<!-- ===== simulation ===== -->
+<rect x="560" y="60" width="490" height="440" rx="6" fill="#ffffff" stroke="#637b8e" stroke-width="2"/>
+<rect x="560" y="60" width="490" height="28" fill="#c98222"/>
+<text x="576" y="79" font-size="13" fill="#ffffff">Mode Simulation ✉ — outil « Add Simple PDU », puis bouton ⏭ Capture/Forward</text>
+<!-- mini topologie -->
+<g>
+  <line x1="640" y1="220" x2="800" y2="260" stroke="#2f6590" stroke-width="4"/>
+  <line x1="860" y1="260" x2="990" y2="220" stroke="#2f6590" stroke-width="4"/>
+  <!-- PC0 -->
+  <rect x="612" y="180" width="52" height="36" rx="4" fill="#27384a"/><rect x="616" y="184" width="44" height="26" fill="#9fd8f1"/>
+  <text x="640" y="242" text-anchor="middle" font-size="13" font-weight="bold" fill="#172b3d">PC0</text>
+  <!-- switch -->
+  <polygon points="790,262 846,262 858,250 802,250" fill="#7fd4e8"/>
+  <polygon points="790,262 846,262 846,278 790,278" fill="#2a6f9e"/>
+  <polygon points="846,262 858,250 858,266 846,278" fill="#173c57"/>
+  <text x="826" y="300" text-anchor="middle" font-size="13" font-weight="bold" fill="#172b3d">Switch0</text>
+  <!-- PC1 -->
+  <rect x="966" y="180" width="52" height="36" rx="4" fill="#27384a"/><rect x="970" y="184" width="44" height="26" fill="#9fd8f1"/>
+  <text x="992" y="242" text-anchor="middle" font-size="13" font-weight="bold" fill="#172b3d">PC1</text>
+  <!-- enveloppe sur le switch -->
+  <g transform="translate(826,228)">
+    <rect x="-17" y="-12" width="34" height="24" rx="3" fill="#e9f7d8" stroke="#5a8f21" stroke-width="2.5"/>
+    <path d="M-17 -12 L0 2 L17 -12" fill="none" stroke="#5a8f21" stroke-width="2.5"/>
+  </g>
+  <text x="826" y="200" text-anchor="middle" font-size="12.5" fill="#5a8f21" font-weight="bold">l'enveloppe s'arrête ICI</text>
+</g>
+<!-- event list -->
+<rect x="600" y="330" width="410" height="120" rx="6" fill="#f5f6f8" stroke="#73889c"/>
+<text x="616" y="352" font-size="13.5" font-weight="bold" fill="#31475a">Event List (la liste des événements)</text>
+<g font-family="Consolas, monospace" font-size="13" fill="#222">
+  <text x="620" y="378">Time(sec)   Last Device   At Device</text>
+  <text x="620" y="400">0.001       —             PC0</text>
+  <text x="620" y="420">0.002       PC0           Switch0</text>
+  <text x="620" y="440">0.003       Switch0       PC1</text>
+</g>
+<rect x="614" y="408" width="382" height="18" rx="4" fill="none" stroke="#ffd66b" stroke-width="2.5"/>
+<text x="805" y="478" text-anchor="middle" font-size="12.5" fill="#7a4c10">À chaque clic sur ⏭, l'enveloppe avance d'UN pas : PC0 → Switch0 → PC1.</text>
+
+<!-- conclusion -->
+<rect x="30" y="520" width="1020" height="120" rx="12" fill="#eef6ff" stroke="#4d8bc2" stroke-width="2"/>
+<text x="540" y="551" text-anchor="middle" font-size="16" font-weight="bold" fill="#12335e">Ce que montrent les deux preuves :</text>
+<text x="540" y="580" text-anchor="middle" font-size="14" fill="#222">① le message passe TOUJOURS par le commutateur, le centre de l'étoile — jamais en ligne droite entre deux PC ;</text>
+<text x="540" y="605" text-anchor="middle" font-size="14" fill="#222">② le commutateur lit l'ADRESSE DE DESTINATION écrite sur l'enveloppe et choisit la bonne branche ;</text>
+<text x="540" y="630" text-anchor="middle" font-size="14" fill="#222">③ si la réponse revient (« Reply from »), c'est la preuve que l'aller ET le retour fonctionnent.</text>
+</svg>
