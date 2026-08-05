@@ -3,7 +3,9 @@
 **Exécution réelle** le 05/08/2026, suite Playwright (Chromium headless).
 v1.0 (lot initial) : 30/30 verts · **v1.1 (rétrofit règle n°22, étape de conception act. 2) : 31/31 verts** —
 la suite vérifie désormais aussi le REFUS sans description de conception (SEQ-10a) et la validation 11/11
-avec conception (SEQ-10b).
+avec conception (SEQ-10b) · **v1.2 (finitions : recette illustrée en 4 vignettes, correctif de chevauchement
+du schéma du facteur, socle et CRCN en toutes lettres) : 33/33 verts** — dont la présence des 8 figures,
+des libellés intégraux du socle (D2/D4) et du repère CRCN verbatim (SEQ-07/07b/07c).
 Seuls des tests réellement exécutés sont déclarés ici (barre qualité du dépôt).
 
 ## Séquence (16 tests)

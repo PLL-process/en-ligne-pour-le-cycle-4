@@ -20,6 +20,7 @@ titre descriptif.
 | `Images/pt_wifi_ssid_module.svg` | SVG original (Fable) | image-objet : SSID, connexion WiFi, échange de module pas à pas (act. 3 étapes E-F) | CC0 | ~8 Ko |
 | `Images/pt_ip_configuration.svg` | SVG original (Fable) | image-objet : fenêtre d'adressage + analogie de la rue + table d'adressage (act. 4, QCM q24) | CC0 | ~8 Ko |
 | `Images/pt_ping_simulation.svg` | SVG original (Fable) | image-objet : transcription ping réelle et Event List à interpréter (act. 5, QCM q28) | CC0 | ~7 Ko |
+| `Images/conception_recette_4_etapes.svg` | SVG original (Fable) | image-objet : la recette de conception du schéma en 4 vignettes progressives (act. 2, règle n°22) | CC0 | ~6 Ko |
 | `Images/facteur_doublon_adresse.svg` | SVG original (Fable) | image-objet : le doublon d'identification rendu visible (act. 1, QCM q18, synthèses) | CC0 | ~7 Ko |
 | `5e_reseau_local_TECHNO-C4.pkt` | Fichier Packet Tracer (Fable, sur poste Pascal) | montage maître : 7 équipements, adresses .10→.50, ping validé — fichier de départ ou corrigé enseignant | CC0 (contenu du montage) | ~43 Ko |
 
