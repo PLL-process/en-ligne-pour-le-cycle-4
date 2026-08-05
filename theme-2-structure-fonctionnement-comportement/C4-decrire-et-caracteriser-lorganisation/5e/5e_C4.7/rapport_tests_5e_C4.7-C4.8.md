@@ -1,6 +1,9 @@
 # Rapport de tests — Lot 5e_C4.7 · C4.8 « Le réseau de la salle techno »
 
-**Exécution réelle** le 05/08/2026, suite Playwright (Chromium headless), 30 tests — **30/30 verts**.
+**Exécution réelle** le 05/08/2026, suite Playwright (Chromium headless).
+v1.0 (lot initial) : 30/30 verts · **v1.1 (rétrofit règle n°22, étape de conception act. 2) : 31/31 verts** —
+la suite vérifie désormais aussi le REFUS sans description de conception (SEQ-10a) et la validation 11/11
+avec conception (SEQ-10b).
 Seuls des tests réellement exécutés sont déclarés ici (barre qualité du dépôt).
 
 ## Séquence (16 tests)
@@ -13,7 +16,8 @@ Seuls des tests réellement exécutés sont déclarés ici (barre qualité du d�
 | SEQ-06 | navigation règle n°11 (⌂ Accueil, lien relatif) | ✔ |
 | SEQ-07 | les 6 figures SVG de la page se chargent (naturalWidth > 0) | ✔ |
 | SEQ-08/09 | bascule des onglets séance 2 et séance 3 | ✔ |
-| SEQ-10 | vérificateur act. 2 : 7/7 quand tout est juste | ✔ |
+| SEQ-10a | **règle n°22** : act. 2 refusée sans la description de SA conception | ✔ |
+| SEQ-10b | vérificateur act. 2 : 11/11 (4 questions-recette de conception + 7 de lecture) | ✔ |
 | SEQ-11 | **VERROU** : act. 5 refusée avec 5 bonnes réponses mais SANS les 2 expériences du mini-simulateur | ✔ |
 | SEQ-12 | **VERROU** : act. 5 validée après livraison normale + livraison en doublon réellement jouées | ✔ |
 | SEQ-13 | sauvegarde locale : champ restauré après rechargement (clé `seq_5e_C4.7-C4.8_reseau_pt`) | ✔ |

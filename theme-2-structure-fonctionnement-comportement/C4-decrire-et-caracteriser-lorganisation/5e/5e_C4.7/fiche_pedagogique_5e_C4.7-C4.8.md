@@ -48,8 +48,9 @@ décrire (5e, ce lot) → paramétrer une IP fixe et dépanner (4e, « SOS jardi
 
 ## Déroulé
 
-S1 : jeu du facteur débranché — prénoms, doublon, enveloppe sans nom (act. 1) ; lecture du schéma topologie
-et les 4 mots du réseau (act. 2). S2 : construction complète dans Packet Tracer 8.2 — guide inclusif A→H
+S1 : jeu du facteur débranché — prénoms, doublon, enveloppe sans nom (act. 1) ; CONCEPTION guidée de son
+propre schéma (recette en 4 étapes, règle n°22) puis lecture du schéma de référence comme correction, et
+les 4 mots du réseau (act. 2). S2 : construction complète dans Packet Tracer 8.2 — guide inclusif A→H
 (règle n°20) avec figures reconstituées d'après le vrai logiciel, binômes pilote/copilote, 4 relevés 🔎 faits
 dans le logiciel, sauvegarde `reseau_5X_NOM_Prenom.pkt` (act. 3). S3 : adresses IP par l'analogie de la rue,
 table .10→.50 (act. 4) ; preuves — ping filaire vs WiFi, enveloppe du mode Simulation, « panne interdite » du
@@ -66,7 +67,9 @@ facteur + schémas + mini-simulateur. Aucune manipulation électrique : tout est
 
 ## Différenciation, inclusion, accessibilité
 
-Guide logiciel inclusif A→H sans étape implicite, chaque geste illustré par une figure fidèle au logiciel
+Pratique exhaustivement guidée « comme une recette » (règle n°22) : l'élève conçoit son schéma avant de
+voir la référence, et pose les appareils selon SON plan dans Packet Tracer. Guide logiciel inclusif A→H
+sans étape implicite, chaque geste illustré par une figure fidèle au logiciel
 (règle n°20) ; binômes à rôles tournants ; aides ×2 par activité ; corrections exhaustives ; exercices en
 listes déroulantes exclusivement (DYS) ; navigation clavier + skip-link ; reduced-motion respecté (y compris
 par l'animation du mini-simulateur) ; impression A4 ; minuteur QCM désactivable ; vocabulaire FR/EN ;
