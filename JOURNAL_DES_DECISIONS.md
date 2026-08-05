@@ -1221,3 +1221,25 @@ structure conservées :
   (5e_C4.1) n'est PAS modifié — il reste la première rencontre, l'atelier approfondit. OVERLAY mis à jour,
   audit et index régénérés. Note pour le lot 3e « Internet jusqu'à Sainte-Luce » : sa version B « Packet
   Tracer à confirmer » est désormais CONFIRMÉE (8.2 opérationnel sur poste enseignant).
+
+## 2026-08-05 — RÈGLE D'OR N°22 « Concevoir guidé, comme une recette » (décision de Pascal, branche `fable/theme-2/regle-22-conception-guidee`)
+
+- **Origine** : à la lecture du lot réseau 5e fraîchement fusionné (PR #119), Pascal constate que l'élève
+  LIT le schéma du réseau (act. 2) et CONSTRUIT le montage (act. 3)… mais ne CONÇOIT jamais son propre
+  schéma. Le constat devient la règle.
+- **Règle n°22 (décidée par Pascal)** : dans toute séquence outillée, l'élève ne se contente ni de lire un
+  schéma ni de reproduire un montage : il **CONÇOIT d'abord le sien**, dans le logiciel ou au cahier, en
+  étant **exhaustivement guidé** — comme une recette de cuisine. Concrètement : ① une étape de conception
+  PRÉCÈDE la lecture du document de référence, qui devient alors la CORRECTION de la conception ; ② chaque
+  étape essentielle du geste logiciel a sa **capture d'écran fidèle** (règles n°1 + n°20) et son
+  **explication exhaustive** — aucune étape implicite, aucun « débrouille-toi » ; ③ les choix de conception
+  de l'élève (placements, liaisons, adresses…) sont les siens, questionnés et vérifiés — le guide enseigne
+  le GESTE, pas la disposition ; ④ la pratique guidée est le régime par défaut (« faire pratiquer en étant
+  exhaustivement guidé »), l'autonomie se gagne dans les Bonus.
+- **Première application — rétrofit du lot réseau 5e (ce commit)** : l'activité 2 gagne une étape
+  « 🖊 Conçois d'abord TON schéma » (4 questions-recette guidant la conception au cahier : par quoi
+  commencer, combien de câbles, qui est sans fil, la forme obtenue — production enregistrée), le schéma de
+  référence devient la correction de conception ; l'activité 3 précise que les placements dans Packet
+  Tracer suivent le plan de L'ÉLÈVE, le guide A→H n'imposant que les gestes. Tests rejoués après rétrofit.
+- **Champ d'application** : les lots 4e et 3e de la fusion réseaux (en cours) naîtront conformes ;
+  audit rétroactif des trois thèmes à programmer comme pour les règles 14-18.
