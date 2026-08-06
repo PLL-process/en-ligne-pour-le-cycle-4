@@ -9,7 +9,7 @@
 | Thème | Thème 2 — Structure, fonctionnement, comportement |
 | Compétence parente | C4 — Décrire et caractériser l'organisation d'un OST |
 | Référentiel | BO n°9 du 29/02/2024 · codes arbitrés par `_outils/data_competences.py` (règle n°21) |
-| Domaines du socle | D2, D4 |
+| Domaines du socle | D2 « Les méthodes et outils pour apprendre » (coopération pilote/copilote, jeu de rôles, outils numériques) · D4 « Les systèmes naturels et les systèmes techniques » (conception-réalisation du schéma, démarche scientifique du doublon) — détail par activité dans la séquence |
 | CRCN | 5.1 Résoudre des problèmes techniques (niv. 2, cartouche règle n°7 en act. 5) · 5.2 travaillée non évaluée |
 | Logiciel embarqué | Cisco Packet Tracer **8.2** (version vérifiée en conditions réelles) — doctrine « obligatoire sur classique » |
 | Durée | 3 séances de 55 min |
