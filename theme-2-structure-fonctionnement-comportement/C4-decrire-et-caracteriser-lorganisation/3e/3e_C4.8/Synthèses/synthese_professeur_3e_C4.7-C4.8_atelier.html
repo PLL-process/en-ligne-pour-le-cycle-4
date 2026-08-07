@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Le pont numérique Martinique → New York (3e_C4.7 · C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:900px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html">← Séquence</a></nav>
+<div class="page">
+<h1>🎓 Synthèse professeur — Le pont numérique Martinique → New York (3e_C4.7 · C4.8)</h1>
+<p class="pb">Atelier routage 3e en 3 séances de 55 min — deux réseaux, deux routeurs, une route statique&nbsp;: la preuve expérimentale de la nécessité du routage (Packet Tracer 8.2)</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Cadrage programme 2024 (codes arbitrés par le référentiel du dépôt)</h2>
+  <dl>
+    <dt>3e_C4.7</dt><dd>«&nbsp;Identifier et représenter la circulation d'une information dans le réseau Internet.&nbsp;» — conception du schéma à deux réseaux (act. 1, règle du «&nbsp;concevoir avant la référence&nbsp;»), preuves ping/TTL/tracert (act. 4), film de la simulation (act. 5). QCM&nbsp;: 12 q.</dd>
+    <dt>3e_C4.8</dt><dd>«&nbsp;Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée, table de routage donnée).&nbsp;» — le jeu du poste-frontière AVEC table donnée (act. 2, débranchée conformément au libellé), l'argument du nombre, la contre-épreuve «&nbsp;route effacée&nbsp;» (act. 5). QCM&nbsp;: 18 q.</dd>
+    <dt>Progressivité</dt><dd>5e a DÉCRIT un réseau local (étoile, adresse «&nbsp;rue + maison&nbsp;»)&nbsp;; 4e a PARAMÉTRÉ et DÉPANNÉ (adresse fixe, masque, passerelle)&nbsp;; la 3e FRANCHIT LA FRONTIÈRE&nbsp;: le routeur donne un corps à la passerelle, la table de routage décide, le protocole devient nécessaire à l'échelle d'Internet. Vocabulaire introduit&nbsp;: routeur, table de routage, route statique, prochain saut, TTL, tracert, protocole de routage.</dd>
+    <dt>Socle · CRCN</dt><dd>D2 (coopération, jeu de rôle du poste-frontière) · D4 (démarche expérimentale&nbsp;: hypothèse, montage, preuve, contre-épreuve) — détail par activité dans la séquence. CRCN 5.1 niv. 3 (cartouche règle n°7 en act. 4&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;»).</dd>
+  </dl>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">Déroulé et matériel</h2>
+    <ul>
+      <li><b>S1 — Deux réseaux, un pont.</b> Act. 1&nbsp;: conception guidée du schéma à deux réseaux (recette 4 étapes), production écrite, PUIS schéma de référence en correction&nbsp;; act. 2&nbsp;: jeu du poste-frontière, table DONNÉE en main (débranché).</li>
+      <li><b>S2 — Construire le pont.</b> Act. 3&nbsp;: recette A→H dans Packet Tracer&nbsp;: montage des deux réseaux, configuration des 2×2 prises routeur, câble croisé, routes statiques miroir.</li>
+      <li><b>S3 — Prouver le voyage.</b> Act. 4&nbsp;: preuves ping (TTL=126) et tracert (3 sauts)&nbsp;; act. 5&nbsp;: mode Simulation (Event List) + contre-épreuve «&nbsp;sans route&nbsp;» sur le mini-simulateur à verrou&nbsp;; bilan.</li>
+      <li><b>Matériel&nbsp;:</b> 1 poste/binôme, Packet Tracer 8.2, compte Cisco de classe préparé AVANT&nbsp;; le fichier <code>3e_routage_MQ_NY_TECHNO-C4.pkt</code> (corrigé du montage) pour l'enseignant et la version 🅲.</li>
+    </ul>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">Verrous et traces (exigés par les vérificateurs)</h2>
+    <ul>
+      <li><b>Production de concepteur (act. 1)&nbsp;:</b> plan rédigé ≥ 25 caractères mentionnant le routeur/pont ou la rue 10.0.0 — exigé AVANT le schéma de référence.</li>
+      <li><b>Justification rédigée (act. 2)&nbsp;:</b> ≥ 25 caractères reliant l'écriture «&nbsp;à la main&nbsp;» au nombre de réseaux (l'argument du protocole).</li>
+      <li><b>Verrou expérientiel (act. 5)&nbsp;:</b> les DEUX passages du mini-simulateur (avec route → Successful&nbsp;; sans route → détruit à R-MQ) tracés dans <code>window.__exp</code> et exigés.</li>
+      <li><b>Valeurs affichées = mesures réelles&nbsp;:</b> ping 2 timeouts puis Reply TTL=126&nbsp;; second ping 4/4, 0% loss, 0-4 ms&nbsp;; tracert 3 sauts&nbsp;; Event List 0.000→0.010 s, Successful — session du 07/08/2026 sur poste enseignant.</li>
+      <li><b>Sauvegarde locale&nbsp;:</b> clés <code>seq_3e_C4.7-C4.8_pont_numerique_pt</code> · <code>qcm_3e_C4.7-C4.8_pont_numerique_pt</code>. Aucune donnée envoyée.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">Pièges d'animation (vécus en session réelle)</h2>
+    <ul>
+      <li>Compte Cisco obligatoire au lancement — préparer le compte de classe avant la séance.</li>
+      <li><b>Sauvegarder le .pkt AVANT toute manipulation risquée</b> (notre session a perdu un montage sur une fermeture inattendue — leçon apprise).</li>
+      <li>Câble routeur ↔ routeur&nbsp;: <b>croisé</b> (Copper Cross-Over), pas droit — sinon liaison rouge.</li>
+      <li>Sur le routeur, penser <code>Port Status&nbsp;: On</code> pour CHAQUE prise (équivalent <code>no shutdown</code>)&nbsp;: une prise oubliée = pont mort.</li>
+      <li>Premier ping&nbsp;: 2 «&nbsp;Request timed out&nbsp;» réels avant les Reply (résolution d'adresses sur 3 tronçons) — relancer avant de conclure, excellent moment de classe.</li>
+      <li>La route MIROIR dans R-NY est le piège n°1&nbsp;: l'aller passe, le retour meurt — faire verbaliser «&nbsp;l'aller ET le retour&nbsp;».</li>
+      <li>En mode Simulation, créer le PDU en Realtime puis passer en Simulation (le panneau masque des appareils — détacher ou fermer le panneau, vécu en session).</li>
+    </ul>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">Différenciation et évaluation</h2>
+    <ul>
+      <li><b>Fragiles&nbsp;:</b> act. 2 avec la table imprimée sous les yeux&nbsp;; act. 3 en version 🅲 (fichier .pkt fourni, on vérifie et on prouve)&nbsp;; QCM mode «&nbsp;10 questions&nbsp;».</li>
+      <li><b>Rapides&nbsp;:</b> Bonus «&nbsp;troisième quartier&nbsp;» (192.168.40.0&nbsp;: la croissance du nombre de lignes rend l'argument chiffré)&nbsp;; défi tracert réel intercontinental&nbsp;; réponse modèle DNB.</li>
+      <li><b>Positionnement&nbsp;:</b> auto-positionnement par code (bilan) + bilan par compétence du QCM (report LSU direct C4.7/C4.8).</li>
+      <li><b>Sommative&nbsp;:</b> à construire par l'enseignant (transfert&nbsp;: relier le réseau du collège à celui de la mairie)&nbsp;; AUCUN corrigé sommatif dans le dépôt public.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Articulation dans le dépôt</h2>
+  <p>Cet atelier est le <b>complément dédié «&nbsp;routage&nbsp;»</b> de la séquence-îlot «&nbsp;Internet jusqu'à
+  Sainte-Luce&nbsp;» (3e_C4.7→C4.8, dossier <code>3e_C4.7</code>), qui reste la porte d'entrée de C4 en 3e — elle
+  aborde les mêmes codes côté Internet mondial&nbsp;; le présent atelier les traite en profondeur par la construction
+  RÉELLE du pont à deux routeurs (conception, table donnée jouée, route statique écrite, preuve et contre-épreuve).
+  En amont&nbsp;: 4e «&nbsp;SOS serre&nbsp;» (4e_C4.7-C4.9) — la passerelle introduite en 4e prend ici tout son sens.
+  Les figures sont des reconstitutions SVG originales CC0 d'après nos sessions réelles Packet Tracer 8.2 (règles n°1
+  et n°20) — aucune capture propriétaire&nbsp;; le fichier maître <code>3e_routage_MQ_NY_TECHNO-C4.pkt</code>
+  (construit et validé en conditions réelles) accompagne le lot.</p>
+</div>
+</div>
+</body>
+</html>

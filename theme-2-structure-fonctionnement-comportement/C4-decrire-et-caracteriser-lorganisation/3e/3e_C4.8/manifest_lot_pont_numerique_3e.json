@@ -1,0 +1,58 @@
+{
+  "lot": "Thème 2 — Atelier routage 3e (Packet Tracer)",
+  "nom": "Le pont numérique Martinique → New York",
+  "agent": "Fable (agent Thème 2)",
+  "theme": 2,
+  "niveau": "3e",
+  "codes": ["3e_C4.7", "3e_C4.8"],
+  "competence_parente": "C4 — Décrire et caractériser l'organisation d'un OST",
+  "duree": "3 séances de 55 min",
+  "branche": "fable/theme-2/atelier-pont-3e",
+  "date_production": "2026-08-07",
+  "particularite": "fusion-refonte du volet 3e de l'esquisse ChatGPT, méthode Fable + règle n°22 native (l'élève CONÇOIT son schéma à deux réseaux avant la référence, recette illustrée à chaque étape) ; montage RÉEL à deux routeurs 1941 construit par Fable dans Cisco Packet Tracer 8.2 sur le poste de Pascal (pilotage à distance) : interfaces configurées (Port Status On, no shutdown), routes statiques miroir écrites (192.168.30.0/24 via 10.0.0.2 et retour), preuves mesurées (ping 2 timeouts puis Reply TTL=126, second ping 4/4 0% loss 0-4 ms, tracert 3 sauts, Event List 0.000→0.010 s Successful) ; conformité au libellé C4.8 : activité DÉBRANCHÉE avec table de routage DONNÉE (act. 2) ; 7 SVG CC0 reconstitués (règles n°1 et n°20) ; complément dédié de la séquence-îlot « Internet jusqu'à Sainte-Luce » (3e_C4.7) sans la modifier",
+  "fichiers": {
+    "sequence": "sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html",
+    "qcm": "qcm_3e_C4.7-C4.8_pont_numerique.html",
+    "synthese_eleve": "Synthèses/synthese_eleve_3e_C4.7-C4.8_atelier.html",
+    "synthese_professeur": "Synthèses/synthese_professeur_3e_C4.7-C4.8_atelier.html",
+    "fiche_pedagogique": "fiche_pedagogique_3e_C4.7-C4.8_atelier.md",
+    "matrice_couverture": "matrice_couverture_3e_C4.7-C4.8_atelier.csv",
+    "sources_medias": "SOURCES_MEDIAS.md",
+    "rapport_tests": "rapport_tests_3e_C4.7-C4.8_atelier.md",
+    "fichier_packet_tracer": "3e_routage_MQ_NY_TECHNO-C4.pkt",
+    "images": [
+      "Images/conception_deux_reseaux_recette.svg",
+      "Images/schema_deux_reseaux_mq_ny.svg",
+      "Images/table_routage_donnee.svg",
+      "Images/pt_config_interface_routeur.svg",
+      "Images/pt_route_statique.svg",
+      "Images/pt_ping_tracert_mq_ny.svg",
+      "Images/pt_simulation_2routeurs.svg"
+    ],
+    "readme_pointeurs": ["README.md", "../3e_C4.7/README.md"]
+  },
+  "contenu": {
+    "activites": 5,
+    "questions_qcm": 30,
+    "questions_par_code": {"3e_C4.7": 12, "3e_C4.8": 18},
+    "questions_illustrees": 6,
+    "repartition_reponses": "8/7/7/8 (fix_r.js, graine 3987)",
+    "syntheses": 2,
+    "simulateur": "mini-simulateur « le poste-frontière à l'épreuve » intégré (trajet en 6 arrêts, mode « sans route » qui détruit l'enveloppe à R-MQ) avec verrou expérientiel : les DEUX passages — avec route (Successful) ET sans route (détruit) — exigés",
+    "conception_regle_22": "act. 1 : l'élève conçoit SON schéma à deux réseaux (recette 4 étapes illustrée, production écrite ≥25 car. exigée) AVANT le schéma de référence qui devient la correction",
+    "demarche_justification": "act. 2 débranchée, table de routage DONNÉE (les tables réelles du montage) : jouer les 3 cas du poste-frontière, éprouver l'écriture à la main, rédiger la justification du protocole (argument du nombre) — puis preuve expérimentale par la route effacée (act. 5)",
+    "crcn": "5.1 Résoudre des problèmes techniques, niv. 3 (l'élève monte, prouve et contre-éprouve son pont) — cartouche complet règle n°7 (act. 4)",
+    "versions": {
+      "A_materiel": "tracert réel vers un site lointain sur un poste autorisé — observation seulement, jamais de modification du réseau pédagogique",
+      "B_simulation": "Cisco Packet Tracer 8.2 (cœur de l'atelier) : construction complète du pont à deux routeurs",
+      "C_sans_materiel": "schémas de la page + jeu débranché de l'act. 2 + mini-simulateur intégré (le .pkt sert de corrigé à lire)"
+    }
+  },
+  "medias_licences": "7 SVG originaux CC0 reconstitués d'après notre session réelle Packet Tracer 8.2 + fichier .pkt (voir SOURCES_MEDIAS.md)",
+  "hors_perimetre_modifie": [
+    "nouveautes.json (+1)", "index.html + README.md régénérés",
+    "_outils/build_audit.py (OVERLAY 3e_C4.8, articulation 3e_C4.7) + audit_couverture.csv/.json", "JOURNAL_DES_DECISIONS.md"
+  ],
+  "source_inspiration": "esquisse ChatGPT « sequences_reseaux_cycle4_packet_tracer » (volet 3e, 05/08/2026) — conservé : le scénario à deux réseaux reliés par deux routeurs ; reconstruit : conception du schéma (règle n°22), jeu débranché avec table donnée (conformité libellé), montage réel prouvé (TTL=126, tracert, Event List), contre-épreuve de la route effacée",
+  "prive_non_publie": "aucune évaluation sommative incluse"
+}

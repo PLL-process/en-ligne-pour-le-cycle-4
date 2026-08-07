@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Le pont numérique Martinique → New York (3e_C4.7 · C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html">← Séquence</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — Le pont numérique Martinique → New York (3e_C4.7 · C4.8)</h1>
+<p class="pb">Comment un message franchit-il la frontière entre deux réseaux — et pourquoi Internet a-t-il besoin d'un protocole de routage&nbsp;?</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Deux réseaux, un pont (3e_C4.7)</h2>
+  <object class="schema" data="../Images/schema_deux_reseaux_mq_ny.svg" type="image/svg+xml" aria-label="Le schéma de référence : réseau Martinique 192.168.10, réseau New York 192.168.30, rue-pont 10.0.0.0/30 entre les routeurs R-MQ et R-NY">Le schéma du pont numérique</object>
+  <dl>
+    <dt>La recette (AVANT le logiciel)</dt><dd>① deux quartiers, deux <b>rues</b> différentes (<code>192.168.10</code> / <code>192.168.30</code>) → ② un <b>routeur</b> à la porte de chaque quartier → ③ la <b>rue-pont</b> <code>10.0.0.0/30</code> entre les deux (câble croisé) → ④ chaque quartier garde son commutateur.</dd>
+    <dt>Le routeur = le poste-frontière</dt><dd>il a <b>deux adresses</b>&nbsp;: le <code>.1</code> de sa rue (la passerelle de 4e — elle a maintenant un corps&nbsp;!) + son pied sur la rue-pont (<code>10.0.0.1</code> ou <code>10.0.0.2</code>).</dd>
+    <dt>Le trajet complet</dt><dd><code>PC-MQ → Switch-MQ → R-MQ → (pont) → R-NY → Switch-NY → Serveur-NY</code> — et le retour en miroir.</dd>
+  </dl>
+</div>
+
+<div class="cols">
+<div class="bloc">
+  <h2 style="margin-top:0">2. La table de routage (3e_C4.8)</h2>
+  <dl>
+    <dt>À chaque frontière</dt><dd>le routeur applique SA <b>table</b>&nbsp;: rue dans la table → <b>transmettre</b> au «&nbsp;via&nbsp;»&nbsp;; rue directement connectée → <b>distribuer</b>&nbsp;; rue inconnue → <b>détruire</b> (jamais au hasard).</dd>
+    <dt>Notre route statique réelle</dt><dd><code>192.168.30.0/24 via 10.0.0.2</code> — écrite À LA MAIN dans R-MQ (et son miroir dans R-NY&nbsp;: sans retour, pas de réponse&nbsp;!).</dd>
+    <dt>Pourquoi un protocole&nbsp;?</dt><dd>2 réseaux = 2 lignes à écrire… mais Internet = <b>des dizaines de milliers de réseaux</b>&nbsp;: impossible à la main. Le <b>protocole de routage</b> (les routeurs s'informent mutuellement) est <b>nécessaire</b>.</dd>
+  </dl>
+</div>
+<div class="bloc">
+  <h2 style="margin-top:0">3. Les preuves du voyage (3e_C4.7)</h2>
+  <dl>
+    <dt>ping</dt><dd>prouve l'aller-retour&nbsp;: <code>Reply… TTL=126</code> (les 2 premiers échecs sont normaux&nbsp;: relancer&nbsp;!). Second ping réel&nbsp;: <b>0% loss, 0-4 ms</b>.</dd>
+    <dt>TTL</dt><dd>compte les frontières&nbsp;: <code>128 − 2 routeurs = 126</code>. Un seul chiffre, et tu SAIS combien de postes-frontières le message a traversés.</dd>
+    <dt>tracert</dt><dd>liste les sauts un par un&nbsp;: <code>192.168.10.1 → 10.0.0.2 → 192.168.30.10</code>, «&nbsp;Trace complete&nbsp;». C'est le chemin que la table a décidé.</dd>
+    <dt>Simulation</dt><dd>le film horodaté&nbsp;: <code>0.000 → 0.010 s</code>, 11 étapes, verdict <b>Successful</b> — et SANS la route, l'enveloppe est détruite à R-MQ.</dd>
+  </dl>
+</div>
+</div>
+
+<div class="cols">
+<div class="bloc savoir">
+  <h2 style="margin-top:0">✅ Je dois savoir</h2>
+  <ul>
+    <li>représenter deux réseaux reliés par des routeurs et une rue-pont&nbsp;;</li>
+    <li>appliquer la procédure du poste-frontière (transmettre / distribuer / détruire)&nbsp;;</li>
+    <li>lire TTL et tracert pour retrouver le chemin d'un message&nbsp;;</li>
+    <li>justifier la nécessité d'un protocole de routage (l'argument du nombre)&nbsp;;</li>
+    <li>citer ma preuve expérimentale&nbsp;: route effacée = plus rien ne passe.</li>
+  </ul>
+</div>
+<div class="bloc faire">
+  <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+  <ul>
+    <li>concevoir le schéma à deux réseaux AVANT d'ouvrir le logiciel&nbsp;;</li>
+    <li>configurer les deux prises d'un routeur (G0/0 quartier, G0/1 pont)&nbsp;;</li>
+    <li>écrire une route statique (Network / Mask / Next Hop / Add)&nbsp;;</li>
+    <li>prouver le voyage&nbsp;: ping, tracert, mode Simulation (Event List).</li>
+  </ul>
+</div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Pièges classiques</h2>
+  <ul>
+    <li>oublier la route <b>MIROIR</b> dans R-NY&nbsp;: l'aller connaît le chemin, pas le retour&nbsp;;</li>
+    <li>confondre commutateur (distribue DANS le quartier) et routeur (franchit les frontières)&nbsp;;</li>
+    <li>croire qu'un routeur «&nbsp;essaie quand même&nbsp;»&nbsp;: rue inconnue = paquet <b>détruit</b>&nbsp;;</li>
+    <li>conclure «&nbsp;panne&nbsp;» sur les 2 premiers timeouts du ping — relancer d'abord&nbsp;;</li>
+    <li>mettre un câble droit entre les deux routeurs (il faut un câble <b>croisé</b>).</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
+  <table class="voc"><tr><td>routeur</td><td><b>router</b></td><td>table de routage</td><td><b>routing table</b></td></tr>
+  <tr><td>saut</td><td><b>hop</b></td><td>route statique</td><td><b>static route</b></td></tr>
+  <tr><td>passerelle</td><td><b>gateway</b></td><td>durée de vie</td><td><b>TTL (time to live)</b></td></tr></table>
+</div>
+</div>
+</body>
+</html>

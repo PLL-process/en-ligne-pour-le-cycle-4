@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 480" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Les tables de routage données : celles, exactes, de nos deux routeurs réels</title>
+<desc id="d">Deux cartes côte à côte. À gauche, la table de R-MQ : réseaux directement connectés 192.168.10.0 par G0/0 et 10.0.0.0 par G0/1, et la route statique donnée réseau 192.168.30.0 masque 255.255.255.0 via 10.0.0.2. À droite, la table miroir de R-NY : connectés 192.168.30.0 et 10.0.0.0, route statique 192.168.10.0 via 10.0.0.1. En bas, la procédure du poste-frontière en trois cas : rue dans la table, transmettre ; rue directement connectée, distribuer ; rue inconnue, détruire.</desc>
+<rect width="1080" height="480" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="478" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Les tables DONNÉES — recopiées de nos vrais routeurs (fenêtre Static Routes)</text>
+
+<!-- table R-MQ -->
+<g>
+<rect x="45" y="60" width="470" height="250" rx="10" fill="#f5f7fa" stroke="#60778c" stroke-width="2"/>
+<rect x="45" y="60" width="470" height="32" rx="10" fill="#2b1a3f"/>
+<text x="66" y="82" font-size="14.5" fill="#fff" font-weight="bold">🛃 Table de routage de R-MQ (Martinique)</text>
+<g font-size="13" font-family="Consolas, monospace">
+<text x="70" y="120" fill="#607086">— réseaux directement connectés (appris tout seuls) —</text>
+<text x="70" y="146" fill="#31475a">192.168.10.0/24   →  ma prise G0/0 (mon quartier)</text>
+<text x="70" y="170" fill="#31475a">10.0.0.0/30       →  ma prise G0/1 (la rue-pont)</text>
+<text x="70" y="200" fill="#607086">— route STATIQUE (écrite à la main — la ligne donnée) —</text>
+</g>
+<rect x="62" y="212" width="436" height="34" rx="8" fill="#eafbe7" stroke="#1e7d4f" stroke-width="2.5"/>
+<text x="80" y="234" font-size="13.5" font-family="Consolas, monospace" fill="#0a3d1f" font-weight="bold">192.168.30.0 / 255.255.255.0  via  10.0.0.2</text>
+<text x="280" y="272" text-anchor="middle" font-size="12" fill="#5c4a14">« pour la rue de New York, passe par le pied de pont d'en face »</text>
+<text x="280" y="292" text-anchor="middle" font-size="11" fill="#8a6d1d" font-family="Consolas, monospace">commande réelle : ip route 192.168.30.0 255.255.255.0 10.0.0.2</text>
+</g>
+
+<!-- table R-NY -->
+<g>
+<rect x="565" y="60" width="470" height="250" rx="10" fill="#f5f7fa" stroke="#60778c" stroke-width="2"/>
+<rect x="565" y="60" width="470" height="32" rx="10" fill="#2b1a3f"/>
+<text x="586" y="82" font-size="14.5" fill="#fff" font-weight="bold">🛃 Table de routage de R-NY (New York)</text>
+<g font-size="13" font-family="Consolas, monospace">
+<text x="590" y="120" fill="#607086">— réseaux directement connectés (appris tout seuls) —</text>
+<text x="590" y="146" fill="#31475a">192.168.30.0/24   →  ma prise G0/0 (mon quartier)</text>
+<text x="590" y="170" fill="#31475a">10.0.0.0/30       →  ma prise G0/1 (la rue-pont)</text>
+<text x="590" y="200" fill="#607086">— route STATIQUE (le miroir exact) —</text>
+</g>
+<rect x="582" y="212" width="436" height="34" rx="8" fill="#eafbe7" stroke="#1e7d4f" stroke-width="2.5"/>
+<text x="600" y="234" font-size="13.5" font-family="Consolas, monospace" fill="#0a3d1f" font-weight="bold">192.168.10.0 / 255.255.255.0  via  10.0.0.1</text>
+<text x="800" y="272" text-anchor="middle" font-size="12" fill="#5c4a14">« pour la rue de la Martinique, passe par l'autre pied de pont »</text>
+<text x="800" y="292" text-anchor="middle" font-size="11" fill="#8a6d1d" font-family="Consolas, monospace">commande réelle : ip route 192.168.10.0 255.255.255.0 10.0.0.1</text>
+</g>
+
+<!-- procédure -->
+<rect x="45" y="330" width="990" height="128" rx="12" fill="#12335e"/>
+<text x="540" y="358" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">La procédure du poste-frontière — pour CHAQUE enveloppe, dans cet ordre :</text>
+<g font-size="13.5" fill="#dcE9fb">
+<text x="90" y="390">① Lire la RUE de la destination (les 3 premiers nombres).</text>
+<text x="90" y="414">② Rue dans MA table → appliquer la ligne (transmettre au « via »). · Rue directement connectée → distribuer dans le quartier.</text>
+<text x="90" y="438">③ Rue INCONNUE → <tspan fill="#ff9aa4" font-weight="bold">DÉTRUIRE le paquet</tspan> — un routeur n'envoie jamais au hasard.</text>
+</g>
+</svg>

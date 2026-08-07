@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Le mode Simulation : le film du paquet ICMP à travers les deux routeurs, avec l'Event List réelle</title>
+<desc id="d">Reconstitution de notre simulation réelle. À gauche, le schéma du montage avec l'enveloppe ICMP violette posée sur le routeur R-MQ, en plein passage de frontière. À droite, le panneau Event List horodaté : 0.000 PC-MQ, 0.001 Switch-MQ, 0.002 R-MQ, 0.003 R-NY, 0.004 Switch-NY, 0.005 Serveur-NY, puis le retour jusqu'à 0.010 PC-MQ, avec le verdict Successful en vert.</desc>
+<rect width="1080" height="560" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="558" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Le film du voyage — mode Simulation réel (l'enveloppe traverse les 2 frontières)</text>
+
+<!-- schéma gauche -->
+<g>
+<rect x="40" y="56" width="560" height="420" rx="10" fill="#f5f8fc" stroke="#60778c" stroke-width="2"/>
+<text x="320" y="82" text-anchor="middle" font-size="13" fill="#607086" font-weight="bold">Le montage, pendant la simulation (Realtime en pause)</text>
+<!-- câbles -->
+<g stroke="#37474f" stroke-width="3">
+<line x1="120" y1="380" x2="185" y2="300"/>
+<line x1="225" y1="280" x2="270" y2="215"/>
+<line x1="520" y1="380" x2="455" y2="300"/>
+<line x1="415" y1="280" x2="370" y2="215"/>
+</g>
+<line x1="322" y1="180" x2="318" y2="180" stroke="#7a5aa8"/>
+<line x1="330" y1="185" x2="310" y2="185" stroke="#7a5aa8" stroke-width="3.5" stroke-dasharray="7 5"/>
+<!-- R-MQ + R-NY -->
+<rect x="240" y="160" width="82" height="52" rx="10" fill="#2b1a3f" stroke="#7a5aa8" stroke-width="2.5"/>
+<text x="281" y="184" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">R-MQ</text>
+<text x="281" y="202" text-anchor="middle" font-size="9" fill="#dcc7f2">1941</text>
+<rect x="330" y="160" width="82" height="52" rx="10" fill="#2b1a3f" stroke="#7a5aa8" stroke-width="2.5"/>
+<text x="371" y="184" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">R-NY</text>
+<text x="371" y="202" text-anchor="middle" font-size="9" fill="#dcc7f2">1941</text>
+<!-- enveloppe ICMP sur R-MQ -->
+<g>
+<rect x="258" y="128" width="46" height="30" rx="4" fill="#b39ddb" stroke="#4b2e83" stroke-width="2.5"/>
+<path d="M258 128 l23 16 l23 -16" fill="none" stroke="#4b2e83" stroke-width="2"/>
+<text x="281" y="122" text-anchor="middle" font-size="10.5" fill="#4b2e83" font-weight="bold">ICMP</text>
+</g>
+<text x="281" y="240" text-anchor="middle" font-size="10.5" fill="#4b2e83" font-weight="bold">← l'enveloppe est SUR le poste-frontière</text>
+<!-- switches -->
+<rect x="170" y="272" width="72" height="30" rx="4" fill="#2f6d8f"/>
+<text x="206" y="320" text-anchor="middle" font-size="10.5" fill="#123d66" font-weight="bold">Switch-MQ</text>
+<rect x="418" y="272" width="72" height="30" rx="4" fill="#2f6d8f"/>
+<text x="454" y="320" text-anchor="middle" font-size="10.5" fill="#7a3a1a" font-weight="bold">Switch-NY</text>
+<!-- PC + serveur -->
+<rect x="72" y="360" width="62" height="42" rx="4" fill="#3b6e91"/><rect x="78" y="366" width="50" height="28" fill="#bfe6f5"/>
+<text x="103" y="424" text-anchor="middle" font-size="10.5" fill="#123d66" font-weight="bold">PC-MQ</text>
+<text x="103" y="440" text-anchor="middle" font-size="9" fill="#607086" font-family="Consolas, monospace">192.168.10.10</text>
+<rect x="500" y="352" width="48" height="60" rx="4" fill="#3b6e91"/>
+<rect x="506" y="360" width="36" height="10" rx="2" fill="#1c4a63"/><circle cx="536" cy="365" r="2.2" fill="#81fba1"/>
+<rect x="506" y="374" width="36" height="10" rx="2" fill="#1c4a63"/><circle cx="536" cy="379" r="2.2" fill="#81fba1"/>
+<text x="524" y="428" text-anchor="middle" font-size="10.5" fill="#7a3a1a" font-weight="bold">Serveur-NY</text>
+<text x="524" y="444" text-anchor="middle" font-size="9" fill="#607086" font-family="Consolas, monospace">192.168.30.10</text>
+<text x="320" y="464" text-anchor="middle" font-size="11" fill="#5c4a14">rue-pont 10.0.0.0/30 entre les deux routeurs (câble croisé)</text>
+</g>
+
+<!-- Event List droite -->
+<g>
+<rect x="620" y="56" width="420" height="420" rx="10" fill="#f2f4f7" stroke="#60778c" stroke-width="2"/>
+<rect x="620" y="56" width="420" height="28" rx="10" fill="#31475a"/>
+<text x="638" y="75" font-size="12.5" fill="#fff" font-weight="bold">Event List — le journal horodaté RÉEL</text>
+<g font-size="11.5" fill="#607086" font-weight="bold">
+<text x="646" y="106">Time (s)</text><text x="740" y="106">At Device</text><text x="900" y="106">Type</text>
+</g>
+<line x1="636" y1="114" x2="1024" y2="114" stroke="#9aaabc"/>
+<g font-family="Consolas, monospace" font-size="12">
+<g fill="#31475a">
+<text x="646" y="136">0.000</text><text x="740" y="136">PC-MQ</text><text x="900" y="136">ICMP</text>
+<text x="646" y="158">0.001</text><text x="740" y="158">Switch-MQ</text><text x="900" y="158">ICMP</text>
+</g>
+<g fill="#4b2e83" font-weight="bold">
+<text x="646" y="180">0.002</text><text x="740" y="180">R-MQ</text><text x="900" y="180">ICMP</text>
+<text x="646" y="202">0.003</text><text x="740" y="202">R-NY</text><text x="900" y="202">ICMP</text>
+</g>
+<g fill="#31475a">
+<text x="646" y="224">0.004</text><text x="740" y="224">Switch-NY</text><text x="900" y="224">ICMP</text>
+<text x="646" y="246">0.005</text><text x="740" y="246">Serveur-NY</text><text x="900" y="246">ICMP</text>
+</g>
+<g fill="#607086">
+<text x="646" y="272">0.006</text><text x="740" y="272">Switch-NY</text><text x="900" y="272">ICMP</text>
+<text x="646" y="294">0.007</text><text x="740" y="294">R-NY</text><text x="900" y="294">ICMP</text>
+<text x="646" y="316">0.008</text><text x="740" y="316">R-MQ</text><text x="900" y="316">ICMP</text>
+<text x="646" y="338">0.009</text><text x="740" y="338">Switch-MQ</text><text x="900" y="338">ICMP</text>
+<text x="646" y="360">0.010</text><text x="740" y="360">PC-MQ</text><text x="900" y="360">ICMP</text>
+</g>
+</g>
+<text x="700" y="187" font-size="10" fill="#4b2e83">← frontière 1</text>
+<text x="700" y="209" font-size="10" fill="#4b2e83">← frontière 2</text>
+<path d="M1006 130 v230" stroke="#9aaabc" stroke-width="1.5"/>
+<text x="1016" y="200" font-size="10" fill="#607086" transform="rotate(90 1016 200)">aller 0.000→0.005 · retour 0.006→0.010</text>
+<rect x="636" y="380" width="388" height="34" rx="8" fill="#eafbe7" stroke="#1e7d4f" stroke-width="2.5"/>
+<text x="830" y="402" text-anchor="middle" font-size="13" fill="#0a3d1f" font-weight="bold">Last Status : Successful ✔</text>
+<text x="830" y="440" text-anchor="middle" font-size="11" fill="#5c4a14">11 étapes en 0.010 s simulée — chaque ligne violette</text>
+<text x="830" y="456" text-anchor="middle" font-size="11" fill="#5c4a14">est un passage de POSTE-FRONTIÈRE (la table décide).</text>
+</g>
+
+<!-- bandeau bas -->
+<rect x="120" y="492" width="840" height="52" rx="10" fill="#fdf6e3" stroke="#a8823c" stroke-width="2"/>
+<text x="540" y="514" text-anchor="middle" font-size="13" fill="#5c4a14" font-weight="bold">Le film confirme tracert : PC-MQ → Switch-MQ → R-MQ → R-NY → Switch-NY → Serveur-NY, puis le retour exact.</text>
+<text x="540" y="534" text-anchor="middle" font-size="12" fill="#5c4a14">Sans la route statique, le film s'arrête à R-MQ : l'enveloppe est DÉTRUITE à la première frontière (rue inconnue).</text>
+</svg>
