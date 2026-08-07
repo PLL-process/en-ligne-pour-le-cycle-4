@@ -192,16 +192,22 @@ OVERLAY = {
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ),
     "4e_C4.7": dict(
-        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
-        sequence=False, qcm=True, projet=False, synthese=False,
-        evaluation=False, correction=True, situation=False, problematique=False,
-        mutualise_avec="4e_C4.1",
-        qualite="README pointeur (séance 3 : IP fixe, réseau du jardin) + QCM "
-                "XXL réseaux 77 q existant conservé en entraînement intensif.",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="ATELIER DÉDIÉ « SOS serre » (C4.7·C4.8·C4.9, dossier principal) : "
+                "conception du plan d'adressage par l'élève (règle n°22), adresse "
+                "fixe passerelle comprise, clinique du réseau (2 pannes réelles), "
+                "validation par simulation ; QCM 30 q (10/10/10), 9 SVG CC0 "
+                "reconstitués de sessions Packet Tracer 8.2 réelles, fichier .pkt "
+                "fourni, 36/36 tests Playwright ; complète la séance 3 du Jardin "
+                "connecté (4e_C4.1) + QCM XXL réseaux conservé en entraînement.",
         anomalies="Héritées du QCM XXL existant : licences des images *_hd.jpg "
                   "non documentées — LICENCE À VÉRIFIER (consolidation "
                   "post-Conseil) ; doc3_schema_parcours.png (2,6 Mo) à trier.",
-        accessibilite="s.o.", medias="Images du QCM XXL : à documenter.",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement (DYS), "
+                      "reduced-motion (clinique comprise), impression A4.",
+        medias="9 SVG originaux CC0 + fichier .pkt — SOURCES_MEDIAS.md complet.",
     ),
     **{c: dict(
         statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
@@ -215,8 +221,18 @@ OVERLAY = {
         "4e_C4.3": "séance 4 : la forme d'une pièce raconte son procédé",
         "4e_C4.5": "séance 2 : transformation des données téléversées",
         "4e_C4.6": "séance 2 : structure de table, explorateur avec verrou",
-        "4e_C4.8": "séance 3 : résolution des 3 pannes de communication",
-        "4e_C4.9": "séance 3 : simulation de réseau fournie et complétée",
+    }.items()},
+    **{c: dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=True, projet=False, synthese=False,
+        evaluation=False, correction=True, situation=False, problematique=False,
+        mutualise_avec="4e_C4.7",
+        qualite=f"README pointeur double : atelier dédié « SOS serre » "
+                f"(4e_C4.7, {d}) + séance 3 du Jardin connecté (4e_C4.1).",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ) for c, d in {
+        "4e_C4.8": "act. 2 et 4 : banc d'essai + panne « mauvaise rue »",
+        "4e_C4.9": "act. 5 : simulation fournie complétée et validée",
     }.items()},
     "4e_C6.2": dict(
         statut="COMPLET ET VALIDABLE",

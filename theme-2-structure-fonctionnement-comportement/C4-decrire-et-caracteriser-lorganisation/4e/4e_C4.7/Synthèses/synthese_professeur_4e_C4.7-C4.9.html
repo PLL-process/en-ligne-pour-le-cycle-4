@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — SOS serre (4e_C4.7 · C4.8 · C4.9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:900px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">← Séquence</a></nav>
+<div class="page">
+<h1>🎓 Synthèse professeur — SOS serre (4e_C4.7 · C4.8 · C4.9)</h1>
+<p class="pb">Atelier réseau 4e en 3 séances de 55 min — adresse IP fixe, dépannage méthodique et validation par simulation (Packet Tracer 8.2)</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Cadrage programme 2024 (codes arbitrés par le référentiel du dépôt)</h2>
+  <dl>
+    <dt>4e_C4.7</dt><dd>«&nbsp;Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local.&nbsp;» — conception du plan (act. 1, règle du «&nbsp;concevoir avant la référence&nbsp;») puis paramétrage réel passerelle comprise (act. 3). QCM&nbsp;: 10 q.</dd>
+    <dt>4e_C4.8</dt><dd>«&nbsp;Résoudre des problèmes pour assurer la communication entre les différents terminaux dans un réseau informatique (simulation ou réseau local déconnecté du réseau pédagogique).&nbsp;» — banc d'essai (act. 2) + démarche de diagnostic sur la panne «&nbsp;mauvaise rue&nbsp;» (act. 4). QCM&nbsp;: 10 q.</dd>
+    <dt>4e_C4.9</dt><dd>«&nbsp;Compléter une simulation fournie pour valider le comportement d'un réseau informatique.&nbsp;» — le fichier <code>4e_serre_TECHNO-C4.pkt</code> est FOURNI, l'élève y ajoute le PDU de test et lit le verdict (act. 5). QCM&nbsp;: 10 q.</dd>
+    <dt>Progressivité</dt><dd>5e a DÉCRIT le réseau (composants, topologie, adresse lue «&nbsp;rue + maison&nbsp;»)&nbsp;; la 4e PARAMÈTRE et DÉPANNE (masque lu, passerelle introduite)&nbsp;; la 3e fera le ROUTAGE entre réseaux (la passerelle prendra tout son sens). Vocabulaire introduit&nbsp;: adresse fixe/statique, DHCP (opposé), passerelle, masque (lecture), famille de panne, PDU/scénario. <b>Exclus (3e)&nbsp;:</b> routeur, table de routage, protocole de routage.</dd>
+    <dt>Socle · CRCN</dt><dd>D2 (coopération, outils numériques) · D4 (conception-réalisation, démarches scientifiques) — détail par activité dans la séquence. CRCN 5.1 niv. 2 consolidé, niv. 3 visé (l'élève ÉLABORE sa démarche de diagnostic, cartouche règle n°7 en act. 4).</dd>
+  </dl>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">Déroulé et matériel</h2>
+    <ul>
+      <li><b>S1 — Le plan avant les câbles.</b> Act. 1&nbsp;: conception guidée du plan d'adressage (recette 4 étapes), production écrite, revue croisée entre binômes, PUIS plan de référence en correction.</li>
+      <li><b>S2 — Construire et adresser.</b> Act. 2&nbsp;: recette A→G (montage express, révision de 5e)&nbsp;; act. 3&nbsp;: adressage des 4 terminaux avec passerelle + preuve ping.</li>
+      <li><b>S3 — La clinique du réseau.</b> Act. 4&nbsp;: panne «&nbsp;mauvaise rue&nbsp;» (démarche du dépanneur + mini-simulateur à verrou)&nbsp;; act. 5&nbsp;: panne «&nbsp;liaison coupée&nbsp;» + validation par simulation sur le fichier fourni&nbsp;; bilan.</li>
+      <li><b>Matériel&nbsp;:</b> 1 poste/binôme, Packet Tracer 8.2, compte Cisco de classe préparé AVANT&nbsp;; le fichier <code>4e_serre_TECHNO-C4.pkt</code> distribué (clé USB ou réseau local de la salle).</li>
+    </ul>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">Verrous et traces (exigés par les vérificateurs)</h2>
+    <ul>
+      <li><b>Production de concepteur (act. 1)&nbsp;:</b> plan rédigé ≥ 25 caractères contenant «&nbsp;192.168.20&nbsp;» — exigé par le vérificateur.</li>
+      <li><b>Verrou expérientiel (act. 4)&nbsp;:</b> les DEUX consultations de la clinique (ping réussi + cas «&nbsp;mauvaise rue&nbsp;») tracées dans <code>window.__exp</code> et exigées.</li>
+      <li><b>Diagnostic rédigé (act. 4)&nbsp;:</b> ≥ 20 caractères reliant le timeout à la rue de l'adresse.</li>
+      <li><b>Valeurs affichées = mesures réelles&nbsp;:</b> pings 0-12 ms (moy. 5 ms), TTL=128, «&nbsp;Request timed out&nbsp;» ×4 et 100% loss — session du 06-07/08/2026 sur poste enseignant.</li>
+      <li><b>Sauvegarde locale&nbsp;:</b> clés <code>seq_4e_C4.7-C4.9_sos_serre_pt</code> · <code>qcm_4e_C4.7-C4.9_sos_serre_pt</code>. Aucune donnée envoyée.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">Pièges d'animation (vécus en session réelle)</h2>
+    <ul>
+      <li>Compte Cisco obligatoire au lancement&nbsp;: fermer la fenêtre de connexion QUITTE le logiciel — préparer le compte de classe avant la séance.</li>
+      <li>Triangles <b>orange ~30 s</b> après câblage&nbsp;: état normal (apprentissage du port) — ne pas laisser «&nbsp;réparer&nbsp;» une non-panne.</li>
+      <li>Premier ping&nbsp;: 1-2 «&nbsp;Request timed out&nbsp;» possibles en tête (résolution d'adresse) avant les Reply — relancer avant de conclure. Notre session l'a reproduit&nbsp;: c'est un excellent moment de classe.</li>
+      <li>Après la panne «&nbsp;mauvaise rue&nbsp;», vérifier le RETOUR en <code>192.168.20.50</code> — sinon la panne «&nbsp;réparée&nbsp;» réapparaît en act. 5.</li>
+      <li>Champ passerelle&nbsp;: des élèves recopient leur propre adresse — faire verbaliser «&nbsp;la porte, pas ma maison&nbsp;».</li>
+      <li>En mode Simulation, le panneau recouvre une partie du plan de travail&nbsp;: détacher ou fermer le panneau pour poser le PDU sur un appareil masqué (vécu en session).</li>
+    </ul>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">Différenciation et évaluation</h2>
+    <ul>
+      <li><b>Fragiles&nbsp;:</b> copilote d'abord&nbsp;; act. 2 avec le schéma sous les yeux&nbsp;; version 🅲 (clinique intégrée) suffit pour C4.8&nbsp;; QCM mode «&nbsp;10 questions&nbsp;».</li>
+      <li><b>Rapides&nbsp;:</b> Bonus «&nbsp;clinique XXL&nbsp;» (inventer une 3ᵉ panne pour le binôme voisin — doublon, masque, câble)&nbsp;; défi jardin (transfert rue 192.168.10).</li>
+      <li><b>Positionnement&nbsp;:</b> auto-positionnement par code (3 familles) + bilan par compétence du QCM (report LSU direct C4.7/C4.8/C4.9).</li>
+      <li><b>Sommative&nbsp;:</b> à construire par l'enseignant (objet transféré — ex. ajouter une caméra au réseau du CDI)&nbsp;; AUCUN corrigé sommatif dans le dépôt public.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Articulation dans le dépôt</h2>
+  <p>Cet atelier est le <b>complément dédié «&nbsp;réseaux&nbsp;»</b> de la séquence-îlot «&nbsp;SOS jardin connecté&nbsp;»
+  (4e_C4.1→C4.9), qui reste la porte d'entrée de C4 en 4e — sa séance 3 traite les mêmes codes en version courte&nbsp;;
+  le présent atelier les traite en profondeur (3 séances, conception du plan, deux familles de pannes, validation
+  par simulation). En amont&nbsp;: 5e «&nbsp;Le réseau de la salle techno&nbsp;» (5e_C4.7-C4.8). En aval&nbsp;: 3e
+  «&nbsp;Internet jusqu'à Sainte-Luce&nbsp;» et l'atelier routage Martinique→New York (3e_C4.8) — la passerelle
+  introduite ici y prend tout son sens. Les figures sont des reconstitutions SVG originales CC0 d'après nos sessions
+  réelles Packet Tracer 8.2 (règles n°1 et n°20) — aucune capture propriétaire&nbsp;; le fichier maître
+  <code>4e_serre_TECHNO-C4.pkt</code> (construit et validé en conditions réelles) accompagne le lot.</p>
+</div>
+</div>
+</body>
+</html>

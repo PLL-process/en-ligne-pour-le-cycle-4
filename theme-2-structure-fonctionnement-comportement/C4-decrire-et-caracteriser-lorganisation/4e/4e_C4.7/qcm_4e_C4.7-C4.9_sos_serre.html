@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 4e · Atelier : QCM — SOS serre (4e_C4.7 · C4.8 · C4.9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:'Fira Code',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">← Séquence</a></nav>
+<h1>Thème 2 · Martinique — 4e · Atelier : QCM — SOS serre</h1>
+<p class="subtitle">Adresse IP fixe (10 q) · résoudre les pannes de communication (10 q) · valider par la simulation (10 q) — d’après le montage Packet Tracer de la séquence</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C4.7</span><span class="badge code">4e_C4.8</span><span class="badge code">4e_C4.9</span>
+  <span class="badge theme">30 questions · 7 illustrées par les schémas du vrai logiciel · corrections détaillées</span>
+</div>
+<p style="text-align:center"><a href="sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C4.7">5e_C4.7 — Composants et topologie du réseau local</option>
+      <option value="C4.8">5e_C4.8 — Identifier les terminaux pour communiquer</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C4.7 · C4.8 · C4.9 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — atelier SOS serre 4e : 30 questions (C4.7 : 10 · C4.8 : 10 · C4.9 : 10), 6 illustrées (règle images v2) */
+const QUESTIONS = [
+/* ═══ C4.7 ═══ */
+{c:"C4.7",n:"Fixe ou automatique",q:"Pourquoi le capteur de la serre reçoit-il une adresse IP FIXE plutôt qu'une adresse automatique (DHCP) ?",
+ o:["parce qu'un objet qu'on doit joindre à coup sûr ne peut pas changer d'adresse au hasard des jours","parce que les adresses fixes transportent les données plus vite","parce que le DHCP est interdit dans les collèges","parce que Packet Tracer ne propose que des adresses fixes"],r:0,
+ expl:"Le serveur vient chercher les mesures du capteur À une adresse écrite dans le plan. Si elle changeait toute seule, le plan serait faux dès le lendemain : on FIGE l'adresse de tout appareil que les autres doivent joindre.",
+ ex:"Chez toi : la box est joignable en permanence (adresse stable), ta tablette de passage reçoit une adresse temporaire du DHCP.",
+ err:"Croire que « fixe » veut dire « plus rapide » — la vitesse ne change pas, c'est la STABILITÉ qui change.",
+ d:["","La vitesse de livraison est la même : seule la stabilité de l'adresse diffère.","Le DHCP est très utilisé partout, y compris au collège — mais pas pour les appareils à joindre.","Packet Tracer propose les deux : la case DHCP est juste au-dessus de Static."],
+ ret:"Objet connecté à joindre = adresse FIXE (Static). Appareil de passage = DHCP."},
+{c:"C4.7",n:"La fenêtre d'adressage",q:"Dans Packet Tracer, où paramètre-t-on l'adresse IP fixe d'un PC ou d'un capteur ?",
+ img:{src:"Images/pt_ip_configuration_passerelle.svg",alt:"La fenêtre IP Configuration du capteur : Static coché, IPv4 Address 192.168.20.50, Subnet Mask 255.255.255.0, Default Gateway 192.168.20.1"},
+ o:["Desktop → IP Configuration, en cochant Static","Physical → Zoom In","Config → Display Name","dans le menu du câble"],r:0,
+ expl:"Le chemin est toujours le même : clic sur l'appareil → onglet Desktop → IP Configuration → cocher Static → remplir IPv4, masque et passerelle.",
+ ex:"C'est la fenêtre reconstituée sur l'image : les quatre lignes à connaître par cœur.",
+ err:"Chercher l'adresse dans l'onglet Config — Display Name ne règle que le NOM affiché, pas l'adresse.",
+ d:["","Physical montre la photo de l'appareil : rien à voir avec l'adressage.","Display Name change l'étiquette affichée sous l'icône, pas l'identité réseau.","Le menu du câble sert à choisir la prise, pas l'adresse."],
+ ret:"Adresse fixe : Desktop → IP Configuration → Static + IPv4 + masque + passerelle."},
+{c:"C4.7",n:"Lire une adresse",q:"Dans l'adresse 192.168.20.50 du capteur, que représentent les TROIS premiers nombres (192.168.20) ?",
+ o:["le masque de sous-réseau","le numéro unique du capteur","la « rue » : la partie commune à tous les appareils du réseau de la serre","la vitesse maximale autorisée"],r:2,
+ expl:"Une adresse IP se lit rue + maison : 192.168.20 est la rue partagée par toute la serre, 50 est le numéro de maison, unique.",
+ ex:"PC-Prof 192.168.20.10, Imprimante 192.168.20.30, Serveur 192.168.20.100 : même rue, numéros différents.",
+ err:"Confondre la rue avec le masque : le masque (255.255.255.0) est un PANNEAU qui explique le découpage, il ne fait pas partie de l'adresse.",
+ d:["Le masque est une autre ligne de la fenêtre : 255.255.255.0.","Le numéro unique est le DERNIER nombre : 50.","","Une adresse n'indique aucune vitesse."],
+ ret:"Adresse = rue (3 premiers nombres, commune) + maison (dernier nombre, unique)."},
+{c:"C4.7",n:"Le rôle du masque",q:"Que dit exactement le masque de sous-réseau 255.255.255.0 ?",
+ o:["que la passerelle est en panne","que le réseau accepte 255 appareils par seconde","que l'adresse est cachée aux pirates","que les trois premiers nombres de l'adresse forment la rue et que le dernier est le numéro de maison"],r:3,
+ expl:"Le masque découpe l'adresse : chaque 255 dit « ceci est la partie rue », le 0 dit « ceci est la partie maison ». 255.255.255.0 = 3 nombres de rue + 1 numéro de maison.",
+ ex:"En 5e, la case « se remplissait toute seule » ; en 4e tu sais la lire ; en 3e tu t'en serviras pour relier des réseaux entre eux.",
+ err:"Croire que « masque » = camouflage de sécurité — le mot désigne un GABARIT de découpage, pas une cachette.",
+ d:["Le masque ne dit rien de l'état de la passerelle.","Le masque ne compte ni appareils ni débits.","Le masque n'a aucun rôle de camouflage.",""],
+ ret:"255.255.255.0 : les 255 marquent la rue, le 0 marque le numéro de maison."},
+{c:"C4.7",n:"La passerelle",q:"Dans le plan de la serre, à quoi est réservée l'adresse 192.168.20.1 ?",
+ o:["à personne : le .1 est une adresse interdite","au capteur, car il est arrivé le premier","au commutateur, qui en a besoin pour trier","à la passerelle : la porte de sortie du réseau vers les autres réseaux"],r:3,
+ expl:"Le .1 est LA convention des techniciens : on y place la passerelle (gateway), la future porte vers les autres réseaux. Personne d'autre ne doit la prendre.",
+ ex:"Chez toi, ta box est très probablement en 192.168.1.1 ou 192.168.0.1 : c'est la passerelle de la maison.",
+ err:"Donner le .1 à un appareil ordinaire : le jour où la vraie passerelle arrive, l'adresse est déjà volée.",
+ d:["Le .1 n'est pas interdit : il est RÉSERVÉ, nuance de dépanneur.","Le capteur du plan est en .50 — l'ordre d'arrivée ne donne aucun droit sur le .1.","Dans notre plan simple, le commutateur travaille sans adresse.",""],
+ ret:"Le .1 est réservé à la passerelle — la porte du réseau. Convention quasi universelle."},
+{c:"C4.7",n:"La ligne Default Gateway",q:"Dans la fenêtre IP Configuration du capteur, que faut-il écrire dans la case « Default Gateway » ?",
+ o:["192.168.20.1 — l'adresse de la passerelle du plan","192.168.20.50 — l'adresse du capteur lui-même","255.255.255.0 — le masque","192.168.21.50 — une adresse de secours"],r:0,
+ expl:"La ligne Default Gateway contient l'adresse de la PORTE du réseau : 192.168.20.1. Chaque habitant note dans son carnet où se trouve la sortie du quartier.",
+ ex:"Notre capture réelle : IPv4 192.168.20.50, masque 255.255.255.0, Default Gateway 192.168.20.1 — trois lignes, trois rôles.",
+ err:"Recopier sa propre adresse dans la case passerelle — l'appareil se désignerait lui-même comme porte de sortie !",
+ d:["","Sa propre adresse va dans IPv4 Address, pas dans Gateway.","Le masque a sa propre case, juste au-dessus.","192.168.21.50 est la fameuse « mauvaise rue » : ni une adresse de secours, ni une adresse de la serre."],
+ ret:"Default Gateway = adresse de la passerelle (192.168.20.1), pas la sienne."},
+{c:"C4.7",n:"Concevoir le plan",q:"Quelle est la PREMIÈRE étape de la recette de conception d'un plan d'adressage ?",
+ img:{src:"Images/conception_plan_recette.svg",alt:"La recette du plan d'adressage en 4 vignettes : recenser les habitants, choisir la rue, numéros uniques + .1 réservé, écrire le masque"},
+ o:["choisir les numéros au hasard","brancher les câbles pour voir ce qui se passe","recenser les habitants : lister tout ce qui devra communiquer sur le réseau","installer le DHCP"],r:2,
+ expl:"Un plan se conçoit AVANT de brancher : étape 1 recenser, étape 2 choisir la rue, étape 3 numéros uniques + .1 réservé, étape 4 écrire le masque.",
+ ex:"Pour la serre : 4 habitants (PC-Prof, Serveur, Imprimante, Capteur), rue 192.168.20, numéros 10/30/50/100, masque 255.255.255.0.",
+ err:"Câbler d'abord et adresser « au fil de l'eau » : c'est comme construire un lotissement sans plan — les doublons arrivent vite.",
+ d:["Le hasard produit des doublons et des trous inexplicables.","Brancher d'abord, c'est l'inverse de la méthode : le plan précède les câbles.","","Le DHCP distribue des adresses temporaires : ce n'est pas un plan."],
+ ret:"Plan d'adressage : recenser → choisir la rue → numéros uniques (.1 réservé) → masque."},
+{c:"C4.7",n:"Adresse valable",q:"Le plan de la serre impose la rue 192.168.20 et interdit le .1. Laquelle de ces adresses est VALABLE pour un cinquième appareil ?",
+ o:["192.168.20.1","192.168.20.50","192.168.21.60","192.168.20.60"],r:3,
+ expl:"Il faut : la bonne rue (192.168.20), un numéro non utilisé (10, 30, 50 et 100 sont pris), et pas le .1 (réservé). 60 remplit les trois conditions.",
+ ex:"Vérification de dépanneur : bonne rue ? numéro libre ? .1 intact ? — trois oui = adresse valable.",
+ err:"Choisir un numéro déjà pris : le doublon casse la livraison des DEUX appareils (souvenir de 5e !).",
+ d:["Le .1 est réservé à la passerelle.","Le .50 appartient déjà au capteur : doublon garanti.","192.168.21 est une AUTRE rue : l'appareil disparaîtrait du réseau de la serre.",""],
+ ret:"Adresse valable = bonne rue + numéro unique + .1 respecté."},
+{c:"C4.7",n:"Le plan de référence",q:"Sur le plan de la serre, quels appareils partagent la MÊME valeur dans la case « masque » ?",
+ img:{src:"Images/plan_adressage_serre.svg",alt:"Le plan d'adressage de la serre : rue 192.168.20, passerelle .1 réservée, PC-Prof .10, Imprimante .30, Capteur .50, Serveur .100"},
+ o:["aucun : chaque appareil a son propre masque","tous : le masque 255.255.255.0 est commun à toute la rue","seulement le serveur et le capteur","seulement la passerelle"],r:1,
+ expl:"Le masque décrit le DÉCOUPAGE de la rue : il est identique pour tous les habitants du même réseau. Un masque différent = un appareil qui lit la rue autrement = pannes bizarres garanties.",
+ ex:"Nos 4 terminaux réels : quatre adresses différentes, un seul et même masque 255.255.255.0.",
+ err:"Personnaliser le masque « pour faire mieux » : c'est la définition même de la rue qu'on casse.",
+ d:["Un masque par appareil créerait autant de définitions de la rue que d'habitants.","","Le masque n'est pas un privilège de serveurs.","La passerelle a une ADRESSE réservée, pas un masque à elle."],
+ ret:"Dans un réseau local simple : UN masque, le même pour tous (255.255.255.0)."},
+{c:"C4.7",n:"Preuve du paramétrage",q:"Après avoir paramétré l'adresse fixe du capteur, comment PROUVER que le paramétrage est réussi ?",
+ o:["réécrire l'adresse une deuxième fois","regarder si l'icône du capteur a changé de couleur","attendre 24 heures pour voir","lancer un ping vers le capteur et lire « Reply from 192.168.20.50 »"],r:3,
+ expl:"La preuve du technicien est TOUJOURS un test : le ping envoie un message aller-retour ; « Reply from » signe la réussite du paramétrage.",
+ ex:"Notre session réelle : ping 192.168.20.100 → 4 Reply, 0% de perte — paramétrage prouvé en dix secondes.",
+ err:"Se fier à l'apparence (« ça a l'air branché ») au lieu de tester : les icônes ne changent pas de couleur quand une adresse est fausse.",
+ d:["Réécrire sans tester, c'est recommencer sans preuve.","L'icône reste identique, adresse juste ou fausse.","Attendre ne teste rien : le réseau ne se répare pas en dormant.",""],
+ ret:"Paramétrage réussi = prouvé par un ping (« Reply from … », 0% loss)."},
+/* ═══ C4.8 ═══ */
+{c:"C4.8",n:"La boucle du dépanneur",q:"Quel est le BON ordre de la démarche de dépannage ?",
+ img:{src:"Images/demarche_diagnostic.svg",alt:"La boucle du dépanneur : observer le symptôme, formuler une hypothèse, tester, appliquer le remède puis re-tester ; une flèche ramène au 2 si le test contredit l'hypothèse"},
+ o:["débrancher tout → rebrancher tout → espérer","remède → test → hypothèse → symptôme","symptôme → hypothèse → test → remède → re-test","hypothèse → remède → symptôme → test"],r:2,
+ expl:"On OBSERVE d'abord (sans toucher), on SUPPOSE ensuite, on TESTE son idée, et seulement alors on RÉPARE — puis on re-teste pour prouver la réparation.",
+ ex:"Notre panne réelle : symptôme (timed out) → hypothèse (le capteur) → test (lire son IP Configuration) → remède (remettre .20.50) → re-test (Reply from).",
+ err:"Appliquer un remède avant d'avoir testé l'hypothèse : on « répare » au hasard et on masque parfois la vraie cause.",
+ d:["Le débranchage aléatoire est l'anti-méthode : il détruit les indices.","Commencer par le remède, c'est opérer avant d'examiner.","","Un remède avant le symptôme n'a aucun sens."],
+ ret:"Toujours : symptôme → hypothèse → test → remède → RE-test."},
+{c:"C4.8",n:"Lire le symptôme",q:"Que signifie la ligne « Request timed out » répétée quatre fois après un ping ?",
+ o:["aucune réponse n'est revenue : l'aller-retour a échoué à 100 %","le message est arrivé mais lentement","l'imprimante n'a plus de papier","le ping a réussi une fois sur quatre"],r:0,
+ expl:"« Request timed out » = le délai d'attente est dépassé, AUCUNE réponse n'est revenue. Quatre fois de suite + « Lost = 4 (100% loss) » : la communication est totalement rompue.",
+ ex:"Notre mesure réelle sur le capteur mal adressé : Sent = 4, Received = 0, Lost = 4 (100% loss).",
+ err:"Confondre « lent » et « muet » : un appareil lent répond avec un grand temps ; un appareil injoignable ne répond PAS DU TOUT.",
+ d:["","La lenteur s'écrirait « Reply from … time=200ms », pas « timed out ».","Le ping ne connaît pas l'état du papier : il teste la communication.","Une réussite partielle afficherait au moins un « Reply from »."],
+ ret:"Request timed out = zéro réponse. 100% loss = communication rompue."},
+{c:"C4.8",n:"La panne mauvaise rue",q:"Le capteur a été reparamétré en 192.168.21.50 au lieu de 192.168.20.50. Pourquoi ne reçoit-il plus RIEN, câble pourtant parfait ?",
+ img:{src:"Images/pt_panne_mauvaise_rue.svg",alt:"Transcription réelle : deux pings réussis vers .100 et .30, puis ping vers 192.168.21.50 : quatre Request timed out, 100% de perte"},
+ o:["parce que le masque a été effacé automatiquement","parce que le nombre 21 est réservé aux serveurs","parce que le câble refuse la rue 21","parce qu'il s'est déclaré dans un AUTRE quartier : dans la rue 192.168.20, plus personne ne s'appelle .50"],r:3,
+ expl:"Une adresse = rue + maison. En changeant la rue (21 au lieu de 20), le capteur a déménagé dans un quartier voisin : pour la serre, il a tout simplement disparu — même avec un câble neuf.",
+ ex:"Une maison télétransportée dans la ville voisine avec son numéro 50 : le facteur de TA rue ne la trouvera plus jamais.",
+ err:"Accuser le câble alors que les triangles sont verts : une panne d'ADRESSAGE ne se voit pas sur le câblage.",
+ d:["Le masque était intact : seul le 3e nombre de l'adresse avait changé.","Aucun nombre n'est « réservé aux serveurs ».","Le câble transporte des signaux : il ignore tout des rues.",""],
+ ret:"Changer la rue d'une adresse = disparaître du réseau. Câble vert n'innocente pas l'adresse."},
+{c:"C4.8",n:"Choisir le bon test",q:"Les pings vers le serveur et l'imprimante réussissent, seul le capteur est muet. Quel est le MEILLEUR premier test ?",
+ o:["remplacer le câble du capteur","redémarrer tout le réseau de la serre","ouvrir l'IP Configuration du capteur et relire son adresse ligne à ligne","réinstaller Packet Tracer"],r:2,
+ expl:"L'hypothèse la plus raisonnable vise ce qui est SEUL en panne. Le test le moins invasif — une simple lecture d'écran — apporte l'information sans rien risquer.",
+ ex:"Notre session : la lecture a immédiatement révélé « 192.168.21.50 » — diagnostic posé sans rien débrancher.",
+ err:"Employer le remède le plus lourd en premier (tout redémarrer) : lent, risqué, et souvent inutile.",
+ d:["Le câble est vert : le remplacer ne teste pas l'hypothèse adresse.","Redémarrer tout punit les innocents et ne montre pas la cause.","","Le logiciel n'est pas en cause : deux pings viennent de réussir."],
+ ret:"Premier test = le moins invasif qui peut trancher l'hypothèse (souvent : LIRE la configuration)."},
+{c:"C4.8",n:"Familles de pannes",q:"Quelle est la différence entre la panne « mauvaise rue » et la panne « liaison coupée » ?",
+ o:["mauvaise rue = panne d'ADRESSAGE (liens verts, timeout) ; liaison coupée = panne PHYSIQUE (triangles rouges)","ce sont deux noms de la même panne","mauvaise rue = panne du commutateur ; liaison coupée = panne du serveur","aucune différence visible à l'écran"],r:0,
+ expl:"Deux familles, deux symptômes : l'adressage casse la LIVRAISON (le réseau semble intact, mais timeout) ; la liaison casse la ROUTE (triangles rouges immédiatement visibles).",
+ ex:"Nos deux cas réels : capteur en 192.168.21.50 (liens verts, 100% loss) vs port de l'imprimante sur Off (triangles rouges).",
+ err:"N'imaginer qu'une seule famille de pannes et appliquer toujours le même remède.",
+ d:["","Les deux pannes ont des causes ET des symptômes différents.","Ni le commutateur ni le serveur n'étaient en cause dans nos deux cas.","La différence saute aux yeux : la couleur des triangles."],
+ ret:"Adressage : liens verts + timeout. Liaison : triangles rouges. Familles différentes, remèdes différents."},
+{c:"C4.8",n:"Triangles rouges",q:"Sur le montage, la liaison de l'imprimante affiche des triangles ROUGES des deux côtés. Que faut-il en conclure ?",
+ img:{src:"Images/pt_panne_liaison_coupee.svg",alt:"Le montage de la serre avec la liaison de l'imprimante en triangles rouges, les trois autres liaisons vertes, et la loupe montrant Port Status Off"},
+ o:["la liaison est tombée : panne physique (port désactivé, câble défait…), l'adresse n'y est pour rien","l'imprimante a une mauvaise adresse IP","le réseau entier est en panne","c'est l'état normal d'une imprimante au repos"],r:0,
+ expl:"Le rouge signale que la LIAISON ne fonctionne plus — dans notre cas réel, le Port Status de l'imprimante était décoché (Off). Les trois autres liaisons restaient vertes : panne localisée.",
+ ex:"Remède prouvé : recocher On → triangles verts → re-test au ping.",
+ err:"Foncer vérifier l'adresse alors que le symptôme (rouge) désigne la liaison : mauvaise famille, mauvais remède.",
+ d:["","Son adresse était restée parfaite : le rouge ne parle jamais d'adresse.","Trois liaisons vertes prouvent le contraire.","Au repos, une liaison correcte reste VERTE."],
+ ret:"Triangles rouges = liaison tombée. Vérifier port et câble, pas l'adresse."},
+{c:"C4.8",n:"Le re-test",q:"Après avoir remis la bonne adresse au capteur, pourquoi RE-lancer un ping est-il obligatoire ?",
+ o:["pour occuper le reste de la séance","parce qu'une réparation n'est prouvée que par un test réussi après le remède","parce que le premier ping a abîmé le réseau","ce n'est pas obligatoire : si on a bien réparé, ça marche"],r:1,
+ expl:"La boucle du dépanneur se termine par le RE-TEST : « Reply from » après réparation est la preuve que le remède a fonctionné — et qu'il n'y avait qu'UNE panne.",
+ ex:"Notre session : après retour en 192.168.20.50 → ping → 4/4 Reply. Réparation signée.",
+ err:"Déclarer « réparé » sans re-tester : si une deuxième panne se cache, on l'apprendra au pire moment.",
+ d:["Le re-test prend dix secondes et clôt le diagnostic proprement.","","Un ping n'abîme rien : quatre messages minuscules.","« Ça devrait marcher » n'est pas une preuve — le re-test, si."],
+ ret:"Pas de réparation sans RE-TEST réussi. C'est la signature du dépanneur."},
+{c:"C4.8",n:"TTL et bonne santé",q:"Nos pings réels affichent « time<1ms » à « time=12ms » selon l'appareil. Qu'en conclut un dépanneur ?",
+ o:["que le réseau est en panne car les temps diffèrent","que ces petites variations sont normales : le réseau local est en bonne santé","que l'imprimante triche","qu'il faut remplacer le commutateur au-dessus de 10 ms"],r:1,
+ expl:"Sur un réseau local sain, les temps d'aller-retour varient de quelques millisecondes selon l'appareil et l'instant : c'est du bruit normal, pas un symptôme.",
+ ex:"Nos mesures : serveur 0-2 ms, imprimante 0-12 ms (moyenne 5 ms) — deux appareils joignables, 0% de perte.",
+ err:"Chercher une panne dans chaque milliseconde : le dépanneur regarde la PERTE (loss) avant les temps.",
+ d:["Des temps différents ne sont pas une panne : la perte à 0% dit que tout va bien.","","Les appareils ne « trichent » pas : ils répondent plus ou moins vite.","Aucune règle ne condamne un réseau à 12 ms."],
+ ret:"Réseau local sain : temps de 0 à ~15 ms, perte 0%. La PERTE est le vrai signal d'alerte."},
+{c:"C4.8",n:"Réseau d'entraînement",q:"Pourquoi la compétence 4e_C4.8 précise-t-elle « simulation ou réseau local DÉCONNECTÉ du réseau pédagogique » ?",
+ o:["parce que les élèves n'ont pas le droit de toucher un ordinateur","parce que le réseau pédagogique est trop lent","pour qu'on puisse provoquer des pannes sans aucun risque pour le vrai réseau du collège","parce que la simulation est plus jolie que la réalité"],r:2,
+ expl:"Dépanner s'apprend en PROVOQUANT des pannes — impensable sur le réseau réel du collège. On s'entraîne donc en simulation ou sur un réseau d'exercice isolé : mêmes gestes, zéro risque.",
+ ex:"C'est la loi de l'atelier depuis la 5e : on ne touche JAMAIS au réseau pédagogique — Packet Tracer est notre terrain d'entraînement.",
+ err:"Tester « en vrai » sur le réseau du collège : une erreur d'adresse peut couper la classe entière.",
+ d:["Les élèves manipulent, mais sur un terrain sans risque.","La vitesse n'est pas la raison : la SÉCURITÉ du réseau commun l'est.","","La simulation n'est pas « jolie » : elle est SANS CONSÉQUENCE."],
+ ret:"On s'entraîne sur simulation ou réseau isolé : provoquer des pannes sans danger, c'est le seul moyen d'apprendre à les réparer."},
+{c:"C4.8",n:"Doublon vs mauvaise rue",q:"En 5e tu as vu la panne du DOUBLON, cette année la MAUVAISE RUE. Quel point commun ont ces deux pannes ?",
+ o:["elles ne peuvent arriver qu'en simulation","ce sont deux pannes de câble","elles font toutes les deux clignoter les triangles en rouge","ce sont deux pannes d'ADRESSAGE : le câblage est intact, c'est l'identité des appareils qui est fausse"],r:3,
+ expl:"Doublon (deux fois la même adresse) et mauvaise rue (mauvais réseau) sont deux erreurs d'IDENTITÉ : le facteur est perdu, mais les routes sont parfaites. Famille : adressage.",
+ ex:"Dans les deux cas, les triangles restent verts et le ping échoue — le symptôme qui dit « cherche du côté des adresses ».",
+ err:"Croire que toute panne se voit sur le schéma : les pannes d'adressage sont invisibles sur les câbles.",
+ d:["Ces pannes existent aussi sur les vrais réseaux — la simulation permet juste de s'y entraîner.","Aucun câble n'est en cause dans ces deux pannes.","Justement non : les liens restent verts, c'est leur signature.",""],
+ ret:"Doublon et mauvaise rue = famille ADRESSAGE : liens verts, livraison cassée."},
+/* ═══ C4.9 ═══ */
+{c:"C4.9",n:"Realtime vs Simulation",q:"Quelle est la différence entre le mode Realtime et le mode Simulation de Packet Tracer ?",
+ o:["Realtime est payant, Simulation est gratuit","en Simulation, le temps est sous ton contrôle : tu vois chaque message avancer image par image","Simulation supprime les pannes automatiquement","Realtime n'affiche pas les câbles"],r:1,
+ expl:"Realtime vit à la vitesse réelle (un ping dure quelques ms, invisible). Simulation est le RALENTI de l'arbitre : le temps avance pas à pas et chaque enveloppe se voit.",
+ ex:"Notre enveloppe réelle : visible sur Switch-MQ, puis sur le routeur — impossible à observer en Realtime.",
+ err:"Rester en Realtime pour « voir passer les messages » : ils passent en quelques millisecondes, on ne voit rien.",
+ d:["Les deux modes font partie du même logiciel gratuit.","","La simulation MONTRE les pannes, elle ne les répare pas.","Les câbles s'affichent dans les deux modes."],
+ ret:"Simulation = le temps au ralenti, message par message. L'outil d'observation du réseau."},
+{c:"C4.9",n:"Compléter, pas reconstruire",q:"La compétence 4e_C4.9 dit « COMPLÉTER une simulation fournie ». Concrètement, que fais-tu du fichier .pkt fourni ?",
+ o:["je le supprime et je reconstruis tout moi-même","je l'ouvre tel quel et j'y AJOUTE le test qui manque (l'enveloppe du mode Simulation)","je le regarde sans rien toucher","je change toutes les adresses pour me l'approprier"],r:1,
+ expl:"Le réseau est déjà construit et vérifié : ta valeur ajoutée est le TEST. Tu ajoutes le scénario (l'enveloppe expéditeur → destinataire) qui prouvera le comportement.",
+ ex:"Notre fichier 4e_serre_TECHNO-C4.pkt : montage complet fourni — l'élève y ajoute le PDU PC-Prof → Serveur-Serre et lance Play.",
+ err:"Tout reconstruire « pour être sûr » : on perd la séance et on ne travaille pas la compétence demandée.",
+ d:["Reconstruire est le contraire de compléter.","","Sans ajout, aucune validation ne se produit.","Changer les adresses casserait un réseau déjà juste."],
+ ret:"Compléter une simulation = ajouter le test (PDU) au fichier fourni, pas refaire le montage."},
+{c:"C4.9",n:"L'outil enveloppe",q:"Dans Packet Tracer, comment ajoute-t-on un test de communication au scénario de simulation ?",
+ o:["outil « enveloppe fermée » (Add Simple PDU) → clic sur l'expéditeur → clic sur le destinataire","en secouant l'icône du serveur","menu File → Print","en tapant l'adresse dans la barre de titre"],r:0,
+ expl:"Add Simple PDU crée un message de test : premier clic = expéditeur, second clic = destinataire. Le scénario apparaît dans la liste en bas (Fire / Last Status).",
+ ex:"Notre test réel : enveloppe posée sur PC-MQ puis Serveur-NY → ligne « Successful » dans la liste.",
+ err:"Cliquer deux fois le même appareil : l'expéditeur s'enverrait un message à lui-même.",
+ d:["","Les icônes ne réagissent pas aux secousses !","Print imprime la page, il ne teste rien.","La barre de titre affiche le nom du fichier, elle n'envoie rien."],
+ ret:"Add Simple PDU : 1er clic expéditeur, 2e clic destinataire — le test entre au scénario."},
+{c:"C4.9",n:"Lire l'Event List",q:"Dans la liste d'événements de la simulation, que raconte la suite « 0.000 PC-Prof → 0.001 Switch0 → 0.002 Serveur-Serre » ?",
+ img:{src:"Images/pt_simulation_enveloppe.svg",alt:"Le mode Simulation : l'enveloppe sur le commutateur et l'Event List montrant le trajet horodaté PC-Prof, Switch0, Serveur-Serre avec le verdict Successful"},
+ o:["l'ordre d'allumage des appareils","les températures de la serre","le trajet horodaté du message : parti du PC, passé par le commutateur, arrivé au serveur","les erreurs du réseau"],r:2,
+ expl:"L'Event List est le journal de bord : chaque ligne dit OÙ est le message à quel instant. On y lit le trajet complet, étape par étape.",
+ ex:"Notre capture réelle en 3e étape : l'enveloppe visible sur le commutateur pendant que la liste s'écrit.",
+ err:"Ignorer la liste et ne regarder que l'animation : la liste est la PREUVE écrite, l'animation n'est que l'illustration.",
+ d:["L'allumage des appareils n'est pas un événement réseau.","Les mesures de la serre passeraient DANS les messages : la liste, elle, trace les messages eux-mêmes.","","Aucune erreur ici : le trajet se déroule parfaitement."],
+ ret:"Event List = le trajet écrit et horodaté du message. La preuve noire sur blanc."},
+{c:"C4.9",n:"Le verdict",q:"Après Play, la ligne du scénario affiche « Successful ». Qu'est-ce que cela VALIDE exactement ?",
+ o:["que le fichier est bien sauvegardé","que l'aller-retour simulé a réussi : le comportement du réseau est conforme","que la simulation s'est affichée sans bug","que l'ordinateur est assez puissant"],r:1,
+ expl:"Successful est le verdict du test : le message est parti, arrivé, et la réponse est revenue. C'est la validation demandée par la compétence — le comportement du réseau est prouvé.",
+ ex:"Notre scénario réel PC-MQ → Serveur-NY : « Successful » après le Play — comportement validé de bout en bout.",
+ err:"Confondre « la simulation a tourné » et « le test a réussi » : une simulation peut tourner ET afficher Failed.",
+ d:["La sauvegarde est une autre opération (Ctrl+S).","","L'affichage sans bug ne dit rien du réseau testé.","La puissance de l'ordinateur n'entre pas dans le verdict."],
+ ret:"Successful = aller-retour simulé réussi = comportement du réseau VALIDÉ."},
+{c:"C4.9",n:"Trajet dans l'étoile",q:"Dans la simulation de la serre, par où passe TOUJOURS l'enveloppe entre PC-Prof et le serveur ?",
+ o:["par l'imprimante, qui fait relais","directement, en ligne droite d'appareil à appareil","par le commutateur : dans une étoile, tout trajet passe par le centre","par la passerelle 192.168.20.1"],r:2,
+ expl:"La topologie en étoile n'a qu'un centre : le commutateur. Chaque message y passe obligatoirement — la simulation le montre image par image.",
+ ex:"Nos captures réelles : l'enveloppe s'arrête systématiquement sur Switch0 avant de repartir vers le destinataire.",
+ err:"Imaginer des raccourcis : sans câble direct entre deux terminaux, aucun message ne peut « couper à travers ».",
+ d:["L'imprimante est un terminal, pas un relais.","Aucun câble ne relie directement deux terminaux : la ligne droite n'existe pas.","","La passerelle ne sert que pour SORTIR du réseau — ici on reste dedans."],
+ ret:"Étoile = tout passe par le commutateur. La simulation en donne la preuve visuelle."},
+{c:"C4.9",n:"Simulation et panne",q:"À quoi sert le mode Simulation pendant un DÉPANNAGE ?",
+ o:["à voir OÙ le message s'arrête : le dernier appareil atteint pointe vers la panne","à réparer automatiquement la panne","à cacher la panne aux élèves","à rien : la simulation ne fonctionne que sans panne"],r:0,
+ expl:"En simulation, un message qui échoue s'arrête quelque part : ce « dernier arrêt » est un indice en or — la panne est au-delà.",
+ ex:"Avec le capteur en mauvaise rue : l'enveloppe meurt au commutateur, qui ne trouve personne en .50 — l'indice désigne l'adressage.",
+ err:"N'utiliser la simulation que quand tout va bien : c'est justement pendant la panne qu'elle raconte le plus.",
+ d:["","La simulation MONTRE, le dépanneur répare.","Au contraire : elle rend la panne visible.","La simulation fonctionne panne ou pas — et c'est sa force."],
+ ret:"En panne, la simulation montre le dernier arrêt du message : la panne est juste après."},
+{c:"C4.9",n:"Sauvegarder le scénario",q:"Pourquoi sauvegarder le fichier .pkt APRÈS avoir ajouté ton enveloppe de test ?",
+ o:["parce que le fichier s'efface toutes les dix minutes","parce que ton test fait maintenant partie du fichier : le prochain utilisateur pourra le rejouer","parce que la simulation ne démarre qu'après sauvegarde","il ne faut surtout pas sauvegarder un fichier fourni"],r:1,
+ expl:"Le scénario ajouté (ton PDU) est enregistré AVEC le montage : le fichier devient un banc de test complet, rejouable par le professeur ou un autre binôme.",
+ ex:"Notre fichier de référence contient le scénario PC-MQ → Serveur-NY : il suffit de cliquer Fire pour rejouer la preuve.",
+ err:"Fermer sans sauvegarder : ton travail de validation disparaît avec la fenêtre.",
+ d:["Les fichiers ne s'effacent pas seuls : ils attendent ta sauvegarde.","","La simulation démarre sauvegardé ou non — mais ton scénario, lui, mérite d'être gardé.","Compléter un fichier fourni, c'est justement l'enrichir et le rendre."],
+ ret:"Sauvegarder après le test : le scénario devient rejouable — le fichier raconte ta validation."},
+{c:"C4.9",n:"Valider un comportement",q:"Que signifie « VALIDER le comportement d'un réseau » (les mots mêmes de la compétence 4e_C4.9) ?",
+ o:["compter les câbles","le trouver joli et bien rangé","vérifier que tous les appareils sont de la même marque","prouver par un test que le réseau fait exactement ce qu'on attend de lui"],r:3,
+ expl:"Valider = confronter le comportement OBSERVÉ (le test simulé) au comportement ATTENDU (le plan). S'ils coïncident — Successful — le réseau est validé.",
+ ex:"Attendu : PC-Prof joint le serveur. Observé : enveloppe livrée, verdict Successful. Validé.",
+ err:"Valider « à l'œil » sans test : un réseau peut être magnifique et injoignable.",
+ d:["Compter les câbles vérifie le montage, pas le COMPORTEMENT.","L'esthétique du montage ne prouve rien.","La marque des appareils n'est pas un critère de comportement.",""],
+ ret:"Valider = test + verdict conforme à l'attendu. Jamais « à l'œil »."},
+{c:"C4.9",n:"Du simulateur au réel",q:"Ton réseau est validé en simulation. Que peut-on affirmer sur le réseau RÉEL équivalent ?",
+ o:["qu'il n'a plus besoin d'être testé","qu'il fonctionnera exactement pareil, à la milliseconde près","rien du tout : la simulation n'a aucun rapport avec le réel","que sa logique (adresses, liaisons, trajets) est correcte — mais le réel ajoutera ses contraintes : longueurs de câbles, parasites, matériel"],r:3,
+ expl:"La simulation valide la LOGIQUE du réseau. Le monde réel ajoute des contraintes physiques (câbles abîmés, distances, brouillages) : la logique validée est nécessaire, pas suffisante.",
+ ex:"Les techniciens font pareil : ils préparent en simulation, puis re-testent sur site — deux étapes, deux preuves.",
+ err:"Croire la simulation « parfaite » ou au contraire « inutile » : elle est un excellent premier filtre, pas une garantie totale.",
+ d:["Le test sur site reste indispensable : le réel a ses surprises.","Les temps réels varieront : matériel, longueurs, trafic.","Le simulateur reproduit fidèlement la logique des vrais équipements.",""],
+ ret:"Simulation validée = logique juste. Le réel exigera son propre re-test."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C4.7-C4.9_sos_serre_pt";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C4.7":"4e_C4.7 — Paramétrer une adresse IP fixe",
+  "C4.8":"4e_C4.8 — Résoudre les problèmes de communication",
+  "C4.9":"4e_C4.9 — Compléter une simulation pour valider" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">La panne « liaison coupée » : la liaison de l'imprimante en rouge, les autres vertes</title>
+<desc id="d">Le montage de la serre reconstitué d'après notre session : le commutateur au centre, quatre liaisons. Celles de PC-Prof, Serveur-Serre et Capteur-Serre portent des triangles verts ; la liaison de l'imprimante porte des triangles rouges aux deux extrémités. Une loupe agrandit la cause découverte pendant le diagnostic : dans la fenêtre de configuration de l'imprimante, la case Port Status est décochée, position Off. Un encadré rappelle que l'adresse de l'imprimante était restée correcte.</desc>
+<rect width="1080" height="560" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="558" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#8a2e2e">La panne « liaison coupée » — triangles ROUGES : l'autre famille de panne</text>
+
+<!-- câbles -->
+<g stroke="#37474f" stroke-width="3.5">
+<line x1="200" y1="150" x2="440" y2="290"/>
+<line x1="760" y1="150" x2="520" y2="290"/>
+<line x1="200" y1="440" x2="440" y2="310"/>
+<line x1="760" y1="440" x2="520" y2="310"/>
+</g>
+<!-- triangles verts (3 liaisons) -->
+<g fill="#2e9e4f">
+<path d="M214 158 l16 -4 l-8 14 z"/><path d="M424 284 l14 -8 l-4 16 z"/>
+<path d="M214 432 l16 4 l-8 -14 z"/><path d="M424 316 l14 8 l-4 -16 z"/>
+<path d="M746 432 l-16 4 l8 -14 z"/><path d="M536 316 l-14 8 l4 -16 z"/>
+</g>
+<!-- triangles ROUGES (imprimante) -->
+<g fill="#d63a3a">
+<path d="M746 158 l-16 -4 l8 14 z"/><path d="M536 284 l-14 -8 l4 16 z"/>
+</g>
+
+<!-- switch -->
+<g>
+<rect x="428" y="278" width="104" height="40" rx="5" fill="#2f6d8f"/>
+<rect x="434" y="284" width="92" height="10" rx="2" fill="#1c4a63"/>
+<text x="480" y="336" text-anchor="middle" font-size="12" fill="#31475a" font-weight="bold">Switch0 (2960)</text>
+</g>
+<!-- PC-Prof -->
+<g><rect x="140" y="104" width="76" height="48" rx="4" fill="#3b6e91"/><rect x="147" y="111" width="62" height="34" fill="#bfe6f5"/>
+<text x="178" y="176" text-anchor="middle" font-size="12" fill="#135588" font-weight="bold">PC-Prof ✓</text></g>
+<!-- Imprimante -->
+<g><rect x="726" y="112" width="86" height="36" rx="5" fill="#5c7a94"/><rect x="740" y="98" width="58" height="16" fill="#eef1f4" stroke="#5c7a94"/>
+<text x="770" y="176" text-anchor="middle" font-size="12" fill="#8a2e2e" font-weight="bold">Imprimante ✗</text></g>
+<!-- Serveur -->
+<g><rect x="146" y="396" width="60" height="76" rx="4" fill="#3b6e91"/>
+<rect x="153" y="404" width="46" height="12" rx="2" fill="#1c4a63"/><circle cx="192" cy="410" r="2.5" fill="#81fba1"/>
+<rect x="153" y="421" width="46" height="12" rx="2" fill="#1c4a63"/><circle cx="192" cy="427" r="2.5" fill="#81fba1"/>
+<text x="176" y="496" text-anchor="middle" font-size="12" fill="#135588" font-weight="bold">Serveur-Serre ✓</text></g>
+<!-- Capteur -->
+<g><rect x="726" y="400" width="76" height="48" rx="4" fill="#3b6e91"/><rect x="733" y="407" width="62" height="34" fill="#eafbe7"/>
+<circle cx="764" cy="424" r="11" fill="none" stroke="#1e7d4f" stroke-width="2"/><path d="M764 417 v7 l5 4" stroke="#1e7d4f" stroke-width="2" fill="none"/>
+<text x="764" y="472" text-anchor="middle" font-size="12" fill="#1e7d4f" font-weight="bold">Capteur-Serre ✓</text></g>
+
+<!-- loupe sur la cause -->
+<g>
+<circle cx="850" cy="264" r="14" fill="none" stroke="#31475a" stroke-width="4"/>
+<line x1="860" y1="275" x2="878" y2="296" stroke="#31475a" stroke-width="5" stroke-linecap="round"/>
+<line x1="770" y1="152" x2="843" y2="252" stroke="#31475a" stroke-width="1.8" stroke-dasharray="6 5"/>
+<rect x="700" y="300" width="350" height="120" rx="10" fill="#f5f7fa" stroke="#60778c" stroke-width="2"/>
+<rect x="700" y="300" width="350" height="26" rx="10" fill="#32658f"/>
+<text x="716" y="318" font-size="12.5" fill="#fff">Imprimante — Config → FastEthernet0</text>
+<text x="724" y="352" font-size="13.5" fill="#222">Port Status</text>
+<rect x="864" y="338" width="18" height="18" rx="4" fill="#ffffff" stroke="#b34a4a" stroke-width="3"/>
+<text x="896" y="352" font-size="13.5" fill="#7a1f1f" font-weight="bold">On  ← décoché : Off !</text>
+<text x="724" y="384" font-size="12.5" fill="#0a3d1f">IPv4 Address : <tspan font-family="Consolas, monospace" font-weight="bold">192.168.20.30</tspan> ✓ (l'adresse, elle, est parfaite)</text>
+<text x="724" y="406" font-size="12.5" fill="#5c4a14" font-weight="bold">Remède : recocher On → triangles verts → RE-tester au ping</text>
+</g>
+
+<!-- encadré famille -->
+<rect x="60" y="490" width="960" height="52" rx="10" fill="#fdecec" stroke="#b34a4a" stroke-width="2"/>
+<text x="540" y="512" text-anchor="middle" font-size="13" fill="#7a1f1f" font-weight="bold">Triangles ROUGES = panne de LIAISON (famille « physique ») : port désactivé, câble défait, prise morte…</text>
+<text x="540" y="532" text-anchor="middle" font-size="12.5" fill="#7a1f1f">Rien à voir avec l'adressage : inutile de vérifier les adresses tant que la route elle-même est coupée.</text>
+</svg>
