@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — SOS serre (4e_C4.7 · C4.8 · C4.9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">← Séquence</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — SOS serre (4e_C4.7 · C4.8 · C4.9)</h1>
+<p class="pb">Comment ajouter un objet connecté à un réseau local — et retrouver, avec méthode, la panne qui l'empêche de communiquer&nbsp;?</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">1. Le plan d'adressage (4e_C4.7)</h2>
+  <object class="schema" data="../Images/plan_adressage_serre.svg" type="image/svg+xml" aria-label="Le plan de la serre : rue 192.168.20, passerelle .1 réservée, PC-Prof .10, Imprimante .30, Capteur .50, Serveur .100">Le plan de la serre</object>
+  <dl>
+    <dt>La recette (AVANT de brancher)</dt><dd>① recenser les habitants → ② choisir la <b>rue</b> commune (<code>192.168.20</code>) → ③ un <b>numéro unique</b> par appareil, le <b>.1 réservé</b> → ④ écrire le <b>masque</b>.</dd>
+    <dt>Passerelle (gateway)</dt><dd>la <b>porte de sortie</b> du réseau vers les autres réseaux — son adresse (<code>192.168.20.1</code>) est réservée et notée dans le carnet de chaque habitant.</dd>
+    <dt>Masque</dt><dd><code>255.255.255.0</code> = «&nbsp;les 3 premiers nombres sont la rue, le dernier est la maison&nbsp;». Le même pour toute la rue.</dd>
+  </dl>
+</div>
+
+<div class="cols">
+<div class="bloc">
+  <h2 style="margin-top:0">2. L'adresse IP fixe (4e_C4.7)</h2>
+  <dl>
+    <dt>Pourquoi FIXE&nbsp;?</dt><dd>un objet connecté qu'on doit <b>joindre à coup sûr</b> (capteur, serveur, imprimante) ne peut pas changer d'adresse au hasard → <b>Static</b>, pas DHCP.</dd>
+    <dt>Les 4 lignes</dt><dd><b>Static</b> coché · <b>IPv4</b> <code>192.168.20.50</code> · <b>masque</b> <code>255.255.255.0</code> · <b>Default Gateway</b> <code>192.168.20.1</code> ⭐ la nouveauté de 4e.</dd>
+    <dt>La preuve</dt><dd>un <b>ping</b>&nbsp;: <code>Reply from…</code> = aller-retour réussi&nbsp;; <code>0% loss</code> = livraison parfaite (nos mesures réelles&nbsp;: 0 à 12 ms).</dd>
+  </dl>
+</div>
+<div class="bloc">
+  <h2 style="margin-top:0">3. Valider par la simulation (4e_C4.9)</h2>
+  <dl>
+    <dt>Compléter, pas reconstruire</dt><dd>le fichier .pkt est <b>fourni</b>&nbsp;: on y <b>ajoute le test</b> (Add Simple PDU&nbsp;: clic expéditeur → clic destinataire), puis Play.</dd>
+    <dt>Lire le film</dt><dd>l'<b>Event List</b> horodate chaque étape&nbsp;: <code>0.000 PC-Prof → 0.001 Switch0 → 0.002 Serveur</code>. Tout passe par le commutateur (étoile).</dd>
+    <dt>Le verdict</dt><dd><b>Successful</b> = aller-retour simulé réussi = comportement du réseau <b>validé</b>. On sauvegarde&nbsp;: le test fait partie du fichier.</dd>
+  </dl>
+</div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">4. Dépanner avec méthode (4e_C4.8)</h2>
+  <object class="schema" data="../Images/demarche_diagnostic.svg" type="image/svg+xml" aria-label="La boucle du dépanneur : symptôme, hypothèse, test, remède, re-test">La boucle du dépanneur</object>
+  <dl>
+    <dt>La boucle du dépanneur</dt><dd><b>symptôme → hypothèse → test → remède → RE-test</b>. Jamais de remède sans test, jamais de «&nbsp;réparé&nbsp;» sans re-test.</dd>
+    <dt>Famille «&nbsp;adressage&nbsp;»</dt><dd>liens <b>verts</b> mais <code>Request timed out</code> (100% loss) → vérifier les adresses. Ex. réel&nbsp;: la <b>mauvaise rue</b> <code>192.168.<b>21</b>.50</code> — une unité d'écart, et le capteur «&nbsp;déménage&nbsp;» hors du réseau.</dd>
+    <dt>Famille «&nbsp;liaison&nbsp;»</dt><dd>triangles <b>ROUGES</b> → la route est coupée (port sur Off, câble défait). Ex. réel&nbsp;: le Port Status de l'imprimante décoché. Remède&nbsp;: On → vert → re-ping.</dd>
+  </dl>
+</div>
+
+<div class="cols">
+<div class="bloc savoir">
+  <h2 style="margin-top:0">✅ Je dois savoir</h2>
+  <ul>
+    <li>concevoir un plan&nbsp;: rue commune, numéros uniques, .1 réservé, masque commun&nbsp;;</li>
+    <li>expliquer fixe vs DHCP (joindre ≠ passer)&nbsp;;</li>
+    <li>lire un ping&nbsp;: Reply / timed out / % loss&nbsp;;</li>
+    <li>distinguer panne d'adressage et panne de liaison&nbsp;;</li>
+    <li>dire ce que valide un «&nbsp;Successful&nbsp;» de simulation.</li>
+  </ul>
+</div>
+<div class="bloc faire">
+  <h2 style="margin-top:0">🛠 Je dois savoir faire</h2>
+  <ul>
+    <li>paramétrer Static + IPv4 + masque + <b>passerelle</b> dans IP Configuration&nbsp;;</li>
+    <li>prouver un paramétrage au ping&nbsp;;</li>
+    <li>dérouler la boucle du dépanneur sur une panne&nbsp;;</li>
+    <li>ajouter un PDU au fichier fourni et lire l'Event List.</li>
+  </ul>
+</div>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠ Pièges classiques</h2>
+  <ul>
+    <li>donner le <b>.1</b> à un appareil (la porte est réservée)&nbsp;;</li>
+    <li>changer de <b>rue</b> sans s'en rendre compte (21 ≠ 20)&nbsp;;</li>
+    <li>accuser le câble quand les triangles sont <b>verts</b> — ou l'adresse quand ils sont <b>rouges</b>&nbsp;;</li>
+    <li>réparer sans re-tester&nbsp;;</li>
+    <li>reconstruire le fichier fourni au lieu de le <b>compléter</b>.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
+  <table class="voc"><tr><td>adresse fixe</td><td><b>static address</b></td><td>passerelle</td><td><b>gateway</b></td></tr>
+  <tr><td>masque</td><td><b>subnet mask</b></td><td>dépanner</td><td><b>to troubleshoot</b></td></tr>
+  <tr><td>panne</td><td><b>failure</b></td><td>délai dépassé</td><td><b>timed out</b></td></tr></table>
+</div>
+</div>
+</body>
+</html>

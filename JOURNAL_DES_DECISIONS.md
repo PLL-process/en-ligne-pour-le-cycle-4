@@ -1243,3 +1243,32 @@ structure conservées :
   Tracer suivent le plan de L'ÉLÈVE, le guide A→H n'imposant que les gestes. Tests rejoués après rétrofit.
 - **Champ d'application** : les lots 4e et 3e de la fusion réseaux (en cours) naîtront conformes ;
   audit rétroactif des trois thèmes à programmer comme pour les règles 14-18.
+
+---
+
+## 2026-08-07 — Lot « SOS serre » : atelier réseau 4e (4e_C4.7 · C4.8 · C4.9)
+
+**Décision.** Le volet 4e de la fusion réseaux (esquisse ChatGPT auditée le 05/08) est livré comme
+ATELIER DÉDIÉ dans `4e_C4.7`, complément de la séance 3 du « Jardin connecté » (4e_C4.1), qui n'est
+pas modifié. Statuts d'audit : 4e_C4.7 passe à COMPLET ET VALIDABLE (dossier principal) ; 4e_C4.8 et
+4e_C4.9 restent COUVERT, désormais mutualisés avec 4e_C4.7 (README pointeurs doubles atelier + îlot).
+
+**Application native de la règle n°22.** L'activité 1 fait CONCEVOIR à l'élève son plan d'adressage
+(recette illustrée en 4 étapes : recenser, rue, numéros uniques + .1 réservé, masque) AVANT le plan de
+référence, production écrite exigée par le vérificateur ; la clinique du réseau (act. 4) porte un verrou
+expérientiel (ping réussi + cas « mauvaise rue » obligatoires).
+
+**Preuves en conditions réelles (sessions des 06-07/08/2026, pilotage à distance du poste enseignant).**
+Montage `4e_serre_TECHNO-C4.pkt` construit et vérifié dans Packet Tracer 8.2 : plan .10→.100 appliqué,
+passerelle 192.168.20.1, pings mesurés (<1 ms→12 ms, moy. 5 ms, TTL=128, 0% loss), panne « mauvaise rue »
+192.168.21.50 réellement provoquée (Request timed out ×4, 100% loss) puis réparée, panne « liaison
+coupée » (Port Status Off) reproduite. Les 9 figures du lot sont des SVG CC0 reconstitués de ces captures
+(règles n°1 et n°20) et citent les valeurs mesurées telles quelles.
+
+**Obstacles vécus (pour mémoire de méthode).** Écran de veille Windows (bureau « Screen-saver ») bloquant
+l'injection d'entrées → suspension runtime puis réactivation en fin de session ; plantage de Packet Tracer
+pendant une coupure du pont → règle confirmée « sauvegarder le .pkt AVANT les captures de pannes » ;
+panneau Simulation recouvrant le canvas → détacher le panneau (consigné dans la synthèse professeur).
+
+**Tests.** Suite Playwright dédiée : 36/36 verts (verrous, règle n°22, socle/CRCN en toutes lettres,
+libellés officiels des 3 codes, QCM 8/7/7/8 graine 4789, images, sauvegardes).

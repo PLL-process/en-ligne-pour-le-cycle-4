@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 640" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Transcription réelle de la panne « mauvaise rue » : deux pings réussis, puis le capteur muet</title>
+<desc id="d">Un terminal noir reconstitué d'après notre session Packet Tracer. En haut, les rappels des deux pings réussis vers le serveur et l'imprimante, en abrégé. Puis le ping vers 192.168.21.50 : quatre lignes Request timed out, et le bilan quatre envoyés, zéro reçu, quatre perdus, cent pour cent de perte. Des annotations expliquent que les voisins répondent, que seul le capteur est muet, et que la rue 21 n'est pas la rue 20.</desc>
+<rect width="1080" height="640" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="638" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#8a2e2e">La panne « mauvaise rue » — notre session réelle : le capteur a déménagé en 192.168.21.50</text>
+
+<!-- terminal -->
+<rect x="40" y="56" width="720" height="556" rx="8" fill="#0c0c0c" stroke="#60778c" stroke-width="2"/>
+<rect x="40" y="56" width="720" height="26" rx="8" fill="#32658f"/>
+<text x="56" y="74" font-size="13" fill="#fff">PC-Prof — Desktop → Command Prompt</text>
+<g font-family="Consolas, monospace" font-size="13.2" fill="#d7d7d7">
+<text x="58" y="108">C:\&gt;ping 192.168.20.100</text>
+<text x="58" y="132" fill="#8ff0a4">Reply from 192.168.20.100: bytes=32 time&lt;1ms TTL=128   (×4)</text>
+<text x="58" y="154" fill="#7d7d7d">    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
+<text x="58" y="190">C:\&gt;ping 192.168.20.30</text>
+<text x="58" y="214" fill="#8ff0a4">Reply from 192.168.20.30: bytes=32 time=12ms TTL=128   (×4)</text>
+<text x="58" y="236" fill="#7d7d7d">    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</text>
+<text x="58" y="282" fill="#ffd66b">C:\&gt;ping 192.168.21.50</text>
+<text x="58" y="308">Pinging 192.168.21.50 with 32 bytes of data:</text>
+<text x="58" y="338" fill="#ff8b96">Request timed out.</text>
+<text x="58" y="362" fill="#ff8b96">Request timed out.</text>
+<text x="58" y="386" fill="#ff8b96">Request timed out.</text>
+<text x="58" y="410" fill="#ff8b96">Request timed out.</text>
+<text x="58" y="442">Ping statistics for 192.168.21.50:</text>
+<text x="58" y="466" fill="#ff8b96">    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),</text>
+<text x="58" y="502" fill="#7d7d7d">C:\&gt;_</text>
+</g>
+
+<!-- annotations -->
+<g font-size="12.5">
+<rect x="790" y="96" width="266" height="106" rx="8" fill="#eafbe7" stroke="#1e7d4f" stroke-width="2"/>
+<text x="923" y="120" text-anchor="middle" fill="#0a3d1f" font-weight="bold">Étape 1 du dépanneur :</text>
+<text x="923" y="140" text-anchor="middle" fill="#0a3d1f">les VOISINS répondent</text>
+<text x="923" y="158" text-anchor="middle" fill="#0a3d1f">(serveur ✓, imprimante ✓)</text>
+<text x="923" y="178" text-anchor="middle" fill="#0a3d1f">→ le réseau, lui, va bien</text>
+<line x1="790" y1="150" x2="742" y2="150" stroke="#1e7d4f" stroke-width="2"/>
+
+<rect x="790" y="300" width="266" height="128" rx="8" fill="#fdecec" stroke="#b34a4a" stroke-width="2"/>
+<text x="923" y="324" text-anchor="middle" fill="#7a1f1f" font-weight="bold">Le SYMPTÔME :</text>
+<text x="923" y="344" text-anchor="middle" fill="#7a1f1f">« Request timed out » ×4</text>
+<text x="923" y="364" text-anchor="middle" fill="#7a1f1f">= AUCUNE réponse.</text>
+<text x="923" y="384" text-anchor="middle" fill="#7a1f1f">Pas « lent » : MUET.</text>
+<text x="923" y="404" text-anchor="middle" fill="#7a1f1f">100 % de perte.</text>
+<line x1="790" y1="360" x2="742" y2="374" stroke="#b34a4a" stroke-width="2"/>
+
+<rect x="790" y="452" width="266" height="128" rx="8" fill="#fdf6e3" stroke="#a8823c" stroke-width="2"/>
+<text x="923" y="476" text-anchor="middle" fill="#5c4a14" font-weight="bold">L'indice dans l'adresse :</text>
+<text x="923" y="498" text-anchor="middle" fill="#5c4a14" font-family="Consolas, monospace">192.168.<tspan fill="#b3341f" font-weight="bold">21</tspan>.50</text>
+<text x="923" y="520" text-anchor="middle" fill="#5c4a14">La rue de la serre est</text>
+<text x="923" y="540" text-anchor="middle" fill="#5c4a14" font-family="Consolas, monospace">192.168.<tspan fill="#0a3d1f" font-weight="bold">20</tspan></text>
+<text x="923" y="562" text-anchor="middle" fill="#5c4a14">→ le capteur a « déménagé »</text>
+<line x1="790" y1="490" x2="742" y2="286" stroke="#a8823c" stroke-width="2"/>
+</g>
+<text x="540" y="630" text-anchor="middle" font-size="11.5" fill="#607086">Transcription exacte de notre session Packet Tracer 8.2 — panne volontairement provoquée puis réparée (retour en 192.168.20.50, ping ✓).</text>
+</svg>

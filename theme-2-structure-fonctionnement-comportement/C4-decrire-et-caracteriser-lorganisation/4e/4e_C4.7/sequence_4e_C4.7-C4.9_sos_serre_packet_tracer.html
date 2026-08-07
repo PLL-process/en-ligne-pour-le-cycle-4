@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 4e · Atelier : SOS serre — l'objet connecté muet (4e_C4.7 · C4.8 · C4.9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+
+<style>
+.cartouche-crcn{border:2px solid var(--energie);border-radius:10px;background:rgba(255,180,84,.08);padding:12px 15px;margin:12px 0;font-size:.88em}
+.ligne-exo{margin:10px 0}
+.ligne-exo label{display:block;font-size:.92em;margin-bottom:4px}
+.recette{border:1.5px solid var(--input-bd);border-radius:12px;padding:12px 16px;margin:12px 0;background:rgba(23,54,102,.35)}
+.recette h4{margin-top:2px;color:var(--hl)}
+</style>
+
+<a class="skip-link" href="#seances">Aller directement aux séances</a>
+<h1>🥬 SOS serre — l'objet connecté muet</h1>
+<p class="subtitle">Thème 2 · Martinique — 4e · Atelier : adresse IP fixe, dépannage et simulation d'un réseau local (Cisco Packet Tracer 8.2)</p>
+<div class="badges">
+  <span class="badge niveau">4e — cycle 4</span>
+  <span class="badge code">4e_C4.7</span>
+  <span class="badge code">4e_C4.8</span>
+  <span class="badge code">4e_C4.9</span>
+  <span class="badge theme">Thème 2 · Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D2 · D4</span>
+  <span class="badge crcn">CRCN : 5.1 (niv. 2→3)</span>
+  <span class="badge duree">3 séances de 55 min</span>
+</div>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e …"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+</div>
+<p class="saved-note" id="savedNote" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
+  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>🚨 La situation : le capteur de la serre n'a jamais donné signe de vie</h2>
+  <div class="declencheur">
+    <p>Jeudi, 7 h 30, dans la serre du jardin connecté du collège, à Sainte-Luce. Le club jardin vient
+    d'installer un <b>capteur d'ambiance</b> flambant neuf (température + humidité) qui doit envoyer ses mesures
+    au serveur de la serre. Sur le papier, tout est branché. En vrai&nbsp;: <b>aucune mesure n'arrive</b>, et
+    l'imprimante qui sort les étiquettes des semis est muette elle aussi. M. Firmin, le gestionnaire du réseau,
+    dépose une boîte sur la table&nbsp;: <em>«&nbsp;Là-dedans, il y a le plan de la serre. Je veux une équipe qui
+    me PRÉPARE l'arrivée de ce capteur dans les règles de l'art&nbsp;: un plan d'adressage, une adresse fixe
+    correctement paramétrée — passerelle comprise — et surtout des dépanneurs capables de trouver une panne
+    SANS tout débrancher au hasard. Vous vous entraînez dans le simulateur, et vous me prouvez chaque
+    réparation.&nbsp;»</em></p>
+    <p><b>Ta mission d'expert&nbsp;:</b> concevoir le plan d'adressage de la serre, reconstruire son réseau dans
+    <b>Cisco Packet Tracer</b>, donner au capteur son <b>adresse IP fixe</b>, puis jouer les médecins du réseau&nbsp;:
+    deux pannes t'attendent à la clinique, et la <b>simulation</b> devra valider chacun de tes diagnostics.</p>
+  </div>
+  <p class="problematique">Comment ajouter un objet connecté à un réseau local — et comment retrouver, avec méthode, la panne qui l'empêche de communiquer&nbsp;?</p>
+  <div class="exo">
+    <label for="hyp1"><b>💭 Ton hypothèse de départ</b> (avant d'apprendre quoi que ce soit — on y reviendra au bilan)&nbsp;: d'après toi, pourquoi un appareil correctement branché peut-il quand même être incapable de communiquer&nbsp;?</label>
+    <textarea id="hyp1" placeholder="Je pense que même bien branché, l'appareil ne communique pas parce que…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📚 Le référentiel de l'atelier — en toutes lettres</h2>
+  <p style="font-size:.88em;color:var(--sub)">Chaque code est écrit ici en entier, avec ce que l'élève FAIT réellement pour le travailler. Les activités rappellent leur compétence sous leur titre.</p>
+  <h4>Compétences de technologie (programme 2024)</h4>
+  <p><b>4e_C4.7</b> — «&nbsp;Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local.&nbsp;» → <em>concevoir SON plan d'adressage (act. 1) puis paramétrer réellement l'adresse fixe du capteur, passerelle comprise, et le prouver au ping (act. 3).</em></p>
+  <p><b>4e_C4.8</b> — «&nbsp;Résoudre des problèmes pour assurer la communication entre les différents terminaux dans un réseau informatique (simulation ou réseau local déconnecté du réseau pédagogique).&nbsp;» → <em>construire le réseau d'entraînement (act. 2) puis diagnostiquer et réparer la panne «&nbsp;mauvaise rue&nbsp;» avec la démarche du dépanneur (act. 4).</em></p>
+  <p><b>4e_C4.9</b> — «&nbsp;Compléter une simulation fournie pour valider le comportement d'un réseau informatique.&nbsp;» → <em>ouvrir le fichier de simulation fourni, y ajouter le test qui manque (l'enveloppe du mode Simulation) et valider la réparation de la panne «&nbsp;liaison coupée&nbsp;» (act. 5).</em></p>
+  <h4>Socle commun — domaines et composantes mobilisés</h4>
+  <p><b>D2 — Les méthodes et outils pour apprendre</b>&nbsp;: composante «&nbsp;coopération et réalisation de projets&nbsp;» (binômes pilote/copilote à rôles tournants, revue de plan croisée en act. 1) et composante «&nbsp;outils numériques pour échanger et communiquer&nbsp;» (le simulateur, le fichier .pkt nommé et rangé, les relevés de preuve).</p>
+  <p><b>D4 — Les systèmes naturels et les systèmes techniques</b>&nbsp;: composante «&nbsp;conception, création, réalisation&nbsp;» (concevoir SON plan d'adressage puis le réaliser en simulation) et composante «&nbsp;démarches scientifiques&nbsp;» (démarche de diagnostic symptôme → hypothèse → test → remède, preuve par le ping et par la simulation).</p>
+  <h4>CRCN (cadre de référence des compétences numériques)</h4>
+  <p><b>5.1 — Résoudre des problèmes techniques</b>, niveau 2 consolidé, niveau 3 visé — repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;» Au niveau 3, l'élève n'applique plus une procédure donnée&nbsp;: il <b>élabore sa démarche</b> de diagnostic (act. 4-5, cartouche complet dans l'activité 4). La compétence <b>5.2 — Évoluer dans un environnement numérique</b> est travaillée (manipulation du simulateur) mais non évaluée.</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Trois façons de vivre l'atelier</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec le professeur&nbsp;: observer l'étiquette d'un objet connecté réel du collège (imprimante, borne, carte du jardin) et y repérer son adresse IP notée par le gestionnaire. <b>Regarder seulement&nbsp;:</b> on ne touche JAMAIS au réseau pédagogique — c'est la loi de l'atelier, et c'est exactement pour cela que la compétence dit «&nbsp;simulation ou réseau local déconnecté&nbsp;».</p></div>
+    <div class="version vb"><h4>🅱 Simulation (le cœur de l'atelier)</h4><p>Construire le réseau de la serre dans <b>Cisco Packet Tracer 8.2</b>, paramétrer l'adresse fixe, provoquer et réparer les deux pannes, valider par la simulation. Toutes les captures de cette page viennent du vrai logiciel, valeurs mesurées comprises.</p></div>
+    <div class="version vc"><h4>🅲 Sans ordinateur</h4><p>Concevoir le plan d'adressage sur papier (act. 1), lire les schémas de la page (identiques à l'écran du logiciel) et jouer les deux pannes dans la <b>clinique du réseau</b>, le mini-simulateur intégré à l'activité 4.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Les trois séances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="seance1" id="tab-s1">Séance 1<br>Le plan avant les câbles<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance2" id="tab-s2">Séance 2<br>Construire et adresser<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance3" id="tab-s3">Séance 3<br>La clinique du réseau<span class="done" id="done-s3"></span></button>
+</div>
+<!-- ═══════════════════════ SÉANCE 1 ═══════════════════════ -->
+<div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
+
+<section class="card">
+  <h2>✏️ Activité 1 — Concevoir TON plan d'adressage <span style="font-size:.7em;color:var(--sub)">(~45 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> décider, AVANT de toucher au logiciel, quelle adresse recevra chaque appareil de la serre — comme un urbaniste qui numérote les maisons avant de poser les boîtes aux lettres.</div>
+    <div><b>Compétence&nbsp;:</b> 4e_C4.7 — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local <em>(ici&nbsp;: la partie «&nbsp;préparer le plan&nbsp;»)</em>.</div>
+    <div><b>Production&nbsp;:</b> TON plan d'adressage (choix + justification écrite), puis sa comparaison avec le plan de référence de M. Firmin.</div>
+    <div><b>Ressources&nbsp;:</b> la recette de conception en 4 étapes, le plan de référence de la serre.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — l'élève conçoit son propre plan avant de voir la référence · D2 «&nbsp;coopération&nbsp;» — revue de plan croisée avec le binôme voisin.</div>
+  </div>
+
+  <p><b>La règle du jeu (règle d'or de l'atelier)&nbsp;:</b> tu <b>conçois d'abord</b>, tu compares ensuite. Le plan
+  de référence n'apparaît qu'à l'étape de lecture — c'est TA proposition qui compte, même différente de la nôtre,
+  tant qu'elle respecte les lois du réseau.</p>
+
+  <h3>① CONCEVOIR — la recette de l'urbaniste, étape par étape</h3>
+  <figure>
+    <img src="Images/conception_plan_recette.svg" alt="La recette de conception d'un plan d'adressage en quatre vignettes : recenser les habitants, choisir la rue, attribuer les numéros uniques en réservant le 1 à la passerelle, écrire le panneau du masque." style="max-width:100%">
+    <figcaption>La recette en 4 étapes — chaque vignette correspond à une étape ci-dessous.</figcaption>
+  </figure>
+
+  <div class="recette">
+    <h4>Étape 1 — Recenser les habitants de la rue</h4>
+    <p>Fais la liste de TOUT ce qui devra parler sur le réseau de la serre&nbsp;: le PC du professeur,
+    le serveur qui stocke les mesures, l'imprimante à étiquettes, et le nouveau capteur d'ambiance.
+    <b>Piège classique&nbsp;:</b> le commutateur relie tout le monde, mais dans notre plan simple il ne
+    réclame pas de numéro — c'est le carrefour, pas une maison.</p>
+    <div class="ligne-exo"><label for="e1c_1">Combien d'«&nbsp;habitants&nbsp;» dois-tu numéroter, et lesquels&nbsp;?</label>
+    <select id="e1c_1"><option value="">— je choisis —</option>
+      <option>5 : les quatre appareils + le commutateur</option>
+      <option>4 : PC-Prof, Serveur-Serre, Imprimante et Capteur-Serre — le commutateur, lui, ne réclame pas de numéro ici</option>
+      <option>2 : seulement le serveur et le capteur</option>
+      <option>1 : uniquement le nouveau capteur</option></select></div>
+  </div>
+
+  <div class="recette">
+    <h4>Étape 2 — Choisir le nom de la rue</h4>
+    <p>Tous les habitants d'un même réseau local partagent le début de leur adresse&nbsp;: c'est la
+    «&nbsp;rue&nbsp;». Pour la serre, M. Firmin impose la rue <b>192.168.20</b> (le jardin utilise déjà
+    la rue 192.168.10 — deux quartiers différents, pour ne pas mélanger les courriers).</p>
+    <div class="ligne-exo"><label for="e1c_2">Dans l'adresse 192.168.20.50, quelle partie est «&nbsp;la rue&nbsp;»&nbsp;?</label>
+    <select id="e1c_2"><option value="">— je choisis —</option>
+      <option>50 — le dernier nombre</option>
+      <option>192.168.20 — les trois premiers nombres, communs à tous les habitants de la serre</option>
+      <option>192 — le premier nombre seulement</option>
+      <option>20.50 — les deux derniers nombres</option></select></div>
+  </div>
+
+  <div class="recette">
+    <h4>Étape 3 — Attribuer les numéros de maison (et réserver le n°1)</h4>
+    <p>Chaque habitant reçoit un dernier nombre <b>unique</b> — tu l'as appris en 5e&nbsp;: un doublon
+    casse la livraison. Nouveauté de 4e&nbsp;: on <b>réserve le .1</b>. Ce numéro n'est donné à personne&nbsp;:
+    c'est celui de la <b>passerelle</b> (<i>gateway</i>), la future porte de sortie du quartier vers les autres
+    réseaux. Même si la serre vit pour l'instant repliée sur elle-même, un bon urbaniste prépare la sortie.</p>
+    <div class="ligne-exo"><label for="e1c_3">Pourquoi ne donner le .1 à aucun appareil de la serre&nbsp;?</label>
+    <select id="e1c_3"><option value="">— je choisis —</option>
+      <option>parce que le 1 porte malheur aux capteurs</option>
+      <option>parce que c'est le numéro le plus lent du réseau</option>
+      <option>parce qu'il est réservé à la passerelle : la porte de sortie du réseau vers les autres réseaux</option>
+      <option>parce que les numéros commencent obligatoirement à 10</option></select></div>
+  </div>
+
+  <div class="recette">
+    <h4>Étape 4 — Écrire le panneau du quartier : le masque</h4>
+    <p>Le <b>masque de sous-réseau</b> est le panneau qui explique où finit la rue et où commence le numéro&nbsp;:
+    <span style="font-family:'Fira Code',monospace">255.255.255.0</span> signifie «&nbsp;les trois premiers nombres
+    sont la rue, le dernier est la maison&nbsp;». En 5e, cette case «&nbsp;se remplissait toute seule&nbsp;»&nbsp;;
+    cette année, tu sais la lire.</p>
+    <div class="ligne-exo"><label for="e1c_4">Que dit exactement le masque 255.255.255.0&nbsp;?</label>
+    <select id="e1c_4"><option value="">— je choisis —</option>
+      <option>que le réseau accepte au maximum 255 appareils par jour</option>
+      <option>que les trois premiers nombres forment la rue et que le dernier est le numéro de maison</option>
+      <option>que l'adresse est secrète et masquée aux autres</option>
+      <option>que la vitesse du réseau est de 255 mégabits</option></select></div>
+  </div>
+
+  <div class="exo">
+    <label for="e1c_prod"><b>🖊 TON plan d'adressage (production de concepteur)&nbsp;:</b> écris le plan que TU proposes
+    pour les 4 appareils — un numéro unique par appareil, dans la rue 192.168.20, sans toucher au .1. Justifie au moins un choix.</label>
+    <textarea id="e1c_prod" placeholder="Je propose : PC-Prof = 192.168.20.… ; Serveur = … ; Imprimante = … ; Capteur = … . J'ai choisi … parce que…"></textarea>
+    <p style="font-size:.85em;color:var(--sub)">👥 <b>Revue croisée&nbsp;:</b> échange ton plan avec le binôme voisin — vérifiez l'un chez l'autre&nbsp;: rue correcte&nbsp;? aucun doublon&nbsp;? .1 intact&nbsp;?</p>
+  </div>
+
+  <h3>② COMPARER — le plan de référence de M. Firmin</h3>
+  <p>Ton plan est peut-être différent&nbsp;: c'est NORMAL et c'est bien. Voici celui que M. Firmin a retenu —
+  c'est lui que nous utiliserons dans le logiciel, pour que toute la classe parle du même réseau.</p>
+  <figure>
+    <img src="Images/plan_adressage_serre.svg" alt="Le plan d'adressage de la serre : la rue 192.168.20 avec la passerelle réservée en .1, le PC du professeur en .10, l'imprimante en .30, le capteur d'ambiance en .50 et le serveur en .100, chacun dessiné comme une maison le long de la rue." style="max-width:100%">
+    <figcaption>Le plan de référence — la rue 192.168.20 et ses habitants.</figcaption>
+  </figure>
+  <div class="ligne-exo"><label for="e1_1">Dans ce plan, quelle adresse complète recevra le capteur d'ambiance&nbsp;?</label>
+  <select id="e1_1"><option value="">— je choisis —</option>
+    <option>192.168.20.50</option><option>192.168.20.1</option><option>192.168.10.50</option><option>255.255.255.0</option></select></div>
+  <div class="ligne-exo"><label for="e1_2">Pourquoi le serveur peut-il prendre .100 alors que les autres ont des petits numéros&nbsp;?</label>
+  <select id="e1_2"><option value="">— je choisis —</option>
+    <option>parce que le numéro n'a pas d'importance tant qu'il est unique et dans la même rue</option>
+    <option>parce que les serveurs doivent obligatoirement dépasser 99</option>
+    <option>parce que .100 va plus vite que .10</option>
+    <option>c'est une erreur du plan</option></select></div>
+  <div class="ligne-exo"><label for="e1_3">Deux appareils de la serre pourraient-ils partager le .50&nbsp;?</label>
+  <select id="e1_3"><option value="">— je choisis —</option>
+    <option>oui, s'ils sont éteints à tour de rôle</option>
+    <option>oui, si ce sont deux capteurs identiques</option>
+    <option>non : dans une même rue, chaque numéro doit rester unique, sinon la livraison devient impossible</option>
+    <option>oui, le commutateur fera le tri</option></select></div>
+  <div class="ligne-exo"><label for="e1_4">La serre (rue 192.168.20) et le jardin (rue 192.168.10) forment-ils le même réseau local&nbsp;?</label>
+  <select id="e1_4"><option value="">— je choisis —</option>
+    <option>oui, puisque tout commence par 192.168</option>
+    <option>non : la rue est différente, ce sont deux réseaux voisins — pour passer de l'un à l'autre, il faudra la passerelle</option>
+    <option>oui, si on utilise le même commutateur</option>
+    <option>non, car un collège n'a droit qu'à un seul réseau</option></select></div>
+  <div class="ligne-exo"><label for="e1_5">Que note l'urbaniste dans la case «&nbsp;masque&nbsp;» du plan&nbsp;?</label>
+  <select id="e1_5"><option value="">— je choisis —</option>
+    <option>255.255.255.0 — le même pour tous les habitants de la rue</option>
+    <option>une valeur différente pour chaque appareil</option>
+    <option>192.168.20.1</option>
+    <option>rien : le masque est facultatif</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Relis chaque vignette de la recette&nbsp;: étape 1 = QUI numéroter&nbsp;; étape 2 = la partie COMMUNE de l'adresse&nbsp;; étape 3 = le numéro UNIQUE + le .1 réservé&nbsp;; étape 4 = le panneau 255.255.255.0. Dans le plan de référence, suis la rue de gauche à droite&nbsp;: passerelle .1 (réservée), PC-Prof .10, Imprimante .30, Capteur .50, Serveur .100.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Adresse = rue + maison. Dans 192.168.20.50&nbsp;: rue = 192.168.20 (trois nombres), maison = 50. Le masque 255.255.255.0 dit exactement cela&nbsp;: trois «&nbsp;255&nbsp;» pour la rue, un «&nbsp;0&nbsp;» pour la maison. La passerelle est une PORTE, pas un habitant&nbsp;: personne ne s'assoit dans une porte, donc personne ne prend le .1. Et deux rues différentes (…10 / …20) = deux réseaux différents, même si tout le reste se ressemble.</p></details>
+
+  <button class="btn" data-check="1">✅ Vérifier mes réponses</button>
+  <div class="feedback" id="fb1" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Étape 1&nbsp;:</b> 4 habitants à numéroter (PC-Prof, Serveur-Serre, Imprimante, Capteur-Serre). Le commutateur
+    est le carrefour&nbsp;: dans notre plan simple, il n'a pas besoin d'adresse pour faire son travail de facteur.</p>
+    <p><b>Étape 2&nbsp;:</b> la rue = <b>192.168.20</b>, les trois premiers nombres, identiques pour tous. C'est ce
+    préfixe commun qui fait dire aux appareils «&nbsp;nous sommes du même quartier&nbsp;».</p>
+    <p><b>Étape 3&nbsp;:</b> le .1 est réservé à la <b>passerelle</b> — la porte de sortie vers les autres réseaux.
+    C'est une convention très répandue chez les techniciens&nbsp;: chez toi aussi, ta box est très probablement en .1&nbsp;!</p>
+    <p><b>Étape 4&nbsp;:</b> le masque <b>255.255.255.0</b> découpe l'adresse&nbsp;: 255 = «&nbsp;partie rue&nbsp;», 0 = «&nbsp;partie maison&nbsp;».</p>
+    <p><b>Lecture du plan&nbsp;:</b> capteur = 192.168.20.<b>50</b>&nbsp;; le .100 du serveur est valable car unique et dans la rue&nbsp;;
+    jamais deux fois le même numéro&nbsp;; serre et jardin = deux réseaux VOISINS (rues différentes) — on les fera se parler en 3e,
+    justement grâce aux passerelles&nbsp;; le masque est le même pour toute la rue.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> donner un numéro au commutateur «&nbsp;pour faire propre&nbsp;»&nbsp;;
+  utiliser le .1 pour le capteur (la porte est bouchée&nbsp;!)&nbsp;; changer de rue en cours de plan (192.168.<b>21</b>.50 — nous
+  la reverrons à la clinique…)&nbsp;; écrire un masque différent par appareil.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> un plan d'adressage se conçoit AVANT de brancher&nbsp;: une <b>rue commune</b>
+  (192.168.20), un <b>numéro unique</b> par appareil, le <b>.1 réservé à la passerelle</b>, un <b>masque</b> commun
+  (255.255.255.0) qui sépare rue et maison.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 9 bonnes réponses + TON plan rédigé et relu par le binôme voisin.</div>
+</section>
+</div>
+<!-- ═══════════════════════ SÉANCE 2 ═══════════════════════ -->
+<div class="seance-panel" id="seance2" role="tabpanel" aria-labelledby="tab-s2">
+
+<section class="card">
+  <h2>🧱 Activité 2 — Construire le réseau d'entraînement de la serre <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> monter dans Packet Tracer le réseau sur lequel toute la suite s'appuie — exactement comme le ferait un technicien sur un réseau d'entraînement «&nbsp;déconnecté du réseau pédagogique&nbsp;».</div>
+    <div><b>Compétence&nbsp;:</b> 4e_C4.8 — Résoudre des problèmes… dans un réseau informatique (simulation ou réseau local déconnecté) <em>(ici&nbsp;: préparer le banc d'essai)</em>.</div>
+    <div><b>Production&nbsp;:</b> le fichier <span style="font-family:'Fira Code',monospace">serre_4X_NOM_Prenom.pkt</span> avec 5 équipements nommés et câblés, liaisons vertes.</div>
+    <div><b>Ressources&nbsp;:</b> la recette A→G ci-dessous, le schéma du montage terminé.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D2 «&nbsp;outils numériques&nbsp;» — fichier nommé, rangé, réutilisable · D4 «&nbsp;conception, création, réalisation&nbsp;» — du plan papier au montage qui fonctionne.</div>
+  </div>
+
+  <p>Tu as construit ton premier réseau en 5e — cette année, la recette est plus courte car tu connais déjà les
+  gestes. <b>Binômes pilote/copilote&nbsp;:</b> le pilote manipule, le copilote lit la recette à voix haute et
+  vérifie chaque étape&nbsp;; on échange les rôles à l'étape D.</p>
+
+  <figure>
+    <img src="Images/serre_topologie_etoile.svg" alt="Le montage terminé dans Packet Tracer : le commutateur 2960 au centre, relié en étoile par quatre câbles droits à PC-Prof en haut à gauche, Imprimante en haut à droite, Serveur-Serre en bas à gauche et Capteur-Serre en bas à droite. Tous les triangles de liaison sont verts." style="max-width:100%">
+    <figcaption>Le montage terminé — reconstitué d'après notre session réelle dans Packet Tracer 8.2.</figcaption>
+  </figure>
+
+  <div class="recette">
+    <h4>La recette A→G (chaque lettre = un geste vérifiable)</h4>
+    <p><b>A.</b> Ouvrir Packet Tracer 8.2 (connexion faite par le professeur AVANT la séance) → <b>File → New</b>.<br>
+    <b>B.</b> Palette (en bas à gauche)&nbsp;: catégorie <b>Network Devices</b> → famille <b>Switches</b> → poser un <b>2960</b> au centre du plan de travail.<br>
+    <b>C.</b> Catégorie <b>End Devices</b>&nbsp;: poser un <b>PC</b> (en haut à gauche), un <b>Server</b> (en bas à gauche), une <b>Printer</b> (en haut à droite) et un second <b>PC</b> qui jouera le capteur (en bas à droite).<br>
+    <b>D.</b> 🔄 <em>(échange des rôles)</em> Catégorie <b>Connections</b> (l'éclair ⚡) → câble <b>Copper Straight-Through</b> (le trait plein noir)&nbsp;: cliquer l'appareil → choisir <b>FastEthernet0</b> → cliquer le commutateur → choisir une prise LIBRE (<b>Fa0/1</b> à <b>Fa0/4</b>). Répéter pour les 4 appareils.<br>
+    <b>E.</b> Renommer proprement&nbsp;: clic sur l'appareil → onglet <b>Config</b> → <b>Display Name</b>&nbsp;: <b>PC-Prof</b>, <b>Serveur-Serre</b>, <b>Imprimante</b>, <b>Capteur-Serre</b>.<br>
+    <b>F.</b> Observer les triangles aux extrémités des câbles&nbsp;: orange d'abord (le commutateur réfléchit ~30 secondes), puis <b>verts des deux côtés</b> = liaison prête.<br>
+    <b>G.</b> <b>File → Save As</b> → <span style="font-family:'Fira Code',monospace">serre_4X_NOM_Prenom.pkt</span> dans le dossier de la classe. On sauvegarde AVANT de jouer avec les pannes&nbsp;!</p>
+  </div>
+
+  <h3>🔎 Tes relevés de chantier (à lire sur TON écran)</h3>
+  <div class="ligne-exo"><label for="e2_1">Combien de liaisons filaires ton montage compte-t-il&nbsp;?</label>
+  <select id="e2_1"><option value="">— je choisis —</option>
+    <option>2</option><option>3</option><option>4 : une par appareil, toutes vers le commutateur</option><option>5, en comptant l'alimentation</option></select></div>
+  <div class="ligne-exo"><label for="e2_2">Quelle forme dessine ton réseau une fois câblé&nbsp;?</label>
+  <select id="e2_2"><option value="">— je choisis —</option>
+    <option>une chaîne : chaque appareil est relié au suivant</option>
+    <option>une étoile : toutes les branches partent du commutateur central</option>
+    <option>un anneau fermé</option>
+    <option>un maillage complet : chaque appareil est relié à tous les autres</option></select></div>
+  <div class="ligne-exo"><label for="e2_3">Avant de devenir verts, les triangles du commutateur restent orange environ 30 secondes. Pourquoi ce délai est-il utile à connaître pour un dépanneur&nbsp;?</label>
+  <select id="e2_3"><option value="">— je choisis —</option>
+    <option>parce qu'un triangle orange pendant 30 s est NORMAL : ce n'est pas encore une panne</option>
+    <option>parce que l'orange signale un câble défectueux à remplacer immédiatement</option>
+    <option>parce qu'il faut redémarrer le logiciel toutes les 30 s</option>
+    <option>ce délai n'existe pas dans le vrai matériel</option></select></div>
+  <div class="ligne-exo"><label for="e2_4">Quel câble as-tu utilisé entre chaque appareil et le commutateur&nbsp;?</label>
+  <select id="e2_4"><option value="">— je choisis —</option>
+    <option>Copper Straight-Through (le câble cuivre droit)</option>
+    <option>Copper Cross-Over (le câble croisé)</option>
+    <option>Fiber (la fibre optique)</option>
+    <option>Serial DCE</option></select></div>
+  <div class="ligne-exo"><label for="e2_5">À ce stade du chantier, les appareils peuvent-ils déjà se parler&nbsp;?</label>
+  <select id="e2_5"><option value="">— je choisis —</option>
+    <option>oui : les câbles suffisent, la preuve, les triangles sont verts</option>
+    <option>non : les liaisons sont prêtes, mais personne n'a encore d'adresse — le facteur n'a aucun nom sur les enveloppes</option>
+    <option>oui, mais uniquement l'imprimante</option>
+    <option>non, car il manque un deuxième commutateur</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Compte les câbles sur TON écran (ou sur le schéma)&nbsp;: PC-Prof, Serveur, Imprimante, Capteur… chacun a le sien. Toutes les branches partent du même centre&nbsp;: c'est la topologie vue en 5e. L'étape F t'explique l'orange&nbsp;; l'étape D nomme le câble.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Le montage câblé est comme un lotissement où les routes sont goudronnées mais où aucune maison n'a de numéro&nbsp;: le facteur circule, mais ne peut rien distribuer. Les adresses arrivent à l'activité 3 — c'est exactement pour cela que l'activité 2 s'arrête à «&nbsp;liaisons vertes&nbsp;».</p></details>
+
+  <button class="btn" data-check="2">✅ Vérifier mes relevés</button>
+  <div class="feedback" id="fb2" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>4 liaisons</b>, une par terminal, toutes vers le 2960&nbsp;: la <b>topologie en étoile</b> de la 5e. Le câble
+    est le <b>Copper Straight-Through</b> — le câble droit standard entre un terminal et un commutateur.</p>
+    <p>L'<b>orange</b> des premiers instants est un état normal (le commutateur apprend sa prise)&nbsp;: un dépanneur
+    qui l'ignore «&nbsp;répare&nbsp;» des pannes qui n'existent pas. Vert des deux côtés = liaison opérationnelle.</p>
+    <p>Et non, <b>personne ne peut encore communiquer</b>&nbsp;: une liaison verte transporte, mais sans adresse,
+    aucun message ne sait où aller. Le chantier continue à l'activité 3.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> prendre le câble croisé (pointillés) au lieu du droit&nbsp;;
+  brancher deux appareils sur la MÊME prise Fa0/1&nbsp;; «&nbsp;réparer&nbsp;» un triangle orange qui allait devenir vert tout seul&nbsp;;
+  oublier le Save As avant la suite.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> le réseau d'entraînement de la serre = <b>1 commutateur 2960 + 4 terminaux
+  + 4 câbles droits</b>, en étoile, liaisons vertes, fichier sauvegardé. Câblé ≠ adressé&nbsp;: il manque encore les adresses.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 5 bons relevés + le fichier .pkt nommé et sauvegardé.</div>
+</section>
+
+<section class="card">
+  <h2>⭐ Activité 3 — L'adresse fixe du capteur, passerelle comprise <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> appliquer TON plan d'adressage dans le logiciel — et découvrir la ligne que la 5e laissait vide&nbsp;: la passerelle.</div>
+    <div><b>Compétence&nbsp;:</b> 4e_C4.7 — Paramétrer une adresse IP fixe pour ajouter un objet connecté à un réseau local <em>(le cœur du code)</em>.</div>
+    <div><b>Production&nbsp;:</b> les 4 terminaux adressés + la preuve par deux pings relevés.</div>
+    <div><b>Ressources&nbsp;:</b> la fenêtre IP Configuration reconstituée, les transcriptions de ping réelles.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — on paramètre, puis on PROUVE par le test · CRCN 5.1 (niv. 2) — procédure de paramétrage menée seul·e.</div>
+  </div>
+
+  <p><b>Pourquoi une adresse FIXE&nbsp;?</b> Ta tablette, chez toi, reçoit une adresse automatique (DHCP) qui peut
+  changer chaque jour — aucune importance, personne ne l'appelle. Mais le capteur de la serre est un
+  <b>objet connecté qu'on doit pouvoir joindre à coup sûr</b>&nbsp;: le serveur vient chercher ses mesures à une
+  adresse écrite dans le plan. Si l'adresse changeait toute seule, le plan serait faux dès le lendemain.
+  Un objet connecté qu'on doit joindre = une adresse <b>fixe</b> (statique).</p>
+
+  <figure>
+    <img src="Images/pt_ip_configuration_passerelle.svg" alt="La fenêtre IP Configuration du Capteur-Serre reconstituée d'après Packet Tracer : Static coché, IPv4 Address 192.168.20.50, Subnet Mask 255.255.255.0, et le champ Default Gateway rempli avec 192.168.20.1, mis en évidence comme la nouveauté de 4e." style="max-width:100%">
+    <figcaption>La fenêtre d'adressage du capteur — la ligne Default Gateway est la nouveauté de cette année.</figcaption>
+  </figure>
+
+  <div class="recette">
+    <h4>La recette d'adressage (à répéter pour les 4 terminaux)</h4>
+    <p><b>1.</b> Clic sur l'appareil → onglet <b>Desktop</b> → <b>IP Configuration</b>.<br>
+    <b>2.</b> Cocher <b>Static</b> (et non DHCP — voir ci-dessus pourquoi).<br>
+    <b>3.</b> <b>IPv4 Address</b>&nbsp;: l'adresse du plan (capteur = 192.168.20.50).<br>
+    <b>4.</b> <b>Subnet Mask</b>&nbsp;: 255.255.255.0 — la case se propose souvent toute seule&nbsp;; cette année tu sais ce qu'elle veut dire.<br>
+    <b>5.</b> <b>Default Gateway</b>&nbsp;: <b>192.168.20.1</b> — LA nouveauté. On y inscrit l'adresse de la passerelle
+    réservée à l'étape 3 du plan. La serre n'en a pas encore besoin pour parler en interne, mais l'objet connecté
+    est prêt pour le jour où il devra sortir du quartier.<br>
+    <b>6.</b> Fermer, passer à l'appareil suivant&nbsp;: PC-Prof = .10, Imprimante = .30, Serveur-Serre = .100 (même masque, même passerelle).</p>
+  </div>
+
+  <h3>🧪 La preuve par le ping — nos mesures réelles</h3>
+  <p>Sur PC-Prof → Desktop → <b>Command Prompt</b>, nous avons tapé <span style="font-family:'Fira Code',monospace">ping 192.168.20.100</span>
+  puis <span style="font-family:'Fira Code',monospace">ping 192.168.20.30</span>. Voici la transcription exacte de notre session&nbsp;:</p>
+  <figure>
+    <img src="Images/pt_ping_reussi_serre.svg" alt="Transcription réelle des deux pings réussis : vers 192.168.20.100, quatre réponses Reply from avec des temps de 0 à 2 millisecondes et TTL 128, zéro pour cent de perte ; vers 192.168.20.30, quatre réponses avec des temps de 0 à 12 millisecondes, moyenne 5 millisecondes, zéro pour cent de perte." style="max-width:100%">
+    <figcaption>Nos deux pings réels — 4 envoyés, 4 reçus, 0&nbsp;% de perte à chaque fois.</figcaption>
+  </figure>
+
+  <div class="ligne-exo"><label for="e3_1">Que prouve une ligne «&nbsp;Reply from 192.168.20.100&nbsp;»&nbsp;?</label>
+  <select id="e3_1"><option value="">— je choisis —</option>
+    <option>que le message est parti, sans garantie d'arrivée</option>
+    <option>que l'ALLER et le RETOUR ont réussi : la communication complète fonctionne</option>
+    <option>que le serveur est allumé mais injoignable</option>
+    <option>que l'imprimante a imprimé</option></select></div>
+  <div class="ligne-exo"><label for="e3_2">Sur nos mesures, combien de paquets ont été perdus&nbsp;?</label>
+  <select id="e3_2"><option value="">— je choisis —</option>
+    <option>4 sur 4</option><option>2 sur 4</option><option>0 sur 4 : « Lost = 0 (0% loss) » sur les deux tests</option><option>impossible à savoir</option></select></div>
+  <div class="ligne-exo"><label for="e3_3">Nos temps de réponse vont de 0 à 12 ms selon l'appareil. Que peut en conclure un technicien&nbsp;?</label>
+  <select id="e3_3"><option value="">— je choisis —</option>
+    <option>que le réseau est en panne : les temps devraient être identiques</option>
+    <option>que ces variations de quelques millisecondes sont normales sur un réseau local en bonne santé</option>
+    <option>que l'imprimante est plus proche du commutateur que le serveur</option>
+    <option>que le ping est cassé au-dessus de 10 ms</option></select></div>
+  <div class="ligne-exo"><label for="e3_4">Dans la fenêtre IP Configuration du capteur, que met-on dans «&nbsp;Default Gateway&nbsp;»&nbsp;?</label>
+  <select id="e3_4"><option value="">— je choisis —</option>
+    <option>l'adresse du capteur lui-même (192.168.20.50)</option>
+    <option>l'adresse réservée de la passerelle : 192.168.20.1</option>
+    <option>le masque 255.255.255.0</option>
+    <option>l'adresse du serveur (192.168.20.100)</option></select></div>
+  <div class="ligne-exo"><label for="e3_5">Pourquoi le capteur reçoit-il une adresse FIXE plutôt qu'automatique (DHCP)&nbsp;?</label>
+  <select id="e3_5"><option value="">— je choisis —</option>
+    <option>parce que le DHCP est payant</option>
+    <option>parce qu'un objet connecté qu'on doit joindre à coup sûr ne peut pas changer d'adresse au hasard des jours</option>
+    <option>parce que les adresses fixes sont plus rapides</option>
+    <option>parce que Packet Tracer ne connaît pas le DHCP</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Lis la transcription ligne par ligne&nbsp;: «&nbsp;Reply from&nbsp;» = réponse revenue&nbsp;; «&nbsp;Sent = 4, Received = 4, Lost = 0&nbsp;» = le bilan de livraison&nbsp;; «&nbsp;time&lt;1ms … time=12ms&nbsp;» = la durée de l'aller-retour. La recette d'adressage, étape 5, te dit quoi mettre dans Default Gateway.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Pense au recommandé de La Poste&nbsp;: le ping est un courrier AVEC accusé de réception — s'il revient signé («&nbsp;Reply&nbsp;»), c'est que l'adresse existe, que la route fonctionne dans les deux sens, et que le destinataire répond. La passerelle, elle, n'est pas le destinataire&nbsp;: c'est la PORTE inscrite dans le carnet d'adresses de chaque habitant, «&nbsp;au cas où il faudrait sortir du quartier&nbsp;».</p></details>
+
+  <button class="btn" data-check="3">✅ Vérifier mes réponses</button>
+  <div class="feedback" id="fb3" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Reply from</b> prouve l'aller-retour complet — c'est LA preuve du technicien. Nos deux tests&nbsp;: 4/4 reçus,
+    <b>0&nbsp;% de perte</b>, temps entre &lt;1 ms et 12 ms (moyenne 5 ms vers l'imprimante) — des valeurs parfaitement
+    normales pour un réseau local&nbsp;: quelques millisecondes de variation ne sont pas une panne.</p>
+    <p><b>Default Gateway = 192.168.20.1</b>&nbsp;: l'adresse de la passerelle réservée dans le plan. Elle ne sert pas
+    encore à l'intérieur de la serre, mais un objet connecté bien paramétré est prêt à sortir du quartier.</p>
+    <p><b>Fixe vs DHCP&nbsp;:</b> on FIGE l'adresse de tout appareil que les autres doivent joindre (serveur, imprimante,
+    capteur)&nbsp;; on laisse le DHCP distribuer des adresses temporaires aux appareils de passage (téléphones, tablettes).</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> laisser DHCP coché puis s'étonner que «&nbsp;l'adresse ne reste pas&nbsp;»&nbsp;;
+  taper la passerelle dans la case IPv4 (le capteur volerait l'adresse de la porte&nbsp;!)&nbsp;; se tromper de rue (21 au lieu de 20)
+  — cette erreur-là a rendez-vous avec toi à la clinique&nbsp;; lancer le ping avant d'avoir adressé les DEUX extrémités.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> paramétrer une adresse IP fixe = <b>Static + IPv4 + masque + passerelle</b>.
+  On fige l'adresse des objets qu'on doit joindre&nbsp;; on vérifie TOUJOURS par un ping&nbsp;: «&nbsp;Reply from&nbsp;» = aller-retour
+  prouvé, «&nbsp;0% loss&nbsp;» = livraison parfaite.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 5 bonnes réponses + tes deux pings réussis dans TON fichier.</div>
+</section>
+</div>
+<!-- ═══════════════════════ SÉANCE 3 ═══════════════════════ -->
+<div class="seance-panel" id="seance3" role="tabpanel" aria-labelledby="tab-s3">
+
+<section class="card">
+  <h2>🩺 Activité 4 — La clinique du réseau : la panne «&nbsp;mauvaise rue&nbsp;» <span style="font-size:.7em;color:var(--sub)">(~35 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> apprendre LA démarche du dépanneur — quatre étapes, toujours les mêmes — sur une panne que nous avons réellement provoquée.</div>
+    <div><b>Compétence&nbsp;:</b> 4e_C4.8 — Résoudre des problèmes pour assurer la communication entre les différents terminaux d'un réseau informatique.</div>
+    <div><b>Production&nbsp;:</b> un diagnostic complet (symptôme → hypothèse → test → remède) + les deux consultations du mini-simulateur réellement jouées.</div>
+    <div><b>Ressources&nbsp;:</b> la boucle du dépanneur, la transcription réelle de la panne, la clinique du réseau (mini-simulateur).</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — hypothèse testée avant tout remède · CRCN 5.1 (niv. 3) — cartouche complet ci-dessous.</div>
+  </div>
+  <div class="cartouche-crcn">
+    <b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé&nbsp;: 3<br>
+    <span style="font-style:italic">Repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;»
+    Au niveau 3, l'élève élabore SA démarche de résolution au lieu de suivre une procédure donnée.</span><br>
+    <b>Action observable&nbsp;:</b> face à un «&nbsp;Request timed out&nbsp;», choisir soi-même l'ordre des vérifications (adresse&nbsp;? câble&nbsp;? rue&nbsp;?), tester, puis réparer.
+    <b>Trace&nbsp;:</b> tes deux consultations de la clinique sont enregistrées dans la page + ton diagnostic rédigé.
+    <b>Réussite&nbsp;:</b> vérificateur de l'activité 4 au vert.
+  </div>
+
+  <h3>La boucle du dépanneur — la démarche AVANT les outils</h3>
+  <figure>
+    <img src="Images/demarche_diagnostic.svg" alt="La boucle du dépanneur en quatre étapes reliées par des flèches : un, observer le symptôme sans rien toucher ; deux, formuler une hypothèse ; trois, faire un test qui peut prouver ou casser l'hypothèse ; quatre, appliquer le remède puis re-tester. Si le test contredit l'hypothèse, la flèche ramène à l'étape deux." style="max-width:100%">
+    <figcaption>Symptôme → Hypothèse → Test → Remède… et on RE-teste. Jamais de remède sans test.</figcaption>
+  </figure>
+  <p>Un mauvais dépanneur débranche tout et rebranche au hasard. Un bon dépanneur <b>observe</b> d'abord,
+  <b>suppose</b> ensuite, <b>teste</b> son idée, et n'applique le <b>remède</b> qu'à la fin — puis re-teste pour
+  prouver la réparation. C'est la même démarche scientifique que ton hypothèse de début de séquence.</p>
+
+  <h3>Le cas réel n°1 — le capteur reparamétré en 192.168.<b>21</b>.50</h3>
+  <p>Dans notre session réelle, nous avons volontairement déplacé le capteur dans la rue 192.168.<b>21</b> —
+  une seule unité d'écart. Voici la transcription complète, trois tests à la suite&nbsp;:</p>
+  <figure>
+    <img src="Images/pt_panne_mauvaise_rue.svg" alt="Transcription réelle de la panne : le ping vers 192.168.20.100 réussit, le ping vers 192.168.20.30 réussit, puis le ping vers 192.168.21.50 échoue avec quatre Request timed out et un bilan de quatre paquets envoyés, zéro reçu, cent pour cent de perte." style="max-width:100%">
+    <figcaption>Nos trois pings réels — deux réussites, puis la panne&nbsp;: 4 envoyés, 0 reçu, 100&nbsp;% de perte.</figcaption>
+  </figure>
+
+  <div class="ligne-exo"><label for="e4_1">📋 SYMPTÔME — que lit-on exactement à l'écran pour le capteur&nbsp;?</label>
+  <select id="e4_1"><option value="">— je choisis —</option>
+    <option>« Reply from » quatre fois, mais lentement</option>
+    <option>« Request timed out » quatre fois : aucun aller-retour, 100 % de perte</option>
+    <option>un message d'erreur rouge « réseau cassé »</option>
+    <option>rien : l'écran s'éteint</option></select></div>
+  <div class="ligne-exo"><label for="e4_2">💡 HYPOTHÈSE — les deux premiers pings réussissent, seul le capteur ne répond pas. Quelle hypothèse est la PLUS raisonnable&nbsp;?</label>
+  <select id="e4_2"><option value="">— je choisis —</option>
+    <option>tout le réseau de la serre est en panne</option>
+    <option>le problème vient du capteur lui-même : son branchement ou son adresse</option>
+    <option>le commutateur est cassé</option>
+    <option>le ping ne fonctionne plus sur PC-Prof</option></select></div>
+  <div class="ligne-exo"><label for="e4_3">🔬 TEST — quel test permet de vérifier cette hypothèse SANS rien débrancher&nbsp;?</label>
+  <select id="e4_3"><option value="">— je choisis —</option>
+    <option>éteindre et rallumer toute la serre</option>
+    <option>ouvrir l'IP Configuration du capteur et relire son adresse ligne à ligne</option>
+    <option>remplacer le câble du capteur par un neuf</option>
+    <option>réinstaller Packet Tracer</option></select></div>
+  <div class="ligne-exo"><label for="e4_4">🔧 REMÈDE — le test révèle «&nbsp;192.168.21.50&nbsp;». Que fait le dépanneur&nbsp;?</label>
+  <select id="e4_4"><option value="">— je choisis —</option>
+    <option>il remet l'adresse du plan, 192.168.20.50, puis RE-teste au ping</option>
+    <option>il change la rue de tous les autres appareils en 192.168.21</option>
+    <option>il supprime le capteur du montage</option>
+    <option>il note « panne inexpliquée » et referme la serre</option></select></div>
+  <div class="ligne-exo"><label for="e4_5">🧠 Pourquoi un appareil de la rue 21 ne reçoit-il RIEN dans la rue 20, alors que le câble fonctionne parfaitement&nbsp;?</label>
+  <select id="e4_5"><option value="">— je choisis —</option>
+    <option>parce que le câble refuse les adresses impaires</option>
+    <option>parce que pour la rue 192.168.20, l'adresse .50 n'existe plus nulle part : l'habitant s'est déclaré dans un AUTRE quartier</option>
+    <option>parce que le commutateur bloque la rue 21 par sécurité</option>
+    <option>parce que le masque a été effacé</option></select></div>
+
+  <h3>🏥 La clinique du réseau — tes deux consultations (obligatoires)</h3>
+  <p>Joue les deux cas dans le simulateur ci-dessous&nbsp;: une livraison <b>normale</b>, puis la consultation
+  «&nbsp;<b>mauvaise rue</b>&nbsp;». La page enregistre tes expériences — le vérificateur les exige.</p>
+  <div class="simulateur" role="group" aria-label="La clinique du réseau — mini-simulateur">
+    <svg viewBox="0 0 760 235" style="width:100%;max-width:740px;display:block;margin:0 auto" aria-hidden="true">
+      <rect width="760" height="235" fill="#08132c" rx="10"/>
+      <!-- PC-Prof -->
+      <rect x="30" y="70" width="120" height="64" rx="8" fill="#173666" stroke="#2e5d9f"/>
+      <text x="90" y="98" text-anchor="middle" font-size="13" fill="#e4eaf5">PC-Prof</text>
+      <text x="90" y="118" text-anchor="middle" font-size="11" fill="#9bbefc" font-family="monospace">.10</text>
+      <!-- switch -->
+      <rect x="330" y="76" width="110" height="52" rx="8" fill="#1d4e89" stroke="#61dafb"/>
+      <text x="385" y="98" text-anchor="middle" font-size="12" fill="#fff">Switch0</text>
+      <text x="385" y="115" text-anchor="middle" font-size="10" fill="#bfe3ff">2960</text>
+      <!-- destinations -->
+      <rect x="600" y="14" width="130" height="52" rx="8" fill="#173666" stroke="#2e5d9f"/>
+      <text x="665" y="36" text-anchor="middle" font-size="12" fill="#e4eaf5">Serveur-Serre</text>
+      <text x="665" y="54" text-anchor="middle" font-size="10.5" fill="#9bbefc" font-family="monospace">.100</text>
+      <rect x="600" y="92" width="130" height="52" rx="8" fill="#173666" stroke="#2e5d9f"/>
+      <text x="665" y="114" text-anchor="middle" font-size="12" fill="#e4eaf5">Imprimante</text>
+      <text x="665" y="132" text-anchor="middle" font-size="10.5" fill="#9bbefc" font-family="monospace">.30</text>
+      <rect x="600" y="170" width="130" height="52" rx="8" fill="#173666" stroke="#ffb454"/>
+      <text x="665" y="192" text-anchor="middle" font-size="12" fill="#e4eaf5">Capteur-Serre</text>
+      <text x="665" y="210" text-anchor="middle" font-size="10.5" fill="#ffb454" font-family="monospace" id="simCaptAddr">.50</text>
+      <!-- câbles -->
+      <line x1="150" y1="102" x2="330" y2="102" stroke="#2e5d9f" stroke-width="3"/>
+      <line x1="440" y1="90" x2="600" y2="40" stroke="#2e5d9f" stroke-width="3"/>
+      <line x1="440" y1="102" x2="600" y2="118" stroke="#2e5d9f" stroke-width="3"/>
+      <line x1="440" y1="115" x2="600" y2="196" stroke="#2e5d9f" stroke-width="3"/>
+      <!-- enveloppe -->
+      <g id="simEnv" style="visibility:hidden">
+        <rect width="34" height="24" fill="#ffd66b" stroke="#8a6d1d" rx="3"/>
+        <path d="M0 0 L17 13 L34 0" fill="none" stroke="#8a6d1d" stroke-width="2"/>
+      </g>
+    </svg>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:10px">
+      <label for="simDest" style="font-size:.9em">Destination du ping&nbsp;:</label>
+      <select id="simDest" style="width:auto">
+        <option value="100">Serveur-Serre (.100)</option>
+        <option value="30">Imprimante (.30)</option>
+        <option value="50">Capteur-Serre (.50)</option>
+      </select>
+      <label style="font-size:.9em"><input type="checkbox" id="simRue"> le capteur est parti dans la mauvaise rue (192.168.<b>21</b>.50)</label>
+      <button class="btn small" id="btnSimSend" type="button">📨 Lancer le ping</button>
+    </div>
+    <p id="simMsg" role="status" aria-live="polite" style="text-align:center;min-height:1.4em;font-size:.92em;color:var(--warn)"></p>
+  </div>
+
+  <div class="exo">
+    <label for="e4_just"><b>🖊 Ton diagnostic rédigé&nbsp;:</b> explique la panne «&nbsp;mauvaise rue&nbsp;» avec tes mots,
+    en reliant le symptôme (Request timed out) à sa cause (la rue de l'adresse).</label>
+    <textarea id="e4_just" placeholder="Le capteur ne répondait plus parce que…"></textarea>
+  </div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Suis la boucle dans l'ordre&nbsp;: le SYMPTÔME est écrit noir sur blanc dans la transcription («&nbsp;Request timed out&nbsp;» ×4)&nbsp;; l'HYPOTHÈSE la plus raisonnable vise ce qui est SEUL en panne&nbsp;; le TEST le moins invasif est une simple lecture d'écran&nbsp;; le REMÈDE remet la valeur du plan… puis on re-teste.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Imagine que ta maison se télétransporte dans la ville voisine en gardant son numéro 50&nbsp;: le facteur de TA rue ne te trouvera plus jamais, même si la route est parfaite. «&nbsp;Mauvaise rue&nbsp;» = l'appareil s'est déclaré dans un autre réseau&nbsp;: pour la rue 192.168.20, il a tout simplement disparu. C'est pour cela que le câble vert n'y change rien.</p></details>
+
+  <button class="btn" data-check="4">✅ Vérifier mon diagnostic</button>
+  <div class="feedback" id="fb4" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Symptôme&nbsp;:</b> «&nbsp;Request timed out&nbsp;» ×4, «&nbsp;Sent = 4, Received = 0, Lost = 4 (100% loss)&nbsp;» —
+    aucun aller-retour. <b>Hypothèse&nbsp;:</b> les autres pings réussissent → le problème est localisé sur le capteur.
+    <b>Test&nbsp;:</b> lire son IP Configuration — zéro risque, information directe. <b>Remède&nbsp;:</b> remettre
+    192.168.20.50, puis RE-tester&nbsp;: «&nbsp;Reply from&nbsp;» de retour, réparation prouvée.</p>
+    <p><b>Le fond de l'affaire&nbsp;:</b> une adresse, c'est rue + maison. En passant en 192.168.<b>21</b>.50, le capteur
+    a changé de QUARTIER&nbsp;: dans la rue 192.168.20, plus personne ne s'appelle .50. Le câble, lui, n'y est pour rien —
+    c'est toute la différence entre une panne de LIAISON et une panne d'ADRESSAGE.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> appliquer un remède AVANT d'avoir testé l'hypothèse (débrancher/rebrancher au hasard)&nbsp;;
+  accuser le câble alors que les triangles sont verts&nbsp;; corriger l'adresse mais oublier de RE-tester&nbsp;; confondre
+  «&nbsp;mauvaise rue&nbsp;» (21 au lieu de 20) et «&nbsp;doublon&nbsp;» (deux fois la même adresse, la panne vue en 5e).</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> la démarche du dépanneur&nbsp;: <b>symptôme → hypothèse → test → remède → RE-test</b>.
+  «&nbsp;Request timed out&nbsp;» + câble vert + voisins joignables = suspecter l'ADRESSE. Une erreur d'une seule unité dans
+  la rue (21 ≠ 20) suffit à faire disparaître un appareil du réseau.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 5 bonnes réponses + les DEUX consultations de la clinique réellement jouées + ton diagnostic rédigé.</div>
+</section>
+
+<section class="card">
+  <h2>🧪 Activité 5 — Panne n°2 et validation par la simulation <span style="font-size:.7em;color:var(--sub)">(~35 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> reconnaître une panne d'une AUTRE famille (la liaison), puis compléter la simulation fournie pour prouver que le réseau réparé se comporte comme prévu.</div>
+    <div><b>Compétence&nbsp;:</b> 4e_C4.9 — Compléter une simulation fournie pour valider le comportement d'un réseau informatique <em>(et 4e_C4.8 pour le dépannage)</em>.</div>
+    <div><b>Production&nbsp;:</b> la panne «&nbsp;liaison coupée&nbsp;» réparée + l'enveloppe du mode Simulation ajoutée au fichier fourni et son trajet relevé.</div>
+    <div><b>Ressources&nbsp;:</b> le fichier fourni <span style="font-family:'Fira Code',monospace">4e_serre_TECHNO-C4.pkt</span>, le schéma de la panne, le trajet de l'enveloppe.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — valider un comportement par l'expérience simulée · D2 «&nbsp;outils numériques&nbsp;» — compléter un fichier fourni sans le casser.</div>
+  </div>
+
+  <h3>Le cas réel n°2 — l'imprimante au lien rouge</h3>
+  <p>Deuxième consultation à la clinique&nbsp;: cette fois, <b>l'adresse de l'imprimante est parfaite</b>… et pourtant
+  plus rien ne passe. Regarde le montage&nbsp;:</p>
+  <figure>
+    <img src="Images/pt_panne_liaison_coupee.svg" alt="Le montage de la serre reconstitué avec la liaison de l'imprimante marquée par des triangles rouges des deux côtés, pendant que les trois autres liaisons restent vertes. Une loupe indique que le Port Status de l'imprimante est décoché, position Off." style="max-width:100%">
+    <figcaption>La liaison de l'imprimante est tombée — triangles ROUGES des deux côtés, les autres restent verts.</figcaption>
+  </figure>
+  <div class="ligne-exo"><label for="e5_1">📋 SYMPTÔME — qu'observe-t-on sur le schéma du montage&nbsp;?</label>
+  <select id="e5_1"><option value="">— je choisis —</option>
+    <option>tous les triangles sont verts, mais le ping échoue</option>
+    <option>les triangles de la liaison de l'imprimante sont ROUGES, les trois autres liaisons restent vertes</option>
+    <option>l'imprimante a disparu du montage</option>
+    <option>le commutateur clignote en orange</option></select></div>
+  <div class="ligne-exo"><label for="e5_2">💡 Cette panne est-elle de la même famille que la «&nbsp;mauvaise rue&nbsp;»&nbsp;?</label>
+  <select id="e5_2"><option value="">— je choisis —</option>
+    <option>oui : c'est encore une erreur d'adresse</option>
+    <option>non : ici l'adresse est bonne, c'est la LIAISON qui est tombée — une panne « physique », pas une panne d'adressage</option>
+    <option>oui : rouge ou timeout, c'est pareil</option>
+    <option>non : c'est une panne d'électricité du collège</option></select></div>
+  <div class="ligne-exo"><label for="e5_3">🔧 Dans notre session, la cause était le «&nbsp;Port Status&nbsp;» de l'imprimante décoché (Off). Quel est le remède, et comment le PROUVER&nbsp;?</label>
+  <select id="e5_3"><option value="">— je choisis —</option>
+    <option>recocher On, voir les triangles repasser au vert, puis re-tester au ping</option>
+    <option>changer l'adresse de l'imprimante</option>
+    <option>remplacer le commutateur</option>
+    <option>recâbler toute la serre</option></select></div>
+
+  <h3>🎬 Compléter la simulation fournie — le contrat de 4e_C4.9</h3>
+  <p>M. Firmin te FOURNIT le fichier du réseau réparé&nbsp;:
+  <a href="4e_serre_TECHNO-C4.pkt" download>📦 télécharger 4e_serre_TECHNO-C4.pkt</a> (construit et vérifié dans notre
+  session réelle). Ta mission n'est PAS de le reconstruire&nbsp;: c'est d'y <b>ajouter le test qui manque</b> pour
+  valider son comportement.</p>
+  <div class="recette">
+    <h4>La recette de validation (mode Simulation)</h4>
+    <p><b>1.</b> Ouvrir le fichier fourni dans Packet Tracer.<br>
+    <b>2.</b> En bas à droite, passer de <b>Realtime</b> à <b>Simulation</b> — le temps est maintenant sous TON contrôle.<br>
+    <b>3.</b> Prendre l'outil <b>enveloppe fermée</b> (Add Simple PDU) dans la barre d'outils de droite.<br>
+    <b>4.</b> Cliquer <b>PC-Prof</b> (expéditeur) puis <b>Serveur-Serre</b> (destinataire)&nbsp;: le scénario de test est ajouté au fichier.<br>
+    <b>5.</b> Bouton <b>Play</b>&nbsp;: l'enveloppe s'anime — note chaque arrêt de son trajet.<br>
+    <b>6.</b> Le verdict s'écrit dans la liste des scénarios&nbsp;: <b>Successful</b> = comportement validé. Sauvegarder&nbsp;: ton test fait maintenant partie du fichier.</p>
+  </div>
+  <figure>
+    <img src="Images/pt_simulation_enveloppe.svg" alt="Le mode Simulation reconstitué : l'enveloppe est arrêtée sur le commutateur entre PC-Prof et Serveur-Serre, et la liste d'événements affiche trois lignes horodatées : à 0.000 seconde l'enveloppe est chez PC-Prof, à 0.001 chez Switch0, à 0.002 chez Serveur-Serre, avec le verdict Successful." style="max-width:100%">
+    <figcaption>L'enveloppe en plein trajet et sa liste d'événements — le film du réseau, image par image.</figcaption>
+  </figure>
+  <div class="ligne-exo"><label for="e5_4">Dans la simulation, par où l'enveloppe passe-t-elle TOUJOURS entre PC-Prof et le serveur&nbsp;?</label>
+  <select id="e5_4"><option value="">— je choisis —</option>
+    <option>par le commutateur, le centre de l'étoile</option>
+    <option>directement de PC à serveur, en ligne droite</option>
+    <option>par l'imprimante</option>
+    <option>par la passerelle 192.168.20.1</option></select></div>
+  <div class="ligne-exo"><label for="e5_5">Que signifie le verdict «&nbsp;Successful&nbsp;» dans la liste des scénarios&nbsp;?</label>
+  <select id="e5_5"><option value="">— je choisis —</option>
+    <option>que le fichier est sauvegardé</option>
+    <option>que l'aller-retour simulé a réussi : le comportement du réseau est validé</option>
+    <option>que la simulation est plus rapide que le réel</option>
+    <option>que le commutateur a été remplacé</option></select></div>
+  <div class="ligne-exo"><label for="e5_6">Pourquoi valider en SIMULATION plutôt que d'expérimenter directement sur le réseau du collège&nbsp;?</label>
+  <select id="e5_6"><option value="">— je choisis —</option>
+    <option>parce que la simulation est plus jolie</option>
+    <option>parce qu'on peut y provoquer des pannes sans aucun risque pour le vrai réseau — c'est exactement ce que demande le programme</option>
+    <option>parce que le vrai réseau est trop rapide pour être observé</option>
+    <option>parce que le matériel réel n'existe pas</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Compare les deux pannes&nbsp;: act. 4 = adresse fausse, câble vert&nbsp;; act. 5 = adresse bonne, triangles ROUGES. Pour la simulation, suis la recette pas à pas&nbsp;: l'enveloppe se pose sur l'expéditeur puis sur le destinataire, et le film se lit dans la liste d'événements.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Deux familles de pannes = deux symptômes différents&nbsp;: l'ADRESSAGE casse la livraison (timeout, liens verts), la LIAISON casse la route (triangles rouges). Le mode Simulation est le ralenti de l'arbitre&nbsp;: il rejoue l'action image par image pour qu'on VOIE le trajet — et le verdict «&nbsp;Successful&nbsp;» est l'accusé de réception officiel.</p></details>
+
+  <button class="btn" data-check="5">✅ Vérifier mes réponses</button>
+  <div class="feedback" id="fb5" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Panne n°2&nbsp;:</b> triangles rouges sur la seule liaison de l'imprimante = panne de LIAISON (le port était
+    sur Off). Remède&nbsp;: Port Status → On, triangles verts, re-test au ping. Adresse intacte du début à la fin&nbsp;:
+    rien à voir avec la «&nbsp;mauvaise rue&nbsp;».</p>
+    <p><b>Validation&nbsp;:</b> l'enveloppe ajoutée au fichier fourni passe TOUJOURS par le commutateur (l'étoile n'a
+    qu'un centre), et le verdict «&nbsp;Successful&nbsp;» signe l'aller-retour simulé. On valide en simulation parce
+    qu'on peut y provoquer, réparer et rejouer des pannes À VOLONTÉ, sans toucher au réseau pédagogique — c'est le
+    mot même du programme&nbsp;: «&nbsp;simulation ou réseau local déconnecté&nbsp;».</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> chercher une erreur d'adresse alors que les triangles sont rouges
+  (mauvaise famille de panne)&nbsp;; oublier de repasser en Realtime après la simulation&nbsp;; cliquer deux fois le même
+  appareil pour le PDU&nbsp;; refaire tout le montage au lieu de COMPLÉTER le fichier fourni.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> deux familles de pannes&nbsp;: <b>adressage</b> (timeout, liens verts) et
+  <b>liaison</b> (triangles rouges). Le mode <b>Simulation</b> rejoue le réseau au ralenti&nbsp;: enveloppe ajoutée au fichier
+  fourni + trajet par le commutateur + verdict «&nbsp;Successful&nbsp;» = comportement du réseau <b>validé</b>.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 6 bonnes réponses — et, en version 🅱, ton enveloppe ajoutée au fichier fourni avec verdict Successful.</div>
+</section>
+</div>
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5.</p>
+  <h4>1. Le plan d'adressage (activité 1)</h4>
+  <p>Avant de brancher, on conçoit&nbsp;: une <b>rue commune</b> (192.168.20), un <b>numéro unique</b> par appareil,
+  le <b>.1 réservé à la passerelle</b> (la porte vers les autres réseaux), et le <b>masque 255.255.255.0</b> qui
+  sépare la rue du numéro de maison.</p>
+  <h4>2. L'adresse IP fixe (activités 2-3)</h4>
+  <p>Un objet connecté qu'on doit joindre reçoit une adresse <b>fixe</b> (Static)&nbsp;: IPv4 + masque +
+  <b>passerelle</b>. On prouve le paramétrage au <b>ping</b>&nbsp;: «&nbsp;Reply from&nbsp;» = aller-retour réussi,
+  «&nbsp;0% loss&nbsp;» = livraison parfaite (nos mesures réelles&nbsp;: 0 à 12 ms).</p>
+  <h4>3. Le dépannage méthodique (activités 4-5)</h4>
+  <p>La boucle du dépanneur&nbsp;: <b>symptôme → hypothèse → test → remède → re-test</b>. Deux familles de pannes&nbsp;:
+  <b>adressage</b> («&nbsp;Request timed out&nbsp;», liens verts — ex. la mauvaise rue 192.168.<b>21</b>.50) et
+  <b>liaison</b> (triangles <b>rouges</b> — ex. le port sur Off). Le mode <b>Simulation</b> valide le comportement&nbsp;:
+  enveloppe, trajet par le commutateur, verdict «&nbsp;Successful&nbsp;».</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">adresse fixe = static address</span><span class="tag">passerelle = gateway</span><span class="tag">masque = subnet mask</span><span class="tag">dépanner = to troubleshoot</span><span class="tag">panne = failure</span><span class="tag">délai dépassé = timed out</span><span class="tag">simulation = simulation</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ&nbsp;:</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé&nbsp;? Compléter avec ce que tu sais maintenant&nbsp;:</label>
+    <textarea id="hyp_retour" placeholder="En fait, un appareil bien branché peut rester muet parce que…"></textarea>
+  </div>
+  <h4>Je me positionne, code par code</h4>
+  <div class="bilan-grid">
+    <div>
+      <p style="margin-bottom:4px"><b>4e_C4.7</b> — paramétrer une adresse IP fixe pour un objet connecté&nbsp;:</p>
+      <select id="pos_c47"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je confonds encore les champs de la fenêtre</option>
+        <option>🟠 Maîtrise fragile — j'y arrive avec la recette sous les yeux</option>
+        <option>🟢 Maîtrise satisfaisante — je paramètre seul·e adresse, masque et passerelle</option>
+        <option>⭐ Très bonne maîtrise — je conçois le plan ET je le mets en œuvre</option></select>
+    </div>
+    <div>
+      <p style="margin-bottom:4px"><b>4e_C4.8</b> — résoudre des problèmes de communication&nbsp;:</p>
+      <select id="pos_c48"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je débranche au hasard</option>
+        <option>🟠 Maîtrise fragile — je suis la boucle avec de l'aide</option>
+        <option>🟢 Maîtrise satisfaisante — je mène symptôme → hypothèse → test → remède seul·e</option>
+        <option>⭐ Très bonne maîtrise — je reconnais la famille de panne dès le symptôme</option></select>
+    </div>
+    <div>
+      <p style="margin-bottom:4px"><b>4e_C4.9</b> — compléter une simulation pour valider un comportement&nbsp;:</p>
+      <select id="pos_c49"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je ne retrouve pas le mode Simulation</option>
+        <option>🟠 Maîtrise fragile — j'ajoute l'enveloppe avec de l'aide</option>
+        <option>🟢 Maîtrise satisfaisante — j'ajoute le test au fichier fourni et je lis le verdict</option>
+        <option>⭐ Très bonne maîtrise — j'explique ce que la simulation prouve (et ne prouve pas)</option></select>
+    </div>
+  </div>
+  <div class="bilan-grid" style="margin-top:10px">
+    <div><label for="bilan1"><b>Ce que j'ai appris&nbsp;:</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire&nbsp;:</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir&nbsp;:</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance&nbsp;:</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>30 questions — dont 7 illustrées par les schémas du vrai logiciel — pour vérifier tout ce que tu sais sur l'adresse fixe, le dépannage et la simulation.</p>
+  <a class="btn qcm" href="qcm_4e_C4.7-C4.9_sos_serre.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🏠 <b>Défi maison&nbsp;:</b> avec l'accord d'un adulte, retrouver l'adresse de la passerelle de TA box
+  (Paramètres → WiFi → détails)&nbsp;: finit-elle en .1, comme dans notre plan&nbsp;?</p>
+  <p>🩺 <b>Défi clinique XXL&nbsp;:</b> dans TON fichier .pkt, inventer une TROISIÈME panne (au choix&nbsp;: doublon
+  d'adresse, mauvais masque, câble débranché), la faire diagnostiquer au binôme voisin avec la boucle du dépanneur —
+  chronomètre en main.</p>
+  <p>🌡 <b>Défi jardin&nbsp;:</b> relier cet atelier à la séquence «&nbsp;jardin connecté&nbsp;»&nbsp;: quelle adresse fixe
+  donnerais-tu à la carte micro:bit du jardin (rue 192.168.10)&nbsp;? Justifier en deux phrases dans le respect du plan.</p>
+</section>
+
+<footer>
+  <p>Séquence 4e_C4.7 · C4.8 · C4.9 — Thème 2 · Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Captures reconstituées d'après Cisco Packet Tracer 8.2 (schémas originaux CC0 — aucune capture propriétaire, valeurs réellement mesurées). Cisco et Packet Tracer sont des marques de Cisco Systems, Inc.</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_4e_C4.7-C4.9_sos_serre_pt";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  document.querySelectorAll("input[type=checkbox][id]").forEach(c=>{ o.inputs["chk_"+c.id]=c.checked?"1":""; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    if(id.indexOf("chk_")===0){ const c=$(id.slice(4)); if(c) c.checked = v==="1"; return; }
+    const el=$(id); if(el) el.value=v;
+  });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ La clinique du réseau (activité 4) — verrou expérientiel ══════ */
+window.__exp = window.__exp || {};
+const SIM_POS = { start:[90,80], sw:[385,80], d100:[655,18], d30:[655,96], d50:[655,174] };
+let simBusy=false;
+function simPlace(x,y){ const e=$("simEnv"); e.setAttribute("transform","translate("+(x-17)+" "+(y)+")"); e.style.visibility="visible"; }
+$("btnSimSend").addEventListener("click", ()=>{
+  if(simBusy) return; simBusy=true;
+  const dest=$("simDest").value, rue=$("simRue").checked;
+  $("simCaptAddr").textContent = rue ? "192.168.21.50 ?!" : ".50";
+  const target = dest==="100" ? SIM_POS.d100 : dest==="30" ? SIM_POS.d30 : SIM_POS.d50;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const step2 = ()=>{
+    if(rue && dest==="50"){
+      simPlace((SIM_POS.sw[0]+target[0])/2, (SIM_POS.sw[1]+target[1])/2);
+      $("simMsg").textContent = "⏳ Request timed out — dans la rue 192.168.20, plus PERSONNE ne s'appelle .50 : le capteur s'est déclaré dans un autre quartier.";
+      window.__exp["clinique_rue"] = true;
+    } else {
+      simPlace(target[0]-45, target[1]+14);
+      $("simMsg").textContent = "✔ Reply from 192.168.20." + dest + " — aller-retour réussi : PC-Prof → Switch0 → ." + dest + " et retour.";
+      window.__exp["clinique_ok"] = true;
+    }
+    save(false); simBusy=false;
+  };
+  $("simMsg").textContent = "L'enveloppe du ping part de PC-Prof…";
+  simPlace(SIM_POS.start[0]+50, SIM_POS.start[1]);
+  setTimeout(()=>{
+    simPlace(SIM_POS.sw[0], SIM_POS.sw[1]);
+    $("simMsg").textContent = "…elle arrive au commutateur, qui cherche « ." + dest + " » dans la rue 192.168.20…";
+    setTimeout(step2, reduced?150:900);
+  }, reduced?150:900);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const txt = id => String($(id).value||"").replace(/\u00a0/g," ").trim().toLowerCase();
+const val = id => String($(id).value||"").replace(/\u00a0/g," ").replace(/\s+/g," ").trim();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={e1c_1:"4 : PC-Prof, Serveur-Serre, Imprimante et Capteur-Serre — le commutateur, lui, ne réclame pas de numéro ici",
+               e1c_2:"192.168.20 — les trois premiers nombres, communs à tous les habitants de la serre",
+               e1c_3:"parce qu'il est réservé à la passerelle : la porte de sortie du réseau vers les autres réseaux",
+               e1c_4:"que les trois premiers nombres forment la rue et que le dernier est le numéro de maison",
+               e1_1:"192.168.20.50",
+               e1_2:"parce que le numéro n'a pas d'importance tant qu'il est unique et dans la même rue",
+               e1_3:"non : dans une même rue, chaque numéro doit rester unique, sinon la livraison devient impossible",
+               e1_4:"non : la rue est différente, ce sont deux réseaux voisins — pour passer de l'un à l'autre, il faudra la passerelle",
+               e1_5:"255.255.255.0 — le même pour tous les habitants de la rue"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const p=txt("e1c_prod");
+    const pOk = p.length>=25 && p.includes("192.168.20");
+    return {score:ok,total:9,extra:pOk?"":" Rédige TON plan (au moins une phrase, avec des adresses de la rue 192.168.20) : c'est ta production de concepteur.",valide:ok===9&&pOk};
+  },
+  2: function(){
+    let ok=0;
+    const att={e2_1:"4 : une par appareil, toutes vers le commutateur",
+               e2_2:"une étoile : toutes les branches partent du commutateur central",
+               e2_3:"parce qu'un triangle orange pendant 30 s est NORMAL : ce n'est pas encore une panne",
+               e2_4:"Copper Straight-Through (le câble cuivre droit)",
+               e2_5:"non : les liaisons sont prêtes, mais personne n'a encore d'adresse — le facteur n'a aucun nom sur les enveloppes"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:5,extra:"",valide:ok===5};
+  },
+  3: function(){
+    let ok=0;
+    const att={e3_1:"que l'ALLER et le RETOUR ont réussi : la communication complète fonctionne",
+               e3_2:"0 sur 4 : « Lost = 0 (0% loss) » sur les deux tests",
+               e3_3:"que ces variations de quelques millisecondes sont normales sur un réseau local en bonne santé",
+               e3_4:"l'adresse réservée de la passerelle : 192.168.20.1",
+               e3_5:"parce qu'un objet connecté qu'on doit joindre à coup sûr ne peut pas changer d'adresse au hasard des jours"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:5,extra:"",valide:ok===5};
+  },
+  4: function(){
+    let ok=0;
+    const att={e4_1:"« Request timed out » quatre fois : aucun aller-retour, 100 % de perte",
+               e4_2:"le problème vient du capteur lui-même : son branchement ou son adresse",
+               e4_3:"ouvrir l'IP Configuration du capteur et relire son adresse ligne à ligne",
+               e4_4:"il remet l'adresse du plan, 192.168.20.50, puis RE-teste au ping",
+               e4_5:"parce que pour la rue 192.168.20, l'adresse .50 n'existe plus nulle part : l'habitant s'est déclaré dans un AUTRE quartier"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const j=txt("e4_just");
+    const jOk = j.length>=20 && (j.includes("rue")||j.includes("réseau")||j.includes("21")||j.includes("quartier"));
+    const e=window.__exp||{};
+    const expOk = e["clinique_ok"] && e["clinique_rue"];
+    let extra="";
+    if(!expOk) extra=" Fais VRAIMENT les deux consultations de la clinique : un ping réussi ET le cas « mauvaise rue ».";
+    else if(!jOk) extra=" Ton diagnostic doit relier le timeout à la RUE de l'adresse (192.168.21 ≠ 192.168.20).";
+    return {score:ok,total:5,extra:extra,valide:ok===5&&jOk&&expOk};
+  },
+  5: function(){
+    let ok=0;
+    const att={e5_1:"les triangles de la liaison de l'imprimante sont ROUGES, les trois autres liaisons restent vertes",
+               e5_2:"non : ici l'adresse est bonne, c'est la LIAISON qui est tombée — une panne « physique », pas une panne d'adressage",
+               e5_3:"recocher On, voir les triangles repasser au vert, puis re-tester au ping",
+               e5_4:"par le commutateur, le centre de l'étoile",
+               e5_5:"que l'aller-retour simulé a réussi : le comportement du réseau est validé",
+               e5_6:"parce qu'on peut y provoquer des pannes sans aucun risque pour le vrai réseau — c'est exactement ce que demande le programme"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:6,extra:"",valide:ok===6};
+  }
+};
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1], s2:[2,3], s3:[4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majProgress(); majHyp();
+</script>
+</body>
+</html>
