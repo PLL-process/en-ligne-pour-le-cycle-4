@@ -361,21 +361,34 @@ OVERLAY = {
                 "intégrés (paquets, jeu du routeur, panne/résilience), activité "
                 "débranchée, versions A (Filius) / B (Packet Tracer à confirmer) / C, "
                 "QCM séparé 30 q, synthèses élève/professeur, fiche pédagogique, "
-                "matrice de couverture, 4 SVG originaux CC0, rapport de tests.",
-        anomalies="Packet Tracer : comptes À CONFIRMER (version B non bloquante, "
-                  "Filius confirmé). Évaluation sommative laissée à l'enseignant.",
+                "matrice de couverture, 4 SVG originaux CC0, rapport de tests ; "
+                "approfondie par l'atelier routage dédié « Le pont numérique "
+                "Martinique → New York » (3e_C4.8) — README pointeur croisé.",
+        anomalies="Packet Tracer 8.2 CONFIRMÉ en conditions réelles (session du "
+                  "07/08/2026, atelier 3e_C4.8) — version B débloquée. Évaluation "
+                  "sommative laissée à l'enseignant.",
         accessibilite="Clavier + skip-link, aria/alt, prefers-reduced-motion, "
                       "impression A4, minuteur désactivable.",
         medias="4 SVG originaux CC0 — SOURCES_MEDIAS.md complet.",
     ),
     "3e_C4.8": dict(
-        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
-        sequence=False, qcm=False, projet=False, synthese=False,
-        evaluation=False, correction=False, situation=False, problematique=False,
-        mutualise_avec="3e_C4.7",
-        qualite="README pointeur vers la séquence mutualisée 3e_C4.7 (activités 4-5 : "
-                "jeu du routeur débranché, simulateur de panne ; 15 questions dédiées).",
-        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="ATELIER DÉDIÉ « Le pont numérique Martinique → New York » "
+                "(C4.7·C4.8, dossier principal) : conception du schéma à deux "
+                "réseaux par l'élève (règle n°22), jeu du poste-frontière avec "
+                "table DONNÉE (activité débranchée — conformité au libellé), "
+                "montage réel à 2 routeurs 1941 (routes statiques miroir), preuves "
+                "mesurées (ping TTL=126, tracert 3 sauts, Event List Successful) + "
+                "contre-épreuve « route effacée » à verrou ; QCM 30 q (12/18), "
+                "7 SVG CC0 reconstitués de la session Packet Tracer 8.2 réelle, "
+                "fichier .pkt fourni, 37/37 tests Playwright ; complète la "
+                "séquence-îlot « Internet jusqu'à Sainte-Luce » (3e_C4.7).",
+        anomalies="Aucune. Évaluation sommative laissée à l'enseignant.",
+        accessibilite="Clavier, aria/alt, listes déroulantes exclusivement (DYS), "
+                      "reduced-motion (simulateur compris), impression A4.",
+        medias="7 SVG originaux CC0 + fichier .pkt — SOURCES_MEDIAS.md complet.",
     ),
     # ── Thème 2 · LOT 03 (Fable, 2026-07-22) : SOS station, réparer plutôt que jeter ──
     "3e_C5.1": dict(

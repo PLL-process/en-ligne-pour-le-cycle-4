@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 3e · Atelier : Le pont numérique Martinique → New York (3e_C4.7 · 3e_C4.8)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 18px;display:block;text-align:center;white-space:normal;line-height:1.35;text-decoration:none}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+
+<style>
+.cartouche-crcn{border:2px solid var(--energie);border-radius:10px;background:rgba(255,180,84,.08);padding:12px 15px;margin:12px 0;font-size:.88em}
+.ligne-exo{margin:10px 0}
+.ligne-exo label{display:block;font-size:.92em;margin-bottom:4px}
+.recette{border:1.5px solid var(--input-bd);border-radius:12px;padding:12px 16px;margin:12px 0;background:rgba(23,54,102,.35)}
+.recette h4{margin-top:2px;color:var(--hl)}
+</style>
+
+<a class="skip-link" href="#seances">Aller directement aux séances</a>
+<h1>🌉 Le pont numérique Martinique → New York</h1>
+<p class="subtitle">Thème 2 · Martinique — 3e · Atelier : faire communiquer DEUX réseaux — routeurs, tables de routage et preuves (Cisco Packet Tracer 8.2)</p>
+<div class="badges">
+  <span class="badge niveau">3e — cycle 4</span>
+  <span class="badge code">3e_C4.7</span>
+  <span class="badge code">3e_C4.8</span>
+  <span class="badge theme">Thème 2 · Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D2 · D4</span>
+  <span class="badge crcn">CRCN : 5.1 (niv. 3)</span>
+  <span class="badge duree">3 séances de 55 min</span>
+</div>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e …"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+</div>
+<p class="saved-note" id="savedNote" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
+  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>🚨 La situation : prouver le voyage d'un message jusqu'à New York</h2>
+  <div class="declencheur">
+    <p>Le club techno du collège échange depuis la 4e avec la New York Public Library — souvenez-vous du
+    Book Train. Cette année, le partenariat devient sérieux&nbsp;: la classe doit envoyer ses relevés de la
+    station d'alerte cyclonique au serveur du partenaire, à New York. M. Firmin arrive avec un défi&nbsp;:
+    <em>«&nbsp;Vous savez faire vivre UN réseau — votre serre en est la preuve. Mais votre message, lui, doit
+    QUITTER votre réseau, traverser l'océan et entrer dans un réseau qui n'est pas le vôtre. Montrez-moi,
+    dans le simulateur, comment DEUX réseaux se parlent&nbsp;: construisez le nôtre, construisez le leur,
+    posez le pont entre les deux — et prouvez-moi chaque saut du voyage.&nbsp;»</em></p>
+    <p><b>Ta mission d'expert&nbsp;:</b> concevoir un schéma à DEUX réseaux reliés par des <b>routeurs</b>,
+    jouer au poste-frontière avec une <b>table de routage donnée</b>, construire le pont dans
+    <b>Cisco Packet Tracer</b>, et rapporter les preuves du voyage&nbsp;: ping, <b>tracert</b> et la
+    simulation saut par saut.</p>
+  </div>
+  <p class="problematique">Pourquoi un simple commutateur ne suffit-il plus — et comment les routeurs et leurs tables font-ils voyager un message de réseau en réseau&nbsp;?</p>
+  <div class="exo">
+    <label for="hyp1"><b>💭 Ton hypothèse de départ</b> (avant d'apprendre quoi que ce soit — on y reviendra au bilan)&nbsp;: d'après toi, que se passe-t-il à la «&nbsp;frontière&nbsp;» entre deux réseaux pour qu'un message trouve son chemin&nbsp;?</label>
+    <textarea id="hyp1" placeholder="Je pense qu'à la frontière entre deux réseaux, le message…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📚 Le référentiel de l'atelier — en toutes lettres</h2>
+  <p style="font-size:.88em;color:var(--sub)">Chaque code est écrit ici en entier, avec ce que l'élève FAIT réellement pour le travailler. Les activités rappellent leur compétence sous leur titre.</p>
+  <h4>Compétences de technologie (programme 2024)</h4>
+  <p><b>3e_C4.7</b> — «&nbsp;Identifier et représenter la circulation d'une information dans le réseau Internet.&nbsp;» → <em>concevoir puis lire le schéma à deux réseaux (act. 1), suivre le voyage réel du message au tracert et dans la simulation saut par saut (act. 4-5).</em></p>
+  <p><b>3e_C4.8</b> — «&nbsp;Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée, table de routage donnée).&nbsp;» → <em>la séquence suit LITTÉRALEMENT le libellé&nbsp;: jeu débranché du poste-frontière avec les tables de routage DONNÉES de nos vrais routeurs (act. 2), puis construction et preuve (act. 3-5).</em></p>
+  <h4>Socle commun — domaines et composantes mobilisés</h4>
+  <p><b>D2 — Les méthodes et outils pour apprendre</b>&nbsp;: composante «&nbsp;coopération et réalisation de projets&nbsp;» (binômes pilote/copilote, jeu de rôles du poste-frontière) et composante «&nbsp;outils numériques pour échanger et communiquer&nbsp;» (le simulateur, le fichier .pkt, les relevés de preuve).</p>
+  <p><b>D4 — Les systèmes naturels et les systèmes techniques</b>&nbsp;: composante «&nbsp;conception, création, réalisation&nbsp;» (concevoir SON schéma à deux réseaux puis le réaliser) et composante «&nbsp;démarches scientifiques&nbsp;» (hypothèse, preuves par le ping, le tracert et la simulation — dont la lecture du TTL).</p>
+  <h4>CRCN (cadre de référence des compétences numériques)</h4>
+  <p><b>5.1 — Résoudre des problèmes techniques</b>, niveau 3 visé — repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;» Au niveau 3, l'élève <b>élabore sa démarche</b>&nbsp;: interpréter seul les deux premiers échecs du ping, choisir le bon outil de preuve (ping, tracert ou simulation) selon la question posée (act. 4-5, cartouche complet dans l'activité 4). La compétence <b>5.2 — Évoluer dans un environnement numérique</b> est travaillée (manipulation du simulateur) mais non évaluée.</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Trois façons de vivre l'atelier</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec un adulte, à la maison&nbsp;: lancer <span style="font-family:'Fira Code',monospace">tracert</span> vers un site lointain et compter les sauts réels — chaque ligne est un routeur traversé. <b>Observation seulement&nbsp;:</b> on ne touche JAMAIS au réseau pédagogique — d'où l'entraînement en simulation.</p></div>
+    <div class="version vb"><h4>🅱 Simulation (le cœur de l'atelier)</h4><p>Construire les DEUX réseaux et leur pont dans <b>Cisco Packet Tracer 8.2</b>, configurer les routeurs, prouver le voyage par ping/tracert/Simulation. Toutes les captures de cette page viennent du vrai logiciel, valeurs mesurées comprises.</p></div>
+    <div class="version vc"><h4>🅲 Sans ordinateur</h4><p>Jouer le poste-frontière en classe (act. 2, tables de routage imprimées), lire les schémas de la page, et utiliser le mini-simulateur du poste-frontière intégré à l'activité 5.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Les trois séances">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="seance1" id="tab-s1">Séance 1<br>Deux réseaux, un pont<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance2" id="tab-s2">Séance 2<br>Construire le pont<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance3" id="tab-s3">Séance 3<br>Prouver le voyage<span class="done" id="done-s3"></span></button>
+</div>
+<!-- ═══════════════════════ SÉANCE 1 ═══════════════════════ -->
+<div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
+
+<section class="card">
+  <h2>✏️ Activité 1 — Concevoir TON schéma à deux réseaux <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> dessiner, AVANT de toucher au logiciel, l'architecture qui relie deux réseaux — comme un ingénieur qui trace le pont avant de le construire.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C4.7 — Identifier et représenter la circulation d'une information dans le réseau Internet <em>(ici&nbsp;: représenter l'architecture du voyage)</em>.</div>
+    <div><b>Production&nbsp;:</b> TON schéma à deux réseaux (choix + justification écrite), puis sa comparaison avec le schéma de référence.</div>
+    <div><b>Ressources&nbsp;:</b> la recette de conception en 4 étapes, le schéma de référence Martinique → New York.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — l'élève conçoit son architecture avant de voir la référence · D2 «&nbsp;coopération&nbsp;» — revue de schéma croisée avec le binôme voisin.</div>
+  </div>
+
+  <p><b>La règle du jeu (règle d'or de l'atelier)&nbsp;:</b> tu <b>conçois d'abord</b>, tu compares ensuite.
+  Le schéma de référence n'apparaît qu'à l'étape de lecture — c'est TA proposition qui compte, tant qu'elle
+  respecte les lois du réseau.</p>
+
+  <h3>① CONCEVOIR — la recette de l'architecte, étape par étape</h3>
+  <figure>
+    <img src="Images/conception_deux_reseaux_recette.svg" alt="La recette de conception d'un schéma à deux réseaux en quatre vignettes : dessiner les deux quartiers avec leurs rues différentes, poser un poste-frontière (routeur) à la porte de chaque quartier, tracer la rue-pont entre les deux routeurs, vérifier que chaque quartier garde son commutateur pour le trafic interne." style="max-width:100%">
+    <figcaption>La recette en 4 étapes — chaque vignette correspond à une étape ci-dessous.</figcaption>
+  </figure>
+
+  <div class="recette">
+    <h4>Étape 1 — Dessiner les DEUX quartiers (deux rues différentes)</h4>
+    <p>Le réseau de la Martinique garde sa rue <b>192.168.10</b> (celle du jardin et de la station).
+    Le réseau de New York a la sienne&nbsp;: <b>192.168.30</b>. Deux quartiers, deux rues — tu sais depuis
+    la 4e que deux rues différentes = deux réseaux qui ne s'entendent PAS tout seuls.</p>
+    <div class="ligne-exo"><label for="e1c_1">Pourquoi le PC martiniquais ne peut-il pas joindre directement le serveur new-yorkais, même avec un très long câble vers son commutateur&nbsp;?</label>
+    <select id="e1c_1"><option value="">— je choisis —</option>
+      <option>parce que l'océan bloque les signaux</option>
+      <option>parce qu'ils habitent deux rues différentes : le commutateur ne connaît que SA rue, il ne sait pas sortir du quartier</option>
+      <option>parce que les serveurs américains refusent les messages français</option>
+      <option>il peut le joindre directement : une rue n'est qu'un détail</option></select></div>
+  </div>
+
+  <div class="recette">
+    <h4>Étape 2 — Poser un poste-frontière à la porte de chaque quartier : le ROUTEUR</h4>
+    <p>Souviens-toi de la 4e&nbsp;: tu réservais le <b>.1</b> à la «&nbsp;passerelle&nbsp;», la porte du quartier.
+    Cette année, la porte prend corps&nbsp;: c'est un <b>routeur</b> — un appareil qui possède UN pied dans le
+    quartier (l'adresse .1) et UN pied dehors. R-MQ garde la porte martiniquaise, R-NY la porte new-yorkaise.</p>
+    <div class="ligne-exo"><label for="e1c_2">Quelle est LA différence entre un commutateur et un routeur&nbsp;?</label>
+    <select id="e1c_2"><option value="">— je choisis —</option>
+      <option>le routeur est plus rapide, c'est tout</option>
+      <option>le commutateur distribue DANS un réseau ; le routeur fait passer les messages D'UN réseau À L'AUTRE</option>
+      <option>le commutateur a plus de prises</option>
+      <option>aucune : ce sont deux noms du même appareil</option></select></div>
+  </div>
+
+  <div class="recette">
+    <h4>Étape 3 — Tracer la rue-pont entre les deux routeurs</h4>
+    <p>Les deux routeurs doivent se parler&nbsp;: on crée pour eux une minuscule rue privée, la rue-pont
+    <b>10.0.0.x</b> — deux maisons seulement&nbsp;: R-MQ y habite au <b>10.0.0.1</b>, R-NY au <b>10.0.0.2</b>.
+    Dans la vraie vie, ce pont est un câble sous-marin, une fibre, un satellite… Dans notre atelier&nbsp;: un câble
+    croisé entre les deux routeurs.</p>
+    <div class="ligne-exo"><label for="e1c_3">Combien d'adresses porte chaque routeur, et pourquoi&nbsp;?</label>
+    <select id="e1c_3"><option value="">— je choisis —</option>
+      <option>une seule, comme tout le monde</option>
+      <option>deux : une dans son quartier (le .1 de sa rue) et une sur la rue-pont — un pied de chaque côté de la frontière</option>
+      <option>aucune : les routeurs n'ont pas d'adresse</option>
+      <option>autant que d'habitants dans son quartier</option></select></div>
+  </div>
+
+  <div class="recette">
+    <h4>Étape 4 — Vérifier : chaque quartier garde son commutateur</h4>
+    <p>Le routeur ne remplace pas le commutateur&nbsp;: DANS chaque quartier, le trafic local passe toujours par
+    le commutateur (l'étoile de la 5e). Le routeur n'est consulté que pour SORTIR. Ton schéma complet aligne donc,
+    de gauche à droite&nbsp;: PC-MQ → Switch-MQ → R-MQ ⇢ pont ⇢ R-NY → Switch-NY → Serveur-NY.</p>
+    <div class="ligne-exo"><label for="e1c_4">Dans ton schéma, où placer le commutateur de chaque quartier&nbsp;?</label>
+    <select id="e1c_4"><option value="">— je choisis —</option>
+      <option>entre les terminaux du quartier et son routeur : il distribue en interne, le routeur garde la frontière</option>
+      <option>sur la rue-pont, entre les deux routeurs</option>
+      <option>on le supprime : le routeur fait tout</option>
+      <option>à New York seulement</option></select></div>
+  </div>
+
+  <div class="exo">
+    <label for="e1c_prod"><b>🖊 TON schéma rédigé (production de concepteur)&nbsp;:</b> décris l'architecture que TU proposes,
+    de PC-MQ jusqu'au serveur de New York — nomme les deux rues, le rôle de chaque appareil traversé, et la rue-pont.</label>
+    <textarea id="e1c_prod" placeholder="Mon message part de PC-MQ (rue 192.168.10), passe par… puis franchit… et arrive…"></textarea>
+    <p style="font-size:.85em;color:var(--sub)">👥 <b>Revue croisée&nbsp;:</b> échange ton schéma avec le binôme voisin — deux rues différentes&nbsp;? un routeur par quartier&nbsp;? la rue-pont entre les deux&nbsp;?</p>
+  </div>
+
+  <h3>② COMPARER — le schéma de référence</h3>
+  <p>Voici l'architecture que nous avons RÉELLEMENT construite dans Packet Tracer — c'est elle que tu monteras en séance 2.</p>
+  <figure>
+    <img src="Images/schema_deux_reseaux_mq_ny.svg" alt="Le schéma de référence : à gauche le réseau Martinique avec PC-MQ en 192.168.10.10 relié à Switch-MQ puis au routeur R-MQ ; à droite le réseau New York avec le serveur en 192.168.30.10 relié à Switch-NY puis au routeur R-NY ; au centre la rue-pont 10.0.0.0 relie R-MQ en 10.0.0.1 à R-NY en 10.0.0.2 par un câble croisé." style="max-width:100%">
+    <figcaption>Le schéma de référence — reconstitué d'après notre montage réel (liaisons toutes vertes).</figcaption>
+  </figure>
+  <div class="ligne-exo"><label for="e1_1">Quelle est l'adresse du serveur de New York, et sa passerelle&nbsp;?</label>
+  <select id="e1_1"><option value="">— je choisis —</option>
+    <option>192.168.30.10, passerelle 192.168.30.1 (le pied « quartier » de R-NY)</option>
+    <option>192.168.10.10, passerelle 192.168.10.1</option>
+    <option>10.0.0.2, passerelle 10.0.0.1</option>
+    <option>192.168.30.1, sans passerelle</option></select></div>
+  <div class="ligne-exo"><label for="e1_2">Combien de RÉSEAUX différents ton schéma contient-il en tout&nbsp;?</label>
+  <select id="e1_2"><option value="">— je choisis —</option>
+    <option>deux : Martinique et New York</option>
+    <option>trois : Martinique (192.168.10), New York (192.168.30) et la rue-pont des routeurs (10.0.0.x)</option>
+    <option>un seul, puisque tout est relié</option>
+    <option>six : un par appareil</option></select></div>
+  <div class="ligne-exo"><label for="e1_3">La passerelle « abstraite » que tu notais en 4e dans Default Gateway est devenue…</label>
+  <select id="e1_3"><option value="">— je choisis —</option>
+    <option>le pied « quartier » d'un vrai routeur (le .1 de chaque rue)</option>
+    <option>le commutateur</option>
+    <option>le masque de sous-réseau</option>
+    <option>une simple convention sans appareil derrière</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Relis les vignettes dans l'ordre&nbsp;: deux rues (étape 1), un routeur-porte par quartier (étape 2), la rue-pont 10.0.0.x (étape 3), le commutateur qui reste dans chaque quartier (étape 4). Sur le schéma de référence, suis le trajet de gauche à droite en lisant chaque adresse.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Pense à deux îles : chaque île a ses routes internes (le commutateur) et son port (le routeur). Le pont entre les ports est une route à part entière, avec ses deux extrémités numérotées (10.0.0.1 et 10.0.0.2). Un habitant qui veut envoyer un colis sur l'autre île le dépose à SON port (sa passerelle .1) — jamais directement sur le pont.</p></details>
+
+  <button class="btn" data-check="1">✅ Vérifier mes réponses</button>
+  <div class="feedback" id="fb1" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Étape 1&nbsp;:</b> deux rues différentes = deux réseaux étanches par défaut&nbsp;: le commutateur ne
+    connaît que sa rue — c'est pour cela qu'un « très long câble » ne résout rien.</p>
+    <p><b>Étape 2&nbsp;:</b> le routeur est l'appareil-frontière&nbsp;: il fait passer les messages D'UN réseau À
+    L'AUTRE, là où le commutateur distribue DANS le réseau.</p>
+    <p><b>Étape 3&nbsp;:</b> chaque routeur a DEUX adresses — un pied dans son quartier (192.168.10.1 ou
+    192.168.30.1), un pied sur la rue-pont (10.0.0.1 ou 10.0.0.2). Trois réseaux en tout&nbsp;: les deux quartiers
+    + la rue-pont.</p>
+    <p><b>Étape 4&nbsp;:</b> le commutateur reste entre les terminaux et le routeur. Et la passerelle de 4e a
+    maintenant un corps&nbsp;: c'est le pied « quartier » du routeur.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> relier les deux commutateurs directement (le pont sans
+  postes-frontières ne fonctionne pas)&nbsp;; donner UNE seule adresse au routeur&nbsp;; oublier que la rue-pont est un
+  réseau à part entière&nbsp;; supprimer le commutateur «&nbsp;puisqu'il y a un routeur&nbsp;».</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> pour relier deux réseaux&nbsp;: deux rues différentes, un <b>routeur</b>
+  à la porte de chaque quartier (deux adresses chacun&nbsp;: le .1 de sa rue + son pied de pont), une <b>rue-pont</b>
+  entre les routeurs, et les commutateurs qui restent dans leur quartier.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 7 bonnes réponses + TON schéma rédigé et relu par le binôme voisin.</div>
+</section>
+
+<section class="card">
+  <h2>🛃 Activité 2 — Le jeu du poste-frontière (table de routage DONNÉE) <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> jouer le routeur, table en main — et découvrir pourquoi, sans elle, aucun message ne franchit la frontière. Activité débranchée&nbsp;: aucune machine.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C4.8 — Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée, table de routage donnée) <em>(le libellé au pied de la lettre)</em>.</div>
+    <div><b>Production&nbsp;:</b> les décisions du poste-frontière (4 enveloppes triées) + la justification rédigée de la nécessité du routage.</div>
+    <div><b>Ressources&nbsp;:</b> les tables de routage RÉELLES de nos deux routeurs (données ci-dessous).</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D2 «&nbsp;coopération&nbsp;» — jeu de rôles à trois (expéditeur, routeur, destinataire) · D4 «&nbsp;démarches scientifiques&nbsp;» — la règle se découvre en jouant, puis se formalise.</div>
+  </div>
+
+  <p><b>Mise en scène&nbsp;:</b> un élève joue <b>R-MQ</b>, le poste-frontière martiniquais. Devant lui, SA table de
+  routage — celle, exacte, de notre vrai routeur. Les autres élèves lui apportent des enveloppes. Pour chaque
+  enveloppe, le routeur applique la même procédure&nbsp;: <b>lire l'adresse de destination → chercher sa rue dans la
+  table → appliquer la ligne trouvée… ou détruire le paquet s'il n'y a pas de ligne.</b></p>
+
+  <figure>
+    <img src="Images/table_routage_donnee.svg" alt="Les deux tables de routage réelles données : celle de R-MQ contient la ligne réseau 192.168.30.0 masque 255.255.255.0 via 10.0.0.2, celle de R-NY contient la ligne réseau 192.168.10.0 masque 255.255.255.0 via 10.0.0.1. Chaque table rappelle aussi les réseaux directement connectés du routeur." style="max-width:100%">
+    <figcaption>Les tables DONNÉES — recopiées de nos vrais routeurs (fenêtre Static Routes de Packet Tracer).</figcaption>
+  </figure>
+
+  <h3>🎲 À toi de jouer le routeur R-MQ — quatre enveloppes arrivent</h3>
+  <div class="ligne-exo"><label for="e2_1">Enveloppe n°1 → destination <b>192.168.30.10</b> (le serveur de New York). Décision de R-MQ&nbsp;?</label>
+  <select id="e2_1"><option value="">— je choisis —</option>
+    <option>la rue 192.168.30 est dans ma table : « via 10.0.0.2 » → je l'envoie sur la rue-pont, vers R-NY</option>
+    <option>je la distribue moi-même dans mon quartier</option>
+    <option>je la détruis : je ne connais pas cette rue</option>
+    <option>je la renvoie à l'expéditeur</option></select></div>
+  <div class="ligne-exo"><label for="e2_2">Enveloppe n°2 → destination <b>192.168.10.20</b> (un voisin du quartier martiniquais). Décision&nbsp;?</label>
+  <select id="e2_2"><option value="">— je choisis —</option>
+    <option>rue directement connectée : je la rends au quartier — le commutateur local fera la distribution</option>
+    <option>je l'envoie sur la rue-pont</option>
+    <option>je la détruis</option>
+    <option>je la garde en attente</option></select></div>
+  <div class="ligne-exo"><label for="e2_3">Enveloppe n°3 → destination <b>192.168.50.7</b> (une rue inconnue). Décision&nbsp;?</label>
+  <select id="e2_3"><option value="">— je choisis —</option>
+    <option>je l'envoie au hasard sur le pont : ça finira par arriver</option>
+    <option>aucune ligne pour la rue 192.168.50 dans ma table → je DÉTRUIS le paquet (et je peux prévenir l'expéditeur)</option>
+    <option>je la distribue dans mon quartier</option>
+    <option>je l'ouvre pour lire le contenu</option></select></div>
+  <div class="ligne-exo"><label for="e2_4">Maintenant efface la ligne « 192.168.30.0 via 10.0.0.2 » de la table. Que devient l'enveloppe n°1 (vers New York)&nbsp;?</label>
+  <select id="e2_4"><option value="">— je choisis —</option>
+    <option>rien ne change : le routeur devine le chemin</option>
+    <option>elle est détruite à la frontière : sans sa ligne de table, le routeur ne connaît AUCUN chemin vers cette rue</option>
+    <option>elle attend qu'une ligne revienne</option>
+    <option>le commutateur prend le relais</option></select></div>
+  <div class="ligne-exo"><label for="e2_5">Notre pont ne relie que 2 réseaux, avec des tables écrites à la main. Sur Internet — des CENTAINES de milliers de réseaux — qui remplit les tables&nbsp;?</label>
+  <select id="e2_5"><option value="">— je choisis —</option>
+    <option>des techniciens qui tapent chaque ligne à la main, réseau par réseau</option>
+    <option>un protocole de ROUTAGE : les routeurs s'échangent automatiquement leurs connaissances et remplissent leurs tables eux-mêmes</option>
+    <option>personne : les tables naissent remplies</option>
+    <option>chaque utilisateur remplit la sienne</option></select></div>
+
+  <div class="exo">
+    <label for="e2_just"><b>🖊 Ta justification (le mot même du programme)&nbsp;:</b> explique pourquoi un
+    <b>protocole de routage</b> devient NÉCESSAIRE quand on passe de notre pont (2 réseaux) à Internet
+    (des centaines de milliers de réseaux qui changent en permanence).</label>
+    <textarea id="e2_just" placeholder="Avec deux réseaux, on peut écrire les tables à la main, mais sur Internet…"></textarea>
+  </div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>La procédure du routeur tient en trois cas&nbsp;: rue dans MA table → j'applique la ligne&nbsp;; rue directement connectée → je distribue&nbsp;; rue inconnue → je détruis. Pour la question 5, imagine devoir écrire À LA MAIN une ligne pour chaque réseau du monde… et la corriger à chaque panne.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Deux réseaux = 1 ligne par table&nbsp;: gérable à la main (c'est notre « route statique »). Des centaines de milliers de réseaux qui apparaissent, disparaissent, tombent en panne à chaque seconde = impossible à suivre humainement. Le protocole de routage est la solution des routeurs&nbsp;: ils BAVARDENT entre eux («&nbsp;moi je sais joindre telle rue&nbsp;») et mettent à jour leurs tables automatiquement — c'est exactement ce que le libellé te demande de justifier.</p></details>
+
+  <button class="btn" data-check="2">✅ Vérifier mes décisions</button>
+  <div class="feedback" id="fb2" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Les trois cas du poste-frontière&nbsp;:</b> ① rue dans la table → appliquer la ligne (n°1&nbsp;: via 10.0.0.2)&nbsp;;
+    ② rue directement connectée → rendre au quartier (n°2)&nbsp;; ③ rue inconnue → DÉTRUIRE (n°3) — le routeur n'envoie
+    jamais « au hasard ».</p>
+    <p><b>La ligne effacée (n°4)&nbsp;:</b> l'enveloppe vers New York meurt à la frontière. La table n'est pas un
+    confort&nbsp;: elle est LA condition du voyage.</p>
+    <p><b>La nécessité du protocole (n°5)&nbsp;:</b> à l'échelle d'Internet, écrire et maintenir les tables à la main
+    est impossible (nombre, pannes, changements permanents). Les protocoles de routage font s'échanger les routeurs
+    leurs connaissances et recalculent les chemins automatiquement — y compris quand un câble sous-marin casse.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> croire que le routeur «&nbsp;essaie quand même&nbsp;» une rue
+  inconnue&nbsp;; confondre la destruction du paquet avec une panne du routeur (c'est la RÈGLE, pas un bug)&nbsp;;
+  penser qu'Internet a UNE table centrale unique&nbsp;; oublier que notre table à 1 ligne est un cas d'école minuscule.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> le routeur applique sa <b>table de routage</b>&nbsp;: ligne trouvée → transmettre,
+  réseau connecté → distribuer, rue inconnue → détruire. À l'échelle d'Internet, les tables ne peuvent plus s'écrire à la
+  main&nbsp;: le <b>protocole de routage</b> — les routeurs qui s'informent mutuellement — devient NÉCESSAIRE.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 5 bonnes décisions + ta justification rédigée de la nécessité du protocole.</div>
+</section>
+</div>
+<!-- ═══════════════════════ SÉANCE 2 ═══════════════════════ -->
+<div class="seance-panel" id="seance2" role="tabpanel" aria-labelledby="tab-s2">
+
+<section class="card">
+  <h2>🧱 Activité 3 — Construire le pont dans Packet Tracer <span style="font-size:.7em;color:var(--sub)">(~55 min, séance entière)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> monter les DEUX réseaux et leur pont, puis configurer les routeurs — interfaces ET routes statiques — par la fenêtre graphique.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C4.8 — Justifier la nécessité d'un protocole de routage… <em>(ici&nbsp;: donner corps aux tables du jeu — nos routes statiques sont les lignes que tu as manipulées en act. 2)</em>.</div>
+    <div><b>Production&nbsp;:</b> le fichier <span style="font-family:'Fira Code',monospace">pont_3X_NOM_Prenom.pkt</span>&nbsp;: 6 équipements, 5 liaisons vertes, 2 routeurs configurés.</div>
+    <div><b>Ressources&nbsp;:</b> la recette A→H, les fenêtres reconstituées de nos configurations réelles.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;conception, création, réalisation&nbsp;» — du schéma conçu au montage qui route · D2 «&nbsp;outils numériques&nbsp;» — fichier nommé, configurations relues à deux.</div>
+  </div>
+
+  <p><b>Binômes pilote/copilote&nbsp;:</b> le pilote manipule, le copilote lit la recette et vérifie chaque valeur
+  saisie (une erreur d'un chiffre = la panne de la 4e&nbsp;!)&nbsp;; échange des rôles à l'étape E.</p>
+
+  <div class="recette">
+    <h4>La recette A→H (chaque lettre = un geste vérifiable)</h4>
+    <p><b>A.</b> <b>File → New</b>. Poser les équipements du schéma de référence&nbsp;: 2 <b>PC/Server</b> (End Devices),
+    2 commutateurs <b>2960</b>, et 2 routeurs <b>1941</b> (catégorie Network Devices → Routers).<br>
+    <b>B.</b> Câbles DROITS (Copper Straight-Through)&nbsp;: PC-MQ→Switch-MQ (Fa0/1), Switch-MQ→R-MQ (Fa0/2 → GigabitEthernet0/0),
+    Serveur-NY→Switch-NY (Fa0/1), Switch-NY→R-NY (Fa0/2 → G0/0).<br>
+    <b>C.</b> Câble <b>CROISÉ</b> (Copper Cross-Over, le trait pointillé) entre les deux routeurs&nbsp;: R-MQ <b>G0/1</b> ↔ R-NY <b>G0/1</b>.
+    Routeur à routeur = câble croisé&nbsp;: c'est la rue-pont.<br>
+    <b>D.</b> Renommer (Config → Display Name)&nbsp;: <b>PC-MQ, Switch-MQ, R-MQ, R-NY, Switch-NY, Serveur-NY</b>.<br>
+    <b>E.</b> 🔄 <em>(échange des rôles)</em> Configurer <b>R-MQ</b>&nbsp;: Config → <b>GigabitEthernet0/0</b>&nbsp;:
+    IPv4 <span style="font-family:'Fira Code',monospace">192.168.10.1</span>, masque <span style="font-family:'Fira Code',monospace">255.255.255.0</span>,
+    cocher <b>On</b> (Port Status)&nbsp;; puis <b>G0/1</b>&nbsp;: <span style="font-family:'Fira Code',monospace">10.0.0.1</span> /
+    <span style="font-family:'Fira Code',monospace">255.255.255.252</span>, <b>On</b>. ⚠ Les prises d'un routeur naissent ÉTEINTES&nbsp;:
+    tant que « On » n'est pas coché, le triangle reste rouge — ce n'est pas une panne, c'est la règle.<br>
+    <b>F.</b> Configurer <b>R-NY</b> en miroir&nbsp;: G0/0 = <span style="font-family:'Fira Code',monospace">192.168.30.1</span> /24, On&nbsp;;
+    G0/1 = <span style="font-family:'Fira Code',monospace">10.0.0.2</span> / <span style="font-family:'Fira Code',monospace">255.255.255.252</span>, On.<br>
+    <b>G.</b> Les ROUTES STATIQUES (les lignes de table du jeu)&nbsp;: sur R-MQ, Config → ROUTING → <b>Static</b>&nbsp;:
+    Network <span style="font-family:'Fira Code',monospace">192.168.30.0</span>, Mask <span style="font-family:'Fira Code',monospace">255.255.255.0</span>,
+    Next Hop <span style="font-family:'Fira Code',monospace">10.0.0.2</span> → <b>Add</b>. Sur R-NY, la ligne miroir&nbsp;:
+    <span style="font-family:'Fira Code',monospace">192.168.10.0 / 255.255.255.0</span> via <span style="font-family:'Fira Code',monospace">10.0.0.1</span>.<br>
+    <b>H.</b> Adresser les terminaux (Desktop → IP Configuration)&nbsp;: PC-MQ = <span style="font-family:'Fira Code',monospace">192.168.10.10</span>,
+    passerelle <span style="font-family:'Fira Code',monospace">192.168.10.1</span>&nbsp;; Serveur-NY = <span style="font-family:'Fira Code',monospace">192.168.30.10</span>,
+    passerelle <span style="font-family:'Fira Code',monospace">192.168.30.1</span>. <b>File → Save As</b>&nbsp;:
+    <span style="font-family:'Fira Code',monospace">pont_3X_NOM_Prenom.pkt</span>.</p>
+  </div>
+
+  <figure>
+    <img src="Images/pt_config_interface_routeur.svg" alt="La fenêtre Config GigabitEthernet0/0 du routeur R-MQ reconstituée : Port Status coché On, IPv4 Address 192.168.10.1, Subnet Mask 255.255.255.0, et le journal des commandes équivalentes montrant hostname R-MQ, ip address, no shutdown et le message changed state to up." style="max-width:100%">
+    <figcaption>Notre configuration réelle de R-MQ — la fenêtre graphique écrit pour toi les commandes des professionnels (visibles en bas).</figcaption>
+  </figure>
+  <figure>
+    <img src="Images/pt_route_statique.svg" alt="La fenêtre Static Routes de R-MQ reconstituée : champs Network 192.168.30.0, Mask 255.255.255.0, Next Hop 10.0.0.2, bouton Add, et la ligne ajoutée 192.168.30.0/24 via 10.0.0.2 dans la liste Network Address, avec la commande équivalente ip route en bas." style="max-width:100%">
+    <figcaption>Notre route statique réelle — la ligne de table que tu as jouée à la main en activité 2.</figcaption>
+  </figure>
+
+  <h3>🔎 Tes relevés de chantier (à lire sur TON écran)</h3>
+  <div class="ligne-exo"><label for="e3_1">Quel câble relie les deux routeurs, et comment le reconnaît-on dans la palette&nbsp;?</label>
+  <select id="e3_1"><option value="">— je choisis —</option>
+    <option>le Copper Cross-Over (câble croisé), dessiné en pointillés</option>
+    <option>le Copper Straight-Through, en trait plein</option>
+    <option>la fibre optique orange</option>
+    <option>le câble console bleu</option></select></div>
+  <div class="ligne-exo"><label for="e3_2">Après avoir saisi l'adresse de G0/0 SANS cocher « On », le triangle reste rouge. Pourquoi&nbsp;?</label>
+  <select id="e3_2"><option value="">— je choisis —</option>
+    <option>parce que l'adresse est fausse</option>
+    <option>parce que les prises d'un routeur naissent éteintes : il faut cocher On (le « no shutdown » des pros) pour les allumer</option>
+    <option>parce que le câble est défectueux</option>
+    <option>parce qu'il faut redémarrer le logiciel</option></select></div>
+  <div class="ligne-exo"><label for="e3_3">Dans le journal des commandes de R-MQ, quelle ligne prouve que ta route statique est enregistrée&nbsp;?</label>
+  <select id="e3_3"><option value="">— je choisis —</option>
+    <option>ip route 192.168.30.0 255.255.255.0 10.0.0.2</option>
+    <option>hostname R-MQ</option>
+    <option>no shutdown</option>
+    <option>changed state to up</option></select></div>
+  <div class="ligne-exo"><label for="e3_4">Pourquoi UNE seule route statique par routeur suffit-elle dans notre montage&nbsp;?</label>
+  <select id="e3_4"><option value="">— je choisis —</option>
+    <option>parce qu'il n'y a qu'UNE rue étrangère à connaître : l'autre quartier (la rue-pont et son propre quartier sont déjà « directement connectés »)</option>
+    <option>parce qu'un routeur ne peut contenir qu'une route</option>
+    <option>c'est faux : il en faut une par appareil</option>
+    <option>parce que la deuxième route est payante</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Étape C pour le câble des routeurs&nbsp;; étape E pour le « On » (lis l'avertissement ⚠)&nbsp;; la figure des routes statiques affiche la commande équivalente en bas&nbsp;; pour la dernière question, relis la table de l'activité 2&nbsp;: combien de lignes contenait-elle&nbsp;?</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Un routeur connaît d'office les rues où il a un pied (ses réseaux « directement connectés »)&nbsp;: R-MQ connaît 192.168.10 et 10.0.0.x sans qu'on lui dise. La SEULE rue qui lui manque est 192.168.30 — d'où une unique ligne « via 10.0.0.2 ». C'est le miroir exact chez R-NY.</p></details>
+
+  <button class="btn" data-check="3">✅ Vérifier mes relevés</button>
+  <div class="feedback" id="fb3" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Câble croisé</b> (pointillés) entre routeurs — les câbles droits servent aux liaisons terminal↔commutateur et
+    commutateur↔routeur. <b>Port Status On</b>&nbsp;: les prises d'un routeur naissent administrativement éteintes&nbsp;;
+    « On » est le clic qui exécute le fameux <code style="font-family:'Fira Code',monospace">no shutdown</code> des
+    professionnels — le journal l'affiche, avec « changed state to up » quand la liaison monte.</p>
+    <p><b>La route statique</b> s'écrit <code style="font-family:'Fira Code',monospace">ip route 192.168.30.0 255.255.255.0 10.0.0.2</code>&nbsp;:
+    « pour la rue 192.168.30, passe par 10.0.0.2 ». Une seule ligne suffit&nbsp;: tout le reste est déjà directement
+    connecté. À l'échelle d'Internet, ces lignes se compteraient par centaines de milliers — d'où le protocole de
+    routage justifié en activité 2.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> câble droit entre les deux routeurs (liaison qui ne monte pas)&nbsp;;
+  adresse saisie mais « On » oublié (triangle rouge — 100 % des binômes la font une fois)&nbsp;; inverser Next Hop et Network
+  dans la route&nbsp;; oublier la passerelle des terminaux (le ping mourra à la frontière du retour)&nbsp;; ne pas sauvegarder
+  avant la séance 3.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> routeur à routeur = câble <b>croisé</b>&nbsp;; prises de routeur à
+  <b>allumer</b> (On = no shutdown)&nbsp;; une <b>route statique</b> = une ligne de table «&nbsp;réseau étranger via
+  prochain saut&nbsp;»&nbsp;; les terminaux reçoivent leur adresse ET leur passerelle.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 4 bons relevés + tes 5 liaisons vertes + les 2 routes ajoutées dans TON fichier.</div>
+</section>
+</div>
+<!-- ═══════════════════════ SÉANCE 3 ═══════════════════════ -->
+<div class="seance-panel" id="seance3" role="tabpanel" aria-labelledby="tab-s3">
+
+<section class="card">
+  <h2>🧾 Activité 4 — Les preuves du voyage : ping, TTL et tracert <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> lire les trois preuves qu'un technicien rapporte — et apprendre à interpréter les indices cachés (les deux premiers échecs, le TTL, les sauts).</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C4.7 — Identifier et représenter la circulation d'une information dans le réseau Internet <em>(et 3e_C4.8&nbsp;: chaque preuve traverse les tables de routage)</em>.</div>
+    <div><b>Production&nbsp;:</b> les trois preuves relevées et interprétées (ping, TTL=126, tracert 3 sauts).</div>
+    <div><b>Ressources&nbsp;:</b> la transcription intégrale et réelle de notre session (figure ci-dessous).</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — interpréter des mesures, y compris les échecs · CRCN 5.1 (niv. 3) — cartouche complet ci-dessous.</div>
+  </div>
+  <div class="cartouche-crcn">
+    <b>CRCN 5.1 — Résoudre des problèmes techniques</b> · Niveau visé&nbsp;: 3<br>
+    <span style="font-style:italic">Repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;»
+    Au niveau 3, l'élève élabore SA démarche&nbsp;: choisir l'outil de preuve adapté à la question (ping&nbsp;? tracert&nbsp;? simulation&nbsp;?) et interpréter seul les résultats inattendus.</span><br>
+    <b>Action observable&nbsp;:</b> expliquer les deux «&nbsp;Request timed out&nbsp;» initiaux SANS conclure à une panne, lire le TTL comme un compteur de frontières, choisir tracert pour prouver le chemin.
+    <b>Trace&nbsp;:</b> tes interprétations dans cette activité + les deux expériences du poste-frontière (act. 5).
+    <b>Réussite&nbsp;:</b> vérificateurs des activités 4 et 5 au vert.
+  </div>
+
+  <p>Voici la transcription <b>intégrale et réelle</b> de notre session — trois commandes tapées à la suite sur PC-MQ&nbsp;:</p>
+  <figure>
+    <img src="Images/pt_ping_tracert_mq_ny.svg" alt="Transcription réelle en trois temps : premier ping vers 192.168.30.10 avec deux Request timed out puis deux Reply avec TTL égal à 126 ; tracert vers la même adresse listant trois sauts, 192.168.10.1 puis 10.0.0.2 puis 192.168.30.10, trace complete ; second ping avec quatre Reply, zéro pour cent de perte, temps de zéro à quatre millisecondes." style="max-width:100%">
+    <figcaption>Nos mesures réelles — les échecs du début font partie de la leçon.</figcaption>
+  </figure>
+
+  <div class="ligne-exo"><label for="e4_1">Premier ping&nbsp;: 2 «&nbsp;Request timed out&nbsp;» PUIS 2 «&nbsp;Reply&nbsp;». Le second ping&nbsp;: 4/4 immédiatement. Interprétation d'expert&nbsp;?</label>
+  <select id="e4_1"><option value="">— je choisis —</option>
+    <option>le réseau était en panne puis s'est réparé seul</option>
+    <option>au premier voyage, chaque étape cherchait encore ses voisins (résolutions d'adresses) : le temps que tout se mette en place, les premiers messages ont expiré — comportement NORMAL, pas une panne</option>
+    <option>le serveur de New York dormait</option>
+    <option>le câble croisé était mal branché</option></select></div>
+  <div class="ligne-exo"><label for="e4_2">Les Reply affichent <b>TTL=126</b>. Dans la serre de 4e (même réseau), c'était TTL=128. Que raconte cette différence de 2&nbsp;?</label>
+  <select id="e4_2"><option value="">— je choisis —</option>
+    <option>rien : le TTL est aléatoire</option>
+    <option>chaque ROUTEUR traversé retire 1 au compteur : 128 − 2 = 126, la preuve chiffrée que la réponse a franchi exactement DEUX routeurs</option>
+    <option>que le message a mis 126 millisecondes</option>
+    <option>que 126 octets ont été perdus</option></select></div>
+  <div class="ligne-exo"><label for="e4_3">Le tracert liste exactement&nbsp;: <b>192.168.10.1</b> → <b>10.0.0.2</b> → <b>192.168.30.10</b>. Traduis ces trois sauts&nbsp;:</label>
+  <select id="e4_3"><option value="">— je choisis —</option>
+    <option>ma passerelle R-MQ → le pied de pont de R-NY → le serveur : le chemin complet, poste-frontière par poste-frontière</option>
+    <option>trois serveurs différents de New York</option>
+    <option>trois copies du même message</option>
+    <option>les trois commutateurs du montage</option></select></div>
+  <div class="ligne-exo"><label for="e4_4">Pourquoi les commutateurs (Switch-MQ, Switch-NY) n'apparaissent-ils PAS dans le tracert&nbsp;?</label>
+  <select id="e4_4"><option value="">— je choisis —</option>
+    <option>parce qu'ils sont en panne</option>
+    <option>parce que tracert ne compte que les passages de FRONTIÈRE (les routeurs) : le commutateur distribue dans le quartier sans « compter » comme un saut</option>
+    <option>parce qu'ils sont trop rapides pour être vus</option>
+    <option>parce qu'on a oublié de les brancher</option></select></div>
+  <div class="ligne-exo"><label for="e4_5">Quel outil choisir pour PROUVER par quel chemin passe le message (et pas seulement qu'il arrive)&nbsp;?</label>
+  <select id="e4_5"><option value="">— je choisis —</option>
+    <option>le ping, qui suffit toujours</option>
+    <option>le tracert (ou la simulation) : ils montrent le CHEMIN saut par saut, là où le ping ne prouve que l'aller-retour</option>
+    <option>le chronomètre</option>
+    <option>redémarrer et observer</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Lis la transcription bloc par bloc&nbsp;: le 1er ping raconte le «&nbsp;réveil&nbsp;» du chemin (2 échecs puis 2 réussites)&nbsp;; le TTL est écrit sur chaque ligne Reply&nbsp;; le tracert numérote les sauts 1, 2, 3&nbsp;; le 2e ping confirme 0% de perte. Compare TTL 128 (serre, 0 routeur) et 126 (ici, 2 routeurs).</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>Le TTL (Time To Live) est un compteur de sécurité embarqué dans chaque paquet&nbsp;: il part de 128 et chaque routeur traversé retire 1 — s'il atteint 0, le paquet est détruit (cela évite les paquets qui tourneraient en rond pour toujours). C'est aussi un magnifique indice de terrain&nbsp;: TTL lu = 126 → 128−126 = 2 frontières franchies. Le tracert, lui, interroge chaque frontière une à une&nbsp;: c'est la liste des tampons sur le passeport du message.</p></details>
+
+  <button class="btn" data-check="4">✅ Vérifier mes interprétations</button>
+  <div class="feedback" id="fb4" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Les deux échecs initiaux&nbsp;:</b> au premier voyage, chaque maillon (PC, routeurs) doit d'abord découvrir
+    l'adresse « physique » de son prochain saut — pendant ces résolutions, les premiers pings expirent. Le second
+    essai, chemin connu&nbsp;: 4/4, 0% de perte, 0-4 ms. Un expert relance donc TOUJOURS avant de conclure à la panne.</p>
+    <p><b>TTL=126&nbsp;:</b> parti de 128, moins 1 par routeur traversé (R-NY puis R-MQ au retour)&nbsp;: la preuve
+    ARITHMÉTIQUE des deux frontières. <b>Tracert&nbsp;:</b> 192.168.10.1 (ma porte) → 10.0.0.2 (l'autre bout du pont)
+    → 192.168.30.10 (destination)&nbsp;: trois sauts, et les commutateurs n'y figurent pas car ils ne franchissent
+    aucune frontière — ils distribuent à l'intérieur.</p>
+    <p><b>Choisir son outil&nbsp;:</b> ping = «&nbsp;est-ce que ça répond&nbsp;?&nbsp;»&nbsp;; tracert = «&nbsp;par OÙ
+    ça passe&nbsp;?&nbsp;»&nbsp;; simulation = «&nbsp;montre-moi CHAQUE étape au ralenti&nbsp;». Trois questions,
+    trois outils.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> conclure «&nbsp;panne&nbsp;» sur les 2 premiers timeout (relancer
+  d'abord&nbsp;!)&nbsp;; lire le TTL comme un temps en millisecondes&nbsp;; chercher les commutateurs dans le tracert&nbsp;;
+  utiliser le ping pour prouver un CHEMIN.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> premier voyage = échecs normaux possibles (relancer)&nbsp;;
+  <b>TTL</b> = compteur de frontières (128 − routeurs traversés)&nbsp;; <b>tracert</b> = la liste des sauts, routeur par
+  routeur&nbsp;; le bon expert choisit l'outil selon la QUESTION posée.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 5 bonnes interprétations — et, en version 🅱, tes trois commandes rejouées dans TON fichier.</div>
+</section>
+
+<section class="card">
+  <h2>🎬 Activité 5 — La simulation saut par saut, et le poste-frontière à l'épreuve <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> voir le voyage complet image par image dans la simulation, puis prouver — en le vivant — que sans sa table, le routeur détruit le message.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C4.7 (représenter la circulation) et 3e_C4.8 (justifier la nécessité du routage) — la synthèse des deux.</div>
+    <div><b>Production&nbsp;:</b> le trajet relevé dans l'Event List + les DEUX expériences du poste-frontière réellement jouées.</div>
+    <div><b>Ressources&nbsp;:</b> notre Event List réelle, le mini-simulateur du poste-frontière, le fichier fourni <span style="font-family:'Fira Code',monospace">3e_routage_MQ_NY_TECHNO-C4.pkt</span>.</div>
+    <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — l'expérience contrôlée (avec/sans table) comme preuve · D2 «&nbsp;outils numériques&nbsp;» — compléter le fichier fourni.</div>
+  </div>
+
+  <p>Dans Packet Tracer, ouvre le fichier fourni
+  <a href="3e_routage_MQ_NY_TECHNO-C4.pkt" download>📦 3e_routage_MQ_NY_TECHNO-C4.pkt</a> (notre montage réel,
+  scénario de test inclus), passe en mode <b>Simulation</b> et lance <b>Play</b>&nbsp;: l'enveloppe s'anime de saut en
+  saut. Voici ce que notre session a réellement enregistré&nbsp;:</p>
+  <figure>
+    <img src="Images/pt_simulation_2routeurs.svg" alt="Le mode Simulation reconstitué : l'enveloppe ICMP violette posée sur le routeur R-MQ, et le panneau Event List listant le voyage complet horodaté : 0.000 PC-MQ, 0.001 Switch-MQ, 0.002 R-MQ, 0.003 R-NY, 0.004 Switch-NY, 0.005 Serveur-NY puis le retour jusqu'à 0.010 PC-MQ, avec le verdict Successful." style="max-width:100%">
+    <figcaption>Notre Event List réelle — le passeport tamponné du message, aller ET retour (verdict Successful).</figcaption>
+  </figure>
+
+  <div class="ligne-exo"><label for="e5_1">Dans l'Event List réelle, remets le voyage ALLER dans l'ordre&nbsp;:</label>
+  <select id="e5_1"><option value="">— je choisis —</option>
+    <option>PC-MQ → Switch-MQ → R-MQ → R-NY → Switch-NY → Serveur-NY</option>
+    <option>PC-MQ → R-MQ → Switch-MQ → Serveur-NY</option>
+    <option>PC-MQ → Switch-NY → R-NY → Serveur-NY</option>
+    <option>PC-MQ → Serveur-NY directement</option></select></div>
+  <div class="ligne-exo"><label for="e5_2">Entre 0.002 (R-MQ) et 0.003 (R-NY), que s'est-il passé EXACTEMENT dans R-MQ&nbsp;?</label>
+  <select id="e5_2"><option value="">— je choisis —</option>
+    <option>il a lu la destination 192.168.30.10, trouvé la ligne « 192.168.30.0 via 10.0.0.2 » dans SA table, et transmis sur la rue-pont</option>
+    <option>il a recopié le message pour tous les appareils</option>
+    <option>il a traduit le message en anglais</option>
+    <option>il a attendu une autorisation de New York</option></select></div>
+  <div class="ligne-exo"><label for="e5_3">Le voyage complet (aller-retour) tient entre 0.000 et 0.010 seconde. Qu'est-ce que cela illustre&nbsp;?</label>
+  <select id="e5_3"><option value="">— je choisis —</option>
+    <option>que la simulation est truquée</option>
+    <option>qu'à chaque saut le traitement se compte en millisecondes : lire une table est quasi instantané — c'est pour cela qu'Internet « semble » direct alors qu'il saute de routeur en routeur</option>
+    <option>que le message a raté son voyage</option>
+    <option>que le simulateur arrondit à zéro</option></select></div>
+
+  <h3>🛃 Le poste-frontière à l'épreuve — tes deux expériences (obligatoires)</h3>
+  <p>Joue les deux cas&nbsp;: le voyage <b>avec</b> la table complète, puis le voyage <b>sans</b> la route de R-MQ.
+  La page enregistre tes expériences — le vérificateur les exige.</p>
+  <div class="simulateur" role="group" aria-label="Le poste-frontière — mini-simulateur">
+    <svg viewBox="0 0 760 190" style="width:100%;max-width:740px;display:block;margin:0 auto" aria-hidden="true">
+      <rect width="760" height="190" fill="#08132c" rx="10"/>
+      <rect x="20" y="70" width="100" height="52" rx="8" fill="#173666" stroke="#2e5d9f"/>
+      <text x="70" y="93" text-anchor="middle" font-size="12" fill="#e4eaf5">PC-MQ</text>
+      <text x="70" y="110" text-anchor="middle" font-size="10" fill="#9bbefc" font-family="monospace">.10.10</text>
+      <rect x="160" y="74" width="86" height="44" rx="8" fill="#1d4e89" stroke="#61dafb"/>
+      <text x="203" y="99" text-anchor="middle" font-size="11" fill="#fff">Switch-MQ</text>
+      <rect x="290" y="66" width="96" height="60" rx="10" fill="#2b1a3f" stroke="#c68ef2" stroke-width="2"/>
+      <text x="338" y="90" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">R-MQ</text>
+      <text x="338" y="107" text-anchor="middle" font-size="9.5" fill="#dcc7f2" font-family="monospace" id="simTableTxt">table : .30.0 → 10.0.0.2</text>
+      <rect x="430" y="66" width="96" height="60" rx="10" fill="#2b1a3f" stroke="#c68ef2" stroke-width="2"/>
+      <text x="478" y="90" text-anchor="middle" font-size="12" fill="#fff" font-weight="bold">R-NY</text>
+      <text x="478" y="107" text-anchor="middle" font-size="9.5" fill="#dcc7f2" font-family="monospace">table : .10.0 → 10.0.0.1</text>
+      <rect x="566" y="74" width="86" height="44" rx="8" fill="#1d4e89" stroke="#61dafb"/>
+      <text x="609" y="99" text-anchor="middle" font-size="11" fill="#fff">Switch-NY</text>
+      <rect x="672" y="70" width="76" height="52" rx="8" fill="#173666" stroke="#81fba1"/>
+      <text x="710" y="93" text-anchor="middle" font-size="11" fill="#e4eaf5">Serveur</text>
+      <text x="710" y="110" text-anchor="middle" font-size="10" fill="#81fba1" font-family="monospace">.30.10</text>
+      <g stroke="#2e5d9f" stroke-width="3">
+        <line x1="120" y1="96" x2="160" y2="96"/><line x1="246" y1="96" x2="290" y2="96"/>
+        <line x1="526" y1="96" x2="566" y2="96"/><line x1="652" y1="96" x2="672" y2="96"/>
+      </g>
+      <line x1="386" y1="96" x2="430" y2="96" stroke="#c68ef2" stroke-width="3" stroke-dasharray="7 5"/>
+      <text x="408" y="86" text-anchor="middle" font-size="9" fill="#c68ef2" font-family="monospace">10.0.0.x</text>
+      <g id="simEnv" style="visibility:hidden">
+        <rect width="32" height="22" fill="#ffd66b" stroke="#8a6d1d" rx="3"/>
+        <path d="M0 0 L16 12 L32 0" fill="none" stroke="#8a6d1d" stroke-width="2"/>
+      </g>
+    </svg>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:10px">
+      <label style="font-size:.9em"><input type="checkbox" id="simSansRoute"> effacer la route « 192.168.30.0 via 10.0.0.2 » de R-MQ</label>
+      <button class="btn small" id="btnSimSend" type="button">📨 Envoyer le message PC-MQ → Serveur-NY</button>
+    </div>
+    <p id="simMsg" role="status" aria-live="polite" style="text-align:center;min-height:1.4em;font-size:.92em;color:var(--warn)"></p>
+  </div>
+
+  <div class="ligne-exo"><label for="e5_4">Sans sa route, R-MQ détruit le message. Relie ce résultat au libellé de la compétence («&nbsp;justifier la NÉCESSITÉ…&nbsp;»)&nbsp;:</label>
+  <select id="e5_4"><option value="">— je choisis —</option>
+    <option>la table (et, à grande échelle, le protocole qui la remplit) n'est pas un confort : sans elle, AUCUNE communication entre réseaux n'existe</option>
+    <option>le routeur était simplement de mauvaise humeur</option>
+    <option>il suffit d'attendre que le message réessaie</option>
+    <option>le commutateur aurait pu livrer à sa place</option></select></div>
+
+  <details class="aide"><summary>💡 Aide niveau 1</summary><p>Suis l'Event List ligne par ligne pour l'ordre du voyage. Pour R-MQ, rejoue mentalement l'activité 2&nbsp;: lire la destination → chercher la rue → appliquer la ligne. Fais VRAIMENT les deux expériences du simulateur&nbsp;: le contraste avec/sans route EST la réponse à la dernière question.</p></details>
+  <details class="aide"><summary>💡💡 Aide niveau 2</summary><p>L'expérience contrôlée est la plus belle preuve du scientifique&nbsp;: on ne change QU'UNE chose (la ligne de table) et on observe. Avec la ligne&nbsp;: voyage complet en 10 ms. Sans&nbsp;: destruction à la première frontière. Conclusion imparable — la communication inter-réseaux EST le routage. À l'échelle d'Internet, remplacer «&nbsp;la ligne écrite à la main&nbsp;» par «&nbsp;le protocole qui écrit les lignes&nbsp;» ne change rien à la logique&nbsp;: sans routage, pas d'Internet.</p></details>
+
+  <button class="btn" data-check="5">✅ Vérifier mes réponses</button>
+  <div class="feedback" id="fb5" role="status"></div>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS vérification)</summary>
+    <p><b>Le voyage réel&nbsp;:</b> PC-MQ (0.000) → Switch-MQ (0.001) → R-MQ (0.002&nbsp;: lecture de la table, décision
+    «&nbsp;via 10.0.0.2&nbsp;») → R-NY (0.003) → Switch-NY (0.004) → Serveur-NY (0.005), puis le retour en miroir
+    jusqu'à 0.010. Verdict&nbsp;: Successful. Chaque saut se compte en millisecondes — Internet «&nbsp;paraît&nbsp;»
+    direct, mais notre Event List montre le vrai film.</p>
+    <p><b>L'expérience du poste-frontière&nbsp;:</b> une seule ligne effacée, et le message meurt à R-MQ. La nécessité
+    du routage n'est plus une phrase à apprendre&nbsp;: tu l'as MESURÉE. Le protocole de routage (act. 2) est ce qui
+    rend cette table possible à l'échelle des centaines de milliers de réseaux d'Internet.</p>
+  </details>
+  <div class="erreurs"><b>⚠ Erreurs fréquentes&nbsp;:</b> chercher les commutateurs dans les «&nbsp;sauts&nbsp;» de
+  la table&nbsp;; croire que le routeur retient le message «&nbsp;en attendant&nbsp;» une route&nbsp;; confondre le
+  verdict Successful (aller-retour simulé) avec «&nbsp;fichier sauvegardé&nbsp;»&nbsp;; refaire tout le montage au lieu
+  d'utiliser le fichier fourni.</div>
+  <div class="retenir"><b>📌 À retenir&nbsp;:</b> l'Event List est le passeport tamponné du message&nbsp;: 6 étapes à
+  l'aller, 6 au retour, ~1 ms par saut. À chaque frontière, le routeur LIT SA TABLE. Sans table — sans routage — pas de
+  communication entre réseaux&nbsp;: c'est la justification demandée par le programme, prouvée par l'expérience.</div>
+  <div class="critere"><b>🎯 Critère de réussite&nbsp;:</b> 4 bonnes réponses + les DEUX expériences du poste-frontière réellement jouées.</div>
+</section>
+</div>
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 5.</p>
+  <h4>1. Deux réseaux, un pont (activités 1, 3)</h4>
+  <p>Deux rues différentes = deux réseaux étanches. Pour les relier&nbsp;: un <b>routeur</b> à la porte de chaque
+  quartier (deux adresses chacun&nbsp;: le .1 de sa rue + son pied sur la <b>rue-pont</b> 10.0.0.x), reliés par un
+  câble croisé. Les commutateurs restent dans leur quartier — la passerelle de 4e a maintenant un corps.</p>
+  <h4>2. La table de routage (activités 2-3)</h4>
+  <p>À chaque frontière, le routeur applique SA <b>table</b>&nbsp;: rue dans la table → transmettre au prochain saut&nbsp;;
+  rue directement connectée → distribuer&nbsp;; rue inconnue → <b>détruire</b>. Notre route statique réelle&nbsp;:
+  «&nbsp;192.168.30.0/24 via 10.0.0.2&nbsp;». À l'échelle d'Internet, les tables ne s'écrivent plus à la main&nbsp;:
+  le <b>protocole de routage</b> — les routeurs qui s'informent mutuellement — est <b>nécessaire</b>.</p>
+  <h4>3. Les preuves du voyage (activités 4-5)</h4>
+  <p>Le <b>ping</b> prouve l'aller-retour (premiers échecs normaux&nbsp;: relancer)&nbsp;; le <b>TTL</b> compte les
+  frontières (128 − 2 routeurs = <b>126</b>)&nbsp;; le <b>tracert</b> liste les sauts (192.168.10.1 → 10.0.0.2 →
+  192.168.30.10)&nbsp;; la <b>simulation</b> montre le film complet (0.000 → 0.010 s, verdict Successful) — et
+  l'expérience «&nbsp;sans route&nbsp;» prouve la nécessité du routage.</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">routeur = router</span><span class="tag">table de routage = routing table</span><span class="tag">saut = hop</span><span class="tag">route statique = static route</span><span class="tag">frontière = border</span><span class="tag">passerelle = gateway</span><span class="tag">durée de vie = TTL (time to live)</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ&nbsp;:</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé&nbsp;? Compléter avec ce que tu sais maintenant&nbsp;:</label>
+    <textarea id="hyp_retour" placeholder="En fait, à la frontière entre deux réseaux, le message…"></textarea>
+  </div>
+  <h4>Je me positionne, code par code</h4>
+  <div class="bilan-grid">
+    <div>
+      <p style="margin-bottom:4px"><b>3e_C4.7</b> — identifier et représenter la circulation d'une information&nbsp;:</p>
+      <select id="pos_c47"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je ne retrouve pas le chemin du message</option>
+        <option>🟠 Maîtrise fragile — je suis le trajet avec le schéma sous les yeux</option>
+        <option>🟢 Maîtrise satisfaisante — je représente le voyage complet et je lis tracert/Event List</option>
+        <option>⭐ Très bonne maîtrise — j'explique aussi le TTL et le rôle de chaque saut</option></select>
+    </div>
+    <div>
+      <p style="margin-bottom:4px"><b>3e_C4.8</b> — justifier la nécessité d'un protocole de routage&nbsp;:</p>
+      <select id="pos_c48"><option value="">— je me positionne —</option>
+        <option>🔴 Maîtrise insuffisante — je confonds commutateur et routeur</option>
+        <option>🟠 Maîtrise fragile — je joue la table avec de l'aide</option>
+        <option>🟢 Maîtrise satisfaisante — j'applique la table et je justifie la nécessité du routage</option>
+        <option>⭐ Très bonne maîtrise — je relie table, protocole et l'échelle d'Internet</option></select>
+    </div>
+  </div>
+  <div class="bilan-grid" style="margin-top:10px">
+    <div><label for="bilan1"><b>Ce que j'ai appris&nbsp;:</b></label><textarea id="bilan1"></textarea></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire&nbsp;:</b></label><textarea id="bilan2"></textarea></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir&nbsp;:</b></label><textarea id="bilan3"></textarea></div>
+    <div>
+      <span style="font-size:.95em"><b>Mon niveau de confiance&nbsp;:</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Niveau de confiance">
+        <label><input type="radio" name="confiance" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="confiance" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="confiance" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="confiance" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>30 questions — dont 6 illustrées par les schémas du vrai logiciel — pour vérifier tout ce que tu sais sur les routeurs, les tables et les preuves du voyage.</p>
+  <a class="btn qcm" href="qcm_3e_C4.7-C4.8_pont_numerique.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>🌍 <b>Défi tracert réel&nbsp;:</b> avec l'accord d'un adulte, lancer <span style="font-family:'Fira Code',monospace">tracert</span>
+  vers un site d'un autre continent&nbsp;: compter les sauts réels, repérer le moment où les temps « sautent » (souvent le câble
+  sous-marin&nbsp;!) — comparer avec nos 3 sauts.</p>
+  <p>🛃 <b>Défi troisième quartier&nbsp;:</b> dans TON fichier .pkt, ajouter un TROISIÈME réseau (192.168.40.0) avec son routeur&nbsp;:
+  combien de lignes de table faut-il maintenant ÉCRIRE en tout&nbsp;? Et pour 10 réseaux&nbsp;? La courbe explose — c'est la
+  démonstration chiffrée de l'activité 2.</p>
+  <p>🎓 <b>Défi DNB&nbsp;:</b> rédiger en 5 lignes la réponse modèle à «&nbsp;Justifier la nécessité d'un protocole de routage&nbsp;»
+  en citant ta preuve expérimentale (la route effacée) — exactement le type de question de l'épreuve.</p>
+</section>
+
+<footer>
+  <p>Séquence 3e_C4.7 · 3e_C4.8 — Thème 2 · Structure, fonctionnement, comportement · Technologie cycle 4 (programme 2024)</p>
+  <p>Captures reconstituées d'après Cisco Packet Tracer 8.2 (schémas originaux CC0 — aucune capture propriétaire, valeurs réellement mesurées). Cisco et Packet Tracer sont des marques de Cisco Systems, Inc.</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_3e_C4.7-C4.8_pont_numerique_pt";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  document.querySelectorAll("input[type=checkbox][id]").forEach(c=>{ o.inputs["chk_"+c.id]=c.checked?"1":""; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{
+    if(id.indexOf("chk_")===0){ const c=$(id.slice(4)); if(c) c.checked = v==="1"; return; }
+    const el=$(id); if(el) el.value=v;
+  });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__exp = o.exp || {};
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Le poste-frontière (activité 5) — verrou expérientiel ══════ */
+window.__exp = window.__exp || {};
+const SIM_STOPS = [[70,66],[203,70],[338,62],[478,62],[609,70],[706,66]];
+let simBusy=false;
+function simPlace(x,y){ const e=$("simEnv"); e.setAttribute("transform","translate("+(x-16)+" "+(y-26)+")"); e.style.visibility="visible"; }
+$("btnSimSend").addEventListener("click", ()=>{
+  if(simBusy) return; simBusy=true;
+  const sans=$("simSansRoute").checked;
+  $("simTableTxt").textContent = sans ? "table : (vide !)" : "table : .30.0 → 10.0.0.2";
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const pas = reduced ? 120 : 650;
+  const etapes = sans ? 3 : 6;
+  let i = 0;
+  const noms = ["PC-MQ","Switch-MQ","R-MQ","R-NY","Switch-NY","Serveur-NY"];
+  const tick = ()=>{
+    simPlace(SIM_STOPS[i][0], SIM_STOPS[i][1]);
+    if(sans && i===2){
+      $("simMsg").textContent = "🛑 Détruit à la frontière : R-MQ cherche « 192.168.30 » dans sa table… aucune ligne. Sans route, le paquet meurt ici.";
+      window.__exp["frontiere_sans"] = true;
+      save(false); simBusy=false; return;
+    }
+    if(i===5){
+      $("simMsg").textContent = "✔ Livré ! PC-MQ → Switch-MQ → R-MQ (table lue) → R-NY → Switch-NY → Serveur-NY — puis le retour en miroir. Verdict : Successful.";
+      window.__exp["frontiere_ok"] = true;
+      save(false); simBusy=false; return;
+    }
+    $("simMsg").textContent = "L'enveloppe est chez " + noms[i] + "…";
+    i++; setTimeout(tick, pas);
+  };
+  tick();
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const txt = id => String($(id).value||"").replace(/\u00a0/g," ").trim().toLowerCase();
+const val = id => String($(id).value||"").replace(/\u00a0/g," ").replace(/\s+/g," ").trim();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    const att={e1c_1:"parce qu'ils habitent deux rues différentes : le commutateur ne connaît que SA rue, il ne sait pas sortir du quartier",
+               e1c_2:"le commutateur distribue DANS un réseau ; le routeur fait passer les messages D'UN réseau À L'AUTRE",
+               e1c_3:"deux : une dans son quartier (le .1 de sa rue) et une sur la rue-pont — un pied de chaque côté de la frontière",
+               e1c_4:"entre les terminaux du quartier et son routeur : il distribue en interne, le routeur garde la frontière",
+               e1_1:"192.168.30.10, passerelle 192.168.30.1 (le pied « quartier » de R-NY)",
+               e1_2:"trois : Martinique (192.168.10), New York (192.168.30) et la rue-pont des routeurs (10.0.0.x)",
+               e1_3:"le pied « quartier » d'un vrai routeur (le .1 de chaque rue)"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const p=txt("e1c_prod");
+    const pOk = p.length>=25 && (p.includes("routeur")||p.includes("pont")||p.includes("10.0.0"));
+    return {score:ok,total:7,extra:pOk?"":" Rédige TON schéma (au moins une phrase nommant le routeur ou la rue-pont) : c'est ta production de concepteur.",valide:ok===7&&pOk};
+  },
+  2: function(){
+    let ok=0;
+    const att={e2_1:"la rue 192.168.30 est dans ma table : « via 10.0.0.2 » → je l'envoie sur la rue-pont, vers R-NY",
+               e2_2:"rue directement connectée : je la rends au quartier — le commutateur local fera la distribution",
+               e2_3:"aucune ligne pour la rue 192.168.50 dans ma table → je DÉTRUIS le paquet (et je peux prévenir l'expéditeur)",
+               e2_4:"elle est détruite à la frontière : sans sa ligne de table, le routeur ne connaît AUCUN chemin vers cette rue",
+               e2_5:"un protocole de ROUTAGE : les routeurs s'échangent automatiquement leurs connaissances et remplissent leurs tables eux-mêmes"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const j=txt("e2_just");
+    const jOk = j.length>=25 && (j.includes("main")||j.includes("automatiqu")||j.includes("protocole")||j.includes("milliers")||j.includes("nombre"));
+    return {score:ok,total:5,extra:jOk?"":" Ta justification doit opposer « tables à la main » (2 réseaux) et l'échelle d'Internet — c'est le mot même du programme.",valide:ok===5&&jOk};
+  },
+  3: function(){
+    let ok=0;
+    const att={e3_1:"le Copper Cross-Over (câble croisé), dessiné en pointillés",
+               e3_2:"parce que les prises d'un routeur naissent éteintes : il faut cocher On (le « no shutdown » des pros) pour les allumer",
+               e3_3:"ip route 192.168.30.0 255.255.255.0 10.0.0.2",
+               e3_4:"parce qu'il n'y a qu'UNE rue étrangère à connaître : l'autre quartier (la rue-pont et son propre quartier sont déjà « directement connectés »)"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:4,extra:"",valide:ok===4};
+  },
+  4: function(){
+    let ok=0;
+    const att={e4_1:"au premier voyage, chaque étape cherchait encore ses voisins (résolutions d'adresses) : le temps que tout se mette en place, les premiers messages ont expiré — comportement NORMAL, pas une panne",
+               e4_2:"chaque ROUTEUR traversé retire 1 au compteur : 128 − 2 = 126, la preuve chiffrée que la réponse a franchi exactement DEUX routeurs",
+               e4_3:"ma passerelle R-MQ → le pied de pont de R-NY → le serveur : le chemin complet, poste-frontière par poste-frontière",
+               e4_4:"parce que tracert ne compte que les passages de FRONTIÈRE (les routeurs) : le commutateur distribue dans le quartier sans « compter » comme un saut",
+               e4_5:"le tracert (ou la simulation) : ils montrent le CHEMIN saut par saut, là où le ping ne prouve que l'aller-retour"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:5,extra:"",valide:ok===5};
+  },
+  5: function(){
+    let ok=0;
+    const att={e5_1:"PC-MQ → Switch-MQ → R-MQ → R-NY → Switch-NY → Serveur-NY",
+               e5_2:"il a lu la destination 192.168.30.10, trouvé la ligne « 192.168.30.0 via 10.0.0.2 » dans SA table, et transmis sur la rue-pont",
+               e5_3:"qu'à chaque saut le traitement se compte en millisecondes : lire une table est quasi instantané — c'est pour cela qu'Internet « semble » direct alors qu'il saute de routeur en routeur",
+               e5_4:"la table (et, à grande échelle, le protocole qui la remplit) n'est pas un confort : sans elle, AUCUNE communication entre réseaux n'existe"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const e=window.__exp||{};
+    const expOk = e["frontiere_ok"] && e["frontiere_sans"];
+    return {score:ok,total:4,extra:expOk?"":" Fais VRAIMENT les deux expériences du poste-frontière : le voyage complet ET le voyage sans route.",valide:ok===4&&expOk};
+  }
+};
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3], s3:[4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Init ══════ */
+restore(); majProgress(); majHyp();
+</script>
+</body>
+</html>

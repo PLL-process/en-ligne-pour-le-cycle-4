@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 520" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Le schéma de référence du pont numérique Martinique → New York</title>
+<desc id="d">Reconstitution de notre montage réel Packet Tracer : à gauche, le réseau Martinique en 192.168.10 avec PC-MQ en .10 relié au commutateur Switch-MQ puis au routeur R-MQ dont le pied quartier est 192.168.10.1 ; à droite, le réseau New York en 192.168.30 avec le serveur en .10 relié à Switch-NY puis au routeur R-NY en 192.168.30.1. Au centre, la rue-pont 10.0.0.0 slash 30 relie R-MQ en 10.0.0.1 à R-NY en 10.0.0.2 par un câble croisé dessiné en pointillés. Toutes les liaisons portent des triangles verts.</desc>
+<rect width="1080" height="520" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="518" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Le schéma de référence — deux réseaux, un pont (montage réel, liaisons vertes)</text>
+
+<!-- zones réseau -->
+<rect x="30" y="70" width="400" height="360" rx="14" fill="#eef4fb" stroke="#31649c" stroke-width="2"/>
+<text x="230" y="98" text-anchor="middle" font-size="15" font-weight="bold" fill="#123d66">🌴 Réseau Martinique — rue 192.168.10</text>
+<rect x="650" y="70" width="400" height="360" rx="14" fill="#fdf1ec" stroke="#b3623a" stroke-width="2"/>
+<text x="850" y="98" text-anchor="middle" font-size="15" font-weight="bold" fill="#7a3a1a">🗽 Réseau New York — rue 192.168.30</text>
+
+<!-- câbles -->
+<g stroke="#37474f" stroke-width="3.5">
+<line x1="140" y1="330" x2="230" y2="240"/>
+<line x1="270" y1="220" x2="340" y2="185"/>
+<line x1="940" y1="330" x2="850" y2="240"/>
+<line x1="810" y1="220" x2="740" y2="185"/>
+</g>
+<line x1="435" y1="170" x2="645" y2="170" stroke="#7a5aa8" stroke-width="4" stroke-dasharray="10 8"/>
+<!-- triangles verts -->
+<g fill="#2e9e4f">
+<path d="M152 320 l14 -2 l-6 12 z"/><path d="M220 252 l12 -6 l-2 14 z"/>
+<path d="M278 216 l12 -6 l0 13 z"/><path d="M330 192 l12 -7 l-1 14 z"/>
+<path d="M928 320 l-14 -2 l6 12 z"/><path d="M860 252 l-12 -6 l2 14 z"/>
+<path d="M802 216 l-12 -6 l0 13 z"/><path d="M750 192 l-12 -7 l1 14 z"/>
+<path d="M443 163 l14 0 l-7 13 z"/><path d="M637 163 l-14 0 l7 13 z"/>
+</g>
+
+<!-- rue-pont -->
+<rect x="440" y="196" width="200" height="30" rx="15" fill="#2b1a3f"/>
+<text x="540" y="216" text-anchor="middle" font-size="12.5" fill="#dcc7f2" font-family="Consolas, monospace">rue-pont 10.0.0.0/30</text>
+<text x="452" y="152" font-size="11" fill="#46326b" font-family="Consolas, monospace">10.0.0.1</text>
+<text x="574" y="152" font-size="11" fill="#46326b" font-family="Consolas, monospace">10.0.0.2</text>
+<text x="540" y="250" text-anchor="middle" font-size="11" fill="#46326b">câble CROISÉ (routeur ↔ routeur) — en vrai : le câble sous-marin</text>
+
+<!-- R-MQ -->
+<g>
+<rect x="340" y="140" width="96" height="62" rx="12" fill="#2b1a3f" stroke="#7a5aa8" stroke-width="2.5"/>
+<circle cx="368" cy="164" r="10" fill="none" stroke="#dcc7f2" stroke-width="2"/><path d="M362 164 h12 M368 158 v12" stroke="#dcc7f2" stroke-width="2"/>
+<text x="404" y="162" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">1941</text>
+<text x="388" y="186" text-anchor="middle" font-size="12.5" fill="#fff" font-weight="bold">R-MQ</text>
+<text x="330" y="222" font-size="10.5" fill="#123d66" font-family="Consolas, monospace">G0/0 = 192.168.10.1</text>
+<text x="330" y="238" font-size="10" fill="#607086">(la passerelle du quartier)</text>
+</g>
+<!-- R-NY -->
+<g>
+<rect x="644" y="140" width="96" height="62" rx="12" fill="#2b1a3f" stroke="#7a5aa8" stroke-width="2.5"/>
+<circle cx="672" cy="164" r="10" fill="none" stroke="#dcc7f2" stroke-width="2"/><path d="M666 164 h12 M672 158 v12" stroke="#dcc7f2" stroke-width="2"/>
+<text x="708" y="162" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">1941</text>
+<text x="692" y="186" text-anchor="middle" font-size="12.5" fill="#fff" font-weight="bold">R-NY</text>
+<text x="640" y="222" font-size="10.5" fill="#7a3a1a" font-family="Consolas, monospace">G0/0 = 192.168.30.1</text>
+<text x="640" y="238" font-size="10" fill="#607086">(la passerelle du quartier)</text>
+</g>
+
+<!-- Switch-MQ -->
+<g>
+<rect x="200" y="212" width="90" height="38" rx="5" fill="#2f6d8f"/>
+<rect x="206" y="218" width="78" height="9" rx="2" fill="#1c4a63"/>
+<text x="245" y="268" text-anchor="middle" font-size="12" fill="#123d66" font-weight="bold">Switch-MQ (2960)</text>
+</g>
+<!-- Switch-NY -->
+<g>
+<rect x="790" y="212" width="90" height="38" rx="5" fill="#2f6d8f"/>
+<rect x="796" y="218" width="78" height="9" rx="2" fill="#1c4a63"/>
+<text x="835" y="268" text-anchor="middle" font-size="12" fill="#7a3a1a" font-weight="bold">Switch-NY (2960)</text>
+</g>
+
+<!-- PC-MQ -->
+<g>
+<rect x="76" y="300" width="80" height="52" rx="4" fill="#3b6e91"/><rect x="83" y="307" width="66" height="38" fill="#bfe6f5"/>
+<rect x="98" y="356" width="36" height="8" fill="#3b6e91"/>
+<text x="116" y="386" text-anchor="middle" font-size="12" fill="#123d66" font-weight="bold">PC-MQ</text>
+<text x="116" y="403" text-anchor="middle" font-size="10.5" fill="#123d66" font-family="Consolas, monospace">192.168.10.10</text>
+<text x="116" y="418" text-anchor="middle" font-size="9.5" fill="#607086" font-family="Consolas, monospace">gw 192.168.10.1</text>
+</g>
+<!-- Serveur-NY -->
+<g>
+<rect x="930" y="296" width="64" height="84" rx="4" fill="#3b6e91"/>
+<rect x="937" y="305" width="50" height="13" rx="2" fill="#1c4a63"/><circle cx="979" cy="311" r="2.8" fill="#81fba1"/>
+<rect x="937" y="323" width="50" height="13" rx="2" fill="#1c4a63"/><circle cx="979" cy="329" r="2.8" fill="#81fba1"/>
+<rect x="937" y="341" width="50" height="13" rx="2" fill="#1c4a63"/><circle cx="979" cy="347" r="2.8" fill="#81fba1"/>
+<text x="962" y="400" text-anchor="middle" font-size="12" fill="#7a3a1a" font-weight="bold">Serveur-NY</text>
+<text x="962" y="417" text-anchor="middle" font-size="10.5" fill="#7a3a1a" font-family="Consolas, monospace">192.168.30.10</text>
+<text x="962" y="432" text-anchor="middle" font-size="9.5" fill="#607086" font-family="Consolas, monospace">gw 192.168.30.1</text>
+</g>
+
+<!-- bandeau lecture -->
+<rect x="120" y="452" width="840" height="52" rx="10" fill="#fdf6e3" stroke="#a8823c" stroke-width="2"/>
+<text x="540" y="474" text-anchor="middle" font-size="13" fill="#5c4a14" font-weight="bold">Trois réseaux : 192.168.10 (MQ) · 192.168.30 (NY) · 10.0.0.0/30 (le pont). Chaque routeur a UN pied de chaque côté.</text>
+<text x="540" y="494" text-anchor="middle" font-size="12" fill="#5c4a14">Trajet aller : PC-MQ → Switch-MQ → R-MQ → (pont) → R-NY → Switch-NY → Serveur-NY.</text>
+</svg>

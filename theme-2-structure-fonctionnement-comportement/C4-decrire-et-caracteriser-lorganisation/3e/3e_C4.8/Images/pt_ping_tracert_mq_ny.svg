@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620" role="img" aria-labelledby="t d" font-family="Arial, Helvetica, sans-serif">
+<title id="t">Les trois preuves du voyage : ping, tracert, second ping — transcription réelle depuis PC-MQ</title>
+<desc id="d">Trois panneaux de terminal reconstitués d'après notre montage réel. Premier panneau : ping 192.168.30.10 avec deux Request timed out puis deux Reply avec TTL égal à 126, deux paquets perdus sur quatre. Deuxième panneau : tracert 192.168.30.10 listant trois sauts, 192.168.10.1 puis 10.0.0.2 puis 192.168.30.10, avec Trace complete. Troisième panneau : second ping avec quatre Reply, zéro pour cent de perte, temps entre 0 et 4 millisecondes. Le TTL 126 est expliqué : 128 moins 2 routeurs traversés.</desc>
+<rect width="1080" height="620" fill="#ffffff"/>
+<rect x="1" y="1" width="1078" height="618" fill="none" stroke="#9aaabc" stroke-width="2"/>
+<text x="540" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#135588">Les 3 preuves du voyage — mesures RÉELLES depuis PC-MQ (Command Prompt)</text>
+
+<!-- panneau 1 : premier ping -->
+<g>
+<rect x="45" y="52" width="990" height="188" rx="8" fill="#101820"/>
+<rect x="45" y="52" width="990" height="24" rx="8" fill="#31475a"/>
+<text x="60" y="69" font-size="12" fill="#fff" font-weight="bold">PREUVE ① — le premier ping (l'aller-retour)</text>
+<g font-family="Consolas, monospace" font-size="12.5" fill="#e8eef4">
+<text x="62" y="98">C:\&gt; ping 192.168.30.10</text>
+<text x="62" y="120" fill="#ff9aa4">Request timed out.</text>
+<text x="62" y="140" fill="#ff9aa4">Request timed out.</text>
+<text x="62" y="160" fill="#c5e1a5">Reply from 192.168.30.10: bytes=32 time=1ms TTL=126</text>
+<text x="62" y="180" fill="#c5e1a5">Reply from 192.168.30.10: bytes=32 time=0ms TTL=126</text>
+<text x="62" y="202" fill="#8fa8bf">Packets: Sent = 4, Received = 2, Lost = 2 (50% loss)</text>
+</g>
+<rect x="620" y="96" width="400" height="118" rx="8" fill="#fdf6e3" stroke="#a8823c" stroke-width="2"/>
+<text x="820" y="118" text-anchor="middle" font-size="12" fill="#5c4a14" font-weight="bold">Les 2 premiers échecs sont NORMAUX :</text>
+<text x="820" y="136" text-anchor="middle" font-size="11.5" fill="#5c4a14">le réseau apprend d'abord les adresses</text>
+<text x="820" y="152" text-anchor="middle" font-size="11.5" fill="#5c4a14">physiques (ARP) sur chaque tronçon.</text>
+<text x="820" y="174" text-anchor="middle" font-size="12" fill="#0a3d1f" font-weight="bold">TTL=126 = 128 − 2 frontières :</text>
+<text x="820" y="192" text-anchor="middle" font-size="11.5" fill="#0a3d1f">chaque routeur traversé enlève 1.</text>
+<text x="820" y="208" text-anchor="middle" font-size="11.5" fill="#0a3d1f">Le TTL COMPTE les postes-frontières !</text>
+</g>
+
+<!-- panneau 2 : tracert -->
+<g>
+<rect x="45" y="252" width="990" height="188" rx="8" fill="#101820"/>
+<rect x="45" y="252" width="990" height="24" rx="8" fill="#31475a"/>
+<text x="60" y="269" font-size="12" fill="#fff" font-weight="bold">PREUVE ② — tracert (la liste des sauts, un par un)</text>
+<g font-family="Consolas, monospace" font-size="12.5" fill="#e8eef4">
+<text x="62" y="298">C:\&gt; tracert 192.168.30.10</text>
+<text x="62" y="320" fill="#8fa8bf">Tracing route to 192.168.30.10 over a maximum of 30 hops:</text>
+<text x="62" y="344" fill="#c5e1a5">  1   0 ms   0 ms   0 ms   192.168.10.1</text>
+<text x="62" y="366" fill="#c5e1a5">  2   0 ms   0 ms   0 ms   10.0.0.2</text>
+<text x="62" y="388" fill="#c5e1a5">  3   0 ms   0 ms   1 ms   192.168.30.10</text>
+<text x="62" y="412" fill="#81fba1">Trace complete.</text>
+</g>
+<rect x="620" y="296" width="400" height="118" rx="8" fill="#eef4fb" stroke="#31649c" stroke-width="2"/>
+<text x="820" y="318" text-anchor="middle" font-size="12" fill="#123d66" font-weight="bold">3 sauts = le chemin EXACT :</text>
+<text x="820" y="340" text-anchor="middle" font-size="11.5" fill="#123d66">1. 192.168.10.1 → R-MQ (ma passerelle)</text>
+<text x="820" y="358" text-anchor="middle" font-size="11.5" fill="#123d66">2. 10.0.0.2 → R-NY (le pied de pont d'en face)</text>
+<text x="820" y="376" text-anchor="middle" font-size="11.5" fill="#123d66">3. 192.168.30.10 → le serveur (destination)</text>
+<text x="820" y="400" text-anchor="middle" font-size="11.5" fill="#5c4a14">tracert DESSINE le trajet que la table décide.</text>
+</g>
+
+<!-- panneau 3 : second ping -->
+<g>
+<rect x="45" y="452" width="990" height="150" rx="8" fill="#101820"/>
+<rect x="45" y="452" width="990" height="24" rx="8" fill="#31475a"/>
+<text x="60" y="469" font-size="12" fill="#fff" font-weight="bold">PREUVE ③ — le second ping (le réseau a appris : plus aucune perte)</text>
+<g font-family="Consolas, monospace" font-size="12.5" fill="#c5e1a5">
+<text x="62" y="498">C:\&gt; ping 192.168.30.10</text>
+<text x="62" y="520">Reply from 192.168.30.10: bytes=32 time=4ms TTL=126</text>
+<text x="62" y="540">Reply from 192.168.30.10: bytes=32 time=0ms TTL=126   (× 4 réponses)</text>
+<text x="62" y="564" fill="#81fba1">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),  time 0–4 ms</text>
+</g>
+<rect x="620" y="496" width="400" height="86" rx="8" fill="#eafbe7" stroke="#1e7d4f" stroke-width="2"/>
+<text x="820" y="520" text-anchor="middle" font-size="12" fill="#0a3d1f" font-weight="bold">0 % de perte, 0 à 4 ms :</text>
+<text x="820" y="540" text-anchor="middle" font-size="11.5" fill="#0a3d1f">le pont Martinique → New York fonctionne.</text>
+<text x="820" y="560" text-anchor="middle" font-size="11.5" fill="#0a3d1f">Toujours relancer un ping avant de conclure !</text>
+</g>
+</svg>

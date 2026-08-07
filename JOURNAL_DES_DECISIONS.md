@@ -1272,3 +1272,39 @@ panneau Simulation recouvrant le canvas → détacher le panneau (consigné dans
 
 **Tests.** Suite Playwright dédiée : 36/36 verts (verrous, règle n°22, socle/CRCN en toutes lettres,
 libellés officiels des 3 codes, QCM 8/7/7/8 graine 4789, images, sauvegardes).
+
+## 2026-08-07 — Lot « Le pont numérique Martinique → New York » : atelier routage 3e (3e_C4.7 · C4.8)
+
+**Décision.** Le volet 3e de la fusion réseaux (esquisse ChatGPT auditée le 05/08) est livré comme
+ATELIER DÉDIÉ dans `3e_C4.8`, complément de la séquence-îlot « Internet jusqu'à Sainte-Luce » (3e_C4.7),
+qui n'est pas modifiée. Statuts d'audit : 3e_C4.8 passe à COMPLET ET VALIDABLE (dossier principal de
+l'atelier) ; 3e_C4.7 reste COMPLET ET VALIDABLE (îlot), les deux README se pointent mutuellement.
+L'anomalie « Packet Tracer : comptes À CONFIRMER » du lot 02 est levée : **la version 🅱 Packet Tracer
+est CONFIRMÉE en conditions réelles** (session du 07/08/2026). La fusion des trois lots réseaux
+(5e → 4e → 3e) est ainsi terminée : PR #119-121 (5e), #122 (4e), présente PR (3e).
+
+**Application native de la règle n°22.** L'activité 1 fait CONCEVOIR à l'élève son schéma à deux
+réseaux (recette illustrée en 4 étapes : deux rues, un routeur par porte, la rue-pont, les commutateurs
+restent) AVANT le schéma de référence, production écrite exigée ; l'activité 2 est l'activité DÉBRANCHÉE
+du libellé, jouée avec la table de routage DONNÉE (les tables réelles du montage, recopiées) et exige
+une justification rédigée du protocole ; l'activité 5 porte le verrou expérientiel du poste-frontière
+(voyage complet Successful ET voyage « sans route » détruit à R-MQ, tous deux obligatoires).
+
+**Preuves en conditions réelles (session du 07/08/2026, pilotage à distance du poste enseignant).**
+Montage `3e_routage_MQ_NY_TECHNO-C4.pkt` construit et vérifié dans Packet Tracer 8.2 : deux réseaux
+(192.168.10 / 192.168.30), deux routeurs 1941 en câble croisé sur la rue-pont 10.0.0.0/30, interfaces
+allumées (Port Status On, journal « changed state to up »), routes statiques miroir
+(192.168.30.0/24 via 10.0.0.2 et retour). Mesures citées telles quelles dans le lot : ping 2 timeouts
+puis Reply TTL=126 ; second ping 4/4, 0% loss, 0-4 ms ; tracert 3 sauts (192.168.10.1 → 10.0.0.2 →
+192.168.30.10, Trace complete) ; Event List 0.000 → 0.010 s, verdict Successful. Les 7 figures du lot
+sont des SVG CC0 reconstitués de ces captures (règles n°1 et n°20).
+
+**Obstacles vécus (pour mémoire de méthode).** Plantage de Packet Tracer pendant une coupure du pont
+d'accès → le montage 3e non sauvegardé a été perdu et reconstruit : règle confirmée et appliquée ensuite,
+« sauvegarder le .pkt AVANT toute manipulation risquée » ; menus d'interfaces du routeur qui se décalent
+quand une prise est déjà configurée (repérage à refaire) ; PDU de simulation posé en Realtime puis
+rejoué en Simulation (le panneau recouvre le canvas — consigné dans la synthèse professeur).
+
+**Tests.** Suite Playwright dédiée : 37/37 verts (verrous act. 1/2/5, règle n°22, socle/CRCN en toutes
+lettres, libellés officiels des 2 codes dont « activité débranchée, table de routage donnée », QCM
+8/7/7/8 graine 3987, répartition 12/18, images, sauvegardes).
