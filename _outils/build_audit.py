@@ -290,6 +290,48 @@ OVERLAY = {
         accessibilite="Bonne base ; navigation clavier des onglets de séances à vérifier.",
         medias="2 SVG originaux (schema_chaines_arrosage, schema_eclairage_automatique).",
     ),
+    "3e_C3.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Shenzhen — refroidir un local qui surchauffe » (08/08/2026) : 4 séances "
+                "de 55 min, 5 activités + billet sans note, 6 solutions simulées à 15 colonnes, "
+                "QCM de 30 questions, 2 synthèses, fiche, matrice de 31 notions, 28 tests "
+                "Playwright tous passés. TROISIÈME ET DERNIER LOT DU C3 : la compétence est "
+                "désormais couverte sur les onze codes des trois niveaux.",
+        anomalies="Aucune : 7 règles mécanisables au vert. CONTRAINTE D'USAGE à respecter : le "
+                  "tableau des six solutions ne se distribue pas en séance 1, sinon l'élève lit "
+                  "une liste au lieu de l'établir et 3e_C3.1 n'est pas couvert. C'est écrit au "
+                  "README, à la fiche et à la synthèse professeur. Données simulées annoncées, "
+                  "et addition des effets présentée comme un ordre de grandeur (règle n°27).",
+        accessibilite="Champs étiquetés, alternative longue sur la figure, aucun défilement "
+                      "horizontal à 1280 ni à 390 px, 9 versions étayées pour 9 productions "
+                      "écrites, aucune ressource distante (n°40). Non vérifiés donc non déclarés "
+                      "conformes : impression A4, contraste mesuré, lecteur d'écran, zoom 200 %.",
+        medias="1 SVG original CC0 — une seule figure, volontairement : la séquence demande de "
+               "PRODUIRE la liste, une planche illustrée aurait donné les réponses.",
+    ),
+    "3e_C3.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shenzhen du dossier 3e_C3.1 (séance 4 — choisir ou composer, et argumenter sur le cycle de vie et les trois piliers).",
+        anomalies="Voir 3e_C3.1 : dossier principal du lot.",
+    ),
+    "3e_C3.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shenzhen du dossier 3e_C3.1 (séance 2 — construire une grille pondérée et la défendre).",
+        anomalies="Voir 3e_C3.1 : dossier principal du lot.",
+    ),
+    "3e_C3.4": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shenzhen du dossier 3e_C3.1 (séance 3 — définir un protocole exécutable par un autre, puis le mettre en œuvre).",
+        anomalies="Voir 3e_C3.1 : dossier principal du lot.",
+    ),
     "4e_C3.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
