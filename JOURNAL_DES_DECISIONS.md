@@ -2975,3 +2975,58 @@ vérité, aucun ne la dit tout entière.
 
 C'est la deuxième fois aujourd'hui qu'une question de Pascal améliore le lot au lieu de simplement
 le corriger. La première avait produit la règle n°43&nbsp;; celle-ci lui donne sa portée exacte.
+
+---
+
+## 8 août 2026 — Deux questions de Pascal sur le lot 3e_C2 : le vocabulaire, et qui choisit
+
+### «&nbsp;Les élèves savent-ils définir ces choix&nbsp;?&nbsp;»
+
+Non, et je ne le vérifiais pas. La séquence proposait six modes de représentation — dont
+<b>storyboard</b> et <b>carte d'empathie</b>, qui ne sont pas des mots de collège — et demandait
+d'en choisir trois. Elle donnait de chaque mode ce qu'il montre et son angle mort&nbsp;; elle ne
+demandait jamais à l'élève de <b>reconnaître</b> ce que le mot désigne.
+
+Pascal se souvient que les anciens manuels traitaient cela par un appariement — «&nbsp;relie le mot
+<i>croquis</i>, <i>esquisse</i>, à sa représentation&nbsp;». C'est exactement ce qui manquait. Six
+appariements ont été ajoutés en tête de l'activité 2, et le vérificateur **refuse d'aller plus
+loin** tant qu'ils ne sont pas tenus&nbsp;: «&nbsp;on ne choisit pas parmi des mots qu'on ne connaît
+pas&nbsp;».
+
+C'est le même défaut que celui corrigé une heure plus tôt sur les corrigés, sous une autre
+forme&nbsp;: **offrir un choix sans donner de quoi choisir.** Là c'étaient les corrigés qui
+manquaient, ici c'est le vocabulaire. Dans les deux cas, le mot «&nbsp;choisis&nbsp;» promettait
+plus que la page ne tenait.
+
+### «&nbsp;Choisis par l'élève, ou par le concepteur&nbsp;?&nbsp;»
+
+**Le texte ne le dit pas.** «&nbsp;À l'aide de modes de représentation choisis&nbsp;» — le
+participe qualifie les modes, il ne nomme pas l'auteur du choix. Les deux lectures tiennent
+grammaticalement.
+
+Mon argument pour la première&nbsp;: en **4e**, le programme énumère lui-même les modes
+(«&nbsp;pour aboutir aux schémas, graphiques, algorithmes&nbsp;»)&nbsp;; en **3e** il retire
+l'énumération et ajoute «&nbsp;choisis&nbsp;». Un texte qui cesse de nommer les modes au moment où
+il ajoute ce mot me paraît transférer la sélection à l'élève, dans une logique d'autonomie
+croissante sur le cycle.
+
+**Mais c'est une lecture, pas une certitude — et je l'avais construite en silence.** C'est
+précisément ce que la règle n°42 interdit, appliqué non plus à la formulation mais à son
+**interprétation**&nbsp;: une lecture du programme se déclare comme lecture.
+
+La séquence porte désormais la note, écrite à l'élève&nbsp;: le programme ne dit pas par qui&nbsp;;
+ici c'est toi qui choisis&nbsp;; ton professeur peut faire autrement et t'imposer le mode&nbsp;; et
+dans les deux cas l'exercice difficile reste le même — **justifier**.
+
+**Règle n°42, troisième volet&nbsp;: quand une formulation du référentiel est ambiguë, on ne tranche
+pas en silence. On dit qu'elle l'est, on donne sa lecture, et on laisse la porte ouverte.**
+
+### Ce que la conclusion de Pascal apporte
+
+«&nbsp;Les six cas de figure sont présents, et l'enseignant qui prend en main la séquence aura le
+choix.&nbsp;» C'est la bonne réponse au problème, et elle vaut mieux que de trancher&nbsp;: une
+séquence qui traite les six modes fonctionne <b>dans les deux lectures</b>. L'enseignant qui préfère
+imposer garde l'exercice de justification intact&nbsp;; celui qui laisse choisir a de quoi corriger
+n'importe quelle réponse.
+
+Ce sera noté à la fiche pédagogique comme une **variante d'usage**, pas comme une réserve.
