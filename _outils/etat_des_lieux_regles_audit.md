@@ -113,3 +113,27 @@ qu'il n'a pas traité, pas le passer sous silence.
 - **n°29 mode essentiel** — uniquement la banque d'entraînement DNB héritée, écart déjà assumé ;
 - **n°23 durée** — reste en «&nbsp;?&nbsp;» sur les séquences-îlots, qui n'annoncent aucune durée
   par activité : c'est une absence de donnée, pas une conformité.
+
+---
+
+## Mise à jour du 08/08/2026 (3) — les tableaux de bord des tâches (règle n°30)
+
+**20 → 6 manquements.** Les quatorze séquences du Thème 2 qui enchaînaient plusieurs tâches sans
+situer l'élève ont désormais leur bandeau : **79 tâches**, dont le libellé est écrit à la main,
+séance par séance.
+
+Les libellés sont dans `_outils/libelles_bandeaux_taches.py` ; `_outils/poser_bandeaux_taches.py`
+ne fait que les installer, et **refuse d'écrire un fichier** dont la liste des tâches ne recouvre
+pas exactement les boutons `data-check` réellement présents, ou dont une clé de séance n'existe
+pas dans la page. C'est la garde née de l'échec du matin : l'extraction automatique des titres
+avait produit des tâches trompeuses.
+
+### Ce qui reste : 6 manquements
+
+- **n°26 diagnostic d'entrée** — 5 séquences invoquent l'année précédente sans billet d'entrée
+  sans note ;
+- **n°29 mode essentiel** — la seule banque d'entraînement DNB héritée, écart déjà assumé.
+
+La règle n°23 reste en «&nbsp;?&nbsp;» sur les séquences-îlots, qui n'annoncent aucune durée par
+activité : c'est une absence de donnée, pas un manquement — et elle demande un jugement
+d'enseignant, pas un script.

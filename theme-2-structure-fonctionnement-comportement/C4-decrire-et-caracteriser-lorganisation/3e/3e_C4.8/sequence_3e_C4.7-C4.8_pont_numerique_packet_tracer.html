@@ -172,6 +172,15 @@
   details.etayage ul{margin:6px 0;padding-left:22px}
   details.etayage li{margin:5px 0}
   @media print{details.etayage{break-inside:avoid}}
+
+  /* Règle d'or n°30 — tableau de bord des tâches : la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{margin:10px 0 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid #274a8a;border-radius:10px;font-size:.92em;line-height:1.55;color:#e4eaf5}
+  #tachesBandeau .tb-titre{font-weight:700;color:#61dafb;display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li{margin:2px 0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  @media print{#tachesBandeau{display:none}}
 </style>
 
 <a class="skip-link" href="#seances">Aller directement aux séances</a>
@@ -283,6 +292,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance2" id="tab-s2">Séance 2<br>Construire le pont<span class="done" id="done-s2"></span></button>
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance3" id="tab-s3">Séance 3<br>Prouver le voyage<span class="done" id="done-s3"></span></button>
 </div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
 <!-- ═══════════════════════ SÉANCE 1 ═══════════════════════ -->
 <div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
 
@@ -1203,6 +1213,32 @@ $("hyp1").addEventListener("input", majHyp);
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
 majEssentiel(); majProgress(); majHyp();
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  "seance1": {titre:"Séance 1 — Concevoir le pont", taches:[{n:0, libelle:"Billet d'entrée : vérifier ses acquis de 4e (sans note)"}, {n:1, libelle:"Comparer sa proposition au schéma de référence"}, {n:2, libelle:"Jouer le routeur R-MQ sur les quatre enveloppes"}]},
+  "seance2": {titre:"Séance 2 — Construire dans Packet Tracer", taches:[{n:3, libelle:"Relever sur son écran les valeurs du réseau construit"}]},
+  "seance3": {titre:"Séance 3 — Prouver le voyage", taches:[{n:4, libelle:"Rapporter les preuves : ping, TTL et tracert"}, {n:5, libelle:"Mener les deux expériences du poste-frontière"}]}
+};
+function majTaches(){
+  const hote = document.getElementById("tachesBandeau"); if(!hote) return;
+  const onglet = document.querySelector(".seance-tab.active");
+  const bloc = TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden = true; return; }
+  hote.hidden = false;
+  const v = window.__valid || {};
+  const faites = bloc.taches.filter(t => v[t.n]).length;
+  hote.innerHTML = "<span class='tb-titre'>" + bloc.titre + " — étape " +
+    Math.min(faites + 1, bloc.taches.length) + " sur " + bloc.taches.length + "</span><ul>" +
+    bloc.taches.map(t => "<li class='" + (v[t.n] ? "faite" : "") + "'>" +
+      (v[t.n] ? "☑" : "☐") + " " + t.libelle + "</li>").join("") + "</ul>";
+}
+document.querySelectorAll(".seance-tab").forEach(t =>
+  t.addEventListener("click", () => setTimeout(majTaches, 0)));
+majProgress = (function(precedent){
+  return function(){ const r = precedent.apply(this, arguments); majTaches(); return r; };
+})(majProgress);
+majTaches();
 </script>
 </body>
 </html>
