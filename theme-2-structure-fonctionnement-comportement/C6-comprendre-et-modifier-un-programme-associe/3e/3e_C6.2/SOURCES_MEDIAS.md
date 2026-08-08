@@ -39,3 +39,12 @@ ci-dessus.
 `Poppins` et `Fira Code` sont appelées depuis Google Fonts par la séquence et le QCM, comme
 dans tout le dépôt (SIL Open Font License 1.1). En l'absence de réseau, la page bascule sur
 la police système : aucune information n'est perdue.
+
+## Réemploi dans l'entraînement DNB
+
+La page `entrainement_dnb_algorigrammes.html` réutilise les **trois mêmes SVG**, sans en produire
+de nouveaux : la planche des symboles illustre l'exercice sur le losange et le rappel de cours,
+l'algorigramme de l'auto-test illustre l'exercice sur l'initialisation du compteur, et la trace
+d'exécution illustre celui sur le compteur qui ne redescend pas.
+
+Un média produit une fois et lu trois fois vaut mieux que trois médias décoratifs.

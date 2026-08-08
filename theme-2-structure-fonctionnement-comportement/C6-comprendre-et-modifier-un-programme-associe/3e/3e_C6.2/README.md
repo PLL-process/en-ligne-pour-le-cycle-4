@@ -22,17 +22,32 @@ distracteur réfuté.
 [Rapport de tests](rapport_tests_3e_C6.2.md) ·
 [Sources des médias](SOURCES_MEDIAS.md)
 
-## 📐 La banque d'entraînement DNB (ressource d'appui, conservée telle quelle)
+## 📐 L'entraînement DNB (réécrit au gabarit maison)
 
-➡ **[30 exercices d'algorigrammes](sequence_algorigrammes_dnb.html)** — 13 schémas, 32 aides
-rédigées, 6 exercices tagués DNB, tableau des symboles normalisés, score et barre de progression.
+➡ **[Entraînement DNB — lire et interpréter un algorigramme](entrainement_dnb_algorigrammes.html)**
+— 30 exercices en 4 manches : le vocabulaire et les symboles, lire et dérouler, les compteurs et
+les cas limites, puis des sujets de type brevet. Sauvegarde locale, mode essentiel, deux niveaux
+d'aide par exercice.
 
-➡ **[QCM associé](qcm_algorigrammes_dnb.html)** — 17 questions.
+Sa particularité : **chaque réponse fausse est réfutée**, une par une. Au brevet, les distracteurs
+sont conçus pour être plausibles ; un élève qui sait *pourquoi* B est faux ne se fera pas prendre
+par une variante de B. C'est là qu'est le travail, bien plus que dans le score.
 
-Ces deux fichiers font **lire** et **interpréter** des algorigrammes : c'est un excellent
-entraînement au brevet, et c'est la ressource dans laquelle on pioche pendant la séance 1 de
-l'atelier. Leur statut d'audit est **ressource d'entraînement**, pas « séquence incomplète » — ce
-qui est la vérité. Ils ne sont pas modifiés.
+➡ [Fiche pédagogique](fiche_pedagogique_entrainement_dnb.md) ·
+[Rapport de tests](rapport_tests_entrainement_dnb.md)
+
+### La version historique, conservée
+
+➡ [Banque d'origine — 30 exercices](sequence_algorigrammes_dnb.html) ·
+[son QCM de 17 questions](qcm_algorigrammes_dnb.html)
+
+Ces deux fichiers viennent d'une organisation antérieure du dépôt. Ils sont **conservés tels
+quels**, sans modification : quatorze fichiers y font référence. Ils restent utilisables, mais la
+page ci-dessus les remplace avantageusement — sauvegarde, aides à deux niveaux, et surtout les
+réfutations.
+
+Leur statut d'audit est **ressource d'entraînement**, pas « séquence incomplète » : c'est la
+vérité sur ce qu'ils sont.
 
 ## 🌀 Le même objet-fil ailleurs en 3e
 
