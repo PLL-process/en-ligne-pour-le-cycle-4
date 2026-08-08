@@ -50,8 +50,9 @@
   <object class="schema" data="../Images/plan_adressage_serre.svg" type="image/svg+xml" aria-label="Le plan de la serre : rue 192.168.20, passerelle .1 réservée, PC-Prof .10, Imprimante .30, Capteur .50, Serveur .100">Le plan de la serre</object>
   <dl>
     <dt>La recette (AVANT de brancher)</dt><dd>① recenser les habitants → ② choisir la <b>rue</b> commune (<code>192.168.20</code>) → ③ un <b>numéro unique</b> par appareil, le <b>.1 réservé</b> → ④ écrire le <b>masque</b>.</dd>
-    <dt>Passerelle (gateway)</dt><dd>la <b>porte de sortie</b> du réseau vers les autres réseaux — son adresse (<code>192.168.20.1</code>) est réservée et notée dans le carnet de chaque habitant.</dd>
-    <dt>Masque</dt><dd><code>255.255.255.0</code> = «&nbsp;les 3 premiers nombres sont la rue, le dernier est la maison&nbsp;». Le même pour toute la rue.</dd>
+    <dt>Passerelle (gateway)</dt><dd>la <b>porte de sortie</b> du réseau vers les autres réseaux — son adresse (<code>192.168.20.1</code>) est réservée et notée dans le carnet de chaque habitant. Dans notre serre, la porte est <b>prévue au plan mais pas encore installée</b>&nbsp;: c'est pour cela que les pings entre voisins marchent quand même.</dd>
+    <dt>Masque</dt><dd><code>255.255.255.0</code> = «&nbsp;les 3 premiers nombres sont la rue, le dernier est la maison&nbsp;» — <b>dans notre réseau, qui utilise ce masque-là</b>. D'autres masques existent&nbsp;; tu les verras plus tard. Le même pour toute la rue.</dd>
+    <dt>Le «&nbsp;.1&nbsp;»</dt><dd>ce n'est pas une loi de l'informatique&nbsp;: c'est une <b>convention</b> très répandue (et la nôtre). On réserve le .1 à la passerelle pour que tout le monde sache où est la porte.</dd>
   </dl>
 </div>
 
@@ -61,7 +62,8 @@
   <dl>
     <dt>Pourquoi FIXE&nbsp;?</dt><dd>un objet connecté qu'on doit <b>joindre à coup sûr</b> (capteur, serveur, imprimante) ne peut pas changer d'adresse au hasard → <b>Static</b>, pas DHCP.</dd>
     <dt>Les 4 lignes</dt><dd><b>Static</b> coché · <b>IPv4</b> <code>192.168.20.50</code> · <b>masque</b> <code>255.255.255.0</code> · <b>Default Gateway</b> <code>192.168.20.1</code> ⭐ la nouveauté de 4e.</dd>
-    <dt>La preuve</dt><dd>un <b>ping</b>&nbsp;: <code>Reply from…</code> = aller-retour réussi&nbsp;; <code>0% loss</code> = livraison parfaite (nos mesures réelles&nbsp;: 0 à 12 ms).</dd>
+    <dt>La preuve qui compte</dt><dd>le ping <b>vers l'objet que tu viens d'adresser</b>&nbsp;: <code>ping 192.168.20.50</code> → <code>Reply from…</code> ×4, <code>0% loss</code>, <code>TTL=128</code>. C'est CE ping qui prouve que TON paramétrage marche — pas un ping au hasard.</dd>
+    <dt>Le premier ping</dt><dd>il arrive souvent qu'il affiche <code>Request timed out</code> tout seul, puis que les suivants répondent&nbsp;: le réseau «&nbsp;se réveille&nbsp;». <b>Ne panique pas</b>, relance une fois avant de conclure à une panne.</dd>
   </dl>
 </div>
 <div class="bloc">
@@ -81,6 +83,17 @@
     <dt>La boucle du dépanneur</dt><dd><b>symptôme → hypothèse → test → remède → RE-test</b>. Jamais de remède sans test, jamais de «&nbsp;réparé&nbsp;» sans re-test.</dd>
     <dt>Famille «&nbsp;adressage&nbsp;»</dt><dd>liens <b>verts</b> mais <code>Request timed out</code> (100% loss) → vérifier les adresses. Ex. réel&nbsp;: la <b>mauvaise rue</b> <code>192.168.<b>21</b>.50</code> — une unité d'écart, et le capteur «&nbsp;déménage&nbsp;» hors du réseau.</dd>
     <dt>Famille «&nbsp;liaison&nbsp;»</dt><dd>triangles <b>ROUGES</b> → la route est coupée (port sur Off, câble défait). Ex. réel&nbsp;: le Port Status de l'imprimante décoché. Remède&nbsp;: On → vert → re-ping.</dd>
+    <dt>Famille «&nbsp;masque&nbsp;»</dt><dd>tout a l'air juste, l'adresse est dans la bonne rue… mais le <b>masque</b> est faux (ex. réel&nbsp;: <code>255.255.255.240</code> sur le capteur). Résultat&nbsp;: <code>100% loss</code>. Le masque décide de qui est «&nbsp;dans la rue&nbsp;»&nbsp;: se tromper de masque, c'est déménager sans changer d'adresse.</dd>
+  </dl>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">5. Ma fiche d'intervention (le geste du pro)</h2>
+  <dl>
+    <dt>Trois fichiers en panne</dt><dd><code>4e_serre_PANNE_A.pkt</code> · <code>4e_serre_PANNE_B.pkt</code> · <code>4e_serre_PANNE_C.pkt</code>&nbsp;: de vraies pannes, préparées puis vérifiées dans Packet Tracer. À toi de les diagnostiquer.</dd>
+    <dt>Les 6 lignes à écrire</dt><dd>① le symptôme observé · ② mon hypothèse · ③ le test que je lance · ④ ce que le test montre · ⑤ le remède appliqué · ⑥ le re-test qui prouve la réparation.</dd>
+    <dt>La règle d'or</dt><dd>on n'écrit jamais «&nbsp;réparé&nbsp;» sans avoir collé la preuve du <b>re-test</b>. Un dépanneur qui ne re-teste pas n'a rien prouvé.</dd>
+    <dt>Le fichier de départ</dt><dd><code>4e_serre_DEPART.pkt</code>&nbsp;: le montage est déjà câblé, les adresses sont <b>vides</b>. La compétence évaluée n'est pas de retrouver le commutateur dans la palette&nbsp;: c'est d'adresser et de prouver.</dd>
   </dl>
 </div>
 
@@ -91,7 +104,7 @@
     <li>concevoir un plan&nbsp;: rue commune, numéros uniques, .1 réservé, masque commun&nbsp;;</li>
     <li>expliquer fixe vs DHCP (joindre ≠ passer)&nbsp;;</li>
     <li>lire un ping&nbsp;: Reply / timed out / % loss&nbsp;;</li>
-    <li>distinguer panne d'adressage et panne de liaison&nbsp;;</li>
+    <li>distinguer les trois familles de pannes&nbsp;: adressage, liaison, masque&nbsp;;</li>
     <li>dire ce que valide un «&nbsp;Successful&nbsp;» de simulation.</li>
   </ul>
 </div>
@@ -101,7 +114,9 @@
     <li>paramétrer Static + IPv4 + masque + <b>passerelle</b> dans IP Configuration&nbsp;;</li>
     <li>prouver un paramétrage au ping&nbsp;;</li>
     <li>dérouler la boucle du dépanneur sur une panne&nbsp;;</li>
-    <li>ajouter un PDU au fichier fourni et lire l'Event List.</li>
+    <li>ajouter un PDU au fichier fourni et lire l'Event List&nbsp;;</li>
+    <li>rédiger une <b>fiche d'intervention</b> en 6 lignes sur un fichier en panne&nbsp;;</li>
+    <li><b>choisir seul·e</b> le test qui prouve une communication, sans procédure sous les yeux.</li>
   </ul>
 </div>
 </div>
@@ -113,6 +128,8 @@
     <li>changer de <b>rue</b> sans s'en rendre compte (21 ≠ 20)&nbsp;;</li>
     <li>accuser le câble quand les triangles sont <b>verts</b> — ou l'adresse quand ils sont <b>rouges</b>&nbsp;;</li>
     <li>réparer sans re-tester&nbsp;;</li>
+    <li>oublier le <b>masque</b> quand l'adresse a l'air juste (255.255.255.240 ≠ 255.255.255.0)&nbsp;;</li>
+    <li>conclure «&nbsp;panne&nbsp;» dès le <b>premier</b> ping raté&nbsp;;</li>
     <li>reconstruire le fichier fourni au lieu de le <b>compléter</b>.</li>
   </ul>
 </div>

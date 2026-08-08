@@ -1308,3 +1308,74 @@ rejoué en Simulation (le panneau recouvre le canvas — consigné dans la synth
 **Tests.** Suite Playwright dédiée : 37/37 verts (verrous act. 1/2/5, règle n°22, socle/CRCN en toutes
 lettres, libellés officiels des 2 codes dont « activité débranchée, table de routage donnée », QCM
 8/7/7/8 graine 3987, répartition 12/18, images, sauvegardes).
+
+## 2026-08-08 — « SOS serre » v2 : un audit pédagogique externe appliqué en entier (4e_C4.7 · C4.8 · C4.9)
+
+**Décision.** Pascal a soumis un audit pédagogique externe du lot 4e « SOS serre » et demandé
+explicitement « plus de captures d'écran ». Les 12 priorités de l'audit sont appliquées, sans exception,
+dans une refonte v2 du lot existant (aucun autre lot touché). La demande de captures est honorée
+**dans le respect de la règle n°1** : cinq figures SVG originales CC0 supplémentaires ont été dessinées
+d'après les enregistrements du poste enseignant (palette et choix du matériel, choix du câble droit et
+du port FastEthernet0, renommage + Save As, ping de preuve vers le capteur, bascule Realtime/Simulation
+et Add Simple PDU) — les PNG propriétaires servent de modèles, jamais de contenu publié. Le lot passe de
+9 à 14 figures.
+
+**Refonte pédagogique.** Passage de 3 à **4 séances de 55 min** (priorité 1 de l'audit), avec un
+**passeport réseau** d'entrée : 5 questions de diagnostic des acquis de 5e, sans note, capsule de
+rattrapage repliable, et une orientation automatique selon le score. Ajout d'un **mode essentiel**
+(bouton persistant) qui masque référentiel, corrections et approfondissements pour les élèves que la
+densité de la page met en difficulté. La preuve de C4.7 est recentrée sur **le ping vers l'objet qu'on
+vient d'adresser** (`ping 192.168.20.50`), les deux autres pings devenant des preuves complémentaires.
+Le diagnostic écrit reçoit une **version étayée** en six phrases guidées (J'observe / Je pense / Pour
+vérifier / Le test montre / Je corrige / Je vérifie). La séance 4 se termine par un **défi SANS
+tutoriel** : prouver la communication capteur↔serveur en choisissant seul son test et en le justifiant —
+le vérificateur accepte le ping OU le PDU, mais exige la justification (geste de niveau 3 du CRCN).
+
+**Corrections scientifiques et institutionnelles.** Le masque est désormais présenté comme vrai « dans
+notre réseau, qui utilise 255.255.255.0 » et non comme une loi générale ; le `.1` est nommé pour ce
+qu'il est, une **convention** répandue et non une règle de l'informatique ; le tableau d'adressage
+précise que la passerelle est **prévue au plan mais non installée** (ce qui explique que les pings
+entre voisins fonctionnent) ; les valeurs de ping sont annoncées comme « réellement observées pendant
+notre simulation » ; les triangles orange sont requalifiés d'« état de préparation » plutôt que d'anomalie.
+Le CRCN est restructuré : **2.3 Collaborer** et **5.2** sont les compétences que le programme 2024 cite
+explicitement pour ces codes, **5.1** est présentée comme travaillée en complément (repère verbatim
+conservé, règle n°7). Le **domaine 1** du socle est explicité. La version 🅰 devient « matériel réel sur
+réseau **ISOLÉ** » avec un TP 2 PC + switch dédié, jamais le réseau pédagogique. La réservation DHCP
+passe en approfondissement. Une note « ordinateur partagé » avertit que la sauvegarde est locale au
+navigateur ET au profil.
+
+**Trois vraies pannes, fabriquées et vérifiées.** L'audit demandait des fichiers en panne à diagnostiquer :
+ils existent désormais, construits par pilotage à distance du poste enseignant (Packet Tracer 8.2, 07 et
+08/08/2026) et **tous vérifiés au ping avant livraison** — `4e_serre_PANNE_A.pkt` (capteur en
+192.168.21.50, 100 % loss vérifié), `4e_serre_PANNE_B.pkt` (Port Status de l'imprimante sur Off, triangle
+rouge observé), `4e_serre_PANNE_C.pkt` (capteur au masque 255.255.255.240, 100 % loss vérifié). S'y ajoute
+`4e_serre_DEPART.pkt` : le montage câblé avec **les quatre terminaux vidés** (IP, masque, passerelle),
+pour que la compétence évaluée soit d'adresser et de prouver, pas de retrouver le 2960 dans la palette.
+Le lot livre donc **cinq fichiers .pkt**. L'évaluation pratique proposée (« Serre de Rivière-Salée —
+intervention n°47 », 10 min) s'appuie dessus, avec une grille à trois niveaux : les pannes et leurs
+remèdes ne sont documentés **que dans la synthèse professeur**, aucun corrigé n'est publié.
+
+**Ce qui n'a pas marché, et pourquoi c'est écrit.** La panne « doublon d'adresse IP » était prévue : elle
+est **impossible à fabriquer** dans l'interface de Packet Tracer 8.2, qui refuse la saisie d'une adresse
+déjà utilisée (« This address is already used in the network. ») et vide le champ. Elle a été remplacée
+par la panne de masque — réelle, vérifiée, et pédagogiquement plus riche puisqu'elle oblige à lire le
+masque. Le doublon reste traité à l'oral et en bonus. C'est consigné dans le rapport de tests, la
+synthèse professeur et SOURCES_MEDIAS.md : **on ne déclare que ce qu'on a fait**.
+
+**Leçons de pilotage à distance (pour les prochains lots).** Le champ IPv4 de l'onglet Config d'une
+imprimante refuse le collage ET SendKeys, mais accepte l'effacement — d'où la fabrication du fichier de
+départ par vidage plutôt que par ressaisie. Les classes C# créées par `Add-Type` **ne survivent pas** d'un
+appel PowerShell au suivant (chaque appel est un nouveau processus) : un helper appelé depuis un second
+appel échoue silencieusement et les frappes partent alors sur le canvas. Conséquence : `Ctrl+A` puis
+`Suppr` sur un plan de travail sélectionne et **efface tout le montage** — c'est arrivé une fois, sans
+dommage (le fichier maître n'est jamais écrasé, seul « Enregistrer sous » est utilisé), et la parade est
+désormais le **triple-clic dans le champ** au lieu de Ctrl+A, plus une capture de vérification après
+chaque fenêtre fermée. Les menus déroulants ne s'ouvrent pas au clic simple sur une fenêtre non active :
+mettre la fenêtre au premier plan puis envoyer `Alt+F` fonctionne, là où `Ctrl+Maj+S` ne déclenche rien.
+
+**Tests.** Suite Playwright étendue de 36 à **50 vérifications, 50/50 vertes** : 14 figures qui chargent,
+4 onglets de séance dont la nouvelle séance 4, mode essentiel qui masque puis réaffiche, passeport qui
+refuse les réponses vides, présence des cinq fichiers .pkt et validité de tous les liens `.pkt` de la page,
+défi exposant bien son choix de test et sa justification — en plus des vérifications v1 (verrous, règle
+n°22, socle et CRCN en toutes lettres, libellés officiels, QCM 8/7/7/8, sauvegardes). Un SVG mal fermé
+(`</g>` en trop) a été détecté par le test « les figures chargent » et corrigé avant livraison.

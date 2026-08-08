@@ -195,19 +195,24 @@ OVERLAY = {
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="ATELIER DÉDIÉ « SOS serre » (C4.7·C4.8·C4.9, dossier principal) : "
-                "conception du plan d'adressage par l'élève (règle n°22), adresse "
-                "fixe passerelle comprise, clinique du réseau (2 pannes réelles), "
-                "validation par simulation ; QCM 30 q (10/10/10), 9 SVG CC0 "
-                "reconstitués de sessions Packet Tracer 8.2 réelles, fichier .pkt "
-                "fourni, 36/36 tests Playwright ; complète la séance 3 du Jardin "
+        qualite="ATELIER DÉDIÉ « SOS serre » (C4.7·C4.8·C4.9, dossier principal), "
+                "REFONTE v2 après audit pédagogique externe (08/08/2026) : "
+                "4 séances de 55 min, passeport réseau d'entrée sans note, mode "
+                "essentiel, conception du plan d'adressage par l'élève (règle n°22), "
+                "adresse fixe passerelle comprise prouvée par le ping vers l'objet "
+                "ajouté, clinique du réseau et intervention réelle sur TROIS fichiers "
+                ".pkt en panne (adressage, liaison, masque) réellement fabriqués et "
+                "vérifiés au ping, validation par simulation, défi sans tutoriel ; "
+                "QCM 30 q (10/10/10), 14 SVG CC0 reconstitués de sessions Packet "
+                "Tracer 8.2 réelles, 5 fichiers .pkt fournis (départ, maître, "
+                "3 pannes), 50/50 tests Playwright ; complète la séance 3 du Jardin "
                 "connecté (4e_C4.1) + QCM XXL réseaux conservé en entraînement.",
         anomalies="Héritées du QCM XXL existant : licences des images *_hd.jpg "
                   "non documentées — LICENCE À VÉRIFIER (consolidation "
                   "post-Conseil) ; doc3_schema_parcours.png (2,6 Mo) à trier.",
         accessibilite="Clavier, aria/alt, listes déroulantes exclusivement (DYS), "
                       "reduced-motion (clinique comprise), impression A4.",
-        medias="9 SVG originaux CC0 + fichier .pkt — SOURCES_MEDIAS.md complet.",
+        medias="14 SVG originaux CC0 + 5 fichiers .pkt — SOURCES_MEDIAS.md complet.",
     ),
     **{c: dict(
         statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
@@ -231,8 +236,8 @@ OVERLAY = {
                 f"(4e_C4.7, {d}) + séance 3 du Jardin connecté (4e_C4.1).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ) for c, d in {
-        "4e_C4.8": "act. 2 et 4 : banc d'essai + panne « mauvaise rue »",
-        "4e_C4.9": "act. 5 : simulation fournie complétée et validée",
+        "4e_C4.8": "act. 2 et 4 + intervention réelle : banc d'essai, panne « mauvaise rue » et trois fichiers .pkt en panne à diagnostiquer",
+        "4e_C4.9": "act. 5 et défi sans tutoriel : simulation fournie complétée, validée et test choisi par l'élève",
     }.items()},
     "4e_C6.2": dict(
         statut="COMPLET ET VALIDABLE",

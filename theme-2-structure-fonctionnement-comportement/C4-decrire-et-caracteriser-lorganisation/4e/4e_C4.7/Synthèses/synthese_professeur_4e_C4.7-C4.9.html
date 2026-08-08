@@ -39,7 +39,7 @@
 <nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html">← Séquence</a></nav>
 <div class="page">
 <h1>🎓 Synthèse professeur — SOS serre (4e_C4.7 · C4.8 · C4.9)</h1>
-<p class="pb">Atelier réseau 4e en 3 séances de 55 min — adresse IP fixe, dépannage méthodique et validation par simulation (Packet Tracer 8.2)</p>
+<p class="pb">Atelier réseau 4e en 4 séances de 55 min — adresse IP fixe, dépannage méthodique et validation par simulation (Packet Tracer 8.2)</p>
 <div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
 
 <div class="bloc">
@@ -49,7 +49,7 @@
     <dt>4e_C4.8</dt><dd>«&nbsp;Résoudre des problèmes pour assurer la communication entre les différents terminaux dans un réseau informatique (simulation ou réseau local déconnecté du réseau pédagogique).&nbsp;» — banc d'essai (act. 2) + démarche de diagnostic sur la panne «&nbsp;mauvaise rue&nbsp;» (act. 4). QCM&nbsp;: 10 q.</dd>
     <dt>4e_C4.9</dt><dd>«&nbsp;Compléter une simulation fournie pour valider le comportement d'un réseau informatique.&nbsp;» — le fichier <code>4e_serre_TECHNO-C4.pkt</code> est FOURNI, l'élève y ajoute le PDU de test et lit le verdict (act. 5). QCM&nbsp;: 10 q.</dd>
     <dt>Progressivité</dt><dd>5e a DÉCRIT le réseau (composants, topologie, adresse lue «&nbsp;rue + maison&nbsp;»)&nbsp;; la 4e PARAMÈTRE et DÉPANNE (masque lu, passerelle introduite)&nbsp;; la 3e fera le ROUTAGE entre réseaux (la passerelle prendra tout son sens). Vocabulaire introduit&nbsp;: adresse fixe/statique, DHCP (opposé), passerelle, masque (lecture), famille de panne, PDU/scénario. <b>Exclus (3e)&nbsp;:</b> routeur, table de routage, protocole de routage.</dd>
-    <dt>Socle · CRCN</dt><dd>D2 (coopération, outils numériques) · D4 (conception-réalisation, démarches scientifiques) — détail par activité dans la séquence. CRCN 5.1 niv. 2 consolidé, niv. 3 visé (l'élève ÉLABORE sa démarche de diagnostic, cartouche règle n°7 en act. 4).</dd>
+    <dt>Socle · CRCN</dt><dd>D1 (langages : lire un plan d'adressage, rédiger un diagnostic) · D2 (coopération, outils numériques) · D4 (conception-réalisation, démarches scientifiques) — détail par activité dans la séquence. CRCN : <b>2.3 Collaborer</b> et <b>5.2 Développer des documents multimédia / résoudre en équipe</b> sont les compétences explicitement citées par le programme 2024 pour ces codes ; <b>5.1 Résoudre des problèmes techniques</b> est travaillée en complément (repère verbatim : «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;»), niv. 2 consolidé, niv. 3 visé — l'élève ÉLABORE sa démarche (act. 4 et défi de la séance 4).</dd>
   </dl>
 </div>
 
@@ -57,10 +57,12 @@
   <div class="bloc">
     <h2 style="margin-top:0">Déroulé et matériel</h2>
     <ul>
-      <li><b>S1 — Le plan avant les câbles.</b> Act. 1&nbsp;: conception guidée du plan d'adressage (recette 4 étapes), production écrite, revue croisée entre binômes, PUIS plan de référence en correction.</li>
-      <li><b>S2 — Construire et adresser.</b> Act. 2&nbsp;: recette A→G (montage express, révision de 5e)&nbsp;; act. 3&nbsp;: adressage des 4 terminaux avec passerelle + preuve ping.</li>
-      <li><b>S3 — La clinique du réseau.</b> Act. 4&nbsp;: panne «&nbsp;mauvaise rue&nbsp;» (démarche du dépanneur + mini-simulateur à verrou)&nbsp;; act. 5&nbsp;: panne «&nbsp;liaison coupée&nbsp;» + validation par simulation sur le fichier fourni&nbsp;; bilan.</li>
-      <li><b>Matériel&nbsp;:</b> 1 poste/binôme, Packet Tracer 8.2, compte Cisco de classe préparé AVANT&nbsp;; le fichier <code>4e_serre_TECHNO-C4.pkt</code> distribué (clé USB ou réseau local de la salle).</li>
+      <li><b>S1 — Le plan avant les câbles (55 min).</b> Passeport réseau (5 min, sans note, diagnostic des acquis de 5e + capsule de rattrapage) ; act. 1&nbsp;: conception guidée du plan d'adressage (recette 4 étapes), production écrite, revue croisée entre binômes, PUIS plan de référence en correction.</li>
+      <li><b>S2 — Construire et adresser (55 min).</b> Act. 2&nbsp;: recette A→G (montage express, révision de 5e — ou départ direct depuis <code>4e_serre_DEPART.pkt</code> si le temps manque)&nbsp;; act. 3&nbsp;: adressage des 4 terminaux avec passerelle, LA preuve = <code>ping 192.168.20.50</code> vers le capteur qu'on vient d'adresser.</li>
+      <li><b>S3 — La clinique du réseau (55 min).</b> Act. 4&nbsp;: panne «&nbsp;mauvaise rue&nbsp;» (démarche du dépanneur + mini-simulateur à verrou, phrases guidées «&nbsp;J'observe / Je pense / Le test montre&nbsp;»)&nbsp;; <b>intervention réelle</b>&nbsp;: les trois fichiers PANNE_A/B/C à diagnostiquer, fiche d'intervention en 6 lignes.</li>
+      <li><b>S4 — Valider et évaluer (55 min).</b> Act. 5&nbsp;: panne «&nbsp;liaison coupée&nbsp;» + validation par simulation (Add Simple PDU, Event List)&nbsp;; <b>défi SANS tutoriel</b> (prouver la communication capteur↔serveur sans procédure)&nbsp;; bilan et auto-positionnement.</li>
+      <li><b>Matériel&nbsp;:</b> 1 poste/binôme, Packet Tracer 8.2, compte Cisco de classe préparé AVANT&nbsp;; les fichiers <code>4e_serre_DEPART.pkt</code>, <code>4e_serre_TECHNO-C4.pkt</code> et <code>4e_serre_PANNE_A/B/C.pkt</code> distribués (clé USB ou réseau local de la salle).</li>
+      <li><b>Ordinateur partagé&nbsp;:</b> la sauvegarde de la séquence est locale au navigateur ET au profil. Sur poste partagé, faire terminer une séance dans la même session, ou faire recopier les 6 lignes de la fiche d'intervention sur le cahier avant de quitter.</li>
     </ul>
   </div>
   <div class="bloc">
@@ -70,6 +72,8 @@
       <li><b>Verrou expérientiel (act. 4)&nbsp;:</b> les DEUX consultations de la clinique (ping réussi + cas «&nbsp;mauvaise rue&nbsp;») tracées dans <code>window.__exp</code> et exigées.</li>
       <li><b>Diagnostic rédigé (act. 4)&nbsp;:</b> ≥ 20 caractères reliant le timeout à la rue de l'adresse.</li>
       <li><b>Valeurs affichées = mesures réelles&nbsp;:</b> pings 0-12 ms (moy. 5 ms), TTL=128, «&nbsp;Request timed out&nbsp;» ×4 et 100% loss — session du 06-07/08/2026 sur poste enseignant.</li>
+      <li><b>Fiche d'intervention (S3)&nbsp;:</b> 6 lignes rédigées sur un des fichiers PANNE — trace écrite de la démarche, évaluable telle quelle.</li>
+      <li><b>Défi sans tutoriel (S4)&nbsp;:</b> l'élève choisit SEUL le test (ping OU PDU) et justifie&nbsp;; le vérificateur accepte les deux et exige la justification — c'est le geste de niveau 3 du CRCN.</li>
       <li><b>Sauvegarde locale&nbsp;:</b> clés <code>seq_4e_C4.7-C4.9_sos_serre_pt</code> · <code>qcm_4e_C4.7-C4.9_sos_serre_pt</code>. Aucune donnée envoyée.</li>
     </ul>
   </div>
@@ -93,21 +97,38 @@
       <li><b>Fragiles&nbsp;:</b> copilote d'abord&nbsp;; act. 2 avec le schéma sous les yeux&nbsp;; version 🅲 (clinique intégrée) suffit pour C4.8&nbsp;; QCM mode «&nbsp;10 questions&nbsp;».</li>
       <li><b>Rapides&nbsp;:</b> Bonus «&nbsp;clinique XXL&nbsp;» (inventer une 3ᵉ panne pour le binôme voisin — doublon, masque, câble)&nbsp;; défi jardin (transfert rue 192.168.10).</li>
       <li><b>Positionnement&nbsp;:</b> auto-positionnement par code (3 familles) + bilan par compétence du QCM (report LSU direct C4.7/C4.8/C4.9).</li>
-      <li><b>Sommative&nbsp;:</b> à construire par l'enseignant (objet transféré — ex. ajouter une caméra au réseau du CDI)&nbsp;; AUCUN corrigé sommatif dans le dépôt public.</li>
+      <li><b>Évaluation pratique proposée (10 min, séance 4)&nbsp;:</b> «&nbsp;Serre de Rivière-Salée — intervention n°47&nbsp;»&nbsp;: l'élève reçoit UN des trois fichiers PANNE, diagnostique, répare, et rend la fiche d'intervention en 6 lignes avec la preuve du re-test. Grille ci-dessous. <b>Aucun corrigé n'est publié dans le dépôt</b>&nbsp;: les trois pannes sont documentées dans la présente synthèse professeur, qui reste le document de l'enseignant.</li>
+      <li><b>Grille (3 niveaux)&nbsp;:</b> <i>fragile</i> — décrit le symptôme, propose un remède sans test&nbsp;; <i>satisfaisante</i> — hypothèse + test + remède + re-test, sur la bonne famille de panne&nbsp;; <i>très bonne</i> — idem + justifie POURQUOI ce test-là prouve la réparation, et nomme la famille de panne.</li>
+      <li><b>Sommative écrite&nbsp;:</b> à construire par l'enseignant (objet transféré — ex. ajouter une caméra au réseau du CDI)&nbsp;; AUCUN corrigé sommatif dans le dépôt public.</li>
     </ul>
   </div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Les trois fichiers en panne — document enseignant</h2>
+  <p>Fabriqués puis <b>vérifiés en conditions réelles</b> dans Packet Tracer 8.2 sur le poste enseignant
+  (07/08/2026) — chaque panne a été provoquée, testée au ping, et le résultat consigné.</p>
+  <dl>
+    <dt><code>4e_serre_PANNE_A.pkt</code> — famille «&nbsp;adressage&nbsp;»</dt><dd>le capteur est en <code>192.168.<b>21</b>.50</code> (mauvaise rue). Triangles verts, <code>ping 192.168.20.50</code> → <b>100% loss</b> vérifié. Remède&nbsp;: remettre <code>192.168.20.50</code>.</dd>
+    <dt><code>4e_serre_PANNE_B.pkt</code> — famille «&nbsp;liaison&nbsp;»</dt><dd>Port Status de l'imprimante décoché (Off). <b>Triangle rouge</b> visible sur la liaison. Remède&nbsp;: recocher On, attendre le vert, re-ping.</dd>
+    <dt><code>4e_serre_PANNE_C.pkt</code> — famille «&nbsp;masque&nbsp;»</dt><dd>le capteur porte la bonne adresse mais le masque <code>255.255.255.240</code>. Tout paraît juste&nbsp;; <code>ping 192.168.20.50</code> → <b>100% loss</b> vérifié (la réponse vers .10 sort du /28 du capteur et part vers une passerelle inexistante). C'est la panne la plus formatrice&nbsp;: elle oblige à lire le masque. Remède&nbsp;: <code>255.255.255.0</code>.</dd>
+  </dl>
+  <p><b>Note d'honnêteté technique&nbsp;:</b> la panne «&nbsp;doublon d'adresse&nbsp;» n'a pas pu être fabriquée&nbsp;:
+  l'interface de Packet Tracer refuse la saisie d'une IP déjà utilisée («&nbsp;This address is already used in
+  the network.&nbsp;»). Le doublon reste traité à l'oral et en bonus, pas en fichier.</p>
 </div>
 
 <div class="bloc">
   <h2 style="margin-top:0">Articulation dans le dépôt</h2>
   <p>Cet atelier est le <b>complément dédié «&nbsp;réseaux&nbsp;»</b> de la séquence-îlot «&nbsp;SOS jardin connecté&nbsp;»
   (4e_C4.1→C4.9), qui reste la porte d'entrée de C4 en 4e — sa séance 3 traite les mêmes codes en version courte&nbsp;;
-  le présent atelier les traite en profondeur (3 séances, conception du plan, deux familles de pannes, validation
-  par simulation). En amont&nbsp;: 5e «&nbsp;Le réseau de la salle techno&nbsp;» (5e_C4.7-C4.8). En aval&nbsp;: 3e
+  le présent atelier les traite en profondeur (4 séances, conception du plan, trois familles de pannes avec
+  fichiers réels, validation par simulation, défi sans procédure). En amont&nbsp;: 5e «&nbsp;Le réseau de la salle techno&nbsp;» (5e_C4.7-C4.8). En aval&nbsp;: 3e
   «&nbsp;Internet jusqu'à Sainte-Luce&nbsp;» et l'atelier routage Martinique→New York (3e_C4.8) — la passerelle
   introduite ici y prend tout son sens. Les figures sont des reconstitutions SVG originales CC0 d'après nos sessions
-  réelles Packet Tracer 8.2 (règles n°1 et n°20) — aucune capture propriétaire&nbsp;; le fichier maître
-  <code>4e_serre_TECHNO-C4.pkt</code> (construit et validé en conditions réelles) accompagne le lot.</p>
+  réelles Packet Tracer 8.2 (règles n°1 et n°20) — aucune capture propriétaire&nbsp;; cinq fichiers Packet Tracer construits et validés en conditions réelles accompagnent le lot&nbsp;:
+  <code>4e_serre_DEPART.pkt</code> (câblé, adresses vides), <code>4e_serre_TECHNO-C4.pkt</code> (maître, tout
+  adressé) et les trois fichiers en panne.</p>
 </div>
 </div>
 </body>
