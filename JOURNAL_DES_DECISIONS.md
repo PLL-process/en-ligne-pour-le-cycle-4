@@ -2499,3 +2499,80 @@ SOURCES_MEDIAS pour qu'on ne la prenne pas pour un manque.
 Quatre codes quittent «&nbsp;À CRÉER&nbsp;». Le dépôt compte **23 codes complets** et **34 à
 créer** — contre 44 ce matin. Vérificateur&nbsp;: **7 sur 7**. Tests du lot&nbsp;: **28 sur 28**.
 Contrôles de l'index&nbsp;: **20 sur 20**.
+
+---
+
+## 8 août 2026 — Lot Shenzhen 5e_C2.1 · C2.2 : « la station de vélos et tout ce qui l'entoure »
+
+Premier lot du **C2**. Il achève une séquence qui existait déjà — 7,4 ko, huit titres justes, un
+scénario qui tient — mais qui était **un plan rédigé en HTML, pas une séquence au gabarit maison**.
+Aucun vérificateur, aucune zone de rédaction, aucune barre d'outils, aucun mode essentiel.
+
+### Une estimation qui n'a pas ouvert le fichier n'est pas une estimation
+
+J'avais annoncé à Pascal que ce lot serait «&nbsp;un achèvement, pas une création — le travail le
+plus court des trois&nbsp;». C'était faux, et je l'ai dit sur la foi d'un statut d'audit et d'un nom
+de fichier, **sans ouvrir le fichier**. Le lot final fait 43 tests et huit fichiers neufs.
+
+### Ce que la séquence installe
+
+Un seul geste, pris dans les deux sens&nbsp;: regarder à l'extérieur de l'objet. En séance 1 l'élève
+**recense** les interacteurs&nbsp;; en séances 2 et 3 il **remonte** des formes aux décisions prises
+pour ces interacteurs-là.
+
+La situation déclenchante a été choisie contre une confusion tenace&nbsp;: la station fonctionne mal
+alors que **rien n'est cassé**. Tant qu'un élève croit qu'une panne suppose une pièce cassée, la
+notion d'interacteur reste décorative.
+
+### La frontière de niveau, qui est le vrai risque de ce lot
+
+«&nbsp;Décrire l'expérience de l'utilisateur&nbsp;» est au programme de **4e**. En 5e, on recense et
+on repère. Le glissement est facile et il coûterait le lot suivant&nbsp;: si la 5e raconte déjà le
+vécu de l'usager, la 4e n'a plus rien à apprendre.
+
+La frontière est donc écrite **à l'élève**, dans la carte du référentiel («&nbsp;ce que tu feras en
+4e, et pas encore ici&nbsp;»), à la fiche, à la synthèse professeur, et le QCM y consacre sa
+trentième question. Un repère de progression qui n'est écrit que pour l'enseignant ne tient pas la
+progression.
+
+### Un compteur qui comptait quatre choses et en annonçait trois
+
+La barre de progression annonçait «&nbsp;0 / 4 activités&nbsp;» pour trois activités et un billet
+d'entrée. Or le billet **oriente sans note**&nbsp;: il ne se valide pas comme une activité. Le
+compteur annonce désormais 3 et compte 3 (règle n°39).
+
+### Des durées qui ne remplissaient pas la séance
+
+Le vérificateur acceptait 94 minutes annoncées pour 165 disponibles — la règle n°23 ne contrôle que
+le dépassement. Mais 71 minutes sans emploi ne sont pas une marge, ce sont des minutes que
+l'enseignant devra inventer devant sa classe. Relevé à **149 minutes**. Une durée qui ne remplit pas
+la séance n'est pas une durée, c'est un vœu.
+
+### Ouvrir un fichier en écriture le vide avant d'écrire
+
+Un script de correction a détruit le QCM en cours de fabrication&nbsp;: `open(p, 'w')` **tronque
+immédiatement**, et l'erreur qui a suivi n'a pas laissé le fichier intact — elle l'a laissé à zéro
+octet. Le générateur livré (`_generation/build_qcm.py`) n'ouvre son fichier de sortie qu'une fois
+toutes ses vérifications passées.
+
+Ce n'était pas une perte grave — le fichier était régénérable, précisément parce que la règle n°38
+avait été suivie. C'est le meilleur argument pour elle&nbsp;: **une source de vérité et un
+générateur, c'est aussi ce qui rend un accident réparable en une commande.**
+
+### Un fichier hérité qu'on garde sans l'utiliser
+
+`solutions_station_shenzhen_simulees.csv` compare quatre variantes de station sur six critères.
+C'est un geste de la compétence **C3**, pas du C2. Il n'est donc pas utilisé par la séquence — et
+c'est **écrit** au SOURCES_MEDIAS plutôt que masqué. Un fichier présent et inexpliqué se lit comme
+un oubli&nbsp;; un fichier présent et expliqué se lit comme une ressource.
+
+### Un lien cassé de moins
+
+La séquence pointait depuis des mois vers `qcm_5e_C2_shenzhen_station_velos.html`, qui n'existait
+pas. Il existe. Reste la deuxième dette signalée&nbsp;: `synthese_eleve_5e_C1.1.html`.
+
+### Le bilan
+
+Deux codes quittent «&nbsp;À CRÉER&nbsp;». Le dépôt compte **24 codes complets** et **33 à créer**.
+Vérificateur&nbsp;: **7 sur 7**. Tests du lot&nbsp;: **43 sur 43**. Contrôles de l'index&nbsp;:
+**20 sur 20**.
