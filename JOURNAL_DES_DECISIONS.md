@@ -1447,3 +1447,136 @@ et la constatation que **sans routeur, les deux moitiés ne se voient pas** — 
 essentiel dont la persistance, les trois issues du billet d'entrée, la capsule, le repère CRCN 5.1 verbatim
 et le niveau 3 toujours en place, l'indicateur « prochaine étape », la restauration locale, le `.pkt` et le
 QCM. La conformité v1 (37/37) n'est pas rejouée ici : elle est inchangée et reste déclarée à sa date.
+
+## 2026-08-08 — Douze règles d'or nées de l'audit externe (n°23 à n°34) + extensions des n°3 et n°7
+
+**Décision de Pascal.** L'audit pédagogique externe du lot 4e ne devait pas rester un correctif ponctuel.
+Ses constats sont transformés en règles du dépôt, applicables à tous les thèmes et à tous les niveaux.
+Douze règles nouvelles, deux extensions de règles existantes, et un rétrofit de l'existant décidé dans la
+foulée. **Une règle qu'on ne peut pas vérifier est une règle qui meurt** : chacune indique donc comment on
+la contrôle, et celles qui sont mécanisables sont outillées dans `_outils/`.
+
+### n°23 — La durée annoncée est un engagement, pas une décoration
+La somme des durées des activités ne dépasse jamais le temps réellement disponible dans le nombre de
+séances annoncé — activités, plus lancement du logiciel, transitions, synthèse et bilan. Si ça ne rentre
+pas, **on ajoute une séance** : on ne rogne pas sur les élèves lents. *Vérifiable par script.*
+Origine : le seul défaut que l'audit qualifie de critique — 170 min annoncées pour 165 disponibles, l'élève
+lent commençant chaque séance suivante avec du retard, et cumulant.
+
+### n°24 — La preuve porte sur l'objet de la mission
+Quand une compétence porte sur un objet précis, la preuve exigée porte sur **cet objet-là**. Les autres
+tests sont des validations complémentaires, jamais le test principal. Origine : l'activité « L'adresse fixe
+du capteur » faisait pinguer le serveur et l'imprimante, jamais le capteur.
+
+### n°25 — On ne certifie pas un dépannage sans panne inconnue
+Une compétence de diagnostic ne s'atteste pas par des listes déroulantes et un simulateur scénarisé : il
+faut un **artefact réellement défectueux**, reçu sans savoir ce qu'il contient, et une trace écrite de la
+démarche. **Clause de proportionnalité** : exigée quand le libellé officiel contient « résoudre un
+problème », « diagnostiquer » ou « dépanner ». Ailleurs, surcharge sans objet.
+
+### n°26 — Un diagnostic d'entrée avant toute séquence qui s'appuie sur l'année précédente
+Dès qu'une séquence dit « tu l'as appris en 5e », elle ouvre par un diagnostic court **sans note** des
+prérequis, avec capsule de rattrapage et aiguillage automatique. **Clause** : il oriente et ne sanctionne
+jamais, et le vérificateur le dit à l'élève en toutes lettres — sinon le filet de sécurité devient une
+épreuve d'entrée, soit l'inverse exact de l'effet recherché.
+
+### n°27 — Ce qui n'est vrai que chez nous se dit comme tel
+Toute simplification valable dans le lot mais fausse en général est **explicitement bornée** à ce cadre :
+« dans notre réseau, qui utilise le masque 255.255.255.0… », jamais « les trois premiers nombres sont
+toujours le réseau ». Un usage se nomme un usage, jamais une règle. **Inclut les valeurs affichées** :
+toute valeur dit d'où elle vient, une valeur de simulateur s'annonce comme telle (« valeurs réellement
+observées pendant notre simulation »), jamais comme une mesure du monde physique, et on précise que celles
+de l'élève seront proches sans être identiques.
+
+### n°28 — La compétence se prouve en situation ; le QCM, lui, entraîne
+Le QCM reste un **entraînement aux connaissances**. Une compétence est la capacité à mobiliser des
+ressources dans une situation **non strictement reproduite** (Éduscol distingue explicitement posséder et
+mobiliser). Donc : toute séquence dont une compétence est « savoir faire » se termine par une tâche **sans
+procédure sous les yeux**, où l'élève choisit son outil et justifie ; l'évaluation de la compétence se fait
+par une **mini-situation pratique** ; le critère de réussite cesse de s'écrire « 5 bonnes réponses + fichier ».
+**Clause d'implémentation, apprise à nos dépens** : quand une activité annonce que plusieurs chemins sont
+valables, **le vérificateur doit tous les accepter** — sinon la page dit une chose et le code en fait une
+autre, et c'est l'élève honnête qui est puni.
+
+### n°29 — La charge de lecture est un obstacle qu'on doit pouvoir retirer
+Toute séquence longue offre un **mode essentiel** : bouton persistant masquant référentiel, longues
+explications, corrections, erreurs fréquentes et approfondissements. Ne restent que **mission → étape
+actuelle → image → consigne → réponse → aide**, avec retour au mode complet à tout moment. **Clause** :
+c'est un confort de lecture proposé à tous, jamais un parcours au rabais assigné à certains.
+
+### n°30 — Le tableau de bord des tâches
+Dès qu'une séance comporte plusieurs tâches enchaînées, la page affiche un **bandeau** qui les liste et
+coche ce qui est fait (« SÉANCE 2 — ÉTAPE 3/5 · ☑ réseau construit · ☐ adresses configurées »). La barre de
+progression **compte** ; ce bandeau **situe**. C'est ce dont un élève attentionnellement fragile a besoin :
+savoir où il en est sans relire la page.
+
+### n°31 — Toute production écrite exigée propose sa version étayée
+Chaque fois qu'on demande de rédiger, la consigne existe en deux formes au choix : **autonome** et
+**étayée** (phrases à compléter : « J'observe que… Je pense que… Pour vérifier, je… Le test montre que…
+Je corrige… Je vérifie ensuite avec… »). Le niveau scientifique exigé reste **exactement le même** : on
+retire l'obstacle linguistique, pas l'exigence.
+
+### n°32 — Le triptyque de capture : où cliquer → quoi faire → ce que j'observe
+Une figure montrant le résultat final ne répond pas à la question de l'élève bloqué (« où dois-je cliquer
+maintenant ? »). Tout geste logiciel constituant un blocage prévisible est illustré en trois temps :
+**où cliquer** (l'élément entouré dans son contexte), **quoi faire** (le geste, fléché), **ce que je dois
+observer** (le résultat et ce qui prouve la réussite). On illustre les blocages, pas la routine — et
+toujours sous la règle n°1 : SVG originaux reconstitués, jamais de capture propriétaire.
+
+### n°33 — Aérer : une idée, un bloc ; une liste, des lignes *(règle proposée par Pascal)*
+On ne fusionne pas deux idées distinctes dans un même pavé. Dès qu'un paragraphe change de sujet —
+l'analogie, puis la précision scientifique — **il change de bloc**. Toute énumération va à la ligne, une
+entrée par ligne, même courte, même dans une consigne ou une recette. L'exemple fondateur : dans l'étape 4
+du lot 4e, l'analogie du masque et sa précision scientifique formaient un seul paragraphe de six lignes —
+un lecteur lent y perdait le fil exactement au moment où la nuance comptait le plus. C'est une règle de
+forme, mais elle décide de qui arrive au bout de la page.
+
+### n°34 — L'audit d'accessibilité passe avant la livraison
+Aucun lot n'est livré sans avoir passé la check-list d'accessibilité, et le rapport de tests dit lesquels
+de ces points ont été **réellement vérifiés** — jamais « le lot est accessible ». Points contrôlés :
+navigation `Tab` seule, focus toujours visible, zoom 200 % sans perte, pas de défilement horizontal sur
+petit écran, `select` avec vraie étiquette, boutons compréhensibles sans la couleur, alternatives textuelles
+pertinentes, emojis décoratifs ignorés du lecteur d'écran, contraste suffisant, réponses justes/fausses
+jamais signalées par la seule couleur, champs de rédaction de taille suffisante, minuterie jamais bloquante.
+La majorité est automatisable : l'outillage vit dans `_outils/`.
+
+### Extension de la règle n°3 (versions 🅰/🅱/🅲)
+La n°3 protège du courant (très basse tension uniquement). On lui ajoute le pendant réseau : **la version
+🅰 d'un lot réseau ne branche jamais rien sur le réseau pédagogique**. Elle est soit de la pure observation,
+soit un TP sur matériel **physiquement séparé**, décrit assez précisément pour être monté — ou écarté
+sciemment. Le guide académique d'équipement recommande explicitement des équipements indépendants du réseau
+pédagogique pour l'étude des réseaux et de l'IoT.
+
+### Extension de la règle n°7 (CRCN observable, tracé, justifié)
+Phrase de garde ajoutée : **le CRCN est le résultat d'une activité authentique, jamais une collection
+d'étiquettes**. On n'ajoute pas une recherche Internet artificielle pour cocher « mener une veille » : mieux
+vaut trois liens vrais que cinq domaines affichés. Corollaire institutionnel : on distingue **les CRCN que
+le programme relie explicitement** au contenu et **les CRCN complémentaires réellement travaillés**, et on
+le dit dans cet ordre.
+
+### Ce qui n'a PAS été érigé en règle, et pourquoi
+Le contrat de binôme nommant qui manipule quoi est une excellente modalité d'animation : sa place est dans
+la fiche pédagogique, pas dans une loi du dépôt. La grille de compétences à trois niveaux appartient au
+skill `curriculum-assessment-cycle4`. Le glossaire illustré pour élèves EANA est un bon gabarit, pas une
+obligation. Enfin, l'audit relève un point de **couverture** et non de méthode : le **débit et ses ordres de
+grandeur**, ainsi que le rôle explicite de la carte réseau, figurent au programme de la thématique réseau et
+n'apparaissent dans aucun des trois lots réseaux — à vérifier dans la progression annuelle qu'ils sont
+traités ailleurs.
+
+### Outillage et état des lieux (même décision)
+Un vérificateur `_outils/verif_regles_audit.py` contrôle les règles mécanisables (n°23, n°26, n°29, n°30,
+n°31, n°33, n°34) sur toute séquence du dépôt, et **signale sans trancher** les règles de jugement (n°24,
+n°25, n°27, n°28, n°32). Passé sur les 16 séquences du Thème 2 avant toute correction, il établit
+**58 manquements mécaniques** — consignés tels quels dans `_outils/etat_des_lieux_regles_audit.md`.
+
+Ce chiffre ne dit pas que le Thème 2 est mauvais : il dit que douze règles écrites aujourd'hui n'existaient
+pas quand ces lots ont été produits. Trois d'entre elles (mode essentiel, tableau de bord des tâches,
+version étayée) concentrent la majorité des lignes rouges et sont mécanisables — le rétrofit sera long mais
+peu risqué. La règle n°23 sort majoritairement en « non mesurable » : la plupart des séquences n'annoncent
+pas de durée par activité, ce qui n'est pas une conformité mais une **absence de donnée** à produire lot par
+lot, à la main. C'est le poste le plus coûteux du chantier, et c'est écrit ici pour qu'on ne l'oublie pas.
+
+**Chantier décidé par Pascal (08/08/2026) :** rétrofit de l'ensemble du Thème 2 aux nouvelles règles, plus
+l'achèvement du lot **`4e_C4.1_book-train`** laissé en suspens — il ne comporte aujourd'hui qu'une séquence
+et ses fichiers drawio, sans QCM, sans synthèses, sans fiche ni manifest, ce qui contredit la règle du lot
+indivisible. Une PR par lot, la présente PR ne portant que les règles et l'outillage.
