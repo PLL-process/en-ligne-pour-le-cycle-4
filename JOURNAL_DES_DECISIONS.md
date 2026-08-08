@@ -2429,3 +2429,73 @@ créer** (contre 44 ce matin). Le C3 est couvert en 5e et en 4e&nbsp;; restent l
 
 Vérificateur&nbsp;: **7 sur 7**. Tests du lot&nbsp;: **28 sur 28**. Contrôles de l'index&nbsp;:
 **20 sur 20**.
+
+---
+
+## 08/08/2026 — Lot Shenzhen 3e_C3 : la compétence C3 achevée sur les trois niveaux
+
+### La progression, enfin lisible
+
+| Niveau | Ce que l'élève reçoit | Ce qu'il produit |
+|---|---|---|
+| 5e — Shanghai | solutions **et** critères **et** protocole | il applique |
+| 4e — Hangzhou | les solutions seules | il écrit les critères, choisit les instruments |
+| 3e — Shenzhen | **un besoin seul** | il **établit la liste** et **définit** le protocole |
+
+Les onze codes du C3 sont couverts. Ce n'est pas un empilement de trois lots&nbsp;: c'est une
+progression dont chaque marche retire un appui.
+
+### La contrainte d'usage qui conditionne tout le lot
+
+**Le tableau des six solutions ne se distribue pas en séance 1.** S'il est donné, l'élève lit une
+liste au lieu de l'établir, et 3e_C3.1 n'est pas couvert.
+
+C'est écrit au plan, au README, à la fiche pédagogique, à la synthèse professeur et à l'OVERLAY
+d'audit — cinq endroits, parce qu'un lot se transmet et que cette contrainte ne se devine pas en
+ouvrant les fichiers. *Une consigne d'usage qui n'est écrite qu'une fois n'est pas transmise.*
+
+### Trois verrous de rédaction au lieu d'un
+
+L'activité 1 refuse de valider tant que la liste ne nomme pas les trois familles&nbsp;; l'activité 3
+exige un protocole en cinq étapes numérotées&nbsp;; l'activité 5 une note chiffrée sur les trois
+piliers. En 3e, la production écrite **est** la preuve, pas un complément — les vérificateurs le
+disent au lieu de le supposer.
+
+### Le retournement de la séance 4
+
+Seul le climatiseur atteint à lui seul les 9 °C que la mesure des élèves a rendus nécessaires. Mais
+ventilation + extracteur + réduction du nombre de machines donne 11,5 °C, pour un coût
+d'installation deux fois moindre et une **consommation nette négative**.
+
+*On ne choisit pas toujours dans une liste&nbsp;: parfois on compose.* C'est ce qui sépare vraiment
+la 3e de la 4e, et la synthèse professeur recommande de laisser un groupe le trouver plutôt que de
+l'annoncer.
+
+### Le pilier social, sous une forme inconfortable
+
+Renoncer à deux serveurs, c'est retirer un service à des usagers réels. La séquence le pose ainsi
+plutôt que de réduire le développement durable à l'écologie. C'est une occasion rare de travailler
+le **D3 du socle** dans un cours de technologie, sur un arbitrage authentique et non sur un débat
+abstrait.
+
+### Un défaut que je reproduis
+
+Quatre réfutations de distracteurs étaient trop courtes — «&nbsp;Aucun lien.&nbsp;», «&nbsp;Rien ne
+le garantit.&nbsp;» Le même contrôle les avait déjà attrapées dans le lot de 4e.
+
+Le motif est net, et il vaut d'être nommé&nbsp;: **quand une réponse fausse me paraît évidente,
+j'écris une réfutation courte** — or c'est exactement là qu'un élève a besoin d'explication. Le test
+compense un biais que ma relecture ne voit pas, parce que ma relecture partage le biais.
+
+### Une seule figure, volontairement
+
+Ce lot ne contient qu'un SVG, là où les précédents en avaient deux ou trois. Une planche de
+solutions illustrées aurait **donné les réponses de l'activité 1**. La sobriété iconographique est
+ici une décision pédagogique, pas une économie&nbsp;: elle est écrite au manifest et à
+SOURCES_MEDIAS pour qu'on ne la prenne pas pour un manque.
+
+### Le bilan
+
+Quatre codes quittent «&nbsp;À CRÉER&nbsp;». Le dépôt compte **23 codes complets** et **34 à
+créer** — contre 44 ce matin. Vérificateur&nbsp;: **7 sur 7**. Tests du lot&nbsp;: **28 sur 28**.
+Contrôles de l'index&nbsp;: **20 sur 20**.

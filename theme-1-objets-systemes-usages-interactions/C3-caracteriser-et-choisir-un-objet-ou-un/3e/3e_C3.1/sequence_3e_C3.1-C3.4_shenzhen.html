@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 3e — Shenzhen : établir la liste des solutions possibles, les évaluer, définir un protocole de mesure et choisir sur les trois piliers du développement durable. Codes 3e_C3.1 à 3e_C3.4, programme 2024.">
+<title>Thème 1 · 3e — Shenzhen : comment refroidir un local qui surchauffe ? (3e_C3.1 à C3.4)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip" href="#seances" style="position:absolute;left:-9999px">Aller directement aux activités</a>
+<div class="page">
+<h1>🌡️ Shenzhen — comment refroidir un local qui surchauffe&nbsp;?</h1>
+<p class="sous">Établir les possibles, les évaluer, définir le protocole, puis choisir.</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">3e_C3.1</span><span class="badge code">3e_C3.2</span>
+  <span class="badge code">3e_C3.3</span><span class="badge code">3e_C3.4</span>
+  <span class="badge theme">D1.3 · D2 · D3 · D4 · D5 · CRCN 1.3 niv. 3</span>
+  <span class="badge theme">4 séances de 55 min</span>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnPrint">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>. Le
+<b>mode essentiel</b> masque le référentiel, les corrections et les compléments.</p>
+
+<section class="card">
+  <h2>🌡️ La situation&nbsp;: 41 °C dans le local, et personne n'a d'idée</h2>
+  <p>Le collège de Shenzhen a installé ses serveurs dans un petit local sans fenêtre, exposé plein
+  ouest. En juin dernier, le thermomètre y est monté à <b>41 °C</b>&nbsp;: deux machines se sont
+  arrêtées d'elles-mêmes pour se protéger.</p>
+  <p>Le principal veut une solution avant l'été. Il n'a reçu <b>aucune proposition</b>&nbsp;: ni
+  devis, ni catalogue, ni tableau comparatif.</p>
+  <p style="color:var(--warn);font-size:1.05em">Cette fois, il n'y a rien à comparer&nbsp;: il faut
+  d'abord <b>trouver ce qu'il est possible de faire</b>.</p>
+  <p class="meta">🪜 <b>La troisième marche.</b> En 5e, on vous donnait les solutions, les critères
+  et le protocole&nbsp;: vous appliquiez. En 4e, on vous donnait les solutions&nbsp;: vous écriviez
+  les critères. En 3e, on ne vous donne <b>qu'un besoin</b>&nbsp;: vous établissez la liste des
+  possibles, et vous <b>définissez</b> le protocole de mesure.</p>
+  <p class="meta">⚠️ <b>Toutes les données de cette séquence sont simulées</b>, construites pour
+  l'exercice. Elles sont réalistes et cohérentes, mais ne décrivent aucun matériel commercialisé.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Comment établir l'éventail des solutions possibles
+  à un besoin, les évaluer selon des exigences que l'on définit, et choisir en tenant compte du
+  cycle de vie et des trois piliers du développement durable&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Avant toute recherche&nbsp;: à ton avis, que faut-il installer dans ce local, et pourquoi&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : que faut-il installer et pourquoi"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Je pense qu'il faut ____.&nbsp;»</li>
+    <li>«&nbsp;Parce que le problème vient de ____.&nbsp;»</li>
+    <li>«&nbsp;Ce dont je ne suis pas sûr·e, c'est ____.&nbsp;»</li></ul></details>
+  <p class="meta">Garde cette réponse en tête&nbsp;: au bilan, tu regarderas si ta première idée
+  appartenait à une seule famille de solutions — c'est le cas le plus fréquent.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>3e_C3.1</code> à
+  <code>3e_C3.4</code> sont des codes de classement <b>internes à ce dépôt</b>. Ils ne figurent pas
+  comme tels au BO.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>3e_C3.1</b></td><td>Établir une liste d'objets ou systèmes techniques possibles en
+      vue de répondre à un besoin.</td><td>Séance 1</td></tr>
+    <tr><td><b>3e_C3.3</b></td><td>Évaluer les solutions selon des exigences ou des critères
+      identifiés&nbsp;: caractéristiques, performances, coût, indice de réparabilité.</td><td>Séance 2</td></tr>
+    <tr><td><b>3e_C3.4</b></td><td><b>Définir</b> et mettre en œuvre un protocole pour mesurer une
+      caractéristique ou une performance.</td><td>Séance 3</td></tr>
+    <tr><td><b>3e_C3.2</b></td><td>Choisir une solution et argumenter ce choix en prenant en compte
+      son cycle de vie et les trois piliers du développement durable.</td><td>Séance 4</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 · D2 · D3 (choix collectif et argumentation) · D4 · D5.</p>
+  <p><b>CRCN réellement travaillé</b> — <b>1.3 Traiter des données</b>, <b>niveau 3</b>. L'élève ne
+  remplit pas une grille fournie&nbsp;: il la <b>construit</b>, <b>pondère</b> ses critères, et doit
+  pouvoir défendre sa pondération — c'est-à-dire assumer que le résultat dépend de choix qu'il a
+  faits. La trace est le classeur, formules et pondérations visibles.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 5 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Établir les possibles<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Évaluer<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Définir le protocole<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Choisir<span class="done" id="done-s4"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu as travaillé les années précédentes. <b>Aucune note</b>.</p>
+  <div class="assoc"><label for="be_1">Une exigence utilisable porte&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>une grandeur, une unité et un seuil</option>
+      <option>un adjectif précis</option><option>le nom du fournisseur</option>
+      <option>un budget maximal, et rien d'autre</option></select></div>
+  <div class="assoc"><label for="be_2">Sur un objet qui dure des années, l'étape du cycle de vie qui pèse le plus est&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>l'utilisation</option><option>la fabrication</option>
+      <option>la distribution</option><option>la fin de vie</option></select></div>
+  <div class="assoc"><label for="be_3">Avant de choisir un appareil de mesure, il faut d'abord&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>décider quelle grandeur on veut mesurer</option>
+      <option>prendre l'appareil le plus précis</option>
+      <option>regarder ce qui est disponible</option>
+      <option>fixer le budget</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Une <b>exigence</b> se dit avec une grandeur, une unité et un seuil&nbsp;: sans les trois,
+    elle ne se vérifie pas.</p>
+    <p>Sur un objet qui dure, l'<b>utilisation</b> pèse le plus&nbsp;: un petit écart quotidien
+    multiplié par des années dépasse un coût unique.</p>
+    <p>La <b>grandeur commande l'appareil</b>, jamais l'inverse.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>🗂️ Activité 1 — Établir la liste des possibles <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> établir une liste de solutions possibles · <b>Compétence</b>
+  3e_C3.1 · <b>Production</b> une liste d'au moins cinq solutions couvrant trois familles ·
+  <b>Ressource</b> la planche ci-dessous — <b>et aucun catalogue</b></div>
+
+  <p><b>Consigne.</b> Avant toute chose, et <b>avant d'ouvrir le tableau de données</b> qui n'arrive
+  qu'en séance 2&nbsp;: cherchez ce qu'il est <b>possible</b> de faire pour ce local. Pas ce qui est
+  le mieux — ce qui est possible.</p>
+
+  <figure class="fig">
+    <img src="Images/familles_de_solutions.svg" alt="Trois familles de solutions présentées comme également légitimes. Les passives ne consomment rien : ventilation naturelle, ombrage, isolation. Les actives consomment pour agir : extracteur d'air, climatiseur, refroidissement par eau. Les organisationnelles changent le problème : déplacer le local, réduire le nombre de machines, décaler les usages. Une bande rappelle qu'une liste qui ne contient qu'une seule famille n'est pas une liste, c'est une idée, et que réduire le besoin est une solution technique à part entière.">
+    <figcaption>📷 Document à lire pour répondre</figcaption>
+  </figure>
+
+  <h4>a) La méthode de recensement</h4>
+  <div class="assoc"><label for="a1_1">Pour établir une liste, la première question à se poser est&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>d'où vient la chaleur, et par où peut-elle partir ?</option>
+      <option>quel est le budget disponible ?</option>
+      <option>quelle marque est la plus fiable ?</option>
+      <option>que font les autres collèges ?</option></select></div>
+  <div class="assoc"><label for="a1_2">Une liste de qualité se juge d'abord à&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>sa diversité : plusieurs familles représentées</option>
+      <option>sa longueur : le plus de propositions possible</option>
+      <option>la nouveauté des technologies citées</option>
+      <option>le prix moyen des solutions listées</option></select></div>
+  <div class="assoc"><label for="a1_3">Un groupe propose trois climatiseurs de marques différentes. Sa liste&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>ne contient en réalité qu'une seule solution, déclinée trois fois</option>
+      <option>est excellente : trois propositions valent mieux qu'une</option>
+      <option>est incomplète mais correcte</option>
+      <option>est hors sujet</option></select></div>
+
+  <h4>b) Ce qu'on oublie presque toujours</h4>
+  <div class="assoc"><label for="a1_4">«&nbsp;Réduire le nombre de machines&nbsp;» est&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>une solution technique à part entière : elle agit sur la cause plutôt que sur l'effet</option>
+      <option>un renoncement, pas une solution</option>
+      <option>une solution seulement si rien d'autre ne marche</option>
+      <option>hors du champ de la technologie</option></select></div>
+  <div class="assoc"><label for="a1_5">Pourquoi les solutions passives sont-elles rarement citées spontanément&nbsp;?</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>parce qu'on cherche d'abord un appareil à installer, pas un obstacle à retirer</option>
+      <option>parce qu'elles ne fonctionnent pas</option>
+      <option>parce qu'elles coûtent plus cher</option>
+      <option>parce qu'elles sont interdites dans les établissements scolaires</option></select></div>
+  <div class="assoc"><label for="a1_6">Écarter une solution dès le recensement parce qu'elle «&nbsp;a l'air trop chère&nbsp;»&nbsp;:</label>
+    <select id="a1_6"><option value="">— choisir —</option>
+      <option>est une erreur : on recense d'abord, on évalue ensuite</option>
+      <option>fait gagner du temps</option>
+      <option>est nécessaire pour rester dans le budget</option>
+      <option>est obligatoire dans un cahier des charges</option></select></div>
+
+  <h4>c) Ta liste</h4>
+  <div class="assoc">
+    <label for="a1_liste">Écris <b>au moins cinq</b> solutions possibles, en indiquant pour chacune sa famille (passive, active ou organisationnelle). Au moins <b>trois familles</b> doivent apparaître.</label>
+    <textarea id="a1_liste" style="min-height:120px" aria-label="Ta liste : au moins cinq solutions possibles avec leur famille"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: la structure est donnée, les idées
+    restent à trouver.</p>
+    <ul>
+      <li>«&nbsp;Solution 1 (passive)&nbsp;: ____ — elle agit en ____.&nbsp;»</li>
+      <li>«&nbsp;Solution 2 (passive)&nbsp;: ____.&nbsp;»</li>
+      <li>«&nbsp;Solution 3 (active)&nbsp;: ____ — elle consomme ____.&nbsp;»</li>
+      <li>«&nbsp;Solution 4 (active)&nbsp;: ____.&nbsp;»</li>
+      <li>«&nbsp;Solution 5 (organisationnelle)&nbsp;: ____ — elle change le problème en ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Deux façons de refroidir un local&nbsp;: <b>évacuer</b> la chaleur qui y est produite, ou en
+    <b>produire moins</b>. La deuxième piste est celle qu'on oublie.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Passe en revue le trajet de la chaleur&nbsp;: elle est <b>produite</b> par les machines,
+    <b>ajoutée</b> par le soleil sur le mur ouest, <b>piégée</b> par l'absence d'ouverture. Chaque
+    étape du trajet ouvre une famille de solutions&nbsp;: produire moins, protéger du soleil,
+    ouvrir un passage, ou extraire de force.</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Recenser, ce n'est pas choisir. La première question n'est pas «&nbsp;quel appareil&nbsp;?&nbsp;»
+    mais «&nbsp;d'où vient la chaleur et par où peut-elle partir&nbsp;?&nbsp;» — le trajet du
+    problème ouvre les familles de solutions.</p>
+    <p>Trois climatiseurs de marques différentes, ce n'est <b>pas</b> trois solutions&nbsp;: c'est
+    une solution déclinée trois fois. Une liste se juge à sa <b>diversité</b>, pas à sa longueur.</p>
+    <p>Les solutions <b>passives</b> et <b>organisationnelles</b> sont rarement citées parce qu'on
+    cherche spontanément un appareil à installer. Or «&nbsp;réduire le nombre de machines&nbsp;»
+    agit sur la <b>cause</b> et non sur l'effet — c'est souvent la solution la moins chère et la
+    moins émettrice, et c'est une solution technique à part entière.</p>
+    <p>Enfin, on ne filtre pas pendant le recensement. Écarter une piste parce qu'elle
+    «&nbsp;a l'air chère&nbsp;», c'est évaluer sans données&nbsp;: on recense d'abord, on évalue
+    ensuite, avec des chiffres.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une liste se juge à sa diversité. Et réduire le
+  besoin est une solution technique — souvent la meilleure.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: filtrer pendant le recensement, et ne garder que
+  ce qu'on avait déjà en tête au départ.</p>
+  <p><b>Critère de réussite</b>&nbsp;: ta liste compte au moins cinq solutions et couvre les trois
+  familles.</p>
+</section>
+</div>
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>⚖️ Activité 2 — Évaluer selon des exigences <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> évaluer des solutions selon des critères identifiés ·
+  <b>Compétence</b> 3e_C3.3 · <b>CRCN 1.3 niveau 3</b> · <b>Production</b> une grille pondérée,
+  construite et défendue · <b>Ressource</b>
+  <a href="donnees_local_technique_shenzhen_simulees.csv">le tableau des six solutions</a></div>
+
+  <p>Le tableau arrive maintenant, et pas avant&nbsp;: votre liste devait exister d'abord. Ouvrez-le
+  dans un tableur — six solutions, quinze colonnes.</p>
+
+  <h4>a) Lire les colonnes qui surprennent</h4>
+  <div class="assoc"><label for="a2_1">La solution S6 affiche un coût annuel de <b>−450 €</b> et une consommation de <b>−900 kWh</b>. Cela signifie&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>qu'elle fait économiser : réduire le nombre de machines diminue la facture et la chaleur produite</option>
+      <option>qu'il y a une erreur dans le tableau</option>
+      <option>que la solution rapporte de l'argent au collège</option>
+      <option>que la consommation est trop faible pour être mesurée</option></select></div>
+  <div class="assoc"><label for="a2_2">Pourquoi S5 et S6 n'ont-elles ni durée de vie ni indice de réparabilité&nbsp;?</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>parce qu'elles n'installent aucun matériel : ces colonnes n'ont pas d'objet pour elles</option>
+      <option>parce que les données manquaient</option>
+      <option>parce qu'elles durent indéfiniment</option>
+      <option>parce qu'elles sont trop récentes</option></select></div>
+  <div class="assoc"><label for="a2_3">S3, le climatiseur, obtient la meilleure baisse de température (9 °C). Faut-il le choisir&nbsp;?</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>pas encore : il faut d'abord regarder ce que cette performance coûte sur les autres colonnes</option>
+      <option>oui : c'est le plus performant</option>
+      <option>non : un climatiseur est toujours à éviter</option>
+      <option>oui, si le budget le permet</option></select></div>
+
+  <h4>b) Construire la grille</h4>
+  <p>Ajoute une colonne <code>score</code>. À toi de décider ce qu'elle contient et <b>combien pèse
+  chaque critère</b>. Rien n'est imposé — mais tu devras défendre tes choix.</p>
+  <div class="assoc"><label for="a2_4">L'indice de réparabilité de S3 est de 5 sur 10, celui de S2 de 8. Cet écart pèse surtout sur&nbsp;:</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>la durée pendant laquelle la solution restera en service, donc son coût réel</option>
+      <option>le confort des utilisateurs</option>
+      <option>la performance de refroidissement</option>
+      <option>rien : c'est un indice commercial</option></select></div>
+  <div class="assoc"><label for="a2_5">Deux groupes obtiennent deux classements différents avec le même tableau. C'est&nbsp;:</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>normal : ils n'ont pas pondéré les critères de la même façon, et chacun doit pouvoir le justifier</option>
+      <option>impossible : les données sont les mêmes</option>
+      <option>la preuve qu'un des deux a fait une erreur de calcul</option>
+      <option>sans importance</option></select></div>
+  <div class="assoc"><label for="a2_6">Une pondération honnête&nbsp;:</label>
+    <select id="a2_6"><option value="">— choisir —</option>
+      <option>est annoncée avant le calcul, et justifiée par le besoin</option>
+      <option>est choisie après coup pour obtenir le classement souhaité</option>
+      <option>donne le même poids à tous les critères, toujours</option>
+      <option>n'a pas besoin d'être expliquée</option></select></div>
+
+  <h4>c) Défends ta grille</h4>
+  <div class="assoc">
+    <label for="a2_grille">Explique en quatre phrases quels critères tu as retenus, lequel pèse le plus lourd, et pourquoi ce choix se défend pour <b>ce</b> besoin.</label>
+    <textarea id="a2_grille" style="min-height:110px" aria-label="Défense de ta grille : critères retenus, pondération et justification"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai retenu les critères ____, ____ et ____.&nbsp;»</li>
+    <li>«&nbsp;Celui qui pèse le plus est ____, avec un poids de ____.&nbsp;»</li>
+    <li>«&nbsp;Je le justifie parce que le besoin est ____.&nbsp;»</li>
+    <li>«&nbsp;Si le besoin avait été ____, j'aurais plutôt privilégié ____.&nbsp;»</li></ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Commence par écarter les colonnes qui ne servent pas à ce besoin précis. Une grille à quinze
+    critères ne se défend pas&nbsp;: quatre ou cinq suffisent, s'ils sont les bons.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Pense au <b>coût sur dix ans</b> plutôt qu'au coût d'installation&nbsp;: multiplie le coût
+    annuel par dix et ajoute l'installation. S3 passe alors de 2400 à 5800&nbsp;€, tandis que S1
+    reste à 600. L'ordre change complètement.</p></details>
+
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Les valeurs <b>négatives</b> de S6 ne sont pas une erreur&nbsp;: réduire le nombre de
+    machines fait baisser la facture <i>et</i> la chaleur produite. C'est la seule ligne du tableau
+    qui agit sur la cause du problème.</p>
+    <p>S5 et S6 n'ont ni durée de vie ni indice de réparabilité parce qu'elles <b>n'installent
+    aucun matériel</b>. Une case vide n'est pas toujours une donnée manquante&nbsp;: elle peut
+    signifier que la question n'a pas d'objet — et il faut savoir faire la différence.</p>
+    <p>S3 refroidit le mieux (9 °C) et c'est aussi la plus consommatrice (1850 kWh/an), la plus
+    émettrice (620 kg éq.) et la moins réparable (5/10). <b>Une performance se paie toujours
+    quelque part</b>&nbsp;: le tableau sert à savoir où.</p>
+    <p>Sur la <b>pondération</b>&nbsp;: deux groupes peuvent obtenir deux classements différents
+    avec les mêmes données, et les deux avoir raison — à condition d'annoncer leur pondération
+    <b>avant</b> le calcul et de la justifier par le besoin. Choisir les poids après coup pour
+    obtenir le classement voulu, c'est habiller une opinion en calcul.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une grille pondérée n'est pas neutre. Elle est
+  honnête quand ses poids sont annoncés avant et justifiés par le besoin.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: régler les poids jusqu'à ce que la solution qu'on
+  préférait au départ arrive en tête.</p>
+</section>
+</div>
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>🔬 Activité 3 — Définir un protocole, puis le mettre en œuvre <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> définir et mettre en œuvre un protocole · <b>Compétence</b>
+  3e_C3.4 · <b>Production</b> un protocole complet, rédigé par l'élève · <b>Ressource</b> aucune —
+  cette fois, le protocole n'est pas fourni</div>
+
+  <p>Avant d'installer quoi que ce soit, le principal veut savoir <b>combien de degrés</b> la
+  solution retenue devra faire gagner. Personne ne le sait&nbsp;: il faut mesurer l'état actuel du
+  local. Aucun protocole n'existe. <b>Écrivez-le.</b></p>
+
+  <h4>a) Ce qu'un protocole doit contenir</h4>
+  <div class="assoc"><label for="a3_1">Un protocole utilisable doit d'abord préciser&nbsp;:</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>la grandeur mesurée, son unité et l'appareil</option>
+      <option>le nom de l'élève qui mesure</option>
+      <option>la conclusion attendue</option>
+      <option>le budget de l'opération</option></select></div>
+  <div class="assoc"><label for="a3_2">Pour la température d'un local, un seul point de mesure&nbsp;:</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>ne suffit pas : l'air est plus chaud près des machines et sous le plafond</option>
+      <option>suffit, la température est la même partout</option>
+      <option>suffit s'il est au centre de la pièce</option>
+      <option>suffit si on mesure trois fois</option></select></div>
+  <div class="assoc"><label for="a3_3">À quel moment faut-il relever&nbsp;?</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>à plusieurs moments de la journée, dont le plus défavorable en fin d'après-midi</option>
+      <option>le matin, quand le local est frais</option>
+      <option>une seule fois, n'importe quand</option>
+      <option>pendant les vacances, quand personne ne dérange</option></select></div>
+  <div class="assoc"><label for="a3_4">Que faut-il maintenir <b>constant</b> pour que les relevés soient comparables&nbsp;?</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>la position du capteur, la porte fermée, et le nombre de machines allumées</option>
+      <option>uniquement l'heure</option>
+      <option>uniquement l'appareil utilisé</option>
+      <option>rien : une température est une température</option></select></div>
+
+  <h4>b) Ce que le protocole permet — et ne permet pas</h4>
+  <div class="assoc"><label for="a3_5">Les relevés donnent 41 °C au pic. L'exigence du constructeur des serveurs est «&nbsp;au plus 32 °C&nbsp;». On en déduit&nbsp;:</label>
+    <select id="a3_5"><option value="">— choisir —</option>
+      <option>que la solution doit faire gagner au moins 9 °C au moment le plus défavorable</option>
+      <option>que le local est inutilisable</option>
+      <option>qu'il faut acheter d'autres serveurs</option>
+      <option>que la mesure est fausse</option></select></div>
+  <div class="assoc"><label for="a3_6">Un relevé fait un jour de pluie à 24 °C extérieurs&nbsp;:</label>
+    <select id="a3_6"><option value="">— choisir —</option>
+      <option>ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole</option>
+      <option>est parfaitement représentatif</option>
+      <option>est meilleur, car plus stable</option>
+      <option>peut remplacer trois relevés d'été</option></select></div>
+
+  <h4>c) Ton protocole</h4>
+  <div class="assoc">
+    <label for="a3_prot">Rédige le protocole complet en cinq étapes numérotées&nbsp;: grandeur et unité, appareil, points de mesure, moments et nombre de relevés, conditions à maintenir constantes.</label>
+    <textarea id="a3_prot" style="min-height:140px" aria-label="Ton protocole complet en cinq étapes"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>La structure est donnée&nbsp;; le contenu technique reste entièrement à écrire.</p>
+    <ul>
+      <li>«&nbsp;1. Je mesure ____, en ____, avec ____.&nbsp;»</li>
+      <li>«&nbsp;2. Je relève en ____ points&nbsp;: ____, ____ et ____.&nbsp;»</li>
+      <li>«&nbsp;3. Je relève à ____ moments&nbsp;: ____, ____ et ____.&nbsp;»</li>
+      <li>«&nbsp;4. Je répète ____ fois et je garde ____.&nbsp;»</li>
+      <li>«&nbsp;5. Je maintiens constants&nbsp;: ____, ____ et ____ — et je note la température extérieure.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Un protocole est écrit pour <b>quelqu'un d'autre</b>. Relis le tien en te demandant&nbsp;:
+    un camarade qui ne connaît pas le local pourrait-il l'exécuter sans poser de question&nbsp;?</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Trois points de mesure suffisent&nbsp;: près de l'entrée d'air, au niveau des machines, et
+    sous le plafond. Trois moments&nbsp;: matin, milieu de journée, fin d'après-midi. Et notez
+    <b>toujours</b> la température extérieure — sans elle, on ne saura pas si l'écart vient du local
+    ou du temps qu'il faisait.</p></details>
+
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Un protocole complet dit&nbsp;: <b>quelle grandeur</b>, dans <b>quelle unité</b>, avec
+    <b>quel appareil</b>, en <b>quels points</b>, à <b>quels moments</b>, <b>combien de fois</b>, et
+    <b>ce qui doit rester constant</b>. Il manque presque toujours les deux derniers.</p>
+    <p>Un seul point ne suffit pas&nbsp;: l'air est stratifié, plus chaud sous le plafond et près
+    des machines. Un seul moment non plus&nbsp;: c'est le pic de fin d'après-midi qui dimensionne
+    la solution, pas la moyenne.</p>
+    <p>41 °C mesurés contre 32 °C admis&nbsp;: la solution devra faire gagner <b>au moins 9 °C</b>
+    au moment le plus défavorable. C'est cette exigence-là, née de <b>votre</b> mesure, qui va
+    éliminer plusieurs solutions du tableau — et vous verrez qu'elle est sévère.</p>
+    <p>Enfin, la <b>température extérieure</b> doit figurer dans le protocole. Sans elle, un relevé
+    à 30 °C ne veut rien dire&nbsp;: on ne sait pas s'il traduit un local performant ou une journée
+    fraîche.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: définir un protocole, c'est le rendre exécutable par
+  quelqu'un d'autre — et c'est la mesure qui fixe l'exigence, pas l'inverse.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: oublier de noter les conditions extérieures, et
+  comparer ensuite des relevés qui n'étaient pas comparables.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<section class="card">
+  <h2>🌍 Activité 4 — Choisir sur les trois piliers <span style="color:var(--sub);font-size:.8em">(~25 min)</span></h2>
+  <div class="meta"><b>Objectif</b> argumenter un choix sur le cycle de vie et les trois piliers ·
+  <b>Compétence</b> 3e_C3.2 · <b>Production</b> un choix argumenté à trois entrées</div>
+
+  <p>L'exigence née de vos mesures&nbsp;: <b>gagner au moins 9 °C</b> au pic.</p>
+  <div class="assoc"><label for="a4_1">Combien de solutions seules atteignent ce seuil&nbsp;?</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>une seule, S3 le climatiseur</option><option>deux</option>
+      <option>trois</option><option>aucune</option></select></div>
+  <div class="assoc"><label for="a4_2">S1 (2,5 °C) et S6 (5 °C) mises ensemble donnent 7,5 °C. Cette idée&nbsp;:</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>est la bonne piste : rien n'oblige à choisir une seule solution, on peut les combiner</option>
+      <option>est interdite : on choisit une solution et une seule</option>
+      <option>ne sert à rien, le total reste sous 9 °C</option>
+      <option>revient à ne rien choisir</option></select></div>
+  <div class="assoc"><label for="a4_3">S1 + S2 + S6 donnent 2,5 + 4 + 5 = 11,5 °C, pour 1230 € d'installation et une consommation nette négative. Face à S3 seul&nbsp;:</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>la combinaison est meilleure sur les trois piliers : moins chère, moins émettrice, et elle ne dépend pas d'un seul appareil</option>
+      <option>S3 reste meilleur car plus simple</option>
+      <option>les deux sont équivalents</option>
+      <option>on ne peut pas comparer une combinaison à une solution seule</option></select></div>
+  <div class="assoc"><label for="a4_4">Le <b>pilier social</b> intervient ici sous la forme&nbsp;:</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>du service rendu et de ce qu'on demande aux personnes : renoncer à deux serveurs a des conséquences pour les usagers</option>
+      <option>du prix payé par le collège</option>
+      <option>des émissions de CO₂</option>
+      <option>de la durée de vie du matériel</option></select></div>
+  <div class="assoc"><label for="a4_5">Additionner les baisses de température de trois solutions&nbsp;:</label>
+    <select id="a4_5"><option value="">— choisir —</option>
+      <option>donne un ordre de grandeur, pas un résultat exact : les effets ne s'ajoutent pas parfaitement</option>
+      <option>donne le résultat exact</option>
+      <option>est mathématiquement interdit</option>
+      <option>sous-estime toujours le résultat</option></select></div>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Rien dans l'énoncé n'impose de choisir une <b>seule</b> solution. Relisez la demande du
+    principal&nbsp;: il veut que le local descende sous 32 °C.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Comparez sur dix ans&nbsp;: S3 coûte 2400 + 10 × 340 = 5800 € et consomme 18 500 kWh.
+    S1 + S2 + S6 coûtent 1230 + 10 × (15 + 62 − 450) = un total <b>négatif</b>, pour une
+    consommation nette de 10 × (0 + 310 − 900) also négative. Le pilier économique et le pilier
+    environnemental pointent dans la même direction.</p></details>
+
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Seul <b>S3</b> atteint 9 °C à lui seul — et c'est un piège. <b>Rien n'oblige à choisir une
+    solution unique</b>&nbsp;: la combinaison S1 + S2 + S6 dépasse l'exigence pour un coût
+    d'installation deux fois moindre et une consommation nette <b>négative</b>.</p>
+    <p>C'est le cœur de la compétence de 3e&nbsp;: on ne choisit pas dans un catalogue, on
+    <b>compose une réponse</b>.</p>
+    <p>Sur les <b>trois piliers</b>&nbsp;: l'économique (coût sur dix ans), l'environnemental
+    (énergie et CO₂ sur le cycle de vie), et le <b>social</b> — qui apparaît ici sous une forme
+    concrète et inconfortable&nbsp;: renoncer à deux serveurs, c'est renoncer à un service pour
+    quelqu'un. Un choix durable ne se réduit pas à l'écologie.</p>
+    <p>Enfin, additionner les baisses de température donne un <b>ordre de grandeur</b>&nbsp;: les
+    effets ne se cumulent pas parfaitement. C'est suffisant pour décider, pas pour promettre.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on ne choisit pas toujours <i>dans</i> une liste —
+  parfois on compose. Et un choix durable tient les trois piliers ensemble.</p>
+</section>
+
+<section class="card">
+  <h2>✉️ Activité 5 — La note au principal <span style="color:var(--sub);font-size:.8em">(~20 min)</span></h2>
+  <div class="meta"><b>Objectif</b> rendre compte d'un choix technique argumenté · <b>Production</b>
+  une note à trois piliers, avec limite et transposition</div>
+  <div class="assoc">
+    <label for="a5_note">Rédige la note&nbsp;: la solution (ou la combinaison) retenue, un argument par pilier avec un chiffre, <b>une limite assumée</b>, et ce qui changerait si le collège était à Fort-de-France.</label>
+    <textarea id="a5_note" style="min-height:150px" aria-label="Ta note au principal : solution retenue, un argument par pilier, une limite, la transposition martiniquaise"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je recommande ____.&nbsp;»</li>
+    <li>«&nbsp;Économiquement&nbsp;: ____ (chiffre&nbsp;: ____).&nbsp;»</li>
+    <li>«&nbsp;Environnementalement&nbsp;: ____ (chiffre&nbsp;: ____).&nbsp;»</li>
+    <li>«&nbsp;Socialement&nbsp;: ____.&nbsp;»</li>
+    <li>«&nbsp;Sa limite est ____.&nbsp;»</li>
+    <li>«&nbsp;À Fort-de-France, ____ ne fonctionnerait plus aussi bien, parce que ____.&nbsp;»</li></ul></details>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+  <p class="feedback" id="fb5" role="status"></p>
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Plusieurs réponses se défendent, à condition de traiter <b>les trois piliers</b> avec des
+    chiffres et d'assumer une limite réelle&nbsp;: la ventilation naturelle dépend du vent, réduire
+    les machines prive quelqu'un d'un service, et une combinaison est plus longue à mettre en œuvre
+    qu'un appareil unique.</p>
+    <p><b>À Fort-de-France</b>, le raisonnement se retourne en partie&nbsp;: en climat tropical
+    humide, l'air extérieur est chaud <b>et</b> chargé d'humidité — la ventilation naturelle perd
+    beaucoup de son efficacité, et l'humidité elle-même devient un problème pour les machines. Le
+    sel accélère la corrosion des échangeurs. Une solution excellente à Shenzhen peut être médiocre
+    à 15 000 km de là&nbsp;: transposer, c'est refaire l'analyse.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une note technique tient les trois piliers, chiffre
+  ses arguments, et nomme sa propre limite.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <p>💭 <b>Rappel de ton hypothèse de départ&nbsp;:</b></p>
+  <p id="rappelHyp" style="display:none;color:var(--warn)"><span id="hypRappelTxt"></span></p>
+  <div class="assoc"><label for="hyp_retour">Ta première idée appartenait-elle à une seule famille&nbsp;? Corrige ou complète.</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Au départ j'avais pensé à ____, qui est une solution ____.&nbsp;»</li>
+    <li>«&nbsp;Je n'avais pas pensé à ____.&nbsp;»</li>
+    <li>«&nbsp;Ce qui a changé mon avis, c'est ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
+    <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai appris qu'une liste se juge à ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'une pondération doit être ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'un protocole doit préciser ____ et ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan2">Ce que je sais maintenant faire&nbsp;:</label>
+    <textarea id="bilan2" aria-label="Ce que je sais maintenant faire"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je sais maintenant établir ____.&nbsp;»</li>
+    <li>«&nbsp;Je sais maintenant définir ____.&nbsp;»</li>
+    <li>«&nbsp;Je sais maintenant argumenter un choix sur ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan3">Ce que je dois encore revoir&nbsp;:</label>
+    <textarea id="bilan3" aria-label="Ce que je dois encore revoir"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li>
+    <li>«&nbsp;Pour progresser, la prochaine fois je ____.&nbsp;»</li></ul></details>
+  <h3>Je me positionne</h3>
+  <div class="assoc"><label for="pos1">3e_C3.1 — établir une liste de solutions possibles&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je ne cite qu'une solution</option>
+      <option>🟠 Maîtrise fragile — je cite plusieurs solutions d'une même famille</option>
+      <option>🟢 Maîtrise satisfaisante — je couvre trois familles</option>
+      <option>⭐ Très bonne maîtrise — je pense aussi à réduire le besoin</option></select></div>
+  <div class="assoc"><label for="pos2">3e_C3.3 — évaluer selon des critères identifiés&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je compare sur un seul chiffre</option>
+      <option>🟠 Maîtrise fragile — je remplis une grille si on me la donne</option>
+      <option>🟢 Maîtrise satisfaisante — je construis ma grille</option>
+      <option>⭐ Très bonne maîtrise — je pondère et je défends ma pondération</option></select></div>
+  <div class="assoc"><label for="pos3">3e_C3.4 — définir et mettre en œuvre un protocole&nbsp;:</label>
+    <select id="pos3"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je mesure sans écrire de protocole</option>
+      <option>🟠 Maîtrise fragile — j'applique un protocole donné</option>
+      <option>🟢 Maîtrise satisfaisante — j'écris un protocole exécutable par un autre</option>
+      <option>⭐ Très bonne maîtrise — j'y précise les conditions à maintenir constantes</option></select></div>
+  <div class="assoc"><label for="pos4">3e_C3.2 — choisir et argumenter sur les trois piliers&nbsp;:</label>
+    <select id="pos4"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je choisis sans argument</option>
+      <option>🟠 Maîtrise fragile — j'argumente sur un seul pilier</option>
+      <option>🟢 Maîtrise satisfaisante — j'argumente sur les trois piliers avec des chiffres</option>
+      <option>⭐ Très bonne maîtrise — j'assume une limite et je sais transposer ailleurs</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence t'attend&nbsp;: <b>30 questions</b> dont 1 illustrée, sur l'établissement
+  d'une liste, l'évaluation pondérée, le protocole et les trois piliers.</p>
+  <p style="text-align:center"><a class="btn qcm" href="qcm_3e_C3.1-C3.4_shenzhen.html">🌡️ Lancer le QCM de la séquence</a></p>
+</section>
+
+<section class="card approfondissement">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>1.</b> Le principal refuse de renoncer au moindre serveur. Refais le choix sans S6, et
+  regarde ce que cela coûte sur dix ans.</p>
+  <p><b>2.</b> Écris le protocole qui permettrait de <b>vérifier après coup</b> que la solution
+  installée tient sa promesse. En quoi diffère-t-il du protocole de la séance 3&nbsp;?</p>
+  <p><b>3.</b> Le même local, à Sainte-Luce. Établis la liste des solutions possibles en climat
+  tropical humide&nbsp;: qu'est-ce qui disparaît de la liste, et qu'est-ce qui apparaît&nbsp;?</p>
+</section>
+</div>
+</main>
+<footer class="page">
+  <p>Séquence 3e_C3.1 · C3.2 · C3.3 · C3.4 — Thème 1 · Technologie cycle 4 (2024).
+  Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
+</footer>
+<script>
+"use strict";
+const KEY="seq_3e_C3.1-C3.4_shenzhen";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"une grandeur, une unité et un seuil", be_2:"l'utilisation",
+               be_3:"décider quelle grandeur on veut mesurer"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🎫 Tes outils sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+  1: function(){
+    const att={a1_1:"d'où vient la chaleur, et par où peut-elle partir ?",
+               a1_2:"sa diversité : plusieurs familles représentées",
+               a1_3:"ne contient en réalité qu'une seule solution, déclinée trois fois",
+               a1_4:"une solution technique à part entière : elle agit sur la cause plutôt que sur l'effet",
+               a1_5:"parce qu'on cherche d'abord un appareil à installer, pas un obstacle à retirer",
+               a1_6:"est une erreur : on recense d'abord, on évalue ensuite"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_liste").toLowerCase();
+    const familles = ["passive","active","organisationnelle"].filter(f=>t.includes(f)).length;
+    const assez = t.trim().length >= 120 && familles >= 3;
+    return {score:ok,total:6,valide: ok>=5 && assez,
+      extra: assez ? "" : " Ta liste doit compter au moins cinq solutions et nommer les TROIS familles : passive, active, organisationnelle."};
+  },
+  2: function(){
+    const att={a2_1:"qu'elle fait économiser : réduire le nombre de machines diminue la facture et la chaleur produite",
+               a2_2:"parce qu'elles n'installent aucun matériel : ces colonnes n'ont pas d'objet pour elles",
+               a2_3:"pas encore : il faut d'abord regarder ce que cette performance coûte sur les autres colonnes",
+               a2_4:"la durée pendant laquelle la solution restera en service, donc son coût réel",
+               a2_5:"normal : ils n'ont pas pondéré les critères de la même façon, et chacun doit pouvoir le justifier",
+               a2_6:"est annoncée avant le calcul, et justifiée par le besoin"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const redige = val("a2_grille").trim().length >= 100;
+    return {score:ok,total:6,valide: ok>=5 && redige,
+      extra: redige ? "" : " Il manque la défense de ta grille : critères retenus, poids le plus lourd, et pourquoi."};
+  },
+  3: function(){
+    const att={a3_1:"la grandeur mesurée, son unité et l'appareil",
+               a3_2:"ne suffit pas : l'air est plus chaud près des machines et sous le plafond",
+               a3_3:"à plusieurs moments de la journée, dont le plus défavorable en fin d'après-midi",
+               a3_4:"la position du capteur, la porte fermée, et le nombre de machines allumées",
+               a3_5:"que la solution doit faire gagner au moins 9 °C au moment le plus défavorable",
+               a3_6:"ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_prot").trim();
+    const etapes = (t.match(/[1-5][.)]/g)||[]).length >= 4;
+    return {score:ok,total:6,valide: ok>=5 && t.length>=120 && etapes,
+      extra: (t.length>=120 && etapes) ? "" : " Ton protocole doit compter cinq étapes numérotées, dont les conditions à maintenir constantes."};
+  },
+  4: function(){
+    const att={a4_1:"une seule, S3 le climatiseur",
+               a4_2:"est la bonne piste : rien n'oblige à choisir une seule solution, on peut les combiner",
+               a4_3:"la combinaison est meilleure sur les trois piliers : moins chère, moins émettrice, et elle ne dépend pas d'un seul appareil",
+               a4_4:"du service rendu et de ce qu'on demande aux personnes : renoncer à deux serveurs a des conséquences pour les usagers",
+               a4_5:"donne un ordre de grandeur, pas un résultat exact : les effets ne s'ajoutent pas parfaitement"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:5,extra:"",valide:ok>=4};
+  },
+  5: function(){
+    const t = val("a5_note").trim();
+    const chiffre = (t.match(/\d/g)||[]).length >= 2;
+    const complet = t.length >= 160 && chiffre;
+    return {score: complet?1:0, total:1, valide: complet,
+      extra: complet ? " Ta note tient les trois piliers, chiffre ses arguments et nomme sa limite." :
+        " Ta note doit contenir la solution retenue, un argument CHIFFRÉ par pilier, une limite assumée et la transposition martiniquaise."};
+  }
+};
+
+
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle explique aussi les réponses fausses."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    if(n!=="0") window.__valid[n] = !!r.valide;
+    else window.__valid[0] = !!r.valide;   // le billet est FAIT dès qu'il est répondu
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3], s4:[4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Établir les possibles", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses outils (sans note)"},
+    {n:1, libelle:"Établir une liste d'au moins cinq solutions couvrant trois familles"}]},
+  s2:{titre:"Séance 2 — Évaluer selon des exigences", taches:[
+    {n:2, libelle:"Construire une grille pondérée au tableur, et la défendre"}]},
+  s3:{titre:"Séance 3 — Définir le protocole", taches:[
+    {n:3, libelle:"Rédiger un protocole de mesure exécutable par quelqu'un d'autre"}]},
+  s4:{titre:"Séance 4 — Choisir et rendre compte", taches:[
+    {n:4, libelle:"Composer une réponse et l'argumenter sur les trois piliers"},
+    {n:5, libelle:"Rédiger la note au principal, limite comprise"}]}
+};
+
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>
