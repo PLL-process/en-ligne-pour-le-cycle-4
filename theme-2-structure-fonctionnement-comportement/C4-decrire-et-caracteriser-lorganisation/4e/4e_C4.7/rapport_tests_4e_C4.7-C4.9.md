@@ -1,12 +1,12 @@
 # Rapport de tests — Lot 4e_C4.7 · C4.8 · C4.9 « SOS serre : l'objet connecté muet »
 
 **Version 2** (refonte après audit pédagogique externe).
-**Exécution réelle** le 08/08/2026, suite Playwright (Chromium headless) : **50/50 verts**.
+**Exécution réelle** le 08/08/2026, suite Playwright (Chromium headless) : **54/54 verts**.
 Seuls des tests réellement exécutés sont déclarés ici (barre qualité du dépôt).
-La v1 déclarait 36/36 le 07/08/2026 ; la suite a été étendue de 14 vérifications pour couvrir
+La v1 déclarait 36/36 le 07/08/2026 ; la suite a été étendue de 18 vérifications pour couvrir
 les nouveautés de la v2 (4e séance, passeport, mode essentiel, fichiers .pkt, défi).
 
-## Séquence (32 tests)
+## Séquence (36 tests)
 
 | Test | Vérifie | Résultat |
 |---|---|---|
@@ -61,6 +61,7 @@ Chargement sans erreur JS des deux synthèses ; les schémas embarqués (`<objec
 | SEQ-17-* | les 4 nouveaux fichiers `.pkt` (DEPART, PANNE_A, PANNE_B, PANNE_C) sont présents dans le dossier | ✔ |
 | SEQ-17b | **tous** les liens `.pkt` de la page pointent un fichier réellement présent | ✔ |
 | SEQ-18 | le défi sans tutoriel expose bien `e5_defi` (choix du test) et `e5_preuve` (justification) | ✔ |
+| SEQ-19 (×4) | le défi **accepte les trois preuves honnêtes** (ping, PDU, « l'un ou l'autre ») et **refuse** « aucun test : si les câbles sont verts, c'est forcément bon » | ✔ |
 
 ## Environnement et limites (honnêteté)
 
@@ -88,4 +89,4 @@ Chargement sans erreur JS des deux synthèses ; les schémas embarqués (`<objec
   utilisée sur le réseau (« This address is already used in the network. ») et vide le
   champ ; le doublon est donc traité à l'oral et en bonus, pas en fichier. La panne
   « masque » l'a remplacée.
-- Script de test : suite Playwright du lot (50 vérifications), rejouable.
+- Script de test : suite Playwright du lot (54 vérifications), rejouable.

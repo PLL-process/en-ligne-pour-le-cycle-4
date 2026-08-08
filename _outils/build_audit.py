@@ -205,7 +205,7 @@ OVERLAY = {
                 "vérifiés au ping, validation par simulation, défi sans tutoriel ; "
                 "QCM 30 q (10/10/10), 14 SVG CC0 reconstitués de sessions Packet "
                 "Tracer 8.2 réelles, 5 fichiers .pkt fournis (départ, maître, "
-                "3 pannes), 50/50 tests Playwright ; complète la séance 3 du Jardin "
+                "3 pannes), 54/54 tests Playwright ; complète la séance 3 du Jardin "
                 "connecté (4e_C4.1) + QCM XXL réseaux conservé en entraînement.",
         anomalies="Héritées du QCM XXL existant : licences des images *_hd.jpg "
                   "non documentées — LICENCE À VÉRIFIER (consolidation "

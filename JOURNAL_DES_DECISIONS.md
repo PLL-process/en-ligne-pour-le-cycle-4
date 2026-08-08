@@ -1373,9 +1373,17 @@ désormais le **triple-clic dans le champ** au lieu de Ctrl+A, plus une capture 
 chaque fenêtre fermée. Les menus déroulants ne s'ouvrent pas au clic simple sur une fenêtre non active :
 mettre la fenêtre au premier plan puis envoyer `Alt+F` fonctionne, là où `Ctrl+Maj+S` ne déclenche rien.
 
-**Tests.** Suite Playwright étendue de 36 à **50 vérifications, 50/50 vertes** : 14 figures qui chargent,
+**Relecture après livraison (même PR).** Le vérificateur du défi sans tutoriel n'acceptait qu'UNE des
+trois bonnes réponses (« l'un ou l'autre ») : un élève qui avait réellement lancé le ping et le déclarait
+honnêtement était compté faux — exactement le contraire du message de l'activité. Corrigé : les trois
+preuves honnêtes (ping, PDU, « l'un ou l'autre ») sont acceptées, seule la réponse « aucun test, les
+câbles sont verts » est refusée, et un message signale à l'élève que l'autre test était valable lui aussi.
+Leçon générale : **quand une activité dit « tous les chemins honnêtes mènent à la preuve », le
+vérificateur doit le dire aussi** — sinon la page se contredit et punit la bonne démarche.
+
+**Tests.** Suite Playwright étendue de 36 à **54 vérifications, 54/54 vertes** : 14 figures qui chargent,
 4 onglets de séance dont la nouvelle séance 4, mode essentiel qui masque puis réaffiche, passeport qui
 refuse les réponses vides, présence des cinq fichiers .pkt et validité de tous les liens `.pkt` de la page,
-défi exposant bien son choix de test et sa justification — en plus des vérifications v1 (verrous, règle
+défi exposant bien son choix de test et sa justification, et acceptant les trois preuves honnêtes tout en refusant « aucun test » — en plus des vérifications v1 (verrous, règle
 n°22, socle et CRCN en toutes lettres, libellés officiels, QCM 8/7/7/8, sauvegardes). Un SVG mal fermé
 (`</g>` en trop) a été détecté par le test « les figures chargent » et corrigé avant livraison.

@@ -1274,12 +1274,20 @@ const CHECKS = {
                e5_3:"recocher On, voir les triangles repasser au vert, puis re-tester au ping",
                e5_4:"par le commutateur, le centre de l'étoile",
                e5_5:"que l'aller-retour simulé a réussi : le comportement du réseau est validé",
-               e5_6:"parce qu'on peut y provoquer des pannes sans aucun risque pour le vrai réseau — c'est exactement ce que demande le programme",
-               e5_defi:"l'un OU l'autre : les deux tests prouvent la communication — c'est exactement ça, savoir choisir son test"};
+               e5_6:"parce qu'on peut y provoquer des pannes sans aucun risque pour le vrai réseau — c'est exactement ce que demande le programme"};
     Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    /* Le défi accepte TOUTE preuve honnête : ping, PDU, ou les deux.
+       Seul « aucun test » est refusé — on ne prouve rien en regardant les câbles. */
+    const DEFI_OK=["un ping depuis Capteur-Serre vers 192.168.20.100 → « Reply from », aller-retour prouvé",
+                   "une enveloppe Add Simple PDU de Capteur-Serre vers Serveur-Serre → verdict « Successful »",
+                   "l'un OU l'autre : les deux tests prouvent la communication — c'est exactement ça, savoir choisir son test"];
+    const dChoix=val("e5_defi");
+    const dOk = DEFI_OK.some(v=>v===dChoix);
+    if(dOk) ok++;
+    const dBonus = (dChoix===DEFI_OK[2]) ? "" : " 💡 Ton test est valable — et sache que l'AUTRE l'était aussi : savoir choisir son test, c'est justement la compétence.";
     const pr=txt("e5_preuve");
     const prOk = pr.length>=20 && (pr.includes("reply")||pr.includes("successful")||pr.includes("ping")||pr.includes("enveloppe")||pr.includes("pdu"));
-    return {score:ok,total:7,extra:prOk?"":" Rédige ta preuve de technicien : quel test, quel résultat affiché (« Reply from » ou « Successful »), quelle conclusion.",valide:ok===7&&prOk};
+    return {score:ok,total:7,extra:(prOk?"":" Rédige ta preuve de technicien : quel test, quel résultat affiché (« Reply from » ou « Successful »), quelle conclusion.")+(dOk?dBonus:" Regarder les câbles ne prouve rien : il faut LANCER un test."),valide:ok===7&&prOk};
   }
 };
 const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
