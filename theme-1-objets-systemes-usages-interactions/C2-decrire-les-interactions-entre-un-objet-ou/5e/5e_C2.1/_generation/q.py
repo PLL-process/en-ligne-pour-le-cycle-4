@@ -20,8 +20,9 @@ IMG_INT = {
 IMG_CHX = {
     "src": "Images/lire_un_choix_de_conception.svg",
     "alt": "Tableau à quatre colonnes : ce que j'observe, pourquoi pas autrement, "
-           "l'interacteur concerné, le domaine de conception, avec quatre exemples pris "
-           "sur la station de vélos.",
+           "l'interacteur concerné, le domaine de conception, avec cinq exemples pris "
+           "sur la station de vélos — dont les pièces remplaçables une par une, qui "
+           "relèvent du développement durable.",
 }
 
 Q = []
@@ -301,20 +302,20 @@ q("C2.2", "La question qui ouvre", "La question qui permet de repérer un choix 
    "L'ancienneté renseigne sur l'histoire de l'objet, pas sur la raison d'un détail : une forme récente peut répondre à une contrainte très ancienne."],
   "« Pourquoi pas autrement ? » fait apparaître la décision.")
 
-q("C2.2", "Trois domaines", "Les trois domaines de choix étudiés cette année sont…",
-  ["l'ergonomie, la sécurité et l'esthétique",
-   "le prix, la solidité et la couleur",
+q("C2.2", "Trois domaines", "Les trois domaines de choix nommés par le programme pour ce code sont…",
+  ["l'ergonomie, la sécurité et le développement durable",
+   "l'ergonomie, la sécurité et l'esthétique",
    "l'électricité, la mécanique et l'informatique",
    "la fabrication, la vente et le recyclage"],
   "Trois domaines, trois questions différentes : l'objet s'adapte-t-il au corps ? protège-t-il ? "
-  "s'intègre-t-il au lieu ?",
-  "Ancrage à 90 cm : ergonomie. Arêtes arrondies : sécurité.",
+  "et que pèse-t-il en matière, en énergie et en durée de vie ?",
+  "Ancrage à 90 cm : ergonomie. Arêtes arrondies : sécurité. Pièces remplaçables : développement durable.",
   "Ranger tout choix inexpliqué dans « l'esthétique ».",
   ["",
-   "Ce sont des critères d'évaluation d'un produit, pas des domaines de conception : la couleur relève de l'esthétique, le prix et la solidité les traversent tous les trois.",
+   "L'esthétique est une vraie question de conception — l'apparence et l'intégration dans le lieu comptent — mais elle n'est pas l'un des trois domaines que le programme nomme pour ce code : c'est le développement durable qui y figure.",
    "Ce sont des familles de technologies, c'est-à-dire des MOYENS ; les trois domaines désignent au contraire les raisons pour lesquelles on emploie ces moyens.",
    "Ce sont des étapes du cycle de vie de l'objet, qui décrivent quand les choix produisent leurs effets, non ce sur quoi ils portent."],
-  "Ergonomie, sécurité, esthétique.")
+  "Ergonomie, sécurité, développement durable.")
 
 q("C2.2", "L'ergonomie", "L'ergonomie concerne…",
   ["l'adaptation de l'objet au corps et aux gestes de celui qui l'utilise",
@@ -379,14 +380,14 @@ q("C2.2", "Un choix pour la maintenance", "Le boîtier qui s'ouvre avec une vis 
 q("C2.2", "Deux domaines à la fois", "Un même choix peut-il servir deux domaines à la fois ?",
   ["oui : un angle arrondi est plus sûr et souvent plus agréable à regarder",
    "non : chaque choix répond à un seul domaine",
-   "oui, mais seulement l'ergonomie et l'esthétique",
+   "oui, mais seulement l'ergonomie et la sécurité",
    "non, sauf en cas d'erreur de conception"],
   "Les domaines se recoupent souvent. L'exercice consiste alors à dire lequel DOMINE, et pourquoi.",
   "Une poignée large : plus facile à saisir (ergonomie) et moins blessante (sécurité).",
   "Chercher à tout prix une seule étiquette par choix.",
   ["",
    "Rien n'oblige une forme à ne produire qu'un effet : une même courbe peut simultanément protéger la main, faciliter la prise et plaire à l'œil.",
-   "Le recoupement peut concerner n'importe quelle paire : sécurité et esthétique se rejoignent aussi, comme le montre justement l'angle arrondi.",
+   "Le recoupement peut concerner n'importe quelle paire : la vis unique sert à la fois l'ergonomie de l'agent de maintenance et le développement durable, puisqu'elle rend la réparation possible.",
    "Servir deux domaines est un signe de bonne conception, pas d'erreur : c'est un choix qui rend deux services pour le prix d'un."],
   "Quand deux domaines se recoupent, dis lequel domine.")
 
@@ -449,20 +450,20 @@ q("C2.2", "Justifier, pas décrire", "Laquelle de ces phrases explique vraiment 
    "La mesure ajoute de la précision au constat sans ajouter de raison : quinze degrés plutôt que cinq, il faudrait encore dire pourquoi."],
   "Expliquer, c'est relier la forme à un interacteur.")
 
-q("C2.2", "Le piège du « c'est joli »", "Dire d'un garde-corps arrondi « c'est pour faire joli », c'est…",
-  ["passer à côté de la raison principale, qui est d'éviter les blessures",
-   "une explication correcte, l'esthétique étant un vrai domaine",
-   "une erreur, car l'esthétique n'existe pas en technologie",
-   "juste, puisqu'un objet doit d'abord plaire"],
-  "L'esthétique est un domaine légitime — mais elle ne doit pas servir de fourre-tout quand on "
-  "n'a pas cherché la raison technique.",
-  "L'arrondi plaît, et il évite surtout une plaie au front.",
-  "Ranger dans « esthétique » tout ce qu'on n'a pas su expliquer.",
+q("C2.2", "Le développement durable comme domaine", "Les pièces de la borne se remplacent une par une plutôt que de former un bloc soudé. Ce choix relève du développement durable parce que…",
+  ["un objet réparable dure plus longtemps : moins de matière à produire, moins de déchets",
+   "les pièces détachées sont fabriquées dans des matériaux naturels",
+   "le recyclage en fin de vie sera plus facile, et c'est tout",
+   "cela rend la borne plus agréable à regarder"],
+  "Un choix « en lien avec le développement durable » porte sur la matière, l'énergie et la durée "
+  "de vie de l'objet — et il se prend dès la conception, pas à la fin.",
+  "Bloc soudé : une seule panne condamne toute la borne, qu'il faut alors reproduire entièrement.",
+  "Croire que le développement durable ne concerne que le tri et le recyclage.",
   ["",
-   "L'esthétique est bien un domaine réel, mais elle n'est pas ici la raison dominante : on arrondit d'abord pour ne pas blesser, l'agrément vient en plus.",
-   "L'esthétique est au contraire l'un des trois domaines au programme : l'intégration d'un objet dans un lieu est une vraie question de conception.",
-   "Un objet technique doit d'abord rendre son service sans danger ; plaire est un objectif réel, mais il ne passe pas avant l'intégrité des usagers."],
-  "L'esthétique est un domaine, pas un fourre-tout.")
+   "La nature du matériau n'est pas le critère : une pièce en plastique remplaçable évite plus de gaspillage qu'une pièce en bois soudée à tout le reste.",
+   "Le recyclage n'est que la dernière étape ; l'essentiel se joue bien avant, en faisant durer l'objet — un objet réparé n'a pas besoin d'être recyclé.",
+   "L'apparence ne change pas selon que les pièces sont vissées ou soudées, et de toute façon l'esthétique n'est pas l'un des trois domaines de ce code."],
+  "Développement durable : la matière, l'énergie, la durée de vie — dès la conception.")
 
 q("C2.2", "Transposer", "Pour installer cette station à Sainte-Luce, il faudrait d'abord revoir…",
   ["les matériaux et les traitements de surface, à cause de l'air salin",

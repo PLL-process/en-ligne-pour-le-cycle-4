@@ -2576,3 +2576,65 @@ pas. Il existe. Reste la deuxième dette signalée&nbsp;: `synthese_eleve_5e_C1.
 Deux codes quittent «&nbsp;À CRÉER&nbsp;». Le dépôt compte **24 codes complets** et **33 à créer**.
 Vérificateur&nbsp;: **7 sur 7**. Tests du lot&nbsp;: **43 sur 43**. Contrôles de l'index&nbsp;:
 **20 sur 20**.
+
+---
+
+## 8 août 2026 — Correction du lot 5e_C2 : j'avais remplacé une dimension du programme par une que j'avais inventée
+
+### Ce qui s'est passé
+
+Le référentiel du code `5e_C2.2` dit&nbsp;: «&nbsp;Repérer et expliquer les choix de conception dans
+les domaines de l'**ergonomie** et de la **sécurité**, ou en lien avec des objectifs de
+**développement durable**.&nbsp;»
+
+J'ai écrit, dans la carte du référentiel de la séquence&nbsp;: «&nbsp;ergonomie, sécurité et
+**esthétique**&nbsp;». Puis j'ai construit l'activité 2 sur ce trio, et la question 18 du QCM en a
+fait la bonne réponse à «&nbsp;les trois domaines sont…&nbsp;».
+
+Le **plan hérité du lot**, écrit par quelqu'un d'autre, disait juste&nbsp;: «&nbsp;liés à
+l'ergonomie, à la sécurité et au développement durable&nbsp;». J'ai substitué en silence, sans le
+remarquer et sans le signaler.
+
+### Pourquoi c'est plus grave qu'une coquille
+
+Une coquille se voit. Celle-ci était **cohérente**&nbsp;: trois domaines, trois définitions, des
+exemples justes, un piège pédagogique bien construit autour de l'esthétique. L'ensemble se tenait
+parfaitement — autour d'une donnée fausse.
+
+C'est exactement le cas que la règle n°36 vise, et je ne l'avais lue que dans un sens. Je vérifiais
+qu'un **code de classement interne** ne soit pas présenté comme une nomenclature officielle. Je ne
+vérifiais pas que la **formulation** d'une compétence soit celle du référentiel. Or réécrire la
+formulation, c'est fabriquer du contenu institutionnel — plus discrètement, et plus profondément.
+
+**Règle n°36, second volet&nbsp;: la formulation d'une compétence se recopie, elle ne se reformule
+pas.** Si la reformulation aide l'élève, elle s'ajoute à côté du texte, elle ne le remplace pas.
+
+### Ce que les 43 tests n'ont pas vu
+
+Ils passaient tous. Aucun ne comparait le contenu enseigné au texte du référentiel&nbsp;: ils
+vérifiaient la mécanique, la cohérence interne, l'accessibilité — tout sauf la seule chose qui était
+fausse. **Une suite de tests vérifie ce que son auteur soupçonne**, et je ne me soupçonnais pas de
+réécrire le programme.
+
+Un test a été ajouté&nbsp;: il lit la bonne réponse de la question «&nbsp;Trois domaines&nbsp;» et la
+compare à la formulation attendue. C'est le premier contrôle de ce dépôt qui porte sur un **contenu
+institutionnel** plutôt que sur un comportement. Il faudra en écrire d'autres&nbsp;: le vérificateur
+`_outils/verif_regles_audit.py` gagnerait à confronter les cartes de référentiel des séquences aux
+formulations de `_outils/data_competences.py`.
+
+### Ce que la correction change, pédagogiquement
+
+Le développement durable **convient mieux** à ce lot que l'esthétique. La station de Shenzhen, son
+air salin martiniquais, ses pièces remplaçables&nbsp;: la matière, l'énergie et la durée de vie sont
+lisibles à l'œil nu sur cet objet. L'activité 2 gagne deux questions et une exigence — au moins un
+des quatre choix relevés doit relever du développement durable — et la figure une cinquième ligne.
+
+L'esthétique reste dans la séquence, nommée pour ce qu'elle est&nbsp;: une vraie question de
+conception, qui n'est pas l'un des trois domaines de ce code. Le dire ainsi vaut mieux que
+l'effacer&nbsp;: c'est un cas exemplaire de la règle n°27 — **ce qui n'est vrai que chez nous se dit
+comme tel**.
+
+### Le bilan
+
+Séquence, QCM, deux synthèses, fiche, matrice, deux READMEs, manifest, figure SVG et suite de tests
+corrigés. **45 tests sur 45.** Vérificateur&nbsp;: 7 sur 7. Index&nbsp;: 20 sur 20.

@@ -1,12 +1,12 @@
 # Rapport de tests — lot Shenzhen 5e_C2.1 · C2.2
 
 **Date** 8 août 2026 · **Suite** `tests_5e_C2.1-C2.2_shenzhen.py` (Playwright, Chromium 1280×900)
-**Résultat** **43 / 43 tests passés**
+**Résultat** **45 / 45 tests passés** (v1.1)
 
 Ce rapport ne mentionne que des tests **réellement exécutés**. La suite est livrée avec le lot :
 elle se relance depuis le dossier du lot par `python3 tests_5e_C2.1-C2.2_shenzhen.py`.
 
-## La séquence (26 tests)
+## La séquence (27 tests)
 
 | Ce qui a été vérifié | Résultat |
 |---|---|
@@ -22,6 +22,7 @@ elle se relance depuis le dossier du lot par `python3 tests_5e_C2.1-C2.2_shenzhe
 | Activité 1 : une liste de six **personnes** est refusée | ✔ |
 | Activité 1 : validée seulement quand les trois natures sont nommées | ✔ |
 | Activité 2 : le relevé de quatre choix est exigé avant validation | ✔ |
+| Activité 2 : un relevé **sans développement durable** est refusé | ✔ |
 | Activité 3 : le transfert martiniquais (trois interacteurs) est exigé | ✔ |
 | Mode essentiel : bascule et `aria-pressed` cohérent (n°29) | ✔ |
 | L'hypothèse de départ est rappelée au bilan | ✔ |
@@ -32,12 +33,13 @@ Les trois verrous de production ont été testés **dans les deux sens** : refus
 manque ou reste incomplète, validation quand elle est là. C'est le point qui distingue une activité
 d'un questionnaire déguisé.
 
-## Le QCM (11 tests)
+## Le QCM (12 tests)
 
 | Ce qui a été vérifié | Résultat |
 |---|---|
 | Aucune erreur JavaScript | ✔ |
 | 30 questions, 15 par code | ✔ |
+| Les trois domaines du code sont ceux du référentiel : ergonomie, sécurité, **développement durable** | ✔ |
 | Bonnes réponses réparties A/B/C/D = **8 / 7 / 7 / 8** (graine 502) | ✔ |
 | 4 questions illustrées | ✔ |
 | Aucune réfutation de distracteur de 20 caractères ou moins ; `d[r]` vide partout | ✔ |
@@ -56,6 +58,18 @@ de suite, des réfutations trop courtes s'étaient glissées là où l'auteur tr
 
 Élève et professeur : aucune erreur JavaScript, figures référencées au bon nombre, et **tous les
 liens de navigation résolus sur des fichiers existants**.
+
+## Ce que ces tests n'auraient pas attrapé
+
+La v1.0 de ce lot enseignait « ergonomie, sécurité, **esthétique** » là où le référentiel dit
+« ergonomie et sécurité, ou en lien avec des objectifs de **développement durable** ». Les 43 tests
+passaient tous. Aucun ne comparait le contenu enseigné au **texte du référentiel** — ils
+vérifiaient la mécanique, la cohérence interne et l'accessibilité, c'est-à-dire tout sauf la seule
+chose qui était fausse.
+
+Un test a été ajouté en v1.1 : il lit la bonne réponse de la question « Trois domaines » du QCM et
+la compare à la formulation attendue. C'est peu, mais c'est le premier test de ce dépôt qui
+contrôle un **contenu institutionnel** plutôt qu'un comportement.
 
 ## Ce qui n'a pas été testé
 
