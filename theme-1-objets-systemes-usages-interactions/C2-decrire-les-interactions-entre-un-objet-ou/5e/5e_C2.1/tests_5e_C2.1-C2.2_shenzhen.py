@@ -29,10 +29,16 @@ LISTE_OK = ("l'usager (personne) : il prend et rend un vélo\n"
             "la pluie (condition) : elle mouille les bornes\n"
             "le sel marin (condition) : il attaque les métaux")
 
+CHOIX_SANS_DD = ("La borne est inclinée : ce choix répond à la pluie, il relève de la sécurité.\n"
+                 "L'ancrage est à 90 cm : ce choix répond à l'usager, il relève de l'ergonomie.\n"
+                 "Les arêtes sont arrondies : ce choix répond à l'usager, sécurité.\n"
+                 "Le boîtier a une vis unique : il répond à l'agent de maintenance, ergonomie.")
+
 CHOIX_OK = ("La borne est inclinée : ce choix répond à la pluie, il relève de la sécurité.\n"
             "L'ancrage est à 90 cm : ce choix répond à l'usager, il relève de l'ergonomie.\n"
             "Les arêtes sont arrondies : ce choix répond à l'usager, il relève de la sécurité.\n"
-            "Le boîtier a une vis unique : il répond à l'agent de maintenance, ergonomie.")
+            "Les pièces se remplacent une par une : cela répond au budget de la ville et à la "
+            "matière à produire, cela relève du développement durable.")
 
 TRANSF_OK = ("L'air salin change : il attaque les métaux, il faut revoir les matériaux.\n"
              "La pluie change : elle est bien plus intense, l'inclinaison ne suffit plus.\n"
@@ -102,16 +108,22 @@ with sync_playwright() as p:
     # activité 2
     pg.click("#tab-s2")
     pg.wait_for_timeout(120)
-    pg.evaluate("['a2_1','a2_2','a2_3','a2_4','a2_5','a2_6']"
+    pg.evaluate("['a2_1','a2_2','a2_3','a2_4','a2_5','a2_6','a2_7','a2_8']"
                 ".forEach(i=>document.getElementById(i).selectedIndex=1)")
     pg.click('[data-check="2"]')
     pg.wait_for_timeout(120)
     t("activité 2 : le relevé écrit est exigé",
       "QUATRE choix" in pg.inner_text("#fb2"), pg.inner_text("#fb2")[-50:])
+    pg.fill("#a2_choix", CHOIX_SANS_DD)
+    pg.click('[data-check="2"]')
+    pg.wait_for_timeout(120)
+    t("activité 2 : un relevé sans développement durable est refusé",
+      "développement durable" in pg.inner_text("#fb2"))
     pg.fill("#a2_choix", CHOIX_OK)
     pg.click('[data-check="2"]')
     pg.wait_for_timeout(120)
-    t("activité 2 : validée une fois le relevé rédigé", "6 / 6" in pg.inner_text("#fb2"))
+    t("activité 2 : validée une fois le développement durable présent",
+      "8 / 8" in pg.inner_text("#fb2"))
 
     # activité 3 + transfert
     pg.click("#tab-s3")
@@ -180,6 +192,10 @@ with sync_playwright() as p:
     t("QCM : bonnes réponses réparties sur A/B/C/D", max(info["rep"]) - min(info["rep"]) <= 1,
       str(info["rep"]))
     t("QCM : 4 questions illustrées", info["imgs"] == 4, str(info["imgs"]))
+    t("QCM : les trois domaines du code sont ceux du programme",
+      pg.evaluate("QUESTIONS.find(q=>q.n==='Trois domaines').o[QUESTIONS.find("
+                  "q=>q.n==='Trois domaines').r]")
+      == "l'ergonomie, la sécurité et le développement durable")
     t("QCM : chaque distracteur porte une réfutation qui explique",
       info["courtes"] == 0 and info["dvide"], f"{info['courtes']} réfutation(s) trop courte(s)")
     t("QCM : chaque question a explication, exemple, erreur classique et à-retenir",

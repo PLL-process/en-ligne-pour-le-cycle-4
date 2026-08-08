@@ -4,8 +4,9 @@
 
 ➡ **[Séquence 5e_C2.1 · C2.2 — Shenzhen : la station de vélos et tout ce qui l'entoure](../5e_C2.1/sequence_5e_C2_shenzhen_station_velos.html)**
 
-Le code `5e_C2.2` — repérer et expliquer les choix de conception dans les domaines de l'ergonomie,
-de la sécurité et de l'esthétique — y est travaillé aux **séances 2 et 3** :
+Le code `5e_C2.2` — repérer et expliquer les choix de conception dans les domaines de l'ergonomie
+et de la sécurité, ou en lien avec des objectifs de **développement durable** — y est travaillé aux
+**séances 2 et 3** :
 
 - **séance 2**, l'élève retrouve la décision derrière quatre formes de la station et rattache chacune
   à un interacteur et à un domaine ;

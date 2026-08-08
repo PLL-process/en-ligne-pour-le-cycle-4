@@ -55,7 +55,13 @@ du côté observable : *quel interacteur, quel domaine* — et non *que ressent 
    une question : **pourquoi pas autrement ?** Tant qu'on n'a pas formulé l'alternative écartée, on
    ne voit pas qu'il y a eu décision.
 3. **Le fourre-tout esthétique.** « C'est pour faire joli » devant un choix qui évite une blessure.
-   L'esthétique est un domaine légitime ; elle ne doit pas servir de refuge à l'explication absente.
+   L'esthétique est une vraie question de conception, mais elle **n'est pas l'un des trois domaines
+   nommés par le programme pour ce code** — ce sont l'ergonomie, la sécurité et le **développement
+   durable**. La séquence le dit à l'élève, et lui demande qu'au moins un de ses quatre choix relève
+   du développement durable.
+4. **Croire que le développement durable, c'est le tri.** Il porte sur la matière, l'énergie et la
+   durée de vie, et il se décide **dès la conception** : des pièces remplaçables une par une font
+   durer la borne. Un objet réparé n'a pas besoin d'être recyclé.
 
 ## Le moment clé
 
