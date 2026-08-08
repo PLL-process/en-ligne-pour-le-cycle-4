@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" role="img"
+     aria-labelledby="t3 d3" font-family="Poppins, Segoe UI, sans-serif">
+  <title id="t3">Trace d'un auto-test au banc d'essai, avec deux organes en panne</title>
+  <desc id="d3">Tableau de suivi d'une exécution pas à pas. Avant la boucle, defauts vaut 0. Premier
+  tour, anémomètre : le test répond vrai, defauts reste à 0. Deuxième tour, gyrophare : le test répond
+  FAUX, defauts passe à 1. Troisième tour, sirène : le test répond vrai, defauts reste à 1 — le
+  compteur ne redescend jamais. Quatrième tour, liaison radio : le test répond FAUX, defauts passe
+  à 2. Après la boucle, la décision defauts égale zéro est fausse, donc un seul message part :
+  « défaut sur 2 organes : gyrophare, liaison radio ». Une note signale le cas limite : la radio étant
+  en panne, ce message ne peut pas partir — c'est la défaillance silencieuse.</desc>
+  <rect width="760" height="400" fill="#050f24"/>
+  <style>
+    text{fill:#e8eefc;font-size:14px;font-family:Poppins, Segoe UI, sans-serif}
+    .h{font-size:13px;fill:#9fb6df;font-weight:600}
+    .ok{fill:#7fe0a8}.ko{fill:#ff9b9b;font-weight:600}
+    .n{font-size:12.5px;fill:#9fb6df}
+  </style>
+  <text x="30" y="32" font-size="17" font-weight="600">Un tour de banc d'essai — je suis le compteur ligne à ligne</text>
+
+  <rect x="26" y="48" width="708" height="34" fill="#122a52" stroke="#3f6bb5"/>
+  <text class="h" x="42" y="70">tour</text>
+  <text class="h" x="120" y="70">organe testé</text>
+  <text class="h" x="330" y="70">tester(organe)</text>
+  <text class="h" x="500" y="70">defauts après ce tour</text>
+
+  <rect x="26" y="82" width="708" height="32" fill="#0b1b39" stroke="#25406e"/>
+  <text x="42" y="103" class="n">—</text>
+  <text x="120" y="103" class="n">avant la boucle</text>
+  <text x="330" y="103" class="n">(rien encore)</text>
+  <text x="500" y="103">defauts = 0</text>
+
+  <rect x="26" y="114" width="708" height="32" fill="#091531" stroke="#25406e"/>
+  <text x="42" y="135">1</text><text x="120" y="135">anémomètre</text>
+  <text x="330" y="135" class="ok">vrai</text><text x="500" y="135">defauts = 0</text>
+
+  <rect x="26" y="146" width="708" height="32" fill="#0b1b39" stroke="#25406e"/>
+  <text x="42" y="167">2</text><text x="120" y="167">gyrophare</text>
+  <text x="330" y="167" class="ko">FAUX</text><text x="500" y="167">defauts = 1</text>
+
+  <rect x="26" y="178" width="708" height="32" fill="#091531" stroke="#25406e"/>
+  <text x="42" y="199">3</text><text x="120" y="199">sirène</text>
+  <text x="330" y="199" class="ok">vrai</text>
+  <text x="500" y="199">defauts = 1 <tspan class="n">— il ne redescend pas</tspan></text>
+
+  <rect x="26" y="210" width="708" height="32" fill="#0b1b39" stroke="#25406e"/>
+  <text x="42" y="231">4</text><text x="120" y="231">liaison radio</text>
+  <text x="330" y="231" class="ko">FAUX</text><text x="500" y="231">defauts = 2</text>
+
+  <rect x="26" y="248" width="708" height="42" fill="#122a52" stroke="#3f6bb5"/>
+  <text x="42" y="266" class="h">après la boucle — une seule décision, un seul message</text>
+  <text x="42" y="284" font-size="13">defauts = 0 ? → non → « défaut sur 2 organes : gyrophare, liaison radio »</text>
+
+  <rect x="26" y="304" width="708" height="72" fill="#2b1a1a" stroke="#c46a6a" rx="8"/>
+  <text x="42" y="326" font-size="13.5" fill="#ffc9c9" font-weight="600">⚠ Le cas limite : la défaillance silencieuse</text>
+  <text x="42" y="347" font-size="13">La liaison radio est justement l'un des deux organes en panne.</text>
+  <text x="42" y="366" font-size="13">Le message est correct, il est calculé — et il ne partira jamais.</text>
+</svg>

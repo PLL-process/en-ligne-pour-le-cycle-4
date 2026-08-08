@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 940" role="img"
+     aria-labelledby="ttl desc" font-family="Poppins, Segoe UI, sans-serif">
+  <title id="ttl">Algorigramme de l'auto-test quotidien de la station d'alerte</title>
+  <desc id="desc">Début. Le compteur defauts est mis à zéro AVANT la boucle. Une boucle parcourt les
+  quatre organes de la station : anémomètre, gyrophare, sirène, liaison radio. Pour chaque organe, un
+  losange demande « l'organe répond-il ? » ; si non, defauts prend la valeur defauts plus un ; si oui,
+  on ne fait rien. Une flèche de retour ramène à l'organe suivant tant qu'il en reste. APRÈS la boucle,
+  un second losange demande « defauts vaut-il zéro ? » : si oui, on envoie au gardien le message
+  « station opérationnelle » ; si non, on envoie « défaut sur N organe(s) » en les nommant. Fin.</desc>
+  <rect width="760" height="940" fill="#050f24"/>
+  <style>
+    text{fill:#e8eefc;font-size:15px}
+    .lbl{font-size:13px;fill:#9fb6df}
+    .sh{fill:#122a52;stroke:#3f6bb5;stroke-width:2}
+    .dec{fill:#2b1a3f;stroke:#a077d8;stroke-width:2}
+    .io{fill:#0d3320;stroke:#4fae7a;stroke-width:2}
+    .se{fill:#173666;stroke:#7fb0ff;stroke-width:2}
+    .fl{stroke:#7fb0ff;stroke-width:2;fill:none;marker-end:url(#a)}
+    .zone{fill:none;stroke:#3f6bb5;stroke-width:1.5;stroke-dasharray:7 6}
+  </style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#7fb0ff"/></marker></defs>
+
+  <rect class="zone" x="30" y="185" width="700" height="405" rx="14"/>
+  <text class="lbl" x="44" y="207">La boucle — on répète pour chacun des 4 organes</text>
+
+  <rect class="se" x="290" y="24" width="180" height="42" rx="21"/>
+  <text x="380" y="51" text-anchor="middle">DÉBUT — 7 h 00</text>
+  <path class="fl" d="M380 66 V 96"/>
+
+  <rect class="sh" x="250" y="96" width="260" height="44" rx="6"/>
+  <text x="380" y="124" text-anchor="middle">defauts ← 0</text>
+  <text class="lbl" x="525" y="123">avant la boucle</text>
+  <path class="fl" d="M380 140 V 230"/>
+
+  <rect class="sh" x="240" y="230" width="280" height="44" rx="6"/>
+  <text x="380" y="258" text-anchor="middle">organe suivant de la liste</text>
+  <path class="fl" d="M380 274 V 306"/>
+
+  <polygon class="dec" points="380,306 560,376 380,446 200,376"/>
+  <text x="380" y="371" text-anchor="middle">tester(organe)</text>
+  <text x="380" y="392" text-anchor="middle">répond correctement ?</text>
+  <text class="lbl" x="566" y="371">oui</text>
+  <text class="lbl" x="178" y="371" text-anchor="end">non</text>
+
+  <path class="fl" d="M200 376 H 110 V 470 H 236"/>
+  <rect class="sh" x="236" y="448" width="288" height="44" rx="6"/>
+  <text x="380" y="476" text-anchor="middle">defauts ← defauts + 1</text>
+
+  <path class="fl" d="M560 376 H 660 V 540 H 384"/>
+  <path class="fl" d="M380 492 V 540"/>
+  <circle cx="380" cy="540" r="5" fill="#7fb0ff"/>
+  <path class="fl" d="M380 540 V 566"/>
+  <text class="lbl" x="672" y="470">rien à compter</text>
+
+  <polygon class="dec" points="380,566 545,616 380,666 215,616"/>
+  <text x="380" y="622" text-anchor="middle">reste-t-il un organe ?</text>
+  <text class="lbl" x="196" y="612" text-anchor="end">oui —</text>
+  <text class="lbl" x="196" y="630" text-anchor="end">on remonte</text>
+  <path class="fl" d="M215 616 H 68 V 252 H 236"/>
+  <text class="lbl" x="551" y="616">non — on sort</text>
+
+  <path class="fl" d="M380 666 V 706"/>
+  <polygon class="dec" points="380,706 555,756 380,806 205,756"/>
+  <text x="380" y="762" text-anchor="middle">defauts = 0 ?</text>
+  <text class="lbl" x="561" y="756">oui</text>
+  <text class="lbl" x="199" y="756" text-anchor="end">non</text>
+
+  <path class="fl" d="M555 756 H 640 V 838 H 596"/>
+  <rect class="io" x="400" y="816" width="196" height="46" rx="6"/>
+  <text x="498" y="838" text-anchor="middle" font-size="13">envoyer au gardien :</text>
+  <text x="498" y="855" text-anchor="middle" font-size="13">« station opérationnelle »</text>
+
+  <path class="fl" d="M205 756 H 120 V 838 H 164"/>
+  <rect class="io" x="164" y="816" width="200" height="46" rx="6"/>
+  <text x="264" y="838" text-anchor="middle" font-size="13">envoyer au gardien :</text>
+  <text x="264" y="855" text-anchor="middle" font-size="13">« défaut sur N organe(s) »</text>
+
+  <path class="fl" d="M264 862 V 890 H 290"/>
+  <path class="fl" d="M498 862 V 890 H 470"/>
+  <rect class="se" x="290" y="868" width="180" height="42" rx="21"/>
+  <text x="380" y="895" text-anchor="middle">FIN</text>
+
+  <text class="lbl" x="600" y="700">un seul message,</text>
+  <text class="lbl" x="600" y="718">APRÈS la boucle</text>
+</svg>
