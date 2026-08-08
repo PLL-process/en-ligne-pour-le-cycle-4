@@ -290,6 +290,40 @@ OVERLAY = {
         accessibilite="Bonne base ; navigation clavier des onglets de séances à vérifier.",
         medias="2 SVG originaux (schema_chaines_arrosage, schema_eclairage_automatique).",
     ),
+    "4e_C3.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Hangzhou — quelle flotte de vélos pour la ville ? » (08/08/2026) : "
+                "4 séances de 55 min, 5 activités + billet sans note, 4 flottes simulées à "
+                "17 colonnes exploitées au tableur, QCM de 30 questions, 2 synthèses, fiche, "
+                "matrice de 32 notions, 28 tests Playwright tous passés. Deuxième lot du C3, "
+                "après Shanghai en 5e.",
+        anomalies="Aucune : 7 règles mécanisables au vert. La marche depuis la 5e est explicite "
+                  "et tenue : en 5e le cahier des charges et le protocole sont FOURNIS, en 4e "
+                  "l'élève les ÉCRIT et choisit les appareils de mesure. Données simulées "
+                  "annoncées comme telles, et bilan carbone présenté comme un ordre de grandeur "
+                  "et non une valeur exacte (règle n°27).",
+        accessibilite="Champs étiquetés, alternatives longues, aucun défilement horizontal à "
+                      "1280 ni à 390 px, 9 versions étayées pour 9 productions écrites. Aucune "
+                      "ressource distante (règle n°40). Non vérifiés donc non déclarés conformes : "
+                      "impression A4, contraste mesuré, lecteur d'écran réel, zoom 200 %.",
+        medias="2 SVG originaux CC0 (du besoin aux caractéristiques ; à chaque grandeur son appareil).",
+    ),
+    "4e_C3.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Hangzhou du dossier 4e_C3.1 (séance 2 — comparer les incidences en les rapportant au service rendu, qualitatif compris).",
+        anomalies="Voir 4e_C3.1 : dossier principal du lot.",
+    ),
+    "4e_C3.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Hangzhou du dossier 4e_C3.1 (séance 3 — choisir les appareils de mesure et rédiger un protocole reproductible).",
+        anomalies="Voir 4e_C3.1 : dossier principal du lot.",
+    ),
     "5e_C3.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
