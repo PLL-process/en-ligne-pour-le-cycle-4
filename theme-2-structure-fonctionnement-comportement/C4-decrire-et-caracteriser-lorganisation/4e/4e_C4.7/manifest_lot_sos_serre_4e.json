@@ -4,12 +4,16 @@
   "agent": "Fable (agent Thème 2)",
   "theme": 2,
   "niveau": "4e",
-  "codes": ["4e_C4.7", "4e_C4.8", "4e_C4.9"],
+  "codes": [
+    "4e_C4.7",
+    "4e_C4.8",
+    "4e_C4.9"
+  ],
   "competence_parente": "C4 — Décrire et caractériser l'organisation d'un OST",
-  "duree": "3 séances de 55 min",
-  "branche": "fable/theme-2/atelier-serre-4e",
-  "date_production": "2026-08-07",
-  "particularite": "fusion-refonte du volet 4e de l'esquisse ChatGPT, méthode Fable + règle n°22 native (l'élève CONÇOIT son plan d'adressage avant la référence, recette illustrée à chaque étape) ; montage RÉEL construit par Fable dans Cisco Packet Tracer 8.2 sur le poste de Pascal (pilotage à distance) : pings mesurés (0-12 ms, TTL=128), panne « mauvaise rue » 192.168.21.50 réellement provoquée (Request timed out ×4, 100% loss) puis réparée, panne « liaison coupée » (Port Status Off) reproduite ; 9 SVG CC0 reconstitués (règles n°1 et n°20) ; complément dédié de la séquence-îlot « SOS jardin connecté » (4e_C4.1) sans la modifier",
+  "duree": "4 séances de 55 min",
+  "branche": "fable/theme-2/audit-sos-serre-4e",
+  "date_production": "2026-08-08",
+  "particularite": "refonte v2 appliquant les 12 priorités d'un audit pédagogique externe : passage à 4 séances de 55 min, passeport réseau d'entrée (diagnostic sans note + capsule de rattrapage 5e), mode essentiel (masque référentiel/corrections/approfondissements), preuve n°1 recentrée sur le ping vers l'objet qu'on vient d'adresser, phrases guidées pour la rédaction du diagnostic, trois fichiers .pkt EN PANNE réellement fabriqués et vérifiés, fichier de départ câblé à adresses vides, défi sans tutoriel, corrections scientifiques (masque, convention du .1, nuance 0% loss, passerelle prévue non installée), CRCN restructuré (2.3 et 5.2 du programme + 5.1 complémentaire), D1 explicité, version 🅰 en réseau ISOLÉ. Base v1 : montage RÉEL construit par Fable dans Cisco Packet Tracer 8.2 sur le poste de Pascal (pilotage à distance), pings mesurés (0-12 ms, TTL=128), pannes réellement provoquées puis réparées ; 14 SVG CC0 reconstitués (règles n°1 et n°20) ; complément dédié de la séquence-îlot « SOS jardin connecté » (4e_C4.1) sans la modifier",
   "fichiers": {
     "sequence": "sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html",
     "qcm": "qcm_4e_C4.7-C4.9_sos_serre.html",
@@ -19,42 +23,86 @@
     "matrice_couverture": "matrice_couverture_4e_C4.7-C4.9.csv",
     "sources_medias": "SOURCES_MEDIAS.md",
     "rapport_tests": "rapport_tests_4e_C4.7-C4.9.md",
-    "fichier_packet_tracer": "4e_serre_TECHNO-C4.pkt",
     "images": [
       "Images/conception_plan_recette.svg",
       "Images/plan_adressage_serre.svg",
+      "Images/pt_palette_choisir_materiel.svg",
+      "Images/pt_choisir_cable_fa0.svg",
       "Images/serre_topologie_etoile.svg",
+      "Images/pt_renommer_enregistrer.svg",
       "Images/pt_ip_configuration_passerelle.svg",
+      "Images/pt_ping_capteur_50.svg",
       "Images/pt_ping_reussi_serre.svg",
-      "Images/pt_panne_mauvaise_rue.svg",
       "Images/demarche_diagnostic.svg",
+      "Images/pt_panne_mauvaise_rue.svg",
       "Images/pt_panne_liaison_coupee.svg",
+      "Images/pt_realtime_simulation_pdu.svg",
       "Images/pt_simulation_enveloppe.svg"
     ],
-    "readme_pointeurs": ["README.md", "../4e_C4.8/README.md", "../4e_C4.9/README.md"]
+    "readme_pointeurs": [
+      "README.md",
+      "../4e_C4.8/README.md",
+      "../4e_C4.9/README.md"
+    ],
+    "fichiers_packet_tracer": {
+      "depart": "4e_serre_DEPART.pkt",
+      "maitre": "4e_serre_TECHNO-C4.pkt",
+      "panne_adressage": "4e_serre_PANNE_A.pkt",
+      "panne_liaison": "4e_serre_PANNE_B.pkt",
+      "panne_masque": "4e_serre_PANNE_C.pkt"
+    }
   },
   "contenu": {
-    "activites": 5,
+    "activites": "5 activités + passeport d'entrée + intervention réelle (3 fichiers en panne) + défi sans tutoriel",
     "questions_qcm": 30,
-    "questions_par_code": {"4e_C4.7": 10, "4e_C4.8": 10, "4e_C4.9": 10},
+    "questions_par_code": {
+      "4e_C4.7": 10,
+      "4e_C4.8": 10,
+      "4e_C4.9": 10
+    },
     "questions_illustrees": 7,
     "repartition_reponses": "8/7/7/8 (fix_r.js, graine 4789)",
     "syntheses": 2,
     "simulateur": "mini-simulateur « la clinique du réseau » intégré (destination au choix, cas « mauvaise rue » provocable) avec verrou expérientiel : ping réussi ET consultation mauvaise rue exigés",
     "conception_regle_22": "act. 1 : l'élève conçoit SON plan d'adressage (recette 4 étapes illustrée, production écrite ≥25 car. exigée, revue croisée) AVANT le plan de référence qui devient la correction",
-    "demarche_diagnostic": "boucle du dépanneur (symptôme → hypothèse → test → remède → re-test) appliquée à deux familles de pannes réellement provoquées : adressage (mauvaise rue) et liaison (port Off)",
-    "crcn": "5.1 Résoudre des problèmes techniques, niv. 2 consolidé, niv. 3 visé (l'élève élabore sa démarche) — cartouche complet règle n°7 (act. 4)",
+    "demarche_diagnostic": "boucle du dépanneur (symptôme → hypothèse → test → remède → re-test) appliquée à TROIS familles de pannes réellement provoquées : adressage (mauvaise rue), liaison (port Off) et masque (255.255.255.240) ; phrases guidées « J'observe / Je pense / Pour vérifier / Le test montre / Je corrige / Je vérifie » et fiche d'intervention en 6 lignes",
+    "crcn": "2.3 Collaborer et 5.2 (compétences explicitement citées par le programme 2024 pour ces codes) ; 5.1 Résoudre des problèmes techniques travaillée en complément — repère verbatim « Identifier des problèmes techniques liés à un environnement informatique. », niv. 2 consolidé, niv. 3 visé — cartouche complet règle n°7 (act. 4)",
     "versions": {
-      "A_materiel": "lecture de l'étiquette IP d'un objet connecté du collège — observation seulement, jamais de manipulation du réseau pédagogique",
-      "B_simulation": "Cisco Packet Tracer 8.2 (cœur de l'atelier) + fichier maître .pkt FOURNI (contrat 4e_C4.9)",
+      "A_materiel": "matériel réel sur réseau ISOLÉ : observation d'une étiquette IP (jamais de manipulation du réseau pédagogique) ou TP 2 PC + switch dédié (192.168.50.10/.20, panne provoquée 192.168.51.20)",
+      "B_simulation": "Cisco Packet Tracer 8.2 (cœur de l'atelier) + fichiers .pkt FOURNIS : départ, maître (contrat 4e_C4.9) et trois pannes",
       "C_sans_materiel": "plan papier + schémas de la page + clinique du réseau intégrée"
-    }
+    },
+    "seances": 4,
+    "passeport": "5 questions de diagnostic des acquis de 5e, sans note, avec capsule de rattrapage repliable ; le vérificateur oriente selon le score",
+    "mode_essentiel": "bouton persistant (window.__exp) qui masque référentiel, corrections et approfondissements",
+    "fichiers_panne": "trois pannes fabriquées ET vérifiées au ping dans Packet Tracer 8.2 : A = mauvaise rue 192.168.21.50 (100% loss vérifié), B = Port Status imprimante Off (triangle rouge), C = masque 255.255.255.240 sur le capteur (100% loss vérifié). La panne « doublon d'IP » s'est révélée impossible à fabriquer : Packet Tracer refuse la saisie d'une adresse déjà utilisée",
+    "evaluation_pratique": "« Serre de Rivière-Salée — intervention n°47 » (10 min) : un fichier PANNE remis à l'élève, fiche d'intervention 6 lignes + preuve du re-test, grille à 3 niveaux dans la synthèse professeur — aucun corrigé publié",
+    "defi_sans_tutoriel": "l'élève choisit SEUL son test ; le vérificateur accepte le ping, le PDU ou les deux et exige la justification écrite — seule la réponse « aucun test, les câbles sont verts » est refusée"
   },
-  "medias_licences": "9 SVG originaux CC0 reconstitués d'après nos sessions réelles Packet Tracer 8.2 + fichier .pkt (voir SOURCES_MEDIAS.md)",
+  "medias_licences": "14 SVG originaux CC0 reconstitués d'après nos sessions réelles Packet Tracer 8.2 + 5 fichiers .pkt (voir SOURCES_MEDIAS.md)",
   "hors_perimetre_modifie": [
-    "nouveautes.json (+1)", "index.html + README.md régénérés",
-    "_outils/build_audit.py (OVERLAY 4e_C4.7/C4.8/C4.9) + audit_couverture.csv/.json", "JOURNAL_DES_DECISIONS.md"
+    "nouveautes.json (+1)",
+    "index.html + README.md régénérés",
+    "_outils/build_audit.py (OVERLAY 4e_C4.7/C4.8/C4.9) + audit_couverture.csv/.json",
+    "JOURNAL_DES_DECISIONS.md"
   ],
   "source_inspiration": "esquisse ChatGPT « sequences_reseaux_cycle4_packet_tracer » (volet 4e, 05/08/2026) — conservé : le scénario serre et la panne d'adresse ; reconstruit : conception du plan (règle n°22), démarche de diagnostic explicite, valeurs mesurées réelles, contrat C4.9 (compléter la simulation fournie)",
-  "prive_non_publie": "aucune évaluation sommative incluse"
+  "prive_non_publie": "aucune évaluation sommative incluse",
+  "version": "v2 — refonte après audit pédagogique externe",
+  "audit_externe_applique": [
+    "4 séances de 55 min",
+    "passeport d'entrée",
+    "mode essentiel",
+    "fichiers .pkt en panne réels",
+    "fichier de départ câblé",
+    "preuve ping recentrée sur l'objet adressé",
+    "phrases guidées du diagnostic",
+    "défi sans tutoriel",
+    "corrections scientifiques (masque, .1, 0% loss, valeurs simulées, triangles orange)",
+    "CRCN 2.3/5.2 + 5.1",
+    "D1 explicité",
+    "version 🅰 en réseau isolé",
+    "note ordinateur partagé",
+    "réservation DHCP en approfondissement"
+  ]
 }
