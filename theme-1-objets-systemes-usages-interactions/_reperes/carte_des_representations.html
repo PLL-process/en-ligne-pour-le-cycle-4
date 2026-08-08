@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repère — La carte des représentations de la technologie (cycle 4, programme 2024)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#122a52;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;
+        --head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd08a;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.5;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:1000px;margin:0 auto}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:14px 0 4px}
+  .subtitle{text-align:center;color:var(--sub);margin:0 0 6px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;margin:4px 0 16px}
+  h2{font-size:1.12em;color:var(--head);margin:26px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+  h3{font-size:1em;color:var(--title);margin:18px 0 6px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin:12px 0}
+  .schema{width:100%;border:1px solid var(--border);border-radius:12px;background:#050f24;display:block}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9em}
+  td,th{border:1px solid var(--border);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  a{color:var(--hl)}
+  .oui{color:var(--ok);font-weight:600}
+  .non{color:var(--err);font-weight:600}
+  .part{color:var(--warn);font-weight:600}
+  .metier{color:var(--warn);font-style:italic}
+  .retenir{border-left:3px solid var(--ok);padding-left:12px;color:var(--ok);margin:10px 0}
+  .piege{border-left:3px solid var(--err);padding-left:12px;color:#ffb0b8;margin:10px 0}
+  .meta{font-size:.88em;color:var(--sub)}
+  .toolbar{text-align:center;margin:12px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;
+           background:rgba(5,15,36,.94);border-bottom:1px solid var(--border);margin:-14px -18px 12px}
+  #navharm a{padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);
+             color:var(--sub);font-size:.92em;text-decoration:none}
+  @media print{body{background:#fff;color:#111;font-size:9pt;padding:0}
+    .card{background:#fff;border-color:#999}h1,h2,h3,.pb{color:#111}
+    .toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}
+    th{background:#eee;color:#111}}
+</style></head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../index.html">⌂ Accueil</a><a href="../">← Thème 1</a></nav>
+<div class="page">
+
+<h1>🧭 La carte des représentations</h1>
+<p class="subtitle">Quinze façons de montrer une idée technique — leur nom officiel, leur nom de
+métier, leur place dans la démarche, et ce que le dépôt en fait aujourd'hui</p>
+<p class="pb">Document de référence pour l'enseignant · programme de technologie du cycle 4, BO n°9 du 29 février 2024</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer</button></div>
+
+<div class="card">
+<h2 style="margin-top:0">Pourquoi cette carte existe</h2>
+<p>Le programme de 2024 a <b>déspécifié</b> l'analyse fonctionnelle. Il impose les <b>concepts</b> —
+besoin, interacteurs, contraintes, exigences, cahier des charges, modes de représentation — et ne
+prescrit plus « bête à cornes », « pieuvre », « FAST » ni « SysML ».</p>
+<p><b>Déspécifier n'est pas interdire.</b> Nous avons d'abord lu le retrait comme une interdiction,
+et nous avons enseigné des concepts justes que personne ne savait nommer — ni l'inspection qui
+visite, ni le sujet de DNB, ni le collègue qui reprend la séquence, ni l'élève qui change
+d'établissement. Cette carte répare cela.</p>
+<div class="retenir">
+<p><b>La règle tenue ici&nbsp;: chaque représentation est nommée deux fois.</b> Par le mot du
+programme, <b>qui fait foi</b>, et par le nom que la profession emploie, entre parenthèses et en
+italique. Ni l'un sans l'autre.</p>
+</div>
+<div class="piege">
+<p><b>Et un principe qui vaut pour tout le cycle&nbsp;: aucun outil n'appartient à une
+compétence.</b> C'est ce que l'élève <b>en fait</b> qui décide de laquelle il relève. Un même
+logiciel de modélisation sert le C2 quand il représente le parcours d'un usager devant une borne,
+et le Thème 3 quand il modélise une forme à fabriquer.</p>
+</div>
+</div>
+
+<h2>La démarche, d'un seul tenant</h2>
+<object class="schema" data="Images/chaine_analyse_technique.svg" type="image/svg+xml"
+        aria-label="La chaîne d'analyse technique en trois blocs — analyse externe, analyse interne, conception et validation — avec le cahier des charges au centre et une flèche de retour qui remonte des tests vers lui">La chaîne d'analyse technique</object>
+<p class="meta">Le cahier des charges n'est pas un vestige de l'ancien programme&nbsp;: il en est
+devenu le <b>référentiel de validation</b>, puisque le programme demande de comparer les résultats
+obtenus ou simulés aux exigences qui en sont issues. C'est ce qui referme la boucle.</p>
+
+<h2>Les quinze représentations</h2>
+<p>La colonne <b>Dans le dépôt</b> dit la vérité au 8 août 2026&nbsp;: <span class="oui">produite
+par l'élève</span>, <span class="part">citée seulement</span>, ou <span class="non">absente</span>.
+Citer une représentation n'est pas l'enseigner.</p>
+
+<h3>Analyse externe — Thème 1</h3>
+<table>
+<tr><th>Représentation</th><th>Ce qu'elle montre</th><th>Place</th><th>Dans le dépôt</th></tr>
+<tr><td><b>Le besoin</b><br><span class="metier">(bête à cornes)</span></td>
+    <td>À qui l'objet rend service, sur quoi il agit, dans quel but. Elle produit la <b>fonction d'usage</b>.</td>
+    <td>Entrée dans l'étude, 5e</td><td><span class="non">absente</span> — décidée pour cette année</td></tr>
+<tr><td><b>Les interacteurs extérieurs</b><br><span class="metier">(diagramme pieuvre)</span></td>
+    <td>L'objet au centre, et autour&nbsp;: <b>usagers, données, autres objets, éléments de l'environnement</b>. C'est la formulation exacte du programme.</td>
+    <td><b>C2, surtout 5e</b></td><td><span class="non">absente</span> comme <i>dessin</i> — la notion est enseignée en 5e_C2.1, décidée pour cette année</td></tr>
+<tr><td><b>Le tableau des contraintes et exigences</b></td>
+    <td>Ce que l'objet doit respecter, et d'où cela vient&nbsp;: normes, cahier des charges, labels, certifications.</td>
+    <td><b>C2, surtout 4e</b></td><td><span class="oui">produite</span> — 4e_C2.1 (Hangzhou)</td></tr>
+<tr><td><b>Le cahier des charges</b></td>
+    <td>Le document qui rassemble les exigences, avec critères et niveaux. Sert ensuite à <b>valider</b>.</td>
+    <td>C2, puis Thème 3</td><td><span class="oui">produite</span> — 4e_C2.1, et repris en 3e et 4e_C1</td></tr>
+<tr><td><b>Le croquis</b></td>
+    <td>Le dessin à main levée de ce que fait réellement l'utilisateur. Point de départ du langage naturel, avec le texte.</td>
+    <td>C2 (4e) et conception</td><td><span class="part">citée seulement</span> — 7 occurrences, toutes des citations du référentiel</td></tr>
+<tr><td><b>Le diagramme des exigences</b><br><span class="metier">(SysML)</span></td>
+    <td>Les exigences et leurs liens, sous forme normalisée.</td>
+    <td>4e / 3e, facultatif</td><td><span class="non">absente</span> — hors périmètre cette année</td></tr>
+<tr><td><b>Le diagramme de cas d'utilisation</b><br><span class="metier">(SysML)</span></td>
+    <td>Qui fait quoi avec le système, vu de l'extérieur.</td>
+    <td>C2, facultatif</td><td><span class="non">absente</span> — hors périmètre cette année</td></tr>
+</table>
+
+<h3>Analyse interne — Thème 2</h3>
+<table>
+<tr><th>Représentation</th><th>Ce qu'elle montre</th><th>Place</th><th>Dans le dépôt</th></tr>
+<tr><td><b>Le diagramme FAST</b></td>
+    <td>Fonction d'usage → fonctions techniques → solutions techniques. La <b>charnière</b> entre le « pourquoi » et le « comment ».</td>
+    <td>Fin du Thème 1 / entrée du Thème 2</td><td><span class="non">absente</span> — décidée pour cette année</td></tr>
+<tr><td><b>Le schéma fonctionnel</b><br><span class="metier">(schéma-blocs)</span></td>
+    <td>Les blocs de l'objet et ce qui circule entre eux.</td>
+    <td>Thème 2</td><td><span class="oui">produite</span> — 36 occurrences</td></tr>
+<tr><td><b>La chaîne d'information</b></td>
+    <td>Acquérir → traiter → communiquer. <b>En haut</b> du schéma, par convention du dépôt (règle n°6).</td>
+    <td>Thème 2</td><td><span class="oui">produite</span> — 166 occurrences</td></tr>
+<tr><td><b>La chaîne d'énergie</b></td>
+    <td>Alimenter → distribuer → convertir → transmettre. <b>En bas</b>, sous la chaîne d'information.</td>
+    <td>Thème 2</td><td><span class="oui">produite</span> — 164 occurrences</td></tr>
+<tr><td><b>L'algorigramme</b></td>
+    <td>La représentation graphique d'un <b>algorithme</b>&nbsp;: l'ordre des opérations et les tests.</td>
+    <td>Comportement, programme</td><td><span class="oui">produite</span> — 319 occurrences, dans les trois thèmes</td></tr>
+</table>
+
+<h3>Conception, réalisation, projet — Thème 3</h3>
+<table>
+<tr><th>Représentation</th><th>Ce qu'elle montre</th><th>Place</th><th>Dans le dépôt</th></tr>
+<tr><td><b>La modélisation</b><br><span class="metier">(CAO, modélisation 3D)</span></td>
+    <td>Une forme, simplifiée volontairement&nbsp;: une représentation <b>choisit</b> ce qu'elle retient du réel.</td>
+    <td>Thème 3 — et C2 en 3e, si l'élève la choisit</td><td><span class="part">citée seulement</span> — 5 occurrences du mot</td></tr>
+<tr><td><b>Le diagramme de planification des tâches</b><br><span class="metier">(Gantt)</span></td>
+    <td>Les tâches, leur durée, et les contraintes entre elles. <b>Le programme le nomme explicitement.</b></td>
+    <td>Thème 3 — <b>C7.1</b></td><td><span class="non">absente</span> — décidée pour cette année</td></tr>
+<tr><td><b>La carte mentale</b></td>
+    <td>Une idée centrale et ses ramifications. Outil de synthèse, pas de description technique.</td>
+    <td>Synthèse, organisation</td><td><span class="non">absente</span> — hors périmètre cette année</td></tr>
+</table>
+
+<h2>Ce qui est décidé pour l'année 2026-2027</h2>
+<div class="card">
+<p><b>Quatre représentations entrent&nbsp;:</b></p>
+<table>
+<tr><th>Représentation</th><th>Où</th><th>Sous quelle forme</th></tr>
+<tr><td>Le diagramme des interacteurs</td><td>5e_C2.1</td>
+    <td>Produit par l'élève, en <b>quatre familles</b>, à partir d'un objet réellement manipulé</td></tr>
+<tr><td>La bête à cornes</td><td>5e, avant le diagramme</td>
+    <td><b>Dix minutes</b>, pour formuler le besoin — pas une séance sur le formalisme, et <b>jamais un objectif évalué</b></td></tr>
+<tr><td>Le FAST</td><td>Charnière Thème 1 / Thème 2</td>
+    <td>Comme passage du « pourquoi » au « comment », pas au cœur du C2</td></tr>
+<tr><td>Le diagramme de Gantt</td><td>Thème 3, C7.1</td>
+    <td>Sur le projet robot&nbsp;: tâches, durées, contraintes entre tâches</td></tr>
+</table>
+<p class="meta"><b>Restent dehors cette année&nbsp;:</b> les deux diagrammes SysML et la carte
+mentale. Non parce qu'ils seraient sans valeur, mais parce qu'un dépôt qui promet tout ne tient
+rien.</p>
+</div>
+
+<h2>Trois principes pour employer cette carte</h2>
+<div class="card">
+<p><b>1. Le mot du programme fait foi, le nom du métier circule.</b> Devant les élèves comme dans les
+documents&nbsp;: «&nbsp;diagramme des interacteurs extérieurs <i>(souvent appelé diagramme
+pieuvre)</i>&nbsp;». L'élève qui rencontrera l'un des deux noms ailleurs saura de quoi il s'agit.</p>
+<p><b>2. Une notion traverse les niveaux en changeant de verbe, pas de sujet.</b> Le cahier des
+charges se <b>reconnaît</b> en 5e, se <b>formule</b> en 4e, s'<b>arbitre</b> en 3e. Trois années à
+refaire le même diagramme ne sont pas une progression&nbsp;: c'est une répétition, et les élèves
+s'en aperçoivent avant nous.</p>
+<p><b>3. Un outil logiciel n'appartient à aucune compétence.</b> La question n'est jamais «&nbsp;dans
+quelle case ranger ce logiciel&nbsp;?&nbsp;» mais «&nbsp;qu'est-ce que l'élève en fait, et quelle
+compétence cela met-il en jeu&nbsp;?&nbsp;»</p>
+</div>
+
+<p class="meta">Sources vérifiées le 8 août 2026 dans l'annexe du programme de technologie du cycle 4
+(BO n°9 du 29 février 2024)&nbsp;: la liste des interacteurs extérieurs, celle des modes de
+représentation, l'origine des exigences et le diagramme de planification des tâches y figurent
+mot pour mot. Le décompte de la colonne «&nbsp;Dans le dépôt&nbsp;» provient d'un relevé mécanique
+sur les 156 pages HTML des trois thèmes, et non d'une impression.</p>
+
+</div>
+</body>
+</html>

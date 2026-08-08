@@ -3653,3 +3653,47 @@ compétence) et la n°66 ci-dessus. Le lot déclare aussi ce qu'il ne fait pas :
 d'objet réel** (n°58), et une donnée traitée mais jamais produite.
 
 Le dépôt passe de **26 à 27 codes COMPLET ET VALIDABLE**.
+
+---
+
+### Règle d'or n°67 — Une consigne qui annonce une production sans offrir de champ n'est pas une consigne
+
+**L'incident.** Pascal signale que la séquence `5e_C1.2` (« Comparer des principes techniques »,
+d'un autre auteur) va contre plusieurs de nos règles. Vérification faite en ouvrant le fichier :
+il a raison sur l'essentiel, et le défaut central est plus net encore que dit. La page contient
+**zéro `<textarea>`, zéro `<select>`, zéro `<input>`, zéro `<button>`** — et pourtant elle écrit
+trois fois «&nbsp;<b>Production attendue</b>&nbsp;: un tableau complété…&nbsp;», «&nbsp;une matrice
+de comparaison et deux phrases de justification…&nbsp;». Le tableau de l'activité 1 est un tableau
+HTML statique dont les cellules contiennent «&nbsp;…&nbsp;».
+
+L'élève lit qu'on attend de lui une production, et n'a **nulle part où la faire**. Il n'y a donc ni
+vérificateur, ni sauvegarde, ni trace — et rien à corriger.
+
+**Ce qui est plus grave que le reste.** Le contrôle mécanisé n'a relevé qu'**un seul** manquement.
+La règle n°31 (version étayée) a répondu «&nbsp;aucune production écrite exigée&nbsp;» et est passée
+au vert&nbsp;: elle cherche des zones de rédaction pour vérifier qu'elles sont étayées, et une page
+qui n'en a aucune lui échappe entièrement. **Une séquence vide passe mieux qu'une séquence
+imparfaite.** C'est le pire réglage possible.
+
+**La règle.** Toute phrase qui annonce une production — «&nbsp;production attendue&nbsp;»,
+«&nbsp;complète le tableau&nbsp;», «&nbsp;rédige&nbsp;», «&nbsp;justifie&nbsp;» — engage un
+**champ où l'élève écrit**, un **vérificateur**, une **correction** et une **sauvegarde**. Sinon la
+consigne est décorative, et la séquence est un document à lire déguisé en activité.
+
+**Mécanisation à faire** (branche Thème 2, avec les n°47, n°51 et n°54)&nbsp;: la n°31 doit
+**échouer**, et non passer, quand une page emploie un verbe de production sans offrir un seul champ.
+Le silence d'un outil n'est pas une preuve (n°47) — et son indulgence non plus.
+
+**Ce qui n'est pas fait, et pourquoi.** La séquence n'est pas corrigée : elle appartient à un autre
+auteur (règle n°66). Le constat est porté ici et dans la carte de couverture, qui sont nos fichiers
+communs. Le code `5e_C1.2` est par ailleurs couvert depuis aujourd'hui par le lot Chengdu, dont
+l'activité 1 fait exactement ce travail — trois principes pour une même fonction, cinq critères, et
+l'obligation de nommer ce qu'on perd en choisissant.
+
+**Un défaut de contenu, aussi, et c'est le nôtre autant que le sien.** L'aide de l'activité 1 écrit
+«&nbsp;La fonction répond à&nbsp;: <i>À quoi cela sert-il&nbsp;?</i>&nbsp;», et l'en-tête du tableau
+«&nbsp;Fonction&nbsp;: à quoi sert-il&nbsp;?&nbsp;». C'est **exactement** la confusion corrigée ce
+matin dans le billet d'entrée du 5e_C2 : «&nbsp;à quoi ça sert&nbsp;» décrit le service rendu à
+l'usager, pas la fonction technique. Deux séquences de deux auteurs différents portaient la même
+erreur, ce qui indique moins une négligence qu'un **contresens partagé dans la discipline** — et
+justifie la règle n°53 : une notion qui a une voisine se définit contre elle.

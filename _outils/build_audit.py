@@ -81,6 +81,7 @@ OVERLAY = {
         medias="4 SVG originaux CC0 écrits pour le lot, title/desc de 1 360 à 1 509 car.",
     ),
     "5e_C1.2": dict(
+        audit_08_08_2026="Séquence sequence_5e_C1.2_principes_techniques.html : situation déclenchante et question problématisée présentes, code et formulation du référentiel présents — mais AUCUN champ de saisie (0 textarea, 0 select, 0 input, 0 button) alors que la page annonce trois fois une « production attendue ». Ni vérificateur, ni sauvegarde, ni hypothèse, ni mode essentiel, ni version étayée, ni auto-positionnement. Défaut de contenu : l'aide définit la fonction technique par « à quoi cela sert-il ? », qui est la fonction d'usage (même erreur que celle corrigée dans 5e_C2.1 le 08/08/2026). Lot d'un autre auteur : NON MODIFIÉ (règle n°66). Le code est couvert depuis le 08/08/2026 par le lot Chengdu (5e_C1.1), dont l'activité 1 traite exactement ce contenu.",
         pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
         statut="À CORRIGER",
         sequence=True, qcm=True, projet=False, synthese=False,
