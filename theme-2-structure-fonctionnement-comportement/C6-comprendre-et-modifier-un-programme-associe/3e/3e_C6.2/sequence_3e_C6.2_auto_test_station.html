@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 3e · Atelier : L'auto-test de la station (3e_C6.2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:700px){.simu{grid-template-columns:1fr}}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
+  .vig-verte{color:var(--ok);border-color:var(--ok)}
+  .vig-jaune{color:var(--warn);border-color:var(--warn)}
+  .vig-orange{color:var(--energie);border-color:var(--energie)}
+  .vig-rouge{color:var(--err);border-color:var(--err)}
+  .vig-violette{color:var(--head);border-color:var(--head)}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
+  table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
+  table.donnees td:first-child,table.donnees th:first-child{text-align:left}
+  .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
+  .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
+  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+
+  /* ══ CodeLab Techno ══ */
+  .codelab{background:#08132c;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:14px 0}
+  .cl-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 14px;background:#0d2347;border-bottom:1px solid var(--border);font-size:.82em}
+  .cl-head .cl-name{font-weight:700;color:var(--hl)}
+  .cl-head .cl-lang{background:#173666;border-radius:7px;padding:2px 9px;color:#ffd66b}
+  .cl-head .cl-lines{color:var(--sub)}
+  .cl-head .cl-saved{margin-left:auto;color:var(--ok);min-width:11em;text-align:right}
+  .cl-tools{display:flex;gap:6px;flex-wrap:wrap;padding:7px 12px;background:#0a1b3d;border-bottom:1px solid var(--border)}
+  .cl-tools button,.cl-tools label{background:#173666;border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:4px 10px;font-size:.78em;cursor:pointer;font-family:inherit}
+  .cl-tools button:hover{background:#1d4e89}
+  .cl-body{display:flex;max-height:430px;overflow:auto;position:relative}
+  .cl-gutter{user-select:none;text-align:right;padding:12px 8px 12px 12px;color:#5b7bb8;background:#0a1b3d;font-family:'Fira Code',monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;border-right:1px solid var(--border)}
+  .cl-gutter .cl-ln-hl{background:rgba(255,214,102,.25);color:#ffd66b;display:block;border-radius:3px}
+  .cl-editwrap{position:relative;flex:1;min-width:0}
+  .cl-hl,.cl-ta{margin:0;padding:12px 14px;font-family:'Fira Code',monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;tab-size:4;min-height:100%;box-sizing:border-box}
+  .codelab.cl-wrap-on .cl-hl,.codelab.cl-wrap-on .cl-ta{white-space:pre-wrap;word-break:break-all}
+  .cl-hl{position:absolute;inset:0;pointer-events:none;color:#d7e6ff;overflow:hidden}
+  .cl-ta{position:relative;width:100%;background:transparent;color:transparent;caret-color:#fff;border:none;outline:none;resize:none;overflow:hidden;display:block}
+  .cl-hl .k{color:#c68ef2;font-weight:600}.cl-hl .s{color:#81fba1}.cl-hl .c{color:#5b7bb8;font-style:italic}.cl-hl .n{color:#ffb454}.cl-hl .f{color:#61dafb}
+  .cl-hl .cl-line-hl{background:rgba(255,214,102,.14);display:inline-block;width:100%}
+  .codelab:fullscreen{border-radius:0}
+  .codelab:fullscreen .cl-body{max-height:none;height:calc(100vh - 92px)}
+
+  /* Règle d'or n°29 — mode essentiel : alléger la lecture sans retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
+
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction, body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — tableau de bord des tâches : la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{margin:10px 0 14px;padding:9px 15px;background:#0d2347;border:1px solid var(--border);
+    border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  /* banc d'essai */
+  .banc{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 15px;margin:12px 0}
+  .banc .organes{display:flex;flex-wrap:wrap;gap:14px;margin:8px 0}
+  .banc label{display:inline-flex;align-items:center;gap:6px;font-size:.93em}
+  .journal{font-family:'Fira Code',monospace;font-size:.86em;background:#050f24;border:1px solid var(--border);
+    border-radius:8px;padding:10px 12px;margin-top:10px;white-space:pre-wrap;min-height:3em}
+</style>
+</head>
+<body><style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+
+<h1>🩺 L'auto-test de la station — écrire l'algorithme qui vérifie la machine</h1>
+<p class="subtitle">La saison cyclonique approche. Comment savoir que la station d'alerte fonctionne encore, AVANT d'en avoir besoin&nbsp;?</p>
+
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C6.2</span>
+  <span class="badge theme">Thème 2 · Structure, fonctionnement, comportement</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D4</span>
+  <span class="badge crcn">CRCN : 3.4 (niv. 3) · 2.3</span>
+  <span class="badge duree">3 séances de 55 min</span>
+</div>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e …"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note" id="savedNote" aria-live="polite"></p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections
+et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
+
+<div class="progress-wrap">
+  <span class="progress-label" id="progTxt">0 / 5 activités validées</span>
+  <div class="progress-bar" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+    <div class="progress-fill" id="progFill"></div>
+  </div>
+</div>
+
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+
+<section class="card">
+  <h2>🌀 La situation : la station a bien marché… l'an dernier</h2>
+  <p>Sainte-Luce, début juin. La station d'alerte cyclonique que le club techno a réparée puis améliorée
+  l'an dernier est toujours en haut du mât, face à la baie. Elle n'a plus servi depuis huit mois.</p>
+
+  <p>À la réunion de préparation de la saison, M. Firmin pose la question qui fâche&nbsp;:
+  «&nbsp;Elle marchait en novembre. Mais aujourd'hui&nbsp;? La batterie tient-elle encore&nbsp;? Le gyrophare
+  s'allume-t-il&nbsp;? La liaison radio passe-t-elle&nbsp;? On le saura le jour où on en aura besoin —
+  et ce jour-là, il sera trop tard.&nbsp;»</p>
+
+  <p>Un pompier volontaire présent dans la salle tranche&nbsp;: «&nbsp;Chez nous, aucun matériel d'alerte
+  n'attend la catastrophe pour se signaler en panne. <b>Il se teste tout seul, tous les jours.</b>&nbsp;»</p>
+
+  <p class="retenir"><b>🎯 Ta mission&nbsp;:</b> écrire l'algorithme d'une <b>nouvelle fonctionnalité</b> —
+  un <b>auto-test quotidien</b>. Chaque matin à 7&nbsp;h, la station vérifie ses organes un par un, compte
+  les défauts, et prévient le gardien s'il y en a. Ce programme n'existe pas encore&nbsp;: personne ne va te
+  le donner à modifier. <b>C'est toi qui vas l'écrire.</b></p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em"><b>Comment écrire un algorithme qui vérifie une machine, la renseigne sur son
+  propre état, et le dit à un humain de façon utile&nbsp;?</b></p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <p>Avant de commencer, écris ce que tu penses. On y reviendra au bilan.</p>
+  <label for="hyp1">Selon toi, comment une machine peut-elle savoir qu'un de ses organes est en panne&nbsp;?</label>
+  <textarea id="hyp1" rows="3" placeholder="Je pense qu'elle peut le savoir en…"></textarea>
+  <details class="aide">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Même exigence, moins d'obstacle&nbsp;: recopie ces débuts de phrase et complète-les.</p>
+    <p>«&nbsp;Pour savoir si un organe fonctionne, la station peut ______.<br>
+    Si l'organe ne répond pas, alors ______.<br>
+    Pour que ce soit utile, elle doit ensuite ______.&nbsp;»</p>
+  </details>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de l'atelier — en toutes lettres</h2>
+  <h4>Compétence de technologie (programme 2024)</h4>
+  <p><b>3e_C6.2</b> — «&nbsp;Programmer un algorithme lié à une nouvelle fonctionnalité.&nbsp;»
+  → <em>tu conçois puis tu écris, de zéro, l'algorithme de l'auto-test (act. 2 et 3), tu l'éprouves au banc
+  d'essai (act. 4) et tu le confrontes à des cas limites (act. 5).</em></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Attention à ne pas confondre les trois codes voisins&nbsp;:
+  <b>3e_C6.1</b> demande de <em>déterminer les données</em> d'un programme existant, <b>3e_C6.3</b> de le
+  <em>modifier et le tester</em>. Ces deux-là sont traités par la séquence «&nbsp;Programmer l'alerte&nbsp;».
+  Ici, le verbe est <b>programmer</b> et l'objet est une <b>fonctionnalité qui n'existe pas encore</b>&nbsp;:
+  rien à lire, rien à modifier — tout à écrire.</p>
+
+  <h4>Socle commun — domaines mobilisés</h4>
+  <p><b>D1.3 — Les langages mathématiques, scientifiques et informatiques</b>&nbsp;: écrire un algorithme dans
+  une notation normalisée (algorigramme), lire et produire un tableau de suivi de variables.</p>
+  <p><b>D2 — Les méthodes et outils pour apprendre</b>&nbsp;: concevoir à deux, éprouver, corriger.</p>
+  <p><b>D4 — Les systèmes naturels et les systèmes techniques</b>&nbsp;: comprendre qu'un système technique
+  peut surveiller son propre état, et pourquoi c'est vital pour un système d'alerte.</p>
+
+  <h4>Et le domaine 1 dans son entier&nbsp;?</h4>
+  <p>La rédaction du <b>message au gardien</b> (act. 5) relève de la langue française&nbsp;: un message
+  d'alerte technique doit être compris par quelqu'un qui n'est pas technicien. C'est évaluable comme tel.</p>
+
+  <h4>CRCN</h4>
+  <p><b>3.4 — Programmer</b>, niveau 3 visé — l'élève <b>élabore son propre algorithme</b> plutôt que
+  d'exécuter une procédure&nbsp;; il en éprouve la validité sur des cas qu'il choisit.
+  <b>2.3 — Collaborer</b> est travaillée par la conception en binôme et la revue croisée.
+  Le CRCN reste le résultat d'une activité authentique, jamais une étiquette&nbsp;: aucune recherche en ligne
+  n'a été ajoutée artificiellement pour cocher une case de plus.</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Trois façons de vivre l'atelier</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel, sur banc ISOLÉ</h4>
+      <p>Si l'établissement dispose d'une carte et de deux ou trois composants (LED, buzzer, interrupteur),
+      on câble un mini-banc <b>totalement indépendant</b> de tout autre réseau ou installation, et on y fait
+      tourner l'auto-test pour de vrai. <b>Très basse tension uniquement</b>&nbsp;: jamais le secteur.</p></div>
+    <div class="version vb"><h4>🅱 Le banc d'essai de la page (cœur de l'atelier)</h4>
+      <p>Un banc d'essai est intégré à cette page&nbsp;: tu mets toi-même des organes en panne, tu lances ton
+      auto-test, et tu lis le journal qu'il produit. Hors ligne, aucune donnée envoyée.</p></div>
+    <div class="version vc"><h4>🅲 Sans ordinateur</h4>
+      <p>L'algorigramme se dessine sur papier et l'exécution se suit à la main dans le
+      <b>tableau de suivi des variables</b> de l'activité 5 — le geste évalué est identique.</p></div>
+  </div>
+</section>
+
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de l'atelier">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="seance1" id="tab-s1">Séance 1<br>Comprendre et concevoir<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance2" id="tab-s2">Séance 2<br>Écrire l'algorithme<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="seance3" id="tab-s3">Séance 3<br>Éprouver et valider<span class="done" id="done-s3"></span></button>
+</div>
+
+<!-- ═══════════ SÉANCE 1 ═══════════ -->
+<div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
+
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils <span style="font-size:.7em;color:var(--sub)">(4 min, sans note)</span></h2>
+  <p>Trois questions sur ce que tu sais déjà faire. <b>Aucune note</b>&nbsp;: c'est un aiguillage, pas une
+  évaluation — le vérificateur ne compte aucun point et te le dira.</p>
+  <div class="exo">
+    <div class="ligne-exo"><label for="p0_1">Une <b>variable</b>, dans un programme, sert à…</label>
+      <select id="p0_1"><option value="">— je choisis —</option>
+        <option>garder une valeur en mémoire pour s'en servir plus tard</option>
+        <option>afficher un texte à l'écran</option>
+        <option>relier deux composants électroniques</option>
+        <option>ralentir le programme</option></select></div>
+    <div class="ligne-exo"><label for="p0_2">Un <b>test</b> (SI … ALORS …) sert à…</label>
+      <select id="p0_2"><option value="">— je choisis —</option>
+        <option>faire deux choses différentes selon qu'une condition est vraie ou fausse</option>
+        <option>répéter une action un certain nombre de fois</option>
+        <option>donner un nom à une valeur</option>
+        <option>arrêter définitivement le programme</option></select></div>
+    <div class="ligne-exo"><label for="p0_3">Une <b>boucle</b> sert à…</label>
+      <select id="p0_3"><option value="">— je choisis —</option>
+        <option>répéter des instructions sans les réécrire à chaque fois</option>
+        <option>choisir entre deux chemins</option>
+        <option>mesurer une grandeur physique</option>
+        <option>enregistrer un fichier</option></select></div>
+    <button class="btn check" data-check="0">Vérifier mon billet d'entrée</button>
+    <div class="feedback" id="fb0" aria-live="polite"></div>
+    <details class="aide" id="capsule4e"><summary>🎒 Je révise en 3 minutes</summary>
+      <p>Une <b>variable</b> est une case mémoire avec un nom. <code>defauts = 0</code> crée la case
+      «&nbsp;defauts&nbsp;» et y met 0. Plus tard, <code>defauts = defauts + 1</code> ajoute 1 à ce qu'elle
+      contenait&nbsp;: c'est un <b>compteur</b>, et tu vas en avoir besoin.</p>
+      <p>Un <b>test</b> pose une question à deux issues et fait bifurquer le programme&nbsp;:
+      <code>SI la sirène ne répond pas ALORS compter un défaut</code>. Dans un algorigramme, c'est le losange.</p>
+      <p>Une <b>boucle</b> répète&nbsp;: <code>POUR CHAQUE organe de la liste</code> évite d'écrire quatre fois
+      le même test. C'est exactement ce qui rend un auto-test court et lisible.</p>
+    </details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔎 Activité 1 — De quoi l'auto-test a-t-il besoin&nbsp;? <span style="font-size:.7em;color:var(--sub)">(~20 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> identifier ce qui entre dans l'algorithme et ce qui doit en sortir, avant d'écrire la moindre ligne.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité (phase d'analyse).</div>
+    <div><b>Production&nbsp;:</b> les entrées et les sorties classées + la liste des organes à tester.</div>
+    <div><b>Ressources&nbsp;:</b> la description de la station ci-dessous.</div>
+  </div>
+
+  <div class="ressource">
+    <h4>La station, telle qu'elle est aujourd'hui</h4>
+    <p>Quatre organes peuvent tomber en panne indépendamment&nbsp;:</p>
+    <ul>
+      <li>l'<b>anémomètre</b> — il mesure le vent&nbsp;; s'il est bloqué, il renvoie toujours la même valeur&nbsp;;</li>
+      <li>le <b>gyrophare</b> — il s'allume en vigilance&nbsp;; une ampoule grillée ne se voit pas de jour&nbsp;;</li>
+      <li>la <b>sirène</b> — elle sonne en alerte&nbsp;; c'est l'organe le plus critique&nbsp;;</li>
+      <li>la <b>liaison radio</b> — elle envoie les messages au gardien&nbsp;; sans elle, la station est muette.</li>
+    </ul>
+    <p>Chaque organe sait répondre à une question simple posée par le programme&nbsp;:
+    <code>tester(organe)</code> renvoie <b>vrai</b> s'il fonctionne, <b>faux</b> sinon.</p>
+  </div>
+
+  <div class="consigne"><b>Consigne&nbsp;:</b> classe chaque élément. Est-ce une <b>donnée d'entrée</b>
+  (l'algorithme la reçoit), une <b>donnée de sortie</b> (l'algorithme la produit), ou <b>ni l'un ni l'autre</b>&nbsp;?</div>
+
+  <div class="exo">
+    <div class="ligne-exo"><label for="e1_1">La réponse de <code>tester(sirène)</code>&nbsp;:</label>
+      <select id="e1_1"><option value="">— je choisis —</option>
+        <option>une donnée d'entrée : l'algorithme la reçoit pour décider</option>
+        <option>une donnée de sortie : l'algorithme la produit</option>
+        <option>ni l'un ni l'autre : c'est un composant</option>
+        <option>une variable inutile</option></select></div>
+    <div class="ligne-exo"><label for="e1_2">Le <b>nombre de défauts</b> trouvés&nbsp;:</label>
+      <select id="e1_2"><option value="">— je choisis —</option>
+        <option>une donnée de sortie : c'est un résultat que l'algorithme calcule</option>
+        <option>une donnée d'entrée : elle est connue avant de commencer</option>
+        <option>ni l'un ni l'autre : c'est un composant</option>
+        <option>une donnée d'entrée fournie par le gardien</option></select></div>
+    <div class="ligne-exo"><label for="e1_3">L'<b>heure qu'il est</b>&nbsp;:</label>
+      <select id="e1_3"><option value="">— je choisis —</option>
+        <option>une donnée d'entrée : elle déclenche l'auto-test à 7 h</option>
+        <option>une donnée de sortie : l'algorithme la calcule</option>
+        <option>ni l'un ni l'autre : le temps ne se programme pas</option>
+        <option>une donnée d'entrée, mais seulement en saison cyclonique</option></select></div>
+    <div class="ligne-exo"><label for="e1_4">Le <b>message envoyé au gardien</b>&nbsp;:</label>
+      <select id="e1_4"><option value="">— je choisis —</option>
+        <option>une donnée de sortie : c'est la production utile de l'algorithme</option>
+        <option>une donnée d'entrée : le gardien l'écrit lui-même</option>
+        <option>ni l'un ni l'autre : c'est un organe</option>
+        <option>une variable intermédiaire sans importance</option></select></div>
+    <div class="ligne-exo"><label for="e1_5">Combien d'organes l'auto-test doit-il tester&nbsp;?</label>
+      <select id="e1_5"><option value="">— je choisis —</option>
+        <option>4 : anémomètre, gyrophare, sirène, liaison radio</option>
+        <option>1 : la sirène suffit, c'est le plus important</option>
+        <option>2 : la sirène et le gyrophare</option>
+        <option>autant qu'on veut, ça n'a pas d'importance</option></select></div>
+
+    <details class="aide"><summary>💡 Aide niveau 1</summary>
+      <p>Pose-toi la question dans ce sens&nbsp;: est-ce que l'algorithme <b>reçoit</b> cette information
+      (entrée), ou est-ce qu'il la <b>fabrique</b> (sortie)&nbsp;?</p></details>
+    <details class="aide"><summary>💡💡 Aide niveau 2</summary>
+      <p>Un compteur commence à zéro et grandit pendant l'exécution&nbsp;: il ne peut pas être une entrée,
+      puisqu'il n'existe pas encore quand le programme démarre.</p></details>
+
+    <button class="btn check" data-check="1">Vérifier mes réponses</button>
+    <div class="feedback" id="fb1" aria-live="polite"></div>
+
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Entrées&nbsp;:</b> la réponse de chaque <code>tester(organe)</code> et l'heure. Ce sont les
+      informations que l'algorithme <em>reçoit</em> du monde extérieur pour décider.</p>
+      <p><b>Sorties&nbsp;:</b> le nombre de défauts et le message au gardien. Ce sont les informations que
+      l'algorithme <em>fabrique</em>. Le message est la sortie <b>utile</b>&nbsp;: sans lui, l'auto-test
+      tournerait pour rien.</p>
+      <p><b>Quatre organes.</b> Se limiter à la sirène serait un contresens&nbsp;: une sirène qui marche mais
+      une radio morte, et le gardien n'apprend jamais qu'il y a un problème ailleurs.</p>
+    </details>
+    <div class="retenir"><b>📌 À retenir&nbsp;:</b> avant d'écrire un algorithme, on dit ce qui <b>entre</b>
+    et ce qui <b>sort</b>. C'est ce qui empêche d'écrire un programme qui calcule quelque chose que personne
+    ne lira jamais.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques&nbsp;:</b> confondre un <b>organe</b> (un objet physique) et
+    la <b>donnée</b> qu'il renvoie&nbsp;; croire qu'un compteur est une entrée parce qu'on l'écrit en haut
+    du programme.</div>
+    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> je sais dire, pour chaque information, si mon
+    algorithme la reçoit ou la produit.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✏️ Activité 2 — CONCEVOIR l'algorigramme, avant toute référence <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> concevoir soi-même l'enchaînement de l'auto-test, puis le confronter à une référence.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité.</div>
+    <div><b>Production&nbsp;:</b> l'algorigramme rédigé en toutes lettres + la revue croisée du binôme voisin.</div>
+    <div><b>Ressources&nbsp;:</b> les quatre symboles normalisés, rappelés ci-dessous.</div>
+  </div>
+
+  <div class="ressource">
+    <h4>Les quatre symboles, et rien d'autre</h4>
+    <p><b>Ovale</b> — Début et Fin. <b>Parallélogramme</b> — une entrée ou une sortie de donnée.
+    <b>Rectangle</b> — une action. <b>Losange</b> — un test à deux issues.</p>
+    <p>Une flèche qui revient en arrière crée une <b>boucle</b>. Aucune branche ne reste dans le vide&nbsp;:
+    un algorigramme dont une flèche ne mène nulle part est faux.</p>
+  </div>
+
+  <div class="consigne"><b>Consigne — tu conçois d'abord, la référence vient après&nbsp;:</b> écris dans le
+  cadre ci-dessous, en toutes lettres, l'enchaînement de ton auto-test. Ton texte doit contenir au moins
+  <b>un compteur</b>, <b>une boucle</b> sur les organes et <b>un test</b>. Échange ensuite ta feuille avec
+  le binôme voisin&nbsp;: cherchez chez l'autre une branche qui ne mène nulle part.</div>
+
+  <div class="exo">
+    <label for="e2_prod">✍️ Mon algorigramme, écrit en toutes lettres (60 caractères minimum)&nbsp;:</label>
+    <textarea id="e2_prod" rows="7" placeholder="DÉBUT. Ensuite…"></textarea>
+    <details class="aide"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Même exigence, moins d'obstacle. Recopie et complète&nbsp;:</p>
+      <p>«&nbsp;DÉBUT.<br>
+      Je mets la variable <b>defauts</b> à ______.<br>
+      POUR CHAQUE organe de la liste ______&nbsp;:<br>
+      &nbsp;&nbsp;&nbsp;SI ______ alors ______ et j'ajoute le nom de l'organe à la liste des pannes.<br>
+      Une fois la boucle terminée, SI defauts ______ alors j'envoie ______, SINON j'envoie ______.<br>
+      FIN.&nbsp;»</p></details>
+
+    <div class="ligne-exo"><label for="e2_1">Où placer le compteur <code>defauts = 0</code>&nbsp;?</label>
+      <select id="e2_1"><option value="">— je choisis —</option>
+        <option>avant la boucle : il doit exister avant qu'on commence à compter</option>
+        <option>à l'intérieur de la boucle, au début de chaque tour</option>
+        <option>après la boucle, juste avant le message</option>
+        <option>il n'en faut pas : on compte de tête</option></select></div>
+    <div class="ligne-exo"><label for="e2_2">Que se passe-t-il si on remet <code>defauts = 0</code> à chaque tour de boucle&nbsp;?</label>
+      <select id="e2_2"><option value="">— je choisis —</option>
+        <option>on efface le comptage : à la fin, on n'a plus que le dernier organe testé</option>
+        <option>rien, le résultat est le même</option>
+        <option>le programme plante</option>
+        <option>on compte deux fois chaque défaut</option></select></div>
+    <div class="ligne-exo"><label for="e2_3">Quel symbole pour «&nbsp;l'organe répond-il&nbsp;?&nbsp;»&nbsp;?</label>
+      <select id="e2_3"><option value="">— je choisis —</option>
+        <option>un losange : c'est un test à deux issues</option>
+        <option>un rectangle : c'est une action</option>
+        <option>un parallélogramme : c'est une donnée</option>
+        <option>un ovale : c'est le début du test</option></select></div>
+    <div class="ligne-exo"><label for="e2_4">Quel symbole pour «&nbsp;envoyer le message au gardien&nbsp;»&nbsp;?</label>
+      <select id="e2_4"><option value="">— je choisis —</option>
+        <option>un parallélogramme : c'est une sortie de donnée</option>
+        <option>un losange : le gardien peut répondre ou non</option>
+        <option>un ovale : c'est la fin du programme</option>
+        <option>un rectangle : c'est un calcul interne</option></select></div>
+    <div class="ligne-exo"><label for="e2_5">Pourquoi une boucle plutôt que quatre tests écrits à la suite&nbsp;?</label>
+      <select id="e2_5"><option value="">— je choisis —</option>
+        <option>pour éviter de réécrire quatre fois la même chose, et pouvoir ajouter un organe sans tout réécrire</option>
+        <option>parce que les boucles sont plus rapides à exécuter</option>
+        <option>parce que le programme est obligé d'avoir une boucle</option>
+        <option>pour économiser de la mémoire sur la carte</option></select></div>
+
+    <details class="aide"><summary>💡 Aide niveau 1</summary>
+      <p>Déroule ton algorithme à voix haute avec quatre organes dont deux en panne. Si tu ne sais pas dire
+      combien vaut <code>defauts</code> à la fin, c'est que le compteur est mal placé.</p></details>
+    <details class="aide"><summary>💡💡 Aide niveau 2</summary>
+      <p>Ordre attendu&nbsp;: initialiser le compteur → parcourir les organes → tester chacun → compter les
+      défauts → <b>une fois la boucle finie</b>, décider du message. Décider à l'intérieur de la boucle
+      enverrait un message par organe&nbsp;: quatre SMS chaque matin, le gardien couperait tout au bout
+      d'une semaine.</p></details>
+
+    <button class="btn check" data-check="2">Vérifier ma conception</button>
+    <div class="feedback" id="fb2" aria-live="polite"></div>
+
+    <details class="correction"><summary>✅ Correction complète — l'algorigramme de référence</summary>
+      <p><b>DÉBUT</b> → <em>(action)</em> <code>defauts = 0</code> et <code>pannes = liste vide</code>
+      → <em>(boucle)</em> POUR CHAQUE organe de [anémomètre, gyrophare, sirène, radio] →
+      <em>(losange)</em> «&nbsp;<code>tester(organe)</code> répond-il vrai&nbsp;?&nbsp;»&nbsp;:
+      si OUI, on passe à l'organe suivant&nbsp;; si NON, <em>(action)</em>
+      <code>defauts = defauts + 1</code> et on ajoute le nom de l'organe à <code>pannes</code>.</p>
+      <p>Une fois la liste épuisée&nbsp;: <em>(losange)</em> «&nbsp;<code>defauts > 0</code>&nbsp;?&nbsp;» →
+      si OUI, <em>(parallélogramme)</em> envoyer «&nbsp;Station&nbsp;: N défaut(s) — [liste]&nbsp;»&nbsp;;
+      si NON, envoyer «&nbsp;Station opérationnelle&nbsp;». <b>FIN.</b></p>
+      <p><b>Le compteur avant la boucle</b>&nbsp;: le remettre à zéro à chaque tour effacerait le comptage —
+      à la fin, on ne saurait plus que l'état du dernier organe. C'est l'erreur la plus fréquente, et elle ne
+      se voit pas&nbsp;: le programme tourne, il ment.</p>
+      <p><b>La décision après la boucle</b>&nbsp;: c'est ce qui transforme quatre résultats isolés en un
+      <em>bilan</em>. Un système d'alerte doit produire une information utilisable, pas un flot de données.</p>
+    </details>
+    <div class="retenir"><b>📌 À retenir&nbsp;:</b> un compteur s'initialise <b>avant</b> la boucle et se
+    lit <b>après</b>. Entre les deux, la boucle ne fait qu'ajouter.</div>
+    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> mon algorigramme contient un compteur bien placé,
+    une boucle sur les organes, un test par organe et une décision finale — et aucune flèche ne mène nulle part.</p>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════ SÉANCE 2 ═══════════ -->
+<div class="seance-panel" id="seance2" role="tabpanel" aria-labelledby="tab-s2">
+
+<section class="card">
+  <h2>⌨️ Activité 3 — Écrire l'algorithme, instruction par instruction <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> traduire son algorigramme en un programme complet et exécutable.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité.</div>
+    <div><b>Production&nbsp;:</b> les huit lignes du programme remises dans l'ordre + la ligne manquante rédigée.</div>
+    <div><b>Ressources&nbsp;:</b> ton algorigramme de l'activité 2.</div>
+  </div>
+
+  <div class="consigne"><b>Consigne&nbsp;:</b> voici les instructions de l'auto-test, dans le désordre.
+  Donne à chacune son rang d'exécution, de 1 à 8. Attention&nbsp;: <b>l'indentation compte</b> — les lignes
+  décalées vers la droite sont à l'intérieur de la boucle ou du test.</div>
+
+  <div class="exo">
+    <div class="assoc"><label for="e3_a">&nbsp;&nbsp;&nbsp;&nbsp;<code>defauts = defauts + 1</code> <span style="color:var(--sub);font-size:.85em">(dans le SI, dans la boucle)</span></label>
+      <select id="e3_a"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_b"><code>defauts = 0</code></label>
+      <select id="e3_b"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_c"><code>SI defauts &gt; 0 ALORS</code></label>
+      <select id="e3_c"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_d"><code>POUR CHAQUE organe DANS organes :</code></label>
+      <select id="e3_d"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_e"><code>organes = [anemometre, gyrophare, sirene, radio]</code></label>
+      <select id="e3_e"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_f">&nbsp;&nbsp;&nbsp;&nbsp;<code>SI tester(organe) est FAUX ALORS</code> <span style="color:var(--sub);font-size:.85em">(dans la boucle)</span></label>
+      <select id="e3_f"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_g">&nbsp;&nbsp;&nbsp;&nbsp;<code>envoyer("Station : " + defauts + " defaut(s) — " + pannes)</code></label>
+      <select id="e3_g"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+    <div class="assoc"><label for="e3_h"><code>SINON envoyer("Station operationnelle")</code></label>
+      <select id="e3_h"><option value="">rang…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+
+    <p style="margin-top:14px"><label for="e3_manque">✍️ Une instruction manque dans cette liste&nbsp;:
+    celle qui <b>retient le nom</b> de l'organe en panne, pour que le message puisse le citer.
+    Écris-la comme tu l'écrirais dans ton programme&nbsp;:</label></p>
+    <textarea id="e3_manque" rows="2" placeholder="ajouter …"></textarea>
+    <details class="aide"><summary>🪜 Version étayée — la phrase à compléter</summary>
+      <p>«&nbsp;ajouter ______ à la liste ______&nbsp;» — et cette instruction se place juste ______ le
+      comptage, à l'intérieur du SI.</p></details>
+
+    <details class="aide"><summary>💡 Aide niveau 1</summary>
+      <p>Commence par ce qui doit exister <b>avant</b> tout le reste&nbsp;: la liste des organes et le
+      compteur. Termine par ce qui ne peut se décider qu'<b>une fois tout testé</b>.</p></details>
+    <details class="aide"><summary>💡💡 Aide niveau 2</summary>
+      <p>Les deux lignes décalées de deux crans (<code>defauts = defauts + 1</code>) sont dans le SI, lui-même
+      dans la boucle&nbsp;: elles ne peuvent donc pas venir avant la ligne <code>POUR CHAQUE</code>.</p></details>
+
+    <button class="btn check" data-check="3">Vérifier mon programme</button>
+    <div class="feedback" id="fb3" aria-live="polite"></div>
+
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>1.</b> <code>organes = [anemometre, gyrophare, sirene, radio]</code> — la liste doit exister avant
+      qu'on la parcoure.<br>
+      <b>2.</b> <code>defauts = 0</code> — le compteur naît avant la boucle.<br>
+      <b>3.</b> <code>POUR CHAQUE organe DANS organes :</code> — on entre dans la boucle.<br>
+      <b>4.</b> <code>SI tester(organe) est FAUX ALORS</code> — le test, à l'intérieur.<br>
+      <b>5.</b> <code>defauts = defauts + 1</code> — on compte, à l'intérieur du SI.<br>
+      <b>6.</b> <code>SI defauts &gt; 0 ALORS</code> — la boucle est finie, on décide.<br>
+      <b>7.</b> <code>envoyer("Station : …")</code> — le message de défaut.<br>
+      <b>8.</b> <code>SINON envoyer("Station operationnelle")</code> — l'autre branche.</p>
+      <p><b>L'instruction manquante&nbsp;:</b> <code>ajouter organe à pannes</code>, placée juste après le
+      comptage, dans le SI. Sans elle, le message peut dire «&nbsp;2 défauts&nbsp;» sans dire lesquels —
+      et le gardien devrait monter au mât pour le découvrir. <b>Un bon message d'alerte dit quoi faire, pas
+      seulement qu'il y a un problème.</b></p>
+    </details>
+    <div class="retenir"><b>📌 À retenir&nbsp;:</b> dans un programme, <b>l'ordre et l'indentation portent
+    du sens</b>. Une ligne juste, placée au mauvais niveau, donne un programme faux qui tourne quand même.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques&nbsp;:</b> placer la décision finale à l'intérieur de la
+    boucle (un message par organe)&nbsp;; oublier de retenir le nom des organes en panne&nbsp;; tester
+    <code>defauts = 0</code> au lieu de <code>defauts &gt; 0</code> et inverser les deux messages.</div>
+    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> mes huit instructions sont dans l'ordre, et j'ai
+    écrit celle qui manquait.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧪 Activité 4 — Le banc d'essai&nbsp;: mon algorithme face à la panne <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> éprouver l'algorithme sur des pannes qu'on provoque soi-même.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C6.2 — l'algorithme n'est validé que s'il se comporte correctement.</div>
+    <div><b>Production&nbsp;:</b> deux essais obligatoires au banc + la lecture du journal produit.</div>
+    <div><b>Ressources&nbsp;:</b> le banc d'essai ci-dessous, intégré à la page (hors ligne).</div>
+  </div>
+
+  <div class="consigne"><b>Consigne&nbsp;:</b> mets des organes en panne, lance l'auto-test, et lis le journal.
+  <b>Deux essais sont obligatoires</b> pour valider cette activité&nbsp;: un essai <b>sans aucune panne</b>,
+  et un essai avec <b>au moins deux organes en panne</b>. Le vérificateur les exige — parce qu'un algorithme
+  qu'on n'a vu tourner qu'une fois n'est pas éprouvé.</div>
+
+  <div class="banc">
+    <b>Banc d'essai — je choisis l'état des organes :</b>
+    <div class="organes">
+      <label><input type="checkbox" id="org_anemo" aria-label="anémomètre : coché, l'organe répond correctement ; décoché, il est en panne" checked> anémomètre</label>
+      <label><input type="checkbox" id="org_gyro" aria-label="gyrophare : coché, l'organe répond correctement ; décoché, il est en panne" checked> gyrophare</label>
+      <label><input type="checkbox" id="org_sirene" aria-label="sirène : coché, l'organe répond correctement ; décoché, il est en panne" checked> sirène</label>
+      <label><input type="checkbox" id="org_radio" aria-label="liaison radio : coché, l'organe répond correctement ; décoché, il est en panne" checked> liaison radio</label>
+    </div>
+    <p style="font-size:.88em;color:var(--sub);margin:4px 0">Case cochée = l'organe répond. Case décochée = il est en panne.</p>
+    <button class="btn" id="btnBanc">▶ Lancer l'auto-test</button>
+    <div class="journal" id="journalBanc" role="status" aria-live="polite">Le journal de l'auto-test s'affichera ici.</div>
+  </div>
+
+  <div class="exo">
+    <div class="ligne-exo"><label for="e4_1">Avec les quatre organes en état, que vaut <code>defauts</code> à la fin&nbsp;?</label>
+      <select id="e4_1"><option value="">— je choisis —</option>
+        <option>0, et le message annonce une station opérationnelle</option>
+        <option>4, puisqu'il y a quatre organes</option>
+        <option>1, il compte toujours au moins un passage</option>
+        <option>impossible à savoir sans lancer le test</option></select></div>
+    <div class="ligne-exo"><label for="e4_2">Avec la sirène et la radio en panne, combien de messages sont envoyés&nbsp;?</label>
+      <select id="e4_2"><option value="">— je choisis —</option>
+        <option>un seul, qui cite les deux organes : la décision est après la boucle</option>
+        <option>deux, un par organe en panne</option>
+        <option>quatre, un par organe testé</option>
+        <option>aucun, le programme s'arrête à la première panne</option></select></div>
+    <div class="ligne-exo"><label for="e4_3">Que change le fait de tester la radio <b>en dernier</b> plutôt qu'en premier&nbsp;?</label>
+      <select id="e4_3"><option value="">— je choisis —</option>
+        <option>rien au comptage : la boucle teste tout le monde avant de décider</option>
+        <option>le compteur repart de zéro</option>
+        <option>les organes suivants ne sont pas testés</option>
+        <option>le message part deux fois</option></select></div>
+    <div class="ligne-exo"><label for="e4_4">Un organe en panne <b>n'interrompt pas</b> l'auto-test. Pourquoi est-ce important&nbsp;?</label>
+      <select id="e4_4"><option value="">— je choisis —</option>
+        <option>pour découvrir TOUTES les pannes en une fois, et n'envoyer le technicien qu'une seule fois au mât</option>
+        <option>pour économiser la batterie</option>
+        <option>pour que le programme soit plus court</option>
+        <option>ce n'est pas important, on pourrait s'arrêter à la première</option></select></div>
+
+    <details class="aide"><summary>💡 Aide niveau 1</summary>
+      <p>Fais l'essai plutôt que de deviner&nbsp;: décoche deux cases, lance, et lis le journal ligne à ligne.</p></details>
+    <details class="aide"><summary>💡💡 Aide niveau 2</summary>
+      <p>Le journal affiche le compteur après chaque organe. Regarde à quel moment il change, et à quel moment
+      le message est produit&nbsp;: c'est toute la différence entre décider dans la boucle et décider après.</p></details>
+
+    <button class="btn check" data-check="4">Vérifier mes essais</button>
+    <div class="feedback" id="fb4" aria-live="polite"></div>
+
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Aucune panne&nbsp;:</b> le compteur reste à 0, la branche SINON s'exécute, un message unique
+      annonce la station opérationnelle. C'est le cas normal — il doit être testé lui aussi&nbsp;: un
+      auto-test qui crierait au loup tous les matins serait pire qu'inutile.</p>
+      <p><b>Deux pannes&nbsp;:</b> le compteur passe à 2, la liste retient les deux noms, et
+      <b>un seul message</b> part, citant les deux organes. La décision étant après la boucle, le nombre de
+      messages ne dépend pas du nombre de pannes.</p>
+      <p><b>L'ordre des organes ne change rien&nbsp;:</b> la boucle parcourt toute la liste avant qu'aucune
+      décision ne soit prise. C'est justement ce qui rend le résultat fiable.</p>
+    </details>
+    <div class="retenir"><b>📌 À retenir&nbsp;:</b> un algorithme se juge sur son <b>comportement</b>, pas
+    sur son allure. Deux essais minimum&nbsp;: le cas normal et le cas dégradé.</div>
+    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> j'ai lancé le banc au moins deux fois, dont une
+    fois sans panne et une fois avec au moins deux pannes, et je sais lire le journal produit.</p>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════ SÉANCE 3 ═══════════ -->
+<div class="seance-panel" id="seance3" role="tabpanel" aria-labelledby="tab-s3">
+
+<section class="card">
+  <h2>🔬 Activité 5 — Les cas limites, et le message qu'un humain doit comprendre <span style="font-size:.7em;color:var(--sub)">(~35 min)</span></h2>
+  <div class="meta-grid">
+    <div><b>Objectif&nbsp;:</b> éprouver l'algorithme là où il casse, et rédiger une sortie utilisable par un non-technicien.</div>
+    <div><b>Compétence&nbsp;:</b> 3e_C6.2 — un algorithme n'est fini que quand il tient face aux cas limites.</div>
+    <div><b>Production&nbsp;:</b> le tableau de suivi complété + le message au gardien rédigé.</div>
+    <div><b>Ressources&nbsp;:</b> le banc d'essai de l'activité 4.</div>
+  </div>
+
+  <div class="ressource">
+    <h4>Le tableau de suivi des variables — l'outil du programmeur</h4>
+    <p>Quand un programme ne fait pas ce qu'on attend, on ne le fixe pas du regard&nbsp;: on le <b>déroule à la
+    main</b>, ligne à ligne, en notant ce que vaut chaque variable. C'est valable sur papier comme à l'écran,
+    et c'est ce qu'on te demandera de savoir faire au brevet.</p>
+    <p>Scénario à dérouler&nbsp;: <b>anémomètre en panne, gyrophare en état, sirène en panne, radio en état</b>.</p>
+  </div>
+
+  <div class="consigne"><b>Consigne&nbsp;:</b> déroule ce scénario dans ta tête (ou au banc d'essai) et donne
+  la valeur de <code>defauts</code> après chaque organe testé.</div>
+
+  <div class="exo">
+    <div class="assoc"><label for="e5_t1">après l'<b>anémomètre</b> (en panne), <code>defauts</code> vaut&nbsp;:</label>
+      <select id="e5_t1"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    <div class="assoc"><label for="e5_t2">après le <b>gyrophare</b> (en état), <code>defauts</code> vaut&nbsp;:</label>
+      <select id="e5_t2"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    <div class="assoc"><label for="e5_t3">après la <b>sirène</b> (en panne), <code>defauts</code> vaut&nbsp;:</label>
+      <select id="e5_t3"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+    <div class="assoc"><label for="e5_t4">après la <b>radio</b> (en état), <code>defauts</code> vaut&nbsp;:</label>
+      <select id="e5_t4"><option value="">— valeur —</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+
+    <div class="ligne-exo" style="margin-top:12px"><label for="e5_lim">🚨 <b>Le cas limite qui fait réfléchir&nbsp;:</b>
+      et si c'est la <b>liaison radio</b> qui est en panne&nbsp;? Que se passe-t-il&nbsp;?</label>
+      <select id="e5_lim"><option value="">— je choisis —</option>
+        <option>l'auto-test détecte la panne mais ne peut pas prévenir : le message ne part pas</option>
+        <option>rien de spécial, le message part quand même</option>
+        <option>le programme plante et redémarre</option>
+        <option>la sirène sonne à la place</option></select></div>
+    <div class="ligne-exo"><label for="e5_rem">Quel remède raisonnable pour ce cas&nbsp;?</label>
+      <select id="e5_rem"><option value="">— je choisis —</option>
+        <option>prévoir un second moyen de signalement local : faire clignoter le gyrophare selon un motif convenu</option>
+        <option>supprimer le test de la radio, puisqu'il ne sert à rien</option>
+        <option>envoyer le message deux fois pour être sûr</option>
+        <option>arrêter la station tant que la radio n'est pas réparée</option></select></div>
+
+    <p style="margin-top:14px"><label for="e5_msg">✍️ <b>Rédige le message</b> que la station envoie au gardien
+    dans le scénario ci-dessus (anémomètre et sirène en panne). Il sera lu sur un téléphone, par quelqu'un qui
+    n'est pas technicien&nbsp;: il doit dire <b>ce qui ne va pas</b> et <b>ce que ça implique</b>.</label></p>
+    <textarea id="e5_msg" rows="3" placeholder="Station de Sainte-Luce, 7 h : …"></textarea>
+    <details class="aide"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>«&nbsp;Station de Sainte-Luce, auto-test de 7&nbsp;h&nbsp;: ______ défaut(s) détecté(s).<br>
+      Organes concernés&nbsp;: ______.<br>
+      Conséquence&nbsp;: la station ne peut plus ______.<br>
+      Action attendue&nbsp;: ______.&nbsp;»</p></details>
+
+    <details class="aide"><summary>💡 Aide niveau 1</summary>
+      <p>Le compteur n'augmente <b>que</b> pour les organes en panne. Un organe en état ne change rien&nbsp;:
+      sa valeur reste celle du tour précédent.</p></details>
+    <details class="aide"><summary>💡💡 Aide niveau 2</summary>
+      <p>Pour le cas limite, demande-toi par quel organe passe le message. Un système qui dépend d'un organe
+      pour signaler la panne de cet organe a un angle mort — les ingénieurs appellent ça une
+      <em>défaillance silencieuse</em>, et c'est la plus dangereuse.</p></details>
+
+    <button class="btn check" data-check="5">Vérifier mon analyse</button>
+    <div class="feedback" id="fb5" aria-live="polite"></div>
+
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Le tableau&nbsp;:</b> 1 après l'anémomètre, 1 après le gyrophare (il est en état, rien ne change),
+      2 après la sirène, 2 après la radio. Le compteur ne redescend jamais&nbsp;: il n'a aucune raison de le faire.</p>
+      <p><b>Le cas limite&nbsp;:</b> si la radio est morte, l'auto-test <em>détecte</em> la panne mais ne peut
+      pas la <em>signaler</em>. C'est une <b>défaillance silencieuse</b> — le pire cas pour un système
+      d'alerte, parce que tout semble normal vu d'en bas.</p>
+      <p><b>Le remède&nbsp;:</b> un second canal, local et indépendant. Faire clignoter le gyrophare selon un
+      motif convenu coûte zéro euro et se voit depuis la route. Supprimer le test serait absurde&nbsp;;
+      arrêter la station reviendrait à se priver de la sirène parce que le SMS ne part pas.</p>
+      <p><b>Le message&nbsp;:</b> «&nbsp;Station de Sainte-Luce, auto-test de 7 h&nbsp;: 2 défauts. Organes
+      concernés&nbsp;: anémomètre, sirène. Conséquence&nbsp;: la station ne mesure plus le vent et ne peut plus
+      alerter au son. Action attendue&nbsp;: intervention avant le prochain épisode.&nbsp;» Un message qui dirait
+      seulement «&nbsp;erreur 2&nbsp;» obligerait le gardien à monter au mât pour comprendre.</p>
+    </details>
+    <div class="retenir"><b>📌 À retenir&nbsp;:</b> un algorithme utile ne s'arrête pas au calcul juste&nbsp;:
+    il produit une <b>information exploitable par la personne qui la reçoit</b>. Et il faut toujours se demander
+    ce qui se passe quand c'est l'organe de signalement lui-même qui tombe.</div>
+    <div class="erreurs"><b>⚠ Pièges classiques&nbsp;:</b> faire redescendre le compteur quand un organe
+    fonctionne&nbsp;; croire qu'un message technique court est un message clair&nbsp;; oublier que le canal
+    d'alerte peut être lui-même en panne.</div>
+    <p class="critere"><b>🎯 Critère de réussite&nbsp;:</b> je sais dérouler mon algorithme à la main, nommer
+    la défaillance silencieuse, et rédiger un message qu'un non-technicien peut utiliser.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse de l'atelier — à retenir</h2>
+  <p><b>Programmer une nouvelle fonctionnalité</b>, ce n'est pas taper des lignes&nbsp;: c'est d'abord dire ce
+  qui entre et ce qui sort, puis concevoir l'enchaînement, puis seulement écrire — et enfin éprouver.</p>
+  <p>Les trois outils de cet atelier reviendront partout&nbsp;: le <b>compteur</b> initialisé avant la boucle et
+  lu après, la <b>boucle</b> qui évite de répéter le même test, et la <b>décision finale</b> qui transforme
+  des résultats isolés en un bilan utilisable.</p>
+  <p>Enfin, un système technique qui surveille son propre état vaut mieux qu'un système qu'on découvre en
+  panne le jour où on en a besoin. C'est vrai d'une station d'alerte, d'un ascenseur, d'un détecteur de fumée.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div id="rappelHyp" style="display:none" class="ressource">
+    <p><b>Au début, tu avais écrit&nbsp;:</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--hl);padding-left:12px;font-style:italic"></blockquote>
+  </div>
+  <label for="bilan1">Ton hypothèse était-elle juste, partielle, à corriger&nbsp;? Explique&nbsp;:</label>
+  <textarea id="bilan1" rows="3" placeholder="Mon hypothèse était… car en réalité, la station…"></textarea>
+  <details class="aide"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>«&nbsp;Mon hypothèse était ______.<br>Ce que j'ignorais, c'est que ______.<br>
+    Maintenant, je sais expliquer que ______.&nbsp;»</p></details>
+
+  <h3>Je me positionne</h3>
+  <div class="bilan-grid">
+    <p><b>3e_C6.2</b> — programmer un algorithme lié à une nouvelle fonctionnalité&nbsp;:</p>
+    <select id="pos_c62" aria-label="Auto-positionnement sur la compétence 3e_C6.2">
+      <option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — j'ai besoin du modèle sous les yeux</option>
+      <option>🟠 Maîtrise fragile — je conçois avec de l'aide</option>
+      <option>🟡 Maîtrise satisfaisante — je conçois et j'écris seul·e</option>
+      <option>🟢 Très bonne maîtrise — je conçois, j'écris et j'éprouve sur des cas que je choisis</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de l'atelier t'attend&nbsp;: <b>30 questions</b> dont 3 illustrées, sur les données, la conception,
+  l'écriture et la mise à l'épreuve d'un algorithme. Chaque réponse est expliquée — même les mauvaises.</p>
+  <p style="text-align:center"><a class="btn qcm" href="qcm_3e_C6.2_auto_test.html">🩺 Lancer le QCM de l'atelier</a></p>
+  <p style="text-align:center;font-size:.92em">Et pour t'entraîner spécifiquement au brevet&nbsp;:
+  <a href="sequence_algorigrammes_dnb.html">la banque des 30 exercices d'algorigrammes</a> — lecture,
+  interprétation, cas types du DNB.</p>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>Défi 1 — le cinquième organe.</b> La mairie ajoute un capteur de pluie. Que faut-il changer dans ton
+  programme&nbsp;? Compte les lignes à modifier — et mesure ce que la boucle t'a fait économiser.</p>
+  <p><b>Défi 2 — l'auto-test qui ment.</b> Écris volontairement la version fausse où le compteur est remis à
+  zéro dans la boucle. Fais-la tourner au banc d'essai avec trois pannes&nbsp;: que répond-elle&nbsp;? Explique
+  pourquoi c'est le genre de bogue le plus dangereux.</p>
+  <p><b>Défi 3 — la fréquence.</b> Un auto-test toutes les minutes, est-ce mieux&nbsp;? Réfléchis à la batterie,
+  à l'usure de la sirène et à la patience du gardien. Propose une fréquence et justifie-la.</p>
+</section>
+</div>
+
+<footer>
+  <p>Atelier 3e_C6.2 · Thème 2 · Technologie cycle 4 (programme 2024) · Sainte-Luce, Martinique</p>
+  <p style="font-size:.85em">Page autonome : fonctionne hors connexion, sauvegarde locale, aucune donnée envoyée sur un serveur.</p>
+</footer>
+
+<script>
+"use strict";
+/* ══════ Sauvegarde ══════ */
+const KEY = "seq_3e_C6.2_auto_test";
+const $ = id => document.getElementById(id);
+function collect(){
+  const o = {inputs:{}, checks:{}, valid: window.__valid||{}, exp: window.__exp||{}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{
+    if(el.type==="checkbox") o.checks[el.id] = el.checked ? 1 : 0; else o.inputs[el.id]=el.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote) $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR");
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){ o=null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.value=v; });
+  Object.entries(o.checks||{}).forEach(([id,v])=>{ const el=$(id); if(el) el.checked = !!v; });
+  window.__valid = o.valid||{}; window.__exp = o.exp||{};
+}
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer tout ton travail enregistré sur cet appareil ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+document.addEventListener("input", ()=>save(false));
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{ t.classList.remove("active"); t.setAttribute("aria-selected","false"); });
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+  });
+});
+
+/* ══════ Banc d'essai de l'auto-test (règle : l'algorithme se juge sur son comportement) ══════ */
+window.__exp = window.__exp || {};
+const ORGANES = [["org_anemo","anémomètre"],["org_gyro","gyrophare"],["org_sirene","sirène"],["org_radio","liaison radio"]];
+$("btnBanc").addEventListener("click", ()=>{
+  let defauts = 0; const pannes = []; const lignes = ["7:00 — auto-test quotidien : début", "defauts = 0"];
+  ORGANES.forEach(([id,nom])=>{
+    const ok = $(id).checked;
+    if(!ok){ defauts++; pannes.push(nom); }
+    lignes.push("  tester(" + nom + ") → " + (ok ? "vrai" : "FAUX") + "   | defauts = " + defauts);
+  });
+  lignes.push("boucle terminée — decision :");
+  lignes.push(defauts > 0
+    ? "  envoyer(\"Station : " + defauts + " defaut(s) — " + pannes.join(", ") + "\")"
+    : "  envoyer(\"Station operationnelle\")");
+  lignes.push(defauts > 0 && !$("org_radio").checked
+    ? "⚠ la liaison radio est en panne : ce message ne partira pas (défaillance silencieuse)"
+    : "message transmis au gardien.");
+  $("journalBanc").textContent = lignes.join("\n");
+  window.__exp["banc_lance"] = 1;
+  if(defauts === 0) window.__exp["banc_sans_panne"] = 1;
+  if(defauts >= 2) window.__exp["banc_deux_pannes"] = 1;
+  save(false);
+});
+
+/* ══════ Vérifications ══════ */
+window.__valid = window.__valid || {};
+const val = id => String($(id).value||"").replace(/ /g," ").replace(/\s+/g," ").trim();
+const txt = id => String($(id).value||"").replace(/ /g," ").trim().toLowerCase();
+
+const CHECKS = {
+  /* Billet d'entrée : il oriente, il ne sanctionne pas. */
+  0: function(){
+    const att={p0_1:"garder une valeur en mémoire pour s'en servir plus tard",
+               p0_2:"faire deux choses différentes selon qu'une condition est vraie ou fausse",
+               p0_3:"répéter des instructions sans les réécrire à chaque fois"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    let extra;
+    if(vides) extra = " Réponds d'abord aux " + vides + " question" + (vides>1?"s":"") + " restante" + (vides>1?"s":"") + " — aucune note n'est prise.";
+    else if(ok===3) extra = " 🎫 Tes outils sont là : file à l'activité 1.";
+    else extra = " Rien de grave, et aucune note n'est prise : ouvre la capsule « Je révise en 3 minutes » juste en dessous, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides&&ok===3};
+  },
+
+  1: function(){
+    let ok=0;
+    const att={e1_1:"une donnée d'entrée : l'algorithme la reçoit pour décider",
+               e1_2:"une donnée de sortie : c'est un résultat que l'algorithme calcule",
+               e1_3:"une donnée d'entrée : elle déclenche l'auto-test à 7 h",
+               e1_4:"une donnée de sortie : c'est la production utile de l'algorithme",
+               e1_5:"4 : anémomètre, gyrophare, sirène, liaison radio"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:5,extra:"",valide:ok===5};
+  },
+
+  2: function(){
+    let ok=0;
+    const att={e2_1:"avant la boucle : il doit exister avant qu'on commence à compter",
+               e2_2:"on efface le comptage : à la fin, on n'a plus que le dernier organe testé",
+               e2_3:"un losange : c'est un test à deux issues",
+               e2_4:"un parallélogramme : c'est une sortie de donnée",
+               e2_5:"pour éviter de réécrire quatre fois la même chose, et pouvoir ajouter un organe sans tout réécrire"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    /* Règle d'or n°22 : l'élève conçoit AVANT de voir la référence — la production est exigée. */
+    const p = txt("e2_prod");
+    const contient = m => p.indexOf(m) >= 0;
+    const prodOk = p.length >= 60
+      && (contient("pour chaque") || contient("boucle") || contient("chaque organe"))
+      && (contient("defaut") || contient("défaut") || contient("compteur") || contient("+ 1") || contient("+1"))
+      && (contient("si ") || contient("test"));
+    if(prodOk) ok++;
+    const extra = prodOk ? "" :
+      " Ta conception d'abord : écris ton algorigramme en toutes lettres (60 caractères au moins), en y faisant apparaître la boucle sur les organes, le compteur de défauts et le test. C'est cette production qui est évaluée, pas la copie de la correction.";
+    return {score:ok,total:6,extra:extra,valide:ok===6};
+  },
+
+  3: function(){
+    let ok=0;
+    const att={e3_e:"1", e3_b:"2", e3_d:"3", e3_f:"4", e3_a:"5", e3_c:"6", e3_g:"7", e3_h:"8"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const m = txt("e3_manque");
+    const manqueOk = m.length >= 10 && (m.indexOf("ajout") >= 0 || m.indexOf("pannes") >= 0)
+                     && (m.indexOf("organe") >= 0 || m.indexOf("nom") >= 0);
+    if(manqueOk) ok++;
+    const extra = manqueOk ? "" :
+      " Il manque encore l'instruction qui retient le NOM de l'organe en panne : sans elle, le message annonce un nombre sans dire lesquels.";
+    return {score:ok,total:9,extra:extra,valide:ok===9};
+  },
+
+  4: function(){
+    let ok=0;
+    const att={e4_1:"0, et le message annonce une station opérationnelle",
+               e4_2:"un seul, qui cite les deux organes : la décision est après la boucle",
+               e4_3:"rien au comptage : la boucle teste tout le monde avant de décider",
+               e4_4:"pour découvrir TOUTES les pannes en une fois, et n'envoyer le technicien qu'une seule fois au mât"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    /* Verrou expérientiel : les deux essais doivent avoir été RÉELLEMENT lancés. */
+    const e = window.__exp || {};
+    const essais = (e["banc_sans_panne"] ? 1 : 0) + (e["banc_deux_pannes"] ? 1 : 0);
+    ok += essais;
+    let extra = "";
+    if(essais < 2){
+      const manque = [];
+      if(!e["banc_sans_panne"]) manque.push("un essai avec les quatre organes en état");
+      if(!e["banc_deux_pannes"]) manque.push("un essai avec au moins deux organes en panne");
+      extra = " Il te manque au banc d'essai : " + manque.join(" et ") + ". Un algorithme qu'on n'a vu tourner qu'une fois n'est pas éprouvé.";
+    }
+    return {score:ok,total:6,extra:extra,valide:ok===6};
+  },
+
+  5: function(){
+    let ok=0;
+    const att={e5_t1:"1", e5_t2:"1", e5_t3:"2", e5_t4:"2",
+               e5_lim:"l'auto-test détecte la panne mais ne peut pas prévenir : le message ne part pas",
+               e5_rem:"prévoir un second moyen de signalement local : faire clignoter le gyrophare selon un motif convenu"};
+    Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const m = txt("e5_msg");
+    const msgOk = m.length >= 40
+      && (m.indexOf("anémom") >= 0 || m.indexOf("anemom") >= 0)
+      && (m.indexOf("sirène") >= 0 || m.indexOf("sirene") >= 0);
+    if(msgOk) ok++;
+    const extra = msgOk ? "" :
+      " Ton message doit nommer les deux organes concernés et dire ce que ça implique : il sera lu par quelqu'un qui n'est pas technicien.";
+    return {score:ok,total:7,extra:extra,valide:ok===7};
+  }
+};
+
+
+const ENC_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENC_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENC_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    if(n === "0"){ fb.className = "feedback show " + (r.valide ? "ok" : "mixte"); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%ENC_OK.length] + " Compare maintenant avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%ENC_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%ENC_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    if(n !== "0") window.__valid[n] = !!r.valide;
+    save(false); majProgress(); majTaches();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3,4], s3:[5]};
+  Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  const next = [1,2,3,4,5].find(k=>!v[k]);
+  if(next) $("progTxt").textContent += " · prochaine étape : activité " + next;
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Comprendre et concevoir", taches:[
+    {n:1, libelle:"Classer les entrées et les sorties de l'auto-test"},
+    {n:2, libelle:"Concevoir l'algorigramme et le faire relire par le binôme"}]},
+  s2:{titre:"Séance 2 — Écrire l'algorithme", taches:[
+    {n:3, libelle:"Remettre les 8 instructions dans l'ordre et écrire celle qui manque"},
+    {n:4, libelle:"Éprouver l'algorithme au banc d'essai (2 essais obligatoires)"}]},
+  s3:{titre:"Séance 3 — Éprouver et valider", taches:[
+    {n:5, libelle:"Dérouler le tableau de suivi, traiter le cas limite, rédiger le message"}]}
+};
+function majTaches(){
+  const hote = $("tachesBandeau"); if(!hote) return;
+  const onglet = document.querySelector(".seance-tab.active");
+  const cle = onglet ? (onglet.id||"").replace("tab-","") : "s1";
+  const bloc = TACHES[cle]; if(!bloc){ hote.hidden = true; return; }
+  hote.hidden = false;
+  const v = window.__valid||{};
+  const faites = bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML = "<span class='tb-titre'>" + bloc.titre + " — étape " +
+    Math.min(faites+1, bloc.taches.length) + " sur " + bloc.taches.length + "</span><ul>" +
+    bloc.taches.map(t => "<li class='" + (v[t.n]?"faite":"") + "'>" + (v[t.n]?"☑":"☐") + " " + t.libelle + "</li>").join("") + "</ul>";
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp = window.__exp || {};
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(false);
+});
+
+/* ══════ Init ══════ */
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majTaches(); majHyp();
+</script>
+</body>
+</html>

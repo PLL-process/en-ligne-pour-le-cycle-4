@@ -1737,3 +1737,98 @@ séquences-îlots, qui n'annoncent aucune durée par activité : absence de donn
 **Ménage.** Les **59 branches déjà fusionnées** du dépôt ont été supprimées, en application de la règle née
 de la fausse PR #130. Quatre branches non fusionnées sont conservées telles quelles, dont deux relèvent d'un
 autre agent.
+
+---
+
+## 08/08/2026 — Lot 3e_C6.2 « L'auto-test de la station » : écrire, et non plus lire
+
+### Le libellé, pris au mot
+
+Le dossier `3e_C6.2` contenait une banque d'entraînement DNB de bonne facture : 30 exercices
+interactifs, 13 schémas inline, 32 aides rédigées. L'audit de couverture la signalait depuis le début
+comme « une banque d'entraînement plus qu'une séquence ». Mais le vrai problème n'était pas là.
+
+Le libellé officiel du code ne dit pas « lire des algorigrammes ». Il dit :
+
+> **Programmer un algorithme lié à une nouvelle fonctionnalité.**
+
+Le verbe est **programmer** ; l'objet est une **nouvelle fonctionnalité**. La banque fait *lire* et
+*interpréter* — excellent entraînement au brevet, mais ce n'est pas la compétence. Compléter la banque
+aurait produit une conformité de façade. Il fallait écrire la séquence qui manquait.
+
+### Un scénario abandonné avant d'être écrit
+
+Le plan initial prévoyait une **alerte graduée** : seuil de vigilance, seuil d'alerte, temporisation
+pour ignorer les rafales isolées. J'ai relu 3e_C6.1 avant de commencer — elle couvrait déjà ce
+scénario. Écrire le lot prévu aurait donné à l'élève l'impression de refaire la même chose deux fois,
+et au dépôt deux séquences qui se marchent dessus.
+
+D'où la répartition, désormais explicite au README du dossier :
+
+- **3e_C6.1** — déterminer les données utilisées et produites : on **lit** ;
+- **3e_C6.2** — ici : on **écrit**, à partir d'un besoin exprimé en français ;
+- **3e_C6.3** — modifier et tester : on **retouche**.
+
+*Leçon de méthode : lire les séquences voisines fait partie de la conception, pas de la relecture.*
+Le coût de cette vérification est de quelques minutes ; celui de l'oubli aurait été un lot entier.
+
+### La fonctionnalité retenue
+
+L'**auto-test quotidien** de la station d'alerte cyclonique. Chaque matin à 7 h, la station teste ses
+quatre organes — anémomètre, gyrophare, sirène, liaison radio —, compte les défauts et envoie **un
+seul** message au gardien. La fonctionnalité est nouvelle, utile, et impossible à écrire sans un
+compteur initialisé avant la boucle, une boucle, et une décision unique après la boucle.
+
+Elle porte en outre un cas limite qui n'est pas un ornement : la **défaillance silencieuse**. La
+liaison radio est à la fois un organe testé et le canal du message. Si elle tombe, le message est
+calculé correctement — et ne part jamais. La classe découvre là qu'un système d'alerte doit prouver
+qu'il est **vivant**, et pas seulement signaler qu'il va mal.
+
+### Une séquence née conforme
+
+C'est la première du dépôt écrite d'emblée sous les règles n°22 à n°34, au lieu d'être rétrofitée :
+durées annoncées par activité avec marge de service (144 min pour 165), billet d'entrée sans note qui
+oriente et ne sanctionne pas, mode essentiel, bandeau de tâches aux libellés écrits à la main, version
+étayée pour chacune des cinq productions écrites, aération, étiquetage de tous les champs.
+
+Le vérificateur la donne **7 règles sur 7 au vert**, et la suite `tests_3e_C6.2.py` — livrée avec le
+lot, pas seulement décrite — passe **22 tests sur 22**. Écrire conforme s'est révélé nettement moins
+coûteux que rétrofiter : la conformité rétroactive demande de comprendre du code déjà écrit, la
+conformité native ne demande que de suivre une liste.
+
+### Ce qui n'est pas déclaré conforme
+
+Quatre points de la check-list n°34 n'ont pas été vérifiés automatiquement : l'impression A4, le
+contraste mesuré, la lecture par un vrai lecteur d'écran, et le zoom navigateur à 200 %. Ils sont donc
+déclarés **non vérifiés** au rapport de tests. La barre qualité du dépôt interdit de dire « accessible »
+à la place de « ces points-là ont été testés ».
+
+### La banque héritée : requalifiée, pas jetée ni rustinée
+
+`sequence_algorigrammes_dnb.html` et son QCM de 17 questions sont **conservés tels quels**. Ils
+deviennent la ressource d'appui de la séance 1 — on y pioche l'exercice utile au moment où il l'est.
+Leur statut passe de « séquence incomplète » à **ressource d'entraînement**, ce qui est la vérité. Ils
+resteront signalés en échec sur la règle n°29 : le rétrofit a refusé de les traiter, faute de gabarit
+maison, et je n'y pose pas un mode essentiel à moitié câblé pour faire tomber un compteur. L'écart est
+écrit au rapport de tests et à l'état des lieux — assumé, pas en attente.
+
+### Trois défauts de mes propres lots, corrigés au passage
+
+En vérifiant mes liens, j'ai trouvé chez moi ce que je cherchais ailleurs :
+
+- le lien « ⌂ Accueil » de la séquence 3e_C6.2 et celui de `qcm_book-train.html` remontaient **cinq**
+  niveaux au lieu de quatre : ils ne menaient nulle part ;
+- `sequence_4e_C4.1-C4.2-C4.4_book-train.html` n'avait **aucune barre de navigation** — la règle n°11
+  n'était pas respectée dans un lot que j'ai livré moi-même ;
+- le filtre par compétence du QCM Book Train proposait C4.1 et C4.2, mais **pas C4.4**, alors que le
+  QCM contient dix questions sur ce code.
+
+*Leçon : un lien mort ne se voit pas à la relecture, il se voit à l'exécution.* La suite de tests du
+lot vérifie désormais les liens de navigation ; c'est ce qui a permis de trouver le premier, et le
+premier a fait chercher les autres.
+
+### Le bilan chiffré
+
+`3e_C6.2` passe de **EXISTANT À AMÉLIORER** à **COMPLET ET VALIDABLE** : le Thème 2 compte
+**20 codes complets** au lieu de 19. Le dépôt totalise 17 séquences analysées pour 33 manquements
+mécaniques inchangés — la nouvelle n'en apporte aucun.

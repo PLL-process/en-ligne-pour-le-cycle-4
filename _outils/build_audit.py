@@ -291,14 +291,31 @@ OVERLAY = {
         medias="2 SVG originaux (schema_chaines_arrosage, schema_eclairage_automatique).",
     ),
     "3e_C6.2": dict(
-        statut="EXISTANT À AMÉLIORER",
-        sequence=True, qcm=True, projet=False, synthese=False,
-        evaluation=True, correction=True, situation=False, problematique=False,
-        qualite="Séquence algorigrammes DNB (68 Ko, mode enseignant) + QCM 24 q — bonne "
-                "banque d'exercices type brevet.",
-        anomalies="Pas de situation déclenchante, pas de problématique, pas de mission, "
-                  "pas de synthèse ni de référentiel affiché : c'est une banque "
-                  "d'entraînement plus qu'une séquence au sens du gabarit Jardin connecté.",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Atelier « L'auto-test de la station » (08/08/2026) : 3 séances de 55 min, "
+                "5 activités + billet d'entrée sans note, banc d'essai intégré avec verrou "
+                "expérientiel (deux exécutions exigées, dont un cas à plusieurs pannes), "
+                "cas limite de la défaillance silencieuse, QCM maison de 30 questions dont "
+                "3 illustrées, deux synthèses, fiche, matrice de 32 notions, suite de "
+                "22 tests Playwright tous passés. Le libellé est pris au mot : l'élève "
+                "ÉCRIT une fonctionnalité nouvelle, il ne lit pas et ne modifie pas.",
+        anomalies="Aucune sur l'atelier : les 7 règles mécanisables (n°23, 26, 29, 30, 31, "
+                  "33, 34) sont au vert. La banque d'entraînement DNB héritée du dossier "
+                  "(sequence_algorigrammes_dnb.html, 30 exercices, 13 schémas) est "
+                  "conservée telle quelle et requalifiée en RESSOURCE D'ENTRAÎNEMENT, ce "
+                  "qui est sa nature réelle ; elle n'est pas bâtie sur le gabarit maison "
+                  "et reste donc signalée sans mode essentiel — écart assumé et documenté "
+                  "au rapport de tests plutôt que masqué.",
+        accessibilite="Tous les champs de saisie étiquetés, aucun défilement horizontal à "
+                      "1280 px ni à 420 px, focus clavier conservé, réussite jamais "
+                      "signalée par la seule couleur. Non vérifiés automatiquement, donc "
+                      "non déclarés conformes : impression A4, contraste mesuré, lecteur "
+                      "d'écran réel, zoom 200 %.",
+        medias="3 SVG originaux CC0 écrits à la main (algorigramme de l'auto-test, planche "
+               "des symboles normalisés, trace d'exécution au banc d'essai), avec title et "
+               "desc accessibles de 585 à 700 caractères.",
     ),
     "3e_C9.1": dict(
         statut="COMPLET ET VALIDABLE",

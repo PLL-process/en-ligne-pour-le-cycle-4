@@ -68,3 +68,19 @@ rétrofit : le pont numérique annonçait 169 min pour 165 disponibles, et SOS s
 une note destinée à l'enseignant.
 
 Enfin, 3 points relèvent du jugement pédagogique et ne seront jamais tranchés par un script.
+
+---
+
+## Mise à jour du 08/08/2026 — lot 3e_C6.2 « L'auto-test de la station »
+
+Le dépôt compte désormais **17 séquences analysées** au lieu de 16, et toujours **33 manquements**.
+La séquence ajoutée n'en apporte aucun : elle a été écrite conforme aux règles n°23 à n°34 dès le
+départ, et le vérificateur la donne **7 sur 7**. C'est la première fois qu'une séquence naît conforme
+plutôt que d'être rétrofitée — et c'est nettement moins cher.
+
+Un cas mérite d'être nommé pour éviter qu'on le prenne un jour pour un oubli :
+`sequence_algorigrammes_dnb.html`, la banque d'entraînement héritée du dossier 3e_C6.2, reste en
+échec sur la règle n°29. Elle n'est **pas** bâtie sur le gabarit maison — pas de barre d'outils, pas
+de `restore()` — et l'outil de rétrofit a refusé de la traiter plutôt que d'y poser un mode essentiel
+à moitié câblé. Son statut d'audit devient **ressource d'entraînement**, ce qui est sa nature réelle.
+Ce manquement est donc **assumé**, pas en attente.

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — L'auto-test de la station (3e_C6.2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C6.2_auto_test_station.html">← Séquence</a></nav>
+<div class="page">
+<h1>🎓 Synthèse professeur — L'auto-test de la station (3e_C6.2)</h1>
+<p class="pb">Ce que la séquence cherche à obtenir, où ça résiste, et comment on le mesure.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer</button></div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">1. Le libellé, pris au mot</h2>
+  <p><b>3e_C6.2 — Programmer un algorithme lié à une nouvelle fonctionnalité.</b> Le verbe est
+  <b>programmer</b>, pas lire ni modifier. C'est ce qui distingue ce code de ses voisins&nbsp;:</p>
+  <ul>
+    <li><b>3e_C6.1</b> — déterminer les données utilisées et produites&nbsp;: on <i>lit</i>&nbsp;;</li>
+    <li><b>3e_C6.2</b> — ici&nbsp;: on <i>écrit</i> à partir d'un besoin exprimé en français&nbsp;;</li>
+    <li><b>3e_C6.3</b> — modifier et tester&nbsp;: on <i>retouche</i> un programme existant.</li>
+  </ul>
+  <p>D'où la fonctionnalité choisie&nbsp;: l'<b>auto-test quotidien</b> de la station d'alerte cyclonique
+  — nouvelle, utile, et impossible à écrire sans un compteur, une boucle et une décision finale.</p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">2. Déroulé et durées</h2>
+  <table class="voc" style="width:100%">
+  <tr><td><b>Séance 1</b> — comprendre et concevoir</td><td>billet d'entrée (4 min), entrées/sorties (20 min), conception de l'algorigramme relue par le binôme (30 min)</td></tr>
+  <tr><td><b>Séance 2</b> — écrire l'algorithme</td><td>remise en ordre des 8 instructions + celle qui manque (30 min), banc d'essai, deux essais obligatoires (25 min)</td></tr>
+  <tr><td><b>Séance 3</b> — éprouver et valider</td><td>tableau de suivi, cas limite, rédaction du message (35 min), bilan et QCM</td></tr>
+  </table>
+  <p>Total annoncé&nbsp;: 144 min pour 165 disponibles — la marge de service de la règle n°23 est tenue.</p>
+</div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">3. Les trois obstacles, dans l'ordre où ils tombent</h2>
+  <dl>
+    <dt>Le compteur placé dans la boucle</dt>
+    <dd>L'erreur la plus fréquente, et la plus instructive&nbsp;: l'élève voit son compteur finir à 0 ou 1
+    quoi qu'il arrive. Ne pas la corriger d'avance — le banc d'essai la révèle mieux qu'une explication.</dd>
+    <dt>Le message envoyé dans la boucle</dt>
+    <dd>Le gardien reçoit quatre messages. La question qui débloque&nbsp;: «&nbsp;à quel moment sais-tu
+    combien il y a de défauts&nbsp;?&nbsp;» — réponse&nbsp;: pas avant la fin.</dd>
+    <dt>La panne qui arrête tout</dt>
+    <dd>Certains sortent de la boucle au premier défaut. Faire constater qu'on ignore alors les organes
+    suivants&nbsp;: un auto-test partiel rassure à tort, ce qui est pire que pas d'auto-test.</dd>
+  </dl>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">4. Le cas limite, et pourquoi il n'est pas un bonus</h2>
+  <p>La liaison radio est à la fois un organe testé et le canal du message. Si elle tombe, le message
+  est juste et ne part pas. C'est le moment où la classe découvre qu'un système d'alerte doit prouver
+  qu'il est <b>vivant</b>, et pas seulement signaler qu'il va mal — la logique du «&nbsp;battement de
+  cœur&nbsp;» que l'élève retrouvera partout ensuite.</p>
+  <p>Le remède attendu n'est pas une instruction de plus dans la boucle&nbsp;: c'est un changement de
+  point de vue, côté gardien. Accepter toute formulation qui dit cela.</p>
+</div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">5. Évaluer&nbsp;: la situation, pas le score</h2>
+  <p>Conformément à la règle n°28, la compétence se prouve <b>en situation</b>. La preuve retenue est
+  l'algorigramme conçu par l'élève <b>avant</b> toute référence (règle n°22), puis éprouvé sur deux jeux
+  d'essai qu'il choisit. Le QCM de 30 questions reste un <b>entraînement</b>, jamais la mesure.</p>
+  <p>Indicateurs de réussite&nbsp;: le compteur est initialisé au bon endroit&nbsp;; la boucle couvre les
+  quatre organes&nbsp;; la décision est unique et postérieure à la boucle&nbsp;; le message nomme les
+  organes en défaut&nbsp;; l'élève sait dire ce que son test <b>ne</b> prouve <b>pas</b>.</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">6. Différenciation</h2>
+  <ul>
+    <li><b>Mode essentiel</b> (règle n°29)&nbsp;: masque référentiel, corrections et compléments.</li>
+    <li><b>Versions étayées</b> (règle n°31)&nbsp;: chaque rédaction existe en phrases à compléter, à
+    exigence scientifique identique.</li>
+    <li><b>Bandeau de tâches</b> (règle n°30)&nbsp;: l'élève sait où il en est sans relire la page.</li>
+    <li><b>Billet d'entrée sans note</b> (règle n°26)&nbsp;: il oriente vers les rappels de 4e, il ne
+    sanctionne pas — et la page le dit à l'élève en toutes lettres.</li>
+    <li>Pour les plus rapides&nbsp;: ajouter un cinquième organe sans réécrire la boucle.</li>
+  </ul>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">7. Ce qui reste disponible dans le dossier</h2>
+  <p>La banque d'entraînement DNB (<code>sequence_algorigrammes_dnb.html</code>, 30 exercices interactifs
+  et 13 schémas) est <b>conservée telle quelle</b> et sert de ressource d'appui à la séance 1&nbsp;: on y
+  pioche l'exercice utile au moment où il est utile. Son QCM de 17 questions reste accessible&nbsp;; le
+  QCM du gabarit maison, 30 questions, est celui de l'atelier.</p>
+</div>
+</div>
+</body>
+</html>
