@@ -169,3 +169,34 @@ assumé et documenté depuis le lot 3e_C6.2.
 
 La règle n°23 reste en «&nbsp;?&nbsp;» sur les séquences-îlots&nbsp;: absence de donnée, et
 jugement d'enseignant.
+
+---
+
+## Mise à jour du 08/08/2026 (5) — archivage de la banque DNB d'origine
+
+**1 → 0 manquement.** Le Thème 2 ne compte plus aucun manquement mécanique.
+
+Le dernier n'était pas un défaut à corriger mais une **décision à prendre**&nbsp;: la banque
+d'entraînement d'origine, remplacée le matin même, restait dans le dossier actif à côté de son
+remplaçant. Elle est désormais dans
+`_archive-anciennes-versions/C6-comprendre-et-modifier-un-programme-associe/3e_C6.2-banque-dnb-v1/`,
+contenu **non modifié**, avec un README qui explique ce qu'elle est et pourquoi elle a été
+remplacée.
+
+Le vérificateur analyse 16 séquences au lieu de 17&nbsp;: c'est la séquence archivée qui sort du
+champ, pas un fichier perdu.
+
+### Le compte de la journée
+
+| Étape | Manquements |
+|---|---|
+| au réveil, avant l'audit externe | 61 |
+| après le correctif du vérificateur (aria-label) | 54 |
+| après les rétrofits mode essentiel | 33 |
+| après les 67 versions étayées (n°31) | 20 |
+| après les 79 bandeaux de tâches (n°30) | 6 |
+| après les diagnostics d'entrée (n°26) | 1 |
+| après l'archivage de la banque d'origine | **0** |
+
+La règle n°23 reste en «&nbsp;?&nbsp;» sur les séquences-îlots&nbsp;: absence de donnée, et
+jugement d'enseignant. Les règles n°24, 25, 27, 28 et 32 relèvent du jugement par construction.
