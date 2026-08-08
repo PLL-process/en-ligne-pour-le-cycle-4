@@ -1832,3 +1832,71 @@ premier a fait chercher les autres.
 `3e_C6.2` passe de **EXISTANT À AMÉLIORER** à **COMPLET ET VALIDABLE** : le Thème 2 compte
 **20 codes complets** au lieu de 19. Le dépôt totalise 17 séquences analysées pour 33 manquements
 mécaniques inchangés — la nouvelle n'en apporte aucun.
+
+---
+
+## 08/08/2026 — Les versions étayées du Thème 2 : 67 blocs écrits à la main
+
+### Pourquoi celles-ci d'abord
+
+Trois chantiers restaient ouverts après le lot 3e_C6.2. Les versions étayées passent devant les
+autres pour une raison simple : ce sont elles qui décident **qui arrive au bout de la page**. Un
+élève qui sait ce qu'il faut répondre mais bute sur la mise en phrase rend une copie vide — et on
+lit cette copie vide comme une lacune scientifique. C'est exactement l'inverse de ce qui s'est
+passé.
+
+Elles manquaient sur **treize séquences**, c'est-à-dire sur les plus fréquentées du dépôt.
+
+### Ce qui a été fait
+
+**67 zones de rédaction** ont reçu leur version étayée, écrite **une par une** à partir de la
+consigne réelle. Le principe de la règle n°31 est tenu à la lettre : le niveau scientifique exigé
+reste identique, seule l'entrée en écriture est facilitée. Chaque amorce est construite pour ne
+pouvoir être complétée que par une réponse juste et complète.
+
+Un exemple, sur la justification du CAN en 3e_C4.3 :
+
+> La grandeur réelle (la pression) est continue&nbsp;: entre deux valeurs, il existe ____.
+> Le CAN, lui, ne peut distinguer que ____ paliers&nbsp;: il est obligé de ____.
+> La donnée numérique est donc une approximation, parce que ____.
+
+L'élève ne peut pas remplir cela sans avoir compris la différence entre continu et discret. On lui
+a retiré l'angoisse de la page blanche, pas le raisonnement.
+
+### L'outil, et ce qu'il refuse de faire
+
+Deux fichiers dans `_outils/` :
+
+- `amorces_versions_etayees.py` — **le texte**, écrit à la main, indexé par fichier et par
+  identifiant de zone. C'est le vrai travail ;
+- `poser_versions_etayees.py` — **la pose**, et rien d'autre. Il refuse d'écrire un fichier dont
+  toutes les amorces n'ont pas été rédigées, il annonce les zones qu'il a laissées de côté, et il
+  ne repasse jamais sur un fichier déjà traité.
+
+C'est la suite directe de la leçon du 08/08 au matin sur le bandeau de tâches : *mécaniser une
+règle de forme est facile, mécaniser une règle de sens ne l'est pas.* La bonne réponse n'est pas
+« pas d'outil », c'est « un outil qui pose ce qu'un humain a écrit ».
+
+### Le textarea qui n'en était pas un
+
+La séquence 3e_C6.1 contient un `textarea` nommé `clTa` : c'est l'**éditeur de code Python**, pas
+une zone de rédaction. Y proposer des phrases à compléter aurait été absurde — et le vérificateur,
+lui, l'avait bien compté comme une zone de rédaction de plus.
+
+*Leçon : un compteur ne sait pas ce qu'il compte.* Le script l'a écarté et l'a dit en clair dans
+son compte rendu, plutôt que de le traiter en silence ou de faire semblant de ne pas l'avoir vu.
+
+### Les tests
+
+Treize séquences rechargées au navigateur, et pour chacune : aucune erreur JavaScript, chaque bloc
+posé **immédiatement après sa zone de rédaction**, au moins deux amorces par bloc contenant toutes
+un espace à compléter, bloc **resté visible en mode essentiel** — c'était le point à vérifier, un
+étayage masqué par le mode qui allège serait exactement le contraire du but — et aucun défilement
+horizontal introduit. **13 séquences, 0 défaut, 67 blocs.**
+
+### Le bilan chiffré
+
+Manquements mécaniques du Thème 2 : **33 → 20**. La règle n°31 ne compte plus aucun échec sur le
+thème. Restent les diagnostics d'entrée (n°26), les bandeaux de tâches (n°30), le mode essentiel de
+la seule banque DNB héritée (écart assumé), et la règle n°23 en «&nbsp;?&nbsp;» sur les
+séquences-îlots — une absence de donnée, pas une conformité.
