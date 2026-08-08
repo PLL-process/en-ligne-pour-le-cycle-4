@@ -63,18 +63,25 @@ RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 # ---------------------------------------------------------------------------
 OVERLAY = {
     "5e_C1.1": dict(
-        statut="EXISTANT À AMÉLIORER",
+        statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
-        qualite="Séquence tableur/données interactive + QCM 24 q + 2 fichiers xlsx + 1 csv.",
-        anomalies="Lien cassé vers C11_exo_tableur_debut.xlsx (le fichier s'appelle "
-                  "exo_tableur_debut.xlsx) ; gabarits non résolus {{sensor_icon}}, "
-                  "{{sort_icon}}, {{analysis_icon}} dans des src d'images ; pas de "
-                  "différenciation ; pas de découpage explicite en séances.",
-        accessibilite="Correcte (réparée lors de la migration) — contraste à revérifier.",
-        medias="Fichiers tableur maison, pas de média externe.",
+        qualite="Lot « Chengdu : le collège qui mesure son air » (Fable, 08/08/2026) — "
+                "séquence 5 séances portant les SIX codes du C1, QCM 30 q dont 13 "
+                "illustrées, 2 synthèses, fiche, matrice, 3 jeux de données simulés "
+                "déterministes, 4 schémas CC0 dont 2 corrigés, suite de 43 tests "
+                "exécutés et verts. Deux chemins d'accès à l'activité tableur "
+                "(règle n°59). L'état antérieur est archivé avec le relevé de ce qui "
+                "en a été repris.",
+        anomalies="Aucune manipulation d'un objet réel (règle n°58) — geste manquant "
+                  "identifié et déclaré dans la fiche, la synthèse professeur et le "
+                  "README. La donnée est traitée, jamais produite.",
+        accessibilite="Vérifiée : étiquettes, alternatives, signalement non chromatique, "
+                      "title/desc sur les 4 SVG, hors ligne intégral.",
+        medias="4 SVG originaux CC0 écrits pour le lot, title/desc de 1 360 à 1 509 car.",
     ),
     "5e_C1.2": dict(
+        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
         statut="À CORRIGER",
         sequence=True, qcm=True, projet=False, synthese=False,
         evaluation=False, correction=False, situation=None, problematique=None,
@@ -89,6 +96,7 @@ OVERLAY = {
         medias="Inconnus (encapsulés dans le .mhtml).",
     ),
     "5e_C1.3": dict(
+        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
         statut="EXISTANT À AMÉLIORER",
         sequence=True, qcm=True, projet=False, synthese=True,
         evaluation=True, correction=True, situation=True, problematique=True,
@@ -100,6 +108,7 @@ OVERLAY = {
         medias="8 PNG extraits de l'ancien HTML base64 — origine à documenter.",
     ),
     "5e_C1.4": dict(
+        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
         statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=False, qcm=False, projet=False, synthese=False,
         evaluation=False, correction=False, situation=False, problematique=False,
@@ -111,6 +120,7 @@ OVERLAY = {
         medias="s.o.",
     ),
     "5e_C1.5": dict(
+        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
         statut="À CRÉER",
         qualite="Aucune ressource dans le dossier. La séquence cybersécurité V16 rangée "
                 "en 4e_C1.4 couvre ce code « en croisement » d'après son README, mais "
@@ -118,6 +128,7 @@ OVERLAY = {
         anomalies="Créer au minimum un README pointeur vers 4e_C1.4 ou une déclinaison 5e.",
     ),
     "5e_C1.6": dict(
+        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
         statut="À CRÉER",
         qualite="Aucune ressource. Même situation que 5e_C1.5 (matériau réutilisable "
                 "dans la séquence cybersécurité 4e_C1.4 : cyberviolence, vie privée).",

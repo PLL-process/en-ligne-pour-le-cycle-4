@@ -3602,3 +3602,54 @@ Pascal tranche, après inventaire :
 
 Le motif de cet ordre est écrit ici pour qu'on ne le rediscute pas : les P0 sont des **erreurs
 enseignées**, et une erreur enseignée coûte plus cher qu'un lot manquant.
+
+---
+
+### Règle d'or n°66 — On n'écrit pas dans le dossier d'un autre, même pour l'améliorer
+
+**L'incident, aujourd'hui, de ma main.** En clôturant le lot Chengdu, j'ai voulu poser les README
+pointeurs d'usage vers les cinq autres codes du C1 en 5e. Je n'ai pas ouvert les dossiers avant
+d'écrire. Ils n'étaient pas vides : **5e_C1.2 et 5e_C1.3 contiennent des lots complets** d'un autre
+auteur — séquence, QCM, synthèses, fiche, manifeste — et **5e_C1.4, C1.5 et C1.6 portaient des
+README écrits par cet auteur**, qui pointaient vers ses propres séquences mutualisées.
+
+J'ai **écrasé trois de ces README** et déposé deux fichiers dans des lots qui n'avaient rien
+demandé. Le contenu que j'ai effacé était juste : il décrivait des preuves CRCN observables et des
+mutualisations légitimes.
+
+**Ce qui a permis de le voir.** Rien d'automatique. `git status` a montré trois ` M ` là où
+j'attendais des créations. Sans ce coup d'œil, la faute partait dans le bundle.
+
+**Le coût évité.** Le travail d'un collègue effacé par une régénération, et une PR qui viole la
+contrainte la plus ancienne du dépôt — *ne jamais modifier les lots existants d'un autre auteur*.
+
+**La règle, en deux temps.**
+
+1. **La n°46 vaut aussi pour l'écriture.** « Une estimation qui n'a pas ouvert le fichier n'est pas
+   une estimation » — et une écriture qui n'a pas ouvert le dossier est un écrasement en puissance.
+   Avant d'écrire dans un dossier, on liste son contenu.
+2. **Un fichier d'un autre auteur ne s'écrase jamais, même pour l'améliorer.** Quand une ressource
+   nouvelle recouvre un code déjà servi, la déclaration se fait **chez soi** — dans son propre
+   README et dans la carte de couverture, qui est un fichier commun — jamais chez l'autre. Le
+   dépôt n'a pas à choisir un vainqueur : il doit permettre à l'enseignant de choisir.
+
+**Ce qui a été fait à la place.** Les trois README sont restaurés à l'identique, les deux fichiers
+parasites retirés, et le README de `5e_C1.1` porte un **tableau comparatif** qui nomme, pour chacun
+des cinq codes, la ressource existante et ce que Chengdu apporte de différent — en disant
+explicitement que les deux peuvent se suivre et qu'aucune n'est moins bonne. La carte de couverture
+reçoit un champ `pointeur_second_parcours` sur les cinq entrées, sans rien retirer de ce que l'audit
+disait des ressources en place.
+
+### Lot livré — 5e_C1.1 à C1.6 « Chengdu : le collège qui mesure son air »
+
+Premier lot du dépôt à porter **six codes** dans une seule séquence, tenus par un seul objet : le
+relevé du capteur de la cour. 5 séances, 215 min pour 275 disponibles. QCM de 30 questions dont 13
+illustrées, ouverture ciblée sur les compétences déjà validées (n°45). **43 tests exécutés, 43
+verts.** Vérificateur de règles : 8 sur 8.
+
+Trois nouveautés de méthode y ont été appliquées le jour même de leur écriture : la n°51 (le titre
+affiché du QCM), la n°59 (deux chemins vers l'activité tableur, parce que le calcul n'est pas la
+compétence) et la n°66 ci-dessus. Le lot déclare aussi ce qu'il ne fait pas : **aucune manipulation
+d'objet réel** (n°58), et une donnée traitée mais jamais produite.
+
+Le dépôt passe de **26 à 27 codes COMPLET ET VALIDABLE**.
