@@ -3162,3 +3162,494 @@ de référentiel, ni vérificateur, ni mode essentiel — mais elles ont du cont
 chantier n'est pas le même selon qu'on écrit ou qu'on met au gabarit.
 
 Je reprends l'état des lieux du C1 **avec le vérificateur corrigé** avant d'écrire une ligne de plus.
+
+---
+
+## 8 août 2026 — Cinq règles d'or tirées de la journée (n°46 à n°50)
+
+Pascal&nbsp;: «&nbsp;de ces expériences passées, il serait utile d'écrire d'autres règles d'or&nbsp;;
+ça nous permettra de gagner du temps et d'être plus efficaces.&nbsp;»
+
+Le critère que j'applique pour décider si une leçon mérite un numéro&nbsp;: **elle doit avoir coûté
+quelque chose**. Pas «&nbsp;bien faire son travail&nbsp;», mais «&nbsp;voici ce qui se paie quand on
+ne le fait pas&nbsp;». Les cinq ci-dessous ont toutes un incident daté derrière elles.
+
+### Règle d'or n°46 — Une estimation qui n'a pas ouvert le fichier n'est pas une estimation
+
+**L'incident.** J'ai annoncé que le lot 5e_C2 serait «&nbsp;un achèvement, pas une création — le
+travail le plus court des trois&nbsp;», sur la foi d'un statut d'audit et d'un nom de fichier. Le
+lot a demandé 43 tests et huit fichiers neufs. Quelques heures plus tard, j'ai annoncé que le C1
+n'était que «&nbsp;des plans de 3,7 à 15 ko&nbsp;»&nbsp;: il y avait 63 ko rien que sur le C1.1.
+
+**Le coût.** Deux fois, Pascal a décidé de l'ordre du travail sur une estimation fausse.
+
+**La règle.** Avant d'annoncer l'ampleur d'un travail, **ouvrir les fichiers concernés**. Un statut
+d'audit, un nom de fichier ou une taille en octets ne sont pas des estimations&nbsp;: ce sont des
+indices. Et si l'on estime sans ouvrir — par exemple pour répondre vite — **le dire**&nbsp;:
+«&nbsp;sans avoir ouvert, il me semble que…&nbsp;».
+
+### Règle d'or n°47 — Le silence d'un outil n'est pas une preuve : tout contrôle déclare son périmètre
+
+**L'incident.** Le vérificateur cherchait `sequence_*.html`. Six séquences nommées avec des traits
+d'union — dont la plus grosse du dépôt, 121 ko — n'ont jamais été analysées. Elles n'avaient aucune
+anomalie&nbsp;: **elles étaient invisibles**. Et je m'y suis laissé prendre parce que mon propre
+relevé employait le même motif.
+
+**Le coût.** Dix-huit défauts non vus depuis la création de l'outil, et un plan de travail bâti sur
+un inventaire faux.
+
+**La règle.** Un contrôle ne vérifie que ce qu'il regarde. Tout outil de contrôle **annonce ce qu'il
+a examiné et ce qu'il a écarté** — nombre de fichiers, motif employé. Et celui qui lit un rapport
+vert **compare ce périmètre à ce qu'il croit couvrir** avant d'en tirer une conclusion.
+
+Cette règle est mécanisable, et elle le sera&nbsp;: chaque outil du dépôt doit imprimer son
+périmètre en fin de rapport.
+
+### Règle d'or n°48 — Une donnée simulée est déterministe là où un corrigé s'appuie sur elle
+
+**L'incident.** Le premier tirage aléatoire des observations de Pékin a donné **zéro abandon chez
+les touristes** — alors que tout le lot repose sur eux. Les corrigés auraient décrit une réalité que
+le fichier ne contenait pas.
+
+**Le coût.** Détecté avant livraison, par chance&nbsp;: j'ai relu les statistiques produites. Un
+lot livré dans cet état aurait donné à des élèves des corrigés faux.
+
+**La règle.** Dans un jeu de données simulé, tout ce sur quoi un corrigé s'appuie est **posé, pas
+tiré au sort**&nbsp;: effectifs, anomalies, pics, valeurs remarquables. L'aléa ne sert qu'au
+décor — les durées, le bruit de mesure — et toujours avec une graine.
+
+**Une donnée simulée n'a pas à être imprévisible&nbsp;: elle a à être vraie par rapport à ce qu'on
+en dit.**
+
+### Règle d'or n°49 — On teste ce qui est rendu, pas ce qui est écrit
+
+**Les incidents**, il y en a trois, et ils se ressemblent&nbsp;:
+
+- une séquence héritée affiche depuis sa mise en ligne trois images nommées `{{analysis_icon}}`,
+  `{{sensor_icon}}`, `{{sort_icon}}` — des variables de gabarit jamais remplacées&nbsp;;
+- un QCM du lot Shanghai portait un champ `img` sous forme de tuple au lieu d'un objet&nbsp;: les
+  trois questions illustrées n'auraient affiché **aucune image**, et la source ne le montrait
+  pas&nbsp;;
+- quatre fois, une suite de tests a lu `inner_text` sur un `<details>` **replié**, qui n'expose que
+  son `summary`, et a déclaré absent un contenu présent.
+
+**Le coût.** Des pages publiées avec des trous que personne ne voyait, et des heures perdues à
+soupçonner un contenu juste.
+
+**La règle.** Un contrôle porte sur la page **telle que le navigateur la rend** — images
+effectivement chargées, texte effectivement présent dans le DOM, y compris replié. Lire le source ne
+prouve rien, et lire ce qui est visible ne prouve pas ce qui existe.
+
+### Règle d'or n°50 — Devant un contrôle rouge, chercher lequel des deux a tort avant de corriger
+
+**Les incidents.** Cinq fois en trois semaines. Quatre fois, c'était le **contrôle** qui avait
+tort&nbsp;: la règle n°26 accusait quatre pages conformes sur cinq, et trois suites de tests
+accusaient des séquences justes. La cinquième fois — aujourd'hui, lot 3e_C2 — c'était le
+**vérificateur pédagogique**&nbsp;: il cherchait «&nbsp;0&nbsp;%&nbsp;» sans garde de chiffre et
+acceptait «&nbsp;30&nbsp;%&nbsp;».
+
+**Le coût.** Quand on corrige le contenu à cause d'un contrôle fautif, on abîme du travail juste et
+on garde le défaut.
+
+**La règle.** Un rouge est une **contradiction entre deux affirmations**, pas un verdict. Avant de
+toucher à quoi que ce soit, établir laquelle des deux est fausse. Et le corollaire, qui s'est
+vérifié aujourd'hui&nbsp;: **cela vaut dans les deux sens** — un contrôle peut être trop sévère,
+mais aussi trop indulgent.
+
+### Ce que ces cinq règles ont en commun
+
+Aucune ne porte sur la pédagogie. Toutes portent sur **la confiance qu'on accorde à ce qui nous
+informe** — un statut, un rapport vert, un tirage aléatoire, un fichier source, un test rouge.
+
+Le dépôt avait quarante-cinq règles sur ce qu'il faut produire. Il lui en manquait cinq sur **ce
+qu'il faut croire**.
+
+---
+
+### Règle d'or n°51 — Le premier texte que l'élève lit n'est jamais vérifié par personne
+
+**L'incident.** Le gabarit de QCM du dépôt vient du lot «&nbsp;SOS serre&nbsp;» (Thème 2, 4e).
+Chaque lot de Thème 1 en a repris le moteur, et chaque générateur a remplacé consciencieusement ce
+qu'il fallait&nbsp;: le `<title>` de l'onglet, les badges de niveau et de code, les libellés du
+filtre par compétence, la clé de sauvegarde, le lien vers la séquence. Aucun n'a remplacé le `<h1>`
+ni le sous-titre — c'est-à-dire **les deux premières lignes affichées de la page**.
+
+Résultat&nbsp;: **six QCM de Thème 1** — 5e, 4e et 3e du C2, 5e, 4e et 3e du C3 — annonçaient à
+l'élève «&nbsp;Thème 2 · Martinique — 4e · Atelier&nbsp;: QCM — SOS serre&nbsp;», suivi d'un
+sous-titre sur les adresses IP fixes et le montage Packet Tracer. Un élève de 5e ouvrant le QCM de
+Shanghai lisait qu'il était en 4e, sur un autre thème, à propos d'un objet qu'il n'a jamais vu.
+
+**Pourquoi rien ne l'a vu.** Toutes les suites de tests vérifiaient le `<title>` de l'onglet, le
+nombre de questions, les modes, la sauvegarde, les liens. Aucune ne vérifiait le titre **affiché**.
+Le `<title>` est ce que le développeur regarde&nbsp;; le `<h1>` est ce que l'élève lit. Nous avions
+testé le premier pendant six lots et jamais le second.
+
+**Le coût.** Six pages publiées, fusionnées, et lues par personne d'assez près pour voir la première
+ligne. C'est la sixième fois qu'un défaut survit parce qu'il se trouvait à un endroit que le
+contrôle ne regardait pas (règle n°47) — mais cette fois l'endroit était le plus visible de tous.
+
+**La règle.** **Ce que l'élève voit en premier se vérifie en premier.** Titre affiché, sous-titre,
+badges, première phrase&nbsp;: tout élément d'identification visible doit nommer le bon thème, le
+bon niveau et le bon objet. Tout générateur travaillant à partir d'un gabarit emprunté à un autre
+lot **refuse d'écrire** tant qu'il reste dans le résultat une trace du lot d'origine — le garde-fou
+est posé dans le générateur, pas dans une relecture.
+
+**Mécanisation.** Le garde-fou est en place dans les trois générateurs existants et dans celui du
+lot 5e_C1. Le contrôle correspondant appartient à `_outils/verif_regles_audit.py`, donc à une
+branche Thème 2&nbsp;: il y rejoint la mécanisation de la règle n°47, encore en attente.
+
+---
+
+## Dix règles tirées d'un audit extérieur du C2 (8 août 2026)
+
+Pascal a fait auditer les trois séquences C2 du Thème 1 — 5e Shenzhen, 4e Hangzhou, 3e Pékin — par un
+regard extérieur, qui n'a lu que les pages publiées. Son verdict sur l'ossature est bon et il ne
+demande pas de tout refaire. Ce qui suit ne retient de l'audit que **ce qui se vérifie dans le
+dépôt** et **ce qui se généralise en règle**. Les propositions d'enrichissement, elles, sont notées
+comme travaux, pas comme règles.
+
+### Règle d'or n°52 — Une notion du programme se range dans les catégories du programme
+
+**L'incident.** La séquence 5e_C2.1 classe les interacteurs en **« personne, objet, condition »**.
+C'est une invention — cohérente, enseignable, et à côté. Le programme 2024 énumère quatre familles
+d'interacteurs extérieurs : **utilisateurs, données, autres objets, éléments de l'environnement**.
+La catégorie **données** est entièrement absente de la séquence, alors qu'une station de vélos ne
+fonctionne que par elles : identifiant de l'abonné, état du vélo, numéro de borne. Et « les règles
+de la ville », que la séquence range parmi les interacteurs, n'en est pas un : c'est une source
+d'exigence.
+
+**Le coût.** Un élève apprend une taxonomie qui ne se retrouve nulle part ailleurs, ni dans les
+ressources nationales, ni au niveau suivant, ni au brevet.
+
+**La règle.** La règle n°42 disait : *une formulation de compétence se recopie, elle ne se
+reformule pas*. Elle s'étend ici aux **notions** : quand le programme énumère des catégories, on
+enseigne **ses** catégories, avec **ses** mots. On peut y ajouter, on ne peut pas y substituer.
+Corollaire de méthode : avant de réécrire, **on ouvre le texte officiel** — la règle n°46 vaut aussi
+pour les programmes, et cet audit-ci, aussi juste soit-il, n'est pas le texte.
+
+### Règle d'or n°53 — Une notion qui a une voisine se définit contre elle
+
+**L'incident.** Le billet d'entrée du 5e_C2 demande à quoi se reconnaît une **fonction technique**,
+et donne pour bonne réponse : « un verbe à l'infinitif : **elle dit à quoi ça sert** ». Or « à quoi
+ça sert » est la définition de la **fonction d'usage**. La bonne réponse enseigne la confusion
+qu'elle prétend lever — et le distracteur exact, celui qu'il fallait écarter, n'était même pas dans
+la liste.
+
+**Le coût.** Une définition fausse placée dans un diagnostic d'entrée : l'élève la retient d'autant
+mieux qu'elle arrive en premier, et qu'elle est validée.
+
+**La règle.** Toute notion qui possède une voisine proche — fonction d'usage / fonction technique,
+donnée / information, exigence / solution, écarter / effacer, contrainte / interacteur — se définit
+**en nommant sa voisine et ce qui l'en sépare**. Une définition qui tient sans mentionner sa voisine
+est presque toujours la définition de la voisine.
+
+### Règle d'or n°54 — Un nombre établi ailleurs se calcule, il ne se recopie pas
+
+**L'incident.** La séquence 5e_C2 annonce « 30 questions, dont **3 illustrées** ». Le QCM en compte
+**4**. Personne n'a menti : quelqu'un a écrit une phrase, puis a ajouté une image.
+
+**Le coût.** Faible, isolément. Répété, il donne l'impression exacte d'un ensemble non synchronisé —
+et c'est cette impression qui décide un collègue à ne pas réutiliser le lot.
+
+**La règle.** Tout nombre qu'un fichier affirme d'un autre fichier — nombre de questions,
+d'illustrées, de séances, de minutes, de codes — est **produit par un contrôle**, pas par la
+mémoire. Mécanisable, et à mécaniser avec les n°47 et n°51.
+
+### Règle d'or n°55 — Un profil d'usager nomme une situation, pas une catégorie de personnes
+
+**L'incident.** Le lot 3e_C2 fait calculer des taux d'abandon par profil : habitués 0 %,
+occasionnels 11 %, poussette 25 %, touristes 43 %, **personnes âgées 50 %**. La séquence réfute déjà
+explicitement la lecture « les habitués sont plus doués » — c'est un distracteur, et il est réfuté.
+Mais le tableau, lui, met un âge en face d'un échec.
+
+**Le coût.** On voulait enseigner que l'interface exclut ; on risque d'enseigner que certaines
+personnes sont incapables. C'est exactement l'inverse de la compétence visée.
+
+**La règle.** Un profil se nomme par une **situation d'usage** — première utilisation, mains
+encombrées, écran en plein soleil, langue peu maîtrisée, une seule main disponible, poussette,
+mobilité réduite — jamais par une catégorie de personnes. Et la question posée aux élèves porte sur
+l'objet : *quelles caractéristiques de l'interface expliquent cet écart&nbsp;?* On mesure
+l'accessibilité de l'objet, jamais la capacité supposée des gens.
+
+### Règle d'or n°56 — Un outil professionnel s'enseigne rattaché au mot du programme
+
+**L'incident.** Le 3e_C2 propose six modes de représentation : parcours utilisateur, algorigramme,
+graphique, carte d'empathie, storyboard, tableau comparatif. Le programme, lui, nomme : **croquis,
+schéma, graphique, algorithme, modélisation**. Deux listes qui ne se recouvrent qu'à moitié — et
+c'était déjà l'inquiétude de Pascal quand il demandait si les élèves savaient définir ces choix.
+
+**Le coût.** L'élève apprend un vocabulaire de métier sans savoir à quelle case officielle il
+correspond. Au moment de l'évaluation, il ne reconnaît pas le mot de la consigne.
+
+**La règle.** On garde les outils professionnels — ils valent mieux que les étiquettes — mais chacun
+est **explicitement raccroché** au mot du programme : un storyboard est une suite de **croquis**, un
+parcours utilisateur est un **schéma**, un algorigramme représente un **algorithme**. Et parmi les
+représentations qu'un élève choisit, **au moins une appartient explicitement aux modes du
+programme**. La **modélisation**, absente de nos C2, reste à introduire.
+
+### Règle d'or n°57 — Une formule frappante doit rester vraie quand on la prend au mot
+
+**Les incidents.** Trois, tous du même genre. « La moyenne décrit **une personne qui n'existe
+pas** » — souvent vrai, pas toujours. « **Chaque** détail de la station est une décision » — non :
+beaucoup viennent d'une norme, d'un coût, d'un composant standard. « L'objet peut fonctionner
+**parfaitement** et échouer à rendre son service » — si le service n'est pas rendu, « parfaitement »
+est de trop.
+
+**Le coût.** L'élève qui prend la phrase au mot a raison, et c'est nous qui avons tort. On perd
+exactement l'élève le plus attentif.
+
+**La règle.** Une formule doit sa force à sa brièveté, jamais à son approximation. Avant de la
+garder, on la prend **au pied de la lettre** et l'on cherche le contre-exemple. S'il existe, on
+resserre sans s'affadir : « une moyenne peut ne correspondre à personne, et masquer de forts
+écarts » ; « beaucoup de détails observables résultent d'un choix — ou d'une contrainte » ; « aucun
+composant n'est en panne, et pourtant le service n'est pas rendu ».
+
+### Règle d'or n°58 — Le réel n'est pas un bonus
+
+**Le constat.** Le programme recommande explicitement de faire **manipuler et mettre en service des
+objets réels**, pour que les descriptions produites par les élèves soient ancrées. Nos trois lots C2
+reposent presque entièrement sur des données simulées ; l'observation d'un objet réel, quand elle
+apparaît, est un prolongement facultatif. C'est le seul reproche **structurel** de l'audit, et il
+est fondé.
+
+**Le coût.** Des élèves qui décrivent parfaitement l'expérience d'un usager qu'ils n'ont jamais vue,
+devant un objet qu'ils n'ont jamais touché. Et une discipline qui, sur écran, ressemble à toutes les
+autres.
+
+**La règle.** Chaque lot comporte **au moins une production qui repose sur un objet réellement
+manipulé** — et elle est dans le parcours obligatoire, jamais dans le Bonus. L'objet est celui du
+collège : imprimante, sèche-mains, porte à badge, fontaine, vidéoprojecteur. Le simulé garde son
+rôle — il donne l'échelle et les cas qu'on ne peut pas produire en une heure — mais il ne remplace
+pas le geste.
+
+### Règle d'or n°59 — L'outil ne doit jamais devenir la compétence évaluée
+
+**L'incident.** L'activité tableur du 4e_C2 impose un seul chemin : ouvrir un CSV de 150 lignes,
+calculer, produire un graphique. Un élève qui comprend parfaitement l'expérience de l'usager mais
+maîtrise mal le tableur est évalué plus bas qu'un élève qui produit une moyenne sans rien comprendre
+à l'usage. Or **C2 n'est pas une compétence de tableur**.
+
+**Le coût.** On croit mesurer une compétence, on mesure l'accès à un outil — c'est-à-dire, très
+souvent, ce que l'élève a chez lui.
+
+**La règle.** Quand une production passe par un outil, on offre **deux chemins vers la même
+exigence** : un chemin guidé (tableau partiellement calculé, graphique fourni à interpréter) et un
+chemin autonome (données brutes, calculs et graphique à produire). **Les mêmes questions, la même
+exigence, deux accès.** Et la page dit à l'élève ce qui est évalué : « le graphique est un outil ;
+ce qui compte est ce que tu en conclus ». Corollaire qui vaut pour tout le dépôt : **un logiciel
+n'appartient à aucune compétence** — c'est ce que l'élève en fait qui décide de laquelle il relève.
+
+### Règle d'or n°60 — On ne coche un domaine que devant une production observable
+
+**L'incident.** Le rattachement au socle et au CRCN, dans plusieurs fiches, tient à la nature de
+l'activité plutôt qu'à une trace. **Utiliser une page HTML n'est pas une compétence CRCN.**
+
+**Le coût.** Des cartes de couverture qui promettent plus que ce que l'élève a réellement produit —
+et un enseignant qui, le jour du bilan, n'a rien à montrer.
+
+**La règle.** Un domaine du socle ou une compétence CRCN n'est déclaré que si le lot **nomme la
+production** qui en apporte la preuve. Pas de production nommée, pas de case cochée.
+
+### Règle d'or n°61 — Une évaluation ne mesure qu'un construit à la fois
+
+**L'incident.** Une ressource héritée du 4e, `qcm_fonctionnement_objet.html`, est rattachée à C2
+tout en interrogeant des compétences de programmation. Elle mesure deux choses et n'en note qu'une.
+
+**Le coût.** Un résultat bas ne dit plus lequel des deux apprentissages manque — donc ne dit rien
+d'exploitable.
+
+**La règle.** Un QCM, un exercice, une évaluation portent sur **un seul construit**. Une ressource
+qui en mêle plusieurs n'est pas supprimée pour autant : elle est **présentée pour ce qu'elle est**,
+et jamais annoncée comme une mesure de la compétence.
+
+### Ce que cet audit prouve accessoirement
+
+Il a trouvé, par un chemin entièrement différent du mien, **le défaut des en-têtes de QCM** — « SOS
+serre », adresse IP, Packet Tracer — que j'avais découvert le matin même en ouvrant le gabarit. Deux
+regards indépendants l'ont vu en une journée ; six lots ne l'avaient pas vu en trois semaines. C'est
+l'argument le plus net possible pour la règle n°51, et pour le principe qui la porte : **un contrôle
+ne trouve que ce qu'il regarde** (n°47).
+
+Et il faut lui appliquer sa propre médecine : cet audit n'a lu que les **pages publiées**. Il ne
+pouvait voir ni les 74 manquements que le vérificateur relève sur 28 séquences, ni la dette des
+corrigés absents (n°43), ni les infobulles manquantes (n°44). Son périmètre est réel, et il ne le
+déclare pas.
+
+---
+
+## La grammaire manquante — inventaire des représentations (8 août 2026)
+
+Pascal signale que le point 10 de l'audit — la table des représentations à conserver — est peut-être
+la raison pour laquelle « on bloquait ». Il a raison, et il faut le dire plus nettement que l'audit
+ne le dit : **le programme 2024 a retiré la grammaire graphique sans la remplacer, nous l'avons
+suivi fidèlement, et nous avons construit des concepts sans vocabulaire partagé.** Or l'inspection
+et les sujets de DNB, eux, parlent encore cette grammaire.
+
+### Ce que le dépôt contient réellement, au 8 août 2026
+
+Inventaire mécanique sur les **156 pages HTML** des trois thèmes, en distinguant « le mot
+apparaît » de « l'élève produit la représentation ».
+
+| Représentation | Présence réelle | Emplacement |
+| --- | --- | --- |
+| Algorigramme | **319 occurrences, enseigné et produit** | Th. 1, 2 et 3 |
+| Chaîne d'information | **166, enseignée et produite** | Thème 2 |
+| Chaîne d'énergie | **164, enseignée et produite** | Thème 2 |
+| Tableau contraintes / exigences | **341, enseigné et produit** | Th. 1 (4e_C2) et 2 |
+| Cahier des charges | **58, réellement rédigé par l'élève** | 4e_C2, 3e et 4e C1 hérités |
+| Schéma fonctionnel / blocs | **36, enseigné** | Thème 2 |
+| Croquis | 7 occurrences — **toutes des citations du référentiel** | jamais produit par l'élève |
+| Modélisation | 5 occurrences — le mot, jamais la chose | Thème 2 |
+| FAST | 8 occurrences — **dont zéro pertinente** : c'était « fast-food » dans un QCM wifi | **absent** |
+| Bête à cornes | **0** | absent |
+| Diagramme des interacteurs / pieuvre | **0** — le mot « interacteur » apparaît 175 fois, la représentation jamais | absent |
+| SysML — exigences | **0** | absent |
+| SysML — cas d'utilisation | **0** | absent |
+| Carte mentale | **0** | absent |
+| Diagramme de Gantt / planification des tâches | **0** | absent — **alors que le programme l'impose** en gestion de projet |
+| Modélisation 3D / CAO | **0** | absent |
+
+Sept représentations nommées sont **entièrement absentes**, une huitième — le croquis — n'existe
+qu'en citation, et le seul « FAST » du dépôt était un fast-food. Ce n'est pas un oubli de détail :
+c'est la moitié de la langue du métier.
+
+### Règle d'or n°62 — Le concept prend le mot du programme, l'outil garde le nom du métier
+
+**Le raisonnement.** Le programme 2024 a cessé d'imposer « bête à cornes », « pieuvre », « FAST »,
+« SysML ». **Il ne les a pas interdits** : il a déspécifié. Nous avons lu le retrait comme une
+interdiction, et nous avons enseigné des concepts que personne ne sait nommer — ni l'inspecteur qui
+visite, ni le sujet de DNB, ni le collègue qui reprend la séquence, ni l'élève qui change
+d'établissement.
+
+**La règle.** Chaque représentation est nommée **deux fois** : par le mot du programme, qui fait
+foi, et par le nom que la profession emploie, entre parenthèses.
+
+> **Diagramme des interacteurs extérieurs** *(historiquement appelé diagramme pieuvre)*
+> **Suite de croquis** *(storyboard)* · **Schéma du parcours** *(parcours utilisateur)*
+
+Le mot du programme est celui de l'évaluation et de la carte de compétence (règle n°42) ; le nom du
+métier est celui qui circule. Ni l'un sans l'autre. Et **aucun outil n'appartient à une
+compétence** : c'est ce que l'élève en fait qui décide de laquelle il relève — Sweet Home 3D sert
+C2 quand il représente un parcours d'usager, et le Thème 3 quand il modélise une forme.
+
+### Règle d'or n°63 — Ce que le programme impose nommément se produit, pas se mentionne
+
+**L'incident.** Le programme cite explicitement le **diagramme de planification des tâches** en
+gestion de projet. Le dépôt en compte **zéro**. Il cite le **croquis** comme point de départ du
+langage naturel en 4e : sept occurrences, toutes des citations du texte officiel, aucune production
+d'élève. Il cite la **modélisation** parmi les modes de représentation de 3e : cinq occurrences du
+mot, aucune chose.
+
+**Le coût.** Une carte de couverture verte au-dessus d'un enseignement qui n'a pas eu lieu. C'est
+le défaut le plus grave qu'un dépôt pédagogique puisse porter, parce qu'il est **invisible depuis
+l'intérieur** : nos vérificateurs comptaient des séquences, jamais des gestes.
+
+**La règle.** Quand le programme **nomme** une représentation, le lot qui porte le code
+correspondant **fait produire cette représentation par l'élève**, et le rapport de tests le déclare.
+Citer le texte officiel n'est pas l'enseigner. À mécaniser avec les n°47, n°51 et n°54.
+
+### Règle d'or n°64 — Tout lot se situe sur la chaîne d'analyse
+
+**Le constat.** L'audit reconstitue la chaîne complète, et elle est juste :
+
+> **Analyse externe** — besoin *(bête à cornes)* → fonction d'usage → interacteurs *(diagramme des
+> interacteurs, « pieuvre »)* → contraintes et exigences → **cahier des charges**
+> **Analyse interne** — fonctions techniques *(FAST)* → solutions techniques → chaînes énergie et
+> information → constituants
+> **Conception** — croquis, schéma, modélisation → prototype → tests et mesures →
+> **comparaison au cahier des charges**
+
+Le programme 2024 n'a pas supprimé cette chaîne : il a cessé d'imposer les outils graphiques qui la
+jalonnaient. Et il referme lui-même la boucle, puisqu'il demande de comparer les résultats obtenus
+ou simulés aux **exigences issues d'un cahier des charges**. Le cahier des charges n'est donc pas un
+vestige : c'est le **référentiel qui valide la solution**.
+
+**Le coût de l'avoir ignorée.** Nos lots sont bons un par un et ne se répondent pas. L'élève traverse
+trois ans de technologie sans jamais voir qu'il parcourt **une seule démarche**, ni où il en est.
+
+**La règle.** Chaque lot indique, dans sa synthèse professeur et dans sa fiche, **où il se situe sur
+la chaîne** — ce qui le précède, ce qui le suit. Et la boucle finale — cahier des charges →
+conception → prototype → essai → **retour au cahier des charges** — est enseignée comme une boucle,
+pas comme une fin de parcours.
+
+### Règle d'or n°65 — Une notion traverse les niveaux en changeant de verbe, pas de sujet
+
+**Le constat.** L'audit propose, pour le cahier des charges : **5e reconnaître → 4e formuler →
+3e choisir, justifier, arbitrer**. C'est exactement la bonne forme d'une progression spiralaire, et
+c'est celle que nos meilleurs lots suivent sans l'avoir nommée — le C2 va bien de « regarder l'objet
+du dehors » à « décider de la forme et la défendre ».
+
+**Le contre-modèle.** Trois années à refaire le même diagramme en changeant d'objet. L'élève croit
+réviser ; il n'apprend rien de nouveau, et il s'ennuie à juste titre.
+
+**La règle.** Quand une notion revient d'un niveau à l'autre, ce n'est pas l'objet d'étude qui
+change, c'est **le verbe** : reconnaître, puis produire, puis arbitrer. La fiche pédagogique de
+chaque lot **nomme le verbe du niveau** et celui des deux autres. Si l'on ne sait pas dire en quoi
+le geste de 4e diffère de celui de 5e, la progression n'existe pas — il n'y a qu'une répétition.
+
+### Décision du 8 août 2026 — ce qui est fait avant la rentrée
+
+Pascal tranche, après inventaire :
+
+1. **Les quatre corrections P0 du C2**, puis **la carte des représentations** — une page de
+   référence portant les quinze représentations, chacune nommée deux fois (règle n°62), situées sur
+   la chaîne d'analyse (n°64), avec pour chacune le niveau et le verbe (n°65).
+2. **Quatre représentations absentes sont intégrées cette année** : le **diagramme des interacteurs**
+   modernisé à quatre familles (5e_C2), la **bête à cornes** courte en entrée d'étude, le **FAST**
+   à la charnière Thème 1 / Thème 2, et le **diagramme de Gantt**, que Pascal rattache à **C7.1**
+   (Thème 3, projet robot). SysML et carte mentale restent hors périmètre cette année.
+3. **Le C1 en 4e et 3e** reprend ensuite.
+
+Le motif de cet ordre est écrit ici pour qu'on ne le rediscute pas : les P0 sont des **erreurs
+enseignées**, et une erreur enseignée coûte plus cher qu'un lot manquant.
+
+---
+
+### Règle d'or n°66 — On n'écrit pas dans le dossier d'un autre, même pour l'améliorer
+
+**L'incident, aujourd'hui, de ma main.** En clôturant le lot Chengdu, j'ai voulu poser les README
+pointeurs d'usage vers les cinq autres codes du C1 en 5e. Je n'ai pas ouvert les dossiers avant
+d'écrire. Ils n'étaient pas vides : **5e_C1.2 et 5e_C1.3 contiennent des lots complets** d'un autre
+auteur — séquence, QCM, synthèses, fiche, manifeste — et **5e_C1.4, C1.5 et C1.6 portaient des
+README écrits par cet auteur**, qui pointaient vers ses propres séquences mutualisées.
+
+J'ai **écrasé trois de ces README** et déposé deux fichiers dans des lots qui n'avaient rien
+demandé. Le contenu que j'ai effacé était juste : il décrivait des preuves CRCN observables et des
+mutualisations légitimes.
+
+**Ce qui a permis de le voir.** Rien d'automatique. `git status` a montré trois ` M ` là où
+j'attendais des créations. Sans ce coup d'œil, la faute partait dans le bundle.
+
+**Le coût évité.** Le travail d'un collègue effacé par une régénération, et une PR qui viole la
+contrainte la plus ancienne du dépôt — *ne jamais modifier les lots existants d'un autre auteur*.
+
+**La règle, en deux temps.**
+
+1. **La n°46 vaut aussi pour l'écriture.** « Une estimation qui n'a pas ouvert le fichier n'est pas
+   une estimation » — et une écriture qui n'a pas ouvert le dossier est un écrasement en puissance.
+   Avant d'écrire dans un dossier, on liste son contenu.
+2. **Un fichier d'un autre auteur ne s'écrase jamais, même pour l'améliorer.** Quand une ressource
+   nouvelle recouvre un code déjà servi, la déclaration se fait **chez soi** — dans son propre
+   README et dans la carte de couverture, qui est un fichier commun — jamais chez l'autre. Le
+   dépôt n'a pas à choisir un vainqueur : il doit permettre à l'enseignant de choisir.
+
+**Ce qui a été fait à la place.** Les trois README sont restaurés à l'identique, les deux fichiers
+parasites retirés, et le README de `5e_C1.1` porte un **tableau comparatif** qui nomme, pour chacun
+des cinq codes, la ressource existante et ce que Chengdu apporte de différent — en disant
+explicitement que les deux peuvent se suivre et qu'aucune n'est moins bonne. La carte de couverture
+reçoit un champ `pointeur_second_parcours` sur les cinq entrées, sans rien retirer de ce que l'audit
+disait des ressources en place.
+
+### Lot livré — 5e_C1.1 à C1.6 « Chengdu : le collège qui mesure son air »
+
+Premier lot du dépôt à porter **six codes** dans une seule séquence, tenus par un seul objet : le
+relevé du capteur de la cour. 5 séances, 215 min pour 275 disponibles. QCM de 30 questions dont 13
+illustrées, ouverture ciblée sur les compétences déjà validées (n°45). **43 tests exécutés, 43
+verts.** Vérificateur de règles : 8 sur 8.
+
+Trois nouveautés de méthode y ont été appliquées le jour même de leur écriture : la n°51 (le titre
+affiché du QCM), la n°59 (deux chemins vers l'activité tableur, parce que le calcul n'est pas la
+compétence) et la n°66 ci-dessus. Le lot déclare aussi ce qu'il ne fait pas : **aucune manipulation
+d'objet réel** (n°58), et une donnée traitée mais jamais produite.
+
+Le dépôt passe de **26 à 27 codes COMPLET ET VALIDABLE**.

@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shenzhen : recenser les interacteurs d'une station de vélos en libre-service et lire les choix de conception dans ses formes. Codes 5e_C2.1 et 5e_C2.2, programme 2024.">
+<title>Thème 1 · 5e — Chengdu : le collège qui mesure son air (5e_C1.1 à C1.6)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<div class="page">
+<h1>🌫️ Chengdu — le collège qui mesure son air</h1>
+<p class="sous">Une donnée naît, se range, se partage, se protège — et finit par désigner quelqu'un.</p>
+<div class="badges">
+  <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">5e</span>
+  <span class="badge code" title="Collecter, trier et analyser des données.">5e_C1.1</span><span class="badge code" title="Comparer des principes techniques pour une même fonction technique.">C1.2</span><span class="badge code" title="Décrire le rôle des systèmes d'information dans le partage d'information.">C1.3</span><span class="badge code" title="Recenser, identifier, classer, représenter, stocker et retrouver des données dans une arborescence.">C1.4</span><span class="badge code" title="Identifier des règles pour sécuriser un environnement numérique et respecter la propriété intellectuelle.">C1.5</span><span class="badge code" title="Appréhender la responsabilité de chacun dans les dérives numériques.">C1.6</span>
+  <span class="badge theme" title="Domaines du socle commun travaillés : D2 méthodes et outils pour apprendre, D3 formation de la personne et du citoyen, D4 systèmes techniques, D5 représentations du monde.">D2 · D3 · D4 · D5</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">5 séances de 55 min</span>
+  <span class="badge theme" title="Compétences numériques du CRCN travaillées et traçables : traiter des données, gérer des données, sécuriser l'environnement numérique.">🖥 CRCN 1.3 · 1.2 · 4.1</span>
+</div>
+<p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
+<b>C1.1 à C1.6</b>&nbsp;: les six compétences travaillées — des codes de classement <b>propres à ce
+site</b>, écrits en toutes lettres plus bas. <b>D2 · D3 · D4 · D5</b>&nbsp;: les domaines du
+<b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
+<b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
+<b>5 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
+
+<section class="card">
+  <h2>🇨🇳 La situation&nbsp;: un capteur dans la cour, et personne ne sait quoi en faire</h2>
+  <p>Un collège de <b>Chengdu</b> a installé un capteur de particules fines dans sa cour. Depuis
+  une semaine, il enregistre une valeur toutes les heures. Le fichier grossit&nbsp;: <b>90 lignes</b>.</p>
+  <p>Personne n'ose s'en servir. Le professeur de technologie a ouvert le fichier et s'est
+  arrêté&nbsp;: il y a une valeur <b>négative</b>. La vie scolaire voudrait savoir s'il faut ouvrir
+  les fenêtres le matin. Et quelqu'un a déjà envoyé une capture d'écran dans un groupe de discussion,
+  avec un commentaire.</p>
+  <p style="color:var(--warn);font-size:1.05em">Une donnée qui reste dans un fichier ne sert à rien.
+  Une donnée qu'on publie sans réfléchir peut faire du mal. <b>Entre les deux, il y a tout le
+  travail.</b></p>
+  <p class="meta">⚠️ <b>Toutes les données de cette séquence sont simulées</b>, construites pour
+  l'exercice. Elles ne décrivent aucun établissement réel.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Que faut-il faire à une donnée, depuis l'instant où
+  elle est mesurée jusqu'à celui où quelqu'un décide grâce à elle&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Entre le capteur de la cour et la décision d'ouvrir les fenêtres, combien d'étapes vois-tu&nbsp;? Cite celles auxquelles tu penses.</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : les étapes entre le capteur et la décision"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;D'abord, il faut ____.&nbsp;»</li>
+    <li>«&nbsp;Ensuite, ____.&nbsp;»</li>
+    <li>«&nbsp;Je pense qu'il y a en tout ____ étapes.&nbsp;»</li></ul></details>
+  <p class="meta">Au bilan, tu compteras combien tu en avais trouvées. La plupart des gens en
+  citent deux ou trois&nbsp;: il y en a <b>six</b>, et chacune peut tout gâcher.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>5e_C1.1</code> à
+  <code>5e_C1.6</code> sont des codes de classement <b>internes à ce dépôt</b>. Ils ne figurent pas
+  comme tels au BO. Les formulations ci-dessous, elles, sont celles du référentiel.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>5e_C1.2</b></td><td>Comparer des principes techniques pour une même fonction
+      technique.</td><td>Séance 1</td></tr>
+    <tr><td><b>5e_C1.1</b></td><td>Collecter, trier et analyser des données.</td><td>Séance 2</td></tr>
+    <tr><td><b>5e_C1.4</b></td><td>Recenser des données, les identifier, les classer, les
+      représenter, les stocker, les retrouver dans une arborescence.</td><td>Séance 3</td></tr>
+    <tr><td><b>5e_C1.3</b></td><td>Décrire le rôle des systèmes d'information dans le partage
+      d'information.</td><td>Séance 4</td></tr>
+    <tr><td><b>5e_C1.5</b></td><td>Identifier des règles permettant de sécuriser un environnement
+      numérique (bases de la cybersécurité) et des règles de respect de la propriété
+      intellectuelle.</td><td>Séance 5</td></tr>
+    <tr><td><b>5e_C1.6</b></td><td>Appréhender la responsabilité de chacun dans les dérives
+      (cyberviolence, atteinte à la vie privée, aux données personnelles, usurpation
+      d'identité).</td><td>Séance 5</td></tr>
+  </table>
+  <p><b>Socle</b> — D2 méthodes et outils pour apprendre · D3 formation de la personne et du citoyen ·
+  D4 systèmes techniques · D5 représentations du monde.</p>
+  <p class="meta">🧵 <b>Six codes, une seule donnée.</b> Le relevé du capteur de la cour va traverser
+  toute la séquence&nbsp;: il sera <b>mesuré</b> (C1.2), <b>trié</b> (C1.1), <b>rangé</b> (C1.4),
+  <b>partagé</b> (C1.3), <b>protégé</b> (C1.5) — et il finira par <b>désigner quelqu'un</b> (C1.6).
+  Ce n'est pas six leçons&nbsp;: c'est une seule histoire, en six moments.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 5 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Mesurer<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Collecter et trier<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Ranger<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Partager<span class="done" id="done-s4"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s5" id="tab-s5">Séance 5<br>Protéger, puis répondre<span class="done" id="done-s5"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
+  <div class="assoc"><label for="be_1">Une <b>fonction technique</b>, c'est&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>ce que l'objet doit faire, dit par un verbe à l'infinitif</option>
+      <option>le nom du composant employé</option>
+      <option>la marque de l'appareil</option>
+      <option>le prix de l'objet</option></select></div>
+  <div class="assoc"><label for="be_2">Une <b>moyenne</b> se calcule au tableur avec&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>=MOYENNE(A2:A8)</option>
+      <option>=SOMME(A2:A8)</option>
+      <option>=MAX(A2:A8)</option>
+      <option>=NB(A2:A8)</option></select></div>
+  <div class="assoc"><label for="be_3">Une <b>donnée personnelle</b>, c'est&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>toute information qui permet de reconnaître une personne, même indirectement</option>
+      <option>uniquement le nom et le prénom</option>
+      <option>ce qu'on écrit sur les réseaux sociaux</option>
+      <option>un mot de passe</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Une <b>fonction technique</b> dit ce que l'objet doit faire&nbsp;: elle commence par un verbe
+    à l'infinitif — «&nbsp;mesurer la poussière&nbsp;», «&nbsp;maintenir au frais&nbsp;». Elle ne dit
+    pas <b>comment</b>&nbsp;: ça, c'est le <b>principe</b>, et plusieurs principes peuvent remplir la
+    même fonction.</p>
+    <p>Au tableur, <code>=MOYENNE(A2:A8)</code> calcule la moyenne d'une plage de cellules.</p>
+    <p>Une <b>donnée personnelle</b> n'est pas seulement un nom. C'est toute information qui permet
+    de <b>reconnaître quelqu'un</b>, même sans le nommer&nbsp;: «&nbsp;la personne qui passe la
+    balayeuse le mardi&nbsp;» désigne une personne précise dans un collège.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>🔬 Activité 1 — Une fonction, trois principes <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
+  <div class="meta"><b>Objectif</b> comparer des principes techniques pour une même fonction ·
+  <b>Compétence</b> 5e_C1.2 · <b>Production</b> le principe retenu pour le collège, et sa justification</div>
+
+  <p>Le collège doit choisir son capteur. Trois appareils existent, et <b>ils remplissent la même
+  fonction</b>&nbsp;: mesurer la concentration de poussières dans l'air. Ils n'emploient pas le même
+  <b>principe</b> — c'est-à-dire pas le même phénomène physique.</p>
+
+  <figure class="fig">
+    <img src="Images/trois_principes_de_mesure.svg"
+         alt="Trois principes pour une même fonction : la diffusion optique (une diode éclaire l'air, un capteur mesure la lumière diffusée : 5 s, 25 €, mais ± 10 % et s'encrasse), la gravimétrie (un filtre pesé avant et après 24 h : ± 2 %, entretenable par le collège, mais 24 h pour un résultat et 900 €), et l'atténuation bêta (un rayonnement traversant le dépôt : 1 h, ± 5 %, mais 6 500 € et une source radioactive sous contrôle réglementaire).">
+    <figcaption>📄 <b>Document à lire.</b> Compare les <b>lignes rouges</b> avant les vertes&nbsp;:
+    ce qu'un appareil ne sait pas faire élimine plus sûrement que ce qu'il sait faire.</figcaption>
+  </figure>
+
+  <h4>a) Fonction, principe, solution</h4>
+  <div class="assoc"><label for="a1_1">«&nbsp;Mesurer la concentration de poussières&nbsp;» est&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>une fonction technique : elle dit ce qu'il faut faire, pas comment</option>
+      <option>un principe technique</option>
+      <option>une solution technique</option>
+      <option>une marque d'appareil</option></select></div>
+  <div class="assoc"><label for="a1_2">«&nbsp;Éclairer l'air et mesurer la lumière diffusée&nbsp;» est&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>un principe : le phénomène physique employé pour remplir la fonction</option>
+      <option>une fonction technique</option>
+      <option>un critère de choix</option>
+      <option>un défaut de l'appareil</option></select></div>
+  <div class="assoc"><label for="a1_3">Que trois principes différents remplissent la même fonction montre que&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>une fonction n'impose pas sa solution : il y a toujours plusieurs chemins</option>
+      <option>deux des trois sont inutiles</option>
+      <option>les concepteurs se sont mal concertés</option>
+      <option>la fonction est mal définie</option></select></div>
+
+  <h4>b) Lire les limites</h4>
+  <div class="assoc"><label for="a1_4">La gravimétrie donne un résultat toutes les 24 h. Pour le collège, cela veut dire&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>aucune alerte possible le matin : on saurait toujours la veille</option>
+      <option>que l'appareil est en panne une journée sur deux</option>
+      <option>que la mesure est moins précise</option>
+      <option>que c'est le meilleur choix pour la vie scolaire</option></select></div>
+  <div class="assoc"><label for="a1_5">L'atténuation bêta est très précise, mais&nbsp;:</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège</option>
+      <option>elle ne mesure pas les particules fines</option>
+      <option>elle demande un branchement au gaz</option>
+      <option>elle ne fonctionne pas en Chine</option></select></div>
+  <div class="assoc"><label for="a1_6">La diffusion optique s'encrasse. La conséquence la plus gênante est&nbsp;:</label>
+    <select id="a1_6"><option value="">— choisir —</option>
+      <option>la mesure dérive lentement sans que rien ne le signale</option>
+      <option>l'appareil s'arrête brutalement</option>
+      <option>la consommation augmente</option>
+      <option>le prix augmente</option></select></div>
+
+  <h4>c) Ton choix, et sa défense</h4>
+  <div class="assoc">
+    <label for="a1_choix">Choisis le principe que tu retiendrais <b>pour ce collège</b>. Écris&nbsp;: le principe retenu, <b>deux raisons</b> tirées du tableau, et <b>ce que tu acceptes de perdre</b> en le choisissant.</label>
+    <textarea id="a1_choix" style="min-height:130px" aria-label="Le principe retenu, deux raisons, et ce que tu acceptes de perdre"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Je retiens le principe ____ (P__).&nbsp;»</li>
+      <li>«&nbsp;Première raison&nbsp;: ____.&nbsp;» · «&nbsp;Deuxième raison&nbsp;: ____.&nbsp;»</li>
+      <li>«&nbsp;En le choisissant, j'accepte de perdre ____, parce que pour un collège ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Deux contraintes éliminent vite&nbsp;: le <b>budget d'un collège</b>, et le fait que
+    <b>personne sur place</b> n'est technicien de laboratoire.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Demande-toi <b>à quoi servira la mesure</b>. Si c'est pour décider d'ouvrir les fenêtres le
+    matin, il faut une réponse <b>dans l'heure</b>. Un appareil très précis qui répond le lendemain
+    ne rend pas ce service — même s'il est meilleur «&nbsp;dans l'absolu&nbsp;».</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Le choix attendu&nbsp;: P1, la diffusion optique</b> — et il est <b>imparfait</b>, c'est
+    tout l'intérêt.</p>
+    <p><b>Deux raisons</b>&nbsp;: elle répond en <b>5 secondes</b>, donc elle permet une décision le
+    matin même&nbsp;; et elle coûte <b>25 €</b>, ce qu'un collège peut engager sans dossier.</p>
+    <p><b>Ce qu'on accepte de perdre</b>&nbsp;: la précision (± 10 % contre ± 2 %), et la maîtrise de
+    l'encrassement — la mesure dérivera lentement, sans rien signaler. Il faudra donc <b>comparer
+    régulièrement</b> à une autre source, ou nettoyer.</p>
+    <p><b>P2, la gravimétrie</b>, est <i>plus juste</i> et pourtant inadaptée&nbsp;: 24 h pour un
+    seul résultat, on saurait toujours la veille. Un appareil meilleur qui ne rend pas le service
+    attendu n'est pas un meilleur choix.</p>
+    <p><b>P3, l'atténuation bêta</b>, est éliminée par une contrainte qui n'a rien de technique&nbsp;:
+    une <b>source radioactive scellée</b> impose un contrôle réglementaire qu'un collège ne peut pas
+    assurer. 6 500 € et 12 W achèvent de la disqualifier.</p>
+    <p class="meta">Retiens la distinction, elle servira toute l'année&nbsp;: la <b>fonction</b> dit
+    ce qu'il faut faire («&nbsp;mesurer la poussière&nbsp;»)&nbsp;; le <b>principe</b> dit par quel
+    phénomène physique on y arrive&nbsp;; la <b>solution</b> est l'appareil précis qu'on achète.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une même <b>fonction</b> se remplit par plusieurs
+  <b>principes</b>. Le meilleur principe n'est pas le plus précis&nbsp;: c'est celui qui rend le
+  service attendu, dans les contraintes réelles.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: choisir l'appareil le plus performant du tableau
+  sans regarder ce qu'il exige — argent, compétence, réglementation.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>🧹 Activité 2 — Collecter, trier, analyser <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
+  <div class="meta"><b>Objectif</b> nettoyer un jeu de données avant de l'exploiter ·
+  <b>Compétence</b> 5e_C1.1 · <b>Production</b> les anomalies repérées, et les moyennes après nettoyage</div>
+
+  <p>Le capteur tourne depuis une semaine. Le fichier
+  <code>releves_air_chengdu_simules.csv</code> contient <b>90 relevés</b>&nbsp;: jour, heure,
+  PM2.5 en µg/m³, température, humidité.</p>
+  <p style="color:var(--warn)"><b>Il contient aussi quatre anomalies.</b> Aucune n'est signalée. Tu
+  dois les trouver avant de calculer quoi que ce soit&nbsp;: <b>une moyenne calculée sur des données
+  sales est fausse, et elle a l'air juste.</b></p>
+
+  <h4>a) Reconnaître une anomalie</h4>
+  <div class="assoc"><label for="a2_1">Une valeur de <b>−4,2 µg/m³</b> est&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>impossible : une concentration ne peut pas être négative</option>
+      <option>possible quand l'air est très pur</option>
+      <option>une erreur d'unité</option>
+      <option>normale la nuit</option></select></div>
+  <div class="assoc"><label for="a2_2">Le vendredi, six heures d'affilée donnent <b>exactement 23,7</b>. Cela signale&nbsp;:</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>un capteur bloqué : une vraie mesure varie toujours un peu</option>
+      <option>un air parfaitement stable</option>
+      <option>une erreur de recopie</option>
+      <option>rien d'anormal</option></select></div>
+  <div class="assoc"><label for="a2_3">Le dimanche à 16 h, la valeur est <b>251,0</b> alors que les heures voisines sont vers 25. C'est&nbsp;:</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>très probablement une virgule décalée : 25,1 devenu 251</option>
+      <option>un vrai pic de pollution</option>
+      <option>une valeur à conserver telle quelle</option>
+      <option>impossible à interpréter</option></select></div>
+  <div class="assoc"><label for="a2_4">Le lundi, le relevé de <b>14 h manque</b>. Que faire&nbsp;?</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>le signaler et calculer sans lui : on n'invente pas une mesure</option>
+      <option>recopier la valeur de 13 h</option>
+      <option>mettre 0</option>
+      <option>abandonner toute la journée du lundi</option></select></div>
+  <div class="assoc"><label for="a2_5">Que faire des trois valeurs manifestement fausses&nbsp;?</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>les écarter du calcul, mais les garder dans le fichier avec une note</option>
+      <option>les effacer définitivement du fichier</option>
+      <option>les corriger en devinant la bonne valeur</option>
+      <option>les laisser et calculer quand même</option></select></div>
+
+  <h4>b) Deux chemins vers le même travail</h4>
+  <p>Ce qui est évalué ici, c'est ta capacité à <b>reconnaître ce qui n'est pas une mesure</b> et à
+  dire ce que cela coûte au résultat. Le tableur est un <b>outil</b>&nbsp;: il fait le calcul, il ne
+  fait pas le raisonnement. Deux chemins mènent donc aux mêmes réponses — choisis le tien, ou suis
+  celui que ton professeur indique.</p>
+  <div class="assoc">
+    <p style="margin:0"><b>🔵 Chemin autonome</b>&nbsp;: tu ouvres le fichier
+    <code>releves_air_chengdu_simules.csv</code> dans un tableur, tu tries, tu repères, tu calcules
+    les deux moyennes toi-même. Les modes opératoires sont juste en dessous.</p>
+    <p style="margin:.5em 0 0"><b>🟢 Chemin guidé</b>&nbsp;: si le tableur n'est pas disponible, ou
+    s'il te ralentit, ouvre l'extrait ci-dessous. Il contient les lignes suspectes déjà sorties du
+    fichier et les deux moyennes déjà calculées. <b>Le travail restant est exactement le
+    même</b>&nbsp;: dire ce qui ne va pas dans chacune, et ce que l'écart entre les deux moyennes
+    signifie.</p>
+  </div>
+  <details class="aide"><summary>🟢 Chemin guidé — l'extrait déjà sorti du fichier</summary>
+    <table style="width:100%;border-collapse:collapse;font-size:.92em">
+      <tr><th style="text-align:left;padding:3px 6px">Jour et heure</th>
+          <th style="text-align:left;padding:3px 6px">Valeur relevée</th>
+          <th style="text-align:left;padding:3px 6px">Les heures voisines</th></tr>
+      <tr><td style="padding:3px 6px">mercredi 11&nbsp;h</td><td style="padding:3px 6px"><b>−4,2</b></td><td style="padding:3px 6px">27,1 puis 26,8</td></tr>
+      <tr><td style="padding:3px 6px">vendredi 9&nbsp;h → 14&nbsp;h</td><td style="padding:3px 6px"><b>23,7 · 23,7 · 23,7 · 23,7 · 23,7 · 23,7</b></td><td style="padding:3px 6px">24,9 avant · 26,2 après</td></tr>
+      <tr><td style="padding:3px 6px">lundi 14&nbsp;h</td><td style="padding:3px 6px"><b>(aucune ligne)</b></td><td style="padding:3px 6px">26,0 à 13&nbsp;h · 27,3 à 15&nbsp;h</td></tr>
+      <tr><td style="padding:3px 6px">dimanche 16&nbsp;h</td><td style="padding:3px 6px"><b>251,0</b></td><td style="padding:3px 6px">24,8 puis 25,4</td></tr>
+    </table>
+    <p class="meta">Moyenne calculée sur les 89 valeurs présentes&nbsp;: <b>27,4&nbsp;µg/m³</b>.
+    Moyenne après avoir écarté les trois valeurs fausses&nbsp;: <b>25,2&nbsp;µg/m³</b>.</p>
+    <p class="meta">Ces deux nombres sont le <b>résultat</b> du calcul, pas la réponse à la question.
+    La réponse, c'est ce que tu écris en dessous.</p>
+  </details>
+
+  <h4>c) Au tableur</h4>
+  <p>Ouvre le fichier dans un tableur. Les modes opératoires ci-dessous valent pour les <b>deux</b>
+  logiciels que tu peux rencontrer&nbsp;— au collège comme chez toi.</p>
+  <details class="aide"><summary>📊 Mode opératoire — <b>LibreOffice Calc</b> (gratuit)</summary>
+    <ul>
+      <li><b>Ouvrir</b>&nbsp;: Fichier → Ouvrir → choisir le <code>.csv</code>. Dans la fenêtre
+      d'import, cocher <b>Point-virgule</b> comme séparateur.</li>
+      <li><b>Trier</b>&nbsp;: sélectionner les données → Données → Trier… → colonne
+      <code>pm25_ug_m3</code>, ordre croissant. Les valeurs impossibles apparaissent en tête.</li>
+      <li><b>Moyenne</b>&nbsp;: <code>=MOYENNE(C2:C91)</code></li>
+      <li><b>Moyenne sans les valeurs fausses</b>&nbsp;:
+      <code>=MOYENNE.SI.ENS(C2:C91;C2:C91;"&gt;0";C2:C91;"&lt;200")</code></li>
+      <li><b>Maximum</b>&nbsp;: <code>=MAX(C2:C91)</code> · <b>Nombre de valeurs</b>&nbsp;:
+      <code>=NB(C2:C91)</code></li>
+    </ul></details>
+  <details class="aide"><summary>📊 Mode opératoire — <b>Excel</b></summary>
+    <ul>
+      <li><b>Ouvrir</b>&nbsp;: Données → À partir d'un fichier texte/CSV → séparateur
+      <b>point-virgule</b>.</li>
+      <li><b>Trier</b>&nbsp;: Données → Trier → colonne <code>pm25_ug_m3</code>, du plus petit au
+      plus grand.</li>
+      <li><b>Moyenne</b>&nbsp;: <code>=MOYENNE(C2:C91)</code></li>
+      <li><b>Moyenne sans les valeurs fausses</b>&nbsp;:
+      <code>=MOYENNE.SI.ENS(C2:C91;C2:C91;"&gt;0";C2:C91;"&lt;200")</code></li>
+      <li><b>Maximum</b>&nbsp;: <code>=MAX(C2:C91)</code> · <b>Nombre de valeurs</b>&nbsp;:
+      <code>=NB(C2:C91)</code></li>
+    </ul>
+    <p class="meta">Les formules sont <b>les mêmes</b> dans les deux logiciels&nbsp;: seuls les menus
+    changent. C'est vrai de presque tout le tableur.</p></details>
+
+  <h4>d) Ton relevé</h4>
+  <div class="assoc">
+    <label for="a2_anomalies">Écris les <b>quatre anomalies</b> — une par ligne, avec le jour, l'heure et ce qui ne va pas. Puis donne <b>la moyenne avec</b> les valeurs fausses et <b>la moyenne sans</b>.</label>
+    <textarea id="a2_anomalies" style="min-height:150px" aria-label="Les quatre anomalies, puis la moyenne avec et sans les valeurs fausses"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Anomalie 1&nbsp;: ____, à ____ h — c'est ____ parce que ____.&nbsp;»</li>
+      <li>«&nbsp;Anomalie 2 / 3 / 4&nbsp;: (même modèle)&nbsp;»</li>
+      <li>«&nbsp;Moyenne avec les valeurs fausses&nbsp;: ____ µg/m³.&nbsp;»</li>
+      <li>«&nbsp;Moyenne sans&nbsp;: ____ µg/m³. L'écart est de ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p><b>Trie la colonne</b> des PM2.5 du plus petit au plus grand&nbsp;: deux anomalies sautent aux
+    yeux immédiatement — l'une en haut, l'autre en bas.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Les deux autres ne se voient pas au tri&nbsp;: l'une est une <b>répétition</b> (la même valeur
+    plusieurs heures de suite), l'autre est une <b>absence</b> (compte les lignes d'une journée&nbsp;:
+    il devrait y en avoir 13).</p>
+    <p>Un capteur qui répète exactement la même valeur pendant six heures ne mesure plus&nbsp;: il
+    est bloqué. Une vraie mesure varie toujours un peu.</p></details>
+
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Les quatre anomalies</b>&nbsp;:</p>
+    <ol>
+      <li><b>Mercredi 11 h&nbsp;: −4,2 µg/m³.</b> Impossible&nbsp;: une concentration est une
+      quantité de matière, elle ne peut pas être négative. Sans doute une erreur du capteur au
+      moment d'un redémarrage.</li>
+      <li><b>Vendredi, de 9 h à 14 h&nbsp;: 23,7 six fois de suite.</b> Un <b>capteur bloqué</b>. Une
+      vraie mesure varie toujours un peu&nbsp;: six valeurs strictement identiques ne se produisent
+      pas naturellement.</li>
+      <li><b>Lundi 14 h&nbsp;: relevé manquant.</b> La journée ne compte que 12 lignes au lieu de 13.
+      On le <b>signale</b>, et on calcule sans lui — <b>on n'invente jamais une mesure</b>.</li>
+      <li><b>Dimanche 16 h&nbsp;: 251,0</b> alors que les heures voisines sont vers 25. Une
+      <b>virgule décalée</b>&nbsp;: 25,1 est devenu 251.</li>
+    </ol>
+    <p><b>Les moyennes</b>&nbsp;: <b>27,4 µg/m³</b> avec les valeurs fausses, <b>25,2 µg/m³</b> sans.
+    L'écart paraît petit — 2,2 µg/m³ — et il vient de <b>trois valeurs sur quatre-vingt-dix</b>.
+    C'est exactement pour cela qu'il est dangereux&nbsp;: <b>une moyenne calculée sur des données
+    sales n'a pas l'air fausse.</b> Rien ne signale l'erreur.</p>
+    <p><b>Ce qu'on fait des valeurs fausses</b>&nbsp;: on les <b>écarte du calcul</b>, mais on les
+    <b>garde dans le fichier</b> avec une note. Les effacer, c'est perdre la trace d'un
+    dysfonctionnement du capteur — et c'est justement ce qu'il faut signaler au technicien.</p>
+    <p class="meta">🔎 <b>Et pendant que tu triais, tu as peut-être vu autre chose&nbsp;:</b> les
+    <b>mardis et jeudis à 7 h</b>, la valeur monte à 67-69 µg/m³ contre 26-28 les autres jours. Ce
+    n'est pas une anomalie — c'est un <b>fait</b>, et il reviendra à la séance 5.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on <b>nettoie avant de calculer</b>. Une moyenne
+  calculée sur des données sales est fausse — et elle a l'air juste.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: effacer les valeurs fausses. On les écarte du
+  calcul, on ne les supprime pas&nbsp;: ce sont des traces de panne.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>🗂️ Activité 3 — Ranger, et retrouver <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> concevoir une arborescence et des noms qui se retrouvent ·
+  <b>Compétence</b> 5e_C1.4 · <b>Production</b> l'arborescence rangée, et trois règles de nommage</div>
+
+  <p>Trois semaines de relevés, et le dossier du professeur ressemble à ceci
+  (<code>arborescence_actuelle_simulee.csv</code>)&nbsp;: <b>14 entrées</b>, dont
+  <code>truc.csv</code>, <code>finalV2 (copie).csv</code>, <code>Nouveau dossier/</code> et
+  <code>capteur mardi PIC ATTENTION.csv</code>.</p>
+  <p style="color:var(--warn)">Personne ne retrouve rien — <b>y compris celui qui a rangé</b>. Dans
+  trois mois, ce sera pire.</p>
+
+  <h4>a) Ce qui rend un nom utilisable</h4>
+  <div class="assoc"><label for="a3_1">Pourquoi <code>capteur mardi PIC ATTENTION.csv</code> est-il un mauvais nom&nbsp;?</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>il dit ce qu'on en pense, pas ce que le fichier contient</option>
+      <option>il est trop court</option>
+      <option>il ne contient pas de chiffre</option>
+      <option>il est en français</option></select></div>
+  <div class="assoc"><label for="a3_2">Pourquoi dater en <code>2026-04-02</code> plutôt qu'en <code>02-04-2026</code>&nbsp;?</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>parce qu'ainsi le tri alphabétique donne l'ordre chronologique</option>
+      <option>parce que c'est la façon anglaise</option>
+      <option>parce que c'est plus court</option>
+      <option>parce que les ordinateurs refusent l'autre format</option></select></div>
+  <div class="assoc"><label for="a3_3">Pourquoi éviter les espaces, les accents et les majuscules&nbsp;?</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>pour qu'un nom survive au passage d'un ordinateur ou d'un site à un autre</option>
+      <option>pour taper plus vite</option>
+      <option>parce que c'est interdit</option>
+      <option>pour économiser de la place</option></select></div>
+  <div class="assoc"><label for="a3_4">Que faire de <code>finalV2 (copie).csv</code>, identique à <code>finalV2.csv</code>&nbsp;?</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>le supprimer : deux fichiers identiques créent un doute, pas une sécurité</option>
+      <option>le garder, on ne sait jamais</option>
+      <option>le renommer finalV3</option>
+      <option>le déplacer dans « à ranger »</option></select></div>
+  <div class="assoc"><label for="a3_5">Un dossier nommé <code>Nouveau dossier/</code> pose problème parce qu'il&nbsp;:</label>
+    <select id="a3_5"><option value="">— choisir —</option>
+      <option>ne dit rien de ce qu'il contient : son nom n'aide personne à chercher</option>
+      <option>est vide</option>
+      <option>a été créé par erreur</option>
+      <option>ne peut pas être renommé</option></select></div>
+
+  <h4>b) Ton arborescence</h4>
+  <div class="assoc">
+    <label for="a3_arbo">Propose l'arborescence rangée&nbsp;: un dossier racine, <b>3 à 5 sous-dossiers</b>, et les fichiers renommés. Une ligne par entrée, en décalant les sous-niveaux. Termine par <b>trois règles de nommage</b> que tu appliques.</label>
+    <textarea id="a3_arbo" style="min-height:170px" aria-label="L'arborescence rangée, puis trois règles de nommage"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — la structure est donnée</summary>
+    <ul>
+      <li>«&nbsp;station-air-chengdu/&nbsp;»</li>
+      <li>«&nbsp;&nbsp;&nbsp;1-____/&nbsp;» puis les fichiers qu'il contient, renommés</li>
+      <li>«&nbsp;&nbsp;&nbsp;2-____/&nbsp;» · «&nbsp;&nbsp;&nbsp;3-____/&nbsp;» · «&nbsp;&nbsp;&nbsp;4-____/&nbsp;»</li>
+      <li>«&nbsp;Règle 1&nbsp;: ____.&nbsp;» · «&nbsp;Règle 2&nbsp;: ____.&nbsp;» · «&nbsp;Règle 3&nbsp;: ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Regroupe par <b>nature</b>, pas par date&nbsp;: les relevés bruts d'un côté, ce que tu en as
+    tiré de l'autre, les documents reçus ailleurs, les photos à part.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Numérote tes dossiers (<code>1-</code>, <code>2-</code>…) si tu veux qu'ils s'affichent dans
+    l'ordre du travail et non par ordre alphabétique.</p>
+    <p>Et vérifie ton rangement par un test&nbsp;: «&nbsp;dans six mois, sauras-tu retrouver le
+    graphique de la semaine 11 <b>sans ouvrir aucun fichier</b>&nbsp;?&nbsp;» Si la réponse est non,
+    les noms ne sont pas assez parlants.</p></details>
+
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète — avec l'arborescence attendue</summary>
+    <figure class="fig">
+      <img src="Images/corrige_arborescence.svg"
+           alt="À gauche l'arborescence de départ en désordre : truc.csv, finalV2 (copie).csv, Nouveau dossier, IMG_4471.jpg, capteur mardi PIC ATTENTION.csv. À droite l'arborescence rangée : un dossier station-air-chengdu contenant 1-releves, 2-analyses, 3-documents et 4-photos, avec des fichiers nommés releves-air-2026-s10.csv, graphique-pm25-s10.png, notice-capteur-en.pdf, photo-capteur-installe-2026-03-05.jpg. En bas, quatre règles de nommage.">
+      <figcaption>Compare la <b>structure</b>, pas les mots&nbsp;: d'autres découpages se
+      défendent.</figcaption>
+    </figure>
+    <p><b>Quatre règles de nommage</b>&nbsp;:</p>
+    <ol>
+      <li>Dire <b>ce que c'est</b>, pas ce qu'on en pense. <code>releves-air-2026-s10</code>, pas
+      <code>PIC ATTENTION</code> — un jugement vieillit, un contenu non.</li>
+      <li>Dater en <b><code>2026-04-02</code></b>&nbsp;: dans cet ordre, le tri alphabétique donne
+      l'ordre chronologique. C'est la seule raison, et elle suffit.</li>
+      <li>Ni espaces, ni accents, ni majuscules&nbsp;: un nom doit survivre au passage d'un
+      ordinateur, d'un site ou d'une clé USB à l'autre.</li>
+      <li><b>Une seule version</b> conservée — la bonne. <code>finalV2 (copie)</code> était
+      identique&nbsp;; <code>sans titre.odt</code> ne contenait que deux lignes. Deux fichiers
+      identiques ne font pas une sécurité&nbsp;: ils font un doute.</li>
+    </ol>
+    <p><b>Le test qui tranche</b>&nbsp;: dans six mois, retrouver le graphique de la semaine 11
+    <b>sans ouvrir un seul fichier</b>. Avec <code>graphique(1).png</code>, impossible. Avec
+    <code>2-analyses/graphique-pm25-s11.png</code>, immédiat.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un nom de fichier s'écrit pour <b>celui qui
+  cherchera</b> — souvent soi-même, dans six mois, et sans souvenir.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: ranger par date de création plutôt que par
+  nature. On cherche presque toujours «&nbsp;le graphique&nbsp;», rarement «&nbsp;ce que j'ai fait
+  le 17 mars&nbsp;».</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<section class="card">
+  <h2>🔗 Activité 4 — Le chemin de la donnée <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> décrire le rôle d'un système d'information dans le partage ·
+  <b>Compétence</b> 5e_C1.3 · <b>Production</b> les quatre étages, et qui a le droit de faire quoi</div>
+
+  <p>Le capteur mesure. Le tableur calcule. Le graphique s'affiche sur l'ENT. Entre les deux, il y a
+  des fichiers, un serveur, des personnes et des droits&nbsp;: <b>c'est cela, un système
+  d'information.</b> Ce n'est pas une machine — c'est une <b>chaîne</b>.</p>
+
+  <div class="assoc"><label for="a4_1">Un système d'information, c'est&nbsp;:</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>l'ensemble des personnes, des outils et des règles qui font circuler l'information</option>
+      <option>un ordinateur puissant</option>
+      <option>un logiciel</option>
+      <option>le réseau internet</option></select></div>
+  <div class="assoc"><label for="a4_2">À quel étage la <b>donnée</b> devient-elle une <b>information</b>&nbsp;?</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>au traitement : c'est là qu'on trie, qu'on écarte et qu'on calcule</option>
+      <option>à la source, dès la mesure</option>
+      <option>au stockage</option>
+      <option>à la diffusion</option></select></div>
+  <div class="assoc"><label for="a4_3">Pourquoi la classe doit-elle travailler sur une <b>copie</b> du fichier&nbsp;?</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>pour que l'original reste intact et qu'on puisse toujours revenir en arrière</option>
+      <option>pour aller plus vite</option>
+      <option>pour économiser de la place</option>
+      <option>parce que le fichier original est protégé par un mot de passe</option></select></div>
+  <div class="assoc"><label for="a4_4">Une valeur fausse enregistrée à la source&nbsp;:</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>se propage à tous les étages tant que personne ne l'écarte</option>
+      <option>est corrigée automatiquement par le tableur</option>
+      <option>disparaît au stockage</option>
+      <option>n'a d'effet qu'à la diffusion</option></select></div>
+  <div class="assoc"><label for="a4_5">Écrire «&nbsp;qui a le droit de faire quoi&nbsp;» à chaque étage sert à&nbsp;:</label>
+    <select id="a4_5"><option value="">— choisir —</option>
+      <option>savoir qui peut modifier quoi, et donc où chercher quand quelque chose a changé</option>
+      <option>empêcher les élèves de travailler</option>
+      <option>respecter une obligation administrative</option>
+      <option>accélérer le système</option></select></div>
+
+  <h4>Ton schéma du système d'information</h4>
+  <div class="assoc">
+    <label for="a4_si">Décris le chemin de la donnée en <b>quatre étages</b>, de la source à la décision. Pour chacun&nbsp;: ce qui s'y passe, et <b>qui a le droit d'y écrire</b>. Une ligne par étage.</label>
+    <textarea id="a4_si" style="min-height:150px" aria-label="Les quatre étages du système d'information, avec qui a le droit d'écrire à chacun"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;1. La source&nbsp;: ____. Écrit ici&nbsp;: ____.&nbsp;»</li>
+      <li>«&nbsp;2. Le stockage&nbsp;: ____. Écrivent ici&nbsp;: ____. Lisent&nbsp;: ____.&nbsp;»</li>
+      <li>«&nbsp;3. Le traitement&nbsp;: ____. Écrit ici&nbsp;: ____, dans ____.&nbsp;»</li>
+      <li>«&nbsp;4. La diffusion et la décision&nbsp;: ____. Publie&nbsp;: ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Suis une seule valeur — celle du mardi 7 h — et demande-toi, à chaque endroit où elle passe&nbsp;:
+    <b>qu'est-ce qui lui arrive ici&nbsp;?</b></p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Les quatre étages se reconnaissent à ce qu'ils <b>font</b>&nbsp;: l'un <b>produit</b>, l'autre
+    <b>conserve</b>, le troisième <b>transforme</b>, le dernier <b>montre</b>.</p>
+    <p>Pour les droits, pose-toi la question à l'envers&nbsp;: <b>si cette valeur changeait, qui
+    aurait pu le faire&nbsp;?</b> La réponse te donne la liste.</p></details>
+
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète — avec le schéma attendu</summary>
+    <figure class="fig">
+      <img src="Images/corrige_systeme_information.svg"
+           alt="Schéma du système d'information en quatre étages : la source (le capteur produit une valeur par heure, personne n'y écrit), le stockage (un fichier déposé chaque soir, déposent le professeur et l'administrateur, lit toute la classe), le traitement (le tableur trie et calcule, la classe écrit dans une copie et jamais dans l'original) et la diffusion (le graphique publié sur l'ENT, publie le professeur seul, lisent tous y compris hors du collège).">
+      <figcaption>Les quatre étages, et la colonne qui compte&nbsp;: <b>qui a le droit de faire
+      quoi</b>.</figcaption>
+    </figure>
+    <p><b>1 · La source.</b> Le capteur produit une valeur par heure. Il <b>ne décide de rien</b>. Et
+    personne n'y écrit&nbsp;: une valeur fausse au départ le restera partout, tant qu'on ne l'écarte
+    pas.</p>
+    <p><b>2 · Le stockage.</b> Un fichier déposé chaque soir dans un dossier daté. Il <b>conserve</b>,
+    il ne juge pas. Déposent&nbsp;: le professeur et l'administrateur. Lit&nbsp;: toute la classe.</p>
+    <p><b>3 · Le traitement.</b> Le tableur trie, écarte, calcule&nbsp;: la <b>donnée devient une
+    information</b>. C'est ici que se font les choix — et donc ici qu'on peut se tromper. La classe
+    écrit dans une <b>copie</b>, jamais dans l'original.</p>
+    <p><b>4 · La diffusion, et la décision.</b> Le graphique sur l'ENT&nbsp;: élèves, professeurs,
+    direction, familles. On décide d'ouvrir ou non les fenêtres. Publie&nbsp;: le professeur seul —
+    parce qu'à partir d'ici, ce qui est publié échappe à celui qui l'a écrit.</p>
+    <p class="meta">Le rôle d'un système d'information n'est pas de <b>transporter</b> une donnée&nbsp;:
+    c'est de la rendre <b>utilisable par quelqu'un d'autre</b>. À chaque étage, elle change — et à
+    chaque étage, quelqu'un peut se tromper. C'est pourquoi on écrit qui a le droit de faire quoi.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un système d'information est une <b>chaîne de
+  personnes et d'outils</b>, pas une machine. Chaque étage transforme la donnée&nbsp;; chaque étage
+  a ses droits.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: croire qu'une donnée «&nbsp;circule&nbsp;» sans
+  changer. Elle est nettoyée, calculée, mise en forme — et à la fin, ce qu'on lit n'est plus ce que
+  le capteur a mesuré.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s5" role="tabpanel" aria-labelledby="tab-s5">
+<section class="card">
+  <h2>🔒 Activité 5 — Protéger, puis répondre <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
+  <div class="meta"><b>Objectif</b> sécuriser un environnement numérique, puis assumer une
+  publication · <b>Compétences</b> 5e_C1.5 et 5e_C1.6 · <b>Production</b> les mesures de sécurité, et
+  la décision de publication justifiée</div>
+
+  <p><b>Ce qui s'est passé.</b> Le fichier de relevés a été déposé sur l'ENT du collège pour que
+  chacun puisse travailler dessus. Trois jours plus tard, le professeur l'ouvre&nbsp;: <b>quatre
+  valeurs ont changé</b>, et la moyenne n'est plus la même. Personne n'a rien dit.</p>
+
+  <h4>a) Sécuriser (5e_C1.5)</h4>
+  <div class="assoc"><label for="a5_1">Le premier réflexe n'est pas d'accuser quelqu'un, mais de&nbsp;:</label>
+    <select id="a5_1"><option value="">— choisir —</option>
+      <option>regarder qui avait le droit d'écrire dans ce fichier</option>
+      <option>interroger toute la classe</option>
+      <option>supprimer le fichier</option>
+      <option>changer le mot de passe de l'ENT</option></select></div>
+  <div class="assoc"><label for="a5_2">Le fichier était déposé <b>en écriture pour tout le monde</b>. La règle qui manquait est&nbsp;:</label>
+    <select id="a5_2"><option value="">— choisir —</option>
+      <option>donner à chacun le droit minimal dont il a besoin : lire ne demande pas d'écrire</option>
+      <option>mettre un mot de passe plus long</option>
+      <option>interdire l'ENT aux élèves</option>
+      <option>sauvegarder plus souvent</option></select></div>
+  <div class="assoc"><label for="a5_3">Une <b>sauvegarde</b> de l'original aurait permis&nbsp;:</label>
+    <select id="a5_3"><option value="">— choisir —</option>
+      <option>de comparer, donc de savoir ce qui a changé et de revenir en arrière</option>
+      <option>d'empêcher la modification</option>
+      <option>d'identifier le coupable</option>
+      <option>de rendre le fichier illisible</option></select></div>
+  <div class="assoc"><label for="a5_4">La notice du capteur, en anglais, a été trouvée sur le site du fabricant. La republier sur l'ENT&nbsp;:</label>
+    <select id="a5_4"><option value="">— choisir —</option>
+      <option>demande de vérifier la licence, et de citer la source dans tous les cas</option>
+      <option>est libre : elle est sur internet</option>
+      <option>est interdite en toutes circonstances</option>
+      <option>ne pose de question que si elle est payante</option></select></div>
+  <div class="assoc"><label for="a5_5">Un mot de passe partagé entre tous les élèves de la classe&nbsp;:</label>
+    <select id="a5_5"><option value="">— choisir —</option>
+      <option>ne protège plus rien et empêche de savoir qui a fait quoi</option>
+      <option>est acceptable s'il est long</option>
+      <option>est plus sûr qu'un mot de passe par élève</option>
+      <option>est obligatoire en classe</option></select></div>
+
+  <div class="assoc">
+    <label for="a5_secu">Écris <b>trois mesures</b> qui auraient évité l'incident. Pour chacune&nbsp;: ce qu'on met en place, et <b>ce que ça empêche exactement</b>.</label>
+    <textarea id="a5_secu" style="min-height:120px" aria-label="Trois mesures de sécurité, et ce que chacune empêche"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Mesure 1&nbsp;: ____. Cela empêche ____.&nbsp;»</li>
+    <li>«&nbsp;Mesure 2&nbsp;: ____. Cela empêche ____.&nbsp;»</li>
+    <li>«&nbsp;Mesure 3&nbsp;: ____. Cela empêche ____.&nbsp;»</li></ul></details>
+
+  <h4>b) Répondre (5e_C1.6)</h4>
+  <p>Le fichier est restauré. En le nettoyant, la classe remarque enfin ce que le tri avait montré
+  dès la séance 2&nbsp;: <b>les mardis et jeudis à 7 h, la valeur monte à 67 µg/m³</b> contre 26 les
+  autres jours.</p>
+  <p>La classe cherche, et trouve&nbsp;: <b>la balayeuse mécanique passe dans la cour ces jours-là,
+  à cette heure-là.</b> Le fait est exact. Et dans ce collège, <b>une seule personne conduit cette
+  balayeuse.</b></p>
+
+  <figure class="fig">
+    <img src="Images/la_donnee_qui_designe.svg"
+         alt="Trois panneaux. La mesure : 67 µg/m³ les mardis et jeudis à 7 h contre 26 les autres jours, exacte et ne désignant personne. L'explication : la balayeuse mécanique passe ces jours-là, et une seule personne la conduit. La publication, avec trois options : A nomme l'agent, exacte et inacceptable ; B tait la cause, acceptable et inutile ; C nomme le nettoyage mécanique et propose de le décaler, exacte, utile, et désignant une organisation. Une bande conclut qu'on n'a pas le choix des faits mais de ce qu'on en publie.">
+    <figcaption>📄 <b>Document à lire.</b> Les trois publications sont <b>vraies</b>. C'est ce qui
+    rend le choix difficile — et c'est pour cela qu'il t'appartient.</figcaption>
+  </figure>
+
+  <div class="assoc"><label for="a5_6">La publication <b>A</b> nomme l'agent. Elle est&nbsp;:</label>
+    <select id="a5_6"><option value="">— choisir —</option>
+      <option>exacte et inacceptable : une mesure d'air devient une accusation contre une personne</option>
+      <option>fausse</option>
+      <option>acceptable, puisque c'est vrai</option>
+      <option>acceptable si l'agent est prévenu</option></select></div>
+  <div class="assoc"><label for="a5_7">La publication <b>B</b> tait la cause. Elle est&nbsp;:</label>
+    <select id="a5_7"><option value="">— choisir —</option>
+      <option>acceptable et inutile : personne ne peut agir sans savoir d'où vient le pic</option>
+      <option>la meilleure des trois</option>
+      <option>malhonnête</option>
+      <option>identique à la publication C</option></select></div>
+  <div class="assoc"><label for="a5_8">Même sans nommer l'agent, écrire «&nbsp;la personne qui passe la balayeuse le mardi&nbsp;»&nbsp;:</label>
+    <select id="a5_8"><option value="">— choisir —</option>
+      <option>le désigne quand même : dans un collège, une seule personne correspond</option>
+      <option>protège suffisamment son identité</option>
+      <option>est anonyme</option>
+      <option>ne concerne pas les données personnelles</option></select></div>
+  <div class="assoc"><label for="a5_9">Ce qui distingue la publication <b>C</b> des deux autres&nbsp;:</label>
+    <select id="a5_9"><option value="">— choisir —</option>
+      <option>elle désigne une organisation — l'horaire du nettoyage — et non une personne</option>
+      <option>elle est plus courte</option>
+      <option>elle ne donne pas de chiffre</option>
+      <option>elle évite de dire la vérité</option></select></div>
+
+  <div class="assoc">
+    <label for="a5_publication">Rédige la publication que <b>tu</b> mettrais sur l'ENT — trois ou quatre phrases. Puis explique <b>ce que tu as volontairement écarté</b>, et <b>pour protéger qui</b>.</label>
+    <textarea id="a5_publication" style="min-height:150px" aria-label="Ta publication, puis ce que tu as écarté et pour protéger qui"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Les relevés montrent que ____ les mardis et jeudis à 7 h.&nbsp;»</li>
+      <li>«&nbsp;Ce pic correspond à ____.&nbsp;»</li>
+      <li>«&nbsp;Nous proposons de ____.&nbsp;»</li>
+      <li>«&nbsp;J'ai volontairement écarté ____, pour protéger ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Écris d'abord ce que tu veux <b>obtenir</b> — que le nettoyage change d'heure. Puis demande-toi
+    le minimum d'informations nécessaire pour l'obtenir.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Une publication utile désigne <b>ce qu'il faut changer</b>, pas <b>qui a mal fait</b>. Ici,
+    rien n'a été mal fait&nbsp;: quelqu'un nettoie la cour, c'est son travail, et c'est l'<b>horaire</b>
+    qui pose problème.</p>
+    <p>Test avant de publier&nbsp;: <b>si cette personne lisait ta publication, pourrait-elle
+    continuer à travailler sereinement le lendemain&nbsp;?</b> Si la réponse est non, réécris.</p></details>
+
+  <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+  <p class="feedback" id="fb5" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Les trois mesures de sécurité</b> (d'autres sont recevables si elles disent ce qu'elles
+    empêchent)&nbsp;:</p>
+    <ol>
+      <li><b>Droits minimaux</b>&nbsp;: le fichier de référence est déposé <b>en lecture seule</b>&nbsp;;
+      seul le professeur peut y écrire. <i>Empêche</i> qu'une modification passe inaperçue, et rend
+      inutile de soupçonner qui que ce soit.</li>
+      <li><b>Copie de travail</b>&nbsp;: chaque groupe travaille sur sa propre copie. <i>Empêche</i>
+      que le travail des uns écrase celui des autres.</li>
+      <li><b>Sauvegarde datée</b> de l'original avant partage. <i>Empêche</i> la perte définitive&nbsp;:
+      on peut comparer, voir ce qui a changé, et revenir en arrière.</li>
+    </ol>
+    <p><b>Sur la notice du fabricant</b>&nbsp;: être trouvable sur internet ne veut pas dire libre de
+    droits. On <b>vérifie la licence</b>, et on <b>cite la source</b> dans tous les cas — même quand
+    la republication est autorisée.</p>
+    <p><b>Sur le mot de passe partagé</b>&nbsp;: il ne protège plus rien, et surtout il rend
+    impossible de savoir qui a fait quoi. Un compte par personne n'est pas une formalité&nbsp;: c'est
+    ce qui permet de <b>ne soupçonner personne</b>.</p>
+
+    <p style="margin-top:14px"><b>La publication.</b> Voici la version <b>C</b>, développée&nbsp;:</p>
+    <blockquote style="border-left:4px solid var(--ok);margin:8px 0;padding:2px 14px">
+      «&nbsp;Les relevés du capteur de la cour montrent une concentration de particules
+      <b>2,5 fois plus élevée</b> les mardis et jeudis à 7 h (67 µg/m³ contre 26 les autres jours).
+      Ce pic correspond au <b>nettoyage mécanique de la cour</b>, programmé ces jours-là à cette
+      heure. Nous proposons de <b>décaler ce nettoyage</b> avant l'arrivée des élèves, ou de
+      l'effectuer en fin de journée.&nbsp;»
+    </blockquote>
+    <p><b>Ce qui a été écarté</b>&nbsp;: le nom de l'agent, sa photo, et toute formule qui permettrait
+    de le reconnaître — y compris «&nbsp;la personne qui passe la balayeuse&nbsp;», qui dans un
+    collège ne désigne qu'une personne. <b>Pour protéger</b> quelqu'un qui n'a rien fait de mal&nbsp;:
+    il fait son travail, à l'heure qu'on lui a donnée.</p>
+    <p><b>Et ce qui n'a pas été écarté</b>&nbsp;: le chiffre, la cause et la proposition. Sans eux, la
+    publication serait honnête et <b>inutile</b> — et l'air de la cour resterait le même.</p>
+    <p class="meta">🧭 <b>Le test qui tranche</b>&nbsp;: si cette personne lisait ta publication,
+    pourrait-elle continuer à travailler sereinement le lendemain&nbsp;? Avec la version C, oui&nbsp;:
+    ce qui est mis en cause est un <b>horaire</b>, pas quelqu'un.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on n'a pas le choix des faits, on a le choix de
+  <b>ce qu'on en publie</b>. La question n'est pas «&nbsp;est-ce vrai&nbsp;?&nbsp;» mais
+  «&nbsp;<b>qui cela désigne, et pour quel effet&nbsp;?</b>&nbsp;»</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: croire qu'une information est anonyme parce
+  qu'elle ne contient pas de nom. Dans un petit groupe, une fonction, un horaire ou une habitude
+  suffisent à désigner quelqu'un.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tes trois mesures disent ce qu'elles empêchent, et ta
+  publication contient le chiffre, la cause et une proposition — sans permettre de reconnaître
+  quiconque.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel <span style="color:var(--sub);font-size:.8em">(~10 min)</span></h2>
+  <p>💭 <b>Rappel de ton hypothèse de départ&nbsp;:</b></p>
+  <p id="rappelHyp" style="display:none;color:var(--warn)"><span id="hypRappelTxt"></span></p>
+  <div class="assoc"><label for="hyp_retour">Combien d'étapes avais-tu trouvées entre le capteur et la décision&nbsp;? Lesquelles t'avaient échappé&nbsp;?</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'avais trouvé ____ étapes sur six.&nbsp;»</li>
+    <li>«&nbsp;Celles auxquelles je n'avais pas pensé&nbsp;: ____.&nbsp;»</li>
+    <li>«&nbsp;Celle qui m'a le plus surpris·e&nbsp;: ____, parce que ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
+    <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai appris qu'une moyenne calculée sur des données sales ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'un nom de fichier s'écrit pour ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'une information exacte peut ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan2">Ce que je dois encore revoir&nbsp;:</label>
+    <textarea id="bilan2" aria-label="Ce que je dois encore revoir"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li></ul></details>
+
+  <h3>🧭 Comment j'ai travaillé</h3>
+  <p class="meta">Ces trois questions ne portent pas sur ce que tu as trouvé, mais sur <b>comment</b>
+  tu t'y es pris. Elles sont reprises de la séquence précédente sur ce thème, où elles étaient déjà
+  la meilleure idée.</p>
+  <div class="assoc"><label for="meta1">Qu'ai-je réussi <b>sans aide</b>&nbsp;? Qu'est-ce qui m'a demandé le plus d'efforts&nbsp;?</label>
+    <textarea id="meta1" aria-label="Ce que j'ai réussi sans aide, et ce qui m'a demandé des efforts"></textarea></div>
+  <div class="assoc"><label for="meta2">Quelle <b>stratégie</b> m'a le plus aidé·e&nbsp;? (par exemple&nbsp;: trier d'abord, puis calculer)</label>
+    <textarea id="meta2" aria-label="La stratégie qui m'a le plus aidé"></textarea></div>
+  <div class="assoc"><label for="meta3">Que ferais-je <b>différemment</b> la prochaine fois, pour aller plus vite et être plus juste&nbsp;?</label>
+    <textarea id="meta3" aria-label="Ce que je ferais différemment la prochaine fois"></textarea></div>
+
+  <h3>Je me positionne</h3>
+  <div class="assoc"><label for="pos1">5e_C1.1 · C1.2 — collecter, trier, analyser · comparer des principes&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je calcule sans regarder si les données sont propres</option>
+      <option>🟠 Maîtrise fragile — je repère les anomalies avec de l'aide</option>
+      <option>🟢 Maîtrise satisfaisante — je nettoie avant de calculer, et je compare des principes</option>
+      <option>⭐ Très bonne maîtrise — je dis aussi ce que je perds en choisissant</option></select></div>
+  <div class="assoc"><label for="pos2">5e_C1.3 · C1.4 — systèmes d'information · ranger et retrouver&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je range au hasard et je ne retrouve rien</option>
+      <option>🟠 Maîtrise fragile — je range, mais mes noms ne parlent qu'à moi</option>
+      <option>🟢 Maîtrise satisfaisante — mes noms se retrouvent, et je sais décrire le chemin d'une donnée</option>
+      <option>⭐ Très bonne maîtrise — je sais dire qui a le droit de faire quoi à chaque étape</option></select></div>
+  <div class="assoc"><label for="pos3">5e_C1.5 · C1.6 — sécuriser · assumer une publication&nbsp;:</label>
+    <select id="pos3"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je publie ce que je trouve, sans y penser</option>
+      <option>🟠 Maîtrise fragile — je sais qu'il faut faire attention, sans savoir à quoi</option>
+      <option>🟢 Maîtrise satisfaisante — je protège les données et je réfléchis avant de publier</option>
+      <option>⭐ Très bonne maîtrise — je sais dire qui une information désigne, même sans nom</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>13 illustrées</b> — les quatre documents du dossier y reviennent, chacun sous un angle différent, et chaque réponse
+  fausse y est expliquée. Elles se répartissent sur les <b>six codes</b>&nbsp;:</p>
+  <ul>
+    <li><b>5e_C1.1</b> collecter, trier, analyser — 6 questions <span class="meta">(séance 2)</span></li>
+    <li><b>5e_C1.2</b> comparer des principes — 5 questions <span class="meta">(séance 1)</span></li>
+    <li><b>5e_C1.3</b> systèmes d'information — 5 questions <span class="meta">(séance 4)</span></li>
+    <li><b>5e_C1.4</b> ranger et retrouver — 5 questions <span class="meta">(séance 3)</span></li>
+    <li><b>5e_C1.5</b> sécuriser — 5 questions <span class="meta">(séance 5)</span></li>
+    <li><b>5e_C1.6</b> responsabilité — 4 questions <span class="meta">(séance 5)</span></li>
+  </ul>
+  <p id="qcmPortee" class="meta">Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un
+  parcours court, pour te tester sans être submergé·e.</p>
+  <p style="text-align:center"><a class="btn qcm" id="lienQcm" href="qcm_5e_C1_chengdu_air.html"
+     title="Ouvre le QCM d'entraînement dans la même fenêtre. Tes réponses y sont enregistrées séparément de celles de la séquence.">🌫️ Lancer le QCM de la séquence</a></p>
+  <p class="meta">Dans le QCM, tu peux à tout moment choisir&nbsp;: <b>parcours complet</b> (les 30),
+  <b>10 questions</b>, <b>révision ciblée</b> (une compétence au choix), ou <b>uniquement mes
+  erreurs</b>. Avec six compétences, la révision ciblée est particulièrement utile.</p>
+</section>
+
+<section class="card approfondissement">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>1.</b> Cherche une <b>donnée publique</b> sur ta commune — qualité de l'air, pluviométrie,
+  fréquentation d'un équipement. Combien de temps te faut-il pour la trouver&nbsp;? Est-elle
+  téléchargeable, ou seulement affichée&nbsp;?</p>
+  <p><b>2.</b> Range ton propre dossier de travail (celui du collège, ou celui de ta clé USB) selon
+  les quatre règles de nommage. Compte les fichiers que tu supprimes.</p>
+  <p><b>3.</b> Trouve, dans l'actualité ou autour de toi, un cas où une donnée <b>exacte</b> a
+  désigné quelqu'un. Qu'aurait-il fallu publier à la place&nbsp;?</p>
+
+  <details class="correction"><summary>📖 Corrigé du Bonus — un exemple entièrement traité</summary>
+    <p><b>1. Une donnée publique sur la commune.</b> Exemple pris&nbsp;: la qualité de l'air en
+    Martinique, publiée par l'association agréée de surveillance (Gwad'Air / Madininair selon les
+    territoires). <b>Sept minutes</b> pour trouver la page, et une découverte&nbsp;: la valeur du
+    jour s'affiche, mais l'historique n'est téléchargeable qu'en demandant.</p>
+    <p><b>Ce qu'on apprend en cherchant</b>&nbsp;: une donnée «&nbsp;publique&nbsp;» n'est pas
+    toujours <b>réutilisable</b>. Voir un chiffre et pouvoir le traiter sont deux choses
+    différentes — et c'est exactement la distinction entre <b>diffusion</b> et <b>partage</b> vue à
+    la séance 4.</p>
+    <p><b>2. Le rangement de mon dossier.</b> 47 fichiers au départ. Après application des quatre
+    règles&nbsp;: 31 fichiers, dans 4 dossiers. <b>16 supprimés</b> — dont neuf doublons
+    (<code>DM (1).odt</code>, <code>DM (2).odt</code>…), quatre brouillons vides, et trois captures
+    d'écran dont je ne savais plus à quoi elles servaient.</p>
+    <p><b>Ce qui surprend</b>&nbsp;: le tiers du dossier ne servait à rien, et il n'était pas
+    identifiable avant qu'on regarde chaque fichier un par un. C'est le prix des mauvais noms.</p>
+    <p><b>3. Une donnée exacte qui désigne quelqu'un.</b> Exemple pris&nbsp;: un collège publie le
+    <b>taux de réussite au DNB par classe</b>. Les chiffres sont exacts. Mais avec une seule classe
+    de 3e B, «&nbsp;la 3e B a 62 %&nbsp;» désigne aussi <b>le professeur principal de la 3e B</b>, et
+    trente élèves reconnaissables par leurs camarades.</p>
+    <p><b>Ce qu'il aurait fallu publier</b>&nbsp;: le taux <b>de l'établissement</b>, et son évolution
+    sur trois ans. Cela répond à la vraie question — l'établissement progresse-t-il&nbsp;? — sans
+    désigner ni une classe, ni un professeur, ni des élèves.</p>
+    <p class="meta">C'est le même raisonnement que pour la balayeuse, sur un autre objet&nbsp;: la
+    donnée est exacte, l'échelle de publication est ce qui décide qui elle désigne. <b>Changer
+    l'échelle, ce n'est pas mentir&nbsp;: c'est choisir ce que la donnée doit servir.</b></p>
+  </details>
+</section>
+</div>
+</main>
+<footer class="page">
+  <p>Séquence 5e_C1.1 à C1.6 — Thème 1 · Technologie cycle 4 (2024).
+  Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
+</footer>
+<script>
+"use strict";
+const KEY="seq_5e_C1_chengdu";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Outils de lecture des productions écrites ══════ */
+/* Règle n°49 : on teste ce qui est RENDU. Ces fonctions lisent la production de
+   l'élève, pas la consigne — et chaque garde est écrite pour ne pas se laisser
+   abuser par un chiffre pris dans un autre (voir l'incident des « 0 % » du 3e_C2). */
+const bas = t => t.toLowerCase()
+  .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[’']/g,"'");
+const lignes = t => t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+/* un nombre isolé : ni précédé ni suivi d'un autre chiffre. La virgule et le point
+   décimal sont acceptés indifféremment — l'élève tape ce que son tableur affiche. */
+const nombre = (t, ent, dec) =>
+  new RegExp("(?:^|[^0-9,.])"+ent+"[.,]"+dec+"(?![0-9])").test(t);
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"ce que l'objet doit faire, dit par un verbe à l'infinitif",
+               be_2:"=MOYENNE(A2:A8)",
+               be_3:"toute information qui permet de reconnaître une personne, même indirectement"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🌬️ Tes trois outils sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+
+  /* Activité 1 — une fonction, trois principes */
+  1: function(){
+    const att={a1_1:"une fonction technique : elle dit ce qu'il faut faire, pas comment",
+               a1_2:"un principe : le phénomène physique employé pour remplir la fonction",
+               a1_3:"une fonction n'impose pas sa solution : il y a toujours plusieurs chemins",
+               a1_4:"aucune alerte possible le matin : on saurait toujours la veille",
+               a1_5:"elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège",
+               a1_6:"la mesure dérive lentement sans que rien ne le signale"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_choix"), b = bas(t);
+    /* le principe retenu doit être nommé — par son numéro ou par son nom */
+    const principe = /\bp\s?[123]\b|diffusion optique|gravim|attenuation|beta/.test(b);
+    /* deux raisons tirées du tableau : au moins deux critères chiffrés ou nommés */
+    const criteres = [/\d+\s*(?:s\b|seconde|h\b|heure)/, /±?\s*\d+\s*%|incertitude/, /\d+\s*(?:€|euro)/,
+                      /\d+[.,]?\d*\s*w\b|consomm/, /entretien|entretenir|encrasse|filtre/]
+                       .filter(r=>r.test(b)).length;
+    /* le troisième point est le cœur de l'activité : choisir, c'est perdre quelque chose */
+    const perte = /perd|perte|renonc|j'accepte|accepte de|sacrifi|en echange|au prix de|inconvenient/.test(b);
+    const complet = principe && criteres >= 2 && perte && t.trim().length >= 150;
+    let manque = "";
+    if(!complet){
+      manque = " Ta défense doit dire QUEL principe, DEUX raisons chiffrées prises dans le tableau, et CE QUE TU ACCEPTES DE PERDRE.";
+      if(principe && criteres >= 2 && !perte)
+        manque = " Il manque le troisième point, et c'est le plus important : que perds-tu en choisissant celui-là ? Un choix qui ne coûte rien n'est pas un choix.";
+    }
+    return {score:ok,total:6,valide: ok>=5 && complet, extra: manque};
+  },
+
+  /* Activité 2 — collecter, trier, analyser */
+  2: function(){
+    const att={a2_1:"impossible : une concentration ne peut pas être négative",
+               a2_2:"un capteur bloqué : une vraie mesure varie toujours un peu",
+               a2_3:"très probablement une virgule décalée : 25,1 devenu 251",
+               a2_4:"le signaler et calculer sans lui : on n'invente pas une mesure",
+               a2_5:"les écarter du calcul, mais les garder dans le fichier avec une note"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a2_anomalies"), b = bas(t);
+    /* les quatre anomalies plantées dans le fichier, chacune reconnaissable */
+    const negative = /-\s?4[.,]2|negativ|impossible/.test(b);
+    const bloque   = /23[.,]7|bloqu|identique|fige|six fois|6 fois/.test(b);
+    const manquant = /manqu|absent|trou|vide/.test(b);
+    const virgule  = /251|virgule/.test(b);
+    const trouvees = [negative, bloque, manquant, virgule].filter(Boolean).length;
+    /* les deux moyennes : avec les valeurs fausses, puis sans */
+    const avec = nombre(b, "27", "4");
+    const sans = nombre(b, "25", "2");
+    const complet = lignes(t) >= 4 && trouvees === 4 && avec && sans;
+    let manque = "";
+    if(trouvees < 4)
+      manque = " Tu as repéré "+trouvees+" anomalie(s) sur 4. Trie la colonne des mesures du plus petit au plus grand : les valeurs impossibles se rangent aux deux bouts, et le capteur bloqué se voit à ses valeurs toutes identiques.";
+    else if(!avec || !sans)
+      manque = " Il manque LES DEUX moyennes : celle qui inclut les valeurs fausses, et celle qui les écarte. C'est l'écart entre les deux qui dit combien une donnée sale coûte.";
+    else if(lignes(t) < 4)
+      manque = " Écris une anomalie par ligne, avec son jour et son heure.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 3 — ranger, et retrouver */
+  3: function(){
+    const att={a3_1:"il dit ce qu'on en pense, pas ce que le fichier contient",
+               a3_2:"parce qu'ainsi le tri alphabétique donne l'ordre chronologique",
+               a3_3:"pour qu'un nom survive au passage d'un ordinateur ou d'un site à un autre",
+               a3_4:"le supprimer : deux fichiers identiques créent un doute, pas une sécurité",
+               a3_5:"ne dit rien de ce qu'il contient : son nom n'aide personne à chercher"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_arbo"), b = bas(t);
+    /* une arborescence se reconnaît à ses dossiers : 3 à 5 sous-dossiers attendus */
+    const dossiers = (b.match(/\//g)||[]).length;
+    /* aucun nom proposé ne doit reprendre les défauts qu'on vient de nommer */
+    const propre = !/nouveau dossier|sans titre|truc|final/.test(b);
+    const date = /20\d\d-\d\d-\d\d|20\d\d-\d\d|20\d\d/.test(b);
+    /* trois règles de nommage, reconnaissables à ce qu'elles interdisent ou imposent */
+    const regles = [/espace/, /accent/, /majuscule/, /date|chronolog/, /version/,
+                    /ce que c'est|contenu|decrit|decrire/].filter(r=>r.test(b)).length;
+    const complet = lignes(t) >= 8 && dossiers >= 4 && propre && date && regles >= 3;
+    let manque = "";
+    if(!complet){
+      manque = " Il faut UN dossier racine, 3 à 5 sous-dossiers (termine-les par « / »), les fichiers renommés, puis TROIS règles de nommage.";
+      if(dossiers >= 4 && !propre)
+        manque = " Ton arborescence est bien construite, mais elle garde des noms du départ (« truc », « final », « Nouveau dossier », « sans titre »). Ranger sans renommer ne sert à rien : le fichier est mieux placé, il reste introuvable.";
+      else if(dossiers >= 4 && propre && !date)
+        manque = " Il manque les dates dans tes noms de fichiers. Sans date au format 2026-04-02, le tri alphabétique ne donne plus l'ordre chronologique — et c'est tout l'intérêt.";
+      else if(regles < 3)
+        manque = " Termine par TROIS règles de nommage : ce qu'un nom doit dire, comment on y met la date, et ce qu'on n'y met jamais.";
+    }
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 4 — le chemin de la donnée */
+  4: function(){
+    const att={a4_1:"l'ensemble des personnes, des outils et des règles qui font circuler l'information",
+               a4_2:"au traitement : c'est là qu'on trie, qu'on écarte et qu'on calcule",
+               a4_3:"pour que l'original reste intact et qu'on puisse toujours revenir en arrière",
+               a4_4:"se propage à tous les étages tant que personne ne l'écarte",
+               a4_5:"savoir qui peut modifier quoi, et donc où chercher quand quelque chose a changé"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a4_si"), b = bas(t);
+    /* les quatre étages, chacun reconnaissable à ce qui s'y passe */
+    const source     = /capteur|source|mesure/.test(b);
+    const stockage   = /stock|fichier|serveur|enregistr|conserv/.test(b);
+    const traitement = /trait|tableur|trie|calcul|moyenne/.test(b);
+    const diffusion  = /diffus|publi|ent\b|graphique|decision|decide/.test(b);
+    const etages = [source, stockage, traitement, diffusion].filter(Boolean).length;
+    /* et pour chacun, qui a le droit d'y écrire — c'est la moitié de la consigne */
+    const droits = (b.match(/ecrit|ecrire|depose|droit|personne n'|professeur|administrateur|classe/g)||[]).length;
+    const complet = lignes(t) >= 4 && etages === 4 && droits >= 3 && t.trim().length >= 200;
+    let manque = "";
+    if(etages < 4)
+      manque = " Il manque des étages : on attend LES QUATRE, de la source à la décision — le capteur, le stockage, le traitement, la diffusion.";
+    else if(droits < 3)
+      manque = " Les quatre étages y sont, mais la moitié de la consigne manque : à chaque étage, dis QUI A LE DROIT D'Y ÉCRIRE. Un système d'information, ce n'est pas seulement un chemin — c'est aussi une liste de permissions.";
+    else if(!complet)
+      manque = " Écris une ligne par étage, un peu plus développée.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 5 — protéger, puis répondre */
+  5: function(){
+    const att={a5_1:"regarder qui avait le droit d'écrire dans ce fichier",
+               a5_2:"donner à chacun le droit minimal dont il a besoin : lire ne demande pas d'écrire",
+               a5_3:"de comparer, donc de savoir ce qui a changé et de revenir en arrière",
+               a5_4:"demande de vérifier la licence, et de citer la source dans tous les cas",
+               a5_5:"ne protège plus rien et empêche de savoir qui a fait quoi",
+               a5_6:"exacte et inacceptable : une mesure d'air devient une accusation contre une personne",
+               a5_7:"acceptable et inutile : personne ne peut agir sans savoir d'où vient le pic",
+               a5_8:"le désigne quand même : dans un collège, une seule personne correspond",
+               a5_9:"elle désigne une organisation — l'horaire du nettoyage — et non une personne"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+
+    /* a) les trois mesures de sécurité : chacune doit dire ce qu'elle EMPÊCHE */
+    const s = val("a5_secu"), bs = bas(s);
+    const empeche = (bs.match(/empech|evite|interdit|rend impossible|protege de/g)||[]).length;
+    const secuOk = lignes(s) >= 3 && empeche >= 3 && s.trim().length >= 140;
+
+    /* b) la publication : elle doit être écrite, ET dire ce qu'elle écarte, ET pour qui */
+    const p = val("a5_publication"), bp = bas(p);
+    const fait    = /mardi|jeudi|7 h|7h|nettoyage|balayeuse|pic|concentration/.test(bp);
+    const ecarte  = /ecart|laisse de cote|pas nomme|sans nommer|n'ai pas|omis|retire|tait/.test(bp);
+    const protege = /proteger|agent|personne|quelqu'un|identifi|nomme/.test(bp);
+    const pubOk = fait && ecarte && protege && p.trim().length >= 220;
+
+    const complet = secuOk && pubOk;
+    let manque = "";
+    if(!secuOk)
+      manque = " Commence par les trois mesures : pour chacune, il faut ce qu'on met en place ET ce que ça empêche exactement. Une mesure dont on ne sait pas ce qu'elle empêche ne protège de rien.";
+    else if(!fait)
+      manque = " Ta publication doit dire le fait mesuré — quand le pic a lieu, et à quoi il correspond.";
+    else if(!ecarte || !protege)
+      manque = " Ta publication est écrite, mais il manque le plus important : ce que tu as VOLONTAIREMENT écarté, et POUR PROTÉGER QUI. On n'a pas le choix des faits ; on a le choix de ce qu'on en publie.";
+    return {score:ok,total:9,valide: ok>=7 && complet, extra: manque};
+  }
+};
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle contient le corrigé complet, à comparer au tien."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3], s4:[4], s5:[5]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches(); majQcm();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Une fonction, trois principes", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses trois outils (sans note)"},
+    {n:1, libelle:"Choisir un principe de mesure, et dire ce qu'on accepte de perdre"}]},
+  s2:{titre:"Séance 2 — Collecter, trier, analyser", taches:[
+    {n:2, libelle:"Trouver les quatre anomalies, puis la moyenne avec et sans"}]},
+  s3:{titre:"Séance 3 — Ranger, et retrouver", taches:[
+    {n:3, libelle:"Proposer une arborescence rangée et trois règles de nommage"}]},
+  s4:{titre:"Séance 4 — Le chemin de la donnée", taches:[
+    {n:4, libelle:"Décrire les quatre étages, et qui a le droit d'écrire à chacun"}]},
+  s5:{titre:"Séance 5 — Protéger, puis répondre", taches:[
+    {n:5, libelle:"Trois mesures de sécurité, puis rédiger la publication"}]}
+};
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°45 — l'entraînement s'ouvre sur ce qui a été fait ══════ */
+/* Un seul bouton QCM (règle n°4) ; c'est sa CIBLE qui devient contextuelle.
+   Cette séquence porte SIX codes : dès qu'une partie seulement est validée, le
+   bouton ouvre une révision ciblée sur les codes effectivement travaillés — le
+   QCM complet ne se propose qu'une fois les cinq activités faites. */
+const CODES_PAR_ACT = {1:"C1.2", 2:"C1.1", 3:"C1.4", 4:"C1.3", 5:"C1.5,C1.6"};
+function majQcm(){
+  const lien=$("lienQcm"), portee=$("qcmPortee");
+  if(!lien || !portee) return;
+  const v=window.__valid||{};
+  const faites=[1,2,3,4,5].filter(k=>v[k]);
+  const fichier="qcm_5e_C1.1-C1.6_chengdu.html";
+  if(faites.length===0){
+    lien.href=fichier+"#depart=court";
+    lien.textContent="🌬️ Commencer par 10 questions";
+    portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un "+
+      "<b>parcours court de 10 questions</b>, pour te tester sans être submergé·e. "+
+      "Les 30 restent accessibles d'un clic dans le QCM.";
+  } else if(faites.length < 5){
+    const codes=faites.map(k=>CODES_PAR_ACT[k]).join(",");
+    lien.href=fichier+"#codes="+codes;
+    lien.textContent="🌬️ Réviser ce que j'ai déjà travaillé ("+codes.split(",").length+" compétence(s))";
+    portee.innerHTML="Tu as validé <b>"+faites.length+" activité(s) sur 5</b>. Le bouton ouvre les "+
+      "questions qui portent sur <b>"+codes.replace(/,/g,", ")+"</b> — celles-là seulement&nbsp;: "+
+      "on ne s'entraîne pas sur ce qu'on n'a pas encore fait. Le parcours complet t'attend à la fin.";
+  } else {
+    lien.href=fichier;
+    lien.textContent="🌬️ Lancer le QCM complet (30 questions)";
+    portee.innerHTML="Tu as terminé les cinq activités&nbsp;: <b>les six compétences ont été "+
+      "travaillées</b>, le parcours complet est maintenant à ta portée.";
+  }
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>

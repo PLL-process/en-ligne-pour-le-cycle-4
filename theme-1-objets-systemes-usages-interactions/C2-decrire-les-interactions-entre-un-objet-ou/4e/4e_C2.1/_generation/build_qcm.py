@@ -149,6 +149,16 @@ def construire(gabarit: str, sortie: str) -> None:
     if reste:
         raise SystemExit("Restes du gabarit 3e non remplacés : %s" % sorted(set(reste)))
 
+
+    # Le gabarit vient d'un lot de Thème 2 : son <h1> et son sous-titre AFFICHÉS
+    # parlaient de « SOS serre » et de Packet Tracer. Six QCM de Thème 1 les ont
+    # portés jusqu'en production, parce que les générateurs remplaçaient le
+    # <title> de l'onglet — que personne ne lit — et pas le titre de la page.
+    # Ce garde-fou refuse désormais toute trace du lot d'origine.
+    for _reste in ("SOS serre", "Packet Tracer", "Adresse IP fixe"):
+        if _reste in s:
+            raise SystemExit("Reste du gabarit d'origine non remplacé : %r" % _reste)
+
     # Écriture seulement une fois tout le travail fait : ouvrir en 'w' tronque
     # immédiatement, et une erreur survenue après ce point détruirait le fichier.
     open(sortie, "w", encoding="utf-8").write(s)
