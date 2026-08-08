@@ -151,6 +151,33 @@ OVERLAY = {
         accessibilite="À vérifier.",
         medias="Affiche Delagrave : droit de rediffusion non établi.",
     ),
+    "3e_C2.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Pékin — trois destinataires, trois représentations » (08/08/2026) : "
+                "3 séances de 55 min, 4 activités + billet sans note, 40 observations, 8 verbatims "
+                "et 3 incidents simulés, 4 SVG originaux dont DEUX corrigés, QCM de 30 questions "
+                "dont 5 illustrées, 2 synthèses, fiche, matrice de 33 notions, 54 tests Playwright "
+                "tous passés. TROISIÈME ET DERNIER LOT DU C2 : la compétence est désormais "
+                "couverte sur les trois niveaux, et la marche complète est écrite À L'ÉLÈVE.",
+        anomalies="Aucune : 8 règles mécanisables au vert. AMBIGUÏTÉ DU RÉFÉRENTIEL DÉCLARÉE : "
+                  "« à l'aide de modes de représentation CHOISIS » ne dit pas par qui. La séquence "
+                  "retient « par l'élève » et le dit comme une lecture, à l'élève comme au "
+                  "professeur (règle n°42, troisième volet). Les six modes étant tous traités et "
+                  "tous corrigés, la séquence fonctionne dans les deux lectures : la fiche décrit "
+                  "la variante où l'enseignant impose le mode et garde la justification. "
+                  "Données simulées annoncées comme telles, effectifs d'abandon fixés et non "
+                  "tirés au sort.",
+        accessibilite="Champs étiquetés, alternatives longues sur les quatre figures, 8 versions "
+                      "étayées pour 8 productions écrites, infobulle sur chaque badge et chaque "
+                      "bouton PLUS une légende en clair, vocabulaire des six modes travaillé avant "
+                      "tout choix, aucune ressource distante (n°40). Non vérifiés donc non "
+                      "déclarés conformes : impression A4, lecteur d'écran, zoom 200 %, mobile.",
+        medias="4 SVG originaux CC0, dont DEUX corrigés présents seulement dans les corrections "
+               "repliées : la séquence offre six modes de représentation, il fallait six corrigés "
+               "(règle n°43 précisée le jour même — un choix offert engage un corrigé par option).",
+    ),
     # ── Lot Thème 1 (Fable) : îlot 5e_C2 « Shenzhen, la station de vélos » ──
     "5e_C2.1": dict(
         statut="COMPLET ET VALIDABLE",

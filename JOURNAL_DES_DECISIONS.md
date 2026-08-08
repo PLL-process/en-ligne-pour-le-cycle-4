@@ -3030,3 +3030,82 @@ imposer garde l'exercice de justification intact&nbsp;; celui qui laisse choisir
 n'importe quelle réponse.
 
 Ce sera noté à la fiche pédagogique comme une **variante d'usage**, pas comme une réserve.
+
+---
+
+## 8 août 2026 — Lot Pékin 3e_C2.1 : la compétence C2 est achevée sur les trois niveaux
+
+Dernier lot du C2. Avec lui, la compétence est couverte en 5e, en 4e et en 3e — et c'est le
+**premier lot du dépôt à achever une compétence dont les deux autres niveaux existaient déjà**.
+
+### La marche est écrite à l'élève
+
+Puisque le lot termine, la progression complète devait se **voir**, et pas seulement dans la fiche
+du professeur. La séquence porte donc un tableau, adressé à l'élève&nbsp;: en 5e tu regardais
+l'objet **du dehors**&nbsp;; en 4e tu partais de **ce que vivent les gens**, mais l'itinéraire
+t'était donné&nbsp;; en 3e tu décides de **la forme**, et tu la **défends**.
+
+Trois ans pour apprendre une chose difficile&nbsp;: un objet technique ne se décrit pas seulement
+par ce qu'il est, mais par ce qu'il fait vivre — et par la façon dont on le raconte à ceux qui
+peuvent le changer. L'élève a le droit de voir ce chemin.
+
+### Le mot «&nbsp;choisis&nbsp;», et sa contrainte
+
+La difficulté propre à la 3e tient dans un mot. Et **choisir n'est un vrai geste que s'il existe une
+contrainte** qui rende un choix meilleur qu'un autre&nbsp;: sans contrainte, l'élève prend le mode
+qu'il préfère, et il a raison — il n'y a rien à justifier.
+
+La contrainte retenue est le **destinataire**&nbsp;: le technicien, l'élue qui vote le budget,
+l'usager debout dans la station. Trois temps, trois vocabulaires, trois pouvoirs. Le même constat ne
+se dit pas de la même façon à ces trois-là.
+
+D'où la thèse du lot, qui est aussi son titre implicite&nbsp;: **un mode n'est jamais bon en soi, il
+est bon pour quelqu'un.** Et son corollaire méthodique&nbsp;: **on justifie un mode par son angle
+mort, pas par son point fort** — tous ont un point fort, donc l'invoquer ne désigne personne.
+
+### Ce que les données produisent seules
+
+«&nbsp;Un usager sur cinq abandonne&nbsp;» est exact — 8 sur 40. Mais **0&nbsp;% chez les
+habitués**, 43&nbsp;% chez les touristes, 50&nbsp;% chez les personnes âgées. Et 77&nbsp;s de durée
+moyenne quand l'habitué met 41&nbsp;s et la personne âgée 123&nbsp;s.
+
+La phrase que la séquence fait écrire&nbsp;: **ceux qui décident sont presque toujours des habitués,
+et les habitués réussissent.** C'est pour cela qu'un problème d'usage reste invisible — et ce n'est
+pas une question de mauvaise volonté, c'est structurel.
+
+### Un test rouge, et cette fois c'est le vérificateur qui avait tort
+
+Le contrôle «&nbsp;une lecture qui ne nomme pas les extrêmes est refusée&nbsp;» a échoué. J'ai
+cherché lequel des deux avait tort, comme d'habitude — et pour la première fois, **ce n'était pas le
+test**.
+
+Mon vérificateur pédagogique cherchait `0 %` sans garde de chiffre. Or «&nbsp;0&nbsp;%&nbsp;» se
+trouve aussi dans «&nbsp;**3**0&nbsp;%&nbsp;» et «&nbsp;4**0**&nbsp;%&nbsp;»&nbsp;: une lecture
+fausse — 5&nbsp;% aux habitués, 30&nbsp;% aux personnes âgées — était **acceptée**. Le verrou
+validait une réponse erronée.
+
+La leçon de juillet disait&nbsp;: «&nbsp;devant un test rouge, chercher lequel des deux a tort avant
+de toucher au code&nbsp;». Elle vaut **dans les deux sens**, et c'est la première fois que le second
+sens se réalise. Corrigé par `(?:^|[^0-9])0\s*%`, avec un commentaire qui dit pourquoi.
+
+### Ce que ce lot doit aux questions de Pascal
+
+Trois de ses remarques, le même jour, ont directement modifié le lot&nbsp;:
+
+1. **le Bonus a son corrigé** (règle n°43 étendue)&nbsp;;
+2. **un choix offert engage un corrigé par option** — la séquence propose six modes, il a fallu
+   deux planches de corrigé au lieu d'une&nbsp;;
+3. **le vocabulaire avant le choix** — six appariements ouvrent l'activité 2, et le vérificateur
+   refuse d'aller plus loin tant qu'ils ne sont pas tenus.
+
+Et une quatrième a produit un volet de règle&nbsp;: «&nbsp;choisis par l'élève ou par le
+concepteur&nbsp;?&nbsp;» — l'ambiguïté est déclarée, la lecture est donnée comme lecture, et les
+deux variantes d'usage sont décrites à la fiche.
+
+### Le bilan
+
+Un code quitte «&nbsp;À CRÉER&nbsp;». Le dépôt compte **26 codes complets** et **31 à créer**.
+Vérificateur&nbsp;: **8 sur 8**. Tests du lot&nbsp;: **54 sur 54**. Index&nbsp;: 20 sur 20.
+
+**La compétence C2 est terminée.** Reste, pour achever le Thème 1&nbsp;: les 15 codes du **C1** —
+dont sept séquences qui n'ont ni mode essentiel, ni version étayée, ni carte de référentiel.

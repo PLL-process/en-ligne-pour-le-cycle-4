@@ -866,7 +866,11 @@ const CHECKS = {
                       .filter(r=>r.test(bas)).length;
     const taux = (t.match(/\d+\s*%/g)||[]).length;
     /* la phrase doit nommer les deux extrêmes : ceux qui n'abandonnent jamais, et les autres */
-    const extremes = /aucun|0\s*%|z[ée]ro/.test(bas) && /50\s*%|moiti[ée]|43\s*%/.test(bas);
+    /* Attention aux pourcentages : sans garde, « 0 % » se retrouve dans « 30 % » et
+       « 40 % », et une lecture fausse passait pour juste. Le chiffre doit être isolé. */
+    const zero = /aucun|z[ée]ro|(?:^|[^0-9])0\s*%/.test(bas);
+    const haut = /moiti[ée]|(?:^|[^0-9])(?:43|50)\s*%/.test(bas);
+    const extremes = zero && haut;
     const complet = lignes >= 6 && profils === 5 && taux >= 5 && extremes;
     return {score:ok,total:4,valide: ok>=3 && complet,
       extra: complet ? "" : " Il faut les CINQ profils avec leur taux en %, une ligne chacun, puis une phrase qui nomme à la fois ceux qui n'abandonnent JAMAIS et ceux qui abandonnent le plus."};
