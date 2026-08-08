@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Un Book Train pour la Schœlcher (4e_C4.1 · C4.2 · C4.4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:'Fira Code',monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}h1,h2,dt,.pb{color:#111}.toolbar{display:none}.page{max-width:none}code{background:#eee}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C4.1-C4.2-C4.4_book-train.html">← Séquence</a></nav>
+<div class="page">
+<h1>🧑‍🏫 Synthèse professeur — Un Book Train pour la Schœlcher (4e_C4.1 · C4.2 · C4.4)</h1>
+<p class="pb">Atelier d'analyse d'un système automatisé réel — 3 séances de 55 min, draw.io et LibreOffice Impress</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Cadrage programme 2024</h2>
+  <dl>
+    <dt>4e_C4.1</dt><dd>«&nbsp;Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données).&nbsp;» — diagramme fonctionnel du Book Train, fonctions et solutions techniques, entrées/sorties du système (act. 1.1, 1.2 A). QCM&nbsp;: 10&nbsp;q.</dd>
+    <dt>4e_C4.2</dt><dd>«&nbsp;Repérer les transformations d'énergie et les flux d'énergie au sein de l'OST.&nbsp;» — les quatre visages de l'énergie, étiquetage des flèches, repérage du seul bloc où l'énergie change de forme (act. 1.2 bis). QCM&nbsp;: 10&nbsp;q.</dd>
+    <dt>4e_C4.4</dt><dd>«&nbsp;Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction.&nbsp;» — terminal, capteurs, destination programmée&nbsp;; puis traduction du traitement en algorigramme normalisé (act. 1.2, 1.3, 2.1, 2.2). QCM&nbsp;: 10&nbsp;q.</dd>
+    <dt>CRCN</dt><dd><b>3.4 Programmer</b> (niv. 2) — lire et construire un algorigramme normalisé&nbsp;; <b>3.3 Adapter les documents à leur finalité</b> (niv. 2) — choisir ET justifier un format d'export. Ces deux compétences sont travaillées par les activités, pas par le QCM&nbsp;: le QCM porte sur les trois codes de technologie. Le CRCN reste le résultat d'une activité authentique, jamais une étiquette (règle d'or n°7).</dd>
+    <dt>Socle</dt><dd>D1.3 (langages scientifiques et informatiques&nbsp;: lire un diagramme, respecter une norme de représentation) · D2 (coopération, outils numériques) · D4 (analyse d'un système technique, démarche d'ingénieur).</dd>
+    <dt>Progressivité</dt><dd>la 5e a associé <i>solutions</i> et <i>fonctions</i>&nbsp;; la 4e ajoute les <b>flux</b> (énergies, données) et la <b>représentation normalisée</b> du traitement&nbsp;; la 3e ajoutera la colonne «&nbsp;fonction d'usage&nbsp;» et le schéma-bloc complet (3e_C4.1).</dd>
+  </dl>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">Déroulé et matériel</h2>
+    <ul>
+      <li><b>Billet d'entrée (4 min, sans note)&nbsp;:</b> trois questions sur les acquis de 5e (fonction technique, capteur, transformation d'énergie) avec capsule de rattrapage. Il oriente, il ne sanctionne pas&nbsp;: ne pas le relever, ne pas le noter.</li>
+      <li><b>S1 — Décoder (55 min).</b> Act. 1.1 le trajet dans l'ordre (15&nbsp;min) · 1.2 information ou énergie (10&nbsp;min) · 1.2 A diagramme fonctionnel (12&nbsp;min) · 1.3 les capteurs à ajouter dans draw.io (15&nbsp;min).</li>
+      <li><b>S2 — Traduire (55 min).</b> Act. 2.1 chaque forme a un métier (10&nbsp;min) · 2.2 construction de l'algorigramme dans draw.io (38&nbsp;min), fichier <code>book-train.drawio</code>.</li>
+      <li><b>S3 — Exporter et présenter (55 min).</b> Act. 3.2 le verdict SVG ou PNG, avec justification écrite (15&nbsp;min) · 3.3 export puis diaporama de 6 diapositives sous Impress (35&nbsp;min).</li>
+      <li><b>Matériel&nbsp;:</b> 1 poste/binôme avec draw.io (installé ou <code>app.diagrams.net</code>, aucun compte requis, aucun envoi de fichier) et LibreOffice Impress. Les fichiers <code>.drawio</code> de départ et de correction sont fournis dans <code>fichiers_drawio/</code>.</li>
+      <li><b>Total annoncé&nbsp;:</b> 154 min pour 165 disponibles — la marge de service (lancement des logiciels, transitions, bilan) est comptée, conformément à la règle d'or n°23.</li>
+    </ul>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">Points de vigilance</h2>
+    <ul>
+      <li><b>Le piège du rail.</b> «&nbsp;Il transporte le wagonnet, donc c'est de l'information&nbsp;»&nbsp;: erreur quasi systématique. Faire verbaliser «&nbsp;transporter n'est pas informer&nbsp;».</li>
+      <li><b>Le piège du capteur.</b> «&nbsp;Le capteur arrête le wagonnet&nbsp;»&nbsp;: non, il informe&nbsp;; c'est le traitement qui décide et le moteur qui exécute. C'est la distinction la plus rentable de la séquence.</li>
+      <li><b>La saisie en rectangle.</b> Dans l'algorigramme, la commande du lecteur est une <i>entrée de donnée</i> (parallélogramme), pas un traitement.</li>
+      <li><b>La branche NON orpheline.</b> Beaucoup d'élèves laissent la branche NON du test dans le vide&nbsp;: exiger la flèche de retour, sinon l'algorigramme est faux.</li>
+      <li><b>Le format sans justification.</b> Un élève qui exporte en SVG sans savoir dire pourquoi n'a pas la compétence CRCN 3.3&nbsp;: c'est la justification qui est évaluée.</li>
+      <li><b>Ordinateur partagé&nbsp;:</b> la sauvegarde de la page est locale au navigateur ET au profil. Faire terminer une séance dans la même session, ou faire recopier les relevés sur le cahier.</li>
+      <li><b>Mode essentiel&nbsp;:</b> le bouton en tête de page masque référentiel, corrections et compléments. À proposer à tous — c'est un confort de lecture, pas un parcours au rabais.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cols">
+  <div class="bloc">
+    <h2 style="margin-top:0">Différenciation et évaluation</h2>
+    <ul>
+      <li><b>Fragiles&nbsp;:</b> capsule du billet d'entrée&nbsp;; <b>versions étayées</b> (phrases à compléter) pour les trois productions écrites — même exigence scientifique, obstacle linguistique retiré&nbsp;; mode essentiel&nbsp;; binôme à rôles tournants.</li>
+      <li><b>Rapides&nbsp;:</b> les défis bonus (algorigramme du retour d'un livre, panne à intégrer, audit du schéma généré par IA).</li>
+      <li><b>Positionnement&nbsp;:</b> auto-positionnement par code + bilan par compétence du QCM (report LSU direct sur C4.1, C4.2, C4.4).</li>
+      <li><b>Évaluation de la compétence&nbsp;:</b> l'algorigramme produit dans draw.io et sa justification de format sont les vraies traces évaluables. Le QCM reste un <b>entraînement</b> (règle d'or n°28).</li>
+      <li><b>Sommative&nbsp;:</b> à construire par l'enseignant sur un système transféré (ex. le monte-charge du collège)&nbsp;; aucun corrigé sommatif dans le dépôt public.</li>
+    </ul>
+  </div>
+  <div class="bloc">
+    <h2 style="margin-top:0">Grille de compétences (3 niveaux)</h2>
+    <ul>
+      <li><b>C4.1</b> — <i>fragile</i>&nbsp;: complète le diagramme avec beaucoup d'aide · <i>satisfaisante</i>&nbsp;: place seul fonctions et solutions · <i>très bonne</i>&nbsp;: justifie chaque association et repère une incohérence dans un schéma fourni.</li>
+      <li><b>C4.2</b> — <i>fragile</i>&nbsp;: cite les énergies sans les situer · <i>satisfaisante</i>&nbsp;: étiquette correctement entrées et sorties de chaque bloc · <i>très bonne</i>&nbsp;: identifie le bloc où l'énergie change de forme et explique pourquoi les autres n'en changent pas.</li>
+      <li><b>C4.3 / algorigramme (C4.4)</b> — <i>fragile</i>&nbsp;: recopie les formes avec modèle · <i>satisfaisante</i>&nbsp;: construit un algorigramme normalisé complet avec ses deux tests · <i>très bonne</i>&nbsp;: ajoute une boucle pertinente non demandée et sait la justifier.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">Honnêteté des ressources</h2>
+  <p>Le schéma d'ensemble en coupe a été <b>généré avec une IA à partir de sources documentaires, puis vérifié et
+  corrigé par l'enseignant</b> — c'est écrit sous la figure, et la séquence en fait un objet d'apprentissage&nbsp;:
+  trois points y restent volontairement à préciser, et ce sont les élèves qui les précisent au fil des activités.
+  Les deux diagrammes fonctionnels (chaîne d'énergie, chaîne d'information) sont des <b>SVG originaux</b> produits
+  pour ce lot avec draw.io, accompagnés de leurs sources <code>.drawio</code> modifiables et d'une bibliothèque de
+  formes réutilisable. Le Book Train de la New York Public Library est un système réel&nbsp;; les valeurs citées
+  (480&nbsp;V, 24&nbsp;V, 290&nbsp;m de rail) proviennent de la documentation publique du système et sont utilisées
+  à titre descriptif.</p>
+</div>
+</div>
+</body>
+</html>

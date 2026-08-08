@@ -181,15 +181,50 @@ OVERLAY = {
                       "(DYS), reduced-motion, impression A4.",
         medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
     ),
-    "4e_C4.4": dict(
-        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
-        sequence=False, qcm=True, projet=False, synthese=False,
-        evaluation=False, correction=True, situation=False, problematique=False,
+    "4e_C4.2": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
         mutualise_avec="4e_C4.1",
-        qualite="README pointeur (séance 2 : chaîne d'information du jardin) "
-                "+ QCM eCall 40 q existant conservé en entraînement "
+        qualite="ATELIER DÉDIÉ « Un Book Train pour la Schœlcher » "
+                "(4e_C4.1·C4.2·C4.4, dossier 4e_C4.1_book-train) : analyse d'un "
+                "système automatisé réel (New York Public Library) au service d'un "
+                "projet martiniquais — diagramme fonctionnel, transformations "
+                "d'énergie bloc par bloc, chaîne d'information, algorigramme "
+                "normalisé construit dans draw.io, export justifié SVG/PNG et "
+                "diaporama. QCM 30 q (10/10/10, 4 illustrées, réponses 8/7/8/7), "
+                "synthèses élève/professeur, fiche, matrice, 2 SVG CC0 + sources "
+                ".drawio modifiables, 32/32 tests. Lot ACHEVÉ le 08/08/2026 : la "
+                "séquence existait seule depuis le 05/08, sans QCM ni synthèses. "
+                "Aux règles d'or n°23 à n°34 (billet d'entrée sans note, mode "
+                "essentiel, durées annoncées, versions étayées, étiquetage complet).",
+        anomalies="Aucune. Règle n°30 (tableau de bord des tâches) non applicable "
+                  "en l'état : écart assumé et signalé au rapport de tests. "
+                  "Complète la séance 1 du Jardin connecté (4e_C4.1).",
+        accessibilite="Clavier, tous les champs étiquetés (label ou aria-label), "
+                      "SVG avec title/desc, listes déroulantes (DYS), mode essentiel, "
+                      "impression A4.",
+        medias="2 SVG originaux CC0 + sources .drawio + bibliothèque de formes ; "
+               "schéma d'ensemble assumé comme généré par IA puis vérifié et corrigé "
+               "par l'enseignant — SOURCES_MEDIAS.md complet.",
+    ),
+    "4e_C4.4": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        mutualise_avec="4e_C4.1",
+        qualite="ATELIER DÉDIÉ « Un Book Train pour la Schœlcher » "
+                "(4e_C4.1·C4.2·C4.4, dossier 4e_C4.1_book-train) : chaîne "
+                "d'information du système (terminal, capteurs, destination "
+                "programmée) puis traduction du traitement en algorigramme "
+                "normalisé dans draw.io — 10 q de QCM dédiées, synthèses, fiche, "
+                "matrice, 32/32 tests. Complète la séance 2 du Jardin connecté "
+                "(4e_C4.1) ; le QCM eCall 40 q existant reste en entraînement "
                 "complémentaire (rattachement confirmé le 21/07/2026).",
-        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+        anomalies="Aucune.",
+        accessibilite="Clavier, tous les champs étiquetés, mode essentiel, "
+                      "versions étayées des productions écrites, impression A4.",
+        medias="2 SVG originaux CC0 + sources .drawio — SOURCES_MEDIAS.md complet.",
     ),
     "4e_C4.7": dict(
         statut="COMPLET ET VALIDABLE",
@@ -222,7 +257,6 @@ OVERLAY = {
         qualite=f"README pointeur ({d}).",
         anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
     ) for c, d in {
-        "4e_C4.2": "séance 1 : transformations et flux d'énergie",
         "4e_C4.3": "séance 4 : la forme d'une pièce raconte son procédé",
         "4e_C4.5": "séance 2 : transformation des données téléversées",
         "4e_C4.6": "séance 2 : structure de table, explorateur avec verrou",
