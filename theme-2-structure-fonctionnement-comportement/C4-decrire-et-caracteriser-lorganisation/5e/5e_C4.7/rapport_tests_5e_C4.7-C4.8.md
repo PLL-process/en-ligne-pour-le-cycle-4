@@ -1,7 +1,14 @@
 # Rapport de tests — Lot 5e_C4.7 · C4.8 « Le réseau de la salle techno »
 
 **Exécution réelle** le 05/08/2026, suite Playwright (Chromium headless).
-v1.0 (lot initial) : 30/30 verts · **v1.1 (rétrofit règle n°22, étape de conception act. 2) : 31/31 verts** —
+v1.0 (lot initial) : 30/30 verts · v1.1 (rétrofit règle n°22, étape de conception act. 2) : 31/31 verts ·
+**v1.2 (rétrofit audit externe, 08/08/2026) : suite dédiée de 24 vérifications, 24/24 vertes** — elle
+contrôle les apports du rétrofit : domaine 1 du socle explicité, CRCN 2.3 présent, encadré « premier ping :
+ne panique pas » visible en séance 3, valeurs annoncées comme réellement observées, variante 🅰 sur réseau
+ISOLÉ, repère CRCN 5.1 verbatim conservé, bouton mode essentiel qui masque puis réaffiche le référentiel et
+persiste après rechargement, billet d'entrée qui refuse le vide / oriente à 2 sur 3 / valide à 3 sur 3,
+capsule de rattrapage présente, indicateur « prochaine étape ».
+La v1.1 disait :
 la suite vérifie désormais aussi le REFUS sans description de conception (SEQ-10a) et la validation 11/11
 avec conception (SEQ-10b) · **v1.2 (finitions : recette illustrée en 4 vignettes, correctif de chevauchement
 du schéma du facteur, socle et CRCN en toutes lettres) : 33/33 verts** — dont la présence des 8 figures,
@@ -57,4 +64,7 @@ Chargement sans erreur JS des deux synthèses ; le schéma embarqué (`<object>`
   5 terminaux adressés, ping filaire < 1 ms et WiFi 57-260 ms « Reply from » 4/4,
   enveloppe PDU suivie en mode Simulation — session de pilotage du 05/08/2026 sur le
   poste enseignant).
-- Script de test : suite Playwright du lot (30 vérifications), rejouable.
+- Script de test : suite Playwright du lot (30 vérifications v1) + suite dédiée du rétrofit audit
+  (24 vérifications v1.2), toutes deux rejouables.
+- Le rétrofit v1.2 ne touche NI le fichier `.pkt`, NI les figures, NI le QCM : ce sont des ajouts de
+  texte, un bouton et un billet d'entrée. Les preuves de la v1.0 restent valables telles quelles.

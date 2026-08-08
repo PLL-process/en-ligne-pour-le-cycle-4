@@ -1387,3 +1387,36 @@ refuse les réponses vides, présence des cinq fichiers .pkt et validité de tou
 défi exposant bien son choix de test et sa justification, et acceptant les trois preuves honnêtes tout en refusant « aucun test » — en plus des vérifications v1 (verrous, règle
 n°22, socle et CRCN en toutes lettres, libellés officiels, QCM 8/7/7/8, sauvegardes). Un SVG mal fermé
 (`</g>` en trop) a été détecté par le test « les figures chargent » et corrigé avant livraison.
+
+## 2026-08-08 — Rétrofit de l'audit externe sur l'atelier réseau 5e (5e_C4.7 · C4.8)
+
+**Décision.** Les corrections obtenues par l'audit pédagogique externe du lot 4e ne valent pas que pour le 4e.
+J'ai passé les deux autres lots réseaux (5e et 3e) au crible des mêmes critères : le 3e était largement
+conforme, le 5e cumulait huit manques sur dix. Ce lot les corrige — **sans toucher au fichier `.pkt`, ni aux
+figures, ni au QCM** : ce sont des ajouts de texte, un bouton et un billet d'entrée. Les preuves de la v1.0
+(session Packet Tracer réelle du 05/08) restent valables telles quelles, ce qui est écrit dans le rapport de
+tests. Règle de méthode qui en découle : **une correction obtenue sur un lot se propage aux lots frères** —
+sinon la même erreur reste publiée deux fois.
+
+**Apports.** Un *billet d'entrée* de 3 questions **sans note** ouvre la séance 1 (communiquer, adresser,
+câble d'énergie ou d'information — les acquis de 6e), avec une capsule « Les mots de départ » de 3 minutes
+pour ceux qui en ont besoin ; il oriente, il ne sanctionne pas, et le vérificateur le dit explicitement.
+Un *mode essentiel* persistant masque référentiel, corrections et compléments. Le *domaine 1 du socle* est
+explicité en complément du rattachement officiel D2·D4 — sans le modifier (règle n°21 : le référentiel du
+dépôt fait foi) : c'est utile pour le LSU, la trace écrite de l'atelier étant évaluable côté langages.
+*CRCN 2.3 Collaborer* est ajouté comme travaillée non évaluée (binôme pilote/copilote, jeu du facteur).
+Un encadré *« Premier ping : ne panique pas »* nomme la fausse panne qui piège toute la classe. Les valeurs
+de ping sont annoncées comme *réellement observées pendant notre simulation*, avec la précision que celles
+de l'élève seront proches sans être identiques. La version 🅰 gagne une variante *TP sur réseau ISOLÉ*
+(2 PC + commutateur dédié, 192.168.50.10/.20, puis doublon provoqué) — jamais le réseau pédagogique.
+La synthèse professeur reçoit les notes « ordinateur partagé », « mode essentiel » et « billet d'entrée ».
+
+**Ce qui n'a PAS été transposé, et pourquoi.** Le 5e ne parle ni de passerelle ni de masque : la nuance
+« le .1 est une convention » et la relativisation du masque n'ont donc pas d'objet ici — le lot dit déjà
+« la case Subnet Mask se remplit seule, tu l'étudieras en 4e », ce qui est la bonne progressivité. On ne
+transpose pas mécaniquement : on transpose ce qui a un sens au niveau considéré.
+
+**Tests.** Suite dédiée de **24 vérifications, 24/24 vertes** (rejouable) : chargement sans erreur JS,
+figures, blocs règle n°4, les six apports de contenu, les trois états du mode essentiel dont la persistance
+après rechargement, les trois issues du billet d'entrée (vide / 2 sur 3 / 3 sur 3), la capsule, l'indicateur
+« prochaine étape », la restauration locale et l'existence du `.pkt` et du QCM.
