@@ -2681,3 +2681,47 @@ Une leçon d'outillage vaut d'être notée&nbsp;: ma **première** version du co
 motif est le même que celui de la règle n°26 en juillet et des trois suites de tests qui accusaient
 des pages conformes&nbsp;: **devant un contrôle qui accuse largement, douter du contrôle avant de
 douter du contenu.**
+
+---
+
+## 8 août 2026 — Règle d'or n°42 : la formulation d'une compétence se recopie, elle ne se reformule pas
+
+**Second volet de la règle n°36.** Le premier volet interdit de faire passer un **code de
+classement interne** pour une nomenclature officielle. Celui-ci interdit de réécrire le **texte**
+d'une compétence.
+
+La reformulation est la plus discrète des deux, et la plus profonde&nbsp;: elle ne se signale par
+aucune anomalie de forme. Le lot 5e_C2 a enseigné «&nbsp;esthétique&nbsp;» là où le programme dit
+«&nbsp;développement durable&nbsp;», et quarante-trois tests l'ont laissé passer.
+
+Si une reformulation aide l'élève, elle **s'ajoute à côté** du texte&nbsp;; elle ne le remplace
+pas. Développer «&nbsp;OST&nbsp;» en «&nbsp;objet ou système technique&nbsp;» reste permis&nbsp;:
+c'est expliciter une abréviation, pas réécrire une exigence.
+
+### La règle est désormais mécanisée
+
+`_outils/verif_regles_audit.py` porte une huitième règle vérifiable. Elle lit la carte de
+référentiel de chaque séquence, la compare aux formulations de `_outils/data_competences.py`, et
+échoue en nommant les mots absents.
+
+Sur les 40 séquences du dépôt&nbsp;: **4 conformes, 5 en écart, 31 sans objet** (pas encore de carte
+de référentiel — c'est-à-dire pas encore passées au gabarit maison). Les cinq écarts sont ceux que
+le balayage manuel avait trouvés, aux mêmes codes&nbsp;: le contrôle ne découvre rien de plus, mais
+il empêchera la récidive, et c'est tout ce qu'on lui demande.
+
+### Une note d'outillage
+
+Ma **première** version de ce contrôle signalait dix-neuf écarts, dont la quasi-totalité étaient
+faux&nbsp;: elle indexait les formulations par le seul code (`C2.1`) au lieu du couple niveau + code,
+et comparait donc la 5e au texte de la 3e.
+
+C'est le même motif que la règle n°26 en juillet, et que les trois suites de tests qui accusaient
+des pages conformes&nbsp;: **devant un contrôle qui accuse largement, douter du contrôle avant de
+douter du contenu.**
+
+### Pourquoi cette PR est sur une branche `theme-2`
+
+`_outils/` appartient au Thème 2. J'y touche pour un outil de gouvernance que je maintiens, sur une
+branche portant le motif du thème, afin que la garde-périmètre **s'applique** — plutôt que sur une
+branche `infra` sans motif, où elle se serait désactivée d'elle-même. Une garde qu'on contourne en
+nommant sa branche autrement n'est pas une garde.
