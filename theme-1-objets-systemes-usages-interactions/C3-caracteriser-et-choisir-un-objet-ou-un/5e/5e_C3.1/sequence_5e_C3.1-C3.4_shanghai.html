@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shanghai : caractériser, mesurer et choisir un véhicule de livraison du dernier kilomètre. Codes 5e_C3.1 à 5e_C3.4, programme 2024.">
+<title>Thème 1 · 5e — Shanghai : quel véhicule pour le dernier kilomètre ? (5e_C3.1 à C3.4)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip" href="#seances" style="position:absolute;left:-9999px">Aller directement aux activités</a>
+<div class="page">
+<h1>🚚 Shanghai — quel véhicule pour le dernier kilomètre&nbsp;?</h1>
+<p class="sous">Caractériser, mesurer, puis choisir — et savoir dire pourquoi.</p>
+<div class="badges">
+  <span class="badge niveau">5e</span>
+  <span class="badge code">5e_C3.1</span><span class="badge code">5e_C3.2</span>
+  <span class="badge code">5e_C3.3</span><span class="badge code">5e_C3.4</span>
+  <span class="badge theme">D1.3 · D2 · D4 · D5 · CRCN 1.3 niv. 2</span>
+  <span class="badge theme">4 séances de 55 min</span>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnPrint">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;: rien
+n'est envoyé, personne d'autre ne les voit. Le <b>mode essentiel</b> masque le référentiel, les
+corrections et les compléments si la page te paraît chargée.</p>
+
+<section class="card">
+  <h2>🌏 La situation&nbsp;: 4 000 colis, et personne pour décider</h2>
+  <p>Un centre logistique de Shanghai livre chaque matin de petits colis à une trentaine
+  d'établissements scolaires. Aujourd'hui, tout part en camionnette thermique.</p>
+  <p>La municipalité impose un changement pour l'an prochain. Le responsable du centre a reçu
+  <b>trois propositions</b>&nbsp;: un vélo-cargo à assistance électrique, une fourgonnette électrique
+  compacte, et un robot de livraison.</p>
+  <p>Il n'arrive pas à choisir. Chaque vendeur affirme que sa solution est la meilleure — et chacun a
+  raison, sur le critère qui l'arrange.</p>
+  <p>C'est vous qu'il appelle.</p>
+  <p class="meta">⚠️ <b>Toutes les données de cette séquence sont simulées</b>, construites pour
+  l'exercice. Elles sont réalistes, mais elles ne décrivent aucun véhicule réellement commercialisé.
+  On ne les présentera donc jamais comme des mesures du monde réel.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Comment caractériser, tester et comparer plusieurs
+  solutions techniques pour choisir celle qui répond le mieux au besoin — sur tout son cycle de vie,
+  et pas seulement le jour de l'achat&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <p>Avant toute activité, réponds avec tes idées actuelles. Tu y reviendras au bilan&nbsp;: avoir
+  changé d'avis, c'est avoir appris.</p>
+  <div class="assoc">
+    <label for="hyp1">D'après toi, laquelle des trois solutions faut-il choisir, et sur quoi te
+    fondes-tu&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : quelle solution, et sur quel critère"></textarea>
+  </div>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: ces débuts de phrases retirent
+    l'obstacle de la rédaction, pas l'exigence.</p>
+    <ul>
+      <li>«&nbsp;Je choisirais plutôt ____, parce que ____.&nbsp;»</li>
+      <li>«&nbsp;Le critère qui me paraît le plus important est ____.&nbsp;»</li>
+      <li>«&nbsp;Ce dont je ne suis pas sûr·e, c'est ____.&nbsp;»</li>
+    </ul>
+  </details>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: les identifiants
+  <code>5e_C3.1</code> à <code>5e_C3.4</code> sont des codes de classement <b>internes à ce
+  dépôt</b>, construits à partir des repères de progressivité du programme. Ils ne figurent pas
+  comme tels au BO.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où on le travaille</th></tr>
+    <tr><td><b>5e_C3.1</b></td><td>Repérer pour un objet ou système technique les matériaux, les
+      sources et les formes d'énergie, et le traitement de l'information.</td><td>Séance 1</td></tr>
+    <tr><td><b>5e_C3.2</b></td><td>Identifier les étapes du cycle de vie d'un objet ou système
+      technique influencées par les choix de matériaux et d'énergie.</td><td>Séance 2</td></tr>
+    <tr><td><b>5e_C3.4</b></td><td>Mesurer et comparer une performance d'un objet ou système
+      technique à partir d'un protocole fourni.</td><td>Séance 3</td></tr>
+    <tr><td><b>5e_C3.3</b></td><td>Choisir un objet ou système technique parmi plusieurs
+      propositions en vue de répondre à un besoin.</td><td>Séance 4</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 langages scientifiques et techniques · D2 méthodes et outils pour apprendre ·
+  D4 systèmes naturels et systèmes techniques · D5 représentations du monde et activité humaine.</p>
+  <p><b>CRCN réellement travaillé</b> — <b>1.3 Traiter des données</b>, niveau 2&nbsp;: l'élève saisit
+  les résultats du protocole dans un tableur, insère une colonne d'indicateur, trie les solutions puis
+  filtre celles qui respectent le cahier des charges. La trace est le classeur, avec ses formules
+  visibles. Utiliser un ordinateur n'est pas une compétence&nbsp;: la compétence est prouvée par les
+  calculs, les tris et les traces conservées.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 5 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Caractériser<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Le cycle de vie<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Mesurer<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Choisir<span class="done" id="done-s4"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage, pas une
+  épreuve. Si l'une résiste, la capsule juste en dessous te remet en selle en trois minutes.</p>
+  <div class="assoc"><label for="be_1">Un <b>matériau</b>, c'est&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>la matière dont un objet est fait, choisie pour ses propriétés</option>
+      <option>la forme donnée à l'objet par la machine</option>
+      <option>l'énergie qui fait fonctionner l'objet</option>
+      <option>le prix de vente de l'objet</option></select></div>
+  <div class="assoc"><label for="be_2">Une <b>source d'énergie</b> d'un objet technique, c'est&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>ce qui lui fournit l'énergie dont il a besoin pour fonctionner</option>
+      <option>ce qu'il produit à la fin de son fonctionnement</option>
+      <option>la couleur de sa carrosserie</option>
+      <option>le nombre de personnes qu'il transporte</option></select></div>
+  <div class="assoc"><label for="be_3">Un <b>capteur</b> sert à&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>renseigner le système sur son environnement : il informe, il n'agit pas</option>
+      <option>agir sur le monde extérieur : pousser, chauffer, éclairer</option>
+      <option>stocker l'énergie pour plus tard</option>
+      <option>fabriquer les pièces de l'objet</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Un <b>matériau</b> est la matière dont l'objet est fait&nbsp;: acier, aluminium, polymère,
+    bois. On le choisit pour ses <b>propriétés</b> — résistance, masse, tenue à l'eau, coût.</p>
+    <p>Une <b>source d'énergie</b> est ce qui alimente l'objet&nbsp;: une batterie, un panneau
+    solaire, le muscle. La <b>forme</b> d'énergie, elle, dit sous quel aspect elle circule&nbsp;:
+    électrique, mécanique, thermique.</p>
+    <p>Un <b>capteur informe</b> (il mesure et transmet une information)&nbsp;; un <b>actionneur
+    agit</b> (moteur, lampe, pompe). Entre les deux, un calculateur décide.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>🔎 Activité 1 — De quoi ces trois véhicules sont-ils faits&nbsp;? <span style="color:var(--sub);font-size:.8em">(~25 min)</span></h2>
+  <div class="meta"><b>Objectif</b> repérer matériaux, sources et formes d'énergie, et traitement de
+  l'information · <b>Compétence</b> 5e_C3.1 · <b>Production</b> un tableau comparatif complété ·
+  <b>Ressource</b> le tableau de données et la planche ci-dessous</div>
+
+  <figure class="fig">
+    <img src="Images/trois_solutions_shanghai.svg" alt="Les trois solutions comparées. S1 vélo-cargo à assistance électrique : aluminium et acier, 48 kg, batterie rechargeable, énergie électrique, contrôleur d'assistance et afficheur, charge utile 120 kg, autonomie 55 km, réparabilité 8 sur 10. S2 fourgonnette électrique compacte : acier et aluminium, 1350 kg, batterie, électrique, calculateur embarqué avec capteurs et navigation, charge utile 650 kg, autonomie 210 km, réparabilité 7 sur 10. S3 robot mobile : aluminium, acier et polymères, 95 kg, batterie, électrique, capteurs, cartographie, calculateur et supervision humaine, charge utile 80 kg, autonomie 38 km, réparabilité 5 sur 10.">
+    <figcaption>📷 Document à lire pour répondre — données simulées</figcaption>
+  </figure>
+
+  <h4>a) Les matériaux et ce qu'ils apportent</h4>
+  <div class="assoc"><label for="a1_1">Les trois structures utilisent toutes de l'aluminium. Pourquoi ce choix, pour un véhicule&nbsp;?</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>il est léger tout en restant résistant : moins de masse à déplacer, donc moins d'énergie</option>
+      <option>il est le moins cher de tous les métaux</option>
+      <option>il conduit bien l'électricité, ce qui alimente le moteur</option>
+      <option>il est transparent, ce qui allège visuellement le véhicule</option></select></div>
+  <div class="assoc"><label for="a1_2">Le robot S3 ajoute des <b>polymères</b> que les deux autres n'ont pas. L'explication la plus probable&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>des carrosseries de formes complexes, légères et non conductrices, autour de ses capteurs</option>
+      <option>les polymères sont plus résistants que l'acier</option>
+      <option>c'est le seul matériau qui conduit l'électricité</option>
+      <option>ils permettent de transporter des charges plus lourdes</option></select></div>
+
+  <h4>b) L'énergie&nbsp;: source et forme</h4>
+  <div class="assoc"><label for="a1_3">Pour les trois solutions, la <b>source</b> d'énergie est&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>une batterie rechargeable</option>
+      <option>le vent</option>
+      <option>le carburant</option>
+      <option>elle est différente pour chacune</option></select></div>
+  <div class="assoc"><label for="a1_4">La <b>forme</b> sous laquelle l'énergie entre dans la chaîne est&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>électrique</option>
+      <option>thermique</option>
+      <option>lumineuse</option>
+      <option>chimique</option></select></div>
+  <div class="assoc"><label for="a1_5">S2 consomme 165 Wh/km contre 18 pour S1. La raison principale&nbsp;:</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>sa masse est près de 28 fois supérieure : déplacer 1350 kg coûte plus que 48 kg</option>
+      <option>sa batterie est de mauvaise qualité</option>
+      <option>elle roule beaucoup plus vite</option>
+      <option>elle transporte de l'information en plus</option></select></div>
+
+  <h4>c) Le traitement de l'information</h4>
+  <div class="assoc"><label for="a1_6">Classe les trois solutions de la <b>moins</b> à la <b>plus</b> traitante en information&nbsp;:</label>
+    <select id="a1_6"><option value="">— choisir —</option>
+      <option>S1 (contrôleur et afficheur) → S2 (calculateur, capteurs, navigation) → S3 (capteurs, cartographie, calculateur, supervision)</option>
+      <option>S3 → S2 → S1</option>
+      <option>S2 → S1 → S3</option>
+      <option>elles traitent toutes exactement la même chose</option></select></div>
+  <div class="assoc"><label for="a1_7">Le robot S3 exige une <b>supervision humaine</b>. Cela signifie que&nbsp;:</label>
+    <select id="a1_7"><option value="">— choisir —</option>
+      <option>une personne suit son trajet à distance et peut reprendre la main : il est automatisé, pas autonome</option>
+      <option>il fonctionne totalement seul, sans personne</option>
+      <option>il faut le pousser à la main</option>
+      <option>il ne peut rouler que la nuit</option></select></div>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Pour l'énergie, distingue bien deux questions&nbsp;: <b>d'où elle vient</b> (la source) et
+    <b>sous quelle forme elle circule</b> (électrique, mécanique…). Les trois véhicules partagent la
+    même réponse à la première question.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Pour la consommation&nbsp;: compare les masses avant de chercher ailleurs. 48 kg, 95 kg,
+    1350 kg. Déplacer une masse coûte de l'énergie à chaque démarrage et à chaque montée&nbsp;; sur
+    un parcours urbain fait d'arrêts permanents, c'est le facteur qui domine tout le reste.</p>
+    <p>Pour l'information&nbsp;: compte ce que chaque solution doit «&nbsp;savoir&nbsp;». S1 doit
+    seulement doser l'assistance. S3 doit se situer sur une carte, éviter les obstacles et rendre des
+    comptes à un opérateur&nbsp;: c'est bien plus.</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS avoir vérifié)</summary>
+    <p>L'<b>aluminium</b> est retenu pour son rapport résistance/masse&nbsp;: sur un véhicule, chaque
+    kilo évité est de l'énergie économisée à chaque démarrage, pendant toute la durée d'usage.</p>
+    <p>Les <b>polymères</b> du robot répondent à un autre besoin&nbsp;: mouler des formes complexes,
+    légères, qui n'interfèrent pas avec les capteurs. Un même véhicule combine donc plusieurs
+    matériaux, chacun pour une raison précise.</p>
+    <p>La <b>source</b> est identique pour les trois&nbsp;: une batterie rechargeable. La
+    <b>forme</b> d'entrée est électrique. C'est un point important&nbsp;: comme la source ne les
+    distingue pas, la comparaison devra porter sur autre chose.</p>
+    <p>La <b>consommation</b> suit la masse&nbsp;: 18, 42 puis 165 Wh/km pour 48, 95 puis 1350 kg. Ce
+    n'est pas une coïncidence, c'est la relation principale de tout véhicule.</p>
+    <p>Le <b>traitement de l'information</b> croît avec l'autonomie de décision demandée. Et
+    «&nbsp;supervision humaine&nbsp;» est un mot à retenir&nbsp;: le robot est <b>automatisé</b>
+    — il exécute seul — mais il n'est pas <b>autonome</b> au sens où personne ne le surveillerait.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on caractérise un objet technique par trois entrées —
+  ses matériaux, son énergie (source et forme), et ce qu'il fait de l'information. Quand deux
+  solutions se ressemblent sur l'une, la comparaison se joue sur les autres.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: confondre la <b>source</b> (la batterie) et la
+  <b>forme</b> (électrique). La source dit d'où vient l'énergie&nbsp;; la forme dit sous quel aspect
+  elle circule.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tu sais désigner, pour chaque solution, un matériau et la
+  raison de son choix, la source et la forme d'énergie, et ce que le système traite comme
+  information.</p>
+</section>
+</div>
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>♻️ Activité 2 — Où nos choix pèsent-ils vraiment&nbsp;? <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> identifier les étapes du cycle de vie influencées par les choix de
+  matériaux et d'énergie · <b>Compétence</b> 5e_C3.2 · <b>Production</b> trois étapes désignées et
+  justifiées · <b>Ressource</b> le schéma du cycle de vie</div>
+
+  <figure class="fig">
+    <img src="Images/cycle_de_vie_ost.svg" alt="Le cycle de vie en cinq étapes qui bouclent : extraction des matières premières, fabrication, distribution, utilisation, fin de vie, cette dernière renvoyant vers l'extraction par le recyclage. Trois étapes sont encadrées en orange car elles dépendent directement des choix de matériaux et d'énergie : l'extraction, qui dépend de la part de matière recyclée ; l'utilisation, qui dépend de l'énergie par kilomètre et de la masse ; la fin de vie, qui dépend de la réparabilité.">
+    <figcaption>📷 Document à lire pour répondre</figcaption>
+  </figure>
+
+  <h4>a) Relier une donnée à l'étape qu'elle concerne</h4>
+  <div class="assoc"><label for="a2_1">«&nbsp;35&nbsp;% de matière recyclée&nbsp;» (S1) concerne surtout l'étape&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>l'extraction des matières premières</option><option>la distribution</option>
+      <option>l'utilisation</option><option>aucune : c'est un argument commercial</option></select></div>
+  <div class="assoc"><label for="a2_2">«&nbsp;18 Wh par km&nbsp;» concerne surtout l'étape&nbsp;:</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>l'utilisation</option><option>la fabrication</option>
+      <option>l'extraction</option><option>la fin de vie</option></select></div>
+  <div class="assoc"><label for="a2_3">«&nbsp;réparabilité 8 sur 10&nbsp;» concerne surtout l'étape&nbsp;:</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>la fin de vie, et la durée pendant laquelle on repousse cette fin de vie</option>
+      <option>l'extraction</option><option>la distribution</option>
+      <option>la fabrication uniquement</option></select></div>
+
+  <h4>b) L'étape la plus lourde n'est pas celle qu'on croit</h4>
+  <div class="assoc"><label for="a2_4">Un véhicule roule 8 à 12 ans. Sur l'ensemble de sa vie, quelle étape consomme le plus d'énergie&nbsp;?</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>l'utilisation, parce qu'elle dure des années et se répète chaque jour</option>
+      <option>la fabrication, parce qu'elle demande des machines</option>
+      <option>la distribution, parce que le véhicule voyage jusqu'au client</option>
+      <option>la fin de vie, parce qu'il faut tout démonter</option></select></div>
+  <div class="assoc"><label for="a2_5">Conséquence directe pour notre choix&nbsp;:</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>un écart de consommation par km, même petit, devient énorme multiplié par des années d'usage</option>
+      <option>le prix d'achat est le seul critère qui compte</option>
+      <option>la masse n'a aucune importance</option>
+      <option>il faut choisir le véhicule le plus récent</option></select></div>
+
+  <h4>c) Le piège du «&nbsp;zéro émission&nbsp;»</h4>
+  <div class="assoc"><label for="a2_6">On lit parfois qu'un véhicule électrique est «&nbsp;zéro émission&nbsp;». Cette affirmation&nbsp;:</label>
+    <select id="a2_6"><option value="">— choisir —</option>
+      <option>ne vaut que pour l'étape d'utilisation : l'extraction et la fabrication, elles, ont un coût</option>
+      <option>est vraie sur tout le cycle de vie</option>
+      <option>est fausse partout : ces véhicules polluent autant en roulant</option>
+      <option>dépend de la couleur du véhicule</option></select></div>
+
+  <h4>d) Ta justification écrite</h4>
+  <div class="assoc">
+    <label for="a2_just">Choisis <b>une</b> des trois solutions et explique en trois phrases quelle étape de son cycle de vie ses choix de matériaux et d'énergie influencent le plus, et pourquoi.</label>
+    <textarea id="a2_just" aria-label="Justification : quelle étape du cycle de vie les choix de la solution retenue influencent le plus"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul>
+      <li>«&nbsp;Je prends la solution ____.&nbsp;»</li>
+      <li>«&nbsp;Ses choix de matériaux et d'énergie pèsent surtout sur l'étape ____.&nbsp;»</li>
+      <li>«&nbsp;C'est parce que ____, et cela dure ____.&nbsp;»</li>
+    </ul>
+  </details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Pour chaque donnée, demande-toi <b>à quel moment de la vie de l'objet</b> elle produit son
+    effet&nbsp;: avant qu'il existe, pendant qu'il roule, ou après.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Fais le calcul mentalement&nbsp;: 18 Wh/km sur 30 km par jour, 200 jours par an, pendant
+    8 ans. Puis recommence avec 165 Wh/km. L'écart n'est pas «&nbsp;un peu&nbsp;» — c'est un ordre
+    de grandeur, et c'est ce que veut dire «&nbsp;l'utilisation domine&nbsp;».</p></details>
+
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>La <b>matière recyclée</b> agit en amont, à l'extraction&nbsp;: chaque kilo recyclé est un kilo
+    qu'on n'extrait pas. L'<b>énergie par kilomètre</b> agit pendant l'utilisation. La
+    <b>réparabilité</b> agit à la fin — et surtout, elle <b>repousse</b> cette fin&nbsp;: un objet
+    réparable vit plus longtemps, donc s'amortit mieux.</p>
+    <p>Sur un véhicule qui roule huit à douze ans, l'<b>utilisation</b> domine largement. C'est ce qui
+    explique qu'un petit écart par kilomètre décide de tout&nbsp;: multiplié par des dizaines de
+    milliers de kilomètres, il devient l'écart principal.</p>
+    <p>«&nbsp;Zéro émission&nbsp;» ne vaut que <b>pendant l'usage</b>. L'extraction du lithium, la
+    fabrication de la batterie et son recyclage ont un coût bien réel. Ce n'est pas un argument contre
+    l'électrique&nbsp;: c'est une raison de raisonner sur <b>tout</b> le cycle, pas sur une étape.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: les choix de matériaux et d'énergie pèsent surtout sur
+  trois étapes — l'extraction, l'utilisation et la fin de vie. Sur un objet qui dure des années,
+  c'est l'utilisation qui domine.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: juger un objet sur le jour de son achat. Un objet
+  technique se juge sur toute sa vie, de l'extraction de sa matière à son recyclage.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tu relies chaque donnée du tableau à l'étape du cycle qu'elle
+  concerne, et tu sais dire laquelle pèse le plus, avec un argument de durée.</p>
+</section>
+</div>
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>📏 Activité 3 — Mesurer pour de vrai&nbsp;: le protocole <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> appliquer un protocole fourni et comparer des performances ·
+  <b>Compétence</b> 5e_C3.4 · <b>Production</b> le tableau de mesures rempli et une conclusion ·
+  <b>Ressource</b> le protocole ci-dessous et le fichier de données</div>
+
+  <figure class="fig">
+    <img src="Images/protocole_freinage.svg" alt="Protocole de mesure de la distance de freinage sur piste droite et plate. Le véhicule arrive à 15 kilomètres par heure. Un repère marque le déclenchement du freinage, un second l'arrêt complet ; la distance mesurée sépare les deux. Trois essais, on garde la moyenne. Trois conditions doivent être identiques d'un véhicule à l'autre : la même charge transportée, le même revêtement sec, la même vitesse de départ.">
+    <figcaption>📷 Le protocole fourni — à appliquer tel quel</figcaption>
+  </figure>
+
+  <h4>a) Lire le protocole avant de mesurer</h4>
+  <div class="assoc"><label for="a3_1">Pourquoi le protocole impose-t-il la <b>même charge</b> pour les trois véhicules&nbsp;?</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>parce qu'une masse différente change la distance de freinage : on ne comparerait plus les véhicules</option>
+      <option>parce que c'est plus rapide à organiser</option>
+      <option>parce que la charge n'a aucun effet sur le freinage</option>
+      <option>pour que les colis n'abîment pas la piste</option></select></div>
+  <div class="assoc"><label for="a3_2">Pourquoi fait-on <b>trois essais</b> et non un seul&nbsp;?</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable</option>
+      <option>pour user les freins et voir s'ils tiennent</option>
+      <option>parce que le premier essai ne compte jamais</option>
+      <option>pour que chaque élève du groupe en fasse un</option></select></div>
+  <div class="assoc"><label for="a3_3">Un groupe mesure S1 sur piste sèche et S3 sur piste mouillée. Que vaut sa comparaison&nbsp;?</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>rien : il compare deux conditions différentes, pas deux véhicules</option>
+      <option>elle est valable, la pluie touche les deux de la même façon</option>
+      <option>elle est meilleure, car plus proche du réel</option>
+      <option>elle est valable si on la refait un jour de beau temps</option></select></div>
+
+  <h4>b) Exploiter les résultats</h4>
+  <table>
+    <tr><th>Solution</th><th>Distance de freinage à 15 km/h</th><th>Rayon de braquage</th><th>Bruit</th></tr>
+    <tr><td>S1 — vélo-cargo</td><td>3,2 m</td><td>2,1 m</td><td>54 dB(A)</td></tr>
+    <tr><td>S2 — fourgonnette</td><td>5,8 m</td><td>5,4 m</td><td>62 dB(A)</td></tr>
+    <tr><td>S3 — robot</td><td>1,6 m</td><td>1,2 m</td><td>49 dB(A)</td></tr>
+  </table>
+  <div class="assoc"><label for="a3_4">Quelle solution s'arrête sur la plus courte distance&nbsp;?</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>S3, le robot</option><option>S1, le vélo-cargo</option>
+      <option>S2, la fourgonnette</option><option>les trois à égalité</option></select></div>
+  <div class="assoc"><label for="a3_5">S2 freine sur 5,8 m contre 1,6 m pour S3. L'explication principale&nbsp;:</label>
+    <select id="a3_5"><option value="">— choisir —</option>
+      <option>sa masse est bien plus grande : plus il y a de masse lancée, plus il faut de distance pour l'arrêter</option>
+      <option>ses freins sont en mauvais état</option>
+      <option>elle roule plus vite lors de l'essai</option>
+      <option>elle est plus bruyante</option></select></div>
+  <div class="assoc"><label for="a3_6">Dans une ruelle étroite, quelle mesure du tableau devient la plus décisive&nbsp;?</label>
+    <select id="a3_6"><option value="">— choisir —</option>
+      <option>le rayon de braquage : c'est lui qui dit si le véhicule peut tourner</option>
+      <option>le bruit</option><option>l'autonomie</option>
+      <option>la part de matière recyclée</option></select></div>
+
+  <h4>c) Ce que la mesure prouve — et ce qu'elle ne prouve pas</h4>
+  <div class="assoc">
+    <label for="a3_conc">Écris en trois phrases ce que ces mesures permettent de conclure, et une chose qu'elles ne disent pas.</label>
+    <textarea id="a3_conc" aria-label="Conclusion : ce que les mesures permettent de conclure et ce qu'elles ne disent pas"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul>
+      <li>«&nbsp;Les mesures montrent que ____ s'arrête le plus court, parce que ____.&nbsp;»</li>
+      <li>«&nbsp;Elles ont été faites dans les mêmes conditions&nbsp;: ____, ____ et ____.&nbsp;»</li>
+      <li>«&nbsp;En revanche, elles ne disent rien de ____.&nbsp;»</li>
+    </ul>
+  </details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Un protocole sert à une seule chose&nbsp;: faire en sorte que la <b>seule</b> différence entre
+    deux essais soit celle qu'on veut mesurer.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Pour la dernière question, cherche ce qui <b>n'est pas dans le tableau</b>&nbsp;: rien sur le
+    coût, rien sur la durée de vie, rien sur ce qui se passe sous la pluie, rien sur le nombre de
+    colis livrés à l'heure. Une mesure est toujours partielle — c'est pour cela qu'on en fait
+    plusieurs, et qu'on les croise.</p></details>
+
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Un protocole fixe les conditions pour que la comparaison ait un sens. Charge identique,
+    revêtement identique, vitesse identique&nbsp;: sans cela, on ne compare plus des véhicules, on
+    compare des essais. C'est la faute la plus fréquente, et elle invalide tout le travail.</p>
+    <p>Trois essais et une moyenne&nbsp;: une mesure isolée peut être ratée — un freinage déclenché
+    trop tôt, une roue qui glisse. La moyenne réduit ce hasard sans le supprimer.</p>
+    <p>La <b>masse</b> explique l'ordre des distances&nbsp;: 95 kg s'arrête en 1,6 m, 1350 kg en
+    5,8 m. C'est la même grandeur qui expliquait déjà la consommation à l'activité 1 — un bon signe
+    qu'on tient quelque chose de solide.</p>
+    <p>Enfin, ces mesures <b>ne disent rien</b> du coût, de la durée de vie, du comportement sous la
+    pluie ni du nombre de colis livrés par heure. Elles valent pour ce qu'elles ont mesuré, le jour
+    où elles l'ont mesuré.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: mesurer, c'est d'abord fixer les conditions. Une
+  mesure prouve ce qu'elle a mesuré, dans les conditions où elle l'a mesuré — pas davantage.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: comparer deux essais faits dans des conditions
+  différentes et croire qu'on a comparé deux objets.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tu sais dire pourquoi chaque condition du protocole est
+  imposée, lire le tableau, et nommer une chose que ces mesures ne permettent pas de conclure.</p>
+</section>
+</div>
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<section class="card">
+  <h2>📊 Activité 4 — L'indicateur multicritère, au tableur <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> traiter des données pour éclairer un choix · <b>Compétence</b>
+  5e_C3.3 · <b>CRCN 1.3 Traiter des données, niveau 2</b> · <b>Production</b> un classeur avec une
+  colonne d'indicateur, un tri et un filtre · <b>Ressource</b>
+  <a href="donnees_vehicules_dernier_kilometre_shanghai_simulees.csv">le fichier de données simulées</a></div>
+
+  <p>Ouvre le fichier de données dans un tableur. Il contient les vingt colonnes des trois solutions.
+  <b>Le cahier des charges du centre logistique&nbsp;:</b></p>
+  <ul>
+    <li>transporter au moins <b>80 kg</b> de colis par tournée&nbsp;;</li>
+    <li>tenir une tournée de <b>35 km</b> sans recharger&nbsp;;</li>
+    <li>circuler dans des ruelles étroites (adaptation aux ruelles ≥ 4 sur 5)&nbsp;;</li>
+    <li>rouler par tous les temps (adaptation à la pluie ≥ 3 sur 5).</li>
+  </ul>
+
+  <h4>a) Filtrer selon le cahier des charges</h4>
+  <div class="assoc"><label for="a4_1">Combien de solutions respectent les <b>quatre</b> exigences&nbsp;?</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>une seule</option><option>deux</option><option>les trois</option><option>aucune</option></select></div>
+  <div class="assoc"><label for="a4_2">Laquelle&nbsp;?</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>S1, le vélo-cargo</option><option>S2, la fourgonnette</option>
+      <option>S3, le robot</option><option>aucune ne convient</option></select></div>
+  <div class="assoc"><label for="a4_3">Sur quel critère S3 est-il écarté&nbsp;?</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>l'adaptation à la pluie, à 2 sur 5, en dessous du seuil de 3</option>
+      <option>sa charge utile, insuffisante</option>
+      <option>son rayon de braquage, trop grand</option>
+      <option>son bruit, trop élevé</option></select></div>
+  <div class="assoc"><label for="a4_4">Et S2&nbsp;?</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>l'adaptation aux ruelles, à 2 sur 5, en dessous du seuil de 4</option>
+      <option>son autonomie, insuffisante</option>
+      <option>sa charge utile, insuffisante</option>
+      <option>sa réparabilité, trop faible</option></select></div>
+
+  <h4>b) Construire l'indicateur</h4>
+  <p>Ajoute une colonne <code>indicateur</code> et fais calculer, pour chaque solution&nbsp;:
+  <code>autonomie ÷ énergie par km + réparabilité + adaptation ruelles</code>. Une formule, recopiée
+  vers le bas — jamais trois calculs à la main.</p>
+  <div class="assoc"><label for="a4_5">Pourquoi écrire une formule plutôt que taper les trois résultats&nbsp;?</label>
+    <select id="a4_5"><option value="">— choisir —</option>
+      <option>parce qu'en changeant une donnée, tous les résultats se recalculent seuls — et parce que la formule montre le raisonnement</option>
+      <option>parce que c'est plus rapide à taper</option>
+      <option>parce que le tableur refuse les nombres saisis</option>
+      <option>parce que le professeur l'a demandé</option></select></div>
+  <div class="assoc"><label for="a4_6">Cet indicateur mélange une autonomie, une réparabilité et une note sur 5. Que faut-il en penser&nbsp;?</label>
+    <select id="a4_6"><option value="">— choisir —</option>
+      <option>c'est un outil d'aide à la décision, utile mais discutable : il faut dire ce qu'on a choisi d'y mettre</option>
+      <option>c'est une mesure scientifique exacte</option>
+      <option>il ne sert à rien, seul le prix compte</option>
+      <option>il donne la bonne réponse à coup sûr</option></select></div>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Pour le filtre, traite les exigences <b>une par une</b>, et note à chaque fois qui tombe. Une
+    solution est écartée dès qu'elle rate <b>une seule</b> exigence.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Les quatre exigences&nbsp;: charge ≥ 80, autonomie ≥ 35, ruelles ≥ 4, pluie ≥ 3. S1 donne
+    120 · 55 · 5 · 3&nbsp;: tout passe. S2 donne 650 · 210 · 2 · 5&nbsp;: les ruelles bloquent.
+    S3 donne 80 · 38 · 5 · 2&nbsp;: la pluie bloque.</p></details>
+
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Une seule</b> solution passe les quatre exigences&nbsp;: <b>S1</b>, le vélo-cargo. S2 a la
+    charge et l'autonomie pour elle, mais ne passe pas dans les ruelles (2 sur 5 pour un seuil de 4).
+    S3 est parfait en ruelle mais tient mal la pluie (2 sur 5 pour un seuil de 3).</p>
+    <p>Remarque importante&nbsp;: aucune des trois n'est «&nbsp;mauvaise&nbsp;». Chacune est excellente
+    sur quelque chose. C'est le <b>cahier des charges</b> qui tranche, pas la qualité en soi.</p>
+    <p>Une <b>formule</b> vaut mieux qu'un résultat tapé pour deux raisons&nbsp;: elle se recalcule
+    quand une donnée change, et elle <b>montre le raisonnement</b> — un lecteur peut la vérifier, la
+    discuter, la corriger. Un nombre tapé ne se discute pas&nbsp;: on ne sait pas d'où il vient.</p>
+    <p>Enfin, un indicateur qui additionne une autonomie, une note de réparabilité et une note sur 5
+    n'est pas une mesure&nbsp;: c'est un <b>choix</b>. Il aide à décider à condition de dire ce qu'on
+    y a mis, et pourquoi.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un cahier des charges transforme une opinion en
+  décision. Ce n'est pas «&nbsp;quelle solution est la meilleure&nbsp;», c'est «&nbsp;laquelle
+  respecte les exigences&nbsp;».</p>
+  <p><b>Critère de réussite</b>&nbsp;: ton classeur contient une colonne calculée par formule, un tri
+  et un filtre, et tu sais dire sur quelle exigence chaque solution écartée est tombée.</p>
+</section>
+
+<section class="card">
+  <h2>🧭 Activité 5 — Décider, et assumer la décision <span style="color:var(--sub);font-size:.8em">(~20 min)</span></h2>
+  <div class="meta"><b>Objectif</b> choisir et argumenter · <b>Compétence</b> 5e_C3.3 ·
+  <b>Production</b> un choix écrit avec sa limite et une adaptation</div>
+
+  <div class="assoc"><label for="a5_1">Le centre change d'avis&nbsp;: il veut désormais livrer 400 kg par tournée sur 150 km, hors du centre-ville. Quelle solution devient la bonne&nbsp;?</label>
+    <select id="a5_1"><option value="">— choisir —</option>
+      <option>S2, la fourgonnette : le besoin a changé, donc la réponse aussi</option>
+      <option>S1, puisqu'elle gagnait déjà</option>
+      <option>S3, parce qu'il freine le plus court</option>
+      <option>aucune : il faut racheter une camionnette thermique</option></select></div>
+  <div class="assoc"><label for="a5_2">Que montre ce changement&nbsp;?</label>
+    <select id="a5_2"><option value="">— choisir —</option>
+      <option>qu'une solution n'est jamais bonne dans l'absolu : elle est bonne pour un besoin donné</option>
+      <option>que notre première réponse était fausse</option>
+      <option>que le tableur s'était trompé</option>
+      <option>que les données étaient mal choisies</option></select></div>
+
+  <div class="assoc">
+    <label for="a5_choix">Rédige ta réponse au responsable du centre&nbsp;: la solution retenue, deux raisons appuyées sur des données, <b>une limite</b> que tu assumes, et une adaptation nécessaire si le même service était monté en Martinique.</label>
+    <textarea id="a5_choix" style="min-height:130px" aria-label="Ta réponse au responsable : solution retenue, deux raisons chiffrées, une limite, une adaptation pour la Martinique"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul>
+      <li>«&nbsp;Je vous conseille la solution ____.&nbsp;»</li>
+      <li>«&nbsp;D'abord parce que ____ (donnée&nbsp;: ____).&nbsp;»</li>
+      <li>«&nbsp;Ensuite parce que ____ (donnée&nbsp;: ____).&nbsp;»</li>
+      <li>«&nbsp;Sa limite est ____&nbsp;: elle ne convient pas si ____.&nbsp;»</li>
+      <li>«&nbsp;En Martinique, il faudrait adapter ____, à cause de ____.&nbsp;»</li>
+    </ul>
+  </details>
+
+  <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+  <p class="feedback" id="fb5" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Avec 400 kg sur 150 km hors centre-ville, c'est <b>S2</b> qui l'emporte&nbsp;: elle seule a la
+    charge utile et l'autonomie, et la contrainte des ruelles a disparu du besoin.</p>
+    <p>Ce retournement est la leçon de la séquence. Notre première réponse n'était pas fausse&nbsp;:
+    elle répondait à un autre besoin. <b>Une solution technique n'est jamais bonne dans l'absolu.</b></p>
+    <p>Pour la Martinique&nbsp;: fortes pluies et humidité salines toute l'année, reliefs marqués,
+    et un risque cyclonique qui impose un abri. Le vélo-cargo demanderait au minimum une protection
+    du conducteur et une vérification de la tenue à la corrosion&nbsp;; le robot, lui, tombe
+    d'emblée sur son 2 sur 5 à la pluie.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: choisir, c'est comparer des solutions <b>à un
+  besoin</b>, pas entre elles. Changez le besoin, la bonne réponse change.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: chercher «&nbsp;la meilleure solution&nbsp;». La
+  question n'a pas de sens tant qu'on n'a pas écrit le cahier des charges.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <p>💭 <b>Rappel de ton hypothèse de départ&nbsp;:</b></p>
+  <p id="rappelHyp" style="display:none;color:var(--warn)"><span id="hypRappelTxt"></span></p>
+  <div class="assoc"><label for="hyp_retour">Ton avis a-t-il changé&nbsp;? Corrige ou complète avec ce que tu sais maintenant.</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ après les activités"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Au départ je pensais que ____.&nbsp;»</li>
+    <li>«&nbsp;Maintenant je sais que ____, parce que ____ me l'a montré.&nbsp;»</li>
+    <li>«&nbsp;Ce qui a changé mon avis, c'est ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
+    <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai appris qu'on caractérise un objet par ____, ____ et ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris que l'étape du cycle de vie qui pèse le plus est ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'un protocole sert à ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan2">Ce que je sais maintenant faire&nbsp;:</label>
+    <textarea id="bilan2" aria-label="Ce que je sais maintenant faire"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je sais maintenant repérer ____ dans un objet technique.&nbsp;»</li>
+    <li>«&nbsp;Je sais maintenant comparer deux solutions en ____.&nbsp;»</li>
+    <li>«&nbsp;Je sais maintenant justifier un choix en ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan3">Ce que je dois encore revoir&nbsp;:</label>
+    <textarea id="bilan3" aria-label="Ce que je dois encore revoir"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li>
+    <li>«&nbsp;Pour progresser, la prochaine fois je ____.&nbsp;»</li></ul></details>
+  <h3>Je me positionne</h3>
+  <div class="assoc"><label for="pos1">5e_C3.1 — repérer matériaux, énergie et information&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je confonds encore source et forme d'énergie</option>
+      <option>🟠 Maîtrise fragile — j'y arrive avec le tableau sous les yeux</option>
+      <option>🟢 Maîtrise satisfaisante — je repère les trois entrées sur un objet nouveau</option>
+      <option>⭐ Très bonne maîtrise — j'explique aussi pourquoi tel matériau a été retenu</option></select></div>
+  <div class="assoc"><label for="pos2">5e_C3.2 — les étapes du cycle de vie influencées&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je ne retiens pas les étapes</option>
+      <option>🟠 Maîtrise fragile — je cite les étapes mais pas leur lien avec les choix</option>
+      <option>🟢 Maîtrise satisfaisante — je relie une donnée à l'étape qu'elle concerne</option>
+      <option>⭐ Très bonne maîtrise — j'argumente que l'utilisation domine, avec une durée</option></select></div>
+  <div class="assoc"><label for="pos3">5e_C3.4 — mesurer et comparer avec un protocole&nbsp;:</label>
+    <select id="pos3"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je mesure sans fixer les conditions</option>
+      <option>🟠 Maîtrise fragile — j'applique le protocole si on me le rappelle</option>
+      <option>🟢 Maîtrise satisfaisante — j'applique le protocole et j'explique ses conditions</option>
+      <option>⭐ Très bonne maîtrise — je dis aussi ce que la mesure ne prouve pas</option></select></div>
+  <div class="assoc"><label for="pos4">5e_C3.3 — choisir et argumenter&nbsp;:</label>
+    <select id="pos4"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je choisis sans critère</option>
+      <option>🟠 Maîtrise fragile — je choisis avec un seul critère</option>
+      <option>🟢 Maîtrise satisfaisante — je choisis avec le cahier des charges et je justifie</option>
+      <option>⭐ Très bonne maîtrise — j'assume une limite et je sais quand la réponse changerait</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence t'attend&nbsp;: <b>30 questions</b> dont 3 illustrées, sur les matériaux,
+  l'énergie, le cycle de vie, la mesure et le choix.</p>
+  <p>Chaque réponse fausse y est expliquée — c'est là qu'est le travail, bien plus que dans le score.</p>
+  <p style="text-align:center"><a class="btn qcm" href="qcm_5e_C3.1-C3.4_shanghai.html">🚚 Lancer le QCM de la séquence</a></p>
+</section>
+
+<section class="card approfondissement">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Trois défis ouverts, sans vérificateur&nbsp;: il n'y a pas une seule bonne réponse.</p>
+  <p><b>1.</b> Le centre veut ajouter un quatrième critère&nbsp;: le bruit, parce qu'il livre à 6 h du
+  matin près d'habitations. Réécris le cahier des charges et regarde si la réponse change.</p>
+  <p><b>2.</b> Invente la cinquième solution qui manquerait au tableau pour battre S1 sur ce besoin
+  précis. Donne-lui ses vingt colonnes, et vérifie qu'elles sont cohérentes entre elles.</p>
+  <p><b>3.</b> Le même service, à Sainte-Luce&nbsp;: relief, pluie, sel, cyclone. Que faudrait-il
+  changer au cahier des charges avant même de regarder les véhicules&nbsp;?</p>
+</section>
+</div>
+</main>
+<footer class="page">
+  <p>Séquence 5e_C3.1 · C3.2 · C3.3 · C3.4 — Thème 1 · Technologie cycle 4 (2024).
+  Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
+</footer>
+<script>
+"use strict";
+const KEY="seq_5e_C3.1-C3.4_shanghai";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"la matière dont un objet est fait, choisie pour ses propriétés",
+               be_2:"ce qui lui fournit l'énergie dont il a besoin pour fonctionner",
+               be_3:"renseigner le système sur son environnement : il informe, il n'agit pas"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🎫 Tes outils sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule juste en dessous, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+  1: function(){
+    const att={a1_1:"il est léger tout en restant résistant : moins de masse à déplacer, donc moins d'énergie",
+               a1_2:"des carrosseries de formes complexes, légères et non conductrices, autour de ses capteurs",
+               a1_3:"une batterie rechargeable", a1_4:"électrique",
+               a1_5:"sa masse est près de 28 fois supérieure : déplacer 1350 kg coûte plus que 48 kg",
+               a1_6:"S1 (contrôleur et afficheur) → S2 (calculateur, capteurs, navigation) → S3 (capteurs, cartographie, calculateur, supervision)",
+               a1_7:"une personne suit son trajet à distance et peut reprendre la main : il est automatisé, pas autonome"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:7,extra:"",valide:ok>=6};
+  },
+  2: function(){
+    const att={a2_1:"l'extraction des matières premières", a2_2:"l'utilisation",
+               a2_3:"la fin de vie, et la durée pendant laquelle on repousse cette fin de vie",
+               a2_4:"l'utilisation, parce qu'elle dure des années et se répète chaque jour",
+               a2_5:"un écart de consommation par km, même petit, devient énorme multiplié par des années d'usage",
+               a2_6:"ne vaut que pour l'étape d'utilisation : l'extraction et la fabrication, elles, ont un coût"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const redige = val("a2_just").trim().length >= 60;
+    return {score:ok,total:6,valide: ok>=5 && redige,
+      extra: redige ? "" : " Il manque ta justification écrite : trois phrases suffisent, et la version étayée est là pour t'aider."};
+  },
+  3: function(){
+    const att={a3_1:"parce qu'une masse différente change la distance de freinage : on ne comparerait plus les véhicules",
+               a3_2:"parce qu'une mesure isolée peut être ratée : la moyenne de trois essais est plus fiable",
+               a3_3:"rien : il compare deux conditions différentes, pas deux véhicules",
+               a3_4:"S3, le robot",
+               a3_5:"sa masse est bien plus grande : plus il y a de masse lancée, plus il faut de distance pour l'arrêter",
+               a3_6:"le rayon de braquage : c'est lui qui dit si le véhicule peut tourner"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const redige = val("a3_conc").trim().length >= 60;
+    return {score:ok,total:6,valide: ok>=5 && redige,
+      extra: redige ? "" : " Il manque ta conclusion écrite — dont une chose que ces mesures NE prouvent pas."};
+  },
+  4: function(){
+    const att={a4_1:"une seule", a4_2:"S1, le vélo-cargo",
+               a4_3:"l'adaptation à la pluie, à 2 sur 5, en dessous du seuil de 3",
+               a4_4:"l'adaptation aux ruelles, à 2 sur 5, en dessous du seuil de 4",
+               a4_5:"parce qu'en changeant une donnée, tous les résultats se recalculent seuls — et parce que la formule montre le raisonnement",
+               a4_6:"c'est un outil d'aide à la décision, utile mais discutable : il faut dire ce qu'on a choisi d'y mettre"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:6,extra:"",valide:ok>=5};
+  },
+  5: function(){
+    const att={a5_1:"S2, la fourgonnette : le besoin a changé, donc la réponse aussi",
+               a5_2:"qu'une solution n'est jamais bonne dans l'absolu : elle est bonne pour un besoin donné"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a5_choix").trim();
+    const complet = t.length >= 120;
+    return {score:ok,total:2,valide: ok===2 && complet,
+      extra: complet ? "" : " Ta réponse au responsable doit contenir la solution, deux raisons chiffrées, une limite et une adaptation martiniquaise."};
+  }
+};
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle explique aussi les réponses fausses."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    if(n!=="0") window.__valid[n] = !!r.valide;
+    else window.__valid[0] = !!r.valide;   // le billet est FAIT dès qu'il est répondu
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3], s4:[4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Caractériser les trois solutions", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses outils (sans note)"},
+    {n:1, libelle:"Repérer matériaux, énergie et traitement de l'information"}]},
+  s2:{titre:"Séance 2 — Le cycle de vie", taches:[
+    {n:2, libelle:"Relier chaque donnée à l'étape du cycle qu'elle concerne, et justifier"}]},
+  s3:{titre:"Séance 3 — Mesurer avec un protocole", taches:[
+    {n:3, libelle:"Appliquer le protocole, exploiter le tableau, dire ce qu'il ne prouve pas"}]},
+  s4:{titre:"Séance 4 — Choisir et argumenter", taches:[
+    {n:4, libelle:"Filtrer au tableur selon le cahier des charges et calculer l'indicateur"},
+    {n:5, libelle:"Rédiger le choix, sa limite et l'adaptation martiniquaise"}]}
+};
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>
