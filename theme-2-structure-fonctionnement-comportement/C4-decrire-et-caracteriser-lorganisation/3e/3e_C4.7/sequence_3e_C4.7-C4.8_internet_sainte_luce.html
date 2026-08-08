@@ -140,6 +140,11 @@
     details{border-color:#999;background:#fff}
     a{color:#111}
   }
+
+  /* Règle d'or n°29 — mode essentiel : alléger la lecture sans retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
 </style>
 </head>
 <body>
@@ -178,7 +183,9 @@
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 
 <div class="progress-wrap">
@@ -776,7 +783,29 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
-restore(); majReseau(); majProgress(); majHyp();
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+(function(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    document.body.classList.toggle("essentiel");
+    window.__exp = window.__exp || {};
+    window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+    majEssentiel();
+    if(typeof save === "function") save(false);
+  });
+})();
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majReseau(); majProgress(); majHyp();
 </script>
 </body>
 </html>

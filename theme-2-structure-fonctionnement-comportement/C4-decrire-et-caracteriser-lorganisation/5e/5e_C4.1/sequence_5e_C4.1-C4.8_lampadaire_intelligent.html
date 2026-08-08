@@ -140,6 +140,11 @@
     details{border-color:#999;background:#fff}
     a{color:#111}
   }
+
+  /* Règle d'or n°29 — mode essentiel : alléger la lecture sans retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
 </style>
 </head>
 <body>
@@ -176,7 +181,9 @@
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 7 activités validées</b></span>
@@ -396,7 +403,7 @@
       <div class="assoc"><label for="e3_e3">Expérience 3 — nuit (10 %) + passage : la LED est…</label><select id="e3_e3"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
       <div class="assoc"><label for="e3_e4">Expérience 4 — plein jour (80 %) + passage : la LED est…</label><select id="e3_e4"><option value="">— choisir —</option><option>éteinte</option><option>en veille (faible)</option><option>à pleine puissance</option></select></div>
       <h4>c) La règle de décision</h4>
-      <p>SI il fait <select id="e3_r1" style="width:auto;display:inline-block"><option value="">…</option><option>nuit</option><option>jour</option></select> ET que quelqu'un <select id="e3_r2" style="width:auto;display:inline-block"><option value="">…</option><option>passe</option><option>dort</option></select> ALORS pleine puissance ; SI nuit sans passage ALORS <select id="e3_r3" style="width:auto;display:inline-block"><option value="">…</option><option>veille</option><option>pleine puissance</option><option>éteint</option></select>.</p>
+      <p>SI il fait <select id="e3_r1" style="width:auto;display:inline-block" aria-label="Expérience 4 — plein jour (80 %) + passage : la LED est…"><option value="">…</option><option>nuit</option><option>jour</option></select> ET que quelqu'un <select id="e3_r2" style="width:auto;display:inline-block" aria-label="Expérience 4 — plein jour (80 %) + passage : la LED est…"><option value="">…</option><option>passe</option><option>dort</option></select> ALORS pleine puissance ; SI nuit sans passage ALORS <select id="e3_r3" style="width:auto;display:inline-block" aria-label="Expérience 4 — plein jour (80 %) + passage : la LED est…"><option value="">…</option><option>veille</option><option>pleine puissance</option><option>éteint</option></select>.</p>
       <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
@@ -805,7 +812,29 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
-restore(); majLampe(); majProgress(); majHyp();
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+(function(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    document.body.classList.toggle("essentiel");
+    window.__exp = window.__exp || {};
+    window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+    majEssentiel();
+    if(typeof save === "function") save(false);
+  });
+})();
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majLampe(); majProgress(); majHyp();
 </script>
 </body>
 </html>
