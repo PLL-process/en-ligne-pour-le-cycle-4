@@ -259,6 +259,45 @@
 
 <!-- ══════ SÉANCE 1 ══════ -->
 <div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card" id="billetEntree">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils de 5e (4 min, <b>sans note</b>)</h2>
+  <p>Cette séquence s'appuie sur ce que tu as appris en 5e avec le lampadaire. Trois questions,
+  <b>aucune note</b>&nbsp;: elles servent à t'aiguiller, pas à te juger.</p>
+  <p>Si l'une te résiste, la capsule de rattrapage juste en dessous te remet en selle en trois
+  minutes. Personne ne regarde tes réponses.</p>
+  <div class="assoc"><label for="be_1">Un <b>capteur</b>, dans un objet technique, sert à&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>renseigner le système sur son environnement (il informe, il n'agit pas)</option>
+      <option>agir sur le monde extérieur (il pousse, il chauffe, il éclaire)</option>
+      <option>stocker l'énergie pour la nuit</option>
+      <option>relier l'objet à Internet</option></select></div>
+  <div class="assoc"><label for="be_2">Une <b>batterie</b> dans une chaîne d'énergie&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>STOCKE l'énergie sous forme chimique, puis la restitue</option>
+      <option>CONVERTIT l'énergie lumineuse en énergie électrique</option>
+      <option>ACQUIERT la température de l'air</option>
+      <option>fabrique de l'énergie à partir de rien</option></select></div>
+  <div class="assoc"><label for="be_3">«&nbsp;Éclairer la rue&nbsp;» est&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>une fonction technique : elle dit à quoi ça sert, pas avec quoi on le fait</option>
+      <option>une solution technique : c'est le nom du composant</option>
+      <option>un matériau</option>
+      <option>un procédé de fabrication</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule5e"><summary>🎒 Je révise en 3 minutes (capsule de rattrapage 5e)</summary>
+    <p>Un <b>capteur</b> informe&nbsp;: il transforme une grandeur du monde (lumière, humidité,
+    température) en information exploitable. Un <b>actionneur</b>, lui, agit&nbsp;: moteur, lampe,
+    pompe.</p>
+    <p>La <b>chaîne d'énergie</b> se lit avec des verbes&nbsp;: ALIMENTER, STOCKER, DISTRIBUER,
+    CONVERTIR. Une batterie <b>stocke</b> — elle ne fabrique rien et ne transforme pas l'usage de
+    l'énergie.</p>
+    <p>Une <b>fonction technique</b> commence par un verbe à l'infinitif et dit <i>à quoi ça
+    sert</i>. Une <b>solution technique</b> nomme le composant retenu&nbsp;: c'est <i>avec quoi on
+    le fait</i>.</p>
+  </details>
+</section>
+
 <section class="card">
   <h2>⚡ Séance 1 — La chaîne d'énergie du jardin (4e_C4.1 · C4.2)</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : d'où vient l'énergie qui arrose les bacs — et sous quelles formes voyage-t-elle ?</p>
@@ -766,7 +805,7 @@ majEssentiel(); majBacs(); majPannes(); majProgress(); majHyp();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
-  "s1": {titre:"Séance 1 — La chaîne d'énergie", taches:[{n:1, libelle:"Suivre l'énergie du soleil jusqu'à l'eau"}]},
+  "s1": {titre:"Séance 1 — La chaîne d'énergie", taches:[{n:0, libelle:"Billet d'entrée : vérifier ses acquis de 5e (sans note)"}, {n:1, libelle:"Suivre l'énergie du soleil jusqu'à l'eau"}]},
   "s2": {titre:"Séance 2 — La chaîne d'information", taches:[{n:2, libelle:"Construire la chaîne d'information du jardin"}, {n:3, libelle:"Suivre le voyage de la donnée jusqu'à la table"}]},
   "s3": {titre:"Séance 3 — Dépanner le réseau", taches:[{n:4, libelle:"Résoudre les trois pannes du réseau"}]},
   "s4": {titre:"Séance 4 — Matériaux et procédés", taches:[{n:5, libelle:"Enquêter sur quatre pièces du jardin"}]}
@@ -790,6 +829,34 @@ majProgress = (function(precedent){
   return function(){ const r = precedent.apply(this, arguments); majTaches(); return r; };
 })(majProgress);
 majTaches();
+
+/* ══════ Règle d'or n°26 — billet d'entrée (sans note : il oriente, il ne sanctionne pas) ══════ */
+CHECKS[0] = function(){
+  const att = {be_1:"renseigner le système sur son environnement (il informe, il n'agit pas)",
+               be_2:"STOCKE l'énergie sous forme chimique, puis la restitue",
+               be_3:"une fonction technique : elle dit à quoi ça sert, pas avec quoi on le fait"};
+  let ok = 0, vides = 0;
+  Object.entries(att).forEach(([id, v]) => { const x = $(id).value;
+    if(!x) vides++; else if(x === v) ok++; });
+  return {score: ok, total: 3, valide: true, vides: vides};
+};
+document.querySelector('[data-check="0"]').addEventListener("click", () => {
+  const r = CHECKS[0](), fb = $("fb0");
+  fb.className = "feedback show";
+  let msg = r.score + " / 3 réponses justes.";
+  if(r.vides) msg += " Réponds d'abord aux " + r.vides + " question(s) restante(s) — aucune note, aucun enjeu.";
+  else if(r.score === 3) msg += " 🎫 Tes outils de 5e sont là : file à l'activité 1.";
+  else if(r.score === 2) msg += " Presque : ouvre la capsule ci-dessous, trois minutes suffiront.";
+  else msg += " Ce n'est pas grave du tout : la capsule ci-dessous reprend l'essentiel, puis reviens ici.";
+  fb.textContent = msg;
+  if(r.score < 3 && r.vides === 0) $("capsule5e").open = true;
+  window.__exp = window.__exp || {};
+  window.__exp["billet_fait"] = 1;
+  // Le billet est fait dès qu'il est RÉPONDU : il oriente, il ne sanctionne pas.
+  // Il ne compte donc pas dans les activités validées, seulement dans le bandeau.
+  window.__valid[0] = (r.vides === 0);
+  save(false); majProgress();
+});
 </script>
 </body>
 </html><p>🧪 <a href="atelier_pix_crcn_jardin.html">Atelier Pix — Les données du jardin connecté</a> : prouve 3 compétences CRCN (1.3, 3.4, 5.1) et génère ta trace.</p>

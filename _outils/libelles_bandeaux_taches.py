@@ -62,6 +62,7 @@ L["sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html"] = {
 
 L["sequence_4e_C4.1-C4.9_jardin_connecte.html"] = {
  "s1": ("Séance 1 — La chaîne d'énergie", [
+   (0, "Billet d'entrée : vérifier ses acquis de 5e (sans note)"),
    (1, "Suivre l'énergie du soleil jusqu'à l'eau")]),
  "s2": ("Séance 2 — La chaîne d'information", [
    (2, "Construire la chaîne d'information du jardin"),
