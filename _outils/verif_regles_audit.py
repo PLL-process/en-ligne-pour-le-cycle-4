@@ -271,7 +271,13 @@ def main(argv: list[str]) -> int:
     sortie_json = "--json" in argv
     cibles = [a for a in argv[1:] if not a.startswith("--")]
     racines = [RACINE / c for c in cibles] if cibles else [RACINE]
-    fichiers = sorted({f for r in racines for f in r.glob("**/sequence_*.html")})
+    # Le motif "sequence_*.html" laissait échapper toutes les séquences nommées avec des
+    # traits d'union — dont la plus grosse du dépôt (121 ko, 4e_C1.4). Six fichiers de
+    # séquence n'ont jamais été analysés depuis la création de cet outil : ils n'avaient
+    # pas d'anomalie, ils étaient invisibles. Un contrôle ne vérifie que ce qu'il regarde.
+    fichiers = sorted({f for r in racines
+                       for motif in ("**/sequence_*.html", "**/sequence-*.html", "**/sequence.html")
+                       for f in r.glob(motif)})
 
     rapports = [analyser(f) for f in fichiers]
     if sortie_json:
