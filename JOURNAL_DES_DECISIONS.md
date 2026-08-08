@@ -1900,3 +1900,76 @@ Manquements mécaniques du Thème 2 : **33 → 20**. La règle n°31 ne compte p
 thème. Restent les diagnostics d'entrée (n°26), les bandeaux de tâches (n°30), le mode essentiel de
 la seule banque DNB héritée (écart assumé), et la règle n°23 en «&nbsp;?&nbsp;» sur les
 séquences-îlots — une absence de donnée, pas une conformité.
+
+---
+
+## 08/08/2026 — Les tableaux de bord des tâches : 79 libellés écrits à la main
+
+### La règle que j'avais échoué à mécaniser le matin même
+
+C'est la deuxième tentative sur la règle n°30. La première, au matin, avait produit des lignes
+comme «&nbsp;Séance 1 — étape 1/1 · ☐ c) Je conclus mon inspection&nbsp;»&nbsp;: l'extraction
+automatique prenait les `<h2>` pour des noms d'activité alors qu'ils portent le titre de la
+SÉANCE, et les titres intermédiaires sont des fragments de phrase. J'avais retiré le code et
+écrit au journal que *mécaniser une règle de forme est facile, mécaniser une règle de sens ne
+l'est pas*.
+
+La bonne réponse n'était pas «&nbsp;pas d'outil&nbsp;». C'était **un outil qui pose ce qu'un
+humain a écrit** — exactement la forme retenue pour les versions étayées quelques heures plus tôt,
+et qui a bien fonctionné.
+
+### Ce qui a été fait
+
+**79 tâches** réparties sur **quatorze séquences**, chacune avec un libellé rédigé à la main. Un
+libellé dit ce que l'élève **fait**, à l'infinitif, en une ligne lisible d'un coup d'œil&nbsp;:
+
+> Séance 3 — Prouver le voyage — étape 1 sur 2
+> ☐ Rapporter les preuves : ping, TTL et tracert
+> ☐ Mener les deux expériences du poste-frontière
+
+Le titre de l'activité disait «&nbsp;Les preuves du voyage&nbsp;»&nbsp;: c'est un thème. Le bandeau
+dit «&nbsp;rapporter les preuves&nbsp;»&nbsp;: c'est une action qu'on peut cocher. La différence
+tient en un verbe, et c'est toute la règle.
+
+La barre de progression **compte**&nbsp;; ce bandeau **situe**. C'est ce dont a besoin l'élève
+attentionnellement fragile&nbsp;: savoir où il en est sans relire la page.
+
+### Les deux gardes du poseur
+
+`poser_bandeaux_taches.py` refuse d'écrire un fichier dans deux cas&nbsp;:
+
+- si la liste des tâches écrites ne recouvre pas **exactement** les boutons `data-check` présents
+  dans la page — un libellé orphelin afficherait une case qu'on ne peut jamais cocher, et une
+  tâche oubliée en cacherait une à faire&nbsp;;
+- si une clé de séance n'existe pas dans la page.
+
+Les deux gardes ont servi pendant l'écriture&nbsp;: elles ont attrapé deux séquences (4e_C6.1 et
+5e_C6.1) où un bouton de vérification supplémentaire est **imbriqué dans une activité existante**,
+et non à la suite. L'ordre des tâches du bandeau suit donc l'ordre de lecture de la page, pas la
+numérotation des boutons.
+
+### Une leçon de méthode sur mes propres tests
+
+La suite de tests a d'abord échoué sur une séquence… qui était **conforme**. Mon test lisait la
+séance active dans `data-panel`, alors que la séquence 3e_C6.2 — celle que j'ai écrite ce matin —
+identifie ses onglets par `id="tab-s1"`. Le défaut était dans le test, pas dans la page.
+
+*Un test qui échoue ne prouve pas que la page est fausse&nbsp;: il prouve qu'il y a un désaccord.*
+Il faut chercher lequel des deux a tort avant de corriger quoi que ce soit. Le test lit désormais
+les deux conventions.
+
+Corollaire à retenir pour la suite&nbsp;: le dépôt a **deux façons** de nommer un onglet de séance.
+Ce n'est pas grave, mais tout code qui les parcourt doit accepter les deux.
+
+### Les tests
+
+Quinze séquences rechargées au navigateur, et pour chacune&nbsp;: aucune erreur JavaScript, bandeau
+visible, mention «&nbsp;étape 1 sur N&nbsp;» présente, **chaque onglet de séance affichant son
+propre bloc non vide**, case qui passe bien à ☑ quand l'activité est validée, bandeau **resté
+visible en mode essentiel**, et aucun défilement horizontal introduit. **15 séquences, 0 défaut.**
+
+### Le bilan chiffré
+
+Manquements mécaniques du Thème 2 : **20 → 6**. Il ne reste que les cinq diagnostics d'entrée
+(n°26) et le mode essentiel de la seule banque DNB héritée, écart déjà assumé. Le compteur était à
+**61** ce matin.
