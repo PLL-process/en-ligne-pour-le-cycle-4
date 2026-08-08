@@ -84,3 +84,32 @@ Un cas mérite d'être nommé pour éviter qu'on le prenne un jour pour un oubli
 de `restore()` — et l'outil de rétrofit a refusé de la traiter plutôt que d'y poser un mode essentiel
 à moitié câblé. Son statut d'audit devient **ressource d'entraînement**, ce qui est sa nature réelle.
 Ce manquement est donc **assumé**, pas en attente.
+
+---
+
+## Mise à jour du 08/08/2026 (2) — les versions étayées du Thème 2 (règle n°31)
+
+**33 → 20 manquements.** Les treize séquences du Thème 2 qui exigeaient une production écrite
+sans proposer de version étayée en ont désormais une pour **chacune** de leurs zones de rédaction :
+**67 blocs**, écrits à la main, zone par zone.
+
+Ce n'est pas un rétrofit mécanique. Les amorces sont dans `_outils/amorces_versions_etayees.py`,
+rédigées une par une à partir de la consigne réelle ; `_outils/poser_versions_etayees.py` ne fait
+que les installer, et **refuse d'écrire un fichier** dont toutes les amorces n'ont pas été écrites.
+C'est la leçon du bandeau de tâches : mécaniser une règle de forme est facile, mécaniser une règle
+de sens ne l'est pas.
+
+Un cas mérite d'être noté. La séquence 3e_C6.1 contient un `textarea` qui n'est **pas** une zone de
+rédaction : c'est l'éditeur de code Python (`clTa`). Y poser une version étayée aurait été absurde.
+Le script l'a laissé de côté et l'a dit en clair dans son compte rendu — un outil doit annoncer ce
+qu'il n'a pas traité, pas le passer sous silence.
+
+### Ce qui reste : 20 manquements
+
+- **n°26 diagnostic d'entrée** — les séquences qui s'appuient sur l'année précédente sans billet
+  d'entrée sans note ;
+- **n°30 tableau de bord des tâches** — les libellés doivent être écrits à la main, séance par
+  séance ;
+- **n°29 mode essentiel** — uniquement la banque d'entraînement DNB héritée, écart déjà assumé ;
+- **n°23 durée** — reste en «&nbsp;?&nbsp;» sur les séquences-îlots, qui n'annoncent aucune durée
+  par activité : c'est une absence de donnée, pas une conformité.
