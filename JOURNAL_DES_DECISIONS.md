@@ -3738,3 +3738,81 @@ ne donne pas celui d'effacer sans mémoire.
 
 Le premier volet — *on ouvre le dossier avant d'y écrire* — est inchangé, et reste celui des deux
 qui m'a réellement pris en défaut.
+
+---
+
+## Audit global des trois thèmes — 8 août 2026
+
+Premier audit mené sur l'ensemble du dépôt depuis que Fable en a la charge complète. **39 séquences
+vivantes** dans les trois thèmes (9 autres sont archivées et hors périmètre), passées à **neuf
+contrôles mécanisés**.
+
+### Ce que cet audit regarde — et ce qu'il ne regarde pas (règle n°47)
+
+**Mécanisé, donc établi** : les consignes de production sans champ de saisie (n°67), la définition
+de la fonction technique par « à quoi ça sert » (n°53), les blocs obligatoires de la règle n°4, le
+mode essentiel (n°29), les corrigés absents derrière un Bonus (n°43), les appels réseau (n°40), les
+variables de gabarit non remplacées, les sauvegardes locales manquantes.
+
+**Non mécanisable, donc NON couvert** : la justesse pédagogique du contenu, la qualité des corrigés,
+la progressivité réelle, l'ergonomie en classe. Ce rapport ne dit rien de ce qui s'enseigne bien.
+
+Toutes les comparaisons normalisent apostrophes et accents. Le premier jet cherchait
+« t'entraîner » avec une apostrophe droite et déclarait absents des blocs présents.
+
+### Le résultat
+
+| Règle | Défaut | Nombre |
+|---|---|---|
+| **n°40** | appel réseau (la page ne fonctionne pas hors ligne) | 26 |
+| **n°43** | Bonus sans corrigé | 23 |
+| **n°29** | mode essentiel absent | 16 |
+| **n°67** | consigne de production sans aucun champ de saisie | 3 |
+| **n°4** | bloc d'entraînement absent | 3 |
+| **n°4** | bloc Bonus absent | 3 |
+| **n°53** | fonction technique définie comme fonction d'usage | 3 |
+| **n°49** | sauvegarde locale absente alors qu'il y a des champs | 1 |
+
+| Thème | Manquements | Séquences en défaut |
+|---|---|---|
+| theme-1 | 23 | 10 |
+| theme-2 | 35 | 17 |
+| theme-3 | 20 | 7 |
+**78 manquements sur 34 séquences.** Cinq séquences seulement sont mécaniquement propres, et ce sont
+les cinq dernières produites : Chengdu 5e_C1, Pékin 3e_C2, Hangzhou 4e_C2, Shenzhen 3e_C3, Shanghai
+5e_C3. Le gabarit actuel tient ; c'est tout ce qui le précède qui ne le suit pas.
+
+### Ce qui compte vraiment, dans l'ordre
+
+**1. Les erreurs enseignées — trois pages définissent la fonction technique par « à quoi ça sert »,
+qui est la fonction d'usage.** `5e_C1.2` (freins), `4e_C4.1` (jardin connecté) et `4e_C4.1_book-train`.
+Nuance importante pour les deux dernières : leur *intention* est juste — elles opposent la fonction
+technique (« à quoi ça sert ») à la solution technique (« avec quoi on le fait »), et cette
+opposition est excellente. C'est la *formulation* qui entre en collision avec la notion voisine. La
+réparation n'est donc pas de supprimer l'opposition mais de la dire autrement : **ce que ça doit
+FAIRE** contre **avec quoi on le fait**.
+
+**Une quatrième page était en défaut : la mienne, corrigée le matin même.** J'avais réparé le billet
+d'entrée du 5e_C2 et laissé, trois lignes plus bas, la capsule de révision qui répétait la même
+définition fausse — plus l'ancienne triade des interacteurs, règles comprises. Le motif m'avait
+échappé parce qu'il était coupé par un retour à la ligne. **Une correction qui n'a pas cherché
+toutes les occurrences n'est pas une correction.** Corrigé, et les 47 tests du lot repassent.
+
+**2. Trois séquences annoncent une production et n'offrent aucun champ** (n°67) : `5e_C1.2`,
+`4e_C1.1` et `3e_C1.1` — les deux dernières étant les séquences « Tsinghua » de 12 ko. Ce sont des
+documents à lire déguisés en activités.
+
+**3. Vingt-trois Bonus sans corrigé** (n°43) : la dette annoncée en juillet, maintenant chiffrée.
+
+**4. Vingt-six pages appellent le réseau** (n°40) : elles ne fonctionnent pas hors ligne, ce qui est
+la promesse du dépôt.
+
+**5. Seize pages sans mode essentiel** (n°29), trois sans bloc d'entraînement et trois sans Bonus.
+
+### Ce que l'audit n'a pas pu faire, et qui revient à une branche Thème 2
+
+L'outil vit dans `/tmp` : `_outils/` appartient au périmètre du Thème 2, et cette branche est une
+branche Thème 1. Il doit y être versé, avec les mécanisations en attente — n°47 (périmètre déclaré),
+n°51 (titre affiché), n°53, n°54 (nombres recalculés) et n°67. Et la n°31 doit être **retournée** :
+elle passe au vert devant une page sans aucune zone de rédaction, si bien qu'une séquence vide se
+note mieux qu'une séquence imparfaite.
