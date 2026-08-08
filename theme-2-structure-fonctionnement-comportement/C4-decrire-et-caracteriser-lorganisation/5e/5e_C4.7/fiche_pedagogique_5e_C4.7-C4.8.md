@@ -9,8 +9,8 @@
 | Thème | Thème 2 — Structure, fonctionnement, comportement |
 | Compétence parente | C4 — Décrire et caractériser l'organisation d'un OST |
 | Référentiel | BO n°9 du 29/02/2024 · codes arbitrés par `_outils/data_competences.py` (règle n°21) |
-| Domaines du socle | D2 « Les méthodes et outils pour apprendre » (coopération pilote/copilote, jeu de rôles, outils numériques) · D4 « Les systèmes naturels et les systèmes techniques » (conception-réalisation du schéma, démarche scientifique du doublon) — détail par activité dans la séquence |
-| CRCN | 5.1 Résoudre des problèmes techniques (niv. 2, cartouche règle n°7 en act. 5) · 5.2 travaillée non évaluée |
+| Domaines du socle | D2 « Les méthodes et outils pour apprendre » (coopération pilote/copilote, jeu de rôles, outils numériques) · D4 « Les systèmes naturels et les systèmes techniques » (conception-réalisation du schéma, démarche scientifique du doublon) — rattachement officiel du référentiel du dépôt. En complément, D1 « Les langages pour penser et communiquer » est réellement mobilisé (lire un schéma technique, écrire une adresse normalisée, rédiger ce qu'un test prouve) : utile pour le LSU, explicité dans la séquence |
+| CRCN | 5.1 Résoudre des problèmes techniques (niv. 2, cartouche règle n°7 en act. 5) · 5.2 Évoluer dans un environnement numérique et 2.3 Collaborer, travaillées non évaluées (binôme pilote/copilote, jeu du facteur) |
 | Logiciel embarqué | Cisco Packet Tracer **8.2** (version vérifiée en conditions réelles) — doctrine « obligatoire sur classique » |
 | Durée | 3 séances de 55 min |
 
@@ -61,8 +61,10 @@ code, QCM 30 q.
 
 Packet Tracer 8.2 (compte Cisco de classe à préparer AVANT la séance : la fenêtre de connexion est
 obligatoire). Mini-simulateur d'enveloppe intégré à la page (hors ligne, aucune donnée envoyée).
-Versions : 🅰 observation réelle des prises et de la borne de la salle — **observation seulement, on ne
-touche jamais au réseau pédagogique** ; 🅱 Packet Tracer (cœur de l'atelier) ; 🅲 sans matériel — jeu du
+Versions : 🅰 **matériel réel sur réseau ISOLÉ** — observation des prises et de la borne de la salle
+(**observation seulement, on ne touche jamais au réseau pédagogique**), ou, si l'établissement dispose d'un
+commutateur dédié non relié au réseau pédagogique, un TP à 2 PC (192.168.50.10 / .20, ping puis doublon
+provoqué) ; 🅱 Packet Tracer (cœur de l'atelier) ; 🅲 sans matériel — jeu du
 facteur + schémas + mini-simulateur. Aucune manipulation électrique : tout est logiciel.
 
 ## Différenciation, inclusion, accessibilité
@@ -76,6 +78,11 @@ par l'animation du mini-simulateur) ; impression A4 ; minuteur QCM désactivable
 langue calibrée 12 ans.
 
 ## Évaluation
+
+Billet d'entrée (4 min, 3 questions, **sans note**) : diagnostic des acquis de 6e avec capsule de
+rattrapage « Les mots de départ » ; il oriente, il ne sanctionne pas.
+Un **mode essentiel** (bouton en tête de page, persistant) masque référentiel, corrections et compléments
+pour les élèves que la densité met en difficulté.
 
 Formatif : vérificateurs par activité (encoches ✔/✘, messages gradués), 4 relevés logiciels, verrou
 expérientiel du mini-simulateur, QCM 30 q avec bilan par compétence (report LSU direct sur les 2 codes).

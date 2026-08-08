@@ -605,7 +605,12 @@ OVERLAY = {
                 "synthèses élève/professeur, fiche, matrice, 7 SVG CC0, fichier "
                 ".pkt maître, cartouche CRCN 5.1 (règle n°7), rapport de tests. "
                 "Approfondit les act. 5-6 du lampadaire (5e_C4.1) ; vocabulaire "
-                "strictement 5e (masque/passerelle/routage exclus, réservés 4e/3e).",
+                "strictement 5e (masque/passerelle/routage exclus, réservés 4e/3e). "
+                "RÉTROFIT AUDIT (08/08/2026) : billet d'entrée sans note + capsule "
+                "de rattrapage, mode essentiel persistant, domaine 1 du socle "
+                "explicité, CRCN 2.3 ajouté, encadré « premier ping : ne panique "
+                "pas », valeurs dites réellement observées, version 🅰 en réseau "
+                "ISOLÉ (TP 2 PC + commutateur dédié) — 24/24 tests dédiés.",
         anomalies="Aucune.",
         accessibilite="Clavier + skip-link, aria/alt, listes déroulantes (DYS), "
                       "reduced-motion (mini-simulateur compris), impression A4, "

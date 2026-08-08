@@ -83,6 +83,9 @@
   details.prof summary{color:#e2b8ff}
   .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
   .retenir b{color:var(--ok)}
+  body.essentiel .referentiel-card, body.essentiel details.correction, body.essentiel .approfondissement{display:none}
+  .retenir.warn{background:rgba(255,214,107,.10);border-color:#8a6d1d}
+  .retenir.warn b{color:var(--warn)}
   .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
   .erreurs b{color:var(--err)}
   .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
@@ -170,8 +173,8 @@
   <span class="badge code">5e_C4.7</span>
   <span class="badge code">5e_C4.8</span>
   <span class="badge theme">Thème 2 · Structure, fonctionnement, comportement</span>
-  <span class="badge socle">Socle : D2 · D4</span>
-  <span class="badge crcn">CRCN : 5.1 (niv. 2)</span>
+  <span class="badge socle">Socle : D2 · D4 (+ D1)</span>
+  <span class="badge crcn">CRCN : 5.1 (niv. 2) · 2.3 · 5.2</span>
   <span class="badge duree">3 séances de 55 min</span>
 </div>
 
@@ -185,7 +188,10 @@
   <button class="btn" id="btnSave">💾 Sauvegarder</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections
+et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" aria-live="polite"></p>
 
 <div class="progress-wrap">
@@ -215,7 +221,7 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card referentiel-card">
   <h2>📚 Le référentiel de l'atelier — en toutes lettres</h2>
   <p style="font-size:.88em;color:var(--sub)">Chaque code est écrit ici en entier, avec ce que l'élève FAIT réellement pour le travailler. Les activités rappellent leur compétence sous leur titre.</p>
   <h4>Compétences de technologie (programme 2024)</h4>
@@ -224,14 +230,30 @@
   <h4>Socle commun — domaines et composantes mobilisés</h4>
   <p><b>D2 — Les méthodes et outils pour apprendre</b>&nbsp;: composante «&nbsp;coopération et réalisation de projets&nbsp;» (binômes pilote/copilote à rôles tournants, jeu de rôles du facteur) et composante «&nbsp;outils numériques pour échanger et communiquer&nbsp;» (le simulateur, le fichier .pkt nommé et rangé).</p>
   <p><b>D4 — Les systèmes naturels et les systèmes techniques</b>&nbsp;: composante «&nbsp;conception, création, réalisation&nbsp;» (concevoir SON schéma puis le réaliser en simulation) et composante «&nbsp;démarches scientifiques&nbsp;» (hypothèse de départ, expérience du doublon, preuve par le ping).</p>
+  <h4>Et le domaine 1 du socle&nbsp;?</h4>
+  <p>Le référentiel du dépôt rattache officiellement ces deux codes à <b>D2</b> et <b>D4</b>&nbsp;: c'est ce
+  qui est affiché en haut de page. Mais l'atelier mobilise aussi, en pratique, le <b>domaine 1 — Les langages
+  pour penser et communiquer</b>&nbsp;: on y <em>lit un schéma comme un document technique</em> (act. 2),
+  on y <em>écrit une adresse dans une notation normalisée</em> (act. 4) et on y <em>rédige ce qu'un test
+  prouve</em> (act. 5). C'est utile à savoir pour le remplissage du LSU&nbsp;: la trace écrite de cet
+  atelier est évaluable côté langages, pas seulement côté systèmes techniques.</p>
+
   <h4>CRCN (cadre de référence des compétences numériques)</h4>
   <p><b>5.1 — Résoudre des problèmes techniques</b>, niveau 2 visé — repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;» → <em>provoquer, diagnostiquer puis réparer le doublon d'adresse (act. 5, cartouche complet dans l'activité)</em>. La compétence <b>5.2 — Évoluer dans un environnement numérique</b> est travaillée (manipulation guidée du simulateur) mais non évaluée.</p>
+  <p>S'y ajoute <b>2.3 — Collaborer</b>, travaillée tout au long de l'atelier par le binôme pilote/copilote à
+  rôles tournants et par le jeu du facteur&nbsp;: produire à deux un même réseau, se relire, se corriger.
+  Elle est travaillée, non évaluée ici — mais elle prépare directement l'atelier de 4e, où le diagnostic se
+  fait à deux.</p>
 </section>
 
 <section class="card">
   <h2>🧰 Trois façons de vivre l'atelier</h2>
   <div class="versions">
-    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec M. Firmin ou le professeur&nbsp;: observer les prises réseau murales de la salle, suivre un câble jusqu'au boîtier à prises multiples, repérer la borne WiFi au plafond. <b>Regarder seulement&nbsp;:</b> on ne touche JAMAIS au réseau du collège — c'est justement pour cela qu'on s'entraîne dans un simulateur.</p></div>
+    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec M. Firmin ou le professeur&nbsp;: observer les prises réseau murales de la salle, suivre un câble jusqu'au boîtier à prises multiples, repérer la borne WiFi au plafond. <b>Regarder seulement&nbsp;:</b> on ne touche JAMAIS au réseau du collège — c'est justement pour cela qu'on s'entraîne dans un simulateur.</p>
+    <p style="font-size:.92em"><b>Variante matériel, si l'établissement le permet&nbsp;:</b> un TP sur un
+    <b>réseau ISOLÉ</b> — deux ordinateurs et un commutateur dédié, <em>non reliés au réseau pédagogique</em>,
+    adresses 192.168.50.10 et 192.168.50.20, ping de l'un vers l'autre, puis panne provoquée en donnant
+    192.168.50.10 aux DEUX machines. Rien d'électrique, rien de branché sur le réseau du collège.</p></div>
     <div class="version vb"><h4>🅱 Simulation (le cœur de l'atelier)</h4><p>Construire le réseau complet dans <b>Cisco Packet Tracer 8.2</b>, poste par poste, câble par câble — puis le tester avec de vrais messages. Toutes les captures de cette page viennent du vrai logiciel.</p></div>
     <div class="version vc"><h4>🅲 Sans ordinateur</h4><p>Jouer le réseau en vrai avec le jeu du facteur (activité 1), lire les schémas de la page (identiques à l'écran du logiciel), et utiliser le mini-simulateur d'enveloppe intégré à l'activité 5.</p></div>
   </div>
@@ -245,6 +267,57 @@
 
 <!-- ═══════════════════════ SÉANCE 1 ═══════════════════════ -->
 <div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
+
+<div class="activite">
+  <header><span class="num">Billet d'entrée</span><h3>Je vérifie mes bagages avant de partir</h3><span class="duree">⏱ 4 min, sans note</span></header>
+  <div class="consigne"><b>Aucune note, aucun piège&nbsp;:</b> juste trois questions pour savoir d'où tu pars.
+  Ce que tu as vu en 6e sur les objets techniques suffit largement.
+  <br>➜ <b>3 bonnes réponses&nbsp;:</b> tu peux jouer l'activité 1 tout de suite.
+  <br>➜ <b>2 ou moins&nbsp;:</b> ouvre la capsule «&nbsp;Les mots de départ&nbsp;» juste en dessous — 3 minutes, et tu repars à égalité.</div>
+
+  <div class="exo">
+    <label for="p0_1">Deux appareils qui s'échangent des informations, on dit qu'ils…</label>
+    <select id="p0_1">
+      <option value="">— je choisis —</option>
+      <option>communiquent : chacun peut envoyer et recevoir</option>
+      <option>se ressemblent</option>
+      <option>sont branchés sur la même prise électrique</option>
+      <option>appartiennent au même élève</option>
+    </select>
+
+    <label for="p0_2">Pour qu'un courrier arrive à la bonne personne, il faut avant tout…</label>
+    <select id="p0_2">
+      <option value="">— je choisis —</option>
+      <option>une adresse qui désigne UNE seule destination</option>
+      <option>une belle enveloppe</option>
+      <option>que le facteur soit rapide</option>
+      <option>que tout le monde s'appelle pareil</option>
+    </select>
+
+    <label for="p0_3">Dans un objet technique, un câble sert à…</label>
+    <select id="p0_3">
+      <option value="">— je choisis —</option>
+      <option>faire passer quelque chose d'un point à un autre : de l'énergie ou de l'information</option>
+      <option>décorer l'appareil</option>
+      <option>tenir l'appareil en place</option>
+      <option>rien : c'est le WiFi qui fait tout</option>
+    </select>
+
+    <button class="btn check" data-check="0">Vérifier mon billet d'entrée</button>
+    <div class="feedback" id="fb0" aria-live="polite"></div>
+
+    <details class="aide1" id="capsule6e"><summary>🎒 Les mots de départ — 3 minutes</summary>
+      <p><b>Communiquer</b>, entre deux appareils, ce n'est pas «&nbsp;se ressembler&nbsp;»&nbsp;: c'est
+      <em>s'échanger des informations dans les deux sens</em>. Ton téléphone <b>envoie</b> une photo et
+      <b>reçoit</b> une confirmation&nbsp;: il communique.</p>
+      <p>Une <b>adresse</b>, c'est ce qui désigne <em>une seule</em> destination. S'il y a deux «&nbsp;Léa&nbsp;»
+      dans la classe et qu'on écrit juste «&nbsp;Léa&nbsp;» sur l'enveloppe, la livraison devient impossible.
+      C'est exactement le problème que tu vas résoudre dans cet atelier.</p>
+      <p>Un <b>câble</b> transporte&nbsp;: soit de l'<b>énergie</b> (le fil électrique), soit de l'<b>information</b>
+      (le câble réseau). Les deux existent dans la salle, et on ne les confond pas.</p>
+    </details>
+  </div>
+</div>
 
 <div class="activite">
   <header><span class="num">Activité 1</span><h3>Le facteur du réseau — on joue avant d'apprendre</h3><span class="duree">⏱ ≈ 20 min</span></header>
@@ -578,8 +651,14 @@
   REMETTRE 192.168.10.40. Utiliser aussi le mini-simulateur ci-dessous pour rejouer la panne sans risque.</div>
   <figure style="margin:14px 0">
     <img src="Images/pt_ping_simulation.svg" alt="À gauche, le terminal de PC0 : la commande ping 192.168.10.20 reçoit quatre réponses Reply from en moins d'une milliseconde avec zéro pour cent de perte, puis le ping vers le smartphone 192.168.10.50 reçoit quatre réponses en 57 à 260 millisecondes — le WiFi répond plus lentement que le câble. À droite, le mode Simulation : l'enveloppe verte est posée sur Switch0 entre PC0 et PC1, et la liste d'événements affiche 0,001 PC0, 0,002 Switch0, 0,003 PC1. En bas, la conclusion : le message passe toujours par le centre de l'étoile, qui lit l'adresse et choisit la bonne branche." style="width:100%;border-radius:12px;border:1px solid var(--border)">
-    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Les deux preuves, telles qu'elles s'affichent réellement dans Packet Tracer 8.2.</figcaption>
+    <figcaption style="font-size:.8em;color:var(--sub);text-align:center">Les deux preuves, telles qu'elles s'affichent réellement dans Packet Tracer 8.2&nbsp;— <b>valeurs réellement observées pendant notre simulation</b>, pas des chiffres inventés. Les tiennes seront proches, jamais identiques au millième près&nbsp;: c'est normal.</figcaption>
   </figure>
+
+  <div class="retenir warn"><b>⚠ Premier ping&nbsp;: ne panique pas.</b> Le tout premier essai peut afficher
+  un ou deux «&nbsp;<span style="font-family:'Fira Code',monospace">Request timed out</span>&nbsp;» avant que
+  les réponses arrivent&nbsp;: le réseau est en train d'apprendre les correspondances entre les adresses.
+  <b>Relance le même ping une deuxième fois</b> avant de conclure à une panne. Ça nous est arrivé pendant
+  notre propre session — et ça arrivera en salle info.</div>
 
   <div class="exo" id="miniSimBloc">
     <h4>🎮 Mini-simulateur — l'enveloppe dans l'étoile (à faire, il compte pour la validation)</h4>
@@ -812,6 +891,19 @@ window.__valid = window.__valid || {};
 const txt = id => String($(id).value||"").replace(/\u00a0/g," ").trim().toLowerCase();
 const val = id => String($(id).value||"").replace(/\u00a0/g," ").replace(/\s+/g," ").trim();
 const CHECKS = {
+  /* Billet d'entrée : diagnostic sans note — il oriente, il ne sanctionne pas. */
+  0: function(){
+    const att={p0_1:"communiquent : chacun peut envoyer et recevoir",
+               p0_2:"une adresse qui désigne UNE seule destination",
+               p0_3:"faire passer quelque chose d'un point à un autre : de l'énergie ou de l'information"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    let extra;
+    if(vides) extra = " Réponds d'abord aux " + vides + " question" + (vides>1?"s":"") + " restante" + (vides>1?"s":"") + " — il n'y a aucune note à la clé.";
+    else if(ok===3) extra = " 🎒 Bagages complets : file à l'activité 1, tu as tout ce qu'il faut.";
+    else extra = " Rien de grave : ouvre la capsule « Les mots de départ » juste en dessous (3 minutes), puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides&&ok===3};
+  },
   1: function(){
     let ok=0;
     const att={e1_1:"ne peut plus choisir : la livraison devient un pari",
@@ -898,7 +990,22 @@ function majProgress(){
   $("progBar").setAttribute("aria-valuenow", n);
   const par = {s1:[1,2], s2:[3], s3:[4,5]};
   Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  const next = [1,2,3,4,5].find(k=>!v[k]);
+  if(next) $("progTxt").textContent += " · prochaine étape : activité " + next;
 }
+
+/* ══════ Mode essentiel ══════ */
+function majEssentiel(){
+  const on = document.body.classList.contains("essentiel");
+  $("btnEssentiel").textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  $("btnEssentiel").setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp = window.__exp || {};
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(false);
+});
 
 /* ══════ Rappel d'hypothèse ══════ */
 function majHyp(){
@@ -908,7 +1015,9 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
-restore(); majProgress(); majHyp();
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
 </script>
 </body>
 </html>
