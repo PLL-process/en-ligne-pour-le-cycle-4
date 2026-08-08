@@ -12,8 +12,10 @@ with sync_playwright() as p:
     # ── SÉQUENCE ──
     pg.goto(SEQ); pg.wait_for_timeout(600)
     t("séquence : aucune erreur JS au chargement", not errs, str(errs))
+    bandeau = pg.inner_text("#tachesBandeau")
     t("séquence : bandeau de tâches affiché (n°30)",
-      "étape 1 sur 2" in pg.inner_text("#tachesBandeau"), pg.inner_text("#tachesBandeau").split("\n")[0])
+      "Séance 1" in bandeau and "étape 1 sur" in bandeau and "☐" in bandeau,
+      bandeau.split("\n")[0])
     # billet d'entrée sans note
     pg.click('button[data-check="0"]'); pg.wait_for_timeout(200)
     m0 = pg.inner_text("#fb0")

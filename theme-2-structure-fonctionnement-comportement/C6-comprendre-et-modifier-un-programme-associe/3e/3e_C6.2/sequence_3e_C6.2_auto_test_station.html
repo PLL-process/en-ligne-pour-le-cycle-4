@@ -952,7 +952,9 @@ const CHECKS = {
     if(vides) extra = " Réponds d'abord aux " + vides + " question" + (vides>1?"s":"") + " restante" + (vides>1?"s":"") + " — aucune note n'est prise.";
     else if(ok===3) extra = " 🎫 Tes outils sont là : file à l'activité 1.";
     else extra = " Rien de grave, et aucune note n'est prise : ouvre la capsule « Je révise en 3 minutes » juste en dessous, puis refais le billet.";
-    return {score:ok,total:3,extra:extra,valide:!vides&&ok===3};
+    // Le billet est FAIT dès qu'il est répondu : il oriente, il ne sanctionne pas.
+    // Il ne compte pas dans les 5 activités ; il coche seulement sa ligne au bandeau.
+    return {score:ok,total:3,extra:extra,valide:!vides};
   },
 
   1: function(){
@@ -1053,7 +1055,7 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
     if(r.extra) msg += r.extra;
     fb.textContent = msg;
     if(n !== "0") window.__valid[n] = !!r.valide;
-    save(false); majProgress(); majTaches();
+    save(false); majProgress();
   });
 });
 
@@ -1068,24 +1070,26 @@ function majProgress(){
   Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
   const next = [1,2,3,4,5].find(k=>!v[k]);
   if(next) $("progTxt").textContent += " · prochaine étape : activité " + next;
+  majTaches();   // une seule porte d'entrée, comme partout ailleurs dans le dépôt
 }
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
-  s1:{titre:"Séance 1 — Comprendre et concevoir", taches:[
+  seance1:{titre:"Séance 1 — Comprendre et concevoir", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses acquis de 4e (sans note)"},
     {n:1, libelle:"Classer les entrées et les sorties de l'auto-test"},
     {n:2, libelle:"Concevoir l'algorigramme et le faire relire par le binôme"}]},
-  s2:{titre:"Séance 2 — Écrire l'algorithme", taches:[
+  seance2:{titre:"Séance 2 — Écrire l'algorithme", taches:[
     {n:3, libelle:"Remettre les 8 instructions dans l'ordre et écrire celle qui manque"},
     {n:4, libelle:"Éprouver l'algorithme au banc d'essai (2 essais obligatoires)"}]},
-  s3:{titre:"Séance 3 — Éprouver et valider", taches:[
+  seance3:{titre:"Séance 3 — Éprouver et valider", taches:[
     {n:5, libelle:"Dérouler le tableau de suivi, traiter le cas limite, rédiger le message"}]}
 };
 function majTaches(){
   const hote = $("tachesBandeau"); if(!hote) return;
   const onglet = document.querySelector(".seance-tab.active");
-  const cle = onglet ? (onglet.id||"").replace("tab-","") : "s1";
-  const bloc = TACHES[cle]; if(!bloc){ hote.hidden = true; return; }
+  const bloc = TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden = true; return; }
   hote.hidden = false;
   const v = window.__valid||{};
   const faites = bloc.taches.filter(t=>v[t.n]).length;
@@ -1118,7 +1122,7 @@ $("btnEssentiel").addEventListener("click", ()=>{
 /* ══════ Init ══════ */
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
-majEssentiel(); majProgress(); majTaches(); majHyp();
+majEssentiel(); majProgress(); majHyp();
 </script>
 </body>
 </html>

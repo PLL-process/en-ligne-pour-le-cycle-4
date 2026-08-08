@@ -69,14 +69,36 @@ def regle_23(src: str) -> tuple[str, str]:
     return "OK", detail
 
 
-def regle_26(src: str) -> tuple[str, str]:
-    t = texte_visible(src).lower()
-    invoque = bool(re.search(r"\b(en 5e|en 4e|en 6e|l'an dernier|l'année dernière)\b", t))
-    if not invoque:
-        return "SANS OBJET", "la page ne s'appuie pas explicitement sur l'année précédente"
-    a_diag = ("passeport" in t or "billet d'entrée" in t) and "sans note" in t
+ORDRE_NIVEAUX = {"6e": 0, "5e": 1, "4e": 2, "3e": 3}
+
+
+def texte_de_consigne(src: str) -> str:
+    """Texte réellement lu par l'élève dans le fil de la page.
+
+    On retire ce qui n'est pas de la consigne : les `option` (ce sont des distracteurs,
+    souvent faux par construction) et les corrections repliées (elles commentent APRÈS
+    coup, et disent volontiers « en 5e c'était fourni, en 3e tu l'élabores »).
+    Corrigé le 08/08/2026 : sans ce filtre, la règle n°26 signalait cinq séquences dont
+    quatre n'invoquaient rien du tout.
+    """
+    t = re.sub(r"<option\b.*?</option>", " ", src, flags=re.S | re.I)
+    t = re.sub(r'<details class="correction".*?</details>', " ", t, flags=re.S | re.I)
+    return texte_visible(t)
+
+
+def regle_26(src: str, niveau: str | None = None) -> tuple[str, str]:
+    t = texte_de_consigne(src)
+    rang = ORDRE_NIVEAUX.get(niveau or "", 99)
+    # On ne retient QUE les niveaux antérieurs à celui de la séquence : citer son propre
+    # niveau (« en 4e, on ne reçoit plus le protocole ») n'est pas invoquer un prérequis,
+    # et citer un niveau postérieur (« tu la reverras en 3e ») encore moins.
+    anterieurs = [n for n, r in ORDRE_NIVEAUX.items() if r < rang]
+    motif = "|".join([rf"\ben {n}\b" for n in anterieurs] + [r"l'an dernier", r"l'année dernière"])
+    if not anterieurs or not re.search(motif, t, re.I):
+        return "SANS OBJET", "la page ne s'appuie pas sur une année antérieure"
+    a_diag = ("passeport" in t.lower() or "billet d'entrée" in t.lower()) and "sans note" in t.lower()
     return ("OK", "diagnostic d'entrée sans note présent") if a_diag else (
-        "ECHEC", "la page invoque l'année précédente sans diagnostic d'entrée sans note")
+        "ECHEC", "la page invoque une année antérieure sans diagnostic d'entrée sans note")
 
 
 def regle_29(src: str) -> tuple[str, str]:
@@ -173,7 +195,12 @@ SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "IN
 
 def analyser(chemin: pathlib.Path) -> dict:
     src = chemin.read_text(encoding="utf-8")
-    res = {nom: dict(zip(("etat", "detail"), fn(src))) for nom, fn in REGLES}
+    m = re.match(r"sequence_(\de)", chemin.name)
+    niveau = m.group(1) if m else None
+    res = {}
+    for nom, fn in REGLES:
+        res[nom] = dict(zip(("etat", "detail"),
+                            fn(src, niveau) if fn is regle_26 else fn(src)))
     return {"fichier": str(chemin.relative_to(RACINE)), "regles": res,
             "signalements": signalements(src)}
 

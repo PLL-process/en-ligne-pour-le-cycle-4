@@ -137,3 +137,35 @@ avait produit des tâches trompeuses.
 La règle n°23 reste en «&nbsp;?&nbsp;» sur les séquences-îlots, qui n'annoncent aucune durée par
 activité : c'est une absence de donnée, pas un manquement — et elle demande un jugement
 d'enseignant, pas un script.
+
+---
+
+## Mise à jour du 08/08/2026 (4) — les diagnostics d'entrée (règle n°26)
+
+**6 → 1 manquement.** Et sur les cinq signalements, **un seul** était réel.
+
+Le vérificateur cherchait «&nbsp;en 5e&nbsp;», «&nbsp;en 4e&nbsp;», «&nbsp;l'an dernier&nbsp;»
+n'importe où dans la page. Il comptait donc comme invocation d'un prérequis&nbsp;:
+
+- un **distracteur** de liste déroulante («&nbsp;…parce que plier est interdit en 4e&nbsp;») ;
+- une **correction repliée** qui raconte la progression («&nbsp;en 5e la chaîne était fournie, en
+  3e tu l'as élaborée&nbsp;») ;
+- une **annonce de la suite** («&nbsp;tu la verras de près en 4e et en 3e&nbsp;», dans une
+  séquence de 5e) ;
+- le **niveau de la séquence elle-même** («&nbsp;en 4e, on ne reçoit plus le protocole&nbsp;»,
+  dans une séquence de 4e).
+
+`regle_26` ne lit désormais que le texte de consigne — hors `option`, hors correction repliée — et
+ne retient qu'un niveau **antérieur** à celui de la séquence, déduit de son nom de fichier.
+
+Une seule séquence invoquait réellement l'année précédente sans filet&nbsp;:
+`sequence_4e_C4.1-C4.9_jardin_connecte.html` («&nbsp;En 5e vous avez appris à lire UN objet
+simple&nbsp;»). Elle a reçu son billet d'entrée sans note, avec capsule de rattrapage de 5e.
+
+### Ce qui reste : 1 manquement
+
+Le mode essentiel de `sequence_algorigrammes_dnb.html`, la banque d'entraînement héritée — écart
+assumé et documenté depuis le lot 3e_C6.2.
+
+La règle n°23 reste en «&nbsp;?&nbsp;» sur les séquences-îlots&nbsp;: absence de donnée, et
+jugement d'enseignant.

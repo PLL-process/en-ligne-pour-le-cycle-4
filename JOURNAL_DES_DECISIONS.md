@@ -1973,3 +1973,71 @@ visible en mode essentiel**, et aucun défilement horizontal introduit. **15 sé
 Manquements mécaniques du Thème 2 : **20 → 6**. Il ne reste que les cinq diagnostics d'entrée
 (n°26) et le mode essentiel de la seule banque DNB héritée, écart déjà assumé. Le compteur était à
 **61** ce matin.
+
+---
+
+## 08/08/2026 — Diagnostics d'entrée : quatre manquements sur cinq n'existaient pas
+
+### Ce que j'ai trouvé en allant vérifier
+
+Le tableau de bord annonçait cinq séquences à traiter au titre de la règle n°26. Avant d'écrire
+cinq billets d'entrée, je suis allé lire les cinq passages incriminés. **Quatre n'invoquaient
+rien du tout.**
+
+Le vérificateur cherchait «&nbsp;en 5e&nbsp;», «&nbsp;en 4e&nbsp;», «&nbsp;l'an dernier&nbsp;»
+n'importe où dans le fichier. Il comptait donc comme prérequis&nbsp;:
+
+- un **distracteur** de liste déroulante — «&nbsp;…parce que plier est interdit en 4e&nbsp;»,
+  qui est une réponse *fausse*, proposée pour être écartée ;
+- une **correction repliée** qui raconte la progression du cycle — «&nbsp;en 5e la chaîne était
+  fournie, en 4e on la complétait&nbsp;: en 3e, tu l'as élaborée&nbsp;» ;
+- une **annonce de la suite** — «&nbsp;tu la verras de près en 4e et en 3e&nbsp;», dans une
+  séquence de 5e&nbsp;: c'est l'inverse d'un prérequis ;
+- le **niveau de la séquence elle-même** — «&nbsp;en 4e, on ne reçoit plus le protocole&nbsp;:
+  on le PROPOSE&nbsp;», dans une séquence de 4e.
+
+### La correction
+
+`regle_26` ne lit plus que le **texte de consigne**&nbsp;: les `option` et les corrections
+repliées sont retirées avant analyse. Et elle ne retient qu'un niveau **antérieur** à celui de la
+séquence, déduit de son nom de fichier — citer son propre niveau n'est pas invoquer un prérequis,
+citer un niveau postérieur encore moins.
+
+*Leçon, qui rejoint celle de ce matin sur le textarea de l'éditeur de code&nbsp;: un compteur ne
+sait pas ce qu'il compte.* Un vérificateur qui signale trop est aussi dangereux qu'un vérificateur
+qui laisse passer&nbsp;: il fait produire du travail inutile, et il finit par ne plus être cru.
+La bonne réaction devant un tableau de bord n'est pas d'exécuter la liste, c'est d'aller voir.
+
+### Le seul manquement réel
+
+`sequence_4e_C4.1-C4.9_jardin_connecte.html` écrit noir sur blanc «&nbsp;En 5e vous avez appris à
+lire UN objet simple&nbsp;; cette année, vous lisez un système complet&nbsp;» — et n'offrait aucun
+filet à l'élève pour qui la 5e est loin.
+
+Elle a reçu un **billet d'entrée sans note** de trois questions (capteur, batterie dans la chaîne
+d'énergie, fonction contre solution technique), avec **capsule de rattrapage de 5e** qui s'ouvre
+d'elle-même en cas de besoin, et un message qui oriente sans jamais sanctionner. Il ne compte pas
+dans les cinq activités validées&nbsp;: il coche seulement sa ligne au bandeau de tâches.
+
+### Une convention harmonisée au passage
+
+Le dépôt avait **deux façons** de désigner l'onglet de séance actif — `data-panel` partout, sauf
+dans la séquence 3e_C6.2 écrite ce matin, qui lisait `id="tab-s1"`. C'est ce qui avait fait échouer
+ma suite de tests tout à l'heure.
+
+Plutôt que d'apprendre aux tests à vivre avec les deux, j'ai **supprimé la divergence à la
+source**&nbsp;: 3e_C6.2 lit désormais `data-panel` comme tout le monde, et son `majProgress()`
+appelle `majTaches()` — une seule porte d'entrée, comme dans les quatorze autres séquences.
+
+*Un test qui doit connaître deux conventions signale surtout qu'il ne devrait y en avoir qu'une.*
+
+Corollaire tenu&nbsp;: dans les deux séquences qui en ont un, le billet d'entrée est **validé dès
+qu'il est répondu**, pas dès qu'il est juste. Un diagnostic qui exige la perfection pour se cocher
+n'est plus un diagnostic, c'est une épreuve d'entrée — exactement ce que la clause de la règle
+n°26 interdit. 3e_C6.2 était dans ce cas&nbsp;: corrigé.
+
+### Le bilan chiffré
+
+Manquements mécaniques du Thème 2 : **6 → 1**. Il ne reste que le mode essentiel de la banque
+d'entraînement DNB héritée, écart assumé depuis le lot 3e_C6.2. Le compteur était à **61** ce
+matin.
