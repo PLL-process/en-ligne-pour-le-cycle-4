@@ -29,6 +29,10 @@ import json
 import pathlib
 import re
 import sys
+import unicodedata
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import data_competences as dc  # noqa: E402  (le chemin doit être posé avant)
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
 
@@ -180,6 +184,63 @@ def signalements(src: str) -> list[str]:
     return out
 
 
+# ── Règle n°42 : la formulation d'une compétence se recopie, elle ne se reformule pas ──
+#
+# Second volet de la règle n°36. Le premier volet interdit de faire passer un code de
+# classement interne pour une nomenclature officielle ; celui-ci interdit de réécrire le
+# TEXTE d'une compétence. La reformulation est plus discrète, et plus profonde : le lot
+# 5e_C2 a enseigné « esthétique » là où le programme dit « développement durable », et
+# quarante-trois tests l'ont laissé passer.
+#
+# Ce qu'on coupe en premier, c'est la parenthèse — et c'est souvent la parenthèse qui fixe
+# le niveau : « à partir d'un protocole DONNÉ » (4e) contre « DÉFINIR un protocole » (3e).
+
+FORMULATIONS = {}
+for _niv, _table in (("5e", dc.COMP_5E), ("4e", dc.COMP_4E), ("3e", dc.COMP_3E)):
+    for _parent, _lignes in _table.items():
+        for _code, _texte, _socle in _lignes:
+            FORMULATIONS[(_niv, _code)] = _texte
+
+# Mots que la carte peut légitimement ne pas reprendre : le dépôt développe « OST » en
+# « objet ou système technique », ce qui est une explicitation, pas une reformulation.
+MOTS_TOLERES = {"technique", "techniques", "systeme", "systemes", "objet", "objets"}
+
+
+def _pivot(t: str) -> set[str]:
+    """Mots porteurs de sens d'un texte, accents et balises retirés."""
+    t = html.unescape(re.sub(r"<[^>]+>", " ", t))
+    t = unicodedata.normalize("NFKD", t)
+    t = "".join(c for c in t if not unicodedata.combining(c))
+    t = re.sub(r"[’']", "'", t).lower()
+    return set(re.findall(r"[a-z]{5,}", t))
+
+
+def regle_42(src: str) -> tuple[str, str]:
+    m = re.search(r"referentiel-card.*?</table>", src, re.S)
+    if not m:
+        return "SANS OBJET", "la page ne porte pas de carte de référentiel"
+    ecarts, lus = [], 0
+    for tr in re.findall(r"<tr>(?!\s*<th).*?</tr>", m.group(0), re.S):
+        cm = re.search(r"\b(\de)_(C\d+\.\d+)\b", tr)
+        if not cm:
+            continue
+        cle = (cm.group(1), cm.group(2))
+        if cle not in FORMULATIONS:
+            continue
+        cellules = re.findall(r"<td>(.*?)</td>", tr, re.S)
+        if len(cellules) < 2:
+            continue
+        lus += 1
+        manque = _pivot(FORMULATIONS[cle]) - _pivot(cellules[1]) - MOTS_TOLERES
+        if manque:
+            ecarts.append(f"{cm.group(0)} (absents : {', '.join(sorted(manque))})")
+    if not lus:
+        return "SANS OBJET", "aucun code reconnu dans la carte de référentiel"
+    if ecarts:
+        return "ECHEC", "formulation réécrite ou tronquée — " + " ; ".join(ecarts)
+    return "OK", f"les {lus} formulation(s) de la carte sont celles du référentiel"
+
+
 REGLES = [
     ("n°23 durée", regle_23),
     ("n°26 diagnostic d'entrée", regle_26),
@@ -188,6 +249,7 @@ REGLES = [
     ("n°31 version étayée", regle_31),
     ("n°33 aération", regle_33),
     ("n°34 accessibilité", regle_34),
+    ("n°42 formulation du référentiel", regle_42),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
