@@ -140,6 +140,11 @@
     details{border-color:#999;background:#fff}
     a{color:#111}
   }
+
+  /* Règle d'or n°29 — mode essentiel : alléger la lecture sans retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
 </style>
 </head>
 <body>
@@ -179,7 +184,9 @@
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <div class="progress-wrap">
   <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 6 activités validées</b></span>
@@ -358,8 +365,8 @@
       <div class="assoc"><label for="c3_e4">Remplacer ou réparer UNIQUEMENT l'élément localisé</label><select id="c3_e4"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
       <div class="assoc"><label for="c3_e5">Rassembler les constats et relire l'arbre de diagnostic</label><select id="c3_e5"><option value="">n°…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
       <h4>b) La règle de localisation</h4>
-      <p>La panne se situe entre le dernier point de test <select id="c3_r1" style="width:auto;display:inline-block"><option value="">…</option><option>correct</option><option>anormal</option></select> et le premier point <select id="c3_r2" style="width:auto;display:inline-block"><option value="">…</option><option>correct</option><option>anormal</option></select>.</p>
-      <p style="font-size:.9em">Exemple : T1 = 12 V ✔, T2 = 12 V ✔, T3 = signal ✔, T4 = 0 V ✘ → l'élément suspect est <select id="c3_r3" style="width:auto;display:inline-block"><option value="">…</option><option>la batterie</option><option>le fusible</option><option>le câble</option><option>la sirène</option></select>.</p>
+      <p>La panne se situe entre le dernier point de test <select id="c3_r1" style="width:auto;display:inline-block" aria-label="La panne se situe entre le dernier point de test… (son état)"><option value="">…</option><option>correct</option><option>anormal</option></select> et le premier point <select id="c3_r2" style="width:auto;display:inline-block" aria-label="…et le premier point (son état)"><option value="">…</option><option>correct</option><option>anormal</option></select>.</p>
+      <p style="font-size:.9em">Exemple : T1 = 12 V ✔, T2 = 12 V ✔, T3 = signal ✔, T4 = 0 V ✘ → l'élément suspect est <select id="c3_r3" style="width:auto;display:inline-block" aria-label="Dans l'exemple donné, l'élément suspect est"><option value="">…</option><option>la batterie</option><option>le fusible</option><option>le câble</option><option>la sirène</option></select>.</p>
       <h4>c) Sécurité</h4>
       <div class="assoc"><label for="c3_s1">Vrai ou faux : « On peut dépanner ce circuit 12 V au collège, mais jamais un appareil branché sur le secteur 230 V. »</label><select id="c3_s1"><option value="">— choisir —</option><option>vrai</option><option>faux</option></select></div>
       <h4>d) À toi : la pompe du jardin connecté ne démarre plus</h4>
@@ -774,7 +781,29 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
-restore(); simEtat(); majSim(); majProgress(); majHyp();
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+(function(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    document.body.classList.toggle("essentiel");
+    window.__exp = window.__exp || {};
+    window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+    majEssentiel();
+    if(typeof save === "function") save(false);
+  });
+})();
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); simEtat(); majSim(); majProgress(); majHyp();
 </script>
 </body>
 </html>

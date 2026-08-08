@@ -1632,3 +1632,37 @@ Le Thème 2 compte 19 codes complets au lieu de 17.
 questions annoncé et le QCM livré, les quatre états du billet d'entrée, les cinq états du mode essentiel dont
 la persistance, une version étayée par production écrite, l'étiquetage de tous les champs, et les onze
 vérifications du QCM.
+
+## 2026-08-08 — Rétrofit des trois lots « dépannage » (C5) et échec instructif du bandeau automatique
+
+**Décision.** Premier rétrofit de masse après l'écriture des règles n°23 à n°34 : les trois séquences de la
+compétence C5 (5e « dépanner le lampadaire », 4e « dépanner le jardin », 3e « SOS station : réparer ») sont
+mises au **mode essentiel** (n°29) et leurs champs de saisie **entièrement étiquetés** (n°34). Un outil,
+`_outils/retrofit_regles_audit.py`, fait ce travail répétitif et **annonce précisément ce qu'il a modifié**.
+
+**L'échec qu'il faut raconter.** J'ai voulu mécaniser aussi la règle n°30 — le tableau de bord des tâches.
+Le script savait lire la correspondance séance → activités (`const par`) et cocher les tâches faites ; tout
+fonctionnait techniquement. Mais les libellés étaient **trompeurs** : les séquences du dépôt ne nomment pas
+leurs activités. Leurs `<h2>` portent le titre de la *séance*, et les titres intermédiaires sont des
+fragments du genre « c) Je conclus mon inspection ». Le bandeau annonçait donc « Séance 1 — étape 1/1 ·
+☐ c) Je conclus mon inspection » : incompréhensible, et **pire que pas de bandeau du tout pour l'élève
+attentionnellement fragile qu'il vise**. Le code a été retiré du script, et la raison écrite dans sa
+documentation. La règle n°30 reste entière — elle se fera à la main, lot par lot, avec des libellés rédigés.
+
+Leçon de méthode : **mécaniser une règle de forme est facile, mécaniser une règle de sens ne l'est pas.**
+Un outil qui produit une aide fausse est plus nuisible qu'un outil qui refuse de la produire. Le script le
+dit maintenant en toutes lettres : il fait le travail bête et refuse de faire semblant de faire l'autre.
+
+**Trois étiquettes rectifiées à la main.** Sur le lot 3e, trois listes déroulantes sont insérées *dans une
+phrase* (« la panne se situe entre le dernier point de test ▾ et le premier point ▾ »). L'étiquette
+automatique y reprenait le libellé de l'exercice précédent — techniquement conforme, sémantiquement faux
+pour qui écoute la page. Elles ont été réécrites une par une.
+
+**Ce qui reste sur ces trois lots, et qui est écrit dans le rapport d'état :** les durées par activité (n°23),
+le diagnostic d'entrée du lot 4e (n°26), le tableau de bord (n°30) et les versions étayées des productions
+écrites (n°31) — 9 zones de rédaction rien que sur le lot 3e. Ce sont des travaux de rédaction, pas de
+script.
+
+**Tests.** Vérification navigateur des trois pages : aucune erreur JS, bouton présent, corrections
+réellement masquées en mode essentiel, bascule d'onglet intacte. Vérificateur de règles : n°29 ✔ et n°34 ✔
+sur les trois.
