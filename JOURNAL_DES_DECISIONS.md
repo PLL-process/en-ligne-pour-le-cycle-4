@@ -2773,3 +2773,84 @@ séquence qui exige une production sans jamais montrer à quoi elle ressemble, r
 qu'en présence du professeur.
 
 **L'autonomie de l'élève est une propriété de la page, pas une qualité de l'élève.**
+
+---
+
+## 8 août 2026 — Trois précisions demandées par Pascal : le Bonus, les sigles nus, et l'entraînement prématuré
+
+Trois remarques de Pascal, le même jour, qui touchent toutes au même endroit&nbsp;: **ce que l'élève
+peut faire seul devant la page.**
+
+### La règle n°43 s'étend au Bonus
+
+Le Bonus est «&nbsp;facultatif, hors parcours obligatoire&nbsp;» — mais celui qui le fait est
+précisément **celui qui travaille seul**, souvent chez lui, souvent le plus avancé. Lui refuser un
+corrigé, c'est réserver la correction à ceux qui n'en ont pas besoin.
+
+**La règle n°43 s'applique donc au Bonus comme au reste**&nbsp;: chaque défi porte son corrigé
+replié. Quand le défi demande un dessin, un schéma ou une trace, le corrigé porte l'image
+correspondante — un dessin ne se corrige pas par une phrase.
+
+Le chiffre&nbsp;: **33 séquences du dépôt portent un bloc Bonus. Zéro n'a de corrigé.** C'est une
+dette homogène, ce qui la rend au moins facile à traiter en série.
+
+Pour les trois séquences **Packet Tracer**, l'image du corrigé sera un **SVG reconstruit**, pas une
+capture d'écran&nbsp;: la règle n°1 ne se plie pas parce qu'un corrigé serait plus vite fait.
+Décision confirmée par Pascal.
+
+### Règle d'or n°44 — aucun sigle, aucun bouton ne reste nu
+
+La règle n°35 disait déjà «&nbsp;un code n'apparaît jamais seul&nbsp;». Elle visait le texte. Elle
+ne visait pas l'**interface**&nbsp;: nos badges de niveau, nos codes CRCN, nos boutons «&nbsp;mode
+essentiel&nbsp;», «&nbsp;révision ciblée&nbsp;», «&nbsp;marquer à revoir&nbsp;» s'affichent nus, et
+l'élève doit deviner.
+
+**Énoncé.** Tout badge, code, sigle ou bouton porte une explication **à portée immédiate**&nbsp;:
+un `title` pour la souris, un `aria-label` ou `aria-describedby` pour le lecteur d'écran, **et une
+mention en clair** quelque part sur la page.
+
+Le troisième élément n'est pas une redondance de zèle&nbsp;: **une infobulle ne s'ouvre pas au
+doigt.** Sur la tablette d'un collégien, `title` ne s'affiche jamais. Une interface qui ne
+s'explique qu'au survol ne s'explique pas aux élèves qui en ont le plus besoin.
+
+### Règle d'or n°45 — un entraînement s'ouvre sur ce qui a été fait
+
+Pascal signale que le QCM est proposé «&nbsp;presque sur toutes les pages, alors que toutes les
+compétences ne sont pas atteintes&nbsp;».
+
+**Vérification faite** — et elle nuance le constat sans l'annuler. Les 35 séquences du dépôt portent
+**exactement un bouton QCM chacune** (règle n°4 tenue partout), placé dans le dernier panneau de
+séance. Le QCM n'est donc pas sur toutes les pages d'une séquence.
+
+Mais le fond est juste, et il est même plus gênant que la forme&nbsp;: **le QCM couvre tous les
+codes de la séquence**, et rien n'empêche un élève de le lancer après la première séance. Il tombe
+alors sur des questions portant sur ce qu'on ne lui a pas encore enseigné, et il conclut qu'il n'y
+arrive pas.
+
+Le plus intéressant, c'est que **la machine existe déjà**&nbsp;: le gabarit de QCM porte un mode
+«&nbsp;révision ciblée&nbsp;» et un filtre par code. Ce qui manque n'est pas une fonction, c'est de
+le **dire à l'élève** — et de ne pas ouvrir par défaut sur «&nbsp;parcours complet&nbsp;».
+
+**Énoncé.** Un entraînement ne présente jamais par défaut ce qui n'a pas été enseigné. Le bloc
+«&nbsp;Prêt·e à t'entraîner&nbsp;» annonce **le nombre de questions par code**, et le lien porte les
+codes déjà travaillés&nbsp;; le QCM s'ouvre dessus. L'élève garde évidemment l'accès au parcours
+complet — on ne lui interdit rien, on choisit seulement ce qu'on lui propose **en premier**.
+
+Un seul bouton reste la règle (n°4)&nbsp;: c'est la **cible** du bouton qui devient contextuelle,
+pas le nombre de boutons.
+
+### Ce que ces trois règles ont en commun
+
+Aucune ne demande d'écrire un contenu nouveau. Toutes les trois demandent de rendre utilisable ce
+qui existe déjà — un corrigé qu'on avait gardé pour la classe, une fonction qu'on n'avait pas
+annoncée, un sigle qu'on n'avait pas traduit.
+
+C'est le prolongement direct de ce que Pascal a formulé ce matin&nbsp;: **l'autonomie de l'élève est
+une propriété de la page, pas une qualité de l'élève.**
+
+### Ordonnancement
+
+La rentrée approche&nbsp;: le **Thème 1 se termine d'abord** (3e_C2, puis les 15 codes du C1).
+L'audit des corrigés, les infobulles et l'entraînement ciblé se font ensuite, thème par thème. Les
+règles n°43 étendue, n°44 et n°45 s'appliquent **dès maintenant aux lots neufs** — le retrofit des
+anciens attend son tour, mais la dette cesse de croître.
