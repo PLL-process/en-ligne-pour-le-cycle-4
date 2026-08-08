@@ -2638,3 +2638,46 @@ comme tel**.
 
 Séquence, QCM, deux synthèses, fiche, matrice, deux READMEs, manifest, figure SVG et suite de tests
 corrigés. **45 tests sur 45.** Vérificateur&nbsp;: 7 sur 7. Index&nbsp;: 20 sur 20.
+
+---
+
+## 8 août 2026 — Le balayage : trois cartes de référentiel du Thème 1 remises au texte
+
+Après la correction du lot 5e_C2, j'ai écrit un contrôle qui compare la **carte de référentiel de
+chaque séquence du dépôt** aux formulations de `_outils/data_competences.py`. Onze écarts. Aucun
+n'était une substitution comme celle du C2&nbsp;: **tous étaient des troncatures**.
+
+Ce qui ne les rend pas anodines, parce que **ce qu'on coupe en premier, c'est la parenthèse** — et
+c'est souvent la parenthèse qui fixe le niveau.
+
+- `4e_C3.3` disait «&nbsp;à partir d'un protocole&nbsp;»&nbsp;; le référentiel dit «&nbsp;à partir
+  d'un protocole **donné**&nbsp;». Ce mot est toute la différence avec la 3e, qui **définit** le
+  protocole.
+- `4e_C3.2` avait perdu «&nbsp;efficacité énergétique&nbsp;» et surtout «&nbsp;**et arrêter un
+  choix**&nbsp;». La séquence faisait bien arrêter le choix — en séances 4 et 5 — mais la carte
+  annonçait la seule séance 2. La couverture était vraie&nbsp;; la carte la sous-déclarait.
+- `5e_C3.1` écrivait «&nbsp;les formes d'énergie&nbsp;» au singulier là où le référentiel met le
+  pluriel. Minuscule, et corrigé quand même&nbsp;: on ne choisit pas les endroits où l'on recopie
+  fidèlement.
+
+### Ce que je ne corrige pas, et pourquoi
+
+Huit écarts restent, tous dans les lots hérités du **Thème 2** — dont `5e_C4.2` et `5e_C4.5`, qui
+omettent «&nbsp;l'organisation de la chaîne d'énergie **étant fournie**&nbsp;», c'est-à-dire
+exactement la frontière 5e/4e&nbsp;; et `3e_C4.6`, qui écrit «&nbsp;(texte, image, **son**)&nbsp;»
+là où le référentiel dit «&nbsp;(texte, image, **nombre**)&nbsp;».
+
+Ce sont des lots existants d'un autre auteur, et ils sont hors du périmètre d'une branche
+`theme-1`. Signalés à Pascal, non touchés.
+
+### La suite mécanique
+
+Le contrôle a sa place dans `_outils/verif_regles_audit.py`, comme huitième règle vérifiable&nbsp;:
+il viendra par une branche `infra`, `_outils/` étant hors du périmètre du Thème 1.
+
+Une leçon d'outillage vaut d'être notée&nbsp;: ma **première** version du contrôle a signalé dix-neuf
+écarts, dont la quasi-totalité étaient faux. Elle indexait les formulations par le seul code
+(`C2.1`) au lieu du couple niveau + code, si bien qu'elle comparait la 5e au texte de la 3e. Le
+motif est le même que celui de la règle n°26 en juillet et des trois suites de tests qui accusaient
+des pages conformes&nbsp;: **devant un contrôle qui accuse largement, douter du contrôle avant de
+douter du contenu.**

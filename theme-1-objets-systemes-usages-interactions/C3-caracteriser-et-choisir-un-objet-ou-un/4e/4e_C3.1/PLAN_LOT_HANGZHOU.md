@@ -7,8 +7,8 @@ Fable, 08/08/2026. **Rien n'est encore écrit** : ceci est le plan, à exécuter
 | Code | Libellé officiel | Ce que la 5e faisait déjà |
 |---|---|---|
 | 4e_C3.1 | Identifier les **caractéristiques à prendre en compte** dans le choix d'un OST en vue de répondre à un besoin | en 5e, les critères étaient **fournis** dans le cahier des charges |
-| 4e_C3.2 | **Comparer qualitativement et/ou quantitativement** (incidences environnementales, bilan carbone) | en 5e, on comparait des performances d'usage, pas des incidences |
-| 4e_C3.3 | **Choisir les appareils de mesure** à utiliser pour mesurer une performance à partir d'un protocole | en 5e, le protocole **et** les appareils étaient donnés |
+| 4e_C3.2 | **Comparer qualitativement et/ou quantitativement** (incidences environnementales, bilan carbone, efficacité énergétique) plusieurs OST répondant au même besoin **et arrêter un choix** | en 5e, on comparait des performances d'usage, pas des incidences |
+| 4e_C3.3 | **Choisir les appareils de mesure** à utiliser pour mesurer une performance d'un OST à partir d'un protocole **donné** | en 5e, le protocole **et** les appareils étaient donnés |
 
 La progression est nette et il faut la rendre visible à l'élève : **en 5e on applique un cahier des
 charges, en 4e on l'écrit ; en 5e on applique un protocole, en 4e on choisit l'instrument.**
