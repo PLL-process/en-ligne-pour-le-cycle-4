@@ -2116,3 +2116,64 @@ le rappel de cours est intégré, et celles de 3e_C6.2 couvrent les mêmes notio
 sont des choix, pas des oublis — et c'est pour cela qu'elles sont écrites ici et au manifest.
 
 **21 tests Playwright exécutés, 21 passés.**
+
+---
+
+## 08/08/2026 — Archivage de la banque DNB d'origine : le Thème 2 à zéro manquement
+
+### Une erreur de comptage de ma part, d'abord
+
+J'avais écrit la veille au soir que «&nbsp;quatorze fichiers du dépôt font référence&nbsp;» à la
+banque d'origine, et j'en avais conclu que l'archivage serait coûteux. C'était faux&nbsp;: quatorze
+fichiers la **mentionnent**, mais seuls **quatre liens cliquables** pointaient vers elle, dans trois
+fichiers — dont `index.html`, qui est régénéré.
+
+J'avais compté les occurrences d'une chaîne de caractères au lieu de compter les liens. C'est la
+même erreur que celles de la journée, sous une troisième forme&nbsp;: *un compteur ne sait pas ce
+qu'il compte*. Ici elle m'a fait recommander à Pascal de reporter une décision qui coûtait en
+réalité une demi-heure.
+
+### Ce qui a été fait
+
+Les deux fichiers sont déplacés — `git mv`, **contenu non modifié** — vers
+`_archive-anciennes-versions/C6-comprendre-et-modifier-un-programme-associe/3e_C6.2-banque-dnb-v1/`,
+avec un README qui dit ce qu'ils sont, pourquoi ils ont été remplacés, et ce qui a changé au moment
+du déplacement.
+
+Les deux liens réels sont redirigés vers l'entraînement DNB. La synthèse professeur, le README du
+dossier et les deux manifests sont mis à jour. Index et audit régénérés.
+
+### Deux effets de bord qu'il fallait aller chercher
+
+`_outils/heritees.json` porte la règle d'or n°12 dans sa propre note&nbsp;: «&nbsp;une entrée
+disparaît quand le remplaçant est livré et l'ancienne version déplacée dans
+`_archive-anciennes-versions/` (même commit)&nbsp;». Les deux entrées ont donc été retirées **dans
+ce commit**, comme la règle l'exige — pas plus tard, pas dans un autre lot.
+
+`_outils/build_qcms.py` **génère** `qcm_algorigrammes_dnb.html` à partir de `banks_a.ALGO_DNB`. Sans
+rien faire, la prochaine régénération l'aurait **ressuscité dans le dossier actif**, à côté de son
+remplaçant — et le manquement serait revenu sans que personne comprenne pourquoi. La cible du job
+pointe désormais l'archive.
+
+*Leçon&nbsp;: archiver un fichier généré ne se fait pas avec `git mv`.* Il faut suivre le fil
+jusqu'à ce qui le fabrique, sinon l'archivage ne tient qu'un seul cycle de régénération.
+
+### Le Thème 2 à zéro
+
+**61 manquements mécaniques au réveil, 0 ce soir.** Le détail est dans
+`_outils/etat_des_lieux_regles_audit.md`.
+
+Ce qui reste est ce qui doit rester&nbsp;: la règle n°23 en «&nbsp;?&nbsp;» sur les
+séquences-îlots, parce qu'annoncer une durée par activité demande de savoir ce que les classes
+mettent réellement — c'est le jugement de Pascal, pas le mien. Et les règles n°24, 25, 27, 28 et 32,
+que le vérificateur signale sans jamais trancher, par construction.
+
+### Deux liens cassés signalés au Thème 1
+
+Le contrôle des liens de tout le dépôt en a trouvé deux, **hors de mon périmètre**&nbsp;:
+
+- `theme-1/…/5e_C2.1/sequence_5e_C2_shenzhen_station_velos.html` → `qcm_5e_C2_shenzhen_station_velos.html` (absent)&nbsp;;
+- `theme-1/…/5e_C1.1/sequence_5e_C1.1_donnees_tableur_2026.html` → `synthese_eleve_5e_C1.1.html` (absent).
+
+Je ne les corrige pas — ce sont des lots d'un autre auteur, et la garde-périmètre refuserait la PR.
+Ils sont écrits ici pour que quelqu'un les prenne.

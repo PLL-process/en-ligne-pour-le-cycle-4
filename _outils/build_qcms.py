@@ -23,9 +23,12 @@ JOBS = [
     (banks_a.JARDIN, f"{T2C6}/4e/4e_C6.2/qcm_jardin_connecte.html",
      "QCM (24 questions) — Jardin connecté : programmer l'arrosage automatique — 4e (2024)",
      "Les questions ciblent 4e_C6.2 (compléter un programme), avec des liens vers C4.1, C4.5 et C1.4. À faire après la séquence Jardin connecté."),
-    (banks_a.ALGO_DNB, f"{T2C6}/3e/3e_C6.2/qcm_algorigrammes_dnb.html",
-     "QCM (24 questions) — Algorigrammes & logique, spécial DNB — 3e (2024)",
-     "Les questions ciblent 3e_C6.2 (modifier et tester un programme), en préparation de l'épreuve de sciences du brevet."),
+    # Archivé le 08/08/2026 : remplacé par entrainement_dnb_algorigrammes.html (30 exercices,
+    # 90 réfutations). La cible pointe désormais l'archive — sans cela, une régénération
+    # ressusciterait le fichier dans le dossier actif, à côté de son remplaçant.
+    (banks_a.ALGO_DNB, f"{ARCH}/C6-comprendre-et-modifier-un-programme-associe/3e_C6.2-banque-dnb-v1/qcm_algorigrammes_dnb.html",
+     "QCM (24 questions) — Algorigrammes & logique, spécial DNB — 3e (2024) — ARCHIVÉ",
+     "Version archivée le 08/08/2026, remplacée par l'entraînement DNB du dossier 3e_C6.2."),
     (banks_b.DONNEES_5E, f"{T1C1}/5e/5e_C1.1/qcm_donnees_tableur.html",
      "QCM (24 questions) — Collecter, trier et analyser des données — 5e (2024)",
      "Les questions ciblent 5e_C1.1, en lien direct avec la séquence tableur et les fichiers d'exercices du dossier."),

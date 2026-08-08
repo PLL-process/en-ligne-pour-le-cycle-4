@@ -36,18 +36,13 @@ par une variante de B. C'est là qu'est le travail, bien plus que dans le score.
 ➡ [Fiche pédagogique](fiche_pedagogique_entrainement_dnb.md) ·
 [Rapport de tests](rapport_tests_entrainement_dnb.md)
 
-### La version historique, conservée
+### La version d'origine, archivée
 
-➡ [Banque d'origine — 30 exercices](sequence_algorigrammes_dnb.html) ·
-[son QCM de 17 questions](qcm_algorigrammes_dnb.html)
-
-Ces deux fichiers viennent d'une organisation antérieure du dépôt. Ils sont **conservés tels
-quels**, sans modification : quatorze fichiers y font référence. Ils restent utilisables, mais la
-page ci-dessus les remplace avantageusement — sauvegarde, aides à deux niveaux, et surtout les
-réfutations.
-
-Leur statut d'audit est **ressource d'entraînement**, pas « séquence incomplète » : c'est la
-vérité sur ce qu'ils sont.
+La banque dont cette page reprend les notions a été **archivée** le 08/08/2026 dans
+[`_archive-anciennes-versions/`](../../../../_archive-anciennes-versions/C6-comprendre-et-modifier-un-programme-associe/3e_C6.2-banque-dnb-v1/).
+Elle reste consultable — rien n'a été supprimé — mais elle n'est plus proposée aux élèves : ses
+corrections ne réfutaient pas les distracteurs, et deux banques côte à côte dans le même dossier
+auraient fait travailler une partie de la classe sur la moins bonne.
 
 ## 🌀 Le même objet-fil ailleurs en 3e
 
