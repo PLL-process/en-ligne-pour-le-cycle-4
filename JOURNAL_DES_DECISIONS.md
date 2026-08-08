@@ -3474,3 +3474,76 @@ Et il faut lui appliquer sa propre médecine : cet audit n'a lu que les **pages 
 pouvait voir ni les 74 manquements que le vérificateur relève sur 28 séquences, ni la dette des
 corrigés absents (n°43), ni les infobulles manquantes (n°44). Son périmètre est réel, et il ne le
 déclare pas.
+
+---
+
+## La grammaire manquante — inventaire des représentations (8 août 2026)
+
+Pascal signale que le point 10 de l'audit — la table des représentations à conserver — est peut-être
+la raison pour laquelle « on bloquait ». Il a raison, et il faut le dire plus nettement que l'audit
+ne le dit : **le programme 2024 a retiré la grammaire graphique sans la remplacer, nous l'avons
+suivi fidèlement, et nous avons construit des concepts sans vocabulaire partagé.** Or l'inspection
+et les sujets de DNB, eux, parlent encore cette grammaire.
+
+### Ce que le dépôt contient réellement, au 8 août 2026
+
+Inventaire mécanique sur les **156 pages HTML** des trois thèmes, en distinguant « le mot
+apparaît » de « l'élève produit la représentation ».
+
+| Représentation | Présence réelle | Emplacement |
+| --- | --- | --- |
+| Algorigramme | **319 occurrences, enseigné et produit** | Th. 1, 2 et 3 |
+| Chaîne d'information | **166, enseignée et produite** | Thème 2 |
+| Chaîne d'énergie | **164, enseignée et produite** | Thème 2 |
+| Tableau contraintes / exigences | **341, enseigné et produit** | Th. 1 (4e_C2) et 2 |
+| Cahier des charges | **58, réellement rédigé par l'élève** | 4e_C2, 3e et 4e C1 hérités |
+| Schéma fonctionnel / blocs | **36, enseigné** | Thème 2 |
+| Croquis | 7 occurrences — **toutes des citations du référentiel** | jamais produit par l'élève |
+| Modélisation | 5 occurrences — le mot, jamais la chose | Thème 2 |
+| FAST | 8 occurrences — **dont zéro pertinente** : c'était « fast-food » dans un QCM wifi | **absent** |
+| Bête à cornes | **0** | absent |
+| Diagramme des interacteurs / pieuvre | **0** — le mot « interacteur » apparaît 175 fois, la représentation jamais | absent |
+| SysML — exigences | **0** | absent |
+| SysML — cas d'utilisation | **0** | absent |
+| Carte mentale | **0** | absent |
+| Diagramme de Gantt / planification des tâches | **0** | absent — **alors que le programme l'impose** en gestion de projet |
+| Modélisation 3D / CAO | **0** | absent |
+
+Sept représentations nommées sont **entièrement absentes**, une huitième — le croquis — n'existe
+qu'en citation, et le seul « FAST » du dépôt était un fast-food. Ce n'est pas un oubli de détail :
+c'est la moitié de la langue du métier.
+
+### Règle d'or n°62 — Le concept prend le mot du programme, l'outil garde le nom du métier
+
+**Le raisonnement.** Le programme 2024 a cessé d'imposer « bête à cornes », « pieuvre », « FAST »,
+« SysML ». **Il ne les a pas interdits** : il a déspécifié. Nous avons lu le retrait comme une
+interdiction, et nous avons enseigné des concepts que personne ne sait nommer — ni l'inspecteur qui
+visite, ni le sujet de DNB, ni le collègue qui reprend la séquence, ni l'élève qui change
+d'établissement.
+
+**La règle.** Chaque représentation est nommée **deux fois** : par le mot du programme, qui fait
+foi, et par le nom que la profession emploie, entre parenthèses.
+
+> **Diagramme des interacteurs extérieurs** *(historiquement appelé diagramme pieuvre)*
+> **Suite de croquis** *(storyboard)* · **Schéma du parcours** *(parcours utilisateur)*
+
+Le mot du programme est celui de l'évaluation et de la carte de compétence (règle n°42) ; le nom du
+métier est celui qui circule. Ni l'un sans l'autre. Et **aucun outil n'appartient à une
+compétence** : c'est ce que l'élève en fait qui décide de laquelle il relève — Sweet Home 3D sert
+C2 quand il représente un parcours d'usager, et le Thème 3 quand il modélise une forme.
+
+### Règle d'or n°63 — Ce que le programme impose nommément se produit, pas se mentionne
+
+**L'incident.** Le programme cite explicitement le **diagramme de planification des tâches** en
+gestion de projet. Le dépôt en compte **zéro**. Il cite le **croquis** comme point de départ du
+langage naturel en 4e : sept occurrences, toutes des citations du texte officiel, aucune production
+d'élève. Il cite la **modélisation** parmi les modes de représentation de 3e : cinq occurrences du
+mot, aucune chose.
+
+**Le coût.** Une carte de couverture verte au-dessus d'un enseignement qui n'a pas eu lieu. C'est
+le défaut le plus grave qu'un dépôt pédagogique puisse porter, parce qu'il est **invisible depuis
+l'intérieur** : nos vérificateurs comptaient des séquences, jamais des gestes.
+
+**La règle.** Quand le programme **nomme** une représentation, le lot qui porte le code
+correspondant **fait produire cette représentation par l'élève**, et le rapport de tests le déclare.
+Citer le texte officiel n'est pas l'enseigner. À mécaniser avec les n°47, n°51 et n°54.
