@@ -3109,3 +3109,56 @@ Vérificateur&nbsp;: **8 sur 8**. Tests du lot&nbsp;: **54 sur 54**. Index&nbsp;
 
 **La compétence C2 est terminée.** Reste, pour achever le Thème 1&nbsp;: les 15 codes du **C1** —
 dont sept séquences qui n'ont ni mode essentiel, ni version étayée, ni carte de référentiel.
+
+---
+
+## 8 août 2026 — Six séquences que le vérificateur n'avait jamais vues
+
+En préparant le lot 5e_C1, j'ai annoncé à Pascal que «&nbsp;les sept séquences du C1 sont des plans
+de 3,7 à 15 ko&nbsp;». **C'était faux**, et l'erreur mérite d'être écrite parce qu'elle a une cause
+mécanique.
+
+### Ce qui s'est passé
+
+`_outils/verif_regles_audit.py` cherchait ses fichiers avec le motif `sequence_*.html`. Toutes les
+séquences nommées avec des **traits d'union** lui échappaient. Six fichiers, dont&nbsp;:
+
+| Taille | Fichier |
+|---|---|
+| **121 ko** | `4e_C1.4/sequence-cybersecurite-protection-donnees.html` — la plus grosse séquence du dépôt |
+| 68 ko | `3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html` |
+| 63 ko | `5e_C1.1/sequence.html` |
+| 60 ko | `4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html` (Thème 2) |
+| 18 ko | `4e_C1.4/activite-bonus-cyber-immersive-2fa.html` |
+| 7 ko | `5e_C1.2/activite_crcn_donnees_freinage_5e_C1.2.html` |
+
+Ces séquences **n'avaient aucune anomalie&nbsp;: elles étaient invisibles.** Depuis la création de
+l'outil, elles n'ont jamais été comptées ni contrôlées.
+
+### Pourquoi je m'y suis laissé prendre
+
+Parce que **mon relevé d'état des lieux employait le même motif que le vérificateur**. J'ai cru
+inventorier le C1 alors que je récitais l'angle mort de mon propre outil.
+
+C'est la troisième forme que prend la même leçon dans ce dépôt&nbsp;:
+
+- juillet — «&nbsp;un compteur ne sait pas ce qu'il compte&nbsp;» (règle n°26, 4 faux positifs)&nbsp;;
+- ce matin — «&nbsp;une suite de tests vérifie ce que son auteur soupçonne&nbsp;» (43 tests verts
+  sur un contenu faux)&nbsp;;
+- maintenant — **un contrôle ne vérifie que ce qu'il regarde.**
+
+Les trois disent la même chose sous trois angles&nbsp;: le silence d'un outil n'est pas une preuve.
+Il faut savoir, à chaque fois, **quel est son périmètre**, et le comparer à ce qu'on croit couvrir.
+
+### Ce que ça change
+
+Le motif accepte désormais `sequence_*.html`, `sequence-*.html` et `sequence.html`. Le dépôt passe
+de **41 à 47 séquences analysées**, et de **56 à 74 manquements** — dix-huit défauts qui existaient
+depuis toujours et que personne ne pouvait voir.
+
+**Et le plan du C1 change.** Ce que j'annonçais comme «&nbsp;tout le C1 à refaire&nbsp;» est
+inexact&nbsp;: `4e_C1.4` porte une séquence de 121 ko, `3e_C1.5` une de 68 ko. Elles n'ont ni carte
+de référentiel, ni vérificateur, ni mode essentiel — mais elles ont du contenu, et beaucoup. Le
+chantier n'est pas le même selon qu'on écrit ou qu'on met au gabarit.
+
+Je reprends l'état des lieux du C1 **avec le vérificateur corrigé** avant d'écrire une ligne de plus.
