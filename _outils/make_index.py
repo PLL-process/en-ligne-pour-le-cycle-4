@@ -41,6 +41,105 @@ except FileNotFoundError:
     HERITEES = set()
 
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Règle d'or n°37 — l'interface montre des RESSOURCES PÉDAGOGIQUES, pas des fichiers.
+# Règle d'or n°39 — un compteur compte ce que son étiquette annonce.
+#
+# Les fichiers de gouvernance (manifest, rapport de tests, matrice, SOURCES_MEDIAS,
+# README, suites de tests) restent dans le dépôt et restent accessibles : ils passent
+# simplement dans une seconde liste, repliée, et ne sont PLUS comptés comme ressources
+# pédagogiques. Avant cette évolution, un lot complet affichait « 7 ressources » alors
+# qu'il en propose trois à l'élève.
+# ─────────────────────────────────────────────────────────────────────────────
+TYPES_PEDAGOGIQUES = [
+    (r"^sequence_mutualisee", "🔗", "Séquence mutualisée"),
+    (r"^sequence(\b|[-_.])", "📘", "Séquence"),
+    (r"^entrainement[-_]", "🏋", "Entraînement"),
+    (r"^qcm[-_]", "🧠", "QCM"),
+    (r"^synthese_eleve", "📌", "Synthèse élève"),
+    (r"^synthese_professeur", "🎓", "Synthèse professeur"),
+    (r"^(activite|activites)[-_]", "🔧", "Activité"),
+    (r"^tp[-_]", "🔧", "Travaux pratiques"),
+    (r"^evaluation[-_]", "📝", "Évaluation"),
+    (r"^(fiche_pedagogique|FICHE_PEDAGOGIQUE)", "🧭", "Fiche pédagogique"),
+    (r"\.pkt$", "🖧", "Fichier Packet Tracer"),
+    (r"\.drawio$", "✏️", "Fichier draw.io"),
+    (r"^(atelier|vittascience)[-_]", "🔧", "Activité"),
+    (r"^(donnees|solutions|mesures|exo)[-_].*\.csv$", "📊", "Jeu de données"),
+    (r"\.(xlsx|ods)$", "📊", "Classeur tableur"),
+]
+
+MOTIFS_MAINTENANCE = (
+    r"^README\.md$", r"^SOURCES_MEDIAS\.md$", r"^matrice_couverture", r"^manifest",
+    r"^MANIFESTE_LOT", r"^rapport_tests", r"^RAPPORT_TESTS", r"^JOURNAL_LOT",
+    r"^tests_.*\.py$", r"^CRCN_regle7\.md$",
+    # Documents de travail internes : utiles au dépôt, sans usage en classe.
+    r"^(CADRAGE|PLAN_LOT|RAPPORT_CONTROLES|ANTICIPATION|AVIS_|MIGRATION_|ENTREE_NOUVEAUTES"
+    r"|MATRICE_COUVERTURE|REGLE_OR|SOURCES_DONNEES)", r"^couverture_.*\.json$", r"\.json$",
+)
+
+
+def classer(nom):
+    """(emoji, libellé pédagogique) ou None si le fichier relève de la maintenance."""
+    # Les médias sont lus DANS la séquence, pas à côté : ils ne sont pas des
+    # ressources autonomes. Ce contrôle passe en premier, sinon atelier_procedes.svg
+    # serait annoncé comme une « Activité ».
+    if nom.lower().endswith((".svg", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".xml")):
+        return None
+    for motif in MOTIFS_MAINTENANCE:
+        if re.search(motif, nom):
+            return None
+    for motif, emoji, libelle in TYPES_PEDAGOGIQUES:
+        if re.search(motif, nom):
+            return emoji, libelle
+    return "📄", "Ressource"
+
+
+def titre_pedagogique(nom, libelle):
+    """Un nom lisible, tiré du fichier — jamais le nom physique (règle n°37).
+
+    On retire le préfixe de type puis, jeton par jeton, tout ce qui relève de la
+    codification interne : « 5e », « C4.1 », « C4.8 », les numéros isolés. Sans ce
+    filtre par jeton, `qcm_5e_C4.1-C4.8_lampadaire_intelligent.html` donnait
+    « QCM — 8 lampadaire intelligent » : un 8 orphelin, reste d'un code coupé en deux.
+    """
+    base = re.sub(r"\.[a-zA-Z0-9]+$", "", nom)
+    base = re.sub(r"^(sequence_mutualisee_avec|sequence|qcm|synthese_eleve|synthese_professeur"
+                  r"|activite|activites|atelier|vittascience|tp|evaluation|fiche_pedagogique"
+                  r"|FICHE_PEDAGOGIQUE|entrainement|donnees|solutions|mesures|exo)([-_.]|$)", "", base)
+    jetons = [j for j in re.split(r"[-_\s.]+", base) if j]
+    garde = []
+    for j in jetons:
+        if re.fullmatch(r"\d+e", j) or re.fullmatch(r"C\d+", j, re.I) or re.fullmatch(r"\d+", j):
+            continue
+        garde.append(j)
+    base = " ".join(garde).strip()
+    if not base:
+        return libelle
+    return f"{libelle} — {base[0].upper() + base[1:]}"
+
+
+# ── Statuts d'audit (règle n°35 : l'information est là où on la lit) ──────────
+STATUTS_PATH = os.path.join(os.path.dirname(__file__), "..", "audit_couverture.csv")
+STATUT_PAR_CODE, STATUT_PUCE = {}, {
+    "COMPLET ET VALIDABLE": ("✅", "#81fba1"),
+    "COUVERT PAR UNE SÉQUENCE MUTUALISÉE": ("🔗", "#61dafb"),
+    "PARTIEL": ("🟡", "#ffd66b"),
+    "EXISTANT À AMÉLIORER": ("🔧", "#ffb454"),
+    "À VÉRIFIER PAR L’ENSEIGNANT": ("🔍", "#c68ef2"),
+    "À CORRIGER": ("⚠️", "#ff7b88"),
+    "À CRÉER": ("⬜", "#5b7bb8"),
+}
+try:
+    import csv as _csv
+    with open(STATUTS_PATH, encoding="utf-8-sig") as _f:
+        for _r in _csv.DictReader(_f, delimiter=";"):
+            STATUT_PAR_CODE[_r["code"]] = _r["statut"]
+except (FileNotFoundError, KeyError):
+    pass
+
+
 def slugify(s, maxlen=45):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
     s = re.sub(r"[^a-zA-Z0-9]+", "-", s).strip("-").lower()
@@ -95,12 +194,13 @@ parts.append("""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Technologie Cycle 4 (2024) — En ligne pour le cycle 4</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Technologie Cycle 4 — Programme 2024 | Compétences, séquences, QCM, socle et CRCN</title>
+<meta name="description" content="Banque pédagogique de technologie pour le cycle 4 (programme 2024) : séquences, QCM, synthèses et évaluations pour la 5e, la 4e et la 3e, classées par thème, compétence de fin de cycle et repère de progressivité.">
+<meta name="color-scheme" content="dark light">
 <style>
 :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 18px 60px;line-height:1.5}
+body{background:var(--bg);color:var(--text);font-family:'Poppins','Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 18px 60px;line-height:1.5}
 h1{text-align:center;color:var(--title);font-size:1.9em;margin:30px 0 4px}
 .sub{text-align:center;color:var(--sub);margin-bottom:8px}
 .note{max-width:880px;margin:0 auto 26px;text-align:center;color:#7d9bd6;font-size:.85em}
@@ -141,64 +241,123 @@ footer a{color:var(--hl)}
 @media print{.badge-new{animation:none;background:#fff;border:1.5px solid #111;color:#111}}
 .code-line.nv-cible{background:rgba(255,180,84,.1);border-radius:8px;outline:1px solid rgba(255,180,84,.45)}
 .code-line{scroll-margin-top:14px}
+
+/* ── Règle d'or n°41 — l'index tenu au même niveau que ce qu'il indexe ── */
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--hl);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:static;display:inline-block;margin:8px;padding:8px 14px;background:var(--panel);border:1px solid var(--hl);border-radius:8px;color:var(--hl)}
+.code-line a{text-decoration:underline;text-underline-offset:2px}   /* jamais la couleur seule */
+/* ── Règle d'or n°35 — un code n'apparaît jamais seul ── */
+.rep{display:grid;grid-template-columns:1fr;gap:3px;padding:9px 0;border-bottom:1px dashed rgba(39,74,138,.55);font-size:.8em}
+.rep:last-child{border-bottom:none}
+.rep-tete{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.rep .cc{font-weight:700;white-space:nowrap;padding:1px 8px;border-radius:999px;background:rgba(39,74,138,.45)}
+.rep .form{display:block;color:var(--text);overflow-wrap:anywhere;line-height:1.45}
+.rep .meta{color:#7d9bd6;font-size:.92em}
+.rep .statut{font-size:.92em;white-space:nowrap}
+.rep ul{list-style:none;margin:4px 0 0;padding:0}
+.rep li{margin:2px 0;overflow-wrap:anywhere}
+.rep .maint{margin-top:3px}
+.rep .maint summary{cursor:pointer;color:#5b7bb8;font-size:.92em}
+.rep .maint a{color:#7d9bd6}
+.socle-cle{max-width:1080px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px 18px;font-size:.82em;color:var(--sub)}
+.socle-cle b{color:var(--text)}
+@media print{
+  body{background:#fff;color:#111;padding:0}
+  .theme,.lvl,.socle-cle{background:#fff;border-color:#666}
+  .comp[open] .levels{display:block}
+  details{border:none}
+  .rep .maint{display:none}
+  h1,.rep .form,.rep .cc{color:#111}
+  a{color:#111}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header>
 <h1>🎓 Technologie — Cycle 4 (programme 2024)</h1>
-<p class="sub">Séquences, QCM et ressources classés par <strong>Thème → Compétence → Niveau → Code</strong></p>
-<p class="note">Codage : <code>5e_C1.1</code> = sous-compétence C1.1 du cahier Nathan 5e — chaque niveau (5e/4e/3e) décline différemment les 9 compétences C1-C9 du BO n°9 du 29/02/2024.</p>
+<p class="sub">Séquences, QCM et ressources classés par <strong>Thème → Compétence de fin de cycle → Niveau → Repère</strong></p>
+<p class="note"><b>Référence normative</b> : programme de technologie du cycle 4, <b>BO n°9 du 29 février 2024</b> —
+il fixe les trois thèmes, les neuf compétences de fin de cycle, les connaissances, les capacités et les repères de progressivité 5e → 4e → 3e.<br>
+<b>Codification opérationnelle</b> : les identifiants du type <code>5e_C4.1</code> sont des <b>codes de classement internes</b> à ce dépôt,
+construits à partir de ces repères de progressivité et de la structuration des cahiers Nathan 2024. <b>Ils ne figurent pas comme tels au BO.</b></p>
+</header>
+<div class="socle-cle"><b>Domaines du socle commun</b> — D1 : les langages pour penser et communiquer · D2 : les méthodes et outils pour apprendre ·
+D3 : la formation de la personne et du citoyen · D4 : les systèmes naturels et les systèmes techniques ·
+D5 : les représentations du monde et l'activité humaine.</div>
 <div class="legend">
   <span><span class="dot" style="background:#8fd18f"></span>5e</span>
   <span><span class="dot" style="background:#7db3f0"></span>4e</span>
   <span><span class="dot" style="background:#f0a878"></span>3e</span>
-  <span>📄 = ressource disponible</span>
-  <span style="color:#5b7bb8">— = à créer</span>
+  <span>✅ couvert</span><span>🔗 mutualisé</span><span>🟡 partiel</span>
+  <span>🔧 à actualiser</span><span>🔍 à vérifier</span><span>⚠️ à corriger</span>
+  <span style="color:#5b7bb8">⬜ à créer</span>
 </div>
+<main id="contenu">
 """)
 
-total_content = 0
+total_peda = 0
 for theme_n in [1, 2, 3]:
-    parts.append(f'<div class="theme" id="theme-{theme_n}"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}<span class="nv-theme-slot" data-theme="{theme_n}"></span></header>')
+    parts.append(f'<section class="theme" id="theme-{theme_n}"><header style="color:{THEME_COLOR[theme_n]}">{THEME_EMOJI[theme_n]} Thème {theme_n} — {html.escape(THEME_TITLES[theme_n])}<span class="nv-theme-slot" data-theme="{theme_n}"></span></header>')
     for cnum in [f"C{i}" for i in range(1, 10)]:
-        text, _, t = C_PARENT[cnum]
+        text, socle_parent, t = C_PARENT[cnum]
         if t != theme_n:
             continue
-        # count content in this competence
-        n_files = 0
+        n_peda = 0
         lvl_html = []
         for niveau in ["5e", "4e", "3e"]:
-            lines = []
-            for code, ctext, _ in COMP_BY_LEVEL[niveau][cnum]:
+            lignes = []
+            for code, ctext, socle in COMP_BY_LEVEL[niveau][cnum]:
                 rel = code_dir(cnum, niveau, code)
                 paires = [(rel, fn) for fn in content_files(rel)]
                 for rel2 in lot_sibling_dirs(cnum, niveau, code):
                     paires += [(rel2, fn) for fn in content_files(rel2)]
                 full_code = f"{niveau}_{code}"
-                if paires:
-                    n_files += len([f for _, f in paires if f != "README.md"]) or 1
-                    links = " · ".join(
-                        f'<a href="{html.escape(r)}/{html.escape(fn)}">📄 {html.escape(fn if len(fn) <= 34 else fn[:31] + "…")}</a>'
-                        + ('<span class="badge-herit" title="Ressource héritée — modernisation prévue (règle d\'or n°12)">🛠</span>'
-                           if f"{r}/{fn}" in HERITEES else "")
-                        for r, fn in paires
-                    )
-                    lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span>{links}</span></div>')
-                else:
-                    lines.append(f'<div class="code-line" id="{full_code}"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span><span class="empty">—</span></div>')
-            lvl_html.append(f'<div class="lvl"><h4 style="color:{NIVEAU_COLOR[niveau]}">{niveau}</h4>{"".join(lines)}</div>')
-        total_content += n_files
-        count_label = f"{n_files} ressource(s)" if n_files else "à compléter"
+
+                peda, maint = [], []
+                for r, fn in paires:
+                    genre = classer(fn)
+                    lien = f'{html.escape(r)}/{html.escape(fn)}'
+                    herit = ('<span class="badge-herit" title="Ressource héritée — modernisation prévue (règle d\'or n°12)">🛠</span>'
+                             if f"{r}/{fn}" in HERITEES else "")
+                    if genre:
+                        emoji, libelle = genre
+                        peda.append(f'<li>{emoji} <a href="{lien}">{html.escape(titre_pedagogique(fn, libelle))}</a>{herit}</li>')
+                    else:
+                        maint.append(f'<a href="{lien}">{html.escape(fn)}</a>')
+                n_peda += len(peda)
+
+                statut = STATUT_PAR_CODE.get(full_code, "")
+                puce, couleur = STATUT_PUCE.get(statut, ("", "#5b7bb8"))
+                bloc_statut = (f'<span class="statut" style="color:{couleur}" title="{html.escape(statut)}">{puce} {html.escape(statut.capitalize())}</span>'
+                               if statut else "")
+                corps = f'<ul>{"".join(peda)}</ul>' if peda else '<span class="empty">Aucune ressource pédagogique publiée pour ce repère.</span>'
+                if maint:
+                    corps += ('<details class="maint"><summary>🔧 Fichiers de gouvernance ('
+                              + str(len(maint)) + ')</summary><p>' + " · ".join(maint) + '</p></details>')
+                lignes.append(
+                    f'<div class="rep" id="{full_code}">'
+                    f'<div class="rep-tete"><span class="cc" style="color:{NIVEAU_COLOR[niveau]}">{full_code}</span>{bloc_statut}</div>'
+                    f'<span class="form">{html.escape(ctext)}</span>'
+                    f'<span class="meta">Socle : {html.escape(socle)}</span>'
+                    f'{corps}</div>')
+            lvl_html.append(f'<div class="lvl"><h4 style="color:{NIVEAU_COLOR[niveau]}">{niveau}</h4>{"".join(lignes)}</div>')
+        total_peda += n_peda
+        # Règle n°39 : l'étiquette dit exactement ce qui est compté.
+        count_label = (f"{n_peda} ressource(s) pédagogique(s)" if n_peda else "à compléter")
         parts.append(
             f'<details class="comp" id="comp-{cnum}"><summary><span class="cnum">{cnum}</span>'
-            f'<span>{html.escape(text if len(text) <= 110 else text[:107] + "…")}<span class="nv-comp-slot" data-comp="{cnum}"></span></span>'
+            f'<span>{html.escape(text)}<span class="nv-comp-slot" data-comp="{cnum}"></span></span>'
             f'<span class="count">{count_label}</span></summary>'
             f'<div class="levels">{"".join(lvl_html)}</div></details>'
         )
-    parts.append("</div>")
+    parts.append("</section>")
+parts.append("</main>")
 
 parts.append(f"""<footer>
 <p>📦 <a href="_ressources-communes/">Ressources communes</a> · 🗄️ <a href="_archive-anciennes-versions/">Archive des anciennes versions</a> · <a href="RAPPORT_MIGRATION.md">Rapport de migration</a></p>
-<p>Référentiel : BO n°9 du 29/02/2024 · Cahiers Nathan 5e/4e/3e (éd. 2024) · Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em></p>
+<p><b>Référence normative</b> : programme de technologie du cycle 4 — BO n°9 du 29 février 2024.<br><b>Codification opérationnelle</b> : adaptation pédagogique de ce dépôt, appuyée sur les repères de progressivité du programme et sur les cahiers Nathan 5e/4e/3e (éd. 2024). Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em>.<br><span style="color:#7d9bd6">Page générée automatiquement depuis <code>_outils/data_competences.py</code> — aucun intitulé n'est ressaisi à la main (règle d'or n°38).</span></p>
 </footer>
 <script>
 /* ── Badges NEW automatiques (source : nouveautes.json, embarqué à la génération) ── */
@@ -269,7 +428,7 @@ const NV_DUREE_DEFAUT = {NV_DUREE_DEFAUT};
 
 with open(os.path.join(DST, "index.html"), "w", encoding="utf-8") as f:
     f.write("".join(parts))
-print("index.html généré —", total_content, "entrées de contenu référencées")
+print("index.html généré —", total_peda, "ressources pédagogiques référencées")
 
 # ---------------------------------------------------------------- README.md
 readme = f"""# 🎓 En ligne pour le cycle 4 — Technologie (programme 2024)
