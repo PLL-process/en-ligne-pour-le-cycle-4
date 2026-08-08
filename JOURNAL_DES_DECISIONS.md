@@ -3697,3 +3697,44 @@ matin dans le billet d'entrée du 5e_C2 : «&nbsp;à quoi ça sert&nbsp;» décr
 l'usager, pas la fonction technique. Deux séquences de deux auteurs différents portaient la même
 erreur, ce qui indique moins une négligence qu'un **contresens partagé dans la discipline** — et
 justifie la règle n°53 : une notion qui a une voisine se définit contre elle.
+
+---
+
+## Changement de gouvernance — 8 août 2026 : un seul auteur pour les trois thèmes
+
+Pascal&nbsp;: «&nbsp;Il n'y a plus d'autres auteurs. Tu es en charge de la rédaction et de la
+conception des 3 thèmes.&nbsp;»
+
+Cette phrase lève la contrainte la plus ancienne du dépôt — *ne jamais modifier les lots existants
+d'un autre auteur* — qui datait de l'époque où Fable, Codex et Grok produisaient en parallèle. Elle
+a servi&nbsp;: elle a évité des écrasements et des doublons. Elle n'a plus d'objet.
+
+**Ce qui change.** Toute ressource des trois thèmes peut désormais être reprise, corrigée,
+refondue ou archivée par Fable, sans demander la permission d'un tiers qui n'existe plus. Les
+séquences héritées cessent d'être un patrimoine intouchable pour devenir un **chantier**.
+
+**Ce qui ne change pas — et c'est le point important.** La discipline qui entourait cette contrainte
+ne venait pas de la propriété, mais de la prudence. Elle reste entière&nbsp;:
+
+- **On ouvre avant d'écrire** (n°66, premier volet, et n°46). Une écriture qui n'a pas listé le
+  dossier est un écrasement en puissance. Ce volet-là n'était jamais une question d'auteur.
+- **On pille avant d'archiver** (n°12). Une ressource qu'on remplace a presque toujours quelque
+  chose à donner&nbsp;: un cas, un mode opératoire, une question métacognitive. Le README d'archive
+  dit ce qui a été repris et ce qui ne pouvait pas l'être.
+- **On archive, on ne supprime pas.** `_archive-anciennes-versions/` garde la trace, avec la date
+  et le motif.
+- **On déclare la seconde route.** Quand deux ressources couvrent le même code, le dépôt ne choisit
+  pas un vainqueur en silence&nbsp;: il dit en quoi elles diffèrent, pour que l'enseignant choisisse.
+
+### Règle d'or n°66, amendée
+
+**Ancien second volet**&nbsp;: «&nbsp;un fichier d'un autre auteur ne s'écrase jamais, même pour
+l'améliorer&nbsp;».
+
+**Nouveau second volet**&nbsp;: **une ressource qui fonctionne ne s'écrase jamais sans laisser de
+trace, même quand elle nous appartient.** On la lit d'abord, on en tire ce qui vaut, on l'archive
+avec le motif, et on écrit ce qu'on a repris. La propriété donne le droit de refondre&nbsp;; elle
+ne donne pas celui d'effacer sans mémoire.
+
+Le premier volet — *on ouvre le dossier avant d'y écrire* — est inchangé, et reste celui des deux
+qui m'a réellement pris en défaut.
