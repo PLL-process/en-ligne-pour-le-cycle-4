@@ -1701,3 +1701,39 @@ bord des tâches (n°30) et versions étayées des productions écrites (n°31).
 #127 et jamais supprimée. Son contenu était intégralement dans `main` et sa fusion aurait ramené un état
 ancien du dépôt. Fermée, branche supprimée. Règle : **une branche fusionnée se supprime le jour même**,
 sinon elle finit par ressurgir en fausse PR.
+
+## 2026-08-08 — Rétrofit des séquences-îlots C4, et deux de mes propres lots pris en faute
+
+**Décision.** Dernière vague de rétrofit mécanisable : les neuf séquences de la compétence C4 — cinq
+séquences-îlots (5e lampadaire, 4e jardin connecté, 3e énergie station, 3e station d'alerte cyclonique, 3e
+Internet jusqu'à Sainte-Luce) et les quatre ateliers dédiés — reçoivent ce qui leur manquait. **Les seize
+séquences du Thème 2 disposent désormais du mode essentiel**, chacune vérifiée au navigateur : aucune erreur
+JS, corrections réellement masquées, onglets intacts.
+
+**Deux de mes propres lots étaient en faute sur la règle n°23, celle que j'ai écrite ce matin.** Le
+vérificateur ne fait pas de favoritisme, et c'est bien la preuve qu'il sert à quelque chose.
+
+- L'atelier **3e « pont numérique »** annonçait **169 minutes pour 165 disponibles** — et sa séance 1
+  cumulait à elle seule 59 minutes de contenu. Les durées ont été rééquilibrées : conception 25 min,
+  poste-frontière 20 min, construction du pont 45 min, preuves 25 min, simulation 20 min. Total 139 minutes,
+  marge de service comprise. Ce ne sont pas des chiffres inventés pour faire passer le test : c'est
+  l'aveu que les premières estimations étaient optimistes, notamment sur l'activité 3, annoncée comme
+  « séance entière » sans laisser une minute pour lancer le logiciel.
+- L'atelier **4e « SOS serre »** dépassait de 5 minutes — mais pour une autre raison : il comptait comme
+  activité de l'élève une **note destinée à l'enseignant** (« évaluation pratique courte (10 min…) »). La
+  note a été reformulée ; elle dit la même chose sans se faire passer pour une activité. Le lot tombe à
+  205 minutes pour 220 disponibles.
+
+**Aération.** Six pavés de plus de 110 mots ont été scindés dans les deux ateliers réseaux — dont un de
+244 mots. C'est la règle n°33, celle que Pascal a proposée, appliquée à mes propres pages.
+
+**Ce qui reste, et qui ne sera jamais fait par un script.** Le compte du Thème 2 passe de 50 à **33
+manquements**, et ceux-là se concentrent sur les trois règles de rédaction : le **diagnostic d'entrée**
+(n°26) sur les trois séquences-îlots qui invoquent l'année précédente sans vérifier les acquis, le **tableau
+de bord des tâches** (n°30) qui demande de nommer les tâches de chaque séance, et la **version étayée**
+(n°31) — plus de quarante zones de rédaction sur l'ensemble du thème. La n°23 reste « non mesurable » sur les
+séquences-îlots, qui n'annoncent aucune durée par activité : absence de donnée, pas conformité.
+
+**Ménage.** Les **59 branches déjà fusionnées** du dépôt ont été supprimées, en application de la règle née
+de la fausse PR #130. Quatre branches non fusionnées sont conservées telles quelles, dont deux relèvent d'un
+autre agent.

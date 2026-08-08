@@ -140,6 +140,11 @@
     details{border-color:#999;background:#fff}
     a{color:#111}
   }
+
+  /* Règle d'or n°29 — mode essentiel : alléger la lecture sans retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
 </style>
 </head>
 <body>
@@ -177,7 +182,9 @@
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
@@ -410,7 +417,7 @@
       <div class="assoc"><label for="m4_4">🌀 Carénage de l'anémomètre (pièce unique) — matériau :</label><select id="m4_4"><option value="">— choisir —</option><option>ABS + vernis anti-UV</option><option>acier galvanisé à chaud</option><option>verre</option><option>béton</option></select></div>
       <div class="assoc"><label for="p4_4">🌀 Carénage — procédé :</label><select id="p4_4"><option value="">— choisir —</option><option>impression 3D</option><option>moulage par injection</option><option>laminage + soudure</option><option>extrusion</option></select></div>
       <h4>b) Ma justification du mât (2 contraintes croisées minimum)</h4>
-      <textarea id="j4" rows="3" placeholder="Le mât est en … mis en forme par … parce que…"></textarea>
+      <textarea id="j4" rows="3" placeholder="Le mât est en … mis en forme par … parce que…" aria-label="🌀 Carénage — procédé"></textarea>
     </div>
     <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Deux questions à te poser : quelle CONTRAINTE domine pour cette pièce (vent ? sel ? UV ?) et combien d'exemplaires (pièce unique → impression 3D ; grande série → injection ; profilé long → extrusion).</p></details>
     <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour le mât : le sel attaque l'acier brut (souviens-toi du lampadaire de 5e !), et le vent exige la solidité de l'acier — d'où l'acier GALVANISÉ. Ta justification doit citer les deux : « solide face au vent » ET « protégé du sel ».</p></details>
@@ -654,7 +661,29 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
-restore(); majSim(); majProgress(); majHyp();
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+(function(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    document.body.classList.toggle("essentiel");
+    window.__exp = window.__exp || {};
+    window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+    majEssentiel();
+    if(typeof save === "function") save(false);
+  });
+})();
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majSim(); majProgress(); majHyp();
 </script>
 </body>
 </html>

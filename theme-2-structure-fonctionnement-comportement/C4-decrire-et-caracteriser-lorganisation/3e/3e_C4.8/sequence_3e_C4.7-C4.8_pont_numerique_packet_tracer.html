@@ -321,7 +321,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 </section>
 
 <section class="card">
-  <h2>✏️ Activité 1 — Concevoir TON schéma à deux réseaux <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <h2>✏️ Activité 1 — Concevoir TON schéma à deux réseaux <span style="font-size:.7em;color:var(--sub)">(~20 min)</span></h2>
   <div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> dessiner, AVANT de toucher au logiciel, l'architecture qui relie deux réseaux — comme un ingénieur qui trace le pont avant de le construire.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.7 — Identifier et représenter la circulation d'une information dans le réseau Internet <em>(ici&nbsp;: représenter l'architecture du voyage)</em>.</div>
@@ -452,7 +452,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 </section>
 
 <section class="card">
-  <h2>🛃 Activité 2 — Le jeu du poste-frontière (table de routage DONNÉE) <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
+  <h2>🛃 Activité 2 — Le jeu du poste-frontière (table de routage DONNÉE) <span style="font-size:.7em;color:var(--sub)">(~20 min)</span></h2>
   <div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> jouer le routeur, table en main — et découvrir pourquoi, sans elle, aucun message ne franchit la frontière. Activité débranchée&nbsp;: aucune machine.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.8 — Justifier la nécessité d'un protocole de routage pour faire communiquer plusieurs réseaux (activité débranchée, table de routage donnée) <em>(le libellé au pied de la lettre)</em>.</div>
@@ -539,7 +539,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 <div class="seance-panel" id="seance2" role="tabpanel" aria-labelledby="tab-s2">
 
 <section class="card">
-  <h2>🧱 Activité 3 — Construire le pont dans Packet Tracer <span style="font-size:.7em;color:var(--sub)">(~55 min, séance entière)</span></h2>
+  <h2>🧱 Activité 3 — Construire le pont dans Packet Tracer <span style="font-size:.7em;color:var(--sub)">(~45 min, le cœur de la séance)</span></h2>
   <div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> monter les DEUX réseaux et leur pont, puis configurer les routeurs — interfaces ET routes statiques — par la fenêtre graphique.</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.8 — Justifier la nécessité d'un protocole de routage… <em>(ici&nbsp;: donner corps aux tables du jeu — nos routes statiques sont les lignes que tu as manipulées en act. 2)</em>.</div>
@@ -557,8 +557,8 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
     2 commutateurs <b>2960</b>, et 2 routeurs <b>1941</b> (catégorie Network Devices → Routers).<br>
     <b>B.</b> Câbles DROITS (Copper Straight-Through)&nbsp;: PC-MQ→Switch-MQ (Fa0/1), Switch-MQ→R-MQ (Fa0/2 → GigabitEthernet0/0),
     Serveur-NY→Switch-NY (Fa0/1), Switch-NY→R-NY (Fa0/2 → G0/0).<br>
-    <b>C.</b> Câble <b>CROISÉ</b> (Copper Cross-Over, le trait pointillé) entre les deux routeurs&nbsp;: R-MQ <b>G0/1</b> ↔ R-NY <b>G0/1</b>.
-    Routeur à routeur = câble croisé&nbsp;: c'est la rue-pont.<br>
+    <b>C.</b> Câble <b>CROISÉ</b> (Copper Cross-Over, le trait pointillé) entre les deux routeurs&nbsp;: R-MQ <b>G0/1</b> ↔ R-NY <b>G0/1</b>.</p>
+  <p>Routeur à routeur = câble croisé&nbsp;: c'est la rue-pont.<br>
     <b>D.</b> Renommer (Config → Display Name)&nbsp;: <b>PC-MQ, Switch-MQ, R-MQ, R-NY, Switch-NY, Serveur-NY</b>.<br>
     <b>E.</b> 🔄 <em>(échange des rôles)</em> Configurer <b>R-MQ</b>&nbsp;: Config → <b>GigabitEthernet0/0</b>&nbsp;:
     IPv4 <span style="font-family:'Fira Code',monospace">192.168.10.1</span>, masque <span style="font-family:'Fira Code',monospace">255.255.255.0</span>,
@@ -569,7 +569,8 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
     G0/1 = <span style="font-family:'Fira Code',monospace">10.0.0.2</span> / <span style="font-family:'Fira Code',monospace">255.255.255.252</span>, On.<br>
     <b>G.</b> Les ROUTES STATIQUES (les lignes de table du jeu)&nbsp;: sur R-MQ, Config → ROUTING → <b>Static</b>&nbsp;:
     Network <span style="font-family:'Fira Code',monospace">192.168.30.0</span>, Mask <span style="font-family:'Fira Code',monospace">255.255.255.0</span>,
-    Next Hop <span style="font-family:'Fira Code',monospace">10.0.0.2</span> → <b>Add</b>. Sur R-NY, la ligne miroir&nbsp;:
+    Next Hop <span style="font-family:'Fira Code',monospace">10.0.0.2</span> → <b>Add</b>.</p>
+  <p>Sur R-NY, la ligne miroir&nbsp;:
     <span style="font-family:'Fira Code',monospace">192.168.10.0 / 255.255.255.0</span> via <span style="font-family:'Fira Code',monospace">10.0.0.1</span>.<br>
     <b>H.</b> Adresser les terminaux (Desktop → IP Configuration)&nbsp;: PC-MQ = <span style="font-family:'Fira Code',monospace">192.168.10.10</span>,
     passerelle <span style="font-family:'Fira Code',monospace">192.168.10.1</span>&nbsp;; Serveur-NY = <span style="font-family:'Fira Code',monospace">192.168.30.10</span>,
@@ -642,7 +643,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
 <div class="seance-panel" id="seance3" role="tabpanel" aria-labelledby="tab-s3">
 
 <section class="card">
-  <h2>🧾 Activité 4 — Les preuves du voyage : ping, TTL et tracert <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
+  <h2>🧾 Activité 4 — Les preuves du voyage : ping, TTL et tracert <span style="font-size:.7em;color:var(--sub)">(~25 min)</span></h2>
   <div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> lire les trois preuves qu'un technicien rapporte — et apprendre à interpréter les indices cachés (les deux premiers échecs, le TTL, les sauts).</div>
     <div><b>Compétence&nbsp;:</b> 3e_C4.7 — Identifier et représenter la circulation d'une information dans le réseau Internet <em>(et 3e_C4.8&nbsp;: chaque preuve traverse les tables de routage)</em>.</div>
@@ -866,7 +867,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
   <div class="bilan-grid">
     <div>
       <p style="margin-bottom:4px"><b>3e_C4.7</b> — identifier et représenter la circulation d'une information&nbsp;:</p>
-      <select id="pos_c47"><option value="">— je me positionne —</option>
+      <select id="pos_c47" aria-label="Ton avis a-t-il changé ? Compléter avec ce que tu sais maintenant"><option value="">— je me positionne —</option>
         <option>🔴 Maîtrise insuffisante — je ne retrouve pas le chemin du message</option>
         <option>🟠 Maîtrise fragile — je suis le trajet avec le schéma sous les yeux</option>
         <option>🟢 Maîtrise satisfaisante — je représente le voyage complet et je lis tracert/Event List</option>
@@ -874,7 +875,7 @@ corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si
     </div>
     <div>
       <p style="margin-bottom:4px"><b>3e_C4.8</b> — justifier la nécessité d'un protocole de routage&nbsp;:</p>
-      <select id="pos_c48"><option value="">— je me positionne —</option>
+      <select id="pos_c48" aria-label="Ton avis a-t-il changé ? Compléter avec ce que tu sais maintenant"><option value="">— je me positionne —</option>
         <option>🔴 Maîtrise insuffisante — je confonds commutateur et routeur</option>
         <option>🟠 Maîtrise fragile — je joue la table avec de l'aide</option>
         <option>🟢 Maîtrise satisfaisante — j'applique la table et je justifie la nécessité du routage</option>

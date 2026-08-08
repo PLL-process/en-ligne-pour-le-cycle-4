@@ -1,47 +1,45 @@
 # État des lieux — règles d'or n°23 à n°34 sur le Thème 2
 
-Généré par `python _outils/verif_regles_audit.py theme-2-* --json` le 08/08/2026.
+Généré par `python _outils/verif_regles_audit.py theme-2-* --json` le 08/08/2026, **après le rétrofit C4**.
 Ce document dit ce qui a été **mécaniquement mesuré**. Les règles n°24, n°25, n°27, n°28 et n°32 relèvent du
 jugement pédagogique : elles apparaissent en fin de document comme points à relire, jamais comme verdicts.
 
-> **Mise à jour du 08/08/2026 (lot Book Train).** Le vérificateur comportait un défaut : son expression
-> régulière s'arrêtait à l'attribut `id` et ne voyait donc jamais un `aria-label` placé après, ce qui lui
-> faisait signaler comme « sans étiquette » des champs parfaitement étiquetés. Corrigé. Le compte, qui
-> annonçait 59 manquements, en établit réellement **54**. Un outil de contrôle se vérifie lui-même sur un
-> cas connu-bon avant qu'on lui fasse confiance.
+> **Historique du compte.** 59 manquements annoncés au départ, puis 54 après correction d'un défaut du
+> vérificateur lui-même, puis 50 après les rétrofits C5 et C6, et **33 après le rétrofit C4**. Les seize
+> séquences du thème disposent désormais du mode essentiel, chacune vérifiée au navigateur.
 
 ## Tableau de bord
 
 | Séquence | n°23 durée | n°26 diagnostic d'entrée | n°29 mode essentiel | n°30 tableau de bord | n°31 version étayée | n°33 aération | n°34 accessibilité |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| `3e_C4.1-C4.2_energie_station` | ? | ✘ | ✘ | ✘ | ✘ | ✔ | ✘ |
-| `3e_C4.3-C4.6_station_alerte_cyclonique` | ? | · | ✘ | ✘ | ✘ | ✔ | ✔ |
-| `3e_C4.7-C4.8_internet_sainte_luce` | ? | · | ✘ | ✘ | ✘ | ✔ | ✔ |
-| `3e_C4.7-C4.8_pont_numerique_packet_tracer` | ✘ | ✔ | ✔ | ✘ | ✘ | ▲ | ✘ |
-| `4e_C4.1-C4.9_jardin_connecte` | ? | ✘ | ✘ | ✘ | ✘ | ✔ | ✔ |
+| `3e_C4.1-C4.2_energie_station` | ? | ✘ | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `3e_C4.3-C4.6_station_alerte_cyclonique` | ? | · | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `3e_C4.7-C4.8_internet_sainte_luce` | ? | · | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `3e_C4.7-C4.8_pont_numerique_packet_tracer` | ✔ | ✔ | ✔ | ✘ | ✘ | ▲ | ✔ |
+| `4e_C4.1-C4.9_jardin_connecte` | ? | ✘ | ✔ | ✘ | ✘ | ✔ | ✔ |
 | `4e_C4.1-C4.2-C4.4_book-train` | ✔ | ✔ | ✔ | · | ✔ | ✔ | ✔ |
-| `4e_C4.7-C4.9_sos_serre_packet_tracer` | ✘ | ✔ | ✔ | ✘ | ✔ | ✘ | ✘ |
-| `5e_C4.1-C4.8_lampadaire_intelligent` | ? | ✘ | ✘ | ✘ | ✘ | ✔ | ✘ |
-| `5e_C4.7-C4.8_reseau_local_packet_tracer` | ✔ | ✔ | ✔ | ✘ | ✘ | ▲ | ✘ |
-| `3e_C5.1-C5.4_sos_station_reparer` | ? | · | ✘ | ✘ | ✘ | ✔ | ✘ |
-| `4e_C5.1-C5.3_depanner_jardin` | ? | ✘ | ✘ | ✘ | ✘ | ✔ | ✔ |
-| `5e_C5.1-C5.3_depanner_lampadaire` | ? | · | ✘ | ✘ | ✘ | ✔ | ✔ |
-| `3e_C6.1-C6.3_programmer_alerte` | ? | · | ✘ | ✘ | ✘ | ✔ | ✔ |
+| `4e_C4.7-C4.9_sos_serre_packet_tracer` | ✔ | ✔ | ✔ | ✘ | ✔ | ▲ | ✔ |
+| `5e_C4.1-C4.8_lampadaire_intelligent` | ? | ✘ | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `5e_C4.7-C4.8_reseau_local_packet_tracer` | ✔ | ✔ | ✔ | ✘ | ✘ | ▲ | ✔ |
+| `3e_C5.1-C5.4_sos_station_reparer` | ? | · | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `4e_C5.1-C5.3_depanner_jardin` | ? | ✘ | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `5e_C5.1-C5.3_depanner_lampadaire` | ? | · | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `3e_C6.1-C6.3_programmer_alerte` | ? | · | ✔ | ✘ | ✘ | ✔ | ✔ |
 | `algorigrammes_dnb` | ? | · | ✘ | · | · | ✔ | ✔ |
-| `4e_C6.1-C6.3_ajuster_programme_jardin` | ? | · | ✘ | ✘ | ✘ | ✔ | ✘ |
-| `5e_C6.1-C6.3_programmer_lampadaire` | ? | ✘ | ✘ | ✘ | ✘ | ✔ | ✔ |
+| `4e_C6.1-C6.3_ajuster_programme_jardin` | ? | · | ✔ | ✘ | ✘ | ✔ | ✔ |
+| `5e_C6.1-C6.3_programmer_lampadaire` | ? | ✘ | ✔ | ✘ | ✘ | ✔ | ✔ |
 
 Légende : ✔ conforme · ✘ manquement établi · ▲ à surveiller · · sans objet · ? non mesurable en l'état
 
 ## Règle par règle
 
-- **n°23 durée** — 12 ?, 2 ✘, 2 ✔
+- **n°23 durée** — 12 ?, 4 ✔
 - **n°26 diagnostic d'entrée** — 7 ·, 5 ✘, 4 ✔
-- **n°29 mode essentiel** — 12 ✘, 4 ✔
+- **n°29 mode essentiel** — 15 ✔, 1 ✘
 - **n°30 tableau de bord** — 14 ✘, 2 ·
 - **n°31 version étayée** — 13 ✘, 2 ✔, 1 ·
-- **n°33 aération** — 13 ✔, 2 ▲, 1 ✘
-- **n°34 accessibilité** — 9 ✔, 7 ✘
+- **n°33 aération** — 13 ✔, 3 ▲
+- **n°34 accessibilité** — 16 ✔
 
 ## Points de jugement signalés pour relecture humaine
 
@@ -54,18 +52,19 @@ Légende : ✔ conforme · ✘ manquement établi · ▲ à surveiller · · san
 **sequence_4e_C4.7-C4.9_sos_serre_packet_tracer.html**
 - n°27 : « 0 % loss » sans bornage au test en cours
 
-## Lecture honnête de ce tableau
+## Ce qui reste, et pourquoi
 
-**54 manquements mécaniques** sur 16 séquences. Ce chiffre ne dit pas que le Thème 2 est mauvais : il dit
-que douze règles écrites aujourd'hui n'existaient pas quand ces lots ont été produits. Trois d'entre elles —
-n°29 mode essentiel, n°30 tableau de bord, n°31 version étayée — concentrent la majorité des lignes rouges,
-et sont mécanisables : le rétrofit sera long mais peu risqué.
+**33 manquements mécaniques.** Ils se concentrent désormais sur les trois règles qu'aucun script ne peut
+traiter : le **diagnostic d'entrée** (n°26) demande d'écrire des questions justes sur les prérequis, le
+**tableau de bord des tâches** (n°30) demande de nommer les tâches de chaque séance, et la **version étayée**
+(n°31) demande de rédiger des amorces de phrases qui tiennent debout. Ce sont des travaux de rédaction.
 
-La règle n°23 sort majoritairement en « ? » : la plupart des séquences n'annoncent pas de durée par activité.
-Ce n'est pas une conformité, c'est une **absence de donnée** — à produire lot par lot, à la main, en
-connaissant le contenu. C'est le poste le plus coûteux du chantier.
+La règle n°23 reste en « ? » sur les séquences-îlots : elles n'annoncent aucune durée par activité. Ce n'est
+pas une conformité, c'est une **absence de donnée** — il faut connaître le contenu pour la produire.
 
-Quatre lots sont déjà conformes ou presque (les trois ateliers réseaux et le Book Train) : ils ont servi de
-terrain d'essai aux règles.
+Les quatre lots qui ont servi de terrain d'essai aux règles (les trois ateliers réseaux et le Book Train)
+sont, eux, largement conformes — y compris sur la n°23, dont deux d'entre eux étaient en faute avant ce
+rétrofit : le pont numérique annonçait 169 min pour 165 disponibles, et SOS serre comptait comme activité
+une note destinée à l'enseignant.
 
 Enfin, 3 points relèvent du jugement pédagogique et ne seront jamais tranchés par un script.
