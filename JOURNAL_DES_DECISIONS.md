@@ -2177,3 +2177,114 @@ Le contrôle des liens de tout le dépôt en a trouvé deux, **hors de mon péri
 
 Je ne les corrige pas — ce sont des lots d'un autre auteur, et la garde-périmètre refuserait la PR.
 Ils sont écrits ici pour que quelqu'un les prenne.
+
+---
+
+## 08/08/2026 — Sept règles d'or nées d'un audit externe de la page d'accueil (n°35 à n°41)
+
+Pascal a fait auditer `index.html` par un regard extérieur. L'audit a **lu le code**, pas seulement
+la page&nbsp;: j'ai vérifié ses cinq affirmations techniques avant de les reprendre, et **les cinq
+étaient exactes** — `ctext` récupéré mais jamais affiché (ligne 171), troncature à 110 caractères
+(ligne 193), aucun `:focus-visible`, aucun `<main>`, aucune `meta description`, et une dépendance à
+Google Fonts.
+
+Les trente-quatre règles existantes disent comment **produire un lot**. Aucune ne disait comment le
+dépôt **se présente**. Ces sept-là couvrent ce manque.
+
+### n°35 — Un code n'apparaît jamais seul
+
+Tout code affiché porte sa **formulation complète**, jamais tronquée, jamais renvoyée à un autre
+document. Cela vaut pour les neuf compétences de fin de cycle comme pour les 114 repères. Trois
+lignes de texte valent mieux qu'un code que le lecteur doit aller décoder ailleurs.
+
+### n°36 — On ne fait jamais passer une codification interne pour une nomenclature officielle
+
+Le BO fournit les thèmes, les neuf compétences de fin de cycle, les connaissances, les capacités et
+les repères de progressivité. Notre numérotation `5e_C4.1` est une **codification de classement
+interne**, issue de notre transcription et de la structuration Nathan. Toute page qui affiche ces
+codes le dit, et distingue par écrit **la référence normative** (BO n°9 du 29/02/2024) de **la
+codification opérationnelle**.
+
+C'est la règle la plus institutionnelle du recueil, et la plus urgente&nbsp;: l'index affirmait
+« les 9 compétences C1-C9 du BO » — vrai pour C1-C9, **faux pour les 114 repères**.
+
+### n°37 — L'interface montre des ressources pédagogiques, pas des fichiers
+
+Manifest, rapport de tests, matrice, `SOURCES_MEDIAS.md`, suites de tests&nbsp;: des outils de
+gouvernance. Ils restent dans le dépôt et restent accessibles, mais **hors de la vue pédagogique**,
+et le nom affiché est un **nom pédagogique** — jamais le nom physique, qui reste dans le lien.
+
+C'est notre méthode qui avait créé le problème&nbsp;: le lot indivisible impose ces fichiers, et
+l'index les servait à l'enseignant comme s'ils étaient des ressources de classe.
+
+### n°38 — Une seule source de vérité, un seul générateur
+
+On ne ressaisit jamais dans une page un intitulé qui existe dans les données. Le chemin est
+toujours&nbsp;: **référentiel de données → générateur → page à jour**. Deux copies d'un même texte
+finissent par diverger, et c'est celle qu'on lit qui est fausse.
+
+### n°39 — Un compteur compte ce que son étiquette annonce
+
+Si une page affiche « 7 ressources », l'utilisateur doit trouver sept choses utilisables. Le
+compteur de l'index annonçait **287 ressources** en comptant les manifests et les rapports de
+tests&nbsp;; il en annonce **135 pédagogiques**, et l'étiquette le dit.
+
+*Cette règle est née cinq fois dans la même journée*&nbsp;: un `textarea` d'éditeur de code compté
+comme production écrite, quatre manquements de règle qui n'existaient pas, quinze bonnes réponses
+sur la même position, quatorze références qui n'étaient que quatre liens, et ce compteur.
+**Un compteur ne sait pas ce qu'il compte&nbsp;: c'est à nous de le lui dire.**
+
+### n°40 — Hors ligne d'abord
+
+Une page qui se revendique utilisable hors ligne n'a besoin d'**aucune ressource distante**. Nos
+séquences promettent « page unique hors ligne » et appelaient toutes une police distante&nbsp;: une
+contradiction entre ce qu'on promet et ce qu'on livre, visible dans un collège au réseau filtré.
+L'index n'appelle plus rien&nbsp;; les séquences suivront lot par lot.
+
+### n°41 — L'index est tenu au même niveau que ce qu'il indexe
+
+Focus clavier visible, structure sémantique, information jamais portée par la seule couleur,
+`meta description` renseignée. Une porte d'entrée moins accessible que les salles qu'elle dessert,
+c'est une porte fermée.
+
+---
+
+## Ce que j'ai refusé de reprendre de l'audit, et pourquoi
+
+**La vue « progression annuelle » en HTML.** Nous avons déjà les classeurs `_progressions/` avec
+leur moteur d'imprévus. Une progression HTML en parallèle serait un **second référentiel de
+progression**&nbsp;: deux sources, divergence garantie. Si on la veut, elle devra être *générée
+depuis les classeurs* — c'est la règle n°38 appliquée à elle-même.
+
+**Les 114 reformulations « Je suis capable de… ».** L'idée est bonne, mais 114 textes écrits à côté
+du texte réglementaire, sans rien qui garantisse leur cohérence, c'est exactement ce que la n°38
+interdit. À faire **uniquement sur les codes qui ont une séquence**, où la reformulation vient du
+lot et reste vraie. Sur un code « À CRÉER », ce serait une promesse.
+
+**Un septième statut « En expérimentation ».** Nous en avons déjà six dans `audit_couverture.csv`.
+Le problème n'était pas leur nombre, c'est que l'index **ne les montrait pas** — il affichait
+« — » pour tout ce qui manquait. Ils sont désormais tous affichés, avec leur puce. Ajouter un
+statut que personne ne maintiendrait aurait dégradé les cinq autres.
+
+---
+
+## Ce que la mise en œuvre a appris
+
+**Le titre pédagogique se construit par jeton, pas par expression régulière.** Ma première version
+retirait le code par motif&nbsp;: `qcm_5e_C4.1-C4.8_lampadaire_intelligent.html` donnait
+« QCM — 8 lampadaire intelligent ». Le motif coupait `C4.8` en deux et laissait un `8` orphelin. La
+version retenue découpe le nom en jetons et écarte ceux qui *sont* un code — plus simple, et juste.
+
+**L'ordre des tests de classement compte.** `atelier_procedes.svg` était annoncé comme une
+« Activité »&nbsp;: le motif `^atelier` gagnait avant le contrôle d'extension. Les médias sont
+désormais écartés en premier — ils se lisent **dans** une séquence, ils ne sont pas des ressources
+autonomes.
+
+**Contrainte de gouvernance à connaître.** `_outils/` appartient au Thème 2&nbsp;: le générateur
+d'index ne peut donc pas être modifié depuis une branche de Thème 1. Toute évolution de l'interface
+passe par une PR Thème 2, les contenus par leur thème. C'est pour cela que cette PR précède les
+lots de Thème 1 à venir&nbsp;: ils s'afficheront d'emblée dans la bonne interface.
+
+**Vingt contrôles automatiques** accompagnent ces règles (`_outils/tests_index.py`) — dont la
+présence des 114 formulations, l'absence de troncature, l'absence de fichier de gouvernance dans la
+vue pédagogique, l'absence de ressource distante, et l'accessibilité clavier. **20 / 20.**
