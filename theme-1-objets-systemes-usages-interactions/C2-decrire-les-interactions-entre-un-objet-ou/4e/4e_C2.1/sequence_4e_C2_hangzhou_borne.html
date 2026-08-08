@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shenzhen : recenser les interacteurs d'une station de vélos en libre-service et lire les choix de conception dans ses formes. Codes 5e_C2.1 et 5e_C2.2, programme 2024.">
+<title>Thème 1 · 4e — Hangzhou : ce que vit l'usager devant la borne (4e_C2.1 · C2.2)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<div class="page">
+<h1>🚲 Hangzhou — ce que vit l'usager devant la borne</h1>
+<p class="sous">Partir de ce que les gens disent, aboutir à un schéma, un graphique et un algorithme — puis remonter aux exigences.</p>
+<div class="badges">
+  <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">4e</span>
+  <span class="badge code" title="Code de classement interne à ce dépôt : décrire l'expérience de l'utilisateur.">4e_C2.1</span><span class="badge code" title="Code de classement interne à ce dépôt : repérer et expliquer les contraintes et exigences.">4e_C2.2</span>
+  <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 langages scientifiques et techniques, D3 formation de la personne et du citoyen, D4 systèmes techniques, D5 représentations du monde.">D1.3 · D3 · D4 · D5</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">3 séances de 55 min</span>
+</div>
+<p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>4e</b>&nbsp;: le niveau.
+<b>4e_C2.1</b> et <b>4e_C2.2</b>&nbsp;: les deux compétences travaillées — ce sont des codes de
+classement <b>propres à ce site</b>, expliqués en toutes lettres plus bas.
+<b>D1.3 · D3 · D4 · D5</b>&nbsp;: les domaines du <b>socle commun</b> — les grandes familles de ce
+qu'on apprend au collège, toutes matières confondues.
+<b>3 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
+
+<section class="card">
+  <h2>🇨🇳 La situation&nbsp;: une réclamation qui ne dit pas ce qu'elle croit dire</h2>
+  <p>Le service client des vélos partagés de Hangzhou reçoit cette réclamation&nbsp;:</p>
+  <blockquote style="border-left:4px solid var(--warn);margin:8px 0;padding:2px 14px;color:var(--warn)">
+    «&nbsp;Vos bornes sont trop lentes. Il faut deux minutes pour prendre un vélo. Réparez-les.&nbsp;»
+  </blockquote>
+  <p>Le service technique répond&nbsp;: «&nbsp;Nos bornes fonctionnent. Aucune n'est en
+  panne.&nbsp;» Les deux ont raison, et personne n'avance.</p>
+  <p>On te confie ce que personne n'a encore croisé&nbsp;: <b>douze usagers interrogés</b> avec
+  leurs mots à eux, et <b>trente retraits chronométrés</b>, étape par étape.</p>
+  <p style="color:var(--warn);font-size:1.05em">Une réclamation dit <b>ce qu'on ressent</b>. Un
+  chronomètre dit <b>ce qui se passe</b>. Ce n'est pas la même chose — et il faut les deux.</p>
+  <p class="meta">⚠️ <b>Toutes les données de cette séquence sont simulées</b>, construites pour
+  l'exercice. Elles ne décrivent aucun service réellement exploité.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Comment passer de ce que les usagers
+  <b>disent</b> à ce qu'il faut <b>exiger</b> de l'objet&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Sans regarder les données&nbsp;: d'après toi, quelle étape du retrait d'un vélo prend le plus de temps&nbsp;? Et de quoi les usagers se plaignent-ils le plus&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : l'étape la plus longue, et celle dont on se plaint"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Je pense que l'étape la plus <b>longue</b> est ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Je pense que les usagers se <b>plaignent</b> surtout de ____.&nbsp;»</li>
+    <li>«&nbsp;À mon avis, c'est la <b>même</b> / ce n'est <b>pas la même</b> étape, parce que ____.&nbsp;»</li></ul></details>
+  <p class="meta">Au bilan, tu reviendras sur ces deux réponses. La question qui compte n'est pas
+  laquelle est juste&nbsp;: c'est de savoir <b>si c'est la même étape</b>.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>4e_C2.1</code> et
+  <code>4e_C2.2</code> sont des codes de classement <b>internes à ce dépôt</b>. Ils ne figurent pas
+  comme tels au BO. Les formulations ci-dessous, elles, sont celles du référentiel.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>4e_C2.1</b></td><td>Décrire l'expérience de l'utilisateur (ressenti et facilité
+      d'usage) d'un objet ou système technique <b>en partant du langage naturel (texte, croquis)
+      pour aboutir aux schémas, graphiques, algorithmes</b>.</td><td>Séances 1 et 2</td></tr>
+    <tr><td><b>4e_C2.2</b></td><td>Repérer et expliquer les contraintes, exigences prises en compte
+      (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité)
+      <b>pour répondre aux attentes des utilisateurs</b>.</td><td>Séance 3</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 langages scientifiques et techniques · D3 formation de la personne et du
+  citoyen · D4 systèmes techniques · D5 représentations du monde.</p>
+  <p class="meta">🪜 <b>Ce que tu faisais en 5e, et ce qui change ici.</b> L'an dernier tu
+  <b>recensais</b> ce qui entoure l'objet, et tu <b>repérais</b> des choix visibles dans sa forme.
+  Cette année, tu pars de <b>ce que vivent les gens</b> — et tu ne t'arrêtes pas à le raconter&nbsp;:
+  tu le traduis en schéma, en graphique, en algorithme. C'est le programme lui-même qui impose ce
+  trajet, et c'est là que se joue toute la difficulté de l'année.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 4 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Écouter, puis schématiser<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Mesurer, puis algorithmer<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Remonter aux exigences<span class="done" id="done-s3"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils de 5e (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu as travaillé l'an dernier. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
+  <div class="assoc"><label for="be_1">Un <b>interacteur</b> d'un objet technique, c'est&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>tout ce qui, à l'extérieur de l'objet, entre en relation avec lui</option>
+      <option>chacune des pièces qui composent l'objet</option>
+      <option>la personne qui a conçu l'objet</option>
+      <option>le lieu où l'objet est installé</option></select></div>
+  <div class="assoc"><label for="be_2">Repérer un <b>choix de conception</b>, c'est&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>comprendre quelle décision explique une forme observée</option>
+      <option>juger si l'objet est beau ou laid</option>
+      <option>mesurer les dimensions de l'objet</option>
+      <option>démonter l'objet pour voir l'intérieur</option></select></div>
+  <div class="assoc"><label for="be_3">Une <b>moyenne</b> calculée sur trente relevés&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>décrit le milieu, et ne dit rien des cas extrêmes</option>
+      <option>décrit ce que subit chaque personne</option>
+      <option>est toujours égale à la valeur la plus fréquente</option>
+      <option>ne sert qu'en mathématiques</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Un <b>interacteur</b> est <b>extérieur</b> à l'objet et entre en relation avec lui&nbsp;: une
+    personne, un autre objet, une condition. Un <b>choix de conception</b> est la décision qui
+    explique une forme&nbsp;— la question qui l'ouvre est «&nbsp;pourquoi pas autrement&nbsp;?&nbsp;»</p>
+    <p>Une <b>moyenne</b> décrit le <b>milieu</b> d'une série. Elle ne dit rien de ce qui arrive aux
+    cas les plus défavorables&nbsp;: deux séries très différentes peuvent avoir la même moyenne.
+    Cette idée-là va servir toute la séquence.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>👂 Activité 1 — Écouter, puis schématiser <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
+  <div class="meta"><b>Objectif</b> passer du langage naturel à un schéma du parcours ·
+  <b>Compétence</b> 4e_C2.1 · <b>Production</b> le parcours en 5 étapes, avec le ressenti dominant de chacune</div>
+
+  <p>Le programme te demande de <b>partir du langage naturel</b>&nbsp;: ce que les gens disent, avec
+  leurs mots. Douze usagers ont été interrogés devant la borne de Hangzhou. Leurs réponses sont dans
+  <code>verbatims_usagers_hangzhou_simules.csv</code>.</p>
+
+  <figure class="fig">
+    <img src="Images/du_verbatim_a_l_algorigramme.svg"
+         alt="Quatre représentations d'une même expérience, reliées par des flèches : le langage naturel (ce qu'on dit, ce qu'on croque), le schéma (le parcours en étapes nommées), le graphique (les durées mesurées) et l'algorithme (actions et tests). Chacune est présentée avec ce qu'elle apporte et ce qu'elle ne sait pas dire. Une bande rappelle qu'un ressenti n'est pas une mesure, et qu'une mesure n'est pas un ressenti.">
+    <figcaption>📄 <b>Document à lire.</b> C'est la carte de toute la séquence&nbsp;: tu vas
+    parcourir ces quatre cases, de gauche à droite, sur un objet réel. Repère dès maintenant la
+    ligne «&nbsp;−&nbsp;» de chaque case : c'est elle qui justifie la case suivante.</figcaption>
+  </figure>
+
+  <h4>a) Lire des verbatims sans les trahir</h4>
+  <div class="assoc"><label for="a1_1">Chen dit&nbsp;: «&nbsp;Tu tires, ça résiste, et tu ne sais pas si c'est toi ou la borne.&nbsp;» Ce qui gêne Chen, c'est&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>de ne pas savoir d'où vient le problème : la machine ne lui dit rien</option>
+      <option>l'effort physique nécessaire pour tirer</option>
+      <option>le prix de la location</option>
+      <option>la couleur du vélo</option></select></div>
+  <div class="assoc"><label for="a1_2">Wang trouve la liste des vélos «&nbsp;trop longue&nbsp;», Ma la trouve pratique. Cela veut dire que&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>un même objet ne produit pas la même expérience selon qui l'utilise</option>
+      <option>l'un des deux se trompe, et il faut trancher</option>
+      <option>les verbatims ne servent à rien</option>
+      <option>il faut interroger davantage de personnes jusqu'à ce qu'elles soient d'accord</option></select></div>
+  <div class="assoc"><label for="a1_3">Feng dit&nbsp;: «&nbsp;Ce qui m'énerve, ce n'est pas que ce soit long, c'est de ne pas savoir combien de temps ça va durer.&nbsp;» Ce verbatim porte sur&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>le ressenti, qui dépend de l'information reçue autant que de la durée réelle</option>
+      <option>la durée réelle, et rien d'autre</option>
+      <option>un défaut de fabrication de la borne</option>
+      <option>une erreur de l'usager</option></select></div>
+  <div class="assoc"><label for="a1_4">Xu dit&nbsp;: «&nbsp;Je fais ça en trente secondes, mais ma mère n'y arrive pas seule.&nbsp;» Ce que ce verbatim apporte&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>la facilité d'usage dépend de l'expérience de la personne, pas seulement de l'objet</option>
+      <option>que la borne est trop compliquée pour tout le monde</option>
+      <option>que Xu est plus intelligente que sa mère</option>
+      <option>rien d'utile : c'est une opinion</option></select></div>
+
+  <h4>b) Découper le parcours</h4>
+  <p>Pour comparer ce que douze personnes racontent, il faut un <b>découpage commun</b>&nbsp;: c'est
+  ce qu'apporte le schéma. Le service technique en propose cinq étapes&nbsp;: <b>arriver</b>,
+  <b>identifier</b>, <b>choisir</b>, <b>déverrouiller</b>, <b>partir</b>.</p>
+  <div class="assoc"><label for="a1_5">À quoi sert de découper le parcours en étapes nommées&nbsp;?</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>à ce que tout le monde parle du même endroit du parcours</option>
+      <option>à rendre le parcours plus rapide</option>
+      <option>à faire joli sur le rapport</option>
+      <option>à supprimer les étapes inutiles</option></select></div>
+  <div class="assoc"><label for="a1_6">Le verbatim de Guo — «&nbsp;les pictogrammes ne se ressemblent pas d'une borne à l'autre&nbsp;» — se range à l'étape&nbsp;:</label>
+    <select id="a1_6"><option value="">— choisir —</option>
+      <option>arriver : c'est en approchant qu'on lit l'écran et les pictogrammes</option>
+      <option>partir</option>
+      <option>déverrouiller</option>
+      <option>nulle part : ce n'est pas une étape du parcours</option></select></div>
+
+  <h4>c) Ton relevé</h4>
+  <div class="assoc">
+    <label for="a1_parcours">Écris le parcours en <b>cinq étapes</b>, une par ligne. Pour chaque étape&nbsp;: son nom, le <b>ressenti dominant</b> qu'expriment les usagers, et <b>le code du verbatim</b> qui te sert de preuve.</label>
+    <textarea id="a1_parcours" style="min-height:130px" aria-label="Le parcours en cinq étapes, avec pour chacune le ressenti dominant et le verbatim qui le prouve"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>La structure est donnée&nbsp;; le contenu reste à trouver dans les verbatims.</p>
+    <ul>
+      <li>«&nbsp;1. arriver — ressenti&nbsp;: ____ — preuve&nbsp;: V__&nbsp;»</li>
+      <li>«&nbsp;2. identifier — ressenti&nbsp;: ____ — preuve&nbsp;: V__&nbsp;»</li>
+      <li>«&nbsp;3. choisir — ressenti&nbsp;: ____ — preuve&nbsp;: V__&nbsp;»</li>
+      <li>«&nbsp;4. déverrouiller — ressenti&nbsp;: ____ — preuve&nbsp;: V__&nbsp;»</li>
+      <li>«&nbsp;5. partir — ressenti&nbsp;: ____ — preuve&nbsp;: V__&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Prends les verbatims un par un et pose-toi une seule question&nbsp;: <b>à quel moment du
+    retrait cette personne se trouve-t-elle&nbsp;?</b> La colonne <code>etape_concernee</code> du
+    fichier te donne la réponse si tu bloques.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Un <b>ressenti</b> s'écrit avec un mot d'émotion ou de difficulté&nbsp;: hésitation,
+    agacement, fatigue, confusion, incertitude, soulagement. Il ne s'écrit pas avec un chiffre —
+    les chiffres viennent à la séance 2.</p>
+    <p>Attention à l'étape <b>choisir</b>&nbsp;: deux usagers disent le contraire l'un de l'autre.
+    Ce n'est pas un problème à résoudre, c'est un résultat à écrire.</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Un relevé possible</b> (les ressentis peuvent se dire avec d'autres mots, les preuves
+    non)&nbsp;:</p>
+    <ol>
+      <li><b>arriver</b> — gêne, fatigue, confusion&nbsp;: l'écran est illisible sous la pluie
+      (V04), il faut se pencher (V07), les pictogrammes changent d'une borne à l'autre (V10).</li>
+      <li><b>identifier</b> — hésitation&nbsp;: on ne sait pas où poser sa carte (V02), et l'aisance
+      de Xu ne vaut que pour elle (V08).</li>
+      <li><b>choisir</b> — <b>partagé</b>&nbsp;: découragement pour Wang (V03), satisfaction pour Ma
+      (V09). Les deux sont vrais.</li>
+      <li><b>déverrouiller</b> — agacement, perte de confiance, incertitude&nbsp;: on ne sait pas si
+      la faute vient de soi ou de la borne (V01), il faut recommencer (V05), et surtout on ignore
+      combien de temps ça va durer (V12).</li>
+      <li><b>partir</b> — soulagement, mais embarras quand on n'a qu'une main libre (V06, V11).</li>
+    </ol>
+    <p><b>Wang contre Ma</b>&nbsp;: rien à trancher. Un même objet ne produit pas la même expérience
+    selon qui l'utilise — Ma est livreur, il cherche la batterie&nbsp;; Wang vient une fois par
+    semaine et ne sait pas quoi regarder. Un relevé honnête <b>écrit les deux</b>.</p>
+    <p><b>Feng</b> est le verbatim le plus précieux de la série&nbsp;: il sépare la <b>durée</b> de
+    l'<b>incertitude</b>. Ce n'est pas la même chose d'attendre trente secondes en le sachant, et
+    d'attendre trente secondes sans le savoir. La séance 3 en tirera une exigence.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on part de ce que les gens <b>disent</b>, et on
+  cherche à quel <b>moment</b> ils le disent. Le schéma ne remplace pas les mots&nbsp;: il les
+  range.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: vouloir trancher entre deux usagers qui se
+  contredisent. Deux expériences opposées sur le même objet, c'est un <b>résultat</b>.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tes cinq étapes sont nommées, chacune porte un ressenti et le
+  code d'un verbatim qui le prouve.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>📊 Activité 2 — Mesurer, et tracer <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> passer du schéma au graphique · <b>Compétence</b> 4e_C2.1 ·
+  <b>Production</b> un graphique des durées, et sa lecture en deux phrases</div>
+
+  <p>Trente retraits ont été chronométrés, étape par étape&nbsp;:
+  <code>donnees_parcours_borne_hangzhou_simulees.csv</code> — 150 lignes, une par étape et par
+  retrait, avec une colonne <code>reprise_necessaire</code>.</p>
+
+  <p><b>Ce que tu dois produire</b>&nbsp;: un <b>diagramme en barres</b>, une barre par étape.
+  Trace <b>deux</b> barres par étape&nbsp;: la <b>durée moyenne</b> et la <b>durée la plus
+  longue</b> observée. C'est cette seconde barre qui fait tout l'intérêt du graphique.</p>
+
+  <div class="assoc"><label for="a2_1">Pourquoi tracer aussi la durée la plus longue, et pas seulement la moyenne&nbsp;?</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>parce qu'une moyenne décrit le milieu, et que personne ne vit le milieu</option>
+      <option>pour que le graphique soit plus joli</option>
+      <option>parce que la moyenne est toujours fausse</option>
+      <option>pour remplir la feuille</option></select></div>
+  <div class="assoc"><label for="a2_2">La colonne <code>reprise_necessaire</code> vaut «&nbsp;oui&nbsp;» 9 fois sur 30 à l'étape déverrouiller. Cela signifie&nbsp;:</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>que près d'un usager sur trois a dû recommencer cette étape</option>
+      <option>que la borne est en panne 9 jours sur 30</option>
+      <option>que 9 vélos sur 30 sont cassés</option>
+      <option>qu'il y a une erreur dans le fichier</option></select></div>
+  <div class="assoc"><label for="a2_3">Un graphique de durées, comparé aux verbatims&nbsp;:</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>dit ce qui se passe, mais pas ce que les gens ressentent</option>
+      <option>remplace les verbatims, qui deviennent inutiles</option>
+      <option>dit la même chose, en plus précis</option>
+      <option>ne sert que si les usagers sont d'accord entre eux</option></select></div>
+  <div class="assoc"><label for="a2_4">Si l'on ne regardait que les moyennes, on conclurait qu'il faut d'abord corriger&nbsp;:</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>l'étape « choisir », qui est la plus longue en moyenne</option>
+      <option>l'étape « déverrouiller »</option>
+      <option>l'étape « arriver »</option>
+      <option>aucune : les moyennes se valent</option></select></div>
+
+  <h4>Ton graphique, et ce qu'on y lit</h4>
+  <div class="assoc">
+    <label for="a2_graph">Trace ton graphique sur papier ou au tableur, puis écris ici&nbsp;: les <b>cinq étapes avec leurs deux valeurs</b> (moyenne et maximum, en secondes), puis <b>deux phrases de lecture</b> — ce que le graphique montre, et ce qu'il ne montre pas.</label>
+    <textarea id="a2_graph" style="min-height:140px" aria-label="Les cinq étapes avec moyenne et maximum, puis deux phrases de lecture du graphique"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;arriver&nbsp;: ____ s en moyenne, ____ s au maximum.&nbsp;» (et ainsi pour les cinq)</li>
+      <li>«&nbsp;Ce que le graphique montre&nbsp;: l'étape ____ est la plus longue en moyenne, mais c'est l'étape ____ qui a le plus grand écart entre la moyenne et le maximum, parce que ____.&nbsp;»</li>
+      <li>«&nbsp;Ce que le graphique ne montre pas&nbsp;: ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Au tableur&nbsp;: filtre la colonne <code>etape</code>, puis utilise <code>MOYENNE</code> et
+    <code>MAX</code> sur la colonne <code>duree_s</code>. Arrondis à la seconde.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Regarde l'écart <b>moyenne → maximum</b> de chaque étape. Quatre étapes ont un écart
+    modeste. Une seule explose — et c'est celle dont parlent trois verbatims sur douze. La colonne
+    <code>reprise_necessaire</code> explique pourquoi.</p></details>
+
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète — avec le graphique attendu</summary>
+    <figure class="fig">
+      <img src="Images/corrige_temps_par_etape.svg"
+           alt="Corrigé du graphique : pour chaque étape, une barre pleine (durée moyenne) et une barre hachurée (durée maximale). Arriver 8 s et 14 s. Identifier 14 s et 27 s. Choisir 40 s et 62 s, la moyenne la plus haute. Déverrouiller 29 s et 83 s, de loin le plus grand écart, avec 9 reprises sur 30. Partir 13 s et 23 s. Un retrait complet dure 104 s en moyenne et jusqu'à 168 s. Deux encadrés : la plus longue n'est pas celle dont on se plaint, et une moyenne cache sa queue.">
+      <figcaption>Le graphique attendu. Compare-le au tien&nbsp;: les valeurs d'abord, la lecture
+      ensuite.</figcaption>
+    </figure>
+    <p><b>Les valeurs</b> (arrondies à la seconde)&nbsp;: arriver 8&nbsp;s / 14&nbsp;s&nbsp;·
+    identifier 14&nbsp;s / 27&nbsp;s&nbsp;· choisir <b>40&nbsp;s</b> / 62&nbsp;s&nbsp;·
+    déverrouiller 29&nbsp;s / <b>83&nbsp;s</b>&nbsp;· partir 13&nbsp;s / 23&nbsp;s. Un retrait
+    complet&nbsp;: <b>104&nbsp;s en moyenne</b>, jusqu'à <b>168&nbsp;s</b>.</p>
+    <p><b>Première lecture&nbsp;: la plus longue n'est pas celle dont on se plaint.</b> L'étape
+    «&nbsp;choisir&nbsp;» est la plus longue en moyenne (40&nbsp;s) — et aucun verbatim ne s'en
+    plaint vraiment&nbsp;; Ma la trouve même pratique. Si l'on n'avait que le chronomètre, on
+    corrigerait la mauvaise étape.</p>
+    <p><b>Seconde lecture&nbsp;: une moyenne cache sa queue.</b> «&nbsp;Déverrouiller&nbsp;» ne
+    fait que 29&nbsp;s de moyenne, mais monte à <b>83&nbsp;s</b> parce que <b>9 retraits sur 30</b>
+    ont demandé une reprise. Pour ces neuf usagers-là, l'étape triple. Et ce sont eux qui écrivent
+    au service client&nbsp;: <b>on ne se plaint pas de la moyenne, on se plaint de ce qu'on a
+    vécu.</b></p>
+    <p><b>Ce que le graphique ne montre pas</b>&nbsp;: le ressenti. Il ne dit pas que Feng
+    supporterait l'attente s'il en connaissait la durée. Il ne dit pas non plus <b>ce que la borne
+    décide</b> pendant ces 83 secondes — c'est ce que l'activité 3 va écrire.</p>
+    <p class="meta">La réclamation de départ disait «&nbsp;deux minutes pour prendre un vélo&nbsp;».
+    Elle n'était pas fausse&nbsp;: 168&nbsp;s, cela fait presque trois minutes. Elle était
+    <b>incomplète</b> — elle ne disait pas <i>où</i>.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une <b>moyenne décrit le milieu</b>, et personne ne
+  vit le milieu. Trace toujours le pire cas à côté.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: conclure d'un graphique de moyennes qu'il faut
+  corriger l'étape la plus haute. Ici, ce serait corriger «&nbsp;choisir&nbsp;» — dont personne ne
+  se plaint.</p>
+</section>
+
+<section class="card">
+  <h2>🔀 Activité 3 — Écrire l'algorithme du parcours <span style="color:var(--sub);font-size:.8em">(~25 min)</span></h2>
+  <div class="meta"><b>Objectif</b> aboutir à l'algorithme, dernière case du trajet ·
+  <b>Compétence</b> 4e_C2.1 · <b>Production</b> l'algorigramme de l'étape « déverrouiller », reprise comprise</div>
+
+  <p>Le graphique dit <b>combien de temps</b>. Il ne dit pas <b>ce que la machine décide</b>. Pour
+  cela, il faut écrire le parcours comme une suite d'<b>actions</b> et de <b>tests</b>&nbsp;: c'est
+  un <b>algorigramme</b>.</p>
+  <p class="meta">📐 <b>Rappel des formes</b>&nbsp;: un <b>rectangle</b> pour une action, un
+  <b>losange</b> pour un test (une question à deux sorties, oui et non), un <b>ovale</b> pour le
+  début et la fin. Une flèche qui remonte, c'est une <b>reprise</b>.</p>
+
+  <div class="assoc"><label for="a3_1">Dans un algorigramme, «&nbsp;la carte est-elle reconnue&nbsp;?&nbsp;» se dessine avec&nbsp;:</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>un losange, parce que c'est un test à deux sorties</option>
+      <option>un rectangle, parce que c'est une action</option>
+      <option>un ovale, parce que c'est un début</option>
+      <option>une flèche seule</option></select></div>
+  <div class="assoc"><label for="a3_2">Les 9 reprises sur 30 relevées à l'étape déverrouiller correspondent, dans l'algorigramme, à&nbsp;:</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>une flèche qui remonte vers une étape déjà faite</option>
+      <option>une case supplémentaire tout à la fin</option>
+      <option>un test sans sortie « non »</option>
+      <option>rien : une reprise ne se dessine pas</option></select></div>
+  <div class="assoc"><label for="a3_3">Un algorigramme dont un test n'a qu'une seule sortie&nbsp;:</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>est faux : un test a toujours deux sorties, et le cas « non » doit être traité</option>
+      <option>est correct si le cas « non » est rare</option>
+      <option>est correct : on simplifie</option>
+      <option>dépend du logiciel utilisé</option></select></div>
+  <div class="assoc"><label for="a3_4">Ce que l'algorigramme apporte, et que le graphique ne donnait pas&nbsp;:</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>les cas d'échec deviennent visibles, donc traitables</option>
+      <option>les durées exactes de chaque étape</option>
+      <option>le ressenti des usagers</option>
+      <option>le nombre d'usagers interrogés</option></select></div>
+
+  <h4>Ton algorigramme</h4>
+  <div class="assoc">
+    <label for="a3_algo">Dessine l'algorigramme de l'étape <b>déverrouiller</b> sur papier, puis écris-le ici ligne par ligne. Il doit contenir au moins <b>deux tests</b> (losanges), une <b>reprise</b>, et une <b>sortie d'échec</b> pour que l'usager ne reste pas bloqué indéfiniment.</label>
+    <textarea id="a3_algo" style="min-height:140px" aria-label="L'algorigramme de l'étape déverrouiller, écrit ligne par ligne"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;DÉBUT — l'usager a choisi son vélo&nbsp;»</li>
+      <li>«&nbsp;ACTION&nbsp;: ____&nbsp;»</li>
+      <li>«&nbsp;TEST&nbsp;: ____&nbsp;? — si OUI ____ — si NON ____&nbsp;»</li>
+      <li>«&nbsp;TEST&nbsp;: ____&nbsp;? — si OUI ____ — si NON ____&nbsp;»</li>
+      <li>«&nbsp;REPRISE&nbsp;: retour à l'étape ____&nbsp;»</li>
+      <li>«&nbsp;FIN&nbsp;: ____ (réussite) ou ____ (échec annoncé à l'usager)&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Repars du verbatim de Chen&nbsp;: «&nbsp;tu ne sais pas si c'est toi ou la borne&nbsp;». Ton
+    algorigramme doit contenir le test qui répond à cette question — et l'action qui <b>le dit à
+    l'usager</b>.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Deux tests suffisent&nbsp;: «&nbsp;le point d'ancrage s'est-il ouvert&nbsp;?&nbsp;» et
+    «&nbsp;est-ce la troisième tentative&nbsp;?&nbsp;». Le second est celui qu'on oublie&nbsp;: sans
+    lui, la reprise tourne en boucle et l'usager n'a aucune sortie.</p>
+    <p>Une boucle sans sortie d'échec, c'est exactement ce que Sun a vécu&nbsp;: «&nbsp;j'ai
+    recommencé trois fois&nbsp;».</p></details>
+
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Un algorigramme correct</b>&nbsp;:</p>
+    <ol>
+      <li><b>DÉBUT</b> — l'usager a choisi son vélo.</li>
+      <li><b>ACTION</b> — la borne commande l'ouverture du point d'ancrage, et <b>affiche le temps
+      restant</b>.</li>
+      <li><b>TEST</b> — «&nbsp;le point d'ancrage s'est-il ouvert en moins de 5&nbsp;s&nbsp;?&nbsp;»
+      Si <b>oui</b> → aller à 6. Si <b>non</b> → aller à 4.</li>
+      <li><b>ACTION</b> — la borne <b>annonce ce qui bloque</b> («&nbsp;ancrage bloqué, ne tirez
+      pas&nbsp;») et propose de réessayer.</li>
+      <li><b>TEST</b> — «&nbsp;est-ce la troisième tentative&nbsp;?&nbsp;» Si <b>non</b> →
+      <b>reprise</b>, retour à 2. Si <b>oui</b> → <b>FIN (échec)</b>&nbsp;: la borne propose un
+      autre vélo et signale l'ancrage au service technique.</li>
+      <li><b>FIN (réussite)</b> — l'usager sort le vélo.</li>
+    </ol>
+    <p><b>La sortie d'échec est le cœur de l'exercice.</b> Sans elle, l'algorithme boucle&nbsp;:
+    l'usager réessaie indéfiniment, exactement comme Sun. Un test dont la sortie
+    «&nbsp;non&nbsp;» n'est pas traitée n'est pas un test, c'est un vœu.</p>
+    <p><b>L'étape 4 est ce que Chen réclamait</b> sans le savoir&nbsp;: non pas que ça aille plus
+    vite, mais que la machine <b>dise</b> ce qui se passe. Et l'affichage du temps restant, à
+    l'étape 2, est ce que Feng réclamait. Deux verbatims deviennent deux cases.</p>
+    <p class="meta">Voilà le trajet complet, parcouru&nbsp;: des <b>mots</b> de Chen et Feng au
+    <b>schéma</b> en cinq étapes, du schéma au <b>graphique</b> des 83&nbsp;secondes, du graphique à
+    l'<b>algorithme</b> qui traite l'échec. Chaque case a servi.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un <b>test a toujours deux sorties</b>, et la sortie
+  «&nbsp;non&nbsp;» doit mener quelque part. Une reprise sans sortie d'échec est une boucle.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: dessiner le parcours quand tout se passe bien.
+  L'algorigramme sert précisément à ce qui se passe quand ça rate.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>📐 Activité 4 — Remonter aux exigences <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> nommer les contraintes et exigences qui répondent aux attentes ·
+  <b>Compétence</b> 4e_C2.2 · <b>Production</b> quatre exigences, chacune reliée à une attente d'usager</div>
+
+  <p>Tu sais maintenant ce que vivent les usagers, où part le temps, et ce que la borne décide. Il
+  reste le geste qui transforme tout cela en <b>cahier des charges</b>&nbsp;: nommer les
+  <b>exigences</b>.</p>
+  <p>Le programme en nomme <b>six familles</b>. Ce sont ses mots, pas les nôtres&nbsp;:
+  <b>sécurité</b>, <b>incidences environnementales</b>, <b>formes et fonctions</b>,
+  <b>ergonomie</b>, <b>qualité</b>, <b>fiabilité</b>.</p>
+
+  <figure class="fig">
+    <img src="Images/six_familles_d_exigences.svg"
+         alt="Tableau des six familles d'exigences du programme : sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité. Pour chacune, la question qu'elle pose et ce qu'elle donne concrètement sur la borne de Hangzhou. Une bande rappelle qu'une exigence n'existe que si l'on peut dire à quelle attente d'utilisateur elle répond.">
+    <figcaption>📄 <b>Document à lire.</b> La colonne du milieu est celle qui sert&nbsp;: c'est la
+    question qui te dit dans quelle famille ranger une exigence.</figcaption>
+  </figure>
+
+  <div class="assoc"><label for="a4_1">«&nbsp;Le message d'attente doit indiquer le temps restant&nbsp;» relève surtout de&nbsp;:</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>la qualité : l'objet doit faire ce qu'il annonce, et informer sur ce qu'il fait</option>
+      <option>la sécurité</option>
+      <option>les incidences environnementales</option>
+      <option>rien : c'est un détail d'affichage</option></select></div>
+  <div class="assoc"><label for="a4_2">«&nbsp;Le déverrouillage doit réussir au moins 98 fois sur 100&nbsp;» relève de&nbsp;:</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>la fiabilité, et elle se chiffre</option>
+      <option>l'ergonomie</option>
+      <option>les formes et fonctions</option>
+      <option>la sécurité uniquement</option></select></div>
+  <div class="assoc"><label for="a4_3">«&nbsp;Le retrait doit pouvoir se faire d'une seule main&nbsp;» répond à l'attente de&nbsp;:</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>Deng, qui a une main prise par son enfant — c'est de l'ergonomie</option>
+      <option>Ma, le livreur</option>
+      <option>Guo, le touriste</option>
+      <option>personne : c'est une idée de concepteur</option></select></div>
+  <div class="assoc"><label for="a4_4">«&nbsp;L'écran s'éteint quand personne n'approche&nbsp;» relève de&nbsp;:</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>les incidences environnementales : moins d'énergie consommée sur la durée de vie</option>
+      <option>la sécurité</option>
+      <option>la qualité</option>
+      <option>les formes et fonctions uniquement</option></select></div>
+  <div class="assoc"><label for="a4_5">Une exigence bien écrite&nbsp;:</label>
+    <select id="a4_5"><option value="">— choisir —</option>
+      <option>dit ce qui est attendu, se vérifie, et nomme l'attente d'utilisateur à laquelle elle répond</option>
+      <option>décrit la solution technique à installer</option>
+      <option>reste large, pour ne pas contraindre le concepteur</option>
+      <option>se contente de citer une famille du programme</option></select></div>
+  <div class="assoc"><label for="a4_6">«&nbsp;Installer un lecteur de carte plus rapide&nbsp;» n'est pas une exigence, parce que&nbsp;:</label>
+    <select id="a4_6"><option value="">— choisir —</option>
+      <option>c'est déjà une solution : une exigence dit le besoin, pas le moyen</option>
+      <option>c'est trop cher</option>
+      <option>le lecteur n'est pas en cause</option>
+      <option>cela relève de la sécurité</option></select></div>
+
+  <h4>Ton cahier des charges</h4>
+  <div class="assoc">
+    <label for="a4_exig">Écris <b>quatre exigences</b>, une par ligne. Pour chacune&nbsp;: ce qui est attendu (vérifiable si possible), la <b>famille</b> du programme à laquelle elle appartient, et <b>l'attente d'usager</b> à laquelle elle répond — avec le code du verbatim. Les quatre doivent relever d'au moins <b>trois familles différentes</b>.</label>
+    <textarea id="a4_exig" style="min-height:150px" aria-label="Quatre exigences avec leur famille et l'attente d'usager à laquelle elles répondent"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;La borne doit ____. Famille&nbsp;: ____. Elle répond à l'attente de ____ (V__), qui disait ____.&nbsp;»</li>
+      <li>«&nbsp;La borne doit ____. Famille&nbsp;: ____. Elle répond à ____ (V__).&nbsp;»</li>
+      <li>«&nbsp;La borne doit ____. Famille&nbsp;: ____. Elle répond à ____ (V__).&nbsp;»</li>
+      <li>«&nbsp;La borne doit ____. Famille&nbsp;: ____. Elle répond à ____ (V__).&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Reprends ton relevé de l'activité 1&nbsp;: chaque ressenti mal vécu appelle une exigence.
+    Pars du verbatim, et demande-toi&nbsp;: <b>qu'est-ce que la borne devrait garantir</b> pour que
+    cette personne n'ait plus à dire ça&nbsp;?</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Une exigence <b>se vérifie</b>&nbsp;: elle contient si possible un nombre («&nbsp;au moins
+    98 fois sur 100&nbsp;», «&nbsp;en moins de 5&nbsp;s&nbsp;», «&nbsp;d'une seule main&nbsp;»).
+    Sans quoi personne ne pourra dire si elle est tenue.</p>
+    <p>Et une exigence <b>n'est pas une solution</b>&nbsp;: «&nbsp;afficher le temps restant&nbsp;»
+    est une exigence, «&nbsp;installer un écran OLED&nbsp;» est un choix de matériel.</p></details>
+
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Quatre exigences possibles</b> (d'autres sont recevables si elles tiennent les trois
+    exigences de forme&nbsp;: attendu, famille, attente d'usager)&nbsp;:</p>
+    <ol>
+      <li>Le déverrouillage doit réussir <b>au moins 98 fois sur 100</b>. — <b>Fiabilité</b>. Répond
+      à Chen (V01) et Sun (V05)&nbsp;: aujourd'hui, c'est 21 fois sur 30 seulement.</li>
+      <li>Pendant une attente, la borne doit <b>afficher le temps restant</b>, et <b>annoncer la
+      cause</b> en cas d'échec. — <b>Qualité</b>. Répond à Feng (V12), qui ne supporte pas
+      l'incertitude, et à Chen (V01), qui ne sait pas d'où vient le blocage.</li>
+      <li>Le retrait doit pouvoir se faire <b>d'une seule main</b>. — <b>Ergonomie</b>. Répond à
+      Deng (V11), qui tient son enfant.</li>
+      <li>L'écran doit rester <b>lisible sous la pluie et sans se pencher</b>. — <b>Formes et
+      fonctions</b> (et ergonomie). Répond à Zhao (V04) et Wu (V07).</li>
+    </ol>
+    <p>Une cinquième, souvent trouvée&nbsp;: l'écran <b>ne s'allume qu'à l'approche</b> —
+    <b>incidences environnementales</b>. Elle ne vient d'aucun verbatim, et c'est normal&nbsp;:
+    <b>les usagers ne réclament pas ce qui ne les gêne pas.</b> Certaines exigences viennent
+    d'ailleurs que des attentes exprimées.</p>
+    <p><b>Ce qui n'est pas une exigence</b>&nbsp;: «&nbsp;installer un lecteur plus rapide&nbsp;»,
+    «&nbsp;changer de fournisseur&nbsp;», «&nbsp;mettre un auvent&nbsp;». Ce sont des
+    <b>solutions</b>. Une exigence dit ce qu'il faut obtenir&nbsp;; la solution dira comment. Les
+    confondre, c'est décider avant d'avoir cherché.</p>
+    <p class="meta">Et l'étape «&nbsp;choisir&nbsp;», la plus longue de toutes&nbsp;? Elle n'appelle
+    <b>aucune exigence urgente</b>&nbsp;: Wang s'en plaint, Ma s'en félicite, et personne n'écrit au
+    service client à son sujet. C'est le résultat le plus intéressant de la séquence — <b>la donnée
+    la plus grosse n'est pas toujours le problème.</b></p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une exigence dit <b>ce qu'il faut obtenir</b>, se
+  <b>vérifie</b>, et nomme <b>l'attente</b> à laquelle elle répond. Sinon, c'est une solution
+  déguisée.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: écrire la solution à la place de l'exigence.
+  «&nbsp;Mettre un auvent&nbsp;» répond déjà à la question&nbsp;; «&nbsp;rester lisible sous la
+  pluie&nbsp;» la pose.</p>
+  <p><b>Critère de réussite</b>&nbsp;: quatre exigences, au moins trois familles du programme, et
+  chacune reliée à un verbatim.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel <span style="color:var(--sub);font-size:.8em">(~10 min)</span></h2>
+  <p>💭 <b>Rappel de ton hypothèse de départ&nbsp;:</b></p>
+  <p id="rappelHyp" style="display:none;color:var(--warn)"><span id="hypRappelTxt"></span></p>
+  <div class="assoc"><label for="hyp_retour">Avais-tu désigné la même étape pour «&nbsp;la plus longue&nbsp;» et pour «&nbsp;celle dont on se plaint&nbsp;»&nbsp;? Que sais-tu maintenant&nbsp;?</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'avais dit que l'étape la plus longue serait ____, et c'est ____.&nbsp;»</li>
+    <li>«&nbsp;J'avais dit qu'on se plaindrait de ____, et c'est ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'avais pas prévu, c'est que ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
+    <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai appris qu'un ressenti et une mesure ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'une moyenne ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'une exigence ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan2">Ce que je dois encore revoir&nbsp;:</label>
+    <textarea id="bilan2" aria-label="Ce que je dois encore revoir"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li></ul></details>
+  <h3>Je me positionne</h3>
+  <div class="assoc"><label for="pos1">4e_C2.1 — décrire l'expérience de l'utilisateur, du langage naturel aux schémas, graphiques et algorithmes&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je répète ce que disent les usagers sans le traduire</option>
+      <option>🟠 Maîtrise fragile — je fais le schéma, mais je bloque au graphique ou à l'algorigramme</option>
+      <option>🟢 Maîtrise satisfaisante — je parcours les quatre représentations</option>
+      <option>⭐ Très bonne maîtrise — je dis aussi ce que chaque représentation ne montre pas</option></select></div>
+  <div class="assoc"><label for="pos2">4e_C2.2 — repérer et expliquer les contraintes et exigences&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — j'écris des solutions à la place des exigences</option>
+      <option>🟠 Maîtrise fragile — j'écris des exigences, sans les rattacher à une attente</option>
+      <option>🟢 Maîtrise satisfaisante — chaque exigence a sa famille et son attente d'usager</option>
+      <option>⭐ Très bonne maîtrise — j'en trouve qui ne viennent d'aucune plainte</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>5 illustrées</b>, et chaque réponse
+  fausse y est expliquée. Elles se répartissent ainsi&nbsp;:</p>
+  <ul>
+    <li><b>15 questions</b> sur <b>4e_C2.1</b> — décrire l'expérience de l'utilisateur
+    <span class="meta">(séances 1 et 2)</span></li>
+    <li><b>15 questions</b> sur <b>4e_C2.2</b> — repérer et expliquer les exigences
+    <span class="meta">(séance 3)</span></li>
+  </ul>
+  <p id="qcmPortee" class="meta">Tu n'as encore validé aucune activité&nbsp;: le bouton t'emmène sur
+  le parcours complet. Dès que tu auras validé une activité, il te proposera d'abord les questions
+  qui portent sur <b>ce que tu as fait</b>.</p>
+  <p style="text-align:center"><a class="btn qcm" id="lienQcm" href="qcm_4e_C2_hangzhou_borne.html"
+     title="Ouvre le QCM d'entraînement dans la même fenêtre. Tes réponses y sont enregistrées séparément de celles de la séquence.">🚲 Lancer le QCM de la séquence</a></p>
+  <p class="meta">Dans le QCM, tu peux à tout moment choisir&nbsp;: <b>parcours complet</b> (les 30),
+  <b>10 questions</b>, <b>révision ciblée</b> (une compétence au choix), ou <b>uniquement mes
+  erreurs</b>. Rien ne t'est interdit&nbsp;: on te propose seulement de commencer par là où tu en
+  es.</p>
+</section>
+
+<section class="card approfondissement">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>1.</b> Interroge trois personnes sur un objet que tu utilises tous les jours au collège
+  — un portail, un distributeur, un casier. Note leurs mots <b>exacts</b>, sans les reformuler.
+  Combien d'étapes leur parcours compte-t-il&nbsp;?</p>
+  <p><b>2.</b> Chronomètre dix fois une même étape de cet objet. Compare la moyenne et le pire cas.
+  L'écart te surprend-il&nbsp;?</p>
+  <p><b>3.</b> Écris une exigence pour cet objet, dans l'une des six familles du programme, et dis à
+  quelle attente elle répond.</p>
+
+  <details class="correction"><summary>📖 Corrigé du Bonus — un exemple entièrement traité</summary>
+    <p>L'objet pris ici&nbsp;: le <b>distributeur de boissons</b> du hall. Ton objet sera
+    différent&nbsp;; c'est la <b>démarche</b> qui doit se ressembler.</p>
+    <p><b>1. Les mots exacts de trois personnes</b> (relevés sans les reformuler)&nbsp;:</p>
+    <ul>
+      <li>«&nbsp;Il rend jamais la monnaie, alors je prends toujours une pièce en trop, au cas où.&nbsp;»</li>
+      <li>«&nbsp;Le truc tombe, mais des fois il reste coincé et faut taper. Moi je tape plus, j'ai peur de casser.&nbsp;»</li>
+      <li>«&nbsp;Y'a écrit "sélectionnez" mais je vois pas où appuyer, les boutons sont tous pareils.&nbsp;»</li>
+    </ul>
+    <p><b>Le parcours&nbsp;: cinq étapes</b> — s'approcher et lire · choisir sa boisson · payer ·
+    attendre la chute · récupérer. Les trois personnes parlent d'étapes différentes&nbsp;: la
+    première du <b>paiement</b>, la deuxième de la <b>chute</b>, la troisième du <b>choix</b>.
+    Trois témoignages, trois étapes&nbsp;: c'est ce que le découpage révèle.</p>
+    <p><b>2. Dix chronométrages de l'étape «&nbsp;attendre la chute&nbsp;»</b> (en secondes)&nbsp;:
+    3, 4, 3, 5, 4, 3, 22, 4, 3, 4.</p>
+    <p><b>Moyenne&nbsp;: 5,5&nbsp;s. Pire cas&nbsp;: 22&nbsp;s</b> — quatre fois la moyenne. Et
+    l'écart s'explique&nbsp;: une seule fois sur dix, la boisson est restée coincée. C'est
+    exactement ce que tu as vu à l'activité 2 sur la borne de Hangzhou&nbsp;: <b>la moyenne est
+    rassurante, et ce n'est pas elle qu'on subit</b>. Si l'écart te surprend, c'est bon signe — il
+    surprend tout le monde la première fois.</p>
+    <p><b>3. Une exigence</b>&nbsp;: «&nbsp;<i>Le produit doit tomber dans le bac en moins de
+    5&nbsp;secondes, au moins 99 fois sur 100.</i>&nbsp;» — Famille&nbsp;: <b>fiabilité</b>. Elle
+    répond à l'attente de la deuxième personne, qui n'ose plus taper sur la machine par peur de la
+    casser.</p>
+    <p>On aurait pu en écrire une autre&nbsp;: «&nbsp;<i>chaque bouton de sélection doit être
+    distinguable au toucher et à la vue</i>&nbsp;» — famille <b>ergonomie</b>, pour la troisième
+    personne. Ou «&nbsp;<i>l'appareil doit rendre la monnaie exacte, ou l'annoncer avant le
+    paiement</i>&nbsp;» — famille <b>qualité</b>, pour la première.</p>
+    <p class="meta">Ce qui rendrait ces trois réponses fausses&nbsp;: écrire «&nbsp;changer le
+    distributeur&nbsp;» ou «&nbsp;mettre un capteur&nbsp;». Ce sont des <b>solutions</b>. Une
+    exigence dit ce qu'il faut obtenir, pas comment.</p>
+  </details>
+  <p class="meta">📚 <b>Ressource complémentaire</b>&nbsp;: le
+  <a href="qcm_fonctionnement_objet.html">QCM «&nbsp;Comment expliquer le fonctionnement d'un
+  objet&nbsp;?&nbsp;»</a> (25 questions), présent dans ce dossier avant cette séquence et conservé
+  tel quel. Il aborde les notices et les contraintes, et déborde sur la <b>programmation</b>
+  (codes C9). Il ne remplace pas le QCM de la séquence.</p>
+</section>
+</div>
+</main>
+<footer class="page">
+  <p>Séquence 4e_C2.1 · C2.2 — Thème 1 · Technologie cycle 4 (2024).
+  Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
+</footer>
+<script>
+"use strict";
+const KEY="seq_4e_C2_hangzhou";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"tout ce qui, à l'extérieur de l'objet, entre en relation avec lui",
+               be_2:"comprendre quelle décision explique une forme observée",
+               be_3:"décrit le milieu, et ne dit rien des cas extrêmes"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🎫 Tes outils de 5e sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+  1: function(){
+    const att={a1_1:"de ne pas savoir d'où vient le problème : la machine ne lui dit rien",
+               a1_2:"un même objet ne produit pas la même expérience selon qui l'utilise",
+               a1_3:"le ressenti, qui dépend de l'information reçue autant que de la durée réelle",
+               a1_4:"la facilité d'usage dépend de l'expérience de la personne, pas seulement de l'objet",
+               a1_5:"à ce que tout le monde parle du même endroit du parcours",
+               a1_6:"arriver : c'est en approchant qu'on lit l'écran et les pictogrammes"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_parcours"); const bas = t.toLowerCase();
+    const lignes = t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+    /* les cinq étapes doivent être nommées, et chaque ligne doit s'appuyer sur un verbatim */
+    const etapes = [/arriv/, /identifi/, /choisir|choix/, /d[ée]verrouill/, /partir|part\b/]
+                     .filter(r=>r.test(bas)).length;
+    const preuves = (t.match(/V\s?\d{1,2}/gi)||[]).length;
+    const complet = lignes >= 5 && etapes === 5 && preuves >= 5;
+    return {score:ok,total:6,valide: ok>=5 && complet,
+      extra: complet ? "" : " Ton relevé doit compter les CINQ étapes, une par ligne, chacune avec son ressenti et le CODE d'un verbatim (V01, V04…) qui le prouve."};
+  },
+  2: function(){
+    const att={a2_1:"parce qu'une moyenne décrit le milieu, et que personne ne vit le milieu",
+               a2_2:"que près d'un usager sur trois a dû recommencer cette étape",
+               a2_3:"dit ce qui se passe, mais pas ce que les gens ressentent",
+               a2_4:"l'étape « choisir », qui est la plus longue en moyenne"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a2_graph");
+    const lignes = t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+    /* dix valeurs attendues : cinq moyennes et cinq maximums */
+    const nombres = (t.match(/\d+/g)||[]).length;
+    /* la lecture doit nommer les deux étapes qui portent la leçon */
+    const bas = t.toLowerCase();
+    const lecture = /choisir/.test(bas) && /d[ée]verrouill/.test(bas);
+    const complet = lignes >= 6 && nombres >= 10 && lecture && t.trim().length >= 160;
+    return {score:ok,total:4,valide: ok>=3 && complet,
+      extra: complet ? "" : " Il faut les CINQ étapes avec leurs DEUX valeurs (moyenne et maximum), puis deux phrases de lecture qui nomment « choisir » ET « déverrouiller »."};
+  },
+  3: function(){
+    const att={a3_1:"un losange, parce que c'est un test à deux sorties",
+               a3_2:"une flèche qui remonte vers une étape déjà faite",
+               a3_3:"est faux : un test a toujours deux sorties, et le cas « non » doit être traité",
+               a3_4:"les cas d'échec deviennent visibles, donc traitables"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_algo"); const bas = t.toLowerCase();
+    const tests = (bas.match(/test|si\s|losange|\?/g)||[]).length;
+    const deuxTests = (bas.match(/test/g)||[]).length >= 2 || (bas.match(/\?/g)||[]).length >= 2;
+    const reprise = /reprise|retour|recommenc|revenir/.test(bas);
+    const echec = /[ée]chec|abandon|autre v[ée]lo|troisi[èe]me tentative|signale/.test(bas);
+    const complet = deuxTests && reprise && echec && t.trim().length >= 140;
+    return {score:ok,total:4,valide: ok>=3 && complet,
+      extra: complet ? "" : " Ton algorigramme doit contenir au moins DEUX tests, une REPRISE, et une SORTIE D'ÉCHEC — sans elle, l'usager tourne en boucle comme Sun."};
+  },
+  4: function(){
+    const att={a4_1:"la qualité : l'objet doit faire ce qu'il annonce, et informer sur ce qu'il fait",
+               a4_2:"la fiabilité, et elle se chiffre",
+               a4_3:"Deng, qui a une main prise par son enfant — c'est de l'ergonomie",
+               a4_4:"les incidences environnementales : moins d'énergie consommée sur la durée de vie",
+               a4_5:"dit ce qui est attendu, se vérifie, et nomme l'attente d'utilisateur à laquelle elle répond",
+               a4_6:"c'est déjà une solution : une exigence dit le besoin, pas le moyen"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a4_exig"); const bas = t.toLowerCase();
+    const lignes = t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+    /* les six familles sont celles du programme : on n'en accepte pas d'autres */
+    const familles = [/s[ée]curit[ée]/, /incidences? environnementales?|environnement/,
+                      /formes? et fonctions?/, /ergonomie/, /qualit[ée]/, /fiabilit[ée]/]
+                       .filter(r=>r.test(bas)).length;
+    const preuves = (t.match(/V\s?\d{1,2}/gi)||[]).length;
+    const complet = lignes >= 4 && familles >= 3 && preuves >= 4 && t.trim().length >= 200;
+    return {score:ok,total:6,valide: ok>=5 && complet,
+      extra: complet ? "" : " Il faut QUATRE exigences, une par ligne, relevant d'au moins TROIS familles du programme, chacune reliée à un verbatim (V01, V11…)."};
+  }
+};
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle contient le corrigé complet, à comparer au tien."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2,3], s3:[4]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches(); majQcm();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Écouter, puis schématiser", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses outils de 5e (sans note)"},
+    {n:1, libelle:"Relever le parcours en cinq étapes, ressenti et verbatim à l'appui"}]},
+  s2:{titre:"Séance 2 — Mesurer, puis algorithmer", taches:[
+    {n:2, libelle:"Tracer le graphique des durées, moyenne ET pire cas"},
+    {n:3, libelle:"Écrire l'algorigramme du déverrouillage, sortie d'échec comprise"}]},
+  s3:{titre:"Séance 3 — Remonter aux exigences", taches:[
+    {n:4, libelle:"Écrire quatre exigences, trois familles, chacune reliée à une attente"}]}
+};
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°45 — l'entraînement s'ouvre sur ce qui a été fait ══════ */
+/* Un seul bouton QCM (règle n°4) : c'est sa CIBLE qui devient contextuelle.
+   Les activités 1 à 3 travaillent 4e_C2.1, l'activité 4 travaille 4e_C2.2. */
+const CODES_PAR_ACTIVITE = {1:"C2.1", 2:"C2.1", 3:"C2.1", 4:"C2.2"};
+const LIBELLE_CODE = {"C2.1":"4e_C2.1 — décrire l'expérience de l'utilisateur",
+                      "C2.2":"4e_C2.2 — repérer et expliquer les exigences"};
+
+function majQcm(){
+  const lien=$("lienQcm"), portee=$("qcmPortee");
+  if(!lien || !portee) return;
+  const v=window.__valid||{};
+  const faits=[...new Set(Object.entries(CODES_PAR_ACTIVITE)
+                 .filter(([a])=>v[a]).map(([,c])=>c))].sort();
+  const tous=Object.keys(LIBELLE_CODE).length;
+  if(faits.length===0){
+    lien.href="qcm_4e_C2_hangzhou_borne.html";
+    lien.textContent="🚲 Lancer le QCM de la séquence";
+    portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton t'emmène sur le "+
+      "parcours complet. Dès que tu auras validé une activité, il te proposera d'abord les "+
+      "questions qui portent sur <b>ce que tu as fait</b>.";
+  } else if(faits.length < tous){
+    lien.href="qcm_4e_C2_hangzhou_borne.html#codes="+faits.join(",");
+    lien.textContent="🚲 M'entraîner sur ce que j'ai fait ("+(faits.length*15)+" questions)";
+    portee.innerHTML="Tu as travaillé <b>"+faits.map(c=>LIBELLE_CODE[c]).join("</b> et <b>")+
+      "</b>. Le bouton ouvre le QCM sur <b>ces questions-là</b> — le parcours complet reste "+
+      "accessible d'un clic dans le QCM.";
+  } else {
+    lien.href="qcm_4e_C2_hangzhou_borne.html";
+    lien.textContent="🚲 Lancer le QCM complet (30 questions)";
+    portee.innerHTML="Tu as travaillé <b>les deux compétences</b>&nbsp;: le parcours complet est "+
+      "maintenant à ta portée.";
+  }
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>

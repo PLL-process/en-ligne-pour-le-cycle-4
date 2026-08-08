@@ -2725,3 +2725,213 @@ douter du contenu.**
 branche portant le motif du thème, afin que la garde-périmètre **s'applique** — plutôt que sur une
 branche `infra` sans motif, où elle se serait désactivée d'elle-même. Une garde qu'on contourne en
 nommant sa branche autrement n'est pas une garde.
+
+---
+
+## 8 août 2026 — Règle d'or n°43 : toute production demandée à l'élève a son corrigé, et ce corrigé arrive après
+
+**Énoncé.** Chaque production que la séquence exige de l'élève — une liste, un relevé, un schéma,
+un graphique, un algorigramme, une note — doit avoir son **corrigé complet dans la page**, sous la
+forme même que l'élève devait produire. Ce corrigé est **replié**, et il n'apparaît **jamais avant**
+l'activité qui le demande.
+
+### D'où elle vient
+
+Deux exigences que je traitais séparément, et qui se contredisaient à chaque lot.
+
+D'un côté, la règle apprise au lot de 3e à Shenzhen&nbsp;: **ne pas donner la figure qui contient
+la réponse**. Une planche de solutions illustrées y aurait vidé l'activité 1 de son sens, alors ce
+lot ne porte volontairement qu'un seul SVG.
+
+De l'autre, l'objection de Pascal sur le lot de 4e&nbsp;: si l'élève doit tracer un graphique et
+qu'aucun graphique fini n'existe nulle part, **l'élève qui travaille seul n'a rien pour se
+corriger**. Il produit, et il ne sait pas.
+
+Les deux ont raison, et la contradiction n'est pas dans le contenu&nbsp;: elle est dans le
+**moment**. Le corrigé n'est pas interdit, il est **différé**. Le repli du `<details>` n'est pas un
+détail de mise en forme, c'est ce qui rend les deux exigences compatibles.
+
+### Ce qu'elle change concrètement
+
+- Une production **graphique ou schématique** exige un corrigé **de même nature**&nbsp;: un
+  graphique se corrige par un graphique, pas par une phrase qui le décrit. Un élève ne peut pas
+  comparer son tracé à un paragraphe.
+- Le corrigé porte le mot **« corrigé »** dans son nom de fichier et dans son titre, pour qu'on ne
+  puisse pas le glisser par erreur dans le fil de la page.
+- Le corrigé va **plus loin que la réponse**&nbsp;: il dit aussi ce qu'on doit y lire. Le corrigé
+  du graphique de Hangzhou ne se contente pas des barres — il nomme les deux lectures qui comptent,
+  «&nbsp;la plus longue n'est pas celle dont on se plaint&nbsp;» et «&nbsp;une moyenne cache sa
+  queue&nbsp;».
+- Rien de tout cela ne s'applique aux **évaluations sommatives**, qui n'ont pas de corrigé dans le
+  dépôt public — la barre qualité de la méthode reste inchangée sur ce point.
+
+### Ce qu'elle rend possible
+
+Un élève absent, un élève qui reprend chez lui, un élève qui va plus vite que la classe&nbsp;:
+tous les trois travaillent seuls, et tous les trois ont besoin de savoir s'ils ont réussi. Une
+séquence qui exige une production sans jamais montrer à quoi elle ressemble, réussie, ne fonctionne
+qu'en présence du professeur.
+
+**L'autonomie de l'élève est une propriété de la page, pas une qualité de l'élève.**
+
+---
+
+## 8 août 2026 — Trois précisions demandées par Pascal : le Bonus, les sigles nus, et l'entraînement prématuré
+
+Trois remarques de Pascal, le même jour, qui touchent toutes au même endroit&nbsp;: **ce que l'élève
+peut faire seul devant la page.**
+
+### La règle n°43 s'étend au Bonus
+
+Le Bonus est «&nbsp;facultatif, hors parcours obligatoire&nbsp;» — mais celui qui le fait est
+précisément **celui qui travaille seul**, souvent chez lui, souvent le plus avancé. Lui refuser un
+corrigé, c'est réserver la correction à ceux qui n'en ont pas besoin.
+
+**La règle n°43 s'applique donc au Bonus comme au reste**&nbsp;: chaque défi porte son corrigé
+replié. Quand le défi demande un dessin, un schéma ou une trace, le corrigé porte l'image
+correspondante — un dessin ne se corrige pas par une phrase.
+
+Le chiffre&nbsp;: **33 séquences du dépôt portent un bloc Bonus. Zéro n'a de corrigé.** C'est une
+dette homogène, ce qui la rend au moins facile à traiter en série.
+
+Pour les trois séquences **Packet Tracer**, l'image du corrigé sera un **SVG reconstruit**, pas une
+capture d'écran&nbsp;: la règle n°1 ne se plie pas parce qu'un corrigé serait plus vite fait.
+Décision confirmée par Pascal.
+
+### Règle d'or n°44 — aucun sigle, aucun bouton ne reste nu
+
+La règle n°35 disait déjà «&nbsp;un code n'apparaît jamais seul&nbsp;». Elle visait le texte. Elle
+ne visait pas l'**interface**&nbsp;: nos badges de niveau, nos codes CRCN, nos boutons «&nbsp;mode
+essentiel&nbsp;», «&nbsp;révision ciblée&nbsp;», «&nbsp;marquer à revoir&nbsp;» s'affichent nus, et
+l'élève doit deviner.
+
+**Énoncé.** Tout badge, code, sigle ou bouton porte une explication **à portée immédiate**&nbsp;:
+un `title` pour la souris, un `aria-label` ou `aria-describedby` pour le lecteur d'écran, **et une
+mention en clair** quelque part sur la page.
+
+Le troisième élément n'est pas une redondance de zèle&nbsp;: **une infobulle ne s'ouvre pas au
+doigt.** Sur la tablette d'un collégien, `title` ne s'affiche jamais. Une interface qui ne
+s'explique qu'au survol ne s'explique pas aux élèves qui en ont le plus besoin.
+
+### Règle d'or n°45 — un entraînement s'ouvre sur ce qui a été fait
+
+Pascal signale que le QCM est proposé «&nbsp;presque sur toutes les pages, alors que toutes les
+compétences ne sont pas atteintes&nbsp;».
+
+**Vérification faite** — et elle nuance le constat sans l'annuler. Les 35 séquences du dépôt portent
+**exactement un bouton QCM chacune** (règle n°4 tenue partout), placé dans le dernier panneau de
+séance. Le QCM n'est donc pas sur toutes les pages d'une séquence.
+
+Mais le fond est juste, et il est même plus gênant que la forme&nbsp;: **le QCM couvre tous les
+codes de la séquence**, et rien n'empêche un élève de le lancer après la première séance. Il tombe
+alors sur des questions portant sur ce qu'on ne lui a pas encore enseigné, et il conclut qu'il n'y
+arrive pas.
+
+Le plus intéressant, c'est que **la machine existe déjà**&nbsp;: le gabarit de QCM porte un mode
+«&nbsp;révision ciblée&nbsp;» et un filtre par code. Ce qui manque n'est pas une fonction, c'est de
+le **dire à l'élève** — et de ne pas ouvrir par défaut sur «&nbsp;parcours complet&nbsp;».
+
+**Énoncé.** Un entraînement ne présente jamais par défaut ce qui n'a pas été enseigné. Le bloc
+«&nbsp;Prêt·e à t'entraîner&nbsp;» annonce **le nombre de questions par code**, et le lien porte les
+codes déjà travaillés&nbsp;; le QCM s'ouvre dessus. L'élève garde évidemment l'accès au parcours
+complet — on ne lui interdit rien, on choisit seulement ce qu'on lui propose **en premier**.
+
+Un seul bouton reste la règle (n°4)&nbsp;: c'est la **cible** du bouton qui devient contextuelle,
+pas le nombre de boutons.
+
+### Ce que ces trois règles ont en commun
+
+Aucune ne demande d'écrire un contenu nouveau. Toutes les trois demandent de rendre utilisable ce
+qui existe déjà — un corrigé qu'on avait gardé pour la classe, une fonction qu'on n'avait pas
+annoncée, un sigle qu'on n'avait pas traduit.
+
+C'est le prolongement direct de ce que Pascal a formulé ce matin&nbsp;: **l'autonomie de l'élève est
+une propriété de la page, pas une qualité de l'élève.**
+
+### Ordonnancement
+
+La rentrée approche&nbsp;: le **Thème 1 se termine d'abord** (3e_C2, puis les 15 codes du C1).
+L'audit des corrigés, les infobulles et l'entraînement ciblé se font ensuite, thème par thème. Les
+règles n°43 étendue, n°44 et n°45 s'appliquent **dès maintenant aux lots neufs** — le retrofit des
+anciens attend son tour, mais la dette cesse de croître.
+
+---
+
+## 8 août 2026 — Lot Hangzhou 4e_C2.1 · C2.2 : « ce que vit l'usager devant la borne »
+
+Deuxième lot du **C2**, et premier lot où s'appliquent les trois règles écrites dans la journée.
+
+### Le référentiel dicte le déroulé
+
+`4e_C2.1` n'est pas un code de description, c'est un code de **traduction**&nbsp;: «&nbsp;en partant
+du langage naturel (texte, croquis) pour aboutir aux schémas, graphiques, algorithmes&nbsp;».
+
+Le déroulé n'est donc pas un choix pédagogique parmi d'autres — il est **imposé**. D'où quatre
+activités, une par case du trajet&nbsp;: verbatims, graphique, algorigramme, exigences. Et chaque
+case est justifiée par ce qui **manque** à la précédente, ce que la figure d'ouverture montre
+explicitement.
+
+C'est la première fois que je conçois un déroulé en partant de la **forme** de la formulation plutôt
+que de son sujet. Après l'incident de l'esthétique, lire la formulation mot à mot n'est plus une
+précaution&nbsp;: c'est devenu une méthode.
+
+### Les données portent la leçon, pas le commentaire
+
+Les chiffres sont construits pour qu'un résultat contre-intuitif apparaisse **sans que le professeur
+l'annonce**&nbsp;:
+
+- «&nbsp;choisir&nbsp;» est l'étape la plus longue en **moyenne** (40&nbsp;s), et personne ne s'en
+  plaint&nbsp;; un usager la trouve même pratique&nbsp;;
+- «&nbsp;déverrouiller&nbsp;» ne fait que 29&nbsp;s de moyenne, mais monte à **83&nbsp;s** pour les
+  **9 retraits sur 30** qui ont demandé une reprise — et trois verbatims sur douze en parlent.
+
+Un élève qui n'aurait que le chronomètre corrigerait la mauvaise étape&nbsp;; un élève qui n'aurait
+que les témoignages ignorerait 40&nbsp;secondes. **C'est le croisement qui décide.**
+
+Deux verbatims se contredisent aussi, volontairement. Ce n'est pas une incohérence à corriger&nbsp;:
+c'est le résultat que l'activité 1 doit faire écrire.
+
+### Première application des règles n°43, n°44 et n°45
+
+- **n°43 étendue** — le Bonus a son corrigé, entièrement traité sur le distributeur de boissons du
+  hall&nbsp;: les mots exacts de trois élèves, dix chronométrages (3, 4, 3, 5, 4, 3, **22**, 4, 3, 4),
+  et l'écart moyenne / pire cas qui rejoue en petit ce que l'élève a découvert sur la borne.
+- **n°44** — zéro badge et zéro bouton nus, plus une légende en clair sous les badges.
+- **n°45** — le bouton du QCM vise `#codes=C2.1` après la seule séance 1, et annonce 15 questions au
+  lieu de 30. Le QCM lit l'ancre, bascule en révision ciblée, et le dit.
+
+**Conséquence, et c'est elle qui compte**&nbsp;: un élève absent, ou qui reprend chez lui, peut faire
+cette séquence **seule du début à la fin**. Tout ce qui lui est demandé a son corrigé.
+
+### Un test rouge, et qui avait tort — la quatrième fois
+
+Le contrôle du corrigé du Bonus a échoué. Le corrigé était là&nbsp;: le test lisait `inner_text` sur
+un `<details>` **replié**, qui n'expose que son `summary`.
+
+Quatrième occurrence du même piège dans ce dépôt. Le réflexe est acquis — chercher lequel des deux a
+tort avant de toucher au contenu — mais **le piège, lui, ne s'use pas**. Le fichier de tests porte
+maintenant un commentaire qui l'explique, pour que le prochain le voie avant de le vivre.
+
+### Un point-virgule dans une phrase
+
+La matrice de couverture est un CSV à points-virgules. J'avais écrit une notion contenant un
+point-virgule&nbsp;: toute la ligne s'est décalée d'une colonne, silencieusement. C'est mon contrôle
+de couverture — «&nbsp;quelles questions ne sont citées nulle part&nbsp;?&nbsp;» — qui l'a vu, pas ma
+relecture. Une ligne de CSV mal découpée ne se voit pas&nbsp;: elle se calcule.
+
+### L'état du dépôt, mesuré
+
+Deux codes quittent «&nbsp;À CRÉER&nbsp;»&nbsp;; `4e_C2.1` quitte en outre le statut PARTIEL, qu'il
+tenait d'un QCM isolé. **25 codes complets, 32 à créer.**
+
+Le vérificateur, sur les 41 séquences du dépôt, relève **56 manquements sur 23 séquences**&nbsp;:
+20 modes essentiels absents, 13 séquences sans version étayée, 12 défauts d'accessibilité,
+7 bandeaux de tâches manquants, 3 formulations de référentiel réécrites, 1 diagnostic d'entrée. Les
+lots neufs sont à zéro&nbsp;; toute la dette est dans l'existant — et elle est maintenant **chiffrée
+règle par règle**, ce qui la rend traitable en série plutôt qu'au jugé.
+
+### La suite
+
+Thème 1 d'abord, comme convenu&nbsp;: **3e_C2**, puis les 15 codes du **C1** — dont les sept
+séquences qui n'ont ni mode essentiel ni carte de référentiel. Le retrofit des corrigés, des
+infobulles et de l'entraînement ciblé viendra ensuite, thème par thème.

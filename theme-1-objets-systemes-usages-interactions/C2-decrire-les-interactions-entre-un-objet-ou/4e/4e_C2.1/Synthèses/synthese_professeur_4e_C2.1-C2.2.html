@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Hangzhou, la borne de retrait (4e_C2.1 · C2.2)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  a{color:var(--hl)}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  table{width:100%;border-collapse:collapse}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}
+    h1,h2,dt,.pb{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}}
+</style></head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C2_hangzhou_borne.html">← Séquence</a></nav>
+<div class="page">
+<h1>🎓 Synthèse professeur — Hangzhou (4e_C2.1 · C2.2)</h1>
+<p class="pb">Ce que la séquence cherche à obtenir, où ça résiste, et comment on le mesure.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer</button></div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">L'intention, et pourquoi le déroulé est ce qu'il est</h2>
+  <p>Le code <code>4e_C2.1</code> n'est pas un code de description&nbsp;: c'est un code de
+  <b>traduction</b>. Sa formulation impose un trajet — «&nbsp;en partant du langage naturel (texte,
+  croquis) pour aboutir aux schémas, graphiques, algorithmes&nbsp;». Le déroulé de la séquence n'est
+  donc pas un choix pédagogique parmi d'autres&nbsp;: il est <b>dicté par le référentiel</b>.</p>
+  <p>D'où quatre activités et non trois&nbsp;: une par case du trajet, plus les exigences. Chaque
+  case est justifiée par ce qui <b>manque</b> à la précédente&nbsp;— c'est écrit sur la figure, et
+  c'est ce qu'il faut faire remarquer à voix haute.</p>
+</div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">Le codage du référentiel</h2>
+  <p><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du 29&nbsp;février
+  2024. <b>Codification opérationnelle</b>&nbsp;: <code>4e_C2.1</code> et <code>4e_C2.2</code> sont
+  des codes de classement internes à ce dépôt&nbsp;; ils ne figurent pas comme tels au BO. Les
+  <b>formulations</b>, elles, sont celles du référentiel, recopiées sans réécriture (règle n°42).</p>
+  <table class="voc">
+    <tr><td><b>4e_C2.1</b></td><td>Décrire l'expérience de l'utilisateur (ressenti et facilité
+      d'usage) d'un OST en partant du langage naturel (texte, croquis) pour aboutir aux schémas,
+      graphiques, algorithmes.</td><td>Séances 1 et 2</td></tr>
+    <tr><td><b>4e_C2.2</b></td><td>Repérer et expliquer les contraintes, exigences prises en compte
+      (sécurité, incidences environnementales, formes et fonctions, ergonomie, qualité, fiabilité)
+      pour répondre aux attentes des utilisateurs.</td><td>Séance 3</td></tr>
+  </table>
+  <p><b>Socle</b>&nbsp;: D1.3, D3, D4, D5. Le <b>D3</b> est réellement travaillé ici — l'écart entre
+  ce que disent les usagers et ce que montrent les mesures est un exercice de jugement.</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">La donnée qui porte toute la séquence</h2>
+  <p>Les chiffres ont été construits pour qu'un <b>résultat contre-intuitif</b> apparaisse tout
+  seul, sans que le professeur ait à l'annoncer&nbsp;:</p>
+  <ul>
+    <li>l'étape la plus longue en <b>moyenne</b> est «&nbsp;choisir&nbsp;» (40&nbsp;s) — et
+    <b>personne ne s'en plaint</b>&nbsp;; un usager la trouve même pratique&nbsp;;</li>
+    <li>l'étape dont <b>trois verbatims sur douze</b> parlent est «&nbsp;déverrouiller&nbsp;»
+    (29&nbsp;s de moyenne seulement) — mais elle monte à <b>83&nbsp;s</b> pour les
+    <b>9 retraits sur 30</b> qui ont demandé une reprise.</li>
+  </ul>
+  <p>Un élève qui n'aurait que le chronomètre corrigerait la mauvaise étape. Un élève qui n'aurait
+  que les témoignages ignorerait 40&nbsp;secondes. <b>C'est le croisement qui décide</b>, et c'est
+  toute la leçon.</p>
+  <p>Si vous ne deviez retenir qu'une phrase à faire écrire&nbsp;: <b>on ne se plaint pas de la
+  moyenne, on se plaint de ce qu'on a vécu.</b></p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">Où ça résiste, séance par séance</h2>
+  <p><b>Séance 1.</b> L'obstacle est la <b>reformulation</b>&nbsp;: les élèves réécrivent les
+  verbatims dans leurs mots et perdent l'essentiel. Insister sur la recopie exacte. Le second
+  obstacle est le désaccord Wang / Ma&nbsp;: ils voudront trancher. Ne pas trancher est
+  l'apprentissage.</p>
+  <p><b>Séance 2, graphique.</b> Techniquement facile au tableur, conceptuellement dense&nbsp;: la
+  notion de <b>pire cas</b> n'est pas acquise en 4e. Le billet d'entrée la prépare (une moyenne
+  décrit le milieu), et le corrigé la nomme deux fois.</p>
+  <p><b>Séance 2, algorigramme.</b> Le travers universel est de ne dessiner que la branche
+  «&nbsp;oui&nbsp;». Le vérificateur exige une <b>sortie d'échec</b>&nbsp;: sans elle, la reprise
+  boucle, et c'est exactement le vécu de Sun. C'est aussi un geste du <b>DNB</b>, qui prépare la
+  3e.</p>
+  <p><b>Séance 3.</b> L'obstacle est le glissement <b>exigence → solution</b>. «&nbsp;Mettre un
+  auvent&nbsp;» viendra spontanément. La relance qui marche&nbsp;: «&nbsp;et si l'auvent était
+  impossible&nbsp;? qu'est-ce que tu veux obtenir, au fond&nbsp;?&nbsp;»</p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">Ce qu'on observe, et comment</h2>
+  <p>Quatre <b>verrous de production</b>, tous testés dans les deux sens&nbsp;: le relevé n'est
+  validé que si les cinq étapes sont nommées <b>et</b> appuyées sur des codes de verbatim&nbsp;; le
+  graphique que si les dix valeurs y sont <b>et</b> que la lecture nomme les deux étapes&nbsp;;
+  l'algorigramme que s'il contient deux tests, une reprise <b>et</b> une sortie d'échec&nbsp;; les
+  exigences que si elles couvrent trois familles <b>et</b> citent leurs verbatims.</p>
+  <p>Un élève ne peut donc pas valider en cliquant seulement dans les listes déroulantes.</p>
+  <p><b>Trois preuves en situation</b> (règle n°28)&nbsp;: le relevé de l'activité 1, l'algorigramme
+  de l'activité 3, le cahier des charges de l'activité 4. Le QCM entraîne&nbsp;; il n'évalue pas.</p>
+  <p><b>CRCN 1.3, niveau 2</b>&nbsp;: l'élève traite des données quantitatives, calcule moyenne et
+  maximum, produit une représentation graphique et l'interprète.</p>
+</div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">Ce qui est nouveau dans ce lot</h2>
+  <p>Trois règles du dépôt s'appliquent ici pour la première fois&nbsp;:</p>
+  <ul>
+    <li><b>n°43 étendue</b>&nbsp;: le <b>Bonus a son corrigé</b>, entièrement traité sur un objet du
+    collège. Celui qui fait le bonus est celui qui travaille seul&nbsp;;</li>
+    <li><b>n°44</b>&nbsp;: chaque badge et chaque bouton porte une infobulle, <b>et</b> une légende
+    en clair — une infobulle ne s'ouvre pas au doigt&nbsp;;</li>
+    <li><b>n°45</b>&nbsp;: le bouton du QCM ouvre sur <b>ce que l'élève a déjà validé</b>. Après la
+    seule séance 1, il propose 15 questions et non 30. Le parcours complet reste à un clic.</li>
+  </ul>
+  <p>Concrètement, cela veut dire qu'un élève <b>absent</b> ou en <b>reprise à la maison</b> peut
+  faire cette séquence seul du début à la fin&nbsp;: tout ce qui lui est demandé a son corrigé.</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">Ressource héritée, et honnêteté sur les données</h2>
+  <p>Le fichier <code>qcm_fonctionnement_objet.html</code> (25 questions) était présent dans ce
+  dossier avant cette séquence. Il est d'un <b>autre auteur</b> et n'a pas été modifié. Il est
+  référencé depuis le bloc Bonus comme <b>ressource complémentaire</b>&nbsp;: il aborde les notices
+  et les contraintes, et <b>déborde sur la programmation</b> (codes C9). Il ne remplace pas le QCM
+  du lot.</p>
+  <p>Les verbatims, les chronométrages et la réclamation initiale sont <b>simulés</b>, construits
+  pour l'exercice. Ils ne décrivent aucun service réellement exploité. La page est autonome, hors
+  ligne, et n'envoie aucune donnée.</p>
+</div>
+</div>
+</body>
+</html>
