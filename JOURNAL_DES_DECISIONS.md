@@ -3162,3 +3162,104 @@ de référentiel, ni vérificateur, ni mode essentiel — mais elles ont du cont
 chantier n'est pas le même selon qu'on écrit ou qu'on met au gabarit.
 
 Je reprends l'état des lieux du C1 **avec le vérificateur corrigé** avant d'écrire une ligne de plus.
+
+---
+
+## 8 août 2026 — Cinq règles d'or tirées de la journée (n°46 à n°50)
+
+Pascal&nbsp;: «&nbsp;de ces expériences passées, il serait utile d'écrire d'autres règles d'or&nbsp;;
+ça nous permettra de gagner du temps et d'être plus efficaces.&nbsp;»
+
+Le critère que j'applique pour décider si une leçon mérite un numéro&nbsp;: **elle doit avoir coûté
+quelque chose**. Pas «&nbsp;bien faire son travail&nbsp;», mais «&nbsp;voici ce qui se paie quand on
+ne le fait pas&nbsp;». Les cinq ci-dessous ont toutes un incident daté derrière elles.
+
+### Règle d'or n°46 — Une estimation qui n'a pas ouvert le fichier n'est pas une estimation
+
+**L'incident.** J'ai annoncé que le lot 5e_C2 serait «&nbsp;un achèvement, pas une création — le
+travail le plus court des trois&nbsp;», sur la foi d'un statut d'audit et d'un nom de fichier. Le
+lot a demandé 43 tests et huit fichiers neufs. Quelques heures plus tard, j'ai annoncé que le C1
+n'était que «&nbsp;des plans de 3,7 à 15 ko&nbsp;»&nbsp;: il y avait 63 ko rien que sur le C1.1.
+
+**Le coût.** Deux fois, Pascal a décidé de l'ordre du travail sur une estimation fausse.
+
+**La règle.** Avant d'annoncer l'ampleur d'un travail, **ouvrir les fichiers concernés**. Un statut
+d'audit, un nom de fichier ou une taille en octets ne sont pas des estimations&nbsp;: ce sont des
+indices. Et si l'on estime sans ouvrir — par exemple pour répondre vite — **le dire**&nbsp;:
+«&nbsp;sans avoir ouvert, il me semble que…&nbsp;».
+
+### Règle d'or n°47 — Le silence d'un outil n'est pas une preuve : tout contrôle déclare son périmètre
+
+**L'incident.** Le vérificateur cherchait `sequence_*.html`. Six séquences nommées avec des traits
+d'union — dont la plus grosse du dépôt, 121 ko — n'ont jamais été analysées. Elles n'avaient aucune
+anomalie&nbsp;: **elles étaient invisibles**. Et je m'y suis laissé prendre parce que mon propre
+relevé employait le même motif.
+
+**Le coût.** Dix-huit défauts non vus depuis la création de l'outil, et un plan de travail bâti sur
+un inventaire faux.
+
+**La règle.** Un contrôle ne vérifie que ce qu'il regarde. Tout outil de contrôle **annonce ce qu'il
+a examiné et ce qu'il a écarté** — nombre de fichiers, motif employé. Et celui qui lit un rapport
+vert **compare ce périmètre à ce qu'il croit couvrir** avant d'en tirer une conclusion.
+
+Cette règle est mécanisable, et elle le sera&nbsp;: chaque outil du dépôt doit imprimer son
+périmètre en fin de rapport.
+
+### Règle d'or n°48 — Une donnée simulée est déterministe là où un corrigé s'appuie sur elle
+
+**L'incident.** Le premier tirage aléatoire des observations de Pékin a donné **zéro abandon chez
+les touristes** — alors que tout le lot repose sur eux. Les corrigés auraient décrit une réalité que
+le fichier ne contenait pas.
+
+**Le coût.** Détecté avant livraison, par chance&nbsp;: j'ai relu les statistiques produites. Un
+lot livré dans cet état aurait donné à des élèves des corrigés faux.
+
+**La règle.** Dans un jeu de données simulé, tout ce sur quoi un corrigé s'appuie est **posé, pas
+tiré au sort**&nbsp;: effectifs, anomalies, pics, valeurs remarquables. L'aléa ne sert qu'au
+décor — les durées, le bruit de mesure — et toujours avec une graine.
+
+**Une donnée simulée n'a pas à être imprévisible&nbsp;: elle a à être vraie par rapport à ce qu'on
+en dit.**
+
+### Règle d'or n°49 — On teste ce qui est rendu, pas ce qui est écrit
+
+**Les incidents**, il y en a trois, et ils se ressemblent&nbsp;:
+
+- une séquence héritée affiche depuis sa mise en ligne trois images nommées `{{analysis_icon}}`,
+  `{{sensor_icon}}`, `{{sort_icon}}` — des variables de gabarit jamais remplacées&nbsp;;
+- un QCM du lot Shanghai portait un champ `img` sous forme de tuple au lieu d'un objet&nbsp;: les
+  trois questions illustrées n'auraient affiché **aucune image**, et la source ne le montrait
+  pas&nbsp;;
+- quatre fois, une suite de tests a lu `inner_text` sur un `<details>` **replié**, qui n'expose que
+  son `summary`, et a déclaré absent un contenu présent.
+
+**Le coût.** Des pages publiées avec des trous que personne ne voyait, et des heures perdues à
+soupçonner un contenu juste.
+
+**La règle.** Un contrôle porte sur la page **telle que le navigateur la rend** — images
+effectivement chargées, texte effectivement présent dans le DOM, y compris replié. Lire le source ne
+prouve rien, et lire ce qui est visible ne prouve pas ce qui existe.
+
+### Règle d'or n°50 — Devant un contrôle rouge, chercher lequel des deux a tort avant de corriger
+
+**Les incidents.** Cinq fois en trois semaines. Quatre fois, c'était le **contrôle** qui avait
+tort&nbsp;: la règle n°26 accusait quatre pages conformes sur cinq, et trois suites de tests
+accusaient des séquences justes. La cinquième fois — aujourd'hui, lot 3e_C2 — c'était le
+**vérificateur pédagogique**&nbsp;: il cherchait «&nbsp;0&nbsp;%&nbsp;» sans garde de chiffre et
+acceptait «&nbsp;30&nbsp;%&nbsp;».
+
+**Le coût.** Quand on corrige le contenu à cause d'un contrôle fautif, on abîme du travail juste et
+on garde le défaut.
+
+**La règle.** Un rouge est une **contradiction entre deux affirmations**, pas un verdict. Avant de
+toucher à quoi que ce soit, établir laquelle des deux est fausse. Et le corollaire, qui s'est
+vérifié aujourd'hui&nbsp;: **cela vaut dans les deux sens** — un contrôle peut être trop sévère,
+mais aussi trop indulgent.
+
+### Ce que ces cinq règles ont en commun
+
+Aucune ne porte sur la pédagogie. Toutes portent sur **la confiance qu'on accorde à ce qui nous
+informe** — un statut, un rapport vert, un tirage aléatoire, un fichier source, un test rouge.
+
+Le dépôt avait quarante-cinq règles sur ce qu'il faut produire. Il lui en manquait cinq sur **ce
+qu'il faut croire**.
