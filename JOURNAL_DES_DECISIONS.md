@@ -2935,3 +2935,177 @@ règle par règle**, ce qui la rend traitable en série plutôt qu'au jugé.
 Thème 1 d'abord, comme convenu&nbsp;: **3e_C2**, puis les 15 codes du **C1** — dont les sept
 séquences qui n'ont ni mode essentiel ni carte de référentiel. Le retrofit des corrigés, des
 infobulles et de l'entraînement ciblé viendra ensuite, thème par thème.
+
+---
+
+## 8 août 2026 — Précision de la règle n°43 : « toute production » veut dire toutes les options offertes
+
+Pascal, sur le lot 3e_C2 en cours&nbsp;: «&nbsp;quel que soit le choix de l'utilisateur, puisqu'il y
+a le mot <i>choisi</i>, il aura une correction, c'est ça&nbsp;?&nbsp;»
+
+**En l'état, la réponse était non.** Et c'est le lot qui inaugure la règle n°43 qui l'enfreignait.
+
+### Ce que j'avais fait
+
+La séquence propose **six modes de représentation** à l'élève et lui demande d'en choisir. Mon
+corrigé en traitait **trois** — algorigramme, graphique, storyboard — parce que j'avais raisonné
+«&nbsp;trois destinataires, trois modes&nbsp;».
+
+Un élève choisissant la carte d'empathie, le parcours utilisateur ou le tableau comparatif produisait
+donc quelque chose dont il n'avait **aucun modèle**. Proposer six portes et n'en corriger que trois,
+c'est pénaliser celui qui prend une porte qu'on a soi-même ouverte.
+
+### La précision
+
+**Quand une consigne offre un choix, le corrigé couvre toutes les options offertes** — pas
+seulement celles que l'auteur trouvait les meilleures. Autrement, «&nbsp;choisis&nbsp;» est un
+mensonge&nbsp;: il n'y a de vrai choix que si toutes les branches sont soutenues.
+
+Le corollaire est utile à l'auteur&nbsp;: si corriger toutes les options coûte trop cher, alors il
+faut **réduire le nombre d'options**, et non réduire le corrigé. Une consigne qui propose six modes
+engage à six corrigés — c'est le prix du mot «&nbsp;choisis&nbsp;».
+
+### Ce que ça a produit
+
+Une seconde planche de corrigé, `corrige_trois_autres_modes.svg`&nbsp;: le même constat rendu en
+parcours utilisateur, en carte d'empathie et en tableau comparatif. Elle porte, comme la première,
+l'**angle mort** de chaque mode — ce qui en fait autre chose qu'un rattrapage&nbsp;: les six fiches
+mises côte à côte démontrent la thèse de la séquence mieux qu'aucune phrase. Les six disent la
+vérité, aucun ne la dit tout entière.
+
+C'est la deuxième fois aujourd'hui qu'une question de Pascal améliore le lot au lieu de simplement
+le corriger. La première avait produit la règle n°43&nbsp;; celle-ci lui donne sa portée exacte.
+
+---
+
+## 8 août 2026 — Deux questions de Pascal sur le lot 3e_C2 : le vocabulaire, et qui choisit
+
+### «&nbsp;Les élèves savent-ils définir ces choix&nbsp;?&nbsp;»
+
+Non, et je ne le vérifiais pas. La séquence proposait six modes de représentation — dont
+<b>storyboard</b> et <b>carte d'empathie</b>, qui ne sont pas des mots de collège — et demandait
+d'en choisir trois. Elle donnait de chaque mode ce qu'il montre et son angle mort&nbsp;; elle ne
+demandait jamais à l'élève de <b>reconnaître</b> ce que le mot désigne.
+
+Pascal se souvient que les anciens manuels traitaient cela par un appariement — «&nbsp;relie le mot
+<i>croquis</i>, <i>esquisse</i>, à sa représentation&nbsp;». C'est exactement ce qui manquait. Six
+appariements ont été ajoutés en tête de l'activité 2, et le vérificateur **refuse d'aller plus
+loin** tant qu'ils ne sont pas tenus&nbsp;: «&nbsp;on ne choisit pas parmi des mots qu'on ne connaît
+pas&nbsp;».
+
+C'est le même défaut que celui corrigé une heure plus tôt sur les corrigés, sous une autre
+forme&nbsp;: **offrir un choix sans donner de quoi choisir.** Là c'étaient les corrigés qui
+manquaient, ici c'est le vocabulaire. Dans les deux cas, le mot «&nbsp;choisis&nbsp;» promettait
+plus que la page ne tenait.
+
+### «&nbsp;Choisis par l'élève, ou par le concepteur&nbsp;?&nbsp;»
+
+**Le texte ne le dit pas.** «&nbsp;À l'aide de modes de représentation choisis&nbsp;» — le
+participe qualifie les modes, il ne nomme pas l'auteur du choix. Les deux lectures tiennent
+grammaticalement.
+
+Mon argument pour la première&nbsp;: en **4e**, le programme énumère lui-même les modes
+(«&nbsp;pour aboutir aux schémas, graphiques, algorithmes&nbsp;»)&nbsp;; en **3e** il retire
+l'énumération et ajoute «&nbsp;choisis&nbsp;». Un texte qui cesse de nommer les modes au moment où
+il ajoute ce mot me paraît transférer la sélection à l'élève, dans une logique d'autonomie
+croissante sur le cycle.
+
+**Mais c'est une lecture, pas une certitude — et je l'avais construite en silence.** C'est
+précisément ce que la règle n°42 interdit, appliqué non plus à la formulation mais à son
+**interprétation**&nbsp;: une lecture du programme se déclare comme lecture.
+
+La séquence porte désormais la note, écrite à l'élève&nbsp;: le programme ne dit pas par qui&nbsp;;
+ici c'est toi qui choisis&nbsp;; ton professeur peut faire autrement et t'imposer le mode&nbsp;; et
+dans les deux cas l'exercice difficile reste le même — **justifier**.
+
+**Règle n°42, troisième volet&nbsp;: quand une formulation du référentiel est ambiguë, on ne tranche
+pas en silence. On dit qu'elle l'est, on donne sa lecture, et on laisse la porte ouverte.**
+
+### Ce que la conclusion de Pascal apporte
+
+«&nbsp;Les six cas de figure sont présents, et l'enseignant qui prend en main la séquence aura le
+choix.&nbsp;» C'est la bonne réponse au problème, et elle vaut mieux que de trancher&nbsp;: une
+séquence qui traite les six modes fonctionne <b>dans les deux lectures</b>. L'enseignant qui préfère
+imposer garde l'exercice de justification intact&nbsp;; celui qui laisse choisir a de quoi corriger
+n'importe quelle réponse.
+
+Ce sera noté à la fiche pédagogique comme une **variante d'usage**, pas comme une réserve.
+
+---
+
+## 8 août 2026 — Lot Pékin 3e_C2.1 : la compétence C2 est achevée sur les trois niveaux
+
+Dernier lot du C2. Avec lui, la compétence est couverte en 5e, en 4e et en 3e — et c'est le
+**premier lot du dépôt à achever une compétence dont les deux autres niveaux existaient déjà**.
+
+### La marche est écrite à l'élève
+
+Puisque le lot termine, la progression complète devait se **voir**, et pas seulement dans la fiche
+du professeur. La séquence porte donc un tableau, adressé à l'élève&nbsp;: en 5e tu regardais
+l'objet **du dehors**&nbsp;; en 4e tu partais de **ce que vivent les gens**, mais l'itinéraire
+t'était donné&nbsp;; en 3e tu décides de **la forme**, et tu la **défends**.
+
+Trois ans pour apprendre une chose difficile&nbsp;: un objet technique ne se décrit pas seulement
+par ce qu'il est, mais par ce qu'il fait vivre — et par la façon dont on le raconte à ceux qui
+peuvent le changer. L'élève a le droit de voir ce chemin.
+
+### Le mot «&nbsp;choisis&nbsp;», et sa contrainte
+
+La difficulté propre à la 3e tient dans un mot. Et **choisir n'est un vrai geste que s'il existe une
+contrainte** qui rende un choix meilleur qu'un autre&nbsp;: sans contrainte, l'élève prend le mode
+qu'il préfère, et il a raison — il n'y a rien à justifier.
+
+La contrainte retenue est le **destinataire**&nbsp;: le technicien, l'élue qui vote le budget,
+l'usager debout dans la station. Trois temps, trois vocabulaires, trois pouvoirs. Le même constat ne
+se dit pas de la même façon à ces trois-là.
+
+D'où la thèse du lot, qui est aussi son titre implicite&nbsp;: **un mode n'est jamais bon en soi, il
+est bon pour quelqu'un.** Et son corollaire méthodique&nbsp;: **on justifie un mode par son angle
+mort, pas par son point fort** — tous ont un point fort, donc l'invoquer ne désigne personne.
+
+### Ce que les données produisent seules
+
+«&nbsp;Un usager sur cinq abandonne&nbsp;» est exact — 8 sur 40. Mais **0&nbsp;% chez les
+habitués**, 43&nbsp;% chez les touristes, 50&nbsp;% chez les personnes âgées. Et 77&nbsp;s de durée
+moyenne quand l'habitué met 41&nbsp;s et la personne âgée 123&nbsp;s.
+
+La phrase que la séquence fait écrire&nbsp;: **ceux qui décident sont presque toujours des habitués,
+et les habitués réussissent.** C'est pour cela qu'un problème d'usage reste invisible — et ce n'est
+pas une question de mauvaise volonté, c'est structurel.
+
+### Un test rouge, et cette fois c'est le vérificateur qui avait tort
+
+Le contrôle «&nbsp;une lecture qui ne nomme pas les extrêmes est refusée&nbsp;» a échoué. J'ai
+cherché lequel des deux avait tort, comme d'habitude — et pour la première fois, **ce n'était pas le
+test**.
+
+Mon vérificateur pédagogique cherchait `0 %` sans garde de chiffre. Or «&nbsp;0&nbsp;%&nbsp;» se
+trouve aussi dans «&nbsp;**3**0&nbsp;%&nbsp;» et «&nbsp;4**0**&nbsp;%&nbsp;»&nbsp;: une lecture
+fausse — 5&nbsp;% aux habitués, 30&nbsp;% aux personnes âgées — était **acceptée**. Le verrou
+validait une réponse erronée.
+
+La leçon de juillet disait&nbsp;: «&nbsp;devant un test rouge, chercher lequel des deux a tort avant
+de toucher au code&nbsp;». Elle vaut **dans les deux sens**, et c'est la première fois que le second
+sens se réalise. Corrigé par `(?:^|[^0-9])0\s*%`, avec un commentaire qui dit pourquoi.
+
+### Ce que ce lot doit aux questions de Pascal
+
+Trois de ses remarques, le même jour, ont directement modifié le lot&nbsp;:
+
+1. **le Bonus a son corrigé** (règle n°43 étendue)&nbsp;;
+2. **un choix offert engage un corrigé par option** — la séquence propose six modes, il a fallu
+   deux planches de corrigé au lieu d'une&nbsp;;
+3. **le vocabulaire avant le choix** — six appariements ouvrent l'activité 2, et le vérificateur
+   refuse d'aller plus loin tant qu'ils ne sont pas tenus.
+
+Et une quatrième a produit un volet de règle&nbsp;: «&nbsp;choisis par l'élève ou par le
+concepteur&nbsp;?&nbsp;» — l'ambiguïté est déclarée, la lecture est donnée comme lecture, et les
+deux variantes d'usage sont décrites à la fiche.
+
+### Le bilan
+
+Un code quitte «&nbsp;À CRÉER&nbsp;». Le dépôt compte **26 codes complets** et **31 à créer**.
+Vérificateur&nbsp;: **8 sur 8**. Tests du lot&nbsp;: **54 sur 54**. Index&nbsp;: 20 sur 20.
+
+**La compétence C2 est terminée.** Reste, pour achever le Thème 1&nbsp;: les 15 codes du **C1** —
+dont sept séquences qui n'ont ni mode essentiel, ni version étayée, ni carte de référentiel.

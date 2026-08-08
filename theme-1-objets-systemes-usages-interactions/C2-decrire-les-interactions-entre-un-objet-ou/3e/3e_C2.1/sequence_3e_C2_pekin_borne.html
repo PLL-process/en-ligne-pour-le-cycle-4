@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shenzhen : recenser les interacteurs d'une station de vélos en libre-service et lire les choix de conception dans ses formes. Codes 5e_C2.1 et 5e_C2.2, programme 2024.">
+<title>Thème 1 · 3e — Pékin : trois destinataires, trois représentations (3e_C2.1)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<div class="page">
+<h1>🚇 Pékin — trois destinataires, trois représentations</h1>
+<p class="sous">Décrire une expérience d'usager, puis choisir comment la montrer — et savoir pourquoi.</p>
+<div class="badges">
+  <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">3e</span>
+  <span class="badge code" title="Code de classement interne à ce dépôt : décrire l'expérience de l'utilisateur à l'aide de modes de représentation choisis.">3e_C2.1</span>
+  <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 langages scientifiques et techniques, D4 systèmes techniques, D5 représentations du monde.">D1.3 · D4 · D5</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">3 séances de 55 min</span>
+  <span class="badge theme" title="Cette séquence travaille un geste attendu à l'épreuve de sciences et technologie du DNB : lire et compléter un algorigramme.">🎓 geste DNB</span>
+</div>
+<p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>3e</b>&nbsp;: le niveau.
+<b>3e_C2.1</b>&nbsp;: la compétence travaillée — c'est un code de classement <b>propre à ce site</b>,
+écrit en toutes lettres plus bas. <b>D1.3 · D4 · D5</b>&nbsp;: les domaines du <b>socle commun</b>,
+les grandes familles de ce qu'on apprend au collège, toutes matières confondues.
+<b>3 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM. <b>🎓 geste DNB</b>&nbsp;: on y
+travaille l'algorigramme, qui tombe régulièrement à l'épreuve de sciences et technologie.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
+
+<section class="card">
+  <h2>🇨🇳 La situation&nbsp;: un chiffre juste que personne ne comprend de la même façon</h2>
+  <p>La régie du métro de Pékin a fait observer <b>40 usagers</b> devant une borne de vente de
+  tickets. Le rapport tient en une ligne&nbsp;:</p>
+  <blockquote style="border-left:4px solid var(--warn);margin:8px 0;padding:2px 14px;color:var(--warn)">
+    «&nbsp;Un usager sur cinq abandonne devant la borne.&nbsp;»
+  </blockquote>
+  <p>Cette ligne circule. Le <b>technicien</b> hausse les épaules&nbsp;: ses bornes fonctionnent.
+  L'<b>élue</b> qui vote le budget demande combien ça coûterait de les changer toutes.
+  Les <b>usagers</b>, eux, n'en savent rien&nbsp;: personne ne leur a rien dit.</p>
+  <p style="color:var(--warn);font-size:1.05em">Le chiffre est exact. Et il ne dit à <b>personne</b>
+  ce qu'il faudrait faire — parce qu'il n'a été mis en forme <b>pour personne</b>.</p>
+  <p class="meta">⚠️ <b>Toutes les données de cette séquence sont simulées</b>, construites pour
+  l'exercice. Elles ne décrivent aucun réseau réellement exploité.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Comment montrer une même expérience d'usager à des
+  gens qui n'ont ni le même temps, ni le même vocabulaire, ni le même pouvoir&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Sans regarder les données&nbsp;: d'après toi, qui abandonne devant cette borne&nbsp;? Et si tu devais l'expliquer à quelqu'un, comment t'y prendrais-tu&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : qui abandonne, et comment tu l'expliquerais"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Je pense que ceux qui abandonnent sont surtout ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Pour l'expliquer, je ferais ____ (un dessin&nbsp;? un tableau&nbsp;? un texte&nbsp;?).&nbsp;»</li>
+    <li>«&nbsp;Je choisirais ça parce que ____.&nbsp;»</li></ul></details>
+  <p class="meta">Garde bien ta seconde réponse. Au bilan, la question ne sera pas de savoir si tu
+  avais raison&nbsp;: ce sera de savoir <b>si tu avais pensé à demander pour qui</b>.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>3e_C2.1</code> est un code de
+  classement <b>interne à ce dépôt</b>. Il ne figure pas comme tel au BO. La formulation ci-dessous,
+  elle, est celle du référentiel.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>3e_C2.1</b></td><td>Décrire l'expérience de l'utilisateur d'un objet ou système
+      technique <b>à l'aide de modes de représentation choisis</b>.</td><td>Les 3 séances</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 langages scientifiques et techniques · D4 systèmes techniques ·
+  D5 représentations du monde.</p>
+  <p class="meta">📖 <b>Une précision d'honnêteté.</b> Le programme écrit «&nbsp;modes de
+  représentation <b>choisis</b>&nbsp;» sans dire <b>par qui</b>. Dans cette séquence, <b>c'est toi
+  qui choisis</b> — parce qu'en 4e le programme nommait lui-même les modes et qu'ici il ne les
+  nomme plus. C'est notre lecture du texte, et ton professeur peut faire autrement&nbsp;: t'imposer
+  le mode et te demander seulement de le défendre. L'exercice le plus difficile reste le même dans
+  les deux cas — <b>justifier</b>.</p>
+  <p class="meta">🔑 <b>Le mot qui compte est «&nbsp;choisis&nbsp;».</b> L'an dernier, le programme
+  te disait <i>quels</i> modes employer&nbsp;: des schémas, des graphiques, des algorithmes, dans cet
+  ordre. Cette année, c'est <b>toi qui décides</b> — et qui dois pouvoir dire pourquoi. On te donne
+  une destination, tu traces la route.</p>
+</section>
+
+<section class="card">
+  <h2>🧗 Où tu en es dans la compétence C2</h2>
+  <p>Cette séquence <b>termine</b> une compétence commencée il y a deux ans. La voici en entier&nbsp;:</p>
+  <table>
+    <tr><th>Année</th><th>Ce que tu faisais</th><th>Ce qui changeait</th></tr>
+    <tr><td><b>5e</b><br>Shenzhen</td><td>tu <b>recensais</b> ce qui entoure l'objet, tu
+      <b>repérais</b> les choix dans sa forme</td><td>tu regardais l'objet <b>du dehors</b></td></tr>
+    <tr><td><b>4e</b><br>Hangzhou</td><td>tu <b>décrivais un vécu</b> et tu le traduisais en schéma,
+      graphique, algorithme</td><td>tu partais de <b>ce que vivent les gens</b> — mais l'itinéraire
+      t'était donné</td></tr>
+    <tr><td><b>3e</b><br><b>ici</b></td><td>tu décris un vécu et tu <b>choisis</b> comment le
+      montrer</td><td>tu décides de <b>la forme</b>, et tu la <b>défends</b></td></tr>
+  </table>
+  <p class="meta">Trois ans pour apprendre une chose difficile&nbsp;: un objet technique ne se
+  décrit pas seulement par ce qu'il est, mais par ce qu'il fait vivre — et par la façon dont on le
+  raconte à ceux qui peuvent le changer.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 4 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Derrière le chiffre<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Six modes, trois destinataires<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Produire et défendre<span class="done" id="done-s3"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils de 4e (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu as travaillé l'an dernier. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
+  <div class="assoc"><label for="be_1">Une <b>moyenne</b> calculée sur un groupe très varié&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>peut ne décrire personne : elle décrit un milieu, pas une personne réelle</option>
+      <option>décrit exactement ce que vit chaque membre du groupe</option>
+      <option>est fausse dès que le groupe est varié</option>
+      <option>remplace avantageusement le détail par profil</option></select></div>
+  <div class="assoc"><label for="be_2">Dans un <b>algorigramme</b>, un test&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>a toujours deux sorties, et la sortie « non » doit mener quelque part</option>
+      <option>peut n'avoir qu'une sortie si le cas « non » est rare</option>
+      <option>se dessine avec un rectangle</option>
+      <option>sert seulement à décorer le schéma</option></select></div>
+  <div class="assoc"><label for="be_3">Une <b>exigence</b> bien écrite&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>dit ce qu'il faut obtenir, se vérifie, et nomme l'attente à laquelle elle répond</option>
+      <option>décrit la solution technique à installer</option>
+      <option>reste volontairement vague</option>
+      <option>cite une famille du programme, et cela suffit</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Une <b>moyenne</b> décrit le milieu d'une série. Sur un groupe varié, elle peut ne
+    correspondre à <b>personne</b>&nbsp;: si la moitié met 40&nbsp;s et l'autre 120&nbsp;s, la
+    moyenne est 80&nbsp;s — et personne ne met 80&nbsp;s.</p>
+    <p>Dans un <b>algorigramme</b>&nbsp;: ovale pour le début et la fin, rectangle pour une action,
+    losange pour un test. Un test a <b>deux sorties</b>, et la branche «&nbsp;non&nbsp;» doit mener
+    quelque part — sinon l'usager tourne en boucle.</p>
+    <p>Une <b>exigence</b> dit ce qu'il faut <b>obtenir</b>, pas comment&nbsp;: «&nbsp;rester
+    lisible sous la pluie&nbsp;» est une exigence, «&nbsp;mettre un auvent&nbsp;» est une solution.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>🔍 Activité 1 — Ce que le chiffre ne dit pas <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
+  <div class="meta"><b>Objectif</b> retrouver, derrière un chiffre global, ce qu'il agrège ·
+  <b>Compétence</b> 3e_C2.1 · <b>Production</b> le taux d'abandon par profil, et la phrase qui en découle</div>
+
+  <p>Le rapport dit&nbsp;: «&nbsp;un usager sur cinq abandonne&nbsp;». Le fichier
+  <code>observations_borne_pekin_simulees.csv</code> contient les <b>40 observations</b> qui ont
+  produit ce chiffre&nbsp;: profil, durée totale, abandon, étape d'abandon.</p>
+  <p>Avant de choisir <i>comment</i> montrer quelque chose, il faut savoir <b>quoi</b> montrer.</p>
+
+  <h4>a) Lire un chiffre agrégé</h4>
+  <div class="assoc"><label for="a1_1">«&nbsp;Un usager sur cinq abandonne&nbsp;» — ce chiffre est&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>exact, et pourtant insuffisant pour décider quoi que ce soit</option>
+      <option>faux : les données disent autre chose</option>
+      <option>suffisant : on sait ce qu'il faut corriger</option>
+      <option>inutilisable : il faudrait observer plus de monde</option></select></div>
+  <div class="assoc"><label for="a1_2">La durée moyenne de tous les usagers est de 77&nbsp;s. Or l'habitué met 41&nbsp;s et la personne âgée 123&nbsp;s. Cela signifie que&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>la moyenne décrit une personne qui n'existe pas</option>
+      <option>l'un des deux relevés est erroné</option>
+      <option>la moyenne est mal calculée</option>
+      <option>il faut arrondir à 80 s pour simplifier</option></select></div>
+  <div class="assoc"><label for="a1_3">Aucun des 14 habitués n'a abandonné. Ce résultat&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>montre que la borne est utilisable — mais seulement quand on la connaît déjà</option>
+      <option>prouve que la borne fonctionne bien</option>
+      <option>signifie que les habitués sont plus doués</option>
+      <option>n'a aucun intérêt : ils ne posent pas de problème</option></select></div>
+  <div class="assoc"><label for="a1_4">Le service technique répond&nbsp;: «&nbsp;nos bornes fonctionnent, aucune n'est en panne&nbsp;». Cette réponse&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>est vraie, et à côté de la question : on ne lui parle pas de pannes mais d'usages</option>
+      <option>règle le problème</option>
+      <option>est fausse : il y a des incidents dans le relevé de maintenance</option>
+      <option>montre que le rapport d'observation est inutile</option></select></div>
+
+  <h4>b) Ta lecture des données</h4>
+  <div class="assoc">
+    <label for="a1_lecture">Calcule le <b>taux d'abandon par profil</b> (5 profils, une ligne chacun, en %), puis écris <b>une phrase</b> qui dit ce que le chiffre global cachait.</label>
+    <textarea id="a1_lecture" style="min-height:140px" aria-label="Le taux d'abandon par profil, puis la phrase qui dit ce que le chiffre global cachait"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;habitués&nbsp;: ____ % (___ abandons sur 14)&nbsp;»</li>
+      <li>«&nbsp;occasionnels&nbsp;: ____ %&nbsp;» · «&nbsp;touristes&nbsp;: ____ %&nbsp;»</li>
+      <li>«&nbsp;personnes âgées&nbsp;: ____ %&nbsp;» · «&nbsp;avec poussette&nbsp;: ____ %&nbsp;»</li>
+      <li>«&nbsp;Le chiffre global cachait que ____, alors que ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Au tableur&nbsp;: filtre la colonne <code>profil</code>, compte les lignes où
+    <code>abandon</code> vaut <code>oui</code>, divise par l'effectif du profil. Arrondis à
+    l'entier.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Range tes cinq taux du plus petit au plus grand. L'écart entre le premier et le dernier est
+    ce que le chiffre global avait effacé — et c'est lui, la vraie information.</p>
+    <p>La phrase attendue ne dit pas seulement «&nbsp;ça dépend des profils&nbsp;». Elle nomme
+    <b>qui</b> abandonne, et <b>qui n'abandonne jamais</b>.</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Les cinq taux</b>&nbsp;: habitués <b>0&nbsp;%</b> (0 sur 14) · occasionnels
+    <b>11&nbsp;%</b> (1 sur 9) · avec poussette <b>25&nbsp;%</b> (1 sur 4) · touristes
+    <b>43&nbsp;%</b> (3 sur 7) · personnes âgées <b>50&nbsp;%</b> (3 sur 6).</p>
+    <p>Total&nbsp;: 8 abandons sur 40, soit <b>20&nbsp;%</b> — «&nbsp;un sur cinq&nbsp;». Le chiffre
+    global est <b>exact</b>.</p>
+    <p><b>Ce qu'il cachait</b>&nbsp;: <b>aucun habitué n'abandonne</b>, tandis qu'une personne âgée
+    sur deux et près d'un touriste sur deux renoncent. Ce ne sont pas «&nbsp;20&nbsp;% des
+    usagers&nbsp;» qui échouent au hasard&nbsp;: ce sont <b>toujours les mêmes</b>.</p>
+    <p>La <b>durée moyenne</b> dit la même chose autrement&nbsp;: 77&nbsp;s en moyenne, quand
+    l'habitué met 41&nbsp;s et la personne âgée 123&nbsp;s. <b>Personne ne met 77&nbsp;secondes.</b>
+    Une moyenne sur une population variée décrit une personne qui n'existe pas.</p>
+    <p><b>Sur la réponse du service technique</b>&nbsp;: elle est vraie. Aucune borne n'est en panne.
+    Mais on ne lui parle pas de pannes — on lui parle d'<b>usages</b>. Un objet peut fonctionner
+    parfaitement et échouer à rendre son service&nbsp;: c'est ce que tu avais déjà vu en 5e à
+    Shenzhen, et en 4e à Hangzhou. Le voir une troisième fois, sur un autre objet, n'est pas une
+    répétition&nbsp;: c'est la confirmation que ce n'est pas un accident.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un chiffre agrégé peut être <b>exact et
+  inutilisable</b>. Avant de le montrer, demande-toi ce qu'il additionne.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: conclure «&nbsp;20&nbsp;% des gens n'y arrivent
+  pas&nbsp;». Non&nbsp;: <b>0&nbsp;% des habitués et 50&nbsp;% des personnes âgées</b>. Ce n'est
+  pas la même phrase, et elle n'appelle pas les mêmes décisions.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tes cinq taux sont justes et ta phrase nomme à la fois ceux
+  qui abandonnent et ceux qui n'abandonnent jamais.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>🎯 Activité 2 — Six modes, trois destinataires <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> choisir un mode de représentation et justifier ce choix ·
+  <b>Compétence</b> 3e_C2.1 · <b>Production</b> trois appariements défendus</div>
+
+  <p>Tu sais maintenant <b>quoi</b> montrer. Reste le plus difficile&nbsp;: <b>comment</b>, et
+  surtout <b>à qui</b>.</p>
+
+  <figure class="fig">
+    <img src="Images/six_modes_de_representation.svg"
+         alt="Tableau des six modes de représentation d'une expérience utilisateur : parcours utilisateur, algorigramme, graphique, carte d'empathie, storyboard, tableau comparatif. Pour chacun, ce qu'il montre et son angle mort. Une bande conclut qu'un mode n'est jamais bon en soi mais bon pour quelqu'un, et que le choix se justifie par le destinataire et l'intention, jamais par le goût.">
+    <figcaption>📄 <b>Document à lire.</b> La colonne «&nbsp;−&nbsp;» est celle qui sert&nbsp;: on
+    ne justifie pas un mode par ce qu'il apporte — tous apportent quelque chose — mais en montrant
+    que son <b>angle mort</b> ne gêne pas <i>ce</i> destinataire-là.</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <img src="Images/trois_destinataires.svg"
+         alt="Trois destinataires du même constat : le technicien de maintenance, qui peut réparer et dispose d'un temps long mais ne supporte pas l'à-peu-près ; l'élue qui vote le budget, qui peut financer ou refuser, dispose de quelques minutes et ne supporte ni le jargon ni plus d'une page ; l'usager debout dans la station, qui peut seulement changer sa façon de faire, dispose de trois secondes et ne lit aucun document.">
+    <figcaption>📄 <b>Document à lire.</b> Regarde la dernière ligne de chaque colonne&nbsp;: ce que
+    la personne <b>ne supporte pas</b>. C'est elle qui élimine les modes, plus sûrement que ce
+    qu'elle aime.</figcaption>
+  </figure>
+
+  <h4>a) D'abord, savoir de quoi on parle</h4>
+  <p>Six mots, dont plusieurs sont sans doute nouveaux pour toi. <b>On ne choisit pas parmi des
+  mots qu'on ne connaît pas</b>&nbsp;: commence par les relier à ce qu'ils désignent.</p>
+  <div class="assoc"><label for="a2_v1">Une suite de <b>quelques images</b>, comme une bande dessinée sans texte, qui montre ce qui se passe étape par étape&nbsp;:</label>
+    <select id="a2_v1"><option value="">— choisir —</option>
+      <option>un storyboard</option><option>une carte d'empathie</option>
+      <option>un algorigramme</option><option>un tableau comparatif</option></select></div>
+  <div class="assoc"><label for="a2_v2">Une feuille <b>divisée en quatre cases</b> — ce que la personne dit, fait, voit, ressent&nbsp;:</label>
+    <select id="a2_v2"><option value="">— choisir —</option>
+      <option>une carte d'empathie</option><option>un parcours utilisateur</option>
+      <option>un storyboard</option><option>un graphique</option></select></div>
+  <div class="assoc"><label for="a2_v3">Un schéma fait d'<b>ovales, de rectangles et de losanges</b> reliés par des flèches, qui dit dans quel ordre les choses se passent&nbsp;:</label>
+    <select id="a2_v3"><option value="">— choisir —</option>
+      <option>un algorigramme</option><option>un parcours utilisateur</option>
+      <option>un tableau comparatif</option><option>un storyboard</option></select></div>
+  <div class="assoc"><label for="a2_v4">La <b>suite des étapes</b> traversées par la personne, nommées les unes après les autres&nbsp;: approcher, choisir, payer, récupérer&nbsp;:</label>
+    <select id="a2_v4"><option value="">— choisir —</option>
+      <option>un parcours utilisateur</option><option>un algorigramme</option>
+      <option>une carte d'empathie</option><option>un graphique</option></select></div>
+  <div class="assoc"><label for="a2_v5">Une grille qui <b>croise des solutions et des critères</b>, une case par croisement&nbsp;:</label>
+    <select id="a2_v5"><option value="">— choisir —</option>
+      <option>un tableau comparatif</option><option>une carte d'empathie</option>
+      <option>un storyboard</option><option>un parcours utilisateur</option></select></div>
+  <div class="assoc"><label for="a2_v6">Des <b>barres ou des points</b> qui permettent de comparer des quantités d'un coup d'œil&nbsp;:</label>
+    <select id="a2_v6"><option value="">— choisir —</option>
+      <option>un graphique</option><option>un algorigramme</option>
+      <option>un tableau comparatif</option><option>un storyboard</option></select></div>
+  <p class="meta">🔤 <b>Deux de ces mots viennent du monde du travail</b> et non de l'école&nbsp;:
+  <i>storyboard</i> (mot anglais du cinéma&nbsp;: le film dessiné avant d'être tourné) et
+  <i>carte d'empathie</i> (outil des concepteurs, pour se mettre à la place de l'utilisateur).
+  Les connaître te servira au lycée et au-delà.</p>
+
+  <h4>b) Éliminer avant de choisir</h4>
+  <div class="assoc"><label for="a2_1">Pour l'<b>usager debout dans la station</b>, le tableau comparatif est&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>à écarter : il se lit lentement, et l'usager a trois secondes</option>
+      <option>le meilleur choix : il contient tout</option>
+      <option>acceptable s'il est en couleur</option>
+      <option>équivalent aux autres modes</option></select></div>
+  <div class="assoc"><label for="a2_2">Pour l'<b>élue</b>, l'algorigramme est&nbsp;:</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>à écarter : il est illisible pour qui n'a pas appris ses formes</option>
+      <option>parfait : il est précis</option>
+      <option>à retenir, car il fait sérieux</option>
+      <option>à retenir si on lui explique les symboles d'abord</option></select></div>
+  <div class="assoc"><label for="a2_3">Pour le <b>technicien</b>, la carte d'empathie est&nbsp;:</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>insuffisante seule : elle ne donne pas la logique exacte dont il a besoin</option>
+      <option>inutile : les ressentis ne servent à rien en technique</option>
+      <option>le meilleur choix</option>
+      <option>équivalente à l'algorigramme</option></select></div>
+  <div class="assoc"><label for="a2_4">Un même mode peut-il convenir à deux destinataires&nbsp;?</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>oui, mais il faudra sans doute le simplifier pour l'un des deux</option>
+      <option>non, jamais</option>
+      <option>oui, sans rien changer</option>
+      <option>seulement si les deux ont le même métier</option></select></div>
+
+  <h4>c) Ce qui fait une bonne justification</h4>
+  <div class="assoc"><label for="a2_5">Justifier le choix d'un mode, c'est&nbsp;:</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>montrer que son angle mort ne gêne pas ce destinataire-là</option>
+      <option>dire qu'on le trouve plus clair</option>
+      <option>expliquer qu'on sait le faire</option>
+      <option>rappeler qu'il est utilisé par les professionnels</option></select></div>
+  <div class="assoc"><label for="a2_6">«&nbsp;J'ai choisi le graphique parce que c'est plus visuel&nbsp;» est une justification&nbsp;:</label>
+    <select id="a2_6"><option value="">— choisir —</option>
+      <option>faible : elle vaudrait pour n'importe quel destinataire, donc elle n'en désigne aucun</option>
+      <option>correcte et suffisante</option>
+      <option>fausse : un graphique n'est pas visuel</option>
+      <option>correcte si on ajoute une couleur</option></select></div>
+
+  <h4>d) Tes trois appariements</h4>
+  <div class="assoc">
+    <label for="a2_appar">Attribue <b>un mode différent</b> à chacun des trois destinataires — <b>technicien</b>, <b>élue</b>, <b>usager</b> — et justifie chaque choix en nommant <b>le point fort</b> retenu <b>et l'angle mort</b> qui ne gêne pas cette personne-là. Une ligne par destinataire.</label>
+    <textarea id="a2_appar" style="min-height:150px" aria-label="Trois appariements destinataire / mode, chacun justifié par un point fort et un angle mort"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Pour le <b>technicien</b>, je choisis ____, parce qu'il ____ (point fort). Son angle mort — ____ — ne le gêne pas, car ____.&nbsp;»</li>
+      <li>«&nbsp;Pour l'<b>élue</b>, je choisis ____, parce qu'il ____. Son angle mort — ____ — ne la gêne pas, car ____.&nbsp;»</li>
+      <li>«&nbsp;Pour l'<b>usager</b>, je choisis ____, parce qu'il ____. Son angle mort — ____ — ne le gêne pas, car ____.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Procède par <b>élimination</b>, pas par préférence. Pour chaque destinataire, relis la ligne
+    «&nbsp;ne supporte pas&nbsp;» et barre les modes qui s'y heurtent. Il en restera peu.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>D'autres appariements que ceux du corrigé sont recevables — ce n'est pas une devinette. Ce
+    qui est exigé, c'est que <b>la justification tienne</b>&nbsp;: point fort utile <i>à cette
+    personne</i>, angle mort sans conséquence <i>pour elle</i>.</p>
+    <p>Exemple d'une justification qui ne tient pas&nbsp;: «&nbsp;pour l'élue, le tableau
+    comparatif, parce qu'il contient tout&nbsp;». C'est vrai — et c'est précisément son défaut ici&nbsp;:
+    elle a quelques minutes.</p></details>
+
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>Un appariement possible</b> — d'autres se défendent&nbsp;:</p>
+    <ul>
+      <li><b>Technicien → algorigramme.</b> Point fort&nbsp;: il rend les cas d'échec visibles, donc
+      traitables — c'est exactement ce qu'il doit réparer. Angle mort&nbsp;: illisible pour un
+      non-technicien — sans conséquence, il en est un.</li>
+      <li><b>Élue → graphique</b> (une seule phrase à côté). Point fort&nbsp;: il chiffre et
+      hiérarchise en un coup d'œil. Angle mort&nbsp;: il ne dit rien du vécu — sans conséquence ici,
+      car elle ne décide pas d'un geste mais d'un <b>budget</b>.</li>
+      <li><b>Usager → storyboard.</b> Point fort&nbsp;: il se comprend sans mode d'emploi, quelle
+      que soit la langue. Angle mort&nbsp;: il ne tient presque rien — sans conséquence, l'usager
+      n'a que trois secondes de toute façon.</li>
+    </ul>
+    <p><b>Ce qui rendrait un appariement faux</b>&nbsp;: le tableau comparatif pour l'usager (il se
+    lit lentement), l'algorigramme pour l'élue (elle n'a pas appris les formes), la carte d'empathie
+    seule pour le technicien (elle ne donne aucune logique à corriger).</p>
+    <p><b>Sur les justifications.</b> «&nbsp;C'est plus visuel&nbsp;», «&nbsp;c'est plus clair&nbsp;»,
+    «&nbsp;c'est plus professionnel&nbsp;» ne sont pas des justifications&nbsp;: elles vaudraient
+    pour n'importe quel destinataire, donc elles n'en désignent aucun. <b>Une justification qui
+    marche pour tout le monde ne justifie rien.</b></p>
+    <p>Et si tu as choisi un mode pour deux destinataires différents&nbsp;: c'est possible, mais tu
+    dois alors dire ce que tu <b>changes</b> de l'un à l'autre.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: un mode n'est <b>jamais bon en soi</b> — il est bon
+  <b>pour quelqu'un</b>. On le justifie par son angle mort, pas par son point fort.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: choisir le mode qu'on préfère, ou celui qu'on
+  sait le mieux faire, et fabriquer la justification après.</p>
+</section>
+
+<section class="card">
+  <h2>🔀 Activité 3 — L'incident que seul un algorigramme montre <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> produire la représentation destinée au technicien ·
+  <b>Compétence</b> 3e_C2.1 · <b>Production</b> l'algorigramme corrigé de l'achat · <span style="color:var(--warn)">🎓 geste DNB</span></div>
+
+  <p>Le relevé de maintenance (<code>incidents_maintenance_pekin_simules.csv</code>) contient trois
+  incidents. Le premier est le plus grave, et il n'a rien d'une pièce cassée&nbsp;:</p>
+  <blockquote style="border-left:4px solid var(--err);margin:8px 0;padding:2px 14px">
+    <b>I1</b>&nbsp;— le rouleau de papier se bloque sous 8&nbsp;% de papier restant. La borne
+    <b>encaisse le paiement</b>, <b>puis</b> échoue à imprimer. <b>L'usager a payé et n'a pas de
+    titre.</b> <span class="meta">3 fois en 30 jours.</span>
+  </blockquote>
+  <p>Ce n'est pas l'organe qui est fautif&nbsp;: c'est <b>l'ordre des opérations</b>. Et l'ordre des
+  opérations, aucun graphique ni aucun storyboard ne le montre.</p>
+
+  <div class="assoc"><label for="a3_1">Pourquoi l'algorigramme est-il ici le seul mode qui convienne&nbsp;?</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>parce que le défaut est dans l'ordre des opérations, que lui seul représente</option>
+      <option>parce qu'il est plus précis que les autres</option>
+      <option>parce que c'est un exercice du DNB</option>
+      <option>parce que le technicien aime les schémas</option></select></div>
+  <div class="assoc"><label for="a3_2">La correction consiste à&nbsp;:</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>tester le papier AVANT d'encaisser, et refuser le paiement s'il en manque</option>
+      <option>changer le rouleau plus souvent</option>
+      <option>afficher un message d'excuse après l'échec</option>
+      <option>rembourser automatiquement l'usager</option></select></div>
+  <div class="assoc"><label for="a3_3">Que doit faire la borne quand le papier manque&nbsp;?</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>se déclarer indisponible et alerter la maintenance</option>
+      <option>continuer, et prévenir seulement si l'impression échoue</option>
+      <option>ne rien faire de particulier</option>
+      <option>demander à l'usager s'il veut tenter quand même</option></select></div>
+  <div class="assoc"><label for="a3_4">L'incident <b>I3</b> — le monnayeur refuse les pièces usées — provoque chez l'usager&nbsp;:</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>la croyance que sa pièce est refusée par erreur, donc il recommence</option>
+      <option>un abandon immédiat</option>
+      <option>une panne de la borne</option>
+      <option>aucun effet notable</option></select></div>
+
+  <h4>Ton algorigramme</h4>
+  <div class="assoc">
+    <label for="a3_algo">Dessine sur papier, puis écris ici ligne par ligne, l'algorigramme <b>corrigé</b> de l'achat d'un titre. Il doit contenir au moins <b>deux tests</b>, l'un portant sur le papier <b>avant</b> l'encaissement, une <b>fin en réussite</b> et une <b>fin en échec</b> qui alerte la maintenance.</label>
+    <textarea id="a3_algo" style="min-height:150px" aria-label="L'algorigramme corrigé de l'achat d'un titre, écrit ligne par ligne"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;DÉBUT — l'usager a choisi son titre&nbsp;»</li>
+      <li>«&nbsp;TEST&nbsp;: ____&nbsp;? — si NON&nbsp;: ____ puis FIN (échec)&nbsp;»</li>
+      <li>«&nbsp;ACTION&nbsp;: ____&nbsp;»</li>
+      <li>«&nbsp;TEST&nbsp;: ____&nbsp;? — si NON&nbsp;: ____&nbsp;»</li>
+      <li>«&nbsp;ACTION&nbsp;: imprimer le titre&nbsp;»</li>
+      <li>«&nbsp;FIN (réussite)&nbsp;: ____&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Écris d'abord la suite des actions telle qu'elle se passe <b>aujourd'hui</b>. Puis demande-toi
+    à quel endroit exact il faut <b>déplacer</b> le test du papier.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Le principe général&nbsp;: <b>on ne prend jamais l'argent d'un usager avant d'être sûr de
+    pouvoir le servir</b>. Tous les tests qui conditionnent le service se placent <b>avant</b>
+    l'encaissement.</p>
+    <p>Et n'oublie pas la <b>fin en échec</b>&nbsp;: une borne qui se sait incapable de servir doit
+    le dire et prévenir, pas attendre le prochain client.</p></details>
+
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète — avec l'algorigramme attendu</summary>
+    <figure class="fig">
+      <img src="Images/corrige_trois_representations.svg"
+           alt="Corrigé : le même constat rendu de trois façons. Pour le technicien, un algorigramme où le test du papier précède l'encaissement, avec une fin en réussite et une fin en échec qui alerte la maintenance. Pour l'élue, un graphique du taux d'abandon par profil, de 0 % chez les habitués à 50 % chez les personnes âgées, avec une phrase unique. Pour l'usager, un storyboard de trois vignettes presque sans texte.">
+      <figcaption>Le corrigé des trois modes de la fiche précédente. <b>La colonne de gauche est
+      celle de cette activité</b> — compare-la à ton algorigramme.</figcaption>
+    </figure>
+    <p><b>L'algorigramme attendu</b>&nbsp;:</p>
+    <ol>
+      <li><b>DÉBUT</b> — l'usager a choisi son titre.</li>
+      <li><b>TEST</b> — «&nbsp;reste-t-il plus de 8&nbsp;% de papier&nbsp;?&nbsp;» Si <b>non</b> →
+      afficher «&nbsp;borne indisponible&nbsp;», <b>alerter la maintenance</b>, <b>FIN (échec)</b>
+      — sans avoir pris un centime.</li>
+      <li><b>ACTION</b> — la borne encaisse.</li>
+      <li><b>TEST</b> — «&nbsp;le paiement a-t-il abouti&nbsp;?&nbsp;» Si <b>non</b> → restituer et
+      revenir au choix.</li>
+      <li><b>ACTION</b> — imprimer le titre.</li>
+      <li><b>FIN (réussite)</b> — l'usager prend son titre.</li>
+    </ol>
+    <p><b>Tout tient dans l'ordre.</b> Le test existait déjà dans la borne actuelle&nbsp;: il était
+    simplement <b>après</b> l'encaissement. Déplacer une case ne coûte rien en matériel et supprime
+    la pire panne du relevé — celle où l'usager paie et n'a rien.</p>
+    <p><b>La fin en échec n'est pas un détail.</b> Une borne qui se sait incapable de servir doit
+    le <b>dire</b> et <b>prévenir</b>. Sans cette branche, elle attend le client suivant pour
+    échouer à nouveau — trois fois en trente jours, c'est exactement ce qui s'est passé.</p>
+    <p class="meta">🎓 <b>Au DNB</b>, on te demandera de lire un algorigramme de ce type, d'y
+    repérer un test mal placé, ou d'en compléter une branche. Ce que tu viens de faire est ce
+    geste-là.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on ne prend <b>jamais</b> l'argent d'un usager avant
+  d'être sûr de pouvoir le servir. Un défaut d'<b>ordre</b> ne se voit que sur un algorigramme.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: corriger l'organe — «&nbsp;changer le rouleau
+  plus souvent&nbsp;» — au lieu de corriger l'ordre. Le rouleau finira toujours par manquer.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>✍️ Activité 4 — Produire, et défendre <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> réaliser une représentation choisie et la défendre ·
+  <b>Compétence</b> 3e_C2.1 · <b>Production</b> une représentation au choix, et sa défense en trois points</div>
+
+  <p>Tu as produit l'algorigramme du technicien. Il reste <b>l'élue</b> et <b>l'usager</b>.
+  Choisis-en <b>un</b>, et produis pour lui la représentation que tu as retenue à l'activité 2.</p>
+  <p class="meta">Tu peux prendre <b>n'importe lequel des six modes</b> — y compris un autre que
+  celui que tu avais annoncé, si tu as changé d'avis. Dans ce cas, dis-le et explique pourquoi&nbsp;:
+  changer d'avis avec une raison, c'est le contraire d'une erreur.</p>
+
+  <div class="assoc"><label for="a4_1">Ta représentation sera réussie si&nbsp;:</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>ton destinataire peut agir après l'avoir vue, dans le temps dont il dispose</option>
+      <option>elle est belle et soignée</option>
+      <option>elle contient toutes les données du fichier</option>
+      <option>elle ressemble à celle du corrigé</option></select></div>
+  <div class="assoc"><label for="a4_2">Si tu produis pour l'élue, tu dois surtout&nbsp;:</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>tenir en une page, sans jargon, et donner un ordre de grandeur</option>
+      <option>détailler la logique interne de la borne</option>
+      <option>montrer les 40 observations une par une</option>
+      <option>utiliser le vocabulaire technique exact</option></select></div>
+  <div class="assoc"><label for="a4_3">Si tu produis pour l'usager, tu dois surtout&nbsp;:</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>être compris en trois secondes, sans qu'il ait à s'arrêter</option>
+      <option>être exhaustif</option>
+      <option>employer des pourcentages</option>
+      <option>expliquer la cause technique de la panne</option></select></div>
+  <div class="assoc"><label for="a4_4">Ta défense doit dire&nbsp;:</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>le destinataire, le mode retenu, et ce que tu as volontairement laissé de côté</option>
+      <option>le temps que tu as mis à la faire</option>
+      <option>que ton mode est le meilleur des six</option>
+      <option>uniquement le mode retenu</option></select></div>
+
+  <h4>Ta production, et sa défense</h4>
+  <div class="assoc">
+    <label for="a4_prod">Réalise ta représentation sur papier ou à l'ordinateur. Puis écris ici sa <b>défense en trois points</b>&nbsp;: (1) pour <b>qui</b> ; (2) quel <b>mode</b> et pourquoi il convient à cette personne ; (3) ce que tu as <b>volontairement laissé de côté</b>, et pourquoi ce n'est pas grave pour elle.</label>
+    <textarea id="a4_prod" style="min-height:150px" aria-label="La défense de ta production en trois points : destinataire, mode et raison, ce qui a été laissé de côté"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;<b>Pour qui</b>&nbsp;: j'ai produit pour ____, qui peut ____ et qui dispose de ____.&nbsp;»</li>
+      <li>«&nbsp;<b>Quel mode</b>&nbsp;: j'ai choisi ____, parce qu'il ____, et c'est ce dont cette personne a besoin pour ____.&nbsp;»</li>
+      <li>«&nbsp;<b>Ce que j'ai laissé de côté</b>&nbsp;: je n'ai pas montré ____, parce que ____ ne lui servirait pas / lui prendrait un temps qu'elle n'a pas.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Commence par le troisième point. Décider <b>ce qu'on enlève</b> est plus rapide que décider
+    ce qu'on met — et c'est ce qui donne sa forme au reste.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Le troisième point est le plus important des trois, et le plus rarement écrit. Une
+    représentation est un <b>choix de ce qu'on montre</b>, donc aussi de ce qu'on cache. Un auteur
+    qui ne sait pas dire ce qu'il a écarté n'a pas choisi&nbsp;: il a mis tout ce qu'il pouvait.</p></details>
+
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+
+  <details class="correction"><summary>📖 Corrigé — les six modes traités</summary>
+    <p>Quel que soit le mode que tu as choisi, tu trouveras ci-dessous un modèle <b>dans la forme
+    que tu as produite</b>. Compare la <b>structure</b>, pas les mots&nbsp;: ta version peut être
+    très différente et tout aussi juste.</p>
+    <figure class="fig">
+      <img src="Images/corrige_trois_representations.svg"
+           alt="Corrigé : le même constat rendu en algorigramme pour le technicien, en graphique du taux d'abandon par profil pour l'élue, et en storyboard de trois vignettes pour l'usager.">
+      <figcaption>Algorigramme (technicien) · graphique (élue) · storyboard (usager).</figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="Images/corrige_trois_autres_modes.svg"
+           alt="Corrigé des trois autres modes : le parcours utilisateur en cinq étapes avec le nombre d'abandons à chacune, la carte d'empathie de Mme Liu (dit, fait, voit, ressent), et le tableau comparatif de quatre pistes d'amélioration croisées avec le coût, l'effet et le délai. Chacun est accompagné de son angle mort.">
+      <figcaption>Parcours utilisateur · carte d'empathie · tableau comparatif. <b>Aucun des six
+      n'était un mauvais choix</b> — c'est la défense qui fait la différence.</figcaption>
+    </figure>
+    <p><b>Trois défenses possibles</b>, une par destinataire&nbsp;:</p>
+    <ul>
+      <li><b>Élue, graphique.</b> Elle décide d'un budget en quelques minutes&nbsp;: elle a besoin
+      d'un ordre de grandeur et d'une comparaison, pas d'une explication technique. <i>Laissé de
+      côté</i>&nbsp;: la cause des abandons — elle ne la corrigera pas elle-même.</li>
+      <li><b>Usager, storyboard.</b> Trois secondes debout&nbsp;: il faut une image comprise d'un
+      coup d'œil, sans langue. <i>Laissé de côté</i>&nbsp;: tous les chiffres — ils ne l'aideraient
+      pas à passer le portique.</li>
+      <li><b>Élue, tableau comparatif.</b> Défendable aussi&nbsp;! Si elle doit <b>arbitrer entre
+      plusieurs pistes</b>, c'est le seul mode qui le permette. <i>Laissé de côté</i>&nbsp;: le
+      vécu des usagers — et il faut assumer que ce tableau ne sera pas lu en trois minutes.</li>
+    </ul>
+    <p><b>Ce qui rend une défense faible</b>&nbsp;: ne pas nommer le destinataire, justifier par le
+    goût («&nbsp;c'est plus clair&nbsp;»), ou ne rien avoir laissé de côté. Ce dernier cas est le
+    plus fréquent&nbsp;: mettre tout ce qu'on a, ce n'est pas représenter — c'est déverser.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: représenter, c'est <b>choisir ce qu'on montre</b>,
+  donc aussi ce qu'on cache. Savoir dire ce qu'on a écarté est la preuve qu'on a choisi.</p>
+  <p><b>Critère de réussite</b>&nbsp;: ta défense nomme le destinataire, le mode et sa raison, et ce
+  que tu as volontairement laissé de côté.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel <span style="color:var(--sub);font-size:.8em">(~10 min)</span></h2>
+  <p>💭 <b>Rappel de ton hypothèse de départ&nbsp;:</b></p>
+  <p id="rappelHyp" style="display:none;color:var(--warn)"><span id="hypRappelTxt"></span></p>
+  <div class="assoc"><label for="hyp_retour">Au départ, avais-tu demandé <b>pour qui</b> tu devais expliquer&nbsp;? Que changerais-tu à ta réponse maintenant&nbsp;?</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Au départ, j'avais dit que j'expliquerais avec ____.&nbsp;»</li>
+    <li>«&nbsp;Je n'avais pas demandé ____.&nbsp;»</li>
+    <li>«&nbsp;Maintenant, je commencerais par ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
+    <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai appris qu'un chiffre global ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'un mode de représentation ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris que représenter, c'est aussi ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan2">Ce que je dois encore revoir&nbsp;:</label>
+    <textarea id="bilan2" aria-label="Ce que je dois encore revoir"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li></ul></details>
+  <h3>Je me positionne</h3>
+  <div class="assoc"><label for="pos1">3e_C2.1 — décrire l'expérience de l'utilisateur à l'aide de modes de représentation choisis&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je produis une représentation sans savoir pour qui</option>
+      <option>🟠 Maîtrise fragile — je choisis un mode, mais je le justifie par mon goût</option>
+      <option>🟢 Maîtrise satisfaisante — je choisis selon le destinataire et je le défends</option>
+      <option>⭐ Très bonne maîtrise — je sais aussi dire ce que j'ai volontairement écarté</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>5 illustrées</b>, et chaque réponse
+  fausse y est expliquée. La séquence ne portant qu'un seul code, elles portent toutes sur
+  <b>3e_C2.1</b>.</p>
+  <p id="qcmPortee" class="meta">Tu n'as encore validé aucune activité&nbsp;: le bouton t'emmène sur
+  le parcours complet. Dès que tu auras validé une activité, il te proposera d'abord les questions
+  qui portent sur <b>ce que tu as fait</b>.</p>
+  <p style="text-align:center"><a class="btn qcm" id="lienQcm" href="qcm_3e_C2_pekin_borne.html"
+     title="Ouvre le QCM d'entraînement dans la même fenêtre. Tes réponses y sont enregistrées séparément de celles de la séquence.">🚇 Lancer le QCM de la séquence</a></p>
+  <p class="meta">Dans le QCM, tu peux à tout moment choisir&nbsp;: <b>parcours complet</b> (les 30),
+  <b>10 questions</b>, <b>révision ciblée</b>, ou <b>uniquement mes erreurs</b>. Rien ne t'est
+  interdit&nbsp;: on te propose seulement de commencer par là où tu en es.</p>
+</section>
+
+<section class="card approfondissement">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>1.</b> Prends un objet du collège que tout le monde utilise — le portail, la sonnerie, le
+  distributeur, le tableau d'affichage. Observe <b>dix personnes</b> et note qui réussit du premier
+  coup et qui non. Y a-t-il un profil qui échoue plus que les autres&nbsp;?</p>
+  <p><b>2.</b> Choisis <b>un</b> destinataire réel — le principal, l'agent d'entretien, un
+  camarade de 6e — et produis pour lui une représentation de ce que tu as observé.</p>
+  <p><b>3.</b> Montre-la à cette personne, sans rien expliquer. Regarde combien de temps elle met à
+  comprendre, et ce qu'elle te demande ensuite. Ce qu'elle demande est ce que tu avais oublié.</p>
+
+  <details class="correction"><summary>📖 Corrigé du Bonus — un exemple entièrement traité</summary>
+    <p>L'objet pris ici&nbsp;: le <b>portail d'entrée à badge</b>. Ton objet sera différent&nbsp;;
+    c'est la <b>démarche</b> qui doit se ressembler.</p>
+    <p><b>1. Dix personnes observées</b> (réussite du premier coup)&nbsp;:</p>
+    <ul>
+      <li>4 élèves de 3e&nbsp;: <b>4 réussites</b> — badge sorti avant d'arriver, geste automatique&nbsp;;</li>
+      <li>3 élèves de 6e&nbsp;: <b>1 réussite</b> — les deux autres présentent le badge à plat,
+      alors que le lecteur est vertical&nbsp;;</li>
+      <li>2 adultes visiteurs&nbsp;: <b>0 réussite</b> — ils cherchent une sonnette&nbsp;;</li>
+      <li>1 agent avec un chariot&nbsp;: <b>0 réussite</b> — il n'a pas de main libre.</li>
+    </ul>
+    <p><b>Le profil qui échoue</b>&nbsp;: ceux qui viennent <b>rarement</b>, et ceux qui ont
+    <b>les mains prises</b>. Exactement comme à Pékin&nbsp;: <b>les habitués ne rencontrent aucun
+    problème</b>, et c'est pour ça que le problème reste invisible — ceux qui décident sont
+    presque toujours des habitués.</p>
+    <p><b>2. Le destinataire retenu&nbsp;: un camarade de 6e</b>, parce que c'est lui qui échoue le
+    plus et lui qui peut changer son geste tout de suite.</p>
+    <p><b>Le mode&nbsp;: un storyboard de deux vignettes</b>, affiché près du portail. Vignette 1&nbsp;:
+    une main tenant le badge <b>à la verticale</b>, face au lecteur, avec une coche verte.
+    Vignette 2&nbsp;: le même badge <b>à plat</b>, avec une croix rouge. Aucun texte.</p>
+    <p><i>Ce que j'ai laissé de côté</i>&nbsp;: les chiffres (un 6e ne veut pas savoir que 2 sur 3
+    échouent), et le cas de l'agent au chariot — il ne relève pas du même remède, il faudrait un
+    bouton d'ouverture au coude.</p>
+    <p><b>3. Le test auprès d'un vrai 6e.</b> Il a compris en <b>deux secondes</b> — puis il a
+    demandé&nbsp;: «&nbsp;et si ça marche pas quand même&nbsp;?&nbsp;»</p>
+    <p><b>C'est ce qu'on avait oublié</b>&nbsp;: le cas d'échec. Exactement la branche
+    «&nbsp;non&nbsp;» d'un test, celle que l'activité 3 t'a appris à ne jamais laisser vide. Il
+    faudrait donc une troisième vignette&nbsp;: <i>si la lumière reste rouge, va à l'accueil</i>.</p>
+    <p class="meta">Ce troisième défi est le plus instructif du lot, et il ne coûte que deux
+    minutes&nbsp;: <b>ce que le destinataire demande après avoir regardé est précisément ce que ta
+    représentation ne disait pas.</b> Aucune relecture personnelle ne remplace ce test-là.</p>
+  </details>
+</section>
+</div>
+</main>
+<footer class="page">
+  <p>Séquence 3e_C2.1 — Thème 1 · Technologie cycle 4 (2024).
+  Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
+</footer>
+<script>
+"use strict";
+const KEY="seq_3e_C2_pekin";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"peut ne décrire personne : elle décrit un milieu, pas une personne réelle",
+               be_2:"a toujours deux sorties, et la sortie « non » doit mener quelque part",
+               be_3:"dit ce qu'il faut obtenir, se vérifie, et nomme l'attente à laquelle elle répond"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🎫 Tes outils de 4e sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+  1: function(){
+    const att={a1_1:"exact, et pourtant insuffisant pour décider quoi que ce soit",
+               a1_2:"la moyenne décrit une personne qui n'existe pas",
+               a1_3:"montre que la borne est utilisable — mais seulement quand on la connaît déjà",
+               a1_4:"est vraie, et à côté de la question : on ne lui parle pas de pannes mais d'usages"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_lecture"); const bas = t.toLowerCase();
+    const lignes = t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+    /* les cinq profils doivent être nommés, et cinq taux donnés */
+    const profils = [/habitu/, /occasionnel/, /touriste/, /[âa]g/, /poussette/]
+                      .filter(r=>r.test(bas)).length;
+    const taux = (t.match(/\d+\s*%/g)||[]).length;
+    /* la phrase doit nommer les deux extrêmes : ceux qui n'abandonnent jamais, et les autres */
+    /* Attention aux pourcentages : sans garde, « 0 % » se retrouve dans « 30 % » et
+       « 40 % », et une lecture fausse passait pour juste. Le chiffre doit être isolé. */
+    const zero = /aucun|z[ée]ro|(?:^|[^0-9])0\s*%/.test(bas);
+    const haut = /moiti[ée]|(?:^|[^0-9])(?:43|50)\s*%/.test(bas);
+    const extremes = zero && haut;
+    const complet = lignes >= 6 && profils === 5 && taux >= 5 && extremes;
+    return {score:ok,total:4,valide: ok>=3 && complet,
+      extra: complet ? "" : " Il faut les CINQ profils avec leur taux en %, une ligne chacun, puis une phrase qui nomme à la fois ceux qui n'abandonnent JAMAIS et ceux qui abandonnent le plus."};
+  },
+  2: function(){
+    /* Le vocabulaire d'abord : on ne choisit pas parmi des mots qu'on ne connaît pas.
+       Ces six appariements comptent dans le score, mais ils ne sont pas le cœur de
+       l'activité — c'est pourquoi le seuil de validation porte sur l'ensemble. */
+    const voc={a2_v1:"un storyboard", a2_v2:"une carte d'empathie", a2_v3:"un algorigramme",
+               a2_v4:"un parcours utilisateur", a2_v5:"un tableau comparatif", a2_v6:"un graphique"};
+    let okVoc=0; Object.entries(voc).forEach(([id,v])=>{ if(val(id)===v) okVoc++; });
+    const att={a2_1:"à écarter : il se lit lentement, et l'usager a trois secondes",
+               a2_2:"à écarter : il est illisible pour qui n'a pas appris ses formes",
+               a2_3:"insuffisante seule : elle ne donne pas la logique exacte dont il a besoin",
+               a2_4:"oui, mais il faudra sans doute le simplifier pour l'un des deux",
+               a2_5:"montrer que son angle mort ne gêne pas ce destinataire-là",
+               a2_6:"faible : elle vaudrait pour n'importe quel destinataire, donc elle n'en désigne aucun"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    ok += okVoc;
+    const t = val("a2_appar"); const bas = t.toLowerCase();
+    const lignes = t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+    /* les trois destinataires doivent être nommés */
+    const dest = [/technicien|maintenance/, /[ée]lue?\b|budget|mairie/, /usager|voyageur|passager/]
+                   .filter(r=>r.test(bas)).length;
+    /* un mode par ligne, pris dans les six proposés */
+    const modes = [/parcours/, /algorigramme|algorithme/, /graphique/, /empathie/,
+                   /storyboard/, /tableau comparatif|tableau/].filter(r=>r.test(bas)).length;
+    /* la justification doit passer par l'angle mort : c'est tout l'enjeu de l'activité */
+    const angle = /angle mort|ne (?:le|la) g[êe]ne pas|sans cons[ée]quence|peu importe|pas grave/.test(bas);
+    const complet = lignes >= 3 && dest === 3 && modes >= 3 && angle && t.trim().length >= 220;
+    let manque = "";
+    if(okVoc < 5) manque = " Commence par la partie a) : les six mots doivent être reliés à ce qu'ils désignent. On ne choisit pas parmi des mots qu'on ne connaît pas.";
+    else if(!complet) manque = " Il faut TROIS lignes, une par destinataire (technicien, élue, usager), chacune avec un mode ET son ANGLE MORT — c'est l'angle mort qui justifie, pas le point fort.";
+    return {score:ok,total:12,valide: okVoc>=5 && ok>=10 && complet, extra: manque};
+  },
+  3: function(){
+    const att={a3_1:"parce que le défaut est dans l'ordre des opérations, que lui seul représente",
+               a3_2:"tester le papier AVANT d'encaisser, et refuser le paiement s'il en manque",
+               a3_3:"se déclarer indisponible et alerter la maintenance",
+               a3_4:"la croyance que sa pièce est refusée par erreur, donc il recommence"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_algo"); const bas = t.toLowerCase();
+    const deuxTests = (bas.match(/test/g)||[]).length >= 2 || (bas.match(/\?/g)||[]).length >= 2;
+    const papier = /papier|rouleau|8\s*%/.test(bas);
+    const echec = /[ée]chec|indisponible|alerter|maintenance/.test(bas);
+    const reussite = /r[ée]ussite|imprimer|titre/.test(bas);
+    /* le test du papier doit précéder l'encaissement : on compare les positions */
+    const iPapier = Math.min(...["papier","rouleau"].map(m=>{const k=bas.indexOf(m);return k<0?1e9:k;}));
+    const iPaie = Math.min(...["encaisse","paiement","payer"].map(m=>{const k=bas.indexOf(m);return k<0?1e9:k;}));
+    const ordre = iPapier < iPaie;
+    const complet = deuxTests && papier && echec && reussite && ordre && t.trim().length >= 160;
+    let manque = "";
+    if(!complet){
+      manque = " Ton algorigramme doit contenir DEUX tests, le test du papier AVANT l'encaissement, une fin en RÉUSSITE et une fin en ÉCHEC qui alerte la maintenance.";
+      if(deuxTests && papier && echec && reussite && !ordre)
+        manque = " Tout y est, sauf l'essentiel : le test du papier doit venir AVANT l'encaissement. C'est l'ordre qui corrige la panne, pas les cases.";
+    }
+    return {score:ok,total:4,valide: ok>=3 && complet, extra: manque};
+  },
+  4: function(){
+    const att={a4_1:"ton destinataire peut agir après l'avoir vue, dans le temps dont il dispose",
+               a4_2:"tenir en une page, sans jargon, et donner un ordre de grandeur",
+               a4_3:"être compris en trois secondes, sans qu'il ait à s'arrêter",
+               a4_4:"le destinataire, le mode retenu, et ce que tu as volontairement laissé de côté"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a4_prod"); const bas = t.toLowerCase();
+    const dest = /[ée]lue?\b|budget|mairie|usager|voyageur|passager|technicien/.test(bas);
+    const mode = /parcours|algorigramme|algorithme|graphique|empathie|storyboard|tableau/.test(bas);
+    /* le troisième point est le plus important, et le plus souvent oublié */
+    const ecarte = /laiss[ée]|[ée]cart|pas montr|sans montrer|je n'ai pas mis|omis|renonc/.test(bas);
+    const complet = dest && mode && ecarte && t.trim().length >= 200;
+    let manque = "";
+    if(!complet){
+      manque = " Ta défense doit dire POUR QUI, QUEL MODE et pourquoi, et CE QUE TU AS LAISSÉ DE CÔTÉ.";
+      if(dest && mode && !ecarte)
+        manque = " Il manque le troisième point, et c'est le plus important : qu'as-tu volontairement laissé de côté ? Une représentation qui ne cache rien n'a rien choisi.";
+    }
+    return {score:ok,total:4,valide: ok>=3 && complet, extra: manque};
+  }
+};
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle contient le corrigé complet, à comparer au tien."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2,3], s3:[4]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches(); majQcm();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Derrière le chiffre", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses outils de 4e (sans note)"},
+    {n:1, libelle:"Calculer le taux d'abandon par profil, et dire ce que le global cachait"}]},
+  s2:{titre:"Séance 2 — Six modes, trois destinataires", taches:[
+    {n:2, libelle:"Apparier trois modes à trois destinataires, angle mort à l'appui"},
+    {n:3, libelle:"Produire l'algorigramme corrigé de l'achat (geste DNB)"}]},
+  s3:{titre:"Séance 3 — Produire et défendre", taches:[
+    {n:4, libelle:"Réaliser une représentation au choix, et la défendre en trois points"}]}
+};
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°45 — l'entraînement s'ouvre sur ce qui a été fait ══════ */
+/* Un seul bouton QCM (règle n°4). Cette séquence ne porte qu'UN code : on ne peut
+   pas filtrer par compétence comme en 4e. Ce qui varie ici, c'est le MOMENT : tant
+   que rien n'est validé, le QCM complet serait prématuré — on propose alors le mode
+   court (10 questions), qui existe déjà dans le gabarit. */
+function majQcm(){
+  const lien=$("lienQcm"), portee=$("qcmPortee");
+  if(!lien || !portee) return;
+  const v=window.__valid||{};
+  const faites=[1,2,3,4].filter(k=>v[k]).length;
+  if(faites===0){
+    lien.href="qcm_3e_C2_pekin_borne.html#depart=court";
+    lien.textContent="🚇 Commencer par 10 questions";
+    portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un "+
+      "<b>parcours court de 10 questions</b>, pour te tester sans être submergé·e. "+
+      "Les 30 restent accessibles d'un clic dans le QCM.";
+  } else if(faites < 4){
+    lien.href="qcm_3e_C2_pekin_borne.html#depart=court";
+    lien.textContent="🚇 M'entraîner (10 questions pour commencer)";
+    portee.innerHTML="Tu as validé <b>"+faites+" activité(s) sur 4</b>. Le bouton ouvre un "+
+      "parcours court&nbsp;; passe au parcours complet quand tu auras terminé la séquence.";
+  } else {
+    lien.href="qcm_3e_C2_pekin_borne.html";
+    lien.textContent="🚇 Lancer le QCM complet (30 questions)";
+    portee.innerHTML="Tu as terminé les quatre activités&nbsp;: <b>le parcours complet est "+
+      "maintenant à ta portée</b>.";
+  }
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>
