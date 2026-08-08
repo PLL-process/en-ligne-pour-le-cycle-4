@@ -2353,3 +2353,79 @@ SÉQUENCE MUTUALISÉE** (C3.2, C3.3, C3.4). Le dépôt compte **21 codes complet
 41 « à créer » au lieu de 44.
 
 Vérificateur&nbsp;: **7 règles sur 7**. Tests&nbsp;: **27 sur 27**.
+
+---
+
+## 08/08/2026 — Lot Hangzhou 4e_C3 : écrire les critères au lieu de les recevoir
+
+### Le plan a servi à quelque chose
+
+Ce lot a été précédé d'un `PLAN_LOT_HANGZHOU.md` écrit et commité **avant** la première ligne de
+contenu, avec un avertissement en toutes lettres&nbsp;: *ne pas refaire Shanghai avec d'autres
+véhicules*.
+
+La marche à monter est précise&nbsp;: en 5e, le cahier des charges et le protocole sont
+**fournis**, l'élève applique. En 4e, l'élève **écrit** les caractéristiques et **choisit** les
+instruments. Un lot 4e qui comparerait des vélos sur des critères donnés ne couvrirait rien de
+nouveau.
+
+C'est la même vigilance qui avait sauvé le lot 3e_C6.2 ce matin, quand la relecture de la séquence
+voisine avait révélé que le scénario prévu était déjà traité. *Écrire le piège avant de commencer
+coûte dix minutes et évite de refaire un lot.*
+
+### Le dispositif qui force la compétence
+
+La situation déclenchante ne donne **aucun critère**&nbsp;: le maire a laissé une phrase — «&nbsp;qu'ils
+durent, qu'ils ne coûtent pas un bras, qu'on puisse les réparer, et qu'on ne les retrouve pas au
+fond du canal&nbsp;» — un relevé de pannes et un budget. Il n'y a rien à appliquer&nbsp;: il faut
+construire.
+
+Le vérificateur de l'activité 1 exige d'ailleurs un cahier des charges **contenant au moins quatre
+chiffres**&nbsp;: on ne valide pas sur des adjectifs.
+
+### Le tableau est construit pour que le classement se déplace
+
+Quatre flottes, dix-sept colonnes. Sur le seul CO₂ de fabrication, F4 gagne largement (58 contre
+210&nbsp;kg éq. pour F3). Rapporté au kilomètre offert sur toute la durée de vie, l'ordre se
+confirme mais les **écarts changent de nature**&nbsp;: F3 n'est plus «&nbsp;3,6 fois pire&nbsp;»
+mais «&nbsp;2,3 fois&nbsp;», et F1 se rapproche beaucoup de F4 alors qu'elle émet 1,7 fois plus à
+la fabrication.
+
+Et F3, la plus agréable à l'usage, celle qui roule le plus (3600&nbsp;km/an), termine
+**dernière** — parce qu'elle cumule une empreinte lourde et une vie courte. C'est le moment où une
+intuition d'usage cède devant un calcul, et il mérite d'être joué à voix haute en classe.
+
+### Une nuance rare, posée explicitement
+
+La séquence écrit qu'un **bilan carbone est un ordre de grandeur, pas une valeur exacte**&nbsp;:
+deux méthodes de calcul donnent des résultats différents. On peut affirmer un écart net entre deux
+solutions&nbsp;; on ne peut pas affirmer un gramme.
+
+Les élèves ne rencontrent presque jamais cette nuance, et elle vaut pour toutes les données
+environnementales qu'ils liront ailleurs. C'est la règle n°27 appliquée à un domaine où elle
+manquait.
+
+### Un test écrit pour un autre lot a servi ici
+
+Quatre réfutations de distracteurs étaient trop courtes — «&nbsp;Aucun rapport.&nbsp;», «&nbsp;Une
+seule suffit.&nbsp;» Le contrôle qui exige plus de vingt caractères par réfutation, écrit pour le
+lot précédent, les a rejetées. Il avait raison&nbsp;: une réfutation de trois mots n'enseigne rien.
+
+*Un contrôle utile survit à son lot d'origine.* C'est un argument de plus pour livrer les suites de
+tests avec les lots plutôt que de les décrire dans un rapport.
+
+### Une confusion de fichiers, nommée plutôt que subie
+
+`donnees_velos_hangzhou_simulees.csv` existait déjà dans le dépôt, sous 5e_C1.3, produit pour un
+autre usage&nbsp;: ses colonnes ne portent ni durée de vie, ni matière recyclée, ni bilan carbone.
+J'ai donc produit `donnees_flottes_velos_hangzhou_simulees.csv`, distinct — et je l'ai **écrit dans
+SOURCES_MEDIAS**, pour qu'on ne croie pas à un doublon dans six mois.
+
+### Le bilan
+
+Trois codes quittent «&nbsp;À CRÉER&nbsp;». Le dépôt compte **22 codes complets** et **38 à
+créer** (contre 44 ce matin). Le C3 est couvert en 5e et en 4e&nbsp;; restent les quatre codes de
+3e, qui demanderont de **définir** un protocole et non plus seulement de choisir l'instrument.
+
+Vérificateur&nbsp;: **7 sur 7**. Tests du lot&nbsp;: **28 sur 28**. Contrôles de l'index&nbsp;:
+**20 sur 20**.

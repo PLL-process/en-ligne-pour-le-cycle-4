@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 4e — Hangzhou : écrire les caractéristiques d'un besoin, comparer des incidences environnementales et choisir les appareils de mesure. Codes 4e_C3.1 à 4e_C3.3, programme 2024.">
+<title>Thème 1 · 4e — Hangzhou : quelle flotte de vélos pour la ville ? (4e_C3.1 à C3.3)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip" href="#seances" style="position:absolute;left:-9999px">Aller directement aux activités</a>
+<div class="page">
+<h1>🚲 Hangzhou — quelle flotte de vélos pour la ville&nbsp;?</h1>
+<p class="sous">Écrire les critères, comparer les incidences, choisir les instruments.</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C3.1</span><span class="badge code">4e_C3.2</span>
+  <span class="badge code">4e_C3.3</span>
+  <span class="badge theme">D1.3 · D2 · D3 · D4 · D5 · CRCN 1.3 niv. 2</span>
+  <span class="badge theme">4 séances de 55 min</span>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnPrint">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;: rien
+n'est envoyé. Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments.</p>
+
+<section class="card">
+  <h2>🚲 La situation&nbsp;: une phrase, un budget, et rien d'autre</h2>
+  <p>La ville de Hangzhou renouvelle sa flotte de vélos en libre-service. Le service technique a
+  reçu quatre propositions, un relevé de pannes, et <b>une phrase du maire</b>&nbsp;:</p>
+  <p style="color:var(--warn);font-size:1.05em">«&nbsp;Qu'ils durent, qu'ils ne coûtent pas un bras,
+  qu'on puisse les réparer, et qu'on ne les retrouve pas au fond du canal.&nbsp;»</p>
+  <p>Personne n'a écrit de cahier des charges. C'est ce qui manque, et c'est votre travail.</p>
+  <p class="meta">🪜 <b>Ce qui change depuis la 5e.</b> L'an dernier, les critères de choix vous
+  étaient <b>fournis</b>, et le protocole de mesure aussi. Cette année, vous <b>écrivez</b> les
+  caractéristiques et vous <b>choisissez</b> les instruments. C'est toute la différence entre
+  appliquer et concevoir.</p>
+  <p class="meta">⚠️ <b>Toutes les données de cette séquence sont simulées</b>, construites pour
+  l'exercice. Elles sont réalistes et cohérentes entre elles, mais elles ne décrivent aucune flotte
+  réellement commercialisée.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Comment transformer un besoin exprimé en mots en
+  caractéristiques mesurables, puis comparer des solutions sur leurs incidences — et pas seulement
+  sur leur prix&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">À ton avis, quelle flotte la ville va-t-elle retenir, et sur quel critère&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : quelle flotte et sur quel critère"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Je pense qu'ils choisiront ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Le critère qui me paraît décisif est ____.&nbsp;»</li>
+    <li>«&nbsp;Ce dont je ne suis pas sûr·e, c'est ____.&nbsp;»</li></ul></details>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>4e_C3.1</code> à
+  <code>4e_C3.3</code> sont des codes de classement <b>internes à ce dépôt</b>, construits à partir
+  des repères de progressivité du programme. Ils ne figurent pas comme tels au BO.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>4e_C3.1</b></td><td>Identifier les caractéristiques à prendre en compte dans le choix
+      d'un objet ou système technique, en vue de répondre à un besoin.</td><td>Séance 1</td></tr>
+    <tr><td><b>4e_C3.2</b></td><td>Comparer qualitativement et/ou quantitativement plusieurs
+      solutions, y compris leurs incidences environnementales et leur bilan carbone.</td><td>Séance 2</td></tr>
+    <tr><td><b>4e_C3.3</b></td><td>Choisir les appareils de mesure à utiliser pour mesurer une
+      performance à partir d'un protocole.</td><td>Séance 3</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 langages scientifiques et techniques · D2 méthodes et outils · D3 formation
+  de la personne et du citoyen (choix collectif, argumentation) · D4 systèmes techniques ·
+  D5 représentations du monde.</p>
+  <p><b>CRCN réellement travaillé</b> — <b>1.3 Traiter des données</b>, niveau 2. En 5e, l'élève
+  remplissait une colonne d'indicateur fournie. Ici, il <b>construit lui-même</b> la formule de
+  comparaison à partir des caractéristiques qu'il a retenues, et doit pouvoir dire ce qu'elle
+  privilégie. La trace est le classeur, formules visibles.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 5 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Écrire les critères<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Comparer les incidences<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Choisir l'instrument<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Décider<span class="done" id="done-s4"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils de 5e (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu as travaillé l'an dernier. <b>Aucune note</b>&nbsp;: c'est un
+  aiguillage. La capsule en dessous te remet en selle en trois minutes si besoin.</p>
+  <div class="assoc"><label for="be_1">Un <b>cahier des charges</b>, c'est&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>le besoin transformé en exigences vérifiables</option>
+      <option>la liste des pièces d'un objet technique</option>
+      <option>le prix de vente du produit</option>
+      <option>le mode d'emploi remis à l'utilisateur</option></select></div>
+  <div class="assoc"><label for="be_2">Sur un objet qui dure des années, l'étape du cycle de vie qui pèse le plus est&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>l'utilisation, parce qu'elle dure et se répète</option>
+      <option>la fabrication, parce qu'elle demande des machines</option>
+      <option>la distribution</option><option>la fin de vie</option></select></div>
+  <div class="assoc"><label for="be_3">Une exigence du cahier des charges qui n'est pas satisfaite&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>écarte la solution : les exigences ne se compensent pas</option>
+      <option>se rattrape si la solution est excellente ailleurs</option>
+      <option>se rattrape si la solution est moins chère</option>
+      <option>n'a pas d'importance si les autres passent</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Un <b>cahier des charges</b> transforme un besoin en <b>exigences vérifiables</b>&nbsp;: une
+    grandeur, une unité, un seuil. Tant qu'il n'est pas écrit, «&nbsp;la meilleure solution&nbsp;»
+    ne veut rien dire.</p>
+    <p>Sur un objet qui dure, c'est l'<b>utilisation</b> qui pèse le plus&nbsp;: un petit écart
+    quotidien multiplié par des années dépasse un coût unique, même élevé.</p>
+    <p>Une exigence est <b>remplie ou non</b>&nbsp;: elle ne se moyenne pas avec les autres.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>✍️ Activité 1 — Du besoin flou aux caractéristiques mesurables <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> identifier les caractéristiques à prendre en compte ·
+  <b>Compétence</b> 4e_C3.1 · <b>Production</b> quatre caractéristiques avec grandeur, unité et
+  seuil · <b>Ressource</b> la phrase du maire et la planche ci-dessous</div>
+
+  <figure class="fig">
+    <img src="Images/du_besoin_aux_caracteristiques.svg" alt="Trois colonnes reliées par des flèches : ce que dit le commanditaire en langage ordinaire (qu'ils durent, pas un bras, qu'on puisse les réparer, pas au fond du canal), la caractéristique technique correspondante (durée de vie, coût rapporté à la durée de vie, disponibilité des pièces et temps de réparation, résistance au vol), et ce qui la rend vérifiable : une grandeur, une unité et un seuil.">
+    <figcaption>📷 Document à lire pour répondre</figcaption>
+  </figure>
+
+  <h4>a) Traduire chaque mot du maire</h4>
+  <div class="assoc"><label for="a1_1">«&nbsp;Qu'ils durent&nbsp;» devient la caractéristique&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>la durée de vie estimée, en années, avec un seuil minimal</option>
+      <option>la solidité, sans autre précision</option>
+      <option>la qualité générale du vélo</option>
+      <option>la satisfaction des usagers</option></select></div>
+  <div class="assoc"><label for="a1_2">«&nbsp;Qu'ils ne coûtent pas un bras&nbsp;» se mesure le mieux par&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>le coût total ramené à la durée de vie, en euros par vélo et par an</option>
+      <option>le prix d'achat seul</option>
+      <option>le coût d'entretien seul</option>
+      <option>le prix du vélo le moins cher du marché</option></select></div>
+  <div class="assoc"><label for="a1_3">«&nbsp;Qu'on puisse les réparer&nbsp;» demande <b>deux</b> caractéristiques&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>la disponibilité des pièces détachées, et le temps de réparation</option>
+      <option>le prix des pièces, et la couleur du cadre</option>
+      <option>la masse, et le confort</option>
+      <option>le nombre de vélos de la flotte, et leur âge</option></select></div>
+  <div class="assoc"><label for="a1_4">Qu'est-ce qui manque à «&nbsp;le vélo doit être solide&nbsp;» pour être vérifiable&nbsp;?</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>une grandeur, une unité et un seuil</option>
+      <option>un adjectif plus précis</option>
+      <option>l'avis des usagers</option>
+      <option>rien : la phrase suffit</option></select></div>
+
+  <h4>b) Un critère peut en cacher un autre</h4>
+  <div class="assoc"><label for="a1_5">Le maire n'a rien dit du confort. Faut-il l'ajouter au cahier des charges&nbsp;?</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>oui, si l'on justifie : un vélo inconfortable est moins utilisé, donc moins rentable par kilomètre</option>
+      <option>non : on ne met que ce que le commanditaire a demandé</option>
+      <option>oui, sans avoir à le justifier</option>
+      <option>non : le confort ne se mesure pas</option></select></div>
+  <div class="assoc"><label for="a1_6">Un cahier des charges qui contient quinze exigences&nbsp;:</label>
+    <select id="a1_6"><option value="">— choisir —</option>
+      <option>risque de n'être satisfait par aucune solution : il faut distinguer l'indispensable du souhaitable</option>
+      <option>est forcément meilleur qu'un cahier de quatre exigences</option>
+      <option>est invalide : le maximum est de dix</option>
+      <option>ne change rien au résultat</option></select></div>
+
+  <h4>c) Ton cahier des charges</h4>
+  <div class="assoc">
+    <label for="a1_cdc">Écris <b>quatre exigences</b> pour la ville. Chacune doit porter une grandeur, une unité et un seuil chiffré.</label>
+    <textarea id="a1_cdc" style="min-height:110px" aria-label="Ton cahier des charges : quatre exigences avec grandeur, unité et seuil"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence. Chaque ligne doit contenir un nombre et une unité.</p>
+    <ul>
+      <li>«&nbsp;Exigence 1&nbsp;: la durée de vie doit être d'au moins ____ ans.&nbsp;»</li>
+      <li>«&nbsp;Exigence 2&nbsp;: le coût total doit rester sous ____ € par vélo et par an.&nbsp;»</li>
+      <li>«&nbsp;Exigence 3&nbsp;: les pièces détachées doivent être ____, et le temps de réparation inférieur à ____ min.&nbsp;»</li>
+      <li>«&nbsp;Exigence 4&nbsp;: la note d'antivol doit être d'au moins ____ sur 5.&nbsp;»</li>
+    </ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Pour chaque mot du maire, pose-toi trois questions dans l'ordre&nbsp;: <b>quelle grandeur</b>
+    j'observe&nbsp;? <b>dans quelle unité</b>&nbsp;? <b>à partir de quelle valeur</b> est-ce
+    satisfaisant&nbsp;?</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>«&nbsp;Pas un bras&nbsp;» est le plus difficile, parce qu'il cache un piège&nbsp;: le vélo le
+    moins cher à l'achat peut être le plus cher à l'usage. Regarde les colonnes
+    <code>prix_achat_euros</code>, <code>cout_entretien_annuel_euros</code> et
+    <code>duree_vie_estimee_ans</code> — et fabrique une grandeur qui les combine.</p></details>
+
+  <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Une caractéristique n'est utilisable que si elle porte <b>une grandeur, une unité et un
+    seuil</b>. «&nbsp;Solide&nbsp;» n'est pas une caractéristique&nbsp;: c'est une impression.</p>
+    <p>«&nbsp;Pas un bras&nbsp;» ne se traduit pas par le prix d'achat. Le coût qui compte est le
+    <b>coût total ramené à la durée de vie</b>&nbsp;: un vélo à 890&nbsp;€ qui dure 6 ans revient
+    plus cher qu'un vélo à 340&nbsp;€ qui en dure 12, avant même de compter l'entretien.</p>
+    <p>«&nbsp;Qu'on puisse les réparer&nbsp;» cache bien <b>deux</b> caractéristiques&nbsp;: on peut
+    avoir les pièces sans pouvoir intervenir vite, et l'inverse.</p>
+    <p>Le confort peut être ajouté — à condition de le <b>justifier</b>&nbsp;: un vélo qu'on n'aime
+    pas utiliser fait moins de kilomètres, donc amortit moins bien sa fabrication. C'est exactement
+    le travail de la 4e&nbsp;: proposer un critère que personne n'a demandé, et défendre son
+    utilité.</p>
+    <p>Enfin, quinze exigences donnent souvent zéro solution. On distingue l'<b>indispensable</b>
+    (le filtre) du <b>souhaitable</b> (qui départage ensuite).</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une caractéristique se dit avec une grandeur, une
+  unité et un seuil. Sans les trois, elle ne se vérifie pas — elle se discute.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: traduire «&nbsp;pas cher&nbsp;» par le prix
+  d'achat. Le prix d'achat ne dit rien de ce que l'objet coûtera.</p>
+  <p><b>Critère de réussite</b>&nbsp;: tes quatre exigences portent chacune un nombre et une unité,
+  et tu sais dire d'où vient chacune dans la phrase du maire.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>🌍 Activité 2 — Comparer les incidences, pas seulement les prix <span style="color:var(--sub);font-size:.8em">(~35 min)</span></h2>
+  <div class="meta"><b>Objectif</b> comparer qualitativement et quantitativement, incidences
+  environnementales comprises · <b>Compétence</b> 4e_C3.2 · <b>Production</b> un classement calculé
+  et une analyse · <b>Ressource</b>
+  <a href="donnees_flottes_velos_hangzhou_simulees.csv">le fichier des quatre flottes</a></div>
+
+  <p>Ouvre le fichier dans un tableur. Quatre flottes, dix-sept colonnes.</p>
+
+  <h4>a) Le classement naïf</h4>
+  <div class="assoc"><label for="a2_1">Classée sur le seul <b>CO₂ de fabrication</b>, la meilleure flotte est&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>F4, acier recyclé (58 kg éq.)</option><option>F1, acier robuste (96 kg éq.)</option>
+      <option>F2, aluminium (134 kg éq.)</option><option>F3, composite (210 kg éq.)</option></select></div>
+  <div class="assoc"><label for="a2_2">Pourquoi ce classement seul ne suffit-il pas&nbsp;?</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>parce qu'il ignore la durée de vie et les kilomètres parcourus : un vélo qui émet peu mais sert peu n'est pas forcément meilleur</option>
+      <option>parce que le CO₂ ne se mesure pas</option>
+      <option>parce que les données sont simulées</option>
+      <option>parce qu'il faut toujours quatre critères</option></select></div>
+
+  <h4>b) Rapporter au service rendu</h4>
+  <p>Calcule au tableur, pour chaque flotte&nbsp;: <code>(CO₂ fabrication + CO₂ entretien × durée
+  de vie) ÷ (durée de vie × km par an)</code>, en grammes par kilomètre.</p>
+  <div class="assoc"><label for="a2_3">Quelle flotte obtient le meilleur résultat (le plus faible)&nbsp;?</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>F4, à environ 5,6 g/km</option><option>F1, à environ 6,3 g/km</option>
+      <option>F2, à environ 8,3 g/km</option><option>F3, à environ 13,1 g/km</option></select></div>
+  <div class="assoc"><label for="a2_4">Et la moins bonne&nbsp;?</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>F3, le composite premium</option><option>F1</option>
+      <option>F2</option><option>F4</option></select></div>
+  <div class="assoc"><label for="a2_5">F3 parcourt pourtant le plus de kilomètres par an (3600). Pourquoi termine-t-elle dernière&nbsp;?</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>parce qu'elle émet beaucoup à la fabrication ET dure le moins longtemps : son coût est amorti sur trop peu de kilomètres</option>
+      <option>parce qu'elle est trop confortable</option>
+      <option>parce que le carbone n'est pas recyclable</option>
+      <option>parce qu'elle est la plus légère</option></select></div>
+
+  <h4>c) Qualitatif et quantitatif</h4>
+  <div class="assoc"><label for="a2_6">«&nbsp;Cadre non réparable après un choc&nbsp;» est une donnée&nbsp;:</label>
+    <select id="a2_6"><option value="">— choisir —</option>
+      <option>qualitative, mais décisive : elle ne se chiffre pas et pourtant elle écarte une solution</option>
+      <option>quantitative, puisqu'elle concerne le cadre</option>
+      <option>sans importance face aux chiffres</option>
+      <option>impossible à prendre en compte</option></select></div>
+  <div class="assoc">
+    <label for="a2_ana">Explique en trois phrases pourquoi un classement sur un seul critère est trompeur, en t'appuyant sur deux chiffres du tableau.</label>
+    <textarea id="a2_ana" aria-label="Analyse : pourquoi un classement sur un seul critère est trompeur"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Sur le seul critère ____, la flotte ____ arrive en tête.&nbsp;»</li>
+    <li>«&nbsp;Mais si on rapporte au service rendu, elle passe ____, parce que ____ (chiffre&nbsp;: ____).&nbsp;»</li>
+    <li>«&nbsp;Un seul critère est donc trompeur, parce qu'il ____.&nbsp;»</li></ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Un bilan carbone n'a de sens que <b>rapporté à ce que l'objet rend comme service</b>. Ici, le
+    service est le kilomètre parcouru par un usager.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>Écris la formule une fois, puis recopie-la vers le bas. Attention aux unités&nbsp;: les CO₂
+    sont en kilogrammes, le résultat demandé en grammes — il faut multiplier par 1000.</p>
+    <p>F1&nbsp;: (96 + 7×12) ÷ (12×2400) = 180 kg pour 28 800 km ≈ 6,3 g/km.</p></details>
+
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Sur le seul CO₂ de fabrication, F4 gagne largement (58 contre 210 pour F3). Mais ce chiffre
+    seul ne dit rien&nbsp;: il ignore <b>combien de temps</b> le vélo servira et <b>combien de
+    kilomètres</b> il fera.</p>
+    <p>Rapporté au service rendu&nbsp;: F4 ≈ 5,6&nbsp;g/km, F1 ≈ 6,3, F2 ≈ 8,3, F3 ≈ 13,1. L'ordre
+    ne change pas ici — mais l'<b>écart</b>, lui, change complètement de nature&nbsp;: F3 n'est plus
+    «&nbsp;3,6 fois pire&nbsp;» que F4 sur le papier, elle l'est «&nbsp;2,3 fois&nbsp;» dans les
+    faits. Et surtout, F1 se rapproche beaucoup de F4, alors qu'elle émet 1,7 fois plus à la
+    fabrication.</p>
+    <p>F3 termine dernière malgré ses 3600 km par an parce qu'elle cumule <b>beaucoup d'émissions</b>
+    et <b>une vie courte</b>&nbsp;: son coût de fabrication est amorti sur trop peu de kilomètres.</p>
+    <p>Enfin, «&nbsp;cadre non réparable&nbsp;» ne se chiffre pas — et écarte pourtant la solution
+    à elle seule. <b>Une donnée qualitative peut être décisive.</b> Comparer, ce n'est pas
+    seulement calculer.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une incidence environnementale se rapporte toujours
+  au <b>service rendu</b>. Et une donnée qualitative peut peser plus lourd qu'un chiffre.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: classer sur un seul critère, puis annoncer le
+  résultat comme si c'était le classement général.</p>
+  <p class="meta">🔬 <b>Honnêteté scientifique</b>&nbsp;: un bilan carbone est un <b>ordre de
+  grandeur</b>, pas une valeur exacte. Deux méthodes de calcul donnent des résultats différents. Ce
+  qu'on peut affirmer, c'est un écart net entre deux solutions — jamais une valeur au gramme près.</p>
+</section>
+</div>
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>📐 Activité 3 — À chaque grandeur son appareil <span style="color:var(--sub);font-size:.8em">(~30 min)</span></h2>
+  <div class="meta"><b>Objectif</b> choisir les appareils de mesure adaptés · <b>Compétence</b>
+  4e_C3.3 · <b>Production</b> le tableau grandeur / unité / appareil complété · <b>Ressource</b>
+  la planche ci-dessous</div>
+
+  <figure class="fig">
+    <img src="Images/appareils_de_mesure.svg" alt="Tableau à quatre colonnes : la grandeur à mesurer, son unité, l'appareil qui convient et la précision courante. Masse en kilogrammes avec une balance au dixième de kilogramme ; encombrement en mètres au mètre ruban au millimètre ; temps de réparation en minutes au chronomètre à la seconde ; effort de rupture d'un antivol en newtons au dynamomètre au newton ; tension en volts au multimètre au centième de volt ; distance parcourue en kilomètres au compteur au kilomètre. Un encadré rappelle qu'un appareil ne mesure qu'une seule grandeur et qu'une mesure s'écrit toujours avec son unité.">
+    <figcaption>📷 Document à lire pour répondre</figcaption>
+  </figure>
+
+  <h4>a) Associer la grandeur et l'appareil</h4>
+  <div class="assoc"><label for="a3_1">Pour vérifier l'exigence «&nbsp;temps de réparation inférieur à 40 min&nbsp;», l'appareil est&nbsp;:</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>un chronomètre</option><option>une balance</option>
+      <option>un dynamomètre</option><option>un multimètre</option></select></div>
+  <div class="assoc"><label for="a3_2">Pour mesurer l'effort qui fait céder un antivol&nbsp;:</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>un dynamomètre, en newtons</option><option>une balance, en kilogrammes</option>
+      <option>un mètre ruban, en mètres</option><option>un chronomètre, en secondes</option></select></div>
+  <div class="assoc"><label for="a3_3">Pour comparer la masse des quatre flottes&nbsp;:</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>une balance, en kilogrammes</option><option>un dynamomètre, en newtons</option>
+      <option>un multimètre, en volts</option><option>un compteur, en kilomètres</option></select></div>
+  <div class="assoc"><label for="a3_4">Un élève propose de mesurer la solidité du cadre «&nbsp;avec un mètre ruban&nbsp;». Que lui répondre&nbsp;?</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>qu'un mètre ruban mesure une longueur, pas une résistance : il faut d'abord dire quelle grandeur représente la solidité</option>
+      <option>qu'il a raison, un cadre plus long est plus solide</option>
+      <option>que la solidité ne se mesure jamais</option>
+      <option>qu'il faut un multimètre</option></select></div>
+
+  <h4>b) La précision, et ce qu'elle change</h4>
+  <div class="assoc"><label for="a3_5">Une balance au dixième de kilogramme suffit-elle pour départager 17,4 kg et 18,9 kg&nbsp;?</label>
+    <select id="a3_5"><option value="">— choisir —</option>
+      <option>oui : l'écart de 1,5 kg est bien supérieur à la précision de l'appareil</option>
+      <option>non : il faudrait le gramme</option>
+      <option>non : une balance ne mesure pas les vélos</option>
+      <option>on ne peut pas savoir</option></select></div>
+  <div class="assoc"><label for="a3_6">Deux flottes annoncent 13,1 et 13,15 kg. Avec la même balance&nbsp;:</label>
+    <select id="a3_6"><option value="">— choisir —</option>
+      <option>on ne peut pas les départager : l'écart est plus petit que la précision de l'appareil</option>
+      <option>la première gagne</option>
+      <option>la seconde gagne</option>
+      <option>il faut refaire trois essais et la moyenne tranchera</option></select></div>
+
+  <h4>c) Ton protocole</h4>
+  <div class="assoc">
+    <label for="a3_prot">Rédige en trois ou quatre étapes le protocole qui permettrait de vérifier <b>une</b> de tes exigences de l'activité 1. Nomme l'appareil, l'unité, et ce que tu compares au seuil.</label>
+    <textarea id="a3_prot" style="min-height:110px" aria-label="Ton protocole : étapes, appareil, unité et comparaison au seuil"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai choisi de vérifier l'exigence ____.&nbsp;»</li>
+    <li>«&nbsp;Étape 1&nbsp;: je prépare ____ dans les mêmes conditions pour toutes les flottes.&nbsp;»</li>
+    <li>«&nbsp;Étape 2&nbsp;: je mesure ____ avec ____, en ____ (unité).&nbsp;»</li>
+    <li>«&nbsp;Étape 3&nbsp;: je répète ____ fois et je garde ____.&nbsp;»</li>
+    <li>«&nbsp;Étape 4&nbsp;: je compare au seuil de ____ et je conclus.&nbsp;»</li></ul></details>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Avant de choisir un appareil, demande-toi toujours <b>quelle grandeur</b> tu veux
+    mesurer&nbsp;: une masse, une longueur, une durée, une force, une tension. L'appareil vient
+    après, jamais avant.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>«&nbsp;Solide&nbsp;» n'est pas une grandeur. Pour le mesurer, il faut d'abord décider ce
+    qu'on appelle solidité&nbsp;: la force qui fait céder le cadre&nbsp;? le nombre de chocs
+    supportés&nbsp;? le temps avant la première fissure&nbsp;? Chaque décision appelle un appareil
+    différent — et c'est justement le travail demandé en 4e.</p></details>
+
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Chronomètre pour une durée, dynamomètre pour une force, balance pour une masse&nbsp;: un
+    appareil ne mesure qu'<b>une seule grandeur</b>. Se tromper d'appareil, c'est souvent s'être
+    trompé de grandeur avant.</p>
+    <p>«&nbsp;Mesurer la solidité&nbsp;» n'a pas de sens tant qu'on n'a pas dit ce qu'on appelle
+    solidité. C'est le cœur du 4e_C3.3&nbsp;: transformer une qualité en grandeur mesurable, puis
+    seulement choisir l'instrument.</p>
+    <p>Sur la <b>précision</b>&nbsp;: un appareil au dixième de kilogramme départage 17,4 et 18,9 kg
+    sans difficulté, mais il ne peut rien dire de 13,1 contre 13,15. Refaire trois essais n'y change
+    rien&nbsp;: le problème n'est pas le hasard, c'est la <b>résolution de l'appareil</b>. Il faut
+    un instrument plus fin, ou accepter que les deux soient équivalentes sur ce critère.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: on choisit la grandeur avant l'appareil. Et un écart
+  plus petit que la précision de l'appareil n'est pas un écart&nbsp;: c'est du bruit.</p>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: annoncer un résultat plus précis que l'appareil
+  ne le permet.</p>
+  <p><b>Critère de réussite</b>&nbsp;: ton protocole nomme la grandeur, l'unité, l'appareil, le
+  nombre d'essais, et compare explicitement au seuil.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<section class="card">
+  <h2>🧭 Activité 4 — Filtrer, puis départager <span style="color:var(--sub);font-size:.8em">(~25 min)</span></h2>
+  <div class="meta"><b>Objectif</b> appliquer son propre cahier des charges · <b>Compétences</b>
+  4e_C3.1 et 4e_C3.2 · <b>CRCN 1.3 niveau 2</b> · <b>Production</b> un classeur avec filtre et
+  formule construite par l'élève</div>
+
+  <p>On retient les quatre exigences suivantes, proches de ce que la classe a écrit&nbsp;:
+  durée de vie ≥ <b>8 ans</b> · pièces détachées <b>disponibles</b> · temps de réparation
+  ≤ <b>40 min</b> · note d'antivol ≥ <b>4 sur 5</b>.</p>
+
+  <div class="assoc"><label for="a4_1">Combien de flottes passent les quatre exigences&nbsp;?</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>deux</option><option>une seule</option><option>trois</option><option>aucune</option></select></div>
+  <div class="assoc"><label for="a4_2">Lesquelles&nbsp;?</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>F1 et F4</option><option>F1 et F2</option>
+      <option>F2 et F3</option><option>F3 et F4</option></select></div>
+  <div class="assoc"><label for="a4_3">Sur quelle exigence F3 tombe-t-elle&nbsp;?</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>trois à la fois : durée de vie, pièces détachées et temps de réparation</option>
+      <option>seulement la durée de vie</option>
+      <option>seulement l'antivol</option>
+      <option>aucune : elle passe</option></select></div>
+  <div class="assoc"><label for="a4_4">Et F2&nbsp;?</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>l'antivol, à 3 sur 5 pour un seuil de 4</option>
+      <option>la durée de vie</option><option>le temps de réparation</option>
+      <option>les pièces détachées</option></select></div>
+  <div class="assoc"><label for="a4_5">Il reste deux flottes. Comment les départager&nbsp;?</label>
+    <select id="a4_5"><option value="">— choisir —</option>
+      <option>avec les critères souhaitables, en disant lesquels on privilégie et pourquoi</option>
+      <option>en tirant au sort</option>
+      <option>en prenant la moins chère à l'achat, sans discussion</option>
+      <option>on ne peut pas : il faut recommencer</option></select></div>
+  <div class="assoc"><label for="a4_6">Entre F1 (confort 3, CO₂ 6,3 g/km) et F4 (confort 2, CO₂ 5,6 g/km), le choix dépend&nbsp;:</label>
+    <select id="a4_6"><option value="">— choisir —</option>
+      <option>de ce que la ville privilégie : l'usage réel ou l'empreinte — et il faut le dire</option>
+      <option>uniquement du CO₂</option>
+      <option>uniquement du confort</option>
+      <option>du hasard</option></select></div>
+
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Traite les exigences <b>une par une</b> et note qui tombe à chaque fois. Une flotte est
+    écartée dès qu'elle en rate une seule.</p></details>
+  <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary>
+    <p>F1&nbsp;: 12 ans · pièces oui · 35 min · antivol 4 → passe. F2&nbsp;: 8 ans · oui · 25 min ·
+    antivol 3 → tombe. F3&nbsp;: 6 ans · non · 70 min · antivol 3 → tombe trois fois.
+    F4&nbsp;: 10 ans · oui · 30 min · antivol 5 → passe.</p></details>
+
+  <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p><b>F1 et F4</b> passent les quatre exigences. F2 tombe sur l'antivol (3 pour un seuil de 4)
+    malgré d'excellents résultats ailleurs&nbsp;; F3 tombe sur <b>trois</b> exigences.</p>
+    <p>Le filtre ne suffit pas à décider&nbsp;: il reste deux flottes. C'est là qu'interviennent les
+    critères <b>souhaitables</b> — et là qu'il faut assumer un choix. F4 émet moins et coûte moins
+    cher&nbsp;; F1 est plus confortable et fait 300 km de plus par vélo et par an, ce qui n'est pas
+    rien pour un service public.</p>
+    <p>Il n'y a pas de bonne réponse unique. Il y a une réponse <b>argumentée</b>, qui dit ce qu'elle
+    privilégie. C'est ce qu'on attend d'un élève de 4e.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: le filtre écarte, il ne choisit pas. Départager
+  demande de dire ce qu'on privilégie.</p>
+</section>
+
+<section class="card">
+  <h2>✉️ Activité 5 — La note au service technique <span style="color:var(--sub);font-size:.8em">(~20 min)</span></h2>
+  <div class="meta"><b>Objectif</b> rendre compte d'un choix technique · <b>Production</b> une note
+  argumentée avec sa limite et sa transposition</div>
+  <div class="assoc">
+    <label for="a5_note">Rédige la note&nbsp;: la flotte retenue, deux raisons chiffrées, <b>une limite assumée</b>, et ce qu'il faudrait changer au cahier des charges si la ville était Fort-de-France plutôt que Hangzhou.</label>
+    <textarea id="a5_note" style="min-height:140px" aria-label="Ta note au service technique : flotte retenue, deux raisons chiffrées, une limite, une adaptation martiniquaise"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je recommande la flotte ____.&nbsp;»</li>
+    <li>«&nbsp;D'abord parce que ____ (chiffre&nbsp;: ____).&nbsp;»</li>
+    <li>«&nbsp;Ensuite parce que ____ (chiffre&nbsp;: ____).&nbsp;»</li>
+    <li>«&nbsp;Sa limite est ____&nbsp;: elle ne conviendrait pas si ____.&nbsp;»</li>
+    <li>«&nbsp;À Fort-de-France, il faudrait ajouter l'exigence ____, à cause de ____.&nbsp;»</li></ul></details>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+  <p class="feedback" id="fb5" role="status"></p>
+  <details class="correction"><summary>📖 Correction complète</summary>
+    <p>Les deux réponses se défendent, à condition d'être argumentées avec des chiffres du tableau.</p>
+    <p>La <b>limite</b> doit être réelle&nbsp;: F4 est lourde (18,9 kg) et peu confortable
+    (2 sur 5), ce qui peut réduire son usage&nbsp;; F1 émet 1,7 fois plus à la fabrication et
+    contient peu de matière recyclée (22&nbsp;%).</p>
+    <p>Pour Fort-de-France&nbsp;: l'air salin impose une exigence de <b>tenue à la corrosion</b> que
+    Hangzhou n'exigeait pas, et le relief change complètement le rapport au poids — 18,9 kg dans les
+    montées de Didier n'a rien à voir avec 18,9 kg sur les berges plates du lac de l'Ouest.
+    Transposer, c'est refaire l'analyse, pas copier la solution.</p>
+  </details>
+  <p class="retenir">🧠 <b>À retenir</b>&nbsp;: une note technique dit ce qu'elle recommande, sur
+  quels chiffres, et ce qu'elle coûte. Sans la limite, elle n'est pas crédible.</p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <p>💭 <b>Rappel de ton hypothèse de départ&nbsp;:</b></p>
+  <p id="rappelHyp" style="display:none;color:var(--warn)"><span id="hypRappelTxt"></span></p>
+  <div class="assoc"><label for="hyp_retour">Ton avis a-t-il changé&nbsp;? Corrige ou complète.</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Au départ je pensais que ____.&nbsp;»</li>
+    <li>«&nbsp;Maintenant je sais que ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce qui a changé mon avis, c'est ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan1">Ce que j'ai appris&nbsp;:</label>
+    <textarea id="bilan1" aria-label="Ce que j'ai appris"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;J'ai appris qu'une caractéristique se dit avec ____, ____ et ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'une incidence se rapporte à ____.&nbsp;»</li>
+    <li>«&nbsp;J'ai appris qu'on choisit ____ avant l'appareil.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan2">Ce que je sais maintenant faire&nbsp;:</label>
+    <textarea id="bilan2" aria-label="Ce que je sais maintenant faire"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je sais maintenant écrire une exigence avec ____.&nbsp;»</li>
+    <li>«&nbsp;Je sais maintenant rapporter une émission à ____.&nbsp;»</li>
+    <li>«&nbsp;Je sais maintenant choisir l'appareil qui correspond à ____.&nbsp;»</li></ul></details>
+  <div class="assoc"><label for="bilan3">Ce que je dois encore revoir&nbsp;:</label>
+    <textarea id="bilan3" aria-label="Ce que je dois encore revoir"></textarea></div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul><li>«&nbsp;Je dois encore revoir ____, parce que ____.&nbsp;»</li>
+    <li>«&nbsp;Ce que je n'arrive pas encore à faire seul·e&nbsp;: ____.&nbsp;»</li>
+    <li>«&nbsp;Pour progresser, la prochaine fois je ____.&nbsp;»</li></ul></details>
+  <h3>Je me positionne</h3>
+  <div class="assoc"><label for="pos1">4e_C3.1 — identifier les caractéristiques d'un besoin&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je reste sur des mots comme « solide »</option>
+      <option>🟠 Maîtrise fragile — je trouve la grandeur, pas le seuil</option>
+      <option>🟢 Maîtrise satisfaisante — j'écris grandeur, unité et seuil</option>
+      <option>⭐ Très bonne maîtrise — je propose un critère que personne n'a demandé et je le justifie</option></select></div>
+  <div class="assoc"><label for="pos2">4e_C3.2 — comparer, incidences comprises&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je compare sur un seul chiffre</option>
+      <option>🟠 Maîtrise fragile — je calcule avec de l'aide</option>
+      <option>🟢 Maîtrise satisfaisante — je rapporte l'incidence au service rendu</option>
+      <option>⭐ Très bonne maîtrise — j'intègre aussi une donnée qualitative décisive</option></select></div>
+  <div class="assoc"><label for="pos3">4e_C3.3 — choisir les appareils de mesure&nbsp;:</label>
+    <select id="pos3"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je confonds les grandeurs</option>
+      <option>🟠 Maîtrise fragile — je choisis l'appareil si on me donne la grandeur</option>
+      <option>🟢 Maîtrise satisfaisante — je pars de la grandeur, puis je choisis l'appareil</option>
+      <option>⭐ Très bonne maîtrise — je tiens compte de la précision de l'appareil</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence t'attend&nbsp;: <b>30 questions</b> dont 2 illustrées, sur les
+  caractéristiques, les incidences et les appareils de mesure.</p>
+  <p>Chaque réponse fausse y est expliquée — c'est là qu'est le travail.</p>
+  <p style="text-align:center"><a class="btn qcm" href="qcm_4e_C3.1-C3.3_hangzhou.html">🚲 Lancer le QCM de la séquence</a></p>
+</section>
+
+<section class="card approfondissement">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Trois défis ouverts, sans vérificateur.</p>
+  <p><b>1.</b> La ville ajoute une exigence&nbsp;: «&nbsp;au moins 50&nbsp;% de matière
+  recyclée&nbsp;». Qui reste en lice&nbsp;? Et qu'est-ce que cela dit du poids d'une exigence
+  isolée&nbsp;?</p>
+  <p><b>2.</b> Invente la cinquième flotte qui satisferait les quatre exigences <b>et</b> battrait
+  F4 sur le CO₂ par kilomètre. Ses dix-sept colonnes doivent rester cohérentes entre elles — c'est
+  plus difficile qu'il n'y paraît.</p>
+  <p><b>3.</b> Écris le protocole complet qui permettrait de vérifier la note d'antivol sur 5.
+  Quelle grandeur&nbsp;? Quel appareil&nbsp;? Et surtout&nbsp;: comment passer d'une force en
+  newtons à une note sur 5 sans tricher&nbsp;?</p>
+</section>
+</div>
+</main>
+<footer class="page">
+  <p>Séquence 4e_C3.1 · C3.2 · C3.3 — Thème 1 · Technologie cycle 4 (2024).
+  Page autonome, hors ligne, aucune donnée envoyée. Toutes les données sont simulées.</p>
+</footer>
+<script>
+"use strict";
+const KEY="seq_4e_C3.1-C3.3_hangzhou";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"le besoin transformé en exigences vérifiables",
+               be_2:"l'utilisation, parce qu'elle dure et se répète",
+               be_3:"écarte la solution : les exigences ne se compensent pas"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🎫 Tes acquis de 5e sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule juste en dessous, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+  1: function(){
+    const att={a1_1:"la durée de vie estimée, en années, avec un seuil minimal",
+               a1_2:"le coût total ramené à la durée de vie, en euros par vélo et par an",
+               a1_3:"la disponibilité des pièces détachées, et le temps de réparation",
+               a1_4:"une grandeur, une unité et un seuil",
+               a1_5:"oui, si l'on justifie : un vélo inconfortable est moins utilisé, donc moins rentable par kilomètre",
+               a1_6:"risque de n'être satisfait par aucune solution : il faut distinguer l'indispensable du souhaitable"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_cdc");
+    const chiffre = (t.match(/\d/g)||[]).length >= 4;
+    return {score:ok,total:6,valide: ok>=5 && t.trim().length>=80 && chiffre,
+      extra: (t.trim().length>=80 && chiffre) ? "" :
+        " Il manque ton cahier des charges : quatre exigences, chacune avec un nombre et une unité."};
+  },
+  2: function(){
+    const att={a2_1:"F4, acier recyclé (58 kg éq.)",
+               a2_2:"parce qu'il ignore la durée de vie et les kilomètres parcourus : un vélo qui émet peu mais sert peu n'est pas forcément meilleur",
+               a2_3:"F4, à environ 5,6 g/km", a2_4:"F3, le composite premium",
+               a2_5:"parce qu'elle émet beaucoup à la fabrication ET dure le moins longtemps : son coût est amorti sur trop peu de kilomètres",
+               a2_6:"qualitative, mais décisive : elle ne se chiffre pas et pourtant elle écarte une solution"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const redige = val("a2_ana").trim().length >= 60;
+    return {score:ok,total:6,valide: ok>=5 && redige,
+      extra: redige ? "" : " Il manque ton analyse écrite, appuyée sur deux chiffres du tableau."};
+  },
+  3: function(){
+    const att={a3_1:"un chronomètre", a3_2:"un dynamomètre, en newtons",
+               a3_3:"une balance, en kilogrammes",
+               a3_4:"qu'un mètre ruban mesure une longueur, pas une résistance : il faut d'abord dire quelle grandeur représente la solidité",
+               a3_5:"oui : l'écart de 1,5 kg est bien supérieur à la précision de l'appareil",
+               a3_6:"on ne peut pas les départager : l'écart est plus petit que la précision de l'appareil"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const redige = val("a3_prot").trim().length >= 80;
+    return {score:ok,total:6,valide: ok>=5 && redige,
+      extra: redige ? "" : " Il manque ton protocole : appareil, unité, nombre d'essais et comparaison au seuil."};
+  },
+  4: function(){
+    const att={a4_1:"deux", a4_2:"F1 et F4",
+               a4_3:"trois à la fois : durée de vie, pièces détachées et temps de réparation",
+               a4_4:"l'antivol, à 3 sur 5 pour un seuil de 4",
+               a4_5:"avec les critères souhaitables, en disant lesquels on privilégie et pourquoi",
+               a4_6:"de ce que la ville privilégie : l'usage réel ou l'empreinte — et il faut le dire"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    return {score:ok,total:6,extra:"",valide:ok>=5};
+  },
+  5: function(){
+    const t = val("a5_note").trim();
+    const chiffre = (t.match(/\d/g)||[]).length >= 2;
+    const complet = t.length >= 140 && chiffre;
+    return {score: complet?1:0, total:1, valide: complet,
+      extra: complet ? " Ta note contient une recommandation, des chiffres, une limite et une adaptation." :
+        " Ta note doit contenir la flotte retenue, deux raisons CHIFFRÉES, une limite assumée et l'adaptation martiniquaise."};
+  }
+};
+
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle explique aussi les réponses fausses."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    if(n!=="0") window.__valid[n] = !!r.valide;
+    else window.__valid[0] = !!r.valide;   // le billet est FAIT dès qu'il est répondu
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3], s4:[4,5]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Écrire les critères", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses acquis de 5e (sans note)"},
+    {n:1, libelle:"Traduire la phrase du maire en quatre exigences chiffrées"}]},
+  s2:{titre:"Séance 2 — Comparer les incidences", taches:[
+    {n:2, libelle:"Rapporter le bilan carbone au service rendu et analyser le classement"}]},
+  s3:{titre:"Séance 3 — Choisir l'instrument", taches:[
+    {n:3, libelle:"Associer grandeur, unité et appareil, puis rédiger un protocole"}]},
+  s4:{titre:"Séance 4 — Décider et rendre compte", taches:[
+    {n:4, libelle:"Filtrer les quatre flottes, puis départager les deux restantes"},
+    {n:5, libelle:"Rédiger la note au service technique, limite comprise"}]}
+};
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>
