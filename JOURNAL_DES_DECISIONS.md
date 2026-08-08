@@ -1666,3 +1666,38 @@ script.
 **Tests.** Vérification navigateur des trois pages : aucune erreur JS, bouton présent, corrections
 réellement masquées en mode essentiel, bascule d'onglet intacte. Vérificateur de règles : n°29 ✔ et n°34 ✔
 sur les trois.
+
+## 2026-08-08 — Rétrofit des lots « programmation » (C6), et une erreur d'emballage à consigner
+
+**Ce qui a été fait.** Les trois séquences C6 bâties sur le gabarit maison — 5e « programmer le lampadaire »,
+4e « ajuster le programme du jardin », 3e « programmer l'alerte » — ont reçu le **mode essentiel** (n°29) et
+l'**étiquetage de leurs champs** (n°34). Vérification au navigateur des trois pages : aucune erreur JS,
+corrections réellement masquées, bascule d'onglet intacte.
+
+**La quatrième séquence n'a PAS été touchée, et c'est délibéré.** `sequence_algorigrammes_dnb.html`
+(3e_C6.2, statut EXISTANT À AMÉLIORER) repose sur un autre gabarit : pas de barre d'outils, pas de
+`restore()`. L'outil s'apprêtait à y poser le CSS du mode essentiel **sans le bouton ni la bascule** — du code
+mort, et une séquence qui aurait eu l'air traitée sans l'être. Le garde-fou l'a arrêté et l'a écrit à
+l'écran. Ce lot mérite mieux qu'un rustinage : il lui manque une situation déclenchante, une problématique,
+une mission, une synthèse et un référentiel affiché. C'est une banque d'entraînement au brevet, pas une
+séquence au sens du gabarit — sa reprise sera un lot à part entière, comme l'a été le Book Train.
+
+**L'erreur d'emballage, et pourquoi elle est écrite ici.** Ce travail sur C6 devait faire l'objet de sa
+propre PR. Il est en réalité parti **dans la PR #129**, celle du rétrofit C5 : en amendant le commit C5 pour
+y corriger l'outil, un `git add -A` a balayé un arbre de travail qui portait déjà les modifications C6. La
+PR #129 annonçait trois séquences et en a livré six. Rien n'est perdu ni cassé — les six fichiers sont
+corrects et vérifiés — mais **le journal du dépôt doit dire ce qui s'est réellement passé**, sinon la trace
+ment. Deux règles de méthode en découlent, pour moi comme pour les autres agents :
+
+- avant tout `git commit --amend`, **relire `git status`** : un amendement n'est pas un ajout innocent, il
+  absorbe tout ce qui traîne dans l'arbre de travail ;
+- ne jamais changer de branche avec des modifications non commitées en cours sur une autre — la
+  parade est de commiter d'abord, quitte à réécrire ensuite.
+
+**Ce qui reste sur les lots C6 :** durées par activité (n°23), diagnostic d'entrée du 5e (n°26), tableau de
+bord des tâches (n°30) et versions étayées des productions écrites (n°31). Travaux de rédaction, lot par lot.
+
+**Une PR fermée sans fusion.** La PR #130 avait été ouverte depuis la branche des règles, déjà fusionnée en
+#127 et jamais supprimée. Son contenu était intégralement dans `main` et sa fusion aurait ramené un état
+ancien du dépôt. Fermée, branche supprimée. Règle : **une branche fusionnée se supprime le jour même**,
+sinon elle finit par ressurgir en fausse PR.
