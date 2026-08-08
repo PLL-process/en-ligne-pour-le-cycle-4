@@ -196,13 +196,39 @@ OVERLAY = {
         anomalies="Voir 5e_C2.1 : dossier principal du lot.",
     ),
     "4e_C2.1": dict(
-        statut="PARTIEL",
-        sequence=False, qcm=True, projet=False, synthese=False,
-        evaluation=False, correction=True, situation=False, problematique=False,
-        qualite="Un seul QCM (qcm_fonctionnement_objet, 50 Ko) — reclassé depuis C1 "
-                "lors de la migration.",
-        anomalies="Pas de séquence, pas de synthèse, pas de projet. Un QCM isolé ne "
-                  "constitue pas une séquence.",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Hangzhou — ce que vit l'usager devant la borne » (08/08/2026) : 3 séances "
+                "de 55 min, 4 activités + billet sans note, 12 verbatims et 150 relevés simulés, "
+                "3 SVG originaux, QCM de 30 questions dont 5 illustrées, 2 synthèses, fiche, "
+                "matrice de 31 notions, 60 tests Playwright tous passés. Le déroulé est dicté par "
+                "le référentiel : 4e_C2.1 impose d'aller du langage naturel aux schémas, "
+                "graphiques et algorithmes — la séquence fait parcourir ce trajet, elle ne le "
+                "décrit pas.",
+        anomalies="Aucune : 8 règles mécanisables au vert. PREMIÈRE APPLICATION des règles n°43 "
+                  "étendue (le Bonus a son corrigé), n°44 (aucun sigle ni bouton nu) et n°45 "
+                  "(l'entraînement s'ouvre sur ce qui a été fait). Le QCM hérité "
+                  "qcm_fonctionnement_objet.html (25 questions, autre auteur) n'a pas été "
+                  "modifié : il est référencé comme ressource complémentaire, avec sa portée "
+                  "dite — il déborde sur les codes C9. Données simulées annoncées comme telles.",
+        accessibilite="Champs étiquetés, alternatives longues sur les trois figures, 8 versions "
+                      "étayées pour 8 productions écrites, infobulle sur chaque badge et chaque "
+                      "bouton PLUS une légende en clair (une infobulle ne s'ouvre pas au doigt), "
+                      "aucune ressource distante (n°40). Non vérifiés donc non déclarés "
+                      "conformes : impression A4, lecteur d'écran, zoom 200 %, mobile réel.",
+        medias="3 SVG originaux CC0. Le troisième est un CORRIGÉ, présent seulement dans la "
+               "correction repliée de l'activité 2 : le graphique est ce que l'élève doit "
+               "produire, mais celui qui travaille seul doit pouvoir se corriger (n°43).",
+    ),
+    "4e_C2.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Hangzhou du dossier 4e_C2.1 (séance 3 — écrire quatre "
+                "exigences couvrant au moins trois des six familles du programme, chacune "
+                "rattachée à un verbatim). 15 des 30 questions du QCM lui sont consacrées.",
+        anomalies="Voir 4e_C2.1 : dossier principal du lot.",
     ),
     # ── LOT 09 (Fable) : îlot 4e_C4 « Le jardin connecté » ──
     "4e_C4.1": dict(

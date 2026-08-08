@@ -2854,3 +2854,84 @@ La rentrée approche&nbsp;: le **Thème 1 se termine d'abord** (3e_C2, puis les 
 L'audit des corrigés, les infobulles et l'entraînement ciblé se font ensuite, thème par thème. Les
 règles n°43 étendue, n°44 et n°45 s'appliquent **dès maintenant aux lots neufs** — le retrofit des
 anciens attend son tour, mais la dette cesse de croître.
+
+---
+
+## 8 août 2026 — Lot Hangzhou 4e_C2.1 · C2.2 : « ce que vit l'usager devant la borne »
+
+Deuxième lot du **C2**, et premier lot où s'appliquent les trois règles écrites dans la journée.
+
+### Le référentiel dicte le déroulé
+
+`4e_C2.1` n'est pas un code de description, c'est un code de **traduction**&nbsp;: «&nbsp;en partant
+du langage naturel (texte, croquis) pour aboutir aux schémas, graphiques, algorithmes&nbsp;».
+
+Le déroulé n'est donc pas un choix pédagogique parmi d'autres — il est **imposé**. D'où quatre
+activités, une par case du trajet&nbsp;: verbatims, graphique, algorigramme, exigences. Et chaque
+case est justifiée par ce qui **manque** à la précédente, ce que la figure d'ouverture montre
+explicitement.
+
+C'est la première fois que je conçois un déroulé en partant de la **forme** de la formulation plutôt
+que de son sujet. Après l'incident de l'esthétique, lire la formulation mot à mot n'est plus une
+précaution&nbsp;: c'est devenu une méthode.
+
+### Les données portent la leçon, pas le commentaire
+
+Les chiffres sont construits pour qu'un résultat contre-intuitif apparaisse **sans que le professeur
+l'annonce**&nbsp;:
+
+- «&nbsp;choisir&nbsp;» est l'étape la plus longue en **moyenne** (40&nbsp;s), et personne ne s'en
+  plaint&nbsp;; un usager la trouve même pratique&nbsp;;
+- «&nbsp;déverrouiller&nbsp;» ne fait que 29&nbsp;s de moyenne, mais monte à **83&nbsp;s** pour les
+  **9 retraits sur 30** qui ont demandé une reprise — et trois verbatims sur douze en parlent.
+
+Un élève qui n'aurait que le chronomètre corrigerait la mauvaise étape&nbsp;; un élève qui n'aurait
+que les témoignages ignorerait 40&nbsp;secondes. **C'est le croisement qui décide.**
+
+Deux verbatims se contredisent aussi, volontairement. Ce n'est pas une incohérence à corriger&nbsp;:
+c'est le résultat que l'activité 1 doit faire écrire.
+
+### Première application des règles n°43, n°44 et n°45
+
+- **n°43 étendue** — le Bonus a son corrigé, entièrement traité sur le distributeur de boissons du
+  hall&nbsp;: les mots exacts de trois élèves, dix chronométrages (3, 4, 3, 5, 4, 3, **22**, 4, 3, 4),
+  et l'écart moyenne / pire cas qui rejoue en petit ce que l'élève a découvert sur la borne.
+- **n°44** — zéro badge et zéro bouton nus, plus une légende en clair sous les badges.
+- **n°45** — le bouton du QCM vise `#codes=C2.1` après la seule séance 1, et annonce 15 questions au
+  lieu de 30. Le QCM lit l'ancre, bascule en révision ciblée, et le dit.
+
+**Conséquence, et c'est elle qui compte**&nbsp;: un élève absent, ou qui reprend chez lui, peut faire
+cette séquence **seule du début à la fin**. Tout ce qui lui est demandé a son corrigé.
+
+### Un test rouge, et qui avait tort — la quatrième fois
+
+Le contrôle du corrigé du Bonus a échoué. Le corrigé était là&nbsp;: le test lisait `inner_text` sur
+un `<details>` **replié**, qui n'expose que son `summary`.
+
+Quatrième occurrence du même piège dans ce dépôt. Le réflexe est acquis — chercher lequel des deux a
+tort avant de toucher au contenu — mais **le piège, lui, ne s'use pas**. Le fichier de tests porte
+maintenant un commentaire qui l'explique, pour que le prochain le voie avant de le vivre.
+
+### Un point-virgule dans une phrase
+
+La matrice de couverture est un CSV à points-virgules. J'avais écrit une notion contenant un
+point-virgule&nbsp;: toute la ligne s'est décalée d'une colonne, silencieusement. C'est mon contrôle
+de couverture — «&nbsp;quelles questions ne sont citées nulle part&nbsp;?&nbsp;» — qui l'a vu, pas ma
+relecture. Une ligne de CSV mal découpée ne se voit pas&nbsp;: elle se calcule.
+
+### L'état du dépôt, mesuré
+
+Deux codes quittent «&nbsp;À CRÉER&nbsp;»&nbsp;; `4e_C2.1` quitte en outre le statut PARTIEL, qu'il
+tenait d'un QCM isolé. **25 codes complets, 32 à créer.**
+
+Le vérificateur, sur les 41 séquences du dépôt, relève **56 manquements sur 23 séquences**&nbsp;:
+20 modes essentiels absents, 13 séquences sans version étayée, 12 défauts d'accessibilité,
+7 bandeaux de tâches manquants, 3 formulations de référentiel réécrites, 1 diagnostic d'entrée. Les
+lots neufs sont à zéro&nbsp;; toute la dette est dans l'existant — et elle est maintenant **chiffrée
+règle par règle**, ce qui la rend traitable en série plutôt qu'au jugé.
+
+### La suite
+
+Thème 1 d'abord, comme convenu&nbsp;: **3e_C2**, puis les 15 codes du **C1** — dont les sept
+séquences qui n'ont ni mode essentiel ni carte de référentiel. Le retrofit des corrigés, des
+infobulles et de l'entraînement ciblé viendra ensuite, thème par thème.
