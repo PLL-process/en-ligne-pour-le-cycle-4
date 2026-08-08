@@ -1420,3 +1420,30 @@ transpose pas mécaniquement : on transpose ce qui a un sens au niveau considér
 figures, blocs règle n°4, les six apports de contenu, les trois états du mode essentiel dont la persistance
 après rechargement, les trois issues du billet d'entrée (vide / 2 sur 3 / 3 sur 3), la capsule, l'indicateur
 « prochaine étape », la restauration locale et l'existence du `.pkt` et du QCM.
+
+## 2026-08-08 — Rétrofit de l'audit externe sur l'atelier routage 3e (3e_C4.7 · C4.8)
+
+**Décision.** Deuxième volet de la propagation des corrections de l'audit externe (le premier portait sur le
+5e). Le lot 3e était déjà largement conforme — il avait été écrit après plusieurs de ces leçons : premier
+ping expliqué, valeurs annoncées comme réelles, convention du `.1` nommée. Il lui manquait quatre choses,
+elles sont ajoutées. Comme pour le 5e, **rien n'est touché du fichier `.pkt`, des figures ni du QCM** : les
+preuves de la v1 (session Packet Tracer réelle du 07/08) restent valables telles quelles.
+
+**Apports.** Un *billet d'entrée* de 3 questions **sans note** ouvre la séquence, calibré non plus sur la 6e
+mais sur les **acquis de 4e** : à quoi sert le masque, ce qu'est la passerelle, ce que prouve un ping à 0 %
+de perte — exactement les trois notions dont le routage a besoin. La capsule « Je révise la 4e en 3 minutes »
+fait le lien explicite avec l'atelier de la serre : *« en 4e tu as écrit l'adresse de la passerelle sans
+forcément t'en servir — la serre n'avait qu'un seul réseau. Ici, la porte existe pour de bon, et elle mène
+quelque part. »* C'est la progressivité du dépôt rendue lisible par l'élève lui-même.
+Un *mode essentiel* persistant masque référentiel et corrections. Le *domaine 1 du socle* est explicité en
+complément du rattachement officiel D2·D4 (lire une table de routage comme un document normalisé, écrire des
+masques dans une notation stricte, rédiger ce qu'une preuve établit). *CRCN 2.3 Collaborer* est ajouté avec
+l'argument propre à ce lot : le pont se construit à deux, les routes sont **miroir**, et une erreur d'un côté
+fait échouer les deux moitiés — la meilleure démonstration de collaboration qu'un réseau puisse offrir.
+La version 🅰 gagne une variante *TP sur réseau ISOLÉ* : deux commutateurs dédiés, deux groupes d'adresses,
+et la constatation que **sans routeur, les deux moitiés ne se voient pas** — la preuve par le manque.
+
+**Tests.** Suite dédiée de **25 vérifications, 25/25 vertes** : les quatre apports, les trois états du mode
+essentiel dont la persistance, les trois issues du billet d'entrée, la capsule, le repère CRCN 5.1 verbatim
+et le niveau 3 toujours en place, l'indicateur « prochaine étape », la restauration locale, le `.pkt` et le
+QCM. La conformité v1 (37/37) n'est pas rejouée ici : elle est inchangée et reste déclarée à sa date.

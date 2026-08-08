@@ -389,7 +389,11 @@ OVERLAY = {
                 "contre-épreuve « route effacée » à verrou ; QCM 30 q (12/18), "
                 "7 SVG CC0 reconstitués de la session Packet Tracer 8.2 réelle, "
                 "fichier .pkt fourni, 37/37 tests Playwright ; complète la "
-                "séquence-îlot « Internet jusqu'à Sainte-Luce » (3e_C4.7).",
+                "séquence-îlot « Internet jusqu'à Sainte-Luce » (3e_C4.7). "
+                "RÉTROFIT AUDIT (08/08/2026) : billet d'entrée sans note sur les "
+                "acquis de 4e + capsule de révision, mode essentiel persistant, "
+                "domaine 1 du socle explicité, CRCN 2.3 ajouté, version 🅰 en "
+                "réseau ISOLÉ (la preuve par le manque) — 25/25 tests dédiés.",
         anomalies="Aucune. Évaluation sommative laissée à l'enseignant.",
         accessibilite="Clavier, aria/alt, listes déroulantes exclusivement (DYS), "
                       "reduced-motion (simulateur compris), impression A4.",
