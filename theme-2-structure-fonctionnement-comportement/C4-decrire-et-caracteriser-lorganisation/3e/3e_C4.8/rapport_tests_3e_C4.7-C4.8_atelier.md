@@ -1,6 +1,12 @@
 # Rapport de tests — Lot 3e_C4.7 · C4.8 « Le pont numérique Martinique → New York »
 
 **Exécution réelle** le 07/08/2026, suite Playwright (Chromium headless) : **37/37 verts**.
+**Rétrofit audit externe du 08/08/2026** : suite dédiée de **25 vérifications, 25/25 vertes** — domaine 1 du
+socle explicité, CRCN 2.3 présent, repère CRCN 5.1 verbatim et niveau 3 maintenus, variante 🅰 sur réseau
+ISOLÉ, mode essentiel qui masque puis réaffiche le référentiel et persiste après rechargement, billet
+d'entrée qui refuse le vide / oriente à 2 sur 3 / valide à 3 sur 3, capsule de révision de 4e, indicateur
+« prochaine étape ». Le rétrofit ne touche NI le fichier `.pkt`, NI les figures, NI le QCM : les preuves de
+la v1 restent valables telles quelles.
 Seuls des tests réellement exécutés sont déclarés ici (barre qualité du dépôt).
 
 ## Séquence (23 tests)

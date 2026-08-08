@@ -9,8 +9,8 @@
 | Thème | Thème 2 — Structure, fonctionnement, comportement |
 | Compétence parente | C4 — Décrire et caractériser l'organisation d'un OST |
 | Référentiel | BO n°9 du 29/02/2024 · codes arbitrés par `_outils/data_competences.py` (règle n°21) |
-| Domaines du socle | D2 « Les méthodes et outils pour apprendre » (jeu de rôle coopératif du poste-frontière, binômes pilote/copilote, fichier .pkt nommé et rangé) · D4 « Les systèmes naturels et les systèmes techniques » (conception du schéma à deux réseaux, démarche expérimentale preuve/contre-épreuve) — détail par activité dans la séquence |
-| CRCN | 5.1 Résoudre des problèmes techniques (niv. 3 — l'élève monte, prouve et contre-éprouve son propre pont ; cartouche règle n°7 en act. 4) · 1.3 travaillée non évaluée |
+| Domaines du socle | D2 « Les méthodes et outils pour apprendre » (jeu de rôle coopératif du poste-frontière, binômes pilote/copilote, fichier .pkt nommé et rangé) · D4 « Les systèmes naturels et les systèmes techniques » (conception du schéma à deux réseaux, démarche expérimentale preuve/contre-épreuve) — rattachement officiel du référentiel du dépôt. En complément, D1 « Les langages pour penser et communiquer » est réellement mobilisé (lire une table de routage comme un document normalisé, écrire adresses et masques dans une notation stricte, rédiger ce qu'une preuve établit) : utile pour le LSU, explicité dans la séquence |
+| CRCN | 5.1 Résoudre des problèmes techniques (niv. 3 — l'élève monte, prouve et contre-éprouve son propre pont ; cartouche règle n°7 en act. 4) · 5.2 et 2.3 Collaborer travaillées non évaluées — le pont se construit à deux, les routes sont miroir : une erreur d'un côté fait échouer les deux · 1.3 travaillée non évaluée |
 | Logiciel embarqué | Cisco Packet Tracer **8.2** (vérifié en conditions réelles) — doctrine « obligatoire sur classique » |
 | Durée | 3 séances de 55 min |
 
@@ -60,8 +60,11 @@ effacée » sur le mini-simulateur à verrou (act. 5) ; bilan, auto-positionneme
 
 Packet Tracer 8.2 (compte Cisco de classe à préparer AVANT la séance : la fenêtre de connexion est
 obligatoire). Mini-simulateur « le poste-frontière à l'épreuve » intégré à la page (hors ligne, aucune
-donnée envoyée). Versions : 🅰 observation réelle — `tracert` vers un site lointain sur un poste
-autorisé, **observation seulement, jamais de modification du réseau pédagogique** ; 🅱 Packet Tracer
+donnée envoyée). Versions : 🅰 **matériel réel sur réseau ISOLÉ** — `tracert` vers un site lointain sur un poste
+autorisé, **observation seulement, jamais de modification du réseau pédagogique** — ou, si l'établissement
+dispose de deux commutateurs dédiés non reliés au réseau pédagogique, un TP à deux groupes d'adresses
+(192.168.50.x / 192.168.60.x) qui fait constater que *sans routeur, les deux moitiés ne se voient pas* ;
+🅱 Packet Tracer
 (cœur de l'atelier) ; 🅲 sans matériel — schémas + jeu débranché + simulateur intégré (le fichier
 `3e_routage_MQ_NY_TECHNO-C4.pkt` sert alors de corrigé à lire). Aucune manipulation électrique :
 tout est logiciel.
@@ -75,6 +78,11 @@ déroulantes exclusivement (DYS) ; navigation clavier + skip-link ; reduced-moti
 compris) ; impression A4 ; minuteur QCM désactivable ; vocabulaire FR/EN ; langue calibrée 14 ans.
 
 ## Évaluation
+
+Billet d'entrée (4 min, 3 questions, **sans note**) : diagnostic des acquis de 4e (masque, passerelle,
+lecture d'un ping) avec capsule « Je révise la 4e en 3 minutes » ; il oriente, il ne sanctionne pas.
+Un **mode essentiel** (bouton en tête de page, persistant) masque référentiel et corrections pour les
+élèves que la densité met en difficulté.
 
 Formatif : vérificateurs par activité, production de concepteur exigée (act. 1), justification rédigée
 du protocole (act. 2), verrou expérientiel du poste-frontière — les DEUX passages, avec et sans route —

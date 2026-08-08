@@ -83,6 +83,7 @@
   details.prof summary{color:#e2b8ff}
   .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
   .retenir b{color:var(--ok)}
+  body.essentiel .referentiel-card, body.essentiel details.correction{display:none}
   .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
   .erreurs b{color:var(--err)}
   .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
@@ -172,8 +173,8 @@
   <span class="badge code">3e_C4.7</span>
   <span class="badge code">3e_C4.8</span>
   <span class="badge theme">Thème 2 · Structure, fonctionnement, comportement</span>
-  <span class="badge socle">Socle : D2 · D4</span>
-  <span class="badge crcn">CRCN : 5.1 (niv. 3)</span>
+  <span class="badge socle">Socle : D2 · D4 (+ D1)</span>
+  <span class="badge crcn">CRCN : 5.1 (niv. 3) · 2.3 · 5.2</span>
   <span class="badge duree">3 séances de 55 min</span>
 </div>
 
@@ -187,7 +188,10 @@
   <button class="btn" id="btnSave">💾 Sauvegarder</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Tout effacer</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel et les
+corrections&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" aria-live="polite"></p>
 
 <div class="progress-wrap">
@@ -217,7 +221,7 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card referentiel-card">
   <h2>📚 Le référentiel de l'atelier — en toutes lettres</h2>
   <p style="font-size:.88em;color:var(--sub)">Chaque code est écrit ici en entier, avec ce que l'élève FAIT réellement pour le travailler. Les activités rappellent leur compétence sous leur titre.</p>
   <h4>Compétences de technologie (programme 2024)</h4>
@@ -226,14 +230,31 @@
   <h4>Socle commun — domaines et composantes mobilisés</h4>
   <p><b>D2 — Les méthodes et outils pour apprendre</b>&nbsp;: composante «&nbsp;coopération et réalisation de projets&nbsp;» (binômes pilote/copilote, jeu de rôles du poste-frontière) et composante «&nbsp;outils numériques pour échanger et communiquer&nbsp;» (le simulateur, le fichier .pkt, les relevés de preuve).</p>
   <p><b>D4 — Les systèmes naturels et les systèmes techniques</b>&nbsp;: composante «&nbsp;conception, création, réalisation&nbsp;» (concevoir SON schéma à deux réseaux puis le réaliser) et composante «&nbsp;démarches scientifiques&nbsp;» (hypothèse, preuves par le ping, le tracert et la simulation — dont la lecture du TTL).</p>
+  <h4>Et le domaine 1 du socle&nbsp;?</h4>
+  <p>Le référentiel du dépôt rattache officiellement ces codes à <b>D2</b> et <b>D4</b>&nbsp;— c'est ce
+  qu'affiche le bandeau. En pratique, l'atelier mobilise fortement le <b>domaine 1 — Les langages pour penser
+  et communiquer</b>&nbsp;: on y <em>lit une table de routage comme un document technique normalisé</em>
+  (act. 2), on y <em>écrit des adresses et des masques dans une notation stricte où un chiffre change tout</em>
+  (act. 3) et on y <em>rédige ce qu'une preuve établit</em> — un TTL qui descend, un tracert à trois sauts
+  (act. 4-5). Utile pour le LSU&nbsp;: la trace écrite de cet atelier est évaluable côté langages.</p>
+
   <h4>CRCN (cadre de référence des compétences numériques)</h4>
   <p><b>5.1 — Résoudre des problèmes techniques</b>, niveau 3 visé — repère officiel&nbsp;: «&nbsp;Identifier des problèmes techniques liés à un environnement informatique.&nbsp;» Au niveau 3, l'élève <b>élabore sa démarche</b>&nbsp;: interpréter seul les deux premiers échecs du ping, choisir le bon outil de preuve (ping, tracert ou simulation) selon la question posée (act. 4-5, cartouche complet dans l'activité 4). La compétence <b>5.2 — Évoluer dans un environnement numérique</b> est travaillée (manipulation du simulateur) mais non évaluée.</p>
+  <p>S'y ajoute <b>2.3 — Collaborer</b>&nbsp;: le pont se construit à deux, un réseau chacun, et il ne
+  fonctionne que si les deux moitiés se parlent — les routes sont <em>miroir</em>, une erreur d'un côté fait
+  échouer les deux. C'est la meilleure démonstration de collaboration que puisse offrir un réseau. Travaillée,
+  non évaluée ici.</p>
 </section>
 
 <section class="card">
   <h2>🧰 Trois façons de vivre l'atelier</h2>
   <div class="versions">
-    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec un adulte, à la maison&nbsp;: lancer <span style="font-family:'Fira Code',monospace">tracert</span> vers un site lointain et compter les sauts réels — chaque ligne est un routeur traversé. <b>Observation seulement&nbsp;:</b> on ne touche JAMAIS au réseau pédagogique — d'où l'entraînement en simulation.</p></div>
+    <div class="version va"><h4>🅰 Observation réelle</h4><p>Avec un adulte, à la maison&nbsp;: lancer <span style="font-family:'Fira Code',monospace">tracert</span> vers un site lointain et compter les sauts réels — chaque ligne est un routeur traversé. <b>Observation seulement&nbsp;:</b> on ne touche JAMAIS au réseau pédagogique — d'où l'entraînement en simulation.</p>
+    <p style="font-size:.92em"><b>Variante matériel, si l'établissement le permet&nbsp;:</b> un TP sur
+    <b>réseau ISOLÉ</b> — deux commutateurs dédiés <em>non reliés au réseau pédagogique</em>, deux groupes
+    d'adresses (192.168.50.x et 192.168.60.x), et la constatation que <em>sans routeur, les deux moitiés ne se
+    voient pas</em>. C'est la preuve par le manque&nbsp;: le pont se comprend d'autant mieux qu'on a vécu son
+    absence.</p></div>
     <div class="version vb"><h4>🅱 Simulation (le cœur de l'atelier)</h4><p>Construire les DEUX réseaux et leur pont dans <b>Cisco Packet Tracer 8.2</b>, configurer les routeurs, prouver le voyage par ping/tracert/Simulation. Toutes les captures de cette page viennent du vrai logiciel, valeurs mesurées comprises.</p></div>
     <div class="version vc"><h4>🅲 Sans ordinateur</h4><p>Jouer le poste-frontière en classe (act. 2, tables de routage imprimées), lire les schémas de la page, et utiliser le mini-simulateur du poste-frontière intégré à l'activité 5.</p></div>
   </div>
@@ -246,6 +267,58 @@
 </div>
 <!-- ═══════════════════════ SÉANCE 1 ═══════════════════════ -->
 <div class="seance-panel active" id="seance1" role="tabpanel" aria-labelledby="tab-s1">
+
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes acquis de 4e <span style="font-size:.7em;color:var(--sub)">(4 min, sans note)</span></h2>
+  <p>Cet atelier part de ce que tu as paramétré en 4e. Trois questions, <b>aucune note</b>&nbsp;: juste un
+  aiguillage. <b>3 bonnes réponses</b>&nbsp;: tu enchaînes sur l'activité 1. <b>2 ou moins</b>&nbsp;: ouvre la
+  capsule «&nbsp;Je révise la 4e en 3 minutes&nbsp;» juste en dessous — et tu repars à égalité.</p>
+
+  <div class="exo">
+    <label for="p0_1">Le <b>masque</b> d'une machine sert à…</label>
+    <select id="p0_1">
+      <option value="">— je choisis —</option>
+      <option>dire quelle partie de l'adresse est la « rue » et quelle partie est la « maison »</option>
+      <option>protéger l'ordinateur des virus</option>
+      <option>cacher l'adresse aux autres machines</option>
+      <option>choisir entre le câble et le WiFi</option>
+    </select>
+
+    <label for="p0_2">La <b>passerelle</b> (default gateway) d'une machine, c'est…</label>
+    <select id="p0_2">
+      <option value="">— je choisis —</option>
+      <option>l'adresse par où sortir quand le destinataire n'est PAS dans le même réseau</option>
+      <option>l'adresse de la machine la plus puissante</option>
+      <option>un mot de passe du réseau</option>
+      <option>l'adresse de l'imprimante</option>
+    </select>
+
+    <label for="p0_3">Un ping qui répond «&nbsp;Reply from&nbsp;» avec 0&nbsp;% de perte prouve que…</label>
+    <select id="p0_3">
+      <option value="">— je choisis —</option>
+      <option>l'aller ET le retour ont fonctionné entre les deux machines</option>
+      <option>la machine visée est allumée, rien de plus</option>
+      <option>le câble est neuf</option>
+      <option>Internet fonctionne partout dans le collège</option>
+    </select>
+
+    <button class="btn check" data-check="0">Vérifier mon billet d'entrée</button>
+    <div class="feedback" id="fb0" aria-live="polite"></div>
+
+    <details class="aide" id="capsule4e"><summary>🎒 Je révise la 4e en 3 minutes</summary>
+      <p><b>Le masque</b> découpe l'adresse en deux&nbsp;: ce qui identifie le <em>réseau</em> et ce qui
+      identifie la <em>machine</em>. Avec <span style="font-family:'Fira Code',monospace">255.255.255.0</span>,
+      les trois premiers nombres sont la rue et le dernier la maison. Deux machines qui n'ont pas la même
+      « rue » ne se voient pas directement&nbsp;: il leur faut un intermédiaire. <b>C'est exactement le sujet
+      de cet atelier.</b></p>
+      <p><b>La passerelle</b>, c'est l'adresse de cet intermédiaire&nbsp;: la porte de sortie. En 4e, tu l'as
+      écrite dans la fenêtre IP Configuration sans forcément t'en servir — la serre n'avait qu'un seul réseau.
+      Ici, la porte existe pour de bon, et elle mène quelque part.</p>
+      <p><b>Le ping</b> prouve l'aller-retour&nbsp;: « Reply from », c'est la réponse qui revient. Un test qui
+      ne revient pas ne prouve rien du tout — d'où l'habitude de toujours re-tester après réparation.</p>
+    </details>
+  </div>
+</section>
 
 <section class="card">
   <h2>✏️ Activité 1 — Concevoir TON schéma à deux réseaux <span style="font-size:.7em;color:var(--sub)">(~30 min)</span></h2>
@@ -932,6 +1005,19 @@ window.__valid = window.__valid || {};
 const txt = id => String($(id).value||"").replace(/\u00a0/g," ").trim().toLowerCase();
 const val = id => String($(id).value||"").replace(/\u00a0/g," ").replace(/\s+/g," ").trim();
 const CHECKS = {
+  /* Billet d'entrée : diagnostic sans note — il oriente, il ne sanctionne pas. */
+  0: function(){
+    const att={p0_1:"dire quelle partie de l'adresse est la « rue » et quelle partie est la « maison »",
+               p0_2:"l'adresse par où sortir quand le destinataire n'est PAS dans le même réseau",
+               p0_3:"l'aller ET le retour ont fonctionné entre les deux machines"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    let extra;
+    if(vides) extra = " Réponds d'abord aux " + vides + " question" + (vides>1?"s":"") + " restante" + (vides>1?"s":"") + " — il n'y a aucune note à la clé.";
+    else if(ok===3) extra = " 🎫 Acquis de 4e solides : file à l'activité 1.";
+    else extra = " Rien de grave : ouvre la capsule « Je révise la 4e en 3 minutes » juste en dessous, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides&&ok===3};
+  },
   1: function(){
     let ok=0;
     const att={e1c_1:"parce qu'ils habitent deux rues différentes : le commutateur ne connaît que SA rue, il ne sait pas sortir du quartier",
@@ -1015,7 +1101,22 @@ function majProgress(){
   $("progBar").setAttribute("aria-valuenow", n);
   const par = {s1:[1,2], s2:[3], s3:[4,5]};
   Object.entries(par).forEach(([s,acts])=>{ $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  const next = [1,2,3,4,5].find(k=>!v[k]);
+  if(next) $("progTxt").textContent += " · prochaine étape : activité " + next;
 }
+
+/* ══════ Mode essentiel ══════ */
+function majEssentiel(){
+  const on = document.body.classList.contains("essentiel");
+  $("btnEssentiel").textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  $("btnEssentiel").setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp = window.__exp || {};
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(false);
+});
 
 /* ══════ Rappel d'hypothèse ══════ */
 function majHyp(){
@@ -1025,7 +1126,9 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
-restore(); majProgress(); majHyp();
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
 </script>
 </body>
 </html>
