@@ -2935,3 +2935,43 @@ règle par règle**, ce qui la rend traitable en série plutôt qu'au jugé.
 Thème 1 d'abord, comme convenu&nbsp;: **3e_C2**, puis les 15 codes du **C1** — dont les sept
 séquences qui n'ont ni mode essentiel ni carte de référentiel. Le retrofit des corrigés, des
 infobulles et de l'entraînement ciblé viendra ensuite, thème par thème.
+
+---
+
+## 8 août 2026 — Précision de la règle n°43 : « toute production » veut dire toutes les options offertes
+
+Pascal, sur le lot 3e_C2 en cours&nbsp;: «&nbsp;quel que soit le choix de l'utilisateur, puisqu'il y
+a le mot <i>choisi</i>, il aura une correction, c'est ça&nbsp;?&nbsp;»
+
+**En l'état, la réponse était non.** Et c'est le lot qui inaugure la règle n°43 qui l'enfreignait.
+
+### Ce que j'avais fait
+
+La séquence propose **six modes de représentation** à l'élève et lui demande d'en choisir. Mon
+corrigé en traitait **trois** — algorigramme, graphique, storyboard — parce que j'avais raisonné
+«&nbsp;trois destinataires, trois modes&nbsp;».
+
+Un élève choisissant la carte d'empathie, le parcours utilisateur ou le tableau comparatif produisait
+donc quelque chose dont il n'avait **aucun modèle**. Proposer six portes et n'en corriger que trois,
+c'est pénaliser celui qui prend une porte qu'on a soi-même ouverte.
+
+### La précision
+
+**Quand une consigne offre un choix, le corrigé couvre toutes les options offertes** — pas
+seulement celles que l'auteur trouvait les meilleures. Autrement, «&nbsp;choisis&nbsp;» est un
+mensonge&nbsp;: il n'y a de vrai choix que si toutes les branches sont soutenues.
+
+Le corollaire est utile à l'auteur&nbsp;: si corriger toutes les options coûte trop cher, alors il
+faut **réduire le nombre d'options**, et non réduire le corrigé. Une consigne qui propose six modes
+engage à six corrigés — c'est le prix du mot «&nbsp;choisis&nbsp;».
+
+### Ce que ça a produit
+
+Une seconde planche de corrigé, `corrige_trois_autres_modes.svg`&nbsp;: le même constat rendu en
+parcours utilisateur, en carte d'empathie et en tableau comparatif. Elle porte, comme la première,
+l'**angle mort** de chaque mode — ce qui en fait autre chose qu'un rattrapage&nbsp;: les six fiches
+mises côte à côte démontrent la thèse de la séquence mieux qu'aucune phrase. Les six disent la
+vérité, aucun ne la dit tout entière.
+
+C'est la deuxième fois aujourd'hui qu'une question de Pascal améliore le lot au lieu de simplement
+le corriger. La première avait produit la règle n°43&nbsp;; celle-ci lui donne sa portée exacte.
