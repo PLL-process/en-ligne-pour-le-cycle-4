@@ -122,10 +122,16 @@ def regle_33(src: str) -> tuple[str, str]:
 def regle_34(src: str) -> tuple[str, str]:
     manques = []
     ids_labels = set(re.findall(r'<label[^>]*\bfor="([^"]+)"', src))
-    for m in re.finditer(r'<(select|textarea)\b[^>]*\bid="([^"]+)"', src):
-        ident = m.group(2)
-        if ident not in ids_labels and f'aria-label' not in m.group(0):
-            manques.append(f"{m.group(1)}#{ident} sans étiquette")
+    # La balise ENTIÈRE est nécessaire : aria-label peut suivre l'attribut id.
+    # (Corrigé le 08/08/2026 : l'expression s'arrêtait à id= et signalait comme
+    #  « sans étiquette » des champs qui portaient bien un aria-label.)
+    for m in re.finditer(r"<(select|textarea)\b[^>]*>", src):
+        balise = m.group(0)
+        ident = re.search(r'\bid="([^"]+)"', balise)
+        if not ident:
+            continue
+        if ident.group(1) not in ids_labels and "aria-label" not in balise:
+            manques.append(f"{m.group(1)}#{ident.group(1)} sans étiquette")
     for m in re.finditer(r"<img\b[^>]*>", src):
         if not re.search(r'\balt="[^"]+"', m.group(0)):
             manques.append("image sans alternative textuelle")

@@ -1613,10 +1613,16 @@ sur les trois codes de technologie : le CRCN reste le résultat d'une activité 
 étiquette (règle n°7).
 
 **Un bug de mon propre outil, trouvé en s'en servant.** Le vérificateur `verif_regles_audit.py` signalait
-27 champs « sans étiquette » qui en avaient une : son expression régulière s'arrêtait à l'attribut `id` et ne
-voyait donc jamais un `aria-label` placé après. Corrigé dans la PR des règles. Le compte réel du Thème 2
-passe de 59 à **58 manquements**. Leçon : un outil de contrôle se vérifie lui-même sur un cas connu-bon avant
+comme « sans étiquette » des champs qui en avaient une : son expression régulière s'arrêtait à l'attribut
+`id` et ne voyait donc jamais un `aria-label` placé après. Le compte réel du Thème 2 n'est pas de 59
+manquements mais de **54**. Leçon : un outil de contrôle se vérifie lui-même sur un cas connu-bon avant
 qu'on lui fasse confiance.
+
+**Où vit ce correctif — et pourquoi il n'est pas là où on l'attendrait.** Il devait accompagner la PR des
+règles (#127). Il a été poussé quelques minutes APRÈS sa fusion : il est donc resté orphelin sur la branche,
+et `main` a un moment porté l'outil bogué et le chiffre de 59. Le correctif voyage finalement avec le présent
+lot, et l'état des lieux est recalculé ici. C'est consigné parce qu'un chiffre publié puis corrigé mérite de
+dire quand et pourquoi il a changé.
 
 **Statuts d'audit.** `4e_C4.2` et `4e_C4.4` passent de COUVERT PAR UNE SÉQUENCE MUTUALISÉE à **COMPLET ET
 VALIDABLE** : ils disposent désormais d'un atelier dédié avec séquence, QCM, synthèses et évaluation.
