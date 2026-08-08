@@ -2041,3 +2041,78 @@ n°26 interdit. 3e_C6.2 était dans ce cas&nbsp;: corrigé.
 Manquements mécaniques du Thème 2 : **6 → 1**. Il ne reste que le mode essentiel de la banque
 d'entraînement DNB héritée, écart assumé depuis le lot 3e_C6.2. Le compteur était à **61** ce
 matin.
+
+---
+
+## 08/08/2026 — L'entraînement DNB, réécrit plutôt que rustiné
+
+### Pourquoi une réécriture
+
+Le dossier 3e_C6.2 contenait une banque de 30 exercices d'algorigrammes, héritée d'une
+organisation antérieure du dépôt. Elle est **bonne sur le fond** : les notions y sont justes, les
+exercices bien choisis, les sujets de type brevet pertinents.
+
+Mais elle n'est pas bâtie sur le gabarit maison — aucune sauvegarde locale, pas de mode essentiel,
+pas de barre d'outils — et surtout, **ses corrections donnent la bonne réponse sans dire pourquoi
+les trois autres sont fausses**.
+
+C'est ce dernier point qui a décidé de la réécriture. Au brevet, les distracteurs sont conçus pour
+être plausibles. Un élève qui sait *pourquoi* B est faux ne se fera pas prendre par une variante de
+B ; un élève qui sait seulement que C est juste sera perdu dès que l'énoncé changera d'habit. Les
+90 réfutations rédigées sont le vrai contenu de cette page — bien plus que les 30 questions.
+
+### Ce que la page est, et ce qu'elle n'est pas
+
+Elle **entraîne**. Elle ne revendique **aucun code** du référentiel, et le dit à l'élève dès son
+badge. La couverture de 3e_C6.2 est assurée par « L'auto-test de la station », qui fait *écrire* un
+algorithme — le verbe du libellé officiel.
+
+Nommer honnêtement ce qu'on produit évite la tentation inverse : gonfler une bonne ressource
+d'entraînement au rang de séquence pour cocher une case d'audit.
+
+### Un défaut de qualité trouvé par le test, pas par la relecture
+
+Le premier tirage plaçait **15 bonnes réponses sur 30 en position C**. Un élève répondant C au
+hasard aurait eu la moyenne sans rien lire — et l'aurait remarqué avant nous.
+
+Relire trente exercices ne fait pas voir ce déséquilibre : il n'apparaît qu'en comptant. Le
+générateur applique désormais une répartition déterministe (8/8/7/7), comme `fix_r.js` le fait pour
+les QCM, et un test vérifie que les quatre positions sont servies.
+
+*Leçon : certaines propriétés d'un lot ne se voient qu'à l'échelle du lot entier.* La relecture
+exercice par exercice est nécessaire ; elle n'est pas suffisante.
+
+### Encore un test qui mentait
+
+Le contrôle «&nbsp;le mode essentiel laisse les exercices visibles&nbsp;» a échoué alors que la
+page était correcte&nbsp;: il interrogeait le premier exercice de la page, appartenant à une manche
+que le test venait lui-même de masquer en changeant d'onglet. C'est la **deuxième fois
+aujourd'hui** qu'un test accuse à tort une page conforme.
+
+Le réflexe est désormais acquis, et mérite d'être écrit&nbsp;: devant un test rouge, on cherche
+lequel des deux a tort **avant** de toucher au code.
+
+### La banque héritée, laissée en place — et ce que ça coûte
+
+`sequence_algorigrammes_dnb.html` et son QCM ne sont **ni modifiés ni déplacés**. Quatorze fichiers
+du dépôt y font référence, dont la séquence 3e_C6.1 et plusieurs fichiers générés&nbsp;: les
+déplacer casserait ces liens et sortirait du périmètre de ce lot.
+
+Conséquence assumée, et qu'il faut nommer plutôt que masquer&nbsp;: l'ancienne banque reste
+signalée sans mode essentiel, et c'est **le dernier manquement mécanique du Thème 2**. Il ne
+disparaîtra pas par un correctif technique — il disparaîtra le jour où Pascal décidera d'archiver
+ces deux fichiers dans `_archive-anciennes-versions/`, ce qui est une décision de gouvernance et
+lui revient.
+
+### Le lot, et ce qu'il ne contient pas
+
+Page d'entraînement, fiche pédagogique, rapport de tests, suite de tests, manifest, générateur
+reproductible (`_outils/dnb_exercices.py` porte les 30 exercices écrits à la main,
+`_outils/dnb_build.py` et `_outils/dnb_gabarit.html` les mettent en page — régénération vérifiée
+identique à l'octet près).
+
+Pas de QCM séparé&nbsp;: la page **est** l'entraînement, un QCM ferait doublon. Pas de synthèses&nbsp;:
+le rappel de cours est intégré, et celles de 3e_C6.2 couvrent les mêmes notions. Ces deux absences
+sont des choix, pas des oublis — et c'est pour cela qu'elles sont écrites ici et au manifest.
+
+**21 tests Playwright exécutés, 21 passés.**

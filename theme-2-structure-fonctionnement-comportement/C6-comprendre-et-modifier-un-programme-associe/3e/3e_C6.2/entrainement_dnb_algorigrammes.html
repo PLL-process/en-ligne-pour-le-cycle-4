@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 3e · Entraînement DNB : lire et interpréter un algorigramme</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;
+        --head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88;
+        --input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;
+       padding:0 0 44px;line-height:1.6}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.12em;color:var(--head);margin:18px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:20px 0 6px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+        padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;
+       cursor:pointer;font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--hl);outline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;
+    font-weight:600;color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .exo{border-left:3px solid var(--input-bd);padding-left:14px;margin:18px 0}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:5px}
+  select{width:100%;max-width:100%;background:var(--input-bg);color:var(--text);
+         border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  pre.algo{background:#08132c;border:1px solid var(--input-bd);border-radius:9px;padding:11px 14px;
+           font-family:'Fira Code',monospace;font-size:.88em;overflow-x:auto;white-space:pre}
+  .ex-figure{margin:10px 0}
+  .ex-figure img{width:100%;max-width:700px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .ex-figure figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction{margin:6px 0;border:1px solid var(--input-bd);border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.correction ul{margin:6px 0;padding-left:22px}
+  details.correction li{margin:5px 0}
+  .retenir{color:var(--ok)}
+  .tag-dnb{font-size:.7em;padding:2px 9px;border-radius:999px;background:#2b1a3f;color:var(--head);
+           border:1px solid var(--border);vertical-align:middle}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — tableau de bord des tâches : la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:24px}
+  @media(max-width:620px){.seance-tab{min-width:120px;font-size:.78em}}
+  @media print{
+    body{background:#fff;color:#111}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}
+    .card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}
+    details{border-color:#999}details[open] summary{color:#111}
+  }
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+
+<div class="page">
+<h1>🧠 Entraînement DNB — lire et interpréter un algorigramme</h1>
+<p class="sous">30 exercices en 4 manches · corrections qui expliquent chaque réponse fausse</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">Entraînement — brevet</span>
+  <span class="badge theme">Thème 2 · ressource d'entraînement, pas une séquence</span>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnPrint">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+rien n'est envoyé, personne d'autre ne les voit. Le <b>mode essentiel</b> masque les corrections
+et les compléments si la page te paraît chargée.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 4 manches validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Manches d'entraînement">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="m1" id="tab-m1">Manche 1<br>Ce…<span class="done" id="done-m1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="m2" id="tab-m2">Manche 2<br>On…<span class="done" id="done-m2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="m3" id="tab-m3">Manche 3<br>Là…<span class="done" id="done-m3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="m4" id="tab-m4">Manche 4<br>Des…<span class="done" id="done-m4"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la manche en cours"></div>
+
+<div class="page">
+
+<section class="card referentiel-card">
+  <h2>📚 Rappel de cours — algorithme et algorigramme</h2>
+  <p>Un <b>algorithme</b> est une suite <b>ordonnée</b> d'instructions qui résout un problème.
+  On peut l'exécuter pas à pas, sans rien deviner.</p>
+  <p>Un <b>algorigramme</b> en est la représentation graphique. Il utilise cinq symboles
+  normalisés, et cinq seulement&nbsp;:</p>
+  <ul>
+    <li><b>Terminal</b> (arrondi)&nbsp;: DÉBUT et FIN, une seule fois chacun.</li>
+    <li><b>Rectangle</b>&nbsp;: un traitement — une flèche entre, une flèche sort.</li>
+    <li><b>Losange</b>&nbsp;: une décision — une flèche entre, <b>deux</b> sortent, étiquetées.</li>
+    <li><b>Parallélogramme</b>&nbsp;: une entrée ou une sortie de donnée.</li>
+    <li><b>Flèche</b>&nbsp;: le sens du parcours, sans ambiguïté.</li>
+  </ul>
+  <figure class="ex-figure">
+    <img src="Images/symboles_algorigramme.svg" alt="Planche des cinq symboles normalisés de l'algorigramme : terminal arrondi pour début et fin, rectangle pour un traitement, losange pour une décision avec deux sorties étiquetées, parallélogramme pour une entrée ou une sortie, flèche pour le sens du parcours.">
+    <figcaption>📷 Les cinq symboles, et ce que chacun promet</figcaption>
+  </figure>
+  <p>Trois structures suffisent à tout écrire&nbsp;: la <b>séquence</b> (les instructions
+  s'enchaînent), la <b>condition</b> (SI … ALORS … SINON) et la <b>boucle</b> (TANT QUE).</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Comment travailler cette page</h2>
+  <p>Réponds d'abord <b>sans ouvrir la correction</b>&nbsp;: c'est le seul moyen de savoir ce que
+  tu sais vraiment.</p>
+  <p>Ouvre ensuite la correction, <b>même quand tu as juste</b>. Elle explique pourquoi chacune
+  des trois autres réponses est fausse — et c'est là que se joue la note au brevet, parce que les
+  distracteurs du DNB sont conçus pour être plausibles.</p>
+  <p>Deux aides sont disponibles avant chaque correction. La première remet sur la piste, la
+  seconde explique le raisonnement complet. Les utiliser n'est pas tricher.</p>
+</section>
+
+
+<div class="seance-panel active" id="m1" role="tabpanel" aria-labelledby="tab-m1">
+<section class="card">
+  <h2>Manche 1 — Le vocabulaire et les symboles</h2>
+  <p>Ce qu&#x27;on doit savoir nommer avant de savoir lire. <b>8 exercices.</b></p>
+  <p>Chaque réponse fausse est expliquée dans la correction&nbsp;: c'est là que se trouve
+  l'essentiel du travail, bien plus que dans le score.</p>
+  
+    <article class="exo" id="exo1">
+      <h3>Exercice 1 — Ce qu&#x27;est un algorithme </h3>
+      
+      <div class="assoc">
+        <label for="q1">Parmi ces définitions, laquelle décrit un algorithme ?</label>
+        <select id="q1"><option value="">— choisir —</option><option>un programme écrit en Python</option><option>une suite ordonnée d&#x27;instructions qui résout un problème, exécutable pas à pas</option><option>un dessin technique coté</option><option>le nom d&#x27;un composant électronique</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Pense à une recette de cuisine : des étapes, dans un ordre, qui mènent à un résultat.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Deux mots comptent : « ordonnée » (l'ordre change le résultat) et « instructions » (des actions précises, sans ambiguïté).</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> une suite ordonnée d&#x27;instructions qui résout un problème, exécutable pas à pas</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> un programme écrit en Python — Python est UN langage possible ; un algorithme existe avant tout langage, et peut se dire en français.</li><li><b>C.</b> un dessin technique coté — Le dessin coté décrit une pièce dans l&#x27;espace. L&#x27;algorithme décrit un enchaînement dans le temps.</li><li><b>D.</b> le nom d&#x27;un composant électronique — Aucun composant ne s&#x27;appelle ainsi : c&#x27;est une méthode, pas un objet.</li></ul>
+        <p class="retenir">🧠 À retenir : Un algorithme = des instructions, dans un ordre, pour résoudre un problème.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo2">
+      <h3>Exercice 2 — Le losange </h3>
+      <figure class="ex-figure"><img src="Images/symboles_algorigramme.svg" alt="Planche des cinq symboles normalisés de l&#x27;algorigramme : terminal, traitement, décision à deux sorties, entrée-sortie, flèche."><figcaption>📷 Document à lire pour répondre</figcaption></figure>
+      <div class="assoc">
+        <label for="q2">Dans un algorigramme, à quoi sert le losange ?</label>
+        <select id="q2"><option value="">— choisir —</option><option>à poser une question fermée : une flèche entre, deux sorties étiquetées oui et non</option><option>à afficher un résultat à l&#x27;écran</option><option>à marquer le début de l&#x27;algorithme</option><option>à écrire un calcul</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Compte les flèches qui sortent du symbole : c'est le seul qui en a deux.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le losange fait bifurquer le parcours. Ses deux sorties portent obligatoirement une étiquette, sinon le lecteur ne sait pas où aller.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> à poser une question fermée : une flèche entre, deux sorties étiquetées oui et non</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> à afficher un résultat à l&#x27;écran — L&#x27;affichage est une sortie de donnée : c&#x27;est le parallélogramme.</li><li><b>C.</b> à marquer le début de l&#x27;algorithme — Le début se marque avec un terminal arrondi, qui n&#x27;apparaît qu&#x27;une fois.</li><li><b>D.</b> à écrire un calcul — Un calcul est un traitement : il va dans un rectangle, avec une seule sortie.</li></ul>
+        <p class="retenir">🧠 À retenir : Losange = une question, deux sorties étiquetées.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo3">
+      <h3>Exercice 3 — Début et fin </h3>
+      
+      <div class="assoc">
+        <label for="q3">Quel symbole marque le début et la fin d'un algorigramme ?</label>
+        <select id="q3"><option value="">— choisir —</option><option>le losange</option><option>le parallélogramme</option><option>le rectangle</option><option>le terminal, un rectangle aux extrémités arrondies</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>C'est le seul symbole aux bords arrondis.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Il apparaît exactement deux fois : une pour DÉBUT, une pour FIN. Jamais au milieu du parcours.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> le terminal, un rectangle aux extrémités arrondies</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> le losange — Le losange pose une question ; il ne peut ni ouvrir ni fermer l&#x27;algorithme.</li><li><b>B.</b> le parallélogramme — Le parallélogramme sert aux entrées et aux sorties de données.</li><li><b>C.</b> le rectangle — Le rectangle porte un traitement, au milieu du parcours.</li></ul>
+        <p class="retenir">🧠 À retenir : Terminal arrondi = DÉBUT et FIN, une fois chacun.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo4">
+      <h3>Exercice 4 — Le parallélogramme </h3>
+      
+      <div class="assoc">
+        <label for="q4">L'instruction « afficher la température mesurée » se place dans :</label>
+        <select id="q4"><option value="">— choisir —</option><option>un terminal</option><option>un losange</option><option>un parallélogramme : la donnée franchit la frontière du système</option><option>un rectangle</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi si la donnée reste à l'intérieur du système ou si elle en sort.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Entrée (lire un capteur) et sortie (afficher, envoyer) utilisent le même symbole : la donnée traverse la frontière.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> un parallélogramme : la donnée franchit la frontière du système</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> un terminal — Le terminal ne sert qu&#x27;à ouvrir et fermer l&#x27;algorithme.</li><li><b>B.</b> un losange — Aucune question n&#x27;est posée : on ne choisit rien.</li><li><b>D.</b> un rectangle — Le rectangle sert aux traitements internes : un calcul, une affectation. Ici la donnée SORT du système.</li></ul>
+        <p class="retenir">🧠 À retenir : Parallélogramme = entrée ou sortie de donnée.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo5">
+      <h3>Exercice 5 — Ce qu&#x27;est une variable </h3>
+      
+      <div class="assoc">
+        <label for="q5">En algorithmique, une variable est :</label>
+        <select id="q5"><option value="">— choisir —</option><option>une valeur fixée une fois pour toutes</option><option>une case mémoire qui porte un nom et dont le contenu peut changer</option><option>un composant de la carte électronique</option><option>une erreur de programmation</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Imagine une boîte étiquetée : l'étiquette est le nom, le contenu peut être remplacé.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Écrire « compteur ← 0 » crée la boîte et y met 0. Écrire « compteur ← compteur + 1 » remplace le contenu par l'ancien plus un.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> une case mémoire qui porte un nom et dont le contenu peut changer</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> une valeur fixée une fois pour toutes — Cela, c&#x27;est une constante. La variable, elle, varie — c&#x27;est son nom qui le dit.</li><li><b>C.</b> un composant de la carte électronique — C&#x27;est une notion logicielle : rien de physique n&#x27;est ajouté à la carte.</li><li><b>D.</b> une erreur de programmation — Aucun rapport : une variable est un outil normal de tout programme.</li></ul>
+        <p class="retenir">🧠 À retenir : Variable = un nom, un contenu qui peut changer.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo6">
+      <h3>Exercice 6 — Le mot-clé de départ </h3>
+      
+      <div class="assoc">
+        <label for="q6">Dans un algorithme écrit en langage naturel, qu'écrit-on tout en haut ?</label>
+        <select id="q6"><option value="">— choisir —</option><option>DÉBUT</option><option>AFFICHER</option><option>SI</option><option>TANT QUE</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le mot-clé de départ correspond au terminal arrondi de l'algorigramme.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>La paire DÉBUT / FIN encadre tout le reste : les déclarations de variables viennent juste après DÉBUT.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> DÉBUT</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> AFFICHER — AFFICHER est une instruction de sortie, qui peut se trouver n&#x27;importe où.</li><li><b>C.</b> SI — SI ouvre une condition, à l&#x27;intérieur de l&#x27;algorithme, pas l&#x27;algorithme lui-même.</li><li><b>D.</b> TANT QUE — TANT QUE ouvre une boucle, elle aussi à l&#x27;intérieur.</li></ul>
+        <p class="retenir">🧠 À retenir : DÉBUT ouvre, FIN ferme.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo7">
+      <h3>Exercice 7 — Le mot-clé de répétition </h3>
+      
+      <div class="assoc">
+        <label for="q7">Quel mot-clé annonce qu'un bloc va se répéter ?</label>
+        <select id="q7"><option value="">— choisir —</option><option>SI … ALORS</option><option>SINON</option><option>AFFICHER</option><option>TANT QUE</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Cherche le mot qui suppose qu'on revienne en arrière.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Dans l'algorigramme, la répétition se voit à la flèche de retour qui remonte vers un symbole déjà traversé.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> TANT QUE</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> SI … ALORS — SI choisit entre deux chemins, une seule fois : il ne répète rien.</li><li><b>B.</b> SINON — SINON est la deuxième branche d&#x27;un SI, pas une répétition.</li><li><b>C.</b> AFFICHER — AFFICHER produit une sortie ; il ne dit rien de la répétition.</li></ul>
+        <p class="retenir">🧠 À retenir : TANT QUE = répétition ; SI = choix.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo8">
+      <h3>Exercice 8 — L&#x27;ordre de lecture </h3>
+      
+      <div class="assoc">
+        <label for="q8">Dans un algorigramme sans boucle ni condition, les instructions s'exécutent :</label>
+        <select id="q8"><option value="">— choisir —</option><option>dans un ordre choisi par la machine</option><option>de la fin vers le début</option><option>de haut en bas, en suivant les flèches</option><option>une instruction sur deux</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>On lit un algorigramme comme un texte : dans le sens des flèches.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>L'ordre EST le sens de l'algorithme : inverser deux instructions change le résultat. C'est pour cela qu'une flèche ne doit jamais laisser deux chemins possibles au même endroit.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> de haut en bas, en suivant les flèches</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> dans un ordre choisi par la machine — La machine n&#x27;invente rien : c&#x27;est le tracé des flèches qui impose l&#x27;ordre.</li><li><b>B.</b> de la fin vers le début — Ce serait illisible — et le résultat n&#x27;aurait aucun sens.</li><li><b>D.</b> une instruction sur deux — Toutes les instructions du chemin parcouru sont exécutées.</li></ul>
+        <p class="retenir">🧠 À retenir : On suit les flèches, de haut en bas.</p>
+      </details>
+    </article>
+  <button class="btn check" data-check="1" type="button">✅ Vérifier la manche 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+</section>
+</div>
+
+<div class="seance-panel" id="m2" role="tabpanel" aria-labelledby="tab-m2">
+<section class="card">
+  <h2>Manche 2 — Lire et dérouler</h2>
+  <p>On suit les flèches, on note ce que devient chaque variable. <b>8 exercices.</b></p>
+  <p>Chaque réponse fausse est expliquée dans la correction&nbsp;: c'est là que se trouve
+  l'essentiel du travail, bien plus que dans le score.</p>
+  
+    <article class="exo" id="exo9">
+      <h3>Exercice 9 — Lire un algorithme simple </h3>
+      <pre class="algo">DÉBUT
+  Lire A
+  Lire B
+  S ← A + B
+  Afficher S
+FIN</pre>
+      <div class="assoc">
+        <label for="q9">Que fait cet algorithme ?</label>
+        <select id="q9"><option value="">— choisir —</option><option>il affiche toujours 0</option><option>il lit deux nombres et affiche leur somme</option><option>il lit deux nombres et affiche le plus grand</option><option>il ne fait rien tant qu&#x27;on n&#x27;appuie pas sur un bouton</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Lis la ligne « S ← A + B » : quel signe y figure ?</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Trois temps : deux entrées (Lire A, Lire B), un traitement (l'addition), une sortie (Afficher S). C'est le schéma de base entrée → traitement → sortie.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> il lit deux nombres et affiche leur somme</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> il affiche toujours 0 — Non : S reçoit A + B, dont la valeur dépend de ce qui a été lu.</li><li><b>C.</b> il lit deux nombres et affiche le plus grand — Aucune comparaison n&#x27;apparaît : il n&#x27;y a ni SI ni losange.</li><li><b>D.</b> il ne fait rien tant qu&#x27;on n&#x27;appuie pas sur un bouton — Aucune attente n&#x27;est écrite : l&#x27;algorithme se déroule dès le DÉBUT.</li></ul>
+        <p class="retenir">🧠 À retenir : Un algorithme se lit ligne à ligne, en suivant ce que devient chaque variable.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo10">
+      <h3>Exercice 10 — Interpréter une condition </h3>
+      <pre class="algo">SI x &gt; 10 ALORS
+  Afficher « Grand »
+SINON
+  Afficher « Petit »
+FIN SI</pre>
+      <div class="assoc">
+        <label for="q10">Avec x = 10, qu'affiche cette instruction ?</label>
+        <select id="q10"><option value="">— choisir —</option><option>« Petit », car 10 n&#x27;est pas strictement supérieur à 10</option><option>les deux, l&#x27;un après l&#x27;autre</option><option>rien du tout</option><option>« Grand », car x vaut 10</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Compare très exactement le signe écrit et la valeur donnée.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>C'est le piège classique du DNB : la valeur qui tombe pile sur le seuil. « > » exclut l'égalité, « ≥ » l'inclut. Un seul caractère change la réponse.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> « Petit », car 10 n&#x27;est pas strictement supérieur à 10</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> les deux, l&#x27;un après l&#x27;autre — Les deux branches d&#x27;un SI s&#x27;excluent : on n&#x27;en prend jamais qu&#x27;une.</li><li><b>C.</b> rien du tout — Un SI … SINON affiche toujours quelque chose : l&#x27;une des deux branches est prise.</li><li><b>D.</b> « Grand », car x vaut 10 — Le test demande x &gt; 10, pas x ≥ 10 : à égalité, il est faux.</li></ul>
+        <p class="retenir">🧠 À retenir : À la limite exacte, tout se joue sur &gt; ou ≥.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo11">
+      <h3>Exercice 11 — La valeur finale (1) </h3>
+      <pre class="algo">A ← 5
+A ← A + 7</pre>
+      <div class="assoc">
+        <label for="q11">Que vaut A à la fin ?</label>
+        <select id="q11"><option value="">— choisir —</option><option>7</option><option>5</option><option>57</option><option>12</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Remplace A par sa valeur du moment dans le membre de droite, puis calcule.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>La flèche ← se lit « reçoit ». On calcule d'abord la droite avec l'ancienne valeur (5 + 7 = 12), puis on range le résultat dans A.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> 12</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> 7 — 7 est la valeur ajoutée, pas le résultat.</li><li><b>B.</b> 5 — 5 est la valeur de départ : elle est remplacée dès la deuxième ligne.</li><li><b>C.</b> 57 — Il s&#x27;agit d&#x27;une addition, pas d&#x27;une mise bout à bout des chiffres.</li></ul>
+        <p class="retenir">🧠 À retenir : A ← A + 7 : on calcule à droite, on range à gauche.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo12">
+      <h3>Exercice 12 — La valeur finale (2) </h3>
+      <pre class="algo">n ← 3
+n ← n × 2
+n ← n − 0</pre>
+      <div class="assoc">
+        <label for="q12">Que vaut n à la fin ?</label>
+        <select id="q12"><option value="">— choisir —</option><option>0</option><option>9</option><option>6</option><option>3</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Traite les lignes une par une, en notant la valeur de n après chacune.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ligne 1 : n = 3. Ligne 2 : n = 3 × 2 = 6. Ligne 3 : n = 6 − 0 = 6. Un tableau de suivi à trois lignes évite toute erreur.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> 6</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> 0 — Rien ne remet n à zéro dans cet algorithme.</li><li><b>B.</b> 9 — 9 serait le résultat si la dernière ligne était n ← n + 3.</li><li><b>D.</b> 3 — 3 est la valeur de départ, écrasée par la suite.</li></ul>
+        <p class="retenir">🧠 À retenir : Un tableau de suivi coûte trente secondes et fait gagner tous les points.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo13">
+      <h3>Exercice 13 — Le nombre de répétitions </h3>
+      <pre class="algo">i ← 1
+TANT QUE i ≤ 5 FAIRE
+  Afficher i
+  i ← i + 1
+FIN TANT QUE</pre>
+      <div class="assoc">
+        <label for="q13">Combien de fois « Afficher i » est-il exécuté ?</label>
+        <select id="q13"><option value="">— choisir —</option><option>6 fois</option><option>5 fois, pour i valant 1, 2, 3, 4 puis 5</option><option>4 fois</option><option>une seule fois</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Écris la liste des valeurs prises par i, puis compte-les.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le nombre de tours dépend de trois choses : la valeur de départ, le test, et le pas d'incrémentation. Changer l'une des trois change le compte.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> 5 fois, pour i valant 1, 2, 3, 4 puis 5</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> 6 fois — i part de 1, pas de 0 : il n&#x27;y a pas de sixième tour.</li><li><b>C.</b> 4 fois — Ce serait le cas avec i &lt; 5. Ici le test est i ≤ 5, donc 5 passe aussi.</li><li><b>D.</b> une seule fois — La flèche de retour ramène au test tant qu&#x27;il est vrai.</li></ul>
+        <p class="retenir">🧠 À retenir : Compter les tours, c&#x27;est lister les valeurs — jamais les deviner.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo14">
+      <h3>Exercice 14 — La boucle qui ne tourne jamais </h3>
+      <pre class="algo">i ← 10
+TANT QUE i &lt; 5 FAIRE
+  Afficher i
+  i ← i + 1
+FIN TANT QUE</pre>
+      <div class="assoc">
+        <label for="q14">Combien de fois le bloc s'exécute-t-il ?</label>
+        <select id="q14"><option value="">— choisir —</option><option>aucune : le test est faux dès le premier passage</option><option>indéfiniment</option><option>une fois, car on entre toujours au moins une fois</option><option>dix fois</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Évalue le test avec la valeur de départ, avant toute chose.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>TANT QUE teste d'abord. Si la condition est fausse au départ, le bloc n'est jamais exécuté — et c'est un comportement normal, pas un bogue.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> aucune : le test est faux dès le premier passage</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> indéfiniment — Il faudrait que le test reste vrai ; ici il est faux d&#x27;emblée.</li><li><b>C.</b> une fois, car on entre toujours au moins une fois — Faux pour TANT QUE : le test est évalué AVANT d&#x27;entrer.</li><li><b>D.</b> dix fois — Aucun compteur ne va jusqu&#x27;à dix dans cet algorithme.</li></ul>
+        <p class="retenir">🧠 À retenir : TANT QUE peut tourner zéro fois.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo15">
+      <h3>Exercice 15 — La boucle sans fin </h3>
+      <pre class="algo">i ← 1
+TANT QUE i ≤ 5 FAIRE
+  Afficher i
+FIN TANT QUE</pre>
+      <div class="assoc">
+        <label for="q15">Que se passe-t-il ici ?</label>
+        <select id="q15"><option value="">— choisir —</option><option>elle ne s&#x27;exécute pas</option><option>elle affiche 1 puis s&#x27;arrête</option><option>elle s&#x27;exécute cinq fois</option><option>la boucle ne s&#x27;arrête jamais : rien ne fait avancer i</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Cherche l'instruction qui devrait modifier la variable du test.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Toute boucle a besoin de trois éléments : une initialisation, un test, et une progression vers la sortie. Ici la progression manque : c'est l'erreur de boucle infinie.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> la boucle ne s&#x27;arrête jamais : rien ne fait avancer i</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> elle ne s&#x27;exécute pas — Le test est vrai au départ : on entre bien dans la boucle.</li><li><b>B.</b> elle affiche 1 puis s&#x27;arrête — Après l&#x27;affichage, la flèche de retour ramène au test, toujours vrai.</li><li><b>C.</b> elle s&#x27;exécute cinq fois — Il faudrait que i augmente ; or i garde la valeur 1.</li></ul>
+        <p class="retenir">🧠 À retenir : Une boucle sans progression vers sa sortie ne s&#x27;arrête jamais.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo16">
+      <h3>Exercice 16 — Remettre dans l&#x27;ordre </h3>
+      
+      <div class="assoc">
+        <label for="q16">Pour préparer un thé, quel enchaînement est correct ?</label>
+        <select id="q16"><option value="">— choisir —</option><option>attendre → mettre le sachet → verser l&#x27;eau → faire chauffer</option><option>mettre le sachet → retirer le sachet → verser l&#x27;eau → attendre</option><option>faire chauffer l&#x27;eau → mettre le sachet → verser l&#x27;eau → attendre → retirer le sachet</option><option>verser l&#x27;eau → faire chauffer l&#x27;eau → mettre le sachet</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi, pour chaque étape, ce qui doit être vrai avant de pouvoir la faire.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>C'est la propriété essentielle : un algorithme est une suite ORDONNÉE. Permuter deux étapes donne un autre résultat — parfois aucun résultat.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> faire chauffer l&#x27;eau → mettre le sachet → verser l&#x27;eau → attendre → retirer le sachet</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> attendre → mettre le sachet → verser l&#x27;eau → faire chauffer — Attendre avant d&#x27;avoir commencé quoi que ce soit ne sert à rien.</li><li><b>B.</b> mettre le sachet → retirer le sachet → verser l&#x27;eau → attendre — On retire le sachet avant d&#x27;avoir versé l&#x27;eau : l&#x27;infusion n&#x27;a pas lieu.</li><li><b>D.</b> verser l&#x27;eau → faire chauffer l&#x27;eau → mettre le sachet — L&#x27;eau est versée avant d&#x27;être chaude : le résultat n&#x27;est pas le même.</li></ul>
+        <p class="retenir">🧠 À retenir : L&#x27;ordre fait partie de l&#x27;algorithme, il n&#x27;est pas décoratif.</p>
+      </details>
+    </article>
+  <button class="btn check" data-check="2" type="button">✅ Vérifier la manche 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+</section>
+</div>
+
+<div class="seance-panel" id="m3" role="tabpanel" aria-labelledby="tab-m3">
+<section class="card">
+  <h2>Manche 3 — Compteurs, tests et cas limites</h2>
+  <p>Là où se perdent les points au brevet. <b>6 exercices.</b></p>
+  <p>Chaque réponse fausse est expliquée dans la correction&nbsp;: c'est là que se trouve
+  l'essentiel du travail, bien plus que dans le score.</p>
+  
+    <article class="exo" id="exo17">
+      <h3>Exercice 17 — Où initialiser un compteur </h3>
+      <figure class="ex-figure"><img src="Images/algorigramme_auto_test.svg" alt="Algorigramme d&#x27;un auto-test : le compteur est mis à zéro avant la boucle, incrémenté à l&#x27;intérieur, et la décision finale vient après la boucle."><figcaption>📷 Document à lire pour répondre</figcaption></figure>
+      <div class="assoc">
+        <label for="q17">Un algorithme compte les défauts trouvés sur plusieurs organes. Où placer « defauts ← 0 » ?</label>
+        <select id="q17"><option value="">— choisir —</option><option>après la boucle</option><option>avant la boucle : le compteur doit exister avant qu&#x27;on commence à compter</option><option>à l&#x27;intérieur de la boucle, à la fin</option><option>à l&#x27;intérieur de la boucle, au début</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi ce que vaudrait le compteur si l'instruction était répétée à chaque tour.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>C'est l'erreur la plus fréquente, et la plus discrète : le programme fonctionne, ne plante pas, et donne un résultat faux. Le tableau de suivi la révèle immédiatement.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> avant la boucle : le compteur doit exister avant qu&#x27;on commence à compter</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> après la boucle — Trop tard : on aurait déjà essayé d&#x27;ajouter 1 à une case qui n&#x27;existe pas.</li><li><b>C.</b> à l&#x27;intérieur de la boucle, à la fin — Pire encore : il effacerait le comptage juste après l&#x27;avoir fait.</li><li><b>D.</b> à l&#x27;intérieur de la boucle, au début — Il repartirait de zéro à chaque tour : le total final ne vaudrait jamais plus de 1.</li></ul>
+        <p class="retenir">🧠 À retenir : Un compteur s&#x27;initialise AVANT la boucle.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo18">
+      <h3>Exercice 18 — Le compteur ne redescend pas </h3>
+      <figure class="ex-figure"><img src="Images/trace_banc_essai.svg" alt="Trace d&#x27;exécution : le compteur passe de 0 à 1 au deuxième tour, reste à 1 au troisième malgré un organe correct, puis passe à 2."><figcaption>📷 Document à lire pour répondre</figcaption></figure>
+      <div class="assoc">
+        <label for="q18">Un compteur de défauts vaut 1. L'organe suivant fonctionne. Que vaut le compteur ensuite ?</label>
+        <select id="q18"><option value="">— choisir —</option><option>toujours 1 : un organe qui marche n&#x27;efface pas un défaut déjà trouvé</option><option>cela dépend de l&#x27;ordre des organes</option><option>2, puisqu&#x27;on continue à compter</option><option>0, puisque le dernier organe est bon</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde ce que fait la branche « l'organe fonctionne » : ajoute-t-elle quelque chose ?</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>La branche du oui ne contient aucune instruction : elle rejoint simplement la suite. Un compteur ne diminue que si une instruction le lui demande explicitement.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> toujours 1 : un organe qui marche n&#x27;efface pas un défaut déjà trouvé</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> cela dépend de l&#x27;ordre des organes — Une addition ne dépend pas de l&#x27;ordre : le total est le même.</li><li><b>C.</b> 2, puisqu&#x27;on continue à compter — On ne compte que les défauts : un organe correct n&#x27;ajoute rien.</li><li><b>D.</b> 0, puisque le dernier organe est bon — Le compteur mémorise le total, pas le dernier résultat.</li></ul>
+        <p class="retenir">🧠 À retenir : Un compteur garde ce qu&#x27;il a compté.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo19">
+      <h3>Exercice 19 — Où placer la décision finale </h3>
+      
+      <div class="assoc">
+        <label for="q19">L'algorithme doit envoyer UN message indiquant le nombre total de défauts. Où placer le test « defauts = 0 ? » ?</label>
+        <select id="q19"><option value="">— choisir —</option><option>dans la branche « organe en panne »</option><option>avant la boucle</option><option>à l&#x27;intérieur de la boucle</option><option>après la boucle : on ne peut conclure qu&#x27;une fois tous les organes testés</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi à quel moment précis on connaît le total.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>La règle générale : une conclusion se place là où l'information nécessaire est complète. Tant que la boucle tourne, le total n'est pas connu.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> après la boucle : on ne peut conclure qu&#x27;une fois tous les organes testés</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> dans la branche « organe en panne » — Le message ne partirait que s&#x27;il y a un défaut, et autant de fois qu&#x27;il y en a.</li><li><b>B.</b> avant la boucle — À ce moment-là le compteur vaut toujours 0 : le message serait systématiquement le même.</li><li><b>C.</b> à l&#x27;intérieur de la boucle — Le destinataire recevrait un message par organe, au lieu d&#x27;un seul.</li></ul>
+        <p class="retenir">🧠 À retenir : On conclut après la boucle, une seule fois.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo20">
+      <h3>Exercice 20 — Traduire une condition </h3>
+      
+      <div class="assoc">
+        <label for="q20">« Au moins un défaut a été trouvé » s'écrit :</label>
+        <select id="q20"><option value="">— choisir —</option><option>defauts &lt; 0</option><option>defauts ≥ 1 ou defauts = 0</option><option>defauts &gt; 0</option><option>defauts = 0</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>« Au moins un » veut dire un, deux, trois… mais pas zéro.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Sur des entiers, defauts > 0 et defauts ≥ 1 sont équivalents. Sur des nombres décimaux, ils ne le seraient plus : la nature de la donnée compte.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> defauts &gt; 0</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> defauts &lt; 0 — Un compteur ne descend jamais sous zéro : ce test serait toujours faux.</li><li><b>B.</b> defauts ≥ 1 ou defauts = 0 — La deuxième partie rend le test toujours vrai, quel que soit le compteur.</li><li><b>D.</b> defauts = 0 — C&#x27;est l&#x27;inverse exact : aucun défaut.</li></ul>
+        <p class="retenir">🧠 À retenir : « Au moins un » = strictement supérieur à zéro.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo21">
+      <h3>Exercice 21 — L&#x27;indentation </h3>
+      
+      <div class="assoc">
+        <label for="q21">À quoi sert le décalage des lignes sous un TANT QUE ?</label>
+        <select id="q21"><option value="">— choisir —</option><option>à indiquer les commentaires</option><option>à montrer quelles instructions sont à l&#x27;intérieur de la boucle</option><option>à rendre le texte plus joli</option><option>à faire ralentir le programme</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Compare avec l'algorigramme : qu'est-ce qui, là-bas, dit la même chose ?</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Ce que l'indentation dit dans le texte, la flèche de retour le dit dans l'algorigramme : elle délimite le bloc répété. Déplacer une ligne d'un cran change le programme.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> à montrer quelles instructions sont à l&#x27;intérieur de la boucle</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> à indiquer les commentaires — Les commentaires se signalent autrement, pas par un décalage.</li><li><b>C.</b> à rendre le texte plus joli — C&#x27;est un effet secondaire, pas la raison : le décalage porte une information.</li><li><b>D.</b> à faire ralentir le programme — L&#x27;indentation ne change rien à la vitesse d&#x27;exécution.</li></ul>
+        <p class="retenir">🧠 À retenir : L&#x27;indentation porte du sens : elle délimite le bloc répété.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo22">
+      <h3>Exercice 22 — Le cas limite </h3>
+      
+      <div class="assoc">
+        <label for="q22">Une station teste ses organes, dont la liaison radio, et envoie son bilan PAR CETTE RADIO. Que se passe-t-il si la radio est en panne ?</label>
+        <select id="q22"><option value="">— choisir —</option><option>le message est calculé correctement mais ne part jamais : la panne est silencieuse</option><option>le message part quand même</option><option>la station se répare toute seule</option><option>l&#x27;algorithme s&#x27;arrête sur une erreur</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi par quel chemin physique le message doit passer.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>C'est la limite d'un auto-test : il ne peut pas signaler la panne de son propre moyen de signalement. Le remède ne s'écrit pas dans la boucle — c'est le destinataire qui doit s'inquiéter de l'ABSENCE de message.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> le message est calculé correctement mais ne part jamais : la panne est silencieuse</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> le message part quand même — Le canal est justement l&#x27;organe défaillant : il ne peut rien transmettre.</li><li><b>C.</b> la station se répare toute seule — Aucun algorithme ne répare un matériel défectueux.</li><li><b>D.</b> l&#x27;algorithme s&#x27;arrête sur une erreur — Rien dans l&#x27;algorithme n&#x27;impose l&#x27;arrêt : il va au bout et croit avoir terminé.</li></ul>
+        <p class="retenir">🧠 À retenir : Un système d&#x27;alerte doit prouver qu&#x27;il est vivant, pas seulement dire qu&#x27;il va mal.</p>
+      </details>
+    </article>
+  <button class="btn check" data-check="3" type="button">✅ Vérifier la manche 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+</section>
+</div>
+
+<div class="seance-panel" id="m4" role="tabpanel" aria-labelledby="tab-m4">
+<section class="card">
+  <h2>Manche 4 — Sujets type DNB</h2>
+  <p>Des situations complètes, comme à l&#x27;épreuve. <b>8 exercices.</b></p>
+  <p>Chaque réponse fausse est expliquée dans la correction&nbsp;: c'est là que se trouve
+  l'essentiel du travail, bien plus que dans le score.</p>
+  
+    <article class="exo" id="exo23">
+      <h3>Exercice 23 — Régulation de température <span class="tag-dnb">Type DNB</span></h3>
+      
+      <div class="assoc">
+        <label for="q23">Une serre chauffe si la température descend sous 18 °C et coupe au-dessus de 22 °C. Quel est l'intérêt de ces deux seuils différents ?</label>
+        <select id="q23"><option value="">— choisir —</option><option>mesurer la température avec plus de précision</option><option>chauffer deux fois plus vite</option><option>économiser un capteur</option><option>éviter que le chauffage s&#x27;allume et s&#x27;éteigne sans arrêt autour d&#x27;une seule valeur</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Imagine ce qui se passerait avec un seul seuil à 20 °C et une température qui oscille autour.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Avec un seul seuil, la moindre variation fait basculer le système : c'est le « clignotement », qui use le matériel. Deux seuils créent une zone neutre où rien ne change.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> éviter que le chauffage s&#x27;allume et s&#x27;éteigne sans arrêt autour d&#x27;une seule valeur</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> mesurer la température avec plus de précision — La précision dépend du capteur, pas des seuils programmés.</li><li><b>B.</b> chauffer deux fois plus vite — Les seuils ne changent pas la puissance du chauffage.</li><li><b>C.</b> économiser un capteur — Un seul capteur suffit dans les deux cas.</li></ul>
+        <p class="retenir">🧠 À retenir : Deux seuils = une zone neutre = pas de clignotement.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo24">
+      <h3>Exercice 24 — Éclairage automatique <span class="tag-dnb">Type DNB</span></h3>
+      
+      <div class="assoc">
+        <label for="q24">Un lampadaire s'allume s'il fait nuit ET qu'une présence est détectée. Que se passe-t-il en plein jour avec une présence ?</label>
+        <select id="q24"><option value="">— choisir —</option><option>il s&#x27;allume, car la présence suffit</option><option>il clignote</option><option>il reste éteint : les deux conditions doivent être vraies en même temps</option><option>il s&#x27;allume avec un retard</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Relis le mot qui relie les deux conditions.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>ET exige les deux ; OU se contente d'une seule. Remplacer l'un par l'autre change complètement le comportement — c'est une question de DNB très fréquente.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> il reste éteint : les deux conditions doivent être vraies en même temps</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> il s&#x27;allume, car la présence suffit — Avec un ET, une seule condition vraie ne suffit pas.</li><li><b>B.</b> il clignote — Rien dans l&#x27;algorithme ne fait clignoter quoi que ce soit.</li><li><b>D.</b> il s&#x27;allume avec un retard — Aucune temporisation n&#x27;est décrite ici.</li></ul>
+        <p class="retenir">🧠 À retenir : ET : les deux. OU : au moins une.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo25">
+      <h3>Exercice 25 — Calcul de moyenne <span class="tag-dnb">Type DNB</span></h3>
+      
+      <div class="assoc">
+        <label for="q25">Un algorithme affiche « admis » si la moyenne est supérieure ou égale à 10. Un élève a 10 exactement. Que se passe-t-il ?</label>
+        <select id="q25"><option value="">— choisir —</option><option>il n&#x27;est pas admis</option><option>il est admis : le test « supérieur ou égal » inclut la valeur 10</option><option>l&#x27;algorithme ne peut pas répondre</option><option>cela dépend du nombre de notes</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Repère si l'énoncé dit « supérieur » ou « supérieur ou égal ».</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Toujours vérifier le cas qui tombe pile sur le seuil : c'est là que se cache la différence entre un algorithme juste et un algorithme presque juste.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> il est admis : le test « supérieur ou égal » inclut la valeur 10</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> il n&#x27;est pas admis — Ce serait le cas avec « strictement supérieur à 10 ».</li><li><b>C.</b> l&#x27;algorithme ne peut pas répondre — Le test tranche toujours : il est vrai ou faux, jamais indécis.</li><li><b>D.</b> cela dépend du nombre de notes — La moyenne est déjà calculée : seul le test compte à ce stade.</li></ul>
+        <p class="retenir">🧠 À retenir : Le cas limite se teste toujours.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo26">
+      <h3>Exercice 26 — Tri sélectif automatisé <span class="tag-dnb">Type DNB</span></h3>
+      
+      <div class="assoc">
+        <label for="q26">Un convoyeur trie des déchets. Un objet n'est ni métallique, ni plastique, ni verre. Que doit prévoir un algorithme correct ?</label>
+        <select id="q26"><option value="">— choisir —</option><option>une sortie par défaut, qui écarte l&#x27;objet non identifié</option><option>arrêter le convoyeur définitivement</option><option>le compter comme du plastique</option><option>rien : ce cas n&#x27;arrive jamais</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Demande-toi ce que fait le système quand aucun test n'est vrai.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Toute suite de tests doit prévoir le cas « aucun des précédents ». Sans branche par défaut, l'objet continue son chemin sans décision : c'est un trou dans l'algorithme.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> une sortie par défaut, qui écarte l&#x27;objet non identifié</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> arrêter le convoyeur définitivement — Une seule anomalie bloquerait toute la chaîne.</li><li><b>C.</b> le compter comme du plastique — Ce serait une erreur de tri délibérée, qui pollue le bac.</li><li><b>D.</b> rien : ce cas n&#x27;arrive jamais — Il arrive forcément : c&#x27;est même la situation la plus fréquente en usage réel.</li></ul>
+        <p class="retenir">🧠 À retenir : Toujours prévoir la branche « aucun des cas précédents ».</p>
+      </details>
+    </article>
+    <article class="exo" id="exo27">
+      <h3>Exercice 27 — Fabrication en série <span class="tag-dnb">Type DNB</span></h3>
+      
+      <div class="assoc">
+        <label for="q27">Une machine produit des pièces et doit s'arrêter après la 500ᵉ. Quelle structure utiliser ?</label>
+        <select id="q27"><option value="">— choisir —</option><option>aucune structure : la machine s&#x27;arrête toute seule</option><option>un simple SI … ALORS</option><option>500 instructions écrites à la suite</option><option>une boucle avec un compteur, qui s&#x27;arrête quand le compteur atteint 500</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Le mot « après la 500ᵉ » suppose qu'on sait combien on en a déjà faites.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Une boucle avec compteur permet de changer 500 en 600 en modifiant UN seul nombre. C'est exactement ce qu'on attend d'un bon algorithme : le paramètre se règle, la structure ne bouge pas.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> une boucle avec un compteur, qui s&#x27;arrête quand le compteur atteint 500</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> aucune structure : la machine s&#x27;arrête toute seule — Rien ne s&#x27;arrête tout seul : l&#x27;arrêt doit être programmé.</li><li><b>B.</b> un simple SI … ALORS — Un SI se traverse une fois : il ne répète rien.</li><li><b>C.</b> 500 instructions écrites à la suite — Techniquement possible, mais illisible — et à refaire entièrement pour 600 pièces.</li></ul>
+        <p class="retenir">🧠 À retenir : Un nombre de répétitions connu = une boucle avec compteur.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo28">
+      <h3>Exercice 28 — Porte automatique <span class="tag-dnb">Logique</span></h3>
+      
+      <div class="assoc">
+        <label for="q28">Une porte automatique doit rester ouverte tant qu'une personne est détectée dans le passage. Quelle structure convient ?</label>
+        <select id="q28"><option value="">— choisir —</option><option>un SI unique en début de programme</option><option>un compteur de 1 à 10</option><option>une boucle : tant que la présence est détectée, la porte reste ouverte</option><option>aucune structure : un capteur suffit</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>La condition doit être vérifiée en permanence, pas une seule fois.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>C'est la différence de fond entre SI et TANT QUE : le premier teste une fois, le second teste à chaque tour. Sur un système de sécurité, le choix n'est pas anodin.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> une boucle : tant que la présence est détectée, la porte reste ouverte</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> un SI unique en début de programme — Il ne serait évalué qu&#x27;une fois : la porte se refermerait sur la personne suivante.</li><li><b>B.</b> un compteur de 1 à 10 — Le temps d&#x27;ouverture ne dépend pas d&#x27;un nombre de tours mais de la présence réelle.</li><li><b>D.</b> aucune structure : un capteur suffit — Le capteur mesure ; c&#x27;est l&#x27;algorithme qui décide de garder la porte ouverte.</li></ul>
+        <p class="retenir">🧠 À retenir : Une condition à surveiller en continu demande une boucle.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo29">
+      <h3>Exercice 29 — Le four qui surveille <span class="tag-dnb">Logique</span></h3>
+      
+      <div class="assoc">
+        <label for="q29">Un four coupe la chauffe quand la cuisson est terminée. Quel élément fournit l'information de fin de cuisson ?</label>
+        <select id="q29"><option value="">— choisir —</option><option>la variable de l&#x27;algorithme</option><option>un capteur, qui renseigne le système sur l&#x27;état réel du plat</option><option>l&#x27;utilisateur, obligatoirement</option><option>l&#x27;actionneur de chauffe</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Sépare ce qui informe de ce qui agit.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Capteur = entrée (il informe). Actionneur = sortie (il agit). L'algorithme est au milieu : il reçoit, décide, commande. C'est la structure de tout système automatisé.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> un capteur, qui renseigne le système sur l&#x27;état réel du plat</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>A.</b> la variable de l&#x27;algorithme — La variable stocke l&#x27;information : elle ne la crée pas.</li><li><b>C.</b> l&#x27;utilisateur, obligatoirement — S&#x27;il fallait l&#x27;utilisateur à chaque fois, le four ne serait pas automatique.</li><li><b>D.</b> l&#x27;actionneur de chauffe — L&#x27;actionneur agit : il chauffe. Il ne mesure rien.</li></ul>
+        <p class="retenir">🧠 À retenir : Le capteur informe, l&#x27;actionneur agit, l&#x27;algorithme décide.</p>
+      </details>
+    </article>
+    <article class="exo" id="exo30">
+      <h3>Exercice 30 — Le stock qui alerte <span class="tag-dnb">Logique</span></h3>
+      
+      <div class="assoc">
+        <label for="q30">Un magasin déclenche une commande dès que le stock passe sous 15 unités. Il en reste 15. Que fait l'algorithme si le test est « stock < 15 » ?</label>
+        <select id="q30"><option value="">— choisir —</option><option>il ne commande pas : 15 n&#x27;est pas strictement inférieur à 15</option><option>il commande, car le stock est bas</option><option>il affiche une erreur</option><option>il commande une demi-unité</option></select>
+      </div>
+      <details class="aide aide1"><summary>💡 Aide de niveau 1</summary><p>Compare très exactement la valeur et le signe du test.</p></details>
+      <details class="aide aide2"><summary>💡💡 Aide de niveau 2</summary><p>Encore le cas limite. Si l'intention était « à 15 on commande », il fallait écrire « stock ≤ 15 ». L'écart entre l'intention et le code se voit uniquement en testant la valeur du seuil.</p></details>
+      <details class="correction"><summary>📖 Correction (à ouvrir APRÈS avoir vérifié)</summary>
+        <p><b>Réponse attendue :</b> il ne commande pas : 15 n&#x27;est pas strictement inférieur à 15</p>
+        <p><b>Pourquoi les autres sont fausses :</b></p>
+        <ul><li><b>B.</b> il commande, car le stock est bas — L&#x27;algorithme n&#x27;a pas d&#x27;avis sur ce qui est « bas » : il applique le test écrit.</li><li><b>C.</b> il affiche une erreur — Rien d&#x27;anormal ne s&#x27;est produit : le test est simplement faux.</li><li><b>D.</b> il commande une demi-unité — Un test ne produit pas de résultat partiel : il est vrai ou faux.</li></ul>
+        <p class="retenir">🧠 À retenir : Le seuil se teste avec la valeur exacte du seuil.</p>
+      </details>
+    </article>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier la manche 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+</section>
+</div>
+
+<section class="card approfondissement">
+  <h2>🔗 Pour aller plus loin</h2>
+  <p>Cette page <b>entraîne</b>&nbsp;: elle ne remplace pas une séquence. Pour apprendre à
+  <b>écrire</b> un algorithme de zéro, et pas seulement à en lire un&nbsp;:</p>
+  <p>➡ <a href="sequence_3e_C6.2_auto_test_station.html">L'auto-test de la station (3e_C6.2)</a>
+  — 3 séances, un besoin réel, un banc d'essai intégré.</p>
+  <p>➡ <a href="../3e_C6.1/sequence_3e_C6.1-C6.3_programmer_alerte.html">Programmer l'alerte
+  (3e_C6.1 · C6.3)</a> — lire les données d'un programme, puis le modifier et le tester.</p>
+</section>
+
+<footer>
+  <p>Entraînement DNB · Thème 2 · Technologie cycle 4 (2024) — page autonome, hors ligne,
+  aucune donnée envoyée.</p>
+</footer>
+</div>
+
+<script>
+"use strict";
+const KEY="entrainement_dnb_algorigrammes";
+const $=id=>document.getElementById(id);
+const val=id=>{ const e=$(id); return e ? e.value : ""; };
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(silencieux){
+  try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){}
+  if(!silencieux){}
+}
+function restore(){
+  let o=null;
+  try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(ev.target.tagName==="SELECT") save(true); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement tes réponses enregistrées dans ce navigateur ?")){
+    localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de manche ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  1: function(){
+    let ok=0, vides=0;
+    const att={q1:"une suite ordonnée d'instructions qui résout un problème, exécutable pas à pas",
+               q2:"à poser une question fermée : une flèche entre, deux sorties étiquetées oui et non",
+               q3:"le terminal, un rectangle aux extrémités arrondies",
+               q4:"un parallélogramme : la donnée franchit la frontière du système",
+               q5:"une case mémoire qui porte un nom et dont le contenu peut changer",
+               q6:"DÉBUT",
+               q7:"TANT QUE",
+               q8:"de haut en bas, en suivant les flèches"};
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    return {score:ok, total:8, vides:vides, valide: ok >= 6};
+  },
+  2: function(){
+    let ok=0, vides=0;
+    const att={q9:"il lit deux nombres et affiche leur somme",
+               q10:"« Petit », car 10 n'est pas strictement supérieur à 10",
+               q11:"12",
+               q12:"6",
+               q13:"5 fois, pour i valant 1, 2, 3, 4 puis 5",
+               q14:"aucune : le test est faux dès le premier passage",
+               q15:"la boucle ne s'arrête jamais : rien ne fait avancer i",
+               q16:"faire chauffer l'eau → mettre le sachet → verser l'eau → attendre → retirer le sachet"};
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    return {score:ok, total:8, vides:vides, valide: ok >= 6};
+  },
+  3: function(){
+    let ok=0, vides=0;
+    const att={q17:"avant la boucle : le compteur doit exister avant qu'on commence à compter",
+               q18:"toujours 1 : un organe qui marche n'efface pas un défaut déjà trouvé",
+               q19:"après la boucle : on ne peut conclure qu'une fois tous les organes testés",
+               q20:"defauts > 0",
+               q21:"à montrer quelles instructions sont à l'intérieur de la boucle",
+               q22:"le message est calculé correctement mais ne part jamais : la panne est silencieuse"};
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    return {score:ok, total:6, vides:vides, valide: ok >= 4};
+  },
+  4: function(){
+    let ok=0, vides=0;
+    const att={q23:"éviter que le chauffage s'allume et s'éteigne sans arrêt autour d'une seule valeur",
+               q24:"il reste éteint : les deux conditions doivent être vraies en même temps",
+               q25:"il est admis : le test « supérieur ou égal » inclut la valeur 10",
+               q26:"une sortie par défaut, qui écarte l'objet non identifié",
+               q27:"une boucle avec un compteur, qui s'arrête quand le compteur atteint 500",
+               q28:"une boucle : tant que la présence est détectée, la porte reste ouverte",
+               q29:"un capteur, qui renseigne le système sur l'état réel du plat",
+               q30:"il ne commande pas : 15 n'est pas strictement inférieur à 15"};
+    Object.entries(att).forEach(([id,v])=>{ const r=val(id); if(!r) vides++; else if(r===v) ok++; });
+    return {score:ok, total:8, vides:vides, valide: ok >= 6};
+  }
+};
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n);
+    fb.className="feedback show " + (r.valide ? "ok" : (r.score >= r.total/2 ? "mixte" : "err"));
+    let msg = r.score + " / " + r.total + " réponses justes.";
+    if(r.vides) msg += " Il te reste " + r.vides + " exercice(s) sans réponse.";
+    else if(r.valide) msg += " Solide. Ouvre quand même les corrections : les explications des réponses fausses valent des points au brevet.";
+    else if(r.score >= r.total/2) msg += " La moitié est là. Reprends les corrections des exercices ratés, une par une.";
+    else msg += " Rien de grave : ouvre les aides de niveau 2, puis refais la manche. C'est exactement à ça que sert cette page.";
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(true); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 manches validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  [1,2,3,4].forEach(k=>{ const d=$("done-m"+k); if(d) d.textContent = v[k] ? " ✔" : ""; });
+  majTaches();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  m1: {titre:"Manche 1 — Le vocabulaire et les symboles", taches:[{n:1, libelle:"Traiter les 8 exercices de la manche 1"}]},
+  m2: {titre:"Manche 2 — Lire et dérouler", taches:[{n:2, libelle:"Traiter les 8 exercices de la manche 2"}]},
+  m3: {titre:"Manche 3 — Compteurs, tests et cas limites", taches:[{n:3, libelle:"Traiter les 6 exercices de la manche 3"}]},
+  m4: {titre:"Manche 4 — Sujets type DNB", taches:[{n:4, libelle:"Traiter les 8 exercices de la manche 4"}]}
+};
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(true);
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress();
+</script>
+</body>
+</html>

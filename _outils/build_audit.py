@@ -302,12 +302,15 @@ OVERLAY = {
                 "22 tests Playwright tous passés. Le libellé est pris au mot : l'élève "
                 "ÉCRIT une fonctionnalité nouvelle, il ne lit pas et ne modifie pas.",
         anomalies="Aucune sur l'atelier : les 7 règles mécanisables (n°23, 26, 29, 30, 31, "
-                  "33, 34) sont au vert. La banque d'entraînement DNB héritée du dossier "
-                  "(sequence_algorigrammes_dnb.html, 30 exercices, 13 schémas) est "
-                  "conservée telle quelle et requalifiée en RESSOURCE D'ENTRAÎNEMENT, ce "
-                  "qui est sa nature réelle ; elle n'est pas bâtie sur le gabarit maison "
-                  "et reste donc signalée sans mode essentiel — écart assumé et documenté "
-                  "au rapport de tests plutôt que masqué.",
+                  "33, 34) sont au vert. Le dossier contient en outre, depuis le 08/08/2026, "
+                  "un ENTRAÎNEMENT DNB réécrit au gabarit maison (30 exercices en 4 manches, "
+                  "90 réfutations de distracteurs, 60 aides, sauvegarde locale, mode essentiel, "
+                  "21 tests Playwright passés). La banque d'entraînement héritée "
+                  "(sequence_algorigrammes_dnb.html) est conservée telle quelle et requalifiée "
+                  "en RESSOURCE D'ENTRAÎNEMENT ; elle n'est ni modifiée ni déplacée, quatorze "
+                  "fichiers du dépôt y faisant référence, et reste donc signalée sans mode "
+                  "essentiel — écart assumé, documenté, et relevant d'une décision "
+                  "d'archivage plutôt que d'un correctif technique.",
         accessibilite="Tous les champs de saisie étiquetés, aucun défilement horizontal à "
                       "1280 px ni à 420 px, focus clavier conservé, réussite jamais "
                       "signalée par la seule couleur. Non vérifiés automatiquement, donc "
