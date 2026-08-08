@@ -142,6 +142,11 @@
   }
 select.ok,input.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
 select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+
+  /* Règle d'or n°29 — mode essentiel : alléger la lecture sans retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
 </style>
 </head>
 <body>
@@ -177,7 +182,9 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 4 activités validées</b></span>
@@ -296,12 +303,12 @@ select.ko,input.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(
     <div class="exo">
       <h4>a) D'abord le dessin — l'algorigramme du programme corrigé (règle n°18)</h4>
       <p>Avant les lignes de code, remets les blocs dans l'ordre (numérote de 1 à 6)&nbsp;:</p>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">⬭ début</span><select id="ag1" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>DÉBUT (au démarrage du système)</span></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag2" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Mesurer l'humidité H et lire l'heure</span></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision 1</span><select id="ag3" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>H &lt; 35 ET (heure &lt; 8 OU heure &gt; 17)&nbsp;? → OUI&nbsp;: pompe ON</span></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision 2</span><select id="ag4" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>SINON, H &gt; 45&nbsp;? → OUI&nbsp;: pompe OFF</span></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag5" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Entre 35 et 45&nbsp;: NE RIEN CHANGER (l'hystérésis garde l'état)</span></div>
-      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">↺ boucle</span><select id="ag6" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Revenir à la mesure (le système surveille en continu)</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">⬭ début</span><select id="ag1" style="width:78px" aria-label="Avant les lignes de code, remets les blocs dans l'ordre (numérote de 1 à 6)"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>DÉBUT (au démarrage du système)</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag2" style="width:78px" aria-label="Avant les lignes de code, remets les blocs dans l'ordre (numérote de 1 à 6)"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Mesurer l'humidité H et lire l'heure</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision 1</span><select id="ag3" style="width:78px" aria-label="champ à renseigner"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>H &lt; 35 ET (heure &lt; 8 OU heure &gt; 17)&nbsp;? → OUI&nbsp;: pompe ON</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision 2</span><select id="ag4" style="width:78px" aria-label="champ à renseigner"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>SINON, H &gt; 45&nbsp;? → OUI&nbsp;: pompe OFF</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag5" style="width:78px" aria-label="champ à renseigner"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Entre 35 et 45&nbsp;: NE RIEN CHANGER (l'hystérésis garde l'état)</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">↺ boucle</span><select id="ag6" style="width:78px" aria-label="champ à renseigner"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><span>Revenir à la mesure (le système surveille en continu)</span></div>
       <button class="btn small" data-check="5" type="button">✅ Vérifier l'algorigramme</button>
       <p class="feedback" id="fb5" role="status"></p>
       <details class="correction"><summary>📖 Correction bloc par bloc</summary>
@@ -631,7 +638,29 @@ function majHyp(){
 $("hyp1").addEventListener("input", majHyp);
 
 /* ══════ Init ══════ */
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+(function(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    document.body.classList.toggle("essentiel");
+    window.__exp = window.__exp || {};
+    window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+    majEssentiel();
+    if(typeof save === "function") save(false);
+  });
+})();
 restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel();
 if(window.__exp && window.__exp.scen){ $("scenEtat").textContent="4 / 4 — programme corrigé VALIDÉ en simulation ✅ (déjà fait)"; $("scenIcone").textContent="✅"; }
 else { majBanc(); }
 majProgress(); majHyp();
