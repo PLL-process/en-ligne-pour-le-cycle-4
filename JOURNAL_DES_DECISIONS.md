@@ -1580,3 +1580,55 @@ lot, à la main. C'est le poste le plus coûteux du chantier, et c'est écrit ic
 l'achèvement du lot **`4e_C4.1_book-train`** laissé en suspens — il ne comporte aujourd'hui qu'une séquence
 et ses fichiers drawio, sans QCM, sans synthèses, sans fiche ni manifest, ce qui contredit la règle du lot
 indivisible. Une PR par lot, la présente PR ne portant que les règles et l'outillage.
+
+## 2026-08-08 — Le lot « Un Book Train pour la Schœlcher » est enfin complet (4e_C4.1 · C4.2 · C4.4)
+
+**Décision.** Le dossier `4e_C4.1_book-train` contenait depuis le 05/08/2026 une séquence de très bonne
+facture — analyse du Book Train de la New York Public Library au service d'un projet de modernisation de la
+bibliothèque Schœlcher — mais **rien d'autre** : ni QCM, ni synthèses, ni fiche, ni matrice, ni manifest.
+Elle contredisait donc la première règle de la méthode : **le lot est un ensemble indivisible**. Pascal
+l'avait signalé comme « laissé en suspension ». Ce lot l'achève.
+
+**Ce qui a été produit.** Un QCM de **30 questions** réparties 10 / 10 / 10 sur les trois codes, avec pour
+chacune une explication, un exemple, l'erreur classique, la réfutation de **chaque** distracteur et un
+« à retenir » ; quatre questions illustrées par les deux diagrammes fonctionnels du lot ; bonnes réponses
+réparties 8/7/8/7 par `fix_r.js` (graine 4127). Synthèse élève (les cinq notions en une page A4) et synthèse
+professeur (cadrage, déroulé minuté, points de vigilance, grille à trois niveaux). Fiche pédagogique, matrice
+de couverture (36 notions tracées jusqu'aux questions du QCM), SOURCES_MEDIAS, README, manifest, rapport de
+tests. **La séquence elle-même n'a pas été réécrite** : elle était bonne, elle a été complétée.
+
+**Mise aux règles d'or n°23 à n°34.** Durées annoncées activité par activité — 154 min pour 165 disponibles,
+marge de service comptée (n°23) ; billet d'entrée de 4 minutes **sans note** sur les acquis de 5e, avec
+capsule de rattrapage et vérificateur qui dit explicitement qu'aucune note n'est prise (n°26) ; mode
+essentiel persistant (n°29) ; **version étayée** pour chacune des trois productions écrites — hypothèse,
+justification de format, bilan — à exigence scientifique identique (n°31) ; pavés de texte scindés (n°33) ;
+**les 41 listes déroulantes de la page étiquetées** par `label` ou `aria-label`, alors qu'une bonne partie
+n'était portée que par un en-tête de tableau (n°34).
+
+**Ce que le lot ne fait pas, et qui est écrit.** La règle n°30 (tableau de bord des tâches) n'est pas
+applicable en l'état : la progression de cette séquence n'utilise pas les vérificateurs numérotés des autres
+lots. C'est un **écart assumé**, consigné au rapport de tests et au manifest plutôt que maquillé en
+conformité. Par ailleurs, le CRCN 3.3 et 3.4 est travaillé par les activités et **pas** par le QCM, qui porte
+sur les trois codes de technologie : le CRCN reste le résultat d'une activité authentique, jamais une
+étiquette (règle n°7).
+
+**Un bug de mon propre outil, trouvé en s'en servant.** Le vérificateur `verif_regles_audit.py` signalait
+comme « sans étiquette » des champs qui en avaient une : son expression régulière s'arrêtait à l'attribut
+`id` et ne voyait donc jamais un `aria-label` placé après. Le compte réel du Thème 2 n'est pas de 59
+manquements mais de **54**. Leçon : un outil de contrôle se vérifie lui-même sur un cas connu-bon avant
+qu'on lui fasse confiance.
+
+**Où vit ce correctif — et pourquoi il n'est pas là où on l'attendrait.** Il devait accompagner la PR des
+règles (#127). Il a été poussé quelques minutes APRÈS sa fusion : il est donc resté orphelin sur la branche,
+et `main` a un moment porté l'outil bogué et le chiffre de 59. Le correctif voyage finalement avec le présent
+lot, et l'état des lieux est recalculé ici. C'est consigné parce qu'un chiffre publié puis corrigé mérite de
+dire quand et pourquoi il a changé.
+
+**Statuts d'audit.** `4e_C4.2` et `4e_C4.4` passent de COUVERT PAR UNE SÉQUENCE MUTUALISÉE à **COMPLET ET
+VALIDABLE** : ils disposent désormais d'un atelier dédié avec séquence, QCM, synthèses et évaluation.
+Le Thème 2 compte 19 codes complets au lieu de 17.
+
+**Tests.** Suite Playwright dédiée : **32/32 verts** — blocs règle n°4, figures, cohérence entre le nombre de
+questions annoncé et le QCM livré, les quatre états du billet d'entrée, les cinq états du mode essentiel dont
+la persistance, une version étayée par production écrite, l'étiquetage de tous les champs, et les onze
+vérifications du QCM.

@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 1530 560" font-family="Segoe UI, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Chaîne d'énergie simplifiée du Book Train de la New York Public Library</title>
+<desc id="d">Schéma fonctionnel horizontal en quatre blocs : Une source d'énergie extérieure entre à gauche : le réseau du bâtiment, 480 volts alternatif triphasé 60 hertz, issu du 13,2 kilovolts urbain. Alimenter (un convertisseur 480 volts alternatif vers 24 volts continu — transformateur, redresseur et lisseur — produisant le bus 24 volts, alimentations auxiliaires basse tension secourues, batterie rechargeable 24 volts embarquée), Distribuer (armoire de puissance : protections, contacteurs, relais et variateur qui autorisent et modulent par MLI le courant moteur sur ordre), Convertir (moteur électrique 24 volts continu du wagonnet), Transmettre (réducteur et entraînement par galets sur le rail). La sortie est l'action : déplacer le wagonnet et sa nacelle dans le tunnel puis la montée verticale. Une flèche d'ordre descend depuis la chaîne d'information (automate PLC et capteurs) vers le bloc Distribuer, conformément à la convention : l'information en haut, l'énergie en bas, la flèche d'ordres qui descend. Une flèche d'états remonte de la chaîne d'énergie vers la chaîne d'information : les comptes-rendus des capteurs.</desc>
+
+<style>
+  .flux-anime{animation:flux 1.1s linear infinite}
+  @keyframes flux{to{stroke-dashoffset:-32}}
+  @media (prefers-reduced-motion:reduce){.flux-anime{animation:none}}
+  .pulse{filter:drop-shadow(0 0 2px rgba(232,161,58,.8))}
+  @media (prefers-reduced-motion:reduce){.pulse{display:none}}
+</style>
+
+<defs>
+  <linearGradient id="g-rouge" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#d64541"/><stop offset="1" stop-color="#a8281f"/>
+  </linearGradient>
+  <linearGradient id="g-bloc" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#fbf7f0"/>
+  </linearGradient>
+  <linearGradient id="g-vert" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#eef9f2"/><stop offset="1" stop-color="#d6efe0"/>
+  </linearGradient>
+  <linearGradient id="g-acier" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f2f6fa"/><stop offset="1" stop-color="#e2eaf1"/>
+  </linearGradient>
+  <linearGradient id="g-or" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fdf9ee"/><stop offset="1" stop-color="#f5ecd6"/>
+  </linearGradient>
+  <filter id="ombre" x="-20%" y="-20%" width="140%" height="150%">
+    <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#2d3a46" flood-opacity="0.22"/>
+  </filter>
+  <filter id="ombre-l" x="-20%" y="-20%" width="140%" height="150%">
+    <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#2d3a46" flood-opacity="0.15"/>
+  </filter>
+  <marker id="fleche" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse">
+    <path d="M0,0 L13,6.5 L0,13 z" fill="#2b2f38"/>
+  </marker>
+  <marker id="fleche-ordre" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse">
+    <path d="M0,0 L13,6.5 L0,13 z" fill="#8f221d"/>
+  </marker>
+  <marker id="fleche-etat" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse">
+    <path d="M0,0 L13,6.5 L0,13 z" fill="#2d3a46"/>
+  </marker>
+  <marker id="fleche-or" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse">
+    <path d="M0,0 L13,6.5 L0,13 z" fill="#a8823c"/>
+  </marker>
+</defs>
+
+<!-- fond + zones pédagogiques teintées -->
+<rect x="-150" y="0" width="1530" height="560" fill="#fdfcf8"/>
+<rect x="14" y="80" width="1352" height="106" rx="16" fill="#eef3f7" opacity="0.45"/>
+<rect x="14" y="270" width="1352" height="276" rx="16" fill="#fbf0ef" opacity="0.5"/>
+<text x="1366" y="102" font-size="12" font-weight="bold" fill="#7d94a8" text-anchor="end" letter-spacing="2">INFORMATION</text>
+<text x="1366" y="538" font-size="12" font-weight="bold" fill="#c9948f" text-anchor="end" letter-spacing="2">ÉNERGIE</text>
+
+<!-- titre -->
+<text x="30" y="42" font-size="26" font-weight="bold" font-family="Georgia, serif" fill="#2d3a46">⚡ Chaîne d'énergie simplifiée du Book Train</text>
+<rect x="30" y="50" width="330" height="3" rx="1.5" fill="#a8823c"/>
+<text x="30" y="70" font-size="15" fill="#5a6068" font-style="italic">Bryant Park → Rose Main Reading Room · alimentation et motorisation des 24 wagonnets</text>
+
+<!-- ============ Zone INFORMATION (rappel) ============ -->
+<g filter="url(#ombre-l)">
+  <rect x="206" y="92" width="400" height="66" rx="14" fill="url(#g-acier)" stroke="#2d3a46" stroke-width="2" stroke-dasharray="8 5"/>
+</g>
+<text x="406" y="118" font-size="15" font-weight="bold" fill="#2d3a46" text-anchor="middle" letter-spacing="0.5">CHAÎNE D'INFORMATION (rappel simplifié)</text>
+<text x="406" y="140" font-size="13.5" fill="#2d3a46" text-anchor="middle">Automate (PLC) + capteurs de station + destination programmée</text>
+
+<!-- Flèche d'ORDRE : axe de DISTRIBUER (x=406), elle descend -->
+<line x1="406" y1="158" x2="406" y2="282" stroke="#8f221d" stroke-width="4" class="flux-anime" stroke-dasharray="10 6" marker-end="url(#fleche-ordre)"/>
+<g filter="url(#ombre-l)">
+  <rect x="418" y="196" width="164" height="62" rx="10" fill="#fff" stroke="#e4c8c5" stroke-width="1.5"/>
+</g>
+<text x="430" y="216" font-size="14" font-weight="bold" fill="#8f221d">ORDRES</text>
+<text x="430" y="234" font-size="12.5" fill="#8f221d">« démarre / accélère /</text>
+<text x="430" y="250" font-size="12.5" fill="#8f221d">ralentis / stoppe »</text>
+
+<!-- Flèche d'ÉTATS : la chaîne d'énergie rend compte à la chaîne d'information -->
+<path d="M 772 330 H 849 V 125 H 612" fill="none" stroke="#2d3a46" stroke-width="2.5" class="flux-anime" stroke-dasharray="7 5" marker-end="url(#fleche-etat)"/>
+<text x="857" y="212" font-size="13" font-weight="bold" fill="#2d3a46">états ↖</text>
+<text x="857" y="228" font-size="11.5" fill="#2d3a46">comptes-rendus des capteurs</text>
+<text x="857" y="243" font-size="10.5" fill="#5a6068">(position · vitesse · wagonnet vacant)</text>
+
+<!-- séparation info / énergie -->
+<line x1="20" y1="192" x2="470" y2="192" stroke="#a8823c" stroke-width="1.5" stroke-dasharray="4 6"/>
+<line x1="600" y1="192" x2="1040" y2="192" stroke="#a8823c" stroke-width="1.5" stroke-dasharray="4 6"/>
+<text x="30" y="212" font-size="12.5" fill="#a8823c" font-style="italic">— au-dessus : l'information décide · en dessous : l'énergie exécute —</text>
+
+<!-- ============ CHAÎNE D'ÉNERGIE ============ -->
+<!-- Source d'énergie extérieure : à GAUCHE d'Alimenter, flèche horizontale -->
+<text x="-10" y="316" font-size="12.5" font-weight="bold" font-style="italic" fill="#c0322b" text-anchor="end">⚡ Source d'énergie</text>
+<text x="-10" y="332" font-size="12.5" font-weight="bold" font-style="italic" fill="#c0322b" text-anchor="end">extérieure :</text>
+<text x="-10" y="350" font-size="12" font-style="italic" fill="#c0322b" text-anchor="end">réseau du bâtiment</text>
+<text x="-10" y="386" font-size="11" font-style="italic" fill="#c0322b" text-anchor="end">(issu du 13,2 kV urbain)</text>
+<line x1="-104" y1="360" x2="24" y2="360" stroke="#c0322b" stroke-width="3.5" marker-end="url(#fleche-ordre)"/>
+<text x="-40" y="374" font-size="11.5" font-weight="bold" fill="#c0322b" text-anchor="middle">480 V ~ tri · 60 Hz</text>
+<!-- ALIMENTER -->
+<g filter="url(#ombre)">
+  <rect x="30" y="286" width="210" height="148" rx="14" fill="url(#g-bloc)" stroke="#c0322b" stroke-width="3"/>
+  <path d="M30 300 a14 14 0 0 1 14 -14 h182 a14 14 0 0 1 14 14 v20 h-210 z" fill="url(#g-rouge)"/>
+</g>
+<text x="135" y="309" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="1">ALIMENTER</text>
+<text x="135" y="342" font-size="14" font-weight="bold" text-anchor="middle" fill="#20242e">Convertisseur</text>
+<text x="135" y="361" font-size="14" font-weight="bold" text-anchor="middle" fill="#20242e">480 V ~ → 24 V ⎓</text>
+<text x="135" y="381" font-size="10.5" text-anchor="middle" fill="#5a6068">(transformateur + redresseur + lisseur)</text>
+<text x="135" y="400" font-size="11" text-anchor="middle" fill="#5a6068">+ alimentations auxiliaires secourues</text>
+<text x="135" y="415" font-size="11" text-anchor="middle" fill="#5a6068">(capteurs, automate — onduleur)</text>
+
+<!-- source auxiliaire -->
+<g filter="url(#ombre-l)">
+  <rect x="30" y="448" width="210" height="72" rx="12" fill="url(#g-or)" stroke="#a8823c" stroke-width="2" stroke-dasharray="7 4"/>
+</g>
+<text x="135" y="474" font-size="13.5" font-weight="bold" fill="#7a5e28" text-anchor="middle">🔋 Source auxiliaire</text>
+<text x="135" y="493" font-size="13" fill="#7a5e28" text-anchor="middle">Batterie rechargeable 24 V ⎓</text>
+<text x="135" y="510" font-size="12" fill="#7a5e28" text-anchor="middle">embarquée dans chaque wagonnet</text>
+<path d="M 240 484 H 262 V 398 H 276" stroke="#a8823c" stroke-width="2.5" class="flux-anime" stroke-dasharray="7 4" fill="none" marker-end="url(#fleche-or)"/>
+<text x="270" y="442" font-size="11.5" fill="#7a5e28">secours</text>
+<text x="270" y="456" font-size="11.5" fill="#7a5e28">appoint</text>
+
+<line x1="240" y1="360" x2="278" y2="360" stroke="#2b2f38" stroke-width="3.5" marker-end="url(#fleche)"/>
+<g filter="url(#ombre-l)"><rect x="221" y="258" width="76" height="20" rx="10" fill="#fff" stroke="#d9d2c0"/></g>
+<text x="259" y="272" font-size="10.5" font-weight="bold" fill="#5a6068" text-anchor="middle">bus 24 V ⎓</text>
+<line x1="259" y1="280" x2="259" y2="352" stroke="#d9d2c0" stroke-width="1.2" stroke-dasharray="2 3"/>
+
+<!-- DISTRIBUER -->
+<g filter="url(#ombre)">
+  <rect x="282" y="286" width="248" height="148" rx="14" fill="url(#g-bloc)" stroke="#c0322b" stroke-width="3"/>
+  <path d="M282 300 a14 14 0 0 1 14 -14 h220 a14 14 0 0 1 14 14 v20 h-248 z" fill="url(#g-rouge)"/>
+</g>
+<text x="406" y="309" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="1">DISTRIBUER</text>
+<text x="406" y="342" font-size="13.5" text-anchor="middle" fill="#20242e">Armoire de puissance :</text>
+<text x="406" y="360" font-size="13" text-anchor="middle" fill="#20242e">protections (fusibles, disjoncteurs)</text>
+<text x="406" y="378" font-size="13" font-weight="bold" text-anchor="middle" fill="#20242e">contacteurs · relais · variateur</text>
+<text x="406" y="398" font-size="12.5" text-anchor="middle" fill="#20242e">→ barre d'alimentation du rail</text>
+<text x="406" y="412" font-size="11" font-style="italic" text-anchor="middle" fill="#8f221d">autorise et module (MLI)</text>
+<text x="406" y="427" font-size="11" font-style="italic" text-anchor="middle" fill="#8f221d">le courant moteur — sur ORDRE</text>
+
+<line x1="530" y1="360" x2="568" y2="360" stroke="#2b2f38" stroke-width="3.5" marker-end="url(#fleche)"/>
+<g filter="url(#ombre-l)"><rect x="487" y="262" width="124" height="20" rx="10" fill="#fff" stroke="#d9d2c0"/></g>
+<text x="549" y="276" font-size="10.5" font-weight="bold" fill="#5a6068" text-anchor="middle">24 V ⎓ modulé (MLI)</text>
+<line x1="549" y1="284" x2="549" y2="352" stroke="#d9d2c0" stroke-width="1.2" stroke-dasharray="2 3"/>
+
+<!-- CONVERTIR -->
+<g filter="url(#ombre)">
+  <rect x="572" y="286" width="200" height="148" rx="14" fill="url(#g-bloc)" stroke="#c0322b" stroke-width="3"/>
+  <path d="M572 300 a14 14 0 0 1 14 -14 h172 a14 14 0 0 1 14 14 v20 h-200 z" fill="url(#g-rouge)"/>
+</g>
+<text x="672" y="309" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="1">CONVERTIR</text>
+<text x="672" y="352" font-size="14" text-anchor="middle" fill="#20242e">Moteur électrique</text>
+<text x="672" y="374" font-size="14" font-weight="bold" text-anchor="middle" fill="#20242e">24 V ⎓ (DC)</text>
+
+<line x1="772" y1="360" x2="854" y2="360" stroke="#2b2f38" stroke-width="3.5" marker-end="url(#fleche)"/>
+<g filter="url(#ombre-l)"><rect x="783" y="258" width="60" height="20" rx="10" fill="#fff" stroke="#d9d2c0"/></g>
+<text x="813" y="272" font-size="10.5" font-weight="bold" fill="#5a6068" text-anchor="middle">rotation</text>
+<line x1="813" y1="280" x2="813" y2="352" stroke="#d9d2c0" stroke-width="1.2" stroke-dasharray="2 3"/>
+
+<!-- TRANSMETTRE -->
+<g filter="url(#ombre)">
+  <rect x="858" y="286" width="216" height="148" rx="14" fill="url(#g-bloc)" stroke="#c0322b" stroke-width="3"/>
+  <path d="M858 300 a14 14 0 0 1 14 -14 h188 a14 14 0 0 1 14 14 v20 h-216 z" fill="url(#g-rouge)"/>
+</g>
+<text x="966" y="309" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="1">TRANSMETTRE</text>
+<text x="966" y="352" font-size="14" text-anchor="middle" fill="#20242e">Réducteur (gearbox)</text>
+<text x="966" y="374" font-size="14" text-anchor="middle" fill="#20242e">+ galets d'entraînement</text>
+<text x="966" y="400" font-size="12.5" text-anchor="middle" fill="#5a6068">adapte vitesse et effort sur le rail</text>
+
+<!-- Sortie : ACTION (au bout de la chaîne, à droite) -->
+<line x1="1074" y1="360" x2="1108" y2="360" stroke="#2b2f38" stroke-width="3.5" marker-end="url(#fleche)"/>
+<g filter="url(#ombre)">
+  <rect x="1112" y="286" width="260" height="148" rx="30" fill="url(#g-vert)" stroke="#1e7d4f" stroke-width="3"/>
+</g>
+<text x="1242" y="320" font-size="15.5" font-weight="bold" fill="#1e7d4f" text-anchor="middle">🚃 ACTION :</text>
+<text x="1242" y="343" font-size="13" font-weight="bold" fill="#1e7d4f" text-anchor="middle">déplacer le wagonnet + nacelle</text>
+<text x="1242" y="371" font-size="10.5" fill="#1e7d4f" text-anchor="middle">tunnel horizontal puis montée verticale</text>
+<text x="1242" y="391" font-size="12" fill="#1e7d4f" text-anchor="middle">≈ 23 m/min (1,4 km/h)</text>
+
+<!-- légende (panneau) -->
+<g filter="url(#ombre-l)">
+  <rect x="318" y="448" width="300" height="92" rx="12" fill="#fff" stroke="#d9d2c0" stroke-width="1.5"/>
+</g>
+<text x="334" y="464" font-size="12" font-weight="bold" fill="#5a6068" letter-spacing="1">LÉGENDE</text>
+<g font-size="11.5" fill="#20242e">
+  <line x1="334" y1="479" x2="370" y2="479" stroke="#2b2f38" stroke-width="3" marker-end="url(#fleche)"/>
+  <text x="378" y="483">flux d'énergie</text>
+  <line x1="334" y1="497" x2="370" y2="497" stroke="#8f221d" stroke-width="3" class="flux-anime" stroke-dasharray="9 5" marker-end="url(#fleche-ordre)"/>
+  <text x="378" y="501">ordres (information → énergie)</text>
+  <line x1="334" y1="515" x2="370" y2="515" stroke="#2d3a46" stroke-width="2.5" class="flux-anime" stroke-dasharray="7 5" marker-end="url(#fleche-etat)"/>
+  <text x="378" y="519">états (énergie → information)</text>
+  <line x1="334" y1="533" x2="370" y2="533" stroke="#a8823c" stroke-width="2.5" class="flux-anime" stroke-dasharray="7 4" marker-end="url(#fleche-or)"/>
+  <text x="378" y="537">source auxiliaire (secours)</text>
+</g>
+
+<circle r="3.5" fill="#e8a13a" class="pulse" opacity="0.9"><animateMotion dur="1.1s" begin="0.5s" repeatCount="indefinite" path="M-104,360 L24,360"/></circle>
+<!-- impulsions : le flux d'énergie voyage (trait plein = continu, la bille montre le sens) -->
+<circle r="3.5" fill="#e8a13a" class="pulse" opacity="0.9"><animateMotion dur="1.1s" begin="0s" repeatCount="indefinite" path="M240,360 L278,360"/></circle>
+<circle r="3.5" fill="#e8a13a" class="pulse" opacity="0.9"><animateMotion dur="1.1s" begin="0.35s" repeatCount="indefinite" path="M530,360 L568,360"/></circle>
+<circle r="3.5" fill="#e8a13a" class="pulse" opacity="0.9"><animateMotion dur="1.1s" begin="0.7s" repeatCount="indefinite" path="M772,360 L854,360"/></circle>
+<circle r="3.5" fill="#e8a13a" class="pulse" opacity="0.9"><animateMotion dur="1.2s" begin="0.2s" repeatCount="indefinite" path="M1074,360 L1108,360"/></circle>
+<circle r="3" fill="#e8a13a" class="pulse" opacity="0.9"><animateMotion dur="1.3s" begin="0s" repeatCount="indefinite" path="M334,484 L374,484"/></circle>
+
+<text x="30" y="552" font-size="11" fill="#8a929c">Schéma original CC0 — séquence « Book Train » · convention du dépôt : information en haut, énergie en bas, la flèche d'ordre descend.</text>
+</svg>

@@ -365,6 +365,11 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
 .pieges ul{margin:.45rem 0 0 1.25rem;padding:0}
 .pieges li{margin:.35rem 0}
 @media print{.btn-haut{display:none}}
+
+  /* Règle d'or n°29 — mode essentiel : alléger la page sans rien retirer du parcours */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
 </style>
 </head>
 <body>
@@ -384,7 +389,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
       <span class="badge crcn">🎯 CRCN 3.3 Adapter les documents à leur finalité — Niv. 2</span>
       <span class="badge theme">Thème 2 — Structure, fonctionnement, comportement</span>
       <span class="badge socle">Socle : D1.3 · D2 · D4</span>
-      <span class="badge duree">⏱ 3 séances</span>
+      <span class="badge duree">⏱ 3 séances de 55 min</span>
     </div>
     <p style="font-size:.9rem;margin:.4rem 0 0;color:#d9d2c0">Ces deux gestes — construire un algorigramme et choisir le bon format de fichier — se retrouvent dans ta certification Pix de 3e.</p>
   </div>
@@ -411,6 +416,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   <button type="button" class="btn" id="btn-sauver">💾 Sauvegarder mon travail</button>
   <button type="button" class="btn ghost" id="btn-imprimer">🖨 Imprimer / PDF</button>
   <button type="button" class="btn ghost" id="btn-effacer">🗑 Effacer ma sauvegarde</button>
+  <button type="button" class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
 <p class="saved-note" id="saved-note" role="status"></p>
 <div class="progress-wrap">
@@ -447,6 +453,13 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     <p>Avant de commencer, écris ton hypothèse. Tu la retrouveras au bilan pour la confronter à ce que tu auras appris.</p>
     <p><label for="hypothese">Selon toi, comment un wagonnet « sait-il » où livrer son livre, sans conducteur ?</label></p>
     <textarea id="hypothese" data-save placeholder="J'écris mon hypothèse avec mes mots…"></textarea>
+    <details class="aide1"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Le niveau attendu est <strong>exactement le même</strong> : on retire l'obstacle de la rédaction, pas l'exigence.
+      Recopie ces débuts de phrase dans le cadre et complète-les.</p>
+      <p>« Je pense que le wagonnet sait où aller parce que ______.<br>
+      L'information de destination vient de ______.<br>
+      Ce qui lui permet de savoir qu'il est arrivé, c'est ______. »</p>
+    </details>
     <p style="font-size:.9rem;color:#5a6068">💾 Tout ce que tu écris sur cette page est sauvegardé automatiquement sur cet ordinateur (rien n'est envoyé sur internet).</p>
   </div>
   <div class="carte">
@@ -557,8 +570,57 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     </figure>
   </div>
 
+  <div class="carte referentiel-card">
+    <h3>🎫 Billet d'entrée — je vérifie mes acquis de 5e <span style="font-size:.7em;font-weight:normal;opacity:.8">(4 min, sans note)</span></h3>
+    <p>Trois questions, <strong>aucune note</strong> : juste un aiguillage. Ce que tu as vu en 5e sur les objets
+    techniques suffit largement.</p>
+    <p><strong>3 bonnes réponses :</strong> tu enchaînes sur l'activité 1.1.<br>
+    <strong>2 ou moins :</strong> ouvre la capsule « Je révise la 5e en 3 minutes » juste en dessous — et tu repars à égalité.</p>
+
+    <p><label for="be1">Une <strong>fonction technique</strong>, c'est…</label><br>
+    <select id="be1" data-save data-bonne="fonction" aria-label="Une fonction technique, c'est">
+      <option value="">— je choisis —</option>
+      <option value="fonction">ce à quoi sert une partie de l'objet, exprimé par un verbe</option>
+      <option value="a">le nom du composant utilisé</option>
+      <option value="b">le prix de la pièce</option>
+      <option value="c">la marque du fabricant</option>
+    </select></p>
+
+    <p><label for="be2">Un <strong>capteur</strong> sert à…</label><br>
+    <select id="be2" data-save data-bonne="capteur" aria-label="Un capteur sert à">
+      <option value="">— je choisis —</option>
+      <option value="capteur">recueillir une information sur le système ou son environnement</option>
+      <option value="a">faire bouger une partie de l'objet</option>
+      <option value="b">alimenter l'objet en électricité</option>
+      <option value="c">protéger l'objet des chocs</option>
+    </select></p>
+
+    <p><label for="be3">Dans un objet technique, l'énergie électrique peut devenir…</label><br>
+    <select id="be3" data-save data-bonne="energie" aria-label="Dans un objet technique, l'énergie électrique peut devenir">
+      <option value="">— je choisis —</option>
+      <option value="energie">du mouvement, de la lumière ou de la chaleur</option>
+      <option value="a">de l'information uniquement</option>
+      <option value="b">rien : elle reste toujours électrique</option>
+      <option value="c">de la matière</option>
+    </select></p>
+
+    <button type="button" class="btn verif" id="btn-billet">Vérifier mon billet d'entrée</button>
+    <p class="feedback" id="fb-billet" role="status"></p>
+
+    <details class="aide1"><summary>🎒 Je révise la 5e en 3 minutes</summary>
+      <p>Une <strong>fonction technique</strong> dit <em>à quoi sert</em> une partie de l'objet. On l'écrit avec
+      un verbe : « soutenir la charge », « détecter la présence ». La <strong>solution technique</strong>, elle,
+      dit <em>avec quoi on le fait</em> : le rail, le capteur, le moteur.</p>
+      <p>Un <strong>capteur</strong> recueille une information — une présence, une distance, une température —
+      et la transmet au système. Il ne fait rien bouger : c'est l'actionneur qui agit.</p>
+      <p>L'<strong>énergie électrique</strong> peut changer de forme : elle devient du mouvement dans un moteur,
+      de la lumière dans une lampe, de la chaleur dans un radiateur. C'est ce changement de forme qu'on appelle
+      une transformation d'énergie — et c'est le cœur de l'activité 1.2 bis.</p>
+    </details>
+  </div>
+
   <div class="carte">
-    <h3>Activité 1.1 — Le trajet d'un livre, dans l'ordre</h3>
+    <h3>Activité 1.1 — Le trajet d'un livre, dans l'ordre <span style="font-size:.7em;font-weight:normal;opacity:.8">(~15 min)</span></h3>
     <details class="aide1"><summary>📖 Rappel de la mission (situation déclenchante)</summary><div class="contenu"><p>« Quand un lecteur commande un livre depuis la Rose Main Reading Room, au 3ᵉ étage, l'ouvrage doit traverser un tunnel, grimper le long des murs et franchir les plafonds… en restant parfaitement à plat. »</p><p><strong>Attention, deux personnes différentes</strong> encadrent le voyage : au sous-sol, le <strong>magasinier</strong> des stacks charge la nacelle ; au 3ᵉ étage, le <strong>bibliothécaire du comptoir</strong> reçoit le livre et prévient le lecteur.</p></div></details>
     <p class="competence-visee">🎯 <strong>4e_C4 (compétence-mère — mise en route)</strong> — Décrire et caractériser l'organisation interne d'un objet ou système technique et ses échanges avec son environnement (énergies, données) : tu remets d'abord le fonctionnement global dans l'ordre, avant d'identifier les chaînes (activités suivantes, 4e_C4.1 · 4e_C4.4).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> le carnet de l'ingénieur est tombé, les étapes sont mélangées ! Pour chaque position (de 1 à 6), choisis l'étape qui s'y déroule. <strong>Document de référence :</strong> le <strong>schéma d'ensemble ci-dessus</strong> et le récit de la mission — les positions 1 à 6 suivent le voyage du livre, de la demande du lecteur jusqu'au comptoir du 3ᵉ étage.</div>
@@ -591,7 +653,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   </div>
 
   <div class="carte">
-    <h3>Activité 1.2 — Qui informe, qui agit ?</h3>
+    <h3>Activité 1.2 — Qui informe, qui agit ? <span style="font-size:.7em;font-weight:normal;opacity:.8">(~10 min)</span></h3>
     <p class="competence-visee">🎯 <strong>4e_C4.4</strong> — Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction.</p>
     <div class="consigne">📌 <strong>Consigne :</strong> classe chaque élément du Book Train : appartient-il à la <strong>chaîne d'information</strong> (il capte, traite ou transmet des informations) ou à la <strong>chaîne d'énergie</strong> (il alimente, distribue, convertit ou transmet de l'énergie) ?</div>
     <div class="encadre-regle">
@@ -623,19 +685,19 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
 
 
   <div class="carte">
-    <h3>Activité 1.2 A — Le diagramme fonctionnel : quelle solution pour quelle fonction ?</h3>
+    <h3>Activité 1.2 A — Le diagramme fonctionnel : quelle solution pour quelle fonction ? <span style="font-size:.7em;font-weight:normal;opacity:.8">(~12 min)</span></h3>
     <p class="competence-visee">🎯 <strong>5e_C4.1 (rappel de 5e)</strong> — Associer des solutions techniques à une ou des fonctions techniques.</p>
     <div class="consigne">📌 <strong>Consigne :</strong> avant de suivre l'énergie, remplis le <strong>diagramme fonctionnel</strong> du Book Train : pour chaque <strong>fonction technique</strong>, choisis la <strong>solution technique</strong> que les ingénieurs ont retenue. <em>(En 3e, tu ajouteras une colonne « fonction d'usage » à gauche pour bâtir le schéma-bloc complet — compétence 3e_C4.1.)</em></div>
     <div id="exo12df">
       <table style="width:100%;border-collapse:collapse;margin:.6rem 0">
         <thead><tr><th style="padding:.5rem;border:1px solid var(--border);text-align:left">Fonction technique</th><th style="padding:.5rem;border:1px solid var(--border);text-align:left">Solution technique</th></tr></thead>
         <tbody>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Fournir une énergie exploitable par le système</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12ta" data-save data-bonne="convertisseur" style="width:100%"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Soutenir et guider le wagonnet sur tout le parcours</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tb" data-save data-bonne="rail" style="width:100%"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Mettre le wagonnet en mouvement</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tc" data-save data-bonne="moteur" style="width:100%"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Adapter la vitesse et l'effort au rail</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12td" data-save data-bonne="reducteur" style="width:100%"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Maintenir les livres à plat, même à la verticale</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12te" data-save data-bonne="nacelle" style="width:100%"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Détecter la position du wagonnet</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tf" data-save data-bonne="capteurs" style="width:100%"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Fournir une énergie exploitable par le système</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12ta" data-save data-bonne="convertisseur" style="width:100%" aria-label="Fournir une énergie exploitable par le système"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Soutenir et guider le wagonnet sur tout le parcours</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tb" data-save data-bonne="rail" style="width:100%" aria-label="Soutenir et guider le wagonnet sur tout le parcours"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Mettre le wagonnet en mouvement</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tc" data-save data-bonne="moteur" style="width:100%" aria-label="Mettre le wagonnet en mouvement"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Adapter la vitesse et l'effort au rail</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12td" data-save data-bonne="reducteur" style="width:100%" aria-label="Adapter la vitesse et l'effort au rail"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Maintenir les livres à plat, même à la verticale</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12te" data-save data-bonne="nacelle" style="width:100%" aria-label="Maintenir les livres à plat, même à la verticale"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left;font-weight:normal">Détecter la position du wagonnet</th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12tf" data-save data-bonne="capteurs" style="width:100%" aria-label="Détecter la position du wagonnet"><option value="">— je choisis —</option><option value="rail">le rail + galets porteurs</option><option value="moteur">le moteur électrique 24 V ⎓</option><option value="reducteur">le réducteur + galets d'entraînement</option><option value="nacelle">la nacelle à suspension pendulaire (cardan)</option><option value="capteurs">les capteurs le long du rail</option><option value="convertisseur">le convertisseur 480 V ~ / 24 V ⎓</option></select></td></tr>
         </tbody>
       </table>
     </div>
@@ -678,10 +740,10 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
           <th style="padding:.5rem;border:1px solid var(--border);text-align:left">Énergie de sortie ➡</th>
         </tr></thead>
         <tbody>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">ALIMENTER<br><small style="font-weight:normal">convertisseur 480 V / 24 V</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12f" data-save data-bonne="elec-ac" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12g" data-save data-bonne="elec-dc" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">DISTRIBUER<br><small style="font-weight:normal">armoire : contacteurs, relais, variateur</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12m" data-save data-bonne="elec-dc" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12n" data-save data-bonne="elec-dc" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">CONVERTIR<br><small style="font-weight:normal">moteur électrique</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12h" data-save data-bonne="elec-dc" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12i" data-save data-bonne="rotation" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
-          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">TRANSMETTRE<br><small style="font-weight:normal">réducteur + galets</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12j" data-save data-bonne="rotation" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12k" data-save data-bonne="translation" style="width:100%"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">ALIMENTER<br><small style="font-weight:normal">convertisseur 480 V / 24 V</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12f" data-save data-bonne="elec-ac" style="width:100%" aria-label="ALIMENTERconvertisseur 480 V / 24 V"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12g" data-save data-bonne="elec-dc" style="width:100%" aria-label="ALIMENTERconvertisseur 480 V / 24 V"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">DISTRIBUER<br><small style="font-weight:normal">armoire : contacteurs, relais, variateur</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12m" data-save data-bonne="elec-dc" style="width:100%" aria-label="DISTRIBUERarmoire : contacteurs, relais, variateur"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12n" data-save data-bonne="elec-dc" style="width:100%" aria-label="DISTRIBUERarmoire : contacteurs, relais, variateur"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">CONVERTIR<br><small style="font-weight:normal">moteur électrique</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12h" data-save data-bonne="elec-dc" style="width:100%" aria-label="CONVERTIRmoteur électrique"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12i" data-save data-bonne="rotation" style="width:100%" aria-label="CONVERTIRmoteur électrique"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
+          <tr><th scope="row" style="padding:.5rem;border:1px solid var(--border);text-align:left">TRANSMETTRE<br><small style="font-weight:normal">réducteur + galets</small></th><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12j" data-save data-bonne="rotation" style="width:100%" aria-label="TRANSMETTREréducteur + galets"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td><td style="padding:.5rem;border:1px solid var(--border)"><select id="e12k" data-save data-bonne="translation" style="width:100%" aria-label="TRANSMETTREréducteur + galets"><option value="">— je choisis —</option><option value="elec-ac">électrique alternative (AC)</option><option value="elec-dc">électrique continue (DC)</option><option value="rotation">mécanique de rotation</option><option value="translation">mécanique de translation</option><option value="thermique">thermique</option></select></td></tr>
         </tbody>
       </table>
       <div class="ligne-exo"><span class="num">★</span><label for="e12l">Le bilan : dans quel bloc l'énergie change-t-elle de <strong>nature</strong> (électrique → mécanique) ?</label>
@@ -694,7 +756,8 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     <details class="correction"><summary>✅ Correction complète</summary><div class="contenu">
       <p><strong>ALIMENTER :</strong> entre de l'électrique alternative (480 V ~ triphasé — l'équivalent américain de notre 400 V tri, issu du 13,2 kV urbain), sort de l'électrique continue (bus 24 V ⎓) grâce à son convertisseur 480 V ~ → 24 V ⎓ (transformateur + redresseur + lisseur). L'énergie reste <em>électrique</em> : changement de <em>forme</em>, pas de nature. À noter : ALIMENTER fournit aussi les alimentations auxiliaires basse tension, secourues par onduleur, pour l'automate et les capteurs — le cerveau ne doit jamais s'éteindre.</p>
       <p><strong>DISTRIBUER :</strong> entre du 24 V ⎓, sort du 24 V ⎓… <em>modulé (MLI)</em>. Ses contacteurs, relais et variateur ne transforment pas l'énergie : ils l'<strong>autorisent, la modulent, l'inversent — sur ORDRE</strong>. C'est le portier de la puissance, pas son cuisinier.</p>
-      <p><strong>🔬 Pour les curieux — comment « module »-t-on ? (le fameux MLI du schéma)</strong> Par <strong>MLI (PWM)</strong> — en toutes lettres : <em>Modulation de Largeur d'Impulsion</em>, <em>Pulse Width Modulation</em> — le variateur hache le 24 V en impulsions ultra-rapides, des milliers de fois par seconde. Plus les impulsions sont <em>larges</em>, plus le moteur reçoit d'énergie en moyenne — et plus il va vite. On ne baisse pas la tension (une résistance gaspillerait tout en chaleur) : on joue sur le <em>temps de passage</em>. Métaphore : on ne dose pas l'eau en écrasant le tuyau, on ouvre et ferme le robinet très vite. C'est la technique de TOUS les moteurs modernes, de la trottinette au TGV.</p>
+      <p><strong>🔬 Pour les curieux — comment « module »-t-on ? (le fameux MLI du schéma)</strong> Par <strong>MLI (PWM)</strong> — en toutes lettres : <em>Modulation de Largeur d'Impulsion</em>, <em>Pulse Width Modulation</em> — le variateur hache le 24 V en impulsions ultra-rapides, des milliers de fois par seconde.</p>
+    <p>Plus les impulsions sont <em>larges</em>, plus le moteur reçoit d'énergie en moyenne — et plus il va vite. On ne baisse pas la tension (une résistance gaspillerait tout en chaleur) : on joue sur le <em>temps de passage</em>. Métaphore : on ne dose pas l'eau en écrasant le tuyau, on ouvre et ferme le robinet très vite. C'est la technique de TOUS les moteurs modernes, de la trottinette au TGV.</p>
       <p><strong>CONVERTIR :</strong> entre de l'électrique continue (24 V ⎓), sort de la <em>rotation</em>. C'est LA conversion : l'énergie change de <strong>nature</strong> — électrique → mécanique. C'est pour cela que le bloc s'appelle CONVERTIR !</p>
       <p><strong>TRANSMETTRE :</strong> entre de la rotation (rapide, peu de couple), sort de la <em>translation</em> du wagonnet (l'avancée sur le rail). Le réducteur adapte, les galets transmettent : la nature reste mécanique, la forme change.</p>
       <p>📐 Sur ton diagramme fonctionnel, écris ces énergies <strong>sur les flèches</strong> entre les blocs : une flèche sans étiquette est une flèche muette.</p>
@@ -725,7 +788,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   </div>
 
   <div class="carte">
-    <h3>Activité 1.3 — Le schéma oublié : ajoute les capteurs dans draw.io 🛠️</h3>
+    <h3>Activité 1.3 — Le schéma oublié : ajoute les capteurs dans draw.io 🛠️ <span style="font-size:.7em;font-weight:normal;opacity:.8">(~15 min)</span></h3>
     <p class="competence-visee">🎯 <strong>4e_C4.4</strong> — Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction.</p>
     <div class="meta">
       <strong>Objectif :</strong> compléter la chaîne d'information du Book Train avec ses capteurs, dans draw.io. ·
@@ -1056,7 +1119,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   </div>
 
   <div class="carte">
-    <h3>Activité 2.1 — Chaque forme a un métier</h3>
+    <h3>Activité 2.1 — Chaque forme a un métier <span style="font-size:.7em;font-weight:normal;opacity:.8">(~10 min)</span></h3>
     <p class="competence-visee">🎯 <strong>CRCN 3.4</strong> — Programmer — lire et construire un algorigramme normalisé (niveau 2).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> associe chaque élément du trajet du livre au symbole normalisé qui doit le représenter dans l'algorigramme.</div>
     <div id="exo21">
@@ -1085,7 +1148,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   </div>
 
   <div class="carte">
-    <h3>Activité 2.2 — Construire l'algorigramme dans draw.io</h3>
+    <h3>Activité 2.2 — Construire l'algorigramme dans draw.io <span style="font-size:.7em;font-weight:normal;opacity:.8">(~38 min)</span></h3>
     <p class="competence-visee">🎯 <strong>CRCN 3.4</strong> — Programmer — lire et construire un algorigramme normalisé (niveau 2).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> ouvre draw.io et construis l'algorigramme complet du trajet du livre, du Début à la Fin, avec <strong>au moins les deux tests</strong> (« wagonnet vacant ? » et « arrivé au 3ᵉ étage ? »). Enregistre ton fichier sous le nom <code>book-train.drawio</code>.</div>
     <h4>🧭 Guide draw.io pas à pas — personne ne reste sur le quai !</h4>
@@ -1368,7 +1431,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   </div>
 
   <div class="carte">
-    <h3>Activité 3.2 — Le verdict : SVG ou PNG ?</h3>
+    <h3>Activité 3.2 — Le verdict : SVG ou PNG ? <span style="font-size:.7em;font-weight:normal;opacity:.8">(~15 min)</span></h3>
     <p class="competence-visee">🎯 <strong>CRCN 3.3</strong> — Adapter les documents à leur finalité — choisir et justifier un format d'export (niveau 2).</p>
     <div class="consigne">📌 <strong>Consigne :</strong> complète le tableau comparatif à l'aide de ton expérience, puis rédige ta justification. C'est elle qui compte pour ta certification : un bon choix <em>sans</em> justification ne vaut rien.</div>
     <table class="comparatif">
@@ -1393,6 +1456,12 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     <details class="aide2"><summary>✋ Aide niveau 2</summary><div class="contenu">Vectoriel = le fichier décrit des <em>formes</em> (« un losange de tel point à tel point ») que l'ordinateur redessine à n'importe quelle taille. Matriciel = le fichier stocke chaque <em>pixel</em> : en zoomant, on agrandit les pixels.</div></details>
     <p style="margin-top:1rem"><label for="justif">✍️ Ma justification (2 à 4 phrases) : quel format j'exporte pour mon diaporama, et pourquoi ? Dans quel cas le PNG resterait-il utile ?</label></p>
     <textarea id="justif" data-save placeholder="J'exporte mon algorigramme en … parce que … . En revanche, si je devais …, je choisirais … car …"></textarea>
+    <details class="aide1"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Même exigence, moins d'obstacle : recopie et complète.</p>
+      <p>« J'exporte mon algorigramme en ______ parce que ______.<br>
+      Au vidéoprojecteur, ce format ______.<br>
+      Je garde aussi un ______ parce que ______. »</p>
+    </details>
     <button class="verif" data-exo="exo32" data-verrou="zoom" data-texte="justif">Vérifier mon verdict</button>
     <p class="resultat" id="res-exo32" aria-live="polite"></p>
     <details class="correction"><summary>✅ Correction complète</summary><div class="contenu">
@@ -1403,7 +1472,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   </div>
 
   <div class="carte">
-    <h3>Activité 3.3 — Exporter, puis construire le diaporama</h3>
+    <h3>Activité 3.3 — Exporter, puis construire le diaporama <span style="font-size:.7em;font-weight:normal;opacity:.8">(~35 min)</span></h3>
     <p class="competence-visee">🎯 <strong>CRCN 3.3</strong> — Adapter les documents à leur finalité — choisir et justifier un format d'export (niveau 2).</p>
     <div class="consigne">📌 <strong>Consigne A — l'export :</strong> dans draw.io : <em>Fichier → Exporter sous → SVG…</em> (coche « Inclure une copie de mon diagramme » : ton SVG restera modifiable dans draw.io !). Recommence avec <em>→ PNG…</em> en réglant le zoom d'export à 300 % minimum. Tu obtiens <code>book-train.svg</code> et <code>book-train.png</code>.</div>
     <div class="consigne">📌 <strong>Consigne B — le diaporama (production finale) :</strong> construis un diaporama de <strong>6 diapositives</strong> en suivant le plan imposé. Insère ton algorigramme exporté (Insertion → Image) sur la diapositive 4 — en SVG si ton logiciel l'accepte, sinon ton PNG haute résolution.</div>
@@ -1623,6 +1692,11 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     <blockquote id="rappel-hypothese" style="border-left:4px solid var(--laiton);margin:.6rem 0;padding:.5rem 1rem;background:#faf7ef;font-style:italic">…</blockquote>
     <p><label for="bilan-hyp">Ton hypothèse était-elle juste, partielle, à corriger ? Explique en une ou deux phrases :</label></p>
     <textarea id="bilan-hyp" data-save placeholder="Mon hypothèse était… car en réalité, le wagonnet…"></textarea>
+    <details class="aide1"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>« Mon hypothèse de départ était ______ (juste / partiellement juste / à corriger).<br>
+      Ce que j'ignorais, c'est que ______.<br>
+      Maintenant, je sais expliquer que ______. »</p>
+    </details>
     <h3>Mon auto-positionnement</h3>
     <div class="autopos" id="autopos">
       <div class="ligne-exo"><span class="code-comp">Décrire un système automatisé (chaînes d'information et d'énergie) :</span>
@@ -1642,7 +1716,7 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
 
   <div class="bloc-entrainement">
     <h2>🧠 Prêt·e à t'entraîner ?</h2>
-    <p>Le QCM de la séquence t'attend : <strong>30 questions</strong> dont <strong>3 illustrées</strong>, sur le Book Train, les algorigrammes et les formats de fichiers. Chaque réponse est expliquée — même les mauvaises !</p>
+    <p>Le QCM de la séquence t'attend : <strong>30 questions</strong> dont <strong>4 illustrées</strong>, réparties sur les trois compétences : l'organisation du système (4e_C4.1), les transformations d'énergie (4e_C4.2) et la chaîne d'information (4e_C4.4). Chaque réponse est expliquée — même les mauvaises !</p>
     <a class="btn-qcm" href="qcm_book-train.html">🚃 Lancer le QCM de la séquence</a>
   </div>
 
@@ -1652,7 +1726,8 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
     <p><strong>Défi 2 — Le Book Train de la Schœlcher (la suite de ta mission !) :</strong> la Collectivité attend des idées. Imagine l'adaptation du système à la bibliothèque Schœlcher : quelles contraintes changent (distances plus courtes, monument historique où l'on ne perce pas, climat tropical — humidité, cyclones —, budget d'une collectivité) ? Esquisse ta proposition en une diapo supplémentaire : c'est elle qui transforme ton étude en projet.</p>
     <p><strong>Défi 3 — 2,6 millions, cher ou pas ?</strong> Mène l'enquête d'ingénieur : estime ce que coûterait la solution « humaine » (combien de trajets par jour ? combien d'employés ? sur combien d'années ?) et compare au prix du Book Train. Ton verdict argumenté en une diapo — il n'y a pas de bonne réponse, seulement des bons arguments.</p>
     <p><strong>Défi 5 — L'IA, assistante (jamais pilote) :</strong> demande à une intelligence artificielle de te proposer un brouillon de diaporama sur le Book Train… puis <strong>audite-le</strong> comme un ingénieur : respecte-t-il le plan des 6 diapos ? les règles premium (3 couleurs, mots-clés) ? et surtout, ses <em>informations</em> sont-elles exactes ? Vérifie chaque chiffre contre le communiqué officiel de la NYPL. Indice vécu : pendant la préparation de cette séquence, une IA affirmait que les wagonnets roulaient en 48 V — la source officielle dit <strong>24 V</strong>. L'IA propose, TOI tu décides et tu vérifies : c'est ça, l'esprit critique numérique.</p>
-    <p><strong>Défi 4 — L'archéologie des convoyeurs (avec témoin !) :</strong> avant 2016, les livres voyageaient en caisses sur des tapis roulants vieillissants — un système utilisé pendant 25 ans, où une seule courroie en panne pouvait tout paralyser. Ton professeur a fréquenté la bibliothèque en <strong>2008</strong>, à l'époque de ce système : ses photos d'alors montrent la Rose Main Reading Room <em>avant</em> sa grande restauration et <em>avant</em> le train. Compare-les aux images officielles de 2016, cherche comment fonctionnait l'ancien dispositif, et prépare 3 arguments : pourquoi le Book Train est-il un progrès ? C'est toute la question de l'<em>évolution des objets techniques</em> : un système ne naît jamais de rien, il répond aux faiblesses de celui qu'il remplace.</p>
+    <p><strong>Défi 4 — L'archéologie des convoyeurs (avec témoin !) :</strong> avant 2016, les livres voyageaient en caisses sur des tapis roulants vieillissants — un système utilisé pendant 25 ans, où une seule courroie en panne pouvait tout paralyser. Ton professeur a fréquenté la bibliothèque en <strong>2008</strong>, à l'époque de ce système : ses photos d'alors montrent la Rose Main Reading Room <em>avant</em> sa grande restauration et <em>avant</em> le train.</p>
+    <p>Compare-les aux images officielles de 2016, cherche comment fonctionnait l'ancien dispositif, et prépare 3 arguments : pourquoi le Book Train est-il un progrès ? C'est toute la question de l'<em>évolution des objets techniques</em> : un système ne naît jamais de rien, il répond aux faiblesses de celui qu'il remplace.</p>
     <!-- 📷 Emplacement photos du professeur (2008) — à décommenter une fois les photos retouchées :
     <figure>
       <img src="photos/nypl-2008-1.jpg" alt="La Rose Main Reading Room en 2008, avant restauration — photo personnelle du professeur" style="max-width:100%;border-radius:8px">
@@ -1914,6 +1989,47 @@ footer{border-top:1px dashed var(--border);color:#5b7bb8}
   });
   var bI = document.getElementById('btn-imprimer');
   if (bI) bI.addEventListener('click', function(){ window.print(); });
+  /* ---------- Billet d'entrée (règle d'or n°26) : il oriente, il ne sanctionne pas ---------- */
+  var bBillet = document.getElementById('btn-billet');
+  if (bBillet) bBillet.addEventListener('click', function(){
+    var ids = ['be1','be2','be3'], ok = 0, vides = 0;
+    ids.forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el || !el.value) { vides++; return; }
+      if (el.value === el.getAttribute('data-bonne')) ok++;
+    });
+    var fb = document.getElementById('fb-billet');
+    if (!fb) return;
+    if (vides) {
+      fb.textContent = 'Réponds d’abord aux ' + vides + ' question' + (vides > 1 ? 's' : '') +
+        ' restante' + (vides > 1 ? 's' : '') + ' — il n’y a aucune note à la clé.';
+      fb.className = 'feedback';
+    } else if (ok === 3) {
+      fb.textContent = '🎫 3 / 3 — bagages complets : file à l’activité 1.1, tu as tout ce qu’il faut.';
+      fb.className = 'feedback ok';
+    } else {
+      fb.textContent = ok + ' / 3 — rien de grave : ouvre la capsule « Je révise la 5e en 3 minutes » ' +
+        'juste en dessous, puis refais le billet. Aucune note n’est prise.';
+      fb.className = 'feedback mixte';
+    }
+    ecrireEtat(etat);
+  });
+
+  /* ---------- Règle d'or n°29 — mode essentiel ---------- */
+  var bEss = document.getElementById('btnEssentiel');
+  function majEssentiel(){
+    var on = document.body.classList.contains('essentiel');
+    if (bEss){ bEss.textContent = on ? '🎯 Mode essentiel : ON' : '🎯 Mode essentiel : OFF';
+               bEss.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+  }
+  if (bEss) bEss.addEventListener('click', function(){
+    document.body.classList.toggle('essentiel');
+    etat.modeEssentiel = document.body.classList.contains('essentiel') ? 1 : 0;
+    majEssentiel(); ecrireEtat(etat);
+  });
+  if (etat.modeEssentiel) document.body.classList.add('essentiel');
+  majEssentiel();
+
   var bE = document.getElementById('btn-effacer');
   if (bE) bE.addEventListener('click', function(){
     if (confirm('Effacer toutes tes réponses sauvegardées sur cet ordinateur ?')){
