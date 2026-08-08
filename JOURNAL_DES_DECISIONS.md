@@ -2288,3 +2288,68 @@ lots de Thème 1 à venir&nbsp;: ils s'afficheront d'emblée dans la bonne inter
 **Vingt contrôles automatiques** accompagnent ces règles (`_outils/tests_index.py`) — dont la
 présence des 114 formulations, l'absence de troncature, l'absence de fichier de gouvernance dans la
 vue pédagogique, l'absence de ressource distante, et l'accessibilité clavier. **20 / 20.**
+
+---
+
+## 08/08/2026 — Lot Shanghai 5e_C3 : le premier lot du Thème 1, et la première séquence hors ligne
+
+### Ce que le lot ouvre
+
+La compétence **C3 — caractériser et choisir un objet ou un système technique** n'avait **aucune
+ressource sur les trois niveaux**&nbsp;: onze codes vides. Ce lot en couvre les quatre de 5e.
+
+Il exécute le `PLAN_LOT_SHANGHAI.md` qui attendait dans le dossier depuis une session précédente,
+et réutilise le fichier de données simulées qui y dormait — vingt colonnes, trois solutions.
+
+### L'ordre des codes n'est pas celui des numéros
+
+C3.1 → C3.2 → C3.4 → **C3.3 en dernier**. On ne peut pas *choisir* avant d'avoir caractérisé, situé
+dans le cycle de vie et mesuré. C3.3 n'est pas une compétence parmi d'autres&nbsp;: c'est
+l'aboutissement de la séquence, et la placer ailleurs qu'à la fin l'aurait vidée de son sens.
+
+### Le fil qui tient la séquence
+
+La **masse** explique la consommation en séance 1 (18 contre 165 Wh/km), pèse sur trois étapes du
+cycle de vie en séance 2, puis explique la distance de freinage en séance 3 (1,6 contre 5,8 m).
+
+Quand une même grandeur explique plusieurs phénomènes, l'élève cesse d'empiler des faits
+séparés&nbsp;: il tient un modèle. C'est ce qu'on cherche, et c'est rare.
+
+### Le retournement final
+
+L'activité 5 change le besoin — 400 kg sur 150 km hors centre-ville — et la bonne réponse devient
+S2, après trois séances où S1 gagnait. Ce n'est pas un piège&nbsp;: c'est la compétence C3.3
+elle-même. **Une solution technique n'est jamais bonne dans l'absolu, elle est bonne pour un besoin
+donné.** La synthèse professeur insiste sur la nuance à poser&nbsp;: la première réponse n'était
+pas fausse, elle répondait à un autre besoin.
+
+### Première séquence du dépôt sans aucune ressource distante
+
+La règle n°40, écrite ce matin à partir de l'audit de l'index, s'applique ici **dès la
+naissance**&nbsp;: ni la séquence ni le QCM n'appellent Google Fonts. Pile système, et rien
+d'autre. Elles fonctionnent à l'identique derrière un filtrage de collège — ce que nos autres
+séquences promettent sans le tenir encore.
+
+Les anciennes suivront lot par lot. C'est un rétrofit mécanisable et peu risqué, mais il ne sera
+pas fait à la sauvette dans une PR de contenu.
+
+### Deux défauts trouvés par les tests
+
+**Le champ `img` du QCM était un tableau, pas un objet.** Ma fonction rangeait le couple
+`(source, alternative)` tel quel, alors que le gabarit attend `{src, alt}`. Les trois questions
+illustrées n'auraient affiché **aucune image**, et rien ne se voyait à la lecture du source&nbsp;:
+seulement à l'exécution.
+
+**Un test qui interrogeait l'affichage au lieu du document.** Le contrôle des blocs de la règle n°4
+utilisait `innerText`, qui ignore les panneaux de séance masqués&nbsp;: il déclarait absents des
+blocs bien présents. C'est la **troisième fois de la journée** qu'un test accuse à tort une page
+conforme. Le réflexe est acquis, et il valait la peine d'être appris&nbsp;: devant un test rouge,
+chercher lequel des deux a tort avant de toucher au code.
+
+### Le bilan
+
+Quatre codes passent de « À CRÉER » à **COMPLET ET VALIDABLE** (5e_C3.1) et **COUVERT PAR UNE
+SÉQUENCE MUTUALISÉE** (C3.2, C3.3, C3.4). Le dépôt compte **21 codes complets** au lieu de 20, et
+41 « à créer » au lieu de 44.
+
+Vérificateur&nbsp;: **7 règles sur 7**. Tests&nbsp;: **27 sur 27**.

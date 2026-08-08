@@ -290,6 +290,50 @@ OVERLAY = {
         accessibilite="Bonne base ; navigation clavier des onglets de séances à vérifier.",
         medias="2 SVG originaux (schema_chaines_arrosage, schema_eclairage_automatique).",
     ),
+    "5e_C3.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Shanghai — quel véhicule pour le dernier kilomètre ? » (08/08/2026) : "
+                "4 séances de 55 min, 5 activités + billet d'entrée sans note, données simulées "
+                "à 20 colonnes exploitées au tableur, QCM de 30 questions dont 3 illustrées, "
+                "2 synthèses, fiche, matrice de 32 notions, 27 tests Playwright tous passés. "
+                "Premier lot du C3, compétence qui n'avait aucune ressource sur les trois niveaux. "
+                "L'ordre de traitement est C3.1, C3.2, C3.4 puis C3.3 : on ne choisit qu'après "
+                "avoir caractérisé, situé dans le cycle de vie et mesuré.",
+        anomalies="Aucune : les 7 règles mécanisables sont au vert. Les données du fichier CSV "
+                  "sont ENTIÈREMENT SIMULÉES et annoncées comme telles dès la situation "
+                  "déclenchante (règle n°27) — aucun véhicule commercialisé n'est décrit.",
+        accessibilite="Champs étiquetés, alternatives longues (plus de 120 caractères) sur les "
+                      "trois figures, aucun défilement horizontal à 1280 ni à 390 px, versions "
+                      "étayées pour les 8 productions écrites. PREMIÈRE SÉQUENCE DU DÉPÔT SANS "
+                      "AUCUNE RESSOURCE DISTANTE (règle n°40) : elle fonctionne à l'identique "
+                      "derrière un filtrage de collège. Non vérifiés donc non déclarés conformes : "
+                      "impression A4, contraste mesuré, lecteur d'écran réel, zoom 200 %.",
+        medias="3 SVG originaux CC0 écrits à la main (planche comparative des trois solutions, "
+               "cycle de vie avec les étapes influencées, protocole de mesure du freinage).",
+    ),
+    "5e_C3.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shanghai du dossier 5e_C3.1 (séance 2 — les étapes du cycle de vie influencées par les choix de matériaux et d'énergie).",
+        anomalies="Voir 5e_C3.1 : dossier principal du lot.",
+    ),
+    "5e_C3.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shanghai du dossier 5e_C3.1 (séance 4 — filtrer selon un cahier des charges, puis choisir et argumenter).",
+        anomalies="Voir 5e_C3.1 : dossier principal du lot.",
+    ),
+    "5e_C3.4": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shanghai du dossier 5e_C3.1 (séance 3 — appliquer un protocole fourni et comparer des performances).",
+        anomalies="Voir 5e_C3.1 : dossier principal du lot.",
+    ),
     "3e_C6.2": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
