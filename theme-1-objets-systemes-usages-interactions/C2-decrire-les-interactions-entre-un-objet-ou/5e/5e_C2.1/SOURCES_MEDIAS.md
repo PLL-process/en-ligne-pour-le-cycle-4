@@ -5,7 +5,7 @@ libre, avec `<title>` et `<desc>` accessibles.
 
 | Fichier | Nature | Auteur | Licence | Rôle pédagogique |
 |---|---|---|---|---|
-| `Images/interacteurs_de_la_station.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | Les trois natures d'interacteurs autour de la station, avec les deux repères : l'interacteur est extérieur, et une liste de personnes seules est à moitié faite |
+| `Images/interacteurs_de_la_station.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | Les quatre familles d'interacteurs autour de la station, avec les deux repères : l'interacteur est extérieur, et une liste de personnes seules est à moitié faite |
 | `Images/lire_un_choix_de_conception.svg` | SVG original écrit à la main | Fable, pour ce dépôt | CC0 1.0 | Le passage « ce que j'observe → pourquoi pas autrement → l'interacteur → le domaine », sur quatre exemples de la station |
 
 Les deux figures sont **lues**, pas regardées : la première sert de grille de relecture de la liste

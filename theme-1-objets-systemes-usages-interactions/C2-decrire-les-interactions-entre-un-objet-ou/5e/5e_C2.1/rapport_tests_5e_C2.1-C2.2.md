@@ -20,7 +20,7 @@ elle se relance depuis le dossier du lot par `python3 tests_5e_C2.1-C2.2_shenzhe
 | Le compteur annonce 3 activités et en compte 3 (n°39) | ✔ |
 | Billet d'entrée : oriente sans note, ne compte pas dans la progression (n°26) | ✔ |
 | Activité 1 : une liste de six **personnes** est refusée | ✔ |
-| Activité 1 : validée seulement quand les trois natures sont nommées | ✔ |
+| Activité 1 : validée seulement quand les quatre familles sont nommées | ✔ |
 | Activité 2 : le relevé de quatre choix est exigé avant validation | ✔ |
 | Activité 2 : un relevé **sans développement durable** est refusé | ✔ |
 | Activité 3 : le transfert martiniquais (trois interacteurs) est exigé | ✔ |

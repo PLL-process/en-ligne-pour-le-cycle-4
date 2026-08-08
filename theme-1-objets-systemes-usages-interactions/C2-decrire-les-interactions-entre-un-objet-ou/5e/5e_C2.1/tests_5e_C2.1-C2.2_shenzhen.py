@@ -22,12 +22,20 @@ def t(n, ok, d=""):
     print(("✔" if ok else "✘"), n, d)
 
 
-LISTE_OK = ("l'usager (personne) : il prend et rend un vélo\n"
-            "l'agent de maintenance (personne) : il répare et débloque\n"
-            "le vélo (objet) : il est ancré à la borne\n"
-            "le trottoir (objet) : la station y est fixée\n"
-            "la pluie (condition) : elle mouille les bornes\n"
-            "le sel marin (condition) : il attaque les métaux")
+# Huit entrées, deux par famille — les quatre familles du programme :
+# usagers, données, autres objets, éléments de l'environnement.
+LISTE_OK = ("l'usager abonné : il prend et rend un vélo\n"
+            "l'agent de maintenance : il répare et débloque\n"
+            "l'identifiant de l'abonné (donnée) : sans lui, rien ne se déverrouille\n"
+            "l'état « disponible » du vélo (donnée) : il vient du serveur\n"
+            "le vélo (autre objet) : il est ancré à la borne\n"
+            "le smartphone (autre objet) : il transmet l'identifiant\n"
+            "la pluie (environnement) : elle mouille les bornes\n"
+            "le trottoir (environnement) : la station y est fixée")
+
+# Huit entrées, mais aucune donnée : la famille qu'on oublie toujours.
+LISTE_SANS_DONNEE = ("l'usager abonné\nl'agent de maintenance\nle riverain\nle maire\n"
+                     "le vélo\nle smartphone\nla pluie\nle trottoir")
 
 CHOIX_SANS_DD = ("La borne est inclinée : ce choix répond à la pluie, il relève de la sécurité.\n"
                  "L'ancrage est à 90 cm : ce choix répond à l'usager, il relève de l'ergonomie.\n"
@@ -87,22 +95,24 @@ with sync_playwright() as p:
       "0 / 3" in pg.inner_text("#progTxt"))
 
     # activité 1 : le verrou de production
-    pg.evaluate("['a1_1','a1_2','a1_3','a1_4','a1_5','a1_6']"
+    pg.evaluate("['a1_1','a1_2','a1_3','a1_4','a1_5','a1_6','a1_7']"
                 ".forEach(i=>document.getElementById(i).selectedIndex=1)")
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
-    t("activité 1 : la liste des trois natures est exigée",
-      "TROIS natures" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-50:])
-    pg.fill("#a1_liste", "l'usager\nl'agent de maintenance\nle riverain\nle maire\nun collégien\nun touriste")
+    t("activité 1 : la liste des quatre familles est exigée",
+      "QUATRE familles" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-50:])
+    pg.fill("#a1_liste", LISTE_SANS_DONNEE)
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
-    t("activité 1 : une liste de personnes seules est refusée",
-      "TROIS natures" in pg.inner_text("#fb1"))
+    # Le message doit NOMMER la famille manquante : un refus qui n'aide pas
+    # l'élève à repartir n'est pas un vérificateur, c'est un mur.
+    t("activité 1 : une liste sans données est refusée, et la famille est nommée",
+      "DONNÉES" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[-70:])
     pg.fill("#a1_liste", LISTE_OK)
     pg.click('[data-check="1"]')
     pg.wait_for_timeout(120)
-    t("activité 1 : validée quand les trois natures sont couvertes",
-      "6 / 6" in pg.inner_text("#fb1"))
+    t("activité 1 : validée quand les quatre familles sont couvertes",
+      "7 / 7" in pg.inner_text("#fb1"), pg.inner_text("#fb1")[:30])
     t("progression mise à jour", "1 / 3" in pg.inner_text("#progTxt"))
 
     # activité 2
@@ -161,7 +171,7 @@ with sync_playwright() as p:
     pg.reload()
     pg.wait_for_timeout(400)
     t("sauvegarde locale restaurée après rechargement",
-      pg.input_value("#a1_liste").startswith("l'usager (personne)")
+      pg.input_value("#a1_liste").startswith("l'usager abonné")
       and "3 / 3" in pg.inner_text("#progTxt"))
 
     # blocs de la règle n°4
@@ -191,7 +201,7 @@ with sync_playwright() as p:
       f"{info['c21']} / {info['c22']}")
     t("QCM : bonnes réponses réparties sur A/B/C/D", max(info["rep"]) - min(info["rep"]) <= 1,
       str(info["rep"]))
-    t("QCM : 4 questions illustrées", info["imgs"] == 4, str(info["imgs"]))
+    t("QCM : 5 questions illustrées", info["imgs"] == 5, str(info["imgs"]))
     t("QCM : les trois domaines du code sont ceux du programme",
       pg.evaluate("QUESTIONS.find(q=>q.n==='Trois domaines').o[QUESTIONS.find("
                   "q=>q.n==='Trois domaines').r]")
@@ -214,6 +224,15 @@ with sync_playwright() as p:
     bilan = pg.inner_text("body")
     t("QCM : parcours complet, 30 bonnes réponses acceptées",
       pg.evaluate("etat.reponses.filter((x,i)=>x===QUESTIONS[i].r).length") == 30)
+    # Règle n°42 : la formulation d'une compétence se recopie. « esthétique » était
+    # une substitution de ma main, corrigée dans la séquence en juillet et restée
+    # dans le QCM jusqu'au 8 août — le contrôle mécanisé ne regardait que la carte
+    # de la séquence. On le vérifie désormais ici aussi.
+    libelles = pg.evaluate("Object.values(COMP_LABELS).join(' | ')")
+    t("QCM : aucune formulation de compétence ne dit « esthétique »",
+      "esthétique" not in libelles, libelles[:80])
+    t("QCM : la formulation de C2.2 est celle du référentiel",
+      "développement durable" in libelles)
     t("QCM : bilan par compétence affiché",
       "5e_C2.1" in bilan and "5e_C2.2" in bilan)
     pg.reload()

@@ -7,7 +7,7 @@ répare au passage un lien cassé du Thème 1 : la page pointait depuis des mois
 station de vélos fonctionne mal alors que **rien n'est cassé** : les bornes s'allument, les vélos
 roulent, le réseau répond. Le problème n'est pas dans l'objet, il est dans ce qui l'entoure.
 
-➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 30 questions, dont 4 illustrées,
+➡ **[QCM d'entraînement](qcm_5e_C2_shenzhen_station_velos.html)** — 30 questions, dont 5 illustrées,
 chaque distracteur réfuté par une explication.
 
 ➡ Synthèses : [élève](Synthèses/synthese_eleve_5e_C2.1-C2.2.html) ·
