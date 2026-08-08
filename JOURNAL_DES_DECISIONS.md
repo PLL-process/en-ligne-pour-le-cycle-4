@@ -3263,3 +3263,37 @@ informe** — un statut, un rapport vert, un tirage aléatoire, un fichier sourc
 
 Le dépôt avait quarante-cinq règles sur ce qu'il faut produire. Il lui en manquait cinq sur **ce
 qu'il faut croire**.
+
+---
+
+### Règle d'or n°51 — Le premier texte que l'élève lit n'est jamais vérifié par personne
+
+**L'incident.** Le gabarit de QCM du dépôt vient du lot «&nbsp;SOS serre&nbsp;» (Thème 2, 4e).
+Chaque lot de Thème 1 en a repris le moteur, et chaque générateur a remplacé consciencieusement ce
+qu'il fallait&nbsp;: le `<title>` de l'onglet, les badges de niveau et de code, les libellés du
+filtre par compétence, la clé de sauvegarde, le lien vers la séquence. Aucun n'a remplacé le `<h1>`
+ni le sous-titre — c'est-à-dire **les deux premières lignes affichées de la page**.
+
+Résultat&nbsp;: **six QCM de Thème 1** — 5e, 4e et 3e du C2, 5e, 4e et 3e du C3 — annonçaient à
+l'élève «&nbsp;Thème 2 · Martinique — 4e · Atelier&nbsp;: QCM — SOS serre&nbsp;», suivi d'un
+sous-titre sur les adresses IP fixes et le montage Packet Tracer. Un élève de 5e ouvrant le QCM de
+Shanghai lisait qu'il était en 4e, sur un autre thème, à propos d'un objet qu'il n'a jamais vu.
+
+**Pourquoi rien ne l'a vu.** Toutes les suites de tests vérifiaient le `<title>` de l'onglet, le
+nombre de questions, les modes, la sauvegarde, les liens. Aucune ne vérifiait le titre **affiché**.
+Le `<title>` est ce que le développeur regarde&nbsp;; le `<h1>` est ce que l'élève lit. Nous avions
+testé le premier pendant six lots et jamais le second.
+
+**Le coût.** Six pages publiées, fusionnées, et lues par personne d'assez près pour voir la première
+ligne. C'est la sixième fois qu'un défaut survit parce qu'il se trouvait à un endroit que le
+contrôle ne regardait pas (règle n°47) — mais cette fois l'endroit était le plus visible de tous.
+
+**La règle.** **Ce que l'élève voit en premier se vérifie en premier.** Titre affiché, sous-titre,
+badges, première phrase&nbsp;: tout élément d'identification visible doit nommer le bon thème, le
+bon niveau et le bon objet. Tout générateur travaillant à partir d'un gabarit emprunté à un autre
+lot **refuse d'écrire** tant qu'il reste dans le résultat une trace du lot d'origine — le garde-fou
+est posé dans le générateur, pas dans une relecture.
+
+**Mécanisation.** Le garde-fou est en place dans les trois générateurs existants et dans celui du
+lot 5e_C1. Le contrôle correspondant appartient à `_outils/verif_regles_audit.py`, donc à une
+branche Thème 2&nbsp;: il y rejoint la mécanisation de la règle n°47, encore en attente.
