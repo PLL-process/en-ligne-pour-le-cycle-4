@@ -2725,3 +2725,51 @@ douter du contenu.**
 branche portant le motif du thème, afin que la garde-périmètre **s'applique** — plutôt que sur une
 branche `infra` sans motif, où elle se serait désactivée d'elle-même. Une garde qu'on contourne en
 nommant sa branche autrement n'est pas une garde.
+
+---
+
+## 8 août 2026 — Règle d'or n°43 : toute production demandée à l'élève a son corrigé, et ce corrigé arrive après
+
+**Énoncé.** Chaque production que la séquence exige de l'élève — une liste, un relevé, un schéma,
+un graphique, un algorigramme, une note — doit avoir son **corrigé complet dans la page**, sous la
+forme même que l'élève devait produire. Ce corrigé est **replié**, et il n'apparaît **jamais avant**
+l'activité qui le demande.
+
+### D'où elle vient
+
+Deux exigences que je traitais séparément, et qui se contredisaient à chaque lot.
+
+D'un côté, la règle apprise au lot de 3e à Shenzhen&nbsp;: **ne pas donner la figure qui contient
+la réponse**. Une planche de solutions illustrées y aurait vidé l'activité 1 de son sens, alors ce
+lot ne porte volontairement qu'un seul SVG.
+
+De l'autre, l'objection de Pascal sur le lot de 4e&nbsp;: si l'élève doit tracer un graphique et
+qu'aucun graphique fini n'existe nulle part, **l'élève qui travaille seul n'a rien pour se
+corriger**. Il produit, et il ne sait pas.
+
+Les deux ont raison, et la contradiction n'est pas dans le contenu&nbsp;: elle est dans le
+**moment**. Le corrigé n'est pas interdit, il est **différé**. Le repli du `<details>` n'est pas un
+détail de mise en forme, c'est ce qui rend les deux exigences compatibles.
+
+### Ce qu'elle change concrètement
+
+- Une production **graphique ou schématique** exige un corrigé **de même nature**&nbsp;: un
+  graphique se corrige par un graphique, pas par une phrase qui le décrit. Un élève ne peut pas
+  comparer son tracé à un paragraphe.
+- Le corrigé porte le mot **« corrigé »** dans son nom de fichier et dans son titre, pour qu'on ne
+  puisse pas le glisser par erreur dans le fil de la page.
+- Le corrigé va **plus loin que la réponse**&nbsp;: il dit aussi ce qu'on doit y lire. Le corrigé
+  du graphique de Hangzhou ne se contente pas des barres — il nomme les deux lectures qui comptent,
+  «&nbsp;la plus longue n'est pas celle dont on se plaint&nbsp;» et «&nbsp;une moyenne cache sa
+  queue&nbsp;».
+- Rien de tout cela ne s'applique aux **évaluations sommatives**, qui n'ont pas de corrigé dans le
+  dépôt public — la barre qualité de la méthode reste inchangée sur ce point.
+
+### Ce qu'elle rend possible
+
+Un élève absent, un élève qui reprend chez lui, un élève qui va plus vite que la classe&nbsp;:
+tous les trois travaillent seuls, et tous les trois ont besoin de savoir s'ils ont réussi. Une
+séquence qui exige une production sans jamais montrer à quoi elle ressemble, réussie, ne fonctionne
+qu'en présence du professeur.
+
+**L'autonomie de l'élève est une propriété de la page, pas une qualité de l'élève.**
