@@ -3547,3 +3547,58 @@ l'intérieur** : nos vérificateurs comptaient des séquences, jamais des gestes
 **La règle.** Quand le programme **nomme** une représentation, le lot qui porte le code
 correspondant **fait produire cette représentation par l'élève**, et le rapport de tests le déclare.
 Citer le texte officiel n'est pas l'enseigner. À mécaniser avec les n°47, n°51 et n°54.
+
+### Règle d'or n°64 — Tout lot se situe sur la chaîne d'analyse
+
+**Le constat.** L'audit reconstitue la chaîne complète, et elle est juste :
+
+> **Analyse externe** — besoin *(bête à cornes)* → fonction d'usage → interacteurs *(diagramme des
+> interacteurs, « pieuvre »)* → contraintes et exigences → **cahier des charges**
+> **Analyse interne** — fonctions techniques *(FAST)* → solutions techniques → chaînes énergie et
+> information → constituants
+> **Conception** — croquis, schéma, modélisation → prototype → tests et mesures →
+> **comparaison au cahier des charges**
+
+Le programme 2024 n'a pas supprimé cette chaîne : il a cessé d'imposer les outils graphiques qui la
+jalonnaient. Et il referme lui-même la boucle, puisqu'il demande de comparer les résultats obtenus
+ou simulés aux **exigences issues d'un cahier des charges**. Le cahier des charges n'est donc pas un
+vestige : c'est le **référentiel qui valide la solution**.
+
+**Le coût de l'avoir ignorée.** Nos lots sont bons un par un et ne se répondent pas. L'élève traverse
+trois ans de technologie sans jamais voir qu'il parcourt **une seule démarche**, ni où il en est.
+
+**La règle.** Chaque lot indique, dans sa synthèse professeur et dans sa fiche, **où il se situe sur
+la chaîne** — ce qui le précède, ce qui le suit. Et la boucle finale — cahier des charges →
+conception → prototype → essai → **retour au cahier des charges** — est enseignée comme une boucle,
+pas comme une fin de parcours.
+
+### Règle d'or n°65 — Une notion traverse les niveaux en changeant de verbe, pas de sujet
+
+**Le constat.** L'audit propose, pour le cahier des charges : **5e reconnaître → 4e formuler →
+3e choisir, justifier, arbitrer**. C'est exactement la bonne forme d'une progression spiralaire, et
+c'est celle que nos meilleurs lots suivent sans l'avoir nommée — le C2 va bien de « regarder l'objet
+du dehors » à « décider de la forme et la défendre ».
+
+**Le contre-modèle.** Trois années à refaire le même diagramme en changeant d'objet. L'élève croit
+réviser ; il n'apprend rien de nouveau, et il s'ennuie à juste titre.
+
+**La règle.** Quand une notion revient d'un niveau à l'autre, ce n'est pas l'objet d'étude qui
+change, c'est **le verbe** : reconnaître, puis produire, puis arbitrer. La fiche pédagogique de
+chaque lot **nomme le verbe du niveau** et celui des deux autres. Si l'on ne sait pas dire en quoi
+le geste de 4e diffère de celui de 5e, la progression n'existe pas — il n'y a qu'une répétition.
+
+### Décision du 8 août 2026 — ce qui est fait avant la rentrée
+
+Pascal tranche, après inventaire :
+
+1. **Les quatre corrections P0 du C2**, puis **la carte des représentations** — une page de
+   référence portant les quinze représentations, chacune nommée deux fois (règle n°62), situées sur
+   la chaîne d'analyse (n°64), avec pour chacune le niveau et le verbe (n°65).
+2. **Quatre représentations absentes sont intégrées cette année** : le **diagramme des interacteurs**
+   modernisé à quatre familles (5e_C2), la **bête à cornes** courte en entrée d'étude, le **FAST**
+   à la charnière Thème 1 / Thème 2, et le **diagramme de Gantt**, que Pascal rattache à **C7.1**
+   (Thème 3, projet robot). SysML et carte mentale restent hors périmètre cette année.
+3. **Le C1 en 4e et 3e** reprend ensuite.
+
+Le motif de cet ordre est écrit ici pour qu'on ne le rediscute pas : les P0 sont des **erreurs
+enseignées**, et une erreur enseignée coûte plus cher qu'un lot manquant.
