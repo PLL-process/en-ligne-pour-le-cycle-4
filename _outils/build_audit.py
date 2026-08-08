@@ -151,6 +151,41 @@ OVERLAY = {
         accessibilite="À vérifier.",
         medias="Affiche Delagrave : droit de rediffusion non établi.",
     ),
+    # ── Lot Thème 1 (Fable) : îlot 5e_C2 « Shenzhen, la station de vélos » ──
+    "5e_C2.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Shenzhen — la station de vélos et tout ce qui l'entoure » (08/08/2026) : "
+                "3 séances de 55 min, 3 activités + billet sans note + bilan, 2 SVG originaux "
+                "lus comme des documents, QCM de 30 questions dont 4 illustrées, 2 synthèses, "
+                "fiche, matrice de 23 notions, 43 tests Playwright tous passés. PREMIER LOT DU "
+                "C2. Achève une séquence héritée qui n'était qu'un plan rédigé en HTML (7,4 ko) "
+                "et RÉPARE un lien cassé connu du Thème 1 : la page pointait vers un QCM absent.",
+        anomalies="Aucune : 7 règles mécanisables au vert. FRONTIÈRE DE NIVEAU à tenir : "
+                  "« décrire l'expérience de l'utilisateur » relève de la 4e, pas de la 5e. "
+                  "Ici l'élève recense et repère ; c'est écrit à l'élève dans la carte du "
+                  "référentiel, à la fiche, à la synthèse professeur, et le QCM y consacre sa "
+                  "dernière question. Données de la station simulées et annoncées comme telles "
+                  "(règle n°27). Le fichier hérité solutions_station_shenzhen_simulees.csv "
+                  "n'est pas utilisé : il évalue des variantes selon des critères, geste de la "
+                  "compétence C3 — c'est dit au SOURCES_MEDIAS plutôt que masqué.",
+        accessibilite="Champs étiquetés, alternatives longues sur les deux figures, 7 versions "
+                      "étayées pour 7 productions écrites, mode essentiel, bandeau de tâches, "
+                      "aucune ressource distante (n°40). Non vérifiés donc non déclarés "
+                      "conformes : impression A4, lecteur d'écran, zoom 200 %, mobile réel.",
+        medias="2 SVG originaux CC0 écrits pour ce dépôt. Aucune photographie de station "
+               "réelle : elle donnerait les réponses de l'activité 1.",
+    ),
+    "5e_C2.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Traité par la séquence Shenzhen du dossier 5e_C2.1 (séances 2 et 3 — retrouver "
+                "la décision derrière une forme, puis comparer deux stations et transposer). "
+                "15 des 30 questions du QCM lui sont consacrées.",
+        anomalies="Voir 5e_C2.1 : dossier principal du lot.",
+    ),
     "4e_C2.1": dict(
         statut="PARTIEL",
         sequence=False, qcm=True, projet=False, synthese=False,
