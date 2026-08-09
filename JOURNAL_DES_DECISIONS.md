@@ -3885,3 +3885,32 @@ une page qui se charge parfaitement et ne répond à rien. Une relecture ne l'au
 
 42 tests exécutés, 42 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **28 à 29 codes
 COMPLET ET VALIDABLE**, et de 39 à 41 codes couverts par une séquence mutualisée.
+
+---
+
+### Règle d'or n°68 — Quand un lot s'appuie sur une catastrophe humaine, il dit ce qu'il compare et ce qu'il ne compare pas
+
+**L'origine.** Cette règle ne vient pas d'un incident : elle vient d'une **réussite**, trouvée dans
+la séquence 3e_C1.1 en la relisant pour la refondre. Son activité sur les évaluations
+environnementales du PNUE à Gaza porte une consigne encadrée, que son auteur a nommée « phrase
+éthique obligatoire » :
+
+> «&nbsp;Nous comparons des indicateurs et des méthodes de mesure&nbsp;; nous ne comparons ni la
+> valeur des vies, ni la gravité des souffrances, ni la légitimité des victimes.&nbsp;»
+
+**Pourquoi c'est juste.** Un cours de technologie peut avoir besoin de données issues d'une guerre,
+d'une catastrophe ou d'une épidémie — elles existent, elles sont publiques, et les ignorer
+appauvrirait l'enseignement. Mais un tableur met tout sur la même ligne, et un graphique met tout à
+la même échelle. **L'outil efface la différence de nature entre ce qu'on mesure et ce qu'on
+éprouve.** La phrase rétablit cette différence, avant que l'élève ne l'ait perdue.
+
+**La règle.** Tout lot qui exploite des données issues d'une catastrophe humaine énonce, **de façon
+visible et non repliée**, ce qui est comparé — des indicateurs, des méthodes, des ordres de
+grandeur — et ce qui ne l'est pas : la valeur des vies, la gravité des souffrances, la légitimité
+des victimes. La leçon technique qui accompagne cette phrase est la plus solide qui soit :
+**certaines grandeurs ne se convertissent pas les unes dans les autres**. Des débris, des cultures
+détruites et une eau contaminée ne se remplacent pas par un chiffre carbone — ni par aucun autre
+chiffre unique.
+
+**Corollaire.** On ne va pas chercher ces données pour l'effet qu'elles produisent. On les emploie
+quand elles servent la leçon — ici, l'incommensurabilité — et jamais comme illustration.
