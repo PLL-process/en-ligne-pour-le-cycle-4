@@ -3816,3 +3816,38 @@ branche Thème 1. Il doit y être versé, avec les mécanisations en attente —
 n°51 (titre affiché), n°53, n°54 (nombres recalculés) et n°67. Et la n°31 doit être **retournée** :
 elle passe au vert devant une page sans aucune zone de rédaction, si bien qu'une séquence vide se
 note mieux qu'une séquence imparfaite.
+
+---
+
+### Lot livré — 5e_C1.2 « Sainte-Luce : quel frein pour les vélos du collège ? » (refonte)
+
+Première **refonte complète** d'un lot existant depuis que Fable a la charge des trois thèmes, et
+premier lot du dépôt à placer une **manipulation d'objet réel au parcours obligatoire** (règle
+n°58) : un vélo, cinq minutes, aucun achat, trois versions 🅰🅱🅲 validées par le même vérificateur.
+
+**Ce que la version précédente enseignait, et qui est corrigé** : « La fonction répond à : *à quoi
+cela sert-il ?* » — la définition de la fonction d'usage — dans l'aide, dans l'en-tête du tableau et
+dans les deux synthèses. Et une page qui annonçait **trois fois** une « production attendue » sans
+offrir **aucun** champ de saisie (règle n°67). Elle en compte désormais 18 et 9.
+
+**Ce qui a été repris** (règle n°12) : la situation de Sainte-Luce — seul ancrage martiniquais du C1
+— le cas du freinage, l'exemple de l'éclairage, et surtout le jeu de données, **plus riche que
+l'usage qu'on en faisait** : trois solutions et six critères chiffrés là où la séquence n'en
+comparait que deux, qualitativement. Un second jeu a été ajouté, quinze relevés d'essai dont la
+fiche est la moyenne exacte — l'élève peut donc la vérifier, et découvrir qu'une fiche technique
+n'est qu'un résumé de mesures.
+
+**La thèse du lot** : le mot difficile du référentiel n'est pas « principe », c'est **comparer**. Le
+frein à patins gagne sur trois critères sur six — masse, prix, réparabilité — et c'est pourtant le
+mauvais choix ici. Compter les colonnes revient à décider en silence que la masse pèse autant que la
+distance d'arrêt sous la pluie, dans une descente, au bord de la mer. Le Bonus 1 referme la
+démonstration : le **même tableau**, lu pour Fort-de-France, désigne les patins, sans qu'aucun
+chiffre n'ait changé.
+
+**Un geste nouveau dans le dépôt : le refus argumenté.** Le vérificateur de la séance 3 refuse le
+frein à patins, cite le chiffre qui le disqualifie, et renvoie au Bonus où ce même choix devient le
+bon. C'est le premier endroit où un refus indique **dans quel contexte la réponse serait juste**.
+Un refus qui n'aide pas l'élève à repartir n'est pas un vérificateur, c'est un mur.
+
+36 tests exécutés, 36 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **27 à 28 codes
+COMPLET ET VALIDABLE**, et le décompte des séquences mécaniquement propres passe de 5 à 7.
