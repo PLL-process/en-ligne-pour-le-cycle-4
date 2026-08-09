@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="g2t g2d"
+     font-family="Segoe UI, system-ui, sans-serif">
+  <title id="g2t">GanttProject, étape 2 — déclarer les antériorités, et laisser le logiciel recalculer les dates (schéma reconstruit)</title>
+  <desc id="g2d">Schéma reconstruit de GanttProject à l'étape des dépendances. La zone du diagramme
+  montre six barres de tâches ; une flèche part de la fin d'une barre et rejoint le début d'une
+  autre, matérialisant une antériorité. Deux façons de faire sont montrées côte à côte. La première,
+  à la souris : on clique sur la barre de la tâche qui doit se terminer d'abord et l'on glisse
+  jusqu'à la barre de celle qui doit attendre ; une flèche apparaît. La seconde, par la boîte de
+  dialogue : clic droit sur la tâche, Task Properties, onglet Predecessors, où l'on ajoute la tâche
+  qui précède et le type de lien, Finish-Start étant celui qu'on emploie presque toujours. Une bulle
+  attire l'attention sur l'effet immédiat : dès qu'une dépendance est déclarée, GanttProject décale
+  la tâche qui attend et recalcule ses dates de début et de fin tout seul. La différence avec le
+  tableur est expliquée dans un encadré : dans un tableur, on écrit soi-même la formule qui décale
+  la tâche ; ici, on déclare seulement qui attend qui, et le logiciel calcule. Ce qu'on gagne, c'est
+  que le calcul se refait automatiquement à chaque changement de durée. Ce qu'on perd, c'est de voir
+  le calcul — d'où l'importance d'avoir compris ce que le logiciel fait à notre place. Un dernier
+  encadré met en garde contre l'erreur la plus fréquente : déclarer une antériorité entre deux
+  tâches qui n'en ont pas besoin. Deux tâches sans lien peuvent avancer en même temps, et c'est
+  précisément là qu'on gagne du temps ; une antériorité inutile allonge le projet sans raison.</desc>
+  <rect width="900" height="480" fill="#f4f7fb"/>
+  <style>
+    text{fill:#16233a;font-size:12px}
+    .ui{font-size:11.5px;fill:#22334d}
+    .hd{font-size:11.5px;font-weight:600;fill:#33465f}
+    .bulle{fill:#b4212a}
+    .btxt{fill:#fff;font-size:11.5px;font-weight:700}
+    .note{font-size:12px;fill:#7a2530}
+    .dep{stroke:#b4212a;stroke-width:2;fill:none;marker-end:url(#fd2)}
+  </style>
+  <defs><marker id="fd2" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+    <polygon points="0 0, 9 3, 0 6" fill="#b4212a"/></marker></defs>
+  <text x="26" y="26" font-size="16" font-weight="600">Étape 2 — déclarer qui attend qui</text>
+  <text x="26" y="44" font-size="11.5" fill="#5b6b82">Schéma reconstruit de l'interface — ce n'est pas une capture d'écran.</text>
+
+  <rect x="26" y="56" width="530" height="250" rx="6" fill="#fff" stroke="#8fa3bd" stroke-width="1.5"/>
+  <rect x="26" y="56" width="530" height="22" fill="#eef2f8"/>
+  <text class="hd" x="38" y="71">Name</text>
+  <text class="hd" x="238" y="71">S1</text><text class="hd" x="288" y="71">S2</text>
+  <text class="hd" x="338" y="71">S3</text><text class="hd" x="388" y="71">S4</text>
+  <text class="hd" x="438" y="71">S5</text><text class="hd" x="488" y="71">S6</text>
+  <line x1="226" y1="56" x2="226" y2="306" stroke="#8fa3bd"/>
+
+  <g class="ui">
+    <text x="38" y="98">A · Relever les besoins</text>
+    <text x="38" y="128">B · Choisir les grandeurs</text>
+    <text x="38" y="158">C · Câbler le capteur</text>
+    <text x="38" y="188">D · Écrire le programme</text>
+    <text x="38" y="218">E · Fabriquer le support</text>
+    <text x="38" y="248">F · Assembler</text>
+  </g>
+  <g fill="#4a7fc1">
+    <rect x="236" y="88" width="42" height="14" rx="3"/>
+    <rect x="286" y="118" width="42" height="14" rx="3"/>
+    <rect x="336" y="148" width="92" height="14" rx="3"/>
+    <rect x="286" y="178" width="92" height="14" rx="3"/>
+    <rect x="336" y="208" width="142" height="14" rx="3"/>
+    <rect x="486" y="238" width="42" height="14" rx="3"/>
+  </g>
+  <path class="dep" d="M278 95 H 292 V 114"/>
+  <path class="dep" d="M328 125 H 336 V 144"/>
+  <path class="dep" d="M328 125 H 332 V 204 H 332" opacity=".55"/>
+  <path class="dep" d="M478 215 H 484 V 234"/>
+
+  <circle class="bulle" cx="300" cy="106" r="11"/><text class="btxt" x="296" y="110">1</text>
+  <circle class="bulle" cx="500" cy="226" r="11"/><text class="btxt" x="496" y="230">2</text>
+
+  <rect x="572" y="56" width="302" height="250" rx="6" fill="#fff" stroke="#8fa3bd" stroke-width="1.5"/>
+  <rect x="572" y="56" width="302" height="24" fill="#e3e9f2"/>
+  <text class="ui" x="586" y="73" font-weight="700">Task Properties — Câbler le capteur</text>
+  <rect x="586" y="90" width="82" height="20" fill="#fff" stroke="#8fa3bd"/>
+  <text class="ui" x="600" y="104">General</text>
+  <rect x="668" y="90" width="94" height="20" fill="#dbe6f4" stroke="#8fa3bd"/>
+  <text class="ui" x="678" y="104" font-weight="700">Predecessors</text>
+  <rect x="762" y="90" width="82" height="20" fill="#fff" stroke="#8fa3bd"/>
+  <text class="ui" x="774" y="104">Resources</text>
+
+  <rect x="586" y="122" width="272" height="22" fill="#eef2f8" stroke="#c3cfdf"/>
+  <text class="hd" x="596" y="137">Task</text><text class="hd" x="742" y="137">Type</text>
+  <rect x="586" y="144" width="272" height="24" fill="#fff" stroke="#c3cfdf"/>
+  <text class="ui" x="596" y="160">B · Choisir les grandeurs</text>
+  <text class="ui" x="742" y="160" font-weight="700">Finish-Start</text>
+  <rect x="586" y="182" width="86" height="24" rx="4" fill="#e3e9f2" stroke="#8fa3bd"/>
+  <text class="ui" x="606" y="198">Add</text>
+  <rect x="680" y="182" width="86" height="24" rx="4" fill="#e3e9f2" stroke="#8fa3bd"/>
+  <text class="ui" x="700" y="198">Delete</text>
+  <text class="ui" x="586" y="236" fill="#5b6b82">Finish-Start&#160;: «&#160;B doit être finie</text>
+  <text class="ui" x="586" y="254" fill="#5b6b82">pour que C commence&#160;» — c'est</text>
+  <text class="ui" x="586" y="272" fill="#5b6b82">le lien qu'on emploie presque toujours.</text>
+  <circle class="bulle" cx="740" cy="102" r="11"/><text class="btxt" x="736" y="106">3</text>
+
+  <rect x="26" y="318" width="410" height="66" rx="6" fill="#fdeceb" stroke="#d9908f"/>
+  <circle class="bulle" cx="46" cy="336" r="9"/><text class="btxt" x="43" y="340">1</text>
+  <text class="note" x="62" y="340"><tspan font-weight="700">À la souris</tspan>&#160;: on part de la barre qui finit d'abord</text>
+  <text class="note" x="62" y="356">et l'on glisse jusqu'à celle qui doit attendre.</text>
+  <circle class="bulle" cx="46" cy="372" r="9"/><text class="btxt" x="43" y="376">2</text>
+  <text class="note" x="62" y="376">La flèche apparaît&#160;: l'antériorité est déclarée.</text>
+
+  <rect x="446" y="318" width="428" height="66" rx="6" fill="#fdeceb" stroke="#d9908f"/>
+  <circle class="bulle" cx="466" cy="336" r="9"/><text class="btxt" x="463" y="340">3</text>
+  <text class="note" x="482" y="340"><tspan font-weight="700">Ou par la boîte&#160;:</tspan> clic droit → Task Properties →</text>
+  <text class="note" x="482" y="356">onglet <tspan font-weight="700">Predecessors</tspan> → Add → choisir la tâche qui précède.</text>
+  <text class="note" x="482" y="376">Et aussitôt&#160;: <tspan font-weight="700">GanttProject décale la tâche et recalcule ses dates.</tspan></text>
+
+  <rect x="26" y="394" width="410" height="76" rx="6" fill="#e8f1e8" stroke="#7aa77a"/>
+  <text x="42" y="416" font-size="12.5" font-weight="700">Tableur ou GanttProject&#160;?</text>
+  <text x="42" y="434" font-size="12">Dans un tableur, <tspan font-weight="700">tu écris la formule</tspan> qui décale la tâche.</text>
+  <text x="42" y="450" font-size="12">Ici, tu déclares seulement <tspan font-weight="700">qui attend qui</tspan>&#160;: le logiciel calcule.</text>
+  <text x="42" y="466" font-size="12">Tu gagnes le recalcul automatique&#160;; tu perds de voir le calcul.</text>
+
+  <rect x="446" y="394" width="428" height="76" rx="6" fill="#3a1218" stroke="#c0555c"/>
+  <text x="462" y="416" font-size="12.5" font-weight="700" fill="#ffd7da">⚠ L'erreur la plus fréquente</text>
+  <text x="462" y="436" font-size="12" fill="#ffd7da">Déclarer une antériorité entre deux tâches qui n'en ont pas besoin.</text>
+  <text x="462" y="454" font-size="12" fill="#ffd7da">Deux tâches sans lien avancent <tspan font-weight="700">en même temps</tspan> — c'est là qu'on</text>
+  <text x="462" y="468" font-size="12" fill="#ffd7da">gagne du temps. Une flèche inutile allonge le projet pour rien.</text>
+</svg>
