@@ -3885,3 +3885,85 @@ une page qui se charge parfaitement et ne répond à rien. Une relecture ne l'au
 
 42 tests exécutés, 42 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **28 à 29 codes
 COMPLET ET VALIDABLE**, et de 39 à 41 codes couverts par une séquence mutualisée.
+
+---
+
+## Mécanisation de cinq règles, et retournement de la n°31 — 9 août 2026
+
+Le vérificateur passe de **8 à 12 contrôles**. Les règles n°51, n°53, n°54 et n°67 étaient écrites
+au journal et vérifiées à la main&nbsp;; elles sont désormais mécanisées. La n°47 s'applique à
+l'outil lui-même&nbsp;: il imprime en fin d'exécution ce qu'il a regardé, ce qui relève du jugement
+humain, ce qu'il ne couvre pas, et **quels fichiers il n'ouvre pas**.
+
+### La n°31 était un piège
+
+Elle répondait «&nbsp;SANS OBJET&nbsp;» — donc au vert — devant une page **sans la moindre zone de
+rédaction**. Une séquence vide se notait ainsi mieux qu'une séquence imparfaite. C'est le pire
+défaut qu'un contrôle puisse avoir&nbsp;: **récompenser l'absence**. Elle échoue maintenant quand
+une page annonce une production sans offrir de champ, et renvoie à la n°67.
+
+### Deux contrôles neufs se sont trompés, et ce sont eux qu'on a corrigés
+
+**La n°51, première version&nbsp;: une liste noire de mots** — «&nbsp;SOS serre&nbsp;»,
+«&nbsp;Packet Tracer&nbsp;», «&nbsp;adresse IP fixe&nbsp;». Elle a immédiatement accusé **quatre
+séquences qui parlent légitimement de Packet Tracer**, dont celle qui s'appelle « SOS serre ». Une
+liste de mots ne peut pas distinguer un reste de gabarit d'un sujet réel. Réécrite&nbsp;: le titre
+affiché est comparé au **niveau et aux codes du fichier lui-même**. Un titre qui annonce un autre
+niveau que son dossier est un reste de gabarit, quel que soit son vocabulaire. Zéro faux positif
+depuis.
+
+**Le vérificateur jugeait les archives.** `_archive-anciennes-versions/` contient précisément les
+pages qu'on a remplacées parce qu'elles étaient en défaut&nbsp;: les compter revient à s'accuser
+d'avoir corrigé. Le compte passait de 50 séquences à 39, et de 90 manquements à 50. Une archive est
+une **trace**, pas une ressource — et le périmètre le dit maintenant.
+
+### Ce que les nouvelles règles ont trouvé, et qui est corrigé
+
+- **n°53** — deux séquences de Thème 2 définissaient la fonction technique par «&nbsp;à quoi ça
+  sert&nbsp;», qui est la fonction d'usage. Leur **intention était juste** : elles opposent la
+  fonction technique à la solution technique, et cette opposition est excellente. Seule la
+  formulation entrait en collision avec la notion voisine. On a donc gardé l'opposition en la
+  disant autrement — *ce que ça doit faire* contre *avec quoi on le fait* — et ajouté, dans le
+  jardin connecté, le distracteur qui manquait : «&nbsp;une fonction d'usage&nbsp;».
+- **n°54** — la séquence 5e_C4.7 annonçait 4 questions illustrées, le QCM en compte 6, tirées de
+  5 documents. L'annonce dit maintenant les deux nombres.
+
+### Une demi-correction rattrapée par le contrôle
+
+En corrigeant le jardin connecté, j'ai d'abord changé **la valeur attendue par le vérificateur JS**
+sans changer **le texte de l'option affichée**. Le billet d'entrée serait devenu insoluble&nbsp;:
+aucune option ne correspondait plus à la bonne réponse. Trouvé en vérifiant que la valeur attendue
+figure bien parmi les options — un contrôle qui porte sur ce qui est **rendu** (n°49). Une
+correction à deux endroits doit toucher les deux, ou elle casse ce qu'elle prétend réparer.
+
+### État après cette passe
+
+**39 séquences vivantes, 50 manquements mécaniquement établis** — contre 78 relevés le 8 août sur
+un périmètre plus large et avec quatre contrôles de moins. Le reste se concentre sur quatre
+règles&nbsp;: mode essentiel (14), version étayée (12), accessibilité (10), tableau de bord (8).
+Ce sont des ajouts de gabarit, pas des erreurs enseignées&nbsp;: ils peuvent attendre la rentrée.
+
+### Règle d'or n°69 — On ne remet pas un colis sans avoir lu son étiquette
+
+**L'incident.** Le 9 août, j'ai construit un bundle de livraison avec
+`git bundle create X.bundle origin/main..HEAD` au lieu de
+`origin/main..<nom-de-branche>`. Un bundle bâti sur `HEAD` n'empaquette **aucune référence
+nommée**&nbsp;: il contient un commit anonyme. Pascal a exécuté les trois commandes du circuit et
+reçu trois erreurs en cascade — `couldn't find remote ref`, puis `src refspec does not match any`,
+puis l'échec de `gh pr create`. Les quatre bundles précédents étaient corrects&nbsp;; j'ai raccourci
+sur celui-là.
+
+**Le coût.** Un aller-retour complet, et trois messages d'erreur que rien ne rattachait à leur
+cause réelle — le contenu du colis, pas les commandes de Pascal.
+
+**La règle.** Avant toute remise, **on liste ce que le colis contient réellement** :
+
+    git bundle list-heads <fichier>.bundle    # la référence attendue doit apparaître
+    git bundle verify <fichier>.bundle        # et le prérequis doit être un commit de main
+
+Un bundle se construit **toujours** avec le nom de branche, jamais avec `HEAD`. C'est le même
+principe que la n°47 et la n°49, appliqué à la livraison&nbsp;: on ne déclare pas un test qu'on n'a
+pas exécuté, et on ne remet pas un colis dont on n'a pas lu l'étiquette.
+
+**Mécanisation.** Deux lignes dans le circuit de livraison de la méthode Fable, à exécuter avant
+tout `SendUserFile`.
