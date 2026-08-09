@@ -44,14 +44,14 @@ de quel besoin elle procède.
 
 ## La séquence refondue
 
-Quatre séances de 55 min. **195 min annoncés pour 220 disponibles.**
+Quatre séances de 55 min. **205 min annoncés pour 220 disponibles.**
 
 | Séance | Titre | Ce que l'élève produit |
 |---|---|---|
 | Billet | Trois réflexes de lecture de données — sans note | 3 réponses + aiguillage |
 | 1 | **Lire avant de calculer** (~45 min) | Pourquoi trois valeurs ne s'additionnent pas, et le tri du fichier |
 | 2 | **Estimer, et dire ce que l'estimation vaut** (~50 min) | Le ratio, l'estimation, **et l'avertissement méthodologique** |
-| 3 | **Comparer sans confondre les périmètres** (~50 min) | Quatre équivalences, et la question critique de chacune |
+| 3 | **Comparer sans confondre les périmètres** (~45 min) | Quatre équivalences, et la question critique de chacune |
 | 4 | **Du nombre au besoin technique** (~50 min) | Le tableau besoin–information–contrainte et **cinq exigences vérifiables** |
 | Bilan | Retour sur l'hypothèse, métacognition, auto-positionnement | ~10 min |
 
