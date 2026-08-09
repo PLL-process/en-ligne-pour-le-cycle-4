@@ -59,32 +59,42 @@ def construire(gabarit: str, sortie: str) -> None:
         ("/* Banque de questions — Shenzhen 3e : 30 questions "
          "(C3.1 : 8 · C3.3 : 8 · C3.4 : 7 · C3.2 : 7) */",
          "/* Banque de questions — Shenzhen 5e : 30 questions "
-         "(5e_C2.1 : 15 · 5e_C2.2 : 15), dont 4 illustrées */"),
+         "(5e_C2.1 : 15 · 5e_C2.2 : 15), dont 5 illustrées */"),
         ('const KEY="qcm_3e_C3.1-C3.4_shenzhen";', 'const KEY="qcm_5e_C2_shenzhen";'),
         ("""const COMP_LABELS={
   "C3.1":"3e_C3.1 — Établir une liste d'objets ou systèmes techniques possibles",
   "C3.3":"3e_C3.3 — Évaluer les solutions selon des exigences ou critères identifiés",
   "C3.4":"3e_C3.4 — Définir et mettre en œuvre un protocole de mesure",
   "C3.2":"3e_C3.2 — Choisir et argumenter en tenant compte du cycle de vie et des trois piliers" };""",
+         # Règle d'or n°42 : ces formulations sont recopiées du référentiel, pas résumées.
+         # « esthétique » était une substitution de ma main ; le texte officiel dit
+         # « ou en lien avec des objectifs de développement durable ».
          """const COMP_LABELS={
-  "C2.1":"5e_C2.1 — Faire la liste des interacteurs extérieurs d'un objet ou système technique",
-  "C2.2":"5e_C2.2 — Repérer et expliquer les choix de conception (ergonomie, sécurité, esthétique)" };"""),
+  "C2.1":"5e_C2.1 — Faire la liste des interacteurs extérieurs d\u2019un OST.",
+  "C2.2":"5e_C2.2 — Repérer et expliquer les choix de conception dans les domaines de l\u2019ergonomie et de la sécurité ou en lien avec des objectifs de développement durable." };"""),
         ("<title>Thème 1 · 3e — QCM : Shenzhen, comment refroidir un local qui surchauffe ? "
          "(3e_C3.1 à C3.4)</title>",
          "<title>Thème 1 · 5e — QCM : Shenzhen, la station de vélos et tout ce qui l'entoure "
          "(5e_C2.1 · C2.2)</title>"),
+        ("<h1>Thème 1 · 3e — QCM : Shenzhen, comment refroidir un local qui surchauffe ?</h1>",
+         "<h1>Thème 1 · 5e — QCM : Shenzhen, la station de vélos et tout ce qui l'entoure</h1>"),
+        ('<p class="subtitle">Caractériser et choisir une solution (3e_C3.1 à C3.4) — protocole '
+         "de mesure, évaluation des solutions et cycle de vie</p>",
+         '<p class="subtitle">Recenser les interacteurs extérieurs d\'un OST (5e_C2.1) — usagers, '
+         "données, autres objets, éléments de l'environnement — puis repérer et expliquer les choix "
+         "de conception (5e_C2.2)</p>"),
         ('<span class="badge niveau">3e</span>', '<span class="badge niveau">5e</span>'),
         ('<span class="badge code">3e_C3.1</span><span class="badge code">3e_C3.2</span>'
          '<span class="badge code">3e_C3.3</span><span class="badge code">3e_C3.4</span>',
          '<span class="badge code">5e_C2.1</span><span class="badge code">5e_C2.2</span>'),
         ("30 questions · 1 illustrée · chaque distracteur réfuté",
-         "30 questions · 4 illustrées · chaque distracteur réfuté"),
+         "30 questions · 5 illustrées · chaque distracteur réfuté"),
         ("""      <option value="C3.1">3e_C3.1 — Établir une liste de solutions possibles</option>
       <option value="C3.3">3e_C3.3 — Évaluer selon des exigences identifiées</option>
       <option value="C3.4">3e_C3.4 — Définir et mettre en œuvre un protocole</option>
       <option value="C3.2">3e_C3.2 — Choisir et argumenter sur les trois piliers</option>""",
          """      <option value="C2.1">5e_C2.1 — Faire la liste des interacteurs extérieurs</option>
-      <option value="C2.2">5e_C2.2 — Repérer et expliquer les choix de conception</option>"""),
+      <option value="C2.2">5e_C2.2 — Repérer et expliquer les choix de conception (ergonomie, sécurité, développement durable)</option>"""),
         ("QCM d’entraînement 3e_C3.1 à C3.4 · Thème 1",
          "QCM d’entraînement 5e_C2.1 · C2.2 · Thème 1"),
     ]

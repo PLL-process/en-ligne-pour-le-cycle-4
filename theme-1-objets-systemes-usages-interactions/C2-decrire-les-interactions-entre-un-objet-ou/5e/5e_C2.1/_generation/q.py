@@ -12,7 +12,7 @@ que l'auteur n'a pas cherché ce que l'élève avait en tête.
 
 IMG_INT = {
     "src": "Images/interacteurs_de_la_station.svg",
-    "alt": "Autour de la station de vélos, trois groupes d'interacteurs : des personnes "
+    "alt": "Autour de la station de vélos, quatre familles d'interacteurs : des usagers "
            "(usager, agent de maintenance, riverain), des objets (vélo, borne, trottoir, "
            "réseau, alimentation électrique) et des conditions (pluie, sel marin, "
            "température, vandalisme, règles de la ville).",
@@ -59,20 +59,41 @@ q("C2.1", "Définition", "Un interacteur d'un objet technique, c'est…",
   "Un interacteur est toujours EXTÉRIEUR à l'objet.",
   img=IMG_INT)
 
-q("C2.1", "Les trois natures", "Une liste complète d'interacteurs comporte…",
-  ["des personnes, d'autres objets, et des conditions ou contraintes",
-   "uniquement des personnes qui utilisent l'objet",
+q("C2.1", "Les quatre familles", "Une liste complète d'interacteurs comporte…",
+  ["les usagers, les données, les autres objets, les éléments de l'environnement",
+   "uniquement les personnes qui utilisent l'objet",
    "des objets neufs, des objets usagés et des objets cassés",
    "des interacteurs proches, moyens et lointains"],
-  "Trois natures, également légitimes. Aucune n'est plus « technique » que les autres, et c'est "
-  "en les passant en revue une par une qu'on cesse d'oublier la moitié de la liste.",
-  "Usager (personne), trottoir (objet), sel marin (condition).",
-  "S'arrêter à la première nature qui vient — presque toujours les personnes.",
+  "Ce sont les quatre familles nommées par le programme, et elles sont également légitimes. "
+  "Aucune n'est plus « technique » que les autres, et c'est en les passant en revue une par une "
+  "qu'on cesse d'oublier la moitié de la liste.",
+  "Le cycliste (usager), l'identifiant de l'abonné (donnée), le vélo (autre objet), la pluie "
+  "(élément de l'environnement).",
+  "S'arrêter à la première famille qui vient — presque toujours les usagers.",
   ["",
-   "C'est justement le réflexe qui fait manquer la moitié de la liste : la pluie, le réseau ou le trottoir agissent sur la station sans être des personnes.",
+   "C'est justement le réflexe qui fait manquer les trois quarts de la liste : la pluie, le réseau ou l'identifiant de l'abonné agissent sur la station sans être des personnes.",
    "L'état d'un objet (neuf, usagé, cassé) ne dit rien de sa relation avec l'objet étudié : un trottoir neuf et un trottoir usé sont tous deux le même interacteur.",
-   "La distance n'est pas une nature : le réseau informatique est lointain et pourtant décisif, la couleur du cadre est toute proche et n'est pas un interacteur."],
-  "Personnes, objets, conditions : les trois comptent.",
+   "La distance n'est pas une famille : le serveur de la ville est lointain et pourtant décisif, la couleur du cadre est toute proche et n'est pas un interacteur."],
+  "Usagers, données, autres objets, environnement : les quatre comptent.",
+  img=IMG_INT)
+
+q("C2.1", "La famille invisible", "L'identifiant de ton abonnement, que la borne lit pour te "
+  "reconnaître, est…",
+  ["un interacteur de la famille « données » : sans lui, la borne ne débloque aucun vélo",
+   "une pièce interne de la borne",
+   "un interacteur de la famille « autres objets »",
+   "un détail sans influence sur le fonctionnement"],
+  "Un interacteur n'a pas besoin d'être visible ni matériel. Une information venue de l'extérieur "
+  "— identifiant, état « disponible » d'un vélo, confirmation de paiement — entre dans la station, "
+  "y déclenche quelque chose, et en ressort modifiée. C'est la définition même d'un interacteur.",
+  "Sans l'identifiant, la borne affiche « abonnement non reconnu » et le vélo reste verrouillé : "
+  "tout le reste peut fonctionner, le service n'est pas rendu.",
+  "Ne compter que ce qui se voit et se touche — et manquer la famille des données.",
+  ["",
+   "L'identifiant n'appartient pas à la borne : il vient de ta carte ou de ton téléphone, donc de l'extérieur. Une pièce interne, elle, fait partie de l'objet.",
+   "Une donnée n'est pas un objet : le téléphone est l'objet, l'identifiant qu'il transmet est la donnée. Les deux sont des interacteurs, de familles différentes.",
+   "Son influence est décisive et immédiate : c'est elle qui décide si le vélo se déverrouille ou non."],
+  "Les données sont des interacteurs. C'est la famille qu'on oublie le plus.",
   img=IMG_INT)
 
 q("C2.1", "Ce qui n'en est pas un", "Parmi ces propositions, laquelle n'est PAS un interacteur de la station ?",
@@ -121,33 +142,21 @@ q("C2.1", "Un interacteur invisible", "Le réseau informatique auquel la borne e
   "Un interacteur peut être invisible.")
 
 q("C2.1", "Le réflexe coûteux", "Le réflexe qui fait manquer la moitié de la liste, c'est…",
-  ["ne citer que des personnes",
+  ["ne citer que ce qu'on voit : des personnes et des objets",
    "citer trop d'objets",
    "commencer par la pluie",
    "faire une liste trop longue"],
-  "Presque tous les élèves commencent par les humains. Le remède est mécanique : après avoir "
-  "listé les personnes, se forcer à chercher deux objets et deux conditions.",
-  "Une première liste typique : « l'usager, le technicien, le maire ». Trois personnes, zéro objet, zéro condition.",
-  "Rendre une liste où toutes les entrées sont des humains.",
+  "Presque tous les élèves commencent par les humains, puis ajoutent ce qui se touche. Le remède "
+  "est mécanique : passer les quatre familles en revue une par une, et se forcer à trouver deux "
+  "entrées dans chacune — surtout dans celle des données, qui ne se voit pas.",
+  "Une première liste typique : « l'usager, le technicien, le vélo, le trottoir ». Deux usagers, "
+  "deux objets, zéro donnée, zéro élément de l'environnement.",
+  "Rendre une liste où toutes les entrées sont visibles et matérielles.",
   ["",
-   "Il n'y a pas d'excès à craindre de ce côté : les objets sont justement l'une des trois natures attendues, et ils sont plutôt sous-représentés dans les listes d'élèves.",
-   "L'ordre est sans importance : commencer par une condition est même un bon moyen d'échapper au réflexe des personnes.",
-   "Une liste longue n'est pas un défaut si elle est variée ; le défaut serait une liste longue qui répète dix fois la même nature."],
-  "Une liste qui ne contient que des personnes est une liste à moitié faite.")
-
-q("C2.1", "Longueur ou variété", "Une liste de dix interacteurs qui sont tous des personnes…",
-  ["est incomplète : il lui manque deux des trois natures",
-   "est excellente, car elle est longue",
-   "est acceptable si les dix personnes sont différentes",
-   "est fausse : dix interacteurs, c'est trop"],
-  "Ce qu'on juge, c'est la couverture des trois natures, pas le nombre d'entrées.",
-  "Six interacteurs bien répartis valent mieux que dix personnes alignées.",
-  "Compter les lignes au lieu de compter les natures.",
-  ["",
-   "La longueur ne prouve rien sur la couverture : on peut allonger indéfiniment une liste en ajoutant des variantes d'une même nature.",
-   "Que les personnes soient différentes entre elles ne change rien : il manquerait toujours les objets et les conditions, c'est-à-dire ce qui alimente, menace et contraint la station.",
-   "Il n'existe pas de nombre maximal d'interacteurs ; une station réelle en compte facilement une vingtaine."],
-  "On juge une liste à sa couverture, pas à sa longueur.")
+   "Il n'y a pas d'excès à craindre de ce côté : les autres objets sont l'une des quatre familles attendues, et ils sont plutôt sous-représentés dans les listes d'élèves.",
+   "L'ordre est sans importance : commencer par la pluie est même un bon moyen d'échapper au réflexe des personnes.",
+   "Une liste longue n'est pas un défaut si elle est variée ; le défaut serait une liste longue qui répète dix fois la même famille."],
+  "Une liste qui ne contient que du visible est une liste au quart faite.")
 
 q("C2.1", "Ce qui alimente", "Parmi ces interacteurs, lequel ALIMENTE la station ?",
   ["l'alimentation électrique du mobilier urbain",
@@ -165,20 +174,24 @@ q("C2.1", "Ce qui alimente", "Parmi ces interacteurs, lequel ALIMENTE la station
   "Trois questions à se poser : qu'est-ce qui alimente, menace, contraint ?")
 
 q("C2.1", "Ce qui contraint", "La règle municipale qui impose de laisser 1,40 m de passage sur le trottoir…",
-  ["est un interacteur : elle limite l'emprise au sol de la station",
-   "n'est pas un interacteur, car une règle n'est pas une chose",
+  ["n'est pas un interacteur mais une EXIGENCE : elle n'échange rien avec la station, elle s'impose au concepteur",
+   "est un interacteur : elle limite l'emprise au sol de la station",
    "concerne la mairie, pas la station",
    "ne compte que si un piéton se plaint"],
-  "Une règle agit réellement sur l'objet : elle décide de sa taille et de sa place. Une contrainte "
-  "invisible qui change la forme de l'objet est un interacteur de plein droit.",
-  "Trottoir de 2 m, passage obligatoire de 1,40 m : il reste 60 cm pour la station.",
-  "Ne recenser que des choses matérielles.",
+  "Un interacteur ÉCHANGE quelque chose avec l'objet : de la matière, de l'énergie, de "
+  "l'information. La pluie mouille, l'usager appuie, le réseau transmet. Une règle, une norme, un "
+  "label n'échangent rien : ils IMPOSENT une condition à respecter. On les appelle des exigences, "
+  "et le programme les fait venir des normes, d'un cahier des charges, des labels et des "
+  "certifications. Elles sont décisives — mais elles ne sont pas de la même nature.",
+  "Trottoir de 2 m, passage obligatoire de 1,40 m : il reste 60 cm pour la station. La règle a "
+  "bien changé la station, sans jamais rien lui échanger.",
+  "Ranger les règles et les normes parmi les interacteurs parce qu'elles « agissent » au sens "
+  "courant du mot. Agir sur le CONCEPTEUR n'est pas interagir avec l'OBJET.",
   ["",
-   "Ce n'est pas la matérialité qui compte mais l'effet produit : cette règle a modifié la largeur réelle de la station, ce qu'aucune matière n'a fait de plus concret.",
-   "La mairie l'écrit, mais c'est la station qui la subit : le concepteur a dû dimensionner son mobilier pour la respecter.",
+   "Elle a bien un effet — mais par l'intermédiaire du concepteur, qui la lit et en tient compte. Le trottoir, lui, est un interacteur : la station y est fixée et échange avec lui un appui.",
+   "La mairie l'écrit, et c'est la station qui en porte la trace : le concepteur a dû dimensionner son mobilier pour la respecter. Elle la concerne donc directement, comme exigence.",
    "Elle s'applique en permanence, plainte ou pas — c'est même son intérêt : elle protège le passage avant qu'un conflit n'apparaisse."],
-  "Une règle qui change la forme de l'objet est un interacteur.")
-
+  "Un interacteur échange. Une exigence impose. Les deux comptent, ce ne sont pas les mêmes.")
 q("C2.1", "Extérieur ou intérieur", "La batterie interne qui garde l'heure de la borne est…",
   ["un composant de la station, donc pas un interacteur",
    "un interacteur, car elle fournit de l'énergie",
@@ -240,13 +253,15 @@ q("C2.1", "Le sel marin", "En bord de mer, l'air salin est un interacteur parce 
   "L'air salin transforme l'objet sans que personne n'y touche.")
 
 q("C2.1", "Le geste de recensement", "Pour ne rien oublier en recensant, la bonne méthode est…",
-  ["de tourner autour de l'objet par la pensée et d'interroger chaque nature une par une",
+  ["de tourner autour de l'objet par la pensée et d'interroger chaque famille une par une",
    "de citer ce qui vient spontanément à l'esprit",
    "de recopier la liste d'un objet voisin",
    "de commencer par ce qui coûte le plus cher"],
-  "Le recensement est un balayage méthodique, pas un souvenir. Passer les trois natures en revue "
-  "évite l'angle mort des personnes.",
-  "Au sol, à hauteur de main, au-dessus, sous la terre : à chaque endroit, qui ou quoi ?",
+  "Le recensement est un balayage méthodique, pas un souvenir. Passer les quatre familles en "
+  "revue évite l'angle mort du visible : les usagers et les objets viennent seuls, les données et "
+  "l'environnement se cherchent.",
+  "Qui s'en sert ? Quelles informations entrent et sortent ? Avec quels autres objets ? Et que "
+  "lui fait le lieu où elle est posée ?",
   "Se fier à sa mémoire plutôt qu'à une méthode.",
   ["",
    "Ce qui vient spontanément, ce sont les personnes : c'est exactement la source de l'oubli qu'on cherche à corriger.",
@@ -497,4 +512,4 @@ q("C2.2", "Ce qu'on fera l'an prochain", "Cette année, en 5e, on repère les ch
 
 assert len(Q) == 30, len(Q)
 assert sum(1 for x in Q if x["c"] == "C2.1") == 15
-assert sum(1 for x in Q if "img" in x) == 4
+assert sum(1 for x in Q if "img" in x) == 5

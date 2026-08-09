@@ -3653,3 +3653,166 @@ compétence) et la n°66 ci-dessus. Le lot déclare aussi ce qu'il ne fait pas :
 d'objet réel** (n°58), et une donnée traitée mais jamais produite.
 
 Le dépôt passe de **26 à 27 codes COMPLET ET VALIDABLE**.
+
+---
+
+### Règle d'or n°67 — Une consigne qui annonce une production sans offrir de champ n'est pas une consigne
+
+**L'incident.** Pascal signale que la séquence `5e_C1.2` (« Comparer des principes techniques »,
+d'un autre auteur) va contre plusieurs de nos règles. Vérification faite en ouvrant le fichier :
+il a raison sur l'essentiel, et le défaut central est plus net encore que dit. La page contient
+**zéro `<textarea>`, zéro `<select>`, zéro `<input>`, zéro `<button>`** — et pourtant elle écrit
+trois fois «&nbsp;<b>Production attendue</b>&nbsp;: un tableau complété…&nbsp;», «&nbsp;une matrice
+de comparaison et deux phrases de justification…&nbsp;». Le tableau de l'activité 1 est un tableau
+HTML statique dont les cellules contiennent «&nbsp;…&nbsp;».
+
+L'élève lit qu'on attend de lui une production, et n'a **nulle part où la faire**. Il n'y a donc ni
+vérificateur, ni sauvegarde, ni trace — et rien à corriger.
+
+**Ce qui est plus grave que le reste.** Le contrôle mécanisé n'a relevé qu'**un seul** manquement.
+La règle n°31 (version étayée) a répondu «&nbsp;aucune production écrite exigée&nbsp;» et est passée
+au vert&nbsp;: elle cherche des zones de rédaction pour vérifier qu'elles sont étayées, et une page
+qui n'en a aucune lui échappe entièrement. **Une séquence vide passe mieux qu'une séquence
+imparfaite.** C'est le pire réglage possible.
+
+**La règle.** Toute phrase qui annonce une production — «&nbsp;production attendue&nbsp;»,
+«&nbsp;complète le tableau&nbsp;», «&nbsp;rédige&nbsp;», «&nbsp;justifie&nbsp;» — engage un
+**champ où l'élève écrit**, un **vérificateur**, une **correction** et une **sauvegarde**. Sinon la
+consigne est décorative, et la séquence est un document à lire déguisé en activité.
+
+**Mécanisation à faire** (branche Thème 2, avec les n°47, n°51 et n°54)&nbsp;: la n°31 doit
+**échouer**, et non passer, quand une page emploie un verbe de production sans offrir un seul champ.
+Le silence d'un outil n'est pas une preuve (n°47) — et son indulgence non plus.
+
+**Ce qui n'est pas fait, et pourquoi.** La séquence n'est pas corrigée : elle appartient à un autre
+auteur (règle n°66). Le constat est porté ici et dans la carte de couverture, qui sont nos fichiers
+communs. Le code `5e_C1.2` est par ailleurs couvert depuis aujourd'hui par le lot Chengdu, dont
+l'activité 1 fait exactement ce travail — trois principes pour une même fonction, cinq critères, et
+l'obligation de nommer ce qu'on perd en choisissant.
+
+**Un défaut de contenu, aussi, et c'est le nôtre autant que le sien.** L'aide de l'activité 1 écrit
+«&nbsp;La fonction répond à&nbsp;: <i>À quoi cela sert-il&nbsp;?</i>&nbsp;», et l'en-tête du tableau
+«&nbsp;Fonction&nbsp;: à quoi sert-il&nbsp;?&nbsp;». C'est **exactement** la confusion corrigée ce
+matin dans le billet d'entrée du 5e_C2 : «&nbsp;à quoi ça sert&nbsp;» décrit le service rendu à
+l'usager, pas la fonction technique. Deux séquences de deux auteurs différents portaient la même
+erreur, ce qui indique moins une négligence qu'un **contresens partagé dans la discipline** — et
+justifie la règle n°53 : une notion qui a une voisine se définit contre elle.
+
+---
+
+## Changement de gouvernance — 8 août 2026 : un seul auteur pour les trois thèmes
+
+Pascal&nbsp;: «&nbsp;Il n'y a plus d'autres auteurs. Tu es en charge de la rédaction et de la
+conception des 3 thèmes.&nbsp;»
+
+Cette phrase lève la contrainte la plus ancienne du dépôt — *ne jamais modifier les lots existants
+d'un autre auteur* — qui datait de l'époque où Fable, Codex et Grok produisaient en parallèle. Elle
+a servi&nbsp;: elle a évité des écrasements et des doublons. Elle n'a plus d'objet.
+
+**Ce qui change.** Toute ressource des trois thèmes peut désormais être reprise, corrigée,
+refondue ou archivée par Fable, sans demander la permission d'un tiers qui n'existe plus. Les
+séquences héritées cessent d'être un patrimoine intouchable pour devenir un **chantier**.
+
+**Ce qui ne change pas — et c'est le point important.** La discipline qui entourait cette contrainte
+ne venait pas de la propriété, mais de la prudence. Elle reste entière&nbsp;:
+
+- **On ouvre avant d'écrire** (n°66, premier volet, et n°46). Une écriture qui n'a pas listé le
+  dossier est un écrasement en puissance. Ce volet-là n'était jamais une question d'auteur.
+- **On pille avant d'archiver** (n°12). Une ressource qu'on remplace a presque toujours quelque
+  chose à donner&nbsp;: un cas, un mode opératoire, une question métacognitive. Le README d'archive
+  dit ce qui a été repris et ce qui ne pouvait pas l'être.
+- **On archive, on ne supprime pas.** `_archive-anciennes-versions/` garde la trace, avec la date
+  et le motif.
+- **On déclare la seconde route.** Quand deux ressources couvrent le même code, le dépôt ne choisit
+  pas un vainqueur en silence&nbsp;: il dit en quoi elles diffèrent, pour que l'enseignant choisisse.
+
+### Règle d'or n°66, amendée
+
+**Ancien second volet**&nbsp;: «&nbsp;un fichier d'un autre auteur ne s'écrase jamais, même pour
+l'améliorer&nbsp;».
+
+**Nouveau second volet**&nbsp;: **une ressource qui fonctionne ne s'écrase jamais sans laisser de
+trace, même quand elle nous appartient.** On la lit d'abord, on en tire ce qui vaut, on l'archive
+avec le motif, et on écrit ce qu'on a repris. La propriété donne le droit de refondre&nbsp;; elle
+ne donne pas celui d'effacer sans mémoire.
+
+Le premier volet — *on ouvre le dossier avant d'y écrire* — est inchangé, et reste celui des deux
+qui m'a réellement pris en défaut.
+
+---
+
+## Audit global des trois thèmes — 8 août 2026
+
+Premier audit mené sur l'ensemble du dépôt depuis que Fable en a la charge complète. **39 séquences
+vivantes** dans les trois thèmes (9 autres sont archivées et hors périmètre), passées à **neuf
+contrôles mécanisés**.
+
+### Ce que cet audit regarde — et ce qu'il ne regarde pas (règle n°47)
+
+**Mécanisé, donc établi** : les consignes de production sans champ de saisie (n°67), la définition
+de la fonction technique par « à quoi ça sert » (n°53), les blocs obligatoires de la règle n°4, le
+mode essentiel (n°29), les corrigés absents derrière un Bonus (n°43), les appels réseau (n°40), les
+variables de gabarit non remplacées, les sauvegardes locales manquantes.
+
+**Non mécanisable, donc NON couvert** : la justesse pédagogique du contenu, la qualité des corrigés,
+la progressivité réelle, l'ergonomie en classe. Ce rapport ne dit rien de ce qui s'enseigne bien.
+
+Toutes les comparaisons normalisent apostrophes et accents. Le premier jet cherchait
+« t'entraîner » avec une apostrophe droite et déclarait absents des blocs présents.
+
+### Le résultat
+
+| Règle | Défaut | Nombre |
+|---|---|---|
+| **n°40** | appel réseau (la page ne fonctionne pas hors ligne) | 26 |
+| **n°43** | Bonus sans corrigé | 23 |
+| **n°29** | mode essentiel absent | 16 |
+| **n°67** | consigne de production sans aucun champ de saisie | 3 |
+| **n°4** | bloc d'entraînement absent | 3 |
+| **n°4** | bloc Bonus absent | 3 |
+| **n°53** | fonction technique définie comme fonction d'usage | 3 |
+| **n°49** | sauvegarde locale absente alors qu'il y a des champs | 1 |
+
+| Thème | Manquements | Séquences en défaut |
+|---|---|---|
+| theme-1 | 23 | 10 |
+| theme-2 | 35 | 17 |
+| theme-3 | 20 | 7 |
+**78 manquements sur 34 séquences.** Cinq séquences seulement sont mécaniquement propres, et ce sont
+les cinq dernières produites : Chengdu 5e_C1, Pékin 3e_C2, Hangzhou 4e_C2, Shenzhen 3e_C3, Shanghai
+5e_C3. Le gabarit actuel tient ; c'est tout ce qui le précède qui ne le suit pas.
+
+### Ce qui compte vraiment, dans l'ordre
+
+**1. Les erreurs enseignées — trois pages définissent la fonction technique par « à quoi ça sert »,
+qui est la fonction d'usage.** `5e_C1.2` (freins), `4e_C4.1` (jardin connecté) et `4e_C4.1_book-train`.
+Nuance importante pour les deux dernières : leur *intention* est juste — elles opposent la fonction
+technique (« à quoi ça sert ») à la solution technique (« avec quoi on le fait »), et cette
+opposition est excellente. C'est la *formulation* qui entre en collision avec la notion voisine. La
+réparation n'est donc pas de supprimer l'opposition mais de la dire autrement : **ce que ça doit
+FAIRE** contre **avec quoi on le fait**.
+
+**Une quatrième page était en défaut : la mienne, corrigée le matin même.** J'avais réparé le billet
+d'entrée du 5e_C2 et laissé, trois lignes plus bas, la capsule de révision qui répétait la même
+définition fausse — plus l'ancienne triade des interacteurs, règles comprises. Le motif m'avait
+échappé parce qu'il était coupé par un retour à la ligne. **Une correction qui n'a pas cherché
+toutes les occurrences n'est pas une correction.** Corrigé, et les 47 tests du lot repassent.
+
+**2. Trois séquences annoncent une production et n'offrent aucun champ** (n°67) : `5e_C1.2`,
+`4e_C1.1` et `3e_C1.1` — les deux dernières étant les séquences « Tsinghua » de 12 ko. Ce sont des
+documents à lire déguisés en activités.
+
+**3. Vingt-trois Bonus sans corrigé** (n°43) : la dette annoncée en juillet, maintenant chiffrée.
+
+**4. Vingt-six pages appellent le réseau** (n°40) : elles ne fonctionnent pas hors ligne, ce qui est
+la promesse du dépôt.
+
+**5. Seize pages sans mode essentiel** (n°29), trois sans bloc d'entraînement et trois sans Bonus.
+
+### Ce que l'audit n'a pas pu faire, et qui revient à une branche Thème 2
+
+L'outil vit dans `/tmp` : `_outils/` appartient au périmètre du Thème 2, et cette branche est une
+branche Thème 1. Il doit y être versé, avec les mécanisations en attente — n°47 (périmètre déclaré),
+n°51 (titre affiché), n°53, n°54 (nombres recalculés) et n°67. Et la n°31 doit être **retournée** :
+elle passe au vert devant une page sans aucune zone de rédaction, si bien qu'une séquence vide se
+note mieux qu'une séquence imparfaite.

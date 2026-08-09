@@ -27,8 +27,8 @@ l'objet, il est dans ce qui l'entoure.**
 
 0. **Billet d'entrée** (4 min, **sans note**) — objet technique, fonction technique, environnement.
    Il oriente vers une capsule de révision de trois minutes ; il ne compte pas dans la progression.
-1. **Recenser les interacteurs** (5e_C2.1, ~45 min) — tri de propositions, les trois natures, puis
-   la liste de l'élève : au moins six interacteurs, les trois natures nommées.
+1. **Recenser les interacteurs** (5e_C2.1, ~45 min) — tri de propositions, les quatre familles, puis
+   la liste de l'élève : au moins six interacteurs, les quatre familles nommées.
 2. **Lire une décision dans une forme** (5e_C2.2, ~50 min) — quatre choix de la station rattachés
    chacun à un interacteur et à un domaine, puis le relevé écrit de l'élève.
 3. **Comparer et transférer** (5e_C2.2, ~35 min) — une seconde station qui a fait d'autres choix,
@@ -85,7 +85,7 @@ réellement la conception d'un mobilier urbain.
 ## Évaluer
 
 **Deux preuves en situation** (règle n°28), une par code : la **liste** de l'activité 1 (au moins
-six interacteurs, les trois natures) et le **relevé de choix** de l'activité 2 (quatre choix, chacun
+six interacteurs, les quatre familles) et le **relevé de choix** de l'activité 2 (quatre choix, chacun
 rattaché à un interacteur et à un domaine). Le transfert de l'activité 3 sert de troisième preuve
 pour les élèves qui vont plus loin. **Le QCM entraîne ; il n'évalue pas.**
 
