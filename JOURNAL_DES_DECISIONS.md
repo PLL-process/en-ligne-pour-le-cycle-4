@@ -3967,3 +3967,88 @@ pas exécuté, et on ne remet pas un colis dont on n'a pas lu l'étiquette.
 
 **Mécanisation.** Deux lignes dans le circuit de livraison de la méthode Fable, à exécuter avant
 tout `SendUserFile`.
+
+---
+
+## 9 août 2026 — L'atelier de planification des tâches, et deux règles nées de mes propres fautes
+
+### Ce qui a été livré
+
+Le programme 2024 nomme, dans les connaissances associées de la gestion de projet :
+« **Le diagramme de planification des tâches : notion de tâches, durée et contraintes entre
+tâches.** » L'inventaire du 8 août avait compté **zéro occurrence** dans tout le dépôt, alors que
+les trois codes C7.1 étaient revendiqués — et que la séquence de 3e, qui doit faire *élaborer* un
+processus « avec des tâches identifiées », ne contenait pas une seule fois le mot « tâche ».
+
+`_atelier-planification/` répond à ce manque par **une ressource unique à trois parcours**, appelée
+depuis les trois séquences C7.1 au moment du lancement de projet — la 5e **suit** un planning déjà
+fait, la 4e l'**organise**, la 3e l'**élabore** et cherche le chemin le plus long. Trois refontes
+auraient produit trois versions qui divergeraient ; une ressource partagée n'en produit qu'une.
+
+L'atelier commence par des **bandes de papier découpées** — 2 cm par séance — et n'ouvre le logiciel
+qu'après. La **voie B sans ordinateur** vaut la voie A partout, et pose les mêmes questions.
+
+### Règle d'or n°70 — Une capture d'écran doit parler la langue du poste
+
+**L'incident.** J'avais produit quatre schémas SVG de l'interface de GanttProject, dessinés à la
+main faute d'avoir pu ouvrir le logiciel, avec des libellés **en anglais** : *Show critical path*,
+*Predecessors*, *Duration*. Le `SOURCES_MEDIAS.md` du lot était pourtant honnête : il déclarait
+noir sur blanc « ce ne sont pas des captures d'écran » et séparait le vérifié du non-vérifié. Cela
+n'a rien sauvé. Pascal a envoyé deux copies d'écran de **son** poste : l'interface est en
+**français**.
+
+**Le coût.** Un élève qui cherche *Show critical path* dans une fenêtre où est écrit « Afficher le
+chemin critique » ne trouve rien — et conclut que c'est lui qui se trompe. Une ressource
+d'accompagnement qui égare est pire qu'une absence de ressource.
+
+**La règle.** Quand un lot guide un geste dans un logiciel, **l'image doit montrer l'écran tel
+qu'il apparaît sur le poste de l'élève** — même version, même langue. Si le logiciel est libre, on
+l'ouvre et on capture. S'il est propriétaire (règle n°1), on ne le montre pas du tout et on
+enseigne le geste autrement. **Un schéma reconstruit n'est acceptable que s'il ne prétend nommer
+aucun bouton.**
+
+**Conséquence pratique.** Les quatre SVG ont été supprimés. GanttProject 3.3 a été lancé sur le
+poste, sur le fichier `jardin_connecte_brooklyn.gan` produit par le lot lui-même, et cinq écrans
+ont été capturés aux moments choisis : la table des tâches, le champ *Durée*, l'onglet
+*Prédécesseurs* avec sa relation *Fin-Début*, les barres, puis le même diagramme après *Afficher le
+chemin critique*. GanttProject étant libre (GPL v3), reproduire son interface est permis — ce qui
+n'était pas le cas de Packet Tracer, à l'origine de la règle n°1.
+
+**Un corollaire, écrit dans l'atelier lui-même :** on ne dit jamais « les barres rouges ». La mise
+en évidence est une hachure dans cette version, une couleur ailleurs. On dit « les tâches mises en
+évidence » — c'est vrai partout.
+
+### Règle d'or n°71 — Un corrigé qui n'est pas écrit par le calcul qui le vérifie n'est pas un corrigé
+
+**L'incident.** `_verifier_planning.py` imprimait à l'écran des résultats **justes** : chemin le
+plus long, tâches critiques, marges. À côté, `_corrige_calcule.json` — le fichier dont l'atelier
+allait tirer ses questions et ses réponses — annonçait des marges **non nulles sur les tâches du
+chemin le plus long**. C'est-à-dire l'inverse exact de ce que l'atelier enseigne.
+
+L'explication est banale et c'est ce qui la rend dangereuse : le JSON avait été écrit à la main,
+avant la correction du calcul des dates au plus tard, et le script qui imprimait les bonnes valeurs
+ne les écrivait nulle part. Deux vérités coexistaient, l'une contrôlée et l'autre publiée.
+
+**Le coût évité de justesse.** Trente questions de QCM et quatre exercices auraient été bâtis sur
+des marges fausses, avec un vérificateur qui aurait refusé les bonnes réponses des élèves.
+
+**La règle.** Le fichier de corrigé est **écrit par le script qui le vérifie**, jamais à côté. Et
+le script ne l'écrit **que si tous ses contrôles passent** — un corrigé produit à partir d'un
+calcul incohérent est pire que pas de corrigé. Après écriture, il **relit le fichier** et contrôle
+qu'il redonne bien le résultat attendu.
+
+C'est la règle n°54 (« un nombre établi ailleurs se calcule, il ne se recopie pas ») prise en
+défaut chez moi, et poussée d'un cran : il ne suffit pas de calculer le nombre quelque part, il
+faut que **le publieur soit le calculateur**.
+
+**Mécanisation.** Trois blocs dans `_verifier_planning.py` : écriture conditionnée à `ok`,
+relecture, contrôle de l'invariant sur le fichier relu. Et, côté page, un générateur qui fabrique
+les tableaux, les questions **et les réponses attendues** à partir du même JSON — de sorte qu'une
+réponse ne peut pas diverger de la question.
+
+### Une décision de barème, au passage
+
+Dans le parcours de 4e, les dates au plus tôt sont contrôlées **sans aucune tolérance**, alors que
+les questions de raisonnement en admettent une. Une date fausse n'est pas une inattention : c'est
+un calcul faux, et l'accepter apprendrait à l'élève que « à peu près » suffit sur un résultat de
+calcul. La tolérance est légitime sur ce qui se discute, jamais sur ce qui se calcule.
