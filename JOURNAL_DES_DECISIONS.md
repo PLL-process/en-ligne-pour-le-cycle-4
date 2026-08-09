@@ -4052,3 +4052,131 @@ Dans le parcours de 4e, les dates au plus tôt sont contrôlées **sans aucune t
 les questions de raisonnement en admettent une. Une date fausse n'est pas une inattention : c'est
 un calcul faux, et l'accepter apprendrait à l'élève que « à peu près » suffit sur un résultat de
 calcul. La tolérance est légitime sur ce qui se discute, jamais sur ce qui se calcule.
+
+---
+
+## 9 août 2026 — Ce que le TP « Dé » de Pascal nous apprend sur le guidage pas à pas
+
+Pascal m'a transmis un TP qu'il a **réellement mené en classe** et qui a marché : quatorze pages
+pour construire un dé en CAO, du fichier vide jusqu'à la pièce colorée. Son commentaire vaut
+cahier des charges : « **C'est long mais il arrive à être autonome et personne ne reste sur la
+touche.** »
+
+Ce TP est un objet d'étude. Il ne contient presque aucune phrase de cours, et pourtant il
+enseigne. Voici ce que j'en retiens, sous forme de règles — parce que nous allons devoir écrire la
+même chose pour Onshape, et trois fois.
+
+### Règle d'or n°72 — Un guidage sépare typographiquement ce qu'on FAIT de ce qu'on doit VOIR
+
+Dans le TP de Pascal, l'action est en noir (« Cliquez sur **Rectangle** ») et le retour attendu est
+en couleur et en italique (« *Le pointeur prend la forme…* », « *Un point rouge apparaît sur
+l'origine lorsque la souris est bien placée* »).
+
+Ce second registre n'est pas du décor : c'est **le seul moyen qu'a l'élève de savoir qu'il vient de
+se tromper**. Sans lui, l'erreur ne se découvre que trois étapes plus loin, quand plus rien ne
+ressemble à l'image — et là il faut lever la main.
+
+**La règle.** Toute consigne de manipulation logicielle s'écrit en deux temps : *le geste*, puis
+*ce qui doit se produire à l'écran*. Deux registres visuellement distincts, toujours les mêmes.
+
+### Règle d'or n°73 — Le nom d'un bouton se cite tel qu'il est écrit, avec son icône à côté
+
+« Cliquez sur **Cotation intelligente** [icône] ». Le mot exact du logiciel, en gras, **et** l'image
+du bouton. L'élève reconnaît l'icône avant d'avoir fini de lire le mot ; l'élève dyslexique la
+reconnaît sans lire du tout.
+
+C'est la règle n°70 (l'image doit parler la langue du poste) poussée d'un cran : **non seulement la
+langue, mais le mot exact et le dessin exact.**
+
+### Règle d'or n°74 — Avant de guider un geste imprécis, on autorise l'imprécision
+
+Encadré orange de Pascal, page 2 : « *Il n'est pas nécessaire d'être précis dans les dimensions ;
+les cotes exactes seront définies ultérieurement.* »
+
+Sans cette phrase, un élève passe cinq minutes à essayer de tracer un rectangle de 50,00 mm à la
+souris, échoue, et se croit nul. Avec elle, il trace n'importe quoi et avance.
+
+**La règle.** Chaque fois qu'une étape produit un résultat volontairement approximatif, on le
+**dit avant**, à l'endroit où l'élève va bloquer.
+
+### Règle d'or n°75 — Toute valeur visible dans une capture est déclarée comme exemple
+
+Deuxième encadré orange : « *La cote 74,13 est un exemple.* »
+
+Sans cette ligne, une partie de la classe tape 74,13. Ce n'est pas de la bêtise : c'est de la
+confiance dans le document. Un élève qui suit une consigne à la lettre a raison de le faire ; c'est
+au document d'être clair sur ce qui est prescriptif et ce qui est illustratif.
+
+### Règle d'or n°76 — L'aide décroît à mesure que le geste se répète
+
+Le TP construit la **première** face en douze étapes détaillées, la **deuxième** en neuf étapes
+allégées, et les **quatre dernières** en une ligne chacune avec l'image du résultat.
+
+C'est la structure entière du document, et c'est elle qui produit l'autonomie. On ne devient pas
+autonome parce qu'on nous dit de l'être : on le devient parce que l'étayage se retire, geste après
+geste, assez lentement pour qu'on ne s'en aperçoive pas.
+
+**La règle.** Un guidage qui répète le même niveau de détail du début à la fin n'apprend rien : il
+fait exécuter. On détaille une fois, on allège la deuxième, on ne montre plus que le résultat
+ensuite.
+
+### Règle d'or n°77 — À chaque palier, l'image du résultat attendu
+
+Le TP montre le cube après extrusion, le trou après enlèvement de matière, le dé après les congés,
+le dé rouge à la fin. À chaque fois, l'élève **compare son écran à l'image** et sait tout seul s'il
+est juste.
+
+C'est très exactement le mécanisme qui fait que « personne ne reste sur la touche » : l'élève qui
+doute n'a pas besoin du professeur, et le professeur reste disponible pour celui qui est vraiment
+bloqué.
+
+### Règle d'or n°78 — On enseigne à lire l'état du logiciel, pas seulement à cliquer
+
+Page 2 : « *Les deux côtés du rectangle qui touchent l'origine sont en noir… Les deux autres côtés
+sont en bleu. Ceci indique qu'ils sont sous-contraints et, de ce fait, libres de mouvement.* »
+
+Rien n'oblige à dire ça pour finir le dé. Mais c'est le seul passage du TP qui enseigne une
+**notion de CAO** : une esquisse est un système de contraintes, et le logiciel dit en permanence où
+il en est. L'élève qui l'a compris se débrouillera dans n'importe quel modeleur ; celui qui a
+seulement cliqué ne saura refaire que ce dé-là.
+
+### Règle d'or n°79 — Le premier geste d'un TP est un geste de rangement
+
+Avant la moindre esquisse : créer un dossier « Construction + Nom élève », un sous-dossier au nom
+du TP, et enregistrer sous un nom **imposé**. Le TP y consacre sa deuxième page.
+
+Un travail qu'on ne retrouve pas à la séance suivante n'a pas eu lieu. Et en salle de technologie,
+avec des sessions partagées, c'est la première cause de séance perdue.
+
+### Règle d'or n°80 — Le rituel d'enregistrement se répète à chaque palier, avec son icône
+
+« Enregistrer le document [icône] » revient huit fois dans les quatorze pages. Ce n'est pas de la
+redondance : c'est un **rituel**, et un rituel s'installe par la répétition à date fixe.
+
+### Règle d'or n°81 — Un TP de prise en main ne pose aucune question de cours
+
+Quatorze pages, zéro question à répondre. Pascal n'évalue pas la notion pendant qu'il enseigne
+l'outil, et c'est pour ça que ça marche : l'élève n'a qu'une seule chose à faire à la fois.
+
+C'est la n°59 (l'outil ne doit jamais devenir la compétence évaluée) et la n°61 (une évaluation ne
+mesure qu'un construit à la fois) vues depuis l'autre bout : **on peut consacrer une séance
+entière à l'outil, à condition de dire que c'est ce qu'on fait.** Les questions viennent après,
+dans la séquence, sur la notion.
+
+### Règle d'or n°82 — Un TP long se termine par une récompense visuelle gratuite
+
+Les deux dernières pages colorent le dé en rouge et les creux en blanc. Techniquement : inutile.
+Pédagogiquement : décisif. Après quatorze pages, l'élève repart avec **une image dont il est
+fier**, et c'est ce qu'il montrera chez lui.
+
+Aucune de nos séquences ne fait ça. Toutes finissent sur un bilan.
+
+### Ce que ça change pour la suite
+
+La progression CAO en Onshape reprendra cette architecture, avec les objets déjà décidés :
+**5e — le dé** (prise en main : esquisse, cotation, extrusion, enlèvement de matière, congé,
+apparence) ; **4e — l'assemblage** du dé et d'un socle de style romain, dé **centré sur l'axe du
+socle** ; **3e — le boîtier étanche du capteur de confort**, où la forme n'est plus donnée mais
+déduite d'un besoin.
+
+Et le TP de Pascal reste sa propriété : il sert de **modèle de forme**, jamais de source de texte.
