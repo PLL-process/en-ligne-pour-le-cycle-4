@@ -727,7 +727,7 @@ page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p
 
 <section class="card">
   <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
-  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>7 illustrées</b>, et chaque réponse
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>6 illustrées</b>, et chaque réponse
   fausse y est expliquée. Elles se répartissent sur les <b>trois codes</b>.</p>
   <p id="qcmPortee" role="status"></p>
   <p style="text-align:center"><a class="btn" id="lienQcm" href="qcm_4e_C1.1-C1.3_tsinghua.html">🔥 Lancer le QCM</a></p>
@@ -1034,26 +1034,31 @@ function majQcm(){
   const lien=$("lienQcm"), portee=$("qcmPortee");
   if(!lien || !portee) return;
   const v=window.__valid||{};
-  const faites=[1,2,3,4].filter(k=>v[k]).length;
+  const faites=[1,2,3,4].filter(k=>v[k]);
   const f="qcm_4e_C1.1-C1.3_tsinghua.html";
-  if(faites===0){
+  /* Quelle activité travaille quel code — c'est ce qui rend la cible possible. */
+  const CODES={1:"C1.1", 2:"C1.1", 3:"C1.2", 4:"C1.3"};
+  if(faites.length===0){
     lien.href=f+"#depart=court";
     lien.textContent="🔥 Commencer par 10 questions";
     portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un "+
       "<b>parcours court de 10 questions</b>, pour te tester sans être submergé·e. "+
       "Les 30 restent accessibles d'un clic dans le QCM.";
-  } else if(faites < 3){
-    lien.href=f+"#depart=court";
-    lien.textContent="🔥 M'entraîner (10 questions pour commencer)";
-    portee.innerHTML="Tu as validé <b>"+faites+" activité(s) sur 4</b>. Le bouton ouvre un parcours "+
-      "court&nbsp;; passe au parcours complet quand tu auras terminé la séquence.";
+  } else if(faites.length < 4){
+    const codes=[...new Set(faites.map(k=>CODES[k]))];
+    lien.href=f+"#codes="+codes.join(",");
+    lien.textContent="🔥 Réviser ce que j'ai déjà travaillé ("+codes.length+" compétence(s))";
+    portee.innerHTML="Tu as validé <b>"+faites.length+" activité(s) sur 4</b>. Le bouton ouvre les "+
+      "questions qui portent sur <b>"+codes.join(", ")+"</b> — celles-là seulement&nbsp;: on ne "+
+      "s'entraîne pas sur ce qu'on n'a pas encore fait. Le parcours complet t'attend à la fin.";
   } else {
     lien.href=f;
     lien.textContent="🔥 Lancer le QCM complet (30 questions)";
-    portee.innerHTML="Tu as terminé les quatre activités&nbsp;: <b>le parcours complet est "+
-      "maintenant à ta portée</b>.";
+    portee.innerHTML="Tu as terminé les quatre activités&nbsp;: <b>les trois compétences ont été "+
+      "travaillées</b>, le parcours complet est maintenant à ta portée.";
   }
 }
+
 
 /* ══════ Rappel d'hypothèse ══════ */
 function majHyp(){

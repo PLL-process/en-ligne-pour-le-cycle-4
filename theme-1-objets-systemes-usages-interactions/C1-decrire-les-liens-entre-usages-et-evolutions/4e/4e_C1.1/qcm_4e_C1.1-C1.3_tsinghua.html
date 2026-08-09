@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 1 · 4e — QCM : Tsinghua, concevoir avant de connecter (4e_C1.1 à C1.3)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .portee-ciblee{max-width:880px;margin:0 auto 12px;padding:9px 14px;border:1px solid var(--head);border-radius:10px;background:#2b1a3f;font-size:.85em;color:var(--text)}
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C1.1-C1.3_tsinghua_feux.html">← Séquence</a></nav>
+<h1>Thème 1 · 4e — QCM : Tsinghua, concevoir avant de connecter</h1>
+<p class="subtitle">Des données publiques, une estimation qu'on ose faire et dont on ose dire les limites — mettre en relation les OST avec leurs usages (4e_C1.1), peser les évolutions (C1.2), justifier par le besoin (C1.3)</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C1.1</span><span class="badge code">4e_C1.2</span><span class="badge code">4e_C1.3</span>
+  <span class="badge theme">30 questions · 6 illustrées · chaque distracteur réfuté</span>
+</div>
+<p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
+<p style="text-align:center"><a href="sequence_4e_C1.1-C1.3_tsinghua_feux.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C1.1">4e_C1.1 — Mettre en relation les OST avec leurs usages</option>
+      <option value="C1.2">4e_C1.2 — Avantages et inconvénients des évolutions</option>
+      <option value="C1.3">4e_C1.3 — Justifier l'évolution par le besoin</option>
+    
+      </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C1.1 à C1.3 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_4e_C1.1-C1.3_tsinghua_feux.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — Tsinghua 4e : 30 questions sur les trois codes (C1.1 : 12 · C1.2 : 9 · C1.3 : 9), dont 6 illustrées. Chiffres publics et sourcés : ministère de l'Intérieur, JRC/EFFIS, ADEME. */
+const QUESTIONS = [
+/* ═══ C1.1 ═══ */
+{c:"C1.1",n:"Par où l'on commence",q:"Une équipe qui doit concevoir un système de détection de feux commence par…",
+ o:["choisir un microcontrôleur","choisir un capteur adapté","comprendre le besoin : ce que les secours attendent réellement, et dans quelles conditions","estimer le prix du système"],r:2,
+ expl:"Un système technique n'existe pas parce qu'un composant est disponible. Il existe pour répondre à un besoin identifié dans une situation d'usage. Commencer par le composant, c'est répondre avant d'avoir écouté la question.",
+ ex:"La séquence entière se déroule sans qu'aucun capteur ne soit choisi : ce sera le travail du Thème 2.",
+ err:"Partir du matériel qu'on connaît déjà, et construire le besoin autour.",
+ d:["Le microcontrôleur traite des données qu'on n'a pas encore décidé de produire : le choisir maintenant serait arbitraire.","Choisir un capteur suppose de savoir quelle grandeur mesurer, avec quelle précision et dans quel délai — trois choses qu'on ignore encore.","","Le prix se calcule sur une solution ; il n'y a rien à chiffrer tant qu'on ne sait pas ce que le système doit faire."],
+ ret:"Un système existe pour un besoin, pas parce qu'un composant existe."},
+{c:"C1.1",n:"Trois grandeurs, zéro addition",q:"« 50 000 ha », « 32 feux » et « 50 % » ne s'additionnent pas parce que…",
+ o:["elles viennent de trois sources différentes","les nombres sont trop éloignés les uns des autres","ce sont trois grandeurs de natures différentes : une surface cumulée, un état instantané, une proportion","le tableur refuserait l'opération"],r:2,
+ expl:"Additionner suppose la même unité ET le même sens. Ici les trois manquent aux deux conditions. L'addition produirait un nombre parfaitement calculé et parfaitement dépourvu de signification.",
+ ex:"50 000 + 32 + 50 = 50 082. Ce nombre existe, et il ne désigne rien au monde.",
+ err:"Se fier au fait que le calcul « marche ». Une machine calcule ce qu'on lui demande sans savoir ce que les nombres veulent dire.",
+ d:["Des chiffres de sources différentes s'additionnent parfaitement s'ils mesurent la même grandeur de la même façon.","L'écart entre les valeurs n'a aucune importance : on additionne très bien 3 et 3 000 s'ils désignent la même chose.","","C'est précisément le danger : le tableur acceptera l'opération sans broncher et affichera un résultat."],
+ ret:"On n'additionne que ce qui a la même unité ET le même sens."},
+{c:"C1.1",n:"Un cumul",q:"« 50 000 ha brûlés depuis le 1ᵉʳ janvier » est…",
+ o:["une estimation calculée par un modèle","la surface qui brûle chaque jour","la surface totale des forêts françaises","un cumul, annoncé comme un minimum : la surface réelle est au moins celle-là"],r:3,
+ expl:"Un cumul ne fait que grandir au fil de l'année. Et le statut « minimum annoncé » signale que le comptage n'est pas terminé : la valeur définitive sera supérieure, sans qu'on sache de combien.",
+ ex:"Le même indicateur, mesuré en octobre, aura nécessairement augmenté — sans qu'aucun feu nouveau n'ait besoin d'être plus grand.",
+ err:"Lire un cumul comme un instantané, et croire que le chiffre décrit une situation présente.",
+ d:["Cette valeur est un comptage d'observations, non le résultat d'un modèle — la colonne « statut » le précise.","Une surface journalière varierait chaque jour et redescendrait ; un cumul, jamais.","La forêt française couvre plusieurs millions d'hectares : 50 000 en est une fraction très faible.",""],
+ ret:"Un cumul grandit toute l'année et ne redescend jamais."},
+{c:"C1.1",n:"Un état instantané",q:"« 32 feux en cours » est…",
+ o:["le nombre de feux de l'année","un état instantané : le nombre à un moment donné, qui aura changé le lendemain","une moyenne journalière","une prévision pour la semaine"],r:1,
+ expl:"Un état instantané est une photographie. Il peut monter, redescendre, revenir au même chiffre pour des feux entièrement différents. Le comparer d'un jour à l'autre a du sens ; le cumuler n'en a aucun.",
+ ex:"Trente-deux feux le 24 juillet et trente-deux le 25 ne font pas soixante-quatre feux : ce sont peut-être les mêmes.",
+ err:"Additionner des états instantanés successifs, et compter plusieurs fois le même phénomène.",
+ d:["Le nombre annuel serait bien plus élevé et n'aurait pas la même signification : il compterait chaque départ, éteint ou non.","","Une moyenne suppose un calcul sur plusieurs jours ; ici la valeur est relevée à un instant.","Rien n'est prédit : la donnée décrit ce qui est observé au moment de l'annonce."],
+ ret:"Un état instantané se compare, il ne se cumule pas."},
+{c:"C1.1",n:"Une proportion",q:"« 50 % des départs de feu sont liés à une imprudence » n'a de sens que si l'on sait…",
+ o:["quel jour la mesure a été faite","combien de feux cela représente exactement","quelle est la surface concernée","de quel ensemble c'est la part : ici, l'ensemble des départs de feu en France"],r:3,
+ expl:"Un pourcentage est une part. Sans son ensemble de référence, il flotte : 50 % de quoi, sur quel territoire, sur quelle période ? C'est cet ensemble qui donne au chiffre sa portée — et qui interdit de l'additionner à des hectares.",
+ ex:"« 50 % des départs » et « 50 % des surfaces brûlées » seraient deux affirmations très différentes, et la seconde serait bien plus grave.",
+ err:"Retenir le pourcentage et oublier son ensemble, ce qui arrive dès qu'on le recopie sans sa phrase.",
+ d:["La date situe la donnée, mais ne dit toujours pas de quel ensemble le pourcentage est la part.","Le nombre absolu serait une information supplémentaire utile, mais la proportion garde son sens sans lui, pourvu qu'on sache de quoi elle est la part.","La surface est une autre grandeur : elle ne dit rien de la part des départs dus à une imprudence.",""],
+ ret:"Un pourcentage sans son ensemble de référence ne veut rien dire."},
+{c:"C1.1",n:"À quoi sert la colonne « statut »",q:"Dans le fichier, la colonne `statut` porte « minimum_annonce », « instantane », « estimation_modelee ». Elle sert à…",
+ o:["dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes","indiquer la date de la mesure","classer les lignes par ordre d'importance","signaler les erreurs du fichier"],r:0,
+ expl:"C'est la colonne la plus précieuse du fichier, et celle qu'on regarde le moins. Elle transporte ce qu'un nombre seul ne peut pas dire : comment il a été obtenu, et donc ce qu'on a le droit d'en faire.",
+ ex:"Deux nombres dans la même colonne « valeur » — 50 000 et 20 — n'autorisent pas les mêmes opérations, et seule la colonne « statut » permet de le savoir.",
+ err:"Supprimer les colonnes « qui ne contiennent pas de chiffres » pour alléger le tableau.",
+ d:["","La date figure dans sa propre colonne ; le statut ne dit pas quand, il dit comment.","Aucun ordre d'importance n'est établi : les trois statuts sont également légitimes, ils décrivent des choses différentes.","Aucune des lignes n'est erronée : le statut décrit une méthode d'obtention, pas un défaut."],
+ ret:"La colonne « statut » dit ce qu'on a le droit de faire avec le nombre."},
+{c:"C1.1",n:"Pourquoi citer la source",q:"La colonne `source` est indispensable parce que…",
+ o:["un chiffre sans source ne peut être ni vérifié ni discuté","cela fait plus sérieux","c'est obligatoire dans un fichier CSV","cela permet de trier les lignes plus facilement"],r:0,
+ expl:"Citer la source, ce n'est pas une politesse académique : c'est ce qui rend un chiffre contestable. Un nombre qu'on ne peut pas remonter jusqu'à son producteur ne peut être ni confirmé ni réfuté — il ne peut qu'être cru.",
+ ex:"« 504 002 ha en 2023 » vient du JRC/EFFIS, service de la Commission européenne : n'importe qui peut aller vérifier, et constater les mises à jour.",
+ err:"Recopier un chiffre trouvé en ligne sans noter d'où il vient. Une semaine plus tard, personne ne peut plus le retrouver.",
+ d:["","L'apparence n'entre pas en jeu : un fichier peut paraître très sérieux et ne contenir que des chiffres invérifiables.","Le format CSV n'impose aucune colonne : c'est une convention de travail, pas une règle technique.","Le tri se ferait tout aussi bien sur n'importe quelle autre colonne."],
+ ret:"Un chiffre sans source ne se discute pas. Il se croit ou il se rejette."},
+{c:"C1.1",n:"Ce qu'un seuil seul produit",q:"Un système qui déclencherait l'alerte au-dessus de 40 °C, dans une cour où l'écart ombre/soleil dépasse 10 °C…",
+ o:["ne se déclencherait jamais","se déclencherait tous les jours d'été, sans le moindre feu","fonctionnerait correctement","ne fonctionnerait que la nuit"],r:1,
+ expl:"C'est la raison pour laquelle la séquence commence par une mesure dans la cour. Un capteur unique confond la cause qu'on cherche avec toutes celles qui produisent le même effet — et le soleil sur du bitume produit exactement le même effet qu'un début d'incendie sur un thermomètre.",
+ ex:"Relevé réel dans une cour : 29,4 °C à l'ombre, 41,8 °C au soleil, au même instant.",
+ err:"Fixer un seuil à partir de la valeur qu'atteint un feu, sans regarder ce que la vie ordinaire atteint déjà.",
+ d:["Il se déclencherait au contraire très souvent : 41,8 °C au soleil dépasse largement le seuil.","","Il ferait exactement ce qu'on lui a demandé — et c'est le problème : ce qu'on lui a demandé est mal posé.","La nuit est justement le moment où il ne se déclencherait pas, faute de soleil."],
+ ret:"Un capteur unique ne distingue pas la cause qu'on cherche des autres qui font le même effet."},
+{c:"C1.1",n:"Croiser les indices",q:"Pour limiter les fausses alertes, la solution est de…",
+ o:["vérifier moins souvent","augmenter le seuil de température","croiser plusieurs indices indépendants avant de confirmer","installer davantage de capteurs du même type"],r:2,
+ expl:"Deux indices indépendants se trompent rarement ensemble. La température seule monte au soleil ; les particules seules montent quand une voiture passe ; les deux ensemble, au même endroit, au même moment, sont beaucoup plus difficiles à expliquer autrement que par un feu.",
+ ex:"Température ET particules de fumée ET absence de pluie : trois conditions dont la rencontre fortuite est rare.",
+ err:"Croire qu'un capteur plus précis résout le problème. Le défaut n'est pas la précision, c'est l'ambiguïté.",
+ d:["Vérifier moins souvent revient à détecter plus tard, ce qui est exactement l'inverse du besoin.","Un seuil plus haut réduit les fausses alertes et fait manquer les vrais départs : on déplace l'erreur, on ne la supprime pas.","","Multiplier les capteurs identiques multiplie aussi les fausses alertes : ils se trompent tous de la même façon, pour la même raison."],
+ ret:"Deux indices indépendants se trompent rarement ensemble."},
+{c:"C1.1",n:"L'absence de donnée",q:"« Aucune alerte reçue » prouve qu'il n'y a pas de feu ?",
+ o:["non : un capteur en panne, déchargé ou hors de portée ne transmet rien non plus","oui, si le système fonctionne","oui, la nuit seulement","cela ne concerne pas la conception du système"],r:0,
+ expl:"Le silence a deux causes possibles, et elles sont indiscernables de loin : rien à signaler, ou plus personne pour signaler. Un système sérieux distingue les deux — en envoyant régulièrement un signe de vie même lorsqu'il n'a rien à dire.",
+ ex:"Un capteur qui émet « je vais bien » toutes les heures permet de savoir, au bout de deux heures de silence, qu'il faut aller voir.",
+ err:"Interpréter l'absence de signal comme une bonne nouvelle.",
+ d:["","C'est précisément ce qu'on ne peut pas savoir à distance : un système en panne ressemble en tout point à un système qui n'a rien à signaler.","L'heure ne change rien : une batterie se vide de jour comme de nuit.","C'est au contraire une exigence de conception majeure : elle décide de la façon dont le système doit se signaler."],
+ ret:"Le silence d'un capteur n'est pas une preuve. C'est une question."},
+{c:"C1.1",n:"Du besoin à l'information",q:"« Détecter tôt » exige d'abord de savoir…",
+ o:["qui financera le projet","quel microcontrôleur employer","combien coûtera le système","quelles grandeurs mesurer, et à quelle fréquence"],r:3,
+ expl:"Entre un besoin exprimé en français — « détecter tôt » — et un objet technique, il y a une étape : dire quelles informations sont nécessaires. C'est elle qui commande tout le reste, y compris le choix des composants du Thème 2.",
+ ex:"« Détecter tôt » → température, fumée, image, vent → « quelle fréquence de mesure ? » → et seulement ensuite, quel capteur.",
+ err:"Sauter l'étape de l'information et passer directement du besoin au matériel.",
+ d:["Le financement est une question réelle, mais elle ne dit rien de ce que le système doit mesurer.","Le microcontrôleur traite des informations : le choisir avant de savoir lesquelles est prématuré.","Le coût dépend des choix techniques, qui dépendent eux-mêmes des informations nécessaires.",""],
+ ret:"Entre le besoin et l'objet, il y a l'information nécessaire."},
+{c:"C1.1",n:"Ce que la séquence ne fait pas",q:"À la fin de cette séquence, on n'a toujours pas…",
+ img:{src:"Images/corrige_du_nombre_a_l_exigence.svg",alt:"La chaîne du raisonnement en cinq étapes, de la donnée publique à l'exigence vérifiable, avec l'incertitude que chaque étape ajoute et qu'aucune ne retire."},
+ o:["regardé de données","compris le besoin","écrit d'exigences","choisi le moindre composant — c'est le travail du Thème 2"],r:3,
+ expl:"C'est volontaire, et c'est la marque d'une bonne analyse externe : on sait ce que le système doit faire et comment on le vérifiera, sans avoir décidé avec quoi. L'espace des solutions reste entier.",
+ ex:"Cinq exigences vérifiables sont écrites, et pas un seul capteur n'est nommé.",
+ err:"Vouloir « finir » en choisissant un composant, et fermer ainsi la comparaison avant de l'avoir faite.",
+ d:["Les données publiques sont lues, triées et exploitées pendant trois séances.","Le besoin est au contraire l'objet même de la séquence, et il est établi dès la première séance.","Cinq exigences vérifiables sont rédigées en séance 4 : c'est la production principale du lot.",""],
+ ret:"Savoir ce qu'il faut obtenir sans avoir choisi avec quoi : c'est cela, l'analyse externe."},
+/* ═══ C1.2 ═══ */
+{c:"C1.2",n:"Un proxy",q:"Le ratio 20 000 000 ÷ 504 002 ≈ 39,68 tCO₂/ha est…",
+ o:["un proxy : une valeur empruntée à un autre contexte, faute de mieux","une mesure faite en France en 2026","une valeur officielle applicable partout","une constante physique"],r:0,
+ expl:"Un proxy est un remplaçant assumé. On n'a pas la valeur qu'il faudrait, on en prend une voisine, et l'on dit qu'on l'a fait. C'est parfaitement légitime — à condition que la dernière partie ne soit pas oubliée.",
+ ex:"Le ratio vient de l'Union européenne en 2023 ; on l'applique à la France en 2026. Deux territoires, deux années, d'autres végétations.",
+ err:"Employer un proxy et n'en parler à personne. Le résultat devient alors une affirmation.",
+ d:["","Aucune mesure de ce type n'a été faite en France en 2026 : c'est justement pour cela qu'on emprunte.","Aucune valeur officielle n'autorise à transposer un ratio d'un territoire à un autre sans précaution.","Une constante physique ne dépend ni de l'année ni du lieu ; celle-ci dépend des deux."],
+ ret:"Un proxy est légitime. Un proxy tu, ne l'est plus."},
+{c:"C1.2",n:"L'ordre de grandeur",q:"Appliqué à 50 000 ha, ce ratio donne environ…",
+ o:["20 millions de tonnes","39,68 millions de tonnes","504 002 tonnes","1,98 million de tonnes de CO₂"],r:3,
+ expl:"50 000 × 39,68 ≈ 1 984 000, soit près de deux millions de tonnes. L'intérêt de ce calcul n'est pas le chiffre exact : c'est de savoir si l'on parle de milliers ou de millions.",
+ ex:"Se tromper d'un facteur mille sur un ordre de grandeur change complètement la conversation qu'on peut avoir avec un décideur.",
+ err:"Recopier un des nombres de l'énoncé au lieu de faire l'opération.",
+ d:["20 millions de tonnes est l'estimation européenne de départ, celle qu'on a utilisée pour bâtir le ratio.","39,68 millions serait le résultat d'une multiplication par un million, non par 50 000.","504 002 est la surface européenne brûlée en 2023, exprimée en hectares : ce n'est pas un résultat.",""],
+ ret:"Une estimation sert d'abord à connaître l'ordre de grandeur."},
+{c:"C1.2",n:"Ce que l'estimation ignore",q:"Cette estimation ne tient pas compte…",
+ o:["de rien : le calcul est complet","du type de végétation, de l'humidité, de la sévérité du feu et de la biomasse réellement consumée","uniquement de la date","uniquement du nombre de feux"],r:1,
+ expl:"Un hectare de garrigue et un hectare de forêt dense ne libèrent pas la même quantité de carbone, à surface égale. Le ratio moyen écrase toutes ces différences — c'est ce qui le rend utilisable, et c'est ce qui le rend approximatif.",
+ ex:"Un feu de sous-bois qui court vite consume peu de biomasse ; un feu de cimes en consume énormément. La surface brûlée est pourtant la même.",
+ err:"Présenter une estimation comme si le calcul avait tout pris en compte.",
+ d:["Le calcul est arithmétiquement juste et physiquement très incomplet : les deux choses sont compatibles.","","La date est un facteur parmi d'autres, et pas le plus important ici.","Le nombre de feux n'entre pas dans le calcul, qui ne porte que sur des surfaces."],
+ ret:"Un ratio moyen écrase les différences. C'est son utilité et sa limite."},
+{c:"C1.2",n:"Une estimation présentée comme une mesure",q:"Écrire « les feux français ont émis 1,98 MtCO₂ en 2026 » serait…",
+ o:["malhonnête : c'est un ordre de grandeur emprunté à un autre territoire et une autre année","acceptable, puisque le calcul est juste","acceptable si l'on cite la source","sans importance, c'est un exercice"],r:0,
+ expl:"La phrase est fausse non par son chiffre mais par son statut : elle affirme au lieu d'estimer. Et un chiffre voyage toujours seul — détaché de sa page, il devient une donnée que d'autres citeront.",
+ ex:"Le même nombre écrit « estimation par proxy européen 2023, non officielle » est parfaitement honnête.",
+ err:"Retirer l'avertissement au moment de faire un joli graphique ou une diapositive.",
+ d:["","Un calcul juste sur des hypothèses empruntées ne produit pas une mesure : il produit une estimation, et la nuance est tout le sujet.","Citer la source du ratio ne suffit pas : il faut dire que le ratio vient d'ailleurs et qu'on l'a transposé.","L'exercice apprend précisément à ne pas faire cela ; s'en dispenser dans un exercice, c'est apprendre l'inverse."],
+ ret:"Une estimation sans avertissement devient une affirmation. C'est là qu'elle devient fausse."},
+{c:"C1.2",n:"Véhicule ou passager",q:"Comparer directement 0,142 kgCO₂e/km (voiture) et 0,00293 kgCO₂e/passager-km (TGV)…",
+ img:{src:"Images/corrige_equivalences_et_perimetres.svg",alt:"Les quatre équivalences calculées à partir de 1,98 MtCO₂, avec pour chacune son unité exacte — kilomètre de véhicule ou passager-kilomètre — et sa question critique."},
+ o:["est impossible à calculer","est correct, ce sont deux moyens de transport","est correct si l'on arrondit","est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent"],r:3,
+ expl:"Le facteur voiture porte sur un véhicule, quel que soit le nombre de personnes à bord. Le facteur TGV porte sur une personne. Les mettre côte à côte sans le dire fait apparaître un rapport de un à cinquante qui n'existe pas sous cette forme.",
+ ex:"Une voiture avec quatre passagers émet, par personne, quatre fois moins que la même voiture avec un seul conducteur — et le facteur ne le dit pas.",
+ err:"Aligner des facteurs d'émission dans un tableau sans recopier leurs unités.",
+ d:["Le calcul est très facile — c'est son interprétation qui est piégée.","Le fait que ce soient deux transports ne suffit pas : encore faut-il compter la même chose des deux côtés.","L'arrondi ne corrige pas une différence d'unité : il la rend seulement moins visible.",""],
+ ret:"Recopie toujours l'unité du facteur. C'est elle qui dit ce qu'on compte."},
+{c:"C1.2",n:"Le mot du titre",q:"Le titre du graphique doit contenir…",
+ img:{src:"Images/corrige_equivalences_et_perimetres.svg",alt:"Les quatre équivalences calculées à partir de 1,98 MtCO₂, avec pour chacune son unité exacte — kilomètre de véhicule ou passager-kilomètre — et sa question critique."},
+ o:["« mêmes impacts »","« équivalences » — et surtout pas « mêmes impacts »","« comparaison exacte »","« pollution »"],r:1,
+ expl:"Une équivalence porte sur une seule grandeur : la quantité de CO₂. Elle ne dit rien de la durée, des effets locaux, de la réversibilité, ni de ce qui brûle avec la forêt. Le titre doit donc annoncer ce qu'il compare, et rien de plus.",
+ ex:"Un feu détruit aussi un écosystème, des habitations parfois, et il relâche son carbone en quelques heures. Un trajet en voiture ne fait rien de tout cela.",
+ err:"Choisir un titre qui en dit plus que le calcul — c'est ainsi qu'on trompe sans mentir.",
+ d:["« Mêmes impacts » affirme une identité que le calcul ne démontre pas : seule la quantité de CO₂ a été comparée.","","« Comparaison exacte » laisse croire à une précision que des facteurs moyens ne permettent pas.","« Pollution » désigne un ensemble beaucoup plus large que les émissions de CO₂, et introduit une confusion supplémentaire."],
+ ret:"Un titre ne doit jamais promettre plus que ce que le calcul a établi."},
+{c:"C1.2",n:"Ce qu'une équivalence dit",q:"« Autant que 14 milliards de km en voiture » signifie…",
+ o:["que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent","que les feux et la voiture ont le même effet sur l'environnement","qu'il faudrait interdire la voiture","que les feux ne sont pas si graves"],r:0,
+ expl:"Une équivalence est un traducteur d'échelle. Elle sert à rendre une mégatonne imaginable par quelqu'un qui n'en a aucune représentation. Elle ne dit rien de la nature des phénomènes comparés.",
+ ex:"On pourrait dire aussi bien « autant que 399 millions de repas avec du bœuf » : ni le repas ni la voiture ne ressemblent à un feu de forêt.",
+ err:"Passer de « même quantité de CO₂ » à « même chose », en une phrase.",
+ d:["","Les effets diffèrent profondément : durée, destruction d'habitats, fumées, réversibilité. Seule la quantité de CO₂ est comparable.","Aucune décision politique ne découle mécaniquement d'une équivalence : elle informe, elle ne tranche pas.","L'équivalence ne minimise rien ; elle donne une échelle, et 14 milliards de kilomètres est un chiffre considérable."],
+ ret:"Une équivalence traduit une échelle. Elle ne rend pas les choses semblables."},
+{c:"C1.2",n:"L'équivalence retournée",q:"On peut décrire 1,98 MtCO₂ comme « 399 millions de repas » ou comme « environ 0,5 % des émissions annuelles françaises ». Ces deux phrases…",
+ o:["disent la même chose","ne peuvent pas être exactes en même temps","sont exactes toutes les deux, et n'orientent pas du tout la même conclusion","sont fausses toutes les deux"],r:2,
+ expl:"Le choix du terme de comparaison fait la moitié du travail d'argumentation, avant même qu'on ait discuté. C'est pourquoi lire une équivalence, c'est toujours demander : pourquoi celle-là plutôt qu'une autre ?",
+ ex:"Le même chiffre paraît colossal ramené à des repas, et minuscule ramené au total national.",
+ err:"Choisir l'équivalence qui va dans le sens de ce qu'on veut démontrer, et la présenter comme neutre.",
+ d:["Elles disent la même quantité et produisent des impressions opposées — c'est exactement le problème.","Elles peuvent parfaitement l'être : ce sont deux divisions différentes du même nombre, toutes deux correctes.","","Les deux calculs sont justes ; c'est leur usage rhétorique qui demande de la vigilance."],
+ ret:"Une équivalence n'est jamais neutre. Demande toujours : pourquoi celle-là ?"},
+{c:"C1.2",n:"Les deux faces",q:"La détection automatisée des feux apporte…",
+ o:["uniquement des inconvénients","uniquement des avantages, sinon on ne l'adopterait pas","des avantages ET des inconvénients, qu'il faut nommer tous les deux","ni l'un ni l'autre : c'est un outil neutre"],r:2,
+ expl:"C'est le cœur du code C1.2. Toute évolution technique se paie : ici, un gain de temps contre des fausses alertes, un coût, une consommation d'énergie, et des caméras qui regardent aussi ce qui n'est pas la forêt.",
+ ex:"Un système qui alerte en dix minutes au lieu de deux heures sauve des hectares — et filme, peut-être, des promeneurs.",
+ err:"N'énumérer que les bénéfices, parce que c'est ce qu'on attend d'un exposé technique.",
+ d:["Les avantages sont considérables : la détection précoce est le principal levier contre les grands feux.","On adopte souvent des techniques dont les inconvénients sont réels et jugés acceptables : les nommer ne les condamne pas.","","Aucune technique n'est neutre : elle change ce qu'on peut faire, donc ce qu'on fait, donc ce qu'on surveille."],
+ ret:"Toute évolution technique se paie. Nommer le prix n'est pas la condamner."},
+/* ═══ C1.3 ═══ */
+{c:"C1.3",n:"Une exigence vérifiable",q:"Une exigence vérifiable se reconnaît à ce qu'elle…",
+ o:["peut être contrôlée par une mesure ou un test qui répond par oui ou par non","est écrite en termes techniques","contient toujours un nombre","désigne le composant à utiliser"],r:0,
+ expl:"Le test est simple : « comment je vérifie ? ». Si l'on ne sait pas répondre, ce n'est pas une exigence, c'est un souhait. Un critère par oui ou non suffit parfaitement — le chiffre n'est pas obligatoire.",
+ ex:"« Le système doit permettre à un opérateur d'annuler une alerte » se vérifie sans aucun chiffre : on essaie, et l'on voit.",
+ err:"Écrire des intentions — « le système doit être fiable » — qu'aucun essai ne peut trancher.",
+ d:["","Le vocabulaire technique ne rend rien vérifiable : on peut écrire une phrase très technique et totalement incontrôlable.","Beaucoup d'exigences excellentes n'ont pas de nombre : ce qui compte est l'existence d'un test, pas la présence d'un chiffre.","Désigner un composant, c'est écrire une solution : l'exigence dit ce qu'il faut obtenir, pas avec quoi."],
+ ret:"Une exigence se reconnaît à ce qu'on sait comment la vérifier."},
+{c:"C1.3",n:"Exigence ou solution",q:"« Installer une caméra thermique » est…",
+ o:["une exigence vérifiable","une solution, pas une exigence : elle désigne déjà le moyen","une contrainte réglementaire","un besoin"],r:1,
+ expl:"Écrire la solution dans le cahier des charges ferme la comparaison avant qu'elle ait lieu. L'exigence correspondante serait : « le système doit détecter une élévation anormale de température à 200 m » — et là, plusieurs solutions redeviennent possibles.",
+ ex:"La même exigence peut être remplie par une caméra thermique, un réseau de capteurs au sol ou un satellite. Nommer la caméra élimine les deux autres sans les avoir examinées.",
+ err:"Écrire les solutions qu'on a en tête à la place des exigences, parce qu'elles sont plus faciles à formuler.",
+ d:["Elle est vérifiable — on voit bien si la caméra est installée — mais elle ne dit pas ce que le système doit obtenir, seulement ce qu'on doit acheter.","","Aucune réglementation n'impose de caméra thermique : c'est un choix technique, pas une obligation.","Un besoin s'exprime du point de vue de l'usage — « détecter tôt » — et non par un matériel."],
+ ret:"L'exigence dit ce qu'il faut obtenir. La solution dit avec quoi. Ne les échange pas."},
+{c:"C1.3",n:"L'ordre des étapes",q:"L'ordre correct est…",
+ img:{src:"Images/corrige_du_nombre_a_l_exigence.svg",alt:"La chaîne du raisonnement en cinq étapes, de la donnée publique à l'exigence vérifiable, avec l'incertitude que chaque étape ajoute et qu'aucune ne retire."},
+ o:["exigence → besoin → information","solution → exigence → besoin","besoin → information nécessaire → contrainte → exigence vérifiable → (Thème 2) solution","l'ordre n'a pas d'importance"],r:2,
+ expl:"Chaque étape restreint la suivante sans la déterminer. C'est ce qui laisse un espace de conception : plusieurs solutions peuvent satisfaire les mêmes exigences, et c'est là qu'on pourra comparer.",
+ ex:"« Détecter tôt » → température et fumée → délai maximal → « signaler en moins de 10 min » → et seulement ensuite, avec quoi.",
+ err:"Commencer par la solution qu'on connaît, puis rédiger des exigences taillées pour elle.",
+ d:["Une exigence ne peut pas précéder le besoin dont elle découle : on ne saurait pas ce qu'on exige, ni pourquoi.","Partir de la solution revient à écrire un cahier des charges sur mesure pour un produit déjà choisi : plus rien n'est comparé.","","L'ordre est décisif : c'est lui qui garde ouvert l'espace des solutions jusqu'au moment de choisir."],
+ ret:"Chaque étape restreint la suivante sans la choisir. C'est là qu'est la conception."},
+{c:"C1.3",n:"Justifier une évolution",q:"Justifier l'évolution d'un système de détection, c'est dire…",
+ o:["combien elle a coûté","quelle technologie récente elle emploie","de quel besoin nouveau ou mal satisfait elle procède","en quelle année elle est apparue"],r:2,
+ expl:"C'est exactement le code 4e_C1.3. Une évolution ne se justifie pas par sa nouveauté mais par le besoin qu'elle sert mieux que la version précédente. Sinon on décrit un changement, on ne l'explique pas.",
+ ex:"On est passé du guet humain en tour de surveillance à la détection automatique parce que la surveillance continue de milliers d'hectares dépasse ce qu'une personne peut tenir.",
+ err:"Confondre « c'est plus moderne » avec « c'est justifié ».",
+ d:["Le coût est une conséquence du choix, pas sa justification.","La technologie employée décrit le moyen, pas la raison : une technologie récente peut répondre à un besoin inexistant.","","La date situe l'évolution sans expliquer pourquoi elle a eu lieu."],
+ ret:"Une évolution se justifie par un besoin, jamais par sa nouveauté."},
+{c:"C1.3",n:"Le garde-fou humain",q:"Pourquoi le système ne doit-il pas décider seul de déclencher les secours ?",
+ o:["parce que les machines sont toujours moins fiables que les humains","parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des moyens réels","parce que c'est interdit par la loi","parce que cela coûterait moins cher"],r:1,
+ expl:"Une alerte engage des camions, des équipages et parfois des vies. La décision d'engager reste humaine — non parce que la machine serait mauvaise, mais parce que la responsabilité, elle, ne s'automatise pas.",
+ ex:"Le système propose, l'opérateur dispose : c'est une exigence de conception, à écrire au même titre que le délai de détection.",
+ err:"Traiter la validation humaine comme une politesse ajoutée à la fin, au lieu d'une exigence à part entière.",
+ d:["Ce n'est pas une question de fiabilité comparée : sur la détection de motifs, une machine peut être meilleure qu'un humain fatigué.","","Aucune interdiction générale n'existe ; c'est un choix de conception, qu'il faut justifier et non subir.","Le coût n'est pas l'argument : une vérification humaine coûte plutôt davantage."],
+ ret:"Le système propose. Un humain décide. Et cela s'écrit dans les exigences."},
+{c:"C1.3",n:"Une exigence bien formée",q:"Laquelle de ces phrases est une exigence vérifiable ?",
+ o:["« Le système doit plaire aux pompiers. »","« Le système doit être performant et moderne. »","« Le système doit utiliser une liaison LoRa. »","« Le système doit transmettre une alerte horodatée en moins de 30 secondes après confirmation par deux indices indépendants. »"],r:3,
+ expl:"Elle dit ce qu'il faut obtenir, avec un délai mesurable et une condition contrôlable, et elle ne nomme aucun composant. On peut la vérifier par un essai, et plusieurs solutions techniques peuvent la satisfaire.",
+ ex:"Un chronomètre et deux capteurs suffisent à dire si elle est tenue ou non.",
+ err:"Confondre longueur et précision : une phrase longue n'est pas forcément vérifiable.",
+ d:["« Plaire » ne se contrôle pas ; on pourrait en revanche exiger qu'un utilisateur réussisse une tâche donnée en moins d'un temps donné.","« Performant » et « moderne » ne se mesurent pas : aucun essai ne peut dire si l'exigence est tenue.","LoRa est une technologie précise : cette phrase est une solution déguisée en exigence.",""],
+ ret:"Un délai mesurable, une condition contrôlable, aucun composant nommé."},
+{c:"C1.3",n:"Ce qui prépare le Thème 2",q:"Les exigences écrites en séance 4 servent ensuite à…",
+ img:{src:"Images/corrige_du_nombre_a_l_exigence.svg",alt:"La chaîne du raisonnement en cinq étapes, de la donnée publique à l'exigence vérifiable, avec l'incertitude que chaque étape ajoute et qu'aucune ne retire."},
+ o:["choisir et comparer des solutions techniques, puis à valider celle qui sera retenue","commander le matériel","rédiger le rapport de stage","rien : l'exercice s'arrête là"],r:0,
+ expl:"Le cahier des charges n'est pas un devoir qu'on rend : c'est le référentiel qui servira à trancher entre les solutions, puis à vérifier que celle qu'on a construite fait bien ce qu'on attendait. C'est la boucle de l'analyse technique.",
+ ex:"« Signaler en moins de 10 minutes » permettra d'éliminer une solution qui met une heure — sans avoir à discuter des goûts de chacun.",
+ err:"Traiter le cahier des charges comme une formalité administrative de début de projet.",
+ d:["","On ne commande rien tant qu'on n'a pas comparé les solutions possibles, ce qui est le travail du Thème 2.","Le rapport documente le travail ; il n'est pas ce à quoi servent les exigences.","C'est au contraire le point de départ de tout le reste du cycle."],
+ ret:"Les exigences serviront deux fois : pour choisir, puis pour valider."},
+{c:"C1.3",n:"L'incertitude se transmet",q:"Dans la chaîne donnée → proxy → estimation → équivalence → exigence, chaque étape…",
+ img:{src:"Images/corrige_du_nombre_a_l_exigence.svg",alt:"La chaîne du raisonnement en cinq étapes, de la donnée publique à l'exigence vérifiable, avec l'incertitude que chaque étape ajoute et qu'aucune ne retire."},
+ o:["supprime l'incertitude au moment de l'arrondi","corrige l'incertitude de la précédente","n'ajoute rien tant que le calcul est juste","ajoute une incertitude, et aucune ne la retire"],r:3,
+ expl:"L'incertitude ne se dissipe pas en avançant : elle s'accumule. C'est pourquoi la dernière ligne — l'exigence — doit porter la mémoire de tout ce qui l'a précédée. Une exigence écrite sans savoir d'où viennent les chiffres est indéfendable.",
+ ex:"Le minimum annoncé, puis le proxy d'un autre pays, puis le ratio moyen, puis le choix de l'équivalence : quatre approximations empilées avant la première exigence.",
+ err:"Croire qu'un calcul exact sur des données approximatives produit un résultat exact.",
+ d:["Arrondir ne réduit pas l'incertitude : cela la rend seulement moins visible.","Aucune étape ne corrige la précédente : elles s'appuient dessus, donc elles en héritent.","La justesse du calcul et la fiabilité des données sont deux questions distinctes : on peut calculer parfaitement sur du sable.",""],
+ ret:"L'incertitude s'accumule. La dernière ligne doit la porter."},
+{c:"C1.3",n:"Ce qu'on transmet au Thème 2",q:"Ce que cette séquence transmet au Thème 2, c'est…",
+ o:["une liste de composants à acheter","des questions ouvertes — comment acquérir, traiter, communiquer, alimenter — et des exigences à respecter","un programme informatique","un schéma électrique"],r:1,
+ expl:"L'analyse externe s'arrête au seuil du « comment ». Elle transmet des questions bien posées, et des exigences qui serviront à juger les réponses. C'est précisément ce qui rend le Thème 2 intéressant : il reste quelque chose à chercher.",
+ ex:"« Comment acquérir la température ? » est une question du Thème 2 ; « le système doit détecter en moins de 10 minutes » est l'exigence qui permettra de juger la réponse.",
+ err:"Vouloir tout résoudre dans la première séquence, et n'avoir plus rien à étudier ensuite.",
+ d:["Aucun composant n'est choisi : ce serait répondre aux questions avant de les avoir posées.","","Il n'y a pas encore de programme, puisqu'on ne sait ni quelles grandeurs seront acquises ni comment elles seront traitées.","Un schéma électrique suppose des composants choisis : c'est plusieurs étapes plus loin."],
+ ret:"On transmet des questions bien posées et des exigences pour juger les réponses."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C1_tsinghua";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C1.1":"4e_C1.1 — Mettre en relation les OST avec leurs usages.",
+  "C1.2":"4e_C1.2 — Identifier les avantages et les inconvénients associés aux évolutions technologiques et informatiques.",
+  "C1.3":"4e_C1.3 — Justifier l’évolution d’un OST pour répondre à l’évolution des besoins." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+
+/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
+/* Cette séquence porte SIX codes : la séquence sait lesquels ont été validés et
+   les passe dans l'adresse. Deux formes possibles :
+     #codes=C1.2,C1.1  → révision ciblée sur ces compétences seulement ;
+     #depart=court     → parcours de dix questions, quand rien n'est validé.
+   Dans les deux cas on ne fait que préselectionner : le parcours complet reste
+   à un clic. On choisit ce qu'on propose EN PREMIER, on n'interdit rien. */
+(function ouvrirSurCeQuiAEteFait(){
+  const h = location.hash || "";
+  const hote = document.getElementById("porteeCiblee");
+
+  const mCodes = h.match(/codes=([A-Za-z0-9.,]+)/);
+  if(mCodes){
+    const demandes = mCodes[1].split(",").filter(c => COMP_LABELS[c]);
+    if(demandes.length){
+      /* le gabarit ne sait cibler qu'UNE compétence à la fois. On passe donc par
+         setMode("cible") — qui met à jour les boutons, le tableau de bord et le
+         sélecteur — puis on ÉLARGIT la sous-liste à la liste demandée. Faire
+         l'inverse (écrire etat.sousListe puis appeler une fonction de rendu)
+         laissait l'interface annoncer un mode et en afficher un autre. */
+      $("selComp").value = demandes[0];
+      setMode("cible");
+      etat.sousListe = QUESTIONS.map((q,i)=>i).filter(i => demandes.includes(QUESTIONS[i].c));
+      etat.courante = etat.sousListe[0];
+      rendreTout();
+      if(hote){
+        hote.hidden = false;
+        hote.innerHTML = "🎯 Tu arrives depuis la séquence&nbsp;: ce QCM s'ouvre sur les <b>" +
+          etat.sousListe.length + " questions</b> qui portent sur <b>" +
+          demandes.join(", ") + "</b> — les compétences que tu as déjà travaillées. " +
+          "Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+      }
+      return;
+    }
+  }
+
+  if(/depart=court/.test(h)){
+    setMode("dix");
+    if(hote){
+      hote.hidden = false;
+      hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore commencée&nbsp;: " +
+        "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
+        "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+    }
+  }
+})();
+
+
+</script>
+</body>
+</html>
