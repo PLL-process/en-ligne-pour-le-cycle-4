@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shenzhen : recenser les interacteurs d'une station de vélos en libre-service et lire les choix de conception dans ses formes. Codes 5e_C2.1 et 5e_C2.2, programme 2024.">
+<title>Thème 1 · 5e — Sainte-Luce : quel frein pour les vélos du collège ? (5e_C1.2)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<div class="page">
+<h1>🚲 Sainte-Luce — quel frein pour les vélos du collège&nbsp;?</h1>
+<p class="sous">Une seule fonction, trois principes — et un tableau qui ne décide rien tout seul.</p>
+<div class="badges">
+  <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">5e</span>
+  <span class="badge code" title="Comparer des principes techniques pour une même fonction technique.">5e_C1.2</span>
+  <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 langages scientifiques, D4 systèmes naturels et techniques, D5 représentations du monde et activité humaine.">D1.3 · D4 · D5</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">3 séances de 55 min</span>
+  <span class="badge theme" title="Compétence numérique du CRCN travaillée et traçable : traiter des données — l'élève exploite un tableau de mesures pour comparer des solutions.">🖥 CRCN 1.3</span>
+  <span class="badge theme" title="Une manipulation d'objet réel est prévue au parcours obligatoire, pas en bonus.">🔧 Objet réel exigé</span>
+</div>
+<p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
+<b>C1.2</b>&nbsp;: la compétence travaillée — un code de classement <b>propre à ce site</b>,
+écrit en toutes lettres plus bas. <b>D1.3 · D4 · D5</b>&nbsp;: les domaines du
+<b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
+<b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
+<b>3 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM. <b>🔧 Objet réel</b>&nbsp;: une manipulation sur un vrai vélo fait partie du parcours, elle n'est pas facultative.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
+
+<section class="card">
+  <h2>🌊 La situation&nbsp;: quinze vélos, et un fournisseur à choisir</h2>
+  <p>Le collège de <b>Sainte-Luce</b> met quinze vélos à disposition des élèves. Le principal doit
+  choisir le <b>système de freinage</b> qui les équipera, et trois fournisseurs ont répondu&nbsp;:
+  <b>freins à patins</b>, <b>freins à disque</b>, <b>freins à tambour</b>.</p>
+  <p>Le trajet est court, mais il n'est pas anodin&nbsp;: il y a la <b>descente du parking</b>, il
+  <b>pleut souvent</b>, et le collège est à <b>quelques centaines de mètres de la mer</b> — le sel
+  de l'air attaque les métaux toute l'année.</p>
+  <p>Le gestionnaire a demandé aux trois fournisseurs leurs fiches techniques, et il a fait passer
+  un essai sur le parking&nbsp;: <b>quinze freinages chronométrés</b>. Il a maintenant deux
+  tableaux de chiffres et aucune idée de ce qu'il faut en faire.</p>
+  <p style="color:var(--warn);font-size:1.05em">Les trois freins <b>arrêtent</b> le vélo. Aucun des
+  trois n'est meilleur que les autres partout. <b>Il va falloir choisir — et savoir pourquoi.</b></p>
+  <p class="meta">⚠️ <b>Les données de cette séquence sont simulées</b>, construites pour l'exercice
+  à partir d'ordres de grandeur réalistes. Elles ne décrivent aucun fournisseur réel.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Quand plusieurs solutions remplissent la même
+  fonction, comment les comparer — et qu'est-ce qui fait qu'une réponse juste ici serait fausse
+  ailleurs&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Sans regarder les chiffres&nbsp;: d'après toi, <b>quel frein</b> faut-il
+    choisir pour le collège de Sainte-Luce, et <b>sur quoi</b> te fondes-tu&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : le frein que tu choisirais, et sur quoi tu te fondes"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Je choisirais le frein ____.&nbsp;»</li>
+    <li>«&nbsp;Parce que, à Sainte-Luce, ____.&nbsp;»</li>
+    <li>«&nbsp;Ce qui me paraît le plus important, c'est ____.&nbsp;»</li></ul></details>
+  <p class="meta">Au bilan, tu reliras cette phrase. La question n'est pas de savoir si tu as
+  «&nbsp;deviné juste&nbsp;» — c'est de voir <b>ce que tu jugeais important avant d'avoir les
+  chiffres</b>, et si les chiffres l'ont confirmé.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>5e_C1.2</code> est un code de
+  classement <b>interne à ce dépôt</b>. Il ne figure pas comme tel au BO. La formulation ci-dessous,
+  elle, est celle du référentiel.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>5e_C1.2</b></td><td>Comparer des principes techniques pour une même fonction
+      technique.</td><td>Séances 1, 2 et 3</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 langages scientifiques (lire et exploiter un tableau de mesures) ·
+  D4 systèmes naturels et techniques · D5 représentations du monde et activité humaine.</p>
+  <p class="meta">🧵 <b>Un seul code, trois marches.</b> En séance 1 on <b>distingue</b> la fonction,
+  le principe et la solution — trois mots qu'on confond tout le temps. En séance 2 on
+  <b>compare</b>, avec des chiffres, et l'on découvre qu'aucun frein ne gagne partout. En séance 3
+  on <b>choisit</b>, pour un lieu précis — et l'on dit ce qu'on accepte de perdre.</p>
+</section>
+
+<section class="card">
+  <h2>🔧 Ce lot demande un objet réel</h2>
+  <p>La séance 1 comporte une <b>manipulation obligatoire</b>&nbsp;: il faut un <b>vélo</b>. N'importe
+  lequel — celui d'un élève, celui du collège, un vélo apporté pour l'occasion. Actionner un levier
+  de frein et <b>regarder ce qui serre quoi</b> apprend en trente secondes ce qu'un schéma met dix
+  minutes à expliquer.</p>
+  <table>
+    <tr><th>Version</th><th>Matériel</th><th>Ce que tu fais</th></tr>
+    <tr><td><b>🅰 Réel</b></td><td>un vélo, une clé Allen</td><td>tu actionnes le levier, tu observes
+      ce qui bouge et ce qui serre, tu mesures l'écart entre le patin et la jante</td></tr>
+    <tr><td><b>🅱 Photos</b></td><td>les schémas de la page</td><td>tu suis le trajet de l'effort sur
+      le schéma coté</td></tr>
+    <tr><td><b>🅲 Sans matériel</b></td><td>rien</td><td>un relevé d'observation t'est fourni&nbsp;:
+      tu l'analyses</td></tr>
+  </table>
+  <p class="meta">Les trois versions mènent à <b>la même production</b> et sont validées par le
+  <b>même vérificateur</b>. La version 🅰 n'est pas «&nbsp;la vraie&nbsp;»&nbsp;: c'est la plus
+  rapide.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 3 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Distinguer<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Comparer<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Choisir<span class="done" id="done-s3"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — je vérifie mes outils (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
+  <div class="assoc"><label for="be_1">Une <b>fonction technique</b>, c'est&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen</option>
+      <option>ce à quoi l'objet sert pour celui qui l'utilise</option>
+      <option>le nom du composant qui la réalise</option>
+      <option>la marque de l'objet</option></select></div>
+  <div class="assoc"><label for="be_2">Le <b>frottement</b> entre deux surfaces qui glissent l'une sur l'autre&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>freine le mouvement et produit de la chaleur</option>
+      <option>accélère le mouvement</option>
+      <option>ne produit rien tant qu'il n'y a pas d'électricité</option>
+      <option>n'existe que sur les surfaces rugueuses</option></select></div>
+  <div class="assoc"><label for="be_3">Comparer deux solutions, c'est d'abord&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>les juger sur les mêmes critères, mesurés de la même façon</option>
+      <option>choisir la moins chère</option>
+      <option>demander laquelle on préfère</option>
+      <option>compter le nombre de pièces de chacune</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Une <b>fonction technique</b> dit <b>ce que l'objet doit faire</b>&nbsp;: elle commence par un
+    verbe à l'infinitif — «&nbsp;arrêter le vélo&nbsp;», «&nbsp;éclairer la salle&nbsp;». Elle ne dit
+    pas <i>par quel moyen</i>.</p>
+    <p class="piege">⚠️ Ne confonds pas avec «&nbsp;<b>à quoi ça sert</b>&nbsp;». Cela, c'est le
+    <b>service rendu à l'usager</b> — ce qu'on appelle la fonction d'usage. Un vélo sert à se
+    déplacer&nbsp;; l'une de ses fonctions techniques est d'arrêter le mouvement.</p>
+    <p>Le <b>frottement</b> de deux surfaces l'une contre l'autre ralentit le mouvement et
+    <b>chauffe</b>. C'est le phénomène employé par les trois freins de cette séquence — et
+    l'énergie du vélo ne disparaît pas&nbsp;: elle devient de la chaleur.</p>
+    <p><b>Comparer</b>, ce n'est pas préférer. C'est juger plusieurs solutions sur <b>les mêmes
+    critères</b>, mesurés de la <b>même façon</b>.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>🔎 Activité 1 — Une fonction, trois principes <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
+  <div class="meta"><b>Objectif</b> distinguer la fonction, le principe et la solution — et voir de
+  ses yeux ce qui serre quoi. · <b>Compétence</b> 5e_C1.2 · <b>Production</b> un relevé
+  d'observation en trois lignes · <b>Ressources</b> un vélo (version 🅰), le schéma des trois
+  principes.</div>
+
+  <h4>a) La manipulation — <b>obligatoire</b></h4>
+  <p>Va au vélo. Actionne le levier de frein <b>lentement</b>, et regarde. Ne démonte rien.</p>
+  <details class="aide"><summary>🅰 Version réelle — ce qu'il faut observer (5 min)</summary>
+    <ul>
+      <li>Quand tu serres le levier, <b>qu'est-ce qui bouge</b>&nbsp;? Suis le câble des doigts.</li>
+      <li><b>Qu'est-ce qui vient toucher quoi</b>&nbsp;? Nomme les deux pièces qui se touchent.</li>
+      <li>Levier relâché, quel <b>écart</b> reste-t-il entre les deux&nbsp;? Un ou deux
+      millimètres&nbsp;? Un doigt&nbsp;?</li>
+      <li>Fais tourner la roue à la main, freine&nbsp;: <b>où la chaleur apparaît-elle</b>&nbsp;?
+      Touche l'endroit — prudemment, après quelques secondes seulement.</li>
+    </ul>
+    <p class="piege">⚠️ On ne roule pas pendant cette manipulation, et on ne démonte rien. Le vélo
+    reste à l'arrêt, tenu par un camarade.</p>
+  </details>
+  <details class="aide"><summary>🅲 Version sans matériel — le relevé t'est fourni</summary>
+    <p>«&nbsp;En serrant le levier, le câble se tend et fait pivoter deux bras. Chaque bras porte un
+    patin de caoutchouc. Les deux patins viennent pincer <b>le bord de la roue</b>, la partie
+    métallique plate qu'on appelle la <b>jante</b>. Levier relâché, il reste environ <b>2 mm</b>
+    entre chaque patin et la jante. Après quelques freinages, <b>la jante est tiède</b> à l'endroit
+    où les patins ont frotté.&nbsp;»</p>
+  </details>
+
+  <div class="assoc">
+    <label for="a1_manip">Écris ton relevé en <b>trois lignes</b>&nbsp;: (1) ce qui bouge quand on
+    serre le levier, (2) <b>quelles deux pièces se touchent</b>, (3) où apparaît la chaleur.</label>
+    <textarea id="a1_manip" style="min-height:110px" aria-label="Ton relevé d'observation en trois lignes"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Quand on serre le levier, ____ se tend et ____ pivotent.&nbsp;»</li>
+      <li>«&nbsp;Les deux pièces qui se touchent sont ____ et ____.&nbsp;»</li>
+      <li>«&nbsp;La chaleur apparaît sur ____, parce qu'il y a ____.&nbsp;»</li>
+    </ul></details>
+
+  <h4>b) Trois mots qu'on confond</h4>
+  <div class="assoc"><label for="a1_1">«&nbsp;<b>Arrêter un vélo en mouvement</b>&nbsp;» est&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen</option>
+      <option>un principe technique : elle nomme un phénomène physique</option>
+      <option>une solution technique : elle désigne un frein précis</option>
+      <option>une marque de frein</option></select></div>
+  <div class="assoc"><label for="a1_2">«&nbsp;<b>Serrer la jante entre deux patins par frottement</b>&nbsp;» est&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>un principe : c'est le phénomène employé pour remplir la fonction</option>
+      <option>une fonction technique</option>
+      <option>une solution technique</option>
+      <option>un critère de choix</option></select></div>
+  <div class="assoc"><label for="a1_3">«&nbsp;<b>Le frein à patins du fournisseur B, référence 2140</b>&nbsp;» est&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>une solution technique : c'est l'objet concret qu'on achète</option>
+      <option>un principe technique</option>
+      <option>une fonction technique</option>
+      <option>un phénomène physique</option></select></div>
+  <div class="assoc"><label for="a1_4">Les trois freins de la séquence emploient&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>le même phénomène — le frottement — mais à des endroits différents</option>
+      <option>trois phénomènes physiques totalement différents</option>
+      <option>de l'électronique pour deux d'entre eux</option>
+      <option>le même principe et la même solution</option></select></div>
+  <div class="assoc"><label for="a1_5">Pourquoi une fonction bien écrite ne nomme-t-elle aucun moyen&nbsp;?</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>pour laisser ouverts tous les principes qui pourraient la remplir</option>
+      <option>pour rester plus courte</option>
+      <option>parce que le moyen n'a pas d'importance</option>
+      <option>parce qu'on ne le connaît jamais à l'avance</option></select></div>
+  <button class="btn small" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Pose-toi les trois questions dans cet ordre&nbsp;: <b>quoi faire</b>&nbsp;? (fonction) —
+    <b>par quel phénomène</b>&nbsp;? (principe) — <b>avec quel objet précis</b>&nbsp;? (solution).</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>Un test simple&nbsp;: si la phrase reste vraie pour les <b>trois</b> freins, c'est une
+    <b>fonction</b>. Si elle n'est vraie que pour un type, c'est un <b>principe</b>. Si elle désigne
+    un article de catalogue, c'est une <b>solution</b>.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <object class="fig" data="Images/corrige_trois_principes_de_freinage.svg" type="image/svg+xml"
+      aria-label="Les trois principes de freinage : patins sur la jante, plaquettes sur un disque au moyeu, mâchoires dans un tambour fermé — avec la distinction fonction, principe, solution">Corrigé des trois principes</object>
+    <p><b>Le relevé attendu</b>&nbsp;: le câble se tend et fait pivoter deux bras&nbsp;; les deux
+    pièces qui se touchent sont <b>le patin et la jante</b>&nbsp;; la chaleur apparaît <b>sur la
+    jante</b>, là où le patin a frotté.</p>
+    <p><b>Ce que la manipulation apprend et qu'un schéma cache</b>&nbsp;: la surface qui frotte, sur
+    un frein à patins, c'est <b>la roue elle-même</b> — celle qui roule dans les flaques et reçoit
+    les projections. Sur un frein à disque, c'est un disque placé <b>près du moyeu</b>, plus haut et
+    plus protégé. Sur un tambour, c'est <b>enfermé</b>. Cela suffit à prévoir lequel souffrira le
+    plus de la pluie et du sel — avant même d'ouvrir le tableau de chiffres.</p>
+    <p class="retenir">📌 <b>Fonction</b>&nbsp;: ce que l'objet doit FAIRE. <b>Principe</b>&nbsp;: par
+    quel phénomène. <b>Solution</b>&nbsp;: ce qu'on achète. Une fonction bien écrite laisse ouverts
+    <b>tous</b> les principes — c'est justement ce qui rend un choix nécessaire.</p>
+  </details>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: écrire un matériau ou une marque comme principe.
+  «&nbsp;Aluminium&nbsp;» n'est pas un principe&nbsp;; «&nbsp;serrer un disque par frottement&nbsp;»
+  en est un.</p>
+  <p class="meta"><b>Critère de réussite</b>&nbsp;: ton relevé nomme les <b>deux</b> pièces qui se
+  touchent et l'endroit où la chaleur apparaît, et tu ranges les trois phrases dans les trois
+  bonnes cases.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>⚖️ Activité 2 — Comparer avec des chiffres <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+  <div class="meta"><b>Objectif</b> exploiter deux tableaux de mesures et découvrir qu'aucune solution
+  ne gagne partout. · <b>Compétence</b> 5e_C1.2 · <b>Production</b> le meilleur et le moins bon de
+  chaque critère, et ce que chaque critère ne dit pas. · <b>Ressources</b> les deux fichiers de
+  données, un tableur (facultatif).</div>
+
+  <h4>a) D'où viennent les chiffres d'une fiche technique&nbsp;?</h4>
+  <p>Le gestionnaire a deux fichiers&nbsp;: la <b>fiche</b> de chaque fournisseur
+  (<code>donnees_freinage_sainte_luce_simulees.csv</code>) et les <b>quinze essais</b> qu'il a faits
+  lui-même sur le parking (<code>releves_essai_college_sainte_luce_simules.csv</code>).</p>
+  <div class="assoc"><label for="a2_1">Sur le parking, le frein à patins a donné 5,7 puis 5,9 m sur sol sec. La fiche annonce 5,8 m. C'est&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>la moyenne des essais : une fiche technique est un résumé de mesures</option>
+      <option>une erreur du fournisseur</option>
+      <option>une valeur inventée</option>
+      <option>la plus petite des deux mesures</option></select></div>
+  <div class="assoc"><label for="a2_2">Sous la pluie, l'écart avec le sol sec vaut <b>+3,1 m</b> pour les patins et <b>+1,0 m</b> pour le disque. Cet écart dit&nbsp;:</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>combien chaque principe perd quand la surface qui frotte est mouillée</option>
+      <option>que le disque est plus lourd</option>
+      <option>que les essais ont été mal faits</option>
+      <option>que la pluie n'a pas d'effet sur le tambour</option></select></div>
+  <div class="assoc"><label for="a2_3">Pourquoi le tambour perd-il le moins sous la pluie&nbsp;?</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>parce que la surface qui frotte est enfermée : l'eau n'y entre pas</option>
+      <option>parce qu'il est le plus lourd</option>
+      <option>parce qu'il freine moins fort</option>
+      <option>parce qu'il coûte moins cher</option></select></div>
+  <div class="assoc"><label for="a2_4">Les essais 5, 10 et 15 sont faits <b>dans la descente à 8 %</b>. Toutes les distances y augmentent. Cela signifie&nbsp;:</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>que la pente ajoute de l'énergie à dissiper : le contexte change le résultat</option>
+      <option>que les freins étaient usés à la fin</option>
+      <option>que l'élève a mal chronométré</option>
+      <option>qu'il ne faut pas tenir compte de ces trois essais</option></select></div>
+  <div class="assoc"><label for="a2_5">Un critère noté «&nbsp;réparabilité 5/5&nbsp;» est&nbsp;:</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>une appréciation chiffrée : utile pour comparer, mais elle résume un jugement</option>
+      <option>une mesure physique, aussi sûre qu'une distance en mètres</option>
+      <option>sans valeur, parce que ce n'est pas une mesure</option>
+      <option>le nombre de pièces détachées disponibles</option></select></div>
+
+  <h4>b) Deux chemins vers le même travail</h4>
+  <p>Ce qui est évalué ici, c'est ta capacité à <b>lire un tableau et à voir ce qu'il ne dit
+  pas</b>. Le tableur est un <b>outil</b>&nbsp;: il calcule, il ne raisonne pas.</p>
+  <div class="assoc">
+    <p style="margin:0"><b>🔵 Chemin autonome</b>&nbsp;: ouvre les deux <code>.csv</code> dans un
+    tableur, calcule les moyennes par solution et par état de chaussée, vérifie qu'elles retombent
+    sur la fiche.</p>
+    <p style="margin:.5em 0 0"><b>🟢 Chemin guidé</b>&nbsp;: le tableau ci-dessous est déjà
+    renseigné. <b>Le travail restant est exactement le même</b>&nbsp;: dire qui gagne, qui perd, et
+    ce que chaque critère ne dit pas.</p>
+  </div>
+  <details class="aide"><summary>📊 Mode opératoire — <b>LibreOffice Calc</b> et <b>Excel</b></summary>
+    <ul>
+      <li><b>Ouvrir</b>&nbsp;: le séparateur est le <b>point-virgule</b>.</li>
+      <li><b>Moyenne d'une solution sur sol sec</b>&nbsp;:
+      <code>=MOYENNE.SI.ENS(F2:F16;B2:B16;"Frein à patins";C2:C16;"sèche")</code></li>
+      <li><b>La même sous la pluie</b>&nbsp;: remplacer <code>"sèche"</code> par <code>"mouillée"</code>.</li>
+      <li><b>L'écart</b>&nbsp;: soustraire l'une de l'autre.</li>
+    </ul>
+    <p class="meta">Les formules sont <b>les mêmes</b> dans les deux logiciels&nbsp;: seuls les menus
+    changent.</p></details>
+  <details class="aide"><summary>🟢 Chemin guidé — le tableau déjà renseigné</summary>
+    <table>
+      <tr><th>Solution</th><th>Arrêt sec</th><th>Arrêt pluie</th><th>Écart</th><th>Masse</th><th>Entretien</th><th>Réparable</th><th>Corrosion</th></tr>
+      <tr><td>Frein à patins</td><td>5,8 m</td><td>8,9 m</td><td><b>+3,1</b></td><td>320 g</td><td>18 €/an</td><td>5/5</td><td>2/5</td></tr>
+      <tr><td>Frein à disque</td><td>5,4 m</td><td>6,4 m</td><td><b>+1,0</b></td><td>510 g</td><td>34 €/an</td><td>4/5</td><td>4/5</td></tr>
+      <tr><td>Frein à tambour</td><td>6,1 m</td><td>6,9 m</td><td><b>+0,8</b></td><td>760 g</td><td>27 €/an</td><td>3/5</td><td>5/5</td></tr>
+    </table>
+  </details>
+
+  <h4>c) Ta lecture du tableau</h4>
+  <div class="assoc">
+    <label for="a2_tableau">Écris <b>une ligne par critère</b> (il y en a six)&nbsp;: le critère, la
+    solution qui gagne, celle qui perd. Puis, en une phrase&nbsp;: <b>qu'est-ce que ce tableau ne
+    dit pas</b>, et pourquoi il ne peut pas décider tout seul&nbsp;?</label>
+    <textarea id="a2_tableau" style="min-height:170px" aria-label="Une ligne par critère avec le meilleur et le moins bon, puis ce que le tableau ne dit pas"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — la structure est donnée</summary>
+    <ul>
+      <li>«&nbsp;Arrêt sur sol sec&nbsp;: le meilleur est ____, le moins bon est ____.&nbsp;»</li>
+      <li>«&nbsp;Arrêt sous la pluie&nbsp;: ____ / ____.&nbsp;»</li>
+      <li>«&nbsp;Masse&nbsp;: ____ / ____.&nbsp;» — «&nbsp;Entretien&nbsp;: ____ / ____.&nbsp;»</li>
+      <li>«&nbsp;Réparabilité&nbsp;: ____ / ____.&nbsp;» — «&nbsp;Corrosion&nbsp;: ____ / ____.&nbsp;»</li>
+      <li>«&nbsp;Ce tableau ne dit pas ____. Il ne peut donc pas décider seul, parce que ____.&nbsp;»</li>
+    </ul></details>
+  <button class="btn small" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Prends les colonnes <b>une par une</b>. Pour chacune, entoure la meilleure valeur et la moins
+    bonne. Attention&nbsp;: pour une distance ou un prix, <b>le plus petit est le meilleur</b>.</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>Quand tu auras fini, compte&nbsp;: chaque solution est première sur au moins un critère et
+    dernière sur au moins un autre. <b>Aucune ne gagne partout.</b> C'est ce constat que la dernière
+    phrase doit expliquer&nbsp;: le tableau donne les faits, il ne donne pas <b>l'importance</b> de
+    chaque fait.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <object class="fig" data="Images/corrige_le_critere_qui_tranche.svg" type="image/svg+xml"
+      aria-label="Le tableau comparatif renseigné avec le meilleur et le moins bon de chaque colonne, et l'explication du critère qui tranche à Sainte-Luce">Corrigé du tableau comparatif</object>
+    <p><b>Arrêt sec</b>&nbsp;: disque (5,4) / tambour (6,1). <b>Arrêt pluie</b>&nbsp;: disque (6,4) /
+    patins (8,9). <b>Masse</b>&nbsp;: patins (320) / tambour (760). <b>Entretien</b>&nbsp;: patins
+    (18) / disque (34). <b>Réparabilité</b>&nbsp;: patins (5) / tambour (3).
+    <b>Corrosion</b>&nbsp;: tambour (5) / patins (2).</p>
+    <p><b>Ce que le tableau ne dit pas</b>&nbsp;: <b>quel critère compte le plus</b>. Il donne les
+    faits, pas leur importance. Or l'importance dépend du <b>lieu</b> et de l'<b>usage</b> — et
+    c'est une décision humaine, pas une donnée.</p>
+    <p class="retenir">📌 Chaque solution est première sur au moins un critère et dernière sur au
+    moins un autre. Un tableau comparatif ne <b>désigne</b> jamais un gagnant&nbsp;: il <b>prépare</b>
+    un choix.</p>
+  </details>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: croire que le plus grand chiffre est toujours le
+  meilleur. Pour une distance d'arrêt, une masse ou un prix, <b>le plus petit gagne</b>.</p>
+  <p class="meta"><b>Critère de réussite</b>&nbsp;: tes six lignes nomment chaque fois le meilleur
+  ET le moins bon, et ta dernière phrase dit que le tableau ne donne pas l'importance des critères.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>🌊 Activité 3 — Choisir pour Sainte-Luce <span style="color:var(--sub);font-size:.8em">(~40 min)</span></h2>
+  <div class="meta"><b>Objectif</b> hiérarchiser les critères selon un contexte, et assumer ce qu'on
+  perd. · <b>Compétence</b> 5e_C1.2 · <b>Production</b> le principe retenu, deux raisons chiffrées,
+  et ce qu'on accepte de perdre. · <b>Ressources</b> le tableau de l'activité 2.</div>
+
+  <h4>a) Ce que le lieu impose</h4>
+  <div class="assoc"><label for="a3_1">Le collège est à quelques centaines de mètres de la mer. Cela rend décisif le critère&nbsp;:</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année</option>
+      <option>la masse</option>
+      <option>le coût d'entretien</option>
+      <option>la réparabilité</option></select></div>
+  <div class="assoc"><label for="a3_2">Le trajet comporte une descente et il pleut souvent. Cela rend décisif&nbsp;:</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé</option>
+      <option>la distance d'arrêt sur sol sec uniquement</option>
+      <option>le prix d'achat</option>
+      <option>la couleur des poignées</option></select></div>
+  <div class="assoc"><label for="a3_3">Le frein à patins gagne sur <b>trois</b> critères : masse, entretien, réparabilité. Le choisir pour cette raison serait&nbsp;:</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance</option>
+      <option>juste : trois sur six, c'est la majorité</option>
+      <option>impossible à trancher</option>
+      <option>correct, car ce sont les critères les moins chers</option></select></div>
+  <div class="assoc"><label for="a3_4">Dans un collège de montagne <b>sèche</b>, où l'on répare soi-même&nbsp;:</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte</option>
+      <option>le classement resterait identique</option>
+      <option>il faudrait refaire tous les essais</option>
+      <option>aucun frein ne conviendrait</option></select></div>
+
+  <h4>b) Ton choix, et sa défense</h4>
+  <div class="assoc">
+    <label for="a3_choix">Écris le principe que tu retiens <b>pour le collège de Sainte-Luce</b>,
+    <b>deux raisons chiffrées</b> tirées du tableau, et <b>ce que tu acceptes de perdre</b> en le
+    choisissant.</label>
+    <textarea id="a3_choix" style="min-height:140px" aria-label="Le principe retenu, deux raisons chiffrées, et ce que tu acceptes de perdre"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Je retiens le frein ____.&nbsp;»</li>
+      <li>«&nbsp;Première raison&nbsp;: sous la pluie il s'arrête en ____ m, contre ____ m pour ____.&nbsp;»</li>
+      <li>«&nbsp;Deuxième raison&nbsp;: sa résistance à la corrosion est de ____ sur 5.&nbsp;»</li>
+      <li>«&nbsp;J'accepte de perdre&nbsp;: ____ (par exemple ____ g de plus, ou ____ €/an).&nbsp;»</li>
+    </ul></details>
+  <button class="btn small" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Commence par écrire les <b>deux</b> critères qui comptent le plus ici, et pourquoi. Le choix
+    en découlera presque tout seul.</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>Deux réponses sont défendables&nbsp;: le <b>disque</b> (le meilleur sous la pluie, bon en
+    corrosion) et le <b>tambour</b> (le meilleur en corrosion, presque aussi bon sous la pluie). Ce
+    qui est évalué n'est pas <b>lequel</b> tu choisis, mais <b>ce que tu sais dire</b> de ton choix
+    — et ce que tu reconnais y perdre.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p><b>Deux réponses sont justes</b>, à condition d'être défendues.</p>
+    <p><b>Le frein à disque</b>&nbsp;: il s'arrête en 6,4 m sous la pluie, contre 8,9 m pour les
+    patins — deux mètres et demi de moins, c'est la longueur d'une voiture. Sa résistance à la
+    corrosion est de 4/5. <b>On accepte de perdre</b>&nbsp;: 190 g de plus que les patins, 34 €/an
+    d'entretien au lieu de 18, et un réglage plus technique.</p>
+    <p><b>Le frein à tambour</b>&nbsp;: 5/5 en corrosion — c'est le seul dont la surface de
+    frottement soit à l'abri du sel — et 6,9 m sous la pluie, presque aussi bien que le disque.
+    <b>On accepte de perdre</b>&nbsp;: 440 g de plus que les patins, une réparabilité de 3/5, et une
+    chaleur qui s'évacue mal dans les longues descentes.</p>
+    <p><b>Ce qui ne serait pas défendable</b>&nbsp;: choisir les patins parce qu'ils gagnent sur
+    trois critères. Compter les colonnes revient à décider que la masse pèse autant que la distance
+    d'arrêt sous la pluie — dans une descente, au bord de la mer.</p>
+    <p class="retenir">📌 Comparer, c'est <b>hiérarchiser des critères selon un contexte</b>. Le même
+    tableau, lu pour un autre lieu, désigne un autre gagnant — et cela ne veut pas dire qu'on s'était
+    trompé la première fois.</p>
+  </details>
+  <p class="meta"><b>Critère de réussite</b>&nbsp;: ta défense nomme un principe, <b>deux chiffres</b>
+  pris dans le tableau, et <b>une perte</b> assumée.</p>
+</section>
+
+<section class="card">
+  <h2>🧩 Bilan <span style="color:var(--sub);font-size:.8em">(~10 min)</span></h2>
+  <div id="rappelHyp" style="display:none">
+    <p class="meta">💭 <b>Ton hypothèse de départ était</b>&nbsp;:</p>
+    <p id="hypRappelTxt" style="color:var(--warn)"></p>
+  </div>
+  <div class="assoc">
+    <label for="hyp_retour">Relis ton hypothèse. Les chiffres t'ont-ils donné raison&nbsp;? Et
+    surtout&nbsp;: <b>quel critère avais-tu oublié</b>&nbsp;?</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="bilan1">En une phrase&nbsp;: quelle est la différence entre une <b>fonction</b>, un
+    <b>principe</b> et une <b>solution</b>&nbsp;?</label>
+    <textarea id="bilan1" aria-label="La différence entre fonction, principe et solution"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="bilan2">Pourquoi un tableau comparatif ne peut-il pas désigner un gagnant tout
+    seul&nbsp;?</label>
+    <textarea id="bilan2" aria-label="Pourquoi un tableau comparatif ne décide pas seul"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="meta1">🧠 Qu'est-ce que la <b>manipulation sur le vélo</b> t'a appris que le tableau
+    ne disait pas&nbsp;?</label>
+    <textarea id="meta1" aria-label="Ce que la manipulation a appris et que le tableau ne disait pas"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="meta2">🧠 À quel moment as-tu changé d'avis pendant cette séquence&nbsp;? Si tu n'as
+    pas changé d'avis, dis pourquoi.</label>
+    <textarea id="meta2" aria-label="Le moment où tu as changé d'avis"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="pos1">📍 Je me positionne sur <b>5e_C1.2</b>&nbsp;— <i>comparer des principes
+    techniques pour une même fonction technique</i>&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je confonds encore fonction, principe et solution</option>
+      <option>🟠 Maîtrise fragile — je distingue les trois avec de l'aide, et je lis le tableau</option>
+      <option>🟢 Maîtrise satisfaisante — je compare sur des critères et je justifie mon choix</option>
+      <option>⭐ Très bonne maîtrise — je hiérarchise les critères selon le contexte et je dis ce que je perds</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>8 illustrées</b>, et chaque réponse
+  fausse y est expliquée. Elles portent toutes sur <b>5e_C1.2</b>.</p>
+  <p id="qcmPortee" role="status"></p>
+  <p style="text-align:center"><a class="btn" id="lienQcm" href="qcm_5e_C1.2_freinage.html">🚲 Lancer le QCM</a></p>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <ol>
+    <li><b>Le même choix, ailleurs.</b> Refais l'activité 3 pour un collège de <b>Fort-de-France</b>,
+    en ville, sur terrain plat, où les vélos servent surtout à de courts trajets. Quel critère devient
+    décisif&nbsp;? Quel frein choisis-tu&nbsp;?</li>
+    <li><b>Une autre fonction, plusieurs principes.</b> «&nbsp;Éclairer une salle&nbsp;» est une
+    fonction. Trouve <b>trois principes</b> qui la remplissent, et dis ce que chacun fait perdre.</li>
+    <li><b>Le critère manquant.</b> Aucun des six critères ne parle du <b>bruit</b>, ni de ce qui se
+    passe quand le frein est <b>usé</b>. Propose un septième critère utile au collège, et dis
+    <b>comment tu le mesurerais</b>.</li>
+  </ol>
+  <details class="correction"><summary>✅ Corrigé du Bonus</summary>
+    <p><b>1 · Fort-de-France.</b> Sans embruns et sans descente, la corrosion et l'écart sous la
+    pluie cessent d'être décisifs. Ce qui compte devient la <b>masse</b> (on soulève le vélo dans les
+    escaliers), le <b>coût d'entretien</b> et la <b>réparabilité</b> — trois critères où le frein à
+    <b>patins</b> est premier. Le même tableau désigne donc une autre solution, sans qu'aucun chiffre
+    n'ait changé. <b>C'est la leçon de toute la séquence.</b></p>
+    <p><b>2 · Éclairer une salle.</b> Trois principes&nbsp;: le <b>filament chauffé</b> jusqu'à
+    devenir lumineux (simple et bon marché, mais l'essentiel de l'énergie part en chaleur), le
+    <b>tube fluorescent</b> (un gaz excité qui émet, plus efficace, mais contient du mercure et
+    supporte mal les allumages répétés), la <b>diode électroluminescente</b> (très efficace et
+    durable, mais plus chère à l'achat et sensible à la chaleur). Chacun fait perdre quelque
+    chose&nbsp;: c'est vrai de tout principe.</p>
+    <p><b>3 · Le critère manquant.</b> Deux bonnes réponses. Le <b>bruit</b>&nbsp;: on le mesurerait
+    avec une application sonomètre, à un mètre, pendant un freinage — un frein qui grince en
+    permanence finit par ne plus être utilisé à fond. L'<b>usure</b>&nbsp;: on mesurerait l'épaisseur
+    du patin ou de la plaquette avec un pied à coulisse, neuve puis après un mois, pour estimer au
+    bout de combien de temps il faut la changer. Dans les deux cas, un critère n'a de valeur que si
+    l'on sait <b>comment on le mesure</b> — sinon c'est un avis.</p>
+  </details>
+</section>
+</div>
+</main>
+</div>
+<script>
+"use strict";
+const KEY="seq_5e_C1.2_sainte_luce";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Lecture des productions écrites ══════ */
+/* Règle n°49 : on teste ce qui est RENDU. Les accents et les apostrophes sont
+   normalisés — un contrôle qui cherche « mouillée » et reçoit « mouillee »
+   refuse une bonne réponse, et c'est le contrôle qui a tort (n°50). */
+const bas = t => t.toLowerCase()
+  .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[’']/g,"'");
+const lignes = t => t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+/* un nombre isolé : ni précédé ni suivi d'un autre chiffre ; virgule ou point. */
+const nombre = (t, ent, dec) =>
+  new RegExp("(?:^|[^0-9,.])"+ent+"[.,]"+dec+"(?![0-9])").test(t);
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"ce que l'objet doit faire, dit par un verbe à l'infinitif, sans dire par quel moyen",
+               be_2:"freine le mouvement et produit de la chaleur",
+               be_3:"les juger sur les mêmes critères, mesurés de la même façon"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🚲 Tes trois outils sont là : va au vélo.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+
+  /* Activité 1 — une fonction, trois principes, et la manipulation */
+  1: function(){
+    const att={a1_1:"une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen",
+               a1_2:"un principe : c'est le phénomène employé pour remplir la fonction",
+               a1_3:"une solution technique : c'est l'objet concret qu'on achète",
+               a1_4:"le même phénomène — le frottement — mais à des endroits différents",
+               a1_5:"pour laisser ouverts tous les principes qui pourraient la remplir"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_manip"), b = bas(t);
+    /* le relevé doit nommer LES DEUX pièces qui se touchent, et la chaleur */
+    const mouvement = /levier|cable|bras|pivot|tend/.test(b);
+    const patin     = /patin|plaquette|machoire|garniture/.test(b);
+    const surface   = /jante|roue|disque|tambour/.test(b);
+    const chaleur   = /chaleur|chaud|tiede|chauff|temperature/.test(b);
+    const complet = lignes(t) >= 3 && mouvement && patin && surface && chaleur && t.trim().length >= 110;
+    let manque = "";
+    if(!complet){
+      manque = " Ton relevé doit tenir en TROIS lignes : ce qui bouge, LES DEUX pièces qui se touchent, et où apparaît la chaleur.";
+      if(patin && !surface)
+        manque = " Tu nommes bien la pièce qui serre, mais pas celle qui est serrée. Un frottement se fait toujours à DEUX : le patin contre quoi ?";
+      else if(surface && !patin)
+        manque = " Tu nommes la pièce qui est serrée, mais pas celle qui serre. Un frottement se fait toujours à deux.";
+      else if(mouvement && patin && surface && !chaleur)
+        manque = " Il manque la chaleur — et ce n'est pas un détail : l'énergie du vélo ne disparaît pas, elle se transforme. Où as-tu senti que ça chauffait ?";
+    }
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 2 — comparer avec des chiffres */
+  2: function(){
+    const att={a2_1:"la moyenne des essais : une fiche technique est un résumé de mesures",
+               a2_2:"combien chaque principe perd quand la surface qui frotte est mouillée",
+               a2_3:"parce que la surface qui frotte est enfermée : l'eau n'y entre pas",
+               a2_4:"que la pente ajoute de l'énergie à dissiper : le contexte change le résultat",
+               a2_5:"une appréciation chiffrée : utile pour comparer, mais elle résume un jugement"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a2_tableau"), b = bas(t);
+    /* les six critères doivent être passés en revue, un par ligne */
+    const criteres = [/sec\b|seche/, /pluie|mouill/, /masse|poids|gramme|\bg\b/,
+                      /entretien|cout|euro|€/, /reparab|reparer/, /corrosion|sel|rouille/]
+                       .filter(r=>r.test(b)).length;
+    /* chaque ligne oppose un meilleur et un moins bon */
+    const oppositions = (b.match(/meilleur|gagne|premier|moins bon|dernier|perd|pire/g)||[]).length;
+    /* la phrase finale doit porter sur l'IMPORTANCE, pas sur les faits */
+    const importance = /importance|important|priorit|depend du (?:lieu|contexte|usage)|contexte|ne dit pas (?:quel|lequel)|poids des criteres|hierarch/.test(b);
+    const complet = lignes(t) >= 6 && criteres === 6 && oppositions >= 6 && importance;
+    let manque = "";
+    if(criteres < 6)
+      manque = " Tu as traité "+criteres+" critère(s) sur 6. Il en manque : reprends les colonnes du tableau une par une.";
+    else if(oppositions < 6)
+      manque = " Pour chaque critère, il faut NOMMER les deux : celui qui gagne ET celui qui perd. C'est cette double lecture qui montre qu'aucune solution ne gagne partout.";
+    else if(!importance)
+      manque = " Il manque la dernière phrase, et c'est la plus importante : le tableau donne les FAITS, il ne donne pas leur IMPORTANCE. Dis-le avec tes mots.";
+    else if(lignes(t) < 6)
+      manque = " Écris un critère par ligne.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 3 — choisir pour Sainte-Luce */
+  3: function(){
+    const att={a3_1:"la résistance à la corrosion : le sel de l'air attaque les métaux toute l'année",
+               a3_2:"la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé",
+               a3_3:"une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance",
+               a3_4:"le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_choix"), b = bas(t);
+    /* le principe retenu doit être nommé — et les patins ne sont pas défendables ici */
+    const disque  = /disque/.test(b);
+    const tambour = /tambour/.test(b);
+    const patins  = /patin/.test(b);
+    /* deux raisons chiffrées prises dans le tableau */
+    const chiffres = [nombre(b,"6","4"), nombre(b,"6","9"), nombre(b,"8","9"),
+                      /\b[45]\s*\/\s*5|\b[45]\s+sur\s+5/.test(b),
+                      /\b(?:320|510|760)\b/.test(b), /\b(?:18|27|34)\b/.test(b)]
+                       .filter(Boolean).length;
+    const perte = /perd|perte|renonc|j'accepte|accepte de|en echange|au prix de|inconvenient|plus lourd|plus cher/.test(b);
+    const choix = disque || tambour;
+    const complet = choix && chiffres >= 2 && perte && t.trim().length >= 140;
+    let manque = "";
+    if(!complet){
+      manque = " Ta défense doit nommer UN principe, donner DEUX chiffres pris dans le tableau, et dire CE QUE TU ACCEPTES DE PERDRE.";
+      if(patins && !choix)
+        manque = " Tu retiens le frein à patins. Regarde à nouveau les deux critères que le lieu impose : 8,9 m sous la pluie dans une descente, et 2/5 en corrosion à quelques centaines de mètres de la mer. Ses trois victoires — masse, prix, réparabilité — ne pèsent pas contre cela ICI. (Elles pèseraient ailleurs : c'est le Bonus 1.)";
+      else if(choix && chiffres < 2)
+        manque = " Il manque les chiffres : deux valeurs prises dans le tableau, pas deux impressions.";
+      else if(choix && chiffres >= 2 && !perte)
+        manque = " Il manque le troisième point, et c'est le plus important : que perds-tu en choisissant celui-là ? Un choix qui ne coûte rien n'est pas un choix.";
+    }
+    return {score:ok,total:4,valide: ok>=3 && complet, extra: manque};
+  }
+};
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle contient le corrigé complet, à comparer au tien."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 3 activités validées";
+  $("progFill").style.width = (n/3*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches(); majQcm();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Distinguer", taches:[
+    {n:0, libelle:"Billet d'entrée : vérifier ses trois outils (sans note)"},
+    {n:1, libelle:"Observer le vélo, puis ranger fonction, principe et solution"}]},
+  s2:{titre:"Séance 2 — Comparer", taches:[
+    {n:2, libelle:"Lire les six critères, et dire ce que le tableau ne dit pas"}]},
+  s3:{titre:"Séance 3 — Choisir", taches:[
+    {n:3, libelle:"Retenir un principe, deux chiffres, et une perte assumée"}]}
+};
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°45 — l'entraînement s'ouvre sur ce qui a été fait ══════ */
+/* Un seul bouton (n°4). Cette séquence ne porte qu'UN code : on ne peut pas
+   filtrer par compétence. Ce qui varie est le MOMENT — tant que la séquence
+   n'est pas terminée, le parcours court de dix questions est proposé en premier.
+   Le parcours complet reste à un clic : on choisit ce qu'on propose, on n'interdit rien. */
+function majQcm(){
+  const lien=$("lienQcm"), portee=$("qcmPortee");
+  if(!lien || !portee) return;
+  const v=window.__valid||{};
+  const faites=[1,2,3].filter(k=>v[k]).length;
+  const f="qcm_5e_C1.2_freinage.html";
+  if(faites===0){
+    lien.href=f+"#depart=court";
+    lien.textContent="🚲 Commencer par 10 questions";
+    portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un "+
+      "<b>parcours court de 10 questions</b>, pour te tester sans être submergé·e. "+
+      "Les 30 restent accessibles d'un clic dans le QCM.";
+  } else if(faites < 3){
+    lien.href=f+"#depart=court";
+    lien.textContent="🚲 M'entraîner (10 questions pour commencer)";
+    portee.innerHTML="Tu as validé <b>"+faites+" activité(s) sur 3</b>. Le bouton ouvre un parcours "+
+      "court&nbsp;; passe au parcours complet quand tu auras terminé la séquence.";
+  } else {
+    lien.href=f;
+    lien.textContent="🚲 Lancer le QCM complet (30 questions)";
+    portee.innerHTML="Tu as terminé les trois activités&nbsp;: <b>le parcours complet est "+
+      "maintenant à ta portée</b>.";
+  }
+}
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>

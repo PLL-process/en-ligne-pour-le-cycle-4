@@ -81,20 +81,27 @@ OVERLAY = {
         medias="4 SVG originaux CC0 écrits pour le lot, title/desc de 1 360 à 1 509 car.",
     ),
     "5e_C1.2": dict(
-        audit_08_08_2026="Séquence sequence_5e_C1.2_principes_techniques.html : situation déclenchante et question problématisée présentes, code et formulation du référentiel présents — mais AUCUN champ de saisie (0 textarea, 0 select, 0 input, 0 button) alors que la page annonce trois fois une « production attendue ». Ni vérificateur, ni sauvegarde, ni hypothèse, ni mode essentiel, ni version étayée, ni auto-positionnement. Défaut de contenu : l'aide définit la fonction technique par « à quoi cela sert-il ? », qui est la fonction d'usage (même erreur que celle corrigée dans 5e_C2.1 le 08/08/2026). Lot d'un autre auteur : NON MODIFIÉ (règle n°66). Le code est couvert depuis le 08/08/2026 par le lot Chengdu (5e_C1.1), dont l'activité 1 traite exactement ce contenu.",
-        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
-        statut="À CORRIGER",
-        sequence=True, qcm=True, projet=False, synthese=False,
-        evaluation=False, correction=False, situation=None, problematique=None,
-        qualite="QCM 24 q correct ; la « séquence » est un fichier .mhtml (archive "
-                "navigateur) de 176 Ko.",
-        anomalies="Le .mhtml ne s'affiche pas comme une page sur GitHub Pages (il se "
-                  "télécharge) ; l'en-tête interne indique un fichier d'origine nommé "
-                  "sequence_C1.2_4e_dark.html : le contenu est peut-être une séquence "
-                  "de 4e rangée en 5e — À VÉRIFIER PAR L'ENSEIGNANT. À reconvertir en "
-                  ".html propre.",
-        accessibilite="Non évaluable tant que le .mhtml n'est pas converti.",
-        medias="Inconnus (encapsulés dans le .mhtml).",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre "
+                                 "entrée : trois principes de MESURE, sans objet à manipuler. Voir "
+                                 "le tableau comparatif du README de 5e_C1.2.",
+        qualite="Lot « Sainte-Luce : quel frein pour les vélos du collège ? » (Fable, 09/08/2026), "
+                "REFONTE au gabarit — 3 séances, QCM 30 q dont 8 illustrées, 2 synthèses, fiche, "
+                "matrice, 2 jeux de données simulés et cohérents entre eux, 2 corrigés graphiques "
+                "CC0, suite de 36 tests exécutés et verts. PREMIER LOT DU DÉPÔT à placer une "
+                "manipulation d'objet réel au parcours obligatoire (règle n°58) : un vélo, cinq "
+                "minutes, trois versions A/B/C validées par le même vérificateur.",
+        anomalies="Les quinze mesures sont fournies, non relevées par les élèves. Le prix d'achat "
+                  "est volontairement absent. L'état antérieur — page sans aucun champ de saisie "
+                  "annonçant trois « productions attendues », et définition de la fonction "
+                  "technique confondue avec la fonction d'usage — est archivé avec le relevé de "
+                  "ce qui en a été repris.",
+        accessibilite="Vérifiée : étiquettes, alternatives, signalement non chromatique, "
+                      "title/desc sur les SVG, hors ligne intégral.",
+        medias="2 SVG originaux CC0 écrits pour le lot (1 315 et 1 694 car. de description), "
+               "2 SVG hérités conservés. Aucune photographie, aucune capture d'écran.",
     ),
     "5e_C1.3": dict(
         pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
