@@ -3942,3 +3942,28 @@ correction à deux endroits doit toucher les deux, ou elle casse ce qu'elle pré
 un périmètre plus large et avec quatre contrôles de moins. Le reste se concentre sur quatre
 règles&nbsp;: mode essentiel (14), version étayée (12), accessibilité (10), tableau de bord (8).
 Ce sont des ajouts de gabarit, pas des erreurs enseignées&nbsp;: ils peuvent attendre la rentrée.
+
+### Règle d'or n°69 — On ne remet pas un colis sans avoir lu son étiquette
+
+**L'incident.** Le 9 août, j'ai construit un bundle de livraison avec
+`git bundle create X.bundle origin/main..HEAD` au lieu de
+`origin/main..<nom-de-branche>`. Un bundle bâti sur `HEAD` n'empaquette **aucune référence
+nommée**&nbsp;: il contient un commit anonyme. Pascal a exécuté les trois commandes du circuit et
+reçu trois erreurs en cascade — `couldn't find remote ref`, puis `src refspec does not match any`,
+puis l'échec de `gh pr create`. Les quatre bundles précédents étaient corrects&nbsp;; j'ai raccourci
+sur celui-là.
+
+**Le coût.** Un aller-retour complet, et trois messages d'erreur que rien ne rattachait à leur
+cause réelle — le contenu du colis, pas les commandes de Pascal.
+
+**La règle.** Avant toute remise, **on liste ce que le colis contient réellement** :
+
+    git bundle list-heads <fichier>.bundle    # la référence attendue doit apparaître
+    git bundle verify <fichier>.bundle        # et le prérequis doit être un commit de main
+
+Un bundle se construit **toujours** avec le nom de branche, jamais avec `HEAD`. C'est le même
+principe que la n°47 et la n°49, appliqué à la livraison&nbsp;: on ne déclare pas un test qu'on n'a
+pas exécuté, et on ne remet pas un colis dont on n'a pas lu l'étiquette.
+
+**Mécanisation.** Deux lignes dans le circuit de livraison de la méthode Fable, à exécuter avant
+tout `SendUserFile`.
