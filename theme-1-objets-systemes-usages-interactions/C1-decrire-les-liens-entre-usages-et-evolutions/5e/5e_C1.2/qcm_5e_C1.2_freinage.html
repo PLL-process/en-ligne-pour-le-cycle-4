@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 1 · 5e — QCM : Sainte-Luce, quel frein pour les vélos du collège ? (5e_C1.2)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .portee-ciblee{max-width:880px;margin:0 auto 12px;padding:9px 14px;border:1px solid var(--head);border-radius:10px;background:#2b1a3f;font-size:.85em;color:var(--text)}
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C1.2_sainte_luce_freinage.html">← Séquence</a></nav>
+<h1>Thème 1 · 5e — QCM : Sainte-Luce, quel frein pour les vélos du collège ?</h1>
+<p class="subtitle">Comparer des principes techniques pour une même fonction technique (5e_C1.2) — une fonction, trois freins, six critères, et un contexte qui décide</p>
+<div class="badges">
+  <span class="badge niveau">5e</span>
+  <span class="badge code">5e_C1.2</span>
+  <span class="badge theme">30 questions · 8 illustrées · chaque distracteur réfuté</span>
+</div>
+<p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
+<p style="text-align:center"><a href="sequence_5e_C1.2_sainte_luce_freinage.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C1.2">5e_C1.2 — Comparer des principes pour une même fonction</option>
+    
+      </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 5e_C1.2 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_5e_C1.2_sainte_luce_freinage.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — Sainte-Luce 5e : 30 questions sur le seul code 5e_C1.2, réparties par thème (fonction, principe, solution : 8 · la manipulation : 7 · lire et comparer : 8 · choisir selon un contexte : 7), dont 8 illustrées */
+const QUESTIONS = [
+/* ═══ C1.2 ═══ */
+{c:"C1.2",n:"La fonction technique",q:"« Arrêter un vélo en mouvement » est…",
+ o:["une fonction technique : elle dit ce qu'il faut obtenir, sans dire par quel moyen","un principe technique : elle nomme un phénomène physique","une solution technique : elle désigne un frein précis","une contrainte imposée par la mairie"],r:0,
+ expl:"Une fonction technique s'énonce par un verbe à l'infinitif et un complément. Elle décrit ce que l'objet doit FAIRE — et elle laisse entièrement ouvert le moyen. C'est ce qui permet à trois freins différents de la remplir tous les trois.",
+ ex:"« Éclairer une salle » est une fonction : la lampe à filament, le tube fluorescent et la diode la remplissent tous les trois.",
+ err:"Écrire une fonction qui contient déjà sa solution — « freiner avec des patins » — et croire qu'on a énoncé une fonction alors qu'on a déjà choisi.",
+ d:["","Aucun phénomène physique n'est nommé : ni frottement, ni magnétisme, ni résistance de l'air. C'est précisément ce qui la distingue d'un principe.","Aucun frein n'est désigné : ni type, ni marque, ni référence. L'énoncé resterait vrai avec n'importe lequel des trois.","Une contrainte impose une condition à respecter ; ici on énonce ce qu'il faut obtenir, ce qui est tout autre chose."],
+ ret:"Fonction = ce que l'objet doit FAIRE. Le moyen reste ouvert."},
+{c:"C1.2",n:"Le piège de « à quoi ça sert »",q:"« À quoi sert un vélo ? — À se déplacer. » Cette phrase énonce…",
+ o:["une solution technique","une fonction technique du vélo","un principe technique","le service rendu à l'usager, ce qu'on appelle la fonction d'usage — pas une fonction technique"],r:3,
+ expl:"C'est la confusion la plus fréquente, et elle a la vie dure. « À quoi ça sert » regarde l'objet du point de vue de celui qui s'en sert. Une fonction technique regarde ce que l'objet, ou l'une de ses parties, doit FAIRE pour rendre ce service.",
+ ex:"Le vélo SERT à se déplacer. L'une de ses fonctions techniques est d'arrêter le mouvement ; une autre est de transmettre l'effort des jambes à la roue.",
+ err:"Répondre « à quoi ça sert » quand on demande une fonction technique. Les deux réponses commencent souvent par un verbe à l'infinitif, ce qui rend le piège difficile à voir.",
+ d:["Aucun objet concret n'est désigné : ni frein, ni pédalier, ni marque.","Une fonction technique porte sur ce que fait l'objet ou l'une de ses parties, pas sur le bénéfice qu'en tire l'usager : « arrêter le mouvement » en est une, « se déplacer » n'en est pas une.","Aucun phénomène physique n'est nommé : se déplacer n'est pas un mécanisme, c'est un résultat pour la personne.",""],
+ ret:"« À quoi ça sert » = le service rendu. « Ce que ça doit faire » = la fonction technique."},
+{c:"C1.2",n:"Le principe",q:"« Serrer la jante entre deux patins par frottement » est…",
+ img:{src:"Images/corrige_trois_principes_de_freinage.svg",alt:"Les trois principes de freinage — patins serrant la jante, plaquettes serrant un disque près du moyeu, mâchoires poussant contre un tambour fermé — avec la distinction entre fonction, principe et solution."},
+ o:["un critère de comparaison","une fonction technique","une solution technique","un principe : c'est le phénomène physique employé pour remplir la fonction"],r:3,
+ expl:"Le principe répond à la question « par quel phénomène ? ». Ici le phénomène est le frottement, et l'endroit où on l'applique est la jante. Changer de principe, c'est changer de phénomène ou d'endroit — pas changer de marque.",
+ ex:"Trois principes pour arrêter un vélo : frotter la jante, frotter un disque au moyeu, frotter l'intérieur d'un tambour.",
+ err:"Confondre le principe avec le matériau : « en caoutchouc » n'est pas un principe.",
+ d:["Un critère sert à départager (le prix, la masse) ; ici rien n'est comparé, on décrit un fonctionnement.","Une fonction ne nomme aucun moyen ; ici le moyen est nommé deux fois, par le phénomène et par l'endroit.","Une solution désigne un objet précis qu'on peut commander sur catalogue ; cet énoncé décrit un mécanisme, pas un article.",""],
+ ret:"Principe = par quel phénomène, et à quel endroit."},
+{c:"C1.2",n:"La solution",q:"« Le frein à patins du fournisseur B, référence 2140 » est…",
+ o:["un principe technique","une solution technique : c'est l'objet concret qu'on achète et qu'on monte","une fonction technique","une exigence du cahier des charges"],r:1,
+ expl:"La solution est le bout de la chaîne : l'article réel, avec sa référence, son prix et son fournisseur. Deux solutions différentes peuvent employer exactement le même principe.",
+ ex:"Deux marques de freins à patins sont deux solutions distinctes pour un seul et même principe.",
+ err:"Croire qu'on a répondu à la question du principe en donnant une référence de catalogue.",
+ d:["Le principe serait « serrer la jante par frottement » ; la référence 2140 n'est qu'une façon particulière de le mettre en œuvre.","","Une fonction ne nomme jamais de fournisseur : elle vaut avant même qu'on ait choisi quoi que ce soit.","Une exigence dit ce qu'il faut respecter, pas ce qu'on achète."],
+ ret:"Solution = l'objet concret. Plusieurs solutions pour un même principe."},
+{c:"C1.2",n:"L'ordre des trois",q:"Dans quel ordre ces trois notions viennent-elles quand on conçoit ?",
+ o:["solution, puis principe, puis fonction","fonction, puis principe, puis solution","principe, puis fonction, puis solution","l'ordre n'a aucune importance"],r:1,
+ expl:"On part de ce qu'il faut obtenir, on explore les phénomènes qui pourraient y parvenir, et l'on choisit enfin un objet. Prendre l'ordre à l'envers — partir de la solution qu'on connaît — revient à avoir choisi avant d'avoir cherché.",
+ ex:"« Arrêter le vélo » → « par frottement sur un disque » → « ce frein-là, référence 2140 ».",
+ err:"Commencer par la solution qu'on a déjà vue quelque part, puis inventer après coup la fonction qu'elle remplit.",
+ d:["Partir de la solution, c'est décider avant de chercher : on ne découvrira jamais les principes qu'on n'avait pas envisagés.","","Un principe ne se choisit que si l'on sait déjà ce qu'il doit accomplir : sans fonction, on ne sait pas ce qu'on cherche.","L'ordre est décisif : c'est lui qui laisse ouverte la comparaison entre plusieurs principes, au lieu de la fermer d'avance."],
+ ret:"Fonction → principe → solution. Prendre l'ordre à l'envers, c'est avoir déjà choisi."},
+{c:"C1.2",n:"Pourquoi ne pas nommer le moyen",q:"Pourquoi une fonction bien écrite ne nomme-t-elle aucun moyen ?",
+ o:["parce que le moyen n'a aucune importance","pour rester plus courte à écrire","pour laisser ouverts tous les principes qui pourraient la remplir","parce qu'on ne le connaît jamais au départ"],r:2,
+ expl:"Une fonction est une question posée, pas une réponse. Si elle contient déjà son moyen, il n'y a plus rien à comparer — et l'on se prive des solutions auxquelles on n'avait pas pensé.",
+ ex:"« Arrêter le vélo » laisse place aux trois freins. « Freiner avec des patins » n'en laisse qu'un, et la comparaison n'a plus lieu d'être.",
+ err:"Écrire une fonction qui contient sa solution, puis s'étonner qu'il n'y ait rien à choisir.",
+ d:["Le moyen a au contraire une importance décisive — c'est lui qui déterminera le prix, la durée de vie et le comportement sous la pluie.","La longueur n'entre pas en jeu : une fonction peut être longue et bien écrite, ou courte et déjà refermée sur une solution.","","On le connaît souvent très bien : le danger est justement de le faire entrer trop tôt dans l'énoncé."],
+ ret:"Une fonction est une question. Si elle contient sa réponse, il n'y a plus rien à comparer."},
+{c:"C1.2",n:"Le même phénomène, trois fois",q:"Les trois freins de la séquence emploient…",
+ img:{src:"Images/corrige_trois_principes_de_freinage.svg",alt:"Les trois principes de freinage — patins serrant la jante, plaquettes serrant un disque près du moyeu, mâchoires poussant contre un tambour fermé — avec la distinction entre fonction, principe et solution."},
+ o:["de l'électronique pour deux d'entre eux","trois phénomènes physiques totalement différents","le même phénomène — le frottement — mais à des endroits différents","le même principe et la même solution"],r:2,
+ expl:"C'est ce que la manipulation rend visible : dans les trois cas, deux surfaces glissent l'une contre l'autre, ralentissent le mouvement et chauffent. Ce qui change est l'ENDROIT — la jante, un disque au moyeu, l'intérieur d'un tambour — et donc ce qui s'y trouve exposé.",
+ ex:"Le patin frotte la jante, exposée à la pluie ; la mâchoire frotte l'intérieur d'un tambour fermé, où l'eau n'entre pas.",
+ err:"Croire que des objets d'aspect différent reposent forcément sur des phénomènes différents.",
+ d:["Aucun des trois freins de la séquence ne comporte d'électronique : ils sont entièrement mécaniques, commandés par un câble.","Le phénomène est identique dans les trois cas : c'est le frottement. Ce sont les surfaces et leur emplacement qui diffèrent.","","Le principe diffère bien d'un frein à l'autre par l'endroit du frottement, et la solution diffère aussi."],
+ ret:"Même phénomène, trois endroits — et l'endroit décide de tout le reste."},
+{c:"C1.2",n:"Ni matériau ni marque",q:"« En aluminium » proposé comme principe technique est…",
+ o:["un principe seulement si la pièce est métallique","juste, car le matériau détermine le fonctionnement","juste, mais incomplet","faux : un matériau n'est pas un phénomène, il ne dit pas comment la fonction est remplie"],r:3,
+ expl:"Un principe décrit une action physique : frotter, aimanter, comprimer, dévier. Un matériau décrit ce dont la pièce est faite. Les deux sont utiles, ils ne répondent pas à la même question.",
+ ex:"« Serrer un disque par frottement » est un principe. « Disque en acier inoxydable » est un choix de matériau à l'intérieur de ce principe.",
+ err:"Répondre par ce qu'on voit — la matière, la couleur, la forme — quand on demande comment ça marche.",
+ d:["La nature du matériau n'y change rien : métallique ou non, il ne décrit toujours pas une action physique.","Le matériau influence les performances, mais il ne dit pas par quel phénomène le vélo s'arrête : un frein en aluminium peut être à patins ou à disque.","Ce n'est pas une réponse incomplète mais une réponse à une autre question : celle de la matière, pas celle du mécanisme.",""],
+ ret:"Un principe est une action physique, jamais une matière."},
+{c:"C1.2",n:"Ce qui se touche",q:"Sur un frein à patins, les deux pièces qui frottent l'une contre l'autre sont…",
+ img:{src:"Images/corrige_trois_principes_de_freinage.svg",alt:"Les trois principes de freinage — patins serrant la jante, plaquettes serrant un disque près du moyeu, mâchoires poussant contre un tambour fermé — avec la distinction entre fonction, principe et solution."},
+ o:["le patin et le pneu","le patin de caoutchouc et la jante, c'est-à-dire le bord métallique de la roue","le câble et le levier","le patin et le moyeu"],r:1,
+ expl:"Un frottement se fait toujours à DEUX. Le patin est la pièce qui serre ; la jante est la pièce qui est serrée. Nommer l'une sans l'autre revient à décrire une main qui applaudit toute seule.",
+ ex:"Après quelques freinages, c'est la JANTE qui est tiède : c'est bien là que l'énergie s'est transformée en chaleur.",
+ err:"Ne nommer que la pièce mobile — le patin — et croire qu'on a décrit le frottement.",
+ d:["Le pneu n'est pas touché par le patin : s'il l'était, il s'userait en quelques freinages et le freinage serait très mauvais.","","Le câble et le levier transmettent l'effort de la main, mais ils ne frottent pas l'un contre l'autre : ils tirent.","Le moyeu est au centre de la roue ; c'est là que frotte un frein à disque ou à tambour, pas un frein à patins."],
+ ret:"Un frottement se fait à deux : la pièce qui serre, et celle qui est serrée."},
+{c:"C1.2",n:"Où part l'énergie",q:"Après plusieurs freinages, la jante est tiède. Cela montre que…",
+ o:["la jante est de mauvaise qualité","le frein est mal réglé","l'énergie du vélo en mouvement s'est transformée en chaleur par frottement","il faisait chaud ce jour-là"],r:2,
+ expl:"Freiner ne fait pas disparaître l'énergie : cela la transforme. L'énergie du vélo lancé devient de la chaleur là où les surfaces frottent. C'est vrai des trois principes — et c'est pour cela que la chaleur devient un problème dans les longues descentes.",
+ ex:"Un tambour, parce qu'il est fermé, évacue mal cette chaleur : en fin de longue descente, il chauffe et freine moins bien.",
+ err:"Chercher une panne là où il y a un phénomène normal et attendu.",
+ d:["Une jante de très bonne qualité chauffe tout autant : elle résistera mieux à l'usure, mais l'énergie devra toujours se transformer quelque part.","Un frein bien réglé chauffe exactement de la même façon : la chaleur vient du principe lui-même, pas d'un défaut de réglage.","","La température de l'air ne change rien à ce constat : c'est la zone de frottement qui chauffe, et elle seule."],
+ ret:"L'énergie ne disparaît pas quand on freine : elle devient de la chaleur."},
+{c:"C1.2",n:"L'écart au repos",q:"Levier relâché, il reste environ 2 mm entre le patin et la jante. Cet écart…",
+ o:["est un défaut de fabrication","est nécessaire : sans lui, le patin frotterait en permanence et userait la jante","sert à laisser passer l'eau de pluie","n'a aucune importance"],r:1,
+ expl:"Un frein doit pouvoir être RELÂCHÉ. L'écart au repos garantit que rien ne frotte quand on ne freine pas. Trop grand, le levier arrive en butée avant de serrer ; trop petit, ça frotte en roulant.",
+ ex:"Un frein mal réglé qui frotte en permanence fatigue le cycliste, use les patins et chauffe la jante sans que personne ne l'ait demandé.",
+ err:"Croire qu'un bon réglage est celui où le patin touche presque toujours la jante.",
+ d:["C'est au contraire le résultat d'un réglage volontaire, qu'on refait quand les patins s'usent et que l'écart grandit.","","L'eau passe de toute façon : elle est projetée par la roue en marche, et 2 mm ne changent rien à cela.","Son importance est décisive dans les deux sens : trop grand, le frein ne serre plus assez ; trop petit, il freine tout le temps."],
+ ret:"Un frein doit aussi savoir ne pas freiner."},
+{c:"C1.2",n:"Le disque au moyeu",q:"Sur un frein à disque, la surface qui frotte est placée près du moyeu. La conséquence est que…",
+ img:{src:"Images/corrige_trois_principes_de_freinage.svg",alt:"Les trois principes de freinage — patins serrant la jante, plaquettes serrant un disque près du moyeu, mâchoires poussant contre un tambour fermé — avec la distinction entre fonction, principe et solution."},
+ o:["elle rend le vélo plus léger","elle freine plus doucement","elle ne chauffe pas","elle est plus haute et plus protégée : elle reçoit moins d'eau et de projections que la jante"],r:3,
+ expl:"L'endroit décide de l'exposition. La jante est à la périphérie de la roue, au plus près de la chaussée et des flaques. Un disque au moyeu se trouve plus haut et plus au centre : l'eau et la boue l'atteignent beaucoup moins.",
+ ex:"C'est ce que confirment les chiffres : sous la pluie, le disque perd 1,0 m par rapport au sol sec, contre 3,1 m pour les patins.",
+ err:"Croire que la différence de comportement sous la pluie vient de la qualité des pièces, alors qu'elle vient d'abord de leur emplacement.",
+ d:["Il alourdit le vélo : 510 g contre 320 g pour les patins, à cause du disque et de son support.","Un frein à disque freine au contraire plus fort à effort égal, parce que la force s'applique sur un plus petit rayon.","Il chauffe beaucoup, et parfois davantage : la surface est plus petite, donc l'énergie se concentre.",""],
+ ret:"L'endroit du frottement décide de son exposition — et donc de sa tenue sous la pluie."},
+{c:"C1.2",n:"Le tambour fermé",q:"Le frein à tambour résiste le mieux à la corrosion parce que…",
+ o:["sa surface de frottement est enfermée : le sel et l'eau ne l'atteignent presque pas","il est fabriqué dans un métal plus résistant","il est plus lourd","il est peint"],r:0,
+ expl:"Encore l'endroit. Les mâchoires poussent contre la paroi INTÉRIEURE d'un tambour clos. Ce qui est enfermé est protégé — de l'eau, du sel, du sable. C'est un avantage décisif en bord de mer, et il ne coûte rien de plus.",
+ ex:"À Sainte-Luce, à quelques centaines de mètres de la mer, cela vaut 5/5 en corrosion contre 2/5 pour les patins.",
+ err:"Chercher l'explication dans le matériau alors qu'elle est dans la géométrie.",
+ d:["","Les trois freins emploient des métaux comparables ; c'est l'exposition qui diffère, pas la nuance d'acier.","La masse ne protège de rien : elle vient de la matière du tambour, elle n'est pas la cause de sa résistance au sel.","La peinture protège les parties visibles, pas la surface de frottement — qui ne peut évidemment pas être peinte, sinon elle ne frotterait plus."],
+ ret:"Ce qui est enfermé est protégé. C'est de la géométrie, pas de la chimie."},
+{c:"C1.2",n:"Le revers du tambour",q:"L'inconvénient de cette surface enfermée est que…",
+ o:["elle s'use plus vite","la chaleur s'en évacue mal : dans une longue descente, le frein chauffe et perd de son efficacité","elle est plus chère à fabriquer","elle ne fonctionne pas par temps froid"],r:1,
+ expl:"Un même choix de conception apporte presque toujours un avantage ET un inconvénient, et ce sont souvent les deux faces de la même caractéristique. Ici, ce qui protège de l'eau empêche aussi la chaleur de sortir.",
+ ex:"Le relevé d'essai le note : « chauffe en fin de descente » pour le tambour, dans la descente à 8 %.",
+ err:"Chercher l'inconvénient ailleurs que dans l'avantage. Il est très souvent au même endroit.",
+ d:["L'usure est plutôt plus lente, justement parce que la surface est protégée du sable et des projections abrasives.","","Le coût d'entretien annoncé, 27 €/an, se situe entre celui des patins et celui du disque : ce n'est pas là que le bât blesse.","Le froid n'a pas d'effet notable sur un frein mécanique de ce type ; c'est la chaleur qui pose problème, pas l'inverse."],
+ ret:"Ce qui protège de l'eau retient aussi la chaleur. Le même choix, ses deux faces."},
+{c:"C1.2",n:"Ce que le schéma ne montrait pas",q:"Qu'apprend la manipulation sur un vrai vélo, qu'un tableau de chiffres ne dit pas ?",
+ o:["que la surface qui frotte, sur un frein à patins, est la roue elle-même — celle qui roule dans les flaques","le prix de chaque frein","la distance d'arrêt exacte","la durée de vie des patins"],r:0,
+ expl:"Les chiffres disent CE QUI se passe ; l'objet dit POURQUOI. Voir de ses yeux que le patin serre le bord de la roue permet de prévoir sa faiblesse sous la pluie avant d'ouvrir le moindre tableau — et de comprendre le chiffre au lieu de l'apprendre.",
+ ex:"Un élève qui a vu où frotte le patin devine l'écart de 3,1 m sous la pluie ; celui qui n'a vu que le tableau le retient sans le comprendre.",
+ err:"Croire qu'un tableau bien fait rend l'objet inutile.",
+ d:["","Le prix figure au contraire dans le tableau, et l'objet ne le donne pas.","La distance d'arrêt est une mesure : elle vient des essais, pas de l'observation à l'arrêt.","La durée de vie ne s'observe pas en une séance : elle demanderait un suivi sur plusieurs mois."],
+ ret:"Les chiffres disent ce qui se passe. L'objet dit pourquoi."},
+{c:"C1.2",n:"D'où viennent les chiffres",q:"Sur le parking, les patins ont donné 5,7 puis 5,9 m sur sol sec. La fiche annonce 5,8 m. C'est…",
+ o:["une valeur inventée pour arrondir","une erreur du fournisseur","la moyenne des essais : une fiche technique est un résumé de mesures","la plus petite des deux mesures"],r:2,
+ expl:"Une fiche technique n'est pas une parole d'autorité : c'est le résumé de mesures que quelqu'un a faites. Savoir cela change tout — on peut la vérifier, et on doit demander dans quelles conditions elle a été établie.",
+ ex:"(5,7 + 5,9) ÷ 2 = 5,8. Les quinze essais du parking retombent exactement sur les valeurs de la fiche.",
+ err:"Prendre une fiche technique pour une vérité qui n'a pas de source.",
+ d:["Elle n'est pas inventée mais calculée, et le calcul est refaisable à partir du fichier des essais.","Il n'y a pas d'erreur : la valeur annoncée correspond exactement à la moyenne des mesures.","","La plus petite des deux serait 5,7 : ce n'est pas ce qu'annonce la fiche."],
+ ret:"Une fiche technique est un résumé de mesures. On peut donc la vérifier."},
+{c:"C1.2",n:"L'écart, pas la valeur",q:"Sous la pluie, l'écart avec le sol sec vaut +3,1 m pour les patins et +1,0 m pour le disque. Cet écart dit…",
+ o:["que la pluie n'a aucun effet sur le tambour","que le disque est plus lourd que les patins","que les essais sous la pluie ont été mal faits","combien chaque principe perd quand la surface qui frotte est mouillée"],r:3,
+ expl:"Comparer les valeurs absolues ne suffit pas : c'est l'ÉCART entre deux conditions qui révèle la sensibilité d'un principe. Un frein qui perd peu quand tout se dégrade est un frein sur lequel on peut compter.",
+ ex:"Les patins passent de 5,8 à 8,9 m, le disque de 5,4 à 6,4 m. Le second reste prévisible ; le premier change de comportement.",
+ err:"Ne regarder que la meilleure valeur, et manquer le fait qu'elle s'effondre dès qu'il pleut.",
+ d:["Le tambour perd lui aussi, mais très peu : +0,8 m. Peu n'est pas rien.","La masse figure dans une autre colonne et n'a aucun rapport avec l'écart entre sec et mouillé.","Les essais ont été faits dans les mêmes conditions pour les trois freins : c'est précisément ce qui rend la comparaison possible.",""],
+ ret:"L'écart entre deux conditions en dit plus que la meilleure valeur."},
+{c:"C1.2",n:"Le plus petit gagne",q:"Pour la colonne « distance d'arrêt », la meilleure valeur est…",
+ o:["celle du milieu","la plus grande : plus la distance est longue, plus le freinage est progressif","la plus petite : s'arrêter en 5,4 m vaut mieux qu'en 6,1 m","la même pour les trois, puisqu'ils arrêtent tous le vélo"],r:2,
+ expl:"Lire un tableau demande de savoir, pour chaque colonne, dans quel sens elle se lit. Pour une distance d'arrêt, une masse ou un prix, le plus petit est le meilleur. Pour une note de réparabilité ou de résistance, c'est l'inverse.",
+ ex:"Dans la même ligne, 320 g est un bon chiffre et 5/5 aussi — pourtant l'un est le plus petit de sa colonne et l'autre le plus grand.",
+ err:"Entourer mécaniquement les plus grands nombres de chaque colonne.",
+ d:["Rien ne justifie de choisir la valeur médiane : ce n'est ni la meilleure ni la moins bonne, c'est simplement la deuxième.","Une distance d'arrêt plus longue signifie qu'on percute ce qu'on voulait éviter ; la progressivité du freinage est une autre qualité, qui ne se lit pas dans cette colonne.","","Ils arrêtent tous le vélo — c'est la fonction, et elle est commune. Les distances, elles, diffèrent nettement."],
+ ret:"Dans chaque colonne, il faut savoir dans quel sens on lit."},
+{c:"C1.2",n:"Une note n'est pas une mesure",q:"Le critère « réparabilité 5/5 » est…",
+ img:{src:"Images/corrige_le_critere_qui_tranche.svg",alt:"Le tableau comparatif des trois solutions sur six critères, avec le meilleur et le moins bon de chaque colonne, et l'explication du critère qui tranche à Sainte-Luce."},
+ o:["le nombre de pièces détachées disponibles","une mesure physique, aussi sûre qu'une distance en mètres","sans valeur, puisque ce n'est pas une mesure","une appréciation chiffrée : utile pour comparer, mais elle résume un jugement, pas une mesure"],r:3,
+ expl:"Toutes les colonnes d'un tableau n'ont pas la même solidité. 6,4 m se mesure avec un décamètre et se refait ; 4/5 résulte de l'avis de quelqu'un. On garde ces notes — elles sont utiles — mais on sait qu'elles se discutent, et on demande qui les a attribuées.",
+ ex:"Deux techniciens peuvent noter la même réparabilité 3/5 et 4/5 ; aucun des deux ne mesurera 6,4 m au lieu de 8,9.",
+ err:"Traiter toutes les colonnes comme également sûres parce qu'elles contiennent toutes des chiffres.",
+ d:["Ce serait une donnée intéressante, mais différente : on peut avoir beaucoup de pièces disponibles pour un objet difficile à démonter.","Une note résume un jugement : deux personnes peuvent l'attribuer différemment, ce qui n'arrive pas avec une distance mesurée.","Elle a beaucoup de valeur, à condition de savoir ce qu'elle est : la réparabilité compte énormément dans un collège.",""],
+ ret:"Un chiffre n'est pas forcément une mesure. Certains résument un avis."},
+{c:"C1.2",n:"Aucune ne gagne partout",q:"En lisant les six colonnes, on constate que…",
+ img:{src:"Images/corrige_le_critere_qui_tranche.svg",alt:"Le tableau comparatif des trois solutions sur six critères, avec le meilleur et le moins bon de chaque colonne, et l'explication du critère qui tranche à Sainte-Luce."},
+ o:["chaque solution est première sur au moins un critère et dernière sur au moins un autre","une solution gagne sur cinq critères sur six","les trois solutions sont équivalentes","le tableau est incomplet, puisqu'il ne désigne pas de vainqueur"],r:0,
+ expl:"C'est la situation normale, pas l'exception. Si une solution gagnait partout, il n'y aurait rien à décider et le tableau serait inutile. Un comparatif sert précisément quand les avantages sont répartis.",
+ ex:"Patins : premiers en masse, entretien et réparabilité, derniers sous la pluie et en corrosion. Disque : premier sur les deux distances, dernier en entretien. Tambour : premier en corrosion, dernier sur le sec, la masse et la réparabilité.",
+ err:"Chercher la solution qui gagne partout, et conclure que le tableau est mal fait quand on ne la trouve pas.",
+ d:["","Aucune n'approche ce score : le maximum est de trois colonnes gagnées, pour les patins.","Elles sont loin d'être équivalentes : 8,9 m contre 6,4 m sous la pluie, c'est deux mètres et demi d'écart.","Un tableau comparatif n'a jamais pour rôle de désigner un vainqueur : il rassemble les faits, la décision vient après."],
+ ret:"Un tableau où quelqu'un gagne partout n'apprend rien. C'est la répartition qui rend le choix nécessaire."},
+{c:"C1.2",n:"Ce que le tableau ne dit pas",q:"Ce qu'un tableau comparatif ne peut pas donner, c'est…",
+ o:["l'importance de chaque critère : il donne les faits, pas leur poids","les valeurs de chaque solution","les unités de mesure","le nombre de critères retenus"],r:0,
+ expl:"Le tableau est un état des lieux. Décider que la corrosion pèse plus que la masse est un choix humain, qui dépend du lieu, de l'usage et des moyens. Aucune colonne ne contient cette information — et c'est pour cela qu'un tableau ne décide jamais seul.",
+ ex:"Le même tableau, à Sainte-Luce et à Fort-de-France, ne désigne pas la même solution. Pourtant aucun chiffre n'a changé.",
+ err:"Attendre du tableau qu'il tranche, puis choisir au hasard quand il ne tranche pas.",
+ d:["","Les valeurs sont exactement ce que le tableau contient : c'est même sa seule fonction.","Les unités figurent en tête de colonne — mètres, grammes, euros par an, notes sur 5.","Le nombre de critères se compte à vue : il y en a six."],
+ ret:"Un tableau donne les faits. Il ne donne pas leur importance — cela, c'est nous."},
+{c:"C1.2",n:"La pente change tout",q:"Les essais faits dans la descente à 8 % donnent des distances plus longues pour les trois freins. Cela montre que…",
+ o:["le contexte de la mesure fait partie du résultat : une distance d'arrêt n'a de sens qu'avec ses conditions","les freins étaient usés en fin de série","l'élève a mal chronométré ces trois essais","il ne faut pas tenir compte de ces trois essais"],r:0,
+ expl:"Une mesure sans ses conditions ne veut rien dire. « 6,4 m » ne signifie quelque chose que si l'on précise : à quelle vitesse, sur quelle pente, sur quelle chaussée. C'est pourquoi le fichier d'essai comporte ces colonnes.",
+ ex:"En descente, la pesanteur ajoute de l'énergie qu'il faut aussi dissiper : le frein a plus de travail à fournir pour le même arrêt.",
+ err:"Comparer deux distances d'arrêt mesurées dans des conditions différentes, et croire qu'on compare les freins.",
+ d:["","Les trois freins sont affectés de la même façon, y compris ceux testés en premier : ce n'est donc pas une question d'usure.","Le phénomène est cohérent sur les trois solutions, ce qui exclut une erreur de mesure isolée.","Ces trois essais sont au contraire les plus proches de l'usage réel au collège, où il y a justement une descente."],
+ ret:"Une mesure ne vaut qu'avec ses conditions. Sinon on ne compare rien."},
+{c:"C1.2",n:"Comparer, c'est mesurer pareil",q:"Pour que la comparaison soit valable, il faut que les essais aient été faits…",
+ o:["dans les mêmes conditions pour les trois freins : même vitesse, même chaussée, même pente","par trois personnes différentes, pour éviter les erreurs","à des dates différentes, pour varier la météo","avec le plus grand nombre d'essais possible, quelles que soient les conditions"],r:0,
+ expl:"Comparer, c'est faire varier UNE seule chose à la fois. Ici, ce qui varie est le frein ; tout le reste doit rester identique, sinon on ne sait plus à quoi attribuer la différence observée.",
+ ex:"Les quinze essais partent tous de 18 km/h. Si l'un était parti de 25 km/h, sa distance plus longue n'aurait rien prouvé sur le frein.",
+ err:"Multiplier les essais sans contrôler les conditions, et croire que le nombre compense le désordre.",
+ d:["","Changer d'opérateur ajouterait une différence de plus : c'est exactement ce qu'on cherche à éviter pendant la comparaison.","Varier la météo entre les freins rendrait la comparaison impossible : on ne saurait plus si l'écart vient du frein ou du temps qu'il faisait.","Un grand nombre d'essais mal contrôlés donne un résultat précis et faux : on mesure très bien quelque chose dont on ignore ce que c'est."],
+ ret:"Comparer, c'est ne faire varier qu'une chose à la fois."},
+{c:"C1.2",n:"Le sel de l'air",q:"Le collège est à quelques centaines de mètres de la mer. Cela rend décisif le critère…",
+ o:["de réparabilité","de masse","de coût d'entretien","de résistance à la corrosion : le sel de l'air attaque les métaux toute l'année"],r:3,
+ expl:"Un critère devient décisif quand le contexte le met en jeu en permanence. En bord de mer, le sel agit tous les jours, sur tous les vélos, qu'on s'en serve ou non. C'est ce caractère continu qui lui donne son poids.",
+ ex:"Le sel voyage dans l'air sur plusieurs centaines de mètres à l'intérieur des terres : tout mobilier littoral est concerné.",
+ err:"Traiter tous les critères comme également importants, quel que soit le lieu.",
+ d:["La réparabilité est précieuse, et elle ne change pas non plus selon qu'on est ou non au bord de l'eau.","La masse compte quand on porte le vélo dans des escaliers ; ici le trajet est extérieur et la question ne se pose pas de la même façon.","Le coût d'entretien importe, mais il ne dépend pas de la proximité de la mer : il est le même partout.",""],
+ ret:"Un critère devient décisif quand le lieu le met en jeu tous les jours."},
+{c:"C1.2",n:"La descente et la pluie",q:"Le trajet comporte une descente et il pleut souvent. Cela rend décisive…",
+ o:["la distance d'arrêt sur sol sec uniquement","la distance d'arrêt sous la pluie, et l'écart entre sec et mouillé","la masse du frein","la couleur des poignées"],r:1,
+ expl:"Deux conditions se cumulent ici : la pente ajoute de l'énergie à dissiper, l'eau réduit l'efficacité du frottement. C'est exactement la situation où un frein sensible à l'humidité devient dangereux — et elle se produit plusieurs fois par semaine.",
+ ex:"Dans la descente à 8 % sous la pluie, les patins demandent 11,4 m, le disque 7,9 m. Trois mètres et demi d'écart, à l'endroit précis où l'on freine le plus.",
+ err:"Choisir d'après la performance sur sol sec, qui est la condition la plus facile et la moins représentative.",
+ d:["Le sol sec n'est pas la situation critique : c'est celle où tous les freins se valent presque, avec 0,7 m d'écart entre le meilleur et le moins bon.","","La masse ne joue aucun rôle dans le comportement sous la pluie ; elle compte pour le transport et la maniabilité.","L'apparence n'est pas un critère technique et ne figure dans aucune colonne du tableau."],
+ ret:"On choisit d'après la situation la plus exigeante, pas la plus facile."},
+{c:"C1.2",n:"Compter n'est pas comparer",q:"Le frein à patins gagne sur trois critères. Le choisir pour cette raison serait…",
+ img:{src:"Images/corrige_le_critere_qui_tranche.svg",alt:"Le tableau comparatif des trois solutions sur six critères, avec le meilleur et le moins bon de chaque colonne, et l'explication du critère qui tranche à Sainte-Luce."},
+ o:["correct, car ce sont les critères les moins coûteux","juste : trois sur six, c'est la majorité","impossible à trancher sans essai supplémentaire","une erreur : compter les colonnes gagnées revient à donner à tous les critères la même importance"],r:3,
+ expl:"C'est le piège central de tout comparatif. Compter les victoires, c'est décider en silence que la masse pèse autant que la distance d'arrêt sous la pluie — dans une descente, au bord de la mer. Ce n'est pas un raisonnement, c'est une abstention déguisée en calcul.",
+ ex:"Trois victoires en masse, prix et réparabilité contre deux défaites en pluie et corrosion : le compte est favorable, le choix serait mauvais.",
+ err:"Transformer une décision en addition, parce que l'addition est plus facile à défendre.",
+ d:["Le coût est un critère parmi d'autres, et rien ne justifie de lui donner par avance la première place.","La majorité des colonnes n'est pas la majorité de l'importance : une seule colonne peut peser plus que trois autres réunies.","Les essais nécessaires ont déjà été faits ; ce qui manque n'est pas une mesure, c'est une hiérarchie des critères.",""],
+ ret:"Comparer n'est pas compter. Il faut hiérarchiser, et le dire."},
+{c:"C1.2",n:"Le même tableau, ailleurs",q:"Dans un collège de montagne sèche, où l'on répare soi-même…",
+ o:["il faudrait refaire tous les essais","le classement resterait identique","le frein à patins deviendrait le meilleur choix : le même tableau, un autre contexte","aucun des trois freins ne conviendrait"],r:2,
+ expl:"C'est la leçon de toute la séquence. Sans embruns et sans pluie fréquente, la corrosion et l'écart sous la pluie cessent d'être décisifs ; la masse, le prix et la réparabilité passent devant. Les chiffres n'ont pas bougé d'un millimètre.",
+ ex:"À Fort-de-France, en ville et à plat, le raisonnement donne également les patins — pour des raisons différentes.",
+ err:"Croire qu'une bonne réponse en technologie est vraie partout et pour toujours.",
+ d:["Les essais restent valables : ils décrivent le comportement des freins, pas le lieu où on les installe.","Le classement change parce que la hiérarchie des critères change : c'est précisément ce que la séquence cherche à faire comprendre.","","Les trois conviendraient techniquement ; la question n'est pas de savoir s'ils fonctionnent, mais lequel convient le mieux à un contexte."],
+ ret:"Le même tableau, un autre lieu, un autre gagnant. Et personne ne s'était trompé."},
+{c:"C1.2",n:"Défendre un choix",q:"Une défense de choix complète comporte…",
+ o:["le principe retenu et ses trois avantages","le principe retenu, deux raisons chiffrées, et ce qu'on accepte de perdre","le nom du fournisseur et son prix","l'avis de la majorité de la classe"],r:1,
+ expl:"Un choix qui ne coûte rien n'est pas un choix : c'est une préférence. Nommer ce qu'on perd prouve qu'on a comparé, et permet à celui qui lit de vérifier qu'on n'a rien caché.",
+ ex:"« Je retiens le disque : 6,4 m sous la pluie contre 8,9, et 4/5 en corrosion. J'accepte 190 g de plus et 16 € d'entretien annuel supplémentaires. »",
+ err:"N'énumérer que les avantages, ce qui donne un plaidoyer et non une comparaison.",
+ d:["Une liste d'avantages ne prouve pas qu'on a comparé : on peut la produire pour n'importe laquelle des trois solutions.","","Le fournisseur et le prix sont des informations d'achat ; ils ne disent rien du principe retenu ni des raisons de le retenir.","Un vote ne remplace pas un argument : la majorité peut parfaitement choisir d'après le mauvais critère."],
+ ret:"Nommer ce qu'on perd est ce qui distingue un choix d'une préférence."},
+{c:"C1.2",n:"Deux réponses justes",q:"Pour Sainte-Luce, le disque et le tambour sont tous deux défendables. Cela signifie que…",
+ o:["il manque des données pour trancher","l'énoncé est mal posé","l'exercice n'a pas UNE bonne réponse : il a des réponses bien ou mal défendues","les deux freins sont identiques"],r:2,
+ expl:"Beaucoup de questions techniques n'ont pas de réponse unique. Ce qui se juge alors n'est pas le résultat mais le raisonnement : les critères retenus, les chiffres cités, et les pertes assumées.",
+ ex:"Le disque gagne sous la pluie, le tambour gagne en corrosion ; les deux sont fondés à Sainte-Luce, selon qu'on redoute davantage la descente ou le sel.",
+ err:"Chercher « la » bonne réponse et rester bloqué quand il y en a deux.",
+ d:["Toutes les données nécessaires sont fournies ; en ajouter ne trancherait pas, car le désaccord porte sur l'importance des critères, pas sur les faits.","L'énoncé est complet : il donne le lieu, l'usage, six critères et quinze essais. C'est la réalité qui admet deux solutions.","","Ils sont très différents : 190 g d'écart de masse, un point de corrosion, une réparabilité qui va de 4/5 à 3/5."],
+ ret:"Certaines questions n'ont pas une réponse, mais des réponses bien ou mal défendues."},
+{c:"C1.2",n:"Ce qu'on ne mesure pas",q:"Aucun des six critères ne parle du bruit du frein. Cela signifie…",
+ img:{src:"Images/corrige_le_critere_qui_tranche.svg",alt:"Le tableau comparatif des trois solutions sur six critères, avec le meilleur et le moins bon de chaque colonne, et l'explication du critère qui tranche à Sainte-Luce."},
+ o:["qu'un tableau ne contient que ce qu'on a décidé d'y mettre : il faut aussi regarder ce qui manque","que le bruit n'a aucune importance","que les trois freins font le même bruit","qu'on ne peut pas mesurer un bruit"],r:0,
+ expl:"Un tableau comparatif porte les traces de celui qui l'a construit. Les colonnes absentes ne sont pas des critères sans importance : ce sont des critères auxquels personne n'a pensé, ou qu'on a jugé trop difficiles à mesurer.",
+ ex:"Un frein qui grince finit par ne plus être serré à fond : le bruit a des conséquences très concrètes sur la sécurité.",
+ err:"Prendre le tableau pour la description complète de la réalité.",
+ d:["","Le bruit compte beaucoup dans l'usage réel, et il influence directement la façon dont on se sert du frein.","Ils font des bruits très différents : un frein à disque mal réglé siffle, un tambour est presque silencieux.","Un bruit se mesure très bien, avec un sonomètre ou une application, à distance et en conditions fixées."],
+ ret:"Regarde aussi les colonnes qui ne sont pas là."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_5e_C1.2_sainte_luce";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C1.2":"5e_C1.2 — Comparer des principes techniques pour une même fonction technique." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+
+/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
+/* Cette séquence ne porte qu'UN code : on ne peut pas filtrer par compétence.
+   Ce qui varie ici est le MOMENT. Tant que la séquence n'est pas terminée, elle
+   appelle ce QCM avec #depart=court, et l'on ouvre sur le parcours de dix
+   questions — déjà présent dans le gabarit. Le parcours complet reste à un clic :
+   on choisit ce qu'on propose EN PREMIER, on n'interdit rien. */
+(function ouvrirSurLeParcoursCourt(){
+  if(!/depart=court/.test(location.hash||"")) return;
+  setMode("dix");
+  const hote = document.getElementById("porteeCiblee");
+  if(hote){
+    hote.hidden = false;
+    hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore terminée&nbsp;: " +
+      "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
+      "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+  }
+})();
+
+
+</script>
+</body>
+</html>
