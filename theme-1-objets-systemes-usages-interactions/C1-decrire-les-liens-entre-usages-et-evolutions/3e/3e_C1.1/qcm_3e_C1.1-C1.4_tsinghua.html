@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 1 · 3e — QCM : Tsinghua, robots, drones et IA face aux feux (3e_C1.1 à C1.4)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .portee-ciblee{max-width:880px;margin:0 auto 12px;padding:9px 14px;border:1px solid var(--head);border-radius:10px;background:#2b1a3f;font-size:.85em;color:var(--text)}
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C1.1-C1.4_tsinghua_feux.html">← Séquence</a></nav>
+<h1>Thème 1 · 3e — QCM : Tsinghua, robots, drones et IA face aux feux</h1>
+<p class="subtitle">Deux ruptures, une découverte de 1800, et deux argumentaires courts — identifier les innovations de rupture (3e_C1.1), relier une découverte à ses effets (C1.2), dire ce que l'objet change pour la société (C1.3) et ce que la société oblige l'objet à changer (C1.4)</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">3e_C1.1</span><span class="badge code">3e_C1.2</span><span class="badge code">3e_C1.3</span><span class="badge code">3e_C1.4</span>
+  <span class="badge theme">30 questions · 11 illustrées · chaque distracteur réfuté</span>
+</div>
+<p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
+<p style="text-align:center"><a href="sequence_3e_C1.1-C1.4_tsinghua_feux.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C1.1">3e_C1.1 — Les innovations de rupture</option>
+      <option value="C1.2">3e_C1.2 — D'une découverte à ses effets sur la société</option>
+      <option value="C1.3">3e_C1.3 — L'incidence d'un OST sur la société</option>
+      <option value="C1.4">3e_C1.4 — L'incidence des contraintes sociétales</option>
+    
+      </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 3e_C1.1 à C1.4 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence_3e_C1.1-C1.4_tsinghua_feux.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — Tsinghua 3e : 30 questions sur les quatre codes (C1.1 : 8 · C1.2 : 7 · C1.3 : 8 · C1.4 : 7), dont 11 illustrées. Chiffres publics et sourcés ; les questions touchant aux données du PNUE portent la discipline de la règle n°68. */
+const QUESTIONS = [
+/* ═══ C1.1 ═══ */
+{c:"C1.1",n:"Amélioration ou rupture",q:"Une tour de guet plus haute, avec de meilleures jumelles, est…",
+ img:{src:"Images/corrige_trois_regimes_de_surveillance.svg",alt:"Les trois régimes de surveillance des feux — vigie humaine, satellite, détection multi-indices — avec ce que chacun permet, ce qu'il ne permet pas, et le métier qu'il suppose."},
+ o:["une innovation de rupture","une amélioration : on fait mieux la même chose, avec le même savoir-faire","un changement sans effet","une régression"],r:1,
+ expl:"Une amélioration se reconnaît à ce qu'elle ne change ni la nature de l'usage, ni le métier de celui qui l'exerce. Le guetteur voit plus loin ; il regarde toujours, et son savoir-faire vaut toujours.",
+ ex:"Des jumelles à fort grossissement font gagner quelques kilomètres. Elles ne font pas voir la nuit.",
+ err:"Confondre l'ampleur du gain avec la nature du changement. Un gain considérable peut n'être qu'une amélioration.",
+ d:["Rien de nouveau ne devient possible : on voit plus loin, on ne voit pas autre chose ni autrement.","","L'effet est réel — la portée augmente — mais il ne change pas la nature de la surveillance.","Rien ne se dégrade : la tour plus haute fait strictement mieux que la précédente."],
+ ret:"Une amélioration fait mieux la même chose. Le métier ne change pas."},
+{c:"C1.1",n:"Le signe de la rupture",q:"Le signe le plus sûr qu'un changement est une rupture, c'est que…",
+ img:{src:"Images/corrige_trois_regimes_de_surveillance.svg",alt:"Les trois régimes de surveillance des feux — vigie humaine, satellite, détection multi-indices — avec ce que chacun permet, ce qu'il ne permet pas, et le métier qu'il suppose."},
+ o:["le métier change : le savoir-faire d'avant ne suffit plus","le prix baisse","l'objet devient plus petit","les journaux en parlent"],r:0,
+ expl:"C'est le critère le plus fiable, parce qu'il est observable. Quand une rupture a lieu, les compétences qui faisaient la valeur d'un professionnel cessent de suffire — et de nouvelles compétences deviennent nécessaires.",
+ ex:"Guetteur, analyste d'images, exploitant de système : trois savoir-faire sans rapport entre eux, pour une seule et même mission.",
+ err:"Chercher la rupture dans l'objet. Elle se voit mieux dans les gens qui l'emploient.",
+ d:["","Beaucoup d'améliorations font baisser le prix sans rien changer d'autre, et certaines ruptures coûtent d'abord bien plus cher.","La miniaturisation est un progrès technique fréquent, qui accompagne aussi bien les améliorations que les ruptures.","La couverture médiatique dit ce qui est nouveau, pas ce qui est structurellement différent."],
+ ret:"Regarde le métier. S'il change, c'est une rupture."},
+{c:"C1.1",n:"Pourquoi le satellite rompt",q:"Le passage à l'observation satellitaire est une rupture parce qu'elle…",
+ o:["emploie de l'électronique","coûte moins cher qu'une tour de guet","est plus récente","rend possible ce qui ne l'était pas du tout : voir la nuit, et sur un continent entier"],r:3,
+ expl:"Aucune tour, aussi haute soit-elle, ne permet de surveiller un continent ni de voir dans l'obscurité. Ce n'est pas un regard humain amélioré : c'est une autre façon de savoir, fondée sur un autre phénomène physique.",
+ ex:"Une anomalie thermique se repère la nuit, quand un guetteur ne verrait rien du tout.",
+ err:"Justifier une rupture par la nouveauté ou par le prix, au lieu de dire ce qui devient possible.",
+ d:["L'électronique est présente dans quantité d'améliorations sans rupture — une paire de jumelles à stabilisation électronique reste des jumelles.","Un satellite coûte infiniment plus cher qu'une tour : ce n'est certainement pas par là qu'il s'impose.","La date n'explique rien : une technologie récente peut n'apporter qu'une amélioration marginale.",""],
+ ret:"Une rupture se justifie par ce qu'elle rend possible, jamais par sa date."},
+{c:"C1.1",n:"Ce qu'une rupture ne fait pas",q:"Une innovation de rupture fait-elle disparaître ce qui la précède ?",
+ img:{src:"Images/corrige_trois_regimes_de_surveillance.svg",alt:"Les trois régimes de surveillance des feux — vigie humaine, satellite, détection multi-indices — avec ce que chacun permet, ce qu'il ne permet pas, et le métier qu'il suppose."},
+ o:["oui, après quelques années","oui, toujours et immédiatement","pas toujours : des tours de guet fonctionnent encore, parce qu'un œil humain lève un doute qu'aucun capteur ne lève","non, jamais"],r:2,
+ expl:"C'est l'erreur la plus fréquente sur cette notion. Une rupture ouvre une possibilité nouvelle ; elle ne rend pas forcément inutile ce qui existait. Les régimes coexistent souvent, chacun couvrant ce que l'autre ne couvre pas.",
+ ex:"Un satellite signale une anomalie thermique ; il ne dit pas si c'est un feu, un toit brûlant ou un feu de camp autorisé. Quelqu'un doit encore aller voir.",
+ err:"Croire que le nouveau remplace mécaniquement l'ancien, et cesser d'étudier ce qui subsiste.",
+ d:["Le délai n'est pas la question : certains moyens anciens ne disparaissent jamais, parce qu'ils font quelque chose d'irremplaçable.","La disparition immédiate est rare : les moyens anciens continuent souvent de servir là où les nouveaux échouent.","","Certaines ruptures font bien disparaître ce qui précède — la photographie argentique en est un exemple. Ce n'est simplement pas une règle."],
+ ret:"Une rupture ouvre. Elle ne referme pas forcément."},
+{c:"C1.1",n:"Trois métiers",q:"Guetteur, analyste d'images, exploitant de système sont…",
+ o:["trois façons de dire « surveillant »","trois noms pour le même métier","trois niveaux hiérarchiques","trois savoir-faire sans rapport, pour une même mission — c'est ce qui signale deux ruptures"],r:3,
+ expl:"Un guetteur sait rester attentif des heures. Un analyste sait lire une donnée et distinguer un signal d'un artefact. Un exploitant sait faire tenir un réseau, gérer une énergie et trier des alertes. On ne passe pas de l'un à l'autre par la formation continue.",
+ ex:"La mission est constante depuis toujours&nbsp;: repérer un départ de feu au plus tôt. Tout le reste a changé deux fois.",
+ err:"Croire qu'un même mot — « surveillance » — désigne un même travail à travers les époques.",
+ d:["Le mot commun cache justement la différence, et c'est ce que la séquence cherche à faire voir.","Les trois n'exigent ni les mêmes gestes, ni les mêmes connaissances, ni les mêmes outils.","Aucune hiérarchie n'est en jeu : ce sont des métiers différents, pas des échelons.",""],
+ ret:"Quand trois savoir-faire sans rapport se succèdent pour une même mission, il y a eu des ruptures."},
+{c:"C1.1",n:"Une amélioration déguisée",q:"Un réseau de capteurs deux fois plus dense, sur le même principe, est…",
+ o:["une rupture, car il y a deux fois plus de capteurs","une amélioration : plus de points de mesure, même façon de détecter, même métier","une rupture, car la couverture change","un retour en arrière"],r:1,
+ expl:"Doubler la densité améliore la couverture et réduit les angles morts. Mais on détecte de la même façon, on exploite le même système, et l'on n'a rien rendu possible qui ne l'était pas.",
+ ex:"Deux fois plus de capteurs, c'est deux fois plus de maintenance — et exactement le même travail.",
+ err:"Prendre une différence de quantité pour une différence de nature.",
+ d:["Le nombre ne fait pas la rupture : cent capteurs identiques détectent comme un seul, en plus d'endroits.","","La couverture s'améliore, mais rien de nouveau ne devient possible : ce sont les mêmes grandeurs, mesurées de la même façon.","Rien ne recule : la détection est strictement meilleure qu'avant."],
+ ret:"Plus, ce n'est pas autrement. La quantité ne fait pas la rupture."},
+{c:"C1.1",n:"Rupture et coexistence",q:"Aujourd'hui, la surveillance des feux emploie…",
+ img:{src:"Images/corrige_trois_regimes_de_surveillance.svg",alt:"Les trois régimes de surveillance des feux — vigie humaine, satellite, détection multi-indices — avec ce que chacun permet, ce qu'il ne permet pas, et le métier qu'il suppose."},
+ o:["les trois régimes à la fois, chacun couvrant ce que les autres ne couvrent pas","seulement le régime le plus récent","seulement les satellites","seulement des capteurs au sol"],r:0,
+ expl:"Le satellite voit large mais grossier et par intermittence ; les capteurs voient fin mais localement ; l'humain lève les doutes. Un système réel combine, parce qu'aucun régime n'est complet à lui seul.",
+ ex:"Un satellite signale une zone, un capteur confirme localement, un opérateur décide d'engager les moyens.",
+ err:"Raisonner comme si l'histoire des techniques était une file où chacun chasse le précédent.",
+ d:["","Le plus récent a ses angles morts — portée limitée, réseau à entretenir — que les autres comblent.","Le satellite seul manquerait tous les départs survenant entre deux passages, et serait aveugle sous les nuages.","Des capteurs seuls ne couvriraient jamais les surfaces concernées : il en faudrait un nombre irréaliste."],
+ ret:"Les régimes coexistent. Chacun couvre le trou de l'autre."},
+{c:"C1.1",n:"Ce qui prouve une rupture",q:"Pour établir qu'un changement est une rupture, il faut montrer…",
+ o:["que l'objet a changé d'apparence","que la technologie employée est nouvelle","que les performances ont augmenté","ce qui devient possible et ne l'était pas du tout, et quel savoir-faire cesse de suffire"],r:3,
+ expl:"C'est une démonstration en deux temps, et les deux sont nécessaires. La possibilité nouvelle évite de confondre avec un simple gain ; le savoir-faire caduc évite de qualifier de rupture tout ce qui est spectaculaire.",
+ ex:"Voir la nuit sur un continent (possibilité nouvelle) + le guetteur ne sait pas lire une image satellitaire (savoir-faire caduc) = rupture établie.",
+ err:"S'arrêter au premier temps de la démonstration, et appeler rupture toute nouveauté frappante.",
+ d:["L'apparence ne prouve rien : deux objets très différents peuvent faire exactement la même chose.","La nouveauté de la technologie ne dit rien de la nature du changement qu'elle produit.","Une hausse de performance, même forte, reste une amélioration si l'usage et le métier demeurent.",""],
+ ret:"Deux preuves à fournir : ce qui devient possible, et ce qui devient caduc."},
+/* ═══ C1.2 ═══ */
+{c:"C1.2",n:"Ce que Herschel cherchait",q:"En 1800, William Herschel place des thermomètres sous chaque couleur d'un spectre. Il cherchait…",
+ img:{src:"Images/corrige_de_la_decouverte_a_l_usage.svg",alt:"Frise de la découverte de l'infrarouge par Herschel en 1800 jusqu'au drone thermique d'aujourd'hui, en passant par la fabrication de détecteurs puis leur diffusion."},
+ o:["à mesurer la température du Soleil","un moyen de détecter les incendies","à fabriquer une caméra","quelle couleur chauffe le plus — il ne cherchait pas l'infrarouge"],r:3,
+ expl:"C'est une découverte faite en cherchant autre chose. Le thermomètre placé juste au-delà du rouge, là où l'œil ne voit plus rien, monte davantage que tous les autres : il existe donc un rayonnement invisible. Personne n'avait posé cette question.",
+ ex:"Beaucoup de découvertes majeures viennent d'une mesure faite « pour voir », et d'un résultat qu'on n'attendait pas.",
+ err:"Raconter l'histoire des sciences à l'envers, comme si l'on avait cherché ce qu'on a trouvé.",
+ d:["La température du Soleil est une tout autre question, et elle demande d'autres méthodes.","Les feux de forêt n'étaient pas son sujet, et aucun instrument de détection n'existait alors.","La photographie elle-même n'existait pas encore : une caméra était hors de portée de l'époque.",""],
+ ret:"Une découverte se fait souvent en cherchant autre chose."},
+{c:"C1.2",n:"Le délai",q:"Plus de deux siècles séparent la découverte de l'infrarouge du drone thermique. Ce délai montre que…",
+ img:{src:"Images/corrige_de_la_decouverte_a_l_usage.svg",alt:"Frise de la découverte de l'infrarouge par Herschel en 1800 jusqu'au drone thermique d'aujourd'hui, en passant par la fabrication de détecteurs puis leur diffusion."},
+ o:["une découverte devient une technique quand une capacité de fabrication ET un besoin la rencontrent","les scientifiques d'autrefois travaillaient lentement","la découverte était inutile","l'usage aurait pu venir tout de suite"],r:0,
+ expl:"Trois conditions doivent se réunir : savoir que le phénomène existe, savoir fabriquer un détecteur, et avoir une raison de le faire. Tant qu'il en manque une, la découverte reste sans usage — et cela n'a rien d'anormal.",
+ ex:"Le laser a été qualifié à sa naissance de « solution cherchant un problème ». Il équipe aujourd'hui les lecteurs, la chirurgie et les télécommunications.",
+ err:"Juger une découverte à sa vitesse d'application, et croire qu'une science utile est une science rapidement rentable.",
+ d:["","La lenteur n'est pas en cause : ce sont les moyens de fabrication qui manquaient, pas l'intelligence.","Elle a été extraordinairement féconde — mais des décennies plus tard, ce qui est la règle.","Aucun matériau ni procédé de 1800 ne permettait de fabriquer un détecteur infrarouge exploitable."],
+ ret:"Découverte + capacité de fabrication + besoin. Il en manque un, et rien ne se passe."},
+{c:"C1.2",n:"L'ordre des étapes",q:"L'enchaînement observé est…",
+ img:{src:"Images/corrige_de_la_decouverte_a_l_usage.svg",alt:"Frise de la découverte de l'infrarouge par Herschel en 1800 jusqu'au drone thermique d'aujourd'hui, en passant par la fabrication de détecteurs puis leur diffusion."},
+ o:["besoin → découverte → usage","découverte scientifique → capacité technique → diffusion → usages nouveaux","usage → découverte → technique","il n'y a pas d'ordre"],r:1,
+ expl:"La découverte vient d'abord et ne vise rien de précis. La capacité de fabrication la rend exploitable. La baisse des coûts la répand. Et c'est alors seulement que des usages apparaissent — souvent bien loin de ce que le découvreur imaginait.",
+ ex:"Infrarouge (1800) → détecteurs (XXᵉ) → capteurs bon marché (années 2000) → thermomètre sans contact, caméra thermique, drone de détection.",
+ err:"Croire que toute technique naît d'un besoin exprimé. Beaucoup naissent d'une possibilité découverte.",
+ d:["Ce chemin existe aussi — la recherche appliquée — mais ce n'est pas celui de l'infrarouge : personne n'avait exprimé ce besoin en 1800.","","Un usage ne peut pas précéder la découverte du phénomène sur lequel il repose.","L'ordre est très net ici, et il est daté : 1800, XXᵉ siècle, années 2000, aujourd'hui."],
+ ret:"Découverte, capacité, diffusion, usages. Dans cet ordre."},
+{c:"C1.2",n:"L'effet sur la société",q:"Un capteur infrarouge devenu bon marché a pour effet…",
+ o:["de faire entrer une mesure jusque-là réservée aux laboratoires dans des objets ordinaires","de rendre les laboratoires inutiles","de faire baisser la température des objets","de remplacer les thermomètres classiques partout"],r:0,
+ expl:"C'est l'effet le plus profond de la diffusion : ce n'est pas seulement moins cher, c'est ailleurs et pour d'autres gens. Un thermomètre sans contact chez un particulier, c'était impensable au siècle dernier.",
+ ex:"Un thermomètre frontal, un détecteur de présence, une caméra thermique de bricolage : trois objets courants qui reposent sur la découverte de 1800.",
+ err:"Réduire la diffusion d'une technologie à une question de prix. C'est d'abord une question d'accès.",
+ d:["","Les laboratoires continuent d'employer des instruments bien plus précis, pour d'autres questions.","Un capteur mesure une température, il ne la modifie pas.","Les thermomètres à contact restent plus précis pour beaucoup d'usages, en particulier médicaux."],
+ ret:"La diffusion change qui peut mesurer, pas seulement combien cela coûte."},
+{c:"C1.2",n:"Ce qu'une découverte ne garantit pas",q:"Découvrir un phénomène garantit-il un usage utile ?",
+ o:["non : il faut encore savoir le fabriquer à un coût acceptable, et qu'un besoin existe","oui, tôt ou tard, tout se transforme en application","oui, si la découverte est importante","non, une découverte ne sert jamais directement"],r:0,
+ expl:"Beaucoup de phénomènes connus n'ont aucun usage courant, faute de moyen de fabrication ou de raison de le faire. L'histoire retient les découvertes appliquées ; elle oublie les autres, ce qui donne l'illusion d'une transformation automatique.",
+ ex:"L'infrarouge a attendu un siècle et demi avant de servir à quoi que ce soit du quotidien.",
+ err:"Confondre ce dont on entend parler avec ce qui existe. Les découvertes sans application ne font pas de titres.",
+ d:["","Rien ne garantit qu'une application apparaisse : certaines découvertes anciennes n'en ont toujours aucune.","L'importance scientifique et l'utilité pratique sont deux choses distinctes, souvent sans rapport.","Certaines découvertes trouvent un usage très vite, quand la capacité de fabrication existe déjà."],
+ ret:"Découvrir ne suffit pas. Il faut pouvoir fabriquer, et avoir une raison de le faire."},
+{c:"C1.2",n:"Mettre en relation",q:"Mettre en relation une découverte avec ses effets sur la société, c'est…",
+ img:{src:"Images/corrige_de_la_decouverte_a_l_usage.svg",alt:"Frise de la découverte de l'infrarouge par Herschel en 1800 jusqu'au drone thermique d'aujourd'hui, en passant par la fabrication de détecteurs puis leur diffusion."},
+ o:["nommer le scientifique","citer la date de la découverte","montrer le chemin complet : le phénomène, la capacité de fabrication, la diffusion, puis ce qui change pour les gens","décrire l'appareil actuel"],r:2,
+ expl:"C'est le geste du code 3e_C1.2, et il est exigeant : il demande de tenir ensemble une histoire des sciences, une histoire des techniques et une observation sociale. Sauter un maillon rend l'enchaînement incompréhensible.",
+ ex:"Sans l'étape « on sait fabriquer un détecteur », le passage de Herschel au drone paraît miraculeux.",
+ err:"S'arrêter aux deux bouts — la découverte et l'objet d'aujourd'hui — en laissant le milieu vide.",
+ d:["Le nom du découvreur appartient à l'histoire des sciences ; il ne décrit aucun effet social.","Une date situe, elle n'explique pas : elle ne dit rien de ce qui a permis le passage à l'usage.","","L'appareil actuel est le point d'arrivée : le décrire ne montre pas le chemin qui y mène."],
+ ret:"Le phénomène, la fabrication, la diffusion, les effets. Quatre maillons, aucun facultatif."},
+{c:"C1.2",n:"Un effet non prévu",q:"Que le drone thermique serve aussi à repérer des fuites de chaleur dans les bâtiments montre que…",
+ o:["les drones sont mal conçus","une même capacité technique trouve des usages que personne n'avait prévus","la détection de feux était un mauvais objectif","les deux usages sont identiques"],r:1,
+ expl:"Une capacité technique se diffuse latéralement : dès qu'elle existe, d'autres métiers s'en emparent pour leurs propres questions. C'est ainsi qu'une technologie née dans un domaine transforme des domaines voisins.",
+ ex:"Voir une déperdition de chaleur par le toit d'une maison n'a rien à voir avec les feux de forêt — et repose exactement sur la même mesure.",
+ err:"Croire qu'une technique reste dans le domaine pour lequel on l'a développée.",
+ d:["Rien n'est mal conçu : c'est au contraire le signe d'une capacité générale, donc robuste.","","L'objectif initial reste pertinent ; il a simplement ouvert davantage qu'on ne pensait.","Les deux usages emploient la même mesure et répondent à des questions entièrement différentes."],
+ ret:"Une capacité technique déborde toujours le besoin qui l'a fait naître."},
+/* ═══ C1.3 ═══ */
+{c:"C1.3",n:"Le sens de l'incidence",q:"« Le drone réduit l'exposition des pompiers » est une incidence…",
+ o:["sans rapport avec le sujet","de la société sur l'objet technique","purement technique, sans effet social","de l'objet technique SUR la société : l'objet change quelque chose pour des gens"],r:3,
+ expl:"Repérer le sens est le premier geste. Ici, l'objet existe et sa mise en service modifie le travail, le risque et l'organisation de personnes réelles. La flèche va de l'objet vers la société.",
+ ex:"Avant : on entre dans la zone pour savoir. Après : on sait avant d'entrer. Le métier de pompier n'est plus tout à fait le même.",
+ err:"Traiter toute phrase sur la technique et la société comme si le sens allait de soi.",
+ d:["C'est au contraire le cœur du code 3e_C1.3 : l'incidence d'un objet technique sur la société.","L'inverse serait : une règle, un budget ou une attente collective qui contraint la conception du drone.","Réduire l'exposition d'êtres humains à un danger est un effet social majeur, pas un détail technique.",""],
+ ret:"Demande-toi toujours : qui agit sur qui ? L'objet sur la société, ou l'inverse ?"},
+{c:"C1.3",n:"Un argumentaire solide",q:"Un argumentaire court est solide quand…",
+ o:["il emploie un vocabulaire technique","il contient beaucoup d'arguments","chaque affirmation s'appuie sur un fait vérifiable, et qu'il dit ce qu'il laisse de côté","il se termine par une phrase forte"],r:2,
+ expl:"Un argumentaire n'est pas un plaidoyer. Ce qui le rend solide, c'est qu'on puisse le vérifier — donc le contester. Et nommer soi-même ses angles morts est ce qui distingue un raisonnement d'une publicité.",
+ ex:"« Le délai d'alerte diminue » se vérifie. « C'est une technologie d'avenir » ne se vérifie pas.",
+ err:"Multiplier les arguments pour compenser leur faiblesse. Trois arguments vérifiables valent mieux que dix affirmations.",
+ d:["Le vocabulaire technique peut même masquer l'absence de preuve derrière une apparence de rigueur.","Le nombre ne fait rien à l'affaire : dix arguments invérifiables ne prouvent pas davantage qu'un seul.","","Une belle formule finale n'ajoute aucune preuve ; elle ajoute de la conviction, ce qui est autre chose."],
+ ret:"Vérifiable, et honnête sur ce qu'il ignore. C'est tout."},
+{c:"C1.3",n:"Les deux faces",q:"Un argumentaire qui n'énumère que des bénéfices…",
+ o:["est convaincant, puisqu'il est positif","ne prouve rien : on pourrait l'écrire à l'identique pour n'importe quelle solution","est correct si les bénéfices sont réels","est le format attendu en technologie"],r:1,
+ expl:"Un raisonnement se reconnaît à ce qu'il aurait pu conclure autrement. S'il ne mentionne aucun coût, aucun risque, aucune perte, c'est qu'il n'a pas comparé — il a défendu une solution choisie d'avance.",
+ ex:"Fausses alertes à trier, réseau à entretenir, images qui n'existaient pas : trois coûts réels d'une détection automatisée.",
+ err:"Croire qu'un exposé technique doit être positif pour être professionnel. C'est l'inverse.",
+ d:["La conviction n'est pas la preuve : un texte uniquement positif se lit comme un argumentaire commercial.","","Des bénéfices réels ne suffisent pas si les coûts, également réels, sont passés sous silence.","Le format attendu, en 3e comme ailleurs, comporte les deux faces — c'est même le sens du mot « peser »."],
+ ret:"Un raisonnement qui ne pouvait que conclure ainsi n'est pas un raisonnement."},
+{c:"C1.3",n:"Un métier qui se transforme",q:"Que le guetteur devienne exploitant de système est une incidence…",
+ o:["négligeable, puisque le nombre d'emplois est le même","purement technique","sociale : elle change des emplois, des formations et des compétences","seulement économique"],r:2,
+ expl:"Les effets sur le travail sont parmi les plus profonds, et les plus lents. Un métier qui se transforme, ce sont des personnes à former, des recrutements différents, et parfois des compétences qui perdent leur valeur.",
+ ex:"Savoir rester attentif huit heures durant ne se convertit pas en savoir entretenir un réseau de capteurs.",
+ err:"Compter les emplois sans regarder ce qu'ils demandent. Le nombre peut rester stable pendant que tout change.",
+ d:["Un effectif constant peut cacher un remplacement complet des compétences requises — c'est même fréquent.","Un changement de métier est social avant d'être technique : il concerne des personnes, pas des objets.","","L'effet économique existe, mais il ne résume pas ce que vivent les personnes concernées."],
+ ret:"Un métier qui change est l'un des effets les plus profonds d'une technique."},
+{c:"C1.3",n:"Ce qui n'est pas pris en compte",q:"Terminer un argumentaire par ce qu'il ne prend pas en compte…",
+ o:["sert seulement à faire plus long","l'affaiblit, puisqu'on avoue une lacune","est facultatif","le renforce : cela montre qu'on connaît les limites de son propre raisonnement"],r:3,
+ expl:"Un lecteur averti cherchera de toute façon les angles morts. Les nommer d'avance prouve qu'on les a vus, et déplace la discussion vers ce qui compte vraiment.",
+ ex:"« Je ne prends pas en compte le coût réel ni ce qui se passe quand le réseau tombe » : le lecteur sait désormais où porte l'argument, et où il ne porte pas.",
+ err:"Confondre l'aveu d'une limite avec l'aveu d'une faute.",
+ d:["Cette phrase est souvent la plus courte du texte, et la plus utile.","Une lacune reconnue est une lacune maîtrisée ; c'est la lacune cachée qui décrédibilise un texte quand on la découvre.","C'est au contraire ce qui distingue un argumentaire de 3e d'un argumentaire de 5e.",""],
+ ret:"Nommer ses angles morts prouve qu'on les a vus."},
+{c:"C1.3",n:"Une affirmation vérifiable",q:"Laquelle de ces phrases s'appuie sur un fait vérifiable ?",
+ o:["« Tout le monde sait que la technologie progresse. »","« Les robots sont l'avenir de la lutte contre les feux. »","« Au 24 juillet 2026, plus de 50 000 ha avaient brûlé en France depuis le 1ᵉʳ janvier. »","« Il faut absolument équiper tous les massifs. »"],r:2,
+ expl:"Elle donne une date, un territoire, une grandeur et une unité — et l'on peut remonter à la source, le ministère de l'Intérieur. Quelqu'un peut la confirmer ou la corriger.",
+ ex:"Chaque élément de la phrase peut être contesté séparément : la date, le chiffre, le périmètre.",
+ err:"Prendre pour un fait une affirmation générale à laquelle on adhère.",
+ d:["« Tout le monde sait » ne désigne aucune source, et ne peut donc être ni vérifié ni contesté.","« L'avenir » n'est pas vérifiable aujourd'hui : c'est une prédiction, pas un fait.","","« Il faut absolument » exprime une volonté, pas une observation."],
+ ret:"Un fait vérifiable a une source, une date, un périmètre et une unité."},
+{c:"C1.3",n:"L'effet sur les habitants",q:"Une alerte précoce publiée à destination des habitants change…",
+ o:["seulement leur inquiétude","rien, puisque ce sont les secours qui interviennent","ce qu'ils peuvent faire : se préparer, évacuer plus tôt, protéger des biens","uniquement l'organisation interne des pompiers"],r:2,
+ expl:"Une information ne vaut que par les décisions qu'elle rend possibles. Prévenir plus tôt ne change pas le feu ; cela change le temps dont disposent les personnes pour agir.",
+ ex:"Une heure d'avance sur un ordre d'évacuation, ce sont des trajets faits sans précipitation et des routes moins encombrées.",
+ err:"Croire qu'une information destinée au public n'a d'effet que psychologique.",
+ d:["L'inquiétude existe, mais elle n'est pas le seul effet — et une information précise inquiète souvent moins qu'une rumeur.","Les habitants agissent aussi : ils se déplacent, protègent, signalent, et leurs décisions comptent.","","L'organisation des secours change également, mais la question portait sur les habitants."],
+ ret:"Une information vaut par les décisions qu'elle rend possibles."},
+{c:"C1.3",n:"Ce que l'argumentaire doit relier",q:"Un argumentaire de 3e sur l'incidence d'un OST doit relier…",
+ o:["l'objet à son fabricant","l'objet à sa technologie","l'objet à son prix","une caractéristique de l'objet à un changement concret pour des personnes identifiées"],r:3,
+ expl:"C'est le lien à ne jamais lâcher : d'un côté ce que l'objet fait, de l'autre ce que cela change pour quelqu'un. Sans le second terme, on décrit une machine ; sans le premier, on énonce une opinion.",
+ ex:"« Le drone voit sous la fumée » (objet) → « les pompiers entrent dans une zone déjà reconnue » (personnes).",
+ err:"Décrire longuement la technologie, puis conclure par une phrase générale sur la société, sans rien relier entre les deux.",
+ d:["Le fabricant relève de l'industrie, pas de l'incidence sur la société.","La technologie décrit l'objet à lui-même : elle ne dit pas encore ce que cela change pour quelqu'un.","Le prix est une donnée économique, qui ne devient sociale que si l'on dit qui le paie et ce qu'il renonce à faire.",""],
+ ret:"Une caractéristique de l'objet, un changement pour des personnes. Le lien est tout."},
+/* ═══ C1.4 ═══ */
+{c:"C1.4",n:"L'autre sens",q:"« La réglementation de l'espace aérien limite le vol des drones » est une incidence…",
+ img:{src:"Images/corrige_ce_qui_ne_se_convertit_pas.svg",alt:"Trois zones : ce qui se convertit grâce à une unité commune, ce qui ne se convertit pas faute d'unité et de nature communes, et ce qui ne se compare jamais."},
+ o:["de la société SUR l'objet technique : une règle collective contraint sa conception et son usage","de l'objet technique sur la société","d'ordre uniquement technique","négligeable"],r:0,
+ expl:"C'est le sens inverse du précédent, et c'est le code 3e_C1.4. Une décision collective — une loi, une norme, un budget, une attente — oblige les concepteurs à faire autrement. L'objet porte la trace de la société qui l'accueille.",
+ ex:"Un drone conçu pour un pays où le vol au-dessus des habitations est interdit n'aura pas le même mode de fonctionnement qu'ailleurs.",
+ err:"Ne voir qu'un seul sens, et croire que la technique s'impose à la société sans réciproque.",
+ d:["","Ce serait l'inverse : le drone changeant quelque chose pour les gens. Ici, ce sont les gens qui changent le drone.","Une réglementation est une décision collective, donc sociale, même si ses effets sont techniques.","Elle décide de ce qui est constructible et utilisable : c'est tout sauf négligeable."],
+ ret:"La société contraint l'objet autant que l'objet change la société."},
+{c:"C1.4",n:"Trois natures de contraintes",q:"Un bon argumentaire sur les contraintes sociétales en cite de natures différentes, par exemple…",
+ o:["trois règles différentes","une règle, un moyen, et une attente collective","trois contraintes techniques","trois inconvénients de l'objet"],r:1,
+ expl:"Une contrainte sociétale peut être juridique (une norme), matérielle (un budget public, du personnel), ou culturelle (ce que les gens acceptent). Les trois pèsent, et elles ne se négocient pas de la même façon.",
+ ex:"Espace aérien (règle) · budget d'une commune (moyen) · refus d'être filmé (attente).",
+ err:"Citer trois fois la même nature de contrainte, et croire qu'on a couvert le sujet.",
+ d:["Trois règles restent une seule nature de contrainte : on manque les moyens et les attentes.","","Une contrainte technique vient de la physique ou du matériel, pas de la société.","Un inconvénient décrit l'objet ; une contrainte sociétale décrit ce que la société lui impose."],
+ ret:"Une règle, un moyen, une attente. Trois natures, trois façons de contraindre."},
+{c:"C1.4",n:"Ce qu'une contrainte change",q:"Nommer une contrainte sans dire ce qu'elle change dans l'objet…",
+ img:{src:"Images/corrige_ce_qui_ne_se_convertit_pas.svg",alt:"Trois zones : ce qui se convertit grâce à une unité commune, ce qui ne se convertit pas faute d'unité et de nature communes, et ce qui ne se compare jamais."},
+ o:["est la méthode attendue","suffit, la contrainte parle d'elle-même","ne prouve rien : c'est l'effet sur la conception qui fait l'argument","vaut mieux qu'un exemple"],r:2,
+ expl:"Une liste de contraintes est un inventaire. L'argumentaire commence quand on dit : à cause de celle-ci, l'objet a telle caractéristique qu'il n'aurait pas eue autrement.",
+ ex:"« La protection des données » ne dit rien. « La protection des données oblige à limiter la résolution et la durée de conservation des images » dit tout.",
+ err:"Recopier la liste des contraintes du cours en pensant avoir répondu à la question.",
+ d:["La méthode attendue est précisément l'inverse : contrainte, puis effet concret sur l'objet.","Une contrainte citée seule laisse le lecteur deviner l'effet, et il devinera peut-être autre chose.","","Un exemple concret est justement ce qui manque à une contrainte nommée toute seule."],
+ ret:"Contrainte → effet sur l'objet. Sans le second terme, ce n'est pas un argument."},
+{c:"C1.4",n:"Une contrainte de vie privée",q:"Une caméra tournée vers la forêt filme aussi les chemins. La contrainte qui en découle oblige à…",
+ o:["renoncer à toute caméra","décider de la résolution, de la durée de conservation et de qui peut consulter les images","prévenir les promeneurs par un panneau, et rien de plus","filmer en noir et blanc"],r:1,
+ expl:"Une contrainte de protection des données se traduit en décisions de conception mesurables. On peut concevoir un système qui détecte une chaleur anormale sans permettre d'identifier quiconque — c'est un choix technique, pris pour une raison sociale.",
+ ex:"Une image thermique de faible résolution suffit à repérer un départ de feu, et ne permet de reconnaître personne.",
+ err:"Traiter la vie privée comme une formalité juridique posée après coup, au lieu d'une exigence de conception.",
+ d:["Renoncer à l'outil n'est pas la seule issue : la question est de le concevoir autrement, pas de l'abandonner.","","Informer est nécessaire et insuffisant : cela ne change rien à ce que le système enregistre et conserve.","La couleur n'a aucun rapport avec l'identification : on reconnaît très bien quelqu'un sur une image en noir et blanc."],
+ ret:"Une exigence sociale devient une caractéristique technique. C'est cela, concevoir."},
+{c:"C1.4",n:"Le budget d'une commune",q:"Un budget public limité oblige surtout à…",
+ o:["choisir une solution entretenable avec les moyens locaux, ce qui écarte des matériels performants mais irréparables sur place","acheter le moins cher","renoncer au projet","demander une subvention"],r:0,
+ expl:"Le coût d'achat n'est qu'une partie du problème. Une commune doit aussi pouvoir faire vivre le système : réparer, remplacer, former quelqu'un. Un matériel excellent mais dont personne ne sait s'occuper localement devient inutile en un an.",
+ ex:"Un capteur bon marché mais réparable par les services techniques tient plus longtemps qu'un matériel de pointe dont le fabricant est à l'autre bout du monde.",
+ err:"Réduire une contrainte de moyens au prix d'achat, en oubliant le coût de possession.",
+ d:["","Le moins cher à l'achat est souvent le plus cher à l'usage, s'il tombe en panne et n'est pas réparable.","Renoncer est une issue possible, mais la contrainte oblige d'abord à concevoir autrement.","Une subvention change le montant disponible ; elle ne change pas la question de l'entretien."],
+ ret:"Une contrainte de moyens porte sur la durée, pas seulement sur l'achat."},
+{c:"C1.4",n:"Contrainte ou obstacle",q:"Les contraintes sociétales sont…",
+ o:["une partie du cahier des charges, au même titre que la portée ou l'autonomie","des obstacles qui empêchent de bien concevoir","des questions juridiques sans rapport avec la technique","des préoccupations qui viennent après la conception"],r:0,
+ expl:"Une contrainte n'empêche pas de concevoir : elle définit ce qu'il faut concevoir. Un objet qui ignorerait les règles, les moyens et les attentes ne serait pas plus libre — il serait inutilisable.",
+ ex:"Un drone qui vole magnifiquement mais qu'aucune autorisation ne permet d'employer n'a aucune valeur.",
+ err:"Traiter les contraintes sociétales comme des tracasseries ajoutées à la fin, alors qu'elles orientent les choix dès le début.",
+ d:["","Elles orientent la conception au lieu de l'empêcher : c'est exactement le rôle d'un cahier des charges.","Elles se traduisent en caractéristiques techniques mesurables — résolution, durée de conservation, mode dégradé.","Les prendre en compte après coup oblige à refaire ; c'est là qu'elles deviennent réellement coûteuses."],
+ ret:"Une contrainte ne bloque pas la conception. Elle la définit."},
+{c:"C1.4",n:"Les deux sens ensemble",q:"Un argumentaire complet de 3e sur un système technique…",
+ img:{src:"Images/corrige_ce_qui_ne_se_convertit_pas.svg",alt:"Trois zones : ce qui se convertit grâce à une unité commune, ce qui ne se convertit pas faute d'unité et de nature communes, et ce qui ne se compare jamais."},
+ o:["n'a pas à choisir : les deux reviennent au même","traite le sens le plus important des deux","traite le sens de l'objet vers la société, qui est le seul au programme","traite les deux sens : ce que l'objet change pour la société, et ce que la société oblige l'objet à changer"],r:3,
+ expl:"Les deux codes — 3e_C1.3 et 3e_C1.4 — décrivent la même relation vue des deux côtés. Les tenir ensemble, c'est comprendre qu'une technique et une société se façonnent mutuellement, et non que l'une subit l'autre.",
+ ex:"Le drone réduit l'exposition des pompiers (objet → société) ; la réglementation aérienne l'oblige à prévoir un mode dégradé (société → objet).",
+ err:"Traiter un seul sens et croire le sujet épuisé.",
+ d:["Ils ne reviennent pas au même : dans l'un l'objet agit, dans l'autre il subit — et les faits à citer sont différents.","Aucun des deux n'est plus important : ce sont deux compétences distinctes du référentiel, toutes deux exigibles.","Les deux figurent au programme de 3e, sous les codes C1.3 et C1.4.",""],
+ ret:"L'objet change la société ; la société change l'objet. Les deux, toujours."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_3e_C1_tsinghua";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C1.1":"3e_C1.1 — Identifier les innovations de rupture qui sont attachées à l’évolution d’un OST.",
+  "C1.2":"3e_C1.2 — Mettre en relation une découverte scientifique avec ses développements technologiques et leurs effets sur la société.",
+  "C1.3":"3e_C1.3 — Exprimer dans un argumentaire court l’incidence d’un OST sur la société.",
+  "C1.4":"3e_C1.4 — Exprimer dans un argumentaire court l’incidence des contraintes sociétales sur les OST." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+
+/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
+/* Cette séquence porte SIX codes : la séquence sait lesquels ont été validés et
+   les passe dans l'adresse. Deux formes possibles :
+     #codes=C1.2,C1.1  → révision ciblée sur ces compétences seulement ;
+     #depart=court     → parcours de dix questions, quand rien n'est validé.
+   Dans les deux cas on ne fait que préselectionner : le parcours complet reste
+   à un clic. On choisit ce qu'on propose EN PREMIER, on n'interdit rien. */
+(function ouvrirSurCeQuiAEteFait(){
+  const h = location.hash || "";
+  const hote = document.getElementById("porteeCiblee");
+
+  const mCodes = h.match(/codes=([A-Za-z0-9.,]+)/);
+  if(mCodes){
+    const demandes = mCodes[1].split(",").filter(c => COMP_LABELS[c]);
+    if(demandes.length){
+      /* le gabarit ne sait cibler qu'UNE compétence à la fois. On passe donc par
+         setMode("cible") — qui met à jour les boutons, le tableau de bord et le
+         sélecteur — puis on ÉLARGIT la sous-liste à la liste demandée. Faire
+         l'inverse (écrire etat.sousListe puis appeler une fonction de rendu)
+         laissait l'interface annoncer un mode et en afficher un autre. */
+      $("selComp").value = demandes[0];
+      setMode("cible");
+      etat.sousListe = QUESTIONS.map((q,i)=>i).filter(i => demandes.includes(QUESTIONS[i].c));
+      etat.courante = etat.sousListe[0];
+      rendreTout();
+      if(hote){
+        hote.hidden = false;
+        hote.innerHTML = "🎯 Tu arrives depuis la séquence&nbsp;: ce QCM s'ouvre sur les <b>" +
+          etat.sousListe.length + " questions</b> qui portent sur <b>" +
+          demandes.join(", ") + "</b> — les compétences que tu as déjà travaillées. " +
+          "Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+      }
+      return;
+    }
+  }
+
+  if(/depart=court/.test(h)){
+    setMode("dix");
+    if(hote){
+      hote.hidden = false;
+      hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore commencée&nbsp;: " +
+        "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
+        "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+    }
+  }
+})();
+
+
+</script>
+</body>
+</html>
