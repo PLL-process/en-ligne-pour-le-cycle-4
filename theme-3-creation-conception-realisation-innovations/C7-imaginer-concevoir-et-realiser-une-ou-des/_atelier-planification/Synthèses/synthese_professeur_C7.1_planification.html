@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Atelier de planification des tâches (C7.1)</title>
+<style>body{font-family:system-ui,sans-serif;max-width:860px;margin:20px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}h1{color:#7a1d89;border-bottom:3px solid #c68ef2;padding-bottom:8px}h2{color:#7a1d89;margin-top:26px}.box{background:#faf0ff;border-left:5px solid #7a1d89;padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0}.warn{background:#fff6e5;border-left-color:#c88a00}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #d8c0e8;padding:6px 9px;text-align:left;vertical-align:top}th{background:#f2e4fb}code{background:#f3eef8;padding:1px 4px;border-radius:4px}@media print{body{font-size:11pt}}</style></head>
+<body>
+<h1>Synthèse professeur — Le diagramme de planification des tâches (C7.1)</h1>
+
+<div class="box"><strong>Pourquoi cet atelier existe</strong>
+<p>Le programme 2024 nomme explicitement, dans les connaissances associées :
+« <strong>Le diagramme de planification des tâches : notion de tâches, durée et contraintes entre
+tâches</strong> ». L'inventaire du dépôt a compté <strong>zéro occurrence</strong> de cette notion.
+La séquence 3e_C7.1, qui doit faire <em>élaborer</em> un processus « avec des tâches identifiées »,
+ne contenait pas une seule fois le mot « tâche ».</p>
+<p>Le code était revendiqué, la chose n'était pas enseignée. C'est exactement ce que la règle d'or
+n°63 interdit : ce que le programme impose nommément se <em>produit</em>, il ne se <em>mentionne</em>
+pas.</p></div>
+
+<h2>Un atelier partagé plutôt que trois refontes</h2>
+<p>Les trois séquences C7.1 sont bonnes sur ce qu'elles font — concevoir, fabriquer, valider. Ce
+qui leur manquait est une notion <strong>transversale</strong>, qui se travaille de la même façon
+aux trois niveaux, avec le seul verbe qui change. Une ressource unique, appelée depuis les trois
+séquences, évite trois versions qui divergeront.</p>
+<table>
+<tr><th>Niveau</th><th>Verbe du référentiel</th><th>Ce que l'élève reçoit</th><th>Ce qu'il produit</th></tr>
+<tr><td>5e</td><td><strong>Suivre</strong></td><td>un planning déjà fait</td>
+    <td>un point d'avancement qui dit ce qui est en retard <em>et ce que ce retard décale</em></td></tr>
+<tr><td>4e</td><td><strong>Organiser</strong></td><td>les tâches et leurs durées</td>
+    <td>les dates au plus tôt, et une décision d'équipe sur le travail parallèle</td></tr>
+<tr><td>3e</td><td><strong>Élaborer</strong></td><td>le projet, et rien d'autre</td>
+    <td>le chemin le plus long de son propre projet, et une tâche où se précipiter ne sert à rien</td></tr>
+</table>
+
+<h2>Place dans l'année, et durée</h2>
+<p>Une séance de 55 minutes, <strong>au lancement du projet</strong> — c'est le seul moment où
+l'atelier sert à quelque chose. Placé après, il devient un exercice ; placé avant le projet, il n'a
+rien à planifier.</p>
+
+<h2>Le déroulé, et ce qu'il faut surveiller</h2>
+<ol>
+<li><strong>Les mots (≈ 20 min, commun).</strong> Billet d'entrée, puis <strong>bandes de papier
+découpées</strong> : 2 cm par séance. C'est un verrou expérientiel, exigé par le vérificateur — la
+page refuse de valider tant que l'élève n'a pas déclaré l'avoir fait.
+<em>À surveiller :</em> les fausses tâches (« travailler sur… »). Le test à donner oralement :
+<em>si je reviens dans une semaine, est-ce que je peux dire oui ou non ?</em></li>
+<li><strong>Le parcours du niveau (≈ 25 min).</strong> Un seul onglet est à faire par classe.
+<em>À surveiller en 4e :</em> les dates au plus tôt sont refusées <strong>sans aucune
+tolérance</strong> — sur un résultat de calcul, « à peu près » n'est pas une réponse. L'erreur
+récurrente est de partir après la <em>première</em> tâche attendue au lieu de la <em>plus
+tardive</em>.</li>
+<li><strong>Le logiciel (≈ 10 min, ou en autonomie).</strong> Pas à pas illustré par cinq vraies
+captures de GanttProject en français, sur le fichier <code>jardin_connecte_brooklyn.gan</code>
+fourni. <strong>Voie B sans ordinateur</strong> : bandes et crayon, mêmes questions, même
+valeur.</li>
+</ol>
+
+<div class="warn box"><strong>Le piège du logiciel, à dire à voix haute</strong>
+<p>Un diagramme sans flèche est un diagramme sans planification : le logiciel aligne alors toutes
+les barres au premier jour, le dessin est net, et il est faux. <strong>Les flèches sont la preuve
+que le travail a été fait.</strong> C'est le premier point à regarder en circulant dans la salle.</p></div>
+
+<h2>Corrigés — tous calculés, aucun recopié</h2>
+<p>Les valeurs ci-dessous sont produites par <code>_verifier_planning.py</code> à partir du seul
+fichier <code>taches_projets_c7_simulees.csv</code>. Le script vérifie à chaque exécution
+l'invariant <em>« le chemin le plus long est exactement l'ensemble des tâches de marge nulle »</em>
+et refuse d'écrire le corrigé si l'invariant tombe.</p>
+<table>
+<tr><th>Projet</th><th>Niveau</th><th>Durée</th><th>Chemin le plus long</th><th>Marges</th></tr>
+<tr><td>indicateur-rangement-hall</td><td>5e</td><td>7 séances</td>
+    <td>A → B → C → E → F → G</td><td>D (+1)</td></tr>
+<tr><td>jardin-connecte-brooklyn</td><td>4e</td><td>9 séances</td>
+    <td>A → B → E → F → G → H → I</td><td>C (+1), D (+3)</td></tr>
+<tr><td>capteur-confort-ny</td><td>3e</td><td>12 séances</td>
+    <td>A → B → C → D → E → H → I → J → K</td><td>F (+4), G (+5)</td></tr>
+</table>
+<p>Somme des durées du projet 4e : 13 séances, pour
+9 séances de projet. L'écart est l'argument pédagogique principal de la séance —
+il rend le parallélisme visible sans un mot d'explication.</p>
+
+<h2>Évaluation</h2>
+<p>Un seul construit est mesuré (règle n°61) : <strong>savoir ce qui commande la date de fin</strong>.
+Ni la maîtrise du logiciel, ni la qualité du découpage du projet ne doivent entrer dans la note —
+les deux voies, papier et logiciel, sont équivalentes (règle n°59).</p>
+<p>Domaines du socle cochés uniquement devant une production observable (règle n°60) :
+<strong>D2</strong> — organiser son travail, planifier une tâche ; <strong>D4</strong> — mener une
+démarche technique. <strong>D3</strong> n'est coché que si la décision d'équipe a réellement été
+écrite et discutée.</p>
+
+<div class="box"><strong>Ce qui n'est pas dans cet atelier, et pourquoi</strong>
+<p>Ni PERT, ni jalons multiples, ni ressources, ni coûts, ni relations autres que Fin-Début : le
+programme nomme trois notions, l'atelier en enseigne trois, plus les deux qui s'en déduisent
+directement. Tout ajout serait du programme inventé.</p></div>
+
+<p><em>Sources, licences et limites des cinq captures : <code>SOURCES_MEDIAS.md</code>.
+Contrôles réellement exécutés : <code>rapport_tests_C7.1.md</code>.</em></p>
+</body></html>
