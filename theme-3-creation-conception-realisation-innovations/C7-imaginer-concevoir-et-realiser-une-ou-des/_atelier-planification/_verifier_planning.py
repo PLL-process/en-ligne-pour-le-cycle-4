@@ -11,6 +11,7 @@ y compris celles du chemin critique — c'est-à-dire l'inverse de ce qu'on veut
 enseigner. C'était le CALCUL qui avait tort, pas les données (règle n°50).
 """
 import csv
+import json
 import pathlib
 import sys
 
@@ -71,9 +72,22 @@ def planifier(p: dict) -> dict:
 def main() -> int:
     projets = charger(D / "taches_projets_c7_simulees.csv")
     ok = True
+    corrige = {}
     for nom, p in projets.items():
         r = planifier(p)
         t, dur = p["taches"], p["duree"]
+        corrige[nom] = {
+            "niveau": p["niveau"],
+            "duree_totale": r["fin"],
+            "chemin": r["chemin"],
+            "marges": r["marge"],
+            "debut_au_plus_tot": r["debut"],
+            "fin_au_plus_tot": {i: r["debut"][i] + dur[i] for i in t},
+            "duree_tache": dur,
+            "anteriorite": p["ant"],
+            "libelle": {i: t[i]["tache"] for i in t},
+            "nature": {i: t[i]["nature"] for i in t},
+        }
         print("── %-26s (%s) · %d entrées · %d séances"
               % (nom, p["niveau"], len(t), r["fin"]))
         print("   chemin le plus long : %s" % " → ".join(r["chemin"]))
@@ -87,6 +101,20 @@ def main() -> int:
             ok = False
         else:
             print("   ✔ le chemin le plus long est exactement l'ensemble des tâches de marge nulle")
+
+    # Le corrigé n'est écrit QUE si tous les contrôles passent : un fichier de
+    # corrigé produit à partir d'un calcul incohérent est pire que pas de fichier.
+    if ok:
+        (D / "_corrige_calcule.json").write_text(
+            json.dumps(corrige, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        print("→ _corrige_calcule.json réécrit à partir du CSV")
+        # garde-fou : le fichier écrit doit redonner marge 0 exactement sur le chemin
+        relu = json.loads((D / "_corrige_calcule.json").read_text(encoding="utf-8"))
+        for nom, c in relu.items():
+            nulles = {i for i, m in c["marges"].items() if m == 0}
+            if nulles != set(c["chemin"]):
+                print("   ✘ %s : le fichier écrit ne redonne pas le bon chemin" % nom)
+                ok = False
     return 0 if ok else 1
 
 
