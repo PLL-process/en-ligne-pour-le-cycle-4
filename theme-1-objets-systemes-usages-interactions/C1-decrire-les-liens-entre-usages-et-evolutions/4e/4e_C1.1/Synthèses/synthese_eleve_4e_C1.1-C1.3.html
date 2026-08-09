@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Tsinghua, concevoir avant de connecter (4e_C1.1 à C1.3)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  a{color:var(--hl)}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  table{width:100%;border-collapse:collapse}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}
+    h1,h2,dt,.pb{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}}
+</style></head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C1.1-C1.3_tsinghua_feux.html">← Séquence</a></nav>
+<div class="page">
+<h1>📌 Synthèse élève — lire un chiffre avant de s'en servir</h1>
+<p class="pb">Un système n'existe pas parce qu'un capteur existe. Il existe pour un besoin.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer (1 page A4)</button></div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">1. On n'additionne pas n'importe quoi</h2>
+  <p>Trois chiffres du même communiqué, et aucun ne s'ajoute aux autres&nbsp;:</p>
+  <dl>
+    <dt>50 000 ha</dt><dd>un <b>cumul</b> depuis le 1<sup>er</sup> janvier, annoncé comme un
+    <b>minimum</b>. Il grandit toute l'année et ne redescend jamais.</dd>
+    <dt>32 feux</dt><dd>un <b>état instantané</b>. Il peut monter, redescendre, revenir au même
+    chiffre pour des feux entièrement différents.</dd>
+    <dt>50 %</dt><dd>une <b>proportion</b> — la part des départs liés à une imprudence. Sans son
+    ensemble de référence, elle ne veut rien dire.</dd>
+  </dl>
+  <p class="pb">On n'additionne que ce qui a <b>la même unité ET le même sens</b>. Le tableur, lui,
+  additionnera n'importe quoi&nbsp;: c'est une machine, elle ne sait pas ce que les nombres veulent
+  dire.</p>
+  <p class="voc">💡 Deux colonnes valent de l'or et personne ne les regarde&nbsp;: <b>statut</b>, qui
+  dit de quelle nature est le chiffre, et <b>source</b>, sans laquelle il ne peut être ni vérifié ni
+  discuté.</p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">2. Estimer, c'est permis — le taire ne l'est pas</h2>
+  <p>On n'avait pas le chiffre français. On a emprunté un <b>proxy</b>&nbsp;: le ratio européen de
+  2023.</p>
+  <ul>
+    <li>20 000 000 t ÷ 504 002 ha ≈ <b>39,68 tCO₂ par hectare</b></li>
+    <li>50 000 ha × 39,68 ≈ <b>1,98 million de tonnes de CO₂</b></li>
+  </ul>
+  <p><b>Et l'avertissement, qui fait partie du résultat</b>&nbsp;: estimation par proxy européen
+  2023, <b>non officielle</b> pour la France 2026. Elle ne tient compte ni du type de végétation, ni
+  de l'humidité, ni de la sévérité du feu, ni du devenir du carbone.</p>
+  <p class="pb">Une estimation n'est <b>ni une mesure, ni un mensonge</b>. Sans son avertissement,
+  elle devient une affirmation — et c'est là qu'elle devient fausse.</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">3. Comparer sans confondre les périmètres</h2>
+  <object class="schema" data="../Images/corrige_equivalences_et_perimetres.svg" type="image/svg+xml" aria-label="Les quatre équivalences avec leur unité exacte et leur question critique">Les quatre équivalences</object>
+  <p>1,98 MtCO₂ ne se représente pas. On traduit — mais <b>chaque facteur a son périmètre</b>&nbsp;:</p>
+  <ul>
+    <li>≈ <b>14,0 milliards de km</b> en voiture — par <b>km de véhicule</b></li>
+    <li>≈ <b>677 milliards de passager-km</b> en TGV — par <b>personne</b>, pas par train</li>
+    <li>≈ <b>11,9 milliards de passager-km</b> en avion</li>
+    <li>≈ <b>399 millions de repas</b> avec du bœuf</li>
+  </ul>
+  <p class="pb">⚠️ Oublier le mot <b>passager</b> multiplie l'erreur par le nombre de places du
+  train. <b>Recopie toujours l'unité du facteur&nbsp;: c'est elle qui dit ce qu'on compte.</b></p>
+  <p>Le titre du graphique doit contenir «&nbsp;<b>équivalences</b>&nbsp;», jamais «&nbsp;mêmes
+  impacts&nbsp;». Ces calculs rendent une quantité <b>lisible</b>&nbsp;; ils ne rendent pas les
+  phénomènes <b>identiques</b>.</p>
+  <p class="voc">🔁 <b>Une équivalence n'est jamais neutre.</b> 1,98 Mt, c'est 399 millions de repas
+  — énorme — ou 0,5 % des émissions françaises — minuscule. Les deux sont exacts. Demande toujours
+  <b>pourquoi celle-là</b>.</p>
+</div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">4. Ce que la mesure de la cour prouve</h2>
+  <p>Dans une cour, l'écart entre l'ombre et le plein soleil dépasse <b>10 °C</b> au même instant.
+  Un seuil d'alerte à 40 °C se déclencherait donc <b>tous les jours d'été</b>, sans le moindre feu.</p>
+  <p class="pb">Un capteur unique ne distingue pas la cause qu'on cherche des autres qui produisent
+  le même effet. <b>Deux indices indépendants se trompent rarement ensemble.</b></p>
+  <p>Et l'inverse est vrai aussi&nbsp;: <b>l'absence de donnée n'est pas une preuve</b>. Un capteur
+  en panne, déchargé ou hors de portée ne transmet rien non plus.</p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">5. Du besoin à l'exigence</h2>
+  <object class="schema" data="../Images/corrige_du_nombre_a_l_exigence.svg" type="image/svg+xml" aria-label="La chaîne du raisonnement de la donnée publique à l'exigence, avec l'incertitude ajoutée à chaque étape">La chaîne du raisonnement</object>
+  <p><b>besoin → information nécessaire → contrainte → exigence vérifiable →</b> <i>(Thème 2)</i>
+  <b>solution</b></p>
+  <p>Une <b>exigence vérifiable</b> se reconnaît à une question&nbsp;: «&nbsp;comment je
+  vérifie&nbsp;?&nbsp;» Si tu ne sais pas répondre, ce n'est pas une exigence, c'est un souhait. Et
+  si ta phrase nomme un composant — caméra, LoRa —, tu as écrit une <b>solution</b>.</p>
+  <p class="voc">✅ «&nbsp;Le système doit transmettre une alerte horodatée en moins de 30 secondes
+  après confirmation par deux indices indépendants.&nbsp;»<br>
+  ❌ «&nbsp;Le système doit être performant.&nbsp;» — «&nbsp;Le système doit utiliser une liaison
+  LoRa.&nbsp;»</p>
+  <p class="pb">⚠️ L'incertitude <b>s'accumule</b> le long de la chaîne, et aucune étape ne la
+  retire. La dernière ligne doit porter la mémoire de tout ce qui l'a précédée.</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">6. Les garde-fous, et pourquoi ils sont des exigences</h2>
+  <ul>
+    <li>Une alerte automatique <b>doit pouvoir être vérifiée</b> par un opérateur&nbsp;: elle engage
+    des camions et des équipages réels. Le système propose, un humain décide.</li>
+    <li>Une caméra tournée vers une forêt <b>ne doit pas devenir</b> un outil de surveillance des
+    personnes.</li>
+    <li>La technologie <b>ne remplace ni la vigilance ni les secours</b>.</li>
+  </ul>
+  <p class="pb">Toute évolution technique se paie&nbsp;: gain de temps contre fausses alertes, coût,
+  énergie, et caméras qui regardent aussi ce qui n'est pas la forêt. <b>Nommer le prix n'est pas
+  condamner l'évolution.</b></p>
+</div>
+
+<div class="bloc">
+  <h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
+  <table class="voc"><tr><td>cumul</td><td><b>running total</b></td><td>état instantané</td><td><b>snapshot</b></td></tr>
+  <tr><td>proportion</td><td><b>share, proportion</b></td><td>estimation</td><td><b>estimate</b></td></tr>
+  <tr><td>ordre de grandeur</td><td><b>order of magnitude</b></td><td>exigence</td><td><b>requirement</b></td></tr>
+  <tr><td>fausse alerte</td><td><b>false alarm</b></td><td>source</td><td><b>source, reference</b></td></tr></table>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Tsinghua (4e_C1.1 à C1.3)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;
+        --text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:14px 18px 40px;line-height:1.45;font-size:.93em;
+       font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif}
+  .page{max-width:860px;margin:0 auto}
+  h1{font-size:1.35em;color:var(--title);text-align:center;margin:8px 0 2px}
+  .pb{text-align:center;color:var(--warn);font-weight:600;font-size:.95em;margin:4px 0 14px}
+  h2{font-size:1em;color:var(--head);margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:3px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  .schema{width:100%;border:1px solid var(--border);border-radius:10px;background:#050f24}
+  dl{margin:4px 0}dt{color:var(--hl);font-weight:600}dd{margin:0 0 6px 0}
+  ul{margin:4px 0;padding-left:20px}li{margin:3px 0}
+  code{font-family:ui-monospace,Consolas,monospace;background:#08132c;padding:1px 6px;border-radius:5px;font-size:.9em}
+  a{color:var(--hl)}
+  .savoir{border-left:4px solid var(--ok)}.faire{border-left:4px solid var(--hl)}.pieges{border-left:4px solid var(--err)}
+  .voc{font-size:.88em}.voc td{padding:2px 8px;border-bottom:1px dashed var(--border)}
+  table{width:100%;border-collapse:collapse}
+  .toolbar{text-align:center;margin:10px 0}
+  .btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:600}
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;margin:-14px -18px 12px}
+  #navharm a{padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none}
+  @media print{body{background:#fff;color:#111;font-size:8.6pt;padding:0}.bloc{background:#fff;border-color:#999}
+    h1,h2,dt,.pb{color:#111}.toolbar,#navharm{display:none}.page{max-width:none}code{background:#eee}a{color:#111}}
+</style></head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_4e_C1.1-C1.3_tsinghua_feux.html">← Séquence</a></nav>
+<div class="page">
+<h1>🎓 Synthèse professeur — Tsinghua (4e_C1.1 à C1.3)</h1>
+<p class="pb">Ce que la séquence cherche à obtenir, où ça résiste, et comment on le mesure.</p>
+<div class="toolbar"><button class="btn" onclick="window.print()">🖨 Imprimer</button></div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">L'intention, et ce qui rend ce lot particulier</h2>
+  <p>C'est le <b>seul lot du dépôt à travailler sur des données réelles</b>&nbsp;: ministère de
+  l'Intérieur, JRC/EFFIS, ADEME Impact CO₂. Partout ailleurs les jeux de données sont simulés — ce
+  qui est confortable, parce qu'on les range avant de les donner. <b>Ici, non.</b> Les vraies
+  données arrivent avec des unités qui ne se parlent pas, des statuts hétérogènes et des périmètres
+  incompatibles, et c'est exactement ce qui fait le travail.</p>
+  <p>La séquence remonte une chaîne complète&nbsp;: un chiffre public → sa lecture → une estimation
+  assumée → une comparaison lisible → <b>une exigence vérifiable</b>. À aucun moment un composant
+  n'est choisi. L'espace des solutions reste entier pour le Thème 2.</p>
+</div>
+
+<div class="bloc savoir">
+  <h2 style="margin-top:0">Le codage du référentiel</h2>
+  <p><b>Référence normative</b>&nbsp;: BO n°9 du 29 février 2024. <b>Codification</b>&nbsp;:
+  <code>4e_C1.1</code> à <code>C1.3</code> sont internes au dépôt&nbsp;; les formulations sont
+  recopiées du référentiel (règle n°42), et le vérificateur automatique le contrôle.</p>
+  <table class="voc">
+    <tr><td><b>C1.1</b></td><td>Mettre en relation les OST avec leurs usages.</td><td>Séances 1 et 4</td></tr>
+    <tr><td><b>C1.2</b></td><td>Identifier les avantages et les inconvénients associés aux évolutions technologiques et informatiques.</td><td>Séance 3</td></tr>
+    <tr><td><b>C1.3</b></td><td>Justifier l'évolution d'un OST pour répondre à l'évolution des besoins.</td><td>Séance 4</td></tr>
+  </table>
+  <p><b>Socle</b>&nbsp;: D1.3, D2, D3, D4. <b>CRCN 1.3 — traiter des données, niveau 2</b>. La trace
+  est le fichier transformé et l'export avec avertissement&nbsp;: <b>utiliser un ordinateur n'est
+  pas une compétence</b> (règle n°60).</p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">Où ça résiste, séance par séance</h2>
+  <p><b>Séance 1.</b> La difficulté n'est pas de lire le fichier, c'est d'admettre qu'on <b>ne peut
+  pas</b> additionner. Beaucoup d'élèves font la somme sans y penser — le tableur ne proteste pas.
+  Le vérificateur exige que les <b>trois natures</b> soient nommées, et il refuse tant qu'il en
+  manque une.</p>
+  <p><b>Séance 2.</b> Deux résistances. L'idée qu'on ait le <b>droit</b> d'emprunter un ratio à un
+  autre pays surprend&nbsp;; puis l'idée qu'il faille l'écrire déçoit — «&nbsp;si on dit que c'est
+  approximatif, on va croire qu'on s'est trompé&nbsp;». C'est le moment de dire l'inverse&nbsp;:
+  déclarer ses hypothèses est ce qui rend un résultat solide.</p>
+  <p><b>Séance 3.</b> L'erreur des <b>passager-km</b> est presque universelle. Le vérificateur la
+  nomme explicitement, avec sa conséquence&nbsp;: l'erreur est multipliée par le nombre de places
+  du train.</p>
+  <p><b>Séance 4.</b> Le passage exigence / solution est le geste de niveau. Le vérificateur
+  <b>refuse</b> toute exigence qui nomme un composant, et dit pourquoi&nbsp;: «&nbsp;tu as choisi le
+  moyen avant d'avoir dit le but&nbsp;».</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">⚠️ Trois précautions</h2>
+  <p><b>Les données vieillissent.</b> Les chiffres datent de juillet 2026 et sont datés dans le
+  fichier. Ce n'est pas un défaut à corriger chaque année&nbsp;: c'est une <b>occasion</b> —
+  demander aux élèves d'aller chercher la valeur de l'année en cours est un excellent
+  prolongement, et il enseigne exactement ce que la séquence enseigne.</p>
+  <p><b>Ne transformez pas la séance 3 en débat écologique.</b> Le sujet s'y prête, et l'objectif
+  serait manqué. Ce qui s'apprend ici est <b>méthodologique</b>&nbsp;: comment on compare sans
+  faire dire aux chiffres plus qu'ils ne disent. Le débat sur les politiques publiques est légitime,
+  il relève d'un autre moment.</p>
+  <p><b>La mesure dans la cour n'est pas facultative.</b> Dix minutes, un thermomètre. Sans elle,
+  l'exigence «&nbsp;croiser deux indices&nbsp;» est une consigne qu'on applique&nbsp;; avec elle,
+  c'est une conclusion que l'élève a tirée.</p>
+</div>
+
+<div class="bloc faire">
+  <h2 style="margin-top:0">Ce qui est évalué</h2>
+  <ul>
+    <li><b>C1.1</b> — trois lignes nommant la nature de chaque chiffre, et le relevé de température
+    avec sa conséquence.</li>
+    <li><b>C1.1</b> — le ratio, l'estimation, <b>et l'avertissement en trois points</b> : d'où vient
+    le proxy, ce qu'il ignore, comment ne pas présenter le résultat.</li>
+    <li><b>C1.2</b> — quatre équivalences avec <b>leur unité exacte</b> et leur question critique.</li>
+    <li><b>C1.3</b> — cinq exigences vérifiables, <b>sans aucun composant</b>, dont la garde
+    humaine.</li>
+  </ul>
+  <p class="voc">Le QCM (30 questions, trois codes, 6 illustrées) s'ouvre sur les seules compétences
+  déjà validées tant que la séquence n'est pas terminée.</p>
+</div>
+
+<div class="bloc pieges">
+  <h2 style="margin-top:0">Ce que ce lot ne fait pas (règle n°47)</h2>
+  <ul>
+    <li><b>Aucune donnée n'est produite par les élèves</b>, sauf la mesure de température. Les
+    relevés de feux sont, par nature, hors de portée d'un collège.</li>
+    <li><b>Aucun composant n'est étudié</b> — c'est volontaire, et c'est le Thème 2.</li>
+    <li><b>Le lot ne traite pas la question politique</b> des moyens de lutte contre les incendies.
+    Il s'arrête à ce qu'un système technique peut apporter, et à ce qu'il ne remplace pas.</li>
+  </ul>
+</div>
+</div>
+</body>
+</html>
