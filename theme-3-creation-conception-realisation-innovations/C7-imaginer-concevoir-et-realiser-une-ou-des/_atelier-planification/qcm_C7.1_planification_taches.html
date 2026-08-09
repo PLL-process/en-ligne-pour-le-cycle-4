@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 5e-4e-3e — QCM : le diagramme de planification des tâches (C7.1)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">⌂ Accueil</a><a href="atelier_C7.1_planification_taches.html">← Atelier</a></nav>
+<h1>Thème 3 — QCM : le diagramme de planification des tâches</h1>
+<p class="subtitle">Tâches, durée, contraintes entre tâches — et la seule chaîne qui décide de la date de fin. Suivre en 5e, organiser en 4e, élaborer en 3e (C7.1)</p>
+<div class="badges">
+  <span class="badge niveau">5e · 4e · 3e</span>
+  <span class="badge code">C7.1</span>
+  <span class="badge theme">30 questions · 5 illustrées · chaque distracteur réfuté</span>
+</div>
+<p style="text-align:center"><a href="atelier_C7.1_planification_taches.html">⬅ Revenir à l'atelier</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="5e">5e — Suivre un processus avec des tâches identifiées</option>
+      <option value="4e">4e — Organiser un processus avec des tâches identifiées</option>
+      <option value="3e">3e — Élaborer un processus avec des tâches identifiées</option>
+    
+      </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement C7.1 · Thème 3 · Technologie cycle 4 (2024) · <a href="atelier_C7.1_planification_taches.html">atelier associé</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — Atelier de planification des tâches, C7.1 : 30 questions (5e : 10 · 4e : 10 · 3e : 10), dont 5 illustrées par de vraies captures de GanttProject en français. Toutes les valeurs numériques viennent du corrigé calculé par _verifier_planning.py. */
+const QUESTIONS = [
+/* ═══ 5e ═══ */
+{c:"5e",n:"Ce qui fait une tâche",q:"Parmi ces quatre lignes, laquelle est une vraie tâche ?",
+ o:["Faire des recherches sur l'arrosage","Travailler sur le capteur","Avancer le projet","Câbler le capteur d'humidité sur la carte"],r:3,
+ expl:"Une tâche est une chose dont on peut dire, à un instant donné, si elle est terminée ou non. « Câbler le capteur sur la carte » a une fin observable : le fil est branché, ou il ne l'est pas.",
+ ex:"En fin de séance, le professeur passe et demande « c'est fini ? ». Sur une vraie tâche, la réponse est oui ou non, jamais « à peu près ».",
+ err:"Écrire des intentions plutôt que des tâches, ce qui rend le planning invérifiable.",
+ d:["« Faire des recherches » n'a pas de fin définie non plus ; il faudrait dire ce qu'on cherche et à quel moment on s'arrête.","« Travailler sur » ne finit jamais : on peut travailler sur le capteur toute l'année sans que rien ne soit terminé.","« Avancer le projet » décrit une direction, pas un état atteint : aucun jour ne permettra de dire que c'est fait.",""],
+ ret:"Une tâche : on peut dire, à un instant donné, si elle est finie."},
+{c:"5e",n:"Le jalon",q:"« L'indicateur est en service » figure dans le planning avec une durée de 0. Pourquoi ?",
+ o:["parce qu'elle est faite par toute la classe et pas par un binôme","parce qu'on a oublié d'estimer sa durée","parce que c'est la tâche la plus rapide du projet","parce que ce n'est pas un travail à faire, mais un état atteint : c'est un jalon"],r:3,
+ expl:"Un jalon est un point de contrôle : il marque qu'on est arrivé quelque part. Il ne consomme aucun temps, donc sa durée est nulle, et le logiciel le dessine en losange.",
+ ex:"« Le cahier des charges est validé », « le prototype fonctionne » : des jalons, pas des tâches.",
+ err:"Compter le jalon comme une tâche et ajouter une séance qui n'existe pas.",
+ d:["Qui réalise une tâche ne change rien à sa durée ; le jalon est à zéro par nature, quelle que soit la personne concernée.","La durée n'a pas été oubliée : elle vaut zéro parce qu'il n'y a rien à faire, seulement quelque chose à constater.","Ce n'est pas une question de rapidité : même la tâche la plus rapide dure au moins un peu, le jalon ne dure pas du tout.",""],
+ ret:"Un jalon ne dure pas : il constate qu'on est arrivé."},
+{c:"5e",n:"Le mot du programme",q:"Le programme appelle ce dessin « diagramme de planification des tâches ». Dans les entreprises, on l'appelle…",
+ o:["diagramme en bâtons","diagramme de Pareto","organigramme","diagramme de Gantt, du nom de l'ingénieur Henry Gantt"],r:3,
+ expl:"Le concept porte le nom du programme ; l'outil garde le nom du métier. Les deux désignent le même dessin, et savoir les deux évite d'être perdu devant un logiciel ou un sujet d'examen.",
+ ex:"Le logiciel utilisé en classe s'appelle GanttProject : le nom du métier est écrit sur la fenêtre.",
+ err:"Croire que « Gantt » désigne autre chose que le diagramme de planification des tâches.",
+ d:["Un diagramme en bâtons compare des quantités ; il n'a pas d'axe du temps ni de contraintes entre barres.","Le diagramme de Pareto classe des causes par importance : il ne place rien dans le temps.","Un organigramme montre qui commande qui dans une organisation, pas ce qui doit attendre quoi.",""],
+ ret:"Diagramme de planification des tâches = diagramme de Gantt."},
+{c:"5e",n:"Suivre, c'est dire la conséquence",q:"Suivre un planning, en 5e, c'est savoir dire à chaque séance :",
+ o:["si le professeur est content du travail","combien d'élèves ont travaillé","quelle tâche était la plus difficile","ce qui est fini, ce qui est en retard, et ce que ce retard décale"],r:3,
+ expl:"Un suivi utile ne se contente pas de constater. Il relie le retard à sa conséquence : la date de fin bouge, ou elle ne bouge pas — et il faut pouvoir dire laquelle des deux.",
+ ex:"« C est en retard d'une séance, donc la mise en service recule d'une séance » : voilà un suivi.",
+ err:"Dire « on a du retard » sans dire ce que ce retard décale.",
+ d:["La satisfaction du professeur n'est pas un état du projet : le planning décrit des tâches, pas des appréciations.","Le nombre d'élèves qui ont travaillé ne dit rien de l'avancement : on peut être nombreux sur une tâche qui n'avance pas.","La difficulté ressentie n'est pas une information de planning ; une tâche facile peut bloquer tout le projet.",""],
+ ret:"Suivre, c'est dire le retard ET ce qu'il décale."},
+{c:"5e",n:"Un retard sur la chaîne",q:"Dans le planning de l'indicateur, la tâche C est sur la chaîne qui décide de la fin. Elle prend une séance de retard. La mise en service…",
+ o:["ne bouge pas","recule d'une séance","recule de deux séances","avance d'une séance"],r:1,
+ expl:"Une tâche sans marge transmet intégralement son retard à tout ce qui suit : il n'y a, par définition, aucun jeu pour l'absorber.",
+ ex:"Le calcul du planning donne un chemin le plus long de A → B → C → E → F → G, et C en fait partie.",
+ err:"Croire qu'une séance de retard « se rattrapera bien toute seule ».",
+ d:["Elle bouge : C n'a aucune marge, donc tout ce qui l'attend est décalé d'autant.","","Le retard n'est pas doublé en chemin : une séance de retard donne une séance de décalage, pas deux.","Un retard ne fait jamais avancer la fin d'un projet ; au mieux il ne la décale pas."],
+ ret:"Retard sur la chaîne = retard sur tout le projet."},
+{c:"5e",n:"Un retard sur une tâche à marge",q:"La tâche D possède une marge d'une séance. Elle prend une séance de retard. La mise en service…",
+ o:["recule d'une demi-séance","recule d'une séance","ne bouge pas : la marge absorbe exactement ce retard","dépend du nombre d'élèves du groupe"],r:2,
+ expl:"La marge est précisément la quantité de retard qu'une tâche peut prendre sans rien décaler. Une séance de marge absorbe une séance de retard, et pas une de plus.",
+ ex:"Dans ce planning, la tâche qui a de la marge est : D (+1 séance).",
+ err:"Traiter toutes les tâches comme également urgentes, et s'épuiser là où ça ne sert à rien.",
+ d:["Une marge se compte en séances entières ici : elle absorbe le retard, ou elle ne l'absorbe pas.","Elle ne recule pas : c'est justement à cela que sert la marge, et c'est pour cela qu'on la calcule.","","Le nombre d'élèves ne change pas la structure du planning : la marge vient des contraintes, pas des effectifs."],
+ ret:"La marge, c'est le retard qu'on peut prendre sans rien décaler."},
+{c:"5e",n:"Une tâche qui en attend deux",q:"La tâche E doit attendre C et D. Elle peut commencer :",
+ o:["après la plus tardive des deux","après la première des deux qui se termine","en même temps que C","dès le début du projet, puisqu'elle est longue"],r:0,
+ expl:"Attendre deux tâches, c'est les attendre toutes les deux. La contrainte la plus contraignante est celle qui finit le plus tard ; c'est elle qui fixe le départ.",
+ ex:"Si C finit à la séance 4 et D à la séance 3, E commence à la séance 5 — pas à la 4.",
+ err:"Démarrer dès que la première condition est remplie, et devoir tout refaire.",
+ d:["","Commencer après la première reviendrait à travailler sans ce que la seconde devait fournir.","Commencer en même temps que C reviendrait à ignorer complètement la contrainte : C n'est pas finie.","La longueur d'une tâche ne lui donne aucun droit de démarrer plus tôt ; seules les contraintes décident."],
+ ret:"Une tâche qui en attend plusieurs part après la plus tardive."},
+{c:"5e",n:"Le tableau du logiciel",q:"Sur cette capture, quelle colonne dit combien de temps dure chaque tâche ?",
+ img:{src:"Images/ganttproject_1_saisir_les_taches_et_les_durees.png",alt:"Capture de GanttProject en français : le tableau des tâches du jardin connecté, avec les colonnes Nom, Date de début, Date de fin et Durée, et neuf lignes de A à I dont la dernière a une durée de zéro."},
+ o:["la colonne Date de début","la colonne Nom","la colonne Durée, à droite du tableau","la colonne Date de fin"],r:2,
+ expl:"Le tableau de gauche comporte quatre colonnes : Nom, Date de début, Date de fin et Durée. C'est la dernière qui porte le nombre de séances.",
+ ex:"Sur la dernière ligne, la valeur 0 signale le jalon : rien à faire, seulement un état atteint.",
+ err:"Confondre la durée d'une tâche avec sa date de début.",
+ d:["La date de début dit QUAND on commence, pas COMBIEN DE TEMPS on y passe.","La colonne Nom porte le libellé de la tâche : ce qu'il y a à faire, pas combien de temps cela prend.","","La date de fin est calculée à partir du début et de la durée : elle en découle, elle ne la donne pas."],
+ ret:"Nom, Date de début, Date de fin, Durée : quatre colonnes, quatre informations différentes."},
+{c:"5e",n:"Estimer, ce n'est pas savoir",q:"On écrit « 2 séances » en face d'une tâche. Ce nombre est :",
+ o:["une valeur inutile tant que la tâche n'est pas faite","une mesure exacte, connue à l'avance","une obligation : la tâche devra durer exactement 2 séances","une estimation, qu'on comparera au réel à la fin du projet"],r:3,
+ expl:"Personne ne connaît la durée d'une tâche avant de l'avoir faite. On l'estime, on l'écrit, et on la confronte ensuite à ce qui s'est passé : c'est ainsi qu'on estime mieux la fois suivante.",
+ ex:"En fin de projet, comparer durées estimées et durées réelles est l'exercice le plus formateur de toute la planification.",
+ err:"Refuser d'écrire une durée « parce qu'on ne peut pas savoir », et se priver de tout planning.",
+ d:["Une estimation écrite sert immédiatement : c'est elle qui permet de calculer la date de fin prévue.","Aucune durée de projet n'est connue exactement à l'avance : si elle l'était, il n'y aurait pas besoin de planifier.","Le planning n'oblige pas la tâche à durer ce qu'on a écrit ; il annonce ce qu'on prévoit, et se corrige.",""],
+ ret:"Une durée s'estime. Et une estimation jamais comparée au réel ne s'améliore jamais."},
+{c:"5e",n:"Ce qu'un planning sert vraiment",q:"À quoi sert d'abord un planning, dans un projet de classe ?",
+ o:["à décorer le compte rendu de projet","à savoir où il faut se dépêcher, et où c'est inutile","à prouver au professeur qu'on a travaillé","à répartir les élèves en groupes de taille égale"],r:1,
+ expl:"La planification produit une information qu'aucune bonne volonté ne donne : quelles tâches commandent la date de fin, et lesquelles peuvent attendre sans conséquence.",
+ ex:"Deux groupes travaillent aussi dur ; celui qui sait où se dépêcher finit plus tôt.",
+ err:"Faire un planning une fois au début, ne plus jamais le regarder, et le joindre au dossier.",
+ d:["Un planning qui ne sert qu'à illustrer un dossier n'a jamais fait gagner une seule séance.","","Prouver l'effort fourni n'est pas son objet : un planning décrit des tâches et des dates, pas du mérite.","La taille des groupes ne se déduit pas du planning ; ce sont les contraintes entre tâches qui décident de ce qui peut avancer ensemble."],
+ ret:"Un planning dit OÙ il faut se dépêcher."},
+/* ═══ 4e ═══ */
+{c:"4e",n:"La contrainte d'antériorité",q:"Écrire « C ne peut commencer qu'après B », c'est poser :",
+ o:["une contrainte d'antériorité","une durée","un jalon","une marge"],r:0,
+ expl:"Le programme nomme trois choses : les tâches, leur durée, et les contraintes entre tâches. L'antériorité est la contrainte de base : elle dit ce qui doit attendre quoi.",
+ ex:"« Assembler » attend « fabriquer le support » : sans support, il n'y a rien à assembler.",
+ err:"Confondre l'ordre dans lequel on a écrit les tâches avec l'ordre dans lequel elles doivent se faire.",
+ d:["","Une durée dit combien de temps une tâche prend, pas ce qu'elle doit attendre.","Un jalon est un point de contrôle sans durée ; ce n'est pas une relation entre deux tâches.","Une marge est un résultat de calcul : elle se déduit des contraintes, elle ne se pose pas."],
+ ret:"Une contrainte d'antériorité : B attend A."},
+{c:"4e",n:"Le parallélisme",q:"Deux tâches entre lesquelles il n'existe aucune contrainte :",
+ o:["doivent quand même être faites l'une après l'autre","peuvent être menées en même temps","sont forcément sur le chemin le plus long","doivent être fusionnées en une seule tâche"],r:1,
+ expl:"L'absence de contrainte est une information, pas un oubli : elle autorise le travail simultané. C'est le seul endroit où un groupe gagne réellement du temps en se répartissant le travail.",
+ ex:"Dans le jardin connecté, câbler le capteur et fabriquer le support n'ont rien à s'échanger : les deux peuvent avancer ensemble.",
+ err:"Faire les tâches dans l'ordre alphabétique du tableau, et perdre tout le parallélisme.",
+ d:["Rien n'oblige à les enchaîner : si aucune n'attend l'autre, les enchaîner ne fait que perdre du temps.","","Deux tâches parallèles peuvent parfaitement être hors du chemin le plus long ; le parallélisme ne dit rien de la criticité.","Fusionner deux tâches indépendantes ferait disparaître l'information la plus utile : qu'elles peuvent avancer ensemble."],
+ ret:"Pas de contrainte = travail en même temps."},
+{c:"4e",n:"La date au plus tôt",q:"La date au plus tôt d'une tâche, c'est :",
+ o:["le moment où elle se termine","le moment où elle doit obligatoirement commencer","le moment le plus précoce où elle peut commencer, compte tenu de ce qu'elle attend","la date choisie par le professeur"],r:2,
+ expl:"C'est une limite basse, pas un ordre. On ne peut pas commencer avant ; on peut commencer après, dans la limite de la marge.",
+ ex:"Une tâche dont la date au plus tôt est la séance 5 ne peut pas démarrer en séance 4, même si le groupe est disponible.",
+ err:"Lire une date au plus tôt comme une convocation, et croire qu'on est en retard dès qu'on ne démarre pas ce jour-là.",
+ d:["La date de fin s'obtient en ajoutant la durée à la date de début ; ce n'est pas la même information.","Rien n'oblige à commencer exactement à cette date : les tâches à marge peuvent démarrer plus tard sans conséquence.","","Elle n'est pas choisie : elle est calculée à partir des durées et des contraintes, et personne ne peut la décider."],
+ ret:"Date au plus tôt : une limite basse, calculée, pas un ordre."},
+{c:"4e",n:"Le calcul, de proche en proche",q:"Comment trouve-t-on la date au plus tôt d'une tâche, sans logiciel ?",
+ o:["en prenant la fin la plus tardive parmi les tâches qu'elle attend","en additionnant les durées de toutes les tâches précédentes du tableau","en divisant la durée totale par le nombre de tâches","en la plaçant au milieu du projet"],r:0,
+ expl:"On part du début et on descend : pour chaque tâche, on regarde toutes celles qu'elle attend, on garde celle qui finit le plus tard, et on commence juste après. Le logiciel ne fait rien d'autre — il le fait seulement plus vite.",
+ ex:"Une tâche qui attend C (fin en séance 4) et E (fin en séance 5) commence en séance 6.",
+ err:"Additionner toutes les durées et croire qu'on obtient la durée du projet.",
+ d:["","Additionner tout le tableau ignore le parallélisme : plusieurs tâches avancent en même temps, leurs durées ne s'ajoutent pas.","Une moyenne n'a aucun sens ici : les tâches n'ont ni la même durée ni les mêmes contraintes.","Placer une tâche « au milieu » revient à inventer une date que rien ne justifie."],
+ ret:"Chaque tâche part après la PLUS TARDIVE de celles qu'elle attend."},
+{c:"4e",n:"La somme n'est pas la durée",q:"Dans le projet du jardin connecté, la somme des durées vaut 13 séances, et le projet en dure 9. Pourquoi cet écart ?",
+ o:["parce que le jalon ne compte pas","parce qu'on a oublié des tâches","parce que certaines tâches avancent en même temps","parce qu'une séance ne fait pas une heure entière"],r:2,
+ expl:"L'écart mesure exactement le parallélisme du projet. Plus il est grand, plus le projet permet de travailler simultanément.",
+ ex:"Écrire le programme pendant que d'autres câblent : deux durées qui s'écoulent en même temps, donc une seule qui compte.",
+ err:"Annoncer aux familles une durée égale à la somme des tâches, et se tromper du simple au double.",
+ d:["Le jalon dure zéro : le retirer ou l'ajouter ne change strictement rien à la somme.","Aucune tâche ne manque : l'écart vient de la structure du planning, pas d'un oubli de saisie.","","La longueur d'une séance ne change pas le rapport entre la somme et la durée du projet : on compte en séances des deux côtés."],
+ ret:"La durée d'un projet n'est pas la somme des durées de ses tâches."},
+{c:"4e",n:"Fin-Début",q:"Sur cette capture, la relation « Fin-Début » signifie :",
+ img:{src:"Images/ganttproject_3_declarer_les_predecesseurs.png",alt:"Capture de l'onglet Prédécesseurs : un tableau ID, Nom de la tâche, Relation, Retard, Contrainte, avec deux lignes en relation Fin-Début et un retard de zéro."},
+ o:["la tâche se termine dès qu'elle commence","les deux tâches finissent le même jour","les deux tâches commencent le même jour","la fin de la tâche attendue commande le début de celle-ci"],r:3,
+ expl:"C'est exactement la contrainte d'antériorité du programme, dite avec le vocabulaire du logiciel. C'est la seule relation dont on ait besoin au collège.",
+ ex:"F attend C et E : deux lignes Fin-Début, retard 0, dans l'onglet Prédécesseurs.",
+ err:"Créer un lien par glisser-déposer sans jamais vérifier quelles tâches ont été reliées.",
+ d:["Une tâche qui se terminerait dès son début aurait une durée nulle : ce serait un jalon, pas une relation.","Finir ensemble serait une relation « Fin-Fin » : ce n'est pas ce qui est écrit ici.","Commencer ensemble serait une relation « Début-Début », qui ne correspond pas à une antériorité.",""],
+ ret:"Fin-Début : la fin de l'une commande le début de l'autre."},
+{c:"4e",n:"Lire le parallélisme sur le dessin",q:"Sur ce diagramme, deux barres qui se chevauchent verticalement montrent :",
+ img:{src:"Images/ganttproject_4_les_barres_et_les_dates.png",alt:"Capture du diagramme : neuf barres bleues en escalier reliées par des flèches, un losange final, et une échelle de temps en semaines."},
+ o:["deux tâches faites par la même personne","deux tâches qui se contredisent","une erreur de saisie","deux tâches qui avancent en même temps"],r:3,
+ expl:"C'est le service principal du dessin : le parallélisme se voit d'un coup d'œil, alors qu'il est invisible dans une simple liste de tâches.",
+ ex:"Câbler le capteur et fabriquer le support occupent les mêmes journées : leurs barres se superposent dans le temps.",
+ err:"Vouloir « aligner proprement » les barres et détruire l'information qu'elles portaient.",
+ d:["Le diagramme ne dit rien de qui réalise les tâches ; les ressources sont un autre onglet du logiciel.","Deux tâches simultanées ne se contredisent pas : rien dans le planning n'interdit de travailler à deux endroits à la fois.","Ce n'est pas une erreur : c'est au contraire le résultat que l'on cherche en organisant un projet.",""],
+ ret:"Barres qui se chevauchent = tâches simultanées."},
+{c:"4e",n:"La preuve qu'un planning existe",q:"Un diagramme sans aucune flèche entre les barres signifie :",
+ o:["que toutes les tâches sont critiques","que le projet est particulièrement simple","qu'aucune contrainte n'a été déclarée : ce n'est pas encore un planning","que le logiciel n'a pas fini de calculer"],r:2,
+ expl:"Sans contrainte, le logiciel place tout au premier jour. Le dessin est net, et il ne prouve rien : les flèches sont la trace visible du travail de planification.",
+ ex:"Un élève qui saisit dix tâches sans lien obtient dix barres alignées à gauche, toutes commençant le même jour.",
+ err:"Rendre un diagramme joli mais vide, et croire le travail fait.",
+ d:["Sans contrainte, aucune tâche n'est critique au sens du planning : il n'y a même pas de chaîne.","Un projet réel comporte presque toujours des dépendances : leur absence signale un oubli, pas une simplicité.","","Le calcul du logiciel est instantané ; il n'y a pas d'attente qui expliquerait des flèches manquantes."],
+ ret:"Pas de flèche, pas de planning."},
+{c:"4e",n:"Organiser, c'est décider",q:"Après avoir repéré deux tâches parallèles, que fait un groupe qui organise vraiment ?",
+ o:["il décide qui travaille sur l'une pendant que d'autres travaillent sur l'autre","il choisit celle qui a l'air la plus intéressante et fait l'autre plus tard","il fusionne les deux tâches pour aller plus vite","il attend l'avis du professeur avant de commencer"],r:0,
+ expl:"Le parallélisme n'est utile que s'il devient une décision d'équipe. Sinon, l'information reste sur le papier et le projet avance comme avant.",
+ ex:"« Léa et Sam câblent, Inès et Tom fabriquent le support » : voilà la décision que permet le planning.",
+ err:"Repérer le parallélisme, le noter, et continuer à travailler tous sur la même tâche.",
+ d:["","Choisir la plus intéressante et remettre l'autre revient à renoncer au gain de temps qu'on venait de découvrir.","Fusionner deux tâches indépendantes ne les rend pas plus rapides : elles restent deux travaux distincts.","Le planning est justement fait pour décider sans attendre : il donne l'information nécessaire au groupe."],
+ ret:"Organiser, c'est transformer le parallélisme en décision d'équipe."},
+{c:"4e",n:"La marge",q:"Une tâche possède une marge de 3 séances. Cela signifie :",
+ o:["qu'elle doit être finie 3 séances avant la fin du projet","qu'elle dure 3 séances de plus que prévu","qu'elle peut prendre jusqu'à 3 séances de retard sans décaler la fin du projet","qu'elle est trois fois moins importante que les autres"],r:2,
+ expl:"La marge est la quantité de retard tolérable. Elle se calcule à partir des contraintes : elle existe parce que ce qui suit la tâche attend aussi autre chose, plus tardif.",
+ ex:"Dans le jardin connecté, les tâches à marge sont : C (+1), D (+3).",
+ err:"Confondre marge et importance, et négliger une tâche à marge jusqu'à ce qu'elle devienne critique.",
+ d:["Rien n'impose de la finir en avance : la marge autorise du retard, elle n'exige pas de l'avance.","La marge ne modifie pas la durée de la tâche : celle-ci reste exactement ce qui a été estimé.","","L'importance d'une tâche est une autre question : une tâche à marge peut être indispensable au projet."],
+ ret:"La marge : le retard qu'on peut prendre sans rien décaler."},
+/* ═══ 3e ═══ */
+{c:"3e",n:"Le chemin le plus long",q:"Le chemin le plus long d'un projet, c'est :",
+ o:["la suite des tâches qui durent le plus longtemps","la suite de tâches enchaînées la plus longue, du début au jalon final","la suite des tâches les plus difficiles","la liste de toutes les tâches, dans l'ordre du tableau"],r:1,
+ expl:"Ce qui compte, c'est l'enchaînement : chaque tâche de la chaîne attend la précédente. C'est cette chaîne, et elle seule, qui fixe la date de fin du projet.",
+ ex:"Dans le capteur de confort, ce chemin est A → B → C → D → E → H → I → J → K, pour 12 séances.",
+ err:"Prendre les tâches longues une par une, sans regarder si elles s'enchaînent.",
+ d:["Une tâche longue qui n'attend personne et que personne n'attend ne fait partie d'aucune chaîne.","","La difficulté ne joue aucun rôle : une tâche critique peut être la plus facile du projet.","L'ordre du tableau est un ordre d'écriture ; il ne dit rien des contraintes réelles."],
+ ret:"Le chemin le plus long : la suite ENCHAÎNÉE la plus longue."},
+{c:"3e",n:"Raccourcir hors du chemin",q:"On raccourcit d'une séance une tâche qui n'est pas sur le chemin le plus long. Le projet gagne :",
+ o:["une séance","aucune séance","une demi-séance","cela dépend du nombre d'élèves mobilisés"],r:1,
+ expl:"Une tâche hors chemin possède de la marge : ce qui la suit attend de toute façon autre chose, plus tardif. L'accélérer n'avance donc rien du tout.",
+ ex:"Dans le capteur de confort, les tâches hors chemin sont F (+4), G (+5) : les accélérer ne change pas la date de fin.",
+ err:"Mobiliser tout le groupe sur une tâche à marge et s'étonner que le projet n'avance pas.",
+ d:["Le gain serait d'une séance seulement si la tâche appartenait à la chaîne qui commande la fin.","","Il n'y a pas de gain partiel : hors du chemin, le gain est exactement nul.","Le nombre d'élèves ne change pas la structure : la marge vient des contraintes, pas des effectifs."],
+ ret:"Accélérer hors du chemin ne fait rien gagner."},
+{c:"3e",n:"Raccourcir sur le chemin",q:"On raccourcit d'une séance une tâche du chemin le plus long. Le projet gagne :",
+ o:["une séance, tant qu'aucun autre chemin ne devient le plus long à son tour","une séance, définitivement","aucune séance","autant de séances qu'il y a de tâches après elle"],r:0,
+ expl:"Le chemin le plus long est le résultat d'un calcul sur les durées du moment. Dès qu'on modifie une durée, il faut recalculer : un autre chemin, jusque-là plus court, peut devenir le plus long.",
+ ex:"Raccourcir une tâche de 3 à 1 séance peut ne faire gagner qu'une séance, si une autre chaîne prend le relais.",
+ err:"Croire qu'on peut raccourcir indéfiniment un projet en accélérant toujours la même chaîne.",
+ d:["","Le gain n'est pas définitivement acquis : au-delà d'un certain point, une autre chaîne devient contraignante.","Le gain n'est pas nul : sur le chemin, chaque séance économisée se répercute sur la date de fin.","Le gain ne se multiplie pas par le nombre de tâches suivantes : elles sont simplement décalées d'autant, une seule fois."],
+ ret:"Sur le chemin, on gagne — jusqu'à ce qu'un autre chemin prenne le relais."},
+{c:"3e",n:"Le nom du métier",q:"Le chemin le plus long s'appelle, dans les entreprises, le chemin critique. « Critique » veut dire ici :",
+ o:["sans aucune marge","difficile","important","risqué"],r:0,
+ expl:"Le mot ne décrit ni la difficulté, ni l'enjeu : il décrit une propriété calculée. Une tâche critique est une tâche dont le moindre retard décale la fin.",
+ ex:"Dans le capteur de confort, les tâches critiques sont A, B, C, D, E, H, I, J, K : leur marge est nulle.",
+ err:"Traiter les tâches « critiques » comme les plus difficiles, et les confier aux plus rapides.",
+ d:["","Une tâche critique peut être très facile : coller une étiquette peut être critique si tout attend cette étiquette.","Toutes les tâches d'un projet sont importantes ; la criticité est une propriété du planning, pas du contenu.","Le risque est une autre notion : une tâche risquée peut avoir beaucoup de marge, et une tâche sûre n'en avoir aucune."],
+ ret:"Critique = sans marge. Ni difficile, ni important."},
+{c:"3e",n:"Ce que montre la capture",q:"Sur cette capture, la commande a été activée et sept barres sont hachurées. Les deux barres restées unies sont :",
+ img:{src:"Images/ganttproject_5_afficher_le_chemin_critique.png",alt:"Capture du même diagramme après activation du chemin critique : sept barres sont hachurées, deux restent unies."},
+ o:["les deux tâches les plus longues","les deux tâches qui possèdent de la marge","les deux tâches non commencées","les deux tâches qui n'ont pas de responsable"],r:1,
+ expl:"L'affichage du chemin critique met en évidence les tâches de marge nulle. Celles qui restent unies sont donc, exactement, celles qui peuvent prendre du retard sans conséquence.",
+ ex:"Ici, ce sont C (câbler) et D (écrire le programme) : leurs marges valent respectivement 1 et 3 séances.",
+ err:"Dire « les barres rouges », alors que la mise en évidence change d'aspect selon les versions.",
+ d:["La longueur des barres n'a rien à voir : la tâche la plus longue de ce projet est justement sur le chemin critique.","","L'avancement se règle ailleurs, dans le champ Avancement des propriétés : le chemin critique ne le regarde pas.","Les responsables se déclarent dans l'onglet Ressources ; le chemin critique se calcule sans eux."],
+ ret:"Les tâches mises en évidence sont celles de marge nulle."},
+{c:"3e",n:"La date de fin est calculée",q:"Dans les propriétés d'une tâche, le champ « Date de fin » est grisé. Pourquoi ?",
+ img:{src:"Images/ganttproject_2_proprietes_duree_de_la_tache.png",alt:"Capture de la boîte Propriétés d'une tâche dans GanttProject : onglets Général, Prédécesseurs, Ressources et Colonnes personnalisées ; champs Nom, case Jalon, Date de début, Date de fin grisée, Durée."},
+ o:["parce qu'elle est calculée à partir du début et de la durée","parce que le logiciel est en version limitée","parce qu'il faut enregistrer le fichier avant de la modifier","parce qu'une tâche n'a pas de fin tant qu'elle n'est pas faite"],r:0,
+ expl:"Un planning ne doit pas pouvoir se contredire. Si l'on pouvait imposer le début, la durée et la fin, on pourrait écrire quelque chose de faux : le logiciel l'interdit en calculant la fin.",
+ ex:"Début en séance 5, durée 3 séances : la fin tombe en séance 7, et aucun autre choix n'est possible.",
+ err:"Chercher à taper une date de fin, ne pas y arriver, et croire à un dysfonctionnement.",
+ d:["","Le grisé n'a rien à voir avec la licence : GanttProject est un logiciel libre, complet et sans version bridée.","L'enregistrement ne débloque rien : le champ restera calculé quel que soit l'état du fichier.","Une tâche non commencée a bien une date de fin PRÉVUE : c'est justement l'objet du planning."],
+ ret:"Début + durée = fin. La fin ne se saisit pas, elle se calcule."},
+{c:"3e",n:"Élaborer, c'est d'abord découper",q:"Élaborer un processus de réalisation commence par :",
+ o:["ouvrir le logiciel et créer un fichier","identifier les tâches, c'est-à-dire découper le projet en choses qu'on peut déclarer finies","estimer la durée totale du projet","répartir les élèves dans les groupes"],r:1,
+ expl:"Le découpage est le vrai travail intellectuel : c'est là qu'on décide de quoi le projet est fait. Tout le reste — durées, contraintes, calcul — s'appuie dessus.",
+ ex:"Un découpage trop grossier (« fabriquer l'objet ») rend le planning inutile : on ne saura jamais où on en est.",
+ err:"Ouvrir le logiciel d'abord, et découvrir qu'on ne sait pas quoi y saisir.",
+ d:["Le logiciel ne peut rien faire tant qu'aucune tâche n'existe : il vient après, pas avant.","","La durée totale est un RÉSULTAT du calcul ; l'estimer d'avance revient à décider la réponse avant l'exercice.","La répartition des élèves dépend de ce qui peut avancer en parallèle, donc du planning : elle vient après."],
+ ret:"Élaborer commence par découper en tâches déclarables finies."},
+{c:"3e",n:"Ajouter des personnes",q:"Une tâche critique dure 3 séances. On y met deux fois plus d'élèves. Que peut-on affirmer ?",
+ o:["le chemin critique disparaîtra","elle durera 1,5 séance","elle durera toujours 3 séances","rien : certaines tâches se divisent, d'autres non"],r:3,
+ expl:"Le planning dit où il vaudrait la peine d'essayer d'accélérer ; il ne dit pas si c'est possible. Câbler quatre capteurs se divise ; attendre la fin d'une impression 3D ne se divise pas.",
+ ex:"Imprimer un boîtier prend le temps que prend l'imprimante, quel que soit le nombre d'élèves autour.",
+ err:"Croire qu'ajouter des personnes raccourcit mécaniquement une tâche.",
+ d:["Un chemin critique existe toujours : même raccourci, un projet garde une chaîne qui commande sa date de fin.","La division par deux ne vaut que pour les tâches réellement divisibles, et encore : la coordination coûte du temps.","Affirmer qu'elle durera toujours 3 séances est tout aussi faux : beaucoup de tâches se partagent très bien.",""],
+ ret:"Le planning dit OÙ essayer d'accélérer, pas si c'est possible."},
+{c:"3e",n:"Recalculer après chaque changement",q:"On modifie la durée d'une tâche. Que faut-il faire du chemin critique établi la veille ?",
+ o:["l'effacer, il ne sert plus à rien","le garder tel quel, il est établi une fois pour toutes","le recalculer : il peut avoir changé","le recopier dans le compte rendu"],r:2,
+ expl:"Le chemin critique n'est pas une propriété permanente du projet : c'est le résultat d'un calcul sur les durées et les contraintes du moment. Changer une durée peut le déplacer entièrement.",
+ ex:"C'est précisément le service que rend un logiciel : recalculer instantanément après chaque modification.",
+ err:"Planifier une fois au début et suivre un chemin critique devenu faux depuis des semaines.",
+ d:["L'effacer priverait le projet de la seule information qui dit où le retard coûte cher.","Le garder tel quel revient à travailler sur une information périmée, et à se dépêcher au mauvais endroit.","","Le recopier dans un dossier ne le met pas à jour : ce qu'il faut, c'est refaire le calcul."],
+ ret:"Le chemin critique se recalcule à chaque changement de durée."},
+{c:"3e",n:"Ce que le programme demande vraiment",q:"Le programme de cycle 4 nomme trois choses à propos de ce diagramme. Lesquelles ?",
+ o:["les tâches, leur durée, et les contraintes entre tâches","les tâches, les responsables, et le budget","les durées, les coûts, et les risques","les tâches, les jalons, et le chemin critique"],r:0,
+ expl:"Le texte est court et précis : « le diagramme de planification des tâches : notion de tâches, durée et contraintes entre tâches ». Tout le reste — marges, chemin le plus long, jalons — se déduit de ces trois notions.",
+ ex:"C'est pour cela que l'atelier commence par les trois mots, et seulement ensuite par le calcul.",
+ err:"Ajouter au programme des notions de gestion de projet qui n'y figurent pas, et alourdir inutilement la séance.",
+ d:["","Les responsables et le budget relèvent de la conduite de projet, pas de ce point du programme.","Les coûts et les risques ne sont pas nommés ici : les confondre avec le programme égare l'élève.","Les jalons et le chemin critique sont utiles, mais ils se DÉDUISENT des trois notions nommées ; ils ne les remplacent pas."],
+ ret:"Tâches, durée, contraintes entre tâches : les trois mots du programme."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_C7.1_planification_taches";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "5e":"5e_C7.1 — Suivre un processus de réalisation d\u2019un objet avec des tâches identifiées.",
+  "4e":"4e_C7.1 — Organiser un processus de réalisation d\u2019un objet avec des tâches identifiées.",
+  "3e":"3e_C7.1 — Élaborer un processus de réalisation d\u2019un objet avec des tâches identifiées." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+</body>
+</html>
