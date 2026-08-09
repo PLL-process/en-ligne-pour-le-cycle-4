@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shenzhen : recenser les interacteurs d'une station de vélos en libre-service et lire les choix de conception dans ses formes. Codes 5e_C2.1 et 5e_C2.2, programme 2024.">
+<title>Thème 1 · 4e — Tsinghua : concevoir avant de connecter, détecter les feux (4e_C1.1 à C1.3)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<div class="page">
+<h1>🔥 Tsinghua — concevoir avant de connecter</h1>
+<p class="sous">Des données publiques, une estimation qu'on ose faire — et dont on ose dire les limites.</p>
+<div class="badges">
+  <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">4e</span>
+  <span class="badge code" title="Mettre en relation les OST avec leurs usages.">4e_C1.1</span><span class="badge code" title="Identifier les avantages et les inconvénients associés aux évolutions technologiques et informatiques.">C1.2</span><span class="badge code" title="Justifier l'évolution d'un OST pour répondre à l'évolution des besoins.">C1.3</span>
+  <span class="badge theme" title="Domaines du socle commun travaillés : D1.3 langages scientifiques, D4 systèmes naturels et techniques, D5 représentations du monde et activité humaine.">D1.3 · D2 · D3 · D4</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">4 séances de 55 min</span>
+  <span class="badge theme" title="Compétence numérique du CRCN travaillée et traçable : traiter des données — l'élève exploite un tableau de mesures pour comparer des solutions.">🖥 CRCN 1.3 · niveau 2</span>
+  <span class="badge theme" title="Une manipulation d'objet réel est prévue au parcours obligatoire, pas en bonus.">📊 Données réelles et sourcées</span>
+</div>
+<p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
+<b>C1.1 à C1.3</b>&nbsp;: les trois compétences travaillées — des codes de classement <b>propres
+à ce site</b>, écrits en toutes lettres plus bas. <b>D1.3 · D2 · D3 · D4</b>&nbsp;: les domaines du
+<b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
+<b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
+<b>4 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM. <b>📊 Données réelles</b>&nbsp;: les chiffres de cette séquence sont <b>publics et vérifiables</b> — ce ne sont pas des données inventées pour l'exercice.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
+
+<section class="card">
+  <h2>🔥 La situation&nbsp;: 50 000 hectares, et une équipe qui ne commence pas par acheter une caméra</h2>
+  <p>Le <b>24 juillet 2026</b>, le ministère de l'Intérieur annonçait que <b>plus de 50 000
+  hectares</b> avaient brûlé en France depuis le début de l'année, et que <b>32 feux</b> étaient
+  encore en cours.</p>
+  <p>Une équipe fictive d'élèves-ingénieurs, inspirée du département d'ingénierie électronique de
+  l'université <b>Tsinghua</b> à Pékin, doit préparer un système de <b>détection précoce</b> des
+  départs de feu. Elle ne commence pas par choisir une caméra ou un microcontrôleur.</p>
+  <p style="color:var(--warn);font-size:1.05em">Elle commence par <b>comprendre le besoin</b> — et
+  par regarder ce que les chiffres disent réellement, avant de calculer quoi que ce soit.</p>
+  <p class="meta">📊 <b>Les données de cette séquence sont réelles et publiques</b>&nbsp;: ministère
+  de l'Intérieur, JRC/EFFIS (Commission européenne), ADEME Impact CO₂. Elles sont vérifiables, et
+  leurs sources sont citées dans le fichier. C'est la seule séquence du site où les chiffres ne
+  sont pas simulés — <b>et c'est ce qui rend l'exercice difficile</b>&nbsp;: les vraies données ne
+  sont jamais aussi bien rangées que celles qu'on invente.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Quelles données, quels usages et quelles contraintes
+  faut-il définir pour détecter rapidement un départ de feu — sans multiplier les fausses alertes,
+  et sans remplacer la décision humaine&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Avant d'ouvrir le fichier&nbsp;: d'après toi, <b>de quoi a besoin</b> un
+    système qui doit détecter un départ de feu&nbsp;? Cite ce qu'il devrait mesurer, et ce qui
+    pourrait le tromper.</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : ce que le système doit mesurer et ce qui pourrait le tromper"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Pour détecter un feu, il faudrait mesurer ____ et ____.&nbsp;»</li>
+    <li>«&nbsp;Mais le système pourrait se tromper si ____.&nbsp;»</li>
+    <li>«&nbsp;Le plus difficile me paraît être ____.&nbsp;»</li></ul></details>
+  <p class="meta">Au bilan, tu reliras cette phrase. La plupart des gens citent la fumée et la
+  chaleur, et oublient <b>ce qui déclenche une fausse alerte</b> — c'est pourtant là que tout se
+  joue.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>4e_C1.1</code> à
+  <code>4e_C1.3</code> sont des codes de classement <b>internes à ce dépôt</b>. Ils ne figurent pas
+  comme tels au BO. Les formulations ci-dessous, elles, sont celles du référentiel.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>4e_C1.1</b></td><td>Mettre en relation les OST avec leurs usages.</td>
+      <td>Séances 1 et 4</td></tr>
+    <tr><td><b>4e_C1.2</b></td><td>Identifier les avantages et les inconvénients associés aux
+      évolutions technologiques et informatiques.</td><td>Séance 3 et garde-fous</td></tr>
+    <tr><td><b>4e_C1.3</b></td><td>Justifier l'évolution d'un OST pour répondre à l'évolution des
+      besoins.</td><td>Séance 4</td></tr>
+  </table>
+  <p><b>Socle</b> — D1.3 langages scientifiques · D2 méthodes et outils pour apprendre ·
+  D3 formation de la personne et du citoyen · D4 systèmes naturels et techniques.</p>
+  <p class="meta">🧵 <b>Le fil de la séquence.</b> On part d'un chiffre public, on apprend à le lire,
+  on construit une estimation à partir de lui, on la compare à des choses connues — et l'on finit
+  par écrire <b>ce que le système devra faire</b>. À aucun moment on ne choisit un composant&nbsp;:
+  c'est le Thème 2 qui s'en chargera.</p>
+</section>
+
+<section class="card">
+  <h2>🔧 Une mesure à faire dans la cour <span style="color:var(--sub);font-size:.8em">(comprise dans l'activité 1)</span></h2>
+  <p>Avant d'ouvrir le fichier, la séance 1 demande <b>une mesure réelle</b>&nbsp;: relever la
+  température de l'air <b>à l'ombre</b> puis <b>en plein soleil</b>, au même moment, dans la cour.</p>
+  <table>
+    <tr><th>Version</th><th>Matériel</th><th>Ce que tu fais</th></tr>
+    <tr><td><b>🅰 Réel</b></td><td>un thermomètre, ou le capteur d'une station météo du collège</td>
+      <td>tu relèves les deux températures et tu notes l'écart</td></tr>
+    <tr><td><b>🅱 Relevé fourni</b></td><td>rien</td><td>un relevé fait dans une cour t'est
+      donné&nbsp;: tu l'analyses</td></tr>
+  </table>
+  <p class="meta">Cette mesure ne sert pas à décorer&nbsp;: elle sert à comprendre <b>pourquoi un
+  seuil de température ne suffit jamais</b> à détecter un feu. Tu t'en serviras en séance 4.</p>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 4 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Lire<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Estimer<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Comparer<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Exiger<span class="done" id="done-s4"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<div class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+<section class="card">
+  <h2>🎫 Billet d'entrée — trois réflexes de lecture (5 min, <b>sans note</b>)</h2>
+  <p>Trois questions sur ce que tu sais déjà. <b>Aucune note</b>&nbsp;: c'est un aiguillage.</p>
+  <div class="assoc"><label for="be_1">Deux valeurs peuvent être additionnées&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>seulement si elles ont la même unité et le même sens</option>
+      <option>dès qu'elles sont dans la même colonne</option>
+      <option>dès que le tableur l'accepte</option>
+      <option>toujours, si ce sont des nombres</option></select></div>
+  <div class="assoc"><label for="be_2">Un <b>pourcentage</b> comme «&nbsp;50 % des départs de feu&nbsp;» est&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>une proportion : il faut savoir de quel ensemble il est la part</option>
+      <option>un nombre de feux</option>
+      <option>une surface</option>
+      <option>une valeur qu'on peut ajouter aux autres</option></select></div>
+  <div class="assoc"><label for="be_3">Une <b>estimation</b> et une <b>mesure</b>&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>ne se valent pas : une estimation est calculée à partir d'autre chose, et elle doit annoncer ses limites</option>
+      <option>c'est la même chose</option>
+      <option>une estimation est toujours fausse</option>
+      <option>une mesure est toujours exacte</option></select></div>
+  <button class="btn small" data-check="0" type="button">🎫 Vérifier mon billet d'entrée</button>
+  <p class="feedback" id="fb0" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p><b>On n'additionne que ce qui a la même unité ET le même sens.</b> Le tableur, lui,
+    additionnera n'importe quoi&nbsp;: c'est une machine, elle ne sait pas ce que les nombres
+    veulent dire.</p>
+    <p>Un <b>pourcentage</b> est une part. Sans savoir <i>part de quoi</i>, il ne veut rien dire —
+    et il ne s'additionne pas à des hectares.</p>
+    <p>Une <b>mesure</b> vient d'un instrument. Une <b>estimation</b> vient d'un calcul appuyé sur
+    d'autres chiffres. Les deux sont utiles&nbsp;; seule la seconde doit dire <b>sur quoi elle
+    repose</b> et <b>ce qu'elle ne prend pas en compte</b>.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>📊 Activité 1 — Lire avant de calculer <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
+  <div class="meta"><b>Objectif</b> distinguer ce que chaque chiffre dit, avant toute opération.
+  · <b>Compétence</b> 4e_C1.1 · <b>Production</b> trois lignes de justification + le relevé de
+  température · <b>Ressources</b> <code>donnees_feux_impacts_4e.csv</code>, un thermomètre.</div>
+
+  <h4>a) La mesure dans la cour</h4>
+  <p>Relève la température de l'air <b>à l'ombre</b>, puis <b>en plein soleil</b>, au même moment.</p>
+  <details class="aide"><summary>🅱 Relevé fourni — si tu n'as pas de thermomètre</summary>
+    <p>«&nbsp;Cour d'un collège, 14 h 10, journée ensoleillée sans vent. À l'ombre du préau&nbsp;:
+    <b>29,4 °C</b>. En plein soleil, au-dessus du bitume&nbsp;: <b>41,8 °C</b>. Écart&nbsp;:
+    <b>12,4 °C</b>, au même moment et à dix mètres de distance.&nbsp;»</p>
+  </details>
+  <div class="assoc">
+    <label for="a1_mesure">Note tes deux températures et leur <b>écart</b>. Puis, en une phrase&nbsp;:
+    si un système déclenchait l'alerte au-dessus de 40&nbsp;°C, <b>que se passerait-il</b> dans ta
+    cour&nbsp;?</label>
+    <textarea id="a1_mesure" style="min-height:95px" aria-label="Les deux températures, leur écart, et l'effet d'un seuil à 40 degrés"></textarea>
+  </div>
+
+  <h4>b) Lire le fichier</h4>
+  <p>Ouvre <code>donnees_feux_impacts_4e.csv</code> dans un tableur. Repère les colonnes
+  <code>date</code>, <code>territoire</code>, <code>indicateur</code>, <code>valeur</code>,
+  <code>unite</code>, <code>source</code> et <code>statut</code>.</p>
+  <div class="assoc"><label for="a1_1">«&nbsp;50 000 ha&nbsp;», «&nbsp;32 feux&nbsp;» et «&nbsp;50 %&nbsp;» ne s'additionnent pas parce que&nbsp;:</label>
+    <select id="a1_1"><option value="">— choisir —</option>
+      <option>ce sont trois grandeurs différentes : une surface cumulée, un état instantané, une proportion</option>
+      <option>les nombres sont trop éloignés les uns des autres</option>
+      <option>elles viennent de trois sources différentes</option>
+      <option>le tableur refuserait l'opération</option></select></div>
+  <div class="assoc"><label for="a1_2">«&nbsp;50 000 ha depuis le 1<sup>er</sup> janvier&nbsp;» est&nbsp;:</label>
+    <select id="a1_2"><option value="">— choisir —</option>
+      <option>un cumul, et un minimum annoncé : la surface réelle est au moins celle-là</option>
+      <option>la surface qui brûle chaque jour</option>
+      <option>la surface totale des forêts françaises</option>
+      <option>une estimation calculée par un modèle</option></select></div>
+  <div class="assoc"><label for="a1_3">«&nbsp;32 feux en cours&nbsp;» est&nbsp;:</label>
+    <select id="a1_3"><option value="">— choisir —</option>
+      <option>un état instantané : le nombre à un moment donné, qui aura changé le lendemain</option>
+      <option>le nombre de feux de l'année</option>
+      <option>une moyenne journalière</option>
+      <option>une prévision</option></select></div>
+  <div class="assoc"><label for="a1_4">La colonne <code>statut</code> porte «&nbsp;minimum_annonce&nbsp;», «&nbsp;instantane&nbsp;», «&nbsp;estimation_modelee&nbsp;». Elle sert à&nbsp;:</label>
+    <select id="a1_4"><option value="">— choisir —</option>
+      <option>dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes</option>
+      <option>indiquer la date de la mesure</option>
+      <option>classer les lignes par ordre d'importance</option>
+      <option>signaler les erreurs du fichier</option></select></div>
+  <div class="assoc"><label for="a1_5">Pourquoi la colonne <code>source</code> est-elle indispensable&nbsp;?</label>
+    <select id="a1_5"><option value="">— choisir —</option>
+      <option>parce qu'un chiffre sans source ne peut être ni vérifié ni discuté</option>
+      <option>pour faire plus sérieux</option>
+      <option>parce que c'est obligatoire dans un fichier CSV</option>
+      <option>pour trier les lignes plus facilement</option></select></div>
+
+  <h4>c) Ta justification</h4>
+  <div class="assoc">
+    <label for="a1_just">Écris <b>trois lignes</b>, une par valeur — 50 000 ha, 32 feux, 50 % —
+    disant pour chacune <b>ce qu'elle mesure</b> et <b>pourquoi elle ne peut pas être additionnée
+    aux deux autres</b>.</label>
+    <textarea id="a1_just" style="min-height:130px" aria-label="Trois lignes : ce que mesure chaque valeur et pourquoi elle ne s'additionne pas"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;50 000 ha est ____ ; son unité est ____.&nbsp;»</li>
+      <li>«&nbsp;32 feux est ____ ; son unité est ____.&nbsp;»</li>
+      <li>«&nbsp;50 % est ____ ; c'est une part de ____.&nbsp;»</li>
+      <li>«&nbsp;On ne peut pas les additionner parce que ____.&nbsp;»</li>
+    </ul></details>
+  <button class="btn small" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+  <p class="feedback" id="fb1" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Pour chaque ligne du fichier, pose-toi deux questions&nbsp;: <b>quelle unité</b>&nbsp;? et
+    <b>ça décrit quoi</b>&nbsp;— un total, un instant, ou une part&nbsp;?</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>Un cumul grandit toute l'année. Un état instantané peut redescendre demain. Une proportion
+    n'a de sens qu'avec son ensemble de référence. <b>Trois natures différentes&nbsp;: aucune
+    addition possible.</b></p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p><b>50 000 ha</b>&nbsp;: une <b>surface cumulée</b> depuis le 1<sup>er</sup> janvier, annoncée
+    comme un <b>minimum</b> — la surface réelle est au moins celle-là. Unité&nbsp;: l'hectare.</p>
+    <p><b>32 feux</b>&nbsp;: un <b>état instantané</b>, le nombre de feux en cours au moment de
+    l'annonce. Ce nombre aura changé le lendemain. Unité&nbsp;: un effectif.</p>
+    <p><b>50 %</b>&nbsp;: une <b>proportion</b> — la part des départs de feu liés à une imprudence.
+    Elle n'a de sens qu'avec son ensemble de référence&nbsp;: les départs de feu, en France.</p>
+    <p class="retenir">📌 Les additionner serait une <b>erreur de sens</b>, même si le tableur
+    accepte techniquement l'opération. Une machine calcule ce qu'on lui demande&nbsp;: elle ne sait
+    pas ce que les nombres veulent dire.</p>
+    <p><b>La mesure de la cour</b>&nbsp;: un écart de l'ordre de 10 à 13 °C entre l'ombre et le
+    soleil, au même instant. Un seuil d'alerte fixé à 40 °C se déclencherait donc <b>tous les jours
+    d'été</b>, sans le moindre feu. C'est la première raison pour laquelle un capteur unique ne
+    suffit jamais.</p>
+  </details>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: se fier au tableur. Il additionnera des hectares
+  et des pourcentages sans broncher, et affichera un résultat parfaitement faux.</p>
+  <p class="meta"><b>Critère de réussite</b>&nbsp;: tes trois lignes nomment chaque fois <b>la nature
+  du chiffre</b> (cumul, instant, proportion), et ta phrase finale dit pourquoi l'addition n'a pas
+  de sens.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+<section class="card">
+  <h2>🧮 Activité 2 — Estimer, et dire ce que l'estimation vaut <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+  <div class="meta"><b>Objectif</b> construire une estimation par proxy et en annoncer les limites.
+  · <b>Compétence</b> 4e_C1.1 · <b>Production</b> le ratio, l'estimation, et l'avertissement
+  méthodologique · <b>Ressources</b> le fichier, un tableur.</div>
+
+  <p>Le <b>JRC/EFFIS</b> — le service de la Commission européenne qui cartographie les feux —
+  indique qu'en <b>2023</b>, environ <b>504 002 ha</b> ont brûlé dans l'Union européenne, et que ces
+  feux ont produit une estimation d'environ <b>20 Mt de CO₂</b>.</p>
+
+  <h4>a) Le calcul</h4>
+  <details class="aide"><summary>📊 Mode opératoire — LibreOffice Calc et Excel</summary>
+    <ul>
+      <li>Convertir 20 Mt en tonnes&nbsp;: <code>=20*1000000</code></li>
+      <li>Le ratio européen 2023&nbsp;: <code>=20000000/504002</code> (tonnes de CO₂ par hectare)</li>
+      <li>L'appliquer à la France 2026&nbsp;: <code>=50000*ratio</code></li>
+      <li>Arrondir à trois chiffres significatifs&nbsp;: <code>=ARRONDI(...;-4)</code> pour un
+      résultat en millions.</li>
+    </ul>
+    <p class="meta">Les formules sont les mêmes dans les deux logiciels&nbsp;: seuls les menus
+    changent.</p></details>
+  <div class="assoc"><label for="a2_1">Le ratio 20 000 000 ÷ 504 002 ≈ 39,68 t/ha est&nbsp;:</label>
+    <select id="a2_1"><option value="">— choisir —</option>
+      <option>un proxy : une valeur empruntée à un autre contexte, faute de mieux</option>
+      <option>une mesure faite en France en 2026</option>
+      <option>une valeur officielle applicable partout</option>
+      <option>une constante physique</option></select></div>
+  <div class="assoc"><label for="a2_2">Appliquer ce ratio aux 50 000 ha français donne environ&nbsp;:</label>
+    <select id="a2_2"><option value="">— choisir —</option>
+      <option>1,98 million de tonnes de CO₂</option>
+      <option>39,68 millions de tonnes</option>
+      <option>504 002 tonnes</option>
+      <option>20 millions de tonnes</option></select></div>
+  <div class="assoc"><label for="a2_3">Ce que cette estimation ne prend PAS en compte&nbsp;:</label>
+    <select id="a2_3"><option value="">— choisir —</option>
+      <option>le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée</option>
+      <option>rien : le calcul est complet</option>
+      <option>uniquement la date</option>
+      <option>seulement le nombre de feux</option></select></div>
+  <div class="assoc"><label for="a2_4">Présenter ce résultat comme «&nbsp;les émissions des feux français de 2026&nbsp;» serait&nbsp;:</label>
+    <select id="a2_4"><option value="">— choisir —</option>
+      <option>malhonnête : ce n'est pas une mesure, c'est un ordre de grandeur emprunté à un autre territoire et une autre année</option>
+      <option>acceptable, puisque le calcul est juste</option>
+      <option>acceptable si on cite la source</option>
+      <option>sans importance, c'est un exercice</option></select></div>
+  <div class="assoc"><label for="a2_5">À quoi sert alors une estimation dont on connaît les limites&nbsp;?</label>
+    <select id="a2_5"><option value="">— choisir —</option>
+      <option>à donner un ordre de grandeur : savoir si l'on parle de milliers ou de millions de tonnes</option>
+      <option>à rien, puisqu'elle n'est pas exacte</option>
+      <option>à remplacer une mesure officielle</option>
+      <option>à convaincre plus facilement</option></select></div>
+
+  <h4>b) Ton estimation, et son avertissement</h4>
+  <div class="assoc">
+    <label for="a2_estim">Écris <b>le ratio</b>, <b>l'estimation obtenue</b>, puis
+    <b>l'avertissement méthodologique</b> qui doit l'accompagner — celui que tu écrirais dans la
+    cellule à côté du résultat.</label>
+    <textarea id="a2_estim" style="min-height:130px" aria-label="Le ratio, l'estimation, et l'avertissement méthodologique"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <ul>
+      <li>«&nbsp;Ratio&nbsp;: ____ ÷ ____ ≈ ____ tonnes de CO₂ par hectare.&nbsp;»</li>
+      <li>«&nbsp;Estimation&nbsp;: 50 000 × ____ ≈ ____ tonnes.&nbsp;»</li>
+      <li>«&nbsp;Attention&nbsp;: cette valeur est ____. Elle ne tient pas compte de ____.&nbsp;»</li>
+      <li>«&nbsp;Elle ne doit pas être présentée comme ____.&nbsp;»</li>
+    </ul></details>
+  <button class="btn small" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <p class="feedback" id="fb2" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Un <b>proxy</b>, c'est une valeur qu'on emprunte parce qu'on n'a pas la vraie. On a le droit
+    de s'en servir — à condition de dire qu'on l'a empruntée.</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>Ton avertissement doit répondre à trois questions&nbsp;: <b>d'où vient</b> le ratio (quel
+    territoire, quelle année)&nbsp;? <b>Qu'est-ce qu'il ignore</b>&nbsp;? <b>Comment ne faut-il pas
+    présenter</b> le résultat&nbsp;?</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <p><b>Ratio</b>&nbsp;: 20 000 000 ÷ 504 002 ≈ <b>39,68 tCO₂/ha</b>.</p>
+    <p><b>Estimation</b>&nbsp;: 50 000 × 39,68 ≈ <b>1,98 million de tonnes de CO₂</b>.</p>
+    <p><b>Avertissement</b>&nbsp;: «&nbsp;Estimation par proxy européen 2023, <b>non officielle</b>
+    pour la France 2026. Elle ne tient pas compte du type de végétation, de l'humidité, de la
+    sévérité du feu, de la biomasse réellement consumée, ni du devenir du carbone après le
+    feu.&nbsp;»</p>
+    <p class="retenir">📌 Une estimation n'est <b>ni une mesure, ni un mensonge</b>. C'est un ordre
+    de grandeur, et elle vaut exactement ce que valent les hypothèses qu'on annonce avec elle. Une
+    estimation sans avertissement devient une affirmation&nbsp;: c'est là qu'elle devient fausse.</p>
+  </details>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: écrire le résultat sans l'avertissement. Le
+  chiffre voyagera seul — c'est toujours ce qui arrive — et deviendra «&nbsp;les feux français ont
+  émis 2 millions de tonnes&nbsp;».</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+<section class="card">
+  <h2>⚖️ Activité 3 — Comparer sans confondre les périmètres <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
+  <div class="meta"><b>Objectif</b> rendre une quantité lisible sans faire croire que les phénomènes
+  sont identiques. · <b>Compétence</b> 4e_C1.2 · <b>Production</b> quatre équivalences et leur
+  question critique · <b>Ressources</b> les facteurs ADEME du fichier.</div>
+
+  <p>1,98 million de tonnes, personne ne se le représente. On traduit donc en choses connues — mais
+  <b>chaque facteur a son périmètre</b>, et c'est là qu'on se trompe.</p>
+  <table>
+    <tr><th>Activité</th><th>Facteur ADEME</th><th>La question critique</th></tr>
+    <tr><td>Voiture thermique diesel</td><td>0,142 kgCO₂e/km</td><td>le facteur inclut-il la
+      <b>fabrication</b> du véhicule&nbsp;?</td></tr>
+    <tr><td>TGV</td><td>0,00293 kgCO₂e/<b>passager</b>-km</td><td>compare-t-on un
+      <b>véhicule</b>-km ou un <b>passager</b>-km&nbsp;?</td></tr>
+    <tr><td>Avion moyen-long courrier</td><td>0,167 kgCO₂e/passager-km</td><td>les <b>traînées de
+      condensation</b> sont-elles incluses&nbsp;?</td></tr>
+    <tr><td>Repas avec du bœuf</td><td>4,97 kgCO₂e/repas</td><td>un «&nbsp;repas type&nbsp;»
+      représente-t-il tous les régimes&nbsp;?</td></tr>
+  </table>
+  <div class="assoc"><label for="a3_1">Comparer le facteur «&nbsp;voiture, par km&nbsp;» au facteur «&nbsp;TGV, par passager-km&nbsp;» directement&nbsp;:</label>
+    <select id="a3_1"><option value="">— choisir —</option>
+      <option>est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent</option>
+      <option>est correct, ce sont deux moyens de transport</option>
+      <option>est correct si on arrondit</option>
+      <option>est impossible à calculer</option></select></div>
+  <div class="assoc"><label for="a3_2">Le titre du graphique doit contenir le mot&nbsp;:</label>
+    <select id="a3_2"><option value="">— choisir —</option>
+      <option>« équivalences » — et surtout pas « mêmes impacts »</option>
+      <option>« mêmes impacts »</option>
+      <option>« comparaison exacte »</option>
+      <option>« pollution »</option></select></div>
+  <div class="assoc"><label for="a3_3">Dire «&nbsp;les feux ont émis autant que 14 milliards de km en voiture&nbsp;» signifie&nbsp;:</label>
+    <select id="a3_3"><option value="">— choisir —</option>
+      <option>que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent</option>
+      <option>que les feux et la voiture ont le même effet sur l'environnement</option>
+      <option>qu'il faudrait interdire la voiture</option>
+      <option>que les feux ne sont pas graves</option></select></div>
+  <div class="assoc"><label for="a3_4">L'intérêt d'une équivalence est&nbsp;:</label>
+    <select id="a3_4"><option value="">— choisir —</option>
+      <option>de rendre une quantité lisible par quelqu'un qui n'a aucune idée de ce qu'est une mégatonne</option>
+      <option>de prouver un point de vue</option>
+      <option>de remplacer le chiffre d'origine</option>
+      <option>de simplifier le calcul</option></select></div>
+  <div class="assoc"><label for="a3_5">Une évolution technologique — ici, la détection automatisée — apporte&nbsp;:</label>
+    <select id="a3_5"><option value="">— choisir —</option>
+      <option>des avantages ET des inconvénients, qu'il faut nommer tous les deux</option>
+      <option>uniquement des avantages, sinon on ne l'adopterait pas</option>
+      <option>uniquement des inconvénients</option>
+      <option>ni l'un ni l'autre : c'est neutre</option></select></div>
+
+  <h4>Tes quatre équivalences</h4>
+  <div class="assoc">
+    <label for="a3_equiv">Calcule les <b>quatre</b> équivalences à partir de 1,98 MtCO₂, et écris
+    <b>une ligne par activité</b>&nbsp;: le résultat, <b>son unité exacte</b>, et <b>la question
+    critique</b> qui l'accompagne.</label>
+    <textarea id="a3_equiv" style="min-height:150px" aria-label="Quatre équivalences avec leur unité exacte et leur question critique"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — la structure est donnée</summary>
+    <ul>
+      <li>«&nbsp;Voiture&nbsp;: ____ km. Question&nbsp;: ____&nbsp;?&nbsp;»</li>
+      <li>«&nbsp;TGV&nbsp;: ____ <b>passager</b>-km. Question&nbsp;: ____&nbsp;?&nbsp;»</li>
+      <li>«&nbsp;Avion&nbsp;: ____ <b>passager</b>-km. Question&nbsp;: ____&nbsp;?&nbsp;»</li>
+      <li>«&nbsp;Repas&nbsp;: ____ repas. Question&nbsp;: ____&nbsp;?&nbsp;»</li>
+    </ul></details>
+  <button class="btn small" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <p class="feedback" id="fb3" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Convertis d'abord 1,98 Mt en <b>kg</b> (1 t = 1 000 kg), puis divise par chaque facteur. Et
+    recopie l'unité du facteur <b>telle quelle</b> dans ta réponse.</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>1,98 Mt = 1 980 000 t = 1 980 000 000 kg. Divise par 0,142 pour la voiture. Et n'oublie pas
+    que deux des quatre facteurs sont en <b>passager</b>-km&nbsp;: ton résultat l'est aussi.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <object class="fig" data="Images/corrige_equivalences_et_perimetres.svg" type="image/svg+xml"
+      aria-label="Les quatre équivalences avec leur résultat, leur unité exacte et leur question critique, et l'avertissement sur le mot équivalence">Corrigé des équivalences</object>
+    <p>À partir de 1,98 MtCO₂&nbsp;: environ <b>14,0 milliards de km</b> en voiture thermique,
+    <b>677 milliards de passager-km</b> en TGV, <b>11,9 milliards de passager-km</b> en avion
+    moyen-long courrier, ou <b>399 millions de repas</b> avec du bœuf.</p>
+    <p class="retenir">📌 Ces équivalences rendent une quantité <b>plus lisible</b>&nbsp;; elles ne
+    rendent pas les phénomènes <b>identiques</b>. Un feu de forêt et un trajet en voiture n'ont ni
+    la même durée, ni les mêmes effets locaux, ni la même réversibilité.</p>
+    <p><b>Et les avantages ne vont jamais seuls</b> (4e_C1.2)&nbsp;: la détection automatisée fait
+    gagner du temps, et elle apporte des fausses alertes, un coût, une consommation d'énergie, et
+    des caméras qui regardent aussi ce qui n'est pas la forêt.</p>
+  </details>
+  <p class="piege">⚠️ <b>Piège classique</b>&nbsp;: écrire «&nbsp;autant que 677 milliards de km en
+  TGV&nbsp;». Le facteur est en <b>passager</b>-km. Oublier le mot, c'est multiplier l'erreur par le
+  nombre de places du train.</p>
+</section>
+</div>
+
+<div class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+<section class="card">
+  <h2>🎯 Activité 4 — Du nombre au besoin technique <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+  <div class="meta"><b>Objectif</b> transformer un constat chiffré en exigences vérifiables.
+  · <b>Compétences</b> 4e_C1.1 · 4e_C1.3 · <b>Production</b> cinq exigences mesurables
+  · <b>Ressources</b> les activités précédentes, et ta mesure de température.</div>
+
+  <p>On sait maintenant de quelle ampleur est le problème. Reste le geste qui fait basculer du
+  constat au projet&nbsp;: <b>écrire ce que le système devra faire</b>. Sans choisir aucun
+  composant — c'est le Thème 2 qui s'en chargera.</p>
+  <table>
+    <tr><th>Besoin ou difficulté</th><th>Information nécessaire</th><th>Contrainte à formuler</th></tr>
+    <tr><td>Détecter tôt</td><td>température, fumée, image, vent</td><td>temps de détection maximal</td></tr>
+    <tr><td>Limiter les fausses alertes</td><td>croisement de plusieurs indices</td><td>seuil de confiance</td></tr>
+    <tr><td>Transmettre depuis une zone isolée</td><td>position, heure, niveau d'alerte</td><td>portée et continuité</td></tr>
+    <tr><td>Fonctionner longtemps</td><td>niveau de batterie</td><td>autonomie minimale</td></tr>
+  </table>
+  <div class="assoc"><label for="a4_1">Ta mesure de la cour — plus de 10 °C d'écart entre l'ombre et le soleil — justifie&nbsp;:</label>
+    <select id="a4_1"><option value="">— choisir —</option>
+      <option>de croiser plusieurs indices : un seuil de température seul déclencherait tous les jours d'été</option>
+      <option>de placer le capteur à l'ombre uniquement</option>
+      <option>d'augmenter le seuil à 50 °C</option>
+      <option>de renoncer à mesurer la température</option></select></div>
+  <div class="assoc"><label for="a4_2">Une <b>exigence vérifiable</b> se reconnaît à ce qu'elle&nbsp;:</label>
+    <select id="a4_2"><option value="">— choisir —</option>
+      <option>peut être contrôlée par une mesure ou un test qui répond par oui ou par non</option>
+      <option>est écrite en termes techniques</option>
+      <option>contient toujours un nombre</option>
+      <option>désigne le composant à utiliser</option></select></div>
+  <div class="assoc"><label for="a4_3">«&nbsp;Installer une caméra thermique&nbsp;» est&nbsp;:</label>
+    <select id="a4_3"><option value="">— choisir —</option>
+      <option>une solution, pas une exigence : elle désigne déjà le moyen</option>
+      <option>une exigence vérifiable</option>
+      <option>une contrainte réglementaire</option>
+      <option>un besoin</option></select></div>
+  <div class="assoc"><label for="a4_4">Pourquoi le système ne doit-il pas décider seul de l'alerte&nbsp;?</label>
+    <select id="a4_4"><option value="">— choisir —</option>
+      <option>parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des secours</option>
+      <option>parce que les machines sont toujours moins fiables que les humains</option>
+      <option>parce que c'est interdit</option>
+      <option>parce que cela coûte moins cher</option></select></div>
+  <div class="assoc"><label for="a4_5">«&nbsp;L'absence de donnée prouve qu'il n'y a pas de feu&nbsp;» est&nbsp;:</label>
+    <select id="a4_5"><option value="">— choisir —</option>
+      <option>faux : un capteur en panne, hors de portée ou déchargé ne transmet rien non plus</option>
+      <option>vrai, si le système fonctionne</option>
+      <option>vrai la nuit seulement</option>
+      <option>sans rapport avec la conception du système</option></select></div>
+
+  <h4>Tes cinq exigences</h4>
+  <div class="assoc">
+    <label for="a4_exig">Rédige <b>cinq exigences vérifiables</b>. Chacune doit pouvoir être
+    <b>contrôlée</b>, et <b>ne doit désigner aucun composant</b>. Un exemple t'est
+    donné&nbsp;: «&nbsp;Le système doit transmettre une alerte horodatée en moins de 30 secondes
+    après confirmation par deux indices indépendants.&nbsp;»</label>
+    <textarea id="a4_exig" style="min-height:160px" aria-label="Cinq exigences vérifiables, sans désigner de composant"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — la structure est donnée</summary>
+    <ul>
+      <li>«&nbsp;Le système doit détecter ____ en moins de ____.&nbsp;»</li>
+      <li>«&nbsp;Le système doit confirmer une alerte par ____ indices avant de ____.&nbsp;»</li>
+      <li>«&nbsp;Le système doit transmettre ____ à une distance d'au moins ____.&nbsp;»</li>
+      <li>«&nbsp;Le système doit fonctionner ____ sans intervention.&nbsp;»</li>
+      <li>«&nbsp;Le système doit permettre à un opérateur de ____.&nbsp;»</li>
+    </ul></details>
+  <button class="btn small" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+  <p class="feedback" id="fb4" role="status"></p>
+  <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+    <p>Commence chaque phrase par «&nbsp;Le système doit…&nbsp;» et termine-la par une valeur ou une
+    condition qu'on peut <b>contrôler</b>.</p></details>
+  <details class="aide aide2"><summary>🪜 Aide de niveau 2</summary>
+    <p>Test&nbsp;: pour chaque exigence, demande-toi <b>«&nbsp;comment je vérifie&nbsp;?&nbsp;»</b>
+    Si tu ne sais pas répondre, l'exigence n'est pas vérifiable. Et si ta phrase contient le nom
+    d'un composant — caméra, capteur, LoRa —, tu as écrit une solution.</p></details>
+  <details class="correction"><summary>✅ Correction complète</summary>
+    <object class="fig" data="Images/corrige_du_nombre_a_l_exigence.svg" type="image/svg+xml"
+      aria-label="La chaîne du raisonnement, de la donnée publique à l'exigence vérifiable, avec l'incertitude qui s'ajoute à chaque étape">Corrigé de la chaîne du raisonnement</object>
+    <p><b>Cinq exigences possibles</b> — d'autres formulations conviennent, pourvu qu'elles soient
+    contrôlables et sans composant&nbsp;:</p>
+    <ol>
+      <li>Le système doit <b>signaler un départ de feu en moins de 10 minutes</b> après son début.</li>
+      <li>Le système doit <b>confirmer par au moins deux indices indépendants</b> avant d'émettre une
+      alerte.</li>
+      <li>Le système doit <b>transmettre une alerte horodatée et localisée</b> depuis une zone sans
+      réseau téléphonique, à au moins 5 km.</li>
+      <li>Le système doit <b>fonctionner 6 mois sans intervention humaine</b>.</li>
+      <li>Le système doit <b>permettre à un opérateur de vérifier et d'annuler</b> une alerte avant
+      l'engagement des secours.</li>
+    </ol>
+    <p class="retenir">📌 Une exigence dit <b>ce qu'il faut obtenir et comment on le vérifie</b>.
+    Une solution dit <b>avec quoi</b>. Passer de l'une à l'autre trop tôt, c'est choisir avant
+    d'avoir cherché — et le Thème 2 n'aura plus rien à explorer.</p>
+    <p><b>Et l'exigence n°5 n'est pas une politesse.</b> Une alerte automatique engage des moyens de
+    secours réels. Le système propose&nbsp;; un humain décide.</p>
+  </details>
+</section>
+
+<section class="card">
+  <h2>🛡️ Garde-fous humains</h2>
+  <ul>
+    <li>Une <b>alerte automatique doit pouvoir être vérifiée</b> par un opérateur.</li>
+    <li>Une <b>caméra tournée vers une forêt</b> ne doit pas devenir un outil de surveillance
+    injustifiée des personnes.</li>
+    <li>Une <b>absence de donnée n'est pas la preuve d'une absence de feu</b>&nbsp;: elle peut être
+    une panne, une batterie vide, une zone hors de portée.</li>
+    <li>La <b>prévention et les comportements humains</b> restent indispensables&nbsp;: la
+    technologie ne remplace ni la vigilance ni les secours.</li>
+  </ul>
+  <p class="meta">🖥️ <b>CRCN 1.3 — Traiter des données, niveau 2.</b> Repère pour enseigner,
+  verbatim&nbsp;: «&nbsp;Insérer, saisir et trier des données dans un tableur pour les
+  exploiter.&nbsp;» <b>Action observable</b>&nbsp;: importer le CSV, insérer des colonnes, saisir
+  les statuts, filtrer, écrire les formules, produire un graphique. <b>Trace</b>&nbsp;: le fichier
+  transformé et l'export avec avertissement méthodologique.<br>
+  <b>Principe</b>&nbsp;: utiliser un ordinateur n'est pas une compétence — la compétence est
+  démontrée par les <b>transformations</b> et les <b>traces</b>.</p>
+</section>
+
+<section class="card">
+  <h2>🧩 Bilan <span style="color:var(--sub);font-size:.8em">(~10 min)</span></h2>
+  <div id="rappelHyp" style="display:none">
+    <p class="meta">💭 <b>Ton hypothèse de départ était</b>&nbsp;:</p>
+    <p id="hypRappelTxt" style="color:var(--warn)"></p>
+  </div>
+  <div class="assoc">
+    <label for="hyp_retour">Relis ton hypothèse. Avais-tu pensé aux <b>fausses alertes</b>&nbsp;?
+    Qu'aurais-tu ajouté&nbsp;?</label>
+    <textarea id="hyp_retour" aria-label="Retour sur ton hypothèse de départ"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="bilan1">En une phrase&nbsp;: pourquoi un système technique n'existe-t-il pas parce
+    qu'un capteur est disponible&nbsp;?</label>
+    <textarea id="bilan1" aria-label="Pourquoi un système n'existe pas parce qu'un capteur est disponible"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="bilan2">Qu'est-ce qui distingue une <b>estimation honnête</b> d'une estimation
+    trompeuse&nbsp;?</label>
+    <textarea id="bilan2" aria-label="Ce qui distingue une estimation honnête d'une estimation trompeuse"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="meta1">🧠 Quel chiffre de cette séquence t'a le plus surpris, et pourquoi&nbsp;?</label>
+    <textarea id="meta1" aria-label="Le chiffre le plus surprenant"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="meta2">🧠 À quel moment as-tu failli faire une opération qui n'avait pas de
+    sens&nbsp;?</label>
+    <textarea id="meta2" aria-label="Le moment où une opération sans sens a failli être faite"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="pos1">📍 <b>4e_C1.1</b> — <i>mettre en relation les OST avec leurs usages</i>&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je ne vois pas le lien entre les chiffres et le système</option>
+      <option>🟠 Maîtrise fragile — je le vois avec de l'aide</option>
+      <option>🟢 Maîtrise satisfaisante — je pars d'un usage pour dire ce que le système doit faire</option>
+      <option>⭐ Très bonne maîtrise — je remonte d'un chiffre public jusqu'à une exigence vérifiable</option>
+    </select>
+  </div>
+  <div class="assoc">
+    <label for="pos2">📍 <b>4e_C1.2</b> — <i>identifier les avantages et les inconvénients des
+    évolutions</i>&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je ne vois que les avantages</option>
+      <option>🟠 Maîtrise fragile — je cite un inconvénient si on me le demande</option>
+      <option>🟢 Maîtrise satisfaisante — je nomme les deux faces d'une évolution</option>
+      <option>⭐ Très bonne maîtrise — je repère aussi ce qu'une comparaison fait croire à tort</option>
+    </select>
+  </div>
+  <div class="assoc">
+    <label for="pos3">📍 <b>4e_C1.3</b> — <i>justifier l'évolution d'un OST pour répondre à
+    l'évolution des besoins</i>&nbsp;:</label>
+    <select id="pos3"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je décris l'objet sans dire pourquoi il a changé</option>
+      <option>🟠 Maîtrise fragile — je relie l'évolution à un besoin avec de l'aide</option>
+      <option>🟢 Maîtrise satisfaisante — j'écris des exigences qui découlent d'un besoin</option>
+      <option>⭐ Très bonne maîtrise — mes exigences sont vérifiables et ne désignent aucun composant</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>6 illustrées</b>, et chaque réponse
+  fausse y est expliquée. Elles se répartissent sur les <b>trois codes</b>.</p>
+  <p id="qcmPortee" role="status"></p>
+  <p style="text-align:center"><a class="btn" id="lienQcm" href="qcm_4e_C1.1-C1.3_tsinghua.html">🔥 Lancer le QCM</a></p>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <ol>
+    <li><b>Adapter à la Martinique.</b> Les feux de forêt y sont rares, mais les <b>cyclones</b> et
+    les <b>fortes pluies</b> ne le sont pas. Quelles exigences changerais-tu pour un système
+    d'alerte adapté à Sainte-Luce&nbsp;?</li>
+    <li><b>Sans caméra.</b> Propose une stratégie de détection qui <b>ne collecte aucune image</b>.
+    Qu'y gagne-t-on, et qu'y perd-on&nbsp;?</li>
+    <li><b>L'équivalence retournée.</b> Trouve une équivalence qui ferait paraître 1,98 MtCO₂
+    <b>énorme</b>, puis une autre qui le ferait paraître <b>négligeable</b>. Les deux seront
+    exactes. Qu'en conclus-tu&nbsp;?</li>
+  </ol>
+  <details class="correction"><summary>✅ Corrigé du Bonus</summary>
+    <p><b>1 · La Martinique.</b> Le besoin change de nature&nbsp;: on ne détecte plus un départ de
+    feu mais une <b>montée d'eau</b> ou un <b>vent excessif</b>. Les exigences de portée et
+    d'autonomie restent&nbsp;; celles de délai se durcissent (une crue peut être très rapide) ; et
+    une nouvelle apparaît&nbsp;: <b>le système doit continuer à fonctionner quand le réseau
+    électrique est coupé</b>, ce qui est le cas courant en cyclone. Noter que la contrainte
+    dominante n'est plus la détection, mais la <b>survie du système lui-même</b>.</p>
+    <p><b>2 · Sans caméra.</b> On peut croiser température, <b>humidité de l'air</b>, particules de
+    fumée et vitesse du vent. <b>Ce qu'on y gagne</b>&nbsp;: aucune image de personnes n'est
+    collectée, la question de la vie privée disparaît, les données sont bien plus légères à
+    transmettre — donc l'autonomie augmente. <b>Ce qu'on y perd</b>&nbsp;: la <b>levée de doute</b>.
+    Une image permet à un opérateur de vérifier en trois secondes ; sans elle, il faut envoyer
+    quelqu'un. C'est un arbitrage réel, et il n'a pas de bonne réponse universelle.</p>
+    <p><b>3 · L'équivalence retournée.</b> 1,98 MtCO₂, c'est environ <b>399 millions de repas avec
+    du bœuf</b> — un chiffre qui paraît colossal. C'est aussi environ <b>0,5 % des émissions
+    annuelles de la France</b> (de l'ordre de 400 MtCO₂e) — un chiffre qui paraît minuscule. <b>Les
+    deux sont exacts.</b> On en conclut qu'une équivalence n'est jamais neutre&nbsp;: le choix du
+    terme de comparaison oriente la conclusion, avant même qu'on ait discuté. Lire une équivalence,
+    c'est donc toujours demander <b>pourquoi celle-là</b>.</p>
+  </details>
+</section>
+</div>
+</main>
+</div>
+<script>
+"use strict";
+const KEY="seq_4e_C1_tsinghua_feux";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Lecture des productions écrites ══════ */
+/* Règle n°49 : on teste ce qui est RENDU. Les accents et les apostrophes sont
+   normalisés — un contrôle qui cherche « mouillée » et reçoit « mouillee »
+   refuse une bonne réponse, et c'est le contrôle qui a tort (n°50). */
+const bas = t => t.toLowerCase()
+  .normalize("NFD").replace(/[̀-ͯ]/g,"")
+  .replace(/[’']/g,"'");
+const lignes = t => t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+/* un nombre isolé : ni précédé ni suivi d'un autre chiffre ; virgule ou point. */
+const nombre = (t, ent, dec) =>
+  new RegExp("(?:^|[^0-9,.])"+ent+"[.,]"+dec+"(?![0-9])").test(t);
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"seulement si elles ont la même unité et le même sens",
+               be_2:"une proportion : il faut savoir de quel ensemble il est la part",
+               be_3:"ne se valent pas : une estimation est calculée à partir d'autre chose, et elle doit annoncer ses limites"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🔥 Tes trois réflexes sont là : ouvre le fichier.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+
+  /* Activité 1 — lire avant de calculer */
+  1: function(){
+    const att={a1_1:"ce sont trois grandeurs différentes : une surface cumulée, un état instantané, une proportion",
+               a1_2:"un cumul, et un minimum annoncé : la surface réelle est au moins celle-là",
+               a1_3:"un état instantané : le nombre à un moment donné, qui aura changé le lendemain",
+               a1_4:"dire de quelle NATURE est chaque chiffre — c'est elle qui empêche les additions absurdes",
+               a1_5:"parce qu'un chiffre sans source ne peut être ni vérifié ni discuté"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+
+    /* a) la mesure de la cour : deux températures, un écart, et l'effet d'un seuil */
+    const m = val("a1_mesure"), bm = bas(m);
+    const temps = (bm.match(/\d+[.,]?\d*\s*(?:°|deg|c\b)/g)||[]).length;
+    const ecart = /ecart|difference|de plus|entre les deux/.test(bm);
+    const seuil = /fausse|alerte|declench|tous les jours|se declencher|tout l'ete|en ete/.test(bm);
+    const mesureOk = temps >= 2 && ecart && seuil;
+
+    /* b) les trois natures nommées, une par ligne */
+    const t = val("a1_just"), b = bas(t);
+    const cumul = /cumul|total|depuis le|somme|minimum/.test(b);
+    const instant = /instantan|a un moment|ce jour|en cours|a l'instant/.test(b);
+    const propor = /proportion|pourcentage|part de|part des/.test(b);
+    const natures = [cumul, instant, propor].filter(Boolean).length;
+    const pourquoi = /unite|sens|nature|pas la meme|differente/.test(b);
+    const justOk = lignes(t) >= 3 && natures === 3 && pourquoi && t.trim().length >= 140;
+
+    let manque = "";
+    if(!mesureOk){
+      manque = " Commence par la mesure : il faut TES DEUX températures, leur ÉCART, et ce que produirait un seuil à 40 °C dans ta cour.";
+      if(temps >= 2 && ecart && !seuil)
+        manque = " Tu as les deux températures et l'écart. Il manque la conséquence : avec un seuil à 40 °C, que se passerait-il dans ta cour un jour d'été, SANS aucun feu ?";
+    } else if(!justOk){
+      manque = " Tes trois lignes doivent nommer la NATURE de chaque chiffre — un cumul, un état instantané, une proportion — et dire pourquoi l'addition n'a pas de sens.";
+      if(natures === 2)
+        manque = " Il te manque une des trois natures. Relis la colonne « statut » du fichier : elle les nomme.";
+    }
+    return {score:ok,total:5,valide: ok>=4 && mesureOk && justOk, extra: manque};
+  },
+
+  /* Activité 2 — estimer, et dire ce que l'estimation vaut */
+  2: function(){
+    const att={a2_1:"un proxy : une valeur empruntée à un autre contexte, faute de mieux",
+               a2_2:"1,98 million de tonnes de CO₂",
+               a2_3:"le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée",
+               a2_4:"malhonnête : ce n'est pas une mesure, c'est un ordre de grandeur emprunté à un autre territoire et une autre année",
+               a2_5:"à donner un ordre de grandeur : savoir si l'on parle de milliers ou de millions de tonnes"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a2_estim"), b = bas(t);
+    /* le ratio et l'estimation, en chiffres */
+    const ratio = nombre(b,"39","6") || nombre(b,"39","7") || /39[.,]68|39,7|39\.7/.test(b);
+    const estim = /1[.,]98|1 98|1980000|1 980 000|1,9 million|1\.9 million/.test(b);
+    /* l'avertissement : d'où vient le proxy, ce qu'il ignore, comment ne pas le présenter */
+    const origine = /europe|2023|effis|emprunt|proxy|autre annee|autre territoire/.test(b);
+    const ignore = /vegetation|humidite|severite|biomasse|carbone|ne tient pas compte|ignore/.test(b);
+    const interdit = /officiel|ne doit pas|pas une mesure|non officiel|ne pas presenter/.test(b);
+    const avert = origine && ignore && interdit;
+    const complet = ratio && estim && avert && t.trim().length >= 160;
+    let manque = "";
+    if(!complet){
+      manque = " Il faut LE RATIO, L'ESTIMATION, et un AVERTISSEMENT qui dit d'où vient le ratio, ce qu'il ignore, et comment le résultat ne doit pas être présenté.";
+      if(ratio && estim && !avert){
+        manque = " Tes deux chiffres sont là. L'avertissement, lui, est incomplet — il doit répondre à TROIS questions.";
+        if(!origine) manque += " D'où vient le ratio ? (quel territoire, quelle année)";
+        if(!ignore) manque += " Qu'est-ce qu'il ne prend pas en compte ?";
+        if(!interdit) manque += " Comment le résultat ne doit-il PAS être présenté ?";
+      }
+    }
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 3 — comparer sans confondre les périmètres */
+  3: function(){
+    const att={a3_1:"est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent",
+               a3_2:"« équivalences » — et surtout pas « mêmes impacts »",
+               a3_3:"que les quantités de CO₂ sont du même ordre — pas que les deux phénomènes se ressemblent",
+               a3_4:"de rendre une quantité lisible par quelqu'un qui n'a aucune idée de ce qu'est une mégatonne",
+               a3_5:"des avantages ET des inconvénients, qu'il faut nommer tous les deux"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_equiv"), b = bas(t);
+    /* les quatre activités doivent être présentes */
+    const quatre = [/voiture/, /tgv|train/, /avion/, /repas|boeuf/].filter(r=>r.test(b)).length;
+    /* les ordres de grandeur */
+    const chiffres = [/\b14\b|13[.,]9|14[.,]0/, /677|676/, /11[.,]9|12 milliard/, /399|400 million/]
+                       .filter(r=>r.test(b)).length;
+    /* l'unité « passager-km » doit apparaître : c'est le cœur de l'activité */
+    const passager = /passager[- ]?km|par passager/.test(b);
+    /* et une question critique par ligne */
+    const questions = (t.match(/\?/g)||[]).length;
+    const complet = lignes(t) >= 4 && quatre === 4 && chiffres >= 3 && passager && questions >= 4;
+    let manque = "";
+    if(quatre < 4)
+      manque = " Il manque des activités : on en attend QUATRE — voiture, TGV, avion, repas.";
+    else if(!passager)
+      manque = " L'unité « passager-km » n'apparaît nulle part. C'est pourtant l'essentiel : deux des quatre facteurs comptent une PERSONNE et non un véhicule. Écrire « 677 milliards de km en TGV » multiplie l'erreur par le nombre de places du train.";
+    else if(chiffres < 3)
+      manque = " Il manque des résultats chiffrés. Convertis d'abord 1,98 Mt en kilogrammes, puis divise par chaque facteur.";
+    else if(questions < 4)
+      manque = " Chaque ligne doit porter SA question critique — celle qui dit ce que le facteur pourrait cacher. Il en manque.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 4 — du nombre au besoin technique */
+  4: function(){
+    const att={a4_1:"de croiser plusieurs indices : un seuil de température seul déclencherait tous les jours d'été",
+               a4_2:"peut être contrôlée par une mesure ou un test qui répond par oui ou par non",
+               a4_3:"une solution, pas une exigence : elle désigne déjà le moyen",
+               a4_4:"parce qu'une alerte automatique doit pouvoir être vérifiée par un opérateur avant d'engager des secours",
+               a4_5:"faux : un capteur en panne, hors de portée ou déchargé ne transmet rien non plus"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a4_exig"), b = bas(t);
+    const n = lignes(t);
+    /* chaque exigence doit être contrôlable : une valeur, un délai, une durée, une distance */
+    const mesurables = (b.match(/\d+\s*(?:s\b|seconde|min|minute|h\b|heure|jour|mois|an\b|km|m\b|%|indice)/g)||[]).length;
+    /* et ne doit désigner aucun composant : c'est le geste du niveau */
+    const composants = /camera|capteur dht|lora|sigfox|arduino|raspberry|microcontroleur|thermocouple|drone/.test(b);
+    /* la garde humaine doit figurer */
+    const humain = /operateur|humain|verifier|annuler|confirmation humaine|pompier|secours/.test(b);
+    const complet = n >= 5 && mesurables >= 3 && !composants && humain && t.trim().length >= 220;
+    let manque = "";
+    if(n < 5)
+      manque = " Il faut CINQ exigences, une par ligne. Tu en as écrit " + n + ".";
+    else if(composants)
+      manque = " Une de tes exigences nomme un composant — caméra, LoRa, microcontrôleur… Ce n'est plus une exigence, c'est une solution : tu as choisi le moyen avant d'avoir dit le but. Réécris-la en disant CE QU'IL FAUT OBTENIR.";
+    else if(mesurables < 3)
+      manque = " Tes exigences ne sont pas assez vérifiables : il faut des valeurs qu'on puisse contrôler — un délai, une durée, une distance, un nombre d'indices.";
+    else if(!humain)
+      manque = " Il manque l'exigence la plus importante, et ce n'est pas une politesse : une alerte automatique engage des secours réels. Un humain doit pouvoir vérifier, et annuler.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  }
+};
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle contient le corrigé complet, à comparer au tien."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 4 activités validées";
+  $("progFill").style.width = (n/4*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3], s4:[4]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches(); majQcm();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Lire", taches:[
+    {n:0, libelle:"Billet d'entrée : trois réflexes de lecture (sans note)"},
+    {n:1, libelle:"Mesurer dans la cour, puis nommer la nature de trois chiffres"}]},
+  s2:{titre:"Séance 2 — Estimer", taches:[
+    {n:2, libelle:"Construire l'estimation, et écrire son avertissement"}]},
+  s3:{titre:"Séance 3 — Comparer", taches:[
+    {n:3, libelle:"Quatre équivalences, avec leur unité exacte et leur question critique"}]},
+  s4:{titre:"Séance 4 — Exiger", taches:[
+    {n:4, libelle:"Cinq exigences vérifiables, sans nommer aucun composant"}]}
+};
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°45 — l'entraînement s'ouvre sur ce qui a été fait ══════ */
+/* Un seul bouton (n°4). Cette séquence ne porte qu'UN code : on ne peut pas
+   filtrer par compétence. Ce qui varie est le MOMENT — tant que la séquence
+   n'est pas terminée, le parcours court de dix questions est proposé en premier.
+   Le parcours complet reste à un clic : on choisit ce qu'on propose, on n'interdit rien. */
+function majQcm(){
+  const lien=$("lienQcm"), portee=$("qcmPortee");
+  if(!lien || !portee) return;
+  const v=window.__valid||{};
+  const faites=[1,2,3,4].filter(k=>v[k]);
+  const f="qcm_4e_C1.1-C1.3_tsinghua.html";
+  /* Quelle activité travaille quel code — c'est ce qui rend la cible possible. */
+  const CODES={1:"C1.1", 2:"C1.1", 3:"C1.2", 4:"C1.3"};
+  if(faites.length===0){
+    lien.href=f+"#depart=court";
+    lien.textContent="🔥 Commencer par 10 questions";
+    portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un "+
+      "<b>parcours court de 10 questions</b>, pour te tester sans être submergé·e. "+
+      "Les 30 restent accessibles d'un clic dans le QCM.";
+  } else if(faites.length < 4){
+    const codes=[...new Set(faites.map(k=>CODES[k]))];
+    lien.href=f+"#codes="+codes.join(",");
+    lien.textContent="🔥 Réviser ce que j'ai déjà travaillé ("+codes.length+" compétence(s))";
+    portee.innerHTML="Tu as validé <b>"+faites.length+" activité(s) sur 4</b>. Le bouton ouvre les "+
+      "questions qui portent sur <b>"+codes.join(", ")+"</b> — celles-là seulement&nbsp;: on ne "+
+      "s'entraîne pas sur ce qu'on n'a pas encore fait. Le parcours complet t'attend à la fin.";
+  } else {
+    lien.href=f;
+    lien.textContent="🔥 Lancer le QCM complet (30 questions)";
+    portee.innerHTML="Tu as terminé les quatre activités&nbsp;: <b>les trois compétences ont été "+
+      "travaillées</b>, le parcours complet est maintenant à ta portée.";
+  }
+}
+
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>

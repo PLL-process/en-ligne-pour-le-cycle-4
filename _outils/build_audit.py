@@ -142,6 +142,40 @@ OVERLAY = {
                 "dans la séquence cybersécurité 4e_C1.4 : cyberviolence, vie privée).",
         anomalies="Créer au minimum un README pointeur vers 4e_C1.4 ou une déclinaison 5e.",
     ),
+    "4e_C1.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Tsinghua : concevoir avant de connecter » (Fable, 09/08/2026), REFONTE — "
+                "4 séances portant 4e_C1.1 à C1.3, QCM 30 q dont 6 illustrées, 2 synthèses, fiche, "
+                "matrice, 2 corrigés graphiques CC0, suite de 42 tests exécutés et verts. SEUL LOT "
+                "DU DÉPÔT bâti sur des données réelles et sourcées (ministère de l'Intérieur, "
+                "JRC/EFFIS, ADEME). Mesure de température au parcours obligatoire (règle n°58).",
+        anomalies="Aucune donnée n'est produite par les élèves sauf la température. Les chiffres "
+                  "sont datés de juillet 2026 et vieilliront — c'est déclaré, et posé comme un "
+                  "prolongement possible plutôt que comme un défaut.",
+        accessibilite="Vérifiée : étiquettes, alternatives, signalement non chromatique, "
+                      "title/desc sur les SVG, hors ligne intégral.",
+        medias="2 SVG originaux CC0 (1 874 et 1 529 car. de description). Aucune photographie.",
+    ),
+    "4e_C1.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C1.1",
+        qualite="Travaillé en séance 3 du lot Tsinghua : quatre équivalences et leurs périmètres, "
+                "puis les deux faces d'une évolution technique. 9 questions au QCM.",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "4e_C1.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C1.1",
+        qualite="Travaillé en séance 4 du lot Tsinghua : cinq exigences vérifiables, sans nommer "
+                "aucun composant, et la garde humaine comme exigence. 9 questions au QCM.",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
     "4e_C1.4": dict(
         statut="EXISTANT À AMÉLIORER",
         sequence=True, qcm=True, projet=False, synthese=True,

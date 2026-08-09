@@ -3851,3 +3851,37 @@ Un refus qui n'aide pas l'élève à repartir n'est pas un vérificateur, c'est 
 
 36 tests exécutés, 36 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **27 à 28 codes
 COMPLET ET VALIDABLE**, et le décompte des séquences mécaniquement propres passe de 5 à 7.
+
+---
+
+### Lot livré — 4e_C1.1 à C1.3 « Tsinghua : concevoir avant de connecter » (refonte)
+
+**Le seul lot du dépôt bâti sur des données réelles et sourcées** : ministère de l'Intérieur,
+JRC/EFFIS, ADEME Impact CO₂. Partout ailleurs nos jeux de données sont simulés — ce qui est
+confortable, parce qu'on les range avant de les donner. Ici les unités ne se parlent pas, les
+statuts sont hétérogènes et les périmètres incompatibles. **C'est ce qui fait le travail.**
+
+**Ce que la refonte n'a pas touché.** Le fond. La leçon des unités, le proxy assumé, les quatre
+équivalences et leurs périmètres, les garde-fous humains, le bloc CRCN — tout est passé
+intégralement. L'audit du 8 août ne signalait qu'un motif, l'absence totale de champs de saisie
+(n°67), et il avait raison ; mais il aurait été absurde de jeter le contenu avec la mécanique.
+
+**Une leçon d'humilité, consignée parce qu'elle vaut.** Le bloc CRCN de la version précédente
+portait cette phrase : «&nbsp;utiliser un ordinateur n'est pas une compétence&nbsp;; la compétence
+est démontrée par les transformations et les traces&nbsp;». C'est **exactement la règle n°60**, que
+j'ai écrite le 8 août à partir d'un audit extérieur, en croyant la découvrir. Elle était déjà dans
+le dépôt, dans une séquence que je m'apprêtais à qualifier de défectueuse. **Le dépôt en savait plus
+que moi sur ce point précis.**
+
+**Ce que la refonte ajoute.** Les champs et les vérificateurs, une mesure de température dans la
+cour (n°58) qui justifie le croisement de deux indices — sans elle c'est une consigne, avec elle
+c'est une conclusion de l'élève —, deux corrigés graphiques, un QCM de 30 questions, deux synthèses,
+et **deux refus argumentés** : une exigence qui nomme un composant, et l'oubli du mot
+«&nbsp;passager&nbsp;» dans une équivalence.
+
+**Un défaut que seul un test pouvait voir.** Mon découpage du script coupait entre les vérificateurs
+et le bloc qui **attache les écouteurs aux boutons**. Cinq boutons muets, aucune erreur JavaScript,
+une page qui se charge parfaitement et ne répond à rien. Une relecture ne l'aurait jamais vu.
+
+42 tests exécutés, 42 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **28 à 29 codes
+COMPLET ET VALIDABLE**, et de 39 à 41 codes couverts par une séquence mutualisée.
