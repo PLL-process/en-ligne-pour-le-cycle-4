@@ -142,6 +142,52 @@ OVERLAY = {
                 "dans la séquence cybersécurité 4e_C1.4 : cyberviolence, vie privée).",
         anomalies="Créer au minimum un README pointeur vers 4e_C1.4 ou une déclinaison 5e.",
     ),
+    "3e_C1.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Tsinghua : robots, drones et IA face aux feux » (Fable, 09/08/2026), "
+                "REFONTE — 5 séances portant 3e_C1.1 à C1.4, QCM 30 q dont 11 illustrées, "
+                "2 synthèses, fiche, matrice, 3 corrigés graphiques CC0, suite de 41 tests "
+                "exécutés et verts. Données réelles et sourcées (Intérieur, JRC/EFFIS, ADEME, "
+                "PNUE). La version antérieure annonçait 4 codes et n'en servait qu'un : elle est "
+                "archivée, son contenu intégralement repris comme base factuelle.",
+        anomalies="Aucune.",
+        accessibilite="Étiquettes, alternatives textuelles longues sur les 3 SVG, signalement non "
+                      "chromatique, mode essentiel, 7 versions étayées.",
+        medias="3 SVG originaux CC0 produits pour ce lot.",
+    ),
+    "3e_C1.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C1.1",
+        qualite="Travaillé en séance 1 du lot Tsinghua 3e : la découverte de l'infrarouge par "
+                "Herschel en 1800, et les deux siècles qui la séparent du drone thermique. "
+                "7 questions au QCM.",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C1.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C1.1",
+        qualite="Travaillé en séance 5 du lot Tsinghua 3e : argumentaire court sur l'incidence de "
+                "l'objet technique sur la société, appuyé sur les faits des séances 2 à 4. "
+                "8 questions au QCM.",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
+    "3e_C1.4": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="3e_C1.1",
+        qualite="Travaillé en séances 4 et 5 du lot Tsinghua 3e : l'incommensurabilité de "
+                "certaines grandeurs, puis l'argumentaire sur l'incidence des contraintes "
+                "sociétales — trois natures exigées (règle, moyen, attente), chacune avec son "
+                "effet concret sur l'objet. 7 questions au QCM.",
+        anomalies="Aucune.", accessibilite="s.o.", medias="s.o.",
+    ),
     "4e_C1.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,

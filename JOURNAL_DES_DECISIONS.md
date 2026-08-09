@@ -3914,3 +3914,39 @@ chiffre unique.
 
 **Corollaire.** On ne va pas chercher ces données pour l'effet qu'elles produisent. On les emploie
 quand elles servent la leçon — ici, l'incommensurabilité — et jamais comme illustration.
+
+---
+
+## Lot 3e_C1.1 à C1.4 — refonte du 9 août 2026
+
+Troisième et dernière refonte de la série ouverte par l'audit du 8 août. Le lot « Tsinghua 3e »
+était signalé pour un motif mécanique — aucun champ de saisie — et la lecture en a révélé un plus
+grave&nbsp;: **il annonçait quatre codes et n'en servait qu'un**.
+
+**Ce que la confrontation au référentiel a montré.** Le mot «&nbsp;rupture&nbsp;» n'apparaissait
+nulle part, aucune découverte scientifique n'était nommée, les contraintes traitées étaient
+techniques et non sociétales, et aucun des quatre codes ne figurait dans la page. Son contenu —
+excellent — relevait en réalité du **traitement de données**, c'est-à-dire du C1 de 5e. Le lot était
+rangé sous les mauvais codes, ce qui est la forme la plus discrète du défaut de la règle n°63.
+
+**Ce qui a été fait.** Le contenu est conservé **intégralement** et devient la base factuelle. Deux
+séances neuves l'encadrent&nbsp;: les trois régimes de surveillance des feux et le critère de la
+rupture — *le métier change* — puis Herschel en 1800 et les deux siècles qui séparent sa mesure du
+drone qui l'utilise. Et deux argumentaires courts en production terminale, dans les deux sens.
+
+**Trois enseignements de méthode, notés pour la suite.**
+
+1. **Le dépôt savait déjà.** Le bloc CRCN de la version 4e portait la phrase «&nbsp;utiliser un
+   ordinateur n'est pas une compétence&nbsp;; la compétence est démontrée par les transformations
+   et les traces&nbsp;» — c'est-à-dire la règle n°60, que nous avons cru découvrir hier grâce à un
+   audit extérieur. Avant d'écrire une règle, il vaut la peine de chercher si le dépôt ne l'énonce
+   pas déjà quelque part.
+2. **La règle n°68 est née d'une réussite**, pas d'un incident. C'est la première du recueil dans ce
+   cas. Il faudra en chercher d'autres&nbsp;: nos règles viennent presque toutes de nos erreurs, ce
+   qui donne du recueil une image plus sombre que le dépôt ne le mérite.
+3. **Deux fois dans la journée, un `cd` résiduel a fait écrire hors du dépôt.** Sans conséquence —
+   les fichiers ont été récupérés et remis en place, jamais réécrits — mais c'est le genre de
+   dérive qui finit par coûter cher. Désormais&nbsp;: chemins absolus, et jamais de confiance
+   accordée au répertoire courant entre deux commandes.
+
+**Bilan de couverture** — le dépôt passe à **30 codes COMPLET ET VALIDABLE** et 26 « À CRÉER ».
