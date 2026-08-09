@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Modèle de scénario pour les TP de prise en main du dépôt en-ligne-pour-le-cycle-4. Démontre les règles d&#x27;or n°72 à n°82 : geste et retour d&#x27;écran séparés, aide décroissante, image du résultat, rituel d&#x27;enregistrement.">
+<title>Modèle de TP de prise en main — démonstration du format</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+
+  .palier{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    padding:14px 18px;margin:16px 0}
+  .palier > h2{margin-top:2px}
+  .niveau{float:right;font-size:.72em;padding:3px 10px;border-radius:999px;
+    border:1px solid var(--input-bd);color:var(--sub);font-weight:600}
+  .niveau.detaille{border-color:var(--hl);color:var(--hl)}
+  .niveau.allege{border-color:var(--warn);color:var(--warn)}
+  .niveau.resultat{border-color:var(--ok);color:var(--ok)}
+  ol.etapes{padding-left:22px;margin:10px 0}
+  ol.etapes > li{margin:12px 0}
+  .voir{display:block;color:var(--head);font-style:italic;margin-top:4px;
+    border-left:3px solid var(--head);padding-left:10px}
+  .btn-icone{height:1.35em;vertical-align:-.3em;margin:0 3px;border-radius:3px;
+    background:#fff;padding:1px}
+  .avertir{background:#3a2a0d;border:1px solid var(--warn);border-left-width:5px;
+    border-radius:8px;padding:9px 13px;margin:10px 0;color:#ffd8a0;font-size:.94em}
+  .avertir b{color:var(--warn)}
+  .capture{margin:10px 0}
+  .capture img{max-width:100%;height:auto;border:1px solid var(--input-bd);
+    border-radius:8px;background:#fff}
+  .capture figcaption{font-size:.88em;color:var(--sub);margin-top:6px}
+  .exemple-note{color:var(--warn);font-size:.88em;margin-top:4px}
+  .attendu{background:var(--panel2);border:1px solid var(--ok);border-radius:10px;
+    padding:11px 14px;margin:12px 0}
+  .attendu > b{color:var(--ok)}
+  .rituel{color:var(--sub);font-size:.92em;margin-top:10px}
+  .recompense{border-color:var(--ok)}
+  .critere{background:var(--panel2);border-left:4px solid var(--hl);
+    padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.94em}
+
+</style>
+</head>
+<body>
+<div class="page">
+<h1>🧭 Modèle de TP de prise en main</h1>
+<p class="sous">Ce document démontre le format. Il ne guide aucun logiciel réel — il montre comment on en guide un.</p>
+<div class="badges"><span class="badge niveau">modèle</span>
+<span class="badge code">tout logiciel</span><span class="badge theme">Règles n°72 à n°82</span><span class="badge theme">Ne pas distribuer aux élèves</span></div>
+<p class="legende-badges">🧭 <b>Comment lire ce TP.</b> En clair, <b>ce que tu fais</b>.
+En <span style="color:var(--head);font-style:italic">italique coloré, ce que tu dois voir se
+produire à l'écran</span> — si tu ne le vois pas, ne continue pas&nbsp;: reprends l'étape.
+Les encadrés orange préviennent des pièges. À la fin de chaque partie, une image te montre
+<b>ce que tu dois obtenir</b>&nbsp;: compare, tu n'as besoin de personne pour te corriger.</p>
+<section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>1 &middot; Ranger avant de commencer</h2><p>Règle n°79 : le premier geste d'un TP est un geste de rangement. Un travail qu'on ne retrouve pas à la séance suivante n'a pas eu lieu.</p><ol class="etapes"><li>Crée un dossier à ton nom, puis un sous-dossier au nom du TP.<span class="voir">Le chemin de ton dossier s'affiche en haut de la fenêtre : tu sauras le retrouver.</span></li><li>Enregistre le document sous le nom <code>imposé_par_le_professeur</code>.<span class="voir">Le nom du fichier remplace « sans titre » dans la barre de titre.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Le nom est imposé, et il n'y a pas d'accent dedans : certains postes de la salle refusent les accents dans les noms de fichiers.</div></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> ton nom apparaît dans le chemin du fichier, et tu saurais le retrouver les yeux fermés.</p><p class="rituel">💾 <b>Enregistre ton travail maintenant.</b> C'est le moment&nbsp;: si le poste redémarre, tu ne perds rien.</p></section><section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>2 &middot; Le premier geste, expliqué au clic près</h2><p>Règle n°72 : chaque étape dit ce qu'on FAIT, puis ce qu'on doit VOIR. Si tu ne vois pas ce qui est écrit en italique coloré, ne continue pas — reprends l'étape.</p><ol class="etapes"><li>Clique sur le bouton <b>Nom exact du bouton</b> de la barre d'outils.<span class="voir">Le bouton s'enfonce et le pointeur change de forme.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Il n'est pas nécessaire d'être précis à cette étape : les valeurs exactes seront saisies juste après. Trace n'importe quoi, et avance.</div></li><li>Saisis la valeur, puis valide.<span class="voir">La valeur remplace celle qui était affichée, et le dessin se met à jour tout seul.</span></li><li>Observe la couleur de ce que tu viens de tracer.<span class="voir">Ce qui est <b>noir</b> est fixé et ne bougera plus ; ce qui est <b>bleu</b> est encore libre. Le logiciel te dit en permanence où il en est — apprends à le lire, ça te servira dans tous les logiciels.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> tu obtiens la même chose que l'image, et tu sais dire ce qui est fixé et ce qui est encore libre.</p><p class="rituel">💾 <b>Enregistre ton travail maintenant.</b> C'est le moment&nbsp;: si le poste redémarre, tu ne perds rien.</p></section><section class="palier"><span class="niveau allege">Aide allégée</span><h2>3 &middot; Le même geste, en plus court</h2><p>Règle n°76 : tu viens de le faire une fois, donc on retire les explications évidentes. Les valeurs restent données.</p><ol class="etapes"><li>Refais le geste précédent, avec les nouvelles valeurs.<span class="voir">Le dessin se met à jour comme la première fois.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> tu l'as refait sans relire le palier précédent.</p><p class="rituel">💾 <b>Enregistre ton travail maintenant.</b> C'est le moment&nbsp;: si le poste redémarre, tu ne perds rien.</p></section><section class="palier"><span class="niveau resultat">À toi de jouer</span><h2>4 &middot; À toi seul, maintenant</h2><p>Règle n°77 : on ne te donne plus que le résultat à obtenir. Compare ton écran à l'image — tu n'as besoin de personne pour te corriger.</p><ol class="etapes"><li>Refais le geste autant de fois qu'il le faut pour obtenir le résultat ci-dessous.<span class="voir">À chaque fois, la même chose se produit : c'est le signe que tu as compris.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> ton écran ressemble à l'image, et tu n'as pas eu besoin de lever la main.</p></section><section class="palier recompense"><span class="niveau resultat">À toi de jouer</span><h2>5 &middot; 🎁 La touche finale</h2><p>Règle n°82 : ce geste ne sert à rien techniquement. Il sert à ce que tu repartes avec quelque chose dont tu es fier.</p><ol class="etapes"><li>Change la couleur, l'apparence, ou ajoute ce qui te plaît.<span class="voir">Ton travail ne ressemble plus à celui du voisin.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> tu as envie de le montrer.</p><p class="rituel">💾 <b>Enregistre ton travail maintenant.</b> C'est le moment&nbsp;: si le poste redémarre, tu ne perds rien.</p></section>
+<footer>Modèle de format — méthode décrite dans GUIDAGE_PAS_A_PAS.md. Aucun contenu pédagogique.</footer>
+</div>
+</body>
+</html>
