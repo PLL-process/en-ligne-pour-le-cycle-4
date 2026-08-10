@@ -19,10 +19,12 @@ from collections import defaultdict
 
 R = Path(".")   # la racine du dépôt : lancer le script depuis là
 IGNORE = ("_archive-anciennes-versions", "node_modules", ".git", "_outils", "_generation")
+# Pages qui ne sont pas destinées aux élèves : le modèle de TP démontre le format.
+EXEMPTES = ("tp_modele_demonstration.html",)
 
 RE_NAV   = re.compile(r'<nav[^>]*id="navharm".*?</nav>', re.S)
 RE_HREF  = re.compile(r'href="([^"#?]+)')
-RE_SEQ   = re.compile(r'sequence_[\w.\-]+\.html$')
+RE_SEQ   = re.compile(r'sequence[_\-][\w.\-]+\.html$')   # certains fichiers portent un tiret
 RE_NIV   = re.compile(r'[\\/](4e|3e)[\\/]')
 RE_RAP   = re.compile(r'rappel-spiralaire|Ce que tu as déjà fait|&#128260;')
 RE_BONUS = re.compile(r'(?is)<section[^>]*class="[^"]*bonus[^"]*".*?</section>')
@@ -34,7 +36,7 @@ def pages():
         s = str(p)
         if any(i in s for i in IGNORE):
             continue
-        if p.name in ("index.html",) or p.parent == R:
+        if p.name in ("index.html",) + EXEMPTES or p.parent == R:
             continue
         yield p
 
@@ -97,9 +99,43 @@ def main():
       "images": "Images annoncées et absentes — les « fenêtres blanches »",
       "n°40": "n°40 — une page doit fonctionner hors ligne",
     }
-    print("# Audit du dépôt — les règles d'or mécanisables\n")
+    n = lambda r: len({f for f, _ in par_regle[r]})
+    print("# Audit d'harmonisation — les règles d'or à l'échelle du dépôt\n")
+    print("*Document **engendré** par `audit_spiralaire.py`, jamais rédigé à la main —")
+    print("aucun chiffre n'y est recopié, il se régénère d'une commande et ne peut donc")
+    print("pas mentir sur l'état réel du dépôt.*\n")
+    print("```bash")
+    print("# depuis la racine du dépôt")
+    print("python3 theme-3-creation-conception-realisation-innovations/audit/audit_spiralaire.py \\")
+    print("    > theme-3-creation-conception-realisation-innovations/audit/AUDIT_HARMONISATION.md")
+    print("```\n")
     print("Constats de FAITS vérifiés sur les fichiers, pas de jugements pédagogiques.")
     print("**%d pages examinées.**\n" % total)
+    print("## Ce qu'il faut lire en premier\n")
+    print("Ces chiffres ne sont pas une note. Ils disent **où appliquer** ce qu'on a écrit,")
+    print("et dans quel ordre.\n")
+    print("**1. La clé de voûte (n°87) — %d séances.** Le chantier qui change quelque chose" % n("n°87"))
+    print("pour l'élève : ces séances de 4e et de 3e s'appuient sur un prérequis sans jamais")
+    print("rappeler ce qu'il a **déjà produit**. Court par séance — trois paragraphes — mais")
+    print("il faut savoir ce qui précède, donc remonter la progression. C'est là que se joue")
+    print("la cohérence du cycle.\n")
+    print("**2. Les impasses (n°88) — %d pages.** Une page où l'on entre sans pouvoir sortir." % n("n°88"))
+    print("Mécanique, corrigeable par lot puisque ces pages partagent leur gabarit.\n")
+    print("**3. Les images absentes — %d pages.** Les TP de CAO, en cours de production.\n" % n("images"))
+    print("**4. Le bonus sans corrigé (n°86) — %d page(s).** À vérifier à la main avant de" % n("n°86"))
+    print("conclure : un chiffre bas peut vouloir dire « tout va bien » ou « le script ne")
+    print("voit pas ».\n")
+    print("**5. Le réseau (n°40) — %d pages.** Dette ancienne et assumée : polices Google," % n("n°40"))
+    print("Vittascience. Une page qui appelle le réseau ne fonctionne pas dans une salle sans")
+    print("connexion. Chantier groupé, hors période de classe.\n")
+    print("## Une mise en garde sur ce que ce rapport ne dit pas\n")
+    print("Un script détecte l'**absence** d'un bloc, jamais la **platitude** de son contenu.")
+    print("Une séance peut porter un rappel spiralaire parfaitement conforme et parfaitement")
+    print("inutile — « tu as vu les capteurs en 4e » coche la case et n'apprend rien. Le vrai")
+    print("critère reste celui qu'on s'est donné : le rappel nomme-t-il une **production** de")
+    print("l'élève, dit-il ce qui **change**, tient-il debout pour celui qui n'était pas là ?\n")
+    print("Ces trois questions-là ne se mesurent pas. Elles se lisent.\n")
+    print("---\n")
     print("| Règle | Pages concernées |\n|---|---|")
     for r in ordre:
         print("| %s | **%d** |" % (r, len({f for f, _ in par_regle[r]})))
