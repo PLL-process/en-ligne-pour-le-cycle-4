@@ -385,7 +385,7 @@
     .python-code .function {color:#61afef;}
     .python-code .number {color:#d19a66;}
     .python-code .operator {color:#abb2bf;}
-  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}</style>
+  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site">
@@ -489,11 +489,18 @@
   </div>
     
   <!-- 0. UTILISER CHATGPT -->
-  <section class="panel">
-    <h2>🧭 Utiliser ChatGPT pour approfondir</h2>
-    <p>Pour expliquer une notion (ex. <em>ransomware</em>, <em>phishing</em>, <em>VPN</em>), ouvre ChatGPT dans un <strong>nouvel onglet</strong>, choisis <em>« Étudier »</em> puis <em>« Explique-moi un sujet »</em>.</p>
-    <p><a class="tag" href="https://chat.openai.com/?model=gpt-5" target="_blank">🔗 Ouvrir ChatGPT</a></p>
-  </section>
+  <div class="saved-note encadre-ia">
+<b>🧭 Approfondir une notion avec une IA — ce qu'il faut savoir d'abord</b>
+<p>Les assistants conversationnels (ChatGPT et les autres) savent expliquer une notion comme
+« rançongiciel » ou « hameçonnage ». Trois conditions avant d'en ouvrir un&nbsp;:
+il faut un <b>compte</b>, un <b>âge minimum</b> (13 ans, et l'accord d'un adulte avant 18 ans),
+et l'<b>accord de ton établissement</b> — tout ce que tu écris à un assistant part sur les
+serveurs de l'entreprise qui le fait tourner. C'est exactement le sujet de cette séquence.</p>
+<p>Alors avant de demander à une machine&nbsp;: la <b>synthèse</b> de la séquence répond déjà à la
+plupart des questions, et ton professeur répond aux autres. Et si tu utilises un assistant,
+garde le réflexe qu'on travaille ici&nbsp;: <b>vérifie</b> ce qu'il te dit ailleurs qu'auprès de
+lui-même.</p>
+</div>
 
 
   <div class="section" id="glossaire-sigles">
@@ -2390,8 +2397,8 @@ function checkDragDrop(section) {
 
   // 🧮 MAJ score (1a notée sur 4 → 6 paires = 4 pts)
   const points = Math.round((correct / 6) * 4);
-  document.getElementById('score1a')?.textContent = `${points}/4`;
-  document.getElementById('result1a')?.textContent = `${correct}/6`;
+  { const _e = document.getElementById('score1a'); if (_e) _e.textContent = `${points}/4`; }
+  { const _e = document.getElementById('result1a'); if (_e) _e.textContent = `${correct}/6`; }
   const corr = document.getElementById('correction1a');
   if (corr) corr.style.display = 'block';
 
@@ -2464,7 +2471,8 @@ function recalc(){
   const max = W.s1 + W.s2 + W.s3 + W.s4 + W.s5 + W.s6;
   const pct = Math.max(0, Math.min(100, Math.round(100*total/max)));
   document.getElementById('scoreTotal').textContent = total;
-  document.getElementById('scoreTotal2').textContent = total;
+  { const _t = document.getElementById('scoreTotal2'); if (_t) _t.textContent = total; }
+  /* FIXME : aucun élément #scoreTotal2 dans la page — le total ne s'affiche nulle part. */
   const bar = document.getElementById('prog');
   if (bar) bar.style.width = pct + '%';
 }
@@ -2525,7 +2533,9 @@ function score6(){
     document.getElementById('btnRecalc').onclick = recalc;
 
         // SAVE/LOAD
-    document.getElementById('saveBtn').onclick = () => {
+    /* FIXME : aucun élément #saveBtn dans la page — le bouton d'enregistrement n'existe pas. */
+  const _sb = document.getElementById('saveBtn');
+  if (_sb) _sb.onclick = () => {
       localStorage.setItem('cyber4e', JSON.stringify({
         student: document.getElementById('studentName').value,
         scores, chrono
@@ -2555,7 +2565,8 @@ function score6(){
 
     // PERF REPORT
     window.onload = () => {
-      console.log(`🚀 Chargé en ${performance.now() - startTime}ms`);
+      /* mesure de chargement retirée : la variable startTime n'existait pas,
+     et l'erreur interrompait tout ce qui suivait. */
     };
 
 </script>
