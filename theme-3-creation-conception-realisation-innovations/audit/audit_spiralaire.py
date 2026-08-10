@@ -29,7 +29,10 @@ RE_NIV   = re.compile(r'[\\/](4e|3e)[\\/]')
 RE_RAP   = re.compile(r'rappel-spiralaire|Ce que tu as déjà fait|&#128260;')
 RE_BONUS = re.compile(r'(?is)<section[^>]*class="[^"]*bonus[^"]*".*?</section>')
 RE_CORR  = re.compile(r'corrige-bonus|<details')
-RE_RESO  = re.compile(r'(?:src|href)="(https?://[^"]+)"')
+# Un LIEN vers un site extérieur ne casse pas la page hors ligne : il ne se
+# charge pas. Seules les ressources RÉELLEMENT chargées comptent pour n°40.
+RE_RESO  = re.compile(r'<(?:img|iframe|script|audio|video|link)[^>]+(?:src|href)="(https?://[^"]+)"')
+RE_LIEN  = re.compile(r'<a[^>]+href="(https?://[^"]+)"')
 
 def pages():
     for p in sorted(R.rglob("*.html")):
@@ -76,7 +79,10 @@ def audite(p):
     # n°40 — une page doit fonctionner hors ligne
     ext = {u.split("/")[2] for u in RE_RESO.findall(h)}
     if ext:
-        faits.append(("n°40", "appelle le réseau : " + ", ".join(sorted(ext)[:3])))
+        faits.append(("n°40", "charge depuis le réseau : " + ", ".join(sorted(ext)[:3])))
+    liens = {u.split("/")[2] for u in RE_LIEN.findall(h)} - ext
+    if liens:
+        faits.append(("liens", "renvoie vers : " + ", ".join(sorted(liens)[:4])))
 
     # images annoncées mais absentes (la classe de bug des « fenêtres blanches »)
     imgs = re.findall(r'<img[^>]+src="([^"]+)"', h)
@@ -95,13 +101,14 @@ def main():
         for regle, quoi in audite(p):
             par_regle[regle].append((str(p), quoi))
 
-    ordre = ["n°88", "n°87", "n°86", "images", "n°40"]
+    ordre = ["n°88", "n°87", "n°86", "images", "n°40", "liens"]
     TITRES = {
       "n°88": "n°88 — une page se juge aussi sur ce qu'on peut en faire quand on y est arrivé",
       "n°87": "n°87 (CLÉ DE VOÛTE) — toute séance qui s'appuie sur un prérequis s'ouvre par un rappel",
       "n°86": "n°86 — un bonus sans corrigé n'est pas un bonus, c'est un devoir non rendu",
       "images": "Images annoncées et absentes — les « fenêtres blanches »",
-      "n°40": "n°40 — une page doit fonctionner hors ligne",
+      "n°40": "n°40 — une page doit fonctionner hors ligne (ressources CHARGÉES)",
+      "liens": "Liens sortants — pour information : ils ne cassent pas la page hors ligne, mais ils méritent une relecture (à quoi envoie-t-on des collégiens ?)",
     }
     n = lambda r: len({f for f, _ in par_regle[r]})
     print("# Audit d'harmonisation — les règles d'or à l'échelle du dépôt\n")
@@ -129,9 +136,11 @@ def main():
     print("**4. Le bonus sans corrigé (n°86) — %d page(s).** À vérifier à la main avant de" % n("n°86"))
     print("conclure : un chiffre bas peut vouloir dire « tout va bien » ou « le script ne")
     print("voit pas ».\n")
-    print("**5. Le réseau (n°40) — %d pages.** Dette ancienne et assumée : polices Google," % n("n°40"))
-    print("Vittascience. Une page qui appelle le réseau ne fonctionne pas dans une salle sans")
-    print("connexion. Chantier groupé, hors période de classe.\n")
+    print("**5. Le réseau (n°40) — %d pages.** Ressources réellement chargées depuis" % n("n°40"))
+    print("l'extérieur. Une page qui en dépend ne fonctionne pas dans une salle sans connexion.\n")
+    print("**6. Les liens sortants — %d pages.** Ils ne cassent rien hors ligne, mais ils" % n("liens"))
+    print("disent où l'on envoie des élèves : cette liste se relit avec d'autres yeux que")
+    print("techniques.\n")
     print("## Une mise en garde sur ce que ce rapport ne dit pas\n")
     print("Un script détecte l'**absence** d'un bloc, jamais la **platitude** de son contenu.")
     print("Une séance peut porter un rappel spiralaire parfaitement conforme et parfaitement")
