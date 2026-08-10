@@ -4336,3 +4336,87 @@ Au passage, le bloc «&nbsp;Idée de départ&nbsp;» de cette séquence ne conte
 seulement une note technique sur la sauvegarde automatique. Il pose désormais la vraie question
 d'ouverture — *comment ton voyant peut-il savoir qu'un sac est posé&nbsp;?* — avec un champ pour y
 répondre, et on la relit au bilan.
+
+---
+
+### Règle d'or n°86 — Un bonus sans corrigé n'est pas un bonus, c'est un devoir non rendu
+
+**L'origine.** Pascal, le 10 août&nbsp;: « *on disait aussi que le BONUS devrait toujours avoir des
+corrections* ». L'audit du 8 août en avait déjà compté **vingt-trois** sans corrigé. J'avais moi-même
+écrit, dans l'atelier de planification&nbsp;: « ces défis n'ont pas de vérificateur — on en discute
+ensemble ». C'est une façon polie de dire que l'élève qui le fait chez lui, le soir, ne saura jamais
+s'il a réussi.
+
+**Ce qui se joue.** Le bonus s'adresse par construction à celui qui travaille **seul et sans
+demande** — le plus autonome, souvent le plus rapide, parfois le plus discret. C'est exactement
+l'élève qui ne lèvera pas la main pour demander la réponse. Lui refuser le corrigé, c'est punir la
+curiosité.
+
+**La règle.** Tout bloc bonus porte son **corrigé replié**. Pas nécessairement un vérificateur
+automatique — un défi ouvert n'en a pas toujours — mais toujours **une réponse à lire**, écrite avec
+le même soin que les corrections du parcours obligatoire&nbsp;: ce qui était attendu, pourquoi, et
+l'erreur classique.
+
+**Dette connue** : vingt-trois blocs bonus du dépôt sont dans ce cas. À traiter groupé, après les
+trois séquences en cours.
+
+### Règle d'or n°87 — LA CLÉ DE VOÛTE : toute séance qui s'appuie sur un prérequis s'ouvre par un rappel de ce que l'élève a déjà fait
+
+**L'origine.** Pascal, le 10 août, à propos du découpage de l'atelier de planification&nbsp;:
+« *il faudrait que ce soit à part, avec un rappel spiralaire de ce qu'il a fait l'année dernière* ».
+Puis&nbsp;: « *le rappel spiralaire devrait être une règle d'or et même clé de voûte, pour toutes
+les séances qui font appel à des prérequis. Ça me rappelle mon prof de maths en IUT.* »
+
+**Pourquoi «&nbsp;clé de voûte&nbsp;» et pas simplement «&nbsp;règle&nbsp;».** Une clé de voûte
+n'est pas la plus grosse pierre&nbsp;: c'est celle sans laquelle les autres tombent. Un cycle de
+quatre ans n'est pas quatre années juxtaposées&nbsp;; c'est **la même poignée de notions revisitées
+avec un verbe plus exigeant**. Si le rappel manque, l'élève ne vit pas une progression&nbsp;: il vit
+une succession de nouveautés, et il oublie chaque été ce qu'il a fait l'année précédente. Toutes nos
+autres règles supposent silencieusement cette continuité — la n°65 (une notion traverse les niveaux
+en changeant de verbe, pas de sujet) n'a aucun effet si personne ne dit à l'élève qu'il traverse.
+
+**La règle.** Toute séance qui mobilise un prérequis **s'ouvre** par un rappel court et concret de
+ce que l'élève a **déjà produit**, et nomme explicitement ce qui change cette année.
+
+**La forme.** Le rappel nomme une **production**, pas une notion&nbsp;:
+
+> «&nbsp;L'an dernier, tu as **suivi** un planning qu'on t'avait donné&nbsp;: tu disais ce qui était
+> en retard et ce que ce retard décalait. Cette année, c'est **toi** qui l'organises.&nbsp;»
+
+et non «&nbsp;tu as vu la planification en 5e&nbsp;». Un élève ne se souvient pas d'une notion&nbsp;;
+il se souvient de ce qu'il a **fait**. Et si le prérequis n'a pas été vu — élève arrivé en cours de
+cycle, année sautée, séquence non faite — le rappel doit être **suffisant en lui-même** pour que la
+séance reste possible. Un rappel qui suppose le passé exclut celui qui ne l'a pas.
+
+**Ce que ça implique pour l'audit à venir.** La prochaine inspection générale des séquences vérifiera
+cette clé de voûte **en action**, séquence par séquence&nbsp;: le rappel existe-t-il, nomme-t-il une
+production, dit-il ce qui change&nbsp;? C'est mécanisable en partie — la présence d'un bloc de rappel
+en ouverture, et le fait qu'il cite un verbe d'action plutôt qu'un nom de notion.
+
+**Calendrier arrêté avec Pascal** : la clé de voûte s'applique d'abord aux trois séquences en cours
+(5e, 4e, 3e du Thème 3). L'audit général vient **après**, une fois ces trois-là terminées.
+
+---
+
+## Feuille de route notée le 10 août — la révision générale
+
+Décision de Pascal, écrite ici pour ne pas être oubliée&nbsp;:
+
+> «&nbsp;Après avoir terminé la séquence de 5e, 4e et de 3e, on va transposer ce savoir et les
+> autres aussi aux autres séances, donc on va faire une révision générale.&nbsp;»
+
+**L'ordre est arrêté** :
+
+1. **Terminer les trois séquences du Thème 3** — 5e, 4e, 3e — en y appliquant tout ce qui a été
+   appris ces jours-ci&nbsp;: objets reconnaissables (n°85), pages séparées par niveau, rappel
+   spiralaire en ouverture (n°87), captures dans les corrections, bonus corrigés (n°86).
+2. **Elles servent alors d'étalon.** C'est sur elles qu'on jugera de ce que doit être une séquence
+   du dépôt — pas sur une liste de règles, sur trois exemples qu'on peut ouvrir.
+3. **Révision générale** de toutes les séquences existantes, à l'étalon de ces trois-là, avec le
+   guidage transposable (`GUIDAGE_PAS_A_PAS.md`) et les vérificateurs mécanisés.
+
+**Pourquoi cet ordre et pas l'inverse.** Réviser trente-neuf séquences contre un recueil de
+quatre-vingt-sept règles écrites, c'est trente-neuf jugements subjectifs. Les réviser contre **trois
+séquences exemplaires** qu'on peut ouvrir côte à côte, c'est une comparaison. Et ce qui aura résisté
+à l'usage sur trois lots mérite d'être imposé aux trente-six autres — ce qui n'y aura pas résisté
+sera abandonné avant d'avoir coûté trente-six fois.
