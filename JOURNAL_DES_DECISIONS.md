@@ -4463,3 +4463,54 @@ ombrée) et les neuf captures d'interface, qui doivent montrer les panneaux d'On
 **en français** (règle n°70). Les prendre, c'est aussi tester le TP — et le seul
 chiffre qui compte reste le nombre de fois où l'on ne sait pas quoi cliquer.
 
+---
+
+## Règle d'or n°88 — une page se juge aussi sur ce qu'on peut en faire quand on y est arrivé
+
+> **Toute page destinée aux élèves doit être atteignable depuis l'index, dire
+> d'où l'on vient et où l'on va, et porter un lien de retour vers sa séquence.**
+
+Née d'un constat de Pascal, arrivé sur le panneau indicateur de 4e : « j'aimerais
+savoir cet atelier va après quoi, et comment retourner à la séquence pédagogique —
+il n'y a pas le retour vers l'accueil ». Puis, une fois le correctif livré :
+« on entrait dans l'atelier sans pouvoir en ressortir — je l'ai compris après ».
+
+C'est la **troisième fois** que la même famille de défaut nous coûte du temps, et
+c'est ce qui justifie une règle plutôt qu'un correctif de plus :
+
+1. l'atelier de planification existait mais n'était listé nulle part — invisible ;
+2. les dossiers en `_` étaient exclus par Jekyll — publiés mais en 404 ;
+3. l'atelier s'ouvrait sans aucun chemin de retour — une impasse.
+
+Chaque fois, le **contenu était juste**. C'est le chemin qui manquait. Un défaut de
+contenu se voit à la relecture ; un défaut de chemin ne se voit qu'en se mettant à
+la place de quelqu'un qui n'a pas construit la page. Celui qui l'a écrite sait
+toujours d'où il vient : c'est précisément l'angle mort.
+
+### Les quatre questions, du point de vue de l'élève
+
+**Comment j'arrive ici ?** La page est listée dans l'index et atteignable depuis
+chaque code qu'elle sert (règle n°83).
+**Où suis-je ?** Un fil d'ariane, ou au minimum une phrase qui situe le moment dans
+la séquence : après quoi, pour combien de temps, avant quoi.
+**Comment je repars ?** Un lien de retour vers **sa** séquence — celle de son
+niveau, pas un index générique.
+**Et ensuite ?** La suite est nommée : le QCM, l'activité d'après, le bilan.
+
+### Ce qui est mécanisable
+
+Un contrôle par page destinée aux élèves : elle apparaît dans `index.html` ; sa
+barre de navigation existe ; **chacun de ses liens résout vers un fichier qui
+existe** ; au moins un de ces liens pointe vers une séquence. Ce dernier point est
+le cœur — c'est lui qui distingue une page d'une impasse. Le contrôle se fait sur
+les fichiers, pas sur l'intention : on suit les liens, on ne les lit pas.
+
+### Le corollaire, pour les refontes
+
+Quand une page est découpée ou renommée, les textes qui la décrivaient ailleurs
+deviennent faux **en silence**. Le découpage de l'atelier en trois pages a laissé
+derrière lui deux consignes mortes — « choisis l'onglet 4e », alors que l'onglet
+n'existait plus, et « c'est la même page pour tout le monde », devenu faux. Elles
+n'ont été vues que parce qu'on relisait la page pour une autre raison. Toute
+refonte doit donc **relire ce que les autres pages disent de celle qu'on change**.
+
