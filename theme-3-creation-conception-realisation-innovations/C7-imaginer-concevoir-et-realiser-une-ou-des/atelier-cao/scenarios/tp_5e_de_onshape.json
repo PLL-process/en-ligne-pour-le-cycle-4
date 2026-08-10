@@ -84,9 +84,9 @@
           "exemple": "Les lettres à droite du menu sont des raccourcis&nbsp;: <kbd>g</kbd> pour le rectangle par sommet, <kbd>r</kbd> pour celui à partir du centre. Tu peux les taper directement, sans ouvrir le menu."
         },
         {
-          "action": "Un outil de dessin reste actif tant que tu ne le quittes pas. Pour en sortir, appuie sur <b>Échap</b>.",
-          "voir": "Le pointeur redevient une flèche : tu peux de nouveau sélectionner au lieu de dessiner.",
-          "avertissement": "C'est le premier réflexe à prendre. Un élève qui « n'arrive plus à cliquer sur rien » a presque toujours un outil de dessin encore actif."
+          "action": "Un outil de dessin <b>reste actif</b> tant que tu ne le quittes pas. Pour en changer, le plus sûr est de <b>cliquer directement sur l'outil suivant</b> dans la barre du haut.",
+          "voir": "Le nouvel outil s'allume dans la barre, et le pointeur change de forme. L'outil précédent s'éteint.",
+          "avertissement": "La touche <b>Échap</b> est censée quitter l'outil, mais elle ne libère pas toujours l'outil rectangle&nbsp;: constaté sur poste réel. Ne t'acharne pas dessus — clique sur l'outil dont tu as besoin, c'est immédiat. Et si tu « n'arrives plus à cliquer sur rien », c'est presque toujours qu'un outil de dessin est encore actif."
         },
         {
           "action": "Clique sur l'<b>origine</b>, écarte la souris, et clique une seconde fois.",
@@ -99,7 +99,7 @@
           "exemple": "La couleur est entièrement libre : c'est ton dé."
         },
         {
-          "action": "Appuie sur <b>Échap</b> pour quitter l'outil rectangle, puis clique sur l'outil <b>Cote</b> — l'icône en double flèche, raccourci <kbd>d</kbd>. Clique sur le côté du haut, éloigne la souris, et clique une seconde fois pour poser la cote.",
+          "action": "Clique sur l'outil <b>Cote</b> — l'icône en double flèche, raccourci <kbd>d</kbd>. Cliquer sur cet outil suffit à quitter le rectangle. Puis clique sur le côté du haut, éloigne la souris, et clique une seconde fois pour poser la cote.",
           "voir": "Une petite case s'ouvre <b>sur le dessin</b>, avec un nombre à virgule déjà sélectionné. C'est là qu'on tape la valeur.",
           "capture": "Images/tp5e_04_cotation.png",
           "capture_alt": "La cote en cours de placement sur le côté supérieur du rectangle, avec la case de saisie ouverte affichant une valeur décimale.",
@@ -136,13 +136,14 @@
       "intro": "Un dessin plat ne s'imprime pas. On lui donne une épaisseur : c'est l'<b>extrusion</b>. Le carré va monter de 50 mm et devenir un cube.",
       "etapes": [
         {
-          "action": "Clique sur l'outil <b>Extruder</b> dans la barre d'outils.",
-          "voir": "Un panneau <b>Extruder 1</b> s'ouvre et un aperçu du volume apparaît, en jaune ou en gris clair.",
+          "action": "Clique sur l'outil <b>Extrudeur</b> dans la barre d'outils (son infobulle dit « <i>Extrudeur (d\u00e9calage+e)</i> » : « d\u00e9calage », c'est la touche <kbd>Maj</kbd>).",
+          "voir": "Un panneau <b>Extrudeur 1</b> s'ouvre, réglé sur <b>Solide</b> et <b>Nouveau</b>, et un aperçu du volume apparaît, en jaune ou en gris clair.",
           "capture": "Images/tp5e_06_extruder.png",
-          "capture_alt": "Le panneau Extruder ouvert, avec le champ Profondeur, et l'aperçu du volume qui sort du carré."
+          "capture_alt": "Le panneau Extrudeur ouvert, avec le champ Profondeur, et l'aperçu du volume qui sort du carré.",
+          "avertissement": "Le panneau s'ouvre déjà rempli : <b>Borgne</b> et une profondeur de <code>25 mm</code>. Ce n'est pas ta valeur, c'est celle que le logiciel propose par défaut — tu vas la remplacer. « Borgne » veut dire que l'extrusion s'arrête à la distance que tu donnes, au lieu d'aller jusqu'à une autre pièce."
         },
         {
-          "action": "Dans le champ <b>Profondeur</b>, saisis <code>50</code>.",
+          "action": "Dans le champ <b>Profondeur</b>, efface <code>25</code> et saisis <code>50</code>. Laisse <b>Nouveau</b> sélectionné : il n'y a encore aucune matière à laquelle ajouter quoi que ce soit.",
           "voir": "L'aperçu s'ajuste : la hauteur devient égale au côté. C'est un <b>cube</b>."
         },
         {
@@ -186,15 +187,15 @@
           "voir": "Le cercle prend sa taille définitive et tous les traits passent au noir."
         },
         {
-          "action": "Valide l'esquisse, puis clique sur <b>Extruder</b>.",
+          "action": "Valide l'esquisse, puis clique sur <b>Extrudeur</b>.",
           "voir": "Le panneau s'ouvre, avec l'aperçu d'un cylindre qui sort de la face."
         },
         {
-          "action": "Choisis <b>Enlever</b> (au lieu de <i>Nouveau</i> ou <i>Ajouter</i>), règle la <b>Profondeur</b> à <code>5</code>, puis valide.",
+          "action": "Choisis <b>Retraite</b> — le troisième onglet, après <i>Nouveau</i> et <i>Ajouter</i> —, règle la <b>Profondeur</b> à <code>5</code>, puis valide.",
           "voir": "Le cylindre se creuse dans la face : le premier point du dé est fait.",
           "capture": "Images/tp5e_08_enlevement.png",
-          "capture_alt": "Le panneau Extruder réglé sur Enlever, profondeur 5 mm, avec l'aperçu du creux dans la face supérieure.",
-          "capture_legende": "<b>Enlever</b> et non <i>Ajouter</i> : c'est le seul réglage qui change tout."
+          "capture_alt": "Le panneau Extrudeur réglé sur Retraite, profondeur 5 mm, avec l'aperçu du creux dans la face supérieure.",
+          "capture_legende": "<b>Retraite</b> et non <i>Ajouter</i> : c'est le seul réglage qui change tout. Le mot est celui d'Onshape en français ; ailleurs on dit « enlèvement de matière »."
         }
       ],
       "image_resultat": "Images/tp5e_R3_face1.png",
@@ -222,7 +223,7 @@
           "avertissement": "Trace et cote <b>un cercle à la fois</b>. Six cercles bleus d'un coup, c'est six problèmes en même temps."
         },
         {
-          "action": "Valide, puis <b>Extruder → Enlever</b>, profondeur <code>5</code>.",
+          "action": "Valide, puis <b>Extrudeur → Retraite</b>, profondeur <code>5</code>.",
           "voir": "Les six creux apparaissent ensemble."
         }
       ],
