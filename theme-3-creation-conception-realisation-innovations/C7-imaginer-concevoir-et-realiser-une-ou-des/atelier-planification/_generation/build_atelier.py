@@ -85,6 +85,11 @@ STYLE_SUP = """
   .corrige-bonus[open] summary{margin-bottom:.5em}
   .corrige-bonus .pourquoi{margin-top:.6em;padding:.5em .7em;border-radius:8px;
     background:var(--panel);font-size:.95em}
+  /* Le planning de la correction : un dessin à lire, pas une décoration. */
+  figure.gantt{margin:1em 0;background:#fff;border:1px solid var(--border);
+    border-radius:10px;padding:8px}
+  figure.gantt img{width:100%;height:auto;display:block}
+  figure.gantt figcaption{color:#334155;font-size:.92em;padding:.5em .2em 0}
   .tablewrap{overflow-x:auto;margin:10px 0}
   .jalon{color:var(--warn);font-size:.85em;white-space:nowrap}
   figure{margin:14px 0;background:var(--panel2);border:1px solid var(--border);
@@ -395,6 +400,7 @@ P5_HTML = """
     finir le projet plus tôt. Se dépêcher sur une tâche à marge ne sert à rien&nbsp;; se dépêcher
     sur une tâche de la chaîne sert à tout. Un planning sert d'abord à savoir <b>où</b> il faut se
     dépêcher.</p>
+  <!--GANTT-->
   </details>
   <p class="retenir"><b>À retenir.</b> Suivre un planning, c'est savoir dire, à chaque séance&nbsp;:
   qu'est-ce qui est fini, qu'est-ce qui est en retard, et <b>qu'est-ce que ce retard décale</b>.
@@ -490,6 +496,7 @@ P4_HTML = """
     <p class="piege"><b>Deuxième piège.</b> Confondre « peut commencer » et « doit commencer ».
     Une date au plus tôt n'est pas un ordre&nbsp;: c'est une <b>limite basse</b>. On ne peut pas
     commencer avant&nbsp;; on peut commencer après, dans la limite de la marge.</p>
+  <!--GANTT-->
   </details>
   <p class="retenir"><b>À retenir.</b> Organiser, c'est écrire ce que chaque tâche attend, puis
   faire descendre les dates de proche en proche&nbsp;: chaque tâche commence après la <b>plus
@@ -601,6 +608,7 @@ P3_HTML = """
     raccourcit. Certaines tâches se divisent (câbler quatre capteurs), d'autres non (attendre
     qu'une impression 3D se termine). Le planning ne dit pas ce qui se divise&nbsp;: il dit
     seulement <b>où ça vaudrait la peine d'essayer</b>.</p>
+  <!--GANTT-->
   </details>
   <p class="retenir"><b>À retenir.</b> La durée d'un projet n'est pas la somme des durées de ses
   tâches&nbsp;: c'est la longueur de sa <b>plus longue chaîne enchaînée</b>. Gagner du temps
@@ -1204,6 +1212,49 @@ RAPPEL = {
 """,
 }
 
+PROJET_DE = {"5e": "indicateur-rangement-hall", "4e": "jardin-connecte-brooklyn",
+             "3e": "capteur-confort-ny"}
+
+
+def figure_gantt(niv, p):
+    """Le planning complet, dans la correction — parce qu'une correction de
+    planning qui n'est que du texte laisse l'élève sans point de comparaison :
+    il a sous les yeux des barres, on lui répond en paragraphes.
+
+    Le dessin est engendré par `gantt_premium.py` depuis le même CSV que le
+    corrigé : il ne peut pas contredire les nombres cités juste au-dessus.
+    """
+    chemin = " → ".join(p["chemin"])
+    libres = sorted((k for k, m in p["marges"].items() if m > 0),
+                    key=lambda k: -p["marges"][k])
+    exemple = libres[0]
+    return """
+  <figure class="gantt">
+    <img src="Images/gantt_%(f)s.svg" alt="Diagramme de planification du projet.
+      Une ligne par tâche, une colonne par séance. Les tâches %(chemin_txt)s sont
+      dessinées en barres pleines colorées : ce sont celles du chemin le plus long,
+      elles n'ont aucune marge. Les autres sont en barres sombres, chacune posée dans
+      un rectangle en pointillés qui va de sa date au plus tôt à sa date au plus tard,
+      avec une barre fantôme montrant où elle pourrait être placée au plus tard, et sa
+      marge écrite à droite. Des flèches relient chaque tâche à celles qui l'attendent.
+      Le projet tient en %(total)s séances.">
+    <figcaption><b>Voilà ton planning, une fois juste.</b> Compare-le au tien —
+    ce ne sont pas les mêmes couleurs par hasard.</figcaption>
+  </figure>
+  <p class="retenir"><b>Trois choses à savoir lire là-dessus.</b>
+  <b>1.</b> Les barres pleines colorées forment le chemin le plus long
+  (%(chemin_txt)s)&nbsp;: elles n'ont <b>aucun jeu</b>, une séance de retard sur l'une
+  d'elles est une séance de retard sur tout le projet.
+  <b>2.</b> Les autres ont du jeu, et le <b>rectangle en pointillés</b> le montre&nbsp;:
+  la tâche <b>%(ex)s</b> aurait pu être placée <b>n'importe où dans son rectangle</b>
+  sans rien retarder — la barre pâle indique sa position la plus tardive possible.
+  <b>3.</b> Ce chemin <b>peut changer</b>. Allonge une tâche à marge jusqu'à remplir
+  son rectangle&nbsp;: elle devient critique, et une autre cesse de l'être. Le chemin
+  le plus long n'est pas gravé dans le projet, il dépend des durées.</p>
+""" % {"f": PROJET_DE[niv], "chemin_txt": chemin, "total": p["duree_totale"],
+       "ex": exemple}
+
+
 def bonus(niv, p):
     """Trois défis, chacun avec SON corrigé replié (règle d'or n°86).
 
@@ -1358,7 +1409,10 @@ def page(niv):
                          "panneau": json.dumps(panneau, ensure_ascii=False)}
 
     bas = BAS_T % {"verbe": n["verbe"], "pos": POS, "bonus": bonus(niv, n["projet"])}
-    return tete + haut + PM + n["corps"] + GP_HTML + bas + script
+    corps = n["corps"].replace("<!--GANTT-->", figure_gantt(niv, n["projet"]))
+    if "<!--GANTT-->" in corps:
+        raise SystemExit("Marqueur GANTT non remplacé dans le parcours %s." % niv)
+    return tete + haut + PM + corps + GP_HTML + bas + script
 
 
 for _niv in ("5e", "4e", "3e"):
