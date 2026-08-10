@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thème 2 · Martinique — 4e · Atelier : Le jardin connecté — arrosage automatique (4e_C6.2)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -13,7 +12,7 @@
     --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --ko:#ff7b88; --energie:#ffb454;
   }
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 60px;line-height:1.55}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 20px 60px;line-height:1.55}
   #navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -20px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
   #navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2}
   #navharm a:hover{border-color:var(--hl);color:var(--hl)}
@@ -78,7 +77,7 @@
   details.aide>summary::-webkit-details-marker,details.correction>summary::-webkit-details-marker{display:none}
   details.aide>div,details.correction>div{padding:0 14px 12px}
   /* règle d'or n°13 — code coloré façon IDE */
-  pre.code{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Fira Code',monospace;font-size:.9em;overflow-x:auto}
+  pre.code{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.9em;overflow-x:auto}
   .py-var{color:var(--hl)}
   .py-str{color:var(--ok)}
   .py-num{color:var(--energie)}
@@ -86,10 +85,10 @@
   .py-op{color:var(--warn);font-weight:600}
   .py-com{color:#5b7bb8;font-style:italic}
   .py-lno{color:#4a6ca8}
-  .py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:'Fira Code',monospace}
-  .pytrous{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Fira Code',monospace;font-size:.92em;line-height:2}
-  .pytrous select{font-family:'Fira Code',monospace;padding:3px 8px}
-  .parsons{border-collapse:collapse;width:100%;font-family:'Fira Code',monospace;font-size:.9em}
+  .py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+  .pytrous{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.92em;line-height:2}
+  .pytrous select{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;padding:3px 8px}
+  .parsons{border-collapse:collapse;width:100%;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.9em}
   .parsons td{border:1px dashed var(--input-bd);padding:7px 10px}
   .parsons td:first-child{width:110px;background:#08132c}
   /* éditeur Vittascience embarqué — barre voyante */
@@ -289,7 +288,8 @@
     <details class="vs" id="vs1">
       <summary>🧪 Reconstruis le programme de mesure ici — blocs OU Python, comme tu préfères</summary>
       <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. Assemble les blocs « capteurs » dans l'ordre que tu as choisi, exécute, et observe la console. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
-      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (séance 1)"></iframe>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (séance 1)"></iframe>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>On ne peut pas convertir une valeur qu'on n'a pas encore lue. Et « répéter sans fin » englobe tout ce qui doit se refaire chaque seconde.</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Ordre logique du technicien : ① ouvrir la répétition (<code>while True:</code>) → ② LIRE le capteur → ③ CONVERTIR la valeur → ④ AFFICHER le résultat → ⑤ ATTENDRE avant la mesure suivante. Vérifie ta prédiction dans l'éditeur avant de valider.</p></div></details>
@@ -346,7 +346,8 @@
     <details class="vs" id="vs2">
       <summary>🧪 Recopie ton programme complété ici et exécute-le — la preuve par la console</summary>
       <p class="vs-note">Blocs à gauche, Python à droite. Sans carte réelle, remplace <code>lire_capteur_pourcent(A0)</code> par une valeur de ton choix (par ex. <code>humidite = 12</code>) et <code>demarrer_pompe()</code> par <code>print("POMPE EN MARCHE")</code> : la console te montre la décision.</p>
-      <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (séance 2)"></iframe>
+      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (séance 2)"></iframe>
     </details>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><div><p>Reprends ta règle de l'activité 4 : elle se traduit mot à mot. « inférieure » → quel symbole ?</p></div></details>
     <details class="aide"><summary>💡 Aide niveau 2 — la démarche</summary><div><p>Trou par trou : ① la condition du SI est la traduction directe de « humidité inférieure au seuil » ; ② DANS le SI (sol sec), on démarre ; ③ dans le SINON (sol assez humide), on arrête. Puis exécute avec humidite = 12 : quelle branche s'affiche ?</p></div></details>
@@ -488,7 +489,8 @@ n'est écrit qu'à UN endroit (la variable <code>seuil</code>) — pour changer 
   <details class="vs" id="vs3">
     <summary>🧪 L'éditeur du Bonus — code tes défis ici, sans quitter la page</summary>
     <p class="vs-note">Blocs à gauche, Python à droite, console en bas. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
-    <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
+    <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
+<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
   </details>
 </section>
 

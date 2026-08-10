@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thème 2 · Martinique — 3e · S4 : La station d'alerte cyclonique (3e_C4.3 → C4.6)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -13,7 +12,7 @@
     --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
   }
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
   h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
   .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
   .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
@@ -95,9 +94,9 @@
   img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
   @media(max-width:700px){.simu{grid-template-columns:1fr}}
-  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
   .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
-  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
   input[type=range]{width:100%;accent-color:var(--hl)}
   .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
   .vig-verte{color:var(--ok);border-color:var(--ok)}
@@ -105,13 +104,13 @@
   .vig-orange{color:var(--energie);border-color:var(--energie)}
   .vig-rouge{color:var(--err);border-color:var(--err)}
   .vig-violette{color:var(--head);border-color:var(--head)}
-  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
   table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
   table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
   table.donnees td:first-child,table.donnees th:first-child{text-align:left}
   .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
   .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
-  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .bin-inputs input{width:52px;text-align:center;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.1em}
   .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:760px){.versions{grid-template-columns:1fr}}
   .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
@@ -390,7 +389,7 @@
       <div class="assoc"><label for="a2_s2">Ce qui sort des capteurs</label><select id="a2_s2"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
       <div class="assoc"><label for="a2_s3">Ce qui circule après le traitement</label><select id="a2_s3"><option value="">— choisir —</option><option>grandeurs physiques (vent, pluie, pression)</option><option>signal électrique analogique</option><option>données numériques</option><option>message d'alerte</option></select></div>
       <p style="margin-top:12px"><b>c) L'exemple chiffré :</b> complète la condition programmée dans le microcontrôleur pour l'alerte violette (seuil officiel d'un ouragan : 118 km/h) :</p>
-      <p style="font-family:'Fira Code',monospace;background:#08132c;padding:10px;border-radius:8px">SI vent &gt; <input type="number" id="a2_seuil" style="width:90px;display:inline-block"> km/h ALORS vigilance ← violette</p>
+      <p style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:10px;border-radius:8px">SI vent &gt; <input type="number" id="a2_seuil" style="width:90px;display:inline-block"> km/h ALORS vigilance ← violette</p>
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>

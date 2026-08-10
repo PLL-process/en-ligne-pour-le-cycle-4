@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thème 2 · Martinique — 3e · S6 : Programmer l'alerte (3e_C6.1 · C6.3)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -13,7 +12,7 @@
     --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
   }
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
   h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
   .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
   .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
@@ -95,9 +94,9 @@
   img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
   @media(max-width:700px){.simu{grid-template-columns:1fr}}
-  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
   .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
-  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
   input[type=range]{width:100%;accent-color:var(--hl)}
   .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
   .vig-verte{color:var(--ok);border-color:var(--ok)}
@@ -105,13 +104,13 @@
   .vig-orange{color:var(--energie);border-color:var(--energie)}
   .vig-rouge{color:var(--err);border-color:var(--err)}
   .vig-violette{color:var(--head);border-color:var(--head)}
-  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
   table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
   table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
   table.donnees td:first-child,table.donnees th:first-child{text-align:left}
   .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
   .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
-  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .bin-inputs input{width:52px;text-align:center;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.1em}
   .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:760px){.versions{grid-template-columns:1fr}}
   .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
@@ -152,10 +151,10 @@
   .cl-tools button,.cl-tools label{background:#173666;border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:4px 10px;font-size:.78em;cursor:pointer;font-family:inherit}
   .cl-tools button:hover{background:#1d4e89}
   .cl-body{display:flex;max-height:430px;overflow:auto;position:relative}
-  .cl-gutter{user-select:none;text-align:right;padding:12px 8px 12px 12px;color:#5b7bb8;background:#0a1b3d;font-family:'Fira Code',monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;border-right:1px solid var(--border)}
+  .cl-gutter{user-select:none;text-align:right;padding:12px 8px 12px 12px;color:#5b7bb8;background:#0a1b3d;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;border-right:1px solid var(--border)}
   .cl-gutter .cl-ln-hl{background:rgba(255,214,102,.25);color:#ffd66b;display:block;border-radius:3px}
   .cl-editwrap{position:relative;flex:1;min-width:0}
-  .cl-hl,.cl-ta{margin:0;padding:12px 14px;font-family:'Fira Code',monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;tab-size:4;min-height:100%;box-sizing:border-box}
+  .cl-hl,.cl-ta{margin:0;padding:12px 14px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:var(--cl-fs,14px);line-height:1.5;white-space:pre;tab-size:4;min-height:100%;box-sizing:border-box}
   .codelab.cl-wrap-on .cl-hl,.codelab.cl-wrap-on .cl-ta{white-space:pre-wrap;word-break:break-all}
   .cl-hl{position:absolute;inset:0;pointer-events:none;color:#d7e6ff;overflow:hidden}
   .cl-ta{position:relative;width:100%;background:transparent;color:transparent;caret-color:#fff;border:none;outline:none;resize:none;overflow:hidden;display:block}
@@ -365,7 +364,7 @@
   </div>
   <details style="margin-top:6px"><summary>🔍 Comparer avec la version d'origine</summary>
     <p style="font-size:.85em" id="clDiffInfo">—</p>
-    <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:'Fira Code',monospace;font-size:.82em;overflow:auto;color:#7d9bd6" id="clOrig"></pre>
+    <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.82em;overflow:auto;color:#7d9bd6" id="clOrig"></pre>
   </details>
 </section>
 
@@ -504,7 +503,7 @@
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde comment <code>sirene_active</code> est gérée : créée à False (ligne 10), passée à True dans les bonnes branches, testée à la fin. <code>gyrophare_actif</code> suit EXACTEMENT le même modèle.</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>① <code>gyrophare_actif = False</code> sous la ligne 10 (même colonne, sans indentation). ② et ③ : à l'intérieur des branches, la ligne commence par 4 espaces. ④ tout en bas :<br><code>if gyrophare_actif:</code><br><code>    activer_gyrophare()</code></p></details>
     <details class="correction"><summary>✅ Correction commentée ligne par ligne (programme v2 complet)</summary>
-      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:'Fira Code',monospace;font-size:.8em;overflow:auto;color:#d7e6ff"># Station d'alerte cyclonique — programme d'alerte v2
+      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.8em;overflow:auto;color:#d7e6ff"># Station d'alerte cyclonique — programme d'alerte v2
 SEUIL_ORANGE = 60          # seuil recalibré (activité 3)
 SEUIL_ROUGE = 90
 SEUIL_OURAGAN = 118
@@ -594,7 +593,7 @@ if gyrophare_actif:               # ④ nouveau bloc de commande
     </div>
     <div class="consigne"><b>Consigne :</b> la bouée houlographe (souviens-toi !) embarque ce programme. Lis-le, puis réponds.</div>
     <div class="exo">
-      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:'Fira Code',monospace;font-size:.85em;overflow:auto;color:#d7e6ff">SEUIL_HOULE = 4
+      <pre style="background:#08132c;border-radius:10px;padding:12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:.85em;overflow:auto;color:#d7e6ff">SEUIL_HOULE = 4
 hauteur_m = lire_capteur("houlographe")
 drapeau = "vert"
 if hauteur_m &gt; SEUIL_HOULE:
