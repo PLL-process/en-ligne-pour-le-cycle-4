@@ -10,6 +10,10 @@ c'est là qu'un élève lèvera la main, et c'est le seul chiffre qui compte (vo
 
 Toutes les images vont dans `Images/`, avec **exactement** le nom indiqué.
 
+**État au 10 août 2026** — les six images de résultat `R2` à `R7` sont **faites**,
+produites par l'API Onshape (rendus ombrés 1600×1200, fond blanc). Restent `R1` et les
+neuf captures d'interface, qui ne s'obtiennent qu'en déroulant le TP sur un poste en français.
+
 | Nom du fichier | Palier | Ce qu'il faut avoir à l'écran |
 |---|---|---|
 | `tp5e_01_creer_document.png` | 1 — Ranger avant de commencer | La fenêtre Nouveau document d'Onshape, avec le champ Nom du document, la zone Étiquettes et le choix de l'emplacement. |
@@ -19,15 +23,15 @@ Toutes les images vont dans `Images/`, avec **exactement** le nom indiqué.
 | `tp5e_05_carre_50.png` | 2 — Esquisser le carré | Le carré de 50 mm sur 50 mm, entièrement en noir, avec ses deux cotes affichées. |
 | `tp5e_R1_carre.png` | 2 — Esquisser le carré | **Résultat du palier.** Vue en perspective : le carré de 50 mm posé sur le plan horizontal, esquisse validée, aucune matière encore créée. |
 | `tp5e_06_extruder.png` | 3 — Donner du volume : l'extrusion | Le panneau Extruder ouvert, avec le champ Profondeur, et l'aperçu du volume qui sort du carré. |
-| `tp5e_R2_cube.png` | 3 — Donner du volume : l'extrusion | **Résultat du palier.** Le cube de 50 mm de côté, en perspective, sur les trois plans de référence. |
+| ✅ `tp5e_R2_cube.png` | 3 — Donner du volume : l'extrusion | **Résultat du palier.** Le cube de 50 mm de côté, en perspective, sur les trois plans de référence. |
 | `tp5e_07_cercle_cote.png` | 4 — La face du 1 — un cercle et un creux | Le cercle centré sur la face supérieure du cube, avec ses deux cotes de 25 mm depuis les bords. |
 | `tp5e_08_enlevement.png` | 4 — La face du 1 — un cercle et un creux | Le panneau Extruder réglé sur Enlever, profondeur 5 mm, avec l'aperçu du creux dans la face supérieure. |
-| `tp5e_R3_face1.png` | 4 — La face du 1 — un cercle et un creux | **Résultat du palier.** Le cube avec un unique creux circulaire au centre de sa face supérieure. |
-| `tp5e_R4_face6.png` | 5 — La face du 6 | **Résultat du palier.** La face à six creux, en deux colonnes de trois, régulièrement espacés. |
-| `tp5e_R5_de_complet.png` | 6 — Les quatre faces qui restent | **Résultat du palier.** Le dé complet en perspective, ses six faces percées, faces opposées sommant à 7. |
+| ✅ `tp5e_R3_face1.png` | 4 — La face du 1 — un cercle et un creux | **Résultat du palier.** Le cube avec un unique creux circulaire au centre de sa face supérieure. |
+| ✅ `tp5e_R4_face6.png` | 5 — La face du 6 | **Résultat du palier.** La face à six creux, en deux colonnes de trois, régulièrement espacés. |
+| ✅ `tp5e_R5_de_complet.png` | 6 — Les quatre faces qui restent | **Résultat du palier.** Le dé complet en perspective, ses six faces percées, faces opposées sommant à 7. |
 | `tp5e_09_conge.png` | 7 — Adoucir : les congés | Le panneau Congé ouvert avec un rayon de 3 mm, plusieurs arêtes du cube sélectionnées et l'aperçu arrondi. |
-| `tp5e_R6_conges.png` | 7 — Adoucir : les congés | **Résultat du palier.** Le dé aux douze arêtes arrondies, points bien visibles. |
-| `tp5e_R7_de_colore.png` | 8 — 🎁 Ton dé, et pas celui du voisin | **Résultat du palier.** Le dé terminé, coloré, prêt à être exporté. |
+| ✅ `tp5e_R6_conges.png` | 7 — Adoucir : les congés | **Résultat du palier.** Le dé aux douze arêtes arrondies, points bien visibles. |
+| ✅ `tp5e_R7_de_colore.png` | 8 — 🎁 Ton dé, et pas celui du voisin | **Résultat du palier.** Le dé terminé, coloré, prêt à être exporté. |
 
 ## Comment cadrer
 
