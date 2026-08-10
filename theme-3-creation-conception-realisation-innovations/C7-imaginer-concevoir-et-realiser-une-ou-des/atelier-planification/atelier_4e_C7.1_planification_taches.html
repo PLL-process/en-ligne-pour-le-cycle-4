@@ -1,73 +1,98 @@
-# -*- coding: utf-8 -*-
-"""Assemble la page de l'atelier de planification des tâches (C7.1).
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Atelier de technologie cycle 4 — le diagramme de planification des tâches : tâches, durées et contraintes entre tâches. Trois parcours, 5e suivre, 4e organiser, 3e élaborer, et un pas à pas dans GanttProject en français. Code C7.1, programme 2024.">
+<title>Thème 3 · 5e-4e-3e — Le diagramme de planification des tâches (C7.1)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-Aucun nombre n'est écrit à la main dans le HTML produit : les durées, les dates
-au plus tôt, les marges, le chemin le plus long et la durée totale des trois
-projets sont lus dans `_corrige_calcule.json`, lui-même écrit par
-`_verifier_planning.py` à partir du seul CSV (règles n°48 et n°54).
 
-Le style vient de `gabarit_style.css`, copie du gabarit harmonisé du dépôt : la
-page de l'atelier doit ressembler aux séquences, pas inventer sa propre langue
-visuelle.
-"""
-import json
-import pathlib
-
-G = pathlib.Path(__file__).resolve().parent
-D = G.parent
-C = json.loads((D / "_corrige_calcule.json").read_text(encoding="utf-8"))
-CSS = (G / "gabarit_style.css").read_text(encoding="utf-8")
-
-P5, P4, P3 = C["indicateur-rangement-hall"], C["jardin-connecte-brooklyn"], C["capteur-confort-ny"]
-
-
-def opts(values, vide="— choisir —"):
-    o = ['<option value="">%s</option>' % vide]
-    o += ["<option>%s</option>" % v for v in values]
-    return "".join(o)
-
-
-def tableau_taches(p, colonnes=("id", "libelle", "duree", "ant")):
-    """La table d'un projet, telle qu'elle est dans le CSV — jamais recopiée."""
-    entetes = {"id": "Tâche", "libelle": "Ce qu'il y a à faire", "duree": "Durée (séances)",
-               "ant": "Ne peut commencer qu'après", "debut": "Au plus tôt"}
-    th = "".join("<th>%s</th>" % entetes[c] for c in colonnes)
-    lignes = []
-    for i in sorted(p["libelle"]):
-        cel = []
-        for c in colonnes:
-            if c == "id":
-                cel.append("<td><b>%s</b></td>" % i)
-            elif c == "libelle":
-                jal = " <span class=\"jalon\">◆ jalon</span>" if p["nature"][i] == "jalon" else ""
-                cel.append("<td>%s%s</td>" % (p["libelle"][i], jal))
-            elif c == "duree":
-                cel.append("<td style=\"text-align:center\">%d</td>" % p["duree_tache"][i])
-            elif c == "ant":
-                a = ", ".join(p["anteriorite"][i]) or "—"
-                cel.append("<td style=\"text-align:center\">%s</td>" % a)
-            elif c == "debut":
-                t0, d = p["debut_au_plus_tot"][i], p["duree_tache"][i]
-                if d == 0:
-                    txt = "fin de la séance&nbsp;%d" % t0
-                elif d == 1:
-                    txt = "séance&nbsp;%d" % (t0 + 1)
-                else:
-                    txt = "séances&nbsp;%d à&nbsp;%d" % (t0 + 1, t0 + d)
-                cel.append("<td style=\"text-align:center\">%s</td>" % txt)
-        lignes.append("<tr>%s</tr>" % "".join(cel))
-    return ('<div class="tablewrap"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>'
-            % (th, "".join(lignes)))
-
-
-def marges_txt(p):
-    m = {i: v for i, v in p["marges"].items() if v > 0}
-    if not m:
-        return "aucune tâche n'a de marge"
-    return ", ".join("%s (+%d)" % (i, v) for i, v in sorted(m.items()))
-
-
-STYLE_SUP = """
   /* Le rappel spiralaire (règle d'or n°87) : il ouvre la page, on ne le replie
      pas, et il ne ressemble à aucun autre bloc — c'est un seuil, pas une carte. */
   .rappel-spiralaire{border-left:5px solid var(--accent);background:var(--panel2)}
@@ -87,21 +112,7 @@ STYLE_SUP = """
   .voies{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
   .voie{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
   .voie h4{margin-top:0}
-"""
 
-# ══════════════════════════════════════════════════════════════════════════
-# 1. Tête
-# ══════════════════════════════════════════════════════════════════════════
-TETE = """<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atelier de technologie cycle 4 — le diagramme de planification des tâches : tâches, durées et contraintes entre tâches. Trois parcours, 5e suivre, 4e organiser, 3e élaborer, et un pas à pas dans GanttProject en français. Code C7.1, programme 2024.">
-<title>Thème 3 · 5e-4e-3e — Le diagramme de planification des tâches (C7.1)</title>
-<style>
-%s
-%s
 </style>
 </head>
 <body>
@@ -119,7 +130,7 @@ TETE = """<!DOCTYPE html>
 <p class="sous">Ce qui doit attendre, ce qui peut avancer en même temps — et la seule chaîne de tâches
 qui décide de la date de fin.</p>
 <div class="badges">
-  <span class="badge niveau" title="Cet atelier sert aux trois niveaux du cycle 4, avec un parcours différent pour chacun.">5e &middot; 4e &middot; 3e</span>
+  <span class="badge niveau" title="Cette page est le parcours de 4e. Les autres niveaux ont la leur.">4e</span>
   <span class="badge code" title="Suivre (5e), organiser (4e) ou élaborer (3e) un processus de réalisation d'un objet avec des tâches identifiées.">C7.1</span>
   <span class="badge theme" title="Thème 3 — Création, conception et réalisation d'innovations. Fil de l'année : New York.">Thème 3 &middot; New York</span>
   <span class="badge theme" title="Domaines du socle commun travaillés : D2 méthodes et outils pour apprendre, D3 formation de la personne et du citoyen, D4 systèmes naturels et techniques.">D2 &middot; D3 &middot; D4</span>
@@ -141,12 +152,20 @@ elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b
 <p class="saved-note" id="aide-essentiel">&#127919; <b>Le mode essentiel</b> masque le référentiel,
 les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Rien n'est
 perdu — un second clic ramène tout.</p>
-""" % (CSS, STYLE_SUP)
 
-# ══════════════════════════════════════════════════════════════════════════
-# 2. Haut de page — situation, hypothèse, référentiel, barre, onglets
-# ══════════════════════════════════════════════════════════════════════════
-HAUT = """
+<section class="card rappel-spiralaire" aria-labelledby="rap-t">
+  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
+  <p class="deja"><b>L'an dernier, en 5e</b>, on t'a donné un planning tout prêt pour un projet&nbsp;:
+  tu l'as <b>suivi</b>. Tu repérais la tâche du jour, tu la <b>cochais</b> quand elle était finie,
+  et tu voyais tout de suite si le groupe était en avance ou en retard.</p>
+  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> personne ne te donne le planning.
+  On te donne la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient
+  avant laquelle. Le logiciel te dira ensuite si ton ordre tient debout.</p>
+  <p class="filet">Tu n'étais pas là l'an dernier&nbsp;? Tout ce qu'il faut savoir tient dans le
+  paragraphe ci-dessus&nbsp;: un planning, c'est des tâches, chacune avec une durée, et des
+  flèches qui disent qui attend qui.</p>
+</section>
+
 <section class="card">
   <h2>&#127968; La situation&nbsp;: trois projets, et une même question</h2>
   <p>Dans les trois niveaux, un projet est lancé. En 5e, un <b>indicateur de rangement</b> pour le
@@ -210,30 +229,23 @@ HAUT = """
 
 <div class="seance-tabs" role="tablist" id="seances" aria-label="Étapes de l'atelier">
   <button class="seance-tab active" role="tab" aria-selected="true" data-panel="pm" id="tab-pm">Étape 1<br>Les mots<span class="done" id="done-pm"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p5" id="tab-p5">5e<br>Suivre<span class="done" id="done-p5"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p4" id="tab-p4">4e<br>Organiser<span class="done" id="done-p4"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p3" id="tab-p3">3e<br>Élaborer<span class="done" id="done-p3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p4" id="tab-p4" title="Le parcours de 4e : organiser des tâches qu'on te liste.">4e<br>Organiser<span class="done" id="done-p4"></span></button>
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="gp" id="tab-gp">Le logiciel<br>Pas à pas<span class="done" id="done-gp"></span></button>
 </div>
 <div id="tachesBandeau" aria-live="polite" aria-label="Ce qu'il y a à faire dans l'étape en cours"></div>
 <main class="page" id="contenu">
-"""
 
-# ══════════════════════════════════════════════════════════════════════════
-# 3. Étape 1 — les mots (commune aux trois niveaux)
-# ══════════════════════════════════════════════════════════════════════════
-PM = """
 <div class="seance-panel active" id="pm" role="tabpanel" aria-labelledby="tab-pm">
 
 <section class="card">
   <h2>&#127915; Billet d'entrée — trois questions (5 min, <b>sans note</b>)</h2>
   <p>Réponds avec ce que tu sais déjà. Le but est de savoir d'où l'on part, pas de te juger.</p>
   <div class="q"><label for="be_1">1. Qu'est-ce qui fait qu'une chose à faire est une <b>tâche</b>&nbsp;?</label>
-    <select id="be_1">%(be1)s</select></div>
+    <select id="be_1"><option value="">— choisir —</option><option>c'est quelque chose d'important pour le projet</option><option>on peut dire, à un instant donné, si elle est terminée ou non</option><option>elle est écrite dans le cahier des charges</option><option>elle est faite par une seule personne</option></select></div>
   <div class="q"><label for="be_2">2. « Le prototype fonctionne »&nbsp;: tâche, ou autre chose&nbsp;?</label>
-    <select id="be_2">%(be2)s</select></div>
+    <select id="be_2"><option value="">— choisir —</option><option>une tâche, puisque quelqu'un doit la faire</option><option>un jalon : un point de contrôle, qui ne dure pas</option><option>une contrainte d'antériorité</option><option>une durée</option></select></div>
   <div class="q"><label for="be_3">3. Deux tâches entre lesquelles il n'y a <b>aucune contrainte</b>&nbsp;:</label>
-    <select id="be_3">%(be3)s</select></div>
+    <select id="be_3"><option value="">— choisir —</option><option>doivent quand même être faites l'une après l'autre</option><option>peuvent avancer en même temps : c'est là qu'on gagne du temps</option><option>sont forcément sur le chemin le plus long</option><option>doivent être fusionnées en une seule tâche</option></select></div>
   <button class="btn small" data-check="0">Vérifier mon billet</button>
   <p class="feedback" id="fb0" role="status"></p>
   <details class="aide"><summary>&#127890; Je révise en 3 minutes</summary>
@@ -276,7 +288,7 @@ PM = """
     <li>Ajoute un <b>losange</b> à la fin, sans longueur&nbsp;: c'est ton jalon.</li>
   </ol>
   <div class="q"><label for="exp_bandes">Quand tes bandes sont collées, coche&nbsp;:</label>
-    <select id="exp_bandes" data-exp="bandes">%(expb)s</select></div>
+    <select id="exp_bandes" data-exp="bandes"><option value="">— où en es-tu ? —</option><option>— pas encore fait —</option><option>j'ai découpé mes bandes et je les ai collées sur la ligne de temps</option></select></div>
   <p class="saved-note">Ce choix ne se devine pas depuis la page&nbsp;: c'est toi qui sais si tu
   as découpé. Le vérificateur, lui, refusera de valider tant que ce n'est pas fait.</p>
 
@@ -313,145 +325,34 @@ PM = """
   tâches pourraient être déclarées terminées par quelqu'un qui passerait dans la salle.</p>
 </section>
 </div>
-""" % {
-    "be1": opts(["c'est quelque chose d'important pour le projet",
-                 "on peut dire, à un instant donné, si elle est terminée ou non",
-                 "elle est écrite dans le cahier des charges",
-                 "elle est faite par une seule personne"]),
-    "be2": opts(["une tâche, puisque quelqu'un doit la faire",
-                 "un jalon : un point de contrôle, qui ne dure pas",
-                 "une contrainte d'antériorité",
-                 "une durée"]),
-    "be3": opts(["doivent quand même être faites l'une après l'autre",
-                 "peuvent avancer en même temps : c'est là qu'on gagne du temps",
-                 "sont forcément sur le chemin le plus long",
-                 "doivent être fusionnées en une seule tâche"]),
-    "expb": opts(["— pas encore fait —",
-                  "j'ai découpé mes bandes et je les ai collées sur la ligne de temps"],
-                 vide="— où en es-tu ? —"),
-}
 
-# ══════════════════════════════════════════════════════════════════════════
-# 4. Parcours 5e — SUIVRE un planning déjà fait
-# ══════════════════════════════════════════════════════════════════════════
-P5_HTML = """
-<div class="seance-panel" id="p5" role="tabpanel" aria-labelledby="tab-p5">
-<section class="card">
-  <h2>&#127974; 5e &middot; Suivre — l'indicateur de rangement du hall</h2>
-  <p>Le planning est <b>déjà fait</b>. Ton travail de 5e n'est pas de le construire&nbsp;: c'est de
-  le <b>suivre</b> — savoir où en est le projet, repérer un retard, et dire ce que ce retard
-  décale.</p>
-  %(table)s
-  <p>En le lisant, le professeur a calculé que le projet dure <b>%(duree)d séances</b> et que la
-  seule tâche qui peut prendre du retard sans rien décaler est&nbsp;: <b>%(marges)s</b>. Toutes les
-  autres sont sur la <b>chaîne qui décide de la fin</b>&nbsp;:
-  <b>%(chemin)s</b>.</p>
-
-  <h3>Trois situations, comme elles arrivent vraiment</h3>
-  <div class="q"><label for="p5_1">1. La séance %(s_c)d est finie&nbsp;: la tâche <b>C</b> (dessiner le
-  support) n'est pas terminée, il faudra une séance de plus. Que devient la mise en service&nbsp;?</label>
-    <select id="p5_1">%(q1)s</select></div>
-  <div class="q"><label for="p5_2">2. Même chose avec la tâche <b>D</b> (choisir le matériau)&nbsp;:
-  une séance de retard. Que devient la mise en service&nbsp;?</label>
-    <select id="p5_2">%(q2)s</select></div>
-  <div class="q"><label for="p5_3">3. Ton groupe est en avance sur <b>D</b> et la finit en une
-  demi-séance. Le projet finit-il plus tôt&nbsp;?</label>
-    <select id="p5_3">%(q3)s</select></div>
-  <div class="q"><label for="p5_4">4. Pourquoi <b>E</b> ne peut-elle pas commencer avant la
-  séance %(s_e)d&nbsp;?</label>
-    <select id="p5_4">%(q4)s</select></div>
-
-  <h3>Ce que tu écris</h3>
-  <p>Le professeur principal te demande un <b>point d'avancement en trois lignes</b>&nbsp;: où en
-  est le projet, ce qui est en retard, et ce que ce retard décale. Écris-le comme tu le lui
-  dirais.</p>
-  <textarea id="p5_bilan" style="min-height:110px" aria-label="Point d'avancement en trois lignes : où en est le projet, ce qui est en retard, ce que ce retard décale"></textarea>
-  <button class="btn small" data-check="2">Vérifier mon suivi</button>
-  <p class="feedback" id="fb2" role="status"></p>
-
-  <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
-    <p><b>1.</b> <b>C</b> est sur la chaîne qui décide de la fin. Une séance de retard sur C, c'est
-    une séance de retard sur <b>tout le projet</b>. Rien ne peut la rattraper, parce que tout ce
-    qui suit l'attend.</p>
-    <p><b>2.</b> <b>D</b> a <b>%(marge_d)d séance de marge</b>&nbsp;: elle pourrait finir une séance
-    plus tard sans que rien bouge, parce que E attend aussi C, qui arrive plus tard. La mise en
-    service ne bouge pas.</p>
-    <p><b>3.</b> Non. Gagner du temps sur une tâche qui a de la marge ne fait <b>rien</b> gagner au
-    projet&nbsp;: E attendra toujours C. C'est le résultat le plus surprenant de la planification,
-    et c'est celui qui change la façon de travailler en groupe.</p>
-    <p><b>4.</b> E doit attendre <b>C et D</b> — les deux. Une tâche qui attend plusieurs autres
-    commence après la <b>plus tardive</b>, pas après la première.</p>
-    <p class="piege"><b>Piège classique.</b> Croire que « chacun se dépêche sur sa partie » fait
-    finir le projet plus tôt. Se dépêcher sur une tâche à marge ne sert à rien&nbsp;; se dépêcher
-    sur une tâche de la chaîne sert à tout. Un planning sert d'abord à savoir <b>où</b> il faut se
-    dépêcher.</p>
-  </details>
-  <p class="retenir"><b>À retenir.</b> Suivre un planning, c'est savoir dire, à chaque séance&nbsp;:
-  qu'est-ce qui est fini, qu'est-ce qui est en retard, et <b>qu'est-ce que ce retard décale</b>.
-  Un retard sur une tâche à marge ne décale rien. Un retard sur la chaîne décale tout.</p>
-  <p class="saved-note"><b>Critère de réussite&nbsp;:</b> ton point d'avancement dit ce qui est en
-  retard <b>et</b> ce que ce retard décale — pas seulement « on a du retard ».</p>
-</section>
-</div>
-""" % {
-    "table": tableau_taches(P5, ("id", "libelle", "duree", "ant", "debut")),
-    "duree": P5["duree_totale"],
-    "marges": marges_txt(P5),
-    "chemin": " &rarr; ".join(P5["chemin"]),
-    "marge_d": P5["marges"]["D"],
-    "s_c": P5["debut_au_plus_tot"]["C"] + P5["duree_tache"]["C"],
-    "s_e": P5["debut_au_plus_tot"]["E"] + 1,
-    "q1": opts(["elle recule d'une séance : C est sur la chaîne qui décide de la fin",
-                "elle ne bouge pas : une séance, ce n'est rien",
-                "elle recule de deux séances",
-                "elle avance d'une séance"]),
-    "q2": opts(["elle recule d'une séance, comme pour C",
-                "elle ne bouge pas : D a de la marge, E attend de toute façon C",
-                "le projet est annulé",
-                "elle recule de deux séances"]),
-    "q3": opts(["oui, une demi-séance de gagnée sur le projet",
-                "non : gagner du temps sur une tâche qui a de la marge ne fait rien gagner",
-                "oui, mais seulement si tout le monde va plus vite",
-                "on ne peut pas le savoir sans le logiciel"]),
-    "q4": opts(["parce qu'elle attend C ET D, donc la plus tardive des deux",
-                "parce que c'est la cinquième de la liste",
-                "parce qu'elle dure deux séances",
-                "parce que le professeur l'a décidé"]),
-}
-
-# ══════════════════════════════════════════════════════════════════════════
-# 5. Parcours 4e — ORGANISER : les tâches et les durées sont données
-# ══════════════════════════════════════════════════════════════════════════
-NUM = [str(n) for n in range(1, 13)]
-
-P4_HTML = """
 <div class="seance-panel" id="p4" role="tabpanel" aria-labelledby="tab-p4">
 <section class="card">
   <h2>&#127793; 4e &middot; Organiser — le jardin connecté de Brooklyn</h2>
   <p>Cette fois, on te donne les tâches et leurs durées. On ne te donne <b>ni les dates, ni
   l'ordre</b>. Organiser, c'est établir ce que chaque tâche doit attendre, puis en déduire quand
   elle peut commencer.</p>
-  %(table)s
+  <div class="tablewrap"><table><thead><tr><th>Tâche</th><th>Ce qu'il y a à faire</th><th>Durée (séances)</th><th>Ne peut commencer qu'après</th></tr></thead><tbody><tr><td><b>A</b></td><td>Relever les besoins en eau des plantes de la cour</td><td style="text-align:center">1</td><td style="text-align:center">—</td></tr><tr><td><b>B</b></td><td>Choisir les grandeurs à mesurer</td><td style="text-align:center">1</td><td style="text-align:center">A</td></tr><tr><td><b>C</b></td><td>Câbler le capteur d'humidité du sol</td><td style="text-align:center">2</td><td style="text-align:center">B</td></tr><tr><td><b>D</b></td><td>Écrire le programme d'arrosage</td><td style="text-align:center">2</td><td style="text-align:center">A</td></tr><tr><td><b>E</b></td><td>Fabriquer le support étanche du capteur</td><td style="text-align:center">3</td><td style="text-align:center">B</td></tr><tr><td><b>F</b></td><td>Assembler capteur, support et carte</td><td style="text-align:center">1</td><td style="text-align:center">C, E</td></tr><tr><td><b>G</b></td><td>Téléverser et régler le seuil d'arrosage</td><td style="text-align:center">1</td><td style="text-align:center">D, F</td></tr><tr><td><b>H</b></td><td>Tester une semaine et relever les mesures</td><td style="text-align:center">2</td><td style="text-align:center">G</td></tr><tr><td><b>I</b></td><td>Le jardin s'arrose seul <span class="jalon">◆ jalon</span></td><td style="text-align:center">0</td><td style="text-align:center">H</td></tr></tbody></table></div>
 
   <h3>a) Les contraintes d'antériorité, une par une</h3>
   <p>La colonne « ne peut commencer qu'après » est déjà remplie&nbsp;: lis-la, elle est le cœur du
   travail. Vérifie que tu la comprends.</p>
   <div class="q"><label for="p4_1">Combien de tâches ne dépendent de <b>rien</b>&nbsp;?</label>
-    <select id="p4_1">%(q1)s</select></div>
+    <select id="p4_1"><option value="">— choisir —</option><option>une seule : A</option><option>deux : A et D</option><option>trois</option><option>aucune</option></select></div>
   <div class="q"><label for="p4_2">Après la tâche <b>B</b>, deux tâches peuvent démarrer en même
   temps. Lesquelles&nbsp;?</label>
-    <select id="p4_2">%(q2)s</select></div>
+    <select id="p4_2"><option value="">— choisir —</option><option>C et D</option><option>C et E</option><option>D et E</option><option>F et G</option></select></div>
   <div class="q"><label for="p4_3">La tâche <b>D</b> (écrire le programme) n'attend que
   <b>A</b>. Que peut-on en conclure&nbsp;?</label>
-    <select id="p4_3">%(q3)s</select></div>
+    <select id="p4_3"><option value="">— choisir —</option><option>qu'elle doit être faite en dernier</option><option>qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent</option><option>qu'elle est la plus importante du projet</option><option>qu'elle ne sert à rien</option></select></div>
 
   <h3>b) Les dates au plus tôt</h3>
   <p>Une tâche commence <b>le plus tôt possible</b>&nbsp;: juste après la fin de la <b>plus
   tardive</b> des tâches qu'elle attend. Complète, en numéros de séance (la séance&nbsp;1 est la
   première du projet).</p>
-  %(champs)s
-  <div class="q"><label for="p4_fin">Le jalon <b>%(jalon)s</b> tombe donc à la fin de la séance&nbsp;:</label>
-    <select id="p4_fin">%(qfin)s</select></div>
+  <div class="q"><label for="p4d_B"><b>B</b> &middot; Choisir les grandeurs à mesurer</label><select id="p4d_B"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_C"><b>C</b> &middot; Câbler le capteur d'humidité du sol</label><select id="p4d_C"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_D"><b>D</b> &middot; Écrire le programme d'arrosage</label><select id="p4d_D"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_E"><b>E</b> &middot; Fabriquer le support étanche du capteur</label><select id="p4d_E"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_F"><b>F</b> &middot; Assembler capteur, support et carte</label><select id="p4d_F"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_G"><b>G</b> &middot; Téléverser et régler le seuil d'arrosage</label><select id="p4d_G"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_H"><b>H</b> &middot; Tester une semaine et relever les mesures</label><select id="p4d_H"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
+  <div class="q"><label for="p4_fin">Le jalon <b>I</b> tombe donc à la fin de la séance&nbsp;:</label>
+    <select id="p4_fin"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
 
   <h3>c) Ce que tu écris</h3>
   <p>Deux tâches de ce projet peuvent avancer <b>en même temps</b>. Nomme-les, dis <b>pourquoi</b>
@@ -462,7 +363,7 @@ P4_HTML = """
   <p class="feedback" id="fb3" role="status"></p>
 
   <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
-    <p><b>Les dates au plus tôt.</b> %(corr_dates)s</p>
+    <p><b>Les dates au plus tôt.</b> <b>A</b> en séance 1, <b>B</b> en séance 2, <b>C</b> en séance 3, <b>D</b> en séance 2, <b>E</b> en séance 3, <b>F</b> en séance 6, <b>G</b> en séance 7, <b>H</b> en séance 8, <b>I</b> en séance 10. Le projet dure donc <b>9 séances</b>.</p>
     <p><b>Comment on les trouve, sans logiciel&nbsp;:</b> on part du début, et pour chaque tâche on
     regarde <b>toutes</b> celles qu'elle attend&nbsp;; on prend celle qui finit <b>le plus tard</b>,
     et on commence juste après. C'est tout. Le logiciel ne fait rien d'autre, il le fait juste plus
@@ -471,7 +372,7 @@ P4_HTML = """
     s'attendent pas&nbsp;: elles peuvent être menées ensemble. <b>D</b> (écrire le programme)
     n'attend que A&nbsp;: elle peut démarrer très tôt, pendant que les autres câblent. C'est
     exactement l'information qui manque à un groupe qui « se répartit le travail » au hasard.</p>
-    <p><b>Les marges.</b> Le calcul donne&nbsp;: %(marges)s. Une marge de +3 sur D veut dire que le
+    <p><b>Les marges.</b> Le calcul donne&nbsp;: C (+1), D (+3). Une marge de +3 sur D veut dire que le
     programme pourrait être écrit trois séances plus tard sans décaler la fin — donc que se
     précipiter dessus ne rapporte rien.</p>
     <p class="piege"><b>Piège classique.</b> Commencer une tâche « puisqu'on a le temps », sans
@@ -488,148 +389,7 @@ P4_HTML = """
   ton groupe qui travaille sur quoi <b>en même temps</b>.</p>
 </section>
 </div>
-"""
 
-
-def champs_dates(p, prefixe, sans=("A",)):
-    out = []
-    for i in sorted(p["libelle"]):
-        if i in sans:
-            continue
-        out.append(
-            '<div class="q"><label for="%s_%s"><b>%s</b> &middot; %s</label>'
-            '<select id="%s_%s">%s</select></div>'
-            % (prefixe, i, i, p["libelle"][i], prefixe, i, opts(NUM)))
-    return "".join(out)
-
-
-_dates4 = ", ".join("<b>%s</b> en séance %d" % (i, P4["debut_au_plus_tot"][i] + 1)
-                    for i in sorted(P4["libelle"]))
-P4_HTML = P4_HTML % {
-    "table": tableau_taches(P4),
-    "champs": champs_dates(P4, "p4d", sans=("A", sorted(P4["libelle"])[-1])),
-    "jalon": sorted(P4["libelle"])[-1],
-    "qfin": opts(NUM),
-    "corr_dates": _dates4 + ". Le projet dure donc <b>%d séances</b>." % P4["duree_totale"],
-    "marges": marges_txt(P4),
-    "q1": opts(["une seule : A", "deux : A et D", "trois", "aucune"]),
-    "q2": opts(["C et D", "C et E", "D et E", "F et G"]),
-    "q3": opts(["qu'elle doit être faite en dernier",
-                "qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent",
-                "qu'elle est la plus importante du projet",
-                "qu'elle ne sert à rien"]),
-}
-
-# ══════════════════════════════════════════════════════════════════════════
-# 6. Parcours 3e — ÉLABORER : rien n'est donné, et on cherche le chemin
-# ══════════════════════════════════════════════════════════════════════════
-_hors3 = sorted(i for i, m in P3["marges"].items() if m > 0)
-
-P3_HTML = """
-<div class="seance-panel" id="p3" role="tabpanel" aria-labelledby="tab-p3">
-<section class="card">
-  <h2>&#127962; 3e &middot; Élaborer — le capteur de confort</h2>
-  <p>En 3e, on ne te donne plus le planning&nbsp;: tu l'<b>élabores</b>. Tu identifies les tâches,
-  tu estimes les durées, tu poses les contraintes — et tu cherches la seule chose qui décide de la
-  date de fin&nbsp;: <b>le chemin le plus long</b>.</p>
-  <p>Voici le projet tel qu'une équipe l'a écrit. C'est un vrai découpage de projet, avec ses
-  chevauchements.</p>
-  %(table)s
-
-  <h3>a) La durée totale, et pourquoi</h3>
-  <div class="q"><label for="p3_1">Combien de séances dure ce projet&nbsp;?</label>
-    <select id="p3_1">%(q1)s</select></div>
-  <div class="q"><label for="p3_2">Additionne toutes les durées du tableau. Tu trouves
-  <b>%(somme)d</b>. Pourquoi le projet ne dure-t-il pas %(somme)d séances&nbsp;?</label>
-    <select id="p3_2">%(q2)s</select></div>
-
-  <h3>b) Le chemin le plus long</h3>
-  <p>Cherche la <b>suite de tâches enchaînées</b> la plus longue, du début au jalon final. C'est
-  elle qui fixe la date de fin.</p>
-  <div class="q"><label for="p3_3">Quelle est cette suite&nbsp;?</label>
-    <select id="p3_3">%(q3)s</select></div>
-  <div class="q"><label for="p3_4">Les tâches <b>%(hors)s</b> n'y sont pas. On raccourcit
-  <b>%(hors1)s</b> d'une séance. Combien de séances le projet gagne-t-il&nbsp;?</label>
-    <select id="p3_4">%(q4)s</select></div>
-  <div class="q"><label for="p3_5">On raccourcit maintenant <b>%(critique1)s</b> d'une séance.
-  Combien le projet gagne-t-il&nbsp;?</label>
-    <select id="p3_5">%(q5)s</select></div>
-  <div class="q"><label for="p3_6">Comment ce chemin s'appelle-t-il, dans les entreprises et sur
-  les logiciels&nbsp;?</label>
-    <select id="p3_6">%(q6)s</select></div>
-
-  <h3>c) Ce que tu écris — sur TON projet</h3>
-  <p>Reprends ton propre projet de 3e. Écris <b>le chemin le plus long</b> de ton projet, sous la
-  forme d'une suite de tâches, puis <b>la tâche sur laquelle il ne sert à rien de se
-  précipiter</b>, avec la raison.</p>
-  <textarea id="p3_chemin" style="min-height:120px" aria-label="Le chemin le plus long de ton projet, et une tâche sur laquelle il ne sert à rien de se précipiter, avec la raison"></textarea>
-  <button class="btn small" data-check="4">Vérifier mon élaboration</button>
-  <p class="feedback" id="fb4" role="status"></p>
-
-  <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
-    <p><b>La durée totale est de %(duree)d séances</b>, alors que la somme des durées vaut
-    %(somme)d. L'écart n'est pas une erreur&nbsp;: il vient du <b>parallélisme</b>. Plusieurs
-    tâches avancent en même temps, donc leurs durées ne s'additionnent pas.</p>
-    <p><b>Le chemin le plus long est %(chemin)s.</b> On le trouve en remontant depuis le jalon
-    final&nbsp;: à chaque étape, on garde celle des tâches attendues qui finit <b>le plus tard</b>.
-    En arrivant au début, on a la chaîne complète.</p>
-    <p><b>Les tâches hors chemin&nbsp;: %(marges)s.</b> Le nombre entre parenthèses est leur
-    <b>marge</b>&nbsp;: le retard qu'elles peuvent prendre sans rien décaler. Raccourcir l'une
-    d'elles fait gagner <b>zéro séance</b> au projet — c'est le résultat le plus contre-intuitif de
-    tout l'atelier, et le plus utile.</p>
-    <p><b>Raccourcir une tâche du chemin</b>, en revanche, fait gagner une séance — jusqu'au moment
-    où un <b>autre</b> chemin devient le plus long à son tour. C'est pour ça qu'on recalcule après
-    chaque changement&nbsp;: le chemin le plus long n'est pas une propriété définitive du projet,
-    c'est le résultat d'un calcul sur les durées du moment.</p>
-    <p><b>Le nom du métier.</b> Cette chaîne s'appelle le <b>chemin critique</b>. « Critique » n'a
-    rien à voir avec la difficulté ou l'importance&nbsp;: une tâche critique peut être facile. Elle
-    est critique parce qu'<b>elle n'a aucune marge</b>.</p>
-    <p class="piege"><b>Piège classique.</b> Prendre pour chemin critique la suite des tâches
-    <b>les plus longues</b>. Ce n'est pas ça&nbsp;: c'est la suite <b>enchaînée</b> la plus longue.
-    Une tâche de 3 séances qui n'attend personne et que personne n'attend n'est pas critique.</p>
-    <p class="piege"><b>Deuxième piège.</b> Croire qu'ajouter des personnes sur une tâche la
-    raccourcit. Certaines tâches se divisent (câbler quatre capteurs), d'autres non (attendre
-    qu'une impression 3D se termine). Le planning ne dit pas ce qui se divise&nbsp;: il dit
-    seulement <b>où ça vaudrait la peine d'essayer</b>.</p>
-  </details>
-  <p class="retenir"><b>À retenir.</b> La durée d'un projet n'est pas la somme des durées de ses
-  tâches&nbsp;: c'est la longueur de sa <b>plus longue chaîne enchaînée</b>. Gagner du temps
-  ailleurs ne gagne rien. Ce chemin porte, dans le métier, le nom de <b>chemin critique</b>.</p>
-  <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tu peux montrer, sur ton propre projet,
-  une tâche où se précipiter ne sert à rien — et dire pourquoi.</p>
-</section>
-</div>
-""" % {
-    "table": tableau_taches(P3),
-    "duree": P3["duree_totale"],
-    "somme": sum(P3["duree_tache"].values()),
-    "chemin": " &rarr; ".join(P3["chemin"]),
-    "marges": marges_txt(P3),
-    "hors": " et ".join(_hors3),
-    "hors1": _hors3[0],
-    "critique1": P3["chemin"][3],
-    "q1": opts([str(P3["duree_totale"] - 2), str(P3["duree_totale"]),
-                str(sum(P3["duree_tache"].values())), str(P3["duree_totale"] + 3)]),
-    "q2": opts(["parce que certaines tâches avancent en même temps",
-                "parce qu'on a oublié des tâches",
-                "parce que le jalon ne compte pas",
-                "parce qu'une séance dure moins d'une heure"]),
-    "q3": opts([" → ".join(P3["chemin"]),
-                " → ".join([i for i in sorted(P3["libelle"])]),
-                " → ".join(["A", "B", "G", "H", "I", "J", "K"]),
-                " → ".join(["A", "B", "C", "F", "I", "J", "K"])]),
-    "q4": opts(["aucune : elle n'est pas sur le chemin le plus long",
-                "une séance", "deux séances", "cela dépend du nombre d'élèves"]),
-    "q5": opts(["aucune", "une séance, tant qu'aucun autre chemin ne devient le plus long",
-                "trois séances", "cela ne se calcule pas"]),
-    "q6": opts(["le chemin de fer", "le chemin critique",
-                "le chemin de traverse", "le chemin des écoliers"]),
-}
-
-# ══════════════════════════════════════════════════════════════════════════
-# 7. Le logiciel — pas à pas, avec de vraies captures en français
-# ══════════════════════════════════════════════════════════════════════════
-GP_HTML = """
 <div class="seance-panel" id="gp" role="tabpanel" aria-labelledby="tab-gp">
 
 <section class="card">
@@ -757,18 +517,18 @@ GP_HTML = """
 
   <h3>Vérifie que tu sais te repérer</h3>
   <div class="q"><label for="gp_1">Où trouve-t-on la commande qui fait apparaître le chemin le plus
-  long&nbsp;?</label><select id="gp_1">%(g1)s</select></div>
+  long&nbsp;?</label><select id="gp_1"><option value="">— choisir —</option><option>dans le menu Affichage</option><option>en haut à droite du diagramme, à côté des états de référence</option><option>dans le menu Projet</option><option>en bas de la fenêtre, près de la barre d'état</option></select></div>
   <div class="q"><label for="gp_2">Dans la boîte des propriétés, quel onglet sert à déclarer ce
-  qu'une tâche doit attendre&nbsp;?</label><select id="gp_2">%(g2)s</select></div>
+  qu'une tâche doit attendre&nbsp;?</label><select id="gp_2"><option value="">— choisir —</option><option>Général</option><option>Prédécesseurs</option><option>Ressources</option><option>Colonnes personnalisées</option></select></div>
   <div class="q"><label for="gp_3">Comment transforme-t-on une tâche en jalon&nbsp;?</label>
-    <select id="gp_3">%(g3)s</select></div>
+    <select id="gp_3"><option value="">— choisir —</option><option>en cochant la case Jalon, ce qui met sa durée à zéro</option><option>en la mettant en gras</option><option>en la plaçant en dernière ligne du tableau</option><option>en supprimant ses prédécesseurs</option></select></div>
   <div class="q"><label for="gp_4">Pourquoi le champ « Date de fin » est-il grisé&nbsp;?</label>
-    <select id="gp_4">%(g4)s</select></div>
+    <select id="gp_4"><option value="">— choisir —</option><option>parce que le logiciel est en version d'essai</option><option>parce qu'elle est calculée à partir du début et de la durée</option><option>parce qu'on ne peut pas finir une tâche</option><option>parce qu'il faut d'abord enregistrer le fichier</option></select></div>
   <div class="q"><label for="gp_5">Que signifie la relation <b>Fin-Début</b>&nbsp;?</label>
-    <select id="gp_5">%(g5)s</select></div>
+    <select id="gp_5"><option value="">— choisir —</option><option>la fin de la tâche attendue commande le début de celle-ci</option><option>les deux tâches finissent le même jour</option><option>les deux tâches commencent le même jour</option><option>la tâche se termine dès qu'elle commence</option></select></div>
   <div class="q"><label for="exp_gp">As-tu ouvert le fichier et cliqué toi-même sur la commande du
   chemin critique&nbsp;? <span style="color:var(--sub)">(la voie B compte aussi&nbsp;: le faire au
-  crayon sur tes bandes)</span></label><select id="exp_gp" data-exp="gp">%(gexp)s</select></div>
+  crayon sur tes bandes)</span></label><select id="exp_gp" data-exp="gp"><option value="">— où en es-tu ? —</option><option>— pas encore —</option><option>oui, je l'ai fait moi-même et j'ai vu les tâches changer d'aspect</option></select></div>
   <button class="btn small" data-check="5">Vérifier mon pas à pas</button>
   <p class="feedback" id="fb5" role="status"></p>
 
@@ -799,33 +559,7 @@ GP_HTML = """
   plus long.</p>
 </section>
 </div>
-""" % {
-    "g1": opts(["dans le menu Affichage",
-                "en haut à droite du diagramme, à côté des états de référence",
-                "dans le menu Projet",
-                "en bas de la fenêtre, près de la barre d'état"]),
-    "g2": opts(["Général", "Prédécesseurs", "Ressources", "Colonnes personnalisées"]),
-    "g3": opts(["en cochant la case Jalon, ce qui met sa durée à zéro",
-                "en la mettant en gras",
-                "en la plaçant en dernière ligne du tableau",
-                "en supprimant ses prédécesseurs"]),
-    "g4": opts(["parce que le logiciel est en version d'essai",
-                "parce qu'elle est calculée à partir du début et de la durée",
-                "parce qu'on ne peut pas finir une tâche",
-                "parce qu'il faut d'abord enregistrer le fichier"]),
-    "g5": opts(["la fin de la tâche attendue commande le début de celle-ci",
-                "les deux tâches finissent le même jour",
-                "les deux tâches commencent le même jour",
-                "la tâche se termine dès qu'elle commence"]),
-    "gexp": opts(["— pas encore —",
-                  "oui, je l'ai fait moi-même et j'ai vu les tâches changer d'aspect"],
-                 vide="— où en es-tu ? —"),
-}
 
-# ══════════════════════════════════════════════════════════════════════════
-# 8. Bilan, auto-positionnement, blocs de la règle n°4, pied de page
-# ══════════════════════════════════════════════════════════════════════════
-BAS = """
 </main>
 <div class="page">
 
@@ -840,12 +574,12 @@ BAS = """
   chemin parcouru.</p>
   <textarea id="hyp2" style="min-height:90px" aria-label="Ta réponse corrigée après l'atelier"></textarea>
   <h3>Où en es-tu&nbsp;?</h3>
-  <div class="q"><label for="pos_1"><b>C7.1</b> — %(verbe)s un processus de réalisation d'un objet
-  avec des tâches identifiées&nbsp;:</label><select id="pos_1">%(pos)s</select></div>
+  <div class="q"><label for="pos_1"><b>C7.1</b> — Suivre, organiser ou élaborer un processus de réalisation d'un objet
+  avec des tâches identifiées&nbsp;:</label><select id="pos_1"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
   <div class="q"><label for="pos_2">Je sais distinguer une <b>tâche</b> d'un jalon, et dire ce
-  qu'est une <b>contrainte d'antériorité</b>&nbsp;:</label><select id="pos_2">%(pos)s</select></div>
+  qu'est une <b>contrainte d'antériorité</b>&nbsp;:</label><select id="pos_2"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
   <div class="q"><label for="pos_3">Je sais expliquer pourquoi accélérer une tâche ne fait pas
-  toujours gagner du temps&nbsp;:</label><select id="pos_3">%(pos)s</select></div>
+  toujours gagner du temps&nbsp;:</label><select id="pos_3"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
 </section>
 
 <section class="card">
@@ -875,59 +609,12 @@ BAS = """
 <footer>Ressource originale du dépôt &middot; Thème 3 &middot; C7.1 &middot; images, licences et
 limites dans <code>SOURCES_MEDIAS.md</code> &middot; page utilisable hors ligne, aucune donnée
 envoyée.</footer>
-""" % {
-    "verbe": "Suivre, organiser ou élaborer",
-    "pos": opts(["je ne sais pas encore", "j'y arrive avec de l'aide",
-                 "j'y arrive seul&middot;e", "je peux l'expliquer à quelqu'un"],
-                vide="— me positionner —"),
-}
 
-# ══════════════════════════════════════════════════════════════════════════
-# 9. Les réponses attendues — construites ici, jamais retapées dans le script
-# ══════════════════════════════════════════════════════════════════════════
-JALON4 = sorted(P4["libelle"])[-1]
-ATTENDU = {
-    "be_1": "on peut dire, à un instant donné, si elle est terminée ou non",
-    "be_2": "un jalon : un point de contrôle, qui ne dure pas",
-    "be_3": "peuvent avancer en même temps : c'est là qu'on gagne du temps",
-    "p5_1": "elle recule d'une séance : C est sur la chaîne qui décide de la fin",
-    "p5_2": "elle ne bouge pas : D a de la marge, E attend de toute façon C",
-    "p5_3": "non : gagner du temps sur une tâche qui a de la marge ne fait rien gagner",
-    "p5_4": "parce qu'elle attend C ET D, donc la plus tardive des deux",
-    "p4_1": "une seule : A",
-    "p4_2": "C et E",
-    "p4_3": "qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent",
-    "p4_fin": str(P4["duree_totale"]),
-    "p3_1": str(P3["duree_totale"]),
-    "p3_2": "parce que certaines tâches avancent en même temps",
-    "p3_3": " → ".join(P3["chemin"]),
-    "p3_4": "aucune : elle n'est pas sur le chemin le plus long",
-    "p3_5": "une séance, tant qu'aucun autre chemin ne devient le plus long",
-    "p3_6": "le chemin critique",
-    "gp_1": "en haut à droite du diagramme, à côté des états de référence",
-    "gp_2": "Prédécesseurs",
-    "gp_3": "en cochant la case Jalon, ce qui met sa durée à zéro",
-    "gp_4": "parce qu'elle est calculée à partir du début et de la durée",
-    "gp_5": "la fin de la tâche attendue commande le début de celle-ci",
-}
-for _i in sorted(P4["libelle"]):
-    if _i != "A" and _i != JALON4:
-        ATTENDU["p4d_" + _i] = str(P4["debut_au_plus_tot"][_i] + 1)
-
-GROUPES = {
-    "0": ["be_1", "be_2", "be_3"],
-    "2": ["p5_1", "p5_2", "p5_3", "p5_4"],
-    "3": ["p4_1", "p4_2", "p4_3"] + sorted(k for k in ATTENDU if k.startswith("p4d_")) + ["p4_fin"],
-    "4": ["p3_1", "p3_2", "p3_3", "p3_4", "p3_5", "p3_6"],
-    "5": ["gp_1", "gp_2", "gp_3", "gp_4", "gp_5"],
-}
-
-SCRIPT_T = """
 <script>
 "use strict";
 const KEY="atelier_c7_1_planification_taches";
-const ATT=%(att)s;
-const GRP=%(grp)s;
+const ATT={"be_1": "on peut dire, à un instant donné, si elle est terminée ou non", "be_2": "un jalon : un point de contrôle, qui ne dure pas", "be_3": "peuvent avancer en même temps : c'est là qu'on gagne du temps", "p5_1": "elle recule d'une séance : C est sur la chaîne qui décide de la fin", "p5_2": "elle ne bouge pas : D a de la marge, E attend de toute façon C", "p5_3": "non : gagner du temps sur une tâche qui a de la marge ne fait rien gagner", "p5_4": "parce qu'elle attend C ET D, donc la plus tardive des deux", "p4_1": "une seule : A", "p4_2": "C et E", "p4_3": "qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent", "p4_fin": "9", "p3_1": "12", "p3_2": "parce que certaines tâches avancent en même temps", "p3_3": "A → B → C → D → E → H → I → J → K", "p3_4": "aucune : elle n'est pas sur le chemin le plus long", "p3_5": "une séance, tant qu'aucun autre chemin ne devient le plus long", "p3_6": "le chemin critique", "gp_1": "en haut à droite du diagramme, à côté des états de référence", "gp_2": "Prédécesseurs", "gp_3": "en cochant la case Jalon, ce qui met sa durée à zéro", "gp_4": "parce qu'elle est calculée à partir du début et de la durée", "gp_5": "la fin de la tâche attendue commande le début de celle-ci", "p4d_B": "2", "p4d_C": "3", "p4d_D": "2", "p4d_E": "3", "p4d_F": "6", "p4d_G": "7", "p4d_H": "8"};
+const GRP={"0": ["be_1", "be_2", "be_3"], "3": ["p4_1", "p4_2", "p4_3", "p4d_B", "p4d_C", "p4d_D", "p4d_E", "p4d_F", "p4d_G", "p4d_H", "p4_fin"], "5": ["gp_1", "gp_2", "gp_3", "gp_4", "gp_5"]};
 const $=id=>document.getElementById(id);
 const val=id=>{const e=$(id);return e?e.value:"";};
 window.__valid = window.__valid || {};
@@ -979,8 +666,8 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
 });
 
 /* ══════ Lecture des productions écrites (règles n°49 et n°50) ══════ */
-const bas = t => t.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").replace(/[’']/g,"'");
-const lignes = t => t.split(/\\n+/).map(x=>x.trim()).filter(x=>x.length>2);
+const bas = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’']/g,"'");
+const lignes = t => t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2);
 const compteQcm = (ids)=>{
   let ok=0, vides=0;
   ids.forEach(id=>{ const v=val(id); if(!v) vides++; else if(v===ATT[id]) ok++; });
@@ -1003,7 +690,7 @@ const CHECKS = {
   1: function(){
     const t=val("a1_taches"), b=bas(t), L=lignes(t);
     /* une durée écrite sur au moins trois lignes */
-    const avecDuree = L.filter(x=>/\\d+\\s*(seance|seances|s\\b|h\\b|heure)/.test(bas(x))).length;
+    const avecDuree = L.filter(x=>/\d+\s*(seance|seances|s\b|h\b|heure)/.test(bas(x))).length;
     /* un verbe d'action sur au moins trois lignes */
     const VERBES=/(cabl|fabriqu|dessin|mesur|choisi|ecri|program|assembl|imprim|monte|coupe|percer|perce|souder|soude|test|releve|relev|install|regl|telecharg|televers|coll|visser|visse|decoup|model|redig|observ|calcul|verifi|peindre|peint|trac)/;
     const avecVerbe = L.filter(x=>VERBES.test(bas(x))).length;
@@ -1058,7 +745,7 @@ const CHECKS = {
     const rd = compteQcm(dates);
     const datesOk = rd.ok===rd.total;
     const t=val("p4_para"), b=bas(t);
-    const nomme = (b.match(/\\b[a-i]\\b/g)||[]).length>=2 || /(cabl|fabriqu|programm|support)/.test(b);
+    const nomme = (b.match(/\b[a-i]\b/g)||[]).length>=2 || /(cabl|fabriqu|programm|support)/.test(b);
     const pourquoi = /(n'attend|attendent pas|aucune contrainte|pas de contrainte|independant|ne depend|rien a voir|en meme temps)/.test(b);
     const groupe = /(pendant que|qui fait|se partage|repartir|repartit|un groupe|l'autre|deux eleves|binome|equipe)/.test(b);
     const ecritOk = nomme && pourquoi && groupe && t.trim().length>=110;
@@ -1077,7 +764,7 @@ const CHECKS = {
     const r=compteQcm(GRP["4"]);
     const t=val("p3_chemin"), b=bas(t);
     const suite = /(->|→|puis|ensuite|,)/.test(t) && lignes(t).length>=2;
-    const tache = /(tache|etape)/.test(b) || (b.match(/\\b[a-k]\\b/g)||[]).length>=3;
+    const tache = /(tache|etape)/.test(b) || (b.match(/\b[a-k]\b/g)||[]).length>=3;
     const raison = /(marge|pas sur le chemin|hors du chemin|ne change rien|ne fait rien gagner|attend de toute facon|rien gagner|aucune seance)/.test(b);
     const ecritOk = suite && tache && raison && t.trim().length>=110;
     let extra="";
@@ -1115,7 +802,7 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
 });
 
 /* ══════ Barre de progression et pastilles d'onglet ══════ */
-const PANNEAU = %(panneau)s;
+const PANNEAU = {"0": "pm", "1": "pm", "3": "p4", "5": "gp"};
 function majProgres(){
   const faits = Object.keys(PANNEAU).filter(k=>window.__valid[k]);
   /* une étape compte quand TOUS ses vérificateurs sont validés */
@@ -1126,7 +813,7 @@ function majProgres(){
   });
   const n = Object.values(parPanneau).filter(Boolean).length;
   const tot = Object.keys(parPanneau).length;
-  $("progFill").style.width = (100*n/tot)+"%%";
+  $("progFill").style.width = (100*n/tot)+"%";
   $("progBar").setAttribute("aria-valuenow", n);
   $("progTxt").textContent = n+" / "+tot+" étapes validées";
   Object.entries(parPanneau).forEach(([p,ok])=>{
@@ -1136,7 +823,7 @@ function majProgres(){
 }
 
 /* ══════ Bandeau « ce qu'il y a à faire ici » (règle n°30) ══════ */
-const TACHES = %(taches)s;
+const TACHES = {"pm": [["0", "répondre au billet d'entrée"], ["1", "découper les bandes, puis écrire trois tâches et un jalon"]], "p4": [["3", "poser les dates au plus tôt, puis écrire les deux tâches parallèles"]], "gp": [["5", "suivre les cinq écrans, manipuler, puis répondre aux cinq repères"]]};
 function majBandeau(){
   const actif=document.querySelector(".seance-panel.active");
   if(!actif) return;
@@ -1153,130 +840,3 @@ majProgres(); majBandeau();
 </script>
 </body>
 </html>
-"""
-
-# ══════════════════════════════════════════════════════════════════════════
-# 10. Assemblage
-# ══════════════════════════════════════════════════════════════════════════
-# Une page PAR NIVEAU, engendrée depuis cette même source : elles ne peuvent pas
-# diverger. Chacune s'ouvre par son rappel spiralaire (règle d'or n°87) et ne
-# montre QUE son parcours — choisir soi-même son niveau était une charge mentale
-# gratuite, et faisait voir à l'élève le travail des autres.
-
-RAPPEL = {
-    "5e": """
-<section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Avant de commencer&nbsp;: à quoi ça sert&nbsp;?</h2>
-  <p class="deja">Tu as <b>déjà fabriqué</b> des choses en technologie&nbsp;: tu as suivi une fiche,
-  étape après étape, et à la fin l'objet était là. Quelqu'un avait écrit ces étapes,
-  et il les avait écrites <b>dans cet ordre-là</b> pour une raison.</p>
-  <p class="change"><b>Ce qui change aujourd'hui&nbsp;:</b> on va regarder cette liste d'étapes
-  elle-même. Pas pour fabriquer&nbsp;: pour comprendre <b>pourquoi</b> certaines doivent attendre,
-  et pourquoi d'autres peuvent avancer en même temps.</p>
-  <p class="filet">Tu n'as encore jamais vu de planning&nbsp;? Parfait&nbsp;: c'est exactement
-  ce qu'on va apprendre à lire.</p>
-</section>
-""",
-    "4e": """
-<section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja"><b>L'an dernier, en 5e</b>, on t'a donné un planning tout prêt pour un projet&nbsp;:
-  tu l'as <b>suivi</b>. Tu repérais la tâche du jour, tu la <b>cochais</b> quand elle était finie,
-  et tu voyais tout de suite si le groupe était en avance ou en retard.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> personne ne te donne le planning.
-  On te donne la <b>liste des tâches</b>, en vrac, et c'est <b>toi</b> qui décides laquelle vient
-  avant laquelle. Le logiciel te dira ensuite si ton ordre tient debout.</p>
-  <p class="filet">Tu n'étais pas là l'an dernier&nbsp;? Tout ce qu'il faut savoir tient dans le
-  paragraphe ci-dessus&nbsp;: un planning, c'est des tâches, chacune avec une durée, et des
-  flèches qui disent qui attend qui.</p>
-</section>
-""",
-    "3e": """
-<section class="card rappel-spiralaire" aria-labelledby="rap-t">
-  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja"><b>En 5e</b>, tu as <b>suivi</b> un planning qu'on t'avait donné.
-  <b>En 4e</b>, tu as <b>organisé</b> des tâches qu'on t'avait listées&nbsp;: tu as posé l'ordre
-  et tracé les liaisons, et tu as trouvé quelles tâches pouvaient avancer en même temps.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> la liste n'existe pas. C'est toi qui
-  <b>découpes</b> le projet en tâches, qui <b>estimes</b> chaque durée, et qui réponds à la seule
-  question qui compte pour un client&nbsp;: <b>ce sera prêt quand&nbsp;?</b></p>
-  <p class="filet">Tu n'as pas fait la 4e ici&nbsp;? Retiens ceci et ça suffira&nbsp;: une tâche a
-  une durée&nbsp;; une flèche dit qu'une tâche doit finir avant qu'une autre commence&nbsp;; la
-  plus longue chaîne de flèches décide de la date de fin.</p>
-</section>
-""",
-}
-
-NIVEAUX = {
-    "5e": {"panel": "p5", "corps": P5_HTML, "verbe": "Suivre",
-           "groupes": ["0", "1", "2", "5"], "onglet": "5e<br>Suivre",
-           "titre_ong": "Le parcours de 5e : suivre un planning qu'on te donne."},
-    "4e": {"panel": "p4", "corps": P4_HTML, "verbe": "Organiser",
-           "groupes": ["0", "1", "3", "5"], "onglet": "4e<br>Organiser",
-           "titre_ong": "Le parcours de 4e : organiser des tâches qu'on te liste."},
-    "3e": {"panel": "p3", "corps": P3_HTML, "verbe": "Élaborer",
-           "groupes": ["0", "1", "4", "5"], "onglet": "3e<br>Élaborer",
-           "titre_ong": "Le parcours de 3e : élaborer le processus de bout en bout."},
-}
-
-TACHES_TOUTES = {
-    "pm": [["0", "répondre au billet d'entrée"],
-           ["1", "découper les bandes, puis écrire trois tâches et un jalon"]],
-    "p5": [["2", "répondre aux quatre situations, puis écrire le point d'avancement"]],
-    "p4": [["3", "poser les dates au plus tôt, puis écrire les deux tâches parallèles"]],
-    "p3": [["4", "trouver la durée, le chemin le plus long, puis l'écrire sur ton projet"]],
-    "gp": [["5", "suivre les cinq écrans, manipuler, puis répondre aux cinq repères"]],
-}
-
-# Ancres exactes dans les gabarits communs — si l'une disparaît, on s'arrête net
-# plutôt que d'écrire une page silencieusement fausse (règle n°71, même esprit).
-ANCRE_BADGE = ('<span class="badge niveau" title="Cet atelier sert aux trois niveaux du cycle 4, '
-               'avec un parcours différent pour chacun.">5e &middot; 4e &middot; 3e</span>')
-ANCRE_ONGLETS_DEB = '<div class="seance-tabs" role="tablist" id="seances"'
-ANCRE_ONGLETS_FIN = '</div>\n<div id="tachesBandeau"'
-
-
-def barre_onglets(niv):
-    n = NIVEAUX[niv]
-    return (
-        '<div class="seance-tabs" role="tablist" id="seances" aria-label="Étapes de l\'atelier">\n'
-        '  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="pm" '
-        'id="tab-pm">Étape 1<br>Les mots<span class="done" id="done-pm"></span></button>\n'
-        '  <button class="seance-tab" role="tab" aria-selected="false" data-panel="%(p)s" '
-        'id="tab-%(p)s" title="%(t)s">%(o)s<span class="done" id="done-%(p)s"></span></button>\n'
-        '  <button class="seance-tab" role="tab" aria-selected="false" data-panel="gp" '
-        'id="tab-gp">Le logiciel<br>Pas à pas<span class="done" id="done-gp"></span></button>\n'
-        % {"p": n["panel"], "o": n["onglet"], "t": n["titre_ong"]})
-
-
-def page(niv):
-    n = NIVEAUX[niv]
-
-    tete = TETE.replace(ANCRE_BADGE,
-                        '<span class="badge niveau" title="Cette page est le parcours de %s. '
-                        'Les autres niveaux ont la leur.">%s</span>' % (niv, niv))
-    if tete == TETE:
-        raise SystemExit("Ancre du badge de niveau introuvable dans TETE — arrêt.")
-
-    d = HAUT.index(ANCRE_ONGLETS_DEB)
-    f = HAUT.index(ANCRE_ONGLETS_FIN, d)
-    haut = HAUT[:d] + barre_onglets(niv) + HAUT[f:]
-    haut = RAPPEL[niv] + haut          # le rappel ouvre la page (règle n°87)
-
-    taches = {k: v for k, v in TACHES_TOUTES.items() if k in ("pm", "gp", n["panel"])}
-    groupes = {k: GROUPES[k] for k in n["groupes"] if k in GROUPES}
-    panneau = {k: v for k, v in
-               {"0": "pm", "1": "pm", "2": "p5", "3": "p4", "4": "p3", "5": "gp"}.items()
-               if v in ("pm", "gp", n["panel"])}
-    script = SCRIPT_T % {"att": json.dumps(ATTENDU, ensure_ascii=False),
-                         "grp": json.dumps(groupes, ensure_ascii=False),
-                         "taches": json.dumps(taches, ensure_ascii=False),
-                         "panneau": json.dumps(panneau, ensure_ascii=False)}
-
-    return tete + haut + PM + n["corps"] + GP_HTML + BAS + script
-
-
-for _niv in ("5e", "4e", "3e"):
-    _s = D / ("atelier_%s_C7.1_planification_taches.html" % _niv)
-    _s.write_text(page(_niv), encoding="utf-8")
-    print("écrit : %s (%d o)" % (_s.name, _s.stat().st_size))

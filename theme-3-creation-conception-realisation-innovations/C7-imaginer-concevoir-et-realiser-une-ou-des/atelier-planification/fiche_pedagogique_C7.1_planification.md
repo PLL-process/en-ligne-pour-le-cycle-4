@@ -89,7 +89,7 @@ réel de New York.
 
 ## Ressources du lot
 
-`atelier_C7.1_planification_taches.html` · `qcm_C7.1_planification_taches.html` (30 questions) ·
+`atelier_5e_…` · `atelier_4e_…` · `atelier_3e_C7.1_planification_taches.html` · `qcm_C7.1_planification_taches.html` (30 questions) ·
 `Synthèses/` (élève et professeur) · `matrice_couverture_C7.1.csv` · `SOURCES_MEDIAS.md` ·
 `rapport_tests_C7.1.md` · `taches_projets_c7_simulees.csv` · `_verifier_planning.py` ·
 `jardin_connecte_brooklyn.gan` · `Images/` (5 captures).
