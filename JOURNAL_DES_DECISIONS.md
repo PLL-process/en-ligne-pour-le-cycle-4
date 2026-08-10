@@ -4514,3 +4514,63 @@ n'existait plus, et « c'est la même page pour tout le monde », devenu faux. E
 n'ont été vues que parce qu'on relisait la page pour une autre raison. Toute
 refonte doit donc **relire ce que les autres pages disent de celle qu'on change**.
 
+---
+
+## 11 août 2026 — La progression CAO est complète, et le dépôt s'est fait auditer
+
+Les trois TP de prise en main existent : le dé en 5e, le dé sur son socle en
+4e, le boîtier étanche en 3e. Ce qui les tient ensemble n'est pas la
+difficulté des outils — la révolution n'est pas plus dure que l'extrusion —
+mais **l'enjeu**. En 5e une pièce ratée reste jolie à l'écran ; en 4e elle ne
+s'assemble pas, et ça se voit tout de suite ; en 3e elle prend l'eau, et on ne
+l'apprend qu'à la première averse. C'est cette montée-là qu'un élève doit
+sentir, et c'est elle que le rappel spiralaire nomme à chaque niveau.
+
+Le lot est complété : fiche pédagogique, synthèse élève, synthèse professeur,
+manifeste, et les trois relevés de captures engendrés depuis les scénarios —
+ils ne peuvent donc pas se désynchroniser des TP.
+
+**La problématique de la CAO est écrite** : *comment décrire un objet assez
+précisément pour qu'une machine le fabrique sans nous ?* Elle rend enfin
+lisibles C7.2 et C7.6, qui flottaient. Pascal avait posé la question — cette
+compétence ne mérite-t-elle pas une problématique à part entière ? — et la
+réponse est oui : sans elle, l'élève apprend un logiciel sans savoir à quelle
+question il répond.
+
+### L'audit d'harmonisation
+
+Pascal, avant de se coucher : « il y a certains TP, certaines séances qui
+mériteront une certaine harmonisation ». Le script `audit_spiralaire.py`
+passe les 181 pages du dépôt au crible des règles mécanisables et écrit
+`AUDIT_HARMONISATION.md`. Le rapport est **engendré**, jamais rédigé : il se
+régénère d'une commande et ne peut pas mentir sur l'état réel.
+
+Ce qu'il trouve, par ordre de rentabilité :
+
+**31 séances de 4e et de 3e sans rappel spiralaire.** C'est le chantier qui
+change quelque chose pour l'élève, et il demande de remonter la progression
+pour savoir ce qui précède. C'est là que se joue la cohérence du cycle.
+
+**47 pages sans sortie** — presque toutes des synthèses et des QCM sans barre
+de navigation. Mécanique, rapide, corrigeable par lot puisqu'elles partagent
+leur gabarit.
+
+**3 pages aux images manquantes** (les TP de CAO, en cours), **1 bonus sans
+corrigé** — bien moins que les 23 craints, mais à vérifier à la main avant de
+conclure : un chiffre bas peut vouloir dire « tout va bien » ou « le script ne
+voit pas » —, et **84 pages qui appellent le réseau**, dette ancienne et
+assumée.
+
+### Ce que cet audit ne dit pas, et qu'il faut se répéter
+
+Un script détecte l'**absence** d'un bloc, jamais la **platitude** de son
+contenu. Une séance peut porter un rappel spiralaire parfaitement conforme et
+parfaitement inutile : « tu as vu les capteurs en 4e » coche la case et
+n'apprend rien. Les trois questions qui comptent — le rappel nomme-t-il une
+**production**, dit-il ce qui **change**, tient-il debout pour celui qui
+n'était pas là — ne se mesurent pas. Elles se lisent.
+
+Le rapport le dit lui-même dans son périmètre. C'est la même discipline que
+pour les vérificateurs de guidage : dire ce qu'on contrôle, et surtout ce
+qu'on ne contrôle pas.
+

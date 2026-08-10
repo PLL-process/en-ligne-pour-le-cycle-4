@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Dessiner un objet pour qu'une machine le fabrique (C7.2, C7.6)</title>
+<style>body{font-family:system-ui,sans-serif;max-width:820px;margin:20px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}h1{color:#1d4e89;border-bottom:3px solid #61dafb;padding-bottom:8px}h2{color:#1d4e89;margin-top:26px}.box{background:#f0f7ff;border-left:5px solid #1d4e89;padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0}.warn{background:#fff6e5;border-left-color:#c88a00}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #b9cbe4;padding:6px 9px;text-align:left}th{background:#e4eefb}code{background:#eef3fa;padding:1px 4px;border-radius:4px}#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}@media print{body{font-size:11pt}}</style></head>
+<body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../../index.html">&#8962; Accueil</a>
+  <a href="../../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html">&#8592; Séquence de 5e</a>
+  <a href="../../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html">Séquence de 4e</a>
+  <a href="../../3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html">Séquence de 3e</a>
+  <a href="../tp_5e_de_onshape.html">Les TP</a>
+</nav>
+<h1>Synthèse élève — Dessiner un objet pour qu'une machine le fabrique</h1>
+<p><strong>Codes :</strong> C7.2 — imaginer, créer et simuler tout ou partie d'un objet ;
+C7.6 — réaliser le prototype d'un objet.</p>
+
+<p>La question à laquelle tout ce travail répond&nbsp;: <strong>comment décrire un objet assez
+précisément pour qu'une machine le fabrique sans nous&nbsp;?</strong></p>
+
+<div class="box"><strong>Le principe : on ne dessine pas l'objet, on dessine comment le construire</strong>
+<p>Un logiciel de conception ne garde pas une image. Il garde la <strong>suite des gestes</strong>
+qui ont mené à la pièce&nbsp;: esquisse, puis extrusion, puis congé. C'est pour ça qu'on peut
+revenir en arrière et changer une cote sans tout refaire — la pièce se reconstruit toute seule.</p></div>
+
+<h2>Les gestes, du plus simple au plus complet</h2>
+<table>
+<tr><th>Geste</th><th>Ce qu'il fait</th><th>Vu en</th></tr>
+<tr><td><strong>Esquisser</strong></td><td>Dessiner à plat, sur un plan ou sur une face. C'est toujours le point de départ.</td><td>5e</td></tr>
+<tr><td><strong>Coter</strong></td><td>Fixer une dimension. Tant qu'une cote manque, la forme peut encore bouger.</td><td>5e</td></tr>
+<tr><td><strong>Extruder</strong></td><td>Pousser une esquisse en ligne droite pour faire du volume — ou pour en enlever.</td><td>5e</td></tr>
+<tr><td><strong>Congé</strong></td><td>Adoucir une arête. Sur un objet réel, une arête vive coupe et casse.</td><td>5e</td></tr>
+<tr><td><strong>Révolution</strong></td><td>Faire tourner une esquisse autour d'un axe. Tout ce qui est rond vient de là.</td><td>4e</td></tr>
+<tr><td><strong>Assemblage</strong></td><td>Mettre plusieurs pièces ensemble et dire comment elles se touchent.</td><td>4e</td></tr>
+<tr><td><strong>Coque</strong></td><td>Évider une pièce en gardant une épaisseur constante partout.</td><td>3e</td></tr>
+</table>
+
+<div class="box"><strong>La couleur du trait dit l'état du dessin</strong>
+<p>Dans une esquisse, un trait <strong>bleu</strong> peut encore bouger&nbsp;: il lui manque une
+cote ou une contrainte. Un trait <strong>noir</strong> est fixé, plus rien ne le déplacera. Une
+esquisse entièrement noire est une esquisse dont on a tout décidé — c'est ce qu'on vise.</p></div>
+
+<h2>Une contrainte n'est pas un placement</h2>
+<p>Dans un assemblage, on ne pose pas une pièce à l'œil. On dit au logiciel ce qui est
+<strong>interdit</strong>&nbsp;: cette face touche celle-là, ces deux axes sont confondus. Le
+logiciel en déduit la position, et elle est <strong>exacte</strong>. Placer à l'œil est facile,
+rapide — et faux dès qu'on zoome.</p>
+
+<div class="box warn"><strong>Apparence n'est pas matériau</strong>
+<p>L'<strong>apparence</strong>, c'est ce que l'objet a l'air d'être&nbsp;: une couleur, un aspect
+brillant. Le <strong>matériau</strong>, c'est ce dont il est fait&nbsp;: il change la
+<strong>masse</strong> annoncée, pas la couleur. Une pièce dorée à l'écran peut être en plastique
+dans le fichier — et c'est le plastique qui sortira de l'imprimante.</p></div>
+
+<h2>Ce qui rend une boîte étanche</h2>
+<p>Une boîte fermée n'est pas une boîte étanche. Entre le boîtier et son couvercle il reste un
+<strong>jeu</strong> invisible où l'eau s'engouffre. On y loge un <strong>joint</strong> qu'on
+écrase en fermant&nbsp;: il lui faut une <strong>rainure</strong>, et la nervure du couvercle doit
+être un peu <em>plus courte</em> que la rainure n'est profonde — sinon le joint ne s'écrase pas.</p>
+<p>Et surtout&nbsp;: <strong>l'eau entre par les trous qu'on a faits exprès</strong>. Un boîtier se
+juge à ses ouvertures, pas à ses parois. Le passage de câble se met en partie basse d'une face
+verticale, et c'est le <strong>presse-étoupe</strong> qui le rend étanche, pas le trou.</p>
+
+<h2>Les trois questions à se poser devant n'importe quelle pièce</h2>
+<ul>
+<li><strong>Est-ce que je peux la fabriquer&nbsp;?</strong> Une paroi de 0,5 mm ne s'imprime pas.</li>
+<li><strong>Est-ce qu'elle va avec les autres&nbsp;?</strong> Une pièce seule ne prouve rien&nbsp;;
+c'est l'assemblage qui révèle les erreurs.</li>
+<li><strong>Est-ce qu'elle tiendra dans la vraie vie&nbsp;?</strong> L'eau, le soleil, les chocs, la
+main qui la saisit.</li>
+</ul>
+<div class="box et-ensuite"><strong>&#10145; Et ensuite</strong><p>Reprends le TP de ton niveau pour t'entraîner, ou reviens à ta séquence : c'est là que ces gestes servent à fabriquer ton objet.</p></div>
+</body></html>
