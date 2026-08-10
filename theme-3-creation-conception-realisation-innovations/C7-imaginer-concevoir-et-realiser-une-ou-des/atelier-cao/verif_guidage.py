@@ -49,9 +49,19 @@ def controler(f: pathlib.Path):
       "%d encadré(s) d'avertissement" % avertir)
 
     # n°75 — toute valeur d'exemple est déclarée
-    exemples = len(re.findall(r"class=\"exemple-note\"", src))
-    r("n°75", "valeurs d'exemple déclarées", True,
-      "%d valeur(s) déclarée(s) comme exemple" % exemples)
+    # Un contrôle qui vaut TOUJOURS vrai n'est pas un contrôle : c'était le cas
+    # ici, et le vert était mensonger. On compte maintenant vraiment.
+    exemples = len(re.findall(r'class="exemple-note"', src))
+    cotes = len(re.findall(r"<code>\d[\d ,.]*</code>", src))
+    # Attention au sens de la règle : elle vise les valeurs qu'un élève pourrait
+    # recopier en croyant qu'elles sont imposées. Beaucoup de valeurs d'un TP le
+    # SONT vraiment (le cube de 50, les creux de 10) : les déclarer « exemple »
+    # serait faux. Le script exige donc au moins une mention, et se contente de
+    # RAPPORTER le rapport — le jugement reste humain.
+    r("n°75", "valeurs d'exemple déclarées", exemples >= 1,
+      "%d mention(s) « c'est un exemple », pour %d valeur(s) chiffrée(s) — "
+      "vérifier à la main que les valeurs LIBRES sont bien signalées"
+      % (exemples, cotes))
 
     # n°76 — l'aide décroît
     niveaux = re.findall(r'class="niveau (detaille|allege|resultat)"', src)
