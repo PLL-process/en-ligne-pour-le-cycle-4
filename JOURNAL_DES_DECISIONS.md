@@ -4248,3 +4248,51 @@ socle** ; **3e — le boîtier étanche du capteur de confort**, où la forme n'
 déduite d'un besoin.
 
 Et le TP de Pascal reste sa propriété : il sert de **modèle de forme**, jamais de source de texte.
+
+---
+
+### Règle d'or n°83 — Une ressource partagée doit être atteignable depuis chaque code qu'elle sert
+
+**L'incident.** Pascal, le 10 août : « *je suis en panique parce que je n'ai pas vu de diagramme de
+Gantt* ». L'atelier de planification était pourtant livré, fusionné, et il contenait cinq vraies
+captures de GanttProject. Mais depuis l'index du site, **il n'existait pas**.
+
+`make_index.py` ne liste que les fichiers rangés directement sous
+`<thème>/<Cx>/<niveau>/<niveau>_<code>/`. L'atelier, lui, vit dans un dossier commun
+`_atelier-planification/` un cran plus haut — précisément parce qu'il est **partagé** par les trois
+niveaux et qu'on ne voulait pas le tripler. J'avais posé des liens dans les trois séquences C7.1,
+et j'avais cru que cela suffisait. Cela ne suffit pas : personne ne trouve une ressource en ouvrant
+d'abord une autre ressource.
+
+**Ce que ça dit de plus général.** Mutualiser un contenu est presque toujours juste — c'est ce qui
+empêche trois versions de diverger. Mais **mutualiser le contenu n'autorise pas à mutualiser
+l'accès**. Un code du référentiel est une porte d'entrée ; si la ressource qui le sert n'est pas
+derrière cette porte, elle n'existe pas pour celui qui cherche.
+
+**La règle.** Toute ressource rangée hors des dossiers de code porte, **dans chaque dossier de code
+qu'elle sert**, un <b>panneau indicateur</b> : une page courte qui dit ce qu'est la ressource,
+pourquoi elle est ailleurs, ce que ce niveau-là y fait, et qui donne le lien. Le contenu reste en
+**un seul exemplaire** ; seul l'accès est dupliqué.
+
+**Mécanisation.** Les panneaux sont nommés d'après la ressource (`atelier_…`, `tp_…`), motif que
+`make_index.py` reconnaît déjà et affiche comme « 🔧 Activité ». Trois panneaux ont été posés pour
+l'atelier de planification, et l'index passe de 164 à 167 ressources.
+
+### Règle d'or n°84 — On vérifie avant de demander
+
+**L'incident, le même jour.** Pascal signale que le mini-projet de 5e annonce « 5e_C7 · 5e_C8 ·
+5e_C9 », des familles et non des compétences. Ma réaction a été de lui **proposer** de vérifier
+lesquels des douze codes étaient réellement servis. Sa réponse&nbsp;: « *pourquoi ne vérifies-tu pas
+avant de produire une question&nbsp;? Or, on a mis des balises justement pour ne pas tomber dans ce
+piège.* »
+
+Il a raison. Le fichier était sur mon disque, le référentiel est dans `audit_couverture.csv`, et le
+vérificateur existe. La réponse était à trente secondes.
+
+**La règle.** Quand la réponse tient dans un fichier que j'ai sous la main, **poser la question
+n'est pas de la prudence : c'est du travail renvoyé à l'autre**. On demande pour arbitrer un choix
+qui appartient à Pascal — jamais pour établir un fait qu'on peut lire.
+
+Le corollaire est plus dur, et c'est le vrai enseignement de la journée&nbsp;: une règle en prose
+se contourne, y compris par celui qui l'a écrite. Les seules qui n'ont jamais échoué sont celles
+qu'un script **refuse** de violer.
