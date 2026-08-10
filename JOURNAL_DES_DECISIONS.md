@@ -4048,7 +4048,7 @@ tâches.** » L'inventaire du 8 août avait compté **zéro occurrence** dans to
 les trois codes C7.1 étaient revendiqués — et que la séquence de 3e, qui doit faire *élaborer* un
 processus « avec des tâches identifiées », ne contenait pas une seule fois le mot « tâche ».
 
-`_atelier-planification/` répond à ce manque par **une ressource unique à trois parcours**, appelée
+`atelier-planification/` répond à ce manque par **une ressource unique à trois parcours**, appelée
 depuis les trois séquences C7.1 au moment du lancement de projet — la 5e **suit** un planning déjà
 fait, la 4e l'**organise**, la 3e l'**élabore** et cherche le chemin le plus long. Trois refontes
 auraient produit trois versions qui divergeraient ; une ressource partagée n'en produit qu'une.
@@ -4259,7 +4259,7 @@ captures de GanttProject. Mais depuis l'index du site, **il n'existait pas**.
 
 `make_index.py` ne liste que les fichiers rangés directement sous
 `<thème>/<Cx>/<niveau>/<niveau>_<code>/`. L'atelier, lui, vit dans un dossier commun
-`_atelier-planification/` un cran plus haut — précisément parce qu'il est **partagé** par les trois
+`atelier-planification/` un cran plus haut — précisément parce qu'il est **partagé** par les trois
 niveaux et qu'on ne voulait pas le tripler. J'avais posé des liens dans les trois séquences C7.1,
 et j'avais cru que cela suffisait. Cela ne suffit pas : personne ne trouve une ressource en ouvrant
 d'abord une autre ressource.
