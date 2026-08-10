@@ -4420,3 +4420,46 @@ quatre-vingt-sept règles écrites, c'est trente-neuf jugements subjectifs. Les 
 séquences exemplaires** qu'on peut ouvrir côte à côte, c'est une comparaison. Et ce qui aura résisté
 à l'usage sur trois lots mérite d'être imposé aux trente-six autres — ce qui n'y aura pas résisté
 sera abandonné avant d'avoir coûté trente-six fois.
+
+---
+
+## 10 août 2026 — Le dé de 5e est modélisé, et ce que ça nous apprend
+
+Six des seize images du TP de 5e sont faites : les résultats de palier `R2` à `R7`,
+produits par l'**API Onshape** et non à la souris. Le mur qu'on avait rencontré — le
+canevas 3D n'accepte ni mouvement de souris ni frappe pilotés — se contourne par
+l'API REST, qui ne passe pas par le canevas. C'est le seul chemin fiable vers des
+images 3D produites sans intervention humaine, et il faut le retenir.
+
+**Trois enseignements, plus durables que les images.**
+
+**Un contrôle ne vaut que s'il porte sur la pièce, pas sur l'intention.** Une face du
+dé a d'abord été percée au mauvais endroit — une hypothèse fausse sur l'origine du
+repère d'esquisse des faces latérales, un creux mal placé, l'autre tombé hors de la
+face et silencieusement ignoré par le logiciel. Ce n'est pas le rendu qui l'a
+attrapé : c'est le relevé des positions réelles des cylindres. On a compté 21 creux
+répartis 1 · 6 · 2 · 5 · 3 · 4, paires opposées à 7, puis recoupé à l'œil sur les six
+vues orthogonales. Même esprit que la règle n°71 : ce qui vérifie doit lire le
+résultat, pas l'énoncé.
+
+**Un signal peut être faux sans être une erreur.** Le centroïde annoncé à l'origine
+paraissait impossible avec un creux en haut et six en bas. C'était un artefact : sans
+matériau affecté, Onshape renvoie un tenseur dégénéré. Seul le volume était
+exploitable — et il tombait exactement sur 125 000 − 21 × π × 5² × 5. Douter du signal
+avant de douter de la pièce, puis vérifier autrement.
+
+**Ce qu'on voit à l'écran n'est pas ce qui est dans le fichier.** Les PNG rendus par
+`/shadedviews` ont un fond **transparent**. À l'écran ils apparaissaient sur blanc,
+composités par l'outil ; sur disque, ils s'affichaient sur noir. Il a fallu les aplatir
+après coup. À retenir pour toute image livrée : **contrôler le fichier, pas l'aperçu**.
+
+**Limite d'outil consignée.** Les constructeurs d'extrusion et de congé du plugin
+Onshape émettent un champ `libraryRelationType: "NONE"` que l'API rejette (HTTP 400,
+`BTWeirdStringValueException`). Les esquisses passent, ces deux-là non ; on est passé
+en REST direct. À savoir avant la prochaine séance de modélisation.
+
+**Reste à la main** : `tp5e_R1_carre.png` (une esquisse sans matière ne se rend pas
+ombrée) et les neuf captures d'interface, qui doivent montrer les panneaux d'Onshape
+**en français** (règle n°70). Les prendre, c'est aussi tester le TP — et le seul
+chiffre qui compte reste le nombre de fois où l'on ne sait pas quoi cliquer.
+
