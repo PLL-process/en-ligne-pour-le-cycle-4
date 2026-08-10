@@ -27,7 +27,7 @@ valider. Ce qui leur manque est une **notion transversale** qui, par nature, se 
 même façon aux trois niveaux, avec le seul verbe qui change. Les refondre toutes les trois pour y
 insérer le même contenu serait long, redondant, et produirait trois versions qui divergeront.
 
-**Décision** : une ressource unique, `_atelier-planification/`, portant les trois parcours, et
+**Décision** : une ressource unique, `atelier-planification/`, portant les trois parcours, et
 appelée depuis chacune des trois séquences. Elle se glisse au moment du lancement de projet, là où
 elle sert.
 
