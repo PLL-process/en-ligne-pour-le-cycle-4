@@ -4675,3 +4675,46 @@ Le profil de 4e n'est pas un rendu Onshape mais un tracé de l'esquisse réelle.
 Et l'image du couvercle est honnête, mais peu démonstrative : à l'échelle de la
 pièce entière, la nervure de 1 mm reste un liseré.
 
+---
+
+## 11 août 2026 — Le TP nommait des boutons qui n'existent pas
+
+Pascal a commencé à dérouler le TP de 5e pour en prendre les captures. Il n'a
+pas eu à aller loin&nbsp;: dès le deuxième palier, il a demandé « après avoir
+cliqué sur Esquisse, quel plan je choisis ? ». Le TP répondait « le plan
+**Top** ». Ses captures montrent que dans l'interface française d'Onshape, la
+liste de gauche affiche **Origine, Haut, Avant, Exact**. Un élève qui cherche
+« Top » ne le trouve pas.
+
+Trois écarts relevés, tous du même genre&nbsp;:
+
+- `Top` / `Front` / `Right` → **Haut** / **Avant** / **Exact** dans l'arbre.
+  (« Exact » est la traduction — mauvaise — que fait Onshape de *Right*. La
+  règle n°73 impose de citer le bouton **tel qu'il est écrit**, même quand
+  c'est écrit mal.)
+- `Part Studio` → **Partie Studio**, et le document s'ouvre avec **deux**
+  onglets, pas un&nbsp;: *Partie Studio 1* et *Assemblée 1*.
+- Le champ du panneau affiche **Haut du plan** une fois le plan choisi.
+
+Et un piège qu'aucune traduction ne résout&nbsp;: les étiquettes dessinées
+**dans la zone 3D** sont restées en anglais (*Top*, *Front*, *Right*) alors que
+la liste de gauche est en français. Le même plan porte deux noms sur le même
+écran. Le TP le dit maintenant explicitement — c'est exactement le genre de
+détail qui fait lever une main.
+
+### Ce que ça confirme
+
+La règle n°70 disait qu'une capture doit parler la langue du poste. Il faut
+l'étendre&nbsp;: **le texte aussi**. Un TP rédigé d'après une documentation
+anglophone décrit un logiciel que l'élève n'a pas sous les yeux, et aucune
+relecture ne le révèle — seul le fait de dérouler le TP sur le poste réel le
+montre.
+
+Et la méthode a fonctionné exactement comme prévu. Le TP est écrit pour
+quelqu'un qui ne connaît pas le logiciel&nbsp;; le faire dérouler par quelqu'un
+qui ne le connaît pas vraiment était le meilleur test possible. Deux questions
+posées, trois défauts trouvés, et ils étaient dans le TP, pas chez le lecteur.
+
+Les trois scénarios — 5e, 4e, 3e — sont corrigés d'un coup&nbsp;: les mêmes
+termes anglais s'y étaient propagés.
+
