@@ -57,6 +57,8 @@ STYLE_TP = """
   .capture img{max-width:100%;height:auto;border:1px solid var(--input-bd);
     border-radius:8px;background:#fff}
   .capture figcaption{font-size:.88em;color:var(--sub);margin-top:6px}
+  .capture-absente{margin:8px 0;padding:10px 12px;border:1px dashed #6b7a99;
+    border-radius:8px;background:rgba(255,255,255,.03);color:#9bbefc;font-size:.9em}
   .exemple-note{color:var(--warn);font-size:.88em;margin-top:4px}
   .attendu{background:var(--panel2);border:1px solid var(--ok);border-radius:10px;
     padding:11px 14px;margin:12px 0}
@@ -79,6 +81,9 @@ def icone(src):
     return ' <img class="btn-icone" src="%s" alt="">' % esc(src)
 
 
+MANQUANTES = []
+
+
 def etape_html(e, i):
     if "voir" not in e or not str(e["voir"]).strip():
         raise SystemExit(
@@ -92,14 +97,31 @@ def etape_html(e, i):
         out.append('<div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> %s</div>'
                    % esc(e["avertissement"]))
     if e.get("capture"):
-        out.append('<figure class="capture"><img src="%s" alt="%s">'
+        # Une capture annoncée mais absente affiche, dans le navigateur, un cadre
+        # blanc cassé : l'élève croit que la page est en panne. On préfère le
+        # dire, et le build tient la liste de ce qui manque.
+        if not (D / e["capture"]).exists():
+            MANQUANTES.append(e["capture"])
+            out.append('<div class="capture-absente">📷 <b>Capture à venir</b> — '
+                       "l'image de cet écran n'a pas encore été prise. "
+                       "Le texte ci-dessus suffit pour agir&nbsp;: %s</div>"
+                       % html.escape(e.get("capture_alt", "")))
+        else:
+            out.append('<figure class="capture"><img src="%s" alt="%s">'
                    % (esc(e["capture"]), html.escape(e.get("capture_alt", ""))))
-        if e.get("capture_legende"):
-            out.append("<figcaption>%s</figcaption>" % esc(e["capture_legende"]))
-        out.append("</figure>")
-        if e.get("exemple"):
-            out.append('<p class="exemple-note">⚠️ La valeur visible sur cette image est '
-                       "<b>un exemple</b>&nbsp;: ne la recopie pas, saisis la tienne.</p>")
+            if e.get("capture_legende"):
+                out.append("<figcaption>%s</figcaption>" % esc(e["capture_legende"]))
+            out.append("</figure>")
+    ex = e.get("exemple")
+    if ex:
+        # Une valeur citée dans le TEXTE se recopie aussi aveuglément qu'une
+        # valeur lue sur une capture : la mention ne dépend donc pas de l'image.
+        # `true` donne la phrase générique ; une chaîne donne l'explication
+        # écrite pour cette valeur-là, ce qui vaut toujours mieux.
+        txt = (esc(ex) if isinstance(ex, str) else
+               "Cette valeur est <b>un exemple</b>&nbsp;: ne la recopie pas "
+               "sans réfléchir, choisis la tienne.")
+        out.append('<p class="exemple-note">⚠️ %s</p>' % txt)
     out.append("</li>")
     return "".join(out)
 
@@ -125,10 +147,17 @@ def palier_html(p, n):
             out.append(etape_html(e, i))
         out.append("</ol>")
     if p.get("image_resultat"):
-        out.append('<div class="attendu"><b>Ce que tu dois obtenir&nbsp;:</b>'
-                   '<figure class="capture"><img src="%s" alt="%s">'
-                   % (esc(p["image_resultat"]), html.escape(p.get("image_resultat_alt", ""))))
-        out.append("</figure></div>")
+        if not (D / p["image_resultat"]).exists():
+            MANQUANTES.append(p["image_resultat"])
+            out.append('<div class="capture-absente">📷 <b>Image du résultat à venir</b> — '
+                       "voici ce que tu dois obtenir, en attendant la photo&nbsp;: %s</div>"
+                       % html.escape(p.get("image_resultat_alt", "")))
+        else:
+            out.append('<div class="attendu"><b>Ce que tu dois obtenir&nbsp;:</b>'
+                       '<figure class="capture"><img src="%s" alt="%s">'
+                       % (esc(p["image_resultat"]),
+                          html.escape(p.get("image_resultat_alt", ""))))
+            out.append("</figure></div>")
     if p.get("critere"):
         out.append('<p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> %s</p>'
                    % esc(p["critere"]))
@@ -161,6 +190,23 @@ def construire(scenario_path: pathlib.Path) -> pathlib.Path:
 
     # Règle d'or n°88 : un TP dans lequel on entre sans pouvoir revenir à sa
     # séquence est une impasse. Le scénario doit dire d'où l'on vient.
+    rap = s.get("rappel_spiralaire") or {}
+    if s.get("niveau") in ("4e", "3e") and not rap:
+        raise SystemExit(
+            "Règle n°87 (clé de voûte) : un TP de %s s'appuie sur un prérequis et doit\n"
+            "s'ouvrir par un rappel de ce que l'élève a DÉJÀ PRODUIT.\n"
+            'Ajoute au JSON : "rappel_spiralaire": {"deja": "…", "change": "…", "filet": "…"}'
+            % s["niveau"])
+    if rap and not (rap.get("deja") and rap.get("change")):
+        raise SystemExit("Règle n°87 : le rappel doit dire ce qui a été FAIT (deja) "
+                         "et ce qui CHANGE (change).")
+    rappel = ("" if not rap else
+              '<section class="card rappel-spiralaire" aria-labelledby="rap-t">\n'
+              '  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>\n'
+              '  <p class="deja">%s</p>\n  <p class="change">%s</p>\n%s</section>\n'
+              % (rap["deja"], rap["change"],
+                 ('  <p class="filet">%s</p>\n' % rap["filet"]) if rap.get("filet") else ""))
+
     retour = str(s.get("retour_sequence", "")).strip()
     if not retour:
         raise SystemExit(
@@ -184,6 +230,10 @@ def construire(scenario_path: pathlib.Path) -> pathlib.Path:
 <style>
 %(css)s
 %(css_tp)s
+.rappel-spiralaire{border-left:5px solid var(--accent,#61dafb)}
+.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
+ background:rgba(255,255,255,.04);border:1px dashed #274a8a}
+.rappel-spiralaire .filet{font-size:.92em;opacity:.85}
 #navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:900px;margin:14px auto 0;padding:0 18px}
 #navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;
  color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
@@ -207,6 +257,7 @@ En <span style="color:var(--head);font-style:italic">italique coloré, ce que tu
 produire à l'écran</span> — si tu ne le vois pas, ne continue pas&nbsp;: reprends l'étape.
 Les encadrés orange préviennent des pièges. À la fin de chaque partie, une image te montre
 <b>ce que tu dois obtenir</b>&nbsp;: compare, tu n'as besoin de personne pour te corriger.</p>
+%(rappel)s
 %(corps)s
 
 <section class="card et-ensuite">
@@ -225,13 +276,19 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
        "css": CSS, "css_tp": STYLE_TP, "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
        "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt.")),
-       "retour": retour}
+       "retour": retour, "rappel": rappel}
 
     sortie = D / s["fichier_sortie"]
     sortie.write_text(page, encoding="utf-8")
     n_etapes = sum(len(p.get("etapes", [])) for p in paliers)
     print("TP écrit : %s (%d paliers, %d étapes, %d o)"
           % (sortie.name, len(paliers), n_etapes, sortie.stat().st_size))
+    if MANQUANTES:
+        print("\n%d capture(s) annoncée(s) mais absente(s) — la page l'indique "
+              "au lieu d'afficher un cadre vide :" % len(MANQUANTES))
+        for m in MANQUANTES:
+            print("   · %s" % m)
+        print("Tant qu'elles manquent, ce TP n'est pas publiable en l'état.")
     print("Étape suivante : python3 verif_guidage.py %s" % sortie.name)
     return sortie
 
