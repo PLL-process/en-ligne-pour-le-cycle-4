@@ -19,7 +19,7 @@ from pathlib import Path
 
 RE_NAV = re.compile(r'<nav[^>]*id="navharm".*?</nav>', re.S)
 RE_HREF = re.compile(r'href="([^"#]+)')
-RE_SEQ = re.compile(r'sequence_[\w.\-]+\.html$')   # les noms portent des tirets
+RE_SEQ = re.compile(r'sequence[_\-][\w.\-]+\.html$')   # les noms portent des tirets
 
 
 def controler(page: Path):
