@@ -57,9 +57,13 @@ def audite(p):
             faits.append(("n°88", "aucun retour vers une séquence"))
 
     # n°87 — clé de voûte : une page de 4e ou de 3e s'appuie sur un prérequis
+    # Un panneau indicateur n'est pas une séance : il oriente vers la page qui,
+    # elle, porte le rappel. Lui en demander un le ferait dire deux fois.
+    pointeur = "panneau indicateur" in h
     porte_prerequis = (RE_NIV.search(str(p))
                        and p.name.startswith(("sequence_", "tp_", "atelier_"))
-                       and "Synthèses" not in str(p))
+                       and "Synthèses" not in str(p)
+                       and not pointeur)
     if porte_prerequis and not RE_RAP.search(h):
         faits.append(("n°87", "séance de 4e/3e sans rappel de ce que l'élève a déjà produit"))
 
