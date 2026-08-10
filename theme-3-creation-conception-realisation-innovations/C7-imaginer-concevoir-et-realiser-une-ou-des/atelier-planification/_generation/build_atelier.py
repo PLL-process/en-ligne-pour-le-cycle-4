@@ -115,8 +115,8 @@ TETE = """<!DOCTYPE html>
 <meta name="description" content="Atelier de technologie cycle 4 — le diagramme de planification des tâches : tâches, durées et contraintes entre tâches. Trois parcours, 5e suivre, 4e organiser, 3e élaborer, et un pas à pas dans GanttProject en français. Code C7.1, programme 2024.">
 <title>Thème 3 · 5e-4e-3e — Le diagramme de planification des tâches (C7.1)</title>
 <style>
-%s
-%s
+%(css)s
+%(sup)s
 </style>
 </head>
 <body>
@@ -128,7 +128,7 @@ TETE = """<!DOCTYPE html>
  text-decoration:none;line-height:1.2}
 #navharm a:hover{border-color:#61dafb;color:#61dafb}
 </style>
-<nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a></nav>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../index.html">&#8962; Accueil</a><a href="%(retour)s">&#8592; Revenir à la séquence de %(niv)s</a><a href="qcm_C7.1_planification_taches.html">&#129504; Le QCM</a></nav>
 <div class="page">
 <h1>&#128197; Le diagramme de planification des tâches</h1>
 <p class="sous">Ce qui doit attendre, ce qui peut avancer en même temps — et la seule chaîne de tâches
@@ -156,7 +156,7 @@ elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b
 <p class="saved-note" id="aide-essentiel">&#127919; <b>Le mode essentiel</b> masque le référentiel,
 les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Rien n'est
 perdu — un second clic ramène tout.</p>
-""" % (CSS, STYLE_SUP)
+"""   # gabarit : formaté par page()
 
 # ══════════════════════════════════════════════════════════════════════════
 # 2. Haut de page — situation, hypothèse, référentiel, barre, onglets
@@ -1342,6 +1342,12 @@ def bonus(niv, p):
        "marge_max": marge_max}
 
 
+RETOUR = {
+    "5e": "../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html",
+    "4e": "../4e/4e_C7.1/sequence_4e_C7_jardin-conception.html",
+    "3e": "../3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html",
+}
+
 NIVEAUX = {
     "5e": {"panel": "p5", "corps": P5_HTML, "verbe": "Suivre", "projet": P5,
            "groupes": ["0", "1", "2", "5"], "onglet": "5e<br>Suivre",
@@ -1387,11 +1393,12 @@ def barre_onglets(niv):
 def page(niv):
     n = NIVEAUX[niv]
 
-    tete = TETE.replace(ANCRE_BADGE,
+    tete = (TETE % {"css": CSS, "sup": STYLE_SUP, "niv": niv,
+                    "retour": RETOUR[niv]}).replace(ANCRE_BADGE,
                         '<span class="badge niveau" title="Cette page est le parcours de %s. '
                         'Les autres niveaux ont la leur.">%s</span>' % (niv, niv))
-    if tete == TETE:
-        raise SystemExit("Ancre du badge de niveau introuvable dans TETE — arrêt.")
+    if ANCRE_BADGE in tete:
+        raise SystemExit("Le badge de niveau n'a pas été remplacé dans TETE — arrêt.")
 
     d = HAUT.index(ANCRE_ONGLETS_DEB)
     f = HAUT.index(ANCRE_ONGLETS_FIN, d)
