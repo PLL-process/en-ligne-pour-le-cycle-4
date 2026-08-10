@@ -4296,3 +4296,43 @@ qui appartient à Pascal — jamais pour établir un fait qu'on peut lire.
 Le corollaire est plus dur, et c'est le vrai enseignement de la journée&nbsp;: une règle en prose
 se contourne, y compris par celui qui l'a écrite. Les seules qui n'ont jamais échoué sont celles
 qu'un script **refuse** de violer.
+
+---
+
+### Règle d'or n°85 — Un élève doit pouvoir dessiner l'objet avant qu'on lui en donne le nom
+
+**L'observation.** Pascal, le 10 août, à propos du mini-projet de 5e&nbsp;: « *indicateur de
+rangement pour le hall du collège&nbsp;: un élève peut se demander, qu'est-ce que c'est, à quoi ça
+sert&nbsp;?* »
+
+Il a raison, et la situation déclenchante le prouvait&nbsp;: trois lignes, dont « *on te demande un
+indicateur simple&nbsp;: place de rangement libre ou occupée (LED + bouton ou capteur)* ». Un
+indicateur n'est pas un objet, c'est une **catégorie**. On ne peut pas le dessiner, donc on ne peut
+pas le vouloir.
+
+**Ce qui se joue.** Une situation déclenchante n'a pas pour fonction d'annoncer le programme&nbsp;:
+elle a pour fonction de faire **désirer un objet**. Tant que l'élève ne voit pas la chose, il
+exécute des consignes — et tout le reste de la séquence, si bonne soit-elle, se fait sans lui.
+
+**La règle.** L'objet d'une séquence se présente d'abord **en mots ordinaires et en images
+mentales** : un lieu, une heure, quelqu'un qui a un problème, et la chose qu'il réclame décrite
+comme il la décrirait. Le **mot du métier arrive après**, une fois la chose vue — jamais avant.
+
+**Le test.** *Un élève qui vient de lire la situation déclenchante peut-il expliquer l'objet à son
+voisin, en une phrase, sans employer un mot technique&nbsp;?* Si non, la situation déclenchante n'a
+pas eu lieu.
+
+C'est la règle n°62 (le concept prend le mot du programme, l'outil garde le nom du métier) appliquée
+à l'entrée de séquence, et poussée d'un cran&nbsp;: **avant même les deux noms, il faut la chose.**
+
+**Ce qui a été corrigé.** Le hall de la Brooklyn Middle School à huit heures moins dix, deux cents
+élèves en huit minutes, vingt casiers sans porte où l'on ne voit pas lesquels sont libres, les sacs
+posés par terre, trois chutes en un mois comptées par M. Alvarez — et sa demande, dans ses mots
+à lui&nbsp;: «&nbsp;un petit voyant au-dessus de chaque case, vert elle est libre, rouge elle est
+prise&nbsp;». Le mot *indicateur d'occupation* n'arrive qu'ensuite, avec ses cousins des gares et
+des parkings.
+
+Au passage, le bloc «&nbsp;Idée de départ&nbsp;» de cette séquence ne contenait aucune idée&nbsp;:
+seulement une note technique sur la sauvegarde automatique. Il pose désormais la vraie question
+d'ouverture — *comment ton voyant peut-il savoir qu'un sac est posé&nbsp;?* — avec un champ pour y
+répondre, et on la relit au bilan.
