@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thème 2 · Martinique — 4e · Atelier : SOS serre — l'objet connecté muet (4e_C4.7 · C4.8 · C4.9)</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
@@ -13,7 +12,7 @@
     --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
   }
   *{box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
   h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
   .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
   .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
@@ -95,9 +94,9 @@
   img.figure,object.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   .simu{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:start}
   @media(max-width:700px){.simu{grid-template-columns:1fr}}
-  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:'Fira Code',monospace}
+  .simu-ecran{background:#08132c;border:2px solid var(--hl);border-radius:12px;padding:14px;text-align:center;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
   .simu-ecran .grand{font-size:1.9em;font-weight:700;color:var(--warn)}
-  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:'Poppins',sans-serif}
+  .simu-ecran .etiquette{font-size:.75em;color:var(--sub);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
   input[type=range]{width:100%;accent-color:var(--hl)}
   .vigilance{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.9em;border:2px solid}
   .vig-verte{color:var(--ok);border-color:var(--ok)}
@@ -105,13 +104,13 @@
   .vig-orange{color:var(--energie);border-color:var(--energie)}
   .vig-rouge{color:var(--err);border-color:var(--err)}
   .vig-violette{color:var(--head);border-color:var(--head)}
-  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:'Fira Code',monospace}
+  table.donnees{width:100%;border-collapse:collapse;font-size:.78em;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
   table.donnees th,table.donnees td{border:1px solid var(--border);padding:4px 7px;text-align:right}
   table.donnees th{background:var(--input-bg);color:var(--hl);position:sticky;top:0}
   table.donnees td:first-child,table.donnees th:first-child{text-align:left}
   .table-scroll{max-height:320px;overflow:auto;border:1px solid var(--border);border-radius:10px}
   .bin-inputs{display:flex;gap:6px;justify-content:flex-start;flex-wrap:wrap}
-  .bin-inputs input{width:52px;text-align:center;font-family:'Fira Code',monospace;font-size:1.1em}
+  .bin-inputs input{width:52px;text-align:center;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.1em}
   .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:760px){.versions{grid-template-columns:1fr}}
   .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
@@ -407,7 +406,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   <div class="recette">
     <h4>Étape 4 — Écrire le panneau du quartier : le masque</h4>
     <p>Le <b>masque de sous-réseau</b> est le panneau qui explique où finit la rue et où commence le numéro&nbsp;:
-    <span style="font-family:'Fira Code',monospace">255.255.255.0</span> signifie «&nbsp;les trois premiers nombres
+    <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</span> signifie «&nbsp;les trois premiers nombres
     sont la rue, le dernier est la maison&nbsp;». En 5e, cette case «&nbsp;se remplissait toute seule&nbsp;»&nbsp;;
     cette année, tu sais la lire. <b>Précision de scientifique&nbsp;:</b> c'est <b>dans notre réseau, qui utilise le
     masque 255.255.255.0</b>, que les trois premiers nombres forment la rue — d'autres réseaux utilisent d'autres
@@ -437,13 +436,13 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   </figure>
   <p><b>Du dessin au langage informatique&nbsp;:</b> voici exactement le même plan, écrit comme le note un
   technicien. Sur ta feuille (ou de tête), <b>surligne la partie «&nbsp;rue&nbsp;» et la partie «&nbsp;maison&nbsp;»</b>
-  de chaque adresse&nbsp;: <span style="font-family:'Fira Code',monospace">192.168.20&nbsp;|&nbsp;50</span>.</p>
+  de chaque adresse&nbsp;: <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20&nbsp;|&nbsp;50</span>.</p>
   <div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:.9em;min-width:520px">
     <tr style="color:var(--hl)"><th style="text-align:left;padding:4px 12px;border-bottom:1px solid var(--input-bd)">Appareil</th><th style="text-align:left;padding:4px 12px;border-bottom:1px solid var(--input-bd)">Adresse IP</th><th style="text-align:left;padding:4px 12px;border-bottom:1px solid var(--input-bd)">Masque</th><th style="text-align:left;padding:4px 12px;border-bottom:1px solid var(--input-bd)">Passerelle</th></tr>
-    <tr><td style="padding:3px 12px">PC-Prof</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.10</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.1</td></tr>
-    <tr><td style="padding:3px 12px">Imprimante</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.30</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.1</td></tr>
-    <tr><td style="padding:3px 12px">Capteur-Serre</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.50</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.1</td></tr>
-    <tr><td style="padding:3px 12px">Serveur-Serre</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.100</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:'Fira Code',monospace">192.168.20.1</td></tr>
+    <tr><td style="padding:3px 12px">PC-Prof</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.10</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.1</td></tr>
+    <tr><td style="padding:3px 12px">Imprimante</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.30</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.1</td></tr>
+    <tr><td style="padding:3px 12px">Capteur-Serre</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.50</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.1</td></tr>
+    <tr><td style="padding:3px 12px">Serveur-Serre</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.100</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">255.255.255.0</td><td style="padding:3px 12px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">192.168.20.1</td></tr>
   </table></div>
   <p style="font-size:.85em;color:var(--sub)">Remarque d'urbaniste&nbsp;: la passerelle 192.168.20.1 est <b>prévue au plan mais non installée</b> dans notre montage
   d'entraînement — la porte est réservée, la maison n'est pas encore construite. Elle prendra corps en 3e, avec le routeur.</p>
@@ -510,7 +509,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   <div class="meta-grid">
     <div><b>Objectif&nbsp;:</b> monter dans Packet Tracer le réseau sur lequel toute la suite s'appuie — exactement comme le ferait un technicien sur un réseau d'entraînement «&nbsp;déconnecté du réseau pédagogique&nbsp;».</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.8 — Résoudre des problèmes… dans un réseau informatique (simulation ou réseau local déconnecté) <em>(ici&nbsp;: préparer le banc d'essai)</em>.</div>
-    <div><b>Production&nbsp;:</b> le fichier <span style="font-family:'Fira Code',monospace">serre_4X_NOM_Prenom.pkt</span> avec 5 équipements nommés et câblés, liaisons vertes.</div>
+    <div><b>Production&nbsp;:</b> le fichier <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">serre_4X_NOM_Prenom.pkt</span> avec 5 équipements nommés et câblés, liaisons vertes.</div>
     <div><b>Ressources&nbsp;:</b> la recette A→G ci-dessous, le schéma du montage terminé.</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D2 «&nbsp;outils numériques&nbsp;» — fichier nommé, rangé, réutilisable · D4 «&nbsp;conception, création, réalisation&nbsp;» — du plan papier au montage qui fonctionne.</div>
   </div>
@@ -527,7 +526,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
     <tr><td style="padding:3px 12px" colspan="2">séance suivante&nbsp;: on INVERSE tout.</td></tr>
   </table></div>
   <p style="font-size:.85em;color:var(--sub)">🪜 <b>Différenciation&nbsp;:</b> ton professeur peut te donner le fichier
-  <span style="font-family:'Fira Code',monospace">4e_serre_DEPART.pkt</span> — le montage déjà câblé et nommé, mais SANS
+  <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">4e_serre_DEPART.pkt</span> — le montage déjà câblé et nommé, mais SANS
   aucune adresse. Tu commences alors directement à l'activité 3&nbsp;: la compétence évaluée n'est pas de retrouver le
   2960 dans la palette&nbsp;!</p>
   <h3>🖱 Où cliquer ? Les 2 gestes qui bloquent tout le monde</h3>
@@ -554,7 +553,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   <p>Répéter pour les 4 appareils.<br>
     <b>E.</b> Renommer proprement&nbsp;: clic sur l'appareil → onglet <b>Config</b> → <b>Display Name</b>&nbsp;: <b>PC-Prof</b>, <b>Serveur-Serre</b>, <b>Imprimante</b>, <b>Capteur-Serre</b>.<br>
     <b>F.</b> Observer les triangles aux extrémités des câbles&nbsp;: orange d'abord (le commutateur réfléchit ~30 secondes), puis <b>verts des deux côtés</b> = liaison prête.<br>
-    <b>G.</b> <b>File → Save As</b> → <span style="font-family:'Fira Code',monospace">serre_4X_NOM_Prenom.pkt</span> dans le dossier de la classe. On sauvegarde AVANT de jouer avec les pannes&nbsp;!</p>
+    <b>G.</b> <b>File → Save As</b> → <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">serre_4X_NOM_Prenom.pkt</span> dans le dossier de la classe. On sauvegarde AVANT de jouer avec les pannes&nbsp;!</p>
   </div>
   <figure>
     <img src="Images/pt_renommer_enregistrer.svg" alt="Deux panneaux : la fenêtre Config avec le champ Display Name contenant Capteur-Serre, puis le menu File avec Save As et la fenêtre d'enregistrement où le nom du fichier est serre_4A_NOM_Prenom.pkt." style="max-width:100%">
@@ -649,7 +648,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
 
   <h3>🎯 LA preuve n°1 — le capteur qu'on vient d'AJOUTER répond</h3>
   <p>La mission de M. Firmin, c'est le CAPTEUR. La toute première preuve à apporter est donc celle-là&nbsp;: sur
-  PC-Prof → Desktop → <b>Command Prompt</b>, taper <span style="font-family:'Fira Code',monospace">ping 192.168.20.50</span>.
+  PC-Prof → Desktop → <b>Command Prompt</b>, taper <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">ping 192.168.20.50</span>.
   Si le capteur répond, l'objet connecté est officiellement AJOUTÉ au réseau — c'est le cœur de la compétence 4e_C4.7.</p>
   <figure>
     <img src="Images/pt_ping_capteur_50.svg" alt="Transcription du ping vers 192.168.20.50 : quatre réponses Reply from avec TTL 128 et zéro pour cent de perte, accompagnée de deux encadrés : pourquoi ce ping est LA preuve de la compétence, et l'avertissement que le tout premier ping peut perdre un ou deux paquets le temps que le réseau apprenne les correspondances d'adresses." style="max-width:100%">
@@ -660,8 +659,8 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
   <b>Relance une deuxième fois le même ping avant de conclure à une panne</b> — nous l'avons vécu dans notre propre session.</div>
 
   <h3>🧪 Preuves n°2 et 3 — la validation du reste du quartier</h3>
-  <p>Ensuite seulement, on valide les autres habitants&nbsp;: <span style="font-family:'Fira Code',monospace">ping 192.168.20.100</span>
-  (serveur) puis <span style="font-family:'Fira Code',monospace">ping 192.168.20.30</span> (imprimante). Voici la transcription
+  <p>Ensuite seulement, on valide les autres habitants&nbsp;: <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">ping 192.168.20.100</span>
+  (serveur) puis <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">ping 192.168.20.30</span> (imprimante). Voici la transcription
   exacte de notre session — des <b>valeurs réellement observées pendant notre simulation Packet Tracer</b> (le simulateur
   reproduit la logique du réseau&nbsp;; il ne mesure pas la latence physique d'un vrai câble)&nbsp;:</p>
   <figure>
@@ -925,7 +924,7 @@ body.essentiel .referentiel-card, body.essentiel details.correction, body.essent
     <div><b>Objectif&nbsp;:</b> reconnaître une panne d'une AUTRE famille (la liaison), puis compléter la simulation fournie pour prouver que le réseau réparé se comporte comme prévu.</div>
     <div><b>Compétence&nbsp;:</b> 4e_C4.9 — Compléter une simulation fournie pour valider le comportement d'un réseau informatique <em>(et 4e_C4.8 pour le dépannage)</em>.</div>
     <div><b>Production&nbsp;:</b> la panne «&nbsp;liaison coupée&nbsp;» réparée + l'enveloppe du mode Simulation ajoutée au fichier fourni et son trajet relevé.</div>
-    <div><b>Ressources&nbsp;:</b> le fichier fourni <span style="font-family:'Fira Code',monospace">4e_serre_TECHNO-C4.pkt</span>, le schéma de la panne, le trajet de l'enveloppe.</div>
+    <div><b>Ressources&nbsp;:</b> le fichier fourni <span style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace">4e_serre_TECHNO-C4.pkt</span>, le schéma de la panne, le trajet de l'enveloppe.</div>
     <div style="grid-column:1/-1"><b>Socle&nbsp;:</b> D4 «&nbsp;démarches scientifiques&nbsp;» — valider un comportement par l'expérience simulée · D2 «&nbsp;outils numériques&nbsp;» — compléter un fichier fourni sans le casser.</div>
   </div>
 

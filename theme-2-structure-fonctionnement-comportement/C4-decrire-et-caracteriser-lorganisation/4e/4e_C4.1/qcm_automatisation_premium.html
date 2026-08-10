@@ -77,10 +77,6 @@ button {
 <button onclick="resetQuiz()">🔄 Réinitialiser</button>
 
 <h2 id="score"></h2>
-
-<audio id="good" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
-<audio id="bad" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
-
 <script>
 
 // TIMER
@@ -95,7 +91,7 @@ const questions = [
 
 {
 q:"Quel composant mesure la température ?",
-img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Temperature_Sensor.jpg",
+img:"Images/capteur_temperature.svg",
 options:["Capteur","Moteur","Écran"],
 answer:0,
 exp:"Un capteur mesure une grandeur physique.",
@@ -104,7 +100,7 @@ comp:"C4.4 | CRCN D1.3"
 
 {
 q:"Quel composant détecte un mouvement ?",
-img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/PIR_motion_sensor.jpg",
+img:"Images/capteur_mouvement.svg",
 options:["Capteur analogique","Détecteur PIR","Résistance"],
 answer:1,
 exp:"Le capteur PIR détecte une présence.",
@@ -113,7 +109,7 @@ comp:"C4.4"
 
 {
 q:"Quel objet traite les informations ?",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+img:"Images/carte_programmable.svg",
 options:["Microcontrôleur","LED","Fil"],
 answer:0,
 exp:"Le microcontrôleur traite les données.",
@@ -122,7 +118,7 @@ comp:"C6.2"
 
 {
 q:"Quel composant agit sur le système ?",
-img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/DC_Motor.jpg",
+img:"Images/moteur_cc.svg",
 options:["Capteur","Actionneur","Programme"],
 answer:1,
 exp:"Un actionneur agit (moteur, LED…).",
@@ -131,7 +127,7 @@ comp:"C4.4"
 
 {
 q:"Un programme sert à :",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+img:"Images/carte_programmable.svg",
 options:["Décorer","Commander","Charger"],
 answer:1,
 exp:"Il donne les instructions.",
@@ -142,7 +138,7 @@ comp:"C6.2"
 
 {
 q:"Un chronogramme représente :",
-img:"https://upload.wikimedia.org/wikipedia/commons/2/2c/Square_wave.svg",
+img:"Images/signal_carre.svg",
 options:["Un signal dans le temps","Un dessin","Une carte"],
 answer:0,
 exp:"Il montre l’évolution d’un signal.",
@@ -151,7 +147,7 @@ comp:"C6.1"
 
 {
 q:"Tester un programme permet :",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+img:"Images/carte_programmable.svg",
 options:["Valider","Supprimer","Éteindre"],
 answer:0,
 exp:"Tester valide le fonctionnement.",
@@ -160,7 +156,7 @@ comp:"C6.3"
 
 {
 q:"Un bug est :",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+img:"Images/carte_programmable.svg",
 options:["Une erreur","Un capteur","Un moteur"],
 answer:0,
 exp:"C’est une erreur de programme.",
@@ -169,7 +165,7 @@ comp:"C6.3"
 
 {
 q:"La LED est :",
-img:"https://upload.wikimedia.org/wikipedia/commons/3/3b/LED.jpg",
+img:"Images/diode_led.svg",
 options:["Capteur","Actionneur","Programme"],
 answer:1,
 exp:"Elle agit en produisant de la lumière.",
@@ -178,7 +174,7 @@ comp:"C4.4"
 
 {
 q:"Une boucle permet :",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+img:"Images/carte_programmable.svg",
 options:["Répéter","Supprimer","Arrêter"],
 answer:0,
 exp:"Elle répète une action.",
@@ -191,7 +187,7 @@ comp:"C6.2"
 while(questions.length < 40){
 questions.push({
 q:"Dans un système automatisé, que fait le programme ?",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Arduino_Uno.jpg",
+img:"Images/carte_programmable.svg",
 options:["Il décide","Il casse","Il coupe"],
 answer:0,
 exp:"Il pilote le système.",
@@ -244,11 +240,11 @@ if(parseInt(rep.value)===q.answer){
 score++;
 exp.innerHTML="✅ "+q.exp;
 exp.className="correct";
-document.getElementById("good").play();
+bipJuste();
 }else{
 exp.innerHTML="❌ "+q.exp;
 exp.className="wrong";
-document.getElementById("bad").play();
+bipFaux();
 }
 }
 });
@@ -266,5 +262,30 @@ location.reload();
 
 </script>
 
+
+<script>
+/* Deux petits sons, fabriqués par le navigateur lui-même (Web Audio).
+   Ils remplacent deux fichiers MP3 chargés depuis un site tiers : la page
+   fonctionne désormais sans réseau, et rien n'est téléchargé (règle n°40). */
+const Bip = (() => {
+  let ctx = null;
+  const jouer = (frequences, duree) => {
+    try {
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      frequences.forEach((f, i) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = "sine"; o.frequency.value = f;
+        const t = ctx.currentTime + i * duree;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.18, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + duree);
+        o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t + duree);
+      });
+    } catch (e) { /* pas de son disponible : ce n'est pas grave, on continue */ }
+  };
+  return { juste: () => jouer([660, 880], 0.12), faux: () => jouer([220], 0.22) };
+})();
+const bipJuste = () => Bip.juste(), bipFaux = () => Bip.faux();
+</script>
 </body>
 </html>

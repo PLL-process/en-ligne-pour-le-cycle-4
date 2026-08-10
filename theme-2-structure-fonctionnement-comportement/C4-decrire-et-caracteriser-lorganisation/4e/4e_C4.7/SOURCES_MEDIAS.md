@@ -2,6 +2,8 @@
 
 Tous les médias sont des **créations originales** (règle images v2 : image-objet).
 Aucune image de manuel, de Google Images ou de site tiers ; aucun hotlinking.
+*(Cette affirmation a été prise en défaut le 11 août 2026 pour un fichier ; voir la
+correction en fin de document. Elle est de nouveau exacte.)*
 
 Particularité de ce lot (règles n°1 + n°20) : les quatorze SVG sont des **reconstitutions
 fidèles dessinées d'après nos sessions réelles de Cisco Packet Tracer 8.2** (06-07/08/2026,
@@ -44,3 +46,37 @@ réelles, les 07 et 08/08/2026).
 de Packet Tracer 8.2 refuse la saisie d'une adresse déjà utilisée sur le réseau (« This address is already
 used in the network. ») et vide le champ. Le doublon reste donc traité à l'oral et en bonus. La panne C
 (mauvais masque) a été retenue à sa place — elle est réelle, vérifiée, et pédagogiquement plus riche.
+
+---
+
+## Correction du 11 août 2026 — dix images de sites tiers remplacées
+
+Ce document affirmait, en tête, « aucune image de manuel, de Google Images ou de
+site tiers ; aucun hotlinking ». C'était faux pour un fichier : le QCM
+`qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html` appelait **dix images hébergées
+ailleurs** — Wikimedia, Amazon, iStock, YouTube, et quatre sites commerciaux —
+et huit copies `.jpg` de ces mêmes images traînaient dans `Images/` sans être
+déclarées ici. Une déclaration de médias fausse est plus grave qu'une image
+manquante : elle empêche la prochaine relecture de voir le problème.
+
+Les dix images sont remplacées par **dix schémas originaux CC0**, dessinés pour
+ce dépôt. Le choix du schéma plutôt que de la photo n'est pas seulement légal :
+une photo montre *un* boîtier, un schéma montre la **structure** — et c'est la
+structure qu'on enseigne.
+
+| Fichier | Type | Ce qu'il montre | Licence |
+|---|---|---|---|
+| `Images/reseau_routeur_lan_internet.svg` | SVG original (Fable) | le routeur à la jonction du réseau local et d'Internet | CC0 |
+| `Images/reseau_switch_ports.svg` | SVG original (Fable) | un commutateur et ses huit prises : il distribue, il ne sort pas du réseau | CC0 |
+| `Images/reseau_filaire_vs_sansfil.svg` | SVG original (Fable) | filaire contre sans-fil, avec ce que chacun coûte et rapporte | CC0 |
+| `Images/reseau_zigbee_maillage.svg` | SVG original (Fable) | le maillage : chaque objet relaie ceux qui sont trop loin de la passerelle | CC0 |
+| `Images/reseau_nfc_paiement.svg` | SVG original (Fable) | le NFC, où la portée très courte fait la sécurité | CC0 |
+| `Images/reseau_rfid_portique.svg` | SVG original (Fable) | l'étiquette RFID sans pile, alimentée par le portique lui-même | CC0 |
+| `Images/reseau_bluetooth_paire.svg` | SVG original (Fable) | le Bluetooth : un lien entre deux appareils, pas un réseau | CC0 |
+| `Images/reseau_rj45_cable.svg` | SVG original (Fable) | quatre paires torsadées, huit broches — et pourquoi elles sont torsadées | CC0 |
+| `Images/licences_symboles.svg` | SVG original (Fable) | ©, CC, CC0, ™ — et le fait qu'une image en ligne est protégée par défaut | CC0 |
+| `Images/reseau_local_schema.svg` | SVG original (Fable) | le réseau local complet, d'Internet jusqu'aux appareils | CC0 |
+
+Les huit fichiers `*_hd.jpg` et `doc3_schema_parcours.png` qui n'étaient déclarés
+nulle part ont été **supprimés** du dépôt.
+
