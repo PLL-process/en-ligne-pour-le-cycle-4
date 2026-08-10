@@ -81,3 +81,32 @@ totale — sont **calculées** par `_verifier_planning.py` à partir de ce seul 
 à la main (règles n°48 et n°54). Le fichier `jardin_connecte_brooklyn.gan` est lui aussi engendré à
 partir du CSV : ce que l'élève ouvre dans le logiciel et ce que le corrigé annonce viennent de la
 même source.
+
+## Les trois diagrammes de planification (SVG, 10 août 2026)
+
+`Images/gantt_indicateur-rangement-hall.svg` · `gantt_jardin-connecte-brooklyn.svg` ·
+`gantt_capteur-confort-ny.svg`
+
+**Origine** : dessins originaux engendrés par `_generation/gantt_premium.py` à partir du
+seul fichier `taches_projets_c7_simulees.csv` — donc du même tableau que le corrigé
+calculé. Aucune donnée saisie à la main, aucun logiciel tiers, aucune capture d'écran.
+
+**Licence** : créés pour ce dépôt, réutilisables sous la licence du dépôt.
+
+**Ce qu'ils montrent, et pourquoi** : chemin le plus long en barres pleines colorées ;
+tâches à marge en barres sombres, chacune posée dans la **fenêtre en pointillés** qui va
+de sa date au plus tôt à sa date au plus tard, avec une barre fantôme à la position la
+plus tardive et la marge écrite en clair. La légende énonce les trois lectures au lieu de
+nommer les couleurs. Palette lisible en niveaux de gris et sûre pour les daltonismes ;
+`<title>` et `<desc>` renseignés, plus un `alt` complet dans la page.
+
+**Pourquoi du SVG et non une capture** : net à l'impression A4, quelques kilo-octets, et
+il se régénère quand une durée change — une capture, elle, mentirait dès la première
+modification du CSV. Les captures de **GanttProject** restent nécessaires ailleurs : elles
+montrent *le logiciel* (règle n°70) ; ces SVG montrent *le raisonnement*.
+
+**Contrôle exécuté** : ordonnancement aller-retour avec tolérance nulle sur les marges,
+corrigé écrit **puis relu** et invariant revérifié (règle n°71), et somme des durées du
+chemin critique égale à la durée du projet. Valeurs identiques à celles du corrigé de
+l'atelier, produites par un second calcul indépendant.
+

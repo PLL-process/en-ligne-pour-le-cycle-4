@@ -12,7 +12,8 @@ import sys
 from playwright.sync_api import sync_playwright
 
 D = pathlib.Path(__file__).resolve().parent
-PAGE = D / "atelier_C7.1_planification_taches.html"
+PAGES = [D / ("atelier_%s_C7.1_planification_taches.html" % n) for n in ("5e","4e","3e")]
+PAGE = PAGES[0]
 COR = json.loads((D / "_corrige_calcule.json").read_text(encoding="utf-8"))
 P4, P3 = COR["jardin-connecte-brooklyn"], COR["capteur-confort-ny"]
 JALON4 = sorted(P4["libelle"])[-1]

@@ -93,6 +93,28 @@
   @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 
+  /* Le rappel spiralaire (règle d'or n°87) : il ouvre la page, on ne le replie
+     pas, et il ne ressemble à aucun autre bloc — c'est un seuil, pas une carte. */
+  .rappel-spiralaire{border-left:5px solid var(--accent);background:var(--panel2)}
+  .rappel-spiralaire .deja{margin:.4em 0}
+  .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
+    background:var(--panel);border:1px dashed var(--border)}
+  .rappel-spiralaire .filet{margin:.5em 0 0;font-size:.92em;opacity:.85}
+  /* Le bonus et ses corrigés (règle d'or n°86) : chaque défi porte sa réponse,
+     repliée. On cherche d'abord, on ouvre ensuite — mais on ouvre. */
+  .bonus .defi{margin:1em 0;padding:.8em 1em;border-radius:10px;
+    background:var(--panel2);border:1px solid var(--border)}
+  .bonus .defi h3{margin:.1em 0 .5em}
+  .corrige-bonus{margin-top:.7em;border-top:1px dashed var(--border);padding-top:.5em}
+  .corrige-bonus summary{cursor:pointer;font-weight:600;color:var(--accent)}
+  .corrige-bonus[open] summary{margin-bottom:.5em}
+  .corrige-bonus .pourquoi{margin-top:.6em;padding:.5em .7em;border-radius:8px;
+    background:var(--panel);font-size:.95em}
+  /* Le planning de la correction : un dessin à lire, pas une décoration. */
+  figure.gantt{margin:1em 0;background:#fff;border:1px solid var(--border);
+    border-radius:10px;padding:8px}
+  figure.gantt img{width:100%;height:auto;display:block}
+  figure.gantt figcaption{color:#334155;font-size:.92em;padding:.5em .2em 0}
   .tablewrap{overflow-x:auto;margin:10px 0}
   .jalon{color:var(--warn);font-size:.85em;white-space:nowrap}
   figure{margin:14px 0;background:var(--panel2);border:1px solid var(--border);
@@ -123,7 +145,7 @@
 <p class="sous">Ce qui doit attendre, ce qui peut avancer en même temps — et la seule chaîne de tâches
 qui décide de la date de fin.</p>
 <div class="badges">
-  <span class="badge niveau" title="Cet atelier sert aux trois niveaux du cycle 4, avec un parcours différent pour chacun.">5e &middot; 4e &middot; 3e</span>
+  <span class="badge niveau" title="Cette page est le parcours de 3e. Les autres niveaux ont la leur.">3e</span>
   <span class="badge code" title="Suivre (5e), organiser (4e) ou élaborer (3e) un processus de réalisation d'un objet avec des tâches identifiées.">C7.1</span>
   <span class="badge theme" title="Thème 3 — Création, conception et réalisation d'innovations. Fil de l'année : New York.">Thème 3 &middot; New York</span>
   <span class="badge theme" title="Domaines du socle commun travaillés : D2 méthodes et outils pour apprendre, D3 formation de la personne et du citoyen, D4 systèmes naturels et techniques.">D2 &middot; D3 &middot; D4</span>
@@ -145,6 +167,19 @@ elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b
 <p class="saved-note" id="aide-essentiel">&#127919; <b>Le mode essentiel</b> masque le référentiel,
 les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Rien n'est
 perdu — un second clic ramène tout.</p>
+
+<section class="card rappel-spiralaire" aria-labelledby="rap-t">
+  <h2 id="rap-t">&#128260; Ce que tu as déjà fait</h2>
+  <p class="deja"><b>En 5e</b>, tu as <b>suivi</b> un planning qu'on t'avait donné.
+  <b>En 4e</b>, tu as <b>organisé</b> des tâches qu'on t'avait listées&nbsp;: tu as posé l'ordre
+  et tracé les liaisons, et tu as trouvé quelles tâches pouvaient avancer en même temps.</p>
+  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> la liste n'existe pas. C'est toi qui
+  <b>découpes</b> le projet en tâches, qui <b>estimes</b> chaque durée, et qui réponds à la seule
+  question qui compte pour un client&nbsp;: <b>ce sera prêt quand&nbsp;?</b></p>
+  <p class="filet">Tu n'as pas fait la 4e ici&nbsp;? Retiens ceci et ça suffira&nbsp;: une tâche a
+  une durée&nbsp;; une flèche dit qu'une tâche doit finir avant qu'une autre commence&nbsp;; la
+  plus longue chaîne de flèches décide de la date de fin.</p>
+</section>
 
 <section class="card">
   <h2>&#127968; La situation&nbsp;: trois projets, et une même question</h2>
@@ -203,15 +238,13 @@ perdu — un second clic ramène tout.</p>
 </section>
 
 <div class="progress-wrap">
-  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
-  <p id="progTxt">0 / 5 étapes validées</p>
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 3 étapes validées</p>
 </div>
 
 <div class="seance-tabs" role="tablist" id="seances" aria-label="Étapes de l'atelier">
   <button class="seance-tab active" role="tab" aria-selected="true" data-panel="pm" id="tab-pm">Étape 1<br>Les mots<span class="done" id="done-pm"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p5" id="tab-p5">5e<br>Suivre<span class="done" id="done-p5"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p4" id="tab-p4">4e<br>Organiser<span class="done" id="done-p4"></span></button>
-  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p3" id="tab-p3">3e<br>Élaborer<span class="done" id="done-p3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="p3" id="tab-p3" title="Le parcours de 3e : élaborer le processus de bout en bout.">3e<br>Élaborer<span class="done" id="done-p3"></span></button>
   <button class="seance-tab" role="tab" aria-selected="false" data-panel="gp" id="tab-gp">Le logiciel<br>Pas à pas<span class="done" id="done-gp"></span></button>
 </div>
 <div id="tachesBandeau" aria-live="polite" aria-label="Ce qu'il y a à faire dans l'étape en cours"></div>
@@ -308,129 +341,6 @@ perdu — un second clic ramène tout.</p>
 </section>
 </div>
 
-<div class="seance-panel" id="p5" role="tabpanel" aria-labelledby="tab-p5">
-<section class="card">
-  <h2>&#127974; 5e &middot; Suivre — l'indicateur de rangement du hall</h2>
-  <p>Le planning est <b>déjà fait</b>. Ton travail de 5e n'est pas de le construire&nbsp;: c'est de
-  le <b>suivre</b> — savoir où en est le projet, repérer un retard, et dire ce que ce retard
-  décale.</p>
-  <div class="tablewrap"><table><thead><tr><th>Tâche</th><th>Ce qu'il y a à faire</th><th>Durée (séances)</th><th>Ne peut commencer qu'après</th><th>Au plus tôt</th></tr></thead><tbody><tr><td><b>A</b></td><td>Observer le hall aux heures de pointe et noter ce qui traîne</td><td style="text-align:center">1</td><td style="text-align:center">—</td><td style="text-align:center">séance&nbsp;1</td></tr><tr><td><b>B</b></td><td>Choisir ce que l'indicateur doit signaler</td><td style="text-align:center">1</td><td style="text-align:center">A</td><td style="text-align:center">séance&nbsp;2</td></tr><tr><td><b>C</b></td><td>Dessiner le support à fabriquer</td><td style="text-align:center">2</td><td style="text-align:center">B</td><td style="text-align:center">séances&nbsp;3 à&nbsp;4</td></tr><tr><td><b>D</b></td><td>Choisir le matériau du support</td><td style="text-align:center">1</td><td style="text-align:center">B</td><td style="text-align:center">séance&nbsp;3</td></tr><tr><td><b>E</b></td><td>Fabriquer le support</td><td style="text-align:center">2</td><td style="text-align:center">C, D</td><td style="text-align:center">séances&nbsp;5 à&nbsp;6</td></tr><tr><td><b>F</b></td><td>Installer l'indicateur dans le hall</td><td style="text-align:center">1</td><td style="text-align:center">E</td><td style="text-align:center">séance&nbsp;7</td></tr><tr><td><b>G</b></td><td>L'indicateur est en service <span class="jalon">◆ jalon</span></td><td style="text-align:center">0</td><td style="text-align:center">F</td><td style="text-align:center">fin de la séance&nbsp;7</td></tr></tbody></table></div>
-  <p>En le lisant, le professeur a calculé que le projet dure <b>7 séances</b> et que la
-  seule tâche qui peut prendre du retard sans rien décaler est&nbsp;: <b>D (+1)</b>. Toutes les
-  autres sont sur la <b>chaîne qui décide de la fin</b>&nbsp;:
-  <b>A &rarr; B &rarr; C &rarr; E &rarr; F &rarr; G</b>.</p>
-
-  <h3>Trois situations, comme elles arrivent vraiment</h3>
-  <div class="q"><label for="p5_1">1. La séance 4 est finie&nbsp;: la tâche <b>C</b> (dessiner le
-  support) n'est pas terminée, il faudra une séance de plus. Que devient la mise en service&nbsp;?</label>
-    <select id="p5_1"><option value="">— choisir —</option><option>elle recule d'une séance : C est sur la chaîne qui décide de la fin</option><option>elle ne bouge pas : une séance, ce n'est rien</option><option>elle recule de deux séances</option><option>elle avance d'une séance</option></select></div>
-  <div class="q"><label for="p5_2">2. Même chose avec la tâche <b>D</b> (choisir le matériau)&nbsp;:
-  une séance de retard. Que devient la mise en service&nbsp;?</label>
-    <select id="p5_2"><option value="">— choisir —</option><option>elle recule d'une séance, comme pour C</option><option>elle ne bouge pas : D a de la marge, E attend de toute façon C</option><option>le projet est annulé</option><option>elle recule de deux séances</option></select></div>
-  <div class="q"><label for="p5_3">3. Ton groupe est en avance sur <b>D</b> et la finit en une
-  demi-séance. Le projet finit-il plus tôt&nbsp;?</label>
-    <select id="p5_3"><option value="">— choisir —</option><option>oui, une demi-séance de gagnée sur le projet</option><option>non : gagner du temps sur une tâche qui a de la marge ne fait rien gagner</option><option>oui, mais seulement si tout le monde va plus vite</option><option>on ne peut pas le savoir sans le logiciel</option></select></div>
-  <div class="q"><label for="p5_4">4. Pourquoi <b>E</b> ne peut-elle pas commencer avant la
-  séance 5&nbsp;?</label>
-    <select id="p5_4"><option value="">— choisir —</option><option>parce qu'elle attend C ET D, donc la plus tardive des deux</option><option>parce que c'est la cinquième de la liste</option><option>parce qu'elle dure deux séances</option><option>parce que le professeur l'a décidé</option></select></div>
-
-  <h3>Ce que tu écris</h3>
-  <p>Le professeur principal te demande un <b>point d'avancement en trois lignes</b>&nbsp;: où en
-  est le projet, ce qui est en retard, et ce que ce retard décale. Écris-le comme tu le lui
-  dirais.</p>
-  <textarea id="p5_bilan" style="min-height:110px" aria-label="Point d'avancement en trois lignes : où en est le projet, ce qui est en retard, ce que ce retard décale"></textarea>
-  <button class="btn small" data-check="2">Vérifier mon suivi</button>
-  <p class="feedback" id="fb2" role="status"></p>
-
-  <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
-    <p><b>1.</b> <b>C</b> est sur la chaîne qui décide de la fin. Une séance de retard sur C, c'est
-    une séance de retard sur <b>tout le projet</b>. Rien ne peut la rattraper, parce que tout ce
-    qui suit l'attend.</p>
-    <p><b>2.</b> <b>D</b> a <b>1 séance de marge</b>&nbsp;: elle pourrait finir une séance
-    plus tard sans que rien bouge, parce que E attend aussi C, qui arrive plus tard. La mise en
-    service ne bouge pas.</p>
-    <p><b>3.</b> Non. Gagner du temps sur une tâche qui a de la marge ne fait <b>rien</b> gagner au
-    projet&nbsp;: E attendra toujours C. C'est le résultat le plus surprenant de la planification,
-    et c'est celui qui change la façon de travailler en groupe.</p>
-    <p><b>4.</b> E doit attendre <b>C et D</b> — les deux. Une tâche qui attend plusieurs autres
-    commence après la <b>plus tardive</b>, pas après la première.</p>
-    <p class="piege"><b>Piège classique.</b> Croire que « chacun se dépêche sur sa partie » fait
-    finir le projet plus tôt. Se dépêcher sur une tâche à marge ne sert à rien&nbsp;; se dépêcher
-    sur une tâche de la chaîne sert à tout. Un planning sert d'abord à savoir <b>où</b> il faut se
-    dépêcher.</p>
-  </details>
-  <p class="retenir"><b>À retenir.</b> Suivre un planning, c'est savoir dire, à chaque séance&nbsp;:
-  qu'est-ce qui est fini, qu'est-ce qui est en retard, et <b>qu'est-ce que ce retard décale</b>.
-  Un retard sur une tâche à marge ne décale rien. Un retard sur la chaîne décale tout.</p>
-  <p class="saved-note"><b>Critère de réussite&nbsp;:</b> ton point d'avancement dit ce qui est en
-  retard <b>et</b> ce que ce retard décale — pas seulement « on a du retard ».</p>
-</section>
-</div>
-
-<div class="seance-panel" id="p4" role="tabpanel" aria-labelledby="tab-p4">
-<section class="card">
-  <h2>&#127793; 4e &middot; Organiser — le jardin connecté de Brooklyn</h2>
-  <p>Cette fois, on te donne les tâches et leurs durées. On ne te donne <b>ni les dates, ni
-  l'ordre</b>. Organiser, c'est établir ce que chaque tâche doit attendre, puis en déduire quand
-  elle peut commencer.</p>
-  <div class="tablewrap"><table><thead><tr><th>Tâche</th><th>Ce qu'il y a à faire</th><th>Durée (séances)</th><th>Ne peut commencer qu'après</th></tr></thead><tbody><tr><td><b>A</b></td><td>Relever les besoins en eau des plantes de la cour</td><td style="text-align:center">1</td><td style="text-align:center">—</td></tr><tr><td><b>B</b></td><td>Choisir les grandeurs à mesurer</td><td style="text-align:center">1</td><td style="text-align:center">A</td></tr><tr><td><b>C</b></td><td>Câbler le capteur d'humidité du sol</td><td style="text-align:center">2</td><td style="text-align:center">B</td></tr><tr><td><b>D</b></td><td>Écrire le programme d'arrosage</td><td style="text-align:center">2</td><td style="text-align:center">A</td></tr><tr><td><b>E</b></td><td>Fabriquer le support étanche du capteur</td><td style="text-align:center">3</td><td style="text-align:center">B</td></tr><tr><td><b>F</b></td><td>Assembler capteur, support et carte</td><td style="text-align:center">1</td><td style="text-align:center">C, E</td></tr><tr><td><b>G</b></td><td>Téléverser et régler le seuil d'arrosage</td><td style="text-align:center">1</td><td style="text-align:center">D, F</td></tr><tr><td><b>H</b></td><td>Tester une semaine et relever les mesures</td><td style="text-align:center">2</td><td style="text-align:center">G</td></tr><tr><td><b>I</b></td><td>Le jardin s'arrose seul <span class="jalon">◆ jalon</span></td><td style="text-align:center">0</td><td style="text-align:center">H</td></tr></tbody></table></div>
-
-  <h3>a) Les contraintes d'antériorité, une par une</h3>
-  <p>La colonne « ne peut commencer qu'après » est déjà remplie&nbsp;: lis-la, elle est le cœur du
-  travail. Vérifie que tu la comprends.</p>
-  <div class="q"><label for="p4_1">Combien de tâches ne dépendent de <b>rien</b>&nbsp;?</label>
-    <select id="p4_1"><option value="">— choisir —</option><option>une seule : A</option><option>deux : A et D</option><option>trois</option><option>aucune</option></select></div>
-  <div class="q"><label for="p4_2">Après la tâche <b>B</b>, deux tâches peuvent démarrer en même
-  temps. Lesquelles&nbsp;?</label>
-    <select id="p4_2"><option value="">— choisir —</option><option>C et D</option><option>C et E</option><option>D et E</option><option>F et G</option></select></div>
-  <div class="q"><label for="p4_3">La tâche <b>D</b> (écrire le programme) n'attend que
-  <b>A</b>. Que peut-on en conclure&nbsp;?</label>
-    <select id="p4_3"><option value="">— choisir —</option><option>qu'elle doit être faite en dernier</option><option>qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent</option><option>qu'elle est la plus importante du projet</option><option>qu'elle ne sert à rien</option></select></div>
-
-  <h3>b) Les dates au plus tôt</h3>
-  <p>Une tâche commence <b>le plus tôt possible</b>&nbsp;: juste après la fin de la <b>plus
-  tardive</b> des tâches qu'elle attend. Complète, en numéros de séance (la séance&nbsp;1 est la
-  première du projet).</p>
-  <div class="q"><label for="p4d_B"><b>B</b> &middot; Choisir les grandeurs à mesurer</label><select id="p4d_B"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_C"><b>C</b> &middot; Câbler le capteur d'humidité du sol</label><select id="p4d_C"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_D"><b>D</b> &middot; Écrire le programme d'arrosage</label><select id="p4d_D"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_E"><b>E</b> &middot; Fabriquer le support étanche du capteur</label><select id="p4d_E"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_F"><b>F</b> &middot; Assembler capteur, support et carte</label><select id="p4d_F"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_G"><b>G</b> &middot; Téléverser et régler le seuil d'arrosage</label><select id="p4d_G"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div><div class="q"><label for="p4d_H"><b>H</b> &middot; Tester une semaine et relever les mesures</label><select id="p4d_H"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
-  <div class="q"><label for="p4_fin">Le jalon <b>I</b> tombe donc à la fin de la séance&nbsp;:</label>
-    <select id="p4_fin"><option value="">— choisir —</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
-
-  <h3>c) Ce que tu écris</h3>
-  <p>Deux tâches de ce projet peuvent avancer <b>en même temps</b>. Nomme-les, dis <b>pourquoi</b>
-  elles le peuvent, et dis ce que ton groupe ferait concrètement de cette information — qui fait
-  quoi, pendant que qui fait quoi.</p>
-  <textarea id="p4_para" style="min-height:110px" aria-label="Deux tâches qui peuvent avancer en même temps, pourquoi, et ce que ton groupe en ferait"></textarea>
-  <button class="btn small" data-check="3">Vérifier mon organisation</button>
-  <p class="feedback" id="fb3" role="status"></p>
-
-  <details class="correction"><summary>&#128269; La correction, et pourquoi elle est comme ça</summary>
-    <p><b>Les dates au plus tôt.</b> <b>A</b> en séance 1, <b>B</b> en séance 2, <b>C</b> en séance 3, <b>D</b> en séance 2, <b>E</b> en séance 3, <b>F</b> en séance 6, <b>G</b> en séance 7, <b>H</b> en séance 8, <b>I</b> en séance 10. Le projet dure donc <b>9 séances</b>.</p>
-    <p><b>Comment on les trouve, sans logiciel&nbsp;:</b> on part du début, et pour chaque tâche on
-    regarde <b>toutes</b> celles qu'elle attend&nbsp;; on prend celle qui finit <b>le plus tard</b>,
-    et on commence juste après. C'est tout. Le logiciel ne fait rien d'autre, il le fait juste plus
-    vite.</p>
-    <p><b>Le parallélisme.</b> Après B, <b>C</b> (câbler) et <b>E</b> (fabriquer le support) ne
-    s'attendent pas&nbsp;: elles peuvent être menées ensemble. <b>D</b> (écrire le programme)
-    n'attend que A&nbsp;: elle peut démarrer très tôt, pendant que les autres câblent. C'est
-    exactement l'information qui manque à un groupe qui « se répartit le travail » au hasard.</p>
-    <p><b>Les marges.</b> Le calcul donne&nbsp;: C (+1), D (+3). Une marge de +3 sur D veut dire que le
-    programme pourrait être écrit trois séances plus tard sans décaler la fin — donc que se
-    précipiter dessus ne rapporte rien.</p>
-    <p class="piege"><b>Piège classique.</b> Commencer une tâche « puisqu'on a le temps », sans
-    regarder ce qu'elle attend. Assembler (F) avant que le support (E) soit fabriqué, ce n'est pas
-    de l'avance&nbsp;: c'est du travail à refaire.</p>
-    <p class="piege"><b>Deuxième piège.</b> Confondre « peut commencer » et « doit commencer ».
-    Une date au plus tôt n'est pas un ordre&nbsp;: c'est une <b>limite basse</b>. On ne peut pas
-    commencer avant&nbsp;; on peut commencer après, dans la limite de la marge.</p>
-  </details>
-  <p class="retenir"><b>À retenir.</b> Organiser, c'est écrire ce que chaque tâche attend, puis
-  faire descendre les dates de proche en proche&nbsp;: chaque tâche commence après la <b>plus
-  tardive</b> de celles qu'elle attend. Les tâches qui ne s'attendent pas se mènent ensemble.</p>
-  <p class="saved-note"><b>Critère de réussite&nbsp;:</b> tes dates sont justes, et tu peux dire à
-  ton groupe qui travaille sur quoi <b>en même temps</b>.</p>
-</section>
-</div>
-
 <div class="seance-panel" id="p3" role="tabpanel" aria-labelledby="tab-p3">
 <section class="card">
   <h2>&#127962; 3e &middot; Élaborer — le capteur de confort</h2>
@@ -496,6 +406,30 @@ perdu — un second clic ramène tout.</p>
     raccourcit. Certaines tâches se divisent (câbler quatre capteurs), d'autres non (attendre
     qu'une impression 3D se termine). Le planning ne dit pas ce qui se divise&nbsp;: il dit
     seulement <b>où ça vaudrait la peine d'essayer</b>.</p>
+  
+  <figure class="gantt">
+    <img src="Images/gantt_capteur-confort-ny.svg" alt="Diagramme de planification du projet.
+      Une ligne par tâche, une colonne par séance. Les tâches A → B → C → D → E → H → I → J → K sont
+      dessinées en barres pleines colorées : ce sont celles du chemin le plus long,
+      elles n'ont aucune marge. Les autres sont en barres sombres, chacune posée dans
+      un rectangle en pointillés qui va de sa date au plus tôt à sa date au plus tard,
+      avec une barre fantôme montrant où elle pourrait être placée au plus tard, et sa
+      marge écrite à droite. Des flèches relient chaque tâche à celles qui l'attendent.
+      Le projet tient en 12 séances.">
+    <figcaption><b>Voilà ton planning, une fois juste.</b> Compare-le au tien —
+    ce ne sont pas les mêmes couleurs par hasard.</figcaption>
+  </figure>
+  <p class="retenir"><b>Trois choses à savoir lire là-dessus.</b>
+  <b>1.</b> Les barres pleines colorées forment le chemin le plus long
+  (A → B → C → D → E → H → I → J → K)&nbsp;: elles n'ont <b>aucun jeu</b>, une séance de retard sur l'une
+  d'elles est une séance de retard sur tout le projet.
+  <b>2.</b> Les autres ont du jeu, et le <b>rectangle en pointillés</b> le montre&nbsp;:
+  la tâche <b>G</b> aurait pu être placée <b>n'importe où dans son rectangle</b>
+  sans rien retarder — la barre pâle indique sa position la plus tardive possible.
+  <b>3.</b> Ce chemin <b>peut changer</b>. Allonge une tâche à marge jusqu'à remplir
+  son rectangle&nbsp;: elle devient critique, et une autre cesse de l'être. Le chemin
+  le plus long n'est pas gravé dans le projet, il dépend des durées.</p>
+
   </details>
   <p class="retenir"><b>À retenir.</b> La durée d'un projet n'est pas la somme des durées de ses
   tâches&nbsp;: c'est la longueur de sa <b>plus longue chaîne enchaînée</b>. Gagner du temps
@@ -689,7 +623,7 @@ perdu — un second clic ramène tout.</p>
   chemin parcouru.</p>
   <textarea id="hyp2" style="min-height:90px" aria-label="Ta réponse corrigée après l'atelier"></textarea>
   <h3>Où en es-tu&nbsp;?</h3>
-  <div class="q"><label for="pos_1"><b>C7.1</b> — Suivre, organiser ou élaborer un processus de réalisation d'un objet
+  <div class="q"><label for="pos_1"><b>C7.1</b> — Élaborer un processus de réalisation d'un objet
   avec des tâches identifiées&nbsp;:</label><select id="pos_1"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
   <div class="q"><label for="pos_2">Je sais distinguer une <b>tâche</b> d'un jalon, et dire ce
   qu'est une <b>contrainte d'antériorité</b>&nbsp;:</label><select id="pos_2"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
@@ -700,25 +634,76 @@ perdu — un second clic ramène tout.</p>
 <section class="card">
   <h2>&#129504; Prêt&middot;e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de cet atelier comporte <b>30 questions</b>, dont <b>5 illustrées</b> par les captures
-  du logiciel. Il porte sur les trois parcours&nbsp;: les mots, le suivi, l'organisation, le chemin
-  le plus long, et le pas à pas du logiciel.</p>
+  du logiciel. Il balaie le vocabulaire, les trois façons de travailler un planning selon le
+  niveau, le chemin le plus long, et le pas à pas du logiciel&nbsp;: tu y trouveras donc quelques
+  questions qui vont un peu plus loin que ta page.</p>
   <p><a class="btn qcm" href="qcm_C7.1_planification_taches.html">&#129504; Ouvrir le QCM (30 questions)</a></p>
 </section>
 
-<section class="card">
+
+<section class="card bonus">
   <h2>&#127873; Bonus (facultatif — hors parcours obligatoire)</h2>
-  <ul>
-    <li>Reprends le planning du jardin connecté et <b>ajoute une tâche</b> à laquelle personne n'a
-    pensé&nbsp;: « demander l'autorisation d'installer dans la cour ». Où la places-tu, qu'attend-elle,
-    et le projet finit-il plus tard&nbsp;?</li>
-    <li>Un professeur est absent une semaine au milieu du projet. <b>Toutes</b> les tâches
-    reculent-elles d'autant&nbsp;? Explique avec le vocabulaire de l'atelier.</li>
-    <li>Cherche le <b>plan de construction d'un pont ou d'une tour</b>, à New York ou ailleurs, et
-    trouve une tâche qui a manifestement dû attendre une autre. Écris la contrainte comme on l'a
-    écrite ici.</li>
-  </ul>
-  <p class="saved-note">Ces défis n'ont pas de vérificateur&nbsp;: on en discute ensemble.</p>
+  <p class="saved-note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
+  Chacun a sa correction, repliée&nbsp;: cherche d'abord, ouvre ensuite.</p>
+
+  <div class="defi">
+    <h3>Défi 1 — la tâche à laquelle personne n'a pensé</h3>
+    <p>Ajoute au projet une tâche oubliée&nbsp;: <b>« demander l'autorisation d'installer dans
+    la salle 214 »</b>, une séance. Où la places-tu&nbsp;? Qu'attend-elle&nbsp;? Et le projet
+    finit-il plus tard&nbsp;?</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p>Elle <b>n'attend rien</b>&nbsp;: on peut la faire dès la première séance. En revanche
+      <b>K ne peut pas avoir lieu sans elle</b> — c'est une contrainte d'antériorité
+      vers la fin, pas vers le début.</p>
+      <p>Le projet <b>ne finit pas plus tard</b>. Elle dure 1 séance et dispose de tout
+      l'intervalle jusqu'à la fin&nbsp;: elle a énormément de marge, donc elle n'entre pas sur
+      le chemin le plus long, qui reste <b>A → B → C → D → E → H → I → J → K</b> et <b>12 séances</b>.</p>
+      <p class="pourquoi">Ce qu'il fallait repérer&nbsp;: une tâche ajoutée n'allonge le projet
+      que si elle se place <b>sur</b> le chemin le plus long. Ajouter du travail et allonger le
+      projet sont deux choses différentes — c'est contre-intuitif, et c'est tout l'intérêt du
+      défi. L'erreur naturelle est de répondre « une tâche de plus, donc une séance de plus ».</p>
+    </details>
+  </div>
+
+  <div class="defi">
+    <h3>Défi 2 — le professeur est absent une semaine</h3>
+    <p>Une séance saute au milieu du projet. <b>Toutes</b> les tâches reculent-elles
+    d'autant&nbsp;? Explique avec le vocabulaire de l'atelier.</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p><b>Non.</b> Il faut regarder <b>où</b> tombe la semaine perdue.</p>
+      <p>Si elle touche une tâche du chemin le plus long (A → B → C → D → E → H → I → J → K), tout recule d'une séance
+      et le projet passe de 12 à 13 séances&nbsp;: ces tâches n'ont
+      <b>aucune marge</b>.</p>
+      <p>Si elle ne touche qu'une tâche à marge — par exemple <b>F, Écrire le programme de mesure et d'alerte</b>, qui a
+      <b>4 séance(s) de marge</b> — la tâche décale, mais <b>la date de fin ne
+      bouge pas</b>. La marge est faite pour ça&nbsp;: c'est du jeu, et le jeu s'use.</p>
+      <p class="pourquoi">Ce qu'il fallait repérer&nbsp;: la plus grande marge du projet est de
+      <b>5 séance(s)</b>. Un retard plus long que ça finit toujours par se voir sur
+      la date de fin, même hors du chemin le plus long.</p>
+    </details>
+  </div>
+
+  <div class="defi">
+    <h3>Défi 3 — une contrainte dans un vrai chantier</h3>
+    <p>Cherche le plan de construction d'un pont ou d'une tour, à New York ou ailleurs, et
+    trouve une tâche qui a <b>manifestement dû attendre</b> une autre. Écris la contrainte
+    comme on l'a écrite ici.</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p>Il n'y a pas une seule bonne réponse, mais il y a une <b>bonne forme</b>. Exemple sur
+      un pont&nbsp;: <i>« Couler le tablier »</i> attend <i>« Couler les piles »</i>. Écrit
+      comme dans l'atelier&nbsp;: <b>Couler le tablier — antériorité&nbsp;: Couler les piles —
+      relation fin-début</b>.</p>
+      <p>Sur une tour&nbsp;: <i>« Poser les façades vitrées »</i> attend <i>« Monter la
+      structure de l'étage »</i>. Et une tâche qui n'attend pas&nbsp;: <i>« Fabriquer les
+      vitrages en usine »</i> peut avancer <b>en même temps</b> que la structure monte.</p>
+      <p class="pourquoi">Ta réponse est juste si elle dit trois choses&nbsp;: quelle tâche
+      attend, laquelle elle attend, et <b>pourquoi physiquement</b> elle ne peut pas commencer
+      avant. Si tu ne trouves pas le « pourquoi physiquement », c'est peut-être qu'il n'y a pas
+      de vraie contrainte — juste une habitude d'organisation.</p>
+    </details>
+  </div>
 </section>
+
 
 </div>
 <footer>Ressource originale du dépôt &middot; Thème 3 &middot; C7.1 &middot; images, licences et
@@ -729,7 +714,7 @@ envoyée.</footer>
 "use strict";
 const KEY="atelier_c7_1_planification_taches";
 const ATT={"be_1": "on peut dire, à un instant donné, si elle est terminée ou non", "be_2": "un jalon : un point de contrôle, qui ne dure pas", "be_3": "peuvent avancer en même temps : c'est là qu'on gagne du temps", "p5_1": "elle recule d'une séance : C est sur la chaîne qui décide de la fin", "p5_2": "elle ne bouge pas : D a de la marge, E attend de toute façon C", "p5_3": "non : gagner du temps sur une tâche qui a de la marge ne fait rien gagner", "p5_4": "parce qu'elle attend C ET D, donc la plus tardive des deux", "p4_1": "une seule : A", "p4_2": "C et E", "p4_3": "qu'elle peut être écrite très tôt, pendant que d'autres câblent ou fabriquent", "p4_fin": "9", "p3_1": "12", "p3_2": "parce que certaines tâches avancent en même temps", "p3_3": "A → B → C → D → E → H → I → J → K", "p3_4": "aucune : elle n'est pas sur le chemin le plus long", "p3_5": "une séance, tant qu'aucun autre chemin ne devient le plus long", "p3_6": "le chemin critique", "gp_1": "en haut à droite du diagramme, à côté des états de référence", "gp_2": "Prédécesseurs", "gp_3": "en cochant la case Jalon, ce qui met sa durée à zéro", "gp_4": "parce qu'elle est calculée à partir du début et de la durée", "gp_5": "la fin de la tâche attendue commande le début de celle-ci", "p4d_B": "2", "p4d_C": "3", "p4d_D": "2", "p4d_E": "3", "p4d_F": "6", "p4d_G": "7", "p4d_H": "8"};
-const GRP={"0": ["be_1", "be_2", "be_3"], "2": ["p5_1", "p5_2", "p5_3", "p5_4"], "3": ["p4_1", "p4_2", "p4_3", "p4d_B", "p4d_C", "p4d_D", "p4d_E", "p4d_F", "p4d_G", "p4d_H", "p4_fin"], "4": ["p3_1", "p3_2", "p3_3", "p3_4", "p3_5", "p3_6"], "5": ["gp_1", "gp_2", "gp_3", "gp_4", "gp_5"]};
+const GRP={"0": ["be_1", "be_2", "be_3"], "4": ["p3_1", "p3_2", "p3_3", "p3_4", "p3_5", "p3_6"], "5": ["gp_1", "gp_2", "gp_3", "gp_4", "gp_5"]};
 const $=id=>document.getElementById(id);
 const val=id=>{const e=$(id);return e?e.value:"";};
 window.__valid = window.__valid || {};
@@ -917,9 +902,9 @@ document.querySelectorAll("[data-check]").forEach(btn=>{
 });
 
 /* ══════ Barre de progression et pastilles d'onglet ══════ */
-const PANNEAU = {"0":"pm","1":"pm","2":"p5","3":"p4","4":"p3","5":"gp"};
+const PANNEAU = {"0": "pm", "1": "pm", "4": "p3", "5": "gp"};
 function majProgres(){
-  const faits = ["0","1","2","3","4","5"].filter(k=>window.__valid[k]);
+  const faits = Object.keys(PANNEAU).filter(k=>window.__valid[k]);
   /* une étape compte quand TOUS ses vérificateurs sont validés */
   const parPanneau = {};
   Object.entries(PANNEAU).forEach(([k,p])=>{
@@ -938,13 +923,7 @@ function majProgres(){
 }
 
 /* ══════ Bandeau « ce qu'il y a à faire ici » (règle n°30) ══════ */
-const TACHES = {
-  pm: [["0","répondre au billet d'entrée"],["1","découper les bandes, puis écrire trois tâches et un jalon"]],
-  p5: [["2","répondre aux quatre situations, puis écrire le point d'avancement"]],
-  p4: [["3","poser les dates au plus tôt, puis écrire les deux tâches parallèles"]],
-  p3: [["4","trouver la durée, le chemin le plus long, puis l'écrire sur ton projet"]],
-  gp: [["5","suivre les cinq écrans, manipuler, puis répondre aux cinq repères"]]
-};
+const TACHES = {"pm": [["0", "répondre au billet d'entrée"], ["1", "découper les bandes, puis écrire trois tâches et un jalon"]], "p3": [["4", "trouver la durée, le chemin le plus long, puis l'écrire sur ton projet"]], "gp": [["5", "suivre les cinq écrans, manipuler, puis répondre aux cinq repères"]]};
 function majBandeau(){
   const actif=document.querySelector(".seance-panel.active");
   if(!actif) return;
