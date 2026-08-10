@@ -4574,3 +4574,64 @@ Le rapport le dit lui-même dans son périmètre. C'est la même discipline que
 pour les vérificateurs de guidage : dire ce qu'on contrôle, et surtout ce
 qu'on ne contrôle pas.
 
+---
+
+## 11 août 2026 (suite) — l'audit au navigateur, et ce qu'il a trouvé chez les autres
+
+Pascal a demandé un audit de tout ce qui a été produit précédemment, sur les
+trois thèmes. Le script statique avait déjà nettoyé beaucoup ; c'est le
+**navigateur** qui a trouvé le reste, et l'écart entre les deux mérite d'être
+écrit.
+
+### Ce qu'un script qui lit le HTML ne peut pas voir
+
+**Une page morte qui a l'air vivante.** La séquence de cybersécurité de 4e
+contenait `document.getElementById('score1a')?.textContent = ...` — un `?.` à
+gauche d'une affectation, ce que JavaScript interdit. Ce n'est pas une erreur
+d'exécution : c'est une erreur de **syntaxe**, donc le navigateur refusait
+**tout** le bloc de script. Vingt-sept boutons, cent vingt-cinq éléments
+interactifs : rien ne fonctionnait. À la lecture du fichier, la page semblait
+complète. Deux autres défauts se cachaient derrière : un `startTime` jamais
+déclaré, et deux accès à des éléments inexistants (`#saveBtn`, `#scoreTotal2`)
+qui interrompaient le script à la première interaction. Les trois sont
+corrigés ; les fonctions dont l'élément n'existe pas sont signalées en clair
+dans le fichier plutôt que masquées.
+
+**Des images invisibles dans le code.** Un QCM du thème 2 chargeait six images
+de Wikimedia **injectées par JavaScript** — donc absentes du HTML, donc
+invisibles à tout script qui lit le fichier. Quarante balises cassées hors
+connexion. Remplacées par six schémas originaux.
+
+### Ce que le navigateur croit voir à tort
+
+Il a fallu apprendre à l'audit à ne pas crier au loup, ce qui compte autant.
+Un `<img>` **sans attribut src** est un emplacement que le script remplira, pas
+une image cassée. Une image en **chargement paresseux** située sous la ligne de
+flottaison n'est pas chargée tant qu'on n'a pas défilé : sans défilement, on les
+compte toutes comme mortes. Et un **gabarit** n'est pas une page — `@@CHECKS@@`
+n'est pas une faute de JavaScript. Trois faux positifs écartés, sinon le rapport
+aurait annoncé seize défauts là où il y en avait deux, et un audit qui crie au
+loup finit par ne plus être lu.
+
+### Les liens vers ChatGPT
+
+Deux pages de 4e proposaient d'« ouvrir ChatGPT » d'un clic. Le service exige
+un compte, un âge minimum de 13 ans, et l'accord d'un adulte avant 18. Le lien
+direct est remplacé par un encadré qui pose les trois conditions — dont
+l'accord de l'établissement — et rappelle que **tout ce qu'on écrit à un
+assistant part sur les serveurs de l'entreprise qui le fait tourner**. Ce qui
+est, exactement, le sujet de cette séquence-là. L'intention pédagogique est
+conservée, l'envoi automatique ne l'est pas ; la décision finale appartient à
+Pascal.
+
+### L'outil qui manquait
+
+`audit_navigateur.py` rejoint `audit_spiralaire.py` : le premier ouvre chaque
+page dans Chromium, le second lit les fichiers. Aucun des deux ne remplace
+l'autre. Écrit noir sur blanc dans leur périmètre : *un script sans erreur peut
+être un script qui ne fait rien* — la justesse des réponses et le fait que la
+page enseigne quelque chose ne se mesurent toujours pas.
+
+**État après ce chantier : 181 pages, aucune erreur JavaScript, aucune image
+cassée, aucun manquement aux règles n°86, n°87 et n°88.**
+

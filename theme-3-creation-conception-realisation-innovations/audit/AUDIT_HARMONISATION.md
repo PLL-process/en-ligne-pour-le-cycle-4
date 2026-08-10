@@ -36,7 +36,7 @@ voit pas ».
 **5. Le réseau (n°40) — 6 pages.** Ressources réellement chargées depuis
 l'extérieur. Une page qui en dépend ne fonctionne pas dans une salle sans connexion.
 
-**6. Les liens sortants — 3 pages.** Ils ne cassent rien hors ligne, mais ils
+**6. Les liens sortants — 2 pages.** Ils ne cassent rien hors ligne, mais ils
 disent où l'on envoie des élèves : cette liste se relit avec d'autres yeux que
 techniques.
 
@@ -59,7 +59,7 @@ Ces trois questions-là ne se mesurent pas. Elles se lisent.
 | n°86 | **0** |
 | images | **3** |
 | n°40 | **6** |
-| liens | **3** |
+| liens | **2** |
 
 ## n°88 — une page se juge aussi sur ce qu'on peut en faire quand on y est arrivé
 
@@ -77,7 +77,7 @@ Aucun manquement.
 
 3 page(s).
 
-- `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/activite-bonus-cyber-immersive-2fa.html` — 2 image(s) annoncée(s) et absente(s)
+- `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/activite-bonus-cyber-immersive-2fa.html` — 1 image(s) annoncée(s) et absente(s)
 - `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1/qcm_automatisation_premium.html` — 1 image(s) annoncée(s) et absente(s)
 - `theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/4e/4e_C4.1_book-train/sequence_4e_C4.1-C4.2-C4.4_book-train.html` — 1 image(s) annoncée(s) et absente(s)
 
@@ -94,11 +94,10 @@ Aucun manquement.
 
 ## Liens sortants — pour information : ils ne cassent pas la page hors ligne, mais ils méritent une relecture (à quoi envoie-t-on des collégiens ?)
 
-3 page(s).
+2 page(s).
 
 - `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html` — renvoie vers : online-python-compiler.com, online-python.com, programiz.com
-- `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/activite-bonus-cyber-immersive-2fa.html` — renvoie vers : chat.openai.com, www.online-python.com
-- `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/sequence-cybersecurite-protection-donnees.html` — renvoie vers : chat.openai.com
+- `theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/activite-bonus-cyber-immersive-2fa.html` — renvoie vers : www.online-python.com
 
 ---
 
