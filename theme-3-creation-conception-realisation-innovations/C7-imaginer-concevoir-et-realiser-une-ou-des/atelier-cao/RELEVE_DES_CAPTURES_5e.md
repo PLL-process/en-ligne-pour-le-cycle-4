@@ -10,7 +10,7 @@ c'est là qu'un élève lèvera la main, et c'est le seul chiffre qui compte (vo
 
 Toutes les images vont dans `Images/`, avec **exactement** le nom indiqué.
 
-**Deux images à refaire (10 août 2026).** Le palier des congés adoucit désormais aussi
+**Refaites le 11 août 2026.** Le palier des congés adoucit désormais aussi
 le **bord des vingt et un points** : les rendus `R6` et `R7` montrent l'ancien dé, aux points
 percés à arêtes vives. Ils ont été **supprimés** plutôt que laissés en place — une image fausse
 coûte plus cher qu'une image annoncée absente, parce qu'un élève la croit.
@@ -35,8 +35,8 @@ neuf captures d'interface, qui ne s'obtiennent qu'en déroulant le TP sur un pos
 | ✅ `tp5e_R4_face6.png` | 5 — La face du 6 | **Résultat du palier.** La face à six creux, en deux colonnes de trois, régulièrement espacés. |
 | ✅ `tp5e_R5_de_complet.png` | 6 — Les quatre faces qui restent | **Résultat du palier.** Le dé complet en perspective, ses six faces percées, faces opposées sommant à 7. |
 | `tp5e_09_conge.png` | 7 — Adoucir : les congés | Le panneau Congé ouvert avec un rayon de 3 mm, plusieurs arêtes du cube sélectionnées et l'aperçu arrondi. |
-| ♻️ `tp5e_R6_conges.png` (À REFAIRE) | 7 — Adoucir : les congés | **Résultat du palier.** Le dé aux douze arêtes arrondies, points bien visibles. |
-| ♻️ `tp5e_R7_de_colore.png` (À REFAIRE) | 8 — 🎁 Ton dé, et pas celui du voisin | **Résultat du palier.** Le dé terminé, coloré, prêt à être exporté. |
+| ✅ `tp5e_R6_conges.png` | 7 — Adoucir : les congés | **Résultat du palier.** Le dé aux douze arêtes arrondies, points bien visibles. |
+| ✅ `tp5e_R7_de_colore.png` | 8 — 🎁 Ton dé, et pas celui du voisin | **Résultat du palier.** Le dé terminé, coloré, prêt à être exporté. |
 
 ## Comment cadrer
 

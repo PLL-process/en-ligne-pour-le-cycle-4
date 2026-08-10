@@ -4635,3 +4635,43 @@ page enseigne quelque chose ne se mesurent toujours pas.
 **État après ce chantier : 181 pages, aucune erreur JavaScript, aucune image
 cassée, aucun manquement aux règles n°86, n°87 et n°88.**
 
+---
+
+## 11 août 2026 — Les trois TP de CAO sont complets
+
+Seize rendus produits par l'API Onshape. Les TP de 4e et de 3e passent les onze
+règles de guidage sans manquement ; celui de 5e attend encore ses neuf captures
+d'interface, qui ne s'obtiennent qu'à la main sur un poste en français.
+
+**Ce que les contrôles ont vraiment prouvé.** Le dé reconstruit pour la 4e fait
+115 482,72356945986 mm³ contre 115 482,72356945979 pour l'original de 5e —
+identiques à treize chiffres. La gorge du boîtier est prouvée continue non pas à
+l'œil mais parce que son fond est **une seule face** de 136,00 mm², exactement
+l'aire de l'anneau complet : une rainure interrompue à un coin aurait donné deux
+faces. Le centrage du dé est à 0,00 mm, et il est tenu par une contrainte
+résolue, pas par des coordonnées saisies. Le jeu du joint mesure 0,50 mm.
+
+**Un chiffre corrigé.** Les 116 753 mm³ notés la veille pour le dé étaient le
+volume **avant** congés. Après les congés de 3 mm et de 1 mm : 115 482,72 mm³.
+
+**Une leçon d'image qui devient une leçon de méthode.** Le premier rendu de la
+coupe de 3e était inutilisable : nervure et gorge faisant 1 mm chacune et
+jointives, dans une même teinte on ne distinguait rien. Il a fallu colorer les
+deux pièces pour que l'image enseigne quelque chose. C'est exactement ce qu'on
+reproche à une image décorative — sauf qu'ici elle était géométriquement juste
+et pédagogiquement vide. **Une image correcte n'est pas une image qui montre.**
+
+**Une limite d'outil devenue contenu du TP.** `create_fastened_mate` aligne les
+axes Z des connecteurs au lieu de les opposer : mater le dessous du dé sur le
+dessus du socle le retourne et l'enfonce. Plutôt que de cacher le contournement,
+le TP de 4e prévient maintenant l'élève que le cas arrive « à tout le monde » et
+lui indique le bouton d'inversion. Un piège rencontré en production vaut mieux
+qu'un piège découvert en classe.
+
+**Trois limites déclarées dans SOURCES_MEDIAS.** La coupe de 3e n'est pas une
+coupe des pièces de production mais une reconstruction — l'API publique
+d'Onshape ne sait pas produire de vue en coupe — prouvée équivalente au volume.
+Le profil de 4e n'est pas un rendu Onshape mais un tracé de l'esquisse réelle.
+Et l'image du couvercle est honnête, mais peu démonstrative : à l'échelle de la
+pièce entière, la nervure de 1 mm reste un liseré.
+
