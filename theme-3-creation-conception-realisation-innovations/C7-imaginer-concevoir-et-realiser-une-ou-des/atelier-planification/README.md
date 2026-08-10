@@ -15,7 +15,9 @@ occurrence, alors que les trois codes C7.1 étaient revendiqués. La séquence d
 
 | Fichier | Pour qui |
 |---|---|
-| `atelier_C7.1_planification_taches.html` | **l'élève** — cinq étapes, un parcours par niveau |
+| `atelier_5e_C7.1_planification_taches.html` | **l'élève de 5e** — rappel spiralaire, les mots, suivre un planning, le logiciel |
+| `atelier_4e_C7.1_planification_taches.html` | **l'élève de 4e** — rappel spiralaire, les mots, organiser les tâches, le logiciel |
+| `atelier_3e_C7.1_planification_taches.html` | **l'élève de 3e** — rappel spiralaire, les mots, élaborer le processus, le logiciel |
 | `qcm_C7.1_planification_taches.html` | l'élève — 30 questions, 10 par niveau, 5 illustrées |
 | `Synthèses/synthese_eleve_C7.1_planification.html` | l'élève — à imprimer, à coller |
 | `Synthèses/synthese_professeur_C7.1_planification.html` | **le professeur** — déroulé, corrigés, pièges |

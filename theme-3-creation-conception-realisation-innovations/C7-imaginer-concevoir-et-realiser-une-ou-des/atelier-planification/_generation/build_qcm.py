@@ -127,7 +127,7 @@ def construire(gabarit: str, sortie: str) -> None:
         s = s.replace(avant, apres)
 
     s = s.replace("sequence_3e_C3.1-C3.4_shenzhen.html",
-                  "atelier_C7.1_planification_taches.html")
+                  "atelier_5e_C7.1_planification_taches.html")
     s = s.replace("../../../../index.html", "../../../index.html")
     s = s.replace("⬅ Revenir à la séquence", "⬅ Revenir à l'atelier")
     s = s.replace("← Séquence", "← Atelier")
