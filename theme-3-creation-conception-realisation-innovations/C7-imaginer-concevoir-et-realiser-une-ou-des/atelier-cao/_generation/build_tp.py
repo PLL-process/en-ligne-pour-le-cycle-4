@@ -159,6 +159,18 @@ def construire(scenario_path: pathlib.Path) -> pathlib.Path:
         if b < a - 0:
             pass  # on autorise un retour en arrière ponctuel : nouveau geste, nouvelle aide
 
+    # Règle d'or n°88 : un TP dans lequel on entre sans pouvoir revenir à sa
+    # séquence est une impasse. Le scénario doit dire d'où l'on vient.
+    retour = str(s.get("retour_sequence", "")).strip()
+    if not retour:
+        raise SystemExit(
+            "Règle n°88 : le scénario n'indique pas « retour_sequence ».\n"
+            "Ajoute au JSON, par exemple :\n"
+            '    "retour_sequence": "../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html"')
+    if not (D / retour).exists():
+        raise SystemExit("Règle n°88 : « retour_sequence » vise un fichier qui n'existe "
+                         "pas : %s" % (D / retour))
+
     corps = "".join(palier_html(p, i) for i, p in enumerate(paliers, 1))
     badges = "".join('<span class="badge theme">%s</span>' % esc(b) for b in s.get("badges", []))
 
@@ -172,9 +184,19 @@ def construire(scenario_path: pathlib.Path) -> pathlib.Path:
 <style>
 %(css)s
 %(css_tp)s
+#navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:900px;margin:14px auto 0;padding:0 18px}
+#navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;
+ color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+@media print{#navharm{display:none}}
 </style>
 </head>
 <body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../index.html">&#8962; Accueil</a>
+  <a href="%(retour)s">&#8592; Revenir à la séquence de %(niveau)s</a>
+  <a href="tp_modele_demonstration.html">&#128209; Le modèle de démonstration</a>
+</nav>
 <div class="page">
 <h1>%(titre)s</h1>
 <p class="sous">%(sous)s</p>
@@ -186,6 +208,15 @@ produire à l'écran</span> — si tu ne le vois pas, ne continue pas&nbsp;: rep
 Les encadrés orange préviennent des pièges. À la fin de chaque partie, une image te montre
 <b>ce que tu dois obtenir</b>&nbsp;: compare, tu n'as besoin de personne pour te corriger.</p>
 %(corps)s
+
+<section class="card et-ensuite">
+  <h2>&#10145; Et maintenant&nbsp;?</h2>
+  <p>Tu sais ouvrir un plan, esquisser, coter, extruder, enlever de la matière et adoucir une
+  arête. <b>C'est tout ce qu'il faut</b> pour dessiner l'objet de ton projet.</p>
+  <p><a class="btn" href="%(retour)s">&#8592; Revenir à ta séquence et dessiner ton support</a></p>
+  <p class="note">Garde ton document&nbsp;: on repartira de ces gestes-là, en 4e, pour
+  <b>assembler</b> deux pièces — et là, une pièce pourra en empêcher une autre de bouger.</p>
+</section>
 <footer>%(pied)s</footer>
 </div>
 </body>
@@ -193,7 +224,8 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 """ % {"desc": html.escape(s.get("description", "")), "titre_page": html.escape(s["titre_page"]),
        "css": CSS, "css_tp": STYLE_TP, "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
-       "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt."))}
+       "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt.")),
+       "retour": retour}
 
     sortie = D / s["fichier_sortie"]
     sortie.write_text(page, encoding="utf-8")
