@@ -3888,6 +3888,74 @@ COMPLET ET VALIDABLE**, et de 39 à 41 codes couverts par une séquence mutualis
 
 ---
 
+### Règle d'or n°68 — Quand un lot s'appuie sur une catastrophe humaine, il dit ce qu'il compare et ce qu'il ne compare pas
+
+**L'origine.** Cette règle ne vient pas d'un incident : elle vient d'une **réussite**, trouvée dans
+la séquence 3e_C1.1 en la relisant pour la refondre. Son activité sur les évaluations
+environnementales du PNUE à Gaza porte une consigne encadrée, que son auteur a nommée « phrase
+éthique obligatoire » :
+
+> «&nbsp;Nous comparons des indicateurs et des méthodes de mesure&nbsp;; nous ne comparons ni la
+> valeur des vies, ni la gravité des souffrances, ni la légitimité des victimes.&nbsp;»
+
+**Pourquoi c'est juste.** Un cours de technologie peut avoir besoin de données issues d'une guerre,
+d'une catastrophe ou d'une épidémie — elles existent, elles sont publiques, et les ignorer
+appauvrirait l'enseignement. Mais un tableur met tout sur la même ligne, et un graphique met tout à
+la même échelle. **L'outil efface la différence de nature entre ce qu'on mesure et ce qu'on
+éprouve.** La phrase rétablit cette différence, avant que l'élève ne l'ait perdue.
+
+**La règle.** Tout lot qui exploite des données issues d'une catastrophe humaine énonce, **de façon
+visible et non repliée**, ce qui est comparé — des indicateurs, des méthodes, des ordres de
+grandeur — et ce qui ne l'est pas : la valeur des vies, la gravité des souffrances, la légitimité
+des victimes. La leçon technique qui accompagne cette phrase est la plus solide qui soit :
+**certaines grandeurs ne se convertissent pas les unes dans les autres**. Des débris, des cultures
+détruites et une eau contaminée ne se remplacent pas par un chiffre carbone — ni par aucun autre
+chiffre unique.
+
+**Corollaire.** On ne va pas chercher ces données pour l'effet qu'elles produisent. On les emploie
+quand elles servent la leçon — ici, l'incommensurabilité — et jamais comme illustration.
+
+---
+
+## Lot 3e_C1.1 à C1.4 — refonte du 9 août 2026
+
+Troisième et dernière refonte de la série ouverte par l'audit du 8 août. Le lot « Tsinghua 3e »
+était signalé pour un motif mécanique — aucun champ de saisie — et la lecture en a révélé un plus
+grave&nbsp;: **il annonçait quatre codes et n'en servait qu'un**.
+
+**Ce que la confrontation au référentiel a montré.** Le mot «&nbsp;rupture&nbsp;» n'apparaissait
+nulle part, aucune découverte scientifique n'était nommée, les contraintes traitées étaient
+techniques et non sociétales, et aucun des quatre codes ne figurait dans la page. Son contenu —
+excellent — relevait en réalité du **traitement de données**, c'est-à-dire du C1 de 5e. Le lot était
+rangé sous les mauvais codes, ce qui est la forme la plus discrète du défaut de la règle n°63.
+
+**Ce qui a été fait.** Le contenu est conservé **intégralement** et devient la base factuelle. Deux
+séances neuves l'encadrent&nbsp;: les trois régimes de surveillance des feux et le critère de la
+rupture — *le métier change* — puis Herschel en 1800 et les deux siècles qui séparent sa mesure du
+drone qui l'utilise. Et deux argumentaires courts en production terminale, dans les deux sens.
+
+**Trois enseignements de méthode, notés pour la suite.**
+
+1. **Le dépôt savait déjà.** Le bloc CRCN de la version 4e portait la phrase «&nbsp;utiliser un
+   ordinateur n'est pas une compétence&nbsp;; la compétence est démontrée par les transformations
+   et les traces&nbsp;» — c'est-à-dire la règle n°60, que nous avons cru découvrir hier grâce à un
+   audit extérieur. Avant d'écrire une règle, il vaut la peine de chercher si le dépôt ne l'énonce
+   pas déjà quelque part.
+2. **La règle n°68 est née d'une réussite**, pas d'un incident. C'est la première du recueil dans ce
+   cas. Il faudra en chercher d'autres&nbsp;: nos règles viennent presque toutes de nos erreurs, ce
+   qui donne du recueil une image plus sombre que le dépôt ne le mérite.
+3. **Deux fois dans la journée, un `cd` résiduel a fait écrire hors du dépôt.** Sans conséquence —
+   les fichiers ont été récupérés et remis en place, jamais réécrits — mais c'est le genre de
+   dérive qui finit par coûter cher. Désormais&nbsp;: chemins absolus, et jamais de confiance
+   accordée au répertoire courant entre deux commandes.
+
+**Bilan de couverture** — le dépôt passe à **30 codes COMPLET ET VALIDABLE** et 26 « À CRÉER ».
+
+42 tests exécutés, 42 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **28 à 29 codes
+COMPLET ET VALIDABLE**, et de 39 à 41 codes couverts par une séquence mutualisée.
+
+---
+
 ## Mécanisation de cinq règles, et retournement de la n°31 — 9 août 2026
 
 Le vérificateur passe de **8 à 12 contrôles**. Les règles n°51, n°53, n°54 et n°67 étaient écrites

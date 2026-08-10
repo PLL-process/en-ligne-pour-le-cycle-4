@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Séquence de technologie 5e — Shenzhen : recenser les interacteurs d'une station de vélos en libre-service et lire les choix de conception dans ses formes. Codes 5e_C2.1 et 5e_C2.2, programme 2024.">
+<title>Thème 1 · 3e — Tsinghua : robots, drones et IA face aux feux (3e_C1.1 à C1.4)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;
+ background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;
+ text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<div class="page">
+<h1>🤖 Robots, drones et IA face aux feux</h1>
+<p class="sous">Une découverte de 1800, deux ruptures — et des chiffres qu'on n'a pas le droit d'additionner.</p>
+<div class="badges">
+  <span class="badge niveau" title="Niveau de classe auquel cette séquence est destinée.">3e</span>
+  <span class="badge code" title="Identifier les innovations de rupture qui sont attachées à l’évolution d’un OST.">3e_C1.1</span>
+  <span class="badge code" title="Mettre en relation une découverte scientifique avec ses développements technologiques et leurs effets sur la société.">3e_C1.2</span>
+  <span class="badge code" title="Exprimer dans un argumentaire court l’incidence d’un OST sur la société.">3e_C1.3</span>
+  <span class="badge code" title="Exprimer dans un argumentaire court l’incidence des contraintes sociétales sur les OST.">3e_C1.4</span>
+
+  <span class="badge theme" title="Domaines du socle commun travaillés : D2 méthodes et outils pour apprendre, D3 formation de la personne et du citoyen, D4 systèmes techniques, D5 représentations du monde.">D2 · D3 · D4 · D5</span>
+  <span class="badge theme" title="Durée prévue de la séquence, hors QCM d'entraînement.">5 séances de 55 min</span>
+  <span class="badge theme" title="Compétences numériques du CRCN travaillées et traçables : traiter des données, gérer des données, sécuriser l'environnement numérique.">🖥 CRCN 1.3 · 1.2 · 4.1</span>
+</div>
+<p class="legende-badges">🔎 <b>Ce que disent ces étiquettes.</b> <b>5e</b>&nbsp;: le niveau.
+<b>C1.1 à C1.6</b>&nbsp;: les six compétences travaillées — des codes de classement <b>propres à ce
+site</b>, écrits en toutes lettres plus bas. <b>D2 · D3 · D4 · D5</b>&nbsp;: les domaines du
+<b>socle commun</b>, les grandes familles de ce qu'on apprend au collège.
+<b>CRCN</b>&nbsp;: le cadre des compétences numériques, celui qu'on retrouve dans <b>Pix</b>.
+<b>5 séances de 55 min</b>&nbsp;: le temps prévu, sans compter le QCM.</p>
+<div class="toolbar">
+  <button class="btn" id="btnPrint" title="Imprimer la page, ou l'enregistrer en PDF. Tes réponses écrites sont imprimées avec.">🖨 Imprimer</button>
+  <button class="btn ghost" id="btnReset" title="Effacer définitivement tes réponses enregistrées dans ce navigateur. Une confirmation te sera demandée.">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false" aria-describedby="aide-essentiel" title="Masquer le référentiel, les corrections et les compléments, pour ne garder que les consignes et les exercices.">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note">Tes réponses sont enregistrées <b>dans ce navigateur uniquement</b>&nbsp;:
+elles ne partent nulle part, et tu les retrouveras sur <b>ce même ordinateur</b>.</p>
+<p class="saved-note" id="aide-essentiel">🎯 <b>Le mode essentiel</b> masque le référentiel, les
+corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. Utile quand la
+page paraît trop chargée. Rien n'est perdu — un second clic ramène tout.</p>
+
+<section class="card">
+  <h2>🇨🇳 La situation&nbsp;: des moyens nombreux, et une question mal posée</h2>
+  <p>Les feux de végétation de 2026 en France ont touché de vastes surfaces&nbsp;: le ministère de
+  l'Intérieur annonçait, au <b>24 juillet</b>, plus de <b>50 000 hectares</b> brûlés depuis le début
+  de l'année, et <b>32 feux encore en cours</b>. Les secours emploient déjà plusieurs familles de
+  moyens&nbsp;: surveillance humaine, satellites, capteurs, aéronefs, cartographie, communication.</p>
+  <p>Une équipe d'élèves-ingénieurs, inspirée des travaux de l'université <b>Tsinghua</b> en
+  automatisation et robotique, doit étudier un robot mobile et un drone de reconnaissance. Avant le
+  moindre programme et le moindre prototype, elle doit répondre à une question plus difficile&nbsp;:
+  <b>de quoi a-t-on réellement besoin, et qu'est-ce que les chiffres disponibles permettent
+  d'affirmer&nbsp;?</b></p>
+  <p class="retenir">Un système technique n'existe pas parce qu'une technologie est disponible. Il
+  existe pour un besoin — et il change la société autant que la société le change.</p>
+  <p class="meta">⚠️ Les données de cette séquence sont <b>publiques et sourcées</b> — ministère de
+  l'Intérieur, JRC/EFFIS de la Commission européenne, ADEME, Programme des Nations unies pour
+  l'environnement. Ce sont de vrais chiffres, avec de vraies limites&nbsp;: c'est justement ce qu'on
+  va apprendre à lire.</p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p style="font-size:1.05em;color:var(--warn)">Comment s'appuyer sur des données fiables pour
+  définir le besoin et les contraintes d'un système robotique de lutte contre les feux — sans
+  comparaisons trompeuses, et sans décision automatique injustifiée&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Ton hypothèse de départ</h2>
+  <div class="assoc">
+    <label for="hyp1">Un robot ou un drone qui aide les secours&nbsp;: à ton avis, qu'est-ce que cela changerait pour les gens — et qu'est-ce que les règles collectives l'obligeraient à changer, lui&nbsp;?</label>
+    <textarea id="hyp1" aria-label="Ton hypothèse de départ : ce que le système changerait, et ce que les règles lui imposeraient"></textarea>
+  </div>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b>&nbsp;: on retire l'obstacle de la rédaction,
+    pas l'exigence.</p>
+    <ul><li>«&nbsp;Pour les secours, cela changerait ____.&nbsp;»</li>
+      <li>«&nbsp;Pour les habitants, cela changerait ____.&nbsp;»</li>
+      <li>«&nbsp;Mais une règle comme ____ obligerait à ____.&nbsp;»</li></ul></details>
+  <p class="meta">Au bilan, tu compteras combien tu en avais trouvées. La plupart des gens en
+  citent deux ou trois&nbsp;: il y en a <b>six</b>, et chacune peut tout gâcher.</p>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📚 Le référentiel de la séquence — en toutes lettres</h2>
+  <p class="meta"><b>Référence normative</b>&nbsp;: programme de technologie du cycle 4, BO n°9 du
+  29 février 2024.<br><b>Codification opérationnelle</b>&nbsp;: <code>3e_C1.1</code> à
+  <code>3e_C1.4</code> sont des codes de classement <b>internes à ce dépôt</b>. Ils ne figurent pas
+  comme tels au BO. Les formulations ci-dessous, elles, sont celles du référentiel.</p>
+  <table>
+    <tr><th>Code</th><th>Ce que l'élève doit savoir faire</th><th>Où</th></tr>
+    <tr><td><b>3e_C1.1</b></td><td>Identifier les innovations de rupture qui sont attachées à l’évolution d’un OST.</td><td>Séance 1</td></tr>
+    <tr><td><b>3e_C1.2</b></td><td>Mettre en relation une découverte scientifique avec ses développements technologiques et leurs effets sur la société.</td><td>Séance 1</td></tr>
+    <tr><td><b>3e_C1.3</b></td><td>Exprimer dans un argumentaire court l’incidence d’un OST sur la société.</td><td>Séance 5</td></tr>
+    <tr><td><b>3e_C1.4</b></td><td>Exprimer dans un argumentaire court l’incidence des contraintes sociétales sur les OST.</td><td>Séances 4 et 5</td></tr>
+  </table>
+</section>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress" id="progBar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progFill"></div></div>
+  <p id="progTxt">0 / 5 activités validées</p>
+</div>
+
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" data-panel="s1" id="tab-s1">Séance 1<br>Rupture<span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s2" id="tab-s2">Séance 2<br>Comparabilité<span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s3" id="tab-s3">Séance 3<br>Proxy<span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s4" id="tab-s4">Séance 4<br>Incommensurable<span class="done" id="done-s4"></span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" data-panel="s5" id="tab-s5">Séance 5<br>Argumenter<span class="done" id="done-s5"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+<main class="page" id="contenu">
+<section class="card">
+  <h2>🎫 Billet d'entrée — trois réflexes, sans note <span style="color:var(--sub);font-size:.8em">(~5 min)</span></h2>
+  <p class="meta">Ce billet n'est pas noté et ne compte pas dans ta progression. Il sert à savoir
+  où tu en es — et à toi seul·e.</p>
+  <div class="assoc"><label for="be_1">Une <b>innovation de rupture</b>, c'est un changement qui&nbsp;:</label>
+    <select id="be_1"><option value="">— choisir —</option>
+      <option>rend possible ce qui ne l'était pas du tout, et rend caduc un savoir-faire</option>
+      <option>fait mieux la même chose qu'avant</option>
+      <option>coûte moins cher que la version précédente</option>
+      <option>est le plus récent sur le marché</option></select></div>
+  <div class="assoc"><label for="be_2">Deux grandeurs ne peuvent être comparées directement que si&nbsp;:</label>
+    <select id="be_2"><option value="">— choisir —</option>
+      <option>elles ont la même unité, la même période et le même périmètre</option>
+      <option>elles viennent de la même source</option>
+      <option>elles sont du même ordre de grandeur</option>
+      <option>elles figurent dans le même tableau</option></select></div>
+  <div class="assoc"><label for="be_3">Un <b>argumentaire court</b> se reconnaît à ce qu'il&nbsp;:</label>
+    <select id="be_3"><option value="">— choisir —</option>
+      <option>appuie chaque affirmation sur un fait vérifiable, et nomme ce qu'il laisse de côté</option>
+      <option>donne un avis personnel sincère</option>
+      <option>énumère le plus d'arguments possible</option>
+      <option>conclut par une phrase forte</option></select></div>
+  <button type="button" data-check="0" class="btn check">🎫 Vérifier mon billet d'entrée</button>
+  <p id="fb0" class="feedback" role="status"></p>
+  <details class="aide" id="capsule"><summary>🎒 Je révise en 3 minutes</summary>
+    <p>Une <b>innovation de rupture</b> ne se reconnaît pas à sa date mais à son effet&nbsp;: elle
+    ouvre un usage impossible auparavant, et le métier d'avant ne suffit plus. Une simple
+    <b>amélioration</b>, elle, fait mieux la même chose.</p>
+    <p>Comparer deux nombres suppose <b>trois accords</b>&nbsp;: même <b>unité</b>, même
+    <b>période</b>, même <b>périmètre</b>. Il en manque un, et la comparaison ne veut plus rien
+    dire — même si le tableur, lui, accepte le calcul.</p>
+    <p>Un <b>argumentaire court</b> n'est pas un avis&nbsp;: c'est une chaîne de faits vérifiables,
+    et il gagne à dire lui-même ce qu'il ne prend pas en compte.</p>
+  </details>
+</section>
+
+<div id="seances-contenu">
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<section class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+  <section class="card">
+    <h2>🗼 Activité 1 — Ce qui a changé, et ce qui a rompu <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
+    <div class="meta"><b>Objectif</b> distinguer une amélioration d'une innovation de rupture, et
+    situer une découverte scientifique par rapport à ses usages ·
+    <b>Compétences</b> 3e_C1.1 · 3e_C1.2 ·
+    <b>Production</b> le tableau des trois régimes, et la distance découverte → usage ·
+    <b>Ressources</b> les deux corrigés graphiques de cette activité</div>
+
+    <p>Surveiller les feux de végétation ne s'est pas fait de la même façon selon les époques.
+    Trois régimes se sont succédé&nbsp;: la <b>vigie humaine</b> dans une tour de guet,
+    l'<b>observation satellitaire</b>, puis la <b>détection multi-indices</b> par des capteurs qui
+    se confirment entre eux.</p>
+
+    <h4>a) Améliorer, ou rompre</h4>
+    <div class="assoc"><label for="a1_1">Une tour de guet plus haute, avec de meilleures jumelles, est&nbsp;:</label>
+      <select id="a1_1"><option value="">— choisir —</option>
+        <option>une amélioration : on fait mieux la même chose, avec le même savoir-faire</option>
+        <option>une innovation de rupture</option>
+        <option>un changement sans effet</option>
+        <option>une régression</option></select></div>
+    <div class="assoc"><label for="a1_2">Le passage à l'observation satellitaire est une <b>rupture</b> parce qu'elle&nbsp;:</label>
+      <select id="a1_2"><option value="">— choisir —</option>
+        <option>rend possible ce qui ne l'était pas : voir la nuit, et sur un continent entier</option>
+        <option>coûte moins cher qu'une tour de guet</option>
+        <option>est plus récente</option>
+        <option>emploie de l'électronique</option></select></div>
+    <div class="assoc"><label for="a1_3">Le signe le plus sûr d'une rupture, c'est&nbsp;:</label>
+      <select id="a1_3"><option value="">— choisir —</option>
+        <option>le métier change : le savoir-faire d'avant ne suffit plus</option>
+        <option>le prix baisse</option>
+        <option>l'objet devient plus petit</option>
+        <option>les journaux en parlent</option></select></div>
+    <div class="assoc"><label for="a1_4">Une rupture fait-elle disparaître ce qui la précède&nbsp;?</label>
+      <select id="a1_4"><option value="">— choisir —</option>
+        <option>pas toujours : des tours de guet fonctionnent encore, l'œil humain lève un doute qu'aucun capteur ne lève</option>
+        <option>oui, toujours et immédiatement</option>
+        <option>oui, après quelques années</option>
+        <option>non, jamais</option></select></div>
+
+    <h4>b) De la découverte à l'usage</h4>
+    <p>Le drone qui repère un point chaud sous la fumée doit tout à un rayonnement invisible.
+    En <b>1800</b>, l'astronome <b>William Herschel</b> décompose la lumière du Soleil avec un
+    prisme et place un thermomètre sous chaque couleur, pour savoir laquelle chauffe le plus. Le
+    thermomètre placé <b>juste au-delà du rouge</b>, là où l'œil ne voit plus rien, monte davantage
+    que tous les autres.</p>
+    <div class="assoc"><label for="a1_5">Ce que Herschel cherchait, c'était&nbsp;:</label>
+      <select id="a1_5"><option value="">— choisir —</option>
+        <option>quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge</option>
+        <option>un moyen de détecter les incendies</option>
+        <option>à fabriquer une caméra</option>
+        <option>à mesurer la température du Soleil</option></select></div>
+    <div class="assoc"><label for="a1_6">Ce que montre le délai de plus de deux siècles&nbsp;:</label>
+      <select id="a1_6"><option value="">— choisir —</option>
+        <option>une découverte devient une technique quand une capacité de fabrication ET un besoin la rencontrent</option>
+        <option>que les scientifiques d'autrefois travaillaient lentement</option>
+        <option>que la découverte était inutile</option>
+        <option>que l'usage aurait pu venir tout de suite</option></select></div>
+
+    <h4>c) Ta production</h4>
+    <div class="assoc">
+      <label for="a1_rupture">En <b>quatre lignes</b>&nbsp;: nomme les <b>trois régimes</b> dans
+      l'ordre, dis pour chacun <b>ce qu'il rend possible</b> et <b>le métier qu'il suppose</b>,
+      puis termine par une ligne qui dit <b>où est la rupture</b> et pourquoi ce n'est pas une
+      simple amélioration.</label>
+      <textarea id="a1_rupture" style="min-height:150px" aria-label="Les trois régimes, ce que chacun rend possible, le métier supposé, et où est la rupture"></textarea>
+    </div>
+    <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <ul>
+        <li>«&nbsp;1. La vigie humaine permet ____. Le métier est celui de ____.&nbsp;»</li>
+        <li>«&nbsp;2. Le satellite permet ____, ce qui était impossible avant. Le métier devient ____.&nbsp;»</li>
+        <li>«&nbsp;3. Le multi-indices permet ____. Le métier devient ____.&nbsp;»</li>
+        <li>«&nbsp;4. La rupture est ____, parce qu'elle n'est pas ____ en mieux&nbsp;: elle ____.&nbsp;»</li>
+      </ul></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+      <p>Pour chaque régime, pose-toi deux questions&nbsp;: <i>qu'est-ce qu'on peut faire qu'on ne
+      pouvait pas&nbsp;?</i> et <i>qui sait le faire&nbsp;?</i> Si la deuxième réponse change, tu
+      tiens une rupture.</p></details>
+    <details class="aide aide2"><summary>🪄 Aide de niveau 2</summary>
+      <p>Un guetteur sait <b>regarder longtemps</b>. Un analyste sait <b>lire une donnée</b>. Un
+      concepteur sait <b>faire tenir un système</b>. Trois savoir-faire sans rapport&nbsp;: c'est
+      le signe que quelque chose a rompu, deux fois.</p></details>
+
+    <button type="button" data-check="1" class="btn check">✅ Vérifier l'activité 1</button>
+    <p id="fb1" class="feedback" role="status"></p>
+
+    <details class="correction"><summary>✅ Correction — les trois régimes, et les deux ruptures</summary>
+      <figure class="fig">
+        <img src="Images/corrige_trois_regimes_de_surveillance.svg" alt="Les trois régimes de surveillance des feux — vigie humaine, satellite, détection multi-indices — avec pour chacun ce qu'il permet, ce qu'il ne permet pas et le métier qu'il suppose, et l'explication de ce qui distingue une rupture d'une amélioration.">
+        <figcaption>Trois régimes, deux ruptures — et un savoir-faire qui change à chaque fois.</figcaption>
+      </figure>
+      <figure class="fig">
+        <img src="Images/corrige_de_la_decouverte_a_l_usage.svg" alt="Frise en quatre temps de la découverte de l'infrarouge par Herschel en 1800 jusqu'au drone thermique d'aujourd'hui, en passant par la fabrication de détecteurs au XXe siècle et leur diffusion dans des objets ordinaires.">
+        <figcaption>Deux siècles entre l'observation de Herschel et le drone qui l'utilise.</figcaption>
+      </figure>
+      <p class="retenir">Une <b>amélioration</b> fait mieux la même chose. Une <b>rupture</b> rend
+      possible ce qui ne l'était pas — et rend caduc un savoir-faire. Observer la nuit n'est pas un
+      regard humain amélioré.</p>
+      <p class="piege">Le piège&nbsp;: croire qu'une rupture supprime ce qui la précède. Des tours
+      de guet fonctionnent encore, parce qu'un œil humain lève un doute qu'aucun capteur ne lève.</p>
+    </details>
+  </section>
+</section>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2">
+  <section class="card">
+    <h2>📊 Activité 2 — Ce que les données permettent d'affirmer <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+    <div class="meta"><b>Objectif</b> construire une matrice de comparabilité avant tout calcul ·
+    <b>Production</b> le fichier transformé, et quatre décisions justifiées ·
+    <b>Ressources</b> <a href="donnees_impacts_feux_activites_conflit_3e.csv" download>📊 le jeu de données</a> (public et sourcé)</div>
+
+    <p>Ouvre le fichier dans un tableur. Il rassemble des indicateurs de <b>trois catégories</b>&nbsp;:
+    des feux, des activités humaines, et un conflit. Avant de calculer quoi que ce soit, il faut
+    savoir <b>ce qui est comparable à quoi</b>.</p>
+
+    <details class="aide"><summary>📊 Mode opératoire — <b>LibreOffice Calc</b></summary>
+      <ul>
+        <li><b>Ouvrir</b>&nbsp;: clic droit sur le fichier → Ouvrir avec LibreOffice Calc → séparateur <b>point-virgule</b>.</li>
+        <li><b>Insérer une colonne</b>&nbsp;: clic droit sur l'en-tête d'une colonne → Insérer des colonnes avant.</li>
+        <li><b>Filtrer</b>&nbsp;: Données → AutoFiltre, puis choisir dans la liste de l'en-tête.</li>
+      </ul></details>
+    <details class="aide"><summary>📊 Mode opératoire — <b>Excel</b></summary>
+      <ul>
+        <li><b>Ouvrir</b>&nbsp;: Données → À partir d'un fichier texte/CSV → séparateur <b>point-virgule</b>.</li>
+        <li><b>Insérer une colonne</b>&nbsp;: clic droit sur l'en-tête → Insertion.</li>
+        <li><b>Filtrer</b>&nbsp;: Données → Filtrer, puis choisir dans la liste de l'en-tête.</li>
+      </ul>
+      <p class="meta">Les gestes sont les mêmes&nbsp;; seuls les menus changent.</p></details>
+
+    <h4>a) Les trois accords</h4>
+    <div class="assoc"><label for="a2_1">Une surface en hectares et une émission en MtCO₂&nbsp;:</label>
+      <select id="a2_1"><option value="">— choisir —</option>
+        <option>ne sont pas comparables directement : ni la même unité, ni la même grandeur</option>
+        <option>sont comparables, elles concernent les mêmes feux</option>
+        <option>sont comparables après arrondi</option>
+        <option>sont comparables si elles ont la même date</option></select></div>
+    <div class="assoc"><label for="a2_2">Un facteur en kgCO₂e/km peut servir à calculer une équivalence&nbsp;:</label>
+      <select id="a2_2"><option value="">— choisir —</option>
+        <option>seulement après avoir converti une quantité totale en kgCO₂e</option>
+        <option>directement, en le comparant à une surface</option>
+        <option>jamais</option>
+        <option>seulement pour les trajets réellement effectués</option></select></div>
+    <div class="assoc"><label for="a2_3">La colonne <code>comparable_directement_en_CO2e</code> sert à&nbsp;:</label>
+      <select id="a2_3"><option value="">— choisir —</option>
+        <option>décider ligne par ligne ce qu'on a le droit de calculer, avant de calculer</option>
+        <option>trier les lignes par importance</option>
+        <option>signaler les erreurs du fichier</option>
+        <option>indiquer la source</option></select></div>
+    <div class="assoc"><label for="a2_4">Une donnée du PNUE sur les débris et un facteur de l'ADEME sur un repas&nbsp;:</label>
+      <select id="a2_4"><option value="">— choisir —</option>
+        <option>décrivent des dimensions différentes : les convertir l'une dans l'autre serait injustifié</option>
+        <option>se comparent, ce sont deux impacts environnementaux</option>
+        <option>se comparent si l'on trouve un coefficient</option>
+        <option>ne figurent pas dans le même fichier</option></select></div>
+    <div class="assoc"><label for="a2_5">Écrire «&nbsp;à vérifier&nbsp;» dans la matrice, c'est&nbsp;:</label>
+      <select id="a2_5"><option value="">— choisir —</option>
+        <option>une réponse honnête, qui vaut mieux qu'un oui ou un non inventé</option>
+        <option>un aveu d'échec</option>
+        <option>interdit dans un tableau</option>
+        <option>la même chose que « non »</option></select></div>
+
+    <h4>b) Ta matrice</h4>
+    <div class="assoc">
+      <label for="a2_matrice">Choisis <b>quatre lignes</b> du fichier, de catégories différentes.
+      Pour chacune, écris une ligne&nbsp;: l'indicateur, puis <b>oui</b>, <b>non</b> ou
+      <b>à vérifier</b> pour la comparabilité directe en CO₂e, puis <b>pourquoi</b> — en citant
+      celui des trois accords qui manque&nbsp;: unité, période ou périmètre.</label>
+      <textarea id="a2_matrice" style="min-height:150px" aria-label="Quatre lignes de la matrice de comparabilité, avec la justification de chacune"></textarea>
+    </div>
+    <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <ul>
+        <li>«&nbsp;____ (indicateur)&nbsp;: ____ (oui / non / à vérifier), parce qu'il manque ____.&nbsp;»</li>
+        <li>«&nbsp;____&nbsp;: ____, parce que l'unité est ____ et non des kgCO₂e.&nbsp;»</li>
+        <li>«&nbsp;____&nbsp;: ____, parce que la période est ____ et non ____.&nbsp;»</li>
+        <li>«&nbsp;____&nbsp;: ____, parce que le périmètre est ____ et non ____.&nbsp;»</li>
+      </ul></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+      <p>Regarde d'abord la colonne <code>unite</code>. Si deux lignes n'ont pas la même, la
+      réponse est déjà «&nbsp;non&nbsp;» — sauf si une conversion existe.</p></details>
+
+    <button type="button" data-check="2" class="btn check">✅ Vérifier l'activité 2</button>
+    <p id="fb2" class="feedback" role="status"></p>
+
+    <details class="correction"><summary>✅ Correction — la matrice attendue</summary>
+      <p>Une <b>surface en hectares</b> n'est pas comparable directement à une <b>émission en
+      MtCO₂</b>, ni à une <b>masse de débris</b>, ni à un <b>pourcentage de végétation perdue</b>&nbsp;:
+      l'unité diffère à chaque fois, et la grandeur mesurée aussi.</p>
+      <p>Les <b>facteurs en kgCO₂e</b> — par kilomètre, par passager-kilomètre, par repas — servent
+      à calculer des équivalences, mais <b>uniquement</b> après conversion d'une quantité totale en
+      kgCO₂e. Ce sont des taux, pas des quantités.</p>
+      <p>Les indicateurs du <b>conflit</b> décrivent d'autres dimensions environnementales&nbsp;:
+      débris, bâtiments, cultures, eau. Les convertir arbitrairement en CO₂e serait
+      <b>scientifiquement injustifié</b> — on verra pourquoi en séance 4.</p>
+      <p class="retenir">Trois accords sont nécessaires&nbsp;: même <b>unité</b>, même
+      <b>période</b>, même <b>périmètre</b>. Il en manque un, la comparaison tombe.</p>
+      <p class="piege">Le piège&nbsp;: le tableur accepte n'importe quelle opération. Il ne sait pas
+      ce que les nombres veulent dire&nbsp;; c'est à toi de le savoir avant de cliquer.</p>
+    </details>
+  </section>
+</section>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3">
+  <section class="card">
+    <h2>🧮 Activité 3 — Un proxy, et sa critique <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+    <div class="meta"><b>Objectif</b> construire une estimation, puis en annoncer les limites ·
+    <b>Production</b> le ratio, l'estimation, les équivalences et l'avertissement méthodologique</div>
+
+    <p>Le <b>JRC/EFFIS</b> — le service de la Commission européenne qui cartographie les feux —
+    indique qu'en <b>2023</b>, environ <b>504 002 ha</b> ont brûlé dans l'Union européenne, et que
+    ces feux ont produit une estimation d'environ <b>20 Mt de CO₂</b>. Le ministère de l'Intérieur
+    annonçait, au <b>24 juillet 2026</b>, plus de <b>50 000 ha</b> brûlés en France depuis le début
+    de l'année.</p>
+
+    <div class="assoc"><label for="a3_1">Le ratio 20 000 000 ÷ 504 002 ≈ 39,68 tCO₂/ha est&nbsp;:</label>
+      <select id="a3_1"><option value="">— choisir —</option>
+        <option>un proxy : une valeur empruntée à un autre territoire et une autre année, faute de mieux</option>
+        <option>une mesure faite en France en 2026</option>
+        <option>une valeur officielle applicable partout</option>
+        <option>une constante physique</option></select></div>
+    <div class="assoc"><label for="a3_2">Appliqué à 50 000 ha, il donne&nbsp;:</label>
+      <select id="a3_2"><option value="">— choisir —</option>
+        <option>environ 1,98 million de tonnes de CO₂</option>
+        <option>environ 39,68 millions de tonnes</option>
+        <option>environ 504 002 tonnes</option>
+        <option>environ 20 millions de tonnes</option></select></div>
+    <div class="assoc"><label for="a3_3">Ce que ce ratio moyen écrase&nbsp;:</label>
+      <select id="a3_3"><option value="">— choisir —</option>
+        <option>le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée</option>
+        <option>rien : le calcul est complet</option>
+        <option>seulement la date</option>
+        <option>seulement le nombre de feux</option></select></div>
+    <div class="assoc"><label for="a3_4">Écrire «&nbsp;les feux français ont émis 1,98 MtCO₂ en 2026&nbsp;» serait&nbsp;:</label>
+      <select id="a3_4"><option value="">— choisir —</option>
+        <option>malhonnête : la phrase affirme là où le calcul estime, avec un ratio venu d'ailleurs</option>
+        <option>acceptable, puisque le calcul est juste</option>
+        <option>acceptable si l'on cite la source du ratio</option>
+        <option>sans importance, c'est un exercice</option></select></div>
+    <div class="assoc"><label for="a3_5">Comparer 0,142 kgCO₂e/km (voiture) et 0,00293 kgCO₂e/<b>passager</b>-km (TGV)&nbsp;:</label>
+      <select id="a3_5"><option value="">— choisir —</option>
+        <option>est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent</option>
+        <option>est correct, ce sont deux transports</option>
+        <option>est correct après arrondi</option>
+        <option>est impossible à calculer</option></select></div>
+
+    <h4>Ta production</h4>
+    <div class="assoc">
+      <label for="a3_proxy">Écris&nbsp;: <b>le ratio</b> avec son calcul, <b>l'estimation</b>
+      obtenue pour 50 000 ha, <b>une équivalence</b> de ton choix, et enfin
+      <b>l'avertissement méthodologique</b> qui doit accompagner ce chiffre partout où il ira.</label>
+      <textarea id="a3_proxy" style="min-height:150px" aria-label="Le ratio, l'estimation, une équivalence et l'avertissement méthodologique"></textarea>
+    </div>
+    <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <ul>
+        <li>«&nbsp;Ratio&nbsp;: ____ ÷ ____ ≈ ____ tCO₂/ha.&nbsp;»</li>
+        <li>«&nbsp;Estimation&nbsp;: 50 000 × ____ ≈ ____ tCO₂, soit environ ____ Mt.&nbsp;»</li>
+        <li>«&nbsp;Équivalence&nbsp;: cela correspond à environ ____ ____.&nbsp;»</li>
+        <li>«&nbsp;Avertissement&nbsp;: estimation par ____ européen ____, non officielle pour ____.&nbsp;»</li>
+      </ul></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+      <p>Pour l'équivalence, divise l'estimation en <b>kg</b>CO₂e par le facteur choisi. Attention
+      aux unités&nbsp;: 1,98 Mt = 1 984 000 000 kg.</p></details>
+
+    <button type="button" data-check="3" class="btn check">✅ Vérifier l'activité 3</button>
+    <p id="fb3" class="feedback" role="status"></p>
+
+    <details class="correction"><summary>✅ Correction — le proxy, et ce qu'il faut en dire</summary>
+      <p><b>Ratio</b>&nbsp;: 20 000 000 ÷ 504 002 ≈ <b>39,68 tCO₂/ha</b>.
+      <b>Estimation</b>&nbsp;: 50 000 × 39,68 ≈ <b>1,984 MtCO₂</b>.</p>
+      <p><b>Équivalences</b> — environ 14,0 milliards de km en voiture thermique&nbsp;;
+      677 milliards de passager-km en TGV&nbsp;; 11,9 milliards de passager-km en avion
+      moyen-long courrier&nbsp;; 399 millions de repas avec du bœuf.</p>
+      <p><b>Avertissement</b>&nbsp;: «&nbsp;estimation par proxy européen 2023, non officielle pour
+      la France 2026&nbsp;». Le ratio moyen masque la végétation, l'humidité, l'intensité du feu, la
+      biomasse consumée, les émissions autres que le CO₂ et la récupération future des écosystèmes.</p>
+      <p class="retenir">Un proxy est <b>légitime</b>. Un proxy <b>tu</b> ne l'est plus&nbsp;: un
+      chiffre voyage toujours seul, détaché de la page qui l'expliquait.</p>
+      <p class="piege">Le piège&nbsp;: retirer l'avertissement au moment de faire un beau graphique.
+      C'est exactement là qu'il devient indispensable.</p>
+    </details>
+  </section>
+</section>
+
+<!-- ══════════════════ SÉANCE 4 ══════════════════ -->
+<section class="seance-panel" id="s4" role="tabpanel" aria-labelledby="tab-s4">
+  <section class="card">
+    <h2>⚖️ Activité 4 — Ce qui ne se convertit pas <span style="color:var(--sub);font-size:.8em">(~45 min)</span></h2>
+    <div class="meta"><b>Objectif</b> reconnaître des grandeurs incommensurables, et refuser une
+    conversion abusive · <b>Compétence</b> 3e_C1.4 ·
+    <b>Production</b> le calcul du taux, le ratio critiqué, et ce qu'aucun chiffre ne dit</div>
+
+    <div class="piege" style="border-left-width:4px;padding:10px 14px;margin:14px 0">
+      <p style="margin:0"><b>Avant de commencer — phrase obligatoire, à lire et à garder présente
+      pendant toute l'activité&nbsp;:</b></p>
+      <p style="margin:8px 0 0;font-size:1.02em"><b>«&nbsp;Nous comparons des indicateurs et des
+      méthodes de mesure&nbsp;; nous ne comparons ni la valeur des vies, ni la gravité des
+      souffrances, ni la légitimité des victimes.&nbsp;»</b></p>
+    </div>
+
+    <p>Le <b>Programme des Nations unies pour l'environnement</b> (PNUE) a publié des évaluations
+    environnementales sur Gaza. Elles décrivent notamment l'augmentation des <b>débris</b>, les
+    dommages aux <b>bâtiments</b>, les pertes de <b>végétation</b>, et des risques pour l'<b>eau</b>,
+    les <b>sols</b> et la <b>santé</b>. Ces lignes figurent dans ton fichier, catégorie
+    <code>conflit</code>.</p>
+
+    <div class="assoc"><label for="a4_1">Les débris passent de 39 à 61 millions de tonnes. L'augmentation est de&nbsp;:</label>
+      <select id="a4_1"><option value="">— choisir —</option>
+        <option>22 millions de tonnes, soit environ 56,4 %</option>
+        <option>22 millions de tonnes, soit environ 36 %</option>
+        <option>61 millions de tonnes</option>
+        <option>impossible à calculer</option></select></div>
+    <div class="assoc"><label for="a4_2">78 % d'une base estimée à 250 000 bâtiments représentent&nbsp;:</label>
+      <select id="a4_2"><option value="">— choisir —</option>
+        <option>environ 195 000 bâtiments</option>
+        <option>environ 78 000 bâtiments</option>
+        <option>environ 320 000 bâtiments</option>
+        <option>250 000 bâtiments</option></select></div>
+    <div class="assoc"><label for="a4_3">Le ratio de 313 tonnes de débris par bâtiment touché est&nbsp;:</label>
+      <select id="a4_3"><option value="">— choisir —</option>
+        <option>calculable et fragile : les bâtiments n'ont ni la même taille ni le même niveau de dommage</option>
+        <option>une mesure précise</option>
+        <option>impossible à obtenir</option>
+        <option>valable pour n'importe quelle ville</option></select></div>
+    <div class="assoc"><label for="a4_4">Ce que ce ratio ne dit pas&nbsp;:</label>
+      <select id="a4_4"><option value="">— choisir —</option>
+        <option>la toxicité, l'amiante, les munitions non explosées, la contamination de l'eau</option>
+        <option>le nombre de bâtiments</option>
+        <option>la masse totale des débris</option>
+        <option>la date de l'évaluation</option></select></div>
+    <div class="assoc"><label for="a4_5">Remplacer débris, cultures perdues et eau contaminée par un seul chiffre carbone serait&nbsp;:</label>
+      <select id="a4_5"><option value="">— choisir —</option>
+        <option>injustifié : ces grandeurs n'ont ni la même unité ni la même nature, aucune formule ne les ramène l'une à l'autre</option>
+        <option>pratique et acceptable</option>
+        <option>possible avec un coefficient de conversion</option>
+        <option>obligatoire pour comparer</option></select></div>
+
+    <h4>Ta production</h4>
+    <div class="assoc">
+      <label for="a4_incommensurable">Écris <b>trois raisons</b> pour lesquelles la moyenne
+      «&nbsp;313 tonnes par bâtiment&nbsp;» est fragile, puis <b>une phrase</b> qui explique
+      pourquoi les pertes de cultures, les débris et la pollution de l'eau ne peuvent pas être
+      remplacés par un seul chiffre.</label>
+      <textarea id="a4_incommensurable" style="min-height:150px" aria-label="Trois raisons de la fragilité de la moyenne, et pourquoi un seul chiffre ne suffit pas"></textarea>
+    </div>
+    <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary>
+      <ul>
+        <li>«&nbsp;Raison 1&nbsp;: les bâtiments n'ont pas tous ____.&nbsp;»</li>
+        <li>«&nbsp;Raison 2&nbsp;: les niveaux de ____ ne sont pas identiques.&nbsp;»</li>
+        <li>«&nbsp;Raison 3&nbsp;: les estimations reposent en partie sur ____.&nbsp;»</li>
+        <li>«&nbsp;Un seul chiffre ne suffit pas parce que ____ et ____ ne se mesurent pas dans la
+        même ____&nbsp;: aucune formule ne les ramène l'une à l'autre.&nbsp;»</li>
+      </ul></details>
+
+    <button type="button" data-check="4" class="btn check">✅ Vérifier l'activité 4</button>
+    <p id="fb4" class="feedback" role="status"></p>
+
+    <details class="correction"><summary>✅ Correction — trois zones, et une frontière</summary>
+      <figure class="fig">
+        <img src="Images/corrige_ce_qui_ne_se_convertit_pas.svg" alt="Trois zones : ce qui se convertit grâce à une unité commune, ce qui ne se convertit pas faute d'unité et de nature communes, et ce qui ne se compare jamais — la valeur des vies, la gravité des souffrances, la légitimité des victimes.">
+        <figcaption>Ce qui se convertit, ce qui ne se convertit pas, et ce qui ne se compare jamais.</figcaption>
+      </figure>
+      <p><b>Les calculs.</b> 61 − 39 = 22 millions de tonnes, soit 22 ÷ 39 ≈ <b>56,4 %</b>
+      d'augmentation. 78 % de 250 000 ≈ <b>195 000 bâtiments</b>. 61 000 000 ÷ 195 000 ≈
+      <b>313 tonnes</b> par bâtiment touché.</p>
+      <p><b>Pourquoi cette moyenne est fragile</b>&nbsp;: les bâtiments ont des tailles différentes&nbsp;;
+      les niveaux de dommage ne sont pas identiques&nbsp;; la masse des infrastructures non
+      résidentielles est incluse de manière variable&nbsp;; et les estimations reposent en partie
+      sur la télédétection. Surtout, elle ne décrit ni la toxicité, ni l'amiante, ni les munitions
+      non explosées, ni la contamination de l'eau.</p>
+      <p class="retenir">Certaines grandeurs <b>ne se convertissent pas</b> les unes dans les
+      autres. Des débris, des cultures détruites et une eau contaminée ne se remplacent par aucun
+      chiffre unique — ni carbone, ni autre.</p>
+      <p class="piege">Et la frontière qu'on ne franchit pas&nbsp;: <b>«&nbsp;Nous comparons des
+      indicateurs et des méthodes de mesure&nbsp;; nous ne comparons ni la valeur des vies, ni la
+      gravité des souffrances, ni la légitimité des victimes.&nbsp;»</b></p>
+    </details>
+  </section>
+</section>
+
+<!-- ══════════════════ SÉANCE 5 ══════════════════ -->
+<section class="seance-panel" id="s5" role="tabpanel" aria-labelledby="tab-s5">
+  <section class="card">
+    <h2>✍️ Activité 5 — Deux argumentaires courts <span style="color:var(--sub);font-size:.8em">(~50 min)</span></h2>
+    <div class="meta"><b>Objectif</b> exprimer dans un argumentaire court l'incidence d'un OST sur
+    la société, et celle des contraintes sociétales sur l'OST ·
+    <b>Compétences</b> 3e_C1.3 · 3e_C1.4 ·
+    <b>Production</b> deux argumentaires de 6 à 8 lignes, appuyés sur les séances précédentes</div>
+
+    <p>Quatre familles de solutions sont envisagées pour aider les secours. Chacune a un usage, des
+    limites, des données nécessaires et une forme de contrôle humain.</p>
+    <table>
+      <tr><th>Solution</th><th>Usage possible</th><th>Limites</th><th>Contrôle humain</th></tr>
+      <tr><td><b>Drone thermique</b></td><td>repérer un point chaud, cartographier</td><td>vent, fumée, autonomie, espace aérien</td><td>validation de l'alerte et du vol</td></tr>
+      <tr><td><b>Robot terrestre</b></td><td>explorer une zone dangereuse, mesurer</td><td>relief, obstacles, chaleur, communication</td><td>arrêt d'urgence et reprise manuelle</td></tr>
+      <tr><td><b>Réseau fixe de capteurs</b></td><td>surveiller en continu</td><td>maintenance, portée, fausses alertes</td><td>confirmation avant alerte majeure</td></tr>
+      <tr><td><b>Satellite</b></td><td>observer de vastes surfaces</td><td>résolution, revisite, nuages</td><td>interprétation par des spécialistes</td></tr>
+    </table>
+
+    <div class="assoc"><label for="a5_1">Un argumentaire court est solide quand&nbsp;:</label>
+      <select id="a5_1"><option value="">— choisir —</option>
+        <option>chaque affirmation s'appuie sur un fait vérifiable, et qu'il dit ce qu'il laisse de côté</option>
+        <option>il contient beaucoup d'arguments</option>
+        <option>il est écrit dans un vocabulaire technique</option>
+        <option>il se termine par une phrase forte</option></select></div>
+    <div class="assoc"><label for="a5_2">«&nbsp;Le drone réduit l'exposition des pompiers&nbsp;» est une incidence&nbsp;:</label>
+      <select id="a5_2"><option value="">— choisir —</option>
+        <option>de l'objet technique SUR la société : c'est l'objet qui change quelque chose pour des gens</option>
+        <option>de la société sur l'objet technique</option>
+        <option>sans rapport avec le sujet</option>
+        <option>purement technique</option></select></div>
+    <div class="assoc"><label for="a5_3">«&nbsp;La réglementation de l'espace aérien limite le vol des drones&nbsp;» est une incidence&nbsp;:</label>
+      <select id="a5_3"><option value="">— choisir —</option>
+        <option>de la société SUR l'objet technique : une règle collective contraint sa conception et son usage</option>
+        <option>de l'objet technique sur la société</option>
+        <option>d'ordre uniquement technique</option>
+        <option>négligeable</option></select></div>
+    <div class="assoc"><label for="a5_4">Un système qui déciderait seul d'envoyer les secours&nbsp;:</label>
+      <select id="a5_4"><option value="">— choisir —</option>
+        <option>poserait un problème de responsabilité : engager des moyens et des vies reste une décision humaine</option>
+        <option>serait plus rapide, donc préférable</option>
+        <option>serait impossible techniquement</option>
+        <option>ne changerait rien</option></select></div>
+
+    <h4>a) L'incidence de l'objet sur la société <span class="meta">(3e_C1.3)</span></h4>
+    <div class="assoc">
+      <label for="a5_arg_ost">Choisis <b>deux</b> des quatre solutions. En <b>6 à 8 lignes</b>,
+      explique ce que leur mise en service <b>change pour les gens</b> — les secours, les habitants,
+      les métiers. Appuie au moins <b>deux</b> affirmations sur un fait ou un chiffre des séances
+      précédentes, et termine par <b>ce que ton argumentaire ne prend pas en compte</b>.</label>
+      <textarea id="a5_arg_ost" style="min-height:170px" aria-label="Argumentaire sur l'incidence de l'objet technique sur la société"></textarea>
+    </div>
+    <details class="etayage"><summary>🪜 Version étayée — la structure est donnée</summary>
+      <ul>
+        <li>«&nbsp;Je retiens ____ et ____.&nbsp;»</li>
+        <li>«&nbsp;Pour les secours, cela change ____, parce que ____ (fait ou chiffre).&nbsp;»</li>
+        <li>«&nbsp;Pour les habitants, cela change ____.&nbsp;»</li>
+        <li>«&nbsp;Un métier apparaît ou se transforme&nbsp;: ____.&nbsp;»</li>
+        <li>«&nbsp;En revanche, cela crée aussi ____ (un inconvénient réel).&nbsp;»</li>
+        <li>«&nbsp;Mon argumentaire ne prend pas en compte ____.&nbsp;»</li>
+      </ul></details>
+
+    <h4>b) L'incidence de la société sur l'objet <span class="meta">(3e_C1.4)</span></h4>
+    <div class="assoc">
+      <label for="a5_arg_societe">En <b>6 à 8 lignes</b>, explique maintenant l'inverse&nbsp;:
+      quelles <b>contraintes sociétales</b> — une règle, une norme, un budget public, une exigence
+      de protection des données, une attente des habitants — <b>obligent à concevoir autrement</b>
+      la solution que tu as retenue. Donne au moins <b>trois</b> contraintes de natures différentes,
+      et dis pour chacune <b>ce qu'elle change concrètement</b> dans l'objet.</label>
+      <textarea id="a5_arg_societe" style="min-height:170px" aria-label="Argumentaire sur l'incidence des contraintes sociétales sur l'objet technique"></textarea>
+    </div>
+    <details class="etayage"><summary>🪜 Version étayée — la structure est donnée</summary>
+      <ul>
+        <li>«&nbsp;Contrainte 1 — <b>règle ou norme</b>&nbsp;: ____. Elle oblige à ____.&nbsp;»</li>
+        <li>«&nbsp;Contrainte 2 — <b>budget ou moyens publics</b>&nbsp;: ____. Elle oblige à ____.&nbsp;»</li>
+        <li>«&nbsp;Contrainte 3 — <b>protection des données ou vie privée</b>&nbsp;: ____. Elle oblige à ____.&nbsp;»</li>
+        <li>«&nbsp;Ces contraintes ne sont pas des obstacles&nbsp;: elles ____.&nbsp;»</li>
+      </ul></details>
+    <details class="aide aide1"><summary>💡 Aide de niveau 1</summary>
+      <p>Une caméra tournée vers la forêt filme aussi les chemins. Qui a le droit de regarder ces
+      images, et pendant combien de temps&nbsp;? Voilà une contrainte sociétale qui change la
+      conception&nbsp;: résolution, durée de conservation, floutage.</p></details>
+    <details class="aide aide2"><summary>🪄 Aide de niveau 2</summary>
+      <p>Trois natures différentes, pour t'aider&nbsp;: une <b>règle</b> (espace aérien, protection
+      des données), un <b>moyen</b> (budget d'une commune, personnel disponible pour l'entretien),
+      une <b>attente</b> (les habitants veulent être prévenus, pas surveillés).</p></details>
+
+    <button type="button" data-check="5" class="btn check">✅ Vérifier l'activité 5</button>
+    <p id="fb5" class="feedback" role="status"></p>
+
+    <details class="correction"><summary>✅ Correction — deux sens, deux argumentaires</summary>
+      <p><b>L'objet sur la société (C1.3).</b> Un drone thermique et un réseau de capteurs réduisent
+      l'exposition des pompiers, puisqu'une zone dangereuse est reconnue avant qu'on y entre. Ils
+      réduisent aussi le délai entre le départ de feu et l'alerte — et l'on a vu en séance 3 l'ordre
+      de grandeur de ce qui brûle&nbsp;: 50 000 ha en sept mois. </p>
+      <p>En contrepartie, ils créent des
+      fausses alertes à trier, un réseau à entretenir, et des images qui n'auraient pas existé
+      autrement. </p>
+      <p>Un métier se transforme&nbsp;: le guetteur devient exploitant de système. </p>
+      <p>Ce qui
+      n'est pas pris en compte&nbsp;: le coût réel, la formation nécessaire, et ce qui se passe
+      quand le réseau tombe.</p>
+      <p><b>La société sur l'objet (C1.4).</b> La <b>réglementation de l'espace aérien</b> limite
+      où et quand un drone peut voler&nbsp;: elle impose une autorisation et donc un délai, ce qui
+      oblige à prévoir un mode dégradé. </p>
+      <p>La <b>protection des données</b> oblige à décider de la
+      résolution des images, de leur durée de conservation et de qui peut les consulter&nbsp;: on
+      conçoit alors un système qui détecte une chaleur sans identifier des personnes. </p>
+      <p>Le
+      <b>budget d'une commune</b> impose une solution entretenable par les moyens locaux&nbsp;: cela
+      élimine des matériels performants mais inréparables sur place. Ces contraintes ne sont pas
+      des obstacles&nbsp;: elles font partie du cahier des charges, au même titre que la portée ou
+      l'autonomie.</p>
+      <p class="retenir">Les deux sens comptent. Un objet change la société&nbsp;; la société
+      change l'objet. Un argumentaire de 3e nomme les deux, et dit ce qu'il laisse de côté.</p>
+      <p class="piege">Le piège&nbsp;: écrire un argumentaire qui n'énumère que des bénéfices. Il
+      ne prouve rien, parce qu'on pourrait l'écrire pour n'importe quelle solution.</p>
+    </details>
+  </section>
+</section>
+
+</div>
+
+<section class="card">
+  <h2>🏁 Bilan <span style="color:var(--sub);font-size:.8em">(~10 min)</span></h2>
+  <div id="rappelHyp" style="display:none">
+    <p class="meta">Ton hypothèse de départ&nbsp;:</p>
+    <p id="hypRappelTxt" style="font-style:italic"></p>
+  </div>
+  <div class="assoc">
+    <label for="hyp_retour">Reviens sur ton hypothèse&nbsp;: qu'est-ce qui s'est confirmé, et
+    qu'est-ce que tu ne pensais pas&nbsp;?</label>
+    <textarea id="hyp_retour" style="min-height:80px" aria-label="Retour sur l'hypothèse de départ"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="bilan1">En une phrase&nbsp;: qu'est-ce qui distingue une <b>rupture</b> d'une
+    amélioration&nbsp;?</label>
+    <textarea id="bilan1" style="min-height:60px" aria-label="Ce qui distingue une rupture d'une amélioration"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="bilan2">En une phrase&nbsp;: pourquoi certaines grandeurs ne se remplacent-elles
+    par <b>aucun</b> chiffre unique&nbsp;?</label>
+    <textarea id="bilan2" style="min-height:60px" aria-label="Pourquoi certaines grandeurs ne se convertissent pas"></textarea>
+  </div>
+
+  <h3>🧠 Comment j'ai travaillé</h3>
+  <div class="assoc">
+    <label for="meta1">Quel moment t'a demandé le plus d'effort, et comment t'en es-tu sorti·e&nbsp;?</label>
+    <textarea id="meta1" style="min-height:60px" aria-label="Le moment le plus difficile, et comment tu t'en es sorti"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="meta2">Quelle aide as-tu ouverte, et qu'est-ce qu'elle t'a apporté&nbsp;?</label>
+    <textarea id="meta2" style="min-height:60px" aria-label="L'aide ouverte et son apport"></textarea>
+  </div>
+  <div class="assoc">
+    <label for="meta3">Que ferais-tu autrement si tu recommençais l'activité 5&nbsp;?</label>
+    <textarea id="meta3" style="min-height:60px" aria-label="Ce que tu ferais autrement"></textarea>
+  </div>
+
+  <h3>📍 Je me positionne</h3>
+  <div class="assoc"><label for="pos1"><b>3e_C1.1 · C1.2</b> — repérer une innovation de rupture, et situer une découverte&nbsp;:</label>
+    <select id="pos1"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je confonds encore « plus récent » et « rupture »</option>
+      <option>🟠 Maîtrise fragile — je repère une rupture quand on me la montre</option>
+      <option>🟢 Maîtrise satisfaisante — je justifie une rupture par ce qu'elle rend possible et par le métier qui change</option>
+      <option>⭐ Très bonne maîtrise — je sais aussi dire ce qu'une rupture ne supprime pas</option></select></div>
+  <div class="assoc"><label for="pos2"><b>Traiter des données</b> — comparabilité, proxy, incommensurabilité&nbsp;:</label>
+    <select id="pos2"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je calcule sans regarder les unités</option>
+      <option>🟠 Maîtrise fragile — je vérifie les unités, mais j'oublie période et périmètre</option>
+      <option>🟢 Maîtrise satisfaisante — je vérifie les trois accords et j'annonce les limites d'un proxy</option>
+      <option>⭐ Très bonne maîtrise — je sais dire ce qu'aucun chiffre ne pourra dire</option></select></div>
+  <div class="assoc"><label for="pos3"><b>3e_C1.3 · C1.4</b> — les deux argumentaires&nbsp;:</label>
+    <select id="pos3"><option value="">— je me positionne —</option>
+      <option>🔴 Maîtrise insuffisante — je donne mon avis sans l'appuyer</option>
+      <option>🟠 Maîtrise fragile — j'appuie mes affirmations, mais je ne vois qu'un seul sens</option>
+      <option>🟢 Maîtrise satisfaisante — je traite les deux sens, faits à l'appui</option>
+      <option>⭐ Très bonne maîtrise — je dis aussi ce que mon argumentaire laisse de côté</option></select></div>
+</section>
+
+<section class="card">
+  <h2>🧠 Prêt·e à t'entraîner&nbsp;?</h2>
+  <p>Le QCM de la séquence compte <b>30 questions</b>, dont <b>11 illustrées</b> — les trois corrigés du dossier y reviennent, chacun sous plusieurs angles, et chaque réponse
+  fausse y est expliquée. Elles se répartissent sur les <b>quatre codes</b>&nbsp;:</p>
+  <ul>
+    <li><b>3e_C1.1</b> — les innovations de rupture (8 questions)</li>
+    <li><b>3e_C1.2</b> — de la découverte scientifique à ses effets (7 questions)</li>
+    <li><b>3e_C1.3</b> — l'incidence d'un OST sur la société (8 questions)</li>
+    <li><b>3e_C1.4</b> — l'incidence des contraintes sociétales sur les OST (7 questions)</li>
+  </ul>
+  <p id="qcmPortee" role="status"></p>
+  <p style="text-align:center"><a id="lienQcm" class="btn" href="qcm_3e_C1.1-C1.4_tsinghua.html">🤖 Lancer le QCM</a></p>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus <span style="color:var(--sub);font-size:.8em">(facultatif — hors parcours obligatoire)</span></h2>
+  <ol>
+    <li><b>Adapter à la Martinique.</b> Relief marqué, réseau inégal, saison cyclonique&nbsp;:
+    laquelle des quatre solutions tiendrait le mieux, et qu'est-ce qu'il faudrait changer&nbsp;?</li>
+    <li><b>Le scénario sans robot.</b> Propose une situation où la meilleure réponse n'est
+    <i>pas</i> un système technique — et dis pourquoi.</li>
+    <li><b>Seuil unique contre indices croisés.</b> Compare une alerte déclenchée par un seul seuil
+    de température à une alerte confirmée par plusieurs indices, du point de vue des fausses
+    alertes ET des feux manqués.</li>
+  </ol>
+  <details class="correction"><summary>✅ Correction du Bonus — à ouvrir après avoir cherché</summary>
+    <p><b>1. La Martinique.</b> Le relief casse les liaisons radio et masque des versants entiers
+    aux satellites à faible angle&nbsp;; la saison cyclonique interdit de compter sur un réseau
+    fixe fragile. Un <b>réseau de capteurs au sol</b>, dense mais simple, complété par des
+    <b>drones ponctuels</b>, tient mieux qu'une solution unique. Ce qu'il faut changer&nbsp;: des
+    fixations qui résistent au vent, une autonomie qui survit à une coupure de plusieurs jours, et
+    un mode de repli qui stocke localement quand la liaison tombe.</p>
+    <p><b>2. Sans robot.</b> Le débroussaillement réglementaire autour des habitations, l'accès des
+    engins de secours, et l'information des promeneurs les jours à risque évitent des départs de
+    feu — là où un capteur ne fait que les constater. <b>Détecter n'est pas prévenir&nbsp;:</b>
+    contre les départs liés à une imprudence, aucune technologie de détection n'agit sur la cause.</p>
+    <p><b>3. Seuil contre indices.</b> Un seuil unique produit beaucoup de <b>fausses alertes</b>
+    (le soleil sur du bitume dépasse le seuil) et, si on le relève pour les réduire, il produit des
+    <b>feux manqués</b>. On ne fait que déplacer l'erreur le long d'un curseur. Croiser deux indices
+    indépendants — chaleur ET particules — déplace le problème ailleurs&nbsp;: la rencontre fortuite
+    des deux est rare, donc les deux erreurs baissent ensemble. Le prix à payer&nbsp;: deux capteurs
+    à entretenir au lieu d'un, et une logique de confirmation à écrire.</p>
+  </details>
+</section>
+<script>
+"use strict";
+const KEY="seq_3e_C1_tsinghua";
+const $=id=>document.getElementById(id);
+const val=id=>{const e=$(id);return e?e.value:"";};
+window.__valid = window.__valid || {};
+window.__exp = window.__exp || {};
+
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  const o={inputs:{}, valid:window.__valid, exp:window.__exp};
+  document.querySelectorAll("select,textarea").forEach(e=>{ if(e.id) o.inputs[e.id]=e.value; });
+  return o;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(err){} }
+function restore(){
+  let o=null; try{ o=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(err){}
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e) e.value=v; });
+  window.__valid=o.valid||{}; window.__exp=o.exp||{};
+}
+document.addEventListener("change", ev=>{ if(/SELECT|TEXTAREA/.test(ev.target.tagName)) save(); });
+document.addEventListener("input", ev=>{ if(ev.target.tagName==="TEXTAREA") save(); });
+
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); }
+});
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    majTaches();
+    window.scrollTo({top:$("seances").offsetTop-8,
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Outils de lecture des productions écrites ══════ */
+/* Règle n°49 : on teste ce qui est RENDU. Ces fonctions lisent la production de
+   l'élève, pas la consigne — et chaque garde est écrite pour ne pas se laisser
+   abuser par un chiffre pris dans un autre (voir l'incident des « 0 % » du 3e_C2). */
+const bas = t => t.toLowerCase()
+  .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[’']/g,"'");
+const lignes = t => t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>2).length;
+/* un nombre isolé : ni précédé ni suivi d'un autre chiffre. La virgule et le point
+   décimal sont acceptés indifféremment — l'élève tape ce que son tableur affiche. */
+const nombre = (t, ent, dec) =>
+  new RegExp("(?:^|[^0-9,.])"+ent+"[.,]"+dec+"(?![0-9])").test(t);
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  0: function(){
+    const att={be_1:"rend possible ce qui ne l'était pas du tout, et rend caduc un savoir-faire",
+               be_2:"elles ont la même unité, la même période et le même périmètre",
+               be_3:"appuie chaque affirmation sur un fait vérifiable, et nomme ce qu'il laisse de côté"};
+    let ok=0, vides=0;
+    Object.entries(att).forEach(([id,v])=>{const r=val(id); if(!r) vides++; else if(r===v) ok++;});
+    let extra;
+    if(vides) extra=" Réponds d'abord aux "+vides+" question(s) restante(s) — aucune note n'est prise.";
+    else if(ok===3) extra=" 🤖 Tes trois réflexes sont là : file à l'activité 1.";
+    else extra=" Rien de grave, et aucune note n'est prise : ouvre la capsule de révision, puis refais le billet.";
+    return {score:ok,total:3,extra:extra,valide:!vides};
+  },
+
+  /* Activité 1 — rupture et découverte (C1.1 · C1.2) */
+  1: function(){
+    const att={a1_1:"une amélioration : on fait mieux la même chose, avec le même savoir-faire",
+               a1_2:"rend possible ce qui ne l'était pas : voir la nuit, et sur un continent entier",
+               a1_3:"le métier change : le savoir-faire d'avant ne suffit plus",
+               a1_4:"pas toujours : des tours de guet fonctionnent encore, l'œil humain lève un doute qu'aucun capteur ne lève",
+               a1_5:"quelle couleur du spectre chauffe le plus — il ne cherchait pas l'infrarouge",
+               a1_6:"une découverte devient une technique quand une capacité de fabrication ET un besoin la rencontrent"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a1_rupture"), b = bas(t);
+    /* les trois régimes doivent être nommés, dans l'ordre ou non */
+    const regimes = [/vigie|guet|tour|humain/, /satellit/, /multi|capteur|indice/]
+                      .filter(r=>r.test(b)).length;
+    /* et pour chacun, un métier — c'est le critère de la rupture */
+    const metiers = [/guetteur|observateur|vigie/, /analyste|lecture|lire/, /concepteur|exploitant|systeme/]
+                      .filter(r=>r.test(b)).length;
+    /* la dernière ligne doit distinguer rupture et amélioration */
+    const distingue = /rupture/.test(b) && /(?:pas|non|n'est pas)\s+(?:une\s+)?(?:simple\s+)?amelioration|rend possible|impossible avant|ne pouvait pas/.test(b);
+    const complet = lignes(t) >= 4 && regimes === 3 && metiers >= 2 && distingue && t.trim().length >= 200;
+    let manque = "";
+    if(regimes < 3)
+      manque = " Il faut nommer LES TROIS régimes : la vigie humaine, le satellite, la détection multi-indices.";
+    else if(metiers < 2)
+      manque = " Pour chaque régime, dis QUEL MÉTIER il suppose. C'est le changement de métier qui signale une rupture, pas la date.";
+    else if(!distingue)
+      manque = " Ta dernière ligne doit dire OÙ est la rupture ET pourquoi ce n'est pas une simple amélioration : qu'est-ce qui devient possible et ne l'était pas du tout ?";
+    else if(!complet)
+      manque = " Écris une ligne par régime, un peu plus développée, puis la ligne de conclusion.";
+    return {score:ok,total:6,valide: ok>=5 && complet, extra: manque};
+  },
+
+  /* Activité 2 — matrice de comparabilité */
+  2: function(){
+    const att={a2_1:"ne sont pas comparables directement : ni la même unité, ni la même grandeur",
+               a2_2:"seulement après avoir converti une quantité totale en kgCO₂e",
+               a2_3:"décider ligne par ligne ce qu'on a le droit de calculer, avant de calculer",
+               a2_4:"décrivent des dimensions différentes : les convertir l'une dans l'autre serait injustifié",
+               a2_5:"une réponse honnête, qui vaut mieux qu'un oui ou un non inventé"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a2_matrice"), b = bas(t);
+    /* quatre lignes, chacune avec un verdict */
+    const verdicts = (b.match(/\boui\b|\bnon\b|a verifier|à verifier/g)||[]).length;
+    /* et une justification qui cite l'un des trois accords */
+    const accords = [/unite/, /periode/, /perimetre/].filter(r=>r.test(b)).length;
+    const complet = lignes(t) >= 4 && verdicts >= 4 && accords >= 2 && t.trim().length >= 200;
+    let manque = "";
+    if(lignes(t) < 4 || verdicts < 4)
+      manque = " Il faut QUATRE lignes, une par indicateur, chacune avec son verdict : oui, non, ou à vérifier.";
+    else if(accords < 2)
+      manque = " Chaque justification doit nommer l'accord qui manque : l'UNITÉ, la PÉRIODE ou le PÉRIMÈTRE. Dire « ce n'est pas comparable » sans dire pourquoi n'apprend rien.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 3 — le proxy et sa critique */
+  3: function(){
+    const att={a3_1:"un proxy : une valeur empruntée à un autre territoire et une autre année, faute de mieux",
+               a3_2:"environ 1,98 million de tonnes de CO₂",
+               a3_3:"le type de végétation, l'humidité, la sévérité du feu et la biomasse réellement consumée",
+               a3_4:"malhonnête : la phrase affirme là où le calcul estime, avec un ratio venu d'ailleurs",
+               a3_5:"est un piège : l'un compte un véhicule, l'autre une personne — les périmètres diffèrent"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a3_proxy"), b = bas(t);
+    const ratio = nombre(b, "39", "68") || /39\s*,?\s*7|504\s?002/.test(b);
+    const estim = nombre(b, "1", "98") || /1\s?98[0-9]\s?000|1984000|1,984/.test(b);
+    const equiv = /km|passager|repas|voiture|tgv|avion/.test(b);
+    /* le point qui fait tout : l'avertissement */
+    const avert = /proxy|estimation|non officiel|pas une mesure|limite/.test(b) &&
+                  /2023|europ|autre (?:annee|territoire)/.test(b);
+    const complet = ratio && estim && equiv && avert && t.trim().length >= 180;
+    let manque = "";
+    if(!complet){
+      manque = " Il faut LES QUATRE : le ratio avec son calcul, l'estimation pour 50 000 ha, une équivalence, et l'avertissement méthodologique.";
+      if(ratio && estim && equiv && !avert)
+        manque = " Il manque le plus important : l'AVERTISSEMENT. Ce chiffre voyagera seul, détaché de ta page. Écris d'où vient le ratio — proxy européen 2023 — et qu'il n'est pas officiel pour la France 2026.";
+    }
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 4 — ce qui ne se convertit pas (C1.4) */
+  4: function(){
+    const att={a4_1:"22 millions de tonnes, soit environ 56,4 %",
+               a4_2:"environ 195 000 bâtiments",
+               a4_3:"calculable et fragile : les bâtiments n'ont ni la même taille ni le même niveau de dommage",
+               a4_4:"la toxicité, l'amiante, les munitions non explosées, la contamination de l'eau",
+               a4_5:"injustifié : ces grandeurs n'ont ni la même unité ni la même nature, aucune formule ne les ramène l'une à l'autre"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+    const t = val("a4_incommensurable"), b = bas(t);
+    /* trois raisons distinctes de fragilité */
+    const raisons = [/taille|surface|grand|petit/, /dommage|degat|degre|niveau/,
+                     /non residentiel|infrastructure|inclus/, /teledetection|satellite|estimation/]
+                      .filter(r=>r.test(b)).length;
+    /* et la phrase d'incommensurabilité */
+    const incomm = /(?:pas|aucune) (?:la )?meme (?:unite|nature)|aucune formule|ne se convertit|ne se ramene|incommensur/.test(b);
+    const complet = lignes(t) >= 3 && raisons >= 3 && incomm && t.trim().length >= 200;
+    let manque = "";
+    if(raisons < 3)
+      manque = " Il faut TROIS raisons différentes pour lesquelles la moyenne est fragile : pense à la taille des bâtiments, au niveau de dommage, à ce qui est inclus ou non, et à la façon dont les estimations sont obtenues.";
+    else if(!incomm)
+      manque = " Il manque la phrase la plus importante : POURQUOI un seul chiffre ne peut pas remplacer des débris, des cultures et une eau contaminée. Dis ce qu'ils n'ont pas en commun.";
+    return {score:ok,total:5,valide: ok>=4 && complet, extra: manque};
+  },
+
+  /* Activité 5 — les deux argumentaires (C1.3 · C1.4) */
+  5: function(){
+    const att={a5_1:"chaque affirmation s'appuie sur un fait vérifiable, et qu'il dit ce qu'il laisse de côté",
+               a5_2:"de l'objet technique SUR la société : c'est l'objet qui change quelque chose pour des gens",
+               a5_3:"de la société SUR l'objet technique : une règle collective contraint sa conception et son usage",
+               a5_4:"poserait un problème de responsabilité : engager des moyens et des vies reste une décision humaine"};
+    let ok=0; Object.entries(att).forEach(([id,v])=>{ if(val(id)===v) ok++; });
+
+    /* a) l'objet sur la société */
+    const a = val("a5_arg_ost"), ba = bas(a);
+    const solutions = [/drone/, /robot/, /capteur|reseau/, /satellit/].filter(r=>r.test(ba)).length;
+    const chiffres = (ba.match(/\d/g)||[]).length >= 3;
+    const ecarte = /ne prend pas en compte|laisse de cote|je n'ai pas|ecarte|omis|limite de mon/.test(ba);
+    const aOk = solutions >= 2 && chiffres && ecarte && a.trim().length >= 320;
+
+    /* b) la société sur l'objet */
+    const c = val("a5_arg_societe"), bc = bas(c);
+    /* trois natures différentes : une règle, un moyen, une attente */
+    const regle   = /regle|norme|reglementation|loi|espace aerien|rgpd|donnees personnelles/.test(bc);
+    const moyen   = /budget|cout|commune|financ|entretien|personnel|moyens/.test(bc);
+    const attente = /habitant|attente|surveill|vie privee|confiance|accept/.test(bc);
+    const natures = [regle, moyen, attente].filter(Boolean).length;
+    /* et pour chacune, ce qu'elle change dans l'objet */
+    const oblige = (bc.match(/oblige|impose|contraint|il faut|conduit a|amene a/g)||[]).length >= 2;
+    const cOk = natures === 3 && oblige && c.trim().length >= 320;
+
+    let manque = "";
+    if(!aOk){
+      manque = " Ton premier argumentaire doit porter sur DEUX solutions, appuyer au moins deux affirmations sur un fait ou un chiffre des séances précédentes, et finir par ce qu'il ne prend PAS en compte.";
+      if(solutions >= 2 && chiffres && !ecarte)
+        manque = " Il ne manque qu'une chose au premier argumentaire, et c'est celle qui le rend honnête : dis ce que tu ne prends PAS en compte.";
+    } else if(!cOk){
+      manque = " Ton second argumentaire doit donner TROIS contraintes de natures différentes — une règle, un moyen, une attente — et dire pour chacune ce qu'elle oblige à changer dans l'objet.";
+      if(natures === 3 && !oblige)
+        manque = " Les trois natures y sont. Il manque, pour chacune, CE QU'ELLE CHANGE concrètement dans l'objet : une contrainte qu'on nomme sans dire son effet ne prouve rien.";
+    }
+    return {score:ok,total:4,valide: ok>=3 && aOk && cOk, extra: manque};
+  }
+};
+
+
+const ENC_OK=["Solide.","C'est net.","Très bien."];
+const ENC_MI=["Tu y es presque.","La moitié est là.","Bon début."];
+const ENC_KO=["Rien de grave.","On reprend calmement.","Ce n'est pas encore acquis."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check, r=CHECKS[n](), fb=$("fb"+n), ratio=r.score/r.total;
+    let msg = r.score + " / " + r.total + (n==="0" ? " réponses justes." : " points validés.");
+    // Le billet d'entrée n'est ni noté ni commenté comme une activité : il oriente (règle n°26).
+    if(n==="0"){ fb.className="feedback show" + (r.valide ? " ok" : ""); }
+    else if(r.valide){ fb.className="feedback show ok"; msg += " " + ENC_OK[r.score%3] + " Ouvre la correction : elle contient le corrigé complet, à comparer au tien."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENC_MI[r.score%3]; }
+    else { fb.className="feedback show err"; msg += " " + ENC_KO[r.score%3] + " Ouvre l'aide de niveau 2, puis reprends."; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v=window.__valid||{};
+  const n=[1,2,3,4,5].filter(k=>v[k]).length;
+  $("progTxt").textContent = n + " / 5 activités validées";
+  $("progFill").style.width = (n/5*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par={s1:[1], s2:[2], s3:[3], s4:[4], s5:[5]};
+  Object.entries(par).forEach(([s,acts])=>{ const d=$("done-"+s); if(d) d.textContent = acts.every(a=>v[a]) ? " ✔" : ""; });
+  majTaches(); majQcm();
+}
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  s1:{titre:"Séance 1 — Ce qui a changé, et ce qui a rompu", taches:[
+    {n:0, libelle:"Billet d'entrée : trois réflexes (sans note)"},
+    {n:1, libelle:"Nommer les trois régimes, leur métier, et où est la rupture"}]},
+  s2:{titre:"Séance 2 — Ce que les données permettent d'affirmer", taches:[
+    {n:2, libelle:"Quatre lignes de matrice, avec l'accord qui manque à chacune"}]},
+  s3:{titre:"Séance 3 — Un proxy, et sa critique", taches:[
+    {n:3, libelle:"Le ratio, l'estimation, une équivalence — et l'avertissement"}]},
+  s4:{titre:"Séance 4 — Ce qui ne se convertit pas", taches:[
+    {n:4, libelle:"Trois raisons de fragilité, et pourquoi un chiffre unique ne suffit pas"}]},
+  s5:{titre:"Séance 5 — Deux argumentaires courts", taches:[
+    {n:5, libelle:"L'objet sur la société, puis la société sur l'objet"}]}
+};
+
+
+function majTaches(){
+  const hote=$("tachesBandeau"); if(!hote) return;
+  const onglet=document.querySelector(".seance-tab.active");
+  const bloc=TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden=true; return; }
+  hote.hidden=false;
+  const v=window.__valid||{};
+  const faites=bloc.taches.filter(t=>v[t.n]).length;
+  hote.innerHTML="<span class='tb-titre'>"+bloc.titre+" — étape "+
+    Math.min(faites+1, bloc.taches.length)+" sur "+bloc.taches.length+"</span><ul>"+
+    bloc.taches.map(t=>"<li class='"+(v[t.n]?"faite":"")+"'>"+(v[t.n]?"☑":"☐")+" "+t.libelle+"</li>").join("")+"</ul>";
+}
+
+/* ══════ Règle d'or n°45 — l'entraînement s'ouvre sur ce qui a été fait ══════ */
+/* Un seul bouton QCM (règle n°4) ; c'est sa CIBLE qui devient contextuelle.
+   Cette séquence porte SIX codes : dès qu'une partie seulement est validée, le
+   bouton ouvre une révision ciblée sur les codes effectivement travaillés — le
+   QCM complet ne se propose qu'une fois les cinq activités faites. */
+const CODES_PAR_ACT = {1:"C1.1,C1.2", 2:"C1.1", 3:"C1.1", 4:"C1.4", 5:"C1.3,C1.4"};
+function majQcm(){
+  const lien=$("lienQcm"), portee=$("qcmPortee");
+  if(!lien || !portee) return;
+  const v=window.__valid||{};
+  const faites=[1,2,3,4,5].filter(k=>v[k]);
+  const fichier="qcm_3e_C1.1-C1.4_tsinghua.html";
+  if(faites.length===0){
+    lien.href=fichier+"#depart=court";
+    lien.textContent="🤖 Commencer par 10 questions";
+    portee.innerHTML="Tu n'as encore validé aucune activité&nbsp;: le bouton ouvre un "+
+      "<b>parcours court de 10 questions</b>, pour te tester sans être submergé·e. "+
+      "Les 30 restent accessibles d'un clic dans le QCM.";
+  } else if(faites.length < 5){
+    const codes=[...new Set(faites.flatMap(k=>CODES_PAR_ACT[k].split(",")))].sort();
+    lien.href=fichier+"#codes="+codes.join(",");
+    lien.textContent="🤖 Réviser ce que j'ai déjà travaillé ("+codes.length+" compétence(s))";
+    portee.innerHTML="Tu as validé <b>"+faites.length+" activité(s) sur 5</b>. Le bouton ouvre les "+
+      "questions qui portent sur <b>"+codes.join(", ")+"</b> — celles-là seulement&nbsp;: on ne "+
+      "s'entraîne pas sur ce qu'on n'a pas encore fait. Le parcours complet t'attend à la fin.";
+  } else {
+    lien.href=fichier;
+    lien.textContent="🤖 Lancer le QCM complet (30 questions)";
+    portee.innerHTML="Tu as terminé les cinq activités&nbsp;: <b>les quatre compétences ont été "+
+      "travaillées</b>, le parcours complet est maintenant à ta portée.";
+  }
+}
+
+
+/* ══════ Rappel d'hypothèse ══════ */
+function majHyp(){
+  const h=$("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b=$("btnEssentiel"); if(!b) return;
+  const on=document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+$("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══════ Init ══════ */
+restore();
+if(window.__exp["mode_essentiel"]) document.body.classList.add("essentiel");
+majEssentiel(); majProgress(); majHyp();
+</script>
+</body>
+</html>
