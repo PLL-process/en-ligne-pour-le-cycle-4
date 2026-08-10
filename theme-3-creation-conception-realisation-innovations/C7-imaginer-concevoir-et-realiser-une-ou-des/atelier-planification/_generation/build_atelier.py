@@ -75,6 +75,16 @@ STYLE_SUP = """
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
     background:var(--panel);border:1px dashed var(--border)}
   .rappel-spiralaire .filet{margin:.5em 0 0;font-size:.92em;opacity:.85}
+  /* Le bonus et ses corrigés (règle d'or n°86) : chaque défi porte sa réponse,
+     repliée. On cherche d'abord, on ouvre ensuite — mais on ouvre. */
+  .bonus .defi{margin:1em 0;padding:.8em 1em;border-radius:10px;
+    background:var(--panel2);border:1px solid var(--border)}
+  .bonus .defi h3{margin:.1em 0 .5em}
+  .corrige-bonus{margin-top:.7em;border-top:1px dashed var(--border);padding-top:.5em}
+  .corrige-bonus summary{cursor:pointer;font-weight:600;color:var(--accent)}
+  .corrige-bonus[open] summary{margin-bottom:.5em}
+  .corrige-bonus .pourquoi{margin-top:.6em;padding:.5em .7em;border-radius:8px;
+    background:var(--panel);font-size:.95em}
   .tablewrap{overflow-x:auto;margin:10px 0}
   .jalon{color:var(--warn);font-size:.85em;white-space:nowrap}
   figure{margin:14px 0;background:var(--panel2);border:1px solid var(--border);
@@ -825,7 +835,7 @@ GP_HTML = """
 # ══════════════════════════════════════════════════════════════════════════
 # 8. Bilan, auto-positionnement, blocs de la règle n°4, pied de page
 # ══════════════════════════════════════════════════════════════════════════
-BAS = """
+BAS_T = """
 </main>
 <div class="page">
 
@@ -851,36 +861,23 @@ BAS = """
 <section class="card">
   <h2>&#129504; Prêt&middot;e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de cet atelier comporte <b>30 questions</b>, dont <b>5 illustrées</b> par les captures
-  du logiciel. Il porte sur les trois parcours&nbsp;: les mots, le suivi, l'organisation, le chemin
-  le plus long, et le pas à pas du logiciel.</p>
+  du logiciel. Il balaie le vocabulaire, les trois façons de travailler un planning selon le
+  niveau, le chemin le plus long, et le pas à pas du logiciel&nbsp;: tu y trouveras donc quelques
+  questions qui vont un peu plus loin que ta page.</p>
   <p><a class="btn qcm" href="qcm_C7.1_planification_taches.html">&#129504; Ouvrir le QCM (30 questions)</a></p>
 </section>
 
-<section class="card">
-  <h2>&#127873; Bonus (facultatif — hors parcours obligatoire)</h2>
-  <ul>
-    <li>Reprends le planning du jardin connecté et <b>ajoute une tâche</b> à laquelle personne n'a
-    pensé&nbsp;: « demander l'autorisation d'installer dans la cour ». Où la places-tu, qu'attend-elle,
-    et le projet finit-il plus tard&nbsp;?</li>
-    <li>Un professeur est absent une semaine au milieu du projet. <b>Toutes</b> les tâches
-    reculent-elles d'autant&nbsp;? Explique avec le vocabulaire de l'atelier.</li>
-    <li>Cherche le <b>plan de construction d'un pont ou d'une tour</b>, à New York ou ailleurs, et
-    trouve une tâche qui a manifestement dû attendre une autre. Écris la contrainte comme on l'a
-    écrite ici.</li>
-  </ul>
-  <p class="saved-note">Ces défis n'ont pas de vérificateur&nbsp;: on en discute ensemble.</p>
-</section>
+%(bonus)s
 
 </div>
 <footer>Ressource originale du dépôt &middot; Thème 3 &middot; C7.1 &middot; images, licences et
 limites dans <code>SOURCES_MEDIAS.md</code> &middot; page utilisable hors ligne, aucune donnée
 envoyée.</footer>
-""" % {
-    "verbe": "Suivre, organiser ou élaborer",
-    "pos": opts(["je ne sais pas encore", "j'y arrive avec de l'aide",
-                 "j'y arrive seul&middot;e", "je peux l'expliquer à quelqu'un"],
-                vide="— me positionner —"),
-}
+"""   # gabarit : formaté par page(), pas au chargement
+
+POS = opts(["je ne sais pas encore", "j'y arrive avec de l'aide",
+            "j'y arrive seul&middot;e", "je peux l'expliquer à quelqu'un"],
+           vide="— me positionner —")
 
 # ══════════════════════════════════════════════════════════════════════════
 # 9. Les réponses attendues — construites ici, jamais retapées dans le script
@@ -1207,14 +1204,101 @@ RAPPEL = {
 """,
 }
 
+def bonus(niv, p):
+    """Trois défis, chacun avec SON corrigé replié (règle d'or n°86).
+
+    Aucun nombre n'est tapé ici : la durée du projet, le chemin le plus long et
+    les marges sont relus dans le corrigé calculé (règle n°71). Le bonus vise
+    l'élève qui travaille seul et qui ne lèvera pas la main — lui refuser la
+    réponse revient à punir la curiosité.
+    """
+    total = p["duree_totale"]
+    chemin = " → ".join(p["chemin"])
+    libres = sorted(k for k, m in p["marges"].items() if m > 0)
+    if not libres:
+        raise SystemExit("Aucune tâche à marge dans %s : le défi 2 n'aurait pas de sens." % niv)
+    t = libres[0]
+    marge_t, lib_t = p["marges"][t], p["libelle"][t]
+    marge_max = max(p["marges"].values())
+    lieu = {"5e": "le hall", "4e": "la cour", "3e": "la salle 214"}[niv]
+    dernier = p["chemin"][-1]
+
+    return """
+<section class="card bonus">
+  <h2>&#127873; Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p class="saved-note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
+  Chacun a sa correction, repliée&nbsp;: cherche d'abord, ouvre ensuite.</p>
+
+  <div class="defi">
+    <h3>Défi 1 — la tâche à laquelle personne n'a pensé</h3>
+    <p>Ajoute au projet une tâche oubliée&nbsp;: <b>« demander l'autorisation d'installer dans
+    %(lieu)s »</b>, une séance. Où la places-tu&nbsp;? Qu'attend-elle&nbsp;? Et le projet
+    finit-il plus tard&nbsp;?</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p>Elle <b>n'attend rien</b>&nbsp;: on peut la faire dès la première séance. En revanche
+      <b>%(dernier)s ne peut pas avoir lieu sans elle</b> — c'est une contrainte d'antériorité
+      vers la fin, pas vers le début.</p>
+      <p>Le projet <b>ne finit pas plus tard</b>. Elle dure 1 séance et dispose de tout
+      l'intervalle jusqu'à la fin&nbsp;: elle a énormément de marge, donc elle n'entre pas sur
+      le chemin le plus long, qui reste <b>%(chemin)s</b> et <b>%(total)s séances</b>.</p>
+      <p class="pourquoi">Ce qu'il fallait repérer&nbsp;: une tâche ajoutée n'allonge le projet
+      que si elle se place <b>sur</b> le chemin le plus long. Ajouter du travail et allonger le
+      projet sont deux choses différentes — c'est contre-intuitif, et c'est tout l'intérêt du
+      défi. L'erreur naturelle est de répondre « une tâche de plus, donc une séance de plus ».</p>
+    </details>
+  </div>
+
+  <div class="defi">
+    <h3>Défi 2 — le professeur est absent une semaine</h3>
+    <p>Une séance saute au milieu du projet. <b>Toutes</b> les tâches reculent-elles
+    d'autant&nbsp;? Explique avec le vocabulaire de l'atelier.</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p><b>Non.</b> Il faut regarder <b>où</b> tombe la semaine perdue.</p>
+      <p>Si elle touche une tâche du chemin le plus long (%(chemin)s), tout recule d'une séance
+      et le projet passe de %(total)s à %(total_plus)s séances&nbsp;: ces tâches n'ont
+      <b>aucune marge</b>.</p>
+      <p>Si elle ne touche qu'une tâche à marge — par exemple <b>%(t)s, %(lib_t)s</b>, qui a
+      <b>%(marge_t)s séance(s) de marge</b> — la tâche décale, mais <b>la date de fin ne
+      bouge pas</b>. La marge est faite pour ça&nbsp;: c'est du jeu, et le jeu s'use.</p>
+      <p class="pourquoi">Ce qu'il fallait repérer&nbsp;: la plus grande marge du projet est de
+      <b>%(marge_max)s séance(s)</b>. Un retard plus long que ça finit toujours par se voir sur
+      la date de fin, même hors du chemin le plus long.</p>
+    </details>
+  </div>
+
+  <div class="defi">
+    <h3>Défi 3 — une contrainte dans un vrai chantier</h3>
+    <p>Cherche le plan de construction d'un pont ou d'une tour, à New York ou ailleurs, et
+    trouve une tâche qui a <b>manifestement dû attendre</b> une autre. Écris la contrainte
+    comme on l'a écrite ici.</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p>Il n'y a pas une seule bonne réponse, mais il y a une <b>bonne forme</b>. Exemple sur
+      un pont&nbsp;: <i>« Couler le tablier »</i> attend <i>« Couler les piles »</i>. Écrit
+      comme dans l'atelier&nbsp;: <b>Couler le tablier — antériorité&nbsp;: Couler les piles —
+      relation fin-début</b>.</p>
+      <p>Sur une tour&nbsp;: <i>« Poser les façades vitrées »</i> attend <i>« Monter la
+      structure de l'étage »</i>. Et une tâche qui n'attend pas&nbsp;: <i>« Fabriquer les
+      vitrages en usine »</i> peut avancer <b>en même temps</b> que la structure monte.</p>
+      <p class="pourquoi">Ta réponse est juste si elle dit trois choses&nbsp;: quelle tâche
+      attend, laquelle elle attend, et <b>pourquoi physiquement</b> elle ne peut pas commencer
+      avant. Si tu ne trouves pas le « pourquoi physiquement », c'est peut-être qu'il n'y a pas
+      de vraie contrainte — juste une habitude d'organisation.</p>
+    </details>
+  </div>
+</section>
+""" % {"lieu": lieu, "chemin": chemin, "total": total, "total_plus": total + 1,
+       "dernier": dernier, "t": t, "lib_t": lib_t, "marge_t": marge_t,
+       "marge_max": marge_max}
+
+
 NIVEAUX = {
-    "5e": {"panel": "p5", "corps": P5_HTML, "verbe": "Suivre",
+    "5e": {"panel": "p5", "corps": P5_HTML, "verbe": "Suivre", "projet": P5,
            "groupes": ["0", "1", "2", "5"], "onglet": "5e<br>Suivre",
            "titre_ong": "Le parcours de 5e : suivre un planning qu'on te donne."},
-    "4e": {"panel": "p4", "corps": P4_HTML, "verbe": "Organiser",
+    "4e": {"panel": "p4", "corps": P4_HTML, "verbe": "Organiser", "projet": P4,
            "groupes": ["0", "1", "3", "5"], "onglet": "4e<br>Organiser",
            "titre_ong": "Le parcours de 4e : organiser des tâches qu'on te liste."},
-    "3e": {"panel": "p3", "corps": P3_HTML, "verbe": "Élaborer",
+    "3e": {"panel": "p3", "corps": P3_HTML, "verbe": "Élaborer", "projet": P3,
            "groupes": ["0", "1", "4", "5"], "onglet": "3e<br>Élaborer",
            "titre_ong": "Le parcours de 3e : élaborer le processus de bout en bout."},
 }
@@ -1273,7 +1357,8 @@ def page(niv):
                          "taches": json.dumps(taches, ensure_ascii=False),
                          "panneau": json.dumps(panneau, ensure_ascii=False)}
 
-    return tete + haut + PM + n["corps"] + GP_HTML + BAS + script
+    bas = BAS_T % {"verbe": n["verbe"], "pos": POS, "bonus": bonus(niv, n["projet"])}
+    return tete + haut + PM + n["corps"] + GP_HTML + bas + script
 
 
 for _niv in ("5e", "4e", "3e"):

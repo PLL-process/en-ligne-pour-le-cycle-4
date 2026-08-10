@@ -100,6 +100,16 @@
   .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
     background:var(--panel);border:1px dashed var(--border)}
   .rappel-spiralaire .filet{margin:.5em 0 0;font-size:.92em;opacity:.85}
+  /* Le bonus et ses corrigés (règle d'or n°86) : chaque défi porte sa réponse,
+     repliée. On cherche d'abord, on ouvre ensuite — mais on ouvre. */
+  .bonus .defi{margin:1em 0;padding:.8em 1em;border-radius:10px;
+    background:var(--panel2);border:1px solid var(--border)}
+  .bonus .defi h3{margin:.1em 0 .5em}
+  .corrige-bonus{margin-top:.7em;border-top:1px dashed var(--border);padding-top:.5em}
+  .corrige-bonus summary{cursor:pointer;font-weight:600;color:var(--accent)}
+  .corrige-bonus[open] summary{margin-bottom:.5em}
+  .corrige-bonus .pourquoi{margin-top:.6em;padding:.5em .7em;border-radius:8px;
+    background:var(--panel);font-size:.95em}
   .tablewrap{overflow-x:auto;margin:10px 0}
   .jalon{color:var(--warn);font-size:.85em;white-space:nowrap}
   figure{margin:14px 0;background:var(--panel2);border:1px solid var(--border);
@@ -574,7 +584,7 @@ perdu — un second clic ramène tout.</p>
   chemin parcouru.</p>
   <textarea id="hyp2" style="min-height:90px" aria-label="Ta réponse corrigée après l'atelier"></textarea>
   <h3>Où en es-tu&nbsp;?</h3>
-  <div class="q"><label for="pos_1"><b>C7.1</b> — Suivre, organiser ou élaborer un processus de réalisation d'un objet
+  <div class="q"><label for="pos_1"><b>C7.1</b> — Organiser un processus de réalisation d'un objet
   avec des tâches identifiées&nbsp;:</label><select id="pos_1"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
   <div class="q"><label for="pos_2">Je sais distinguer une <b>tâche</b> d'un jalon, et dire ce
   qu'est une <b>contrainte d'antériorité</b>&nbsp;:</label><select id="pos_2"><option value="">— me positionner —</option><option>je ne sais pas encore</option><option>j'y arrive avec de l'aide</option><option>j'y arrive seul&middot;e</option><option>je peux l'expliquer à quelqu'un</option></select></div>
@@ -585,25 +595,76 @@ perdu — un second clic ramène tout.</p>
 <section class="card">
   <h2>&#129504; Prêt&middot;e à t'entraîner&nbsp;?</h2>
   <p>Le QCM de cet atelier comporte <b>30 questions</b>, dont <b>5 illustrées</b> par les captures
-  du logiciel. Il porte sur les trois parcours&nbsp;: les mots, le suivi, l'organisation, le chemin
-  le plus long, et le pas à pas du logiciel.</p>
+  du logiciel. Il balaie le vocabulaire, les trois façons de travailler un planning selon le
+  niveau, le chemin le plus long, et le pas à pas du logiciel&nbsp;: tu y trouveras donc quelques
+  questions qui vont un peu plus loin que ta page.</p>
   <p><a class="btn qcm" href="qcm_C7.1_planification_taches.html">&#129504; Ouvrir le QCM (30 questions)</a></p>
 </section>
 
-<section class="card">
+
+<section class="card bonus">
   <h2>&#127873; Bonus (facultatif — hors parcours obligatoire)</h2>
-  <ul>
-    <li>Reprends le planning du jardin connecté et <b>ajoute une tâche</b> à laquelle personne n'a
-    pensé&nbsp;: « demander l'autorisation d'installer dans la cour ». Où la places-tu, qu'attend-elle,
-    et le projet finit-il plus tard&nbsp;?</li>
-    <li>Un professeur est absent une semaine au milieu du projet. <b>Toutes</b> les tâches
-    reculent-elles d'autant&nbsp;? Explique avec le vocabulaire de l'atelier.</li>
-    <li>Cherche le <b>plan de construction d'un pont ou d'une tour</b>, à New York ou ailleurs, et
-    trouve une tâche qui a manifestement dû attendre une autre. Écris la contrainte comme on l'a
-    écrite ici.</li>
-  </ul>
-  <p class="saved-note">Ces défis n'ont pas de vérificateur&nbsp;: on en discute ensemble.</p>
+  <p class="saved-note">Ces défis ne sont pas notés et ne comptent pas dans ta progression.
+  Chacun a sa correction, repliée&nbsp;: cherche d'abord, ouvre ensuite.</p>
+
+  <div class="defi">
+    <h3>Défi 1 — la tâche à laquelle personne n'a pensé</h3>
+    <p>Ajoute au projet une tâche oubliée&nbsp;: <b>« demander l'autorisation d'installer dans
+    la cour »</b>, une séance. Où la places-tu&nbsp;? Qu'attend-elle&nbsp;? Et le projet
+    finit-il plus tard&nbsp;?</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p>Elle <b>n'attend rien</b>&nbsp;: on peut la faire dès la première séance. En revanche
+      <b>I ne peut pas avoir lieu sans elle</b> — c'est une contrainte d'antériorité
+      vers la fin, pas vers le début.</p>
+      <p>Le projet <b>ne finit pas plus tard</b>. Elle dure 1 séance et dispose de tout
+      l'intervalle jusqu'à la fin&nbsp;: elle a énormément de marge, donc elle n'entre pas sur
+      le chemin le plus long, qui reste <b>A → B → E → F → G → H → I</b> et <b>9 séances</b>.</p>
+      <p class="pourquoi">Ce qu'il fallait repérer&nbsp;: une tâche ajoutée n'allonge le projet
+      que si elle se place <b>sur</b> le chemin le plus long. Ajouter du travail et allonger le
+      projet sont deux choses différentes — c'est contre-intuitif, et c'est tout l'intérêt du
+      défi. L'erreur naturelle est de répondre « une tâche de plus, donc une séance de plus ».</p>
+    </details>
+  </div>
+
+  <div class="defi">
+    <h3>Défi 2 — le professeur est absent une semaine</h3>
+    <p>Une séance saute au milieu du projet. <b>Toutes</b> les tâches reculent-elles
+    d'autant&nbsp;? Explique avec le vocabulaire de l'atelier.</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p><b>Non.</b> Il faut regarder <b>où</b> tombe la semaine perdue.</p>
+      <p>Si elle touche une tâche du chemin le plus long (A → B → E → F → G → H → I), tout recule d'une séance
+      et le projet passe de 9 à 10 séances&nbsp;: ces tâches n'ont
+      <b>aucune marge</b>.</p>
+      <p>Si elle ne touche qu'une tâche à marge — par exemple <b>C, Câbler le capteur d'humidité du sol</b>, qui a
+      <b>1 séance(s) de marge</b> — la tâche décale, mais <b>la date de fin ne
+      bouge pas</b>. La marge est faite pour ça&nbsp;: c'est du jeu, et le jeu s'use.</p>
+      <p class="pourquoi">Ce qu'il fallait repérer&nbsp;: la plus grande marge du projet est de
+      <b>3 séance(s)</b>. Un retard plus long que ça finit toujours par se voir sur
+      la date de fin, même hors du chemin le plus long.</p>
+    </details>
+  </div>
+
+  <div class="defi">
+    <h3>Défi 3 — une contrainte dans un vrai chantier</h3>
+    <p>Cherche le plan de construction d'un pont ou d'une tour, à New York ou ailleurs, et
+    trouve une tâche qui a <b>manifestement dû attendre</b> une autre. Écris la contrainte
+    comme on l'a écrite ici.</p>
+    <details class="corrige-bonus"><summary>Voir la correction</summary>
+      <p>Il n'y a pas une seule bonne réponse, mais il y a une <b>bonne forme</b>. Exemple sur
+      un pont&nbsp;: <i>« Couler le tablier »</i> attend <i>« Couler les piles »</i>. Écrit
+      comme dans l'atelier&nbsp;: <b>Couler le tablier — antériorité&nbsp;: Couler les piles —
+      relation fin-début</b>.</p>
+      <p>Sur une tour&nbsp;: <i>« Poser les façades vitrées »</i> attend <i>« Monter la
+      structure de l'étage »</i>. Et une tâche qui n'attend pas&nbsp;: <i>« Fabriquer les
+      vitrages en usine »</i> peut avancer <b>en même temps</b> que la structure monte.</p>
+      <p class="pourquoi">Ta réponse est juste si elle dit trois choses&nbsp;: quelle tâche
+      attend, laquelle elle attend, et <b>pourquoi physiquement</b> elle ne peut pas commencer
+      avant. Si tu ne trouves pas le « pourquoi physiquement », c'est peut-être qu'il n'y a pas
+      de vraie contrainte — juste une habitude d'organisation.</p>
+    </details>
+  </div>
 </section>
+
 
 </div>
 <footer>Ressource originale du dépôt &middot; Thème 3 &middot; C7.1 &middot; images, licences et
