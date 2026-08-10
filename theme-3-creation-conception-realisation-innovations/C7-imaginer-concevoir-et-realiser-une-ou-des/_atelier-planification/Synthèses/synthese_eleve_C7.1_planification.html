@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Le diagramme de planification des tâches (C7.1)</title>
+<style>body{font-family:system-ui,sans-serif;max-width:820px;margin:20px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}h1{color:#1d4e89;border-bottom:3px solid #61dafb;padding-bottom:8px}h2{color:#1d4e89;margin-top:26px}.box{background:#f0f7ff;border-left:5px solid #1d4e89;padding:12px 16px;margin:16px 0;border-radius:0 8px 8px 0}.warn{background:#fff6e5;border-left-color:#c88a00}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #b9cbe4;padding:6px 9px;text-align:left}th{background:#e4eefb}code{background:#eef3fa;padding:1px 4px;border-radius:4px}@media print{body{font-size:11pt}}</style></head>
+<body>
+<h1>Synthèse élève — Le diagramme de planification des tâches</h1>
+<p><strong>Code :</strong> C7.1, aux trois niveaux — <em>suivre</em> en 5e, <em>organiser</em> en 4e,
+<em>élaborer</em> en 3e, un processus de réalisation d'un objet avec des tâches identifiées.</p>
+
+<div class="box"><strong>Les trois mots du programme</strong><ul>
+<li><strong>Une tâche :</strong> une chose dont on peut dire, à un instant donné, si elle est
+terminée ou non. « Câbler le capteur » en est une ; « travailler sur le capteur » n'en est pas une.</li>
+<li><strong>Une durée :</strong> le nombre de séances qu'on <em>estime</em>. On ne la connaît pas
+d'avance : on l'écrit, et on la compare au réel à la fin.</li>
+<li><strong>Une contrainte entre tâches :</strong> « B ne peut commencer qu'après A ». C'est la
+seule contrainte demandée, et c'est la plus utile.</li>
+</ul></div>
+
+<div class="box"><strong>Deux notions qui se déduisent des trois premières</strong><ul>
+<li><strong>Le jalon :</strong> un point de contrôle sans durée. « Le jardin s'arrose seul » n'est
+pas un travail, c'est un état atteint. On l'écrit avec une durée de 0, et le logiciel le dessine
+en losange.</li>
+<li><strong>La marge :</strong> le retard qu'une tâche peut prendre sans décaler la fin du projet.
+Une tâche de marge nulle transmet tout son retard au projet entier.</li>
+</ul></div>
+
+<h2>La méthode, en cinq gestes</h2>
+<ol>
+<li>Découper le projet en tâches qu'on peut déclarer finies.</li>
+<li>Estimer la durée de chacune, en séances.</li>
+<li>Écrire, pour chaque tâche, ce qu'elle doit attendre.</li>
+<li>Faire descendre les dates : chaque tâche commence après la <strong>plus tardive</strong> de
+celles qu'elle attend.</li>
+<li>Chercher la suite enchaînée la plus longue : c'est elle qui fixe la date de fin.</li>
+</ol>
+
+<div class="box warn"><strong>Le résultat qui surprend tout le monde</strong>
+<p>La durée d'un projet <strong>n'est pas</strong> la somme des durées de ses tâches. Dans le jardin
+connecté, la somme vaut 13 séances et le projet en dure
+9 : l'écart, c'est tout ce qui avance en même temps.</p>
+<p>Et accélérer une tâche <strong>qui n'est pas sur le chemin le plus long</strong> ne fait gagner
+<strong>aucune</strong> séance. C'est pour cela qu'on planifie : pour savoir où il faut se dépêcher,
+et où c'est inutile.</p></div>
+
+<h2>Les trois projets de l'atelier</h2>
+<table>
+<tr><th>Projet</th><th>Niveau</th><th>Durée</th><th>Chemin le plus long</th><th>Tâches à marge</th></tr>
+<tr><td>Indicateur de rangement du hall</td><td>5e</td><td>7 séances</td>
+    <td>A → B → C → E → F → G</td><td>D (+1)</td></tr>
+<tr><td>Jardin connecté de Brooklyn</td><td>4e</td><td>9 séances</td>
+    <td>A → B → E → F → G → H → I</td><td>C (+1), D (+3)</td></tr>
+<tr><td>Capteur de confort</td><td>3e</td><td>12 séances</td>
+    <td>A → B → C → D → E → H → I → J → K</td><td>F (+4), G (+5)</td></tr>
+</table>
+
+<h2>Les mots du métier</h2>
+<p>Le programme dit « <strong>diagramme de planification des tâches</strong> ». Les entreprises et
+les logiciels disent « <strong>diagramme de Gantt</strong> », et appellent la chaîne qui décide de
+la date de fin le « <strong>chemin critique</strong> ». <em>Critique</em> ne veut dire ni difficile
+ni important : cela veut dire <strong>sans marge</strong>.</p>
+
+<div class="box"><strong>Je dois savoir</strong><ul>
+<li>Distinguer une tâche d'une intention, et une tâche d'un jalon.</li>
+<li>Dire ce qu'est une contrainte d'antériorité, et une marge.</li>
+<li>Expliquer pourquoi la durée d'un projet n'est pas la somme des durées.</li>
+</ul></div>
+<div class="box"><strong>Je dois savoir faire</strong><ul>
+<li>Découper mon projet en tâches, et estimer leurs durées.</li>
+<li>Calculer les dates au plus tôt de proche en proche, sans logiciel.</li>
+<li>Trouver le chemin le plus long et nommer une tâche où se précipiter ne sert à rien.</li>
+<li>Dans le logiciel : saisir une tâche, régler une durée, cocher <code>Jalon</code>, déclarer un
+prédécesseur en relation <code>Fin-Début</code>, afficher le chemin critique.</li>
+</ul></div>
+<p><em>Ressource associée : l'atelier
+<code>atelier_C7.1_planification_taches.html</code> et son QCM de 30 questions.</em></p>
+</body></html>

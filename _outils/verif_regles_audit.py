@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-"""Vérificateur des règles d'or n°23 à n°34 (nées de l'audit externe du 08/08/2026).
+"""Vérificateur des règles d'or mécanisables du dépôt.
+
+PÉRIMÈTRE DE CE CONTRÔLE (règle n°47 — un contrôle déclare ce qu'il regarde).
+
+Mécanisé, donc établi : n°23, n°26, n°29, n°30, n°31, n°33, n°34, n°42, n°47,
+n°51, n°53, n°54 et n°67 — la liste exacte est imprimée en fin d'exécution.
+
+NON mécanisable, donc NON couvert, et à faire à l'œil : la justesse pédagogique
+des contenus et des corrigés, la progressivité réelle, l'ergonomie en classe, et
+les règles n°24, n°25, n°27, n°28 et n°32 qui relèvent du jugement.
 
 Une règle qu'on ne peut pas vérifier est une règle qui meurt. Ce script contrôle,
 sur toute séquence HTML du dépôt, les règles mécanisables :
@@ -12,6 +21,11 @@ sur toute séquence HTML du dépôt, les règles mécanisables :
   n°33  aération : pas de pavé de texte trop long dans un même bloc
   n°34  accessibilité statique : étiquettes de select, alternatives d'images,
         pas de signalement par la seule couleur, champs de rédaction suffisants
+  n°42  formulations du référentiel recopiées, dans la carte ET dans le QCM
+  n°51  le titre AFFICHÉ ne porte aucune trace du lot d'origine du gabarit
+  n°53  une notion à voisine proche n'est pas définie par sa voisine
+  n°54  un nombre annoncé sur un autre fichier correspond au fait
+  n°67  une consigne de production s'accompagne d'un champ de saisie
 
 Les règles n°24, n°25, n°27, n°28 et n°32 relèvent du jugement pédagogique :
 le script les SIGNALE pour relecture humaine, il ne les tranche pas. Il ne dit
@@ -123,9 +137,19 @@ def regle_30(src: str) -> tuple[str, str]:
 
 
 def regle_31(src: str) -> tuple[str, str]:
+    """Version étayée pour chaque production écrite exigée.
+
+    RETOURNEMENT du 09/08/2026 : cette règle passait « SANS OBJET » — donc au
+    vert — devant une page sans la moindre zone de rédaction. Une séquence vide
+    se notait ainsi mieux qu'une séquence imparfaite. Or une page qui n'exige
+    aucune production n'est pas dispensée de la règle : elle est en défaut sur
+    la n°67, et on le dit ici plutôt que de se taire."""
     n_textarea = len(re.findall(r"<textarea\b", src))
     if n_textarea == 0:
-        return "SANS OBJET", "aucune production écrite exigée"
+        if re.search(VERBES_PRODUCTION, norm(texte_visible(src))):
+            return "ECHEC", ("aucune zone de rédaction, alors que la page annonce une production "
+                             "— voir aussi n°67")
+        return "SANS OBJET", "aucune production écrite exigée (et aucune annoncée)"
     n_etaye = len(re.findall(r"[Vv]ersion étayée", src))
     if n_etaye == 0:
         return "ECHEC", f"{n_textarea} zone(s) de rédaction, aucune version étayée"
@@ -241,6 +265,116 @@ def regle_42(src: str) -> tuple[str, str]:
     return "OK", f"les {lus} formulation(s) de la carte sont celles du référentiel"
 
 
+
+# ═══════════════════ Règles mécanisées le 09/08/2026 ═══════════════════
+# Écrites au journal les 8 et 9 août, vérifiées à la main jusqu'ici. Une règle
+# qu'on ne peut pas vérifier est une règle qui meurt.
+
+def norm(t: str) -> str:
+    """Minuscules, apostrophes droites, accents retirés.
+
+    Le premier jet d'un contrôle cherchait « t'entraîner » avec une apostrophe
+    droite et déclarait absents des blocs présents. On normalise une fois pour
+    toutes, ici."""
+    t = t.replace("\u2019", "'").replace("\u00a0", " ")
+    t = unicodedata.normalize("NFKD", t)
+    return "".join(c for c in t if not unicodedata.combining(c)).lower()
+
+
+VERBES_PRODUCTION = (r"production attendue|complete le tableau|redige|recense|"
+                     r"ecris (?:un|une|le|la|les|deux|trois|quatre|cinq|six|huit)|"
+                     r"propose (?:un|une|ton|ta)|justifie|argumentaire de")
+
+# Traces des lots dont le gabarit a été emprunté (règle n°51). Six QCM de
+# Thème 1 ont affiché « SOS serre » et Packet Tracer jusqu'au 08/08/2026.
+TRACES_GABARIT = ("sos serre", "packet tracer", "adresse ip fixe")
+
+# Notions à voisine proche (règle n°53). La clé est la notion ; la valeur, la
+# définition de sa VOISINE — celle qu'il ne faut pas lui donner.
+VOISINES = [
+    ("fonction technique", r"a quoi (?:cela |ca |il |elle )?sert|dit a quoi (?:ca |cela )?sert",
+     "c'est la fonction d'usage : la fonction technique dit ce que l'objet doit FAIRE"),
+]
+
+
+def regle_51(src: str, chemin: pathlib.Path | None = None) -> tuple[str, str]:
+    """Ce que l'élève voit en premier annonce le bon niveau et le bon lot.
+
+    Première version fautive : une liste noire de mots (« SOS serre »,
+    « Packet Tracer »). Elle accusait les lots qui parlent légitimement de
+    Packet Tracer — dont celui qui s'appelle « SOS serre ». Une liste de mots
+    ne distingue pas un reste de gabarit d'un sujet réel. On compare donc le
+    titre au niveau et aux codes du fichier lui-même."""
+    m = re.search(r"<h1[^>]*>(.*?)</h1>", src, re.S | re.I)
+    if not m:
+        return "ECHEC", "aucun <h1> : la page ne dit pas ce qu'elle est"
+    if chemin is None:
+        return "SANS OBJET", "chemin inconnu, comparaison impossible"
+
+    attendu = None
+    for part in chemin.parts:
+        mm = re.fullmatch(r"([345]e)", part)
+        if mm:
+            attendu = mm.group(1)
+    if attendu is None:
+        mm = re.search(r"([345]e)_C\d", chemin.name)
+        attendu = mm.group(1) if mm else None
+    if attendu is None:
+        return "SANS OBJET", "niveau du lot indéterminable depuis le chemin"
+
+    tete = texte_visible(m.group(1))
+    sub = re.search(r'<p class="(?:subtitle|sous|subtitle-mission)"[^>]*>(.*?)</p>', src, re.S | re.I)
+    zone = tete + " " + (texte_visible(sub.group(1)) if sub else "")
+    niveaux = set(re.findall(r"\b([345]e)\b", zone))
+    intrus = niveaux - {attendu}
+    if intrus:
+        return "ECHEC", ("le titre affiché annonce %s alors que le lot est en %s"
+                         % (", ".join(sorted(intrus)), attendu))
+    codes = set(re.findall(r"([345]e)_C\d", zone))
+    if codes and codes != {attendu}:
+        return "ECHEC", "le titre affiché porte des codes d'un autre niveau : " + ", ".join(sorted(codes))
+    return "OK", "titre affiché cohérent avec le niveau du lot (%s)" % attendu
+
+
+def regle_53(src: str) -> tuple[str, str]:
+    """Une notion à voisine proche n'est pas définie par sa voisine."""
+    n = norm(texte_visible(src))
+    for notion, motif, explication in VOISINES:
+        for m in re.finditer(notion + r"[^.]{0,70}", n):
+            if re.search(motif, m.group(0)):
+                return "ECHEC", "« %s » définie par sa voisine — %s" % (notion, explication)
+    return "OK", "aucune notion définie par sa voisine"
+
+
+def regle_54(src: str, dossier: pathlib.Path | None = None) -> tuple[str, str]:
+    """Un nombre annoncé d'un AUTRE fichier correspond au fait."""
+    m = re.search(r"(\d+)\s*(?:</b>\s*)?illustr[ée]e", texte_visible(src), re.I)
+    if not m or dossier is None:
+        return "SANS OBJET", "aucun nombre d'illustrées annoncé"
+    annonce = int(m.group(1))
+    qcms = [f for f in dossier.glob("qcm_*.html")]
+    if not qcms:
+        return "ALERTE", "%d illustrées annoncées, aucun QCM dans le dossier" % annonce
+    reels = max(len(re.findall(r"img:\{", f.read_text(encoding="utf-8", errors="ignore")))
+                for f in qcms)
+    if reels == 0:
+        return "ALERTE", "%d illustrées annoncées, le QCM n'expose pas ses images au format attendu" % annonce
+    if reels != annonce:
+        return "ECHEC", "%d illustrées annoncées, %d dans le QCM" % (annonce, reels)
+    return "OK", "%d illustrées annoncées, %d dans le QCM" % (annonce, reels)
+
+
+def regle_67(src: str) -> tuple[str, str]:
+    """Une consigne de production s'accompagne d'un champ où produire."""
+    n = norm(texte_visible(src))
+    if not re.search(VERBES_PRODUCTION, n):
+        return "SANS OBJET", "aucune production annoncée"
+    champs = len(re.findall(r"<(?:textarea|select|input)\b", src))
+    if champs == 0:
+        return "ECHEC", "la page annonce une production et n'offre aucun champ de saisie"
+    return "OK", "%d champ(s) de saisie pour les productions annoncées" % champs
+
+
 REGLES = [
     ("n°23 durée", regle_23),
     ("n°26 diagnostic d'entrée", regle_26),
@@ -250,6 +384,10 @@ REGLES = [
     ("n°33 aération", regle_33),
     ("n°34 accessibilité", regle_34),
     ("n°42 formulation du référentiel", regle_42),
+    ("n°51 titre affiché", regle_51),
+    ("n°53 notion et sa voisine", regle_53),
+    ("n°54 nombre annoncé ailleurs", regle_54),
+    ("n°67 consigne sans champ", regle_67),
 ]
 
 SYMBOLE = {"OK": "✔", "ECHEC": "✘", "ALERTE": "▲", "SANS OBJET": "·", "INCONNU": "?"}
@@ -261,8 +399,15 @@ def analyser(chemin: pathlib.Path) -> dict:
     niveau = m.group(1) if m else None
     res = {}
     for nom, fn in REGLES:
-        res[nom] = dict(zip(("etat", "detail"),
-                            fn(src, niveau) if fn is regle_26 else fn(src)))
+        if fn is regle_26:
+            sortie = fn(src, niveau)
+        elif fn is regle_54:
+            sortie = fn(src, chemin.parent)   # la n°54 compare deux fichiers
+        elif fn is regle_51:
+            sortie = fn(src, chemin)          # la n°51 compare le titre au chemin
+        else:
+            sortie = fn(src)
+        res[nom] = dict(zip(("etat", "detail"), sortie))
     return {"fichier": str(chemin.relative_to(RACINE)), "regles": res,
             "signalements": signalements(src)}
 
@@ -275,9 +420,12 @@ def main(argv: list[str]) -> int:
     # traits d'union — dont la plus grosse du dépôt (121 ko, 4e_C1.4). Six fichiers de
     # séquence n'ont jamais été analysés depuis la création de cet outil : ils n'avaient
     # pas d'anomalie, ils étaient invisibles. Un contrôle ne vérifie que ce qu'il regarde.
+    # Les archives sont gardées comme trace, pas comme ressource vivante : les
+    # juger produit des manquements qu'on ne corrigera jamais.
     fichiers = sorted({f for r in racines
                        for motif in ("**/sequence_*.html", "**/sequence-*.html", "**/sequence.html")
-                       for f in r.glob(motif)})
+                       for f in r.glob(motif)
+                       if "_archive-anciennes-versions" not in f.parts})
 
     rapports = [analyser(f) for f in fichiers]
     if sortie_json:
@@ -293,7 +441,15 @@ def main(argv: list[str]) -> int:
         for s in r["signalements"]:
             print(f"   ⚑ à relire — {s}")
     print(f"\n{len(fichiers)} séquence(s) analysée(s) · {echecs} manquement(s) mécaniquement établi(s)")
-    print("Les règles n°24, n°25, n°27, n°28 et n°32 relèvent du jugement : voir les ⚑.")
+    # Règle d'or n°47 — un contrôle déclare son périmètre, y compris ce qu'il ignore.
+    print("\nPÉRIMÈTRE DE CE CONTRÔLE")
+    print("  Vérifié mécaniquement : " + " · ".join(nom.split()[0] for nom, _ in REGLES))
+    print("  Jugement humain requis : n°24, n°25, n°27, n°28, n°32 — voir les ⚑ ci-dessus.")
+    print("  NON couvert : justesse pédagogique des contenus et des corrigés, qualité des")
+    print("  explications, progressivité réelle, ergonomie en classe, rendu à l'impression.")
+    print("  Fichiers regardés : sequence_*.html, sequence-*.html, sequence.html — un QCM,")
+    print("  une synthèse ou une fiche n'est PAS analysé ici.")
+    print("  Exclu : _archive-anciennes-versions/ — une archive est une trace, pas une ressource.")
     return 0
 
 

@@ -279,7 +279,8 @@
       <option>fabrique de l'énergie à partir de rien</option></select></div>
   <div class="assoc"><label for="be_3">«&nbsp;Éclairer la rue&nbsp;» est&nbsp;:</label>
     <select id="be_3"><option value="">— choisir —</option>
-      <option>une fonction technique : elle dit à quoi ça sert, pas avec quoi on le fait</option>
+      <option>une fonction technique : elle dit ce que l'objet doit FAIRE, pas avec quoi on le fait</option>
+      <option>une fonction d'usage : elle dit à quoi l'objet sert pour son usager</option>
       <option>une solution technique : c'est le nom du composant</option>
       <option>un matériau</option>
       <option>un procédé de fabrication</option></select></div>
@@ -292,9 +293,12 @@
     <p>La <b>chaîne d'énergie</b> se lit avec des verbes&nbsp;: ALIMENTER, STOCKER, DISTRIBUER,
     CONVERTIR. Une batterie <b>stocke</b> — elle ne fabrique rien et ne transforme pas l'usage de
     l'énergie.</p>
-    <p>Une <b>fonction technique</b> commence par un verbe à l'infinitif et dit <i>à quoi ça
-    sert</i>. Une <b>solution technique</b> nomme le composant retenu&nbsp;: c'est <i>avec quoi on
-    le fait</i>.</p>
+    <p>Une <b>fonction technique</b> commence par un verbe à l'infinitif et dit <b>ce que l'objet
+    doit faire</b>. Une <b>solution technique</b> nomme le composant retenu&nbsp;: c'est <i>avec
+    quoi on le fait</i>.</p>
+    <p class="meta">⚠️ Ne pas confondre avec «&nbsp;<i>à quoi ça sert</i>&nbsp;», qui désigne le
+    <b>service rendu à l'usager</b> — la fonction d'usage. La fonction technique porte sur ce que
+    l'objet, ou l'une de ses parties, doit <b>faire</b> pour rendre ce service.</p>
   </details>
 </section>
 
@@ -834,7 +838,7 @@ majTaches();
 CHECKS[0] = function(){
   const att = {be_1:"renseigner le système sur son environnement (il informe, il n'agit pas)",
                be_2:"STOCKE l'énergie sous forme chimique, puis la restitue",
-               be_3:"une fonction technique : elle dit à quoi ça sert, pas avec quoi on le fait"};
+               be_3:"une fonction technique : elle dit ce que l'objet doit FAIRE, pas avec quoi on le fait"};
   let ok = 0, vides = 0;
   Object.entries(att).forEach(([id, v]) => { const x = $(id).value;
     if(!x) vides++; else if(x === v) ok++; });

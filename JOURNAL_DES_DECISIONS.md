@@ -3950,3 +3950,301 @@ drone qui l'utilise. Et deux argumentaires courts en production terminale, dans 
    accordée au répertoire courant entre deux commandes.
 
 **Bilan de couverture** — le dépôt passe à **30 codes COMPLET ET VALIDABLE** et 26 « À CRÉER ».
+
+42 tests exécutés, 42 verts. Vérificateur de règles : 8 sur 8. Le dépôt passe de **28 à 29 codes
+COMPLET ET VALIDABLE**, et de 39 à 41 codes couverts par une séquence mutualisée.
+
+---
+
+## Mécanisation de cinq règles, et retournement de la n°31 — 9 août 2026
+
+Le vérificateur passe de **8 à 12 contrôles**. Les règles n°51, n°53, n°54 et n°67 étaient écrites
+au journal et vérifiées à la main&nbsp;; elles sont désormais mécanisées. La n°47 s'applique à
+l'outil lui-même&nbsp;: il imprime en fin d'exécution ce qu'il a regardé, ce qui relève du jugement
+humain, ce qu'il ne couvre pas, et **quels fichiers il n'ouvre pas**.
+
+### La n°31 était un piège
+
+Elle répondait «&nbsp;SANS OBJET&nbsp;» — donc au vert — devant une page **sans la moindre zone de
+rédaction**. Une séquence vide se notait ainsi mieux qu'une séquence imparfaite. C'est le pire
+défaut qu'un contrôle puisse avoir&nbsp;: **récompenser l'absence**. Elle échoue maintenant quand
+une page annonce une production sans offrir de champ, et renvoie à la n°67.
+
+### Deux contrôles neufs se sont trompés, et ce sont eux qu'on a corrigés
+
+**La n°51, première version&nbsp;: une liste noire de mots** — «&nbsp;SOS serre&nbsp;»,
+«&nbsp;Packet Tracer&nbsp;», «&nbsp;adresse IP fixe&nbsp;». Elle a immédiatement accusé **quatre
+séquences qui parlent légitimement de Packet Tracer**, dont celle qui s'appelle « SOS serre ». Une
+liste de mots ne peut pas distinguer un reste de gabarit d'un sujet réel. Réécrite&nbsp;: le titre
+affiché est comparé au **niveau et aux codes du fichier lui-même**. Un titre qui annonce un autre
+niveau que son dossier est un reste de gabarit, quel que soit son vocabulaire. Zéro faux positif
+depuis.
+
+**Le vérificateur jugeait les archives.** `_archive-anciennes-versions/` contient précisément les
+pages qu'on a remplacées parce qu'elles étaient en défaut&nbsp;: les compter revient à s'accuser
+d'avoir corrigé. Le compte passait de 50 séquences à 39, et de 90 manquements à 50. Une archive est
+une **trace**, pas une ressource — et le périmètre le dit maintenant.
+
+### Ce que les nouvelles règles ont trouvé, et qui est corrigé
+
+- **n°53** — deux séquences de Thème 2 définissaient la fonction technique par «&nbsp;à quoi ça
+  sert&nbsp;», qui est la fonction d'usage. Leur **intention était juste** : elles opposent la
+  fonction technique à la solution technique, et cette opposition est excellente. Seule la
+  formulation entrait en collision avec la notion voisine. On a donc gardé l'opposition en la
+  disant autrement — *ce que ça doit faire* contre *avec quoi on le fait* — et ajouté, dans le
+  jardin connecté, le distracteur qui manquait : «&nbsp;une fonction d'usage&nbsp;».
+- **n°54** — la séquence 5e_C4.7 annonçait 4 questions illustrées, le QCM en compte 6, tirées de
+  5 documents. L'annonce dit maintenant les deux nombres.
+
+### Une demi-correction rattrapée par le contrôle
+
+En corrigeant le jardin connecté, j'ai d'abord changé **la valeur attendue par le vérificateur JS**
+sans changer **le texte de l'option affichée**. Le billet d'entrée serait devenu insoluble&nbsp;:
+aucune option ne correspondait plus à la bonne réponse. Trouvé en vérifiant que la valeur attendue
+figure bien parmi les options — un contrôle qui porte sur ce qui est **rendu** (n°49). Une
+correction à deux endroits doit toucher les deux, ou elle casse ce qu'elle prétend réparer.
+
+### État après cette passe
+
+**39 séquences vivantes, 50 manquements mécaniquement établis** — contre 78 relevés le 8 août sur
+un périmètre plus large et avec quatre contrôles de moins. Le reste se concentre sur quatre
+règles&nbsp;: mode essentiel (14), version étayée (12), accessibilité (10), tableau de bord (8).
+Ce sont des ajouts de gabarit, pas des erreurs enseignées&nbsp;: ils peuvent attendre la rentrée.
+
+### Règle d'or n°69 — On ne remet pas un colis sans avoir lu son étiquette
+
+**L'incident.** Le 9 août, j'ai construit un bundle de livraison avec
+`git bundle create X.bundle origin/main..HEAD` au lieu de
+`origin/main..<nom-de-branche>`. Un bundle bâti sur `HEAD` n'empaquette **aucune référence
+nommée**&nbsp;: il contient un commit anonyme. Pascal a exécuté les trois commandes du circuit et
+reçu trois erreurs en cascade — `couldn't find remote ref`, puis `src refspec does not match any`,
+puis l'échec de `gh pr create`. Les quatre bundles précédents étaient corrects&nbsp;; j'ai raccourci
+sur celui-là.
+
+**Le coût.** Un aller-retour complet, et trois messages d'erreur que rien ne rattachait à leur
+cause réelle — le contenu du colis, pas les commandes de Pascal.
+
+**La règle.** Avant toute remise, **on liste ce que le colis contient réellement** :
+
+    git bundle list-heads <fichier>.bundle    # la référence attendue doit apparaître
+    git bundle verify <fichier>.bundle        # et le prérequis doit être un commit de main
+
+Un bundle se construit **toujours** avec le nom de branche, jamais avec `HEAD`. C'est le même
+principe que la n°47 et la n°49, appliqué à la livraison&nbsp;: on ne déclare pas un test qu'on n'a
+pas exécuté, et on ne remet pas un colis dont on n'a pas lu l'étiquette.
+
+**Mécanisation.** Deux lignes dans le circuit de livraison de la méthode Fable, à exécuter avant
+tout `SendUserFile`.
+
+---
+
+## 9 août 2026 — L'atelier de planification des tâches, et deux règles nées de mes propres fautes
+
+### Ce qui a été livré
+
+Le programme 2024 nomme, dans les connaissances associées de la gestion de projet :
+« **Le diagramme de planification des tâches : notion de tâches, durée et contraintes entre
+tâches.** » L'inventaire du 8 août avait compté **zéro occurrence** dans tout le dépôt, alors que
+les trois codes C7.1 étaient revendiqués — et que la séquence de 3e, qui doit faire *élaborer* un
+processus « avec des tâches identifiées », ne contenait pas une seule fois le mot « tâche ».
+
+`_atelier-planification/` répond à ce manque par **une ressource unique à trois parcours**, appelée
+depuis les trois séquences C7.1 au moment du lancement de projet — la 5e **suit** un planning déjà
+fait, la 4e l'**organise**, la 3e l'**élabore** et cherche le chemin le plus long. Trois refontes
+auraient produit trois versions qui divergeraient ; une ressource partagée n'en produit qu'une.
+
+L'atelier commence par des **bandes de papier découpées** — 2 cm par séance — et n'ouvre le logiciel
+qu'après. La **voie B sans ordinateur** vaut la voie A partout, et pose les mêmes questions.
+
+### Règle d'or n°70 — Une capture d'écran doit parler la langue du poste
+
+**L'incident.** J'avais produit quatre schémas SVG de l'interface de GanttProject, dessinés à la
+main faute d'avoir pu ouvrir le logiciel, avec des libellés **en anglais** : *Show critical path*,
+*Predecessors*, *Duration*. Le `SOURCES_MEDIAS.md` du lot était pourtant honnête : il déclarait
+noir sur blanc « ce ne sont pas des captures d'écran » et séparait le vérifié du non-vérifié. Cela
+n'a rien sauvé. Pascal a envoyé deux copies d'écran de **son** poste : l'interface est en
+**français**.
+
+**Le coût.** Un élève qui cherche *Show critical path* dans une fenêtre où est écrit « Afficher le
+chemin critique » ne trouve rien — et conclut que c'est lui qui se trompe. Une ressource
+d'accompagnement qui égare est pire qu'une absence de ressource.
+
+**La règle.** Quand un lot guide un geste dans un logiciel, **l'image doit montrer l'écran tel
+qu'il apparaît sur le poste de l'élève** — même version, même langue. Si le logiciel est libre, on
+l'ouvre et on capture. S'il est propriétaire (règle n°1), on ne le montre pas du tout et on
+enseigne le geste autrement. **Un schéma reconstruit n'est acceptable que s'il ne prétend nommer
+aucun bouton.**
+
+**Conséquence pratique.** Les quatre SVG ont été supprimés. GanttProject 3.3 a été lancé sur le
+poste, sur le fichier `jardin_connecte_brooklyn.gan` produit par le lot lui-même, et cinq écrans
+ont été capturés aux moments choisis : la table des tâches, le champ *Durée*, l'onglet
+*Prédécesseurs* avec sa relation *Fin-Début*, les barres, puis le même diagramme après *Afficher le
+chemin critique*. GanttProject étant libre (GPL v3), reproduire son interface est permis — ce qui
+n'était pas le cas de Packet Tracer, à l'origine de la règle n°1.
+
+**Un corollaire, écrit dans l'atelier lui-même :** on ne dit jamais « les barres rouges ». La mise
+en évidence est une hachure dans cette version, une couleur ailleurs. On dit « les tâches mises en
+évidence » — c'est vrai partout.
+
+### Règle d'or n°71 — Un corrigé qui n'est pas écrit par le calcul qui le vérifie n'est pas un corrigé
+
+**L'incident.** `_verifier_planning.py` imprimait à l'écran des résultats **justes** : chemin le
+plus long, tâches critiques, marges. À côté, `_corrige_calcule.json` — le fichier dont l'atelier
+allait tirer ses questions et ses réponses — annonçait des marges **non nulles sur les tâches du
+chemin le plus long**. C'est-à-dire l'inverse exact de ce que l'atelier enseigne.
+
+L'explication est banale et c'est ce qui la rend dangereuse : le JSON avait été écrit à la main,
+avant la correction du calcul des dates au plus tard, et le script qui imprimait les bonnes valeurs
+ne les écrivait nulle part. Deux vérités coexistaient, l'une contrôlée et l'autre publiée.
+
+**Le coût évité de justesse.** Trente questions de QCM et quatre exercices auraient été bâtis sur
+des marges fausses, avec un vérificateur qui aurait refusé les bonnes réponses des élèves.
+
+**La règle.** Le fichier de corrigé est **écrit par le script qui le vérifie**, jamais à côté. Et
+le script ne l'écrit **que si tous ses contrôles passent** — un corrigé produit à partir d'un
+calcul incohérent est pire que pas de corrigé. Après écriture, il **relit le fichier** et contrôle
+qu'il redonne bien le résultat attendu.
+
+C'est la règle n°54 (« un nombre établi ailleurs se calcule, il ne se recopie pas ») prise en
+défaut chez moi, et poussée d'un cran : il ne suffit pas de calculer le nombre quelque part, il
+faut que **le publieur soit le calculateur**.
+
+**Mécanisation.** Trois blocs dans `_verifier_planning.py` : écriture conditionnée à `ok`,
+relecture, contrôle de l'invariant sur le fichier relu. Et, côté page, un générateur qui fabrique
+les tableaux, les questions **et les réponses attendues** à partir du même JSON — de sorte qu'une
+réponse ne peut pas diverger de la question.
+
+### Une décision de barème, au passage
+
+Dans le parcours de 4e, les dates au plus tôt sont contrôlées **sans aucune tolérance**, alors que
+les questions de raisonnement en admettent une. Une date fausse n'est pas une inattention : c'est
+un calcul faux, et l'accepter apprendrait à l'élève que « à peu près » suffit sur un résultat de
+calcul. La tolérance est légitime sur ce qui se discute, jamais sur ce qui se calcule.
+
+---
+
+## 9 août 2026 — Ce que le TP « Dé » de Pascal nous apprend sur le guidage pas à pas
+
+Pascal m'a transmis un TP qu'il a **réellement mené en classe** et qui a marché : quatorze pages
+pour construire un dé en CAO, du fichier vide jusqu'à la pièce colorée. Son commentaire vaut
+cahier des charges : « **C'est long mais il arrive à être autonome et personne ne reste sur la
+touche.** »
+
+Ce TP est un objet d'étude. Il ne contient presque aucune phrase de cours, et pourtant il
+enseigne. Voici ce que j'en retiens, sous forme de règles — parce que nous allons devoir écrire la
+même chose pour Onshape, et trois fois.
+
+### Règle d'or n°72 — Un guidage sépare typographiquement ce qu'on FAIT de ce qu'on doit VOIR
+
+Dans le TP de Pascal, l'action est en noir (« Cliquez sur **Rectangle** ») et le retour attendu est
+en couleur et en italique (« *Le pointeur prend la forme…* », « *Un point rouge apparaît sur
+l'origine lorsque la souris est bien placée* »).
+
+Ce second registre n'est pas du décor : c'est **le seul moyen qu'a l'élève de savoir qu'il vient de
+se tromper**. Sans lui, l'erreur ne se découvre que trois étapes plus loin, quand plus rien ne
+ressemble à l'image — et là il faut lever la main.
+
+**La règle.** Toute consigne de manipulation logicielle s'écrit en deux temps : *le geste*, puis
+*ce qui doit se produire à l'écran*. Deux registres visuellement distincts, toujours les mêmes.
+
+### Règle d'or n°73 — Le nom d'un bouton se cite tel qu'il est écrit, avec son icône à côté
+
+« Cliquez sur **Cotation intelligente** [icône] ». Le mot exact du logiciel, en gras, **et** l'image
+du bouton. L'élève reconnaît l'icône avant d'avoir fini de lire le mot ; l'élève dyslexique la
+reconnaît sans lire du tout.
+
+C'est la règle n°70 (l'image doit parler la langue du poste) poussée d'un cran : **non seulement la
+langue, mais le mot exact et le dessin exact.**
+
+### Règle d'or n°74 — Avant de guider un geste imprécis, on autorise l'imprécision
+
+Encadré orange de Pascal, page 2 : « *Il n'est pas nécessaire d'être précis dans les dimensions ;
+les cotes exactes seront définies ultérieurement.* »
+
+Sans cette phrase, un élève passe cinq minutes à essayer de tracer un rectangle de 50,00 mm à la
+souris, échoue, et se croit nul. Avec elle, il trace n'importe quoi et avance.
+
+**La règle.** Chaque fois qu'une étape produit un résultat volontairement approximatif, on le
+**dit avant**, à l'endroit où l'élève va bloquer.
+
+### Règle d'or n°75 — Toute valeur visible dans une capture est déclarée comme exemple
+
+Deuxième encadré orange : « *La cote 74,13 est un exemple.* »
+
+Sans cette ligne, une partie de la classe tape 74,13. Ce n'est pas de la bêtise : c'est de la
+confiance dans le document. Un élève qui suit une consigne à la lettre a raison de le faire ; c'est
+au document d'être clair sur ce qui est prescriptif et ce qui est illustratif.
+
+### Règle d'or n°76 — L'aide décroît à mesure que le geste se répète
+
+Le TP construit la **première** face en douze étapes détaillées, la **deuxième** en neuf étapes
+allégées, et les **quatre dernières** en une ligne chacune avec l'image du résultat.
+
+C'est la structure entière du document, et c'est elle qui produit l'autonomie. On ne devient pas
+autonome parce qu'on nous dit de l'être : on le devient parce que l'étayage se retire, geste après
+geste, assez lentement pour qu'on ne s'en aperçoive pas.
+
+**La règle.** Un guidage qui répète le même niveau de détail du début à la fin n'apprend rien : il
+fait exécuter. On détaille une fois, on allège la deuxième, on ne montre plus que le résultat
+ensuite.
+
+### Règle d'or n°77 — À chaque palier, l'image du résultat attendu
+
+Le TP montre le cube après extrusion, le trou après enlèvement de matière, le dé après les congés,
+le dé rouge à la fin. À chaque fois, l'élève **compare son écran à l'image** et sait tout seul s'il
+est juste.
+
+C'est très exactement le mécanisme qui fait que « personne ne reste sur la touche » : l'élève qui
+doute n'a pas besoin du professeur, et le professeur reste disponible pour celui qui est vraiment
+bloqué.
+
+### Règle d'or n°78 — On enseigne à lire l'état du logiciel, pas seulement à cliquer
+
+Page 2 : « *Les deux côtés du rectangle qui touchent l'origine sont en noir… Les deux autres côtés
+sont en bleu. Ceci indique qu'ils sont sous-contraints et, de ce fait, libres de mouvement.* »
+
+Rien n'oblige à dire ça pour finir le dé. Mais c'est le seul passage du TP qui enseigne une
+**notion de CAO** : une esquisse est un système de contraintes, et le logiciel dit en permanence où
+il en est. L'élève qui l'a compris se débrouillera dans n'importe quel modeleur ; celui qui a
+seulement cliqué ne saura refaire que ce dé-là.
+
+### Règle d'or n°79 — Le premier geste d'un TP est un geste de rangement
+
+Avant la moindre esquisse : créer un dossier « Construction + Nom élève », un sous-dossier au nom
+du TP, et enregistrer sous un nom **imposé**. Le TP y consacre sa deuxième page.
+
+Un travail qu'on ne retrouve pas à la séance suivante n'a pas eu lieu. Et en salle de technologie,
+avec des sessions partagées, c'est la première cause de séance perdue.
+
+### Règle d'or n°80 — Le rituel d'enregistrement se répète à chaque palier, avec son icône
+
+« Enregistrer le document [icône] » revient huit fois dans les quatorze pages. Ce n'est pas de la
+redondance : c'est un **rituel**, et un rituel s'installe par la répétition à date fixe.
+
+### Règle d'or n°81 — Un TP de prise en main ne pose aucune question de cours
+
+Quatorze pages, zéro question à répondre. Pascal n'évalue pas la notion pendant qu'il enseigne
+l'outil, et c'est pour ça que ça marche : l'élève n'a qu'une seule chose à faire à la fois.
+
+C'est la n°59 (l'outil ne doit jamais devenir la compétence évaluée) et la n°61 (une évaluation ne
+mesure qu'un construit à la fois) vues depuis l'autre bout : **on peut consacrer une séance
+entière à l'outil, à condition de dire que c'est ce qu'on fait.** Les questions viennent après,
+dans la séquence, sur la notion.
+
+### Règle d'or n°82 — Un TP long se termine par une récompense visuelle gratuite
+
+Les deux dernières pages colorent le dé en rouge et les creux en blanc. Techniquement : inutile.
+Pédagogiquement : décisif. Après quatorze pages, l'élève repart avec **une image dont il est
+fier**, et c'est ce qu'il montrera chez lui.
+
+Aucune de nos séquences ne fait ça. Toutes finissent sur un bilan.
+
+### Ce que ça change pour la suite
+
+La progression CAO en Onshape reprendra cette architecture, avec les objets déjà décidés :
+**5e — le dé** (prise en main : esquisse, cotation, extrusion, enlèvement de matière, congé,
+apparence) ; **4e — l'assemblage** du dé et d'un socle de style romain, dé **centré sur l'axe du
+socle** ; **3e — le boîtier étanche du capteur de confort**, où la forme n'est plus donnée mais
+déduite d'un besoin.
+
+Et le TP de Pascal reste sa propriété : il sert de **modèle de forme**, jamais de source de texte.
