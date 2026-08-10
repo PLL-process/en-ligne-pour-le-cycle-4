@@ -46,7 +46,8 @@ def controler(page: Path):
                            "une page d'une impasse")
 
     # « Et ensuite ? » : la suite doit être nommée quelque part dans la page.
-    if not re.search(r"qcm_|Prêt&middot;e à t'entraîner|Pour t'entraîner", html):
+    suite = r"qcm_|Prêt&middot;e à t'entraîner|Pour t'entraîner|class=\"[^\"]*et-ensuite"
+    if not re.search(suite, html):
         manquements.append("la suite n'est nommée nulle part (QCM ou activité suivante)")
 
     return manquements
