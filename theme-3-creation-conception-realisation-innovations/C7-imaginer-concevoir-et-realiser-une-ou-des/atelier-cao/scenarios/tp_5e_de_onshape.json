@@ -136,11 +136,26 @@
       "intro": "Un dessin plat ne s'imprime pas. On lui donne une épaisseur : c'est l'<b>extrusion</b>. Le carré va monter de 50 mm et devenir un cube.",
       "etapes": [
         {
-          "action": "Clique sur l'outil <b>Extrudeur</b> dans la barre d'outils (son infobulle dit « <i>Extrudeur (d\u00e9calage+e)</i> » : « d\u00e9calage », c'est la touche <kbd>Maj</kbd>).",
+          "action": "Retiens deux gestes qui se ressemblent et ne veulent pas dire la même chose.",
+          "voir": "Rien à faire ici&nbsp;: c'est une règle de lecture du logiciel.",
+          "avertissement": "Dans l'arbre de gauche&nbsp;: <b>double-clic</b> sur une fonction = « je veux la modifier », son panneau se rouvre. <b>Clic simple</b> pendant qu'un panneau est ouvert = « je choisis cet élément-là », il va se poser dans le champ en attente. Et la <b>coche verte</b> veut toujours dire « j'ai fini », jamais « continue »&nbsp;: tant qu'un panneau est ouvert, l'arbre et la vue 3D servent à le remplir."
+        },
+        {
+          "action": "Avant d'extruder, regarde ton carré&nbsp;: il doit être là, à l'écran, en traits noirs.",
+          "voir": "Un carré, quatre traits, deux cotes de 50.",
+          "avertissement": "Une esquisse peut être <b>vide</b> sans le dire&nbsp;: elle apparaît quand même dans l'arbre, elle s'ouvre, elle se referme — mais il n'y a aucun tracé dedans, et alors l'extrusion ne peut rien fabriquer. Ça arrive après plusieurs annulations. Si tu ne vois qu'un grand rectangle gris marqué « Top » et deux axes, c'est le <b>plan</b>, pas ton dessin&nbsp;: l'esquisse est vide, il faut redessiner le carré. Pour en avoir le cœur net, prends <b>Zoomer pour ajuster</b> dans le menu du petit cube&nbsp;: le logiciel recadre sur tout ce qui existe. Si rien n'apparaît, c'est qu'il n'y a rien."
+        },
+        {
+          "action": "Clique sur l'outil <b>Extrudeur</b> dans la barre d'outils (son infobulle dit « <i>Extrudeur (décalage+e)</i> » : « décalage », c'est la touche <kbd>Maj</kbd>).",
           "voir": "Un panneau <b>Extrudeur 1</b> s'ouvre, réglé sur <b>Solide</b> et <b>Nouveau</b>, et un aperçu du volume apparaît, en jaune ou en gris clair.",
           "capture": "Images/tp5e_06_extruder.png",
           "capture_alt": "Le panneau Extrudeur ouvert, avec le champ Profondeur, et l'aperçu du volume qui sort du carré.",
           "avertissement": "Le panneau s'ouvre déjà rempli : <b>Borgne</b> et une profondeur de <code>25 mm</code>. Ce n'est pas ta valeur, c'est celle que le logiciel propose par défaut — tu vas la remplacer. « Borgne » veut dire que l'extrusion s'arrête à la distance que tu donnes, au lieu d'aller jusqu'à une autre pièce."
+        },
+        {
+          "action": "Clique <b>à l'intérieur du carré</b>, dans la vue 3D.",
+          "voir": "La surface du carré se colore et le champ <b>Faces et zones d'esquisse à extruder</b> se remplit. C'est ça qui va monter.",
+          "avertissement": "Étape la plus sautée du palier, et elle ne pardonne pas : si le champ reste vide, l'extrusion échoue. <b>Extrudeur 1</b> s'écrit alors en <b>rouge</b> dans l'arbre de gauche et la liste indique <b>Pièces (0)</b> — aucune matière n'a été créée. Pour réparer&nbsp;: <b>double-clic</b> sur <b>Extrudeur 1</b> (le clic droit ne propose pas « Modifier »&nbsp;: seulement Renommer, Exclure, Commentaire), puis clique dans le carré — ou, plus sûr, <b>un seul clic sur « Esquisse 1 »</b> dans l'arbre, ce qui prend l'esquisse entière sans avoir à viser. Constaté sur poste réel."
         },
         {
           "action": "Dans le champ <b>Profondeur</b>, efface <code>25</code> et saisis <code>50</code>. Laisse <b>Nouveau</b> sélectionné : il n'y a encore aucune matière à laquelle ajouter quoi que ce soit.",
@@ -149,6 +164,11 @@
         {
           "action": "Valide avec la <b>coche verte</b>.",
           "voir": "Le cube devient gris plein. Dans la liste de gauche, <b>Pièces (1)</b> apparaît : il existe maintenant de la matière."
+        },
+        {
+          "action": "Dans le menu du petit cube, en bas à droite, choisis <b>Isométrique</b>.",
+          "voir": "Le cube se montre en perspective, trois faces visibles.",
+          "avertissement": "Si tu es resté·e en vue <b>Dessus</b>, un cube ressemble à un carré : on ne voit pas qu'il a de l'épaisseur. Le volume existe quand même — c'est la caméra qui le cache, pas la pièce."
         }
       ],
       "image_resultat": "Images/tp5e_R2_cube.png",
@@ -189,6 +209,11 @@
         {
           "action": "Valide l'esquisse, puis clique sur <b>Extrudeur</b>.",
           "voir": "Le panneau s'ouvre, avec l'aperçu d'un cylindre qui sort de la face."
+        },
+        {
+          "action": "Clique <b>à l'intérieur du carré</b>, dans la vue 3D.",
+          "voir": "La surface du carré se colore et le champ <b>Faces et zones d'esquisse à extruder</b> se remplit. C'est ça qui va monter.",
+          "avertissement": "Même piquet qu'au palier précédent : sans zone sélectionnée, rien ne se passe."
         },
         {
           "action": "Choisis <b>Retraite</b> — le troisième onglet, après <i>Nouveau</i> et <i>Ajouter</i> —, règle la <b>Profondeur</b> à <code>5</code>, puis valide.",
@@ -282,6 +307,66 @@
       "image_resultat_alt": "Le dé aux douze arêtes arrondies et aux vingt et un points adoucis sur leur bord : plus aucune arête vive sur la pièce.",
       "critere": "aucune arête vive ne subsiste, et les creux sont intacts.",
       "enregistrer": true
+    },
+    {
+      "type": "geste",
+      "titre": "Emporter son travail : nommer, exporter, retrouver",
+      "niveau_aide": "detaille",
+      "intro": "Un travail qu'on ne retrouve pas n'a pas eu lieu. Ce dernier palier ne fabrique rien&nbsp;: il met ta pièce à l'abri et te donne le fichier que la machine attend.",
+      "etapes": [
+        {
+          "action": "Ne cherche pas de bouton <b>Enregistrer</b>&nbsp;: il n'y en a pas.",
+          "voir": "Rien à l'écran ne dit « enregistré ». C'est normal : Onshape sauvegarde en continu, à chaque geste, dans ton compte.",
+          "avertissement": "Si tu fais <kbd>Ctrl</kbd>+<kbd>S</kbd> par réflexe, c'est le <b>navigateur</b> qui répond, pas Onshape&nbsp;: il te propose d'enregistrer la page en <i>HTML</i> ou <i>MHTML</i>. Ce fichier ne contient <b>pas</b> ta pièce — seulement l'habillage de l'écran. Annule cette fenêtre. La seule chose qu'il faut penser à faire, c'est <b>nommer le document</b>, et ça se fait une fois pour toutes."
+        },
+        {
+          "action": "Vérifie le <b>nom du document</b>, en haut à gauche. S'il s'appelle encore « Sans titre », renomme-le maintenant&nbsp;: <code>Dé - TES INITIALES</code>.",
+          "voir": "Le nom change dans le bandeau du haut.",
+          "avertissement": "Dans une classe de vingt-huit, vingt-huit fichiers « Part Studio 1 » ne se distinguent pas. Le nom du travail <b>plus tes initiales</b>, c'est ce qui te permettra de retrouver le tien."
+        },
+        {
+          "action": "Clic droit sur ta pièce dans l'arbre, en bas à gauche, puis <b>Exportateur…</b>",
+          "voir": "Une fenêtre <b>Exportateur</b> s'ouvre, avec un nom de fichier, un format et des options.",
+          "avertissement": "Le format proposé par défaut est <b>PARASOLID</b>&nbsp;: c'est le format interne d'Onshape, il n'intéresse aucun autre logiciel. Change-le.",
+          "capture": "Images/tp5e_10_exportateur.png",
+          "capture_alt": "Le menu du clic droit sur la pièce, avec la ligne Exportateur."
+        },
+        {
+          "action": "Choisis le format <b>STL</b>.",
+          "voir": "La liste propose une douzaine de formats. Deux comptent pour toi.",
+          "exemple": "<b>STL</b> décrit la surface par un maillage de triangles&nbsp;: c'est ce que mange une imprimante 3D, mais la pièce n'y est plus modifiable — on ne peut plus revenir sur une cote. <b>STEP</b> garde la géométrie exacte et s'ouvre dans n'importe quel autre logiciel de CAO. Autrement dit&nbsp;: <b>STL pour fabriquer, STEP pour transmettre</b>. En 5e, ton dé est fait pour être imprimé&nbsp;: prends <b>STL</b>.",
+          "capture": "Images/tp5e_11_formats.png",
+          "capture_alt": "La liste déroulée des formats d'export, avec STEP et STL parmi la douzaine proposée."
+        },
+        {
+          "action": "Quand tu choisis STL, trois réglages apparaissent. Le plus important est <b>Unités</b>&nbsp;: mets <b>Millimètre</b>.",
+          "voir": "Trois listes s'ajoutent&nbsp;: Format STL, Unités, Résolution.",
+          "avertissement": "Un fichier STL ne contient que des <b>nombres</b>, sans unité écrite dedans&nbsp;: le logiciel de l'imprimante suppose des millimètres. Si tu laisses <b>Mètre</b>, un objet de 50 mm sera décrit par le nombre <code>0,05</code> — et la machine fabriquera un grain de cinquante microns, invisible. La description est juste, l'unité manque, la machine se trompe d'un facteur mille. C'est très exactement la question du TP&nbsp;: décrire assez précisément pour qu'une machine fabrique sans nous.",
+          "exemple": "Ce réglage est à Mètre par défaut. Constaté sur poste réel."
+        },
+        {
+          "action": "Laisse <b>Format STL : Binaire</b> et choisis <b>Résolution : Fin</b>.",
+          "voir": "Les deux listes se ferment sur ces valeurs.",
+          "exemple": "<b>Binaire ou texte</b>, c'est la même géométrie écrite de deux façons&nbsp;: le texte se lit dans un éditeur — on y voit chaque triangle avec ses trois sommets — mais pèse cinq à six fois plus lourd. Ouvrir une fois un STL texte dans le Bloc-notes est une belle façon de voir qu'un objet 3D n'est qu'une <b>liste de triangles</b>. La <b>résolution</b> est la finesse de ce maillage&nbsp;: en <i>Grossier</i>, les facettes se voient sur les congés et les creux ronds&nbsp;; en <i>Fin</i>, elles disparaissent, au prix d'un fichier plus gros."
+        },
+        {
+          "action": "Dans <b>Options</b>, choisis « <b>Télécharger et stocker le fichier dans un nouvel onglet</b> », puis valide.",
+          "voir": "Le fichier descend dans tes téléchargements, et un onglet supplémentaire apparaît en bas de ton document Onshape.",
+          "avertissement": "C'est le seul des trois choix qui protège ton travail. Sur un poste de collège, le dossier Téléchargements est souvent vidé, et tu ne repasseras pas forcément sur la même machine&nbsp;: un simple « Télécharger » revient à ne rien garder. Là, le fichier reste attaché au document et te suit.",
+          "exemple": "Laisse « Exporter les modèles avec l'axe Y vers le haut » <b>décoché</b>&nbsp;: cette case sert aux logiciels qui n'ont pas la même convention d'orientation.",
+          "capture": "Images/tp5e_12_export_stl.png",
+          "capture_alt": "La fenêtre Exportateur remplie : nom avec initiales, format STL, Binaire, Millimètre, Fin, et l'option qui stocke le fichier dans le document."
+        },
+        {
+          "action": "Pour une simple <b>image</b> — un compte rendu, le cahier de texte — n'exporte rien.",
+          "voir": "Une icône d'appareil photo, dans la barre verticale à droite de la vue 3D, produit un PNG propre du modèle.",
+          "avertissement": "Un export n'est pas un enregistrement&nbsp;: c'est une <b>traduction</b> de la pièce vers ce qu'une machine ou un autre logiciel sait lire — et chaque traduction perd quelque chose. L'original, celui qui garde l'histoire complète et les cotes modifiables, reste dans Onshape."
+        }
+      ],
+      "critere": "ton document porte ton nom, et le fichier exporté apparaît dans un onglet en bas de ton document.",
+      "enregistrer": false,
+      "image_resultat": "Images/tp5e_12_export_stl.png",
+      "image_resultat_alt": "La fenêtre d'export entièrement réglée."
     },
     {
       "type": "recompense",
