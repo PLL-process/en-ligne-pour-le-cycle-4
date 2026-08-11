@@ -4759,3 +4759,44 @@ qu'un `50` désigne des millimètres. Ce qui est mécanisable, en revanche, c'es
 la **présence** d'une unité à côté d'un nombre dans une consigne d'export.
 À écrire dans `verif_guidage.py` quand un deuxième cas se présentera&nbsp;:
 une règle se mécanise sur deux occurrences, pas sur une.
+
+---
+
+## Règle d'or n°90 — un rituel qui demande un geste impossible fabrique du doute
+
+*11 août 2026. Relevée par Pascal en lisant la page du TP de 5e.*
+
+La règle n°80 impose un rituel d'enregistrement à la fin de chaque palier. Elle
+a été écrite pour des logiciels où l'on perd tout si l'on oublie. Onshape
+enregistre en continu et **n'a pas de bouton Enregistrer** — le TP le dit
+lui-même au premier palier. Résultat&nbsp;: la page expliquait qu'il n'y a pas
+de bouton, puis demandait neuf fois d'appuyer dessus.
+
+**Quand un rituel mécanisé rencontre un logiciel qui ne fonctionne pas comme
+celui pour lequel la règle a été écrite, on tient l'INTENTION de la règle, pas
+sa lettre — et on le mécanise, au lieu de le corriger à la main.** Le scénario
+porte désormais un drapeau `logiciel_sans_enregistrement`, et le rituel devient
+un **point de reprise**&nbsp;: « tu n'as rien à enregistrer, c'est déjà fait,
+tout seul, depuis le début ; si le poste redémarrait maintenant, tu retrouverais
+ton travail exactement ici. »
+
+### Ce que ça coûte de ne pas le faire
+
+Un élève de 5e qui lit deux consignes contradictoires ne conclut pas que le TP
+se trompe&nbsp;: il conclut qu'il n'a pas compris. Une contradiction visible
+coûte plus cher qu'une lacune, parce qu'elle attaque la confiance dans tout le
+reste du document.
+
+### Portée
+
+Tout logiciel à sauvegarde continue ou en ligne — Onshape, les suites
+bureautiques en ligne, Vittascience, Scratch en ligne. À l'inverse, le rituel
+d'origine reste indispensable pour GanttProject, LibreOffice hors ligne,
+l'IDE Arduino, Packet Tracer&nbsp;: là, un oubli fait vraiment perdre la séance.
+Le drapeau se pose scénario par scénario, jamais globalement.
+
+### Ce qui est mécanisé
+
+Le texte du rituel, dans `build_tp.py`. Ce qui ne l'est pas&nbsp;: décider si un
+logiciel enregistre seul. Cela se constate en l'utilisant — et c'est exactement
+ainsi que celui-ci a été trouvé, en déroulant le TP sur un poste réel.
