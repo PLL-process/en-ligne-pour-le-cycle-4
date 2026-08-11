@@ -4800,3 +4800,42 @@ Le drapeau se pose scénario par scénario, jamais globalement.
 Le texte du rituel, dans `build_tp.py`. Ce qui ne l'est pas&nbsp;: décider si un
 logiciel enregistre seul. Cela se constate en l'utilisant — et c'est exactement
 ainsi que celui-ci a été trouvé, en déroulant le TP sur un poste réel.
+
+---
+
+## Règle d'or n°91 (clé de voûte) — quand une affirmation surprend, donner le moyen de la vérifier
+
+*11 août 2026. Trouvée par Pascal en déroulant le TP de 5e, dans le prolongement
+de la n°90.*
+
+Le TP annonçait qu'Onshape enregistre tout seul et qu'il n'existe pas de bouton
+Enregistrer. C'est vrai, c'est surprenant, et l'élève n'avait qu'une chose à
+faire de cette information&nbsp;: **croire le professeur**.
+
+**Toute affirmation qui contredit l'expérience de l'élève doit être suivie du
+geste qui permet de la vérifier — immédiatement, et par lui.** Pas plus tard,
+pas ailleurs dans le document&nbsp;: au moment où elle surprend.
+
+Ici&nbsp;: « clique sur le logo Onshape, rouvre ton document — tout est là. »
+Trois clics, et l'affirmation devient un constat.
+
+### Pourquoi c'est une clé de voûte et pas un détail de rédaction
+
+Parce que ce qui est transmis n'est pas l'information mais le **moyen de la
+vérifier**. Un élève à qui l'on a montré comment vérifier saura le refaire dans
+un autre logiciel, l'an prochain, sans nous. Un élève à qui l'on a demandé de
+croire dépend de celui qui affirme — et se retrouve démuni dès qu'il change
+d'outil ou de professeur. C'est la différence entre enseigner un fait et
+enseigner un rapport aux faits&nbsp;; le second est le seul qui survive à la
+sortie du collège.
+
+Corollaire pour l'auteur du lot&nbsp;: **si l'on ne sait pas décrire le geste de
+vérification, c'est peut-être qu'on n'a pas vérifié soi-même.** L'affirmation
+mérite alors d'être testée avant d'être écrite (règle n°71).
+
+### Ce qui est mécanisé
+
+Rien. Aucun script ne sait reconnaître qu'une phrase surprendra un élève de 5e.
+Ce qui se relève, en revanche, c'est la présence d'un geste vérifiable après
+chaque affirmation contre-intuitive — et ça, seule une relecture humaine le
+fait. Elle se conduit en salle, ou en déroulant le TP comme Pascal l'a fait.
