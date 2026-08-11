@@ -131,6 +131,9 @@ NIVEAUX = {"detaille": ("Aide détaillée", "detaille"),
            "resultat": ("À toi de jouer", "resultat")}
 
 
+SANS_ENREGISTREMENT = False
+
+
 def palier_html(p, n):
     niv = p.get("niveau_aide", "detaille")
     if niv not in NIVEAUX:
@@ -162,14 +165,25 @@ def palier_html(p, n):
         out.append('<p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> %s</p>'
                    % esc(p["critere"]))
     if p.get("enregistrer"):
-        out.append('<p class="rituel">💾 <b>Enregistre ton travail maintenant.</b> '
-                   "C'est le moment&nbsp;: si le poste redémarre, tu ne perds rien.</p>")
+        # Règle d'or n°80 — le rituel d'enregistrement. Mais un rituel qui demande
+        # un geste impossible fabrique du doute : dans un logiciel qui sauvegarde
+        # tout seul, on ne dit pas « enregistre », on dit « c'est déjà enregistré ».
+        if SANS_ENREGISTREMENT:
+            out.append('<p class="rituel">💾 <b>Point de reprise.</b> '
+                       "Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, "
+                       "depuis le début. Si le poste redémarrait maintenant, tu "
+                       "retrouverais ton travail exactement ici.</p>")
+        else:
+            out.append('<p class="rituel">💾 <b>Enregistre ton travail maintenant.</b> '
+                       "C'est le moment&nbsp;: si le poste redémarre, tu ne perds rien.</p>")
     out.append("</section>")
     return "".join(out)
 
 
 def construire(scenario_path: pathlib.Path) -> pathlib.Path:
     s = json.loads(scenario_path.read_text(encoding="utf-8"))
+    global SANS_ENREGISTREMENT
+    SANS_ENREGISTREMENT = bool(s.get("logiciel_sans_enregistrement"))
     paliers = s["paliers"]
 
     # ── Règles de structure, contrôlées avant toute écriture ────────────────
