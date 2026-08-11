@@ -4839,3 +4839,45 @@ Rien. Aucun script ne sait reconnaître qu'une phrase surprendra un élève de 5
 Ce qui se relève, en revanche, c'est la présence d'un geste vérifiable après
 chaque affirmation contre-intuitive — et ça, seule une relecture humaine le
 fait. Elle se conduit en salle, ou en déroulant le TP comme Pascal l'a fait.
+
+---
+
+## Règle d'or n°92 — une image qu'on ne peut pas agrandir est une image qu'on ne peut pas lire
+
+*11 août 2026. Demandée par Pascal, qui n'arrivait pas à lire une capture
+d'écran dans le TP de 5e.*
+
+Les images du dépôt sont des **documents à lire** (règle n°1), pas des
+décorations. Une capture d'interface au huitième de sa taille, un schéma
+réseau, un Gantt&nbsp;: à la largeur d'une colonne de texte, le texte qu'ils
+contiennent est illisible. L'élève voit qu'il y a quelque chose, et ne peut pas
+le lire — ce qui est pire que ne rien montrer, puisqu'il sait qu'il lui manque
+une information.
+
+**Toute image d'une page destinée aux élèves doit pouvoir s'agrandir&nbsp;:
+d'un clic, d'une touche au clavier, et se refermer par Échap.** Sans
+bibliothèque, sans réseau, sans donnée envoyée — comme le reste du dépôt.
+
+### Ce que ça implique, au-delà du clic
+
+L'agrandissement affiche **l'alternative textuelle en légende**. Une image dont
+le `alt` est vide ou creux se dénonce donc toute seule à l'usage&nbsp;: le grand
+format ne montre rien d'écrit sous l'image. La loupe devient un révélateur
+d'images mal décrites — c'est un effet secondaire, et il est bienvenu.
+
+Les schémas SVG écrits **dans** la page sont concernés au même titre que les
+`<img>`&nbsp;: ils sont sérialisés à la volée, sans réseau, puisque le dessin
+est déjà là. Les icônes de moins de 120 × 90 pixels sont laissées tranquilles —
+on agrandit ce qui se lit, pas ce qui décore.
+
+### Ce qui est mécanisé
+
+`audit/loupe.py` injecte le bloc dans chaque page, une seule fois, en refusant
+les gabarits et les pages sans image. **Testé au navigateur, pas déclaré**&nbsp;:
+22 images armées sur le TP de 5e, ouverture, légende, fermeture par Échap,
+zéro erreur JS&nbsp;; 1 SVG sérialisé sur la séquence 4e C8.1.
+
+Ce qui n'est PAS couvert, et qu'aucun script ne saura faire&nbsp;: savoir si
+l'image agrandie est **lisible**. Une capture floue le reste en grand, et une
+capture rognée trop court ne montrera jamais ce qu'il fallait voir. Le script
+rend l'agrandissement possible&nbsp;; il ne rend pas les images bonnes.
