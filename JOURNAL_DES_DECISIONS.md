@@ -4881,3 +4881,48 @@ Ce qui n'est PAS couvert, et qu'aucun script ne saura faire&nbsp;: savoir si
 l'image agrandie est **lisible**. Une capture floue le reste en grand, et une
 capture rognée trop court ne montrera jamais ce qu'il fallait voir. Le script
 rend l'agrandissement possible&nbsp;; il ne rend pas les images bonnes.
+
+---
+
+## Règle d'or n°93 (clé de voûte) — un TP ne suppose acquis aucun GESTE d'outil
+
+*11 août 2026. Posée par Pascal&nbsp;: « j'arrive dans un établissement et
+l'année dernière je n'ai pas fait certaines choses avec les cinquièmes. »*
+
+La règle n°87 impose à tout TP de 4e et de 3e un rappel spiralaire
+auto-suffisant. Elle porte sur les **notions**. Il manquait son pendant, qui
+porte sur les **gestes du logiciel**&nbsp;: créer et nommer son document,
+comprendre qu'il n'y a pas de bouton Enregistrer, retrouver son travail,
+exporter au bon format et à la bonne unité.
+
+**Les gestes d'outil se réenseignent à chaque niveau, en trois lignes, sans
+excuse ni renvoi à l'année précédente.** Pas « comme tu l'as vu en 5e »&nbsp;:
+la formulation doit tenir pour quelqu'un qui ne l'a jamais vu.
+
+### Pourquoi cette règle-là, et pas seulement le rappel des notions
+
+Parce que l'année précédente n'a pas toujours eu lieu. Un professeur muté en
+cours de cycle, un emploi du temps amputé, un collègue qui a fait d'autres
+choix, un élève arrivé d'un autre collège, une année où la salle informatique
+était indisponible&nbsp;: dans tous ces cas, la progression spiralaire existe
+sur le papier et pas dans la classe. **Un lot qui suppose sa propre continuité
+ne survit pas à la réalité d'un établissement.**
+
+Et le coût de la redite est faible. Un élève qui sait déjà passe en dix
+secondes&nbsp;; un élève qui ne sait pas est sauvé. L'asymétrie tranche seule.
+
+### Ce qui est fait
+
+Les trois TP de CAO portent désormais les mêmes gestes d'ouverture — pas de
+bouton Enregistrer, vérification immédiate qu'Onshape a bien gardé le
+travail — et le même palier de clôture pour exporter et retrouver son fichier.
+Le rappel de vérification en 4e et 3e dit explicitement&nbsp;: « tu l'as
+peut-être déjà fait l'an dernier&nbsp;; refais-le, c'est court. »
+
+### Ce qui n'est pas mécanisé
+
+Décider ce qui compte comme « geste d'outil » relève du jugement. Ce qui se
+mécanisera, quand la liste sera stable&nbsp;: vérifier que chaque TP d'un même
+logiciel contient bien les gestes de la liste commune. À écrire dans
+`verif_guidage.py` lorsque la progression CAO aura été menée une fois en
+classe — pas avant, sous peine de figer une liste inventée au bureau.
