@@ -4718,3 +4718,44 @@ posées, trois défauts trouvés, et ils étaient dans le TP, pas chez le lecteu
 Les trois scénarios — 5e, 4e, 3e — sont corrigés d'un coup&nbsp;: les mêmes
 termes anglais s'y étaient propagés.
 
+
+---
+
+## Règle d'or n°89 — un nombre sans son unité n'est pas une mesure
+
+*11 août 2026. Trouvée en déroulant l'export du TP de 5e sur poste réel.*
+
+La fenêtre d'export STL d'Onshape propose **Mètre** par défaut. Un dé de 50 mm
+part alors dans le fichier sous la forme du nombre `0,05`. Le fichier est
+valide, la géométrie est exacte, l'imprimante obéit — et fabrique un grain de
+cinquante microns. Rien n'a échoué&nbsp;: la description était juste, l'unité
+manquait, et la machine s'est trompée d'un facteur mille.
+
+**Toute grandeur qui sort d'un logiciel pour entrer dans un autre doit être
+accompagnée de son unité, et le TP doit faire vérifier cette unité comme un
+geste à part entière — pas comme une remarque.** Un réglage par défaut n'est
+pas un choix&nbsp;: c'est ce que quelqu'un d'autre a choisi pour nous.
+
+### Pourquoi c'est une règle et pas une astuce
+
+Parce que c'est la problématique de la séquence CAO prise en flagrant délit&nbsp;:
+*« comment décrire un objet assez précisément pour qu'une machine le fabrique
+sans nous ? »* La réponse que donne ce piège est plus forte que n'importe quel
+cours&nbsp;: la précision ne suffit pas, il faut aussi que la machine et nous
+parlions de la même chose. Un STL ne contient que des nombres&nbsp;; c'est
+l'humain qui garantit ce qu'ils signifient.
+
+### Portée
+
+Au-delà de la CAO&nbsp;: une tension relevée sans « V », une durée de séance
+sans « min », une vitesse sans « km/h » dans un tableau d'élève relèvent du
+même défaut. Partout où un lot fait transiter une valeur — export, saisie,
+tableau, capteur — l'unité fait partie de la valeur.
+
+### Ce qui est mécanisé
+
+Rien, pour l'instant, et il faut le dire&nbsp;: aucun script ne peut savoir
+qu'un `50` désigne des millimètres. Ce qui est mécanisable, en revanche, c'est
+la **présence** d'une unité à côté d'un nombre dans une consigne d'export.
+À écrire dans `verif_guidage.py` quand un deuxième cas se présentera&nbsp;:
+une règle se mécanise sur deux occurrences, pas sur une.
