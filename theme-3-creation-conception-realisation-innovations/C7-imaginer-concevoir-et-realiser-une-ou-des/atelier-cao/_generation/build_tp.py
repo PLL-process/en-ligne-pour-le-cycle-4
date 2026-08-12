@@ -70,6 +70,23 @@ STYLE_TP = """
 """
 
 
+import importlib.util as _iu
+import pathlib as _pl
+
+# Règle d'or n°92 — l'agrandisseur d'images. On IMPORTE le bloc au lieu de le
+# recopier : régénérer un TP effaçait la loupe injectée après coup, en silence.
+# Une page engendrée doit porter elle-même tout ce que les règles exigent.
+def _loupe():
+    chemin = _pl.Path(__file__).resolve().parents[3] / "audit" / "loupe.py"
+    if not chemin.exists():
+        raise SystemExit("Règle n°92 : audit/loupe.py est introuvable (%s). "
+                         "Le TP ne peut pas être engendré sans l'agrandisseur "
+                         "d'images." % chemin)
+    spec = _iu.spec_from_file_location("loupe", chemin)
+    mod = _iu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.BLOC
+
 def esc(t):
     """Le scénario autorise <b>, <i>, <code> : on n'échappe donc pas tout."""
     return t
@@ -284,6 +301,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 </section>
 <footer>%(pied)s</footer>
 </div>
+@@LOUPE@@
 </body>
 </html>
 """ % {"desc": html.escape(s.get("description", "")), "titre_page": html.escape(s["titre_page"]),
@@ -293,6 +311,13 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
        "retour": retour, "rappel": rappel}
 
     sortie = D / s["fichier_sortie"]
+    # La loupe est posée ICI, après la mise en forme : le bloc contient des
+    # « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
+    # jetons. Une seule source, importée, jamais recopiée.
+    page = page.replace("@@LOUPE@@", _loupe())
+    if "@@LOUPE@@" in page or "loupe-images-v1" not in page:
+        raise SystemExit("Règle n°92 : l'agrandisseur d'images n'a pas été posé "
+                         "dans la page — arrêt avant écriture.")
     sortie.write_text(page, encoding="utf-8")
     n_etapes = sum(len(p.get("etapes", [])) for p in paliers)
     print("TP écrit : %s (%d paliers, %d étapes, %d o)"
