@@ -54,6 +54,11 @@ STYLE_TP = """
     border-radius:8px;padding:9px 13px;margin:10px 0;color:#ffd8a0;font-size:.94em}
   .avertir b{color:var(--warn)}
   .capture{margin:10px 0}
+  /* « Où est-ce ? » : l'image du bouton, glissée entre le geste et son
+     résultat. Plus petite et décalée, pour qu'on ne la confonde pas avec
+     l'état d'écran obtenu. */
+  .capture.ou-est-ce{margin:8px 0 8px 1.1rem;border-left:3px solid #ffb300;padding-left:.7rem}
+  .capture.ou-est-ce img{max-width:min(100%,520px)}
   .capture img{max-width:100%;height:auto;border:1px solid var(--input-bd);
     border-radius:8px;background:#fff}
   .capture figcaption{font-size:.88em;color:var(--sub);margin-top:6px}
@@ -108,8 +113,23 @@ def etape_html(e, i):
             "Une consigne de manipulation sans retour d'écran attendu laisse l'élève\n"
             "découvrir son erreur trois étapes plus loin. Ajoute ce qu'il doit constater."
             % (i, str(e.get("action", ""))[:60]))
-    out = ["<li>", esc(e["action"]), icone(e.get("icone")),
-           '<span class="voir">%s</span>' % esc(e["voir"])]
+    # Une étape peut porter DEUX images : « ou_est_ce » montre le bouton, dans la
+    # barre d'outils, entre le geste et son résultat ; « capture » montre l'état
+    # d'écran obtenu. Les confondre force à choisir entre « où je clique » et
+    # « ce que j'obtiens » — deux questions différentes.
+    out = ["<li>", esc(e["action"]), icone(e.get("icone"))]
+    if e.get("ou_est_ce"):
+        if not (D / e["ou_est_ce"]).exists():
+            MANQUANTES.append(e["ou_est_ce"])
+            out.append('<div class="capture-absente">📷 <b>Capture à venir</b> — '
+                       'où trouver le bouton.</div>')
+        else:
+            out.append('<figure class="capture ou-est-ce"><img src="%s" alt="%s">'
+                       % (esc(e["ou_est_ce"]), esc(e.get("ou_est_ce_alt", ""))))
+            if e.get("ou_est_ce_legende"):
+                out.append("<figcaption>%s</figcaption>" % esc(e["ou_est_ce_legende"]))
+            out.append("</figure>")
+    out.append('<span class="voir">%s</span>' % esc(e["voir"]))
     if e.get("avertissement"):
         out.append('<div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> %s</div>'
                    % esc(e["avertissement"]))
