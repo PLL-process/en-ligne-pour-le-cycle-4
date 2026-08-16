@@ -54,3 +54,24 @@ python3 verif_guidage.py tp_5e_de_onshape.html
 ```
 
 Le TP se réassemble avec les images, et le vérificateur repasse les onze règles.
+
+## Mise à jour du 12 août 2026 — trois rendus retirés
+
+Le point du dé est passé de **5 mm** à **1,5 mm** de profondeur (voir le
+journal, et les mesures des trois variantes fabriquées dans Onshape). Les
+rendus faits avant ce changement montrent donc des creux **faux** :
+
+| Fichier retiré | Ce qu'il montrait | Ce qu'il faut refaire |
+|---|---|---|
+| `tp5e_R5_de_complet.png` | le dé aux six faces, creux de 5 mm | mêmes vues, creux de 1,5 mm |
+| `tp5e_R6_conges.png` | le dé aux congés, creux de 5 mm | idem, avec les congés 3 mm et 1 mm |
+| `tp5e_R7_de_colore.png` | le dé coloré, creux de 5 mm | idem, bronze et or |
+
+Ils ont été **supprimés plutôt que laissés en place** : une image fausse
+coûte plus cher qu'une image annoncée absente. Le générateur signale les trois
+manques à chaque construction, et la règle n°77 refuse de déclarer le TP
+publiable tant qu'ils ne sont pas refaits.
+
+Les résultats des paliers 4 et 5, eux, ne sont plus des rendus mais des
+**captures d'écran** prises sur poste réel après le passage à 1,5 mm :
+`p4_R_face1.png` et `p5_R_face6.png`.
