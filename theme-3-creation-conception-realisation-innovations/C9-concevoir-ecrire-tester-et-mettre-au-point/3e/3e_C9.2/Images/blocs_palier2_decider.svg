@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p2 d-p2">
+<title id="t-p2">Palier 2 — reconstitution du programme en blocs : décider du niveau d'alerte avec deux blocs si-sinon emboîtés</title>
+<desc id="d-p2">Reconstitution schématique (pas une capture d'écran). Dans la boucle, après la lecture du vent du palier 1, un bloc « si vitesseVent supérieur ou égal à 150 alors niveauAlerte prend la valeur 2, sinon » contient un second bloc « si vitesseVent supérieur ou égal à 100 alors niveauAlerte prend la valeur 1, sinon niveauAlerte prend la valeur 0 ». L'ordre est essentiel : on teste d'abord le seuil le plus haut. Résultat attendu au moniteur série : niveau égal 0, 1 ou 2 selon la position du potentiomètre.</desc>
+<rect width="760" height="400" fill="#050f24"/>
+<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 2 — le programme décide du niveau</text>
+<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+
+<rect x="52" y="64" width="360" height="24" rx="6" fill="#0d2347" stroke="#274a8a"/>
+<text x="64" y="81" fill="#9bbefc" font-size="11">… (les blocs de lecture du palier 1 restent au-dessus) …</text>
+
+<!-- si externe -->
+<path d="M60 100 h340 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 h-310 v56 h310 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 h-310 v96 h310 a8 8 0 0 1 8 8 v16 a8 8 0 0 1 -8 8 H60 a8 8 0 0 1 -8 -8 V108 a8 8 0 0 1 8 -8 z" fill="#5a2a7a" stroke="#c68ef2" stroke-width="2"/>
+<text x="72" y="120" fill="#fff" font-size="12" font-weight="700">❓ si  <tspan fill="#ffd66b">vitesseVent</tspan> ≥ <tspan fill="#ffd66b">150</tspan>  alors</text>
+<rect x="100" y="140" width="270" height="30" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="112" y="160" fill="#fff" font-size="12"><tspan font-weight="700" fill="#ffd66b">niveauAlerte</tspan> ← 2   <tspan fill="#ff9aa5">(alerte rouge)</tspan></text>
+<text x="72" y="212" fill="#fff" font-size="12" font-weight="700">sinon</text>
+
+<!-- si interne -->
+<path d="M100 224 h270 a7 7 0 0 1 7 7 v14 a7 7 0 0 1 -7 7 h-244 v34 h244 a7 7 0 0 1 7 7 v14 a7 7 0 0 1 -7 7 h-244 v34 h244 a7 7 0 0 1 7 7 v13 a7 7 0 0 1 -7 7 H100 a7 7 0 0 1 -7 -7 V231 a7 7 0 0 1 7 -7 z" fill="#7a3fa0" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="110" y="241" fill="#fff" font-size="11" font-weight="700">❓ si  <tspan fill="#ffd66b">vitesseVent</tspan> ≥ <tspan fill="#ffd66b">100</tspan>  alors</text>
+<rect x="132" y="256" width="220" height="26" rx="5" fill="#1d4e89" stroke="#61dafb"/>
+<text x="142" y="274" fill="#fff" font-size="11"><tspan font-weight="700" fill="#ffd66b">niveauAlerte</tspan> ← 1  <tspan fill="#ffc78a">(vigilance)</tspan></text>
+<text x="110" y="303" fill="#fff" font-size="11" font-weight="700">sinon</text>
+<rect x="132" y="312" width="220" height="26" rx="5" fill="#1d4e89" stroke="#61dafb"/>
+<text x="142" y="330" fill="#fff" font-size="11"><tspan font-weight="700" fill="#ffd66b">niveauAlerte</tspan> ← 0  <tspan fill="#9df5b9">(veille)</tspan></text>
+
+<!-- résultat attendu -->
+<rect x="440" y="90" width="280" height="240" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="580" y="114" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS voir (moniteur série)</text>
+<g font-family="monospace" font-size="12" fill="#81fba1">
+  <text x="456" y="142">vent= 42   niveau= 0</text>
+  <text x="456" y="164">vent= 118  niveau= 1</text>
+  <text x="456" y="186">vent= 187  niveau= 2</text>
+</g>
+<text x="580" y="216" text-anchor="middle" fill="#e4eaf5" font-size="11">3 positions du potentiomètre</text>
+<text x="580" y="232" text-anchor="middle" fill="#e4eaf5" font-size="11">→ 3 niveaux différents</text>
+<rect x="456" y="248" width="248" height="60" rx="8" fill="rgba(255,214,107,.08)" stroke="#ffd66b"/>
+<text x="580" y="268" text-anchor="middle" fill="#ffd66b" font-size="11" font-weight="700">⚠ L'ORDRE des deux « si » compte :</text>
+<text x="580" y="284" text-anchor="middle" fill="#e4eaf5" font-size="11">teste 150 d'abord — sinon 180 km/h</text>
+<text x="580" y="299" text-anchor="middle" fill="#e4eaf5" font-size="11">serait rangé en « vigilance » !</text>
+<text x="580" y="352" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(les valeurs affichées sont des exemples)</text>
+</svg>

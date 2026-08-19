@@ -1,0 +1,89 @@
+{
+  "lot": "Thème 3 — Station d'alerte cyclonique (programmation + recette)",
+  "nom": "La station d'alerte cyclonique se programme",
+  "agent": "Fable",
+  "theme": 3,
+  "niveau": "3e",
+  "codes": ["3e_C9.2", "3e_C8.3"],
+  "dossier_principal": "3e_C9.2",
+  "couverts_par_pointeur": ["3e_C8.3"],
+  "competences_parentes": "C9 — Concevoir, écrire, tester et mettre au point un programme · C8 — Valider les solutions techniques par des essais et des tests",
+  "duree": "4 séances de 1 h 30",
+  "branche": "fable/theme-3/station-alerte-cyclonique",
+  "date_production": "2026-08-19",
+  "fichiers": {
+    "sequence": "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html",
+    "qcm": "qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html",
+    "synthese_eleve": "Synthèses/synthese_eleve_3e_C9.2-C8.3.html",
+    "synthese_professeur": "Synthèses/synthese_professeur_3e_C9.2-C8.3.html",
+    "fiche_pedagogique": "fiche_pedagogique_3e_C9.2-C8.3.md",
+    "matrice_couverture": "matrice_couverture_3e_C9.2-C8.3.csv",
+    "sources_medias": "SOURCES_MEDIAS.md",
+    "rapport_tests": "rapport_tests_3e_C9.2-C8.3.md",
+    "readme_dossier": "README.md",
+    "programme_reference": "station_alerte_cyclonique/station_alerte_cyclonique.ino",
+    "banc_enseignant": [
+      "banc-docker/Dockerfile",
+      "banc-docker/compose.yaml",
+      "banc-docker/README_BANC.md"
+    ],
+    "images": [
+      "Images/montage_station_grove.svg",
+      "Images/chaine_info_energie_station.svg",
+      "Images/algorigramme_alerte.svg",
+      "Images/ihm_acquittement_chronogramme.svg",
+      "Images/protocole_recette_anatomie.svg",
+      "Images/blocs_palier1_lire_vent.svg",
+      "Images/blocs_palier2_decider.svg",
+      "Images/blocs_palier3_afficher.svg",
+      "Images/blocs_palier4_acquitter.svg"
+    ],
+    "readme_pointeurs": [
+      "../../../C8-valider-les-solutions-techniques-par-des/3e/3e_C8.3/README.md"
+    ]
+  },
+  "contenu": {
+    "activites": 7,
+    "activites_detail": [
+      "1. Relire le cahier des charges — les deux chaînes (C9.2)",
+      "2. De l'algorithme à l'algorigramme (C9.2, pont DNB)",
+      "3. Le programme en blocs — 4 paliers (C9.2)",
+      "4. Le bouton d'acquittement — événement et mémoire (C9.2)",
+      "5. Lire le C++ généré et diagnostiquer à la trace (C9.2)",
+      "6. Rédiger le protocole de test (C8.3)",
+      "7. Exécuter la recette et signer le PV (C8.3)"
+    ],
+    "questions_qcm": 30,
+    "questions_par_code": {"3e_C9.2": 15, "3e_C8.3": 15},
+    "questions_illustrees": 4,
+    "repartition_bonnes_reponses": "8/7/7/8 (fix_r.js, graine 20260819)",
+    "cles_localstorage": {
+      "sequence": "seq_3eC92-3eC83_station-alerte",
+      "qcm": "qcm_3eC92-3eC83_station-alerte"
+    },
+    "verrous_experientiels": [
+      "lecture (vent varié au banc)", "niveaux (3 niveaux atteints)",
+      "acquit (alarme acquittée)", "retrigger (alarme repartie après acquittement)",
+      "borne99/borne100/borne149/borne150 (frontières exécutées)", "chrono (performance mesurée)"
+    ],
+    "syntheses": 2,
+    "versions": {
+      "A_materiel": "Arduino UNO + Grove (potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C) — ArduBlock Éducation 1.7, TBT 5 V",
+      "B_simulation": "banc d'essai de la station intégré à la page (boucle 200 ms, verrous)",
+      "C_sans_materiel": "banc intégré + traces d'exécution fournies (act. 5 et 7)"
+    }
+  },
+  "compilation_reference": {
+    "fqbn": "arduino:avr:uno",
+    "resultat": "text 6764 · data 176 · bss 393 — OK (19/08/2026, avr-gcc 7.3 + ArduinoCore-avr + Grove_LCD_RGB_Backlight)",
+    "banc_docker": "banc-docker/ (enseignant, arduino-cli 1.5.1)"
+  },
+  "medias_licences": "9 SVG originaux CC0 (dont 4 reconstitutions schématiques étiquetées, jamais de fausses captures) — voir SOURCES_MEDIAS.md",
+  "hors_perimetre_modifie": [
+    "nouveautes.json (entrée du lot)",
+    "_outils/build_audit.py (OVERLAY : 3e_C9.2 et 3e_C8.3)",
+    "audit_couverture.* + index.html + README.md racine (régénérés par build_audit.py / make_index.py)",
+    "JOURNAL_DES_DECISIONS.md (entrée du lot)"
+  ],
+  "prive_non_publie": "aucune évaluation sommative incluse (à construire par l'enseignant depuis la matrice)"
+}

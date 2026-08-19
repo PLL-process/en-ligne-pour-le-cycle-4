@@ -4926,3 +4926,63 @@ mécanisera, quand la liste sera stable&nbsp;: vérifier que chaque TP d'un mêm
 logiciel contient bien les gestes de la liste commune. À écrire dans
 `verif_guidage.py` lorsque la progression CAO aura été menée une fois en
 classe — pas avant, sous peine de figer une liste inventée au bureau.
+
+## 19 août 2026 — Lot « La station d'alerte cyclonique se programme » (3e_C9.2 + 3e_C8.3)
+
+### Ce qui a été livré
+
+L'objet-fil de 3e franchit le pas : la station que les élèves avaient DÉCRITE au
+Thème 2 (3e_C4.3), la mairie la COMMANDE désormais — courrier de commande à
+l'appui, avec une exigence qui structure tout le lot : un procès-verbal de
+recette avant mise en service. Dossier principal `3e_C9.2` (COMPLET ET
+VALIDABLE), pointeur `3e_C8.3` (COUVERT PAR UNE SÉQUENCE MUTUALISÉE).
+
+Le lot indivisible : séquence 4 séances de 1 h 30 (7 activités), QCM 30 q
+(15/15 par code, 4 illustrées, répartition 8/7/7/8 par `fix_r.js` graine
+20260819), deux synthèses, fiche pédagogique, matrice de 23 notions,
+SOURCES_MEDIAS (9 SVG originaux CC0), programme C++ de référence commenté ligne
+à ligne (compilation `arduino:avr:uno` vérifiée : 6 764 o) avec banc Docker
+enseignant, suite Playwright de 51 tests committée, rapport de tests.
+
+### Trois choix qui méritent d'être retenus
+
+**Le banc d'essai INTÉGRÉ comme colonne vertébrale.** La station simulée vit en
+haut de page (boucle à 200 ms comme le vrai programme, LCD, DEL, buzzer, bouton
+d'acquittement, chrono de performance) et sert les quatre séances : découverte
+en S2, expériences d'acquittement en S3, exécution de la recette en S4. Les
+verrous `window.__exp` y tracent dix expériences (variation, trois niveaux,
+acquittement, ré-armement, quatre frontières, chrono) : les activités 3, 4 et 7
+REFUSENT la validation tant que la manipulation n'a pas réellement eu lieu.
+
+**La séance 2 au gabarit du « dé de 5e ».** Demande explicite de Pascal : la
+programmation se guide palier par palier (règles n°72-82) — un geste, l'image du
+résultat attendu, le rituel d'enregistrement, l'aide qui décroît. Contrainte
+assumée : pas d'accès à ArduBlock Éducation depuis la session (site DuinoEdu
+inaccessible le 19/08), donc les planches sont des RECONSTITUTIONS schématiques
+du programme en blocs, étiquetées comme telles dans l'image ET dans l'alt —
+jamais de faux noms de boutons (règle n°73), valeurs déclarées comme exemples
+(règle n°75). Les emplacements accueilleront des captures du poste réel si
+Pascal en fournit.
+
+**C8.3 pris au verbe.** « PROPOSER un protocole de test » : l'activité 6 fait
+rédiger le protocole AVANT toute exécution (nominaux, frontières 99/100/149/150,
+performance chronométrée, deux essais d'interaction, règle de décision), et
+l'activité 7 le fait exécuter au banc — tableau essai/attendu/observé/verdict
+rempli PENDANT, PV signé. Le QCM consolide, il ne remplace pas la production.
+
+### La vérification, dans l'esprit de la maison
+
+La suite Playwright SIMULE la séquence comme un élève et prend une capture
+d'écran à chaque action (32 captures livrées avec le lot, hors dépôt) — y
+compris la preuve que le verrou refuse AVANT la manipulation et accepte APRÈS.
+Trois scénarios de notes calculés à la main puis vérifiés en machine.
+`verif_regles_audit.py` : 0 manquement mécanique (étayages 11/11, durées 285+10
+pour 360, formulations officielles recopiées, accessibilité statique).
+Mobile 390 px : débordement horizontal ramené de 137 px à 0 (tables passées en
+défilement local sous 680 px).
+
+### Restes à faire consignés
+
+Banc Docker à exécuter sur le poste de Pascal ; version d'ArduBlock Éducation à
+revalider d'un clic à la rentrée ; montage 🅰 à faire vivre au labo ; captures
+réelles d'ArduBlock bienvenues en remplacement des reconstitutions.

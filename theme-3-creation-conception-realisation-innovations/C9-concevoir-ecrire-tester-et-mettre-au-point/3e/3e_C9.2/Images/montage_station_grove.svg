@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-montage d-montage">
+<title id="t-montage">Montage de la station d'alerte cyclonique : Arduino UNO avec shield Grove et cinq modules câblés</title>
+<desc id="d-montage">Schéma de câblage à lire. Au centre, la carte Arduino UNO surmontée de son shield Grove (sélecteur sur 5 V). Cinq modules Grove y sont reliés par des câbles à quatre fils : en haut à gauche, l'afficheur LCD RGB branché sur un connecteur I2C ; en haut à droite, le potentiomètre qui simule l'anémomètre, branché sur A1 ; en bas à gauche, le bouton d'acquittement branché sur D2 ; en bas au centre, la DEL rouge d'alerte branchée sur D3 ; en bas à droite, le buzzer branché sur D5. Un encadré rappelle : montage en très basse tension 5 volts uniquement, alimentation par le câble USB de l'ordinateur.</desc>
+<rect width="900" height="560" fill="#050f24"/>
+<text x="450" y="34" text-anchor="middle" fill="#81aaff" font-size="22" font-weight="700">Le montage de la station — qui se branche où ?</text>
+
+<!-- Carte centrale -->
+<g>
+  <rect x="330" y="215" width="240" height="150" rx="10" fill="#0d5c63" stroke="#61dafb" stroke-width="2"/>
+  <rect x="345" y="230" width="210" height="120" rx="8" fill="#0a3d42" stroke="#2e5d9f"/>
+  <text x="450" y="268" text-anchor="middle" fill="#e4eaf5" font-size="16" font-weight="700">Arduino UNO</text>
+  <text x="450" y="290" text-anchor="middle" fill="#9bbefc" font-size="13">+ shield Grove</text>
+  <text x="450" y="312" text-anchor="middle" fill="#ffd66b" font-size="12">sélecteur : 5 V</text>
+  <text x="450" y="336" text-anchor="middle" fill="#9bbefc" font-size="11">(le « cerveau » : il exécute le programme)</text>
+  <!-- USB -->
+  <rect x="418" y="365" width="64" height="18" rx="4" fill="#173666" stroke="#2e5d9f"/>
+  <text x="450" y="379" text-anchor="middle" fill="#e4eaf5" font-size="11">USB</text>
+  <line x1="450" y1="383" x2="450" y2="430" stroke="#ffb454" stroke-width="3"/>
+  <text x="450" y="450" text-anchor="middle" fill="#ffb454" font-size="12">vers l'ordinateur (téléversement + énergie 5 V)</text>
+</g>
+
+<!-- LCD, I2C, haut gauche -->
+<g>
+  <rect x="60" y="80" width="230" height="100" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+  <rect x="78" y="96" width="194" height="44" rx="4" fill="#123322" stroke="#2f6b40"/>
+  <text x="175" y="115" text-anchor="middle" fill="#81fba1" font-size="12" font-family="monospace">Veille</text>
+  <text x="175" y="132" text-anchor="middle" fill="#81fba1" font-size="12" font-family="monospace">Vent: 42 km/h</text>
+  <text x="175" y="162" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">Afficheur LCD RGB Grove</text>
+  <text x="175" y="176" text-anchor="middle" fill="#9bbefc" font-size="11">affiche le niveau + la vitesse (SORTIE)</text>
+  <path d="M290 130 C 330 150, 330 200, 358 218" fill="none" stroke="#c68ef2" stroke-width="3"/>
+  <rect x="296" y="150" width="52" height="22" rx="6" fill="#2b1a3f" stroke="#c68ef2"/>
+  <text x="322" y="166" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">I2C</text>
+</g>
+
+<!-- Potentiomètre, A1, haut droite -->
+<g>
+  <rect x="620" y="80" width="230" height="100" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+  <circle cx="680" cy="120" r="24" fill="#173666" stroke="#61dafb" stroke-width="2"/>
+  <line x1="680" y1="120" x2="694" y2="102" stroke="#ffd66b" stroke-width="3"/>
+  <text x="765" y="112" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">Potentiomètre Grove</text>
+  <text x="765" y="128" text-anchor="middle" fill="#9bbefc" font-size="11">= anémomètre SIMULÉ</text>
+  <text x="765" y="143" text-anchor="middle" fill="#9bbefc" font-size="11">signal analogique 0 à 5 V (ENTRÉE)</text>
+  <text x="735" y="168" text-anchor="middle" fill="#ffd66b" font-size="11">tourner = faire « souffler » le vent</text>
+  <path d="M620 140 C 570 165, 560 200, 545 218" fill="none" stroke="#61dafb" stroke-width="3"/>
+  <rect x="556" y="158" width="46" height="22" rx="6" fill="#173666" stroke="#61dafb"/>
+  <text x="579" y="174" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">A1</text>
+</g>
+
+<!-- Bouton D2 bas gauche -->
+<g>
+  <rect x="60" y="380" width="210" height="95" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+  <circle cx="115" cy="420" r="18" fill="#3a1218" stroke="#ff7b88" stroke-width="2"/>
+  <circle cx="115" cy="420" r="9" fill="#ff7b88"/>
+  <text x="190" y="412" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">Bouton Grove</text>
+  <text x="190" y="428" text-anchor="middle" fill="#9bbefc" font-size="11">ACQUITTER l'alarme</text>
+  <text x="190" y="443" text-anchor="middle" fill="#9bbefc" font-size="11">signal logique 0 / 1 (ENTRÉE)</text>
+  <text x="165" y="464" text-anchor="middle" fill="#ffd66b" font-size="11">l'humain répond à la machine</text>
+  <path d="M270 405 C 315 390, 320 370, 352 362" fill="none" stroke="#61dafb" stroke-width="3"/>
+  <rect x="292" y="368" width="46" height="22" rx="6" fill="#173666" stroke="#61dafb"/>
+  <text x="315" y="384" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">D2</text>
+</g>
+
+<!-- DEL D3 bas centre -->
+<g>
+  <rect x="330" y="470" width="180" height="80" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+  <circle cx="368" cy="505" r="13" fill="#ff2d3e"/>
+  <path d="M368 487 l0 -8 M355 492 l-6 -6 M381 492 l6 -6" stroke="#ff7b88" stroke-width="2"/>
+  <text x="440" y="500" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">DEL rouge Grove</text>
+  <text x="440" y="516" text-anchor="middle" fill="#9bbefc" font-size="11">signal visuel (SORTIE)</text>
+  <text x="420" y="537" text-anchor="middle" fill="#9bbefc" font-size="11">allumée dès la vigilance</text>
+  <path d="M420 470 C 420 440, 425 400, 430 366" fill="none" stroke="#61dafb" stroke-width="3"/>
+  <rect x="398" y="408" width="46" height="22" rx="6" fill="#173666" stroke="#61dafb"/>
+  <text x="421" y="424" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">D3</text>
+</g>
+
+<!-- Buzzer D5 bas droite -->
+<g>
+  <rect x="620" y="380" width="210" height="95" rx="10" fill="#0d2347" stroke="#61dafb" stroke-width="2"/>
+  <circle cx="675" cy="420" r="17" fill="#173666" stroke="#ffd66b" stroke-width="2"/>
+  <circle cx="675" cy="420" r="5" fill="#ffd66b"/>
+  <path d="M699 410 a14 14 0 0 1 0 20 M706 403 a22 22 0 0 1 0 34" fill="none" stroke="#ffd66b" stroke-width="2"/>
+  <text x="762" y="412" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">Buzzer Grove</text>
+  <text x="762" y="428" text-anchor="middle" fill="#9bbefc" font-size="11">alarme sonore (SORTIE)</text>
+  <text x="762" y="443" text-anchor="middle" fill="#9bbefc" font-size="11">sonne en alerte rouge</text>
+  <text x="737" y="464" text-anchor="middle" fill="#ffd66b" font-size="11">acquittable par le bouton</text>
+  <path d="M620 410 C 585 395, 580 375, 548 364" fill="none" stroke="#61dafb" stroke-width="3"/>
+  <rect x="562" y="376" width="46" height="22" rx="6" fill="#173666" stroke="#61dafb"/>
+  <text x="585" y="392" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">D5</text>
+</g>
+
+<!-- Sécurité -->
+<g>
+  <rect x="620" y="495" width="260" height="52" rx="8" fill="rgba(255,214,107,.08)" stroke="#ffd66b"/>
+  <text x="750" y="516" text-anchor="middle" fill="#ffd66b" font-size="12" font-weight="700">⚡ Sécurité : très basse tension 5 V</text>
+  <text x="750" y="534" text-anchor="middle" fill="#e4eaf5" font-size="11">jamais de secteur 230 V — câblage vérifié avant l'USB</text>
+</g>
+
+<!-- Légende entrées/sorties -->
+<g>
+  <rect x="20" y="495" width="250" height="52" rx="8" fill="#0a1b3d" stroke="#274a8a"/>
+  <line x1="34" y1="514" x2="64" y2="514" stroke="#61dafb" stroke-width="3"/>
+  <text x="70" y="518" fill="#e4eaf5" font-size="11">câble de signal (information)</text>
+  <line x1="34" y1="534" x2="64" y2="534" stroke="#ffb454" stroke-width="3"/>
+  <text x="70" y="538" fill="#e4eaf5" font-size="11">câble d'énergie (USB 5 V)</text>
+</g>
+</svg>

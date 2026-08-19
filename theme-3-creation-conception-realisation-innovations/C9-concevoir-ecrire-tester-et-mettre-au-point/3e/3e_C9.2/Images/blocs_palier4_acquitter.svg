@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p4 d-p4">
+<title id="t-p4">Palier 4 — reconstitution du programme en blocs : le bouton acquitte le buzzer, un changement de niveau relance l'alarme</title>
+<desc id="d-p4">Reconstitution schématique (pas une capture d'écran). Trois groupes de blocs ajoutés dans la boucle. Groupe 1, lire l'humain : « si lire broche numérique D2 est vrai, alors alarmeAcquittee prend la valeur vrai ». Groupe 2, détecter l'événement : « si niveauAlerte est différent de niveauPrecedent, alors alarmeAcquittee prend la valeur faux » — un changement de niveau est un nouvel événement, l'alarme doit repartir. Groupe 3, commander le buzzer : « le buzzer D5 sonne si niveauAlerte égale 2 ET alarmeAcquittee est faux », puis « niveauPrecedent prend la valeur de niveauAlerte » pour mémoriser d'un tour à l'autre. Résultat attendu : en alerte rouge le buzzer sonne, un appui le coupe, la DEL et l'écran restent en alerte, et si le niveau change puis revient à 2 le buzzer repart.</desc>
+<rect width="760" height="400" fill="#050f24"/>
+<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 4 — l'humain entre dans la boucle</text>
+<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+
+<g font-size="11" fill="#fff">
+  <text x="60" y="82" fill="#61dafb" font-size="12" font-weight="700">① Écouter l'humain</text>
+  <rect x="60" y="90" width="352" height="46" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+  <text x="72" y="108" font-weight="700">❓ si lire broche numérique <tspan fill="#ffd66b">D2</tspan> = appuyé :</text>
+  <text x="86" y="126"><tspan fill="#ffd66b" font-weight="700">alarmeAcquittee</tspan> ← vrai   <tspan fill="#9df5b9">(l'agent a répondu)</tspan></text>
+
+  <text x="60" y="160" fill="#61dafb" font-size="12" font-weight="700">② Détecter l'ÉVÉNEMENT « le niveau vient de changer »</text>
+  <rect x="60" y="168" width="352" height="46" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+  <text x="72" y="186" font-weight="700">❓ si <tspan fill="#ffd66b">niveauAlerte</tspan> ≠ <tspan fill="#ffd66b">niveauPrecedent</tspan> :</text>
+  <text x="86" y="204"><tspan fill="#ffd66b" font-weight="700">alarmeAcquittee</tspan> ← faux   <tspan fill="#ff9aa5">(nouvel événement : l'alarme repart)</tspan></text>
+
+  <text x="60" y="238" fill="#61dafb" font-size="12" font-weight="700">③ Commander le buzzer, puis mémoriser</text>
+  <rect x="60" y="246" width="352" height="46" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+  <text x="72" y="264">buzzer <tspan font-weight="700">D5</tspan> : sonne si <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan> = 2</text>
+  <text x="86" y="282"><tspan font-weight="700">ET</tspan> <tspan fill="#ffd66b" font-weight="700">alarmeAcquittee</tspan> = faux</text>
+  <rect x="60" y="300" width="352" height="30" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
+  <text x="72" y="320"><tspan fill="#ffd66b" font-weight="700">niveauPrecedent</tspan> ← <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan>   <tspan fill="#9df5b9">(mémoire du tour d'avant)</tspan></text>
+</g>
+
+<!-- résultat attendu -->
+<rect x="440" y="80" width="280" height="270" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="580" y="104" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS constater</text>
+<g font-size="11" fill="#e4eaf5">
+  <text x="456" y="130">1. Potentiomètre à fond → <tspan fill="#ff7b88" font-weight="700">🔊 le buzzer sonne</tspan></text>
+  <text x="456" y="152">2. Appui sur le bouton → <tspan fill="#81fba1" font-weight="700">🔇 il se tait</tspan></text>
+  <text x="472" y="168" fill="#9bbefc">mais l'écran reste ROUGE, la DEL allumée</text>
+  <text x="456" y="192">3. Vent redescendu puis remonté :</text>
+  <text x="472" y="208"><tspan fill="#ff7b88" font-weight="700">🔊 le buzzer REPART tout seul</tspan></text>
+  <text x="472" y="224" fill="#9bbefc">(nouvel événement = nouvel avertissement)</text>
+</g>
+<rect x="456" y="240" width="248" height="66" rx="8" fill="rgba(198,142,242,.1)" stroke="#c68ef2"/>
+<text x="580" y="260" text-anchor="middle" fill="#c68ef2" font-size="11" font-weight="700">C'est ça, l'interaction humain-machine :</text>
+<text x="580" y="276" text-anchor="middle" fill="#e4eaf5" font-size="11">la machine alerte, l'humain répond,</text>
+<text x="580" y="291" text-anchor="middle" fill="#e4eaf5" font-size="11">la machine s'en souvient — et sait oublier.</text>
+<text x="580" y="332" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(teste les 3 étapes dans cet ordre)</text>
+</svg>

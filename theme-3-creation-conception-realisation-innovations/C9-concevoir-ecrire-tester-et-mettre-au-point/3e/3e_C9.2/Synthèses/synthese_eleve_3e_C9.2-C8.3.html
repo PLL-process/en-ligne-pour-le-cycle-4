@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
+<style>
+  :root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--ko:#ff7b88}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:14px 18px 50px;line-height:1.55;font-size:.97em}
+  .page{max-width:940px;margin:0 auto}
+  h1{font-size:1.45em;color:var(--title);text-align:center}
+  .sous{text-align:center;color:var(--sub);margin-top:-8px}
+  h2{font-size:1.08em;color:var(--head);border-bottom:1px solid var(--border);padding-bottom:4px;margin:22px 0 8px}
+  .bloc{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#173666;color:var(--hl)}
+  ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+  .ok{color:var(--ok)}.warn{color:var(--warn)}.ko{color:var(--ko)}
+  figure{margin:10px 0;text-align:center}
+  figure img{width:100%;max-width:820px;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  code{background:#08132c;padding:1px 6px;border-radius:5px;font-family:monospace}
+  #navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a}
+  #navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+  #navharm a:hover{border-color:#61dafb;color:#61dafb}
+  #navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+  @media print{body{background:#fff;color:#111;font-size:9.5pt}.bloc{background:#fff;border-color:#999}h1,h2,th{color:#111}th{background:#eee}.ok,.warn,.ko{color:#111;font-weight:bold}#navharm{display:none}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../../index.html">⌂ Accueil</a><a href="../sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">← Séquence</a></nav>
+<div class="page">
+<h1>📄 Synthèse — La station d'alerte cyclonique se programme</h1>
+<p class="sous">3e_C9.2 + 3e_C8.3 · Thème 3 · Martinique — ce qu'il faut savoir refaire</p>
+
+<div class="bloc">
+<h2 style="margin-top:0">🧭 Du besoin au programme</h2>
+<ul>
+  <li>Le <b>cahier des charges</b> impose des exigences de <b>comportement</b> (ce que fait la station) et de <b>performance</b> (chiffrées : « moins d'une seconde », donc mesurables).</li>
+  <li>L'<b>algorithme</b> s'élabore en français AVANT les blocs : variables, seuils, ordre des tests. Dans une cascade SI/SINON, <span class="warn">le seuil le plus HAUT se teste en PREMIER</span> — sinon 180 km/h finirait en « vigilance ».</li>
+  <li>L'<b>algorigramme</b> (🎓 DNB) : ovale = début/fin · rectangle = action · losange = décision OUI/NON · flèche qui remonte = <b>boucle</b> (une station de surveillance recommence sans fin).</li>
+  <li>On programme <b>palier par palier</b> : lire (A1, bloc « calibrer » : 512 → ≈ 125 km/h) → décider (les deux SI) → afficher (LCD couleur, DEL) — en <b>testant et ré-enregistrant à chaque palier</b>.</li>
+</ul>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🖐 L'interaction humain-machine (le cœur de 3e_C9.2)</h2>
+<ul>
+  <li>Le bouton (D2) est un <b>capteur de décision humaine</b> : fonction Acquérir — l'information ENTRE dans la station.</li>
+  <li>L'<b>acquittement</b> : un appui bref à effet durable → un <b>booléen-mémoire</b> <code>alarmeAcquittee</code>. Le buzzer sonne si (niveau = 2) <b>ET</b> (non acquitté). <span class="ok">On coupe le SON, jamais l'INFORMATION</span> : écran et DEL restent en alerte.</li>
+  <li><b>État ≠ événement</b> : l'état dure (« alerte »), l'événement est l'instant du changement. Détection : <code>niveauAlerte ≠ niveauPrecedent</code> → l'alarme se <b>ré-arme</b> (nouvel événement, nouvel avertissement).</li>
+  <li>Les blocs deviennent du C++ : « calibrer » → <code>map()</code> · « si/sinon » → <code>if/else</code> · l'affichage vit dans le <b>sous-programme</b> <code>afficherEtat()</code> (structuration exigée en 3e).</li>
+  <li><b>Mise au point</b> : la trace du moniteur série innocente la chaîne tronçon par tronçon — on cherche le PREMIER endroit où les valeurs deviennent fausses.</li>
+</ul>
+<figure><img src="../Images/ihm_acquittement_chronogramme.svg" alt="Chronogramme de l'acquittement : le buzzer se tait à l'appui, l'écran et la DEL restent, et une nouvelle alerte fait repartir le buzzer"></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">📋 Le protocole de test (le cœur de 3e_C8.3)</h2>
+<ul>
+  <li>Un protocole se rédige <b>AVANT</b> l'exécution : essais ordonnés + valeurs d'entrée + résultats <b>ATTENDUS</b>. <span class="ko">Un test qu'on n'a pas écrit avant n'est pas un test : c'est une impression.</span></li>
+  <li>Quatre familles d'essais pour la station : <b>nominaux</b> (42, 120, 200) · <b>cas limites aux frontières</b> (99/100 et 149/150 — les bugs vivent là : un ≥ écrit > ne se voit QUE sur la valeur pile) · <b>performance mesurée</b> (chrono &lt; 1 s) · <b>interaction</b> (2 essais : le son se coupe à l'appui, l'alarme repart à l'événement suivant).</li>
+  <li>Le tableau de recette : <b>essai · attendu · observé · verdict</b>. Attendu rempli AVANT (cahier des charges), observé rempli <b>PENDANT</b> l'essai.</li>
+  <li><b>Règle de décision</b> écrite à l'avance (ex. : 10/10 sinon ajournée). Une recette ne se moyenne pas : toute non-conformité → réserve ou ajournement.</li>
+  <li>Après CHAQUE correction : <span class="warn">on rejoue TOUT le protocole</span> (la non-régression).</li>
+  <li>Le <b>PV de recette</b> = les faits + la décision + la signature : le document qui autorise la mise en service. Il prouve la conformité au cahier des charges — pas l'absence de tout défaut.</li>
+</ul>
+<figure><img src="../Images/protocole_recette_anatomie.svg" alt="Anatomie d'un protocole de test : frontières encadrées par 99, 100, 149, 150, tableau essai attendu observé verdict, et chronomètre de la performance"></figure>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🇬🇧 Vocabulaire</h2>
+<table>
+<tr><th>Français</th><th>English</th><th>Français</th><th>English</th></tr>
+<tr><td>programme</td><td>program</td><td>seuil</td><td>threshold</td></tr>
+<tr><td>boucle</td><td>loop</td><td>événement</td><td>event</td></tr>
+<tr><td>acquitter</td><td>to acknowledge</td><td>protocole de test</td><td>test protocol</td></tr>
+<tr><td>recette</td><td>acceptance test</td><td>téléverser</td><td>to upload</td></tr>
+</table>
+</div>
+
+<div class="bloc">
+<h2 style="margin-top:0">🎯 En une phrase</h2>
+<p style="text-align:center;font-size:1.03em">Un programme commande un système réel en dialoguant avec l'humain (capter, décider, <b>acquitter</b>, ré-armer) — et il n'est <b>validé</b> que lorsqu'un protocole écrit À L'AVANCE, frontières et performance comprises, a été exécuté et signé au procès-verbal.</p>
+</div>
+</div>
+</body>
+</html>

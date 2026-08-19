@@ -650,6 +650,48 @@ OVERLAY = {
                   "encore en place — remplacement possible par le QCM 30 q ; l'iframe "
                   "Vittascience exige une connexion (versions 🅲 hors ligne prévues).",
     ),
+    # ── Thème 3 · Station d'alerte cyclonique : programmation + recette (Fable, 2026-08-19) ──
+    "3e_C9.2": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Séquence « La station d'alerte cyclonique se programme » (objet-fil "
+                "3e, commande de la mairie avec exigence de PV de recette) : 4 séances "
+                "de 1 h 30, 7 activités, banc d'essai de la station INTÉGRÉ (curseur de "
+                "vent, LCD, DEL, buzzer, bouton d'acquittement, chrono, boucle 200 ms) "
+                "avec verrous expérientiels sur les activités 3, 4 et 7 ; programmation "
+                "ArduBlock par paliers façon « dé de 5e » (image du résultat attendu et "
+                "rituel d'enregistrement à chaque palier), acquittement et détection "
+                "d'événement (IHM du libellé prise au mot), lecture guidée du C++ généré, "
+                "diagnostic sur trace série ; QCM 30 q (15/15, 4 illustrées, 8/7/7/8), "
+                "2 synthèses, fiche, matrice 23 notions, 9 SVG originaux CC0, programme "
+                "C++ de référence commenté (compilation arduino:avr:uno vérifiée : "
+                "6 764 o) + banc Docker enseignant. Suite Playwright de 51 tests, tous "
+                "passés, qui SIMULE la séquence comme un élève avec 32 captures d'écran.",
+        anomalies="Planches ArduBlock = reconstitutions schématiques étiquetées (pas de "
+                  "captures : site DuinoEdu inaccessible le 19/08/2026, version 1.7 à "
+                  "revalider en début d'année) ; banc Docker non exécuté en session "
+                  "(réservé au poste enseignant). Aucun corrigé sommatif publié.",
+        accessibilite="Navigation clavier + skip-link, aria complets, loupe sur toutes "
+                      "les images (règle n°92), mode essentiel, étayages 11/11, "
+                      "prefers-reduced-motion, mobile 390 px sans défilement horizontal "
+                      "(vérifié), impression A4. Non vérifiés automatiquement : "
+                      "contraste mesuré, lecteur d'écran réel, zoom 200 %.",
+        medias="9 SVG originaux CC0 écrits à la main (title/desc de 504 à 1 188 "
+               "caractères) — SOURCES_MEDIAS.md complet.",
+    ),
+    "3e_C8.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Proposer un protocole de test : séance 4 entière de la séquence "
+                "« La station d'alerte cyclonique se programme » (3e_C9.2) — l'élève "
+                "RÉDIGE son protocole (act. 6 : nominaux, frontières 99/100/149/150, "
+                "performance chronométrée, interaction) puis l'EXÉCUTE au banc et signe "
+                "le PV (act. 7, verrous sur les frontières et le chrono). 15 questions "
+                "de QCM dédiées. README pointeur en place.",
+        anomalies="",
+    ),
     # ── Thème 3 · Arc variables, marche 5e (Fable, 2026-07-30) ──
     "5e_C9.1": dict(
         statut="COMPLET ET VALIDABLE",

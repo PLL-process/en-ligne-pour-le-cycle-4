@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p3 d-p3">
+<title id="t-p3">Palier 3 — reconstitution du programme en blocs : afficher le niveau sur l'écran LCD couleur et commander la DEL</title>
+<desc id="d-p3">Reconstitution schématique (pas une capture d'écran). Après la décision du palier 2, trois branches d'affichage selon niveauAlerte : si le niveau vaut 2, fond du LCD rouge et texte « ALERTE ROUGE ! » ; si le niveau vaut 1, fond orange et texte « Vigilance orange » ; sinon fond vert et texte « Veille ». La deuxième ligne du LCD affiche « Vent: » suivi de la vitesse. Un bloc commande la DEL sur D3 : allumée si le niveau est supérieur ou égal à 1, éteinte sinon. Résultat attendu : trois photos d'écran LCD, vert, orange, rouge, avec la vitesse en deuxième ligne, et la DEL allumée dès le niveau vigilance.</desc>
+<rect width="760" height="380" fill="#050f24"/>
+<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 3 — la station parle : LCD couleur + DEL</text>
+<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+
+<rect x="52" y="64" width="360" height="24" rx="6" fill="#0d2347" stroke="#274a8a"/>
+<text x="64" y="81" fill="#9bbefc" font-size="11">… (lecture palier 1, décision palier 2 au-dessus) …</text>
+
+<g font-size="11" fill="#fff">
+  <rect x="60" y="100" width="352" height="56" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+  <text x="72" y="118" font-weight="700">❓ si <tspan fill="#ffd66b">niveauAlerte</tspan> = 2 :</text>
+  <text x="86" y="134">LCD : couleur du fond <tspan fill="#ff9aa5" font-weight="700">rouge (255, 0, 0)</tspan></text>
+  <text x="86" y="149">LCD ligne 1 : écrire « <tspan font-weight="700">ALERTE ROUGE !</tspan> »</text>
+
+  <rect x="60" y="162" width="352" height="56" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+  <text x="72" y="180" font-weight="700">❓ sinon, si <tspan fill="#ffd66b">niveauAlerte</tspan> = 1 :</text>
+  <text x="86" y="196">LCD : couleur du fond <tspan fill="#ffc78a" font-weight="700">orange (255, 120, 0)</tspan></text>
+  <text x="86" y="211">LCD ligne 1 : écrire « <tspan font-weight="700">Vigilance orange</tspan> »</text>
+
+  <rect x="60" y="224" width="352" height="56" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+  <text x="72" y="242" font-weight="700">❓ sinon :</text>
+  <text x="86" y="258">LCD : couleur du fond <tspan fill="#9df5b9" font-weight="700">vert (0, 180, 60)</tspan></text>
+  <text x="86" y="273">LCD ligne 1 : écrire « <tspan font-weight="700">Veille</tspan> »</text>
+
+  <rect x="60" y="288" width="352" height="30" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
+  <text x="72" y="308">LCD ligne 2 : écrire « Vent: » puis <tspan fill="#ffd66b" font-weight="700">vitesseVent</tspan> puis « km/h »</text>
+
+  <rect x="60" y="326" width="352" height="30" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+  <text x="72" y="346">DEL broche <tspan font-weight="700">D3</tspan> : allumée si <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan> ≥ 1, éteinte sinon</text>
+</g>
+
+<!-- résultat attendu : 3 LCD -->
+<rect x="440" y="90" width="280" height="270" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="580" y="112" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS voir (écran LCD)</text>
+<g font-family="monospace" font-size="12">
+  <rect x="466" y="124" width="228" height="48" rx="5" fill="#0a4020" stroke="#81fba1"/>
+  <text x="478" y="144" fill="#d9ffe6">Veille</text>
+  <text x="478" y="162" fill="#d9ffe6">Vent: 42 km/h</text>
+  <circle cx="708" cy="148" r="7" fill="#333" stroke="#666"/>
+
+  <rect x="466" y="182" width="228" height="48" rx="5" fill="#7a4a10" stroke="#ffb454"/>
+  <text x="478" y="202" fill="#fff2dd">Vigilance orange</text>
+  <text x="478" y="220" fill="#fff2dd">Vent: 118 km/h</text>
+  <circle cx="708" cy="206" r="7" fill="#ff2d3e"/>
+
+  <rect x="466" y="240" width="228" height="48" rx="5" fill="#7a1020" stroke="#ff7b88"/>
+  <text x="478" y="260" fill="#ffe0e4">ALERTE ROUGE !</text>
+  <text x="478" y="278" fill="#ffe0e4">Vent: 187 km/h</text>
+  <circle cx="708" cy="264" r="7" fill="#ff2d3e"/>
+</g>
+<text x="580" y="308" text-anchor="middle" fill="#e4eaf5" font-size="11">le rond à droite = la DEL (D3) :</text>
+<text x="580" y="323" text-anchor="middle" fill="#e4eaf5" font-size="11">éteinte en veille, allumée dès la vigilance</text>
+<text x="580" y="348" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(les vitesses affichées sont des exemples)</text>
+</svg>
