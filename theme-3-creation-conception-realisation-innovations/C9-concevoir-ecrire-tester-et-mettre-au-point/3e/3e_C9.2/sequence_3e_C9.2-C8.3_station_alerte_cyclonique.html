@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl);overflow-wrap:anywhere}
+  code{overflow-wrap:anywhere}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .courrier{background:#f4efe3;color:#26221a;border-radius:10px;padding:18px 22px;font-size:.95em;margin:12px 0;border:1px solid #c9bf9f}
+  .courrier .entete{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:.85em;color:#5a5340;border-bottom:1px solid #c9bf9f;padding-bottom:6px;margin-bottom:10px}
+  .courrier b{color:#1F3864}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  @media(max-width:680px){table.refs,table.recette{display:block;overflow-x:auto}}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  details.etayage{margin:8px 0;border:1px solid #3f6bb5;border-left:4px solid #61dafb;border-radius:8px;background:rgba(13,35,71,.55);padding:6px 12px}
+  details.etayage>summary{cursor:pointer;font-weight:600;color:#61dafb}
+  details.etayage p{margin:6px 0}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  @media print{details.etayage{break-inside:avoid}}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  /* ── Banc de simulation de la station ── */
+  .banc{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;align-items:start}
+  @media(max-width:720px){.banc{grid-template-columns:1fr}}
+  .lcd-sim{border-radius:10px;padding:14px 16px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.25em;line-height:1.5;border:3px solid #222;min-height:74px;transition:background .3s;color:#08320f;box-shadow:inset 0 0 18px rgba(0,0,0,.25)}
+  .lcd-vert{background:#57d98a}
+  .lcd-orange{background:#f2a94f;color:#4a2600}
+  .lcd-rouge{background:#f2545f;color:#3d0208}
+  .station-io{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .del-sim{width:26px;height:26px;border-radius:50%;background:#3a3a3a;border:3px solid #555;display:inline-block;vertical-align:middle}
+  .del-sim.on{background:#ff2d3e;box-shadow:0 0 14px #ff2d3e}
+  .buzzer-sim{font-size:1.15em;padding:5px 12px;border-radius:8px;border:2px solid var(--border);background:#08132c}
+  .buzzer-sim.on{border-color:var(--err);color:var(--err);animation:buzz .5s infinite alternate}
+  @keyframes buzz{from{box-shadow:0 0 2px #ff7b88}to{box-shadow:0 0 14px #ff7b88}}
+  .btn-acquit{background:#8a1d2c;border:2px solid #ff7b88;color:#fff;border-radius:12px;padding:12px 20px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95em}
+  .btn-acquit:hover,.btn-acquit:focus-visible{background:#a92c3d}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .verrous-liste{font-size:.85em;margin:10px 0 0;padding:0;list-style:none}
+  .verrous-liste li{margin:3px 0;color:var(--sub)}
+  .verrous-liste li.fait{color:var(--ok)}
+  .palier{border:1px solid var(--input-bd);border-left:5px solid var(--head);border-radius:0 12px 12px 0;background:rgba(13,35,71,.5);padding:12px 16px;margin:14px 0}
+  .palier h4{margin:0 0 8px;color:var(--head)}
+  .palier .faire{color:var(--hl);font-weight:600}
+  .palier .rituel{font-size:.85em;color:var(--warn);border-top:1px dashed var(--border);margin-top:10px;padding-top:8px}
+  pre.code{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 16px;overflow-x:auto;font-size:.85em;line-height:1.5;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+  pre.code .cmt{color:#7fa650}
+  pre.code .kw{color:#61dafb}
+  pre.code .fn{color:#c68ef2}
+  pre.code .num{color:#ffd66b}
+  table.recette{width:100%;border-collapse:collapse;font-size:.85em}
+  table.recette th,table.recette td{border:1px solid var(--border);padding:6px 8px;text-align:left;vertical-align:middle}
+  table.recette th{background:var(--input-bg);color:var(--hl)}
+  table.recette select,table.recette input{padding:4px 6px;font-size:.95em}
+  .regle-or-schema{border:3px solid #1F3864;border-radius:12px;padding:14px 18px;margin:18px 0;background:#EAF1FB;color:#111;font-weight:600;line-height:1.5}
+  .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
+  .rappel-spiralaire h2{margin:.1em 0 .5em}
+  .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}
+  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+  .gestes-outil{border:1px solid var(--border);border-left:4px solid #ffb300;border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel)}
+  .gestes-outil h2{margin:0 0 .35rem;font-size:1.05em}
+  .gestes-outil .pourquoi{margin:.2rem 0 .8rem;opacity:.85;font-size:.95em}
+  .gestes-outil ol{margin:0;padding-left:1.3rem}
+  .gestes-outil li{margin:.45rem 0}
+  .gestes-outil li b:first-child{color:#ffb300}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo,.palier{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note,.btn-acquit{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+/* Règle d'or n°30 — tableau de bord des tâches */
+#tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+  border:1px solid #274a8a;border-radius:10px;font-size:.92em;line-height:1.55;color:#e4eaf5}
+#tachesBandeau .tb-titre{font-weight:700;color:#61dafb;display:block;margin-bottom:3px}
+#tachesBandeau ul{list-style:none;margin:0;padding:0}
+#tachesBandeau li{margin:2px 0}
+#tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+@media print{#tachesBandeau{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a></nav>
+<a class="skip-link" href="#seances">Aller directement aux activités</a>
+<h1>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme</h1>
+<p class="subtitle">🎯 Ta mission : programmer la station commandée par la mairie — puis PROUVER qu'elle marche, protocole de test à l'appui, avant sa mise en service dans la cour.</p>
+
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
+  <p class="deja">Tu connais déjà cette station : au Thème 2 (séquence 3e_C4.3), tu as <b>décrit sa chaîne d'information</b> — capteur, microcontrôleur, alerte — et manipulé son CAN. Et dans l'atelier « Variables, types et systèmes » (3e_C9.1), tu as appris qu'une <b>variable</b> est une boîte étiquetée, qu'un programme se structure en <b>sous-programmes</b>, et qu'on le met au point avec un <b>banc de tests</b>.</p>
+  <p class="change"><b>Cette fois, ce qui change&nbsp;:</b> tu ne décris plus la station, tu la <b>COMMANDES</b>. Ton programme va piloter un <b>système réel</b> — écran, DEL, buzzer — et dialoguer avec un <b>humain</b> qui appuie sur un bouton. Puis tu changeras de casquette : avant la mise en service, c'est TOI qui rédigeras le <b>protocole de test</b> qui prouve à la mairie que ça marche.</p>
+  <p class="filet">Tu n'as pas fait ces séquences ? Il suffit de savoir qu'un capteur produit un nombre (0 à 1023), qu'une variable garde une valeur en mémoire, et qu'un programme se lit dans l'ordre.</p>
+</section>
+
+<section class="card" aria-labelledby="billet-titre">
+  <h2 id="billet-titre">🎫 Billet d'entrée (sans note — juste pour savoir d'où tu pars)</h2>
+  <p style="font-size:.9em;color:var(--sub)">Trois questions éclair sur les acquis utiles aujourd'hui. Personne ne les note : elles te disent, à toi, ce qu'il faut réviser avant de commencer.</p>
+  <div class="exo">
+    <div class="assoc"><label for="be_1">1. Sur la station, l'anémomètre appartient à la fonction…</label><select id="be_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+    <div class="assoc"><label for="be_2">2. Une variable, c'est…</label><select id="be_2"><option value="">— choisir —</option><option>une boîte étiquetée qui garde une valeur</option><option>un câble de la carte</option><option>un type d'écran</option><option>une erreur de programme</option></select></div>
+    <div class="assoc"><label for="be_3">3. <code>analogRead(A1)</code> renvoie un nombre entre…</label><select id="be_3"><option value="">— choisir —</option><option>0 et 1023</option><option>0 et 100</option><option>−512 et 512</option><option>0 et 5</option></select></div>
+    <button class="btn small" id="btnBillet" style="margin-top:8px">✔ Me situer (sans note)</button>
+    <div class="feedback" id="fbBillet" role="status"></div>
+  </div>
+  <details class="correction"><summary>✅ Réponses du billet (à ouvrir après avoir répondu)</summary>
+    <p>1 → <b>Acquérir</b> (c'est un capteur). 2 → <b>une boîte étiquetée qui garde une valeur</b>. 3 → <b>0 et 1023</b> (CAN 10 bits : 2¹⁰ = 1024 paliers numérotés de 0 à 1023).</p>
+    <p>Moins de 3 bonnes réponses ? Aucun souci pour continuer : la séquence rappelle tout au bon moment. Si tu veux réviser d'abord : la séquence <a href="../../../../theme-2-structure-fonctionnement-comportement/C4-decrire-et-caracteriser-lorganisation/3e/3e_C4.3/sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html">Station d'alerte (Thème 2)</a> et l'atelier <a href="../3e_C9.1/sequence_3e_C9.1_variables_types_systemes.html">Variables, types et systèmes</a>.</p>
+  </details>
+</section>
+
+<section class="card gestes-outil" aria-labelledby="gestes-ardublock">
+  <h2 id="gestes-ardublock">🧰 Avant de commencer — les quatre gestes d'ArduBlock Éducation</h2>
+  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas.
+  Tu as peut-être déjà utilisé ArduBlock une autre année&nbsp;: refais-les quand même, c'est court.
+  Et si c'est la première fois, tout est écrit ici. <i>(Les intitulés exacts des menus peuvent
+  varier légèrement selon la version installée — au moindre doute, demande au professeur.)</i></p>
+  <ol>
+    <li><b>Brancher et ouvrir.</b> Branche la carte UNO en USB, puis ouvre <b>ArduBlock Éducation 1.7</b> (version du labo).</li>
+    <li><b>Vérifier.</b> Avant tout téléversement, vérifie que la carte sélectionnée est bien <b>Arduino UNO</b> et que le <b>port</b> affiché correspond à ta carte branchée. Une carte mal choisie = un téléversement qui échoue avec un message obscur.</li>
+    <li><b>Nommer et enregistrer.</b> Enregistre tout de suite ton programme sous le nom <code>3e-STATION-TON&nbsp;NOM</code>, dans le dossier de la classe. Un programme sans nom est introuvable la semaine suivante — et tu ré-enregistreras à CHAQUE palier.</li>
+    <li><b>Téléverser et observer.</b> Le bouton de téléversement envoie ton programme dans la carte ; le <b>moniteur série</b> affiche ce que la carte raconte (9600 bauds). Ces deux gestes reviennent à chaque palier de la séance 2.</li>
+  </ol>
+</section>
+
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C9.2</span>
+  <span class="badge code">3e_C8.3</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
+  <span class="badge crcn">CRCN : 3.4 · 5.2</span>
+  <span class="badge duree">⏱ 4 séances de 90 min (1 h 30)</span>
+</div>
+
+<div class="identite" id="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" autocomplete="family-name"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" autocomplete="given-name"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="3e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression dans la séquence : <b id="progTxt">0 / 7 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p><b>Lundi matin, Martinique.</b> Le principal te tend un courrier arrivé au club techno. La mairie a visité
+    l'exposition du Thème 2 — celle où vous aviez expliqué comment fonctionne une station d'alerte cyclonique.
+    Elle ne veut plus une explication&nbsp;: elle veut <b>la station</b>. En vrai, dans la cour, avant la saison cyclonique.</p>
+  </div>
+  <div class="courrier" aria-label="Courrier de commande de la mairie">
+    <div class="entete"><span><b>MAIRIE</b> — Direction des services techniques</span><span>Objet : commande d'un prototype</span></div>
+    <p>Madame, Monsieur,</p>
+    <p>À la suite de votre exposition, la commune souhaite confier au club technologie la réalisation d'un
+    <b>prototype de station d'alerte cyclonique</b> pour la cour du collège. Le prototype devra&nbsp;:</p>
+    <p>— <b>mesurer la vitesse du vent</b> en continu&nbsp;;<br>
+    — <b>afficher en permanence</b> le niveau d'alerte et la vitesse&nbsp;: <b>veille</b> (écran vert),
+    <b>vigilance orange</b> à partir de <b>100 km/h</b>, <b>alerte rouge</b> à partir de <b>150 km/h</b>&nbsp;;<br>
+    — en alerte rouge, <b>allumer un signal lumineux et déclencher une alarme sonore</b>&nbsp;;<br>
+    — permettre à l'agent d'accueil d'<b>acquitter l'alarme sonore d'un appui sur un bouton</b> — sans jamais
+    éteindre l'affichage ni le signal lumineux&nbsp;;<br>
+    — réagir à un changement de vent en <b>moins d'une seconde</b>.</p>
+    <p>Avant toute mise en service, vos services fourniront un <b>procès-verbal de recette</b>&nbsp;: la liste des
+    essais réalisés prouvant que le prototype respecte chacune de ces exigences.</p>
+    <p style="text-align:right">Le maire-adjoint aux risques majeurs</p>
+  </div>
+  <p style="font-size:.9em;color:var(--sub)">Les seuils de 100 et 150 km/h sont ceux du <b>cahier des charges de la mairie</b> pour ce prototype pédagogique — les vraies vigilances de Météo-France croisent bien d'autres critères (pluie, houle, trajectoire). Le prototype mesure le vent avec un <b>potentiomètre qui SIMULE l'anémomètre</b> : tourner le bouton, c'est faire souffler le vent. <i>(Données et matériel réels de la version 🅰 : très basse tension 5 V uniquement.)</i></p>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment écrire, puis mettre au point, un programme qui commande la station<br>et dialogue avec un humain — et comment PROUVER à la mairie qu'il respecte le cahier des charges&nbsp;?</p>
+</section>
+
+<section class="card">
+  <h2>💭 Mes hypothèses de départ</h2>
+  <p>Avant les activités, réponds avec tes idées actuelles. Tu y reviendras à la fin : avoir changé d'avis, c'est avoir appris !</p>
+  <div class="exo">
+    <label for="hyp1"><b>1.</b> D'après toi, de quoi le programme de la station a-t-il besoin pour décider entre « veille », « vigilance » et « alerte » ?</label>
+    <textarea id="hyp1" placeholder="J'imagine que le programme…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Pour décider, le programme a besoin de connaître ____.</li>
+    <li>Il doit comparer cette valeur à ____.</li>
+    <li>Selon le résultat de la comparaison, il ____.</li>
+  </ul>
+</details>
+    <label for="hyp2" style="margin-top:10px;display:block"><b>2.</b> Comment prouverais-tu à la mairie que la station fonctionne ? Que faudrait-il tester, et combien de tests te sembleraient suffisants ?</label>
+    <textarea id="hyp2" placeholder="Je testerais…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Je testerais d'abord ____ pour vérifier que ____.</li>
+    <li>Il faudrait aussi essayer des valeurs ____ parce que ____.</li>
+    <li>Il me semblerait suffisant de faire ____ tests, parce que ____.</li>
+  </ul>
+</details>
+  </div>
+</section>
+
+<section class="card referentiel-card">
+  <h2>📋 Référentiel officiel (programme 2024)</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Sous-compétence travaillée</th><th>Socle</th><th>Activités</th></tr>
+    <tr><td><b>3e_C9.2</b></td><td>Réaliser et mettre au point un programme commandant un système réel incluant une interaction entre un humain et une machine.</td><td>D1.3, D2, D4</td><td>1, 2, 3, 4, 5</td></tr>
+    <tr><td><b>3e_C8.3</b></td><td>Proposer un protocole de test pour valider le comportement et les performances d’un objet technique.</td><td>D1.3, D2, D3, D4, D5</td><td>6, 7</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub);margin-top:8px">Compétences parentes : <b>C9</b> — concevoir, écrire, tester et mettre au point un programme · <b>C8</b> — valider les solutions techniques par des essais et des tests (BO n°9 du 29/02/2024). Le dossier 3e_C8.3 renvoie vers cette séquence (dossier principal : 3e_C9.2).</p>
+</section>
+
+<section class="card">
+  <h2>🧰 Choix de l'outil</h2>
+  <table class="refs">
+    <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
+    <tr><td>ArduBlock Éducation 1.7 (blocs → téléversement)</td><td>Programmation par blocs en français, téléversement direct vers l'UNO : on passe des blocs au système réel sans réécrire une ligne. Version 1.7 = version du labo (aucune version plus récente identifiée au 19/08/2026 — à revalider en début d'année).</td><td>Arduino IDE avec le programme C++ de référence fourni (dossier <a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>)</td></tr>
+    <tr><td>Arduino UNO + shield Grove (version 🅰)</td><td>Matériel confirmé du labo : LCD RGB (I2C), bouton (D2), DEL (D3), buzzer (D5), potentiomètre (A1). Très basse tension 5 V.</td><td>Banc de simulation intégré à cette page (version 🅱)</td></tr>
+    <tr><td>Banc de simulation intégré (cette page)</td><td>La MÊME station, simulée : curseur de vent, LCD, DEL, buzzer, bouton d'acquittement. Fonctionne hors connexion, trace tes expériences, sert de banc d'essai pour la recette.</td><td>—</td></tr>
+  </table>
+  <p style="font-size:.85em;color:var(--sub)">Côté professeur : un <b>banc Docker</b> (dossier <code>banc-docker/</code>) vérifie que le programme C++ de référence compile pour <code>arduino:avr:uno</code> — réservé à l'enseignant, les élèves n'en ont pas besoin.</p>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <div class="versions">
+    <div class="version va"><h4>🅰 Matériel réel</h4>
+      <p>Arduino UNO + Grove Base Shield (sélecteur <b>5 V</b>) : potentiomètre sur <b>A1</b>, bouton sur <b>D2</b>, DEL sur <b>D3</b>, buzzer sur <b>D5</b>, LCD RGB sur <b>I2C</b>. Programme en blocs ArduBlock, téléversé pour de vrai.</p>
+      <p style="color:var(--sub)">Sécurité : très basse tension uniquement, jamais de secteur 230 V ; câblage vérifié par le professeur avant branchement USB ; ne jamais brancher ou débrancher un module sous tension.</p></div>
+    <div class="version vb"><h4>🅱 Simulation</h4>
+      <p>Le <b>banc de simulation intégré</b> à cette page : la même station, les mêmes seuils, le même bouton d'acquittement. Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
+    <div class="version vc"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans la page : le banc de simulation + des <b>traces d'exécution enregistrées</b> à analyser dans les activités 5 et 7. Personne n'est pénalisé si le matériel manque — y compris à la maison.</p></div>
+  </div>
+  <p style="font-size:.85em;color:var(--sub)">Les trois versions visent les <b>mêmes</b> objectifs : la 🅲 n'est pas un lot de consolation.</p>
+</section>
+<div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>« La mairie vous appelle »</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Programmer en blocs</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>L'humain dans la boucle</small><span class="done" id="done-s3"></span></button>
+  <button class="seance-tab" data-panel="s4" role="tab" aria-selected="false">Séance 4<br><small>La recette : prouver</small><span class="done" id="done-s4"></span></button>
+</div>
+<div id="tachesBandeau" aria-live="polite" aria-label="Tâches de la séance en cours"></div>
+
+<section class="card" id="bancCard" aria-labelledby="banc-titre">
+  <h2 id="banc-titre">🌀 Le banc d'essai de la station (version 🅱 — toujours disponible)</h2>
+  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1), l'écran, la DEL (D3), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 4.</p>
+  <div class="banc">
+    <div>
+      <label for="simVent"><b>🌬 Vitesse du vent simulée (tourne le potentiomètre) :</b></label>
+      <input type="range" id="simVent" min="0" max="250" value="42" step="1" aria-describedby="simVentVal">
+      <div class="assoc" style="margin-top:6px"><label for="simVentNum" id="simVentVal">Valeur exacte (km/h) — pratique pour viser 99, 100, 149, 150 :</label><input type="number" id="simVentNum" min="0" max="250" step="1" value="42"></div>
+      <p style="font-size:.82em;color:var(--sub)">Mesure brute correspondante (CAN 10 bits) : <b id="simBrut" style="color:var(--hl)">—</b> / 1023</p>
+      <div class="station-io">
+        <button class="btn-acquit" id="btnAcquit">🖐 ACQUITTER (bouton D2)</button>
+        <button class="btn small ghost" id="btnChrono">⏱ Mesurer le temps de réponse</button>
+      </div>
+      <p class="saved-note" id="chronoNote" role="status" aria-live="polite" style="text-align:left"></p>
+    </div>
+    <div>
+      <div class="lcd-sim lcd-vert" id="simLcd" role="status" aria-live="polite">
+        <div id="simL1">Veille</div>
+        <div id="simL2">Vent: 42 km/h</div>
+      </div>
+      <div class="station-io" aria-live="polite">
+        <span><span class="del-sim" id="simDel"></span> <span style="font-size:.85em">DEL (D3)</span></span>
+        <span class="buzzer-sim" id="simBuz">🔇 buzzer muet</span>
+      </div>
+      <ul class="verrous-liste" id="verrousListe" aria-label="Expériences tracées au banc">
+        <li id="v-lecture">☐ J'ai fait varier le vent et observé la mesure</li>
+        <li id="v-niveaux">☐ J'ai atteint les 3 niveaux (veille · vigilance · alerte)</li>
+        <li id="v-acquit">☐ J'ai acquitté une alarme qui sonnait</li>
+        <li id="v-retrigger">☐ Après acquittement, j'ai déclenché une NOUVELLE alerte (le buzzer est reparti)</li>
+        <li id="v-bornes">☐ J'ai testé les 4 frontières : 99 · 100 · 149 · 150 km/h</li>
+        <li id="v-chrono">☐ J'ai mesuré le temps de réponse</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>📞 Séance 1 — « La mairie vous appelle » : du besoin à l'algorithme</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que doit décider le programme, à partir de quoi, et dans quel ordre ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Relire le cahier des charges — et poser les deux chaînes</h3><span class="duree">⏱ ~30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> extraire les exigences du courrier de la mairie et situer chaque organe dans les chaînes d'information et d'énergie.</div>
+      <div><b>Compétence :</b> 3e_C9.2 — comprendre le système que le programme devra commander.</div>
+      <div><b>Production attendue :</b> tableau des exigences + chaînes complétées (à recopier dans le cahier).</div>
+      <div><b>Ressources :</b> le courrier de la mairie (en haut de page) + le schéma des deux chaînes ci-dessous.</div>
+    </div>
+    <img class="figure" src="Images/chaine_info_energie_station.svg" alt="Schéma des deux chaînes de la station : en haut la chaîne d'information (Acquérir avec l'anémomètre A1 et le bouton D2, Traiter avec le microcontrôleur et les seuils 100 et 150 km/h, Communiquer avec le LCD, la DEL et le buzzer), en bas la chaîne d'énergie (Alimenter par USB 5 V, Distribuer par le shield, Convertir en lumière et en son), et entre les deux la flèche d'ordre qui descend du bloc Traiter">
+    <div class="consigne"><b>Consigne :</b> a) relis le courrier de la mairie et repère les exigences ; b) place chaque organe dans sa fonction ; c) justifie la place du bouton d'acquittement — c'est LA nouveauté de cette séquence.</div>
+    <div class="exo">
+      <h4>a) Le courrier, ligne à ligne</h4>
+      <div class="assoc"><label for="a1_e1">« réagir en moins d'une seconde » est une exigence de…</label><select id="a1_e1"><option value="">— choisir —</option><option>comportement (ce que fait la station)</option><option>performance (à quelle vitesse / avec quelle qualité)</option><option>coût</option><option>esthétique</option></select></div>
+      <div class="assoc"><label for="a1_e2">« l'agent peut acquitter l'alarme d'un appui » est une exigence de…</label><select id="a1_e2"><option value="">— choisir —</option><option>comportement (ce que fait la station)</option><option>performance (à quelle vitesse / avec quelle qualité)</option><option>coût</option><option>esthétique</option></select></div>
+      <div class="assoc"><label for="a1_e3">Qui fournit les valeurs 100 et 150 km/h ?</label><select id="a1_e3"><option value="">— choisir —</option><option>le cahier des charges de la mairie</option><option>le hasard</option><option>le programme les invente</option><option>le potentiomètre</option></select></div>
+      <h4>b) Chaque organe à sa place</h4>
+      <div class="assoc"><label for="a1_1">Potentiomètre « anémomètre » (A1)</label><select id="a1_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_2">Bouton d'acquittement (D2)</label><select id="a1_2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_3">Microcontrôleur + programme</label><select id="a1_3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_4">Écran LCD RGB (I2C)</label><select id="a1_4"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_5">DEL rouge (D3) et buzzer (D5)</label><select id="a1_5"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_6">Câble USB 5 V</label><select id="a1_6"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <h4>c) La nouveauté</h4>
+      <label for="a1_just" style="display:block"><b>Justifie :</b> le bouton d'acquittement fait entrer une information dans la station. Laquelle, et qui la produit ? En quoi est-ce différent de l'anémomètre ?</label>
+      <textarea id="a1_just" placeholder="Le bouton fait entrer…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Le bouton fait entrer l'information « ____ », produite par ____.</li>
+    <li>L'anémomètre, lui, capte une grandeur ____ ; le bouton capte une décision ____.</li>
+    <li>C'est ce dialogue machine → humain → machine qu'on appelle ____.</li>
+  </ul>
+</details>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Comportement = « QUE fait la station ? » ; performance = « à quelle VITESSE, avec quelle précision ? ». Pour b) : cet organe capte-t-il, décide-t-il, diffuse-t-il, ou fournit-il seulement de l'énergie ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le bouton est du côté « Acquérir » : il fait ENTRER une information (l'appui) exactement comme l'anémomètre fait entrer le vent. La différence est la SOURCE : l'anémomètre capte le monde physique, le bouton capte une décision humaine. Le LCD, la DEL et le buzzer font SORTIR l'information : « Communiquer ».</p></details>
+    <details class="correction"><summary>✅ Correction complète (à ouvrir après vérification)</summary>
+      <p><b>a)</b> « moins d'une seconde » → <b>performance</b> · « acquitter d'un appui » → <b>comportement</b> · 100 et 150 km/h → <b>le cahier des charges de la mairie</b> (jamais le hasard : en séance 4, la recette vérifiera CES valeurs-là).</p>
+      <p><b>b)</b> potentiomètre → Acquérir · bouton → <b>Acquérir</b> · microcontrôleur → Traiter · LCD → Communiquer · DEL + buzzer → Communiquer · USB → Alimenter.</p>
+      <p><b>c) Justification attendue :</b> le bouton fait entrer l'information « l'agent a pris connaissance de l'alarme », produite par un <b>humain</b>. L'anémomètre capte une grandeur <b>physique</b> (le vent) sans intervention humaine ; le bouton capte une <b>décision humaine</b>. Ce dialogue — la machine alerte, l'humain répond, la machine en tient compte — est l'<b>interaction humain-machine</b> exigée par le programme (3e_C9.2).</p>
+      <div class="regle-or-schema" role="note">📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
+      <p><b>Recopie les deux chaînes dans ton cahier</b> en respectant cette disposition : c'est elle qu'on te demandera au DNB.</p>
+      <p><b>Limite :</b> le bouton pourrait aussi être vu comme une « commande » plutôt qu'un capteur — en 3e, on retient qu'il fait ENTRER une information, donc Acquérir.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> classer le bouton dans « Communiquer » parce qu'« on communique avec la machine » — regarde le SENS : l'information ENTRE dans la station, c'est Acquérir ; confondre exigence de comportement (quoi) et de performance (à quelle vitesse).</div>
+    <div class="retenir"><b>📌 À retenir :</b> un cahier des charges impose des exigences de <b>comportement</b> (ce que fait le système) et de <b>performance</b> (chiffrées, donc testables). L'<b>interaction humain-machine</b> ajoute une entrée d'un type nouveau : la décision d'un humain (bouton), à côté des grandeurs physiques (capteurs).</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> au moins 8 réponses justes sur 9 <b>et</b> une justification qui nomme l'information apportée par le bouton et sa source humaine.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>De l'algorithme en français à l'algorigramme</h3><span class="duree">⏱ ~35 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> élaborer l'algorithme des trois niveaux d'alerte, puis le lire sous forme d'algorigramme normalisé.</div>
+      <div><b>Compétence :</b> 3e_C9.2 — élaborer l'algorithme avant d'écrire le programme.</div>
+      <div><b>Production attendue :</b> algorithme complété + algorigramme recopié dans le cahier.</div>
+      <div><b>Ressources :</b> l'algorigramme ci-dessous (à lire APRÈS avoir complété l'algorithme).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) complète l'algorithme en langage naturel ; b) lis l'algorigramme et réponds aux questions — l'ordre des tests va se révéler décisif.</div>
+    <div class="exo">
+      <h4>a) L'algorithme en français</h4>
+      <p style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:12px;border-radius:8px;line-height:2">
+        RÉPÉTER sans fin :<br>
+        &nbsp;&nbsp;lire la vitesse du vent<br>
+        &nbsp;&nbsp;SI vitesse ≥ <input type="number" id="a2_s1" style="width:80px;display:inline-block"> ALORS niveau ← alerte rouge<br>
+        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" style="width:80px;display:inline-block"> ALORS niveau ← vigilance orange<br>
+        &nbsp;&nbsp;SINON niveau ← <select id="a2_s3" aria-label="niveau si aucun seuil n'est atteint" style="width:150px;display:inline-block"><option value="">— choisir —</option><option>veille</option><option>alerte rouge</option><option>vigilance orange</option><option>panne</option></select><br>
+        &nbsp;&nbsp;afficher le niveau et la vitesse
+      </p>
+      <h4>b) Lire l'algorigramme</h4>
+      <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station : ovale Début, rectangle Lire la vitesse du vent, losange vitesse supérieure ou égale à 150, si oui alerte rouge, sinon losange vitesse supérieure ou égale à 100, si oui vigilance orange, sinon veille ; les branches se rejoignent et une flèche remonte vers la lecture : c'est la boucle ; légende des symboles ovale, rectangle, losange, flèche">
+      <div class="assoc"><label for="a2_q1">Le vent souffle à 130 km/h. Quel chemin l'algorigramme suit-il ?</label><select id="a2_q1"><option value="">— choisir —</option><option>losange 150 : NON → losange 100 : OUI → vigilance orange</option><option>losange 150 : OUI → alerte rouge</option><option>losange 100 : OUI → alerte rouge</option><option>aucun losange : veille</option></select></div>
+      <div class="assoc"><label for="a2_q2">Pourquoi teste-t-on 150 AVANT 100 ?</label><select id="a2_q2"><option value="">— choisir —</option><option>parce qu'une rafale à 180 km/h doit finir en « alerte », pas en « vigilance »</option><option>parce que 150 est plus facile à calculer</option><option>par habitude, l'ordre n'a aucun effet</option><option>parce que le losange 100 est en panne</option></select></div>
+      <div class="assoc"><label for="a2_q3">Que représente la flèche qui remonte vers « Lire la vitesse » ?</label><select id="a2_q3"><option value="">— choisir —</option><option>la boucle : la station recommence sans fin</option><option>une erreur de dessin</option><option>le retour du courant électrique</option><option>la fin du programme</option></select></div>
+      <div class="assoc"><label for="a2_q4">Dans un algorigramme, le losange représente…</label><select id="a2_q4"><option value="">— choisir —</option><option>une décision, avec deux sorties OUI / NON</option><option>une action</option><option>le début du programme</option><option>un capteur</option></select></div>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les deux seuils sont écrits noir sur blanc dans le courrier de la mairie. Pour b) : suis le chemin avec le doigt, losange par losange, en répondant OUI ou NON à chaque question.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 150 ? NON → on descend au 2e losange. 130 ≥ 100 ? OUI → vigilance. Maintenant imagine 180 km/h avec les losanges INVERSÉS (100 testé d'abord) : 180 ≥ 100 ? OUI → « vigilance »… et le test 150 n'est jamais atteint. Voilà pourquoi l'ordre compte.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> SI vitesse ≥ <b>150</b> → alerte rouge ; SINON SI vitesse ≥ <b>100</b> → vigilance orange ; SINON → <b>veille</b>.</p>
+      <p><b>b)</b> 130 km/h → losange 150 : NON → losange 100 : OUI → <b>vigilance orange</b>. On teste 150 d'abord car <b>une rafale à 180 doit finir en alerte</b> : si on testait 100 d'abord, 180 ≥ 100 serait vrai et le programme s'arrêterait à « vigilance » — un bug dangereux. La flèche qui remonte est <b>la boucle</b> : une station de surveillance ne s'arrête jamais. Le losange est <b>une décision à deux sorties OUI/NON</b>.</p>
+      <p><b>Méthode :</b> élaborer l'algorithme AVANT de programmer, c'est décider des variables, des seuils et de l'ordre des tests en français — quand corriger ne coûte encore rien.</p>
+      <p><b>Exemple pour s'en souvenir :</b> un videur vérifie d'abord la carte VIP, puis l'entrée normale : s'il vérifiait l'entrée normale d'abord, les VIP feraient la queue avec tout le monde.</p>
+      <p><b>Limite :</b> notre algorithme relit le vent 5 fois par seconde — un vrai anémomètre lisse la mesure sur plusieurs secondes pour éviter qu'une rafale isolée fasse clignoter l'alerte.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser les deux seuils (tester 100 d'abord) — le niveau « alerte » devient inatteignable ; oublier le SINON et écrire deux SI indépendants — à 180 km/h les deux seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin.</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>algorithme</b> s'élabore en français avant d'être traduit en blocs. Dans des SI/SINON en cascade, <b>on teste le seuil le plus haut d'abord</b>. L'<b>algorigramme</b> (🎓 attendu au DNB) le dessine : ovale = début/fin, rectangle = traitement, losange = décision OUI/NON, flèche qui remonte = boucle.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> algorithme 3/3 et lecture d'algorigramme 4/4 — et tu sais expliquer à l'oral pourquoi 150 se teste avant 100.</div>
+    <details class="prof approfondissement"><summary>🎓 Encart DNB — l'algorigramme est un grand classique de l'épreuve</summary>
+      <p>À l'épreuve de sciences du DNB, on te demandera de <b>lire, compléter ou corriger</b> un algorigramme : entrées/sorties, traitements, losanges de décision, boucles. Les gestes travaillés ici (suivre le chemin, vérifier l'ordre des tests, repérer la boucle) sont exactement ceux des sujets. Entraînement complet : les questions illustrées du QCM de cette séquence, puis l'entraînement DNB du dépôt (dossier 3e_C6.2).</p>
+    </details>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
+<section class="card">
+  <h2>🧱 Séance 2 — Programmer la station en blocs, palier par palier</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment traduire notre algorithme en un programme qui commande la vraie carte ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Le programme en blocs — 4 paliers, du capteur à l'écran</h3><span class="duree">⏱ ~70 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> construire le programme en blocs (ArduBlock) qui lit le vent, décide du niveau et l'affiche.</div>
+      <div><b>Compétence :</b> 3e_C9.2 — réaliser un programme commandant un système réel.</div>
+      <div><b>Production attendue :</b> programme enregistré <code>3e-STATION-TON NOM</code> (version 🅰) + les 4 paliers reproduits au banc d'essai (versions 🅱/🅲) + réponses vérifiées.</div>
+      <div><b>Ressources :</b> les 4 planches de paliers + le banc d'essai de la station (en haut de page).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> avance <b>palier par palier</b> : à chaque palier, fais le geste, compare avec l'image du résultat attendu, ré-enregistre ton programme, PUIS passe au suivant. En version 🅱/🅲, reproduis chaque comportement au banc d'essai — tes manipulations y sont tracées et comptent pour la validation. Premier geste : <b>crée et nomme ton fichier</b> <code>3e-STATION-TON NOM</code> (un programme sans nom est introuvable la semaine suivante).</div>
+
+    <div class="palier">
+      <h4>Palier 1 — Lire le vent</h4>
+      <p class="faire">👉 FAIS : dans la boucle, range la lecture de la broche analogique <b>A1</b> dans la variable <code>mesureBrute</code>, convertis-la en km/h (0-1023 → 0-250) dans <code>vitesseVent</code>, et envoie <code>vitesseVent</code> au moniteur série.</p>
+      <img class="figure" src="Images/blocs_palier1_lire_vent.svg" alt="Reconstitution schématique du palier 1 : dans un bloc boucle, mesureBrute reçoit la lecture analogique de A1, vitesseVent reçoit la conversion de 0-1023 vers 0-250, et vitesseVent est envoyée au moniteur série ; à droite, le moniteur série attendu affiche des vitesses qui montent quand on tourne le potentiomètre">
+      <p>👀 <b>VÉRIFIE :</b> tourne le potentiomètre — au moniteur série (version 🅰) ou au banc d'essai de cette page (🅱), la vitesse doit monter et descendre avec ton geste.</p>
+      <div class="assoc"><label for="a3_p1">Le potentiomètre est à mi-course : <code>mesureBrute</code> vaut environ 512. Que vaut <code>vitesseVent</code> ?</label><input type="number" id="a3_p1" placeholder="km/h"></div>
+      <p class="rituel">💾 Rituel : ré-enregistre ton programme (même nom, même dossier) avant de passer au palier 2.</p>
+    </div>
+
+    <div class="palier">
+      <h4>Palier 2 — Décider du niveau</h4>
+      <p class="faire">👉 FAIS : ajoute les deux SI/SINON de ton algorithme (activité 2) : d'abord le seuil <b>150</b> (niveau 2), sinon le seuil <b>100</b> (niveau 1), sinon niveau 0. Range le résultat dans la variable <code>niveauAlerte</code> et envoie-la aussi au moniteur.</p>
+      <img class="figure" src="Images/blocs_palier2_decider.svg" alt="Reconstitution schématique du palier 2 : un bloc si vitesseVent supérieure ou égale à 150 range 2 dans niveauAlerte, sinon un second bloc si vitesseVent supérieure ou égale à 100 range 1, sinon 0 ; à droite, moniteur série attendu montrant niveau 0, 1 puis 2 selon le potentiomètre, et l'avertissement que l'ordre des deux si est essentiel">
+      <p>👀 <b>VÉRIFIE :</b> trois positions du potentiomètre → trois niveaux : 0, 1, 2. Au banc d'essai, fais passer la station par les <b>trois niveaux</b> (le banc le trace ✔).</p>
+      <div class="assoc"><label for="a3_p2">Ton camarade a mis le test « ≥ 100 » EN PREMIER. À 180 km/h son programme affiche…</label><select id="a3_p2"><option value="">— choisir —</option><option>niveau 1 (vigilance) — c'est le bug !</option><option>niveau 2 (alerte), comme le tien</option><option>niveau 0 (veille)</option><option>un message d'erreur</option></select></div>
+      <p class="rituel">💾 Rituel : ré-enregistre. Si un doute : compare bloc à bloc avec la planche, PUIS appelle le professeur.</p>
+    </div>
+
+    <div class="palier">
+      <h4>Palier 3 — Afficher : la station parle</h4>
+      <p class="faire">👉 FAIS : selon <code>niveauAlerte</code>, change la <b>couleur de fond</b> du LCD (vert / orange / rouge) et le texte de la ligne 1 ; affiche « Vent: … km/h » en ligne 2 ; allume la <b>DEL (D3)</b> dès que <code>niveauAlerte</code> ≥ 1.</p>
+      <img class="figure" src="Images/blocs_palier3_afficher.svg" alt="Reconstitution schématique du palier 3 : trois branches selon niveauAlerte règlent la couleur de fond du LCD en rouge, orange ou vert avec le texte correspondant, la deuxième ligne affiche la vitesse, et la DEL sur D3 s'allume si le niveau est supérieur ou égal à 1 ; à droite, les trois écrans LCD attendus vert, orange et rouge avec l'état de la DEL">
+      <p>👀 <b>VÉRIFIE :</b> écran vert en veille, orange dès 100, rouge dès 150 — et la DEL suit. C'est exactement ce que fait le banc d'essai : compare !</p>
+      <div class="assoc"><label for="a3_p3">À 120 km/h, l'écran doit être…</label><select id="a3_p3"><option value="">— choisir —</option><option>orange, DEL allumée, buzzer muet</option><option>vert, tout éteint</option><option>rouge, buzzer qui sonne</option><option>orange, DEL éteinte</option></select></div>
+      <p class="rituel">💾 Rituel : ré-enregistre. Ton programme commande maintenant un vrai système : capteur → décision → écran, DEL.</p>
+    </div>
+
+    <div class="palier">
+      <h4>Palier 4 — (aperçu) L'humain entre dans la boucle</h4>
+      <p>Le bouton d'acquittement et le buzzer, c'est la <b>séance 3</b> — le cœur de l'interaction humain-machine. La planche est déjà là si tu es en avance, mais la logique de l'événement « le niveau vient de changer » mérite une séance entière.</p>
+    </div>
+
+    <div class="exo">
+      <button class="btn small" data-check="3" style="margin-top:2px">✔ Vérifier mes réponses (et mes expériences au banc)</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Palier 1 : 512 est à peu près la moitié de 1023, donc <code>vitesseVent</code> vaut à peu près la moitié de 250. Palier 2 : rejoue le scénario de l'activité 2 avec 180 km/h et les tests inversés. Palier 3 : 120 est entre 100 et 150 — relis le courrier de la mairie.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Palier 1 : 512 × 250 ÷ 1023 ≈ <b>125 km/h</b> (accepté : 124 à 126). Palier 2 : 180 ≥ 100 est vrai → son programme s'arrête à « vigilance » sans jamais tester 150 : niveau 1, c'est le bug. Palier 3 : entre 100 et 150 → vigilance orange, DEL allumée, buzzer muet (il ne sonne qu'en alerte rouge).</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>P1 :</b> ≈ 125 km/h (512 × 250 ÷ 1023). La conversion est une proportionnalité : c'est le bloc « calibrer » (en C++ : <code>map()</code>).</p>
+      <p><b>P2 :</b> niveau 1 — c'est le bug ! L'ordre des SI est un choix d'<b>algorithme</b>, pas de dessin : le seuil le plus haut se teste en premier.</p>
+      <p><b>P3 :</b> orange, DEL allumée, buzzer muet. Le buzzer attend l'alerte rouge ET le non-acquittement — séance 3.</p>
+      <p><b>Méthode :</b> le développement par paliers (une fonctionnalité à la fois, testée avant la suivante) est LA méthode des professionnels : quand quelque chose casse, le coupable est forcément dans le dernier palier.</p>
+      <p><b>Limite :</b> nos blocs re-décident à chaque tour de boucle (~5 fois/seconde) : un vrai produit lisserait la mesure pour éviter le clignotement autour d'un seuil.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier de ré-enregistrer à chaque palier (une panne = tout perdu) ; téléverser sans vérifier carte et port (gestes d'outil, en haut de page) ; inverser les intervalles du bloc calibrer (250 → 0 : la vitesse descend quand le vent monte !) ; mettre l'affichage HORS de la boucle — l'écran ne se met plus jamais à jour.</div>
+    <div class="retenir"><b>📌 À retenir :</b> traduire un algorithme en blocs = même logique, autre écriture. On construit <b>par paliers</b> : lire → décider → afficher, en <b>testant chaque palier</b> avant d'empiler le suivant, et en ré-enregistrant à chaque fois.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 3 réponses justes + au banc d'essai : vent varié ET les 3 niveaux atteints (coches ✔ du banc). En version 🅰 : le professeur voit l'écran passer vert → orange → rouge sur ta carte.</div>
+    <details class="prof"><summary>🅰 Fiche version matériel réel (à faire valider par le professeur)</summary>
+      <p><b>Montage :</b> voir le schéma de câblage ci-dessous — shield Grove sélecteur <b>5 V</b>, potentiomètre <b>A1</b>, bouton <b>D2</b>, DEL <b>D3</b>, buzzer <b>D5</b>, LCD RGB <b>I2C</b>. Câblage vérifié par le professeur AVANT le branchement USB.</p>
+      <img class="figure" src="Images/montage_station_grove.svg" alt="Schéma de câblage de la station : Arduino UNO avec shield Grove au centre, LCD RGB sur I2C, potentiomètre anémomètre simulé sur A1, bouton d'acquittement sur D2, DEL rouge sur D3, buzzer sur D5, alimentation USB 5 volts, encadré sécurité très basse tension">
+      <p><b>Dépannage :</b> rien sur le LCD → connecteur I2C et bibliothèque Grove ; vitesse figée → mauvais port analogique (A0 au lieu de A1 ?) ; le téléversement échoue → carte ou port mal choisis (gestes d'outil) ; valeurs qui « tremblent » → normal, le CAN hésite entre deux paliers.</p>
+      <p><b>Sécurité :</b> très basse tension 5 V uniquement ; jamais de secteur 230 V ; ne jamais brancher/débrancher un module sous tension ; en cas d'odeur ou d'échauffement, débrancher l'USB et appeler le professeur.</p>
+      <p><b>Programme de référence :</b> le C++ commenté ligne à ligne est fourni (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>) — compilation vérifiée pour <code>arduino:avr:uno</code> (6 764 octets de flash). Les élèves le liront en séance 3.</p>
+    </details>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🖐 Séance 3 — L'humain dans la boucle : acquitter, et lire le C++</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : comment le programme se souvient-il que l'agent a répondu — et comment sait-il l'oublier au bon moment ?</p>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Le bouton d'acquittement — un événement, une mémoire</h3><span class="duree">⏱ ~40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> programmer l'acquittement (palier 4) et comprendre la notion d'événement « le niveau vient de changer ».</div>
+      <div><b>Compétence :</b> 3e_C9.2 — l'interaction entre un humain et une machine, au cœur du programme.</div>
+      <div><b>Production attendue :</b> palier 4 ajouté au programme + les 2 expériences d'acquittement tracées au banc.</div>
+      <div><b>Ressources :</b> la planche du palier 4 + le chronogramme + le banc d'essai.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> a) ajoute le palier 4 à ton programme (ou reproduis-le au banc d'essai) ; b) fais les DEUX expériences : acquitter une alarme, puis déclencher une NOUVELLE alerte ; c) lis le chronogramme et réponds.</div>
+    <img class="figure" src="Images/blocs_palier4_acquitter.svg" alt="Reconstitution schématique du palier 4 : un bloc si le bouton D2 est appuyé range vrai dans alarmeAcquittee ; un bloc si niveauAlerte est différent de niveauPrecedent range faux dans alarmeAcquittee ; le buzzer D5 sonne si le niveau vaut 2 et que l'alarme n'est pas acquittée ; enfin niveauPrecedent mémorise niveauAlerte ; à droite les trois constats attendus : le buzzer sonne, l'appui le coupe, une nouvelle alerte le fait repartir">
+    <div class="exo">
+      <p><b>🧪 Les deux expériences au banc d'essai</b> (elles sont tracées ✔) : ① monte le vent au-dessus de 150, laisse sonner, puis <b>ACQUITTE</b> — le son se tait, l'écran reste rouge ; ② redescends sous 100, puis remonte au-dessus de 150 — le buzzer <b>repart tout seul</b>.</p>
+      <h4>Lire le chronogramme</h4>
+      <img class="figure" src="Images/ihm_acquittement_chronogramme.svg" alt="Chronogramme sur quatre lignes : le niveau d'alerte passe par veille, vigilance, alerte rouge, revient en vigilance puis repasse en alerte ; le bouton est appuyé brièvement pendant la première alerte ; le buzzer sonne du début de l'alerte jusqu'à l'appui, se tait, puis ressonne à la nouvelle alerte ; la DEL reste allumée sans interruption dès la vigilance">
+      <div class="assoc"><label for="a4_q1">À t3, l'agent appuie sur le bouton. Que se passe-t-il ?</label><select id="a4_q1"><option value="">— choisir —</option><option>le buzzer se tait, mais l'écran et la DEL restent en alerte</option><option>toute la station s'éteint</option><option>l'alerte passe en vigilance</option><option>rien : le bouton ne sert qu'au démarrage</option></select></div>
+      <div class="assoc"><label for="a4_q2">À t5, le buzzer repart SANS nouvel appui. Pourquoi ?</label><select id="a4_q2"><option value="">— choisir —</option><option>le changement de niveau est un NOUVEL événement : l'acquittement est effacé</option><option>le bouton est resté coincé</option><option>le programme a un bug</option><option>la batterie est rechargée</option></select></div>
+      <div class="assoc"><label for="a4_q3">Pourquoi la DEL ne s'acquitte-t-elle PAS ?</label><select id="a4_q3"><option value="">— choisir —</option><option>le cahier des charges l'exige : l'information visuelle doit rester tant que dure l'alerte</option><option>c'est un oubli du programmeur</option><option>la DEL est trop petite pour s'éteindre</option><option>le bouton ne peut commander qu'une sortie</option></select></div>
+      <div class="assoc"><label for="a4_q4">Quelle variable joue le rôle de « mémoire du tour précédent » ?</label><select id="a4_q4"><option value="">— choisir —</option><option>niveauPrecedent</option><option>vitesseVent</option><option>mesureBrute</option><option>le moniteur série</option></select></div>
+      <label for="a4_exp" style="display:block;margin-top:10px"><b>Explique</b> avec tes mots : à quoi sert la variable <code>alarmeAcquittee</code>, et quand repasse-t-elle à « faux » ?</label>
+      <textarea id="a4_exp" placeholder="alarmeAcquittee sert à…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li><code>alarmeAcquittee</code> sert à retenir que ____.</li>
+    <li>Tant qu'elle vaut « vrai », le buzzer ____ même si le niveau est encore ____.</li>
+    <li>Elle repasse à « faux » quand ____, parce qu'un changement de niveau est ____.</li>
+  </ul>
+</details>
+      <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mes réponses (et mes expériences au banc)</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Refais les deux expériences au banc en regardant le chronogramme en même temps : chaque ligne du dessin correspond à ce que tu viens de voir. La DEL et le buzzer n'obéissent pas à la même règle — c'est voulu.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p><code>alarmeAcquittee</code> est un booléen : vrai = « l'agent a répondu ». Le buzzer sonne seulement si (niveau = 2) ET (alarmeAcquittee = faux). Et quand <code>niveauAlerte ≠ niveauPrecedent</code>, le programme remet alarmeAcquittee à faux : nouvel événement, nouvel avertissement sonore.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Q1 :</b> le buzzer se tait, l'écran et la DEL restent en alerte — acquitter, c'est répondre, pas éteindre. <b>Q2 :</b> le changement de niveau est un <b>nouvel événement</b> : le programme efface l'acquittement pour re-prévenir. <b>Q3 :</b> le cahier des charges l'exige (« sans jamais éteindre l'affichage ni le signal lumineux ») : le son dérange, on peut le couper ; l'information doit rester. <b>Q4 :</b> <code>niveauPrecedent</code>.</p>
+      <p><b>Explication attendue :</b> <code>alarmeAcquittee</code> retient que l'agent a pris connaissance de l'alarme ; tant qu'elle vaut vrai, le buzzer reste muet même en alerte. Elle repasse à faux quand le niveau CHANGE (<code>niveauAlerte ≠ niveauPrecedent</code>) : un nouvel événement mérite un nouvel avertissement.</p>
+      <p><b>Méthode :</b> détecter un événement = comparer l'état actuel à l'état mémorisé du tour précédent. Ce motif (état + mémoire + comparaison) est partout : notifications de téléphone, détecteurs de fumée, alarmes de voiture.</p>
+      <p><b>Limite :</b> notre bouton est lu 5 fois par seconde : un appui très bref entre deux lectures pourrait être raté — les vrais systèmes utilisent des interruptions.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> croire qu'acquitter éteint l'alerte (il ne coupe QUE le son) ; oublier de remettre <code>alarmeAcquittee</code> à faux au changement de niveau — l'alarme ne sonnerait plus jamais après le premier appui : bug silencieux et dangereux ; confondre l'état (niveau = 2) et l'événement (le niveau VIENT DE passer à 2).</div>
+    <div class="retenir"><b>📌 À retenir :</b> une <b>interaction humain-machine</b> se programme avec : une entrée humaine (bouton), un <b>booléen-mémoire</b> (<code>alarmeAcquittee</code>), et la détection d'<b>événement</b> par comparaison à l'état précédent (<code>niveauPrecedent</code>). État ≠ événement : l'état dure, l'événement est l'instant du changement.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 réponses justes + explication complète + les 2 expériences ✔ au banc (acquitter, puis re-déclencher).</div>
+  </div>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Sous le capot : lire le C++ que les blocs fabriquent</h3><span class="duree">⏱ ~35 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> retrouver dans le C++ généré les structures construites en blocs, et utiliser le moniteur série pour la mise au point.</div>
+      <div><b>Compétence :</b> 3e_C9.2 — mettre au point : comprendre ce que la machine exécute vraiment.</div>
+      <div><b>Production attendue :</b> lecture guidée vérifiée + une trace d'exécution interprétée.</div>
+      <div><b>Ressources :</b> extraits du programme de référence commenté (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">le fichier complet</a>).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> ArduBlock traduit tes blocs en C++ avant le téléversement. Lis les trois extraits du programme de référence — c'est le même programme que le tien, écrit dans la langue de la machine — puis réponds. Version 🅲 : la trace d'exécution en d) remplace le moniteur série réel.</div>
+    <div class="exo">
+      <h4>Extrait 1 — les constantes et les variables (le début du fichier)</h4>
+<pre class="code"><span class="kw">const int</span> BROCHE_VENT   = A1;  <span class="cmt">// potentiomètre « anémomètre » sur A1</span>
+<span class="kw">const int</span> SEUIL_VIGILANCE = <span class="num">100</span>;  <span class="cmt">// au-dessus : vigilance orange</span>
+<span class="kw">const int</span> SEUIL_ALERTE    = <span class="num">150</span>;  <span class="cmt">// au-dessus : alerte rouge</span>
+<span class="kw">int</span>  vitesseVent   = <span class="num">0</span>;        <span class="cmt">// vitesse du vent calculée, en km/h</span>
+<span class="kw">bool</span> alarmeAcquittee = <span class="kw">false</span>;  <span class="cmt">// true si l'humain a acquitté l'alarme</span></pre>
+      <div class="assoc"><label for="a5_q1">Pourquoi les seuils sont-ils déclarés <code>const</code> (constantes) ?</label><select id="a5_q1"><option value="">— choisir —</option><option>ils ne changent jamais pendant l'exécution : le programme interdit de les modifier par accident</option><option>pour qu'ils changent tout seuls avec le vent</option><option>parce que « const » rend le programme plus rapide à téléverser</option><option>c'est obligatoire pour tous les nombres</option></select></div>
+      <h4>Extrait 2 — la conversion et la décision (dans <code>loop()</code>)</h4>
+<pre class="code"><span class="kw">int</span> mesureBrute = <span class="fn">analogRead</span>(BROCHE_VENT);          <span class="cmt">// valeur brute du CAN (0-1023)</span>
+vitesseVent = <span class="fn">map</span>(mesureBrute, <span class="num">0</span>, <span class="num">1023</span>, <span class="num">0</span>, <span class="num">250</span>);    <span class="cmt">// conversion en km/h</span>
+<span class="kw">if</span> (vitesseVent &gt;= SEUIL_ALERTE) {
+  niveauAlerte = <span class="num">2</span>;                                 <span class="cmt">// alerte rouge</span>
+} <span class="kw">else if</span> (vitesseVent &gt;= SEUIL_VIGILANCE) {
+  niveauAlerte = <span class="num">1</span>;                                 <span class="cmt">// vigilance orange</span>
+} <span class="kw">else</span> {
+  niveauAlerte = <span class="num">0</span>;                                 <span class="cmt">// simple veille</span>
+}</pre>
+      <div class="assoc"><label for="a5_q2">Quel bloc ArduBlock la fonction <code>map(…)</code> traduit-elle ?</label><select id="a5_q2"><option value="">— choisir —</option><option>le bloc « calibrer » (0-1023 vers 0-250) du palier 1</option><option>le bloc « si / sinon » du palier 2</option><option>le bloc « boucle » </option><option>le bloc d'affichage LCD</option></select></div>
+      <div class="assoc"><label for="a5_q3">Le <code>else if</code> traduit exactement…</label><select id="a5_q3"><option value="">— choisir —</option><option>le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non</option><option>une deuxième boucle</option><option>une erreur de traduction d'ArduBlock</option><option>un commentaire</option></select></div>
+      <h4>Extrait 3 — le sous-programme d'affichage</h4>
+<pre class="code"><span class="cmt">// Sous-programme (fonction) : affiche le niveau et la vitesse sur le LCD</span>
+<span class="cmt">// — la structuration en sous-programmes est exigée en 3e.</span>
+<span class="kw">void</span> <span class="fn">afficherEtat</span>() {
+  ecran.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">0</span>);
+  <span class="kw">if</span> (niveauAlerte == <span class="num">2</span>) {
+    ecran.<span class="fn">setRGB</span>(<span class="num">255</span>, <span class="num">0</span>, <span class="num">0</span>);      <span class="cmt">// fond ROUGE</span>
+    ecran.<span class="fn">print</span>(<span class="num">"ALERTE ROUGE !  "</span>);
+  } <span class="cmt">/* … orange, vert … */</span>
+}</pre>
+      <div class="assoc"><label for="a5_q4">Quel est l'intérêt de ranger l'affichage dans le sous-programme <code>afficherEtat()</code> ?</label><select id="a5_q4"><option value="">— choisir —</option><option>la boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit</option><option>le programme devient plus lent, donc plus sûr</option><option>c'est purement décoratif</option><option>ça évite d'utiliser des variables</option></select></div>
+      <h4>d) La trace d'exécution (version 🅲 — mise au point au moniteur)</h4>
+      <p style="font-size:.9em">Le programme envoie sa trace au moniteur série. Voici ce qu'un binôme a relevé sur SA station <i>(trace enregistrée — données simulées)</i> :</p>
+<pre class="code">vent(km/h)=97   niveau=0
+vent(km/h)=103  niveau=0   ⬅ ⚠
+vent(km/h)=126  niveau=0   ⬅ ⚠
+vent(km/h)=161  niveau=2</pre>
+      <div class="assoc"><label for="a5_q5">À 103 et 126 km/h, leur station affiche encore « niveau=0 ». Quelle est l'hypothèse de panne la PLUS probable ?</label><select id="a5_q5"><option value="">— choisir —</option><option>leur seuil de vigilance est mal réglé (par exemple 150 au lieu de 100) ou le SINON SI a disparu</option><option>le potentiomètre est cassé (la vitesse ne monte plus)</option><option>le moniteur série ment</option><option>le CAN ne sait pas compter au-delà de 100</option></select></div>
+      <label for="a5_exp" style="display:block;margin-top:10px"><b>Justifie :</b> pourquoi la panne ne peut PAS venir du capteur ni de la conversion ? Appuie-toi sur la trace.</label>
+      <textarea id="a5_exp" placeholder="La trace montre que…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>La trace montre que la vitesse ____ correctement (97 → 161), donc le capteur et la conversion ____.</li>
+    <li>Le problème apparaît entre la vitesse et le ____ : c'est donc la ____ qui est en cause.</li>
+    <li>À 161 km/h le niveau 2 s'affiche, donc le seuil ____ fonctionne : c'est le seuil ____ qui est mal réglé (ou son SINON SI absent).</li>
+  </ul>
+</details>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relie chaque extrait au palier qui l'a construit : extrait 2 = paliers 1 et 2. Pour d) : la colonne « vent » monte normalement — quelle colonne se comporte mal, et quel morceau du programme la fabrique ?</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La vitesse affichée (97 → 161) prouve que capteur + CAN + conversion marchent. Le niveau reste à 0 entre 100 et 150 : c'est la DÉCISION qui rate. Et comme 161 donne bien niveau 2, le test « ≥ 150 » existe : c'est le test « ≥ 100 » qui est faux ou absent.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <b>Q2 :</b> le bloc « calibrer » du palier 1. <b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <b>Q5 :</b> seuil de vigilance mal réglé ou SINON SI absent.</p>
+      <p><b>Justification attendue :</b> la trace prouve que la vitesse monte correctement (97 → 103 → 126 → 161) : capteur, CAN et conversion fonctionnent. La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. Et puisque 161 déclenche bien le niveau 2, le test ≥ 150 marche : le défaut est dans le test ≥ 100.</p>
+      <p><b>Méthode (mise au point) :</b> la trace du moniteur série découpe la chaîne en tronçons : on cherche le PREMIER endroit où les valeurs deviennent fausses — tout ce qui est en amont est innocenté. C'est exactement le raisonnement du banc de tests de l'atelier 3e_C9.1.</p>
+      <p><b>Limite :</b> lire le C++ n'est pas au programme de 3e pour l'ÉCRIRE — mais savoir le lire te permet de vérifier ce que tes blocs fabriquent, et c'est un immense avantage au lycée.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> accuser le capteur dès qu'un affichage est faux (lis la trace : le capteur est souvent innocent) ; confondre <code>=</code> (ranger) et <code>==</code> (comparer) dans le C++ ; croire que les blocs et le C++ sont deux programmes différents — c'est le MÊME, dans deux écritures.</div>
+    <div class="retenir"><b>📌 À retenir :</b> les blocs se traduisent en C++ : « calibrer » → <code>map()</code>, « si/sinon » → <code>if/else</code>, et l'affichage vit dans un <b>sous-programme</b> (<code>afficherEtat()</code>) — structuration exigée en 3e. La <b>mise au point</b> s'appuie sur la trace du moniteur série : on innocente la chaîne tronçon par tronçon.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes et une justification qui utilise la trace pour innocenter le capteur ET désigner le test fautif.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 4 ══════════════════ -->
+<div class="seance-panel" id="s4" role="tabpanel">
+<section class="card">
+  <h2>📋 Séance 4 — La recette : prouver que ça marche</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : quels essais suffisent à PROUVER à la mairie que la station respecte tout le cahier des charges ?</p>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Activité 6</span><h3>Rédiger le protocole de test</h3><span class="duree">⏱ ~40 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> proposer un protocole de test complet : cas nominaux, cas limites, performance, interaction humain-machine.</div>
+      <div><b>Compétence :</b> 3e_C8.3 — proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</div>
+      <div><b>Production attendue :</b> TON protocole rédigé (tableau + phrase de méthode) — AVANT toute exécution.</div>
+      <div><b>Ressources :</b> l'anatomie d'un protocole ci-dessous + le courrier de la mairie.</div>
+    </div>
+    <img class="figure" src="Images/protocole_recette_anatomie.svg" alt="Anatomie d'un protocole de test : une droite graduée du vent porte les seuils 100 et 150 avec quatre valeurs de test par paires, 99 et 100, 149 et 150 ; un tableau de recette à cinq colonnes numéro, condition d'entrée, résultat attendu, résultat observé, verdict avec trois lignes d'exemple ; un chronomètre illustre la mesure du temps de réponse, exigence moins d'une seconde ; une phrase conclut qu'un test non écrit à l'avance n'est pas un test">
+    <div class="consigne"><b>Consigne :</b> c'est TOI l'expert chargé de la recette. a) choisis les valeurs à tester et justifie-les ; b) écris le résultat attendu de chaque essai <b>avant</b> de toucher au banc ; c) rédige la règle de décision du PV. Ton protocole doit couvrir : les 3 comportements nominaux, les 4 frontières, la performance, et l'acquittement (2 essais).</div>
+    <div class="exo">
+      <h4>a) Les valeurs d'essai</h4>
+      <div class="assoc"><label for="a6_v1">Pour vérifier le comportement « veille », une bonne valeur nominale est…</label><select id="a6_v1"><option value="">— choisir —</option><option>42 km/h (franchement dans la zone)</option><option>99 km/h (trop près de la frontière pour un test nominal)</option><option>150 km/h</option><option>0 km/h uniquement</option></select></div>
+      <div class="assoc"><label for="a6_v2">Autour du seuil de 100, le protocole doit tester…</label><select id="a6_v2"><option value="">— choisir —</option><option>99 ET 100 : juste sous la frontière, et pile dessus</option><option>seulement 100</option><option>50 et 150, c'est pareil</option><option>101 seulement, pour être sûr</option></select></div>
+      <div class="assoc"><label for="a6_v3">À 150 km/h PILE, le cahier des charges impose…</label><select id="a6_v3"><option value="">— choisir —</option><option>l'alerte rouge : « à partir de 150 » veut dire 150 compris (≥)</option><option>la vigilance : 150 n'est pas encore « au-dessus »</option><option>au choix du programmeur</option><option>l'écran s'éteint</option></select></div>
+      <div class="assoc"><label for="a6_v4">Pour vérifier la PERFORMANCE, l'essai doit…</label><select id="a6_v4"><option value="">— choisir —</option><option>chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s</option><option>regarder si « ça a l'air rapide »</option><option>compter les blocs du programme</option><option>mesurer la longueur des câbles</option></select></div>
+      <div class="assoc"><label for="a6_v5">Pour l'acquittement, il faut DEUX essais parce que…</label><select id="a6_v5"><option value="">— choisir —</option><option>il faut prouver que le son se coupe À l'appui ET qu'il repart à l'événement suivant</option><option>le bouton s'use vite</option><option>un seul essai suffirait, mais deux font plus sérieux</option><option>la mairie paie au nombre d'essais</option></select></div>
+      <h4>b) Mon protocole rédigé</h4>
+      <label for="a6_redac" style="display:block">Rédige ton protocole : les essais dans l'ordre, la valeur choisie pour chacun, le résultat attendu, et ta règle de décision (à partir de quand signes-tu « recette prononcée » ?).</label>
+      <textarea id="a6_redac" style="min-height:130px" placeholder="Essai 1 : je règle le vent à … , j'attends …&#10;Essai 2 : …&#10;Règle de décision : je prononce la recette si…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — un squelette de protocole à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ce squelette retire l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-le et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Essais nominaux : je règle le vent à ____ (veille), ____ (vigilance), ____ (alerte) et j'attends respectivement ____.</li>
+    <li>Essais aux frontières : ____ , ____ , ____ , ____ — parce que c'est là que ____.</li>
+    <li>Essai de performance : je chronomètre ____ ; l'exigence est ____.</li>
+    <li>Essais d'interaction : j'appuie sur le bouton pendant ____ et je vérifie que ____ ; puis je ____ et je vérifie que le buzzer ____.</li>
+    <li>Règle de décision : je prononce la recette si ____ essais sur ____ sont réussis, sinon ____.</li>
+  </ul>
+</details>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relis le courrier de la mairie exigence par exigence : chaque phrase du courrier doit avoir AU MOINS un essai dans ton protocole. Les frontières sont les valeurs où le comportement DOIT changer.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un protocole complet ici : 3 nominaux (ex. 42, 120, 200) + 4 frontières (99, 100, 149, 150) + 1 performance (chrono &lt; 1 s) + 2 interaction (acquitter ; re-déclencher) = <b>10 essais</b>. « À partir de 150 » = 150 compris : c'est le cahier des charges qui tranche le ≥, pas le programmeur.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> 42 km/h (nominal franc) · 99 ET 100 · alerte rouge à 150 pile (« à partir de » = compris, d'où le ≥ du programme) · chronométrer le délai seuil → affichage (exigence &lt; 1 s) · deux essais d'acquittement (couper À l'appui, repartir à l'événement suivant).</p>
+      <p><b>b) Protocole attendu (exemple) :</b> essais 1-3 nominaux : 42 → veille (écran vert, tout éteint) ; 120 → vigilance (orange + DEL, buzzer muet) ; 200 → alerte (rouge + DEL + buzzer). Essais 4-7 frontières : 99 → veille ; 100 → vigilance ; 149 → vigilance ; 150 → alerte.</p><p>Essai 8 performance : franchissement de 150, chrono &lt; 1 s. Essais 9-10 interaction : appui pendant l'alarme → le son se coupe, l'écran et la DEL restent ; redescente puis remontée → le buzzer repart. <b>Règle de décision :</b> recette prononcée si 10/10 réussis ; un seul échec = réserve, correction, puis on REJOUE TOUT le protocole (non-régression).</p>
+      <p><b>Méthode :</b> chaque exigence du cahier des charges → au moins un essai ; chaque seuil → deux essais (dessous / dessus) ; chaque exigence chiffrée → une mesure, pas une impression.</p>
+      <p><b>Limite :</b> 10 essais prouvent la conformité au cahier des charges — pas l'absence de TOUT défaut (pluie sur le boîtier, câble arraché… d'autres protocoles existent pour ça).</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> ne tester que les cas nominaux « ça marche chez moi » — les pannes vivent aux frontières ; écrire le résultat attendu APRÈS l'essai (ce n'est plus un test, c'est une impression) ; oublier les essais d'interaction humain-machine ; une règle de décision floue (« si ça a l'air bon »).</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>protocole de test</b> se rédige AVANT l'exécution : essais nominaux + <b>cas limites aux frontières</b> des seuils + exigences de <b>performance chiffrées</b> + interaction humain-machine, avec pour chaque essai le résultat ATTENDU et une <b>règle de décision</b> explicite.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 choix justes ET un protocole rédigé qui contient les 4 familles d'essais + une règle de décision.</div>
+  </div>
+
+  <div class="activite" id="act7">
+    <header><span class="num">Activité 7</span><h3>Exécuter la recette et signer le procès-verbal</h3><span class="duree">⏱ ~35 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> exécuter le protocole au banc d'essai, consigner les observations, prononcer la recette.</div>
+      <div><b>Compétence :</b> 3e_C8.3 — valider comportement ET performances par les essais.</div>
+      <div><b>Production attendue :</b> tableau de recette rempli PENDANT les essais + PV signé.</div>
+      <div><b>Ressources :</b> le banc d'essai de la station (en haut de page) — ou la carte réelle (version 🅰).</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> exécute les essais AU BANC (les frontières 99, 100, 149, 150 et le chrono sont tracés ✔ automatiquement), consigne chaque observation <b>pendant</b> l'essai, remplis le verdict, puis rédige le PV. En version 🅰, fais la même chose sur la carte réelle avec le professeur.</div>
+    <div class="exo">
+      <h4>Le tableau de recette</h4>
+      <table class="recette" aria-label="Tableau de recette à remplir">
+        <tr><th>N°</th><th>Essai</th><th>Résultat attendu</th><th>Observé ?</th></tr>
+        <tr><td>1</td><td>vent 42 km/h</td><td>écran vert « Veille », DEL et buzzer éteints</td><td><select id="a7_r1" aria-label="résultat observé essai 1"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>2</td><td>vent 120 km/h</td><td>orange + DEL, buzzer muet</td><td><select id="a7_r2" aria-label="résultat observé essai 2"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>3</td><td>vent 200 km/h</td><td>rouge + DEL + buzzer</td><td><select id="a7_r3" aria-label="résultat observé essai 3"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>4</td><td>frontière : 99 km/h</td><td><select id="a7_a4" aria-label="résultat attendu essai 4"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r4" aria-label="résultat observé essai 4"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>5</td><td>frontière : 100 km/h</td><td><select id="a7_a5" aria-label="résultat attendu essai 5"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r5" aria-label="résultat observé essai 5"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>6</td><td>frontière : 149 km/h</td><td><select id="a7_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r6" aria-label="résultat observé essai 6"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>7</td><td>frontière : 150 km/h</td><td><select id="a7_a7" aria-label="résultat attendu essai 7"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r7" aria-label="résultat observé essai 7"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>8</td><td>performance : chrono seuil → affichage</td><td>moins de 1 seconde</td><td><select id="a7_r8" aria-label="résultat observé essai 8"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>9</td><td>appui pendant l'alarme</td><td>le son se coupe, écran et DEL restent</td><td><select id="a7_r9" aria-label="résultat observé essai 9"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>10</td><td>redescente puis nouvelle alerte</td><td>le buzzer repart sans appui</td><td><select id="a7_r10" aria-label="résultat observé essai 10"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+      </table>
+      <h4>Le procès-verbal</h4>
+      <label for="a7_pv" style="display:block">Rédige le PV pour la mairie : essais réalisés, résultats, réserves éventuelles, et ta conclusion (« recette prononcée » ou « recette ajournée »).</label>
+      <textarea id="a7_pv" style="min-height:110px" placeholder="Procès-verbal de recette — Station d'alerte cyclonique.&#10;Le …, nous avons exécuté … essais…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — un squelette de PV à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ce squelette retire l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-le et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Le ____ , nous avons exécuté les ____ essais du protocole sur ____ (banc de simulation / carte réelle).</li>
+    <li>Résultats : ____ essais conformes sur ____ . Les essais aux frontières (99, 100, 149, 150 km/h) ont montré que ____.</li>
+    <li>La performance mesurée est de ____ , pour une exigence de ____ .</li>
+    <li>Conclusion : la recette est ____ , avec les réserves suivantes : ____ .</li>
+  </ul>
+</details>
+      <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier ma recette (essais tracés compris)</button>
+      <div class="feedback" id="fb7" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Utilise le champ « valeur exacte » du banc pour viser 99, 100, 149 et 150 pile. Les attendus des essais 4 à 7 se déduisent du courrier : « à partir de 100 », « à partir de 150 » — frontière comprise.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>99 → veille · 100 → vigilance orange · 149 → vigilance orange · 150 → alerte rouge. Le bouton ⏱ du banc mesure le temps de réponse pour toi (la boucle tourne toutes les 200 ms : tu devrais mesurer ≈ 0,2-0,4 s, conforme). N'oublie pas : le PV se signe sur ce que tu as OBSERVÉ, pas sur ce que tu espérais.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Attendus des frontières :</b> 99 → veille · 100 → vigilance · 149 → vigilance · 150 → alerte. Tous les essais du banc doivent être « conforme » (le programme de référence respecte le cahier des charges) — si tu observes autre chose, note-le : c'est une VRAIE observation, elle va dans le PV.</p>
+      <p><b>PV attendu (exemple) :</b> « Le [date], nous avons exécuté les 10 essais du protocole sur le banc de simulation. 10 essais conformes sur 10. Les frontières confirment : veille jusqu'à 99 km/h, vigilance de 100 à 149, alerte dès 150. Temps de réponse mesuré ≈ 0,3 s (exigence : &lt; 1 s). L'alarme s'acquitte à l'appui et repart au changement de niveau. Recette prononcée, sans réserve. Signé : l'équipe de recette 3e. »</p>
+      <p><b>Méthode :</b> observer PENDANT l'essai, verdict essai par essai, conclusion GLOBALE seulement à la fin — et si un essai échoue après correction du programme, on rejoue TOUT (non-régression, comme en 3e_C9.1).</p>
+      <p><b>Limite :</b> la recette prouve la conformité AU CAHIER DES CHARGES ce jour-là, sur ce banc : la version 🅰 au labo peut réserver des surprises (contacts, lumière ambiante…) — c'est pour ça que les industriels recettent sur le matériel final.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> remplir la colonne « observé » de mémoire après coup ; cocher « conforme » parce qu'on VEUT que ça marche (le PV engage ta signature !) ; conclure « recette prononcée » avec un essai non conforme sans même une réserve ; oublier de re-tester après une correction.</div>
+    <div class="retenir"><b>📌 À retenir :</b> exécuter une recette = dérouler le protocole SANS improviser, consigner chaque observation <b>pendant</b> l'essai, puis prononcer une décision engageante : recette prononcée / ajournée, avec réserves. Le <b>PV</b> est un document technique ET contractuel : il se signe.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 attendus de frontières justes, 10 verdicts remplis, les 4 frontières + le chrono réellement exécutés au banc (coches ✔), et un PV rédigé avec une conclusion explicite.</div>
+  </div>
+</section>
+</div>
+
+<section class="card">
+  <h2>📝 Synthèse de la séquence — à retenir</h2>
+  <p style="font-size:.88em;color:var(--sub)">Toutes ces notions ont été construites dans les activités 1 à 7 — rien de nouveau ici.</p>
+  <h4>1. Du besoin au programme (activités 1-3)</h4>
+  <p>Le <b>cahier des charges</b> impose des exigences de <b>comportement</b> et de <b>performance</b> (chiffrées). On <b>élabore l'algorithme</b> en français (seuils, ordre des tests : le plus haut d'abord), on le dessine en <b>algorigramme</b> (🎓 DNB), puis on le traduit en blocs, <b>palier par palier</b>, en testant chaque palier.</p>
+  <h4>2. Commander un système réel avec un humain dans la boucle (activités 4-5)</h4>
+  <p>Le programme lit des capteurs (A1) ET une entrée humaine (bouton D2). L'<b>acquittement</b> se programme avec un booléen-mémoire (<code>alarmeAcquittee</code>) et la détection d'<b>événement</b> (<code>niveauAlerte ≠ niveauPrecedent</code>). Les blocs deviennent du C++ : « calibrer » → <code>map()</code>, « si/sinon » → <code>if/else</code>, affichage dans un <b>sous-programme</b> (<code>afficherEtat()</code>). La <b>mise au point</b> lit la trace du moniteur série pour innocenter la chaîne tronçon par tronçon.</p>
+  <h4>3. Prouver : le protocole de test (activités 6-7)</h4>
+  <p>Un <b>protocole de test</b> se rédige AVANT : essais nominaux + <b>cas limites aux frontières</b> (99/100, 149/150) + <b>performance mesurée</b> (&lt; 1 s) + interaction humain-machine, chacun avec son résultat ATTENDU. L'exécution remplit le tableau <i>essai / attendu / observé / verdict</i> PENDANT les essais, et le <b>PV de recette</b> conclut : prononcée ou ajournée. Après correction : on rejoue tout (<b>non-régression</b>).</p>
+  <h4>🇬🇧 Vocabulaire utile</h4>
+  <p class="tag-zone"><span class="tag">programme = program</span><span class="tag">capteur = sensor</span><span class="tag">seuil = threshold</span><span class="tag">boucle = loop</span><span class="tag">acquitter = to acknowledge</span><span class="tag">événement = event</span><span class="tag">tester = to test</span><span class="tag">protocole de test = test protocol</span><span class="tag">recette = acceptance test</span><span class="tag">téléverser = to upload</span></p>
+</section>
+
+<section class="card">
+  <h2>🪞 Mon bilan personnel</h2>
+  <div class="exo" id="rappelHyp" style="display:none">
+    <p><b>💭 Rappel de ton hypothèse de départ :</b></p>
+    <blockquote id="hypRappelTxt" style="border-left:3px solid var(--warn);margin:6px 0;padding:4px 12px;color:var(--warn);font-style:italic"></blockquote>
+    <label for="hyp_retour">Ton avis a-t-il changé ? Corrige ou complète ton hypothèse avec ce que tu sais maintenant :</label>
+    <textarea id="hyp_retour" placeholder="En fait, pour décider et pour prouver, il faut…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Au départ je pensais que ____.</li>
+    <li>Maintenant je sais que ____, parce que ____ me l'a montré.</li>
+    <li>Ce qui a changé mon avis, c'est ____.</li>
+  </ul>
+</details>
+  </div>
+  <h4>Mon auto-positionnement, code par code</h4>
+  <div class="bilan-grid">
+    <div>
+      <span style="font-size:.95em"><b>3e_C9.2 — programmer un système réel avec interaction humain-machine :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Confiance 3e_C9.2">
+        <label><input type="radio" name="conf_c92" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="conf_c92" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="conf_c92" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="conf_c92" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+    <div>
+      <span style="font-size:.95em"><b>3e_C8.3 — proposer un protocole de test :</b></span>
+      <div class="confiance" role="radiogroup" aria-label="Confiance 3e_C8.3">
+        <label><input type="radio" name="conf_c83" value="1"> 😕 Fragile</label>
+        <label><input type="radio" name="conf_c83" value="2"> 🙂 Moyen</label>
+        <label><input type="radio" name="conf_c83" value="3"> 😃 Solide</label>
+        <label><input type="radio" name="conf_c83" value="4"> 🤩 Expert</label>
+      </div>
+    </div>
+    <div><label for="bilan1"><b>Ce que j'ai appris :</b></label><textarea id="bilan1"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>J'ai appris qu'un programme qui commande un système réel doit ____.</li>
+    <li>J'ai appris que l'acquittement se programme avec ____.</li>
+    <li>J'ai appris qu'un protocole de test doit contenir ____.</li>
+  </ul>
+</details></div>
+    <div><label for="bilan2"><b>Ce que je sais maintenant faire :</b></label><textarea id="bilan2"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Je sais maintenant traduire un algorithme en ____ palier par palier.</li>
+    <li>Je sais maintenant utiliser la trace du moniteur série pour ____.</li>
+    <li>Je sais maintenant choisir les valeurs d'essai d'une recette : ____.</li>
+  </ul>
+</details></div>
+    <div><label for="bilan3"><b>Ce que je dois encore revoir :</b></label><textarea id="bilan3"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li>Je dois encore revoir ____, parce que ____.</li>
+    <li>Ce que je n'arrive pas encore à faire seul·e : ____.</li>
+    <li>Pour progresser, la prochaine fois je ____.</li>
+  </ul>
+</details></div>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions pour vérifier toutes les notions de la séquence — dont 4 questions illustrées (algorigramme, montage, chronogramme, protocole) — avec corrections détaillées, minuteur facultatif et reprise possible.</p>
+  <a class="btn qcm" href="qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html" style="display:inline-block;text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
+  <p>🟣 <b>Défi « niveau violet » :</b> la mairie voudrait un 4e niveau « ouragan majeur » à partir de 200 km/h : écran violet, buzzer qui sonne par intermittence. Où insérer le nouveau test dans l'algorigramme, et pourquoi À CET ENDROIT ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 200 » s'insère EN PREMIER, avant « ≥ 150 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « alerte rouge » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, 199 et 200. Erreur classique : ajouter le test en dernier — il devient inatteignable.</p></details>
+  <p>🔔 <b>Défi « double appui » :</b> l'agent voudrait qu'un DEUXIÈME appui sur le bouton ré-active l'alarme (pour re-prévenir un collègue). Quelle variable faudrait-il faire évoluer, et quel piège guette ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. Erreur classique : tester l'état au lieu du front.</p></details>
+  <p>🌬 <b>Défi « anémomètre réel » :</b> pour remplacer le potentiomètre par un vrai anémomètre à coupelles, quelles étapes de ton programme changeraient — et lesquelles ne changeraient PAS ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi anémomètre</summary><p>Change : l'ACQUISITION (un anémomètre à coupelles produit des impulsions à compter, pas une tension à lire — il faudrait compter les tours par seconde) et l'ÉTALONNAGE (convertir des tours/s en km/h selon la doc du capteur). Ne change PAS : la décision (seuils 100/150), l'affichage, l'acquittement, ni le protocole de recette (les mêmes essais restent valables !). C'est l'intérêt de la structuration : chaque étage se remplace sans toucher aux autres. Erreur classique : croire qu'il faut tout réécrire.</p></details>
+</section>
+
+<footer>
+  <p>Séquence 3e_C9.2 (dossier principal) + 3e_C8.3 · Thème 3 — Création, conception, réalisation · Technologie cycle 4 (programme 2024)</p>
+  <p>Fonctionne hors connexion après chargement · aucune donnée envoyée sur un serveur · sauvegarde locale sur cet appareil uniquement</p>
+</footer>
+<script>
+"use strict";
+/* ══════ Sauvegarde locale ══════ */
+const KEY = "seq_3eC92-3eC83_station-alerte";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+function collect(){
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, exp: window.__exp || {}};
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{
+    if(el.type==="radio") return;
+    o.inputs[el.id] = el.value;
+  });
+  document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
+  return o;
+}
+function save(showNote){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(collect()));
+    if(showNote){ $("savedNote").textContent = "✔ Travail sauvegardé sur cet appareil à " + new Date().toLocaleTimeString("fr-FR"); }
+  }catch(e){ $("savedNote").textContent = "⚠ Sauvegarde impossible (stockage local indisponible)"; }
+}
+function restore(){
+  let o;
+  try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ o = null; }
+  if(!o) return;
+  Object.entries(o.inputs||{}).forEach(([id,v])=>{ const el=$(id); if(el && id!=="simVent" && id!=="simVentNum") el.value=v; });
+  Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
+  window.__valid = o.valid || {};
+  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+}
+let saveTimer=null;
+document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
+$("btnSave").addEventListener("click", ()=>save(true));
+$("btnPrint").addEventListener("click", ()=>window.print());
+$("btnReset").addEventListener("click", ()=>{
+  if(confirm("Effacer définitivement ta sauvegarde locale (réponses, expériences au banc, bilan, progression) ?")){
+    localStorage.removeItem(KEY); location.reload();
+  }
+});
+
+/* ══════ Billet d'entrée (sans note : n'entre pas dans la progression) ══════ */
+$("btnBillet").addEventListener("click", ()=>{
+  const att={be_1:"Acquérir", be_2:"une boîte étiquetée qui garde une valeur", be_3:"0 et 1023"};
+  let ok=0, rep=0;
+  Object.entries(att).forEach(([id,v])=>{ if($(id).value){rep++;} if($(id).value===v) ok++; });
+  const fb=$("fbBillet");
+  fb.className="feedback show " + (ok===3?"ok":ok>=2?"mixte":"err");
+  fb.textContent = rep<3 ? "Réponds aux trois questions pour te situer (aucune note, promis)."
+    : `${ok} / 3 — ${ok===3?"tous les acquis sont là, fonce !":"regarde les réponses repliées ci-dessous : les liens de révision y sont. Tu peux commencer la séquence quand même."}`;
+});
+
+/* ══════ Onglets séances ══════ */
+document.querySelectorAll(".seance-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    $(tab.dataset.panel).classList.add("active");
+    window.scrollTo({top: $("seances").offsetTop - 8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+});
+
+/* ══════ Le banc d'essai de la station ══════
+   Fidèle au programme de référence : boucle exécutée toutes les 200 ms,
+   seuils 100 / 150, acquittement mémorisé, ré-armement au changement de niveau. */
+const SIM = {
+  vent: 42, niveau: 0, niveauPrecedent: -1, acquittee: false,
+  mouvements: 0, dernierVent: 42, niveauxVus: {}, chronoArme: false, chronoT0: 0
+};
+function simSetVent(v){
+  v = Math.max(0, Math.min(250, Math.round(v)));
+  if(v !== SIM.vent){ SIM.mouvements++; }
+  SIM.vent = v;
+  $("simVent").value = v; $("simVentNum").value = v;
+  $("simBrut").textContent = Math.round(v/250*1023);
+}
+$("simVent").addEventListener("input", e=>simSetVent(parseInt(e.target.value,10)||0));
+$("simVentNum").addEventListener("input", e=>{ const v=parseInt(e.target.value,10); if(!isNaN(v)) simSetVent(v); });
+$("btnAcquit").addEventListener("click", ()=>{
+  if(SIM.niveau===2 && !SIM.acquittee){ window.__exp.acquitEnCours = true; }
+  SIM.acquittee = true;
+});
+function simTick(){
+  /* 1. traiter : décider du niveau (même cascade que le programme) */
+  const v = SIM.vent;
+  SIM.niveau = (v >= 150) ? 2 : (v >= 100) ? 1 : 0;
+  /* 2. événement : changement de niveau → ré-armement de l'alarme */
+  if(SIM.niveau !== SIM.niveauPrecedent){
+    if(SIM.acquittee && SIM.niveauPrecedent !== -1){ window.__exp.apresAcquit = true; }
+    SIM.acquittee = false;
+  }
+  /* 3. commander : LCD, DEL, buzzer */
+  const lcd = $("simLcd"), l1 = $("simL1"), l2 = $("simL2");
+  lcd.className = "lcd-sim " + (SIM.niveau===2 ? "lcd-rouge" : SIM.niveau===1 ? "lcd-orange" : "lcd-vert");
+  l1.textContent = SIM.niveau===2 ? "ALERTE ROUGE !" : SIM.niveau===1 ? "Vigilance orange" : "Veille";
+  l2.textContent = "Vent: " + v + " km/h";
+  $("simDel").className = "del-sim" + (SIM.niveau>=1 ? " on" : "");
+  const sonne = (SIM.niveau===2) && !SIM.acquittee;
+  const buz = $("simBuz");
+  buz.className = "buzzer-sim" + (sonne ? " on" : "");
+  buz.textContent = sonne ? "🔊 buzzer : ALARME !" : "🔇 buzzer muet";
+  /* 4. tracer les expériences (verrous) */
+  const e = window.__exp;
+  if(SIM.vent !== SIM.dernierVent){ SIM.dernierVent = SIM.vent; }
+  if(SIM.mouvements >= 6) e.lecture = true;
+  SIM.niveauxVus[SIM.niveau] = true;
+  if(SIM.niveauxVus[0] && SIM.niveauxVus[1] && SIM.niveauxVus[2]) e.niveaux = true;
+  if(e.acquitEnCours && SIM.acquittee && SIM.niveau===2){ e.acquit = true; e.acquitEnCours = false; }
+  if(e.apresAcquit && SIM.niveau===2 && sonne){ e.retrigger = true; e.apresAcquit = false; }
+  if(v===99) e.borne99 = true;
+  if(v===100) e.borne100 = true;
+  if(v===149) e.borne149 = true;
+  if(v===150) e.borne150 = true;
+  /* 5. chrono de performance */
+  if(SIM.chronoArme && SIM.niveau===2){
+    const dt = (performance.now() - SIM.chronoT0) / 1000;
+    SIM.chronoArme = false;
+    e.chrono = true;
+    $("chronoNote").textContent = "⏱ Temps de réponse mesuré : " + dt.toFixed(2).replace(".",",") +
+      " s (franchissement de 150 km/h → affichage « ALERTE ROUGE ») — exigence de la mairie : moins de 1 s → " +
+      (dt < 1 ? "CONFORME ✔" : "NON CONFORME ✘");
+    save(false);
+  }
+  SIM.niveauPrecedent = SIM.niveau;
+  majVerrous();
+}
+$("btnChrono").addEventListener("click", ()=>{
+  simSetVent(140);
+  $("chronoNote").textContent = "⏱ Mesure en cours : vent stabilisé à 140 km/h, franchissement du seuil dans un instant…";
+  setTimeout(()=>{
+    SIM.chronoT0 = performance.now();
+    SIM.chronoArme = true;
+    simSetVent(160);
+  }, 600);
+});
+const VERROUS_UI = {
+  "v-lecture":  ["lecture",  "J'ai fait varier le vent et observé la mesure"],
+  "v-niveaux":  ["niveaux",  "J'ai atteint les 3 niveaux (veille · vigilance · alerte)"],
+  "v-acquit":   ["acquit",   "J'ai acquitté une alarme qui sonnait"],
+  "v-retrigger":["retrigger","Après acquittement, j'ai déclenché une NOUVELLE alerte (le buzzer est reparti)"],
+  "v-bornes":   [null,       "J'ai testé les 4 frontières : 99 · 100 · 149 · 150 km/h"],
+  "v-chrono":   ["chrono",   "J'ai mesuré le temps de réponse"]
+};
+function bornesOk(){ const e=window.__exp; return !!(e.borne99 && e.borne100 && e.borne149 && e.borne150); }
+function majVerrous(){
+  const e = window.__exp;
+  Object.entries(VERROUS_UI).forEach(([id, [cle, libelle]])=>{
+    const li = $(id); if(!li) return;
+    const fait = cle ? !!e[cle] : bornesOk();
+    li.className = fait ? "fait" : "";
+    li.textContent = (fait ? "✔ " : "☐ ") + libelle;
+  });
+}
+setInterval(simTick, 200);
+
+/* ══════ Vérifications des activités ══════ */
+window.__valid = window.__valid || {};
+const num = (id) => parseFloat(String($(id).value).replace(",","."));
+const txt = (id) => String($(id).value||"").trim().toLowerCase();
+const CHECKS = {
+  1: function(){
+    let ok=0;
+    if($("a1_e1").value.startsWith("performance")) ok++;
+    if($("a1_e2").value.startsWith("comportement")) ok++;
+    if($("a1_e3").value.startsWith("le cahier des charges")) ok++;
+    const att={a1_1:"Acquérir",a1_2:"Acquérir",a1_3:"Traiter",a1_4:"Communiquer",a1_5:"Communiquer",a1_6:"Alimenter"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id).value===v) ok++; });
+    const justOk = txt("a1_just").length>=25;
+    return {score:ok, total:9, extra: justOk ? "" : " Pense à rédiger la justification c) : quelle information le bouton fait-il entrer, et qui la produit ?", valide: ok>=8 && justOk};
+  },
+  2: function(){
+    let ok=0;
+    if(num("a2_s1")===150) ok++;
+    if(num("a2_s2")===100) ok++;
+    if($("a2_s3").value==="veille") ok++;
+    if($("a2_q1").value.startsWith("losange 150 : NON")) ok++;
+    if($("a2_q2").value.startsWith("parce qu'une rafale à 180")) ok++;
+    if($("a2_q3").value.startsWith("la boucle")) ok++;
+    if($("a2_q4").value.startsWith("une décision")) ok++;
+    return {score:ok,total:7,valide:ok===7};
+  },
+  3: function(){
+    let ok=0;
+    if(Math.abs(num("a3_p1")-125)<=1) ok++;
+    if($("a3_p2").value.startsWith("niveau 1")) ok++;
+    if($("a3_p3").value.startsWith("orange, DEL allumée")) ok++;
+    const e=window.__exp;
+    const expOk = !!(e.lecture && e.niveaux);
+    return {score:ok,total:3,
+      extra: expOk?"":" Il manque tes expériences au banc d'essai : fais varier le vent et passe par les TROIS niveaux (les coches ✔ du banc doivent s'allumer).",
+      valide: ok===3 && expOk};
+  },
+  4: function(){
+    let ok=0;
+    if($("a4_q1").value.startsWith("le buzzer se tait")) ok++;
+    if($("a4_q2").value.startsWith("le changement de niveau")) ok++;
+    if($("a4_q3").value.startsWith("le cahier des charges l'exige")) ok++;
+    if($("a4_q4").value==="niveauPrecedent") ok++;
+    const expOk = txt("a4_exp").length>=30;
+    const e=window.__exp;
+    const bancOk = !!(e.acquit && e.retrigger);
+    let extra="";
+    if(!expOk) extra += " Rédige l'explication sur alarmeAcquittee (2 phrases minimum).";
+    if(!bancOk) extra += " Fais les DEUX expériences au banc : acquitter une alarme qui sonne, puis re-déclencher une alerte (coches ✔).";
+    return {score:ok,total:4,extra,valide: ok===4 && expOk && bancOk};
+  },
+  5: function(){
+    let ok=0;
+    if($("a5_q1").value.startsWith("ils ne changent jamais")) ok++;
+    if($("a5_q2").value.startsWith("le bloc « calibrer »")) ok++;
+    if($("a5_q3").value.startsWith("le SINON SI")) ok++;
+    if($("a5_q4").value.startsWith("la boucle reste lisible")) ok++;
+    if($("a5_q5").value.startsWith("leur seuil de vigilance")) ok++;
+    const e=txt("a5_exp");
+    const expOk = e.length>=30 && (e.includes("capteur")||e.includes("vitesse")||e.includes("conversion"));
+    return {score:ok,total:5,extra: expOk?"":" Ta justification doit s'appuyer sur la trace : la vitesse monte correctement, donc le capteur et la conversion sont innocentés.",valide: ok===5 && expOk};
+  },
+  6: function(){
+    let ok=0;
+    if($("a6_v1").value.startsWith("42 km/h")) ok++;
+    if($("a6_v2").value.startsWith("99 ET 100")) ok++;
+    if($("a6_v3").value.startsWith("l'alerte rouge")) ok++;
+    if($("a6_v4").value.startsWith("chronométrer")) ok++;
+    if($("a6_v5").value.startsWith("il faut prouver")) ok++;
+    const r=txt("a6_redac");
+    const redacOk = r.length>=120 && (r.includes("99")||r.includes("149")) && (r.includes("seconde")||r.includes("chrono")||r.includes("temps")) && (r.includes("acquit")||r.includes("bouton")||r.includes("appui"));
+    return {score:ok,total:5,extra: redacOk?"":" Ton protocole rédigé doit contenir les 4 familles : nominaux, frontières (99/100/149/150), performance (chrono), interaction (bouton) — et une règle de décision.",valide: ok===5 && redacOk};
+  },
+  7: function(){
+    let ok=0;
+    if($("a7_a4").value==="veille") ok++;
+    if($("a7_a5").value==="vigilance orange") ok++;
+    if($("a7_a6").value==="vigilance orange") ok++;
+    if($("a7_a7").value==="alerte rouge") ok++;
+    const verdicts = ["a7_r1","a7_r2","a7_r3","a7_r4","a7_r5","a7_r6","a7_r7","a7_r8","a7_r9","a7_r10"];
+    const remplis = verdicts.filter(id=>$(id).value!=="").length;
+    const pvOk = txt("a7_pv").length>=80 && (txt("a7_pv").includes("recette")||txt("a7_pv").includes("prononc")||txt("a7_pv").includes("ajourn"));
+    const e=window.__exp;
+    const bancOk = bornesOk() && !!e.chrono;
+    let extra="";
+    if(remplis<10) extra += ` Remplis les 10 verdicts (${remplis}/10) — PENDANT les essais, pas de mémoire.`;
+    if(!bancOk) extra += " Exécute réellement les essais au banc : les 4 frontières (99, 100, 149, 150) et la mesure ⏱ doivent être cochées ✔.";
+    if(!pvOk) extra += " Rédige le PV avec une conclusion explicite (recette prononcée / ajournée).";
+    return {score:ok,total:4,extra,valide: ok===4 && remplis===10 && bancOk && pvOk};
+  }
+};
+const ENCOURAGE_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENCOURAGE_MI=["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENCOURAGE_KO=["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n=btn.dataset.check;
+    const r=CHECKS[n]();
+    const fb=$("fb"+n);
+    const ratio=r.score/r.total;
+    let msg = `${r.score} / ${r.total} réponses correctes.`;
+    if(r.valide){ fb.className="feedback show ok"; msg += " " + ENCOURAGE_OK[r.score%ENCOURAGE_OK.length] + " Tu peux maintenant comparer avec la correction complète."; }
+    else if(ratio>=0.5){ fb.className="feedback show mixte"; msg += " " + ENCOURAGE_MI[r.score%ENCOURAGE_MI.length]; }
+    else { fb.className="feedback show err"; msg += " " + ENCOURAGE_KO[r.score%ENCOURAGE_KO.length]; }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid[n] = !!r.valide;
+    save(false); majProgress();
+  });
+});
+
+/* ══════ Progression ══════ */
+function majProgress(){
+  const v = window.__valid||{};
+  const n = [1,2,3,4,5,6,7].filter(k=>v[k]).length;
+  $("progTxt").textContent = `${n} / 7 activités validées`;
+  $("progFill").style.width = (n/7*100)+"%";
+  $("progBar").setAttribute("aria-valuenow", n);
+  const par = {s1:[1,2], s2:[3], s3:[4,5], s4:[6,7]};
+  Object.entries(par).forEach(([s,acts])=>{
+    $("done-"+s).textContent = acts.every(a=>v[a]) ? " ✔" : "";
+  });
+}
+
+/* ══════ Rappel d'hypothèse dans le bilan ══════ */
+function majHyp(){
+  const h = $("hyp1").value.trim();
+  if(h){ $("rappelHyp").style.display="block"; $("hypRappelTxt").textContent = "« " + h + " »"; }
+}
+$("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+(function(){
+  const b = document.getElementById("btnEssentiel");
+  if(!b) return;
+  b.addEventListener("click", ()=>{
+    document.body.classList.toggle("essentiel");
+    window.__exp = window.__exp || {};
+    window.__exp["mode_essentiel"] = document.body.classList.contains("essentiel") ? 1 : 0;
+    majEssentiel();
+    if(typeof save === "function") save(false);
+  });
+})();
+
+/* ══════ Init ══════ */
+restore();
+if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
+simSetVent(42); SIM.mouvements = 0;
+majEssentiel(); majProgress(); majHyp(); majVerrous(); simTick();
+
+/* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
+const TACHES = {
+  "s1": {titre:"Séance 1 — « La mairie vous appelle »", taches:[{n:1, libelle:"Relire le cahier des charges et poser les deux chaînes"}, {n:2, libelle:"Élaborer l'algorithme et lire l'algorigramme des trois niveaux"}]},
+  "s2": {titre:"Séance 2 — Programmer en blocs", taches:[{n:3, libelle:"Construire le programme palier par palier : lire, décider, afficher"}]},
+  "s3": {titre:"Séance 3 — L'humain dans la boucle", taches:[{n:4, libelle:"Programmer l'acquittement et comprendre l'événement"}, {n:5, libelle:"Lire le C++ généré et diagnostiquer avec la trace"}]},
+  "s4": {titre:"Séance 4 — La recette : prouver que ça marche", taches:[{n:6, libelle:"Rédiger le protocole de test (nominaux, frontières, performance, interaction)"}, {n:7, libelle:"Exécuter la recette au banc et signer le procès-verbal"}]}
+};
+function majTaches(){
+  const hote = document.getElementById("tachesBandeau"); if(!hote) return;
+  const onglet = document.querySelector(".seance-tab.active");
+  const bloc = TACHES[onglet ? onglet.dataset.panel : ""];
+  if(!bloc){ hote.hidden = true; return; }
+  hote.hidden = false;
+  const v = window.__valid || {};
+  const faites = bloc.taches.filter(t => v[t.n]).length;
+  hote.innerHTML = "<span class='tb-titre'>" + bloc.titre + " — étape " +
+    Math.min(faites + 1, bloc.taches.length) + " sur " + bloc.taches.length + "</span><ul>" +
+    bloc.taches.map(t => "<li class='" + (v[t.n] ? "faite" : "") + "'>" +
+      (v[t.n] ? "☑" : "☐") + " " + t.libelle + "</li>").join("") + "</ul>";
+}
+document.querySelectorAll(".seance-tab").forEach(t =>
+  t.addEventListener("click", () => setTimeout(majTaches, 0)));
+majProgress = (function(precedent){
+  return function(){ const r = precedent.apply(this, arguments); majTaches(); return r; };
+})(majProgress);
+majTaches();
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  —  Échap pour refermer"
+                                  : "Échap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  function armer(){
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>

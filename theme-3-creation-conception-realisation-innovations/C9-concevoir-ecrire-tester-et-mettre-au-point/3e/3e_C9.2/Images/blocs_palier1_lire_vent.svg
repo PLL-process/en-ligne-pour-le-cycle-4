@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p1 d-p1">
+<title id="t-p1">Palier 1 — reconstitution du programme en blocs : lire l'anémomètre sur A1, convertir en kilomètres par heure, afficher au moniteur série</title>
+<desc id="d-p1">Reconstitution schématique (ce n'est pas une capture d'écran : l'aspect exact des blocs peut différer selon la version d'ArduBlock). Un grand bloc « boucle (répéter sans fin) » contient trois blocs emboîtés : d'abord « mesureBrute prend la valeur de : lire la broche analogique A1 » ; puis « vitesseVent prend la valeur de : calibrer mesureBrute de l'intervalle 0-1023 vers l'intervalle 0-250 » ; enfin « envoyer au moniteur série : vitesseVent ». Résultat attendu à l'écran du moniteur : des nombres qui montent quand on tourne le potentiomètre, et descendent quand on le ramène.</desc>
+<rect width="760" height="340" fill="#050f24"/>
+<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 1 — le programme lit le vent</text>
+<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+
+<!-- bloc boucle -->
+<path d="M60 70 h330 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 h-300 v130 h300 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 H60 a8 8 0 0 1 -8 -8 V78 a8 8 0 0 1 8 -8 z" fill="#8a4a1d" stroke="#ffb454" stroke-width="2"/>
+<text x="72" y="90" fill="#fff" font-size="13" font-weight="700">🔁 boucle — répéter sans fin</text>
+<text x="72" y="266" fill="#fff" font-size="11">recommencer</text>
+
+<!-- bloc 1 -->
+<rect x="100" y="112" width="278" height="34" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="112" y="134" fill="#fff" font-size="12"><tspan font-weight="700" fill="#ffd66b">mesureBrute</tspan> ← lire broche analogique <tspan font-weight="700">A1</tspan></text>
+
+<!-- bloc 2 -->
+<rect x="100" y="154" width="278" height="48" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="112" y="174" fill="#fff" font-size="12"><tspan font-weight="700" fill="#ffd66b">vitesseVent</tspan> ← calibrer <tspan font-weight="700" fill="#ffd66b">mesureBrute</tspan></text>
+<text x="112" y="192" fill="#c8dcff" font-size="11">de [ 0 ; 1023 ]  vers  [ 0 ; 250 ] km/h</text>
+
+<!-- bloc 3 -->
+<rect x="100" y="210" width="278" height="34" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
+<text x="112" y="232" fill="#fff" font-size="12">envoyer au moniteur série : <tspan font-weight="700" fill="#ffd66b">vitesseVent</tspan></text>
+
+<!-- résultat attendu -->
+<rect x="440" y="80" width="280" height="200" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="580" y="104" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS voir (moniteur série)</text>
+<g font-family="monospace" font-size="13" fill="#81fba1">
+  <text x="460" y="132">vent(km/h)= 38</text>
+  <text x="460" y="152">vent(km/h)= 71</text>
+  <text x="460" y="172">vent(km/h)= 122</text>
+  <text x="460" y="192">vent(km/h)= 187</text>
+  <text x="460" y="212">vent(km/h)= 244</text>
+</g>
+<text x="580" y="242" text-anchor="middle" fill="#e4eaf5" font-size="11">les nombres MONTENT quand tu tournes</text>
+<text x="580" y="258" text-anchor="middle" fill="#e4eaf5" font-size="11">le potentiomètre, et redescendent après</text>
+<text x="580" y="300" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(les valeurs affichées ici sont des exemples)</text>
+</svg>

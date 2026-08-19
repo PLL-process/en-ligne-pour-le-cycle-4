@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · Martinique — 3e : QCM — La station d'alerte cyclonique se programme (3e_C9.2 + 3e_C8.3)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;color:var(--sub);font-size:.8em;margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">← Séquence</a></nav>
+<h1>Thème 3 · Martinique — 3e : QCM — La station d'alerte cyclonique se programme</h1>
+<p class="subtitle">Programmer un système réel avec interaction humain-machine · proposer un protocole de test</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">3e_C9.2</span><span class="badge code">3e_C8.3</span>
+  <span class="badge theme">30 questions · corrections détaillées · 4 illustrées</span>
+</div>
+<p style="text-align:center"><a href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C9.2">3e_C9.2 — Programmer un système réel (interaction humain-machine)</option>
+      <option value="C8.3">3e_C8.3 — Proposer un protocole de test</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d'entraînement 3e_C9.2 + 3e_C8.3 · Thème 3 · Technologie cycle 4 (2024) · <a href="sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* ─────────── Banque de questions ───────────
+ c: compétence · n: notion · q: question · o: options · r: index bonne réponse
+ expl: explication + raisonnement · ex: exemple · err: erreur fréquente
+ d: pourquoi chaque distracteur est faux ("" pour la bonne réponse) · ret: à retenir */
+const QUESTIONS = [
+/* ═══ C9.2 ═══ */
+{c:"C9.2",n:"Commander un système réel",q:"Que signifie « le programme commande un SYSTÈME RÉEL » pour la station d'alerte ?",
+ o:["Le programme dessine une station à l'écran de l'ordinateur","Le programme pilote de vrais composants : écran LCD, DEL, buzzer, à partir de vraies entrées (capteur, bouton)","Le programme fonctionne sans aucune carte électronique","Le programme commande d'autres programmes"],r:1,
+ expl:"Un système réel, c'est du matériel : le programme lit des entrées physiques (potentiomètre sur A1, bouton sur D2) et commande des sorties physiques (LCD, DEL sur D3, buzzer sur D5). L'information qu'il calcule devient de la lumière, du son, un affichage.",
+ ex:"Quand vitesseVent dépasse 150, la broche D5 passe à l'état haut : le buzzer sonne pour de vrai dans la cour.",
+ err:"Confondre la simulation (le banc d'essai de la page) avec le but : la simulation prépare et teste, mais la compétence visée est bien de commander le matériel.",
+ d:["Dessiner à l'écran est une simulation : utile pour tester, mais ce n'est pas commander le matériel.","","Sans carte, il n'y a plus de système réel à commander.","La station n'a qu'un seul programme : celui du microcontrôleur."],
+ ret:"Programme + système réel = des entrées physiques lues, des sorties physiques commandées."},
+{c:"C9.2",n:"Le cahier des charges",q:"Dans le projet de la station, qui a fixé les seuils de 100 et 150 km/h ?",
+ o:["Le potentiomètre, selon sa position","Le programmeur, selon son intuition","Le cahier des charges de la mairie — le programme ne fait que les appliquer","Le hasard du téléversement"],r:2,
+ expl:"Les seuils sont des EXIGENCES du client (la mairie). Le programmeur les recopie dans des constantes (SEUIL_VIGILANCE, SEUIL_ALERTE) : il les applique, il ne les invente pas. Et c'est le protocole de recette qui vérifiera CES valeurs-là.",
+ ex:"« Vigilance orange à partir de 100 km/h » est écrit noir sur blanc dans le courrier de commande.",
+ err:"Croire que le programmeur choisit les seuils : s'il met 120 au lieu de 100, la station ne respecte plus la commande — la recette échouera.",
+ d:["Le potentiomètre fournit la MESURE, pas les seuils de décision.","L'intuition du programmeur n'engage que lui ; le cahier des charges engage le projet.","","Rien n'est aléatoire dans un cahier des charges."],
+ ret:"Les valeurs de décision d'un programme viennent du cahier des charges — et la recette les vérifie."},
+{c:"C9.2",n:"Comportement et performance",q:"« La station réagit en moins d'une seconde » : de quel type d'exigence s'agit-il ?",
+ o:["Une exigence esthétique","Une exigence de comportement : elle décrit ce que fait la station","Une exigence de PERFORMANCE : elle est chiffrée et se mesure","Un simple conseil, pas une exigence"],r:2,
+ expl:"Le comportement dit CE QUE fait le système (afficher, sonner, s'acquitter) ; la performance dit À QUELLE VITESSE ou avec quelle qualité, avec un CHIFFRE. « Moins d'une seconde » est mesurable au chronomètre : c'est une performance.",
+ ex:"Au banc d'essai, le bouton ⏱ mesure ≈ 0,3 s entre le franchissement du seuil et l'affichage : conforme.",
+ err:"Ranger toutes les phrases du cahier des charges dans le même sac : à la recette, un comportement se VÉRIFIE, une performance se MESURE.",
+ d:["La vitesse de réaction n'a rien d'esthétique.","« Afficher le niveau d'alerte » serait un comportement ; ici il y a un chiffre et un chronomètre.","","Tout ce qui figure au cahier des charges engage : la recette devra le prouver."],
+ ret:"Comportement = ce que fait le système · Performance = exigence chiffrée, donc mesurable."},
+{c:"C9.2",n:"L'ordre des tests",q:"Sur l'algorigramme, pourquoi le losange « ≥ 150 » est-il placé AVANT le losange « ≥ 100 » ?",
+ img:{src:"Images/algorigramme_alerte.svg",alt:"Algorigramme de la station : après la lecture du vent, un premier losange teste vitesse supérieure ou égale à 150 vers l'alerte rouge, sinon un second losange teste vitesse supérieure ou égale à 100 vers la vigilance orange, sinon veille, puis la boucle remonte vers la lecture"},
+ o:["Parce qu'une rafale à 180 km/h doit déclencher l'alerte rouge — testée après « ≥ 100 », elle serait rangée à tort en vigilance","Parce que 150 est plus grand, donc plus rapide à calculer","Par tradition : l'ordre des losanges n'a aucun effet","Parce que le losange « ≥ 100 » ne fonctionne que la nuit"],r:0,
+ expl:"Dans une cascade SI / SINON SI, seule la PREMIÈRE condition vraie s'applique. Si on testait « ≥ 100 » d'abord, 180 ≥ 100 serait vrai et le programme s'arrêterait à « vigilance » : le test « ≥ 150 » ne serait jamais atteint. On teste donc toujours le seuil le plus haut d'abord.",
+ ex:"180 km/h : losange 150 → OUI → alerte rouge. Avec l'ordre inversé : losange 100 → OUI → vigilance… et l'alerte devient inatteignable.",
+ err:"Croire que l'ordre des tests est un détail de dessin : c'est un choix d'ALGORITHME, et l'inverser crée un bug dangereux.",
+ d:["","Le temps de calcul d'une comparaison est identique quel que soit le seuil.","L'ordre change tout : c'est précisément le bug classique de cette cascade.","Un algorigramme ne dépend évidemment pas de l'heure."],
+ ret:"Cascade de SI/SINON : le seuil le plus HAUT se teste en PREMIER."},
+{c:"C9.2",n:"Les symboles de l'algorigramme",q:"Dans un algorigramme, que représente le losange ?",
+ o:["Le début ou la fin du programme","Une action à exécuter","Une décision : une question à deux sorties, OUI et NON","Un composant électronique"],r:2,
+ expl:"Le losange pose une question fermée (vitesse ≥ 150 ?) et le chemin se sépare en deux : OUI et NON. Les rectangles portent les actions, les ovales le début et la fin, les flèches le sens de lecture.",
+ ex:"« vitesseVent ≥ 100 ? » — OUI vers la vigilance, NON vers la veille.",
+ err:"Écrire une action dans un losange (« allumer la DEL ») : une action ne se répond ni par oui ni par non.",
+ d:["Début et fin sont des ovales.","Les actions vivent dans les rectangles.","","L'algorigramme décrit le programme, pas le circuit."],
+ ret:"🎓 DNB — ovale : début/fin · rectangle : action · losange : décision OUI/NON · flèche : sens de lecture."},
+{c:"C9.2",n:"La boucle",q:"Le programme de la station répète sa lecture-décision-affichage « sans fin ». Pourquoi ?",
+ o:["Une station de surveillance doit re-mesurer en permanence : le vent change, la décision doit suivre","C'est une erreur : un bon programme se termine toujours","Pour user le processeur régulièrement","Parce qu'ArduBlock ne sait pas faire autrement"],r:0,
+ expl:"Le vent évolue sans cesse : si le programme s'arrêtait après une mesure, la station afficherait pour toujours l'état d'il y a une heure. La boucle relit le capteur (~5 fois par seconde ici) et remet la décision à jour.",
+ ex:"À 9 h : veille. À 15 h, la tempête arrive : la même boucle, toujours en train de tourner, bascule l'écran en alerte.",
+ err:"Confondre les programmes « calcul » (qui se terminent en rendant un résultat) et les programmes « système » (qui surveillent en continu).",
+ d:["","Pour un système de surveillance, se terminer serait justement la panne.","La répétition n'use pas un processeur : il est fait pour ça.","La boucle est un choix d'algorithme, pas une limite de l'outil."],
+ ret:"Un programme qui SURVEILLE tourne en boucle : mesurer → décider → afficher, sans fin."},
+{c:"C9.2",n:"La conversion (calibrer / map)",q:"Le bloc « calibrer » convertit la mesure brute (0-1023) en vitesse (0-250 km/h). Pour mesureBrute = 512, vitesseVent vaut environ…",
+ o:["125 km/h — la moitié de l'échelle","512 km/h — la valeur se recopie","250 km/h — le maximum","0 km/h — la conversion efface tout"],r:0,
+ expl:"La conversion est une proportionnalité : 512 est à peu près la moitié de 1023, donc la vitesse vaut à peu près la moitié de 250, soit ≈ 125 km/h. En C++, c'est la fonction map(mesureBrute, 0, 1023, 0, 250).",
+ ex:"512 × 250 ÷ 1023 = 125,1 → 125 km/h affichés.",
+ err:"Recopier la valeur brute comme si c'était des km/h : 512 km/h n'existe pas — le CAN sort un numéro de palier, pas une vitesse.",
+ d:["","512 est la mesure BRUTE : il faut la convertir avant de l'interpréter.","250 correspondrait à mesureBrute = 1023.","La conversion transforme la valeur, elle ne l'efface pas."],
+ ret:"calibrer / map = proportionnalité : valeur = brute × (étendue de sortie ÷ 1023)."},
+{c:"C9.2",n:"Le bouton : une entrée humaine",q:"Sur le montage, le bouton d'acquittement est branché en D2. Dans la chaîne d'information, il assure la fonction…",
+ img:{src:"Images/montage_station_grove.svg",alt:"Schéma de câblage : Arduino UNO et shield Grove au centre, LCD RGB sur I2C, potentiomètre sur A1, bouton d'acquittement sur D2, DEL rouge sur D3, buzzer sur D5, câble USB d'alimentation 5 volts"},
+ o:["Communiquer : on « communique » avec la machine en appuyant","Acquérir : il fait ENTRER une information — la décision de l'agent","Traiter : c'est lui qui décide du niveau","Alimenter : il fournit le courant du buzzer"],r:1,
+ expl:"Regarde le SENS de l'information : l'appui entre dans la station, comme la mesure du vent. Le bouton est donc un capteur — d'un genre particulier : il capte une décision HUMAINE et non une grandeur physique. C'est l'entrée de l'interaction humain-machine.",
+ ex:"digitalRead(BROCHE_BOUTON) == HIGH : le programme LIT le bouton exactement comme il lit un capteur.",
+ err:"Classer le bouton dans « Communiquer » parce qu'on s'adresse à la machine : Communiquer, c'est faire SORTIR l'information (écran, DEL, buzzer).",
+ d:["Communiquer = les sorties (LCD, DEL, buzzer) : l'information y SORT de la station.","","Le seul organe qui décide est le microcontrôleur, avec son programme.","Le bouton transporte une information, pas l'énergie du montage."],
+ ret:"Le bouton = un capteur de décision humaine : fonction Acquérir, entrée de l'interaction humain-machine."},
+{c:"C9.2",n:"Le booléen-mémoire",q:"À quoi sert la variable booléenne alarmeAcquittee dans le programme de la station ?",
+ o:["À choisir la couleur de l'écran","À mémoriser la vitesse maximale du vent","À compter le nombre d'appuis sur le bouton","À retenir que l'agent a répondu à l'alarme, pour couper le son sans éteindre l'alerte"],r:3,
+ expl:"Un appui ne dure qu'un instant, mais son effet doit durer : alarmeAcquittee (vrai/faux) mémorise « l'agent a répondu ». Le buzzer sonne seulement si (niveau = 2) ET (alarmeAcquittee = faux) : le son se tait, l'écran et la DEL restent.",
+ ex:"Appui à 14 h 03 : alarmeAcquittee passe à vrai — et le buzzer reste muet à 14 h 04, 14 h 05… tant que l'alerte ne change pas.",
+ err:"Couper le buzzer directement dans le « si bouton appuyé » : dès le tour de boucle suivant, il re-sonnerait — l'appui est déjà oublié.",
+ d:["La couleur dépend de niveauAlerte, pas de l'acquittement.","La vitesse vit dans vitesseVent ; alarmeAcquittee ne connaît que vrai/faux.","Compter demanderait un nombre entier ; un booléen n'a que deux valeurs.",""],
+ ret:"Une action brève à effet durable se programme avec un booléen-mémoire."},
+{c:"C9.2",n:"État et événement",q:"Dans le programme, à quoi sert la comparaison « niveauAlerte ≠ niveauPrecedent » ?",
+ o:["À détecter l'ÉVÉNEMENT « le niveau vient de changer », pour ré-armer l'alarme","À vérifier que le capteur fonctionne","À ralentir la boucle","À économiser la batterie"],r:0,
+ expl:"niveauAlerte est l'ÉTAT actuel ; niveauPrecedent est l'état mémorisé au tour de boucle précédent. S'ils diffèrent, c'est que le niveau VIENT DE changer : un événement. Le programme en profite pour remettre alarmeAcquittee à faux — nouvel événement, nouvel avertissement sonore.",
+ ex:"Vigilance → alerte : l'événement est détecté, l'acquittement précédent est effacé, le buzzer repart.",
+ err:"Confondre l'état (l'alerte DURE) et l'événement (l'instant où elle COMMENCE) : l'alarme se ré-arme sur l'événement, pas sur l'état.",
+ d:["","Le diagnostic du capteur se ferait sur la mesure brute, pas sur les niveaux.","La cadence de la boucle vient du délai (200 ms), pas d'une comparaison.","Comparer deux entiers ne consomme presque rien."],
+ ret:"Événement = état actuel ≠ état mémorisé du tour précédent. C'est LE motif de la détection de changement."},
+{c:"C9.2",n:"Lire le chronogramme",q:"Sur le chronogramme, à t5 le buzzer se remet à sonner SANS nouvel appui sur le bouton. Pourquoi ?",
+ img:{src:"Images/ihm_acquittement_chronogramme.svg",alt:"Chronogramme : le niveau passe en alerte rouge à t2, le buzzer sonne, l'agent appuie à t3 et le buzzer se tait, le niveau redescend en vigilance à t4 puis repasse en alerte à t5 et le buzzer ressonne, la DEL reste allumée en continu dès la vigilance"},
+ o:["Le programme a perdu la mémoire à cause d'une coupure","Le bouton est resté coincé depuis t3","Le niveau vient de repasser en alerte : ce nouvel événement a effacé l'acquittement","La DEL a transmis son état au buzzer"],r:2,
+ expl:"Entre t4 et t5, le niveau est redescendu puis remonté en alerte : à t5, niveauAlerte ≠ niveauPrecedent — un nouvel événement. Le programme remet alarmeAcquittee à faux : chaque nouvelle alerte mérite son avertissement sonore, même si l'agent avait répondu à la précédente.",
+ ex:"Deux rafales de tempête à une heure d'écart = deux alarmes : l'agent doit être re-prévenu à chaque fois.",
+ err:"Croire qu'un acquittement vaut pour toujours : ce serait dangereux — la deuxième alerte passerait inaperçue.",
+ d:["Le chronogramme ne montre aucune coupure : la DEL reste alimentée en continu.","Un bouton coincé maintiendrait l'acquittement : le buzzer resterait MUET, c'est l'inverse.","","La DEL et le buzzer sont deux sorties indépendantes, commandées par le même programme."],
+ ret:"Un changement de niveau ré-arme l'alarme : l'acquittement ne vaut que pour l'événement en cours."},
+{c:"C9.2",n:"Ce qui s'acquitte et ce qui reste",q:"Quand l'agent acquitte l'alarme, pourquoi la DEL et l'écran restent-ils en alerte ?",
+ o:["Le cahier des charges l'exige : on coupe le son qui dérange, jamais l'information qui protège","C'est un oubli dans le programme","La DEL est soudée : impossible de l'éteindre","Le bouton n'a pas assez d'énergie pour deux sorties"],r:0,
+ expl:"L'acquittement veut dire « j'ai entendu », pas « le danger est fini ». Le son, pénible, peut être coupé une fois l'agent prévenu ; l'information visuelle (écran rouge, DEL) doit rester tant que dure l'alerte, pour tous les autres.",
+ ex:"Le courrier de la mairie : « acquitter l'alarme sonore… sans jamais éteindre l'affichage ni le signal lumineux ».",
+ err:"Programmer l'acquittement sur TOUTES les sorties : la station deviendrait muette ET aveugle après un appui — contresens dangereux.",
+ d:["","C'est un choix explicite du cahier des charges, traduit dans la condition du buzzer uniquement.","La DEL est commandée par D3 : le programme peut l'éteindre — il ne le DOIT pas.","Le bouton ne fournit aucune énergie : il envoie une information au programme."],
+ ret:"Acquitter = couper le SON, jamais l'INFORMATION : le danger continue tant que l'alerte dure."},
+{c:"C9.2",n:"Les constantes",q:"Dans le C++ généré, les seuils sont déclarés « const int SEUIL_ALERTE = 150; ». Qu'apporte le mot-clé const ?",
+ o:["Le seuil s'adapte automatiquement au vent","Le programme s'exécute deux fois plus vite","La valeur devient invisible pour le programmeur","La valeur ne peut plus être modifiée pendant l'exécution : le seuil du cahier des charges est protégé des accidents"],r:3,
+ expl:"const déclare une valeur fixe : si une ligne du programme essayait de changer SEUIL_ALERTE, la compilation échouerait. Les exigences du cahier des charges sont ainsi verrouillées dans le code — on ne peut pas les abîmer par erreur.",
+ ex:"vitesseVent change à chaque tour (variable) ; SEUIL_ALERTE ne change jamais (constante).",
+ err:"Mettre les seuils dans des variables ordinaires : une faute de frappe pourrait écrire dedans, et la station se mettrait à alerter à 15 km/h — ou jamais.",
+ d:["Un seuil qui « s'adapterait » trahirait le cahier des charges.","const protège la valeur, il n'accélère rien de mesurable ici.","La constante reste parfaitement lisible : elle est même NOMMÉE pour être comprise.",""],
+ ret:"const = valeur verrouillée. Variables pour ce qui change, constantes pour ce que le cahier des charges fixe."},
+{c:"C9.2",n:"Le sous-programme",q:"L'affichage vit dans le sous-programme afficherEtat(), appelé depuis la boucle. Quel est l'intérêt ?",
+ o:["La boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit","Le programme consomme moins de mémoire, c'est le seul but","C'est obligatoire : un programme ne compile pas sans sous-programme","Ça empêche les autres élèves de copier le code"],r:0,
+ expl:"Ranger chaque tâche dans un sous-programme (une fonction), c'est la STRUCTURATION exigée en 3e : la boucle raconte l'histoire (lire → décider → afficher) et chaque détail vit dans sa fonction, testable et corrigeable isolément.",
+ ex:"Un bug d'affichage ? On ouvre afficherEtat() — 15 lignes — au lieu de fouiller tout le programme.",
+ err:"Tout écrire dans la boucle : au 3e ajout, plus personne ne s'y retrouve — même pas son auteur.",
+ d:["","L'effet mémoire est négligeable : l'enjeu est la lisibilité et la mise au point.","Un programme compile très bien sans fonction — il devient juste illisible en grossissant.","La structuration aide au contraire à RELIRE le code, y compris par d'autres."],
+ ret:"Un sous-programme par tâche : lisible, testable, corrigeable — la structuration exigée en 3e."},
+{c:"C9.2",n:"Mise au point à la trace",q:"La trace affiche : vent=103 niveau=0, vent=126 niveau=0, vent=161 niveau=2. Qu'en déduire ?",
+ o:["Le moniteur série affiche n'importe quoi","Le capteur est cassé : il faut le remplacer","Le CAN sature à 100","Capteur et conversion sont innocents (la vitesse monte bien) : le test du seuil 100 est défaillant"],r:3,
+ expl:"On lit la trace colonne par colonne : la vitesse évolue normalement (103 → 126 → 161), donc capteur + CAN + conversion fonctionnent. Le niveau reste à 0 entre 100 et 150 alors qu'il devrait valoir 1 : la DÉCISION rate. Et comme 161 donne bien 2, le test ≥ 150 existe : c'est le test ≥ 100 qui est faux ou absent.",
+ ex:"Erreur typique trouvée ensuite dans les blocs : le SINON SI « ≥ 100 » a été remplacé par « ≥ 150 » lors d'un copier-coller.",
+ err:"Accuser le matériel dès qu'un affichage est faux : la trace permet d'innocenter la chaîne tronçon par tronçon AVANT d'ouvrir le capot.",
+ d:["Le moniteur affiche ce que le programme lui envoie : c'est le témoin, pas le coupable.","La trace prouve le contraire : les vitesses affichées suivent le potentiomètre.","103 et 126 sont bien mesurés et affichés : rien ne sature.",""],
+ ret:"Mise au point : lire la trace, chercher le PREMIER endroit où les valeurs deviennent fausses — l'amont est innocenté."},
+/* ═══ C8.3 ═══ */
+{c:"C8.3",n:"Définition du protocole",q:"Qu'est-ce qu'un protocole de test ?",
+ o:["La liste des composants du montage","Le fait d'essayer l'objet « pour voir » jusqu'à ce qu'il tombe en panne","Le mode d'emploi destiné aux utilisateurs","La liste ORDONNÉE des essais à réaliser, écrite AVANT de les exécuter, avec le résultat attendu de chacun"],r:3,
+ expl:"Un protocole se rédige AVANT l'exécution : quels essais, dans quel ordre, avec quelles valeurs d'entrée, et surtout quel résultat ATTENDU pour chacun. Sans attendu écrit à l'avance, on ne teste pas : on regarde — et on se convainc de ce qu'on espère.",
+ ex:"« Essai 5 : vent réglé à 150 km/h pile ; attendu : alerte rouge + buzzer » — écrit avant de toucher au banc.",
+ err:"Essayer au hasard puis raconter « ça a marché » : sans attendus écrits, impossible de dire ce qui a été prouvé.",
+ d:["La nomenclature décrit le matériel, pas les essais.","Essayer « pour voir » n'est pas un protocole : rien n'est prévu, rien n'est prouvé.","Le mode d'emploi explique l'usage ; le protocole prouve la conformité.",""],
+ ret:"Protocole = essais ordonnés + valeurs d'entrée + résultats ATTENDUS, rédigés AVANT l'exécution."},
+{c:"C8.3",n:"Pourquoi des cas limites",q:"Sur le document, les valeurs 99, 100, 149 et 150 encadrent les deux seuils. Pourquoi tester précisément là ?",
+ img:{src:"Images/protocole_recette_anatomie.svg",alt:"Anatomie d'un protocole : une droite graduée du vent porte les seuils 100 et 150 avec les valeurs de test 99, 100, 149 et 150 par paires autour de chaque seuil ; un tableau essai, condition d'entrée, résultat attendu, résultat observé, verdict ; un chronomètre pour la performance"},
+ o:["Parce que le vent souffle souvent à ces vitesses en Martinique","Parce que ces nombres sont plus faciles à régler au potentiomètre","Pour faire davantage d'essais et impressionner la mairie","Parce que les erreurs de programme se cachent aux FRONTIÈRES : c'est là qu'un ≥ confondu avec un > change le comportement"],r:3,
+ expl:"Loin des seuils, presque tous les programmes se comportent pareil. C'est PILE à la frontière que se nichent les bugs : un ≥ écrit >, un seuil recopié 105 au lieu de 100… Tester juste dessous (99, 149) et pile dessus (100, 150) prouve que la frontière est exactement où le cahier des charges la veut.",
+ ex:"Un programme avec « > 150 » au lieu de « ≥ 150 » passe tous les essais nominaux… et échoue à l'essai « 150 pile ».",
+ err:"Ne tester que des valeurs « franches » (42, 120, 200) : le protocole a alors l'air complet et ne prouve presque rien sur les seuils.",
+ d:["La météo locale ne décide pas des valeurs de test : les seuils du cahier des charges, si.","La facilité de réglage n'a rien à voir : on choisit ces valeurs pour ce qu'elles PROUVENT.","On ne multiplie pas les essais pour la forme : chaque essai a une raison.",""],
+ ret:"Tester chaque seuil DES DEUX CÔTÉS : juste en dessous et pile dessus — les bugs vivent aux frontières."},
+{c:"C8.3",n:"Encadrer un seuil",q:"Pour vérifier le seuil de vigilance (100 km/h), quel couple d'essais faut-il au protocole ?",
+ o:["100 km/h seulement : le seuil, c'est le seuil","99 km/h (attendu : veille) ET 100 km/h (attendu : vigilance)","50 km/h et 150 km/h : un peu en dessous, un peu au-dessus","101 km/h deux fois, pour confirmer"],r:1,
+ expl:"Deux essais encadrent la frontière : juste en dessous (99 → encore veille) et pile dessus (100 → déjà vigilance). Ensemble ils prouvent que la bascule se fait exactement à 100 — ni avant, ni après.",
+ ex:"Si 99 donne « vigilance », le seuil est trop bas ; si 100 donne « veille », le ≥ a été écrit > : chaque cas d'erreur est détecté par l'un des deux essais.",
+ err:"Tester une seule valeur : on prouve un seul côté de la frontière — l'autre reste une supposition.",
+ d:["Un seul essai ne prouve qu'un côté : la bascule pourrait se faire à 95 sans qu'on le voie.","","50 et 150 sont trop loin : la bascule pourrait être n'importe où entre les deux — et 150 est un AUTRE seuil !","Répéter le même essai ne teste toujours qu'un côté de la frontière."],
+ ret:"Un seuil se vérifie par un COUPLE d'essais : juste en dessous + pile dessus."},
+{c:"C8.3",n:"La frontière comprise ou non",q:"Le courrier exige « l'alerte rouge à partir de 150 km/h ». À 150 pile, le protocole doit donc attendre…",
+ o:["Au choix : ≥ ou >, c'est une préférence de style","La vigilance : 150 n'est pas encore « au-dessus de 150 »","L'alerte rouge : « à partir de » inclut la valeur — c'est le cahier des charges qui tranche, pas le programmeur","Un écran éteint, par sécurité"],r:2,
+ expl:"« À partir de 150 » signifie 150 COMPRIS : le programme doit écrire ≥. Ce n'est pas le programmeur qui décide entre ≥ et > : c'est la lecture attentive du cahier des charges. Et l'essai « 150 pile » du protocole vérifie exactement ce choix.",
+ ex:"Si le cahier des charges disait « au-delà de 150 », alors 150 pile resterait en vigilance et le programme écrirait >.",
+ err:"Trancher ≥ ou > « au feeling » : les deux programmes marchent… mais un seul respecte la commande.",
+ d:["Ce n'est jamais une préférence de style : c'est une exigence à lire dans le document de commande.","« À partir de » inclut la borne : 150 est déjà en alerte.","","Rien n'autorise à éteindre l'affichage : le cahier des charges impose l'affichage permanent."],
+ ret:"≥ ou > : la réponse est DANS le cahier des charges — et l'essai à la valeur pile la vérifie."},
+{c:"C8.3",n:"Tester une performance",q:"Comment le protocole vérifie-t-il l'exigence « réagir en moins d'une seconde » ?",
+ o:["En regardant si la station « a l'air rapide »","Par une MESURE : chronométrer le délai entre le franchissement du seuil et le changement d'affichage, puis comparer à 1 s","En comptant le nombre de blocs du programme","En lisant la notice du microcontrôleur"],r:1,
+ expl:"Une exigence chiffrée se vérifie par une mesure chiffrée : on déclenche le franchissement du seuil, on chronomètre jusqu'au changement d'affichage, on compare au 1 s exigé. Le verdict est un nombre, pas une impression.",
+ ex:"Au banc d'essai : passage de 140 à 160 km/h → affichage « ALERTE ROUGE » mesuré à 0,3 s → conforme.",
+ err:"Valider une performance « à l'œil » : l'œil trouve rapide tout ce qui prend moins d'une seconde… et aussi pas mal de choses qui en prennent deux.",
+ d:["« Avoir l'air rapide » n'est pas mesurable : aucun verdict possible.","","Le nombre de blocs ne dit rien du temps de réaction réel.","La notice donne des capacités théoriques : la recette mesure le système RÉEL, tel qu'il est câblé et programmé."],
+ ret:"Exigence chiffrée → essai chiffré : on MESURE, on compare, on conclut."},
+{c:"C8.3",n:"Le tableau de recette",q:"Quelles colonnes forment le cœur d'un tableau de recette ?",
+ o:["Composant · prix · fournisseur","Nom de l'élève · note · appréciation","N° d'essai · condition d'entrée · résultat ATTENDU · résultat OBSERVÉ · verdict","Date · météo · humeur du testeur"],r:2,
+ expl:"Chaque ligne raconte un essai complet : ce qu'on impose au système (condition d'entrée), ce que le cahier des charges fait attendre (attendu), ce qui s'est réellement produit (observé), et la conclusion de la comparaison (verdict : réussi / échoué).",
+ ex:"« Essai 6 · vent 149 km/h · attendu vigilance orange · observé conforme · RÉUSSI ».",
+ err:"Fusionner attendu et observé en une seule colonne « résultat » : on ne peut plus voir si la ligne prouve quelque chose ou constate n'importe quoi.",
+ d:["Ça, c'est la nomenclature ou le devis.","La recette évalue l'OBJET, pas une personne.","","L'humeur du testeur n'a pas sa place : c'est exactement ce que le protocole neutralise."],
+ ret:"Une ligne de recette = entrée · attendu · observé · verdict. L'attendu se compare à l'observé."},
+{c:"C8.3",n:"Avant / pendant",q:"Dans le tableau de recette, QUAND remplit-on la colonne « attendu » et la colonne « observé » ?",
+ o:["Attendu : AVANT les essais (à la rédaction du protocole) · Observé : PENDANT chaque essai","Les deux à la fin, de mémoire, c'est plus rapide","Les deux avant : on sait bien ce que ça va donner","Observé d'abord, attendu ensuite, pour être sûr qu'ils coïncident"],r:0,
+ expl:"L'attendu vient du cahier des charges : il s'écrit à la rédaction, avant de toucher au système. L'observé se note PENDANT l'essai, tel quel. Remplir après coup, de mémoire, ou copier l'observé dans l'attendu, c'est fabriquer une recette qui réussit toujours — donc qui ne prouve rien.",
+ ex:"L'essai 5 du document : l'attendu « alerte rouge + buzzer » est imprimé d'avance ; la case observé attend l'essai.",
+ err:"« On remplira le tableau ce soir » : le soir, la mémoire arrondit tout vers « conforme ».",
+ d:["","De mémoire, on retient ce qu'on espérait voir : le tableau perd sa valeur de preuve.","Écrire l'observé avant l'essai, c'est de la fiction, plus de l'observation.","Ajuster l'attendu sur l'observé garantit un 10/10… qui ne prouve rien : c'est le contraire d'un test."],
+ ret:"Attendu AVANT (du cahier des charges) · observé PENDANT (tel quel) : c'est ce décalage qui fait la preuve."},
+{c:"C8.3",n:"Tester l'interaction",q:"Pourquoi le protocole de la station consacre-t-il DEUX essais à l'acquittement ?",
+ o:["Parce que la mairie paie les essais à l'unité","Parce que le bouton pourrait s'user au premier essai","Un seul suffirait, le second est décoratif","Il y a deux comportements à prouver : le son se coupe À l'appui, ET l'alarme repart au prochain changement de niveau"],r:3,
+ expl:"L'exigence d'acquittement cache deux comportements distincts : couper le son à l'appui (sans éteindre l'affichage), et ré-armer l'alarme à l'événement suivant. Un seul essai n'en prouverait qu'un — et le bug du « plus jamais de son après le premier appui » passerait la recette.",
+ ex:"Essai 9 : appui pendant l'alarme → silence, écran et DEL intacts. Essai 10 : redescente puis remontée → le buzzer repart seul.",
+ err:"S'arrêter à « l'appui coupe le son » : le programme qui n'efface jamais l'acquittement réussit cet essai… et devient muet pour toutes les alertes suivantes.",
+ d:["Le nombre d'essais se déduit des comportements à prouver, jamais d'une facturation.","Un bouton supporte des dizaines de milliers d'appuis : la raison est ailleurs.","Le second essai détecte un bug précis et dangereux : rien de décoratif.",""],
+ ret:"Chaque comportement exigé → au moins un essai. L'acquittement en cache DEUX : couper, puis ré-armer."},
+{c:"C8.3",n:"La règle de décision",q:"Que doit contenir la conclusion d'un protocole pour que la recette puisse être « prononcée » ?",
+ o:["La promesse de corriger un jour les défauts","La signature du testeur, rien d'autre","Une impression générale : « dans l'ensemble, ça marche bien »","Une règle de décision EXPLICITE, écrite à l'avance : par exemple « recette prononcée si 10 essais sur 10 sont réussis, sinon ajournée avec réserves »"],r:3,
+ expl:"Sans règle de décision écrite AVANT, la conclusion se négocie après coup (« 8/10, allez, c'est bon… »). La règle fixe le verdict à l'avance : combien d'essais réussis il faut, et ce qui se passe sinon (réserve, correction, re-test).",
+ ex:"« Recette prononcée si 10/10 ; tout échec = réserve motivée, correction, puis ré-exécution COMPLÈTE du protocole. »",
+ err:"Conclure « globalement satisfaisant » : la mairie signe quoi, exactement ? Personne ne le sait.",
+ d:["Une promesse sans re-test n'est pas une validation : le défaut reste, prononcer la recette serait faux.","La signature engage — mais elle doit engager sur une règle claire, pas sur du flou.","Une impression n'est ni vérifiable ni opposable : le PV perd sa valeur.",""],
+ ret:"La règle de décision s'écrit AVANT les essais : elle transforme des verdicts d'essais en décision de recette."},
+{c:"C8.3",n:"La non-régression",q:"Un essai de la recette échoue ; on corrige le programme. Que doit-on faire ensuite ?",
+ o:["REJOUER TOUT le protocole : la correction a pu casser un comportement qui marchait","Rejouer uniquement l'essai qui avait échoué","Rien : la correction suffit, on signe","Supprimer l'essai gênant du protocole"],r:0,
+ expl:"Une correction n'est jamais chirurgicale à coup sûr : en déplaçant un test ou un seuil, elle peut casser un comportement voisin qui, lui, marchait. Rejouer l'intégralité du protocole après toute correction, c'est la NON-RÉGRESSION — déjà rencontrée au banc de tests de l'atelier 3e_C9.1.",
+ ex:"En corrigeant le seuil 100, un élève a décalé le bloc du buzzer : l'essai 3 (200 km/h → buzzer), qui passait, échoue désormais. Seul le protocole complet l'attrape.",
+ err:"Ne revérifier que l'essai corrigé : le bug de régression — le plus sournois — passe entre les mailles.",
+ d:["","L'essai corrigé peut réussir pendant qu'un autre, à côté, vient de casser.","Signer sans re-tester, c'est signer un document faux.","Supprimer l'essai, c'est maquiller la preuve : le défaut reste dans la station livrée."],
+ ret:"Après CHAQUE correction : on rejoue TOUT le protocole. C'est la non-régression."},
+{c:"C8.3",n:"Le verdict honnête",q:"9 essais sur 10 sont conformes ; l'essai « 100 km/h pile » donne « veille » au lieu de « vigilance ». Que conclut le PV ?",
+ o:["Recette prononcée si on promet de corriger plus tard","Recette prononcée : 90 %, c'est une excellente note","Recette AJOURNÉE (ou réserve bloquante) : une exigence du cahier des charges n'est pas respectée — correction puis nouveau passage complet","On refait l'essai jusqu'à ce qu'il passe, puis on prononce"],r:2,
+ expl:"La recette n'est pas une moyenne : chaque exigence du cahier des charges doit être tenue. Un seuil décalé d'un km/h est précisément le genre de défaut que la mairie paie la recette pour détecter. On consigne l'échec, on corrige, on REJOUE tout.",
+ ex:"PV honnête : « Essai 5 non conforme (bascule à 101 au lieu de 100). Recette ajournée. Nouvelle session après correction. »",
+ err:"Raisonner en pourcentage comme pour un contrôle : 9/10 à une recette, c'est une station qui alerte en retard.",
+ d:["Une promesse ne protège personne pendant un cyclone : seule la correction VÉRIFIÉE compte.","90 % d'exigences tenues = une exigence trahie : le système n'est pas conforme.","","Refaire l'essai sans corriger, c'est espérer une erreur de mesure — et maquiller un défaut reproductible."],
+ ret:"Une recette ne se moyenne pas : toute non-conformité → ajournement ou réserve, correction, re-test complet."},
+{c:"C8.3",n:"Prouver vs croire",q:"Quelle est la différence entre « le programme a marché quand je l'ai essayé » et « le programme a passé la recette » ?",
+ o:["Aucune : dans les deux cas, ça marche","La recette suit un protocole ÉCRIT et REPRODUCTIBLE : n'importe qui peut refaire les mêmes essais et vérifier les mêmes attendus","La recette est plus longue, c'est tout","La recette se fait obligatoirement sans le programmeur"],r:1,
+ expl:"« Ça a marché chez moi » décrit UN moment, sans trace : personne ne sait ce qui a été essayé. La recette laisse un protocole écrit, des attendus datés, des observations : un tiers peut REFAIRE les essais et retrouver les verdicts. C'est la reproductibilité qui transforme une impression en preuve.",
+ ex:"Le PV permet à la mairie de refaire l'essai « 150 pile » elle-même, dans un mois, et d'obtenir le même verdict.",
+ err:"Montrer une démo réussie et l'appeler « validation » : une démo se prépare pour réussir ; une recette se prépare pour DÉTECTER.",
+ d:["L'un laisse une preuve vérifiable, l'autre un souvenir.","","La longueur ne fait rien à l'affaire : c'est l'écrit et la reproductibilité qui comptent.","Le programmeur peut participer — le protocole écrit protège justement de sa complaisance."],
+ ret:"Preuve = protocole écrit + essais reproductibles + verdicts consignés. Une démo n'est pas une recette."},
+{c:"C8.3",n:"Ce que prouve la recette",q:"La station a passé ses 10 essais : recette prononcée. Qu'a-t-on prouvé, exactement ?",
+ o:["Que la station résistera à un cyclone réel","Que la station ne tombera jamais en panne","Que le programme est le meilleur possible","La conformité AU CAHIER DES CHARGES, ce jour-là, sur ce banc — pas l'absence de tout défaut en toutes circonstances"],r:3,
+ expl:"Un protocole prouve ce qu'il teste : les exigences écrites, dans les conditions de l'essai. La pluie sur le boîtier, un câble arraché, dix ans de soleil : d'autres essais existent pour cela (étanchéité, vieillissement…). Savoir ce qu'une preuve NE couvre pas fait partie du métier.",
+ ex:"C'est pourquoi le PV précise la date, le banc utilisé et la version du programme testée.",
+ err:"Lire « recette prononcée » comme « garantie totale » : la recette valide la conformité, pas l'invulnérabilité.",
+ d:["Le comportement au cyclone réel dépend aussi du boîtier, de la fixation… hors du périmètre de CE protocole.","Aucun essai fini ne prouve un « jamais » : la fiabilité à long terme se traite par d'autres études.","La recette compare au cahier des charges, pas aux programmes concurrents.",""],
+ ret:"Une recette prouve la conformité aux exigences testées — ni plus, ni moins. Le PV en fixe le périmètre."},
+{c:"C8.3",n:"Le procès-verbal",q:"Pourquoi le protocole de la station se termine-t-il par un PROCÈS-VERBAL signé ?",
+ o:["C'est une tradition scolaire sans portée réelle","Le PV est un document technique ET contractuel : il consigne les essais et engage ceux qui prononcent la recette devant le client","Pour décorer le classeur du club techno","Parce que la mairie exige toujours trois tampons"],r:1,
+ expl:"Le PV rassemble les faits (essais, observations, verdicts, réserves) et une décision signée. C'est sur lui que la mairie s'appuie pour mettre la station en service : la signature engage la responsabilité de l'équipe de recette — d'où l'exigence de n'y écrire que ce qui a été réellement observé.",
+ ex:"« 10 essais conformes sur 10, temps de réponse 0,3 s, recette prononcée sans réserve. Signé : l'équipe de recette 3e. »",
+ err:"Signer un PV rempli de mémoire ou « pour faire plaisir » : le jour où la station rate une alerte, c'est ce document qu'on relira.",
+ d:["Dans l'industrie comme au collège, le PV de recette conditionne la mise en service et les paiements.","","Le PV est la pièce maîtresse du dossier, pas sa décoration.","Le nombre de tampons est folklorique ; l'engagement signé ne l'est pas."],
+ ret:"Le PV de recette : les faits, la décision, la signature — le document qui autorise la mise en service."},
+{c:"C8.3",n:"Transférer la démarche",q:"Le collège reçoit un portail automatique : il doit s'ouvrir en moins de 8 s et se bloquer si un obstacle est détecté. Que contient un bon protocole de recette ?",
+ o:["Uniquement dix ouvertures de suite, pour voir","Des essais nominaux, les cas limites de la détection d'obstacle, ET un chronométrage de l'ouverture comparé aux 8 s","La lecture attentive de la publicité du fabricant","Un vote à main levée des utilisateurs"],r:1,
+ expl:"La démarche est transférable à tout objet technique : une famille d'essais par exigence — comportements nominaux (ouvrir, fermer), cas limites (obstacle mince, au ras du sol, au dernier moment), performance mesurée (chrono ≤ 8 s). Mêmes principes que la station : attendus écrits avant, observations pendant, verdicts, décision.",
+ ex:"Essai limite : un carton de 5 cm posé sur le seuil au moment de la fermeture — attendu : blocage immédiat.",
+ err:"Répéter dix fois le cas facile : dix succès d'ouverture ne disent RIEN de la détection d'obstacle — l'exigence de sécurité n'est pas testée.",
+ d:["Dix ouvertures testent une seule exigence : les limites et la performance restent improuvées.","","La publicité n'est pas une preuve : la recette teste l'objet réel installé.","L'avis des utilisateurs mesure la satisfaction, pas la conformité aux exigences."],
+ ret:"Pour tout objet : une famille d'essais par exigence — nominal, limites, performance mesurée. La démarche de la station se transfère telle quelle."}
+];
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_3eC92-3eC83_station-alerte";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={ "C9.2":"3e_C9.2 — Programmer un système réel (interaction humain-machine)", "C8.3":"3e_C8.3 — Proposer un protocole de test" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); $("qImg").alt=""; }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Programmer un système réel et prouver qu'il marche n'ont plus de secret pour toi — tu es prêt·e pour l'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  —  Échap pour refermer"
+                                  : "Échap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  function armer(){
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>

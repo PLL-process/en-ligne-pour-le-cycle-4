@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-proto d-proto">
+<title id="t-proto">Anatomie d'un protocole de test : cas nominaux, cas limites aux frontières des seuils, performance, et tableau essai-attendu-observé-verdict</title>
+<desc id="d-proto">Document à lire, en trois parties. Partie 1, la règle des frontières : une droite graduée de la vitesse du vent de 0 à 250 kilomètres par heure porte les deux seuils, 100 et 150. Quatre valeurs de test y sont pointées par paires autour de chaque seuil : 99 et 100 autour du premier, 149 et 150 autour du second — un test juste en dessous, un test juste sur le seuil, car c'est là que les programmes se trompent. Partie 2, un extrait de tableau de recette à cinq colonnes : numéro de l'essai, condition d'entrée, résultat attendu, résultat observé, verdict. Trois lignes d'exemple : essai 1, vent réglé à 42, attendu LCD vert Veille, observé conforme, verdict RÉUSSI ; essai 4, vent réglé à 149, attendu vigilance orange sans buzzer, observé conforme, verdict RÉUSSI ; essai 5, vent réglé à 150 pile, attendu alerte rouge et buzzer, observé écrit à la main pendant l'essai, verdict à cocher. Partie 3, la performance : un chronomètre illustre la mesure du temps de réponse entre le changement de vitesse et le changement d'affichage, exigence de la mairie : moins de une seconde. Une phrase conclut : un test qu'on n'a pas écrit AVANT de l'exécuter n'est pas un test, c'est une impression.</desc>
+<rect width="900" height="600" fill="#050f24"/>
+<text x="450" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">Le protocole de recette — prouver, pas croire</text>
+
+<!-- Partie 1 : frontières -->
+<text x="40" y="66" fill="#61dafb" font-size="14" font-weight="700">① Tester les FRONTIÈRES : là où les programmes se trompent</text>
+<line x1="70" y1="120" x2="830" y2="120" stroke="#9bbefc" stroke-width="2"/>
+<g fill="#9bbefc" font-size="11" text-anchor="middle">
+  <line x1="70" y1="114" x2="70" y2="126" stroke="#9bbefc" stroke-width="2"/><text x="70" y="142">0</text>
+  <line x1="830" y1="114" x2="830" y2="126" stroke="#9bbefc" stroke-width="2"/><text x="830" y="142">250 km/h</text>
+</g>
+<line x1="374" y1="104" x2="374" y2="136" stroke="#ffb454" stroke-width="3"/>
+<text x="374" y="98" text-anchor="middle" fill="#ffb454" font-size="12" font-weight="700">seuil 100</text>
+<line x1="526" y1="104" x2="526" y2="136" stroke="#ff7b88" stroke-width="3"/>
+<text x="526" y="98" text-anchor="middle" fill="#ff7b88" font-size="12" font-weight="700">seuil 150</text>
+<g text-anchor="middle" font-size="11">
+  <circle cx="371" cy="120" r="5" fill="#81fba1"/><text x="356" y="160" fill="#81fba1" font-weight="700">99</text>
+  <circle cx="377" cy="120" r="5" fill="#ffb454"/><text x="392" y="160" fill="#ffb454" font-weight="700">100</text>
+  <circle cx="523" cy="120" r="5" fill="#ffb454"/><text x="508" y="160" fill="#ffb454" font-weight="700">149</text>
+  <circle cx="529" cy="120" r="5" fill="#ff7b88"/><text x="546" y="160" fill="#ff7b88" font-weight="700">150</text>
+</g>
+<text x="450" y="185" text-anchor="middle" fill="#e4eaf5" font-size="12">Deux tests par seuil : <tspan fill="#81fba1">juste en dessous (99, 149)</tspan> et <tspan fill="#ff7b88">pile dessus (100, 150)</tspan> — c'est le cahier des charges qui dit si 150 pile est déjà « rouge ».</text>
+
+<!-- Partie 2 : tableau -->
+<text x="40" y="222" fill="#61dafb" font-size="14" font-weight="700">② Le tableau de recette : une ligne = un essai, écrit AVANT d'être exécuté</text>
+<g font-size="12">
+  <rect x="40" y="236" width="820" height="34" fill="#173666" stroke="#274a8a"/>
+  <text x="70" y="258" fill="#61dafb" font-weight="700">N°</text>
+  <text x="180" y="258" fill="#61dafb" font-weight="700" text-anchor="middle">Condition d'entrée</text>
+  <text x="420" y="258" fill="#61dafb" font-weight="700" text-anchor="middle">Résultat ATTENDU</text>
+  <text x="640" y="258" fill="#61dafb" font-weight="700" text-anchor="middle">Résultat OBSERVÉ</text>
+  <text x="800" y="258" fill="#61dafb" font-weight="700" text-anchor="middle">Verdict</text>
+
+  <rect x="40" y="270" width="820" height="40" fill="#0d2347" stroke="#274a8a"/>
+  <text x="70" y="295" fill="#e4eaf5">1</text>
+  <text x="180" y="288" fill="#e4eaf5" text-anchor="middle">vent réglé à 42 km/h</text>
+  <text x="180" y="303" fill="#9bbefc" text-anchor="middle" font-size="10">(cas nominal « veille »)</text>
+  <text x="420" y="295" fill="#e4eaf5" text-anchor="middle">LCD vert « Veille », tout éteint</text>
+  <text x="640" y="295" fill="#81fba1" text-anchor="middle">conforme</text>
+  <text x="800" y="295" fill="#81fba1" text-anchor="middle" font-weight="700">✔ RÉUSSI</text>
+
+  <rect x="40" y="310" width="820" height="40" fill="#0a1b3d" stroke="#274a8a"/>
+  <text x="70" y="335" fill="#e4eaf5">4</text>
+  <text x="180" y="328" fill="#e4eaf5" text-anchor="middle">vent réglé à 149 km/h</text>
+  <text x="180" y="343" fill="#ffd66b" text-anchor="middle" font-size="10">(cas LIMITE, sous le seuil)</text>
+  <text x="420" y="335" fill="#e4eaf5" text-anchor="middle">vigilance orange, buzzer MUET</text>
+  <text x="640" y="335" fill="#81fba1" text-anchor="middle">conforme</text>
+  <text x="800" y="335" fill="#81fba1" text-anchor="middle" font-weight="700">✔ RÉUSSI</text>
+
+  <rect x="40" y="350" width="820" height="40" fill="#0d2347" stroke="#ffd66b"/>
+  <text x="70" y="375" fill="#e4eaf5">5</text>
+  <text x="180" y="368" fill="#e4eaf5" text-anchor="middle">vent réglé à 150 km/h PILE</text>
+  <text x="180" y="383" fill="#ffd66b" text-anchor="middle" font-size="10">(cas LIMITE, sur le seuil)</text>
+  <text x="420" y="375" fill="#e4eaf5" text-anchor="middle">ALERTE ROUGE + buzzer</text>
+  <text x="640" y="368" fill="#ffd66b" text-anchor="middle" font-size="11">… s'écrit PENDANT l'essai,</text>
+  <text x="640" y="382" fill="#ffd66b" text-anchor="middle" font-size="11">jamais de mémoire</text>
+  <text x="800" y="375" fill="#ffd66b" text-anchor="middle" font-weight="700">☐ à cocher</text>
+</g>
+
+<!-- Partie 3 : performance -->
+<text x="40" y="432" fill="#61dafb" font-size="14" font-weight="700">③ La PERFORMANCE : le comportement ne suffit pas, la mairie exige une vitesse de réaction</text>
+<g>
+  <circle cx="110" cy="495" r="34" fill="#0d2347" stroke="#ffd66b" stroke-width="3"/>
+  <line x1="110" y1="495" x2="110" y2="470" stroke="#ffd66b" stroke-width="3"/>
+  <line x1="110" y1="495" x2="128" y2="503" stroke="#ffd66b" stroke-width="2"/>
+  <rect x="102" y="453" width="16" height="8" fill="#ffd66b"/>
+  <text x="360" y="478" fill="#e4eaf5" font-size="12">On mesure le <tspan font-weight="700" fill="#ffd66b">temps de réponse</tspan> : entre le moment où la vitesse franchit 150 km/h</text>
+  <text x="360" y="496" fill="#e4eaf5" font-size="12">et le moment où l'écran passe en « ALERTE ROUGE ».</text>
+  <text x="360" y="518" fill="#e4eaf5" font-size="12">Exigence du cahier des charges : <tspan font-weight="700" fill="#ff7b88">moins de 1 seconde</tspan> — chiffrée, donc vérifiable.</text>
+</g>
+
+<rect x="40" y="545" width="820" height="38" rx="8" fill="rgba(198,142,242,.08)" stroke="#c68ef2"/>
+<text x="450" y="569" text-anchor="middle" fill="#c68ef2" font-size="13" font-weight="700">Un test qu'on n'a pas écrit AVANT de l'exécuter n'est pas un test : c'est une impression.</text>
+</svg>

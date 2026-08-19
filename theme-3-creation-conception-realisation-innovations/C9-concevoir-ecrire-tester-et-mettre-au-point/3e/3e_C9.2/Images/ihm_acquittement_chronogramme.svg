@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-ihm d-ihm">
+<title id="t-ihm">Chronogramme de l'acquittement : le buzzer sonne en alerte rouge, l'appui du bouton le coupe, un nouveau passage en alerte le fait repartir</title>
+<desc id="d-ihm">Chronogramme à lire, quatre lignes superposées sur un même axe du temps gradué de t1 à t6. Ligne 1, niveau d'alerte : veille jusqu'à t1, vigilance de t1 à t2, alerte rouge de t2 à t4, retour vigilance de t4 à t5, nouvelle alerte rouge à partir de t5. Ligne 2, bouton d'acquittement : un appui bref à t3. Ligne 3, buzzer : il sonne de t2 à t3, se tait à l'appui du bouton bien que l'alerte rouge continue, reste muet jusqu'à t5, et ressonne à t5 car le CHANGEMENT de niveau est un nouvel événement qui efface l'acquittement. Ligne 4, DEL rouge : allumée de t1 à t6 sans interruption, car la DEL ne s'acquitte pas — seul le son se coupe. Deux annotations : à t3 « l'humain répond : le son se tait, l'information reste » ; à t5 « nouvel événement : l'alarme repart, l'acquittement est oublié ».</desc>
+<rect width="900" height="560" fill="#050f24"/>
+<text x="450" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">Acquitter, c'est répondre — pas éteindre l'alerte</text>
+
+<defs>
+  <marker id="ft" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#9bbefc"/></marker>
+</defs>
+
+<!-- axe temps -->
+<line x1="150" y1="500" x2="860" y2="500" stroke="#9bbefc" stroke-width="2" marker-end="url(#ft)"/>
+<text x="868" y="490" fill="#9bbefc" font-size="12">temps</text>
+<g fill="#9bbefc" font-size="12" text-anchor="middle">
+  <text x="240" y="520">t1</text><text x="340" y="520">t2</text><text x="470" y="520">t3</text><text x="590" y="520">t4</text><text x="690" y="520">t5</text><text x="810" y="520">t6</text>
+</g>
+<g stroke="#274a8a" stroke-dasharray="3 5">
+  <line x1="240" y1="60" x2="240" y2="500"/><line x1="340" y1="60" x2="340" y2="500"/>
+  <line x1="470" y1="60" x2="470" y2="500"/><line x1="590" y1="60" x2="590" y2="500"/>
+  <line x1="690" y1="60" x2="690" y2="500"/><line x1="810" y1="60" x2="810" y2="500"/>
+</g>
+
+<!-- Ligne 1 : niveau -->
+<text x="140" y="105" text-anchor="end" fill="#e4eaf5" font-size="13" font-weight="700">niveau d'alerte</text>
+<text x="140" y="121" text-anchor="end" fill="#9bbefc" font-size="10">(0 veille · 1 vigilance · 2 rouge)</text>
+<polyline points="150,130 240,130 240,105 340,105 340,80 590,80 590,105 690,105 690,80 860,80" fill="none" stroke="#ffd66b" stroke-width="3"/>
+<text x="195" y="145" text-anchor="middle" fill="#81fba1" font-size="11">veille</text>
+<text x="290" y="99" text-anchor="middle" fill="#ffb454" font-size="11">vigilance</text>
+<text x="465" y="74" text-anchor="middle" fill="#ff7b88" font-size="11">ALERTE ROUGE</text>
+<text x="640" y="99" text-anchor="middle" fill="#ffb454" font-size="11">vigilance</text>
+<text x="785" y="74" text-anchor="middle" fill="#ff7b88" font-size="11">ALERTE ROUGE</text>
+
+<!-- Ligne 2 : bouton -->
+<text x="140" y="215" text-anchor="end" fill="#e4eaf5" font-size="13" font-weight="700">bouton (D2)</text>
+<polyline points="150,240 462,240 462,210 478,210 478,240 860,240" fill="none" stroke="#61dafb" stroke-width="3"/>
+<text x="470" y="200" text-anchor="middle" fill="#61dafb" font-size="11">appui bref</text>
+
+<!-- Ligne 3 : buzzer -->
+<text x="140" y="325" text-anchor="end" fill="#e4eaf5" font-size="13" font-weight="700">buzzer (D5)</text>
+<polyline points="150,360 340,360 340,320 470,320 470,360 690,360 690,320 860,320" fill="none" stroke="#ff7b88" stroke-width="3"/>
+<text x="405" y="312" text-anchor="middle" fill="#ff7b88" font-size="11">🔊 sonne</text>
+<text x="580" y="350" text-anchor="middle" fill="#9bbefc" font-size="11">silencieux (acquitté)</text>
+<text x="775" y="312" text-anchor="middle" fill="#ff7b88" font-size="11">🔊 re-sonne</text>
+
+<!-- Ligne 4 : DEL -->
+<text x="140" y="430" text-anchor="end" fill="#e4eaf5" font-size="13" font-weight="700">DEL rouge (D3)</text>
+<polyline points="150,465 240,465 240,430 860,430" fill="none" stroke="#ffb454" stroke-width="3"/>
+<text x="550" y="422" text-anchor="middle" fill="#ffb454" font-size="11">💡 allumée sans interruption dès la vigilance — la DEL ne s'acquitte pas</text>
+
+<!-- Annotations -->
+<g>
+  <rect x="356" y="150" width="230" height="40" rx="8" fill="rgba(97,218,251,.08)" stroke="#61dafb"/>
+  <text x="471" y="167" text-anchor="middle" fill="#61dafb" font-size="11" font-weight="700">t3 — l'humain répond :</text>
+  <text x="471" y="183" text-anchor="middle" fill="#e4eaf5" font-size="11">le SON se tait, l'information RESTE</text>
+  <line x1="471" y1="190" x2="471" y2="205" stroke="#61dafb" stroke-width="1.5" marker-end="url(#ft)"/>
+</g>
+<g>
+  <rect x="600" y="245" width="256" height="40" rx="8" fill="rgba(255,123,136,.08)" stroke="#ff7b88"/>
+  <text x="728" y="262" text-anchor="middle" fill="#ff7b88" font-size="11" font-weight="700">t5 — NOUVEL événement :</text>
+  <text x="728" y="278" text-anchor="middle" fill="#e4eaf5" font-size="11">l'alarme repart, l'acquittement est oublié</text>
+  <line x1="690" y1="285" x2="690" y2="315" stroke="#ff7b88" stroke-width="1.5" marker-end="url(#ft)"/>
+</g>
+
+<text x="450" y="548" text-anchor="middle" fill="#9bbefc" font-size="12" font-style="italic">C'est l'interaction humain ↔ machine : la machine alerte, l'humain répond, la machine s'en souvient — jusqu'au prochain événement.</text>
+</svg>
