@@ -1,42 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p2 d-p2">
-<title id="t-p2">Palier 2 — reconstitution du programme en blocs : décider du niveau d'alerte avec deux blocs si-sinon emboîtés</title>
-<desc id="d-p2">Reconstitution schématique (pas une capture d'écran). Dans la boucle, après la lecture du vent du palier 1, un bloc « si vitesseVent supérieur ou égal à 150 alors niveauAlerte prend la valeur 2, sinon » contient un second bloc « si vitesseVent supérieur ou égal à 100 alors niveauAlerte prend la valeur 1, sinon niveauAlerte prend la valeur 0 ». L'ordre est essentiel : on teste d'abord le seuil le plus haut. Résultat attendu au moniteur série : niveau égal 0, 1 ou 2 selon la position du potentiomètre.</desc>
-<rect width="760" height="400" fill="#050f24"/>
-<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 2 — le programme décide du niveau</text>
-<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p2 d-p2">
+<title id="t-p2">Palier 2 dans Vittascience — la cascade si, sinon si, sinon qui décide du niveau d'alerte</title>
+<desc id="d-p2">Reconstitution schématique de l'écran Vittascience (interface Arduino, mode blocs) pour le palier 2 de la station d'alerte cyclonique. Les blocs de lecture du palier 1 (au démarrage, puis la lecture de l'entrée analogique A0) restent au-dessus, dans le bloc répéter indéfiniment.
 
-<rect x="52" y="64" width="360" height="24" rx="6" fill="#0d2347" stroke="#274a8a"/>
-<text x="64" y="81" fill="#9bbefc" font-size="11">… (les blocs de lecture du palier 1 restent au-dessus) …</text>
+À gauche, une seule structure de blocs, la cascade si / sinon si / sinon, à lire de haut en bas.
+Premier test : « si niveau_vent ≥ seuil_alerte alors », et à l'intérieur le bloc « afficher ALERTE sur le moniteur ».
+Deuxième test : « sinon si niveau_vent ≥ seuil_vigilance alors », et à l'intérieur le bloc « afficher VIGILANCE sur le moniteur ».
+Enfin « sinon », et à l'intérieur le bloc « afficher VEILLE sur le moniteur ».
+À ce palier, chaque branche se contente d'écrire son nom sur le moniteur : aucune sortie n'est encore commandée, on vérifie seulement que la décision est juste.
 
-<!-- si externe -->
-<path d="M60 100 h340 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 h-310 v56 h310 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 h-310 v96 h310 a8 8 0 0 1 8 8 v16 a8 8 0 0 1 -8 8 H60 a8 8 0 0 1 -8 -8 V108 a8 8 0 0 1 8 -8 z" fill="#5a2a7a" stroke="#c68ef2" stroke-width="2"/>
-<text x="72" y="120" fill="#fff" font-size="12" font-weight="700">❓ si  <tspan fill="#ffd66b">vitesseVent</tspan> ≥ <tspan fill="#ffd66b">150</tspan>  alors</text>
-<rect x="100" y="140" width="270" height="30" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
-<text x="112" y="160" fill="#fff" font-size="12"><tspan font-weight="700" fill="#ffd66b">niveauAlerte</tspan> ← 2   <tspan fill="#ff9aa5">(alerte rouge)</tspan></text>
-<text x="72" y="212" fill="#fff" font-size="12" font-weight="700">sinon</text>
+À droite, un encart d'avertissement à contour jaune : on teste le seuil le PLUS HAUT d'abord — sinon un niveau de 85 s'arrêterait à VIGILANCE. En effet 85 est supérieur ou égal à 40 comme à 70 : si le test de 40 était écrit en premier, la cascade s'arrêterait à la branche VIGILANCE et la branche ALERTE ne serait jamais atteinte.
 
-<!-- si interne -->
-<path d="M100 224 h270 a7 7 0 0 1 7 7 v14 a7 7 0 0 1 -7 7 h-244 v34 h244 a7 7 0 0 1 7 7 v14 a7 7 0 0 1 -7 7 h-244 v34 h244 a7 7 0 0 1 7 7 v13 a7 7 0 0 1 -7 7 H100 a7 7 0 0 1 -7 -7 V231 a7 7 0 0 1 7 -7 z" fill="#7a3fa0" stroke="#c68ef2" stroke-width="1.5"/>
-<text x="110" y="241" fill="#fff" font-size="11" font-weight="700">❓ si  <tspan fill="#ffd66b">vitesseVent</tspan> ≥ <tspan fill="#ffd66b">100</tspan>  alors</text>
-<rect x="132" y="256" width="220" height="26" rx="5" fill="#1d4e89" stroke="#61dafb"/>
-<text x="142" y="274" fill="#fff" font-size="11"><tspan font-weight="700" fill="#ffd66b">niveauAlerte</tspan> ← 1  <tspan fill="#ffc78a">(vigilance)</tspan></text>
-<text x="110" y="303" fill="#fff" font-size="11" font-weight="700">sinon</text>
-<rect x="132" y="312" width="220" height="26" rx="5" fill="#1d4e89" stroke="#61dafb"/>
-<text x="142" y="330" fill="#fff" font-size="11"><tspan font-weight="700" fill="#ffd66b">niveauAlerte</tspan> ← 0  <tspan fill="#9df5b9">(veille)</tspan></text>
+En dessous, un rappel des quatre valeurs frontières à essayer avec le capteur rotatif pour tester le programme : niveau_vent égal à 39 doit donner VEILLE, 40 doit donner VIGILANCE, 69 doit donner VIGILANCE, et 70 doit donner ALERTE. Les seuils valent seuil_vigilance égal 40 et seuil_alerte égal 70, sur l'échelle scolaire de 0 à 100 sans unité.</desc>
+<rect width="800" height="420" fill="#050f24"/>
+<text x="400" y="28" text-anchor="middle" fill="#81aaff" font-size="18" font-weight="700">Palier 2 — décider du niveau (Vittascience, mode BLOCS)</text>
+<text x="400" y="49" text-anchor="middle" fill="#9bbefc" font-size="12">seuil_vigilance = 40 · seuil_alerte = 70 — échelle 0 à 100, sans unité</text>
 
-<!-- résultat attendu -->
-<rect x="440" y="90" width="280" height="240" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
-<text x="580" y="114" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS voir (moniteur série)</text>
-<g font-family="monospace" font-size="12" fill="#81fba1">
-  <text x="456" y="142">vent= 42   niveau= 0</text>
-  <text x="456" y="164">vent= 118  niveau= 1</text>
-  <text x="456" y="186">vent= 187  niveau= 2</text>
+<!-- rappel palier 1 -->
+<rect x="34" y="64" width="430" height="26" rx="6" fill="#0d2347" stroke="#274a8a"/>
+<text x="249" y="82" text-anchor="middle" fill="#9bbefc" font-size="11">… la lecture de A0 (palier 1) reste au-dessus, dans « répéter indéfiniment » …</text>
+
+<!-- cascade -->
+<rect x="34" y="100" width="430" height="238" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2"/>
+
+<rect x="46" y="112" width="406" height="34" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="58" y="134" font-size="12.5" fill="#e4eaf5" font-weight="700">si <tspan fill="#ffd66b">niveau_vent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ff7b88">seuil_alerte</tspan>  alors</text>
+
+<rect x="66" y="150" width="386" height="32" rx="6" fill="#3a1218" stroke="#ff7b88" stroke-width="1.5"/>
+<text x="78" y="171" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ff7b88" font-weight="700">« ALERTE »</tspan> sur le moniteur</text>
+
+<rect x="46" y="186" width="406" height="34" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="58" y="208" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon si <tspan fill="#ffd66b">niveau_vent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ffb454">seuil_vigilance</tspan>  alors</text>
+
+<rect x="66" y="224" width="386" height="32" rx="6" fill="#3a2412" stroke="#ffb454" stroke-width="1.5"/>
+<text x="78" y="245" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ffb454" font-weight="700">« VIGILANCE »</tspan> sur le moniteur</text>
+
+<rect x="46" y="260" width="406" height="30" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="58" y="280" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon</text>
+
+<rect x="66" y="294" width="386" height="32" rx="6" fill="#123322" stroke="#81fba1" stroke-width="1.5"/>
+<text x="78" y="315" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#81fba1" font-weight="700">« VEILLE »</tspan> sur le moniteur</text>
+
+<!-- encart avertissement -->
+<rect x="486" y="64" width="280" height="152" rx="10" fill="#2a2210" stroke="#ffd66b" stroke-width="2"/>
+<text x="626" y="88" text-anchor="middle" fill="#ffd66b" font-size="12.5" font-weight="700">⚠ l'ORDRE des tests décide de tout</text>
+<text x="500" y="112" fill="#e4eaf5" font-size="12">on teste le seuil le <tspan font-weight="700" fill="#ffd66b">PLUS HAUT</tspan></text>
+<text x="500" y="130" fill="#e4eaf5" font-size="12">d'abord — sinon un niveau de <tspan font-weight="700" fill="#ffd66b">85</tspan></text>
+<text x="500" y="148" fill="#e4eaf5" font-size="12">s'arrêterait à <tspan font-weight="700" fill="#ffb454">VIGILANCE</tspan>.</text>
+<text x="500" y="172" fill="#9bbefc" font-size="11.5">85 ≥ 40 est vrai AUSSI : la cascade</text>
+<text x="500" y="189" fill="#9bbefc" font-size="11.5">s'arrête au premier test réussi et</text>
+<text x="500" y="206" fill="#9bbefc" font-size="11.5">n'atteint jamais la branche ALERTE.</text>
+
+<!-- frontières -->
+<rect x="486" y="230" width="280" height="146" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="626" y="254" text-anchor="middle" fill="#61dafb" font-size="12.5" font-weight="700">les 4 frontières à tester</text>
+<line x1="500" y1="264" x2="752" y2="264" stroke="#274a8a"/>
+<g font-family="monospace" font-size="12.5">
+  <text x="506" y="286" fill="#e4eaf5">niveau_vent = 39</text>
+  <text x="640" y="286" fill="#81fba1">→ VEILLE</text>
+  <text x="506" y="310" fill="#e4eaf5">niveau_vent = 40</text>
+  <text x="640" y="310" fill="#ffb454">→ VIGILANCE</text>
+  <text x="506" y="334" fill="#e4eaf5">niveau_vent = 69</text>
+  <text x="640" y="334" fill="#ffb454">→ VIGILANCE</text>
+  <text x="506" y="358" fill="#e4eaf5">niveau_vent = 70</text>
+  <text x="640" y="358" fill="#ff7b88">→ ALERTE</text>
 </g>
-<text x="580" y="216" text-anchor="middle" fill="#e4eaf5" font-size="11">3 positions du potentiomètre</text>
-<text x="580" y="232" text-anchor="middle" fill="#e4eaf5" font-size="11">→ 3 niveaux différents</text>
-<rect x="456" y="248" width="248" height="60" rx="8" fill="rgba(255,214,107,.08)" stroke="#ffd66b"/>
-<text x="580" y="268" text-anchor="middle" fill="#ffd66b" font-size="11" font-weight="700">⚠ L'ORDRE des deux « si » compte :</text>
-<text x="580" y="284" text-anchor="middle" fill="#e4eaf5" font-size="11">teste 150 d'abord — sinon 180 km/h</text>
-<text x="580" y="299" text-anchor="middle" fill="#e4eaf5" font-size="11">serait rangé en « vigilance » !</text>
-<text x="580" y="352" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(les valeurs affichées sont des exemples)</text>
+
+<text x="400" y="400" text-anchor="middle" fill="#9bbefc" font-size="11.5" font-style="italic">Reconstitution schématique de l'écran Vittascience — les libellés peuvent varier légèrement selon la version.</text>
 </svg>

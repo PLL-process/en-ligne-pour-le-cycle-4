@@ -13,7 +13,9 @@ programme désormais — et se prouve.
 * **`sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html`** — la séquence
   complète (4 séances de 1 h 30, 7 activités) : commande de la mairie avec
   exigence de PV de recette, algorithme → algorigramme (pont DNB), programmation
-  ArduBlock **par paliers** avec image du résultat attendu à chaque palier,
+  **Vittascience** (interface Arduino, mode BLOCS, simulateur intégré) **par
+  paliers** avec planche du résultat attendu à chaque palier — ArduBlock reste
+  proposé en **bonus facultatif** avec deux captures réelles du logiciel —,
   acquittement et détection d'événement (interaction humain-machine), lecture du
   C++ généré, puis rédaction ET exécution du protocole de test.
   **Banc d'essai de la station intégré** (curseur de vent, LCD, DEL, buzzer,
@@ -33,11 +35,26 @@ programme désormais — et se prouve.
   (**enseignant uniquement** : compte Docker requis, les élèves n'en ont pas
   besoin).
 
-## Matériel (version 🅰)
+## Matériel (version 🅰) — deux montages, deux échelles
 
-Arduino UNO + shield Grove (5 V) : potentiomètre **A1** (anémomètre simulé),
+**Maquette de programmation (séance 2, Vittascience)** : Arduino UNO + shield
+Grove (5 V), capteur rotatif **A0**, voyants **D2** vert · **D3** orange ·
+**D4** rouge, buzzer **D5**. Échelle `niveau_vent` **0-100** (sans unité),
+seuils **40** (vigilance) et **70** (alerte). Utilisable **sans aucun matériel**
+grâce au simulateur intégré de Vittascience.
+
+**Station du labo (séances 3 et 4)** : potentiomètre **A1** (anémomètre simulé),
 bouton **D2** (acquittement), DEL **D3**, buzzer **D5**, LCD RGB **I2C**.
-Programmation **ArduBlock Éducation 1.7** (aucune version plus récente identifiée
-au 19/08/2026 — à revalider en début d'année). Très basse tension uniquement.
-Les versions 🅱 (banc intégré) et 🅲 (banc + traces fournies) couvrent tout le
-parcours sans matériel.
+Échelle **km/h 0-250**, seuils **100** et **150** — c'est la station que l'on
+recette. Très basse tension uniquement.
+
+Les deux échelles ne se mélangent jamais : la séquence fournit un **tableau de
+correspondance** (0-100 ↔ 0-250 km/h ; 40 ↔ 100 ; 70 ↔ 150 ; frontières
+39/40/69/70 ↔ 99/100/149/150), seul pont autorisé entre elles.
+
+**Logiciel** : **Vittascience**, interface Arduino en mode BLOCS
+(`fr.vittascience.com/arduino`) — seul élément de la séquence qui demande une
+connexion Internet, avec repli hors-ligne complet prévu en séance 2. ArduBlock
+Éducation 1.7 reste disponible en **bonus facultatif** (hors parcours
+obligatoire). Les versions 🅱 (banc intégré) et 🅲 (banc + traces fournies)
+couvrent tout le parcours sans matériel.

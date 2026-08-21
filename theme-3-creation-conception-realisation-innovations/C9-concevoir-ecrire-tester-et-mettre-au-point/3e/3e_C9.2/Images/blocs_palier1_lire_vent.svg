@@ -1,39 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p1 d-p1">
-<title id="t-p1">Palier 1 — reconstitution du programme en blocs : lire l'anémomètre sur A1, convertir en kilomètres par heure, afficher au moniteur série</title>
-<desc id="d-p1">Reconstitution schématique (ce n'est pas une capture d'écran : l'aspect exact des blocs peut différer selon la version d'ArduBlock). Un grand bloc « boucle (répéter sans fin) » contient trois blocs emboîtés : d'abord « mesureBrute prend la valeur de : lire la broche analogique A1 » ; puis « vitesseVent prend la valeur de : calibrer mesureBrute de l'intervalle 0-1023 vers l'intervalle 0-250 » ; enfin « envoyer au moniteur série : vitesseVent ». Résultat attendu à l'écran du moniteur : des nombres qui montent quand on tourne le potentiomètre, et descendent quand on le ramène.</desc>
-<rect width="760" height="340" fill="#050f24"/>
-<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 1 — le programme lit le vent</text>
-<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p1 d-p1">
+<title id="t-p1">Palier 1 dans Vittascience — lire le capteur rotatif sur A0 et obtenir niveau_vent entre 0 et 100</title>
+<desc id="d-p1">Reconstitution schématique de l'écran Vittascience (interface Arduino, mode blocs) pour le palier 1 de la station d'alerte cyclonique. Deux piles de blocs sont posées côte à côte à gauche, une vignette de moniteur série à droite.
 
-<!-- bloc boucle -->
-<path d="M60 70 h330 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 h-300 v130 h300 a8 8 0 0 1 8 8 v18 a8 8 0 0 1 -8 8 H60 a8 8 0 0 1 -8 -8 V78 a8 8 0 0 1 8 -8 z" fill="#8a4a1d" stroke="#ffb454" stroke-width="2"/>
-<text x="72" y="90" fill="#fff" font-size="13" font-weight="700">🔁 boucle — répéter sans fin</text>
-<text x="72" y="266" fill="#fff" font-size="11">recommencer</text>
+Première pile, bloc chapeau « au démarrage ». Il contient trois blocs, dans cet ordre : « mettre niveau_vent à 0 » ; « mettre seuil_vigilance à 40 » ; « mettre seuil_alerte à 70 ». Ces trois valeurs sont des nombres de l'échelle scolaire de 0 à 100, sans unité.
 
-<!-- bloc 1 -->
-<rect x="100" y="112" width="278" height="34" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
-<text x="112" y="134" fill="#fff" font-size="12"><tspan font-weight="700" fill="#ffd66b">mesureBrute</tspan> ← lire broche analogique <tspan font-weight="700">A1</tspan></text>
+Deuxième pile, bloc « répéter indéfiniment ». Il contient trois blocs, dans cet ordre. Premier bloc : « mettre niveau_vent à arrondir( lire entrée analogique A0 × 100 ÷ 1023 ) » ; le capteur rotatif Grove branché sur A0 donne une valeur brute comprise entre 0 et 1023, la multiplication par 100 puis la division par 1023 la ramène sur l'échelle 0 à 100, et le bloc arrondir supprime les décimales. Deuxième bloc : « afficher niveau_vent sur le moniteur ». Troisième bloc : « attendre 200 millisecondes », pour que le moniteur reste lisible.
 
-<!-- bloc 2 -->
-<rect x="100" y="154" width="278" height="48" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
-<text x="112" y="174" fill="#fff" font-size="12"><tspan font-weight="700" fill="#ffd66b">vitesseVent</tspan> ← calibrer <tspan font-weight="700" fill="#ffd66b">mesureBrute</tspan></text>
-<text x="112" y="192" fill="#c8dcff" font-size="11">de [ 0 ; 1023 ]  vers  [ 0 ; 250 ] km/h</text>
+À droite, la vignette « moniteur série attendu » montre la suite de valeurs qui s'affichent quand on tourne lentement le bouton du capteur rotatif : 0, puis 12, puis 38, puis 51, puis 74, puis 92. Les nombres montent quand on tourne dans un sens et redescendent quand on revient en arrière : c'est la preuve que la lecture fonctionne avant d'écrire la moindre décision.</desc>
+<rect width="800" height="440" fill="#050f24"/>
+<text x="400" y="28" text-anchor="middle" fill="#81aaff" font-size="18" font-weight="700">Palier 1 — lire le vent (Vittascience, mode BLOCS)</text>
+<text x="400" y="49" text-anchor="middle" fill="#9bbefc" font-size="12">capteur rotatif Grove sur A0 → variable niveau_vent, échelle 0 à 100 (sans unité)</text>
 
-<!-- bloc 3 -->
-<rect x="100" y="210" width="278" height="34" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
-<text x="112" y="232" fill="#fff" font-size="12">envoyer au moniteur série : <tspan font-weight="700" fill="#ffd66b">vitesseVent</tspan></text>
+<!-- ===== colonne au démarrage ===== -->
+<rect x="34" y="66" width="404" height="150" rx="10" fill="#123322" stroke="#81fba1" stroke-width="2"/>
+<text x="50" y="90" fill="#81fba1" font-size="13.5" font-weight="700">au démarrage</text>
 
-<!-- résultat attendu -->
-<rect x="440" y="80" width="280" height="200" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
-<text x="580" y="104" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS voir (moniteur série)</text>
-<g font-family="monospace" font-size="13" fill="#81fba1">
-  <text x="460" y="132">vent(km/h)= 38</text>
-  <text x="460" y="152">vent(km/h)= 71</text>
-  <text x="460" y="172">vent(km/h)= 122</text>
-  <text x="460" y="192">vent(km/h)= 187</text>
-  <text x="460" y="212">vent(km/h)= 244</text>
+<rect x="50" y="100" width="372" height="32" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="62" y="121" font-size="12.5" fill="#e4eaf5">mettre <tspan fill="#ffd66b" font-weight="700">niveau_vent</tspan> à <tspan fill="#81fba1" font-weight="700">0</tspan></text>
+
+<rect x="50" y="136" width="372" height="32" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="62" y="157" font-size="12.5" fill="#e4eaf5">mettre <tspan fill="#ffd66b" font-weight="700">seuil_vigilance</tspan> à <tspan fill="#ffb454" font-weight="700">40</tspan></text>
+
+<rect x="50" y="172" width="372" height="32" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="62" y="193" font-size="12.5" fill="#e4eaf5">mettre <tspan fill="#ffd66b" font-weight="700">seuil_alerte</tspan> à <tspan fill="#ff7b88" font-weight="700">70</tspan></text>
+
+<!-- ===== colonne répéter indéfiniment ===== -->
+<rect x="34" y="230" width="404" height="176" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="50" y="254" fill="#ffb454" font-size="13.5" font-weight="700">répéter indéfiniment</text>
+
+<rect x="50" y="264" width="372" height="50" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
+<text x="62" y="284" font-size="12.5" fill="#e4eaf5">mettre <tspan fill="#ffd66b" font-weight="700">niveau_vent</tspan> à <tspan fill="#9bbefc" font-weight="700">arrondir</tspan> (</text>
+<text x="78" y="303" font-size="12.5" fill="#e4eaf5"><tspan fill="#61dafb" font-weight="700">lire entrée analogique A0</tspan> × 100 ÷ 1023 )</text>
+
+<rect x="50" y="320" width="372" height="32" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
+<text x="62" y="341" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ffd66b" font-weight="700">niveau_vent</tspan> sur le moniteur</text>
+
+<rect x="50" y="358" width="372" height="32" rx="6" fill="#4a3a6b" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="62" y="379" font-size="12.5" fill="#e4eaf5">attendre <tspan fill="#ffd66b" font-weight="700">200</tspan> millisecondes</text>
+
+<!-- ===== vignette moniteur ===== -->
+<rect x="458" y="66" width="308" height="340" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="612" y="92" text-anchor="middle" fill="#61dafb" font-size="12.5" font-weight="700">moniteur série attendu</text>
+<line x1="474" y1="102" x2="750" y2="102" stroke="#274a8a" stroke-width="1"/>
+<g font-family="monospace" font-size="14" fill="#81fba1">
+  <text x="492" y="126">niveau_vent = 0</text>
+  <text x="492" y="152">niveau_vent = 12</text>
+  <text x="492" y="178">niveau_vent = 38</text>
+  <text x="492" y="204">niveau_vent = 51</text>
+  <text x="492" y="230">niveau_vent = 74</text>
+  <text x="492" y="256">niveau_vent = 92</text>
 </g>
-<text x="580" y="242" text-anchor="middle" fill="#e4eaf5" font-size="11">les nombres MONTENT quand tu tournes</text>
-<text x="580" y="258" text-anchor="middle" fill="#e4eaf5" font-size="11">le potentiomètre, et redescendent après</text>
-<text x="580" y="300" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(les valeurs affichées ici sont des exemples)</text>
+<line x1="478" y1="112" x2="478" y2="262" stroke="#ffb454" stroke-width="2"/>
+<path d="M478 112 l-5 10 h10 z" fill="#ffb454"/>
+<text x="612" y="288" text-anchor="middle" fill="#e4eaf5" font-size="12">les valeurs MONTENT quand on tourne</text>
+<text x="612" y="306" text-anchor="middle" fill="#e4eaf5" font-size="12">le bouton du capteur rotatif A0,</text>
+<text x="612" y="324" text-anchor="middle" fill="#e4eaf5" font-size="12">et redescendent quand on revient.</text>
+<rect x="478" y="338" width="268" height="52" rx="8" fill="#0d2347" stroke="#274a8a"/>
+<text x="612" y="357" text-anchor="middle" fill="#9bbefc" font-size="11.5">échelle scolaire 0 → 100, sans unité :</text>
+<text x="612" y="375" text-anchor="middle" fill="#9bbefc" font-size="11.5">on ne mesure pas encore un vrai vent.</text>
+
+<text x="400" y="428" text-anchor="middle" fill="#9bbefc" font-size="11.5" font-style="italic">Reconstitution schématique de l'écran Vittascience — les libellés peuvent varier légèrement selon la version.</text>
 </svg>

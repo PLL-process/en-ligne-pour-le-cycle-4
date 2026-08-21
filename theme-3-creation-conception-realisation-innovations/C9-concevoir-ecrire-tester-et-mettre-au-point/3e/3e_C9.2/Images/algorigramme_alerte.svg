@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-algo d-algo">
 <title id="t-algo">Algorigramme de la station d'alerte : lecture du vent puis décision entre trois niveaux avec deux losanges de test</title>
-<desc id="d-algo">Algorigramme au format attendu au DNB, à lire de haut en bas. Un ovale Début, puis un rectangle « Lire la vitesse du vent (A1) ». Premier losange de décision : « vitesse supérieure ou égale à 150 kilomètres par heure ? ». Si oui, rectangle « ALERTE ROUGE : LCD rouge + DEL + buzzer ». Si non, deuxième losange : « vitesse supérieure ou égale à 100 kilomètres par heure ? ». Si oui, rectangle « VIGILANCE ORANGE : LCD orange + DEL ». Si non, rectangle « VEILLE : LCD vert, tout éteint ». Les trois branches se rejoignent puis une flèche remonte vers la lecture du capteur : c'est la boucle, la station recommence sans fin. Un encadré rappelle la légende des symboles : ovale début et fin, rectangle traitement, losange décision à deux sorties oui et non, flèches de sens de lecture.</desc>
+<desc id="d-algo">Algorigramme au format attendu au DNB, à lire de haut en bas. Un ovale Début, puis un rectangle « Lire la vitesse du vent (A1) ». Premier losange de décision : « vitesse supérieure ou égale à 150 kilomètres par heure ? ». Si oui, rectangle « ALERTE ROUGE : LCD rouge + DEL + buzzer ». Si non, deuxième losange : « vitesse supérieure ou égale à 100 kilomètres par heure ? ». Si oui, rectangle « VIGILANCE ORANGE : LCD orange + DEL ». Si non, rectangle « VEILLE : LCD vert, tout éteint ». Les trois branches se rejoignent puis une flèche remonte vers la lecture du capteur : c'est la boucle, la station recommence sans fin. Une bulle à contour violet pointillé, rattachée à cette flèche de retour, porte la mention « commentaire — pas un symbole » : elle explique la boucle sans faire partie de l'algorigramme. Un encadré rappelle la légende des symboles : ovale début et fin, rectangle traitement, losange décision à deux sorties oui et non, flèches de sens de lecture.</desc>
 <rect width="900" height="640" fill="#050f24"/>
 <text x="430" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">L'algorigramme de la station — trois niveaux, deux questions</text>
 
@@ -58,16 +58,25 @@
 <line x1="430" y1="552" x2="430" y2="580" stroke="#61dafb" stroke-width="2.5"/>
 <line x1="767" y1="530" x2="767" y2="580" stroke="#61dafb" stroke-width="2.5"/>
 <line x1="430" y1="580" x2="767" y2="580" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="430" y1="580" x2="150" y2="580" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="150" y1="580" x2="150" y2="154" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="150" y1="154" x2="308" y2="154" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
-<rect x="60" y="330" width="176" height="66" rx="8" fill="rgba(97,218,251,.07)" stroke="#61dafb"/>
-<text x="148" y="355" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">🔁 LA BOUCLE</text>
-<text x="148" y="372" text-anchor="middle" fill="#e4eaf5" font-size="11">la station recommence</text>
-<text x="148" y="387" text-anchor="middle" fill="#e4eaf5" font-size="11">sans fin (≈ 5 fois/seconde)</text>
+<line x1="430" y1="580" x2="90" y2="580" stroke="#61dafb" stroke-width="2.5"/>
+<line x1="90" y1="580" x2="90" y2="154" stroke="#61dafb" stroke-width="2.5"/>
+<line x1="90" y1="154" x2="308" y2="154" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<!-- Repère de lecture — surtout PAS un symbole d'algorigramme (refonte v2).
+     Bulle très arrondie, contour pointillé violet (couleur réservée aux
+     commentaires, jamais celle du flux) + trait de rattachement pointillé vers
+     la flèche de retour : impossible de la confondre avec un rectangle de
+     traitement. -->
+<line x1="90" y1="362" x2="104" y2="362" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="3 4"/>
+<circle cx="90" cy="362" r="4" fill="#c68ef2"/>
+<rect x="106" y="322" width="190" height="80" rx="24" ry="24"
+      fill="#1c1233" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="201" y="344" text-anchor="middle" fill="#c68ef2" font-size="10" font-style="italic">commentaire — pas un symbole</text>
+<text x="201" y="362" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">🔁 LA BOUCLE</text>
+<text x="201" y="380" text-anchor="middle" fill="#e4eaf5" font-size="11">la station recommence</text>
+<text x="201" y="394" text-anchor="middle" fill="#e4eaf5" font-size="11">sans fin (≈ 5 fois/seconde)</text>
 
 <!-- Légende DNB -->
-<rect x="590" y="60" width="292" height="140" rx="10" fill="#0a1b3d" stroke="#274a8a"/>
+<rect x="590" y="60" width="292" height="172" rx="10" fill="#0a1b3d" stroke="#274a8a"/>
 <text x="736" y="82" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">🎓 Les symboles (attendus au DNB)</text>
 <ellipse cx="625" cy="102" rx="26" ry="11" fill="none" stroke="#81fba1" stroke-width="1.5"/>
 <text x="660" y="106" fill="#e4eaf5" font-size="11">ovale : début / fin</text>
@@ -77,6 +86,8 @@
 <text x="660" y="161" fill="#e4eaf5" font-size="11">losange : décision → OUI / NON</text>
 <line x1="606" y1="183" x2="646" y2="183" stroke="#61dafb" stroke-width="2" marker-end="url(#fa)"/>
 <text x="660" y="187" fill="#e4eaf5" font-size="11">flèche : sens de lecture</text>
+<rect x="601" y="205" width="50" height="16" rx="8" fill="none" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="660" y="217" fill="#c68ef2" font-size="11">bulle pointillée : commentaire</text>
 
 <text x="430" y="622" text-anchor="middle" fill="#9bbefc" font-size="12" font-style="italic">Lire les losanges DANS L'ORDRE : on teste d'abord le seuil le plus haut (150) — sinon une rafale à 180 km/h serait rangée en « vigilance ».</text>
 </svg>

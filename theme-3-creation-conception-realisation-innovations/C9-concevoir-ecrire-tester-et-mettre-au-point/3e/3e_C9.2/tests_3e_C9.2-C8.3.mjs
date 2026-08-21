@@ -108,16 +108,24 @@ const run = async () => {
   /* activité 2 */
   await page.fill("#a2_s1", "150"); await page.fill("#a2_s2", "100");
   await page.selectOption("#a2_s3", "veille");
-  for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4"]) await page.selectOption("#"+id, { index: 1 });
+  for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4","a2_q5","a2_q6","a2_q7","a2_q8","a2_q9","a2_q10"])
+    await page.selectOption("#"+id, { index: 1 });
   await page.click('[data-check="2"]');
-  ok("activité 2 validée (algorithme + algorigramme 7/7)", (await page.textContent("#fb2")).includes("7 / 7"));
+  ok("activité 2 validée (algorithme + algorigramme 13/13, dont les 6 questions de lecture fine)",
+     (await page.textContent("#fb2")).includes("13 / 13"), await page.textContent("#fb2"));
   await shot(page, "act2_validee");
+
+  /* refonte v2 : les 6 questions ajoutées sous l'algorigramme existent bien */
+  for (const id of ["a2_q5","a2_q6","a2_q7","a2_q8","a2_q9","a2_q10"])
+    ok("question de lecture fine présente : #" + id, (await page.locator("#"+id).count()) === 1);
+  ok("l'algorigramme distingue le commentaire du symbole (question a2_q7)",
+     (await page.textContent("#a2_q7")).includes("commentaire de lecture"));
 
   /* verrou : act3 doit REFUSER sans expériences au banc */
   await page.click('.seance-tab[data-panel="s2"]');
-  await page.fill("#a3_p1", "125");
-  await page.selectOption("#a3_p2", { index: 1 });
-  await page.selectOption("#a3_p3", { index: 1 });
+  await page.fill("#a3_p1", "50");    // maquette Vittascience : 512 x 100 / 1023
+  await page.fill("#a3_p1b", "125");  // pont vers l'échelle de la station réelle
+  for (const id of ["a3_p2", "a3_p2b", "a3_p3", "a3_p3b"]) await page.selectOption("#"+id, { index: 1 });
   await page.click('[data-check="3"]');
   ok("verrou expérientiel : act. 3 refusée sans manipulation au banc",
      (await page.textContent("#fb3")).includes("banc"), (await page.textContent("#fb3")).slice(0, 90));
@@ -142,8 +150,24 @@ const run = async () => {
   /* act3 doit maintenant passer */
   await page.click('[data-check="3"]');
   ok("activité 3 validée après manipulations (verrous lecture + 3 niveaux)",
-     (await page.textContent("#fb3")).includes("3 / 3") && !(await page.textContent("#fb3")).includes("banc"));
+     (await page.textContent("#fb3")).includes("6 / 6") && !(await page.textContent("#fb3")).includes("banc"),
+     await page.textContent("#fb3"));
   await shot(page, "act3_validee");
+
+  /* refonte v2 : la séance 2 est bien passée sur Vittascience, avec repli hors-ligne */
+  ok("séance 2 : l'emplacement de l'interface Vittascience existe",
+     (await page.locator("#vitta-embed").count()) === 1);
+  ok("séance 2 : repli hors-ligne présent (lien direct + planches + banc)",
+     (await page.textContent("#vitta-embed")).includes("fr.vittascience.com/arduino") &&
+     (await page.textContent("#vitta-embed")).includes("Plan B"));
+  ok("séance 2 : tableau de correspondance des deux échelles présent",
+     (await page.textContent("#act3")).includes("seuil_alerte") &&
+     (await page.textContent("#act3")).includes("150 km/h"));
+  ok("séance 2 : ArduBlock est devenu un bonus facultatif hors parcours",
+     (await page.textContent("#act3")).includes("Bonus (facultatif — hors parcours obligatoire)") &&
+     (await page.textContent("#act3")).includes("ArduBlock"));
+  for (const src of ["Images/bonus_ardublock_palier1.png", "Images/bonus_ardublock_palier2.png"])
+    ok("capture réelle ArduBlock présente : " + src, (await page.locator(`img[src="${src}"]`).count()) === 1);
 
   /* séance 3 : acquittement puis re-déclenchement */
   await page.click('.seance-tab[data-panel="s3"]');
