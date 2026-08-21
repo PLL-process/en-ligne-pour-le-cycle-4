@@ -294,7 +294,7 @@ const QUESTIONS = [
  d:["Début et fin sont des ovales.","Les actions vivent dans les rectangles.","","L'algorigramme décrit le programme, pas le circuit."],
  ret:"🎓 DNB — ovale : début/fin · rectangle : action · losange : décision OUI/NON · flèche : sens de lecture."},
 {c:"C9.2",n:"La boucle",q:"Le programme de la station répète sa lecture-décision-affichage « sans fin ». Pourquoi ?",
- o:["Une station de surveillance doit re-mesurer en permanence : le vent change, la décision doit suivre","C'est une erreur : un bon programme se termine toujours","Pour user le processeur régulièrement","Parce qu'ArduBlock ne sait pas faire autrement"],r:0,
+ o:["Une station de surveillance doit re-mesurer en permanence : le vent change, la décision doit suivre","C'est une erreur : un bon programme se termine toujours","Pour user le processeur régulièrement","Parce que le logiciel de blocs ne sait pas faire autrement"],r:0,
  expl:"Le vent évolue sans cesse : si le programme s'arrêtait après une mesure, la station afficherait pour toujours l'état d'il y a une heure. La boucle relit le capteur (~5 fois par seconde ici) et remet la décision à jour.",
  ex:"À 9 h : veille. À 15 h, la tempête arrive : la même boucle, toujours en train de tourner, bascule l'écran en alerte.",
  err:"Confondre les programmes « calcul » (qui se terminent en rendant un résultat) et les programmes « système » (qui surveillent en continu).",
@@ -763,14 +763,20 @@ setMode(etat.mode||"complet");
      refermer. Le focus revient sur l'image quittée. -->
 <style>
   .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
-    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    z-index:9999;padding:2rem 2rem 9rem;box-sizing:border-box;overflow:auto;
     align-items:center;justify-content:center}
   .loupe-fond[data-ouvert="oui"]{display:flex}
-  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+  .loupe-fond img{max-width:100%;max-height:68vh;height:auto;
     box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
     background:#fff;border-radius:4px}
-  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
-    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  /* Refonte v2 : la legende ne doit JAMAIS chevaucher l'image agrandie.
+     Barre opaque collee en bas + image reduite (68vh) + reserve de place
+     sous l'image via le padding-bottom du fond. */
+  .loupe-legende{position:fixed;left:0;right:0;bottom:0;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;
+    background:#12151b;border-top:1px solid #3a4150;
+    padding:.75rem 2rem;max-height:22vh;overflow:auto;
+    box-shadow:0 -8px 24px rgba(0,0,0,.5)}
   .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
     color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
     font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}

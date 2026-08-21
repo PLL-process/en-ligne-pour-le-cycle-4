@@ -70,16 +70,33 @@ essai/attendu/observé/verdict rempli PENDANT, **PV de recette** rédigé et sig
 
 | Version | Dispositif |
 |---|---|
-| 🅰 Matériel réel | UNO + shield Grove 5 V : potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C. ArduBlock Éducation 1.7 (blocs → téléversement). TBT uniquement. |
+| 🅰 Matériel réel | **Séance 2 (maquette)** : UNO + shield Grove 5 V, capteur rotatif A0, voyants D2 vert / D3 orange / D4 rouge, buzzer D5 — programme construit sur **Vittascience** (interface Arduino, mode BLOCS) et téléversé. **Séances 3-4 (station du labo)** : potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C. TBT uniquement. |
 | 🅱 Simulation | Banc d'essai intégré à la page : mêmes seuils, même logique (boucle 200 ms), verrous expérientiels `window.__exp`. |
 | 🅲 Sans matériel | Banc intégré + traces d'exécution fournies (act. 5 et 7). Parcours complet, y compris à la maison. |
 
-**Point de vigilance outil** : ArduBlock Éducation **1.7** = version de référence ;
-aucune version plus récente identifiée au 19/08/2026 (site DuinoEdu inaccessible à
-la vérification automatique) — à revalider d'un clic en début d'année. Les
-planches de la séance 2 sont des **reconstitutions schématiques** étiquetées comme
-telles (pas des captures) : remplacer par des captures du poste réel si souhaité
-(règles n°70/73).
+**Point de vigilance outil (refonte v2)** : la séance 2 se fait désormais sur
+**Vittascience**, interface Arduino en mode **BLOCS**
+(`fr.vittascience.com/arduino`). Motif : Vittascience **simule**, ArduBlock non —
+or les tests aux **valeurs frontières** (39/40, 69/70), cœur de la compétence
+C8.3, exigent de pouvoir rejouer une valeur exacte à volonté, sans carte et sans
+attendre son tour. Conséquence à anticiper : Vittascience demande une
+**connexion Internet** ; c'est le seul point de la séquence dans ce cas, et un
+**repli hors-ligne** complet est prévu (lien direct + planches de blocs + banc
+d'essai intégré), suffisant pour répondre à toutes les questions et valider
+l'activité. Prévoir aussi l'**emplacement de l'iframe** Vittascience, à remplir
+avec le code d'intégration officiel dès qu'il est disponible.
+
+**ArduBlock Éducation 1.7** n'est pas abandonné : il devient un **bonus
+facultatif — hors parcours obligatoire** de la séance 2, illustré par **deux
+captures réelles** du logiciel (paliers 1 et 2, poste du labo — règle d'or
+n°94). Ce bonus a une vraie valeur pédagogique : il montre le **même
+raisonnement** dans deux logiciels et à deux échelles, ce qui prépare la question
+« ce qu'un algorigramme ne dit pas » (act. 2 c).
+
+Les planches de la séance 2 sont des **reconstitutions schématiques** de l'écran
+Vittascience, étiquetées comme telles (pas des captures) : à remplacer par des
+captures du poste réel dès que les programmes de la classe existent
+(règles n°70/73/94).
 
 **Banc Docker (enseignant uniquement)** : `banc-docker/` — vérifie la compilation
 `arduino:avr:uno` du programme de référence (compte Docker personnel requis).

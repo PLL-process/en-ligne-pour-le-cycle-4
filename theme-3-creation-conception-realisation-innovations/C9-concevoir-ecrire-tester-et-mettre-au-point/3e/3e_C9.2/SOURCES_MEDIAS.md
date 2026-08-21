@@ -2,10 +2,19 @@
 
 Tous les médias de ce lot sont des **créations originales** réalisées pour le projet
 (SVG écrits à la main). Aucune image extraite d'un manuel, de Google Images ou d'un
-site tiers. Aucun hotlinking. Aucune capture d'écran de logiciel tiers : les planches
-de la séance 2 sont des **reconstitutions schématiques** du programme en blocs,
-étiquetées comme telles dans l'image ET dans son texte alternatif (règles n°70/73/75 :
-pas de faux noms de boutons, valeurs déclarées comme exemples).
+site tiers. Aucun hotlinking. Les planches de la séance 2 sont des **reconstitutions
+schématiques** du programme en blocs Vittascience, étiquetées comme telles dans
+l'image ET dans son texte alternatif (règles n°70/73/75 : pas de faux noms de
+boutons, valeurs déclarées comme exemples).
+
+**Deux exceptions assumées, et une seule** : les deux images du bonus facultatif de la
+séance 2 sont de **vraies captures d'écran** du logiciel **ArduBlock Éducation 1.7**,
+prises sur le poste du laboratoire de technologie le 20/08/2026, pendant la
+construction réelle du programme. Elles sont produites conformément à la **règle d'or
+n°94** : toute capture d'écran d'un logiciel vient du vrai logiciel exécuté sur le
+poste — jamais d'une reconstitution présentée comme une capture, jamais d'une image
+trouvée en ligne. Elles ne montrent que l'interface du logiciel et le programme
+construit pour ce lot ; aucune donnée personnelle n'y figure.
 
 | Fichier | Type | Source / auteur | Licence | Rôle pédagogique (image à LIRE) | Poids |
 |---|---|---|---|---|---|
@@ -18,6 +27,8 @@ pas de faux noms de boutons, valeurs déclarées comme exemples).
 | `Images/blocs_palier2_decider.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 2 | ~5 Ko |
 | `Images/blocs_palier3_afficher.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 3 | ~5 Ko |
 | `Images/blocs_palier4_acquitter.svg` | SVG original (reconstitution schématique) | Création Fable pour ce projet | CC0 | Image-explication : résultat attendu du palier 4 (act. 4) | ~5 Ko |
+| `Images/bonus_ardublock_palier1.png` | **Capture d'écran réelle** (règle d'or n°94) | Écran du logiciel ArduBlock Éducation 1.7 exécuté sur le poste du labo, 20/08/2026 — programme `3e-STATION-palier1.abp` construit pour ce lot | Capture d'interface à usage pédagogique ; le programme photographié est une création originale du lot (CC0) | Image à LIRE : retrouver, dans un AUTRE logiciel de blocs, la boucle, la lecture analogique et la conversion d'échelle — bonus facultatif de la séance 2 | ~222 Ko |
+| `Images/bonus_ardublock_palier2.png` | **Capture d'écran réelle** (règle d'or n°94) | Écran du logiciel ArduBlock Éducation 1.7 exécuté sur le poste du labo, 20/08/2026 — programme `3e-STATION-palier2.abp` construit pour ce lot | Capture d'interface à usage pédagogique ; le programme photographié est une création originale du lot (CC0) | Image à LIRE : retrouver la cascade de tests et l'ordre « seuil le plus haut d'abord » sous un autre habillage, à une autre échelle (km/h) — bonus facultatif | ~327 Ko |
 
 Autres fichiers non graphiques du lot :
 
@@ -37,4 +48,11 @@ Notes de conformité :
   chaque SVG (504 à 1 188 caractères) ; toutes les images s'agrandissent à la loupe
   (règle n°92) ;
 - aucune donnée Météo-France réelle : les seuils sont ceux du cahier des charges
-  pédagogique de la mairie fictive, dit explicitement aux élèves.
+  pédagogique de la mairie fictive, dit explicitement aux élèves. Les **cinq niveaux
+  officiels** de la vigilance cyclonique aux Antilles (jaune → orange → rouge →
+  violet → gris) sont en revanche cités correctement dans la situation déclenchante,
+  et la page dit clairement que le prototype n'en programme que trois ;
+- les deux captures ArduBlock du bonus sont des **captures réelles** du logiciel
+  (règle d'or n°94) et sont déclarées comme telles dans la page, dans leur légende
+  et dans leur texte alternatif — contrairement aux planches Vittascience, qui sont
+  déclarées comme des reconstitutions. La distinction est visible par l'élève.

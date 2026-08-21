@@ -4986,3 +4986,181 @@ défilement local sous 680 px).
 Banc Docker à exécuter sur le poste de Pascal ; version d'ArduBlock Éducation à
 revalider d'un clic à la rentrée ; montage 🅰 à faire vivre au labo ; captures
 réelles d'ArduBlock bienvenues en remplacement des reconstitutions.
+
+---
+
+## Règle d'or n°94 — une capture d'écran vient du vrai logiciel, exécuté sur le poste
+
+*21 août 2026. Née d'un travail réel : deux paliers du programme de la station
+construits dans ArduBlock sur le poste de Pascal, puis capturés — après une
+séquence entière livrée avec des « planches » dessinées à la main.*
+
+Le dépôt distingue depuis longtemps l'**image-objet** (un document à lire) de
+l'**image-explication** (un schéma qui enseigne). Il manquait une frontière plus
+grossière, et plus dangereuse : celle entre **ce qui montre un logiciel** et
+**ce qui prétend le montrer**.
+
+**Quand une page dit à l'élève « voilà ce que tu dois voir à l'écran », l'image
+vient du logiciel lui-même, lancé sur le poste, avec le programme réellement
+construit.** Pas d'une reconstitution habillée en capture, pas d'une image
+trouvée en ligne, pas d'un rendu de l'IA. Et la capture porte sa date et son
+poste.
+
+### Pourquoi c'est une règle et pas une préférence
+
+Une reconstitution est une **hypothèse sur l'interface**. Elle nomme des boutons
+de mémoire, invente une disposition plausible, oublie une barre d'outils. En
+classe, l'élève cherche à l'écran ce que la page lui a montré — et ne le trouve
+pas. Il en conclut, dans l'ordre : que son écran a un problème, puis qu'il n'a
+pas compris, puis que la page ment. La règle n°80 avait déjà attrapé ce cas sur
+les **noms de boutons** ; la n°94 l'étend à **l'image entière**, qui est un nom
+de bouton de mille pixels de large.
+
+Il y a un second effet, moins évident. Capturer oblige à **faire réellement le
+travail** : ouvrir le logiciel, construire le programme, l'enregistrer, le voir
+tourner. Un lot dont les captures sont réelles est un lot dont quelqu'un a
+vérifié, avec ses mains, que l'activité est faisable dans le temps annoncé.
+C'est le prolongement direct de la règle n°93 : on ne suppose pas les gestes,
+donc on les fait.
+
+### Ce que la règle n'interdit pas
+
+Elle n'interdit pas les **reconstitutions schématiques** : elles restent utiles,
+notamment quand l'outil n'est pas encore choisi, quand le repli hors ligne doit
+fonctionner sans le logiciel, ou quand on veut épurer un écran chargé pour
+montrer une seule idée. Elle exige seulement qu'elles soient **déclarées comme
+telles** — dans l'image, dans la légende, et dans le texte alternatif — et
+qu'elles ne soient jamais présentées comme « ce que tu verras ». Une page peut
+porter les deux, côte à côte ; l'élève doit pouvoir dire laquelle est laquelle
+sans hésiter.
+
+### Portée
+
+Toute page élève ou professeur qui montre une interface logicielle : TP de CAO,
+séquences de programmation, tutoriels d'outil. Les captures réelles sont
+inventoriées dans `SOURCES_MEDIAS.md` avec leur **origine, leur date et leur
+poste**, et distinguées ligne à ligne des reconstitutions.
+
+### Ce qui n'est pas mécanisé
+
+Aucun script ne saura dire si une image est une vraie capture. Ce qui est
+mécanisable, et qui reste à faire : vérifier que chaque image bitmap d'une page
+élève possède **une ligne dans `SOURCES_MEDIAS.md` déclarant son statut**
+(capture réelle ou reconstitution) — l'absence de déclaration devient le
+manquement, faute de pouvoir juger l'image elle-même.
+
+---
+
+## 21 août 2026 — Refonte v2 de la station d'alerte cyclonique : le simulateur a fait le choix de l'outil
+
+*Suite du lot du 19 août (3e_C9.2 + 3e_C8.3, PR #232). Même branche, même lot :
+une refonte, pas un nouveau lot.*
+
+### Le pivot : ArduBlock → Vittascience
+
+La séance 2 était écrite pour **ArduBlock Éducation 1.7**, le logiciel du labo.
+Le travail avait même commencé pour de vrai : deux paliers construits et
+enregistrés sur le poste. Le pivot ne vient pas d'un défaut d'ArduBlock, mais
+d'une exigence de la séquence elle-même. La compétence **C8.3** demande de
+**tester aux valeurs frontières** — 39 et 40, 69 et 70. Or tester une frontière,
+c'est poser une valeur exacte, regarder, la changer d'une unité, regarder encore.
+Avec ArduBlock, chaque essai coûte un téléversement, une carte disponible et un
+tour d'îlot. **ArduBlock ne simule pas.** Vittascience simule.
+
+Autrement dit : ce n'est pas « quel logiciel de blocs préférons-nous », c'est
+**quel logiciel rend le geste central de la séance possible pour 28 élèves en
+1 h 30**. Posée ainsi, la question n'en était plus une.
+
+Le prix est réel et il est écrit dans la page : Vittascience demande une
+**connexion Internet**, seul élément de la séquence dans ce cas. D'où un
+**repli hors-ligne** complet — lien direct, planches de blocs, banc d'essai
+intégré — qui permet de répondre à toutes les questions et de valider
+l'activité sans réseau. Un emplacement d'**iframe** est réservé dans la page,
+à remplir avec le code d'intégration officiel dès qu'il existe.
+
+### ArduBlock n'est pas jeté : il devient une leçon
+
+Le travail déjà fait sur le poste devient un **bonus facultatif — hors parcours
+obligatoire**, avec ses **deux captures réelles** (règle n°94, née là). Et il y
+gagne : mis côte à côte, ArduBlock et Vittascience montrent le **même
+raisonnement** sous deux habillages et à deux échelles. C'est exactement la
+réponse à la question ajoutée en activité 2 — *ce qu'un algorigramme ne dit
+pas, c'est le langage*. Un pivot d'outil s'est transformé en argument
+pédagogique.
+
+### Deux échelles, et la discipline de ne jamais les mélanger
+
+La maquette Vittascience travaille en `niveau_vent` de **0 à 100**, seuils
+**40 / 70**, capteur rotatif sur A0, trois voyants et un buzzer. La station du
+labo travaille en **km/h de 0 à 250**, seuils **100 / 150**, avec LCD et bouton
+d'acquittement. Deux échelles, deux câblages, une seule logique.
+
+La tentation était d'unifier. On ne l'a pas fait, pour deux raisons. La première
+est pratique : unifier obligeait à refaire le banc d'essai, le programme C++ de
+référence, les séances 3 et 4 et la moitié du QCM — pour un lot déjà en PR. La
+seconde est meilleure : **cette dualité est la leçon**. Un élève de 3e qui
+comprend que la même décision se code sur deux échelles et deux câblages a
+compris ce qu'est un algorithme. Un **tableau de correspondance** est donc posé
+en tête de séance 2, déclaré comme le **seul pont autorisé** entre les deux, et
+une règle de travail est écrite noir sur blanc : *dans l'interface tu parles en
+niveau de vent, dans le PV tu parles en km/h, une phrase ne mélange jamais les
+deux*. C'est aussi devenu une erreur fréquente listée et un point de vigilance
+pour le professeur.
+
+### Les quatre corrections v2 demandées par Pascal
+
+**L'encart « LA BOUCLE » de l'algorigramme ressemblait à un rectangle de
+traitement.** Dans un algorigramme, la forme EST la grammaire : un rectangle dit
+« action ». Un commentaire dessiné en rectangle enseigne donc une action qui
+n'existe pas — un code trompeur au sens de la règle n°80, mais graphique. Il est
+devenu une bulle très arrondie, à contour **violet pointillé** (couleur réservée
+aux commentaires, jamais celle du flux), hors du tracé des flèches, portant la
+mention *« commentaire — pas un symbole »*, avec sa ligne dans la légende des
+symboles. La `<desc>` du SVG le dit aussi.
+
+**Six questions ont été ajoutées sous l'algorigramme** (activité 2 c), qui font
+passer l'activité de 7 à 13 points : le cas de la frontière exacte (150 km/h
+pile → alerte, parce que « ≥ » comprend la valeur), le comptage des rectangles
+de traitement, la distinction commentaire / symbole — qui verrouille la
+correction précédente —, l'effacement de la flèche de retour, le comptage des
+chemins, et enfin *ce qu'un algorigramme ne dit pas*. Aides, correction,
+erreurs fréquentes, critère de réussite, matrice de couverture et suite
+Playwright ont suivi.
+
+**Les niveaux de vigilance étaient incomplets.** Aux Antilles la vigilance
+cyclonique ne s'arrête pas au rouge : **jaune → orange → rouge → violet → gris**.
+Un encadré le dit dans la situation déclenchante, en précisant que le prototype
+n'en programme que trois. Le défi bonus « violet » gagne une seconde question,
+autrement plus intéressante que la première : *pourquoi le niveau gris ne peut-il
+PAS se déduire de la seule vitesse du vent ?* Réponse : le gris est un état de
+l'**après**, décidé par un humain ; une même entrée peut donner plusieurs
+sorties. Il faudrait une mémoire et une décision humaine — la limite d'une
+maquette, et la raison pour laquelle un dispositif d'alerte réel n'est jamais
+entièrement automatique.
+
+**La loupe superposait sa légende à l'image.** L'agrandissement de la règle n°92
+affichait le texte alternatif par-dessus le bas de l'image. Corrigé dans la
+séquence ET dans le QCM : barre de légende opaque collée en bas, image ramenée à
+68 % de la hauteur, réserve de place sous l'image. Une loupe qui cache ce qu'on
+agrandit ne remplit pas son office.
+
+### Le fil rouge : New York lit le PV
+
+Le Thème 3 a New York pour fil rouge, la séquence est martiniquaise. Le nœud
+tient en une ligne du courrier de la mairie : le procès-verbal est demandé en
+**deux exemplaires**, dont un pour la ville **jumelée**. Depuis **Sandy (2012)**,
+New York échange avec les territoires qui vivent le risque cyclonique chaque
+année. Ce que la ville demande n'est pas la station, c'est la **recette** — et
+c'est un excellent critère de rédaction : *un PV qui se lit à 6 800 km, par des
+gens qui n'ont jamais vu le prototype, est un PV bien écrit*. Le renversement
+vaut d'être noté : ici, ce n'est plus la Martinique qui apprend de New York.
+
+### Restes à faire consignés
+
+Code d'intégration iframe Vittascience à coller (emplacement réservé, repli en
+place) ; captures réelles de l'interface Vittascience à substituer aux planches
+schématiques dès que les programmes de la classe existent (règle n°94) ;
+vérifier que `fr.vittascience.com` n'est pas filtré par le réseau du collège
+avant la séance 2 ; nettoyage du poste (chemin `sketchbook.path` d'origine à
+restaurer, flag DPI de `javaw.exe` à retirer, fichiers de travail de
+`Downloads` à supprimer).

@@ -229,17 +229,18 @@
 </section>
 
 <section class="card gestes-outil" aria-labelledby="gestes-ardublock">
-  <h2 id="gestes-ardublock">🧰 Avant de commencer — les quatre gestes d'ArduBlock Éducation</h2>
+  <h2 id="gestes-ardublock">🧰 Avant de commencer — les quatre gestes de Vittascience</h2>
   <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas.
-  Tu as peut-être déjà utilisé ArduBlock une autre année&nbsp;: refais-les quand même, c'est court.
+  Tu as peut-être déjà programmé en blocs une autre année&nbsp;: refais-les quand même, c'est court.
   Et si c'est la première fois, tout est écrit ici. <i>(Les intitulés exacts des menus peuvent
-  varier légèrement selon la version installée — au moindre doute, demande au professeur.)</i></p>
+  varier légèrement selon la version du site — au moindre doute, demande au professeur.)</i></p>
   <ol>
-    <li><b>Brancher et ouvrir.</b> Branche la carte UNO en USB, puis ouvre <b>ArduBlock Éducation 1.7</b> (version du labo).</li>
-    <li><b>Vérifier.</b> Avant tout téléversement, vérifie que la carte sélectionnée est bien <b>Arduino UNO</b> et que le <b>port</b> affiché correspond à ta carte branchée. Une carte mal choisie = un téléversement qui échoue avec un message obscur.</li>
-    <li><b>Nommer et enregistrer.</b> Enregistre tout de suite ton programme sous le nom <code>3e-STATION-TON&nbsp;NOM</code>, dans le dossier de la classe. Un programme sans nom est introuvable la semaine suivante — et tu ré-enregistreras à CHAQUE palier.</li>
-    <li><b>Téléverser et observer.</b> Le bouton de téléversement envoie ton programme dans la carte ; le <b>moniteur série</b> affiche ce que la carte raconte (9600 bauds). Ces deux gestes reviennent à chaque palier de la séance 2.</li>
+    <li><b>Ouvrir la bonne interface.</b> Va sur <a href="https://fr.vittascience.com/arduino/" target="_blank" rel="noopener">fr.vittascience.com/arduino</a> et vérifie deux choses : l'interface <b>Arduino</b>, et la bascule sur <b>BLOCS</b> (et non CODE). Connecte-toi avec le compte de la classe si le professeur te le demande — c'est ce qui permet d'enregistrer.</li>
+    <li><b>Repérer les cinq catégories.</b> À gauche de l'espace de travail : <b>Variables</b> (créer et régler <code>niveau_vent</code>, <code>seuil_vigilance</code>, <code>seuil_alerte</code>), <b>Logique</b> (les blocs <i>si / sinon si / sinon</i> et les comparaisons), <b>Boucles</b> (<i>répéter indéfiniment</i>), <b>Entrées / sorties</b> (lire A0, piloter D2 à D5) et <b>Fonctions</b> (définir et appeler tes sous-programmes). Tout le programme de la séance vient de ces cinq-là.</li>
+    <li><b>Nommer et enregistrer.</b> Enregistre tout de suite ton programme sous le nom <code>3e-STATION-palier1-TON&nbsp;NOM</code>. Un programme sans nom est introuvable la semaine suivante — et tu enregistreras une version <b>à chaque palier</b>, sous son propre nom : c'est ta trace de progression.</li>
+    <li><b>Simuler, puis (si tu as la carte) téléverser.</b> Le <b>simulateur</b> intégré fait tourner ton programme <b>sans aucun matériel</b> : tu tournes le capteur rotatif à la souris et tu vois les voyants réagir. Le <b>moniteur</b> affiche ce que ton programme raconte. En version 🅰 seulement, le bouton de téléversement envoie ensuite le programme dans la vraie carte — après avoir vérifié la carte et le port.</li>
   </ol>
+  <p class="pourquoi" style="margin-top:10px">🌐 <b>Une seule chose demande Internet dans cette séquence</b> : Vittascience. Si le réseau du collège bloque le site ou si tu travailles hors connexion, la séance 2 prévoit un repli complet (planches de blocs + banc d'essai de cette page) — tu peux tout faire et tout valider.</p>
 </section>
 
 <div class="badges">
@@ -292,10 +293,35 @@
     éteindre l'affichage ni le signal lumineux&nbsp;;<br>
     — réagir à un changement de vent en <b>moins d'une seconde</b>.</p>
     <p>Avant toute mise en service, vos services fourniront un <b>procès-verbal de recette</b>&nbsp;: la liste des
-    essais réalisés prouvant que le prototype respecte chacune de ces exigences.</p>
+    essais réalisés prouvant que le prototype respecte chacune de ces exigences. Vous en établirez
+    <b>deux exemplaires</b>&nbsp;: l'un pour nos services, l'autre pour la <b>ville jumelée de New York</b>, qui suit
+    nos travaux sur le risque cyclonique depuis l'ouragan Sandy.</p>
     <p style="text-align:right">Le maire-adjoint aux risques majeurs</p>
   </div>
   <p style="font-size:.9em;color:var(--sub)">Les seuils de 100 et 150 km/h sont ceux du <b>cahier des charges de la mairie</b> pour ce prototype pédagogique — les vraies vigilances de Météo-France croisent bien d'autres critères (pluie, houle, trajectoire). Le prototype mesure le vent avec un <b>potentiomètre qui SIMULE l'anémomètre</b> : tourner le bouton, c'est faire souffler le vent. <i>(Données et matériel réels de la version 🅰 : très basse tension 5 V uniquement.)</i></p>
+  <div class="retenir" style="margin-top:1rem"><b>🌀 Aux Antilles, la vigilance cyclonique compte CINQ niveaux</b> — et elle ne s'arrête pas au rouge :
+    <b>jaune</b> (soyez attentif) → <b>orange</b> (préparez-vous) → <b>rouge</b> (confinement : plus personne dehors)
+    → <b>violet</b> (confinement absolu, danger extrême — même les secours ne circulent plus) → <b>gris</b>
+    (phase de sauvegarde, après le passage : on ressort prudemment, on fait le bilan et on porte secours).
+    <b>Notre prototype n'en programme que trois</b> (veille · vigilance · alerte) : c'est une <b>maquette scolaire</b>,
+    pas un dispositif officiel. Retiens l'ordre complet — <i>du jaune au gris en passant par le violet</i> — il revient
+    dans le défi bonus.</div>
+
+  <details class="prof approfondissement" style="margin-top:1rem">
+    <summary>🗽 Pourquoi New York lit-elle aussi ce dossier ?</summary>
+    <p>Une ligne du courrier a peut-être attiré ton œil : la mairie demande <b>deux exemplaires</b> du procès-verbal de
+    recette. Le second part à <b>New York</b>, ville jumelée avec la commune.</p>
+    <p>En octobre <b>2012</b>, l'ouragan <b>Sandy</b> a inondé le sud de Manhattan, noyé des stations de métro et privé
+    des centaines de milliers de foyers d'électricité pendant des jours. La ville a découvert qu'elle était bien moins
+    préparée au risque cyclonique que les territoires qui le vivent chaque année. Depuis, elle échange avec eux — et la
+    <b>Martinique</b>, où la saison cyclonique revient de juin à novembre, fait partie de ceux qu'on appelle.</p>
+    <p>Ce que New York demande n'est pas la station : c'est la <b>recette</b>. Autrement dit, la preuve écrite que
+    l'objet fait ce qu'on lui demande, et la façon de le prouver. Un dossier de recette bien rédigé se lit à
+    6&nbsp;800&nbsp;km de distance, par des gens qui n'ont jamais vu le prototype : c'est même là qu'on voit s'il est
+    bien rédigé.</p>
+    <p style="font-size:.9em;color:var(--sub)">Même esprit que l'atelier « Le pont numérique Martinique → New York »
+    (3e_C4.8) : ici, ce n'est plus la Martinique qui apprend de New York, c'est l'inverse.</p>
+  </details>
 </section>
 
 <section class="card">
@@ -346,8 +372,9 @@
   <h2>🧰 Choix de l'outil</h2>
   <table class="refs">
     <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
-    <tr><td>ArduBlock Éducation 1.7 (blocs → téléversement)</td><td>Programmation par blocs en français, téléversement direct vers l'UNO : on passe des blocs au système réel sans réécrire une ligne. Version 1.7 = version du labo (aucune version plus récente identifiée au 19/08/2026 — à revalider en début d'année).</td><td>Arduino IDE avec le programme C++ de référence fourni (dossier <a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>)</td></tr>
-    <tr><td>Arduino UNO + shield Grove (version 🅰)</td><td>Matériel confirmé du labo : LCD RGB (I2C), bouton (D2), DEL (D3), buzzer (D5), potentiomètre (A1). Très basse tension 5 V.</td><td>Banc de simulation intégré à cette page (version 🅱)</td></tr>
+    <tr><td><b>Vittascience</b> — interface Arduino, mode BLOCS (fr.vittascience.com)</td><td>Programmation par blocs en français <b>avec simulateur intégré</b> : chaque palier se vérifie immédiatement, <b>sans carte, sans câble, sans attendre son tour</b> — y compris à la maison. Le téléversement vers l'UNO reste possible pour la version 🅰. C'est la simulation qui a fait la différence : c'est elle qui permet de tester les <b>frontières</b> (39/40, 69/70), geste central de la compétence C8.3.<br><i>Écart assumé :</i> Vittascience demande une connexion Internet — un repli hors-ligne complet est prévu en séance 2.</td><td><b>ArduBlock Éducation 1.7</b> (le logiciel du labo, sans simulateur) : conservé en <b>bonus facultatif</b> de la séance 2, avec les captures réelles des paliers 1 et 2 · Arduino IDE avec le programme C++ de référence (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>)</td></tr>
+    <tr><td>Arduino UNO + shield Grove — <b>maquette de programmation</b> (séance 2)</td><td>Le montage sur lequel tourne le programme Vittascience : capteur rotatif Grove (<b>A0</b>), voyants vert (<b>D2</b>), orange (<b>D3</b>), rouge (<b>D4</b>), buzzer (<b>D5</b>). Très basse tension 5 V. <b>Utilisable sans aucun matériel</b> grâce au simulateur.</td><td>Le simulateur intégré de Vittascience</td></tr>
+    <tr><td>Arduino UNO + shield Grove — <b>station du labo</b> (versions 🅰, séances 3 et 4)</td><td>Matériel confirmé du labo, avec l'interface humain-machine complète : LCD RGB (I2C), bouton d'acquittement (D2), DEL (D3), buzzer (D5), potentiomètre « anémomètre simulé » (A1), en km/h. C'est la station que l'on <b>recette</b>.</td><td>Banc de simulation intégré à cette page (version 🅱)</td></tr>
     <tr><td>Banc de simulation intégré (cette page)</td><td>La MÊME station, simulée : curseur de vent, LCD, DEL, buzzer, bouton d'acquittement. Fonctionne hors connexion, trace tes expériences, sert de banc d'essai pour la recette.</td><td>—</td></tr>
   </table>
   <p style="font-size:.85em;color:var(--sub)">Côté professeur : un <b>banc Docker</b> (dossier <code>banc-docker/</code>) vérifie que le programme C++ de référence compile pour <code>arduino:avr:uno</code> — réservé à l'enseignant, les élèves n'en ont pas besoin.</p>
@@ -357,10 +384,11 @@
   <h2>🔀 Trois façons de vivre la séquence</h2>
   <div class="versions">
     <div class="version va"><h4>🅰 Matériel réel</h4>
-      <p>Arduino UNO + Grove Base Shield (sélecteur <b>5 V</b>) : potentiomètre sur <b>A1</b>, bouton sur <b>D2</b>, DEL sur <b>D3</b>, buzzer sur <b>D5</b>, LCD RGB sur <b>I2C</b>. Programme en blocs ArduBlock, téléversé pour de vrai.</p>
+      <p><b>Séance 2 (maquette) :</b> Arduino UNO + Grove Base Shield (sélecteur <b>5 V</b>), capteur rotatif sur <b>A0</b>, voyants <b>D2</b> vert · <b>D3</b> orange · <b>D4</b> rouge, buzzer <b>D5</b> — programme construit en blocs sur <b>Vittascience</b> et téléversé pour de vrai.</p>
+      <p><b>Séances 3 et 4 (station du labo) :</b> potentiomètre sur <b>A1</b>, bouton d'acquittement sur <b>D2</b>, DEL sur <b>D3</b>, buzzer sur <b>D5</b>, LCD RGB sur <b>I2C</b> — c'est la station complète, celle que l'on recette.</p>
       <p style="color:var(--sub)">Sécurité : très basse tension uniquement, jamais de secteur 230 V ; câblage vérifié par le professeur avant branchement USB ; ne jamais brancher ou débrancher un module sous tension.</p></div>
     <div class="version vb"><h4>🅱 Simulation</h4>
-      <p>Le <b>banc de simulation intégré</b> à cette page : la même station, les mêmes seuils, le même bouton d'acquittement. Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
+      <p>Deux simulateurs, deux rôles : celui de <b>Vittascience</b> pour <b>construire et éprouver ton programme</b> en séance 2 (échelle 0-100), et le <b>banc de simulation intégré</b> à cette page pour <b>vivre la station complète</b> — mêmes seuils, bouton d'acquittement, en km/h. Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
     <div class="version vc"><h4>🅲 Sans matériel</h4>
       <p>Tout est dans la page : le banc de simulation + des <b>traces d'exécution enregistrées</b> à analyser dans les activités 5 et 7. Personne n'est pénalisé si le matériel manque — y compris à la maison.</p></div>
   </div>
@@ -368,7 +396,7 @@
 </section>
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
   <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>« La mairie vous appelle »</small><span class="done" id="done-s1"></span></button>
-  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Programmer en blocs</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Programmer en blocs (Vittascience)</small><span class="done" id="done-s2"></span></button>
   <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>L'humain dans la boucle</small><span class="done" id="done-s3"></span></button>
   <button class="seance-tab" data-panel="s4" role="tab" aria-selected="false">Séance 4<br><small>La recette : prouver</small><span class="done" id="done-s4"></span></button>
 </div>
@@ -488,26 +516,44 @@
         &nbsp;&nbsp;afficher le niveau et la vitesse
       </p>
       <h4>b) Lire l'algorigramme</h4>
-      <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station : ovale Début, rectangle Lire la vitesse du vent, losange vitesse supérieure ou égale à 150, si oui alerte rouge, sinon losange vitesse supérieure ou égale à 100, si oui vigilance orange, sinon veille ; les branches se rejoignent et une flèche remonte vers la lecture : c'est la boucle ; légende des symboles ovale, rectangle, losange, flèche">
+      <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station : ovale Début, rectangle Lire la vitesse du vent, losange vitesse supérieure ou égale à 150, si oui alerte rouge, sinon losange vitesse supérieure ou égale à 100, si oui vigilance orange, sinon veille ; les branches se rejoignent et une flèche remonte vers la lecture : c'est la boucle ; une bulle à contour violet en pointillés, rattachée à cette flèche de retour et marquée « commentaire — pas un symbole », explique la boucle sans faire partie de l'algorigramme ; légende des symboles ovale, rectangle, losange, flèche, bulle pointillée">
       <div class="assoc"><label for="a2_q1">Le vent souffle à 130 km/h. Quel chemin l'algorigramme suit-il ?</label><select id="a2_q1"><option value="">— choisir —</option><option>losange 150 : NON → losange 100 : OUI → vigilance orange</option><option>losange 150 : OUI → alerte rouge</option><option>losange 100 : OUI → alerte rouge</option><option>aucun losange : veille</option></select></div>
       <div class="assoc"><label for="a2_q2">Pourquoi teste-t-on 150 AVANT 100 ?</label><select id="a2_q2"><option value="">— choisir —</option><option>parce qu'une rafale à 180 km/h doit finir en « alerte », pas en « vigilance »</option><option>parce que 150 est plus facile à calculer</option><option>par habitude, l'ordre n'a aucun effet</option><option>parce que le losange 100 est en panne</option></select></div>
       <div class="assoc"><label for="a2_q3">Que représente la flèche qui remonte vers « Lire la vitesse » ?</label><select id="a2_q3"><option value="">— choisir —</option><option>la boucle : la station recommence sans fin</option><option>une erreur de dessin</option><option>le retour du courant électrique</option><option>la fin du programme</option></select></div>
       <div class="assoc"><label for="a2_q4">Dans un algorigramme, le losange représente…</label><select id="a2_q4"><option value="">— choisir —</option><option>une décision, avec deux sorties OUI / NON</option><option>une action</option><option>le début du programme</option><option>un capteur</option></select></div>
+
+      <h4 style="margin-top:18px">c) Lire l'algorigramme au millimètre — six questions de plus</h4>
+      <p style="font-size:.92em;color:var(--sub)">Les quatre premières questions t'ont fait suivre un chemin. Ces six-là te font <b>lire les symboles</b> et <b>tester les frontières</b> : c'est exactement le geste demandé au DNB.</p>
+      <div class="assoc"><label for="a2_q5">Le vent souffle à <b>150 km/h PILE</b>. Où l'algorigramme t'emmène-t-il ?</label><select id="a2_q5"><option value="">— choisir —</option><option>alerte rouge : « ≥ 150 » veut dire 150 COMPRIS</option><option>vigilance orange : 150 n'est pas encore « au-dessus » de 150</option><option>veille : le losange ne répond ni OUI ni NON</option><option>impossible à savoir sans faire tourner le programme</option></select></div>
+      <div class="assoc"><label for="a2_q6">Combien cet algorigramme compte-t-il de <b>rectangles de traitement</b> ?</label><select id="a2_q6"><option value="">— choisir —</option><option>4 : la lecture du vent, puis les trois niveaux</option><option>2 : les deux losanges</option><option>3 : seulement les trois niveaux</option><option>1 : la boucle</option></select></div>
+      <div class="assoc"><label for="a2_q7">La bulle violette en pointillés « 🔁 LA BOUCLE », à gauche du dessin, c'est…</label><select id="a2_q7"><option value="">— choisir —</option><option>un commentaire de lecture : il explique le dessin sans faire partie de l'algorigramme</option><option>un rectangle de traitement : une action que la station exécute</option><option>un losange de décision déguisé</option><option>le symbole normalisé de la boucle</option></select></div>
+      <div class="assoc"><label for="a2_q8">On <b>efface la flèche qui remonte</b>. Que devient la station ?</label><select id="a2_q8"><option value="">— choisir —</option><option>elle mesure le vent UNE SEULE FOIS, affiche un niveau, puis ne bouge plus</option><option>elle mesure deux fois plus vite</option><option>rien ne change : la flèche est décorative</option><option>elle repart au DÉBUT toute seule</option></select></div>
+      <div class="assoc"><label for="a2_q9">Combien de <b>chemins différents</b> peut suivre une mesure, entre la lecture du vent et le retour de boucle ?</label><select id="a2_q9"><option value="">— choisir —</option><option>3 — un par niveau : alerte, vigilance, veille</option><option>2 — un par losange</option><option>1 — l'algorigramme est une ligne droite</option><option>une infinité, puisque la boucle ne s'arrête jamais</option></select></div>
+      <div class="assoc"><label for="a2_q10">Ce qu'un algorigramme ne dit <b>PAS</b> :</label><select id="a2_q10"><option value="">— choisir —</option><option>dans quel langage on programmera : blocs, C++, Python… le raisonnement, lui, reste le même</option><option>l'ordre dans lequel les tests se font</option><option>ce que le système fait quand aucun seuil n'est atteint</option><option>où se prennent les décisions</option></select></div>
+
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les deux seuils sont écrits noir sur blanc dans le courrier de la mairie. Pour b) : suis le chemin avec le doigt, losange par losange, en répondant OUI ou NON à chaque question.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 150 ? NON → on descend au 2e losange. 130 ≥ 100 ? OUI → vigilance. Maintenant imagine 180 km/h avec les losanges INVERSÉS (100 testé d'abord) : 180 ≥ 100 ? OUI → « vigilance »… et le test 150 n'est jamais atteint. Voilà pourquoi l'ordre compte.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les deux seuils sont écrits noir sur blanc dans le courrier de la mairie. Pour b) : suis le chemin avec le doigt, losange par losange, en répondant OUI ou NON à chaque question. Pour c) : ne devine pas, <b>compte sur le dessin</b> — les rectangles, les chemins possibles — et relis la légende « 🎓 Les symboles » en haut à droite de l'image.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 150 ? NON → on descend au 2e losange. 130 ≥ 100 ? OUI → vigilance. Maintenant imagine 180 km/h avec les losanges INVERSÉS (100 testé d'abord) : 180 ≥ 100 ? OUI → « vigilance »… et le test 150 n'est jamais atteint. Voilà pourquoi l'ordre compte.</p>
+      <p><b>Pour c) :</b> le symbole « ≥ » se lit « supérieur <b>ou égal</b> » — la valeur du seuil est donc DEDANS. Les rectangles se repèrent à leur forme (angles droits) : la lecture du vent en est un, chaque niveau en est un. Une forme <b>en pointillés</b> n'est jamais un symbole d'algorigramme : c'est une note posée à côté du dessin, comme une bulle dans une BD. Et pour compter les chemins : chaque OUI qui sort d'un losange ouvre un chemin, le dernier NON en ouvre un aussi.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>a)</b> SI vitesse ≥ <b>150</b> → alerte rouge ; SINON SI vitesse ≥ <b>100</b> → vigilance orange ; SINON → <b>veille</b>.</p>
       <p><b>b)</b> 130 km/h → losange 150 : NON → losange 100 : OUI → <b>vigilance orange</b>. On teste 150 d'abord car <b>une rafale à 180 doit finir en alerte</b> : si on testait 100 d'abord, 180 ≥ 100 serait vrai et le programme s'arrêterait à « vigilance » — un bug dangereux. La flèche qui remonte est <b>la boucle</b> : une station de surveillance ne s'arrête jamais. Le losange est <b>une décision à deux sorties OUI/NON</b>.</p>
+      <p><b>c) Lecture fine — les six réponses.</b></p>
+      <p><b>150 km/h pile → alerte rouge :</b> « ≥ » se lit « supérieur OU ÉGAL », la valeur du seuil appartient au niveau du dessus. C'est LA frontière que tout protocole de recette doit tester (tu la retrouveras en séance 4, essai n° 7).</p>
+      <p><b>4 rectangles :</b> la lecture du vent, puis ALERTE ROUGE, VIGILANCE ORANGE et VEILLE ; les losanges ne sont pas des traitements, ils ne <i>font</i> rien, ils <i>demandent</i>.</p>
+      <p><b>La bulle violette en pointillés est un commentaire :</b> elle explique le dessin, elle n'en fait pas partie. Repère infaillible : elle est <b>en pointillés</b> et <b>hors du flux</b> des flèches. Si tu recopies l'algorigramme au propre dans ton cahier, tu peux garder la note… mais pas sous forme de rectangle, sinon tu inventes une action qui n'existe pas.</p>
+      <p><b>Sans la flèche de retour</b>, la station mesurerait le vent une seule fois, afficherait un niveau et resterait figée : une station de surveillance sans boucle ne surveille rien.</p>
+      <p><b>3 chemins :</b> OUI du losange 150, OUI du losange 100, NON du losange 100 ; ils se rejoignent avant la boucle.</p>
+      <p><b>Ce que l'algorigramme ne dit pas :</b> le langage. Blocs Vittascience, C++ ou Python, le raisonnement dessiné reste identique — c'est justement pour cela qu'on le dessine AVANT de choisir l'outil.</p>
       <p><b>Méthode :</b> élaborer l'algorithme AVANT de programmer, c'est décider des variables, des seuils et de l'ordre des tests en français — quand corriger ne coûte encore rien.</p>
       <p><b>Exemple pour s'en souvenir :</b> un videur vérifie d'abord la carte VIP, puis l'entrée normale : s'il vérifiait l'entrée normale d'abord, les VIP feraient la queue avec tout le monde.</p>
       <p><b>Limite :</b> notre algorithme relit le vent 5 fois par seconde — un vrai anémomètre lisse la mesure sur plusieurs secondes pour éviter qu'une rafale isolée fasse clignoter l'alerte.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser les deux seuils (tester 100 d'abord) — le niveau « alerte » devient inatteignable ; oublier le SINON et écrire deux SI indépendants — à 180 km/h les deux seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin.</div>
-    <div class="retenir"><b>📌 À retenir :</b> un <b>algorithme</b> s'élabore en français avant d'être traduit en blocs. Dans des SI/SINON en cascade, <b>on teste le seuil le plus haut d'abord</b>. L'<b>algorigramme</b> (🎓 attendu au DNB) le dessine : ovale = début/fin, rectangle = traitement, losange = décision OUI/NON, flèche qui remonte = boucle.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> algorithme 3/3 et lecture d'algorigramme 4/4 — et tu sais expliquer à l'oral pourquoi 150 se teste avant 100.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser les deux seuils (tester 100 d'abord) — le niveau « alerte » devient inatteignable ; oublier le SINON et écrire deux SI indépendants — à 180 km/h les deux seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin ; lire « ≥ 150 » comme « au-dessus de 150 » et exclure 150 lui-même ; prendre la bulle de commentaire pour un symbole de l'algorigramme (et la recopier en rectangle dans son cahier) ; compter les losanges parmi les traitements.</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>algorithme</b> s'élabore en français avant d'être traduit en blocs. Dans des SI/SINON en cascade, <b>on teste le seuil le plus haut d'abord</b>. L'<b>algorigramme</b> (🎓 attendu au DNB) le dessine : ovale = début/fin, rectangle = traitement, losange = décision OUI/NON, flèche qui remonte = boucle. <b>Seules ces formes-là sont des symboles</b> : tout ce qui est en pointillés, hors du flux des flèches, n'est qu'un commentaire de lecture. Et « <b>≥</b> » veut dire <b>supérieur OU ÉGAL</b> : le seuil appartient au niveau du dessus.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> algorithme 3/3 et lecture d'algorigramme au moins 9/10 (sur les questions b et c) — et tu sais expliquer à l'oral pourquoi 150 se teste avant 100, et pourquoi 150 km/h pile déclenche l'alerte.</div>
     <details class="prof approfondissement"><summary>🎓 Encart DNB — l'algorigramme est un grand classique de l'épreuve</summary>
       <p>À l'épreuve de sciences du DNB, on te demandera de <b>lire, compléter ou corriger</b> un algorigramme : entrées/sorties, traitements, losanges de décision, boucles. Les gestes travaillés ici (suivre le chemin, vérifier l'ordre des tests, repérer la boucle) sont exactement ceux des sujets. Entraînement complet : les questions illustrées du QCM de cette séquence, puis l'entraînement DNB du dépôt (dossier 3e_C6.2).</p>
     </details>
@@ -518,71 +564,142 @@
 <!-- ══════════════════ SÉANCE 2 ══════════════════ -->
 <div class="seance-panel" id="s2" role="tabpanel">
 <section class="card">
-  <h2>🧱 Séance 2 — Programmer la station en blocs, palier par palier</h2>
+  <h2>🧱 Séance 2 — Programmer la station en blocs sur Vittascience, palier par palier</h2>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment traduire notre algorithme en un programme qui commande la vraie carte ?</p>
 
   <div class="activite" id="act3">
-    <header><span class="num">Activité 3</span><h3>Le programme en blocs — 4 paliers, du capteur à l'écran</h3><span class="duree">⏱ ~70 min</span></header>
+    <header><span class="num">Activité 3</span><h3>Le programme en blocs sur Vittascience — 4 paliers, du capteur à l'alerte</h3><span class="duree">⏱ ~70 min</span></header>
     <div class="meta-grid">
-      <div><b>Objectif :</b> construire le programme en blocs (ArduBlock) qui lit le vent, décide du niveau et l'affiche.</div>
+      <div><b>Objectif :</b> construire, dans <b>Vittascience (interface Arduino, mode BLOCS)</b>, le programme qui lit le vent, décide du niveau et déclenche l'alerte — et le vérifier dans le <b>simulateur intégré</b>.</div>
       <div><b>Compétence :</b> 3e_C9.2 — réaliser un programme commandant un système réel.</div>
-      <div><b>Production attendue :</b> programme enregistré <code>3e-STATION-TON NOM</code> (version 🅰) + les 4 paliers reproduits au banc d'essai (versions 🅱/🅲) + réponses vérifiées.</div>
-      <div><b>Ressources :</b> les 4 planches de paliers + le banc d'essai de la station (en haut de page).</div>
+      <div><b>Production attendue :</b> les 4 programmes enregistrés sur Vittascience (<code>3e-STATION-palier1</code> … <code>3e-STATION-complet</code>, suivis de TON NOM) + les 3 états obtenus au simulateur + réponses vérifiées.</div>
+      <div><b>Ressources :</b> l'interface Vittascience intégrée ci-dessous, les 4 planches de paliers, le tableau de correspondance des deux échelles, et le banc d'essai de la station (en haut de page).</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> avance <b>palier par palier</b> : à chaque palier, fais le geste, compare avec l'image du résultat attendu, ré-enregistre ton programme, PUIS passe au suivant. En version 🅱/🅲, reproduis chaque comportement au banc d'essai — tes manipulations y sont tracées et comptent pour la validation. Premier geste : <b>crée et nomme ton fichier</b> <code>3e-STATION-TON NOM</code> (un programme sans nom est introuvable la semaine suivante).</div>
+
+    <div class="retenir"><b>⚖️ Deux échelles — à ne jamais mélanger.</b> Le <b>capteur rotatif</b> de la maquette ne mesure pas des km/h : il donne un <b>niveau de vent de 0 à 100</b>, sans unité. C'est cette échelle-là, et elle seule, qui vit dans ton programme. Les <b>km/h</b> (et les seuils 100 / 150 du courrier de la mairie) restent l'échelle de la <b>vraie station</b> : celle du banc d'essai, du protocole de recette et du procès-verbal. Le tableau ci-dessous est le <b>seul</b> pont autorisé entre les deux.
+      <div style="overflow-x:auto;margin-top:10px">
+        <table style="width:100%;border-collapse:collapse">
+          <caption style="text-align:left;font-size:.9em;color:var(--sub);padding-bottom:6px">Correspondance maquette ↔ station réelle (valeurs de <b>maquette scolaire</b> — ce ne sont pas les procédures officielles d'alerte)</caption>
+          <thead><tr><th scope="col">Dans ton programme (maquette)</th><th scope="col">Sur la vraie station</th><th scope="col">Niveau</th></tr></thead>
+          <tbody>
+            <tr><td><code>niveau_vent</code> de 0 à 100</td><td>vitesse de 0 à 250 km/h</td><td>—</td></tr>
+            <tr><td><code>niveau_vent</code> &lt; 40</td><td>moins de 100 km/h</td><td>veille</td></tr>
+            <tr><td><code>seuil_vigilance</code> = <b>40</b></td><td><b>100 km/h</b></td><td>vigilance orange</td></tr>
+            <tr><td><code>seuil_alerte</code> = <b>70</b></td><td><b>150 km/h</b></td><td>alerte rouge</td></tr>
+            <tr><td>frontières à tester : 39 / 40 / 69 / 70</td><td>99 / 100 / 149 / 150 km/h</td><td>séance 4</td></tr>
+            <tr><td>entrée : capteur rotatif Grove sur <b>A0</b></td><td>potentiomètre « anémomètre simulé » sur <b>A1</b></td><td>Acquérir</td></tr>
+            <tr><td>sorties : voyants <b>D2</b> vert · <b>D3</b> orange · <b>D4</b> rouge + buzzer <b>D5</b></td><td>écran LCD couleur + DEL <b>D3</b> + buzzer <b>D5</b> + bouton <b>D2</b></td><td>Communiquer</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin:8px 0 0"><b>Règle de travail :</b> dans l'interface Vittascience, tu parles en <b>niveau de vent (0-100)</b>. Dans le PV de recette, tu parles en <b>km/h</b>. Une phrase ne mélange jamais les deux.</p>
+      <p style="margin:8px 0 0;font-size:.93em">Les deux dernières lignes disent la même chose pour le <b>matériel</b> : la maquette et la station du labo ne sont pas câblées pareil. Ce n'est pas un détail à subir, c'est la leçon centrale de la séance — <b>le raisonnement ne dépend ni de l'échelle, ni du câblage, ni du logiciel</b>. Ce qui change, c'est la manière de le dire à une machine.</p>
+    </div>
+
+    <div class="consigne"><b>Consigne :</b> avance <b>palier par palier</b> : à chaque palier, construis les blocs, lance le <b>simulateur</b>, compare avec la planche du résultat attendu, <b>enregistre sous le nom du palier</b>, PUIS passe au suivant. Tes manipulations au banc d'essai de cette page (en haut) sont tracées et comptent aussi pour la validation. Premier geste : <b>enregistre et nomme ton programme</b> <code>3e-STATION-palier1-TON NOM</code> (un programme sans nom est introuvable la semaine suivante).</div>
+
+    <div class="palier" id="vitta-embed">
+      <h4>🖥 L'interface Vittascience — ici même</h4>
+      <p class="faire">👉 FAIS : programme directement dans le cadre ci-dessous. <b>Mode BLOCS</b> (bascule <b>BLOCS / CODE</b> en haut de l'espace de travail) : tu glisses les blocs depuis les catégories <b>Variables · Logique · Boucles · Entrées / sorties · Fonctions</b>, et tu vérifies ton programme avec le <b>simulateur</b> — <b>sans aucun matériel</b>.</p>
+
+      <!-- EMPLACEMENT DE L'IFRAME VITTASCIENCE.
+           Le code d'intégration officiel (Partager → Intégrer, sur fr.vittascience.com)
+           se colle ICI, en remplacement du bloc .repli-vitta ci-dessous. Ne pas
+           fabriquer l'URL d'embed à la main. Tant que le code n'est pas fourni,
+           le repli hors-ligne ci-dessous s'affiche : la séquence reste utilisable. -->
+      <div class="repli-vitta" style="border:2px dashed var(--hl);border-radius:10px;padding:16px;background:#08132c">
+        <p style="margin-top:0"><b>🔌 Si le cadre Vittascience ne s'affiche pas</b> (pas de connexion, filtrage du réseau du collège, page ouverte hors ligne) — tout reste faisable :</p>
+        <ol style="margin-bottom:8px">
+          <li><b>Plan A — dans un onglet :</b> ouvre <a href="https://fr.vittascience.com/arduino/" target="_blank" rel="noopener">fr.vittascience.com/arduino</a>, choisis l'interface <b>Arduino</b> en mode <b>BLOCS</b>, et construis le même programme. Les liens directs vers les programmes de la classe sont donnés par le professeur.</li>
+          <li><b>Plan B — sans connexion du tout :</b> les <b>planches de paliers</b> ci-dessous montrent le programme bloc à bloc, et le <b>banc d'essai</b> en haut de cette page reproduit le comportement de la station. Tu peux répondre à TOUTES les questions et valider l'activité — la construction des blocs se fera à la séance suivante ou à la maison.</li>
+        </ol>
+        <p style="margin-bottom:0;font-size:.9em;color:var(--sub)">Vittascience est le seul élément de cette séquence qui demande Internet. Tout le reste fonctionne hors connexion.</p>
+      </div>
+    </div>
 
     <div class="palier">
       <h4>Palier 1 — Lire le vent</h4>
-      <p class="faire">👉 FAIS : dans la boucle, range la lecture de la broche analogique <b>A1</b> dans la variable <code>mesureBrute</code>, convertis-la en km/h (0-1023 → 0-250) dans <code>vitesseVent</code>, et envoie <code>vitesseVent</code> au moniteur série.</p>
-      <img class="figure" src="Images/blocs_palier1_lire_vent.svg" alt="Reconstitution schématique du palier 1 : dans un bloc boucle, mesureBrute reçoit la lecture analogique de A1, vitesseVent reçoit la conversion de 0-1023 vers 0-250, et vitesseVent est envoyée au moniteur série ; à droite, le moniteur série attendu affiche des vitesses qui montent quand on tourne le potentiomètre">
-      <p>👀 <b>VÉRIFIE :</b> tourne le potentiomètre — au moniteur série (version 🅰) ou au banc d'essai de cette page (🅱), la vitesse doit monter et descendre avec ton geste.</p>
-      <div class="assoc"><label for="a3_p1">Le potentiomètre est à mi-course : <code>mesureBrute</code> vaut environ 512. Que vaut <code>vitesseVent</code> ?</label><input type="number" id="a3_p1" placeholder="km/h"></div>
-      <p class="rituel">💾 Rituel : ré-enregistre ton programme (même nom, même dossier) avant de passer au palier 2.</p>
+      <p class="faire">👉 FAIS : <b>au démarrage</b>, crée les trois variables et donne-leur leur valeur — <code>niveau_vent</code> à 0, <code>seuil_vigilance</code> à <b>40</b>, <code>seuil_alerte</code> à <b>70</b> (bloc <i>mettre … à</i>, catégorie <b>Variables</b>). Puis, <b>dans la boucle</b> <i>répéter indéfiniment</i> : mets dans <code>niveau_vent</code> la valeur <i>arrondie</i> de <i>lire entrée analogique <b>A0</b></i> <b>× 100 ÷ 1023</b>, et <i>affiche <code>niveau_vent</code> sur le moniteur série</i>. Termine par <i>attendre 200 millisecondes</i>.</p>
+      <img class="figure" src="Images/blocs_palier1_lire_vent.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 1. À gauche, un bloc « au démarrage » contient trois blocs : mettre niveau_vent à 0, mettre seuil_vigilance à 40, mettre seuil_alerte à 70. En dessous, un bloc « répéter indéfiniment » contient : mettre niveau_vent à arrondir de lire entrée analogique A0 multiplié par 100 divisé par 1023 ; afficher niveau_vent sur le moniteur ; attendre 200 millisecondes. À droite, une vignette du moniteur série attendu montre des valeurs de niveau_vent qui montent : 0, 12, 38, 51, 74, 92 quand on tourne le bouton du capteur rotatif, et un rappel que l'échelle scolaire va de 0 à 100 sans unité">
+      <p>👀 <b>VÉRIFIE au simulateur :</b> tourne le <b>capteur rotatif</b> — la valeur affichée au moniteur doit monter et descendre avec ton geste, entre <b>0 et 100</b>. Si elle dépasse 100 ou reste bloquée à 0, c'est la conversion qu'il faut relire.</p>
+      <div class="assoc"><label for="a3_p1">Le capteur rotatif est à mi-course : la lecture brute de A0 vaut environ 512. Que vaut alors <code>niveau_vent</code> ?</label><input type="number" id="a3_p1" placeholder="niveau de vent (0-100)"></div>
+      <div class="assoc"><label for="a3_p1b">Avec le tableau de correspondance : à quelle vitesse de la <b>vraie station</b> ce niveau correspond-il ?</label><input type="number" id="a3_p1b" placeholder="km/h"></div>
+      <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier1-TON NOM</code> avant de passer au palier 2.</p>
     </div>
 
     <div class="palier">
       <h4>Palier 2 — Décider du niveau</h4>
-      <p class="faire">👉 FAIS : ajoute les deux SI/SINON de ton algorithme (activité 2) : d'abord le seuil <b>150</b> (niveau 2), sinon le seuil <b>100</b> (niveau 1), sinon niveau 0. Range le résultat dans la variable <code>niveauAlerte</code> et envoie-la aussi au moniteur.</p>
-      <img class="figure" src="Images/blocs_palier2_decider.svg" alt="Reconstitution schématique du palier 2 : un bloc si vitesseVent supérieure ou égale à 150 range 2 dans niveauAlerte, sinon un second bloc si vitesseVent supérieure ou égale à 100 range 1, sinon 0 ; à droite, moniteur série attendu montrant niveau 0, 1 puis 2 selon le potentiomètre, et l'avertissement que l'ordre des deux si est essentiel">
-      <p>👀 <b>VÉRIFIE :</b> trois positions du potentiomètre → trois niveaux : 0, 1, 2. Au banc d'essai, fais passer la station par les <b>trois niveaux</b> (le banc le trace ✔).</p>
-      <div class="assoc"><label for="a3_p2">Ton camarade a mis le test « ≥ 100 » EN PREMIER. À 180 km/h son programme affiche…</label><select id="a3_p2"><option value="">— choisir —</option><option>niveau 1 (vigilance) — c'est le bug !</option><option>niveau 2 (alerte), comme le tien</option><option>niveau 0 (veille)</option><option>un message d'erreur</option></select></div>
-      <p class="rituel">💾 Rituel : ré-enregistre. Si un doute : compare bloc à bloc avec la planche, PUIS appelle le professeur.</p>
+      <p class="faire">👉 FAIS : sous la lecture, pose la cascade de ton algorithme (activité 2) avec le bloc <i>si / sinon si / sinon</i> (catégorie <b>Logique</b>) : d'abord <code>niveau_vent</code> <b>≥</b> <code>seuil_alerte</code>, sinon si <code>niveau_vent</code> <b>≥</b> <code>seuil_vigilance</code>, sinon le dernier cas. Utilise bien l'opérateur <b>« supérieur ou égal »</b> (≥), pas « supérieur » (&gt;). Pour l'instant, chaque branche se contente d'afficher son nom au moniteur.</p>
+      <img class="figure" src="Images/blocs_palier2_decider.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 2. Une cascade de blocs : si niveau_vent supérieur ou égal à seuil_alerte alors afficher ALERTE sur le moniteur ; sinon si niveau_vent supérieur ou égal à seuil_vigilance alors afficher VIGILANCE ; sinon afficher VEILLE. Un bandeau rappelle que la lecture de A0 du palier 1 reste au-dessus, dans répéter indéfiniment. À droite, un encart d'avertissement explique qu'on teste le seuil le plus haut d'abord, sinon un niveau de 85 s'arrêterait à VIGILANCE puisque 85 est aussi supérieur à 40 et que la cascade s'arrête au premier test réussi. Un second encart liste les quatre frontières à tester : 39 donne VEILLE, 40 donne VIGILANCE, 69 donne VIGILANCE, 70 donne ALERTE">
+      <p>👀 <b>VÉRIFIE au simulateur :</b> trois positions du capteur → trois messages. Puis <b>les frontières</b>, qui sont le vrai test : à <b>39</b> puis <b>40</b> (le passage en vigilance), à <b>69</b> puis <b>70</b> (le passage en alerte). Au banc d'essai de cette page, fais aussi passer la station par les <b>trois niveaux</b> (le banc le trace ✔).</p>
+      <div class="assoc"><label for="a3_p2">Ton camarade a mis le test « ≥ <code>seuil_vigilance</code> » EN PREMIER. À un niveau de vent de 85, son programme annonce…</label><select id="a3_p2"><option value="">— choisir —</option><option>niveau 1 (vigilance) — c'est le bug !</option><option>niveau 2 (alerte), comme le tien</option><option>niveau 0 (veille)</option><option>un message d'erreur</option></select></div>
+      <div class="assoc"><label for="a3_p2b">Une camarade a utilisé « &gt; <code>seuil_alerte</code> » au lieu de « ≥ ». Sur quelle valeur exactement son programme se trompe-t-il ?</label><select id="a3_p2b"><option value="">— choisir —</option><option>sur 70 pile, et sur elle seule : elle affiche « vigilance » au lieu de « alerte »</option><option>sur toutes les valeurs au-dessus de 70</option><option>sur toutes les valeurs en dessous de 40</option><option>sur aucune : « &gt; » et « ≥ » font la même chose</option></select></div>
+      <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier2-TON NOM</code>. Si un doute : compare bloc à bloc avec la planche, PUIS appelle le professeur.</p>
     </div>
 
     <div class="palier">
-      <h4>Palier 3 — Afficher : la station parle</h4>
-      <p class="faire">👉 FAIS : selon <code>niveauAlerte</code>, change la <b>couleur de fond</b> du LCD (vert / orange / rouge) et le texte de la ligne 1 ; affiche « Vent: … km/h » en ligne 2 ; allume la <b>DEL (D3)</b> dès que <code>niveauAlerte</code> ≥ 1.</p>
-      <img class="figure" src="Images/blocs_palier3_afficher.svg" alt="Reconstitution schématique du palier 3 : trois branches selon niveauAlerte règlent la couleur de fond du LCD en rouge, orange ou vert avec le texte correspondant, la deuxième ligne affiche la vitesse, et la DEL sur D3 s'allume si le niveau est supérieur ou égal à 1 ; à droite, les trois écrans LCD attendus vert, orange et rouge avec l'état de la DEL">
-      <p>👀 <b>VÉRIFIE :</b> écran vert en veille, orange dès 100, rouge dès 150 — et la DEL suit. C'est exactement ce que fait le banc d'essai : compare !</p>
-      <div class="assoc"><label for="a3_p3">À 120 km/h, l'écran doit être…</label><select id="a3_p3"><option value="">— choisir —</option><option>orange, DEL allumée, buzzer muet</option><option>vert, tout éteint</option><option>rouge, buzzer qui sonne</option><option>orange, DEL éteinte</option></select></div>
-      <p class="rituel">💾 Rituel : ré-enregistre. Ton programme commande maintenant un vrai système : capteur → décision → écran, DEL.</p>
+      <h4>Palier 3 — Alerter : la station parle</h4>
+      <p class="faire">👉 FAIS : dans la catégorie <b>Fonctions</b>, <i>définis</i> trois sous-programmes — <code>mode_veille</code>, <code>mode_vigilance</code>, <code>mode_alerte</code>. <b>Chacun impose l'état des QUATRE sorties</b> : voyant vert <b>D2</b>, orange <b>D3</b>, rouge <b>D4</b>, buzzer <b>D5</b>. Puis remplace le contenu de chaque branche de ta cascade par un simple <i>appeler <code>mode_…</code></i>.</p>
+      <div class="retenir" style="margin:10px 0"><b>🔑 Pourquoi imposer les QUATRE sorties à chaque fois ?</b> Si <code>mode_vigilance</code> se contente d'<i>allumer</i> l'orange, le voyant rouge allumé une seconde plus tôt <b>reste allumé</b> : la station afficherait deux niveaux à la fois. Un mode ne dit pas « ce que j'allume », il dit <b>« à quoi ressemble la station entière quand je suis en vigilance »</b>. Éteindre est aussi important qu'allumer.</div>
+      <img class="figure" src="Images/blocs_palier3_afficher.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 3. À gauche, trois sous-programmes définis : mode_veille impose voyant vert D2 allumé, voyant orange D3 éteint, voyant rouge D4 éteint, buzzer D5 arrêté ; mode_vigilance impose vert éteint, orange allumé, rouge éteint, buzzer arrêté ; mode_alerte impose vert éteint, orange éteint, rouge allumé, buzzer activé. À droite, la cascade du palier 2 dont chaque branche ne contient plus qu'un appel : appeler mode_alerte, appeler mode_vigilance, appeler mode_veille. Un encart rappelle que chaque mode impose l'état des quatre sorties, car éteindre est aussi important qu'allumer, sans quoi le voyant du mode précédent resterait allumé et la station afficherait deux niveaux à la fois. Un dernier encart rappelle le brochage : A0 capteur rotatif, D2 vert, D3 orange, D4 rouge, D5 buzzer">
+      <p>👀 <b>VÉRIFIE au simulateur :</b> vert seul en veille, orange seul dès 40, rouge <b>+ buzzer</b> dès 70 — et <b>jamais deux voyants ensemble</b>. Balaye lentement toute la course du capteur en surveillant ce point.</p>
+      <div class="assoc"><label for="a3_p3">Le niveau de vent est à 52 (soit ≈ 130 km/h sur la vraie station). L'état correct de la station est…</label><select id="a3_p3"><option value="">— choisir —</option><option>orange seul allumé, vert et rouge éteints, buzzer muet</option><option>vert allumé, tout le reste éteint</option><option>rouge allumé et buzzer qui sonne</option><option>vert et orange allumés tous les deux</option></select></div>
+      <div class="assoc"><label for="a3_p3b">En simulant, tu vois l'orange ET le rouge allumés en même temps. La cause la plus probable :</label><select id="a3_p3b"><option value="">— choisir —</option><option>un sous-programme allume sa sortie sans éteindre les trois autres</option><option>le capteur rotatif est cassé</option><option>la boucle tourne trop vite</option><option>il manque le bloc « attendre 200 millisecondes »</option></select></div>
+      <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier3-TON NOM</code>, puis une copie propre et commentée sous <code>3e-STATION-complet-TON NOM</code>. Ton programme commande maintenant un système entier : capteur → décision → voyants et buzzer.</p>
     </div>
 
     <div class="palier">
       <h4>Palier 4 — (aperçu) L'humain entre dans la boucle</h4>
-      <p>Le bouton d'acquittement et le buzzer, c'est la <b>séance 3</b> — le cœur de l'interaction humain-machine. La planche est déjà là si tu es en avance, mais la logique de l'événement « le niveau vient de changer » mérite une séance entière.</p>
+      <p>Le bouton d'acquittement — couper le buzzer sans éteindre l'alerte — c'est la <b>séance 3</b>, le cœur de l'interaction humain-machine. La planche est déjà là si tu es en avance, mais la logique de l'événement « le niveau vient de changer » mérite une séance entière.</p>
     </div>
+
+    <details class="prof approfondissement">
+      <summary>🎁 Bonus (facultatif — hors parcours obligatoire) : le même programme dans <b>ArduBlock</b></summary>
+      <p>Avant Vittascience, ce programme avait été construit dans <b>ArduBlock Éducation 1.7</b>, un autre logiciel de
+      programmation par blocs. Il fait le même travail, mais <b>ne simule pas</b> : il faut une carte branchée pour voir
+      quoi que ce soit. C'est la raison pour laquelle la séquence se fait aujourd'hui sur Vittascience — et c'est déjà une
+      leçon : <b>on choisit un outil pour ce qu'il permet de faire en classe</b>, pas par habitude.</p>
+      <p>Les deux captures ci-dessous sont de <b>vraies captures d'écran</b> du logiciel, prises pendant la construction du
+      programme, aux paliers 1 et 2. Regarde-les comme un document : les <b>blocs changent de forme et de nom</b>, mais tu
+      retrouves exactement la même chose — <b>la boucle</b>, <b>la lecture d'une entrée analogique</b>, <b>la cascade de
+      tests avec le seuil le plus haut d'abord</b>. C'est le sens de la question <i>c)</i> de l'activité 2 : l'algorigramme
+      ne dépend pas du logiciel.</p>
+      <figure style="margin:1rem 0">
+        <img class="figure" src="Images/bonus_ardublock_palier1.png" alt="Capture d'écran réelle du logiciel ArduBlock Éducation 1.7, fenêtre intitulée 3e-STATION-palier1.abp. À gauche, la palette des catégories de blocs : Structure, Sous-programmes, Broches, Tests, Opérateurs mathématiques, Variables/Constantes, Temps, Moniteur série, Sons, Capteurs, Actionneurs, Afficheurs. Au centre, un grand bloc Boucle contient trois blocs empilés : définir la variable entière mesureBrute avec pour valeur celle de la broche Entrée Analogique A1 ; définir la variable entière vitesseVent avec un bloc Réétalonner qui transforme la fourchette actuelle 0-1023 en nouvelle fourchette 0-250 ; et Écrire sur le port série la valeur de vitesseVent avec passage à la ligne">
+        <figcaption style="font-size:.9em;color:var(--sub)">Palier 1 dans ArduBlock Éducation 1.7 — capture réelle du logiciel (poste du labo). Le programme est enregistré sous <code>3e-STATION-palier1.abp</code>.</figcaption>
+      </figure>
+      <figure style="margin:1rem 0">
+        <img class="figure" src="Images/bonus_ardublock_palier2.png" alt="Capture d'écran réelle du logiciel ArduBlock Éducation 1.7, fenêtre intitulée 3e-STATION-palier2.abp. À gauche, la palette des catégories de blocs : Structure, Sous-programmes, Broches, Tests, Opérateurs mathématiques, Variables/Constantes, Temps, Moniteur série, Sons, Capteurs, Actionneurs, Afficheurs. Au centre, un grand bloc Boucle contient : définir la variable entière mesureBrute avec la valeur de la broche Entrée Analogique A1 ; définir la variable entière vitesseVent avec un bloc Réétalonner qui transforme la fourchette 0-1023 en 0-250 ; puis un bloc Si-Sinon dont le test est vitesseVent supérieur ou égal à 150 et qui met niveauAlerte à 2, sinon un second Si-Sinon dont le test est vitesseVent supérieur ou égal à 100 et qui met niveauAlerte à 1, sinon niveauAlerte à 0 ; enfin un bloc Écrire sur le port série qui envoie vitesseVent">
+        <figcaption style="font-size:.9em;color:var(--sub)">Palier 2 dans ArduBlock Éducation 1.7 — capture réelle du logiciel. Le programme est enregistré sous <code>3e-STATION-palier2.abp</code>. <b>Attention à l'échelle :</b> cette version-là travaille directement en <b>km/h (0-250, seuils 100 et 150)</b>, celle de la vraie station — alors que sur Vittascience tu travailles sur la <b>maquette (0-100, seuils 40 et 70)</b>. Deux échelles, un seul raisonnement : c'est tout l'intérêt du tableau de correspondance.</figcaption>
+      </figure>
+      <p><b>Défi (sans vérificateur) :</b> compare une capture ArduBlock et la planche Vittascience du même palier. Écris trois
+      phrases : <b>ce qui a changé</b> (les mots, les couleurs, la façon d'emboîter), <b>ce qui n'a pas changé</b> (le
+      raisonnement, l'ordre des tests), et <b>ce que Vittascience apporte en plus</b> (le simulateur : programmer sans carte).</p>
+      <p style="font-size:.9em;color:var(--sub)">⚠️ Ce bonus est <b>hors parcours obligatoire</b> : il n'est ni évalué, ni
+      exigé par le vérificateur. Le programme officiel de la séquence est celui de Vittascience.</p>
+    </details>
 
     <div class="exo">
       <button class="btn small" data-check="3" style="margin-top:2px">✔ Vérifier mes réponses (et mes expériences au banc)</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Palier 1 : 512 est à peu près la moitié de 1023, donc <code>vitesseVent</code> vaut à peu près la moitié de 250. Palier 2 : rejoue le scénario de l'activité 2 avec 180 km/h et les tests inversés. Palier 3 : 120 est entre 100 et 150 — relis le courrier de la mairie.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Palier 1 : 512 × 250 ÷ 1023 ≈ <b>125 km/h</b> (accepté : 124 à 126). Palier 2 : 180 ≥ 100 est vrai → son programme s'arrête à « vigilance » sans jamais tester 150 : niveau 1, c'est le bug. Palier 3 : entre 100 et 150 → vigilance orange, DEL allumée, buzzer muet (il ne sonne qu'en alerte rouge).</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Palier 1 : 512 est à peu près la <b>moitié</b> de 1023 — et l'échelle de la maquette va de 0 à 100. Pour la deuxième question, cherche la ligne « 0 à 100 ↔ 0 à 250 km/h » du tableau de correspondance. Palier 2 : rejoue le scénario de l'activité 2, mais avec les valeurs de la maquette ; et relis ce que « ≥ » veut dire exactement. Palier 3 : 52 est entre 40 et 70 — et pense à l'état des <b>quatre</b> sorties, pas d'une seule.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Palier 1 : 512 × 100 ÷ 1023 ≈ <b>50</b> (accepté : 49 à 51) ; et 50 sur 100, c'est la moitié de l'échelle, donc ≈ <b>125 km/h</b> sur la vraie station.</p><p>Palier 2 : 85 ≥ 40 est vrai → son programme s'arrête à « vigilance » sans jamais tester le seuil d'alerte, c'est le bug ; et « &gt; 70 » exclut 70 lui-même : à 70 pile, son programme dit « vigilance » alors que le cahier des charges dit « alerte ».</p><p>Palier 3 : entre 40 et 70 → orange SEUL (vert et rouge éteints), buzzer muet ; deux voyants allumés en même temps = un mode qui a oublié d'éteindre les autres.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>P1 :</b> ≈ 125 km/h (512 × 250 ÷ 1023). La conversion est une proportionnalité : c'est le bloc « calibrer » (en C++ : <code>map()</code>).</p>
-      <p><b>P2 :</b> niveau 1 — c'est le bug ! L'ordre des SI est un choix d'<b>algorithme</b>, pas de dessin : le seuil le plus haut se teste en premier.</p>
-      <p><b>P3 :</b> orange, DEL allumée, buzzer muet. Le buzzer attend l'alerte rouge ET le non-acquittement — séance 3.</p>
-      <p><b>Méthode :</b> le développement par paliers (une fonctionnalité à la fois, testée avant la suivante) est LA méthode des professionnels : quand quelque chose casse, le coupable est forcément dans le dernier palier.</p>
-      <p><b>Limite :</b> nos blocs re-décident à chaque tour de boucle (~5 fois/seconde) : un vrai produit lisserait la mesure pour éviter le clignotement autour d'un seuil.</p>
+      <p><b>P1 :</b> <code>niveau_vent</code> ≈ <b>50</b> (512 × 100 ÷ 1023). La conversion est une <b>proportionnalité</b> : on transporte une mesure d'une échelle (0-1023, ce que sait lire la carte) vers une autre (0-100, ce que comprend l'humain). Sur la vraie station, ce même demi-tour de capteur correspond à ≈ <b>125 km/h</b> — la moitié de 250. Même geste, deux échelles : c'est exactement ce que fait le tableau de correspondance.</p>
+      <p><b>P2 :</b> <b>niveau 1 (vigilance)</b> — c'est le bug ! L'ordre des SI est un choix d'<b>algorithme</b>, pas de dessin : le seuil le plus haut se teste en premier. <b>Et le piège du « &gt; » :</b> il se trompe sur <b>70 pile, et sur 70 seulement</b>. Un programme faux sur UNE valeur sur cent reste faux : c'est précisément pour attraper ces erreurs-là qu'on teste les <b>frontières</b> (39/40 et 69/70) et pas seulement « une petite valeur, une moyenne, une grande ».</p>
+      <p><b>P3 :</b> <b>orange seul</b>, vert et rouge éteints, buzzer muet — le buzzer attend l'alerte, et l'acquittement viendra en séance 3. Si tu vois deux voyants ensemble, cherche le sous-programme qui <b>allume sans éteindre</b> : chaque mode doit imposer l'état des QUATRE sorties, sinon la station garde l'affichage du niveau précédent.</p>
+      <p><b>Méthode :</b> le développement par paliers (une fonctionnalité à la fois, testée avant la suivante) est LA méthode des professionnels : quand quelque chose casse, le coupable est forcément dans le dernier palier. Le simulateur de Vittascience rend ce va-et-vient immédiat — c'est pour cela qu'on l'utilise.</p>
+      <p><b>Limite :</b> le capteur rotatif <b>ne mesure pas le vent</b> : il simule l'anémomètre, et son échelle 0-100 n'a pas d'unité. Et nos blocs re-décident à chaque tour de boucle (5 fois par seconde) : un vrai produit lisserait la mesure pour éviter le clignotement autour d'un seuil.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier de ré-enregistrer à chaque palier (une panne = tout perdu) ; téléverser sans vérifier carte et port (gestes d'outil, en haut de page) ; inverser les intervalles du bloc calibrer (250 → 0 : la vitesse descend quand le vent monte !) ; mettre l'affichage HORS de la boucle — l'écran ne se met plus jamais à jour.</div>
-    <div class="retenir"><b>📌 À retenir :</b> traduire un algorithme en blocs = même logique, autre écriture. On construit <b>par paliers</b> : lire → décider → afficher, en <b>testant chaque palier</b> avant d'empiler le suivant, et en ré-enregistrant à chaque fois.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 3 réponses justes + au banc d'essai : vent varié ET les 3 niveaux atteints (coches ✔ du banc). En version 🅰 : le professeur voit l'écran passer vert → orange → rouge sur ta carte.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier d'enregistrer à chaque palier (une page rechargée = tout perdu) ; mettre les seuils <b>dans la boucle</b> au lieu de « au démarrage », ou écrire 40 et 70 en dur dans les tests au lieu d'utiliser les variables — on perd alors tout l'intérêt de pouvoir régler les seuils en un seul endroit ; utiliser « supérieur » au lieu de « supérieur ou égal » ; oublier d'éteindre les sorties des autres modes ; <b>mélanger les deux échelles</b> — écrire 100 ou 150 dans un bloc Vittascience alors que la maquette travaille de 0 à 100 ; sortir la lecture du capteur de la boucle — la valeur se fige à jamais.</div>
+    <div class="retenir"><b>📌 À retenir :</b> traduire un algorithme en blocs = même logique, autre écriture. On construit <b>par paliers</b> : lire → décider → alerter, en <b>testant chaque palier au simulateur</b> avant d'empiler le suivant. Les <b>seuils sont des variables</b> réglées au démarrage, jamais des nombres cachés au fond des tests. Chaque <b>sous-programme de mode</b> impose l'état de TOUTES les sorties. Et l'<b>échelle du programme</b> (0-100) n'est pas l'<b>échelle de la station</b> (km/h) : le tableau de correspondance est le seul pont.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5 + au banc d'essai : vent varié ET les 3 niveaux atteints (coches ✔ du banc). Sur Vittascience : les 4 programmes enregistrés, et au simulateur les frontières <b>39/40</b> et <b>69/70</b> vérifiées — avec un seul voyant allumé à la fois. En version 🅰 : le professeur voit les voyants passer vert → orange → rouge sur ta carte.</div>
     <details class="prof"><summary>🅰 Fiche version matériel réel (à faire valider par le professeur)</summary>
-      <p><b>Montage :</b> voir le schéma de câblage ci-dessous — shield Grove sélecteur <b>5 V</b>, potentiomètre <b>A1</b>, bouton <b>D2</b>, DEL <b>D3</b>, buzzer <b>D5</b>, LCD RGB <b>I2C</b>. Câblage vérifié par le professeur AVANT le branchement USB.</p>
+      <p><b>Montage de la MAQUETTE (celui de cette séance) :</b> shield Grove sélecteur <b>5 V</b> — capteur rotatif <b>A0</b>, voyant vert <b>D2</b>, voyant orange <b>D3</b>, voyant rouge <b>D4</b>, buzzer <b>D5</b>. C'est le montage sur lequel le programme Vittascience se téléverse tel quel. Câblage vérifié par le professeur AVANT le branchement USB.</p>
+      <p><b>Montage de la STATION du labo (séances 3 et 4) :</b> le schéma ci-dessous — potentiomètre <b>A1</b>, bouton d'acquittement <b>D2</b>, DEL <b>D3</b>, buzzer <b>D5</b>, LCD RGB <b>I2C</b>. C'est la station complète, avec son interface humain-machine ; elle travaille en km/h.</p>
       <img class="figure" src="Images/montage_station_grove.svg" alt="Schéma de câblage de la station : Arduino UNO avec shield Grove au centre, LCD RGB sur I2C, potentiomètre anémomètre simulé sur A1, bouton d'acquittement sur D2, DEL rouge sur D3, buzzer sur D5, alimentation USB 5 volts, encadré sécurité très basse tension">
-      <p><b>Dépannage :</b> rien sur le LCD → connecteur I2C et bibliothèque Grove ; vitesse figée → mauvais port analogique (A0 au lieu de A1 ?) ; le téléversement échoue → carte ou port mal choisis (gestes d'outil) ; valeurs qui « tremblent » → normal, le CAN hésite entre deux paliers.</p>
+      <p><b>Dépannage :</b> rien sur le LCD → connecteur I2C et bibliothèque Grove ; valeur figée → mauvais port analogique (vérifie <b>A0</b> sur la maquette, <b>A1</b> sur la station) ; deux voyants allumés ensemble sur la maquette → un sous-programme de mode qui n'éteint pas les autres sorties ; le téléversement échoue → carte ou port mal choisis (gestes d'outil) ; valeurs qui « tremblent » → normal, le CAN hésite entre deux paliers.</p>
       <p><b>Sécurité :</b> très basse tension 5 V uniquement ; jamais de secteur 230 V ; ne jamais brancher/débrancher un module sous tension ; en cas d'odeur ou d'échauffement, débrancher l'USB et appeler le professeur.</p>
       <p><b>Programme de référence :</b> le C++ commenté ligne à ligne est fourni (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>) — compilation vérifiée pour <code>arduino:avr:uno</code> (6 764 octets de flash). Les élèves le liront en séance 3.</p>
     </details>
@@ -649,7 +766,7 @@
       <div><b>Production attendue :</b> lecture guidée vérifiée + une trace d'exécution interprétée.</div>
       <div><b>Ressources :</b> extraits du programme de référence commenté (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">le fichier complet</a>).</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> ArduBlock traduit tes blocs en C++ avant le téléversement. Lis les trois extraits du programme de référence — c'est le même programme que le tien, écrit dans la langue de la machine — puis réponds. Version 🅲 : la trace d'exécution en d) remplace le moniteur série réel.</div>
+    <div class="consigne"><b>Consigne :</b> qu'ils viennent de Vittascience ou d'un autre logiciel de blocs, tes blocs sont traduits en <b>C++</b> avant d'entrer dans la carte — la bascule <b>BLOCS / CODE</b> de Vittascience te le montre en direct. Lis les trois extraits du programme de référence — c'est le même programme que le tien, écrit dans la langue de la machine — puis réponds. Version 🅲 : la trace d'exécution en d) remplace le moniteur série réel.</div>
     <div class="exo">
       <h4>Extrait 1 — les constantes et les variables (le début du fichier)</h4>
 <pre class="code"><span class="kw">const int</span> BROCHE_VENT   = A1;  <span class="cmt">// potentiomètre « anémomètre » sur A1</span>
@@ -668,8 +785,8 @@ vitesseVent = <span class="fn">map</span>(mesureBrute, <span class="num">0</span
 } <span class="kw">else</span> {
   niveauAlerte = <span class="num">0</span>;                                 <span class="cmt">// simple veille</span>
 }</pre>
-      <div class="assoc"><label for="a5_q2">Quel bloc ArduBlock la fonction <code>map(…)</code> traduit-elle ?</label><select id="a5_q2"><option value="">— choisir —</option><option>le bloc « calibrer » (0-1023 vers 0-250) du palier 1</option><option>le bloc « si / sinon » du palier 2</option><option>le bloc « boucle » </option><option>le bloc d'affichage LCD</option></select></div>
-      <div class="assoc"><label for="a5_q3">Le <code>else if</code> traduit exactement…</label><select id="a5_q3"><option value="">— choisir —</option><option>le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non</option><option>une deuxième boucle</option><option>une erreur de traduction d'ArduBlock</option><option>un commentaire</option></select></div>
+      <div class="assoc"><label for="a5_q2">La fonction <code>map(…)</code> fait, en une ligne, le travail de quel bloc du palier 1 ?</label><select id="a5_q2"><option value="">— choisir —</option><option>le calcul de conversion de l'échelle du capteur vers l'échelle lisible</option><option>le bloc « si / sinon » du palier 2</option><option>le bloc « répéter indéfiniment »</option><option>le bloc d'affichage sur le moniteur</option></select></div>
+      <div class="assoc"><label for="a5_q3">Le <code>else if</code> traduit exactement…</label><select id="a5_q3"><option value="">— choisir —</option><option>le SINON SI de notre algorithme : testé seulement si le premier SI a répondu non</option><option>une deuxième boucle</option><option>une erreur de traduction du logiciel de blocs</option><option>un commentaire</option></select></div>
       <h4>Extrait 3 — le sous-programme d'affichage</h4>
 <pre class="code"><span class="cmt">// Sous-programme (fonction) : affiche le niveau et la vitesse sur le LCD</span>
 <span class="cmt">// — la structuration en sous-programmes est exigée en 3e.</span>
@@ -705,13 +822,13 @@ vent(km/h)=161  niveau=2</pre>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relie chaque extrait au palier qui l'a construit : extrait 2 = paliers 1 et 2. Pour d) : la colonne « vent » monte normalement — quelle colonne se comporte mal, et quel morceau du programme la fabrique ?</p></details>
     <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La vitesse affichée (97 → 161) prouve que capteur + CAN + conversion marchent. Le niveau reste à 0 entre 100 et 150 : c'est la DÉCISION qui rate. Et comme 161 donne bien niveau 2, le test « ≥ 150 » existe : c'est le test « ≥ 100 » qui est faux ou absent.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <b>Q2 :</b> le bloc « calibrer » du palier 1. <b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <b>Q5 :</b> seuil de vigilance mal réglé ou SINON SI absent.</p>
+      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <b>Q2 :</b> le calcul de conversion du palier 1 — <code>× 100 ÷ 1023</code> sur la maquette Vittascience, <code>map()</code> côté C++, « réétalonner » dans ArduBlock : trois écritures, une seule idée, la proportionnalité. <b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <b>Q5 :</b> seuil de vigilance mal réglé ou SINON SI absent.</p>
       <p><b>Justification attendue :</b> la trace prouve que la vitesse monte correctement (97 → 103 → 126 → 161) : capteur, CAN et conversion fonctionnent. La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. Et puisque 161 déclenche bien le niveau 2, le test ≥ 150 marche : le défaut est dans le test ≥ 100.</p>
       <p><b>Méthode (mise au point) :</b> la trace du moniteur série découpe la chaîne en tronçons : on cherche le PREMIER endroit où les valeurs deviennent fausses — tout ce qui est en amont est innocenté. C'est exactement le raisonnement du banc de tests de l'atelier 3e_C9.1.</p>
       <p><b>Limite :</b> lire le C++ n'est pas au programme de 3e pour l'ÉCRIRE — mais savoir le lire te permet de vérifier ce que tes blocs fabriquent, et c'est un immense avantage au lycée.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> accuser le capteur dès qu'un affichage est faux (lis la trace : le capteur est souvent innocent) ; confondre <code>=</code> (ranger) et <code>==</code> (comparer) dans le C++ ; croire que les blocs et le C++ sont deux programmes différents — c'est le MÊME, dans deux écritures.</div>
-    <div class="retenir"><b>📌 À retenir :</b> les blocs se traduisent en C++ : « calibrer » → <code>map()</code>, « si/sinon » → <code>if/else</code>, et l'affichage vit dans un <b>sous-programme</b> (<code>afficherEtat()</code>) — structuration exigée en 3e. La <b>mise au point</b> s'appuie sur la trace du moniteur série : on innocente la chaîne tronçon par tronçon.</div>
+    <div class="retenir"><b>📌 À retenir :</b> les blocs se traduisent en C++ : la conversion d'échelle → <code>map()</code>, « si / sinon si / sinon » → <code>if / else if / else</code>, et l'affichage vit dans un <b>sous-programme</b> (<code>afficherEtat()</code>) — structuration exigée en 3e. La <b>mise au point</b> s'appuie sur la trace du moniteur série : on innocente la chaîne tronçon par tronçon.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes et une justification qui utilise la trace pour innocenter le capteur ET désigner le test fautif.</div>
   </div>
 </section>
@@ -815,6 +932,7 @@ vent(km/h)=161  niveau=2</pre>
     <details class="correction"><summary>✅ Correction complète</summary>
       <p><b>Attendus des frontières :</b> 99 → veille · 100 → vigilance · 149 → vigilance · 150 → alerte. Tous les essais du banc doivent être « conforme » (le programme de référence respecte le cahier des charges) — si tu observes autre chose, note-le : c'est une VRAIE observation, elle va dans le PV.</p>
       <p><b>PV attendu (exemple) :</b> « Le [date], nous avons exécuté les 10 essais du protocole sur le banc de simulation. 10 essais conformes sur 10. Les frontières confirment : veille jusqu'à 99 km/h, vigilance de 100 à 149, alerte dès 150. Temps de réponse mesuré ≈ 0,3 s (exigence : &lt; 1 s). L'alarme s'acquitte à l'appui et repart au changement de niveau. Recette prononcée, sans réserve. Signé : l'équipe de recette 3e. »</p>
+      <p><b>🗽 Le second exemplaire.</b> Souviens-toi que le PV part aussi à New York. Relis le tien en te demandant : <b>un lecteur qui n'a jamais vu la station comprendrait-il ce qui a été testé, avec quelles valeurs, et ce qui a été observé ?</b> Si la réponse est non, ce n'est pas le lecteur qui manque d'informations — c'est le PV. Écris les valeurs (99, 100, 149, 150), l'unité (km/h) et les résultats observés, jamais « ça marche ».</p>
       <p><b>Méthode :</b> observer PENDANT l'essai, verdict essai par essai, conclusion GLOBALE seulement à la fin — et si un essai échoue après correction du programme, on rejoue TOUT (non-régression, comme en 3e_C9.1).</p>
       <p><b>Limite :</b> la recette prouve la conformité AU CAHIER DES CHARGES ce jour-là, sur ce banc : la version 🅰 au labo peut réserver des surprises (contacts, lumière ambiante…) — c'est pour ça que les industriels recettent sur le matériel final.</p>
     </details>
@@ -831,7 +949,7 @@ vent(km/h)=161  niveau=2</pre>
   <h4>1. Du besoin au programme (activités 1-3)</h4>
   <p>Le <b>cahier des charges</b> impose des exigences de <b>comportement</b> et de <b>performance</b> (chiffrées). On <b>élabore l'algorithme</b> en français (seuils, ordre des tests : le plus haut d'abord), on le dessine en <b>algorigramme</b> (🎓 DNB), puis on le traduit en blocs, <b>palier par palier</b>, en testant chaque palier.</p>
   <h4>2. Commander un système réel avec un humain dans la boucle (activités 4-5)</h4>
-  <p>Le programme lit des capteurs (A1) ET une entrée humaine (bouton D2). L'<b>acquittement</b> se programme avec un booléen-mémoire (<code>alarmeAcquittee</code>) et la détection d'<b>événement</b> (<code>niveauAlerte ≠ niveauPrecedent</code>). Les blocs deviennent du C++ : « calibrer » → <code>map()</code>, « si/sinon » → <code>if/else</code>, affichage dans un <b>sous-programme</b> (<code>afficherEtat()</code>). La <b>mise au point</b> lit la trace du moniteur série pour innocenter la chaîne tronçon par tronçon.</p>
+  <p>Le programme lit des capteurs (A1) ET une entrée humaine (bouton D2). L'<b>acquittement</b> se programme avec un booléen-mémoire (<code>alarmeAcquittee</code>) et la détection d'<b>événement</b> (<code>niveauAlerte ≠ niveauPrecedent</code>). Les blocs deviennent du C++ : la conversion d'échelle → <code>map()</code>, « si / sinon si / sinon » → <code>if / else if / else</code>, affichage dans un <b>sous-programme</b> (<code>afficherEtat()</code>). La <b>mise au point</b> lit la trace du moniteur série pour innocenter la chaîne tronçon par tronçon.</p>
   <h4>3. Prouver : le protocole de test (activités 6-7)</h4>
   <p>Un <b>protocole de test</b> se rédige AVANT : essais nominaux + <b>cas limites aux frontières</b> (99/100, 149/150) + <b>performance mesurée</b> (&lt; 1 s) + interaction humain-machine, chacun avec son résultat ATTENDU. L'exécution remplit le tableau <i>essai / attendu / observé / verdict</i> PENDANT les essais, et le <b>PV de recette</b> conclut : prononcée ou ajournée. Après correction : on rejoue tout (<b>non-régression</b>).</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
@@ -917,8 +1035,18 @@ vent(km/h)=161  niveau=2</pre>
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
   <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
-  <p>🟣 <b>Défi « niveau violet » :</b> la mairie voudrait un 4e niveau « ouragan majeur » à partir de 200 km/h : écran violet, buzzer qui sonne par intermittence. Où insérer le nouveau test dans l'algorigramme, et pourquoi À CET ENDROIT ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 200 » s'insère EN PREMIER, avant « ≥ 150 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « alerte rouge » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, 199 et 200. Erreur classique : ajouter le test en dernier — il devient inatteignable.</p></details>
+  <p>🟣 <b>Défi « niveau violet » :</b> aux Antilles, la vigilance ne s'arrête pas au rouge — après le rouge vient le
+  <b>violet</b> (confinement absolu), puis le <b>gris</b> (phase de sauvegarde, après le passage). La mairie voudrait
+  que le prototype se rapproche de ce vocabulaire réel : un 4<sup>e</sup> niveau « violet » à partir de 200 km/h
+  (écran violet, buzzer qui sonne par intermittence). Où insérer le nouveau test dans l'algorigramme, et pourquoi
+  À CET ENDROIT ? Et pourquoi le niveau <b>gris</b>, lui, ne peut-il PAS se déduire de la seule vitesse du vent ?</p>
+  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 200 » s'insère EN PREMIER, avant « ≥ 150 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « alerte rouge » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, 199 et 200. Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
+  <p><b>Le cas du gris.</b> Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
+  phénomène est passé. Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un
+  jour ordinaire. Une même entrée, plusieurs sorties possibles : la vitesse du vent <b>ne suffit pas</b>. Il faudrait
+  une <b>mémoire</b> (« sommes-nous DÉJÀ passés par le rouge ? ») et une <b>décision humaine</b> en entrée. C'est
+  exactement la limite d'une maquette scolaire — et la raison pour laquelle un vrai dispositif d'alerte n'est jamais
+  entièrement automatique.</p></details>
   <p>🔔 <b>Défi « double appui » :</b> l'agent voudrait qu'un DEUXIÈME appui sur le bouton ré-active l'alarme (pour re-prévenir un collègue). Quelle variable faudrait-il faire évoluer, et quel piège guette ?</p>
   <details class="correction"><summary>✅ Corrigé du défi double appui</summary><p>Il faudrait basculer <code>alarmeAcquittee</code> à chaque appui (vrai → faux → vrai…). Le piège : la boucle lit le bouton 5 fois par seconde — un appui d'une demi-seconde serait vu comme 2 ou 3 appuis et l'alarme clignoterait. Il faut détecter le FRONT (l'instant où le bouton PASSE de relâché à appuyé), avec une variable <code>boutonPrecedent</code> — exactement le motif « événement » de l'activité 4. Erreur classique : tester l'état au lieu du front.</p></details>
   <p>🌬 <b>Défi « anémomètre réel » :</b> pour remplacer le potentiomètre par un vrai anémomètre à coupelles, quelles étapes de ton programme changeraient — et lesquelles ne changeraient PAS ?</p>
@@ -1108,18 +1236,29 @@ const CHECKS = {
     if($("a2_q2").value.startsWith("parce qu'une rafale à 180")) ok++;
     if($("a2_q3").value.startsWith("la boucle")) ok++;
     if($("a2_q4").value.startsWith("une décision")) ok++;
-    return {score:ok,total:7,valide:ok===7};
+    // Refonte v2 : six questions de lecture fine de l'algorigramme (c)
+    if($("a2_q5").value.startsWith("alerte rouge")) ok++;
+    if($("a2_q6").value.startsWith("4 :")) ok++;
+    if($("a2_q7").value.startsWith("un commentaire de lecture")) ok++;
+    if($("a2_q8").value.startsWith("elle mesure le vent UNE SEULE FOIS")) ok++;
+    if($("a2_q9").value.startsWith("3 —")) ok++;
+    if($("a2_q10").value.startsWith("dans quel langage")) ok++;
+    return {score:ok,total:13,valide:ok>=12};
   },
   3: function(){
     let ok=0;
-    if(Math.abs(num("a3_p1")-125)<=1) ok++;
+    // Refonte v2 (Vittascience) : échelle de la MAQUETTE 0-100, seuils 40/70.
+    if(Math.abs(num("a3_p1")-50)<=1) ok++;          // 512 x 100 / 1023
+    if(Math.abs(num("a3_p1b")-125)<=2) ok++;        // pont vers l'échelle réelle
     if($("a3_p2").value.startsWith("niveau 1")) ok++;
-    if($("a3_p3").value.startsWith("orange, DEL allumée")) ok++;
+    if($("a3_p2b").value.startsWith("sur 70 pile")) ok++;
+    if($("a3_p3").value.startsWith("orange seul")) ok++;
+    if($("a3_p3b").value.startsWith("un sous-programme allume")) ok++;
     const e=window.__exp;
     const expOk = !!(e.lecture && e.niveaux);
-    return {score:ok,total:3,
+    return {score:ok,total:6,
       extra: expOk?"":" Il manque tes expériences au banc d'essai : fais varier le vent et passe par les TROIS niveaux (les coches ✔ du banc doivent s'allumer).",
-      valide: ok===3 && expOk};
+      valide: ok===6 && expOk};
   },
   4: function(){
     let ok=0;
@@ -1138,7 +1277,7 @@ const CHECKS = {
   5: function(){
     let ok=0;
     if($("a5_q1").value.startsWith("ils ne changent jamais")) ok++;
-    if($("a5_q2").value.startsWith("le bloc « calibrer »")) ok++;
+    if($("a5_q2").value.startsWith("le calcul de conversion")) ok++;
     if($("a5_q3").value.startsWith("le SINON SI")) ok++;
     if($("a5_q4").value.startsWith("la boucle reste lisible")) ok++;
     if($("a5_q5").value.startsWith("leur seuil de vigilance")) ok++;
@@ -1244,7 +1383,7 @@ majEssentiel(); majProgress(); majHyp(); majVerrous(); simTick();
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
   "s1": {titre:"Séance 1 — « La mairie vous appelle »", taches:[{n:1, libelle:"Relire le cahier des charges et poser les deux chaînes"}, {n:2, libelle:"Élaborer l'algorithme et lire l'algorigramme des trois niveaux"}]},
-  "s2": {titre:"Séance 2 — Programmer en blocs", taches:[{n:3, libelle:"Construire le programme palier par palier : lire, décider, afficher"}]},
+  "s2": {titre:"Séance 2 — Programmer en blocs (Vittascience)", taches:[{n:3, libelle:"Construire le programme palier par palier sur Vittascience : lire, décider, alerter"}]},
   "s3": {titre:"Séance 3 — L'humain dans la boucle", taches:[{n:4, libelle:"Programmer l'acquittement et comprendre l'événement"}, {n:5, libelle:"Lire le C++ généré et diagnostiquer avec la trace"}]},
   "s4": {titre:"Séance 4 — La recette : prouver que ça marche", taches:[{n:6, libelle:"Rédiger le protocole de test (nominaux, frontières, performance, interaction)"}, {n:7, libelle:"Exécuter la recette au banc et signer le procès-verbal"}]}
 };
@@ -1274,14 +1413,20 @@ majTaches();
      refermer. Le focus revient sur l'image quittée. -->
 <style>
   .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
-    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    z-index:9999;padding:2rem 2rem 9rem;box-sizing:border-box;overflow:auto;
     align-items:center;justify-content:center}
   .loupe-fond[data-ouvert="oui"]{display:flex}
-  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+  .loupe-fond img{max-width:100%;max-height:68vh;height:auto;
     box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
     background:#fff;border-radius:4px}
-  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
-    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  /* Refonte v2 : la legende ne doit JAMAIS chevaucher l'image agrandie.
+     Barre opaque collee en bas + image reduite (68vh) + reserve de place
+     sous l'image via le padding-bottom du fond. */
+  .loupe-legende{position:fixed;left:0;right:0;bottom:0;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;
+    background:#12151b;border-top:1px solid #3a4150;
+    padding:.75rem 2rem;max-height:22vh;overflow:auto;
+    box-shadow:0 -8px 24px rgba(0,0,0,.5)}
   .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
     color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
     font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}

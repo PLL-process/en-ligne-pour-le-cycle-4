@@ -1,56 +1,104 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p3 d-p3">
-<title id="t-p3">Palier 3 — reconstitution du programme en blocs : afficher le niveau sur l'écran LCD couleur et commander la DEL</title>
-<desc id="d-p3">Reconstitution schématique (pas une capture d'écran). Après la décision du palier 2, trois branches d'affichage selon niveauAlerte : si le niveau vaut 2, fond du LCD rouge et texte « ALERTE ROUGE ! » ; si le niveau vaut 1, fond orange et texte « Vigilance orange » ; sinon fond vert et texte « Veille ». La deuxième ligne du LCD affiche « Vent: » suivi de la vitesse. Un bloc commande la DEL sur D3 : allumée si le niveau est supérieur ou égal à 1, éteinte sinon. Résultat attendu : trois photos d'écran LCD, vert, orange, rouge, avec la vitesse en deuxième ligne, et la DEL allumée dès le niveau vigilance.</desc>
-<rect width="760" height="380" fill="#050f24"/>
-<text x="380" y="26" text-anchor="middle" fill="#81aaff" font-size="17" font-weight="700">Palier 3 — la station parle : LCD couleur + DEL</text>
-<text x="380" y="46" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">⚠ reconstitution schématique — pas une capture : l'aspect des blocs peut différer légèrement dans ta version</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 530" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p3 d-p3">
+<title id="t-p3">Palier 3 dans Vittascience — trois sous-programmes de mode et la cascade qui les appelle</title>
+<desc id="d-p3">Reconstitution schématique de l'écran Vittascience (interface Arduino, mode blocs) pour le palier 3 de la station d'alerte cyclonique. Les sorties sont : voyant vert sur D2, voyant orange sur D3, voyant rouge sur D4, buzzer sur D5.
 
-<rect x="52" y="64" width="360" height="24" rx="6" fill="#0d2347" stroke="#274a8a"/>
-<text x="64" y="81" fill="#9bbefc" font-size="11">… (lecture palier 1, décision palier 2 au-dessus) …</text>
+À gauche, trois sous-programmes. Chacun impose l'état des QUATRE sorties, sans en oublier aucune.
+Sous-programme « définir mode_veille » : voyant vert D2 allumé ; voyant orange D3 éteint ; voyant rouge D4 éteint ; buzzer D5 arrêté.
+Sous-programme « définir mode_vigilance » : voyant vert D2 éteint ; voyant orange D3 allumé ; voyant rouge D4 éteint ; buzzer D5 arrêté.
+Sous-programme « définir mode_alerte » : voyant vert D2 éteint ; voyant orange D3 éteint ; voyant rouge D4 allumé ; buzzer D5 activé.
 
-<g font-size="11" fill="#fff">
-  <rect x="60" y="100" width="352" height="56" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
-  <text x="72" y="118" font-weight="700">❓ si <tspan fill="#ffd66b">niveauAlerte</tspan> = 2 :</text>
-  <text x="86" y="134">LCD : couleur du fond <tspan fill="#ff9aa5" font-weight="700">rouge (255, 0, 0)</tspan></text>
-  <text x="86" y="149">LCD ligne 1 : écrire « <tspan font-weight="700">ALERTE ROUGE !</tspan> »</text>
+À droite, la cascade du palier 2, placée dans le bloc répéter indéfiniment, où chaque branche ne contient plus qu'un seul bloc, l'appel du sous-programme correspondant.
+« si niveau_vent ≥ seuil_alerte alors » : appeler mode_alerte.
+« sinon si niveau_vent ≥ seuil_vigilance alors » : appeler mode_vigilance.
+« sinon » : appeler mode_veille.
 
-  <rect x="60" y="162" width="352" height="56" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
-  <text x="72" y="180" font-weight="700">❓ sinon, si <tspan fill="#ffd66b">niveauAlerte</tspan> = 1 :</text>
-  <text x="86" y="196">LCD : couleur du fond <tspan fill="#ffc78a" font-weight="700">orange (255, 120, 0)</tspan></text>
-  <text x="86" y="211">LCD ligne 1 : écrire « <tspan font-weight="700">Vigilance orange</tspan> »</text>
+Un encart à contour jaune rappelle que chaque mode impose l'état des QUATRE sorties — éteindre est aussi important qu'allumer : si un mode oublie d'éteindre le voyant du mode précédent, deux voyants restent allumés en même temps et la station ment.
 
-  <rect x="60" y="224" width="352" height="56" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
-  <text x="72" y="242" font-weight="700">❓ sinon :</text>
-  <text x="86" y="258">LCD : couleur du fond <tspan fill="#9df5b9" font-weight="700">vert (0, 180, 60)</tspan></text>
-  <text x="86" y="273">LCD ligne 1 : écrire « <tspan font-weight="700">Veille</tspan> »</text>
+Un dernier encart rappelle le brochage : capteur rotatif sur A0, voyant vert sur D2, voyant orange sur D3, voyant rouge sur D4, buzzer sur D5. Les seuils restent seuil_vigilance égal 40 et seuil_alerte égal 70, sur l'échelle scolaire de 0 à 100 sans unité.</desc>
+<rect width="900" height="530" fill="#050f24"/>
+<text x="450" y="28" text-anchor="middle" fill="#81aaff" font-size="18" font-weight="700">Palier 3 — alerter (Vittascience, mode BLOCS)</text>
+<text x="450" y="49" text-anchor="middle" fill="#9bbefc" font-size="12">voyant vert D2 · voyant orange D3 · voyant rouge D4 · buzzer D5</text>
 
-  <rect x="60" y="288" width="352" height="30" rx="6" fill="#2b6b40" stroke="#81fba1" stroke-width="1.5"/>
-  <text x="72" y="308">LCD ligne 2 : écrire « Vent: » puis <tspan fill="#ffd66b" font-weight="700">vitesseVent</tspan> puis « km/h »</text>
+<!-- ============ mode_veille ============ -->
+<rect x="30" y="72" width="420" height="136" rx="10" fill="#123322" stroke="#81fba1" stroke-width="2"/>
+<text x="46" y="95" fill="#81fba1" font-size="13.5" font-weight="700">définir mode_veille</text>
+<rect x="46" y="104" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="115" r="5" fill="#81fba1"/>
+<text x="74" y="119" fill="#e4eaf5" font-size="12">voyant vert D2 : <tspan font-weight="700" fill="#81fba1">allumé</tspan></text>
+<rect x="46" y="128" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="139" r="5" fill="none" stroke="#ffb454"/>
+<text x="74" y="143" fill="#e4eaf5" font-size="12">voyant orange D3 : <tspan font-weight="700" fill="#9bbefc">éteint</tspan></text>
+<rect x="46" y="152" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="163" r="5" fill="none" stroke="#ff7b88"/>
+<text x="74" y="167" fill="#e4eaf5" font-size="12">voyant rouge D4 : <tspan font-weight="700" fill="#9bbefc">éteint</tspan></text>
+<rect x="46" y="176" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="187" r="5" fill="none" stroke="#c68ef2"/>
+<text x="74" y="191" fill="#e4eaf5" font-size="12">buzzer D5 : <tspan font-weight="700" fill="#9bbefc">arrêté</tspan></text>
 
-  <rect x="60" y="326" width="352" height="30" rx="6" fill="#1d4e89" stroke="#61dafb" stroke-width="1.5"/>
-  <text x="72" y="346">DEL broche <tspan font-weight="700">D3</tspan> : allumée si <tspan fill="#ffd66b" font-weight="700">niveauAlerte</tspan> ≥ 1, éteinte sinon</text>
-</g>
+<!-- ============ mode_vigilance ============ -->
+<rect x="30" y="216" width="420" height="136" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="46" y="239" fill="#ffb454" font-size="13.5" font-weight="700">définir mode_vigilance</text>
+<rect x="46" y="248" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="259" r="5" fill="none" stroke="#81fba1"/>
+<text x="74" y="263" fill="#e4eaf5" font-size="12">voyant vert D2 : <tspan font-weight="700" fill="#9bbefc">éteint</tspan></text>
+<rect x="46" y="272" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="283" r="5" fill="#ffb454"/>
+<text x="74" y="287" fill="#e4eaf5" font-size="12">voyant orange D3 : <tspan font-weight="700" fill="#ffb454">allumé</tspan></text>
+<rect x="46" y="296" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="307" r="5" fill="none" stroke="#ff7b88"/>
+<text x="74" y="311" fill="#e4eaf5" font-size="12">voyant rouge D4 : <tspan font-weight="700" fill="#9bbefc">éteint</tspan></text>
+<rect x="46" y="320" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="331" r="5" fill="none" stroke="#c68ef2"/>
+<text x="74" y="335" fill="#e4eaf5" font-size="12">buzzer D5 : <tspan font-weight="700" fill="#9bbefc">arrêté</tspan></text>
 
-<!-- résultat attendu : 3 LCD -->
-<rect x="440" y="90" width="280" height="270" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
-<text x="580" y="112" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">✅ Ce que tu DOIS voir (écran LCD)</text>
-<g font-family="monospace" font-size="12">
-  <rect x="466" y="124" width="228" height="48" rx="5" fill="#0a4020" stroke="#81fba1"/>
-  <text x="478" y="144" fill="#d9ffe6">Veille</text>
-  <text x="478" y="162" fill="#d9ffe6">Vent: 42 km/h</text>
-  <circle cx="708" cy="148" r="7" fill="#333" stroke="#666"/>
+<!-- ============ mode_alerte ============ -->
+<rect x="30" y="360" width="420" height="136" rx="10" fill="#3a1218" stroke="#ff7b88" stroke-width="2"/>
+<text x="46" y="383" fill="#ff7b88" font-size="13.5" font-weight="700">définir mode_alerte</text>
+<rect x="46" y="392" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="403" r="5" fill="none" stroke="#81fba1"/>
+<text x="74" y="407" fill="#e4eaf5" font-size="12">voyant vert D2 : <tspan font-weight="700" fill="#9bbefc">éteint</tspan></text>
+<rect x="46" y="416" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="427" r="5" fill="none" stroke="#ffb454"/>
+<text x="74" y="431" fill="#e4eaf5" font-size="12">voyant orange D3 : <tspan font-weight="700" fill="#9bbefc">éteint</tspan></text>
+<rect x="46" y="440" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="451" r="5" fill="#ff7b88"/>
+<text x="74" y="455" fill="#e4eaf5" font-size="12">voyant rouge D4 : <tspan font-weight="700" fill="#ff7b88">allumé</tspan></text>
+<rect x="46" y="464" width="388" height="22" rx="5" fill="#0d2347" stroke="#274a8a"/>
+<circle cx="60" cy="475" r="5" fill="#c68ef2"/>
+<text x="74" y="479" fill="#e4eaf5" font-size="12">buzzer D5 : <tspan font-weight="700" fill="#c68ef2">activé</tspan></text>
 
-  <rect x="466" y="182" width="228" height="48" rx="5" fill="#7a4a10" stroke="#ffb454"/>
-  <text x="478" y="202" fill="#fff2dd">Vigilance orange</text>
-  <text x="478" y="220" fill="#fff2dd">Vent: 118 km/h</text>
-  <circle cx="708" cy="206" r="7" fill="#ff2d3e"/>
+<!-- ============ cascade à droite ============ -->
+<rect x="470" y="72" width="400" height="26" rx="6" fill="#0d2347" stroke="#274a8a"/>
+<text x="670" y="90" text-anchor="middle" fill="#9bbefc" font-size="11">… dans « répéter indéfiniment », après la lecture de A0 …</text>
 
-  <rect x="466" y="240" width="228" height="48" rx="5" fill="#7a1020" stroke="#ff7b88"/>
-  <text x="478" y="260" fill="#ffe0e4">ALERTE ROUGE !</text>
-  <text x="478" y="278" fill="#ffe0e4">Vent: 187 km/h</text>
-  <circle cx="708" cy="264" r="7" fill="#ff2d3e"/>
-</g>
-<text x="580" y="308" text-anchor="middle" fill="#e4eaf5" font-size="11">le rond à droite = la DEL (D3) :</text>
-<text x="580" y="323" text-anchor="middle" fill="#e4eaf5" font-size="11">éteinte en veille, allumée dès la vigilance</text>
-<text x="580" y="348" text-anchor="middle" fill="#ffd66b" font-size="11" font-style="italic">(les vitesses affichées sont des exemples)</text>
+<rect x="470" y="108" width="400" height="212" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2"/>
+
+<rect x="482" y="120" width="376" height="32" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="494" y="141" font-size="12" fill="#e4eaf5" font-weight="700">si <tspan fill="#ffd66b">niveau_vent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ff7b88">seuil_alerte</tspan>  alors</text>
+<rect x="500" y="156" width="358" height="30" rx="6" fill="#3a1218" stroke="#ff7b88" stroke-width="1.5"/>
+<text x="512" y="176" font-size="12" fill="#e4eaf5">appeler <tspan fill="#ff7b88" font-weight="700">mode_alerte</tspan></text>
+
+<rect x="482" y="190" width="376" height="32" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="494" y="211" font-size="12" fill="#e4eaf5" font-weight="700">sinon si <tspan fill="#ffd66b">niveau_vent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ffb454">seuil_vigilance</tspan>  alors</text>
+<rect x="500" y="226" width="358" height="30" rx="6" fill="#3a2412" stroke="#ffb454" stroke-width="1.5"/>
+<text x="512" y="246" font-size="12" fill="#e4eaf5">appeler <tspan fill="#ffb454" font-weight="700">mode_vigilance</tspan></text>
+
+<rect x="482" y="260" width="376" height="28" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="494" y="279" font-size="12" fill="#e4eaf5" font-weight="700">sinon</text>
+<rect x="500" y="292" width="358" height="30" rx="6" fill="#123322" stroke="#81fba1" stroke-width="1.5"/>
+<text x="512" y="312" font-size="12" fill="#e4eaf5">appeler <tspan fill="#81fba1" font-weight="700">mode_veille</tspan></text>
+
+<!-- encart avertissement -->
+<rect x="470" y="340" width="400" height="86" rx="10" fill="#2a2210" stroke="#ffd66b" stroke-width="2"/>
+<text x="670" y="364" text-anchor="middle" fill="#ffd66b" font-size="12.5" font-weight="700">⚠ chaque mode impose l'état des QUATRE sorties</text>
+<text x="670" y="385" text-anchor="middle" fill="#e4eaf5" font-size="12">éteindre est aussi important qu'allumer : sans cela</text>
+<text x="670" y="403" text-anchor="middle" fill="#e4eaf5" font-size="12">le voyant du mode précédent resterait allumé et</text>
+<text x="670" y="418" text-anchor="middle" fill="#e4eaf5" font-size="12">la station afficherait deux niveaux à la fois.</text>
+
+<!-- rappel brochage -->
+<rect x="470" y="440" width="400" height="56" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="670" y="461" text-anchor="middle" fill="#61dafb" font-size="12" font-weight="700">rappel du brochage</text>
+<text x="670" y="482" text-anchor="middle" fill="#e4eaf5" font-size="12">A0 capteur rotatif · D2 vert · D3 orange · D4 rouge · D5 buzzer</text>
+
+<text x="450" y="518" text-anchor="middle" fill="#9bbefc" font-size="11.5" font-style="italic">Reconstitution schématique de l'écran Vittascience — les libellés peuvent varier légèrement selon la version.</text>
 </svg>
