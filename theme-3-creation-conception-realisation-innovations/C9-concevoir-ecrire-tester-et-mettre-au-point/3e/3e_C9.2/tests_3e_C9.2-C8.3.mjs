@@ -250,6 +250,29 @@ const run = async () => {
     return b ? b.closest("section").querySelectorAll("details.correction").length : 0;
   });
   ok("règle n°86 : chaque défi bonus a son corrigé replié (3/3)", bonusCorriges === 3, String(bonusCorriges));
+
+  /* encadré jumelage : les ouragans cités, et le tout REPLIÉ (hors parcours obligatoire) */
+  const jumelage = await page.evaluate(() => {
+    const s = [...document.querySelectorAll("details > summary")]
+      .find(x => x.textContent.includes("New York lit-elle aussi ce dossier"));
+    if (!s) return null;
+    const d = s.parentElement;
+    const interne = d.querySelector("details");
+    return { replie: !d.open, interneReplie: !!interne && !interne.open,
+             texte: d.textContent, tableaux: d.querySelectorAll("table").length };
+  });
+  ok("encadré jumelage présent", !!jumelage);
+  ok("encadré jumelage : replié par défaut (ne coupe pas la situation déclenchante)",
+     jumelage && jumelage.replie && jumelage.interneReplie);
+  for (const nom of ["1938", "Irene", "Sandy", "Henri", "Ida"])
+    ok("encadré jumelage : ouragan cité — " + nom, jumelage && jumelage.texte.includes(nom));
+  ok("encadré jumelage : comparaison Martinique / New York en tableau",
+     jumelage && jumelage.tableaux === 2, String(jumelage && jumelage.tableaux));
+  ok("encadré jumelage : déclaré hors parcours obligatoire",
+     jumelage && jumelage.texte.includes("hors parcours obligatoire"));
+  ok("encadré jumelage : la limite du prototype est nommée (il ne mesure que le vent)",
+     jumelage && jumelage.texte.includes("montée des eaux"));
+
   await page.click("#btnEssentiel");
   ok("mode essentiel : référentiel et corrections masqués",
      await page.evaluate(() => document.body.classList.contains("essentiel") &&

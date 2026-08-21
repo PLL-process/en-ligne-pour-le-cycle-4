@@ -5164,3 +5164,67 @@ vérifier que `fr.vittascience.com` n'est pas filtré par le réseau du collège
 avant la séance 2 ; nettoyage du poste (chemin `sketchbook.path` d'origine à
 restaurer, flag DPI de `javaw.exe` à retirer, fichiers de travail de
 `Downloads` à supprimer).
+
+---
+
+## 21 août 2026 (suite) — L'encadré « jumelage » gagne quatre ouragans, et reste replié
+
+*Demande de Pascal, qui a trouvé la situation déclenchante « accrochante » mais trop
+courte sur les cyclones : « il serait intéressant de citer tous les cyclones… et je te
+laisse carte blanche, car ce sujet peut être très long et pourrait être considéré comme
+un distracteur ».*
+
+La demande contenait déjà sa propre contrainte, et c'est elle qui a guidé le travail :
+**enrichir sans détourner**. Un élève de 3e qui découvre l'histoire des ouragans de New
+York peut y passer la séance — et rater la station.
+
+### Ce qui a été fait
+
+L'encadré cite maintenant **cinq cas** au lieu d'un : l'ouragan de **1938** (« Long
+Island Express », catégorie 3, ~190 km/h sur Long Island — le seul vrai coup direct),
+**Irene** (2011), **Sandy** (2012), **Henri** et **Ida** (2021). Puis une comparaison
+**Martinique / New York** en quatre lignes : fréquence, danger principal, point faible,
+population.
+
+### Les trois garde-fous qui empêchent le distracteur
+
+1. **Tout est replié, à deux niveaux.** L'encadré était déjà un `<details>` ; les
+   ouragans vivent dans un `<details>` **imbriqué**. Il faut donc deux gestes délibérés
+   pour y entrer. Une suite de tests vérifie que les deux restent fermés au chargement —
+   c'est mécanisable, donc mécanisé.
+2. **C'est écrit noir sur blanc** : « complément de culture, hors parcours obligatoire ;
+   rien ici n'est demandé au vérificateur ni au QCM ». L'élève sait ce qu'il lit, et ce
+   qu'il ne risque pas de manquer.
+3. **Le contenu revient à l'objet technique.** Le fil conducteur n'est pas « voici des
+   ouragans », c'est : *sauf en 1938, le danger new-yorkais n'était pas le vent, c'était
+   l'eau*. D'où la chute, qui est la seule chose vraiment utile de tout l'encadré —
+   **notre prototype ne mesure que le vent** : utile à Sainte-Luce, très insuffisant à
+   New York, où il faudrait mesurer la montée des eaux. Un objet technique ne vaut que
+   pour le besoin auquel il répond. Un encadré de culture qui se termine sur une limite
+   du prototype n'est plus un distracteur : c'est une leçon d'analyse du besoin.
+
+### Une règle de rédaction qui se dégage
+
+Quand un complément risque de manger la séance, la question n'est pas « faut-il le
+mettre ? » mais **« par quoi le fait-on finir ? »**. Un complément qui se termine sur
+l'objet de la séquence ramène l'élève ; un complément qui se termine sur lui-même
+l'emmène ailleurs. C'est peut-être une future règle d'or ; elle mérite d'abord d'être
+éprouvée sur deux ou trois lots.
+
+### Vérification et point de vigilance sur l'outillage
+
+`verif_regles_audit.py` : 0 manquement. Suite Playwright : **74/74** (64 + 10 ajoutés
+pour cet encadré). Les faits historiques ont été vérifiés sur sources concordantes et
+sont donnés en ordres de grandeur, jamais avec une précision qu'ils n'ont pas ;
+`SOURCES_MEDIAS.md` le consigne.
+
+**Bogue repéré dans l'outillage, hors périmètre** : la règle n°42 s'ancre sur
+`re.search(r"referentiel-card.*?</table>")`, qui tombe sur la **première** occurrence de
+`referentiel-card` — celle de la feuille de style — puis s'arrête au premier `</table>`
+rencontré. Ajouter un tableau AVANT la carte de référentiel suffit donc à faire passer
+la règle en « SANS OBJET » : elle ne vérifie plus rien, sans rien signaler. C'est ce qui
+est arrivé ici. Les deux formulations ont été revérifiées à la main (conformes), et
+l'ancre correcte serait `class="card referentiel-card"`. À corriger par le responsable
+de `_outils/`. La leçon dépasse ce bogue : **une règle qui devient silencieusement
+« sans objet » est plus dangereuse qu'une règle qui échoue** — l'échec se voit, le
+silence non.

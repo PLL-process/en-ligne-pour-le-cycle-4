@@ -11,7 +11,19 @@ activité validée, chaque état du banc — veille/vigilance/alerte, acquitteme
 ré-armement, frontières, chrono —, bilan, persistance, mode essentiel, loupe,
 QCM et ses scénarios, mobile). Les captures sont livrées à part (non committées).
 
-## 1. Tests automatisés exécutés — 64/64 réussis
+## 1. Tests automatisés exécutés — 74/74 réussis
+
+### Ce que l'enrichissement de l'encadré « jumelage » a ajouté (10 tests)
+
+| Test | Résultat |
+|---|---|
+| L'encadré jumelage existe | ✅ |
+| Il est **replié par défaut**, encadré interne compris (il ne coupe pas la situation déclenchante) | ✅ |
+| Les cinq cas sont cités : 1938, Irene, Sandy, Henri, Ida | ✅ (5 tests) |
+| La comparaison Martinique / New York est bien en tableaux (2) | ✅ |
+| L'encadré est déclaré **hors parcours obligatoire** | ✅ |
+| La limite du prototype est nommée (il ne mesure que le vent, pas la montée des eaux) | ✅ |
+
 
 ### Ce que la refonte v2 a ajouté à la suite (13 tests)
 
@@ -129,5 +141,5 @@ Chargement des deux synthèses (élève, professeur) sans erreur JS : ✅.
 
 ## 5. Échecs
 
-Aucun test exécuté en échec au moment de la remise de la refonte v2 (64/64).
+Aucun test exécuté en échec au moment de la remise (74/74).
 La suite complète a été rejouée intégralement, pas seulement les tests ajoutés.
