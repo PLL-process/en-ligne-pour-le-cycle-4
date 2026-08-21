@@ -47,6 +47,15 @@ Notes de conformité :
 - textes alternatifs : `alt` complets dans les pages + `<title>/<desc>` internes à
   chaque SVG (504 à 1 188 caractères) ; toutes les images s'agrandissent à la loupe
   (règle n°92) ;
+- **faits historiques cités dans l'encadré « jumelage »** (ouragan de 1938 dit
+  « Long Island Express », Irene 2011, Sandy 2012, Henri et Ida 2021) : aucun média
+  n'est repris, seulement des faits publics, reformulés et vérifiés le 21/08/2026
+  auprès de sources concordantes — notamment la fiche « Hurricane Sandy » du centre de
+  données de Baruch College (CUNY) pour les chiffres new-yorkais de 2012 (onde de
+  tempête à Battery Park, morts dans la ville, foyers privés d'électricité) et la
+  notice de l'ouragan de 1938 pour la catégorie et la vitesse des vents au moment du
+  passage sur Long Island. Les ordres de grandeur sont donnés comme tels (« environ
+  4 mètres », « plus de quarante morts »), jamais avec une précision qu'ils n'ont pas ;
 - aucune donnée Météo-France réelle : les seuils sont ceux du cahier des charges
   pédagogique de la mairie fictive, dit explicitement aux élèves. Les **cinq niveaux
   officiels** de la vigilance cyclonique aux Antilles (jaune → orange → rouge →
