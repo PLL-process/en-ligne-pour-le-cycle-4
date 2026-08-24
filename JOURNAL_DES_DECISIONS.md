@@ -5228,3 +5228,549 @@ l'ancre correcte serait `class="card referentiel-card"`. À corriger par le resp
 de `_outils/`. La leçon dépasse ce bogue : **une règle qui devient silencieusement
 « sans objet » est plus dangereuse qu'une règle qui échoue** — l'échec se voit, le
 silence non.
+
+---
+
+## 21 août 2026 — Deux audits de C9, et trente-deux règles qui en sortent
+
+*Pascal a conduit deux audits du parcours C9 (5e, 4e, 3e_C9.1, 3e_C9.2) : le sien, en
+se mettant en position d'élève qui bute, et un audit demandé à ChatGPT, en position
+d'inspecteur qui vérifie. Les deux ne trouvent pas les mêmes choses — et c'est
+exactement pour cela qu'il fallait les deux.*
+
+L'audit-élève trouve ce qui **empêche d'avancer** : une correction qu'on ne comprend
+pas, un banc de tests qu'on ne trouve pas, un mot qui change de sens en route, quatre
+options sur une même ligne. Rien de tout cela n'est faux ; tout cela coûte. L'audit-
+inspecteur trouve ce qui est **faux** : une proportionnalité erronée, un exemple qui se
+contredit, un code de compétence qui ne correspond pas au verbe travaillé, un QCM dont
+la bonne réponse est toujours la deuxième.
+
+Aucun des deux ne remplace l'autre. Un dépôt juste mais impraticable ne sert personne ;
+un dépôt confortable et faux non plus.
+
+Les trente-deux règles ci-dessous en sortent. Trois sont des **clés de voûte** (n°95,
+n°104, n°109). Quelques-unes ne sont pas neuves : elles constatent qu'une règle
+existante n'a jamais été appliquée à l'existant — et c'est précisément l'objet de la
+première.
+
+---
+
+## Règle d'or n°95 (clé de voûte) — une règle d'or non harmonisée n'est pas une règle, c'est un vœu
+
+*Posée par Pascal, à partir d'un constat qu'il fait dans son propre dépôt.*
+
+**Toute règle d'or nouvellement écrite déclenche, dans le même mouvement, une passe
+d'harmonisation sur les séquences déjà publiées des trois thèmes.** Tant que cette
+passe n'est pas faite et consignée, la règle est marquée **« écrite, non harmonisée »**.
+
+La preuve était déjà là, sous nos yeux. La règle n°4 impose que les blocs « Prêt·e à
+t'entraîner ? » et « Bonus » closent la page, une seule fois, à la fin : la séquence de
+5e les place en fin de séance intermédiaire. La règle n°86 impose que chaque défi bonus
+ait son corrigé replié : la 5e a des bonus sans correction. Ces deux règles ont été
+écrites *après* la séquence de 5e, et jamais répercutées.
+
+Une règle qui ne vaut que pour les lots futurs crée **deux dépôts dans le dépôt** :
+celui d'avant la règle et celui d'après. L'élève, lui, ne sait pas de quelle époque est
+la page qu'il a sous les yeux. Il en tire la seule conclusion disponible : les
+conventions du site ne sont pas fiables.
+
+### Ce qui est mécanisé
+
+Un **tableau d'harmonisation** au journal (voir plus bas) : une ligne par règle, une
+colonne par séquence publiée, trois états — conforme, non conforme, sans objet. Pour
+les règles déjà mécanisées, `verif_regles_audit.py` remplit les cases. Le tableau EST
+le reste-à-faire ; il remplace notre mémoire, qui a démontré qu'elle ne suffisait pas.
+
+### Ce qui ne l'est pas
+
+Décider si l'harmonisation vaut une retouche ou une refonte. Certaines règles nouvelles
+condamneraient une séquence entière ; dans ce cas la règle vaut pour les nouveaux lots
+et la séquence ancienne est **datée** au tableau — jamais réputée conforme par
+commodité.
+
+---
+
+## Règle d'or n°96 — une correction est exhaustive, même quand l'élève a tout juste
+
+Chaque question posée a sa correction, **y compris celles que l'élève a réussies**, et
+la correction reste accessible après un sans-faute.
+
+Le motif est de Pascal, et il vaut d'être cité : *« quand un élève a 100 % de bonnes
+réponses, il s'attend quand même à une correction exhaustive, car elle lui apprend
+davantage ou conforte ses acquis, et cela le met en confiance. »* Une correction n'est
+pas une sanction d'erreur. C'est le moment où l'élève découvre qu'il avait raison — ou
+qu'il avait raison **pour une mauvaise raison**, ce qu'aucun score ne lui dira jamais.
+
+Corollaire : une correction partielle, qui ne reprend que « les questions difficiles »,
+enseigne implicitement que le reste n'avait pas d'intérêt.
+
+---
+
+## Règle d'or n°97 — une correction se met en page comme une démonstration de mathématiques
+
+Une idée par ligne. Un retour à la ligne à chaque moment-clé. Les valeurs numériques
+alignées. Le raisonnement doit être visible **dans la forme** avant d'être compris dans
+le fond. Interdit : le pavé où le lecteur doit lui-même séparer les étapes.
+
+Le cas d'école est cruel : la correction de la barrière du Cyclone, en 5e — *« Ligne 5
+→ places = places + descendus ; nouveau train → ligne 1 : places = 32 … ② B1 OUVERTE ✔,
+B2 OUVERTE ✔, B3 : 0 > 0 est FAUX → FERMÉE ✔ »* — n'a pas été comprise **par l'auteur
+du dépôt lui-même**. Si l'auteur ne suit pas sa propre correction, l'élève n'a aucune
+chance.
+
+---
+
+## Règle d'or n°98 — les options d'un choix se lisent en colonne, jamais en ligne
+
+Les réponses possibles s'empilent verticalement, une par ligne. Une suite d'options sur
+une même ligne oblige à toutes les tenir en mémoire de travail avant de choisir : c'est
+une charge inutile, et elle frappe d'abord ceux qui lisent lentement.
+
+C'est la même famille que la n°97 : **la mise en page fait partie de la compréhension**,
+elle n'est pas une décoration appliquée après coup.
+
+---
+
+## Règle d'or n°99 — une aide qui donne le raisonnement ouvre sur un exercice jumeau
+
+Quand l'aide de niveau 2 livre la solution — et c'est son rôle, elle est un filet —
+elle est immédiatement suivie d'une **situation analogue à valeurs différentes**, à
+traiter seul.
+
+Sans cela, rien ne distingue « j'ai compris grâce à l'aide » de « j'ai recopié l'aide ».
+Ni pour le professeur, ni, ce qui est plus grave, **pour l'élève lui-même** : il croira
+savoir jusqu'à l'évaluation.
+
+Exemple : après l'aide sur la table de suivi, *« le nouveau train compte 28 places,
+quatre visiteurs montent et deux descendent — complète la table sans reprendre les
+nombres de l'exemple. »*
+
+---
+
+## Règle d'or n°100 — un dispositif intégré s'annonce par un titre qui le nomme
+
+Banc de tests, simulateur, éditeur embarqué, banc d'essai : chacun porte un **intitulé
+visible** (« 🧪 Banc de tests intégré ») et un cadre qui le délimite. L'élève doit voir
+où le dispositif commence sans avoir à lire la consigne jusqu'au bout.
+
+Le constat de Pascal dit tout : *« ce banc de test est révélé en lisant l'intégralité
+de la consigne, mais comme les élèves atypiques, je me suis arrêté de lire pour le
+repérer — et je n'ai eu aucun repère. »* Chercher un objet qui existe pourtant à
+l'écran est une expérience d'échec, et elle se produit avant même la première question.
+
+---
+
+## Règle d'or n°101 — chaque séance se termine par un bouton qui mène à la suivante
+
+Fin de séance = un bouton explicite, nommé par sa destination (« Séance 2 → Lire et
+tester »). L'élève ne cherche jamais où continuer, et la progression reste sous ses
+yeux. À harmoniser sur les trois thèmes (n°95).
+
+---
+
+## Règle d'or n°102 — toute page élève s'imprime en document propre, sans fond sombre
+
+Le thème sombre est un confort d'écran. À la reprographie, c'est une page noire et une
+cartouche vidée. La feuille d'impression force fond blanc et texte noir, masque les
+éléments interactifs, et produit un **document de qualité livrable**, mis en page pour
+le A4.
+
+Pascal en donne le motif complet, qui dépasse l'encre : *si le réseau du collège est
+indisponible, ou si l'enseignant préfère mener la séance sur papier, il doit pouvoir
+imprimer sa séquence sans rien perdre.* L'impression n'est donc pas une commodité :
+c'est **le dernier repli du dispositif**, celui qui garantit que la séance a lieu.
+
+---
+
+## Règle d'or n°103 — les blocs de fin ferment la page, et rien ne les suit
+
+« 🪞 Bilan », « 🧠 Prêt·e à t'entraîner ? » et « 🎁 Bonus » apparaissent **une seule
+fois**, à la toute fin de la séquence — jamais en fin de séance intermédiaire.
+
+Ce n'est pas une règle neuve : la n°4 le disait. C'est une **dette** que la n°95 rend
+visible et exigible. On la réécrit ici parce qu'une règle violée dans le dépôt même qui
+la porte doit être re-signée.
+
+---
+
+## Règle d'or n°104 (clé de voûte) — un code de compétence s'écrit toujours avec son niveau
+
+Jamais `C9.2` seul : toujours **`5e_C9.2`**, `4e_C9.2`, `3e_C9.2` — dans la page, dans
+la fiche, dans la matrice, dans le QCM, dans l'index, dans le journal.
+
+Le même numéro désigne des attendus **différents** selon le niveau : en 5e on modifie,
+en 4e on traduit, en 3e on conçoit. Écrire le code nu fabrique une confusion entre
+trois compétences distinctes — et cette confusion voyage jusqu'au LSU, où elle devient
+un positionnement faux sur le bulletin d'un élève.
+
+C'est une clé de voûte parce qu'elle ne coûte rien à respecter et qu'elle coûte cher à
+réparer.
+
+---
+
+## Règle d'or n°105 — la formulation d'une compétence est celle du BO, au mot près, partout
+
+La règle n°42 mécanise déjà ce contrôle sur la **carte de référentiel**. Elle est ici
+**étendue** : la formulation doit être exacte aussi dans la **fiche pédagogique**, la
+**matrice de couverture**, le **QCM** et l'**index**.
+
+Une compétence reformulée « pour que ce soit plus clair » devient une compétence
+différente. Si la formulation officielle est obscure pour l'élève, on l'accompagne
+d'une reformulation **déclarée comme telle** — on ne la remplace pas.
+
+---
+
+## Règle d'or n°106 — le code annoncé doit correspondre au VERBE réellement travaillé
+
+Annoncer `4e_C9.1` (« modifier un algorithme ») pour une activité qui **traduit** un
+algorithme en programme, c'est fausser la matrice, la couverture du référentiel et le
+positionnement final.
+
+Le contrôle est simple et se fait à voix haute : *le verbe officiel du code est-il le
+verbe de la consigne ?* Si la consigne dit « traduis », le code ne peut pas être celui
+qui dit « modifie ».
+
+Cas fondateur : les trois activités de la séquence 4e « Jardin programmé » sont
+décalées d'un cran par rapport aux codes annoncés.
+
+---
+
+## Règle d'or n°107 — un nom propre du récit s'explique une fois, puis ne change plus
+
+Un nom propre est présenté à sa première occurrence — *le Cyclone est une montagne
+russe en bois de Coney Island, à New York* — puis désigné **toujours du même mot**.
+
+Alterner « le Cyclone » et « le manège » oblige l'élève à deviner qu'il s'agit du même
+objet, et cette dépense n'enseigne rien. Le cas est aggravé ici par l'homonymie : dans
+un dépôt où l'on programme une **station d'alerte cyclonique**, appeler un manège « le
+Cyclone » sans le dire est un piège qu'il faut désamorcer explicitement.
+
+---
+
+## Règle d'or n°108 — l'outil est nommé avec sa modalité exacte, et ce qui s'ouvre est ce qui est annoncé
+
+« Vittascience » ne suffit pas : **« l'éditeur Vittascience, interface Python »** ou
+**« interface Arduino, mode blocs »**. Et l'annonce doit être **vérifiée dans le
+navigateur** : la séquence de 5e annonce l'éditeur Python, l'iframe s'ouvre en mode
+blocs sans bascule visible.
+
+Un outil qui n'est pas celui annoncé fait douter l'élève de lui-même — jamais de la
+page. C'est la même famille que la n°80 (les noms de boutons) et la n°94 (les captures
+réelles) : **on ne décrit pas un logiciel de mémoire.**
+
+Corollaire : quand un outil embarqué met du temps à charger, on le dit — *« compte 1 à
+2 minutes à l'ouverture »*. Un élève qui croit la page cassée ferme l'onglet.
+
+---
+
+## Règle d'or n°109 (clé de voûte) — tout nombre calculable est recalculé, et le calcul est testé
+
+Toute correspondance, conversion, échelle, proportion ou valeur dérivée figurant dans
+une page élève est **recalculée** et couverte par un **test automatique**.
+
+La faute qui fonde la règle est la nôtre, et elle est exemplaire. Le tableau de
+correspondance de la station annonçait 40 ↔ 100 km/h — juste — **et** 70 ↔ 150 km/h.
+Or 70 × 250 ÷ 100 = **175**. Vingt-cinq kilomètres-heure d'erreur, dans un tableau
+présenté comme « le seul pont autorisé » entre deux échelles, à trois écrans d'une
+activité qui enseigne la proportionnalité. Ni l'auteur, ni la relecture, ni la suite de
+74 tests ne l'ont vue. Il aurait fallu trois lignes.
+
+C'est une clé de voûte parce qu'elle attrape une classe entière de fautes que la
+relecture humaine ne voit **jamais** : celles où le texte est cohérent, plausible, bien
+écrit — et faux.
+
+---
+
+## Règle d'or n°110 — un exemple filé raconte une seule histoire, du début à la fin
+
+Les valeurs de la consigne, celles du programme, celles de la correction et celles de
+la capture décrivent **le même déroulé**. Un seul contre-exemple ruine la confiance
+dans tout le reste de la page.
+
+Cas fondateur : en 3e_C9.1, la consigne annonce un panneau affichant « St - 3 min », le
+programme corrigé produit 2, et la correction annonce 2. L'élève qui a suivi ne sait
+plus s'il a mal lu, mal compris, ou si la page se trompe — et il n'a aucun moyen de
+trancher.
+
+---
+
+## Règle d'or n°111 — fiction déclarée, chiffre sourcé
+
+Les courriers, commandes, clients et personnages sont signalés comme **scénarios
+pédagogiques fictifs inspirés de situations réelles** — une mention discrète, une fois
+par page, suffit. Et tout chiffre présenté comme un fait porte sa source, ou disparaît.
+
+À corriger dans le dépôt : « 9 collégiens sur 10 ignorent… », qui est inventé, et qui
+doit devenir « une notion souvent difficile ». Fabriquer une statistique pour rendre une
+accroche plus frappante, c'est enseigner en creux qu'un chiffre bien tourné n'a pas
+besoin d'être vrai. Dans un dépôt de technologie, où l'on va exiger des élèves un
+procès-verbal honnête, c'est intenable.
+
+---
+
+## Règle d'or n°112 — le statut de chaque ressource est écrit
+
+Sur l'index et dans la page : **obligatoire · entraînement · prolongement facultatif ·
+ancienne adresse (redirection)**. L'élève ne doit jamais avoir à deviner si une
+ressource compte.
+
+Cas relevé : en 3e_C9.1 coexistent le QCM de 30 questions, un ancien QCM de 24, un TP
+mBot2 et une page de redirection — sans hiérarchie visible. Devant quatre portes non
+étiquetées, l'élève consciencieux les ouvre toutes et perd sa séance ; l'autre n'en
+ouvre aucune.
+
+---
+
+## Règle d'or n°113 — « réaliser un programme » exige une trace du programme réalisé
+
+Quand le verbe officiel est *réaliser et mettre au point un programme*, un banc de
+simulation intégré ne suffit pas à valider la compétence. Il faut une **preuve
+minimale** : nom du projet enregistré, capture du programme, trace des tests, et une
+phrase sur le cas limite.
+
+La simulation reste le chemin de ceux qui n'ont pas de matériel — elle ne remplace pas
+la production. Sans cette règle, 5e_C9.3 peut être validée sans qu'aucun programme
+n'ait jamais été écrit, ce qui est exactement ce que le libellé interdit.
+
+---
+
+## Règle d'or n°114 — en 3e, l'élève conçoit au moins une fois sans squelette
+
+Le verbe de 3e est **concevoir**. Une activité qui fournit déjà le nom de la fonction,
+ses paramètres et la structure `si / sinon si / sinon` fait *traduire* — c'est le verbe
+de la 4e.
+
+Chaque séquence de 3e comporte donc au moins un transfert où l'élève part des entrées
+et des sorties et écrit lui-même l'algorithme, en français d'abord. Le squelette est
+une aide légitime ; il ne peut pas être le régime permanent d'un niveau dont la
+compétence est la conception.
+
+---
+
+## Règle d'or n°115 — on fait observer le problème avant d'en expliquer la solution
+
+Une notion corrective — hystérésis, anti-rebond, lissage, temporisation — est d'abord
+**subie** : une série de mesures qui fait osciller la sortie, un tableau qui montre le
+défaut, un chronogramme qui le rend visible. L'explication ne vient qu'après, comme
+réponse à une gêne réelle.
+
+Expliquée avant d'être rencontrée, la solution est un mot à retenir. Rencontrée
+d'abord, elle est un soulagement — et un soulagement ne s'oublie pas.
+
+---
+
+## Règle d'or n°116 — une séquence trop dense se découpe en pages reliées, sans rien perdre
+
+Au-delà de l'ordre de grandeur de **8 000 mots** (ou ~30 volets repliables), une page
+élève se découpe en **pages séparées reliées par une même barre de progression**, et la
+progression se conserve d'une page à l'autre.
+
+**Aucune question, aucune activité, aucun corrigé ne disparaît au découpage** : on
+répartit, on ne coupe pas. C'est la condition sans laquelle le découpage devient un
+allègement déguisé.
+
+La mesure qui fonde la règle : la station d'alerte cyclonique compte ≈ 12 400 mots,
+41 volets repliables, 55 listes déroulantes, 29 zones de saisie, 7 activités. Le mode
+essentiel réduit ce qui s'affiche, pas ce qui existe : **la longueur seule décourage,
+avant même la première consigne**.
+
+Découpage retenu pour la station, qui vaut modèle :
+
+1. Besoin et algorithme ;
+2. Programmer par paliers ;
+3. Interaction humain-machine et mise au point ;
+4. Protocole et recette.
+
+Bénéfice inattendu et décisif : ce découpage-là sépare aussi **ce qui relève de C9** de
+**ce qui relève de C8**, que la page unique mélangeait.
+
+---
+
+## Règle d'or n°117 — un `alt` court, une description longue à côté
+
+Le texte alternatif dit la **fonction** de l'image, en une phrase. La description
+détaillée vit **à côté de l'image**, dans un volet dépliable ouvert à tous. Les
+chronogrammes, câblages et algorigrammes reçoivent en plus un **équivalent en tableau**.
+
+Cette règle corrige une dérive du dépôt, née de la meilleure intention. La règle n°1
+dit que l'image est un document à lire ; nous en avons conclu qu'il fallait tout mettre
+dans le `alt`, jusqu'à 1 200 caractères. Or **un `alt` ne se parcourt pas** : au lecteur
+d'écran, il se déroule d'un bloc, sans titres, sans possibilité de sauter à l'essentiel
+ni d'y revenir. Un mur de mots n'est pas une alternative accessible : c'est le même
+problème que le pavé de la n°97, transposé à l'oreille.
+
+La description dépliable, elle, profite à tout le monde — y compris à l'élève voyant
+qui n'arrive pas à lire un schéma.
+
+---
+
+## Règle d'or n°118 — socle accessible minimal, sur toute page élève
+
+Lien d'évitement vers le contenu, balise `<main>`, et **un nom accessible explicite
+pour chaque contrôle** (`<label>` relié, ou `aria-labelledby`). Un utilisateur de
+lecteur d'écran doit entendre la question, pas « liste déroulante ».
+
+Constat qui fonde la règle : la séquence de 4e n'a ni lien d'évitement ni `<main>`, et
+3 contrôles sur 22 portent un nom accessible. Ce n'est pas un raffinement : sans nom,
+la page est **inutilisable**, pas seulement inconfortable.
+
+---
+
+## Règle d'or n°119 — jamais la couleur seule, jamais l'animation seule
+
+Toute information portée par une couleur l'est aussi par un texte ou une forme. La
+règle est étendue ici : **il en va de même pour une pulsation, un clignotement ou une
+animation**. Un écran qui passe du vert foncé au vert clair pour signaler un état doit
+aussi l'écrire.
+
+Motifs : le daltonisme, un écran en plein soleil, `prefers-reduced-motion` actif — et,
+plus banal que tout le reste, un regard ailleurs au moment précis où la chose clignote.
+Une information qui n'existe que pendant un instant n'existe pas.
+
+---
+
+## Règle d'or n°120 — la couleur d'une notion est constante dans toute la séquence
+
+Si la variable est bleue dans le cours, elle est bleue dans la question, dans la
+réponse, dans la correction, dans le schéma et dans le QCM. Idem pour la valeur, le
+type, l'entrée, la sortie.
+
+Un code couleur stable **allège la charge mentale** : l'élève reconnaît avant de lire.
+Un code couleur qui change de sens d'un bloc à l'autre fait pire que rien — il installe
+une attente, puis la trahit, et l'élève finit par ignorer la couleur, y compris quand
+elle disait vrai.
+
+---
+
+## Règle d'or n°121 — une capture montre un geste nécessaire
+
+Toute capture répond à deux questions : *que dois-je faire ?* et *comment saurai-je que
+c'est fait ?* Donc : l'interface au moment du geste, le résultat attendu, et le message
+d'erreur typique quand il existe.
+
+Les images d'ambiance restent permises — elles installent le récit — mais elles ne
+comptent pas comme représentation opératoire, et ne dispensent d'aucune capture utile.
+Se combine avec la n°94 : ces captures viennent du vrai logiciel, exécuté sur le poste.
+
+---
+
+## Règle d'or n°122 — les trois façons de vivre la séquence sont trois parcours, pas trois paragraphes
+
+Les versions 🅰 / 🅱 / 🅲 se choisissent **en tête de page** et **modifient l'affichage** :
+les consignes, les boutons et les dispositifs de la voie choisie apparaissent, les
+autres se replient. Le choix est mémorisé, et réversible à tout moment.
+
+Décrire les trois modalités dans un texte que tout le monde lit laisse chaque élève
+trier lui-même ce qui le concerne — c'est-à-dire lire les deux tiers d'une page pour
+rien, et risquer d'appliquer la consigne d'une autre voie.
+
+Pascal en donne le motif fort, qui va au-delà du confort : **le réseau du collège peut
+être indisponible**, ou l'enseignant peut décider de mener la séance sur papier. Un
+parcours réellement isolable est alors imprimable seul (n°102) et la séance a lieu
+quand même. Les trois voies ne sont pas trois niveaux de confort : ce sont **trois
+plans de secours les uns pour les autres**.
+
+---
+
+## Règle d'or n°123 — les fonctions techniques des deux chaînes sont nommées, complètes, en majuscules
+
+Les fonctions de chaque chaîne sont écrites en toutes lettres et en majuscules —
+ACQUÉRIR · TRAITER · COMMUNIQUER pour l'information ; ALIMENTER · DISTRIBUER ·
+CONVERTIR · TRANSMETTRE pour l'énergie — et **l'action sur la matière d'œuvre figure à
+droite, hors chaîne**.
+
+Complète la n°6, qui fixe la disposition (information en haut, énergie en bas, ordre
+qui descend). Cas relevé : la barrière du Cyclone était rangée **dans** la chaîne
+d'énergie alors qu'elle en est le résultat — l'action —, et « distribuer » était en
+minuscules parmi des fonctions capitalisées. Une chaîne mal peuplée enseigne un
+contresens sur ce qu'est une fonction technique.
+
+---
+
+## Règle d'or n°124 — la matrice de couverture a des colonnes normalisées
+
+Code (avec son niveau, n°104) · verbe officiel · activité · production attendue ·
+questions de QCM · niveau cognitif · socle · CRCN · critère de réussite.
+
+Et la colonne **production** doit montrer où l'élève **conçoit seul**, pas seulement où
+il répond juste. Une matrice qui n'aligne que des réponses à des questions fermées
+prouve une reconnaissance, pas une compétence.
+
+---
+
+## Règle d'or n°125 — un distracteur est plausible, et il est réfuté
+
+Aucune option ne doit pouvoir s'éliminer sans connaître la notion : « décorer »,
+« rien », « perdre du temps », « acheter un robot » ne sont pas des distracteurs, ce
+sont des remplissages. Chaque distracteur reçoit sa réfutation propre. Et les bonnes
+réponses sont réparties sur A/B/C/D.
+
+Cette dernière exigence existait déjà, et **elle n'est pas tenue** : dans le QCM de 4e,
+la bonne réponse est systématiquement la deuxième ; en 5e, elle est souvent la première
+et la plus détaillée. Un élève peut donc réussir par détection du motif, sans rien
+savoir — et il le fera, parce qu'il est intelligent. **Dette d'harmonisation (n°95).**
+
+---
+
+## Règle d'or n°126 — distinguer le domaine contextualisé du domaine évalué
+
+Une séquence peut **mobiliser** D3 ou D5 par son contexte sans les **évaluer**. Les
+domaines évalués sont ceux dont une production porte la preuve ; les autres sont
+mentionnés comme contexte, et dits comme tels.
+
+Et les trois endroits qui annoncent les domaines — index, fiche pédagogique, séquence —
+doivent annoncer les mêmes. Incohérence relevée en 4e : D1.3/D2/D4 à l'index,
+D2/D4/D5 dans la fiche.
+
+---
+
+## Le tableau d'harmonisation (règle n°95)
+
+*État au 21 août 2026. « ✔ » conforme · « ✘ » non conforme, à reprendre · « — » sans
+objet · « ? » non encore vérifié. Ce tableau est le reste-à-faire du dépôt : il se met
+à jour à chaque lot, et aucune règle n'est réputée appliquée tant que sa ligne n'est
+pas pleine.*
+
+| Règle | 5e_C9.1 | 4e_C9 | 3e_C9.1 | 3e_C9.2 |
+|---|---|---|---|---|
+| n°96 correction exhaustive | ✘ | ? | ? | ? |
+| n°97 correction mise en page | ✘ | ? | ? | ? |
+| n°98 options en colonne | ✘ | ? | ? | ? |
+| n°99 exercice jumeau après aide | ✘ | ✘ | ✘ | ✘ |
+| n°100 dispositif intégré nommé | ✘ | ? | ? | ✘ |
+| n°101 bouton de séance suivante | ✘ | ✘ | ✘ | ✘ |
+| n°102 impression propre | ? | ? | ? | ✔ |
+| n°103 blocs de fin en fin de page | ✘ | ? | ? | ✔ |
+| n°104 code avec niveau | ✘ | ? | ? | ✔ |
+| n°105 formulation BO partout | ✘ | ✘ | ? | ✔ |
+| n°106 code = verbe travaillé | ? | ✘ | ? | ✔ |
+| n°107 nom propre expliqué | ✘ | — | — | ✔ |
+| n°108 outil nommé et vérifié | ✘ | ? | ? | ✔ |
+| n°109 nombres recalculés et testés | ? | ? | ✘ | ✘ |
+| n°110 exemple filé cohérent | ? | ? | ✘ | ? |
+| n°111 fiction déclarée, chiffre sourcé | ✘ | ? | ? | ✘ |
+| n°112 statut des ressources | ? | ? | ✘ | ? |
+| n°113 trace du programme réalisé | ✘ | ✘ | ? | ✘ |
+| n°114 conception sans squelette (3e) | — | — | ✘ | ✘ |
+| n°115 problème observé avant solution | ? | ✘ | ? | ? |
+| n°116 découpage au-delà du seuil | ✔ | ✔ | ? | ✘ |
+| n°117 alt court + description | ✘ | ✘ | ✘ | ✘ |
+| n°118 socle accessible minimal | ? | ✘ | ? | ✔ |
+| n°119 ni couleur seule, ni animation seule | ? | ? | ? | ✔ |
+| n°120 couleur constante par notion | ✘ | ? | ? | ? |
+| n°121 capture d'un geste nécessaire | ✘ | ✘ | ✘ | ✘ |
+| n°122 trois parcours, trois affichages | ✘ | ✘ | ✘ | ✘ |
+| n°123 fonctions des chaînes nommées | ✘ | ? | — | ✔ |
+| n°124 colonnes de la matrice | ✘ | ✘ | ✘ | ✘ |
+| n°125 distracteurs plausibles et réfutés | ✘ | ✘ | ✔ | ✔ |
+| n°126 domaine contextualisé vs évalué | ? | ✘ | ? | ? |
+
+**Ordre de traitement retenu** : 3e_C9.2 (station) d'abord — elle cumule le découpage
+en quatre pages, la bascule des seuils, le quatrième niveau et l'écran ; puis 4e, la
+plus en retard ; puis 3e_C9.1 ; puis 5e.
+
+**Ce que ce tableau dit de nous, et qu'il faut lire en face** : les lignes les plus
+noires ne sont pas les plus difficiles (n°101 un bouton, n°121 des captures, n°122 un
+sélecteur de parcours). Ce sont celles auxquelles personne n'avait pensé — et le seul
+moyen d'y penser a été de **regarder la page en élève**, puis de la faire auditer par
+quelqu'un d'autre. Aucun des deux audits, seul, n'aurait produit cette liste.
