@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-cj d-cj">
+<title id="t-cj">Les deux chaînes du jardin connecté : l'information décide, l'énergie pompe — et ici, la flèche d'ordre atterrit sur un relais</title>
+<desc id="d-cj">Schéma bloc à lire selon la convention du dépôt : l'information en haut, l'énergie en bas, la flèche d'ordre qui descend.
+
+En haut, la chaîne d'information. Deux entrées à gauche : l'HUMIDITÉ DU SOL, grandeur physique lue par le capteur d'humidité, et l'HEURE, donnée par l'horloge de la carte — deux entrées de natures différentes, l'une venue du monde, l'autre du temps. Elles arrivent au bloc ACQUÉRIR (capteur d'humidité et horloge, conversion en un nombre de 0 à 100). Une flèche étiquetée « données » mène au bloc TRAITER : la carte et le programme, avec les deux seuils 35 et 45 et la mémoire de l'état courant de la pompe. Une flèche étiquetée « décision » mène au bloc COMMUNIQUER : l'écran ou la console qui affiche POMPE ON ou POMPE OFF, plus le voyant — c'est ce qui permet à l'humain de savoir ce que la machine a décidé.
+
+Entre les deux chaînes, une grande flèche jaune descend de TRAITER et vient se poser sur le RELAIS. Une note explique pourquoi elle atterrit là et non sur le moteur : la pompe fonctionne en 12 volts et consomme bien plus qu'une broche ne peut fournir. Le relais est le préactionneur : il reçoit un petit signal de commande et laisse passer une grosse énergie. Un rappel signale que dans la station d'alerte cyclonique de 3e, où la sortie était un simple voyant, cette même flèche atterrissait directement sur CONVERTIR — la règle est la même, c'est la puissance qui change.
+
+En bas, la chaîne d'énergie, de gauche à droite : ALIMENTER, une alimentation 12 volts séparée — surtout pas l'USB de la carte ; DISTRIBUER, le relais qui ouvre ou ferme le passage ; CONVERTIR, le moteur de la pompe qui transforme l'électricité en rotation ; TRANSMETTRE, l'arbre du moteur qui entraîne la turbine. Enfin l'eau part vers le sol.
+
+Un encart de comparaison souligne la différence avec la station de 3e : ici, quelque chose se DÉPLACE — l'eau — donc la fonction TRANSMETTRE existe vraiment. Une station qui allume et qui sonne n'en avait pas.</desc>
+<rect width="1000" height="600" fill="#050f24"/>
+<text x="500" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">Le jardin connecté : deux chaînes, et un relais entre les deux</text>
+
+<defs>
+  <marker id="ji" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#61dafb"/></marker>
+  <marker id="jv" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#c68ef2"/></marker>
+  <marker id="jo" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#ffd66b"/></marker>
+  <marker id="je" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#ffb454"/></marker>
+</defs>
+
+<!-- ══ information ══ -->
+<rect x="20" y="48" width="960" height="212" rx="12" fill="rgba(97,218,251,.05)" stroke="#61dafb" stroke-dasharray="6 4"/>
+<text x="40" y="72" fill="#61dafb" font-size="14" font-weight="700">CHAÎNE D'INFORMATION — en HAUT (elle décide)</text>
+
+<rect x="40" y="88" width="168" height="62" rx="8" fill="#0d2347" stroke="#274a8a"/>
+<text x="124" y="110" text-anchor="middle" fill="#e4eaf5" font-size="12" font-weight="700">💧 Humidité du sol</text>
+<text x="124" y="127" text-anchor="middle" fill="#9bbefc" font-size="11">grandeur physique</text>
+<text x="124" y="142" text-anchor="middle" fill="#9bbefc" font-size="11">capteur d'humidité</text>
+
+<rect x="40" y="172" width="168" height="62" rx="8" fill="#0d2347" stroke="#274a8a"/>
+<text x="124" y="194" text-anchor="middle" fill="#e4eaf5" font-size="12" font-weight="700">🕐 L'heure</text>
+<text x="124" y="211" text-anchor="middle" fill="#9bbefc" font-size="11">horloge de la carte</text>
+<text x="124" y="226" text-anchor="middle" fill="#9bbefc" font-size="11">une entrée sans capteur</text>
+
+<rect x="262" y="118" width="136" height="86" rx="10" fill="#123322" stroke="#81fba1" stroke-width="2"/>
+<text x="330" y="150" text-anchor="middle" fill="#81fba1" font-size="15" font-weight="700">ACQUÉRIR</text>
+<text x="330" y="170" text-anchor="middle" fill="#e4eaf5" font-size="11">capteur + horloge</text>
+<text x="330" y="186" text-anchor="middle" fill="#e4eaf5" font-size="11">H : un nombre 0-100</text>
+<line x1="210" y1="118" x2="260" y2="140" stroke="#61dafb" stroke-width="2.5" marker-end="url(#ji)"/>
+<line x1="210" y1="204" x2="260" y2="182" stroke="#61dafb" stroke-width="2.5" marker-end="url(#ji)"/>
+
+<line x1="400" y1="161" x2="480" y2="161" stroke="#61dafb" stroke-width="2.5" marker-end="url(#ji)"/>
+<text x="440" y="143" text-anchor="middle" fill="#9bbefc" font-size="11" font-weight="700">données</text>
+
+<rect x="482" y="118" width="176" height="86" rx="10" fill="#173666" stroke="#61dafb" stroke-width="2"/>
+<text x="570" y="146" text-anchor="middle" fill="#61dafb" font-size="15" font-weight="700">TRAITER</text>
+<text x="570" y="165" text-anchor="middle" fill="#e4eaf5" font-size="11">la carte + le programme</text>
+<text x="570" y="181" text-anchor="middle" fill="#ffd66b" font-size="11">seuils : 35 et 45</text>
+<text x="570" y="197" text-anchor="middle" fill="#e4eaf5" font-size="11">+ mémoire de l'état</text>
+
+<line x1="660" y1="161" x2="740" y2="161" stroke="#61dafb" stroke-width="2.5" marker-end="url(#ji)"/>
+<text x="700" y="143" text-anchor="middle" fill="#9bbefc" font-size="11" font-weight="700">décision</text>
+
+<rect x="742" y="118" width="166" height="86" rx="10" fill="#2b1a3f" stroke="#c68ef2" stroke-width="2"/>
+<text x="825" y="146" text-anchor="middle" fill="#c68ef2" font-size="14" font-weight="700">COMMUNIQUER</text>
+<text x="825" y="165" text-anchor="middle" fill="#e4eaf5" font-size="11">« POMPE ON / OFF »</text>
+<text x="825" y="181" text-anchor="middle" fill="#e4eaf5" font-size="11">écran ou console + voyant</text>
+<text x="825" y="197" text-anchor="middle" fill="#e4eaf5" font-size="11">vers le jardinier</text>
+<path d="M910 161 L 938 161" stroke="#c68ef2" stroke-width="2.5" marker-end="url(#jv)"/>
+<text x="946" y="155" fill="#e4eaf5" font-size="18">👤</text>
+
+<!-- ══ flèche d'ORDRE, vers le RELAIS ══ -->
+<path d="M570 206 L 570 288 L 420 288 L 420 364" stroke="#ffd66b" stroke-width="6" fill="none" marker-end="url(#jo)"/>
+<rect x="598" y="270" width="382" height="76" rx="8" fill="rgba(255,214,107,.1)" stroke="#ffd66b"/>
+<text x="789" y="291" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">l'ORDRE descend — et il s'arrête sur le RELAIS</text>
+<text x="789" y="310" text-anchor="middle" fill="#e4eaf5" font-size="11.5">La pompe est en 12 V et consomme cent fois ce qu'une broche</text>
+<text x="789" y="326" text-anchor="middle" fill="#e4eaf5" font-size="11.5">peut donner. Le relais reçoit le petit signal, et laisse passer la grosse énergie.</text>
+<text x="789" y="341" text-anchor="middle" fill="#9bbefc" font-size="10.5">En 3e, sur la station d'alerte, la sortie était un voyant : la flèche allait droit sur CONVERTIR.</text>
+
+<!-- ══ énergie ══ -->
+<rect x="20" y="356" width="960" height="150" rx="12" fill="rgba(255,180,84,.05)" stroke="#ffb454" stroke-dasharray="6 4"/>
+<text x="40" y="380" fill="#ffb454" font-size="14" font-weight="700">CHAÎNE D'ÉNERGIE — en BAS (elle obéit)</text>
+
+<rect x="40" y="392" width="150" height="76" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="115" y="420" text-anchor="middle" fill="#ffb454" font-size="13" font-weight="700">ALIMENTER</text>
+<text x="115" y="439" text-anchor="middle" fill="#e4eaf5" font-size="11">alimentation 12 V</text>
+<text x="115" y="455" text-anchor="middle" fill="#ff7b88" font-size="10.5">séparée — PAS l'USB</text>
+
+<rect x="345" y="392" width="150" height="76" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2.5"/>
+<text x="420" y="418" text-anchor="middle" fill="#c68ef2" font-size="13" font-weight="700">DISTRIBUER</text>
+<text x="420" y="435" text-anchor="middle" fill="#ffd66b" font-size="10.5" font-weight="700">le RELAIS = préactionneur</text>
+<text x="420" y="452" text-anchor="middle" fill="#e4eaf5" font-size="10.5">il ouvre ou ferme le passage</text>
+
+<rect x="588" y="392" width="150" height="76" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="663" y="418" text-anchor="middle" fill="#ffb454" font-size="13" font-weight="700">CONVERTIR</text>
+<text x="663" y="437" text-anchor="middle" fill="#e4eaf5" font-size="11">le moteur de la pompe :</text>
+<text x="663" y="453" text-anchor="middle" fill="#e4eaf5" font-size="11">électricité → rotation</text>
+
+<rect x="790" y="392" width="150" height="76" rx="10" fill="#123322" stroke="#81fba1" stroke-width="2.5"/>
+<text x="865" y="418" text-anchor="middle" fill="#81fba1" font-size="13" font-weight="700">TRANSMETTRE</text>
+<text x="865" y="437" text-anchor="middle" fill="#e4eaf5" font-size="11">l'arbre entraîne</text>
+<text x="865" y="453" text-anchor="middle" fill="#e4eaf5" font-size="11">la turbine → l'eau part</text>
+
+<line x1="192" y1="430" x2="343" y2="430" stroke="#ffb454" stroke-width="3" marker-end="url(#je)"/>
+<line x1="497" y1="430" x2="586" y2="430" stroke="#ffb454" stroke-width="3" marker-end="url(#je)"/>
+<line x1="740" y1="430" x2="788" y2="430" stroke="#81fba1" stroke-width="3" marker-end="url(#je)"/>
+
+<rect x="130" y="480" width="740" height="20" rx="6" fill="none" stroke="none"/>
+<text x="500" y="494" text-anchor="middle" fill="#81fba1" font-size="12" font-weight="700">Ici, quelque chose SE DÉPLACE — l'eau. C'est pour cela que TRANSMETTRE existe vraiment dans cette chaîne.</text>
+
+<text x="500" y="534" text-anchor="middle" fill="#9bbefc" font-size="12" font-style="italic">📐 L'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend : la disposition montre qui commande.</text>
+<text x="500" y="562" text-anchor="middle" fill="#c68ef2" font-size="11.5" font-weight="700">La règle : la flèche d'ORDRE atterrit sur le PREMIER bloc de la chaîne d'énergie qu'elle commande.</text>
+<text x="500" y="580" text-anchor="middle" fill="#e4eaf5" font-size="11">Le convertisseur quand la puissance est minuscule (un voyant) ; le préactionneur dès qu'elle ne l'est plus (une pompe).</text>
+</svg>

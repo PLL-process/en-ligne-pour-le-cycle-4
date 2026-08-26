@@ -1,0 +1,97 @@
+{
+  "lot": "Thème 3 — Le jardin connecté se programme (4e)",
+  "nom": "Le jardin connecté se programme",
+  "agent": "Fable",
+  "theme": 3,
+  "niveau": "4e",
+  "codes": [
+    "4e_C9.1",
+    "4e_C9.2",
+    "4e_C9.3"
+  ],
+  "dossier_principal": "4e_C9.1",
+  "couverts_par_pointeur": [
+    "4e_C9.2",
+    "4e_C9.3"
+  ],
+  "competence_parente": "C9 — Concevoir, écrire, tester et mettre au point un programme",
+  "duree": "3 séances de 55 min (155 min d'activités annoncées pour 165 disponibles)",
+  "branche": "fable/theme-3/jardin-connecte-4e",
+  "date_production": "2026-08-26",
+  "refonte": "réécriture complète du lot 03 (v1, Grok, 25/07/2026) au standard dégagé des audits du 21 août",
+  "fichiers": {
+    "sequence": "sequence_4e_C9_jardin-programme.html",
+    "qcm": "qcm_4e_C9_jardin-programme.html",
+    "synthese_eleve": "Synthèses/synthese_eleve_4e_C9.html",
+    "synthese_professeur": "Synthèses/synthese_professeur_4e_C9.html",
+    "fiche_pedagogique": "fiche_pedagogique_4e_C9.md",
+    "matrice_couverture": "matrice_couverture_4e_C9.csv",
+    "sources_medias": "SOURCES_MEDIAS.md",
+    "rapport_tests": "rapport_tests_4e_C9.md",
+    "suite_de_tests": "tests_4e_C9.mjs",
+    "crcn": "CRCN_regle7.md",
+    "readme_dossier": "README.md",
+    "images": [
+      "Images/chaines_jardin_connecte.svg",
+      "Images/algorigramme_arrosage.svg",
+      "Images/jeu_de_tests_anatomie.svg",
+      "Images/hysteresis_chronogramme.svg"
+    ]
+  },
+  "contenu": {
+    "activites": 6,
+    "activites_detail": [
+      "1. Les deux chaînes du jardin — et le relais qui les sépare (préalable)",
+      "2. De la règle à l'algorigramme — dessiner avant d'écrire (4e_C9.1 : modifier)",
+      "3. Écrire et exécuter — des blocs au Python (4e_C9.2 : traduire)",
+      "4. Tester — construire le jeu d'essais qui prouve (4e_C9.3)",
+      "5. Le clignotement — diagnostiquer, corriger, re-tester (4e_C9.3 + 4e_C9.1)",
+      "6. Réinvestir — le lampadaire, sans squelette (4e_C9.3)"
+    ],
+    "questions_qcm": 30,
+    "questions_par_code": {
+      "4e_C9.1": 10,
+      "4e_C9.2": 10,
+      "4e_C9.3": 10
+    },
+    "questions_illustrees": 4,
+    "repartition_bonnes_reponses": "8/7/7/8",
+    "cles_localstorage": {
+      "sequence": "seq_4e_C9_jardin-connecte",
+      "qcm": "qcm_4eC9_jardin-connecte"
+    },
+    "verrous_experientiels": [
+      "varie (humidité traversant le seuil dans les deux sens)",
+      "plage (sol sec HORS plage horaire : la pompe reste éteinte)",
+      "front39 / front40 (les deux frontières exécutées)",
+      "clignote (clignotement provoqué en mode UN seuil)",
+      "hysteres (même tremblement, mode DEUX seuils : plus de clignotement)"
+    ],
+    "banc_essai": {
+      "hors_ligne": true,
+      "tremblement": "suite de valeurs FIGÉE dans le code (41,39,41,40,39,40,39,41,40,39,41,40) — non aléatoire, pour que la comparaison entre les deux règles soit reproductible d'un poste à l'autre",
+      "regles": "un seuil (40) ou deux seuils (35/45 avec bande morte) ; la plage horaire 6-10 s'applique dans les deux cas"
+    },
+    "syntheses": 2,
+    "versions": {
+      "A_materiel": "carte + capteur d'humidité + module relais + pompe 12 V à alimentation SÉPARÉE ; carte en TBT, alimentation branchée par le professeur",
+      "B_simulation": "éditeur Vittascience (mode mixte blocs/Python) + banc d'essai intégré",
+      "C_sans_materiel": "banc d'essai + traces d'exécution fournies — mêmes validations"
+    }
+  },
+  "correction_referentiel": {
+    "constat": "la v1 annonçait « concevoir » pour 4e_C9.1 et « réinvestir » pour 4e_C9.3 : ce ne sont pas les verbes du programme 2024",
+    "reel": {
+      "4e_C9.1": "Modifier un algorithme permettant de répondre au besoin ou au problème posé.",
+      "4e_C9.2": "Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme.",
+      "4e_C9.3": "Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine."
+    },
+    "consequence": "les activités ont été remises en face des bons codes (règles d'or n°105 et n°106)"
+  },
+  "hors_perimetre_modifie": [
+    "nouveautes.json (entrée du lot)",
+    "audit_couverture.* + index.html (régénérés par build_audit.py / make_index.py)",
+    "JOURNAL_DES_DECISIONS.md (entrée du lot)"
+  ],
+  "prive_non_publie": "aucune évaluation sommative incluse (à construire par l'enseignant depuis la matrice)"
+}

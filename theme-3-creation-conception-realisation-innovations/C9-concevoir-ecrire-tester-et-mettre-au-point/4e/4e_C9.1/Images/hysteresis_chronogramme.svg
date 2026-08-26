@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-hy d-hy">
+<title id="t-hy">Un seuil contre deux seuils : pourquoi la pompe clignote, et comment l'hystérésis l'arrête</title>
+<desc id="d-hy">Deux chronogrammes superposés qui montrent le même mesurage d'humidité traité de deux façons.
+
+En haut, AVEC UN SEUL SEUIL à 40 %. La courbe d'humidité descend lentement puis se met à osciller très légèrement autour de 40 : elle repasse six fois d'un côté à l'autre de la ligne, sans jamais s'en écarter de plus de deux points. En dessous, la ligne de la pompe suit chaque passage : ON, OFF, ON, OFF, ON, OFF — six basculements en quelques minutes. Une accolade rouge signale « la pompe claque six fois pour deux points d'humidité ». Le texte précise que ce n'est pas un défaut du capteur mais une conséquence logique : quand la valeur est PILE sur la frontière, le moindre tremblement la fait changer de côté.
+
+En bas, AVEC DEUX SEUILS : 35 % pour allumer, 45 % pour éteindre. La même courbe d'humidité, exactement la même, traverse cette fois une BANDE grisée comprise entre 35 et 45, appelée bande morte ou zone neutre. Tant que la mesure reste dans cette bande, la pompe NE CHANGE PAS D'ÉTAT : elle garde ce qu'elle avait. La ligne de la pompe ne bascule que deux fois sur toute la durée — une fois en passant sous 35, une fois en repassant au-dessus de 45. Une accolade verte signale « deux basculements au lieu de six ».
+
+Un encart explique la règle en une phrase : avec deux seuils, la valeur qui fait ALLUMER n'est pas celle qui fait ÉTEINDRE ; pour changer d'avis, le système doit traverser toute la bande, et un tremblement de deux points n'y suffit pas.
+
+Un second encart pose la question du choix : une bande trop étroite ne corrige rien, une bande trop large rend le système paresseux — il attend trop longtemps avant de réagir. La largeur se choisit en regardant de combien la mesure tremble réellement.</desc>
+<rect width="960" height="640" fill="#050f24"/>
+<text x="480" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">Pourquoi la pompe claque — et comment deux seuils l'arrêtent</text>
+
+<defs>
+  <marker id="fh" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#9bbefc"/></marker>
+</defs>
+
+<!-- ═══════════ HAUT : un seul seuil ═══════════ -->
+<rect x="20" y="50" width="920" height="260" rx="12" fill="rgba(255,123,136,.05)" stroke="#ff7b88" stroke-dasharray="6 4"/>
+<text x="40" y="74" fill="#ff7b88" font-size="14" font-weight="700">① UN SEUL SEUIL à 40 % — le programme de l'activité 1</text>
+
+<!-- axes humidité -->
+<line x1="120" y1="90" x2="120" y2="196" stroke="#9bbefc" stroke-width="1.5"/>
+<line x1="120" y1="196" x2="880" y2="196" stroke="#9bbefc" stroke-width="1.5" marker-end="url(#fh)"/>
+<text x="70" y="100" fill="#9bbefc" font-size="11">H (%)</text>
+<text x="104" y="120" text-anchor="end" fill="#9bbefc" font-size="10">45</text>
+<text x="104" y="146" text-anchor="end" fill="#9bbefc" font-size="10">40</text>
+<text x="104" y="172" text-anchor="end" fill="#9bbefc" font-size="10">35</text>
+
+<!-- ligne de seuil unique -->
+<line x1="120" y1="146" x2="880" y2="146" stroke="#ffd66b" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="888" y="150" fill="#ffd66b" font-size="11" font-weight="700">40</text>
+
+<!-- courbe d'humidité qui oscille autour de 40 -->
+<polyline points="120,104 200,118 280,134 340,143 370,150 400,141 430,152 460,142 490,153 520,143 550,151 580,142 610,152 660,148 720,151 800,150 880,149"
+  fill="none" stroke="#61dafb" stroke-width="2.5"/>
+<text x="150" y="98" fill="#61dafb" font-size="11">humidité mesurée</text>
+
+<!-- zone d'oscillation -->
+<rect x="360" y="136" width="260" height="22" fill="rgba(255,123,136,.14)" stroke="#ff7b88" stroke-dasharray="3 3"/>
+<text x="490" y="176" text-anchor="middle" fill="#ff7b88" font-size="11">elle ne tremble que de <tspan font-weight="700">2 points</tspan>…</text>
+
+<!-- ligne pompe -->
+<text x="104" y="238" text-anchor="end" fill="#e4eaf5" font-size="12" font-weight="700">pompe</text>
+<text x="104" y="252" text-anchor="end" fill="#9bbefc" font-size="10">ON / OFF</text>
+<line x1="120" y1="222" x2="120" y2="268" stroke="#9bbefc" stroke-width="1.5"/>
+<line x1="120" y1="268" x2="880" y2="268" stroke="#9bbefc" stroke-width="1.5"/>
+<polyline points="120,268 370,268 370,228 400,228 400,268 430,268 430,228 460,228 460,268 490,268 490,228 520,228 520,268 550,268 550,228 580,228 580,268 610,268 610,228 880,228"
+  fill="none" stroke="#ff7b88" stroke-width="3"/>
+<text x="200" y="262" fill="#9bbefc" font-size="11">OFF</text>
+<text x="740" y="222" fill="#ff7b88" font-size="11">ON</text>
+
+<!-- accolade -->
+<path d="M368 284 q0 8 8 8 h100 q8 0 8 8 q0 -8 8 -8 h100 q8 0 8 -8" fill="none" stroke="#ff7b88" stroke-width="2"/>
+<text x="492" y="304" text-anchor="middle" fill="#ff7b88" font-size="12" font-weight="700">… et la pompe claque SIX FOIS.</text>
+
+<!-- ═══════════ BAS : deux seuils ═══════════ -->
+<rect x="20" y="322" width="920" height="256" rx="12" fill="rgba(129,251,161,.05)" stroke="#81fba1" stroke-dasharray="6 4"/>
+<text x="40" y="346" fill="#81fba1" font-size="14" font-weight="700">② DEUX SEUILS — 35 pour allumer, 45 pour éteindre : l'hystérésis</text>
+
+<line x1="120" y1="362" x2="120" y2="468" stroke="#9bbefc" stroke-width="1.5"/>
+<line x1="120" y1="468" x2="880" y2="468" stroke="#9bbefc" stroke-width="1.5" marker-end="url(#fh)"/>
+<text x="70" y="372" fill="#9bbefc" font-size="11">H (%)</text>
+<text x="104" y="396" text-anchor="end" fill="#9bbefc" font-size="10">45</text>
+<text x="104" y="422" text-anchor="end" fill="#9bbefc" font-size="10">40</text>
+<text x="104" y="448" text-anchor="end" fill="#9bbefc" font-size="10">35</text>
+
+<!-- la bande morte -->
+<rect x="120" y="392" width="760" height="56" fill="rgba(155,190,252,.14)" stroke="#9bbefc" stroke-dasharray="4 4"/>
+<line x1="120" y1="392" x2="880" y2="392" stroke="#81fba1" stroke-width="2"/>
+<text x="888" y="396" fill="#81fba1" font-size="11" font-weight="700">45</text>
+<line x1="120" y1="448" x2="880" y2="448" stroke="#ffb454" stroke-width="2"/>
+<text x="888" y="452" fill="#ffb454" font-size="11" font-weight="700">35</text>
+<text x="480" y="424" text-anchor="middle" fill="#9bbefc" font-size="12" font-weight="700">BANDE MORTE — ici, on ne change RIEN</text>
+
+<!-- la MÊME courbe -->
+<polyline points="120,376 200,390 280,406 340,415 370,422 400,413 430,424 460,414 490,425 520,415 550,423 580,414 610,424 660,420 720,423 800,422 880,421"
+  fill="none" stroke="#61dafb" stroke-width="2.5"/>
+<text x="150" y="370" fill="#61dafb" font-size="11">la MÊME humidité, exactement</text>
+
+<!-- ligne pompe stable -->
+<text x="104" y="510" text-anchor="end" fill="#e4eaf5" font-size="12" font-weight="700">pompe</text>
+<text x="104" y="524" text-anchor="end" fill="#9bbefc" font-size="10">ON / OFF</text>
+<line x1="120" y1="494" x2="120" y2="540" stroke="#9bbefc" stroke-width="1.5"/>
+<line x1="120" y1="540" x2="880" y2="540" stroke="#9bbefc" stroke-width="1.5"/>
+<polyline points="120,540 300,540 300,500 880,500" fill="none" stroke="#81fba1" stroke-width="3"/>
+<text x="200" y="534" fill="#9bbefc" font-size="11">OFF</text>
+<text x="600" y="494" fill="#81fba1" font-size="11">ON — et elle y reste</text>
+<text x="492" y="562" text-anchor="middle" fill="#81fba1" font-size="12" font-weight="700">UN SEUL basculement au lieu de six. La mesure n'a pas changé — la règle, si.</text>
+
+<!-- encart règle -->
+<rect x="20" y="590" width="450" height="40" rx="8" fill="rgba(255,214,107,.1)" stroke="#ffd66b"/>
+<text x="245" y="608" text-anchor="middle" fill="#ffd66b" font-size="12" font-weight="700">La valeur qui ALLUME n'est pas celle qui ÉTEINT.</text>
+<text x="245" y="624" text-anchor="middle" fill="#e4eaf5" font-size="11">Pour changer d'avis, il faut traverser toute la bande.</text>
+
+<rect x="490" y="590" width="450" height="40" rx="8" fill="rgba(198,142,242,.1)" stroke="#c68ef2"/>
+<text x="715" y="608" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">Quelle largeur de bande ?</text>
+<text x="715" y="624" text-anchor="middle" fill="#e4eaf5" font-size="11">Trop étroite : rien n'est corrigé. Trop large : le système devient paresseux.</text>
+</svg>

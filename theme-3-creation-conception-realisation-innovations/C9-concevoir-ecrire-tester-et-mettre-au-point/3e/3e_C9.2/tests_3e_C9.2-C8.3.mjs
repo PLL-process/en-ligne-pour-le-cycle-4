@@ -336,6 +336,32 @@ const run = async () => {
   ok("encadré jumelage : la limite du prototype est nommée (il ne mesure que le vent)",
      jumelage && jumelage.texte.includes("montée des eaux"));
 
+  /* ── lisibilité : mesure / vigilance / alerte en trois cartes, pas en tableau ── */
+  ok("mesure/vigilance/alerte : trois cartes distinctes, numérotées 1-2-3",
+     await page.evaluate(() => {
+       const n = [...document.querySelectorAll(".trois-niveaux .niv")];
+       return n.length === 3 &&
+              n.map(x => x.querySelector(".niv-rang").textContent.trim()).join("") === "123";
+     }));
+  ok("mesure/vigilance/alerte : chaque carte porte une couleur de bord distincte",
+     await page.evaluate(() => {
+       const c = [...document.querySelectorAll(".trois-niveaux .niv")]
+         .map(x => getComputedStyle(x).borderLeftColor);
+       return new Set(c).size === 3;
+     }));
+  ok("mesure/vigilance/alerte : la place de la station est marquée sur le niveau 1",
+     await page.evaluate(() => {
+       const p = document.querySelector(".niv-mesure .niv-ici");
+       return !!p && p.textContent.includes("s'arrête ICI");
+     }));
+  ok("lisibilité : tout tableau d'une carte a des séparateurs de colonnes",
+     await page.evaluate(() => [...document.querySelectorAll("section.card table")]
+       .filter(t => t.rows.length > 1)
+       .every(t => {
+         const c = t.rows[1] && t.rows[1].cells[1];
+         return c && getComputedStyle(c).borderLeftWidth !== "0px";
+       })));
+
   /* ── règle n°101 : chaque séance mène explicitement à la suivante ── */
   ok("règle n°101 : 3 boutons « séance suivante » dans la page tout-en-un",
      await page.locator("button.vers-seance").count() === 3);

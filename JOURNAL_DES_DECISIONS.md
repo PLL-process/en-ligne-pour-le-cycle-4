@@ -5731,6 +5731,13 @@ objet · « ? » non encore vérifié. Ce tableau est le reste-à-faire du dép�
 à jour à chaque lot, et aucune règle n'est réputée appliquée tant que sa ligne n'est
 pas pleine.*
 
+*Mise à jour du 26 août (soir) : la colonne **4e_C9** est reprise après la
+réécriture complète du lot du jardin connecté. Deux lignes restent **rouges et le
+disent** : la n°99 (aucun exercice jumeau après l'aide de niveau 2 — c'est le
+prochain chantier de ce lot) et la n°124 (la matrice a huit colonnes normalisées,
+mais pas encore le niveau cognitif, le CRCN ni le critère de réussite). Le reste
+est couvert par la suite de tests ou par `verif_regles_audit.py`.*
+
 *Mise à jour du 26 août : la colonne **3e_C9.2** passe au vert sur quatorze lignes
 supplémentaires (n°100, 101, 109 à 114, 116, 117, 119 à 122). Chacune est **couverte
 par un test de la suite** `tests_3e_C9.2-C8.3.mjs` ou par un contrôle de
@@ -5744,37 +5751,37 @@ les exercices jumeaux et la matrice, et attendent leur tour.*
 
 | Règle | 5e_C9.1 | 4e_C9 | 3e_C9.1 | 3e_C9.2 |
 |---|---|---|---|---|
-| n°96 correction exhaustive | ✘ | ? | ? | ? |
-| n°97 correction mise en page | ✘ | ? | ? | ? |
-| n°98 options en colonne | ✘ | ? | ? | ? |
+| n°96 correction exhaustive | ✘ | ✔ | ? | ? |
+| n°97 correction mise en page | ✘ | ✔ | ? | ? |
+| n°98 options en colonne | ✘ | ✔ | ? | ? |
 | n°99 exercice jumeau après aide | ✘ | ✘ | ✘ | ✘ |
-| n°100 dispositif intégré nommé | ✘ | ? | ? | ✔ |
-| n°101 bouton de séance suivante | ✘ | ✘ | ✘ | ✔ |
-| n°102 impression propre | ? | ? | ? | ✔ |
-| n°103 blocs de fin en fin de page | ✘ | ? | ? | ✔ |
-| n°104 code avec niveau | ✘ | ? | ? | ✔ |
-| n°105 formulation BO partout | ✘ | ✘ | ? | ✔ |
-| n°106 code = verbe travaillé | ? | ✘ | ? | ✔ |
-| n°107 nom propre expliqué | ✘ | — | — | ✔ |
-| n°108 outil nommé et vérifié | ✘ | ? | ? | ✔ |
-| n°109 nombres recalculés et testés | ? | ? | ✘ | ✔ |
-| n°110 exemple filé cohérent | ? | ? | ✘ | ✔ |
-| n°111 fiction déclarée, chiffre sourcé | ✘ | ? | ? | ✔ |
-| n°112 statut des ressources | ? | ? | ✘ | ✔ |
-| n°113 trace du programme réalisé | ✘ | ✘ | ? | ✔ |
-| n°114 conception sans squelette (3e) | — | — | ✘ | ✔ |
-| n°115 problème observé avant solution | ? | ✘ | ? | ? |
+| n°100 dispositif intégré nommé | ✘ | ✔ | ? | ✔ |
+| n°101 bouton de séance suivante | ✘ | ✔ | ✘ | ✔ |
+| n°102 impression propre | ? | ✔ | ? | ✔ |
+| n°103 blocs de fin en fin de page | ✘ | ✔ | ? | ✔ |
+| n°104 code avec niveau | ✘ | ✔ | ? | ✔ |
+| n°105 formulation BO partout | ✘ | ✔ | ? | ✔ |
+| n°106 code = verbe travaillé | ? | ✔ | ? | ✔ |
+| n°107 nom propre expliqué | ✘ | ✔ | — | ✔ |
+| n°108 outil nommé et vérifié | ✘ | ✔ | ? | ✔ |
+| n°109 nombres recalculés et testés | ? | ✔ | ✘ | ✔ |
+| n°110 exemple filé cohérent | ? | ✔ | ✘ | ✔ |
+| n°111 fiction déclarée, chiffre sourcé | ✘ | ✔ | ? | ✔ |
+| n°112 statut des ressources | ? | ✔ | ✘ | ✔ |
+| n°113 trace du programme réalisé | ✘ | ✔ | ? | ✔ |
+| n°114 conception sans squelette (3e) | — | ✔ | ✘ | ✔ |
+| n°115 problème observé avant solution | ? | ✔ | ? | ? |
 | n°116 découpage au-delà du seuil | ✔ | ✔ | ? | ✔ |
-| n°117 alt court + description | ✘ | ✘ | ✘ | ✔ |
-| n°118 socle accessible minimal | ? | ✘ | ? | ✔ |
-| n°119 ni couleur seule, ni animation seule | ? | ? | ? | ✔ |
-| n°120 couleur constante par notion | ✘ | ? | ? | ✔ |
-| n°121 capture d'un geste nécessaire | ✘ | ✘ | ✘ | ✔ |
-| n°122 trois parcours, trois affichages | ✘ | ✘ | ✘ | ✔ |
-| n°123 fonctions des chaînes nommées | ✘ | ? | — | ✔ |
+| n°117 alt court + description | ✘ | ✔ | ✘ | ✔ |
+| n°118 socle accessible minimal | ? | ✔ | ? | ✔ |
+| n°119 ni couleur seule, ni animation seule | ? | ✔ | ? | ✔ |
+| n°120 couleur constante par notion | ✘ | ✔ | ? | ✔ |
+| n°121 capture d'un geste nécessaire | ✘ | ✔ | ✘ | ✔ |
+| n°122 trois parcours, trois affichages | ✘ | ✔ | ✘ | ✔ |
+| n°123 fonctions des chaînes nommées | ✘ | ✔ | — | ✔ |
 | n°124 colonnes de la matrice | ✘ | ✘ | ✘ | ✘ |
-| n°125 distracteurs plausibles et réfutés | ✘ | ✘ | ✔ | ✔ |
-| n°126 domaine contextualisé vs évalué | ? | ✘ | ? | ? |
+| n°125 distracteurs plausibles et réfutés | ✘ | ✔ | ✔ | ✔ |
+| n°126 domaine contextualisé vs évalué | ? | ✔ | ? | ? |
 
 **Ordre de traitement retenu** : 3e_C9.2 (station) d'abord — elle cumule le découpage
 en quatre pages, la bascule des seuils, le quatrième niveau et l'écran ; puis 4e, la
@@ -5975,3 +5982,118 @@ la trace ?), pas seulement sa présence.
 Un exemple faux est plus nuisible qu'un exemple absent : l'élève qui applique
 correctement la méthode y arrive à une conclusion fausse, et conclut que la méthode
 est mauvaise.
+
+---
+
+# 26 août 2026 (soir) — Le jardin connecté de 4e, refait au standard
+
+*Deuxième lot passé au standard dégagé des audits du 21 août, dans l'ordre décidé :
+la 4e, la plus en retard. Réécriture complète — il ne restait à peu près que le
+sujet.*
+
+## Ce qui n'allait pas, et ce que le contrôle a trouvé tout seul
+
+Le vérificateur mécanisé relevait **cinq manquements** d'entrée : aucune durée
+annoncée (n°23), pas de diagnostic d'entrée (n°26), pas de mode essentiel (n°29),
+cinq tâches enchaînées sans tableau de bord (n°30), six zones de rédaction sans la
+moindre version étayée (n°31), seize champs sans étiquette (n°34). Le lot n'avait
+par ailleurs **aucune image** — pas une seule — dans une séquence dont le cœur est
+un phénomène temporel.
+
+Mais le défaut le plus grave ne se voyait ni à l'écran ni à l'exécution.
+
+## Les mauvais verbes en face des codes
+
+Le lot annonçait, pour 4e_C9.1, « concevoir le programme avant de l'écrire », et
+pour 4e_C9.3, « réinvestir une structure ». Le programme 2024 dit :
+
+* **4e_C9.1** — *Modifier* un algorithme permettant de répondre au besoin ou au problème posé.
+* **4e_C9.2** — *Traduire* un algorithme … en un programme.
+* **4e_C9.3** — *Réaliser et mettre au point* un programme commandant un système réel…
+
+« Concevoir » est un verbe de **3e**. En annonçant ce verbe-là en 4e, le lot
+promettait — et pouvait demander — autre chose que ce que le cycle prévoit à ce
+moment-là. **« Modifier » interdit la page blanche** : il faut fournir un
+algorithme amputé d'une exigence, et faire chercher l'endroit où intervenir. Ce
+n'est pas la même séance.
+
+Ce défaut a survécu un mois parce qu'il est **invisible à l'usage** : la page
+fonctionnait très bien. Il a fallu le contrôle n°42, qui compare la carte de
+référentiel au texte officiel **mot à mot**, pour qu'il apparaisse — et il est
+apparu en trois secondes.
+
+## Ce qui a été bâti
+
+**Le banc d'essai du jardin**, intégré, hors ligne, qui rend visible ce qu'aucun
+texte ne montre : curseurs d'humidité et d'heure, sélecteur de règle (un seuil /
+deux seuils), et surtout un **compteur de basculements**. Mode un seuil, on fait
+trembler la mesure : huit basculements. Mode deux seuils, même tremblement : zéro.
+La mesure n'a pas bougé d'un point.
+
+Le tremblement est une **suite figée dans le code**, pas un tirage aléatoire. Sans
+cela on comparerait deux mesures différentes, et la démonstration ne prouverait
+rien. C'est aussi ce qui la rend reproductible d'un poste à l'autre — un élève
+peut inscrire les nombres obtenus dans son compte rendu et être sûr qu'ils
+tiendront.
+
+**Quatre figures**, dont une qui porte toute la séance 3 : le chronogramme qui
+superpose la même mesure traitée à un seuil et à deux, avec la bande morte tramée.
+
+**Trente questions de QCM** en remplacement de vingt-huit sommaires, dix par code,
+quatre illustrées, chaque distracteur réfuté nommément.
+
+## L'idée que la séquence essaie de faire passer
+
+Elle tient dans l'activité 5, et c'est la seule chose qui devrait rester dans dix
+ans : **un programme peut être parfaitement juste et parfaitement inutilisable.**
+La pompe qui claque six fois par minute n'a aucun bug — chaque décision qu'elle
+prend est correcte. C'est la *règle* qui est mal choisie.
+
+Les élèves vont chercher le bug. Il faut les laisser chercher un peu, puis
+demander : « et si aucune ligne n'était fausse ? ».
+
+## Et le prix de la correction, dit lui aussi
+
+L'hystérésis n'est pas un progrès gratuit : à 39 % d'humidité, la pompe ne
+s'allume plus. On gagne en stabilité ce qu'on perd en réactivité. La séquence le
+dit, le banc le montre, et l'activité 6 demande de **justifier** la largeur de
+bande choisie plutôt que de la recopier. Une décision technique est presque
+toujours un arbitrage — c'est vrai du jardin comme du reste.
+
+---
+
+## Règle d'or n°133 — le contrôle qui compare mot à mot est le seul qui voie les erreurs de niveau
+
+Une formulation de compétence réécrite « avec ses mots » se lit très bien. Elle
+peut pourtant annoncer un **autre niveau du cycle** que celui de la page — et rien,
+dans l'usage, ne le signale : la séquence fonctionne, les élèves travaillent, le
+professeur ne voit rien.
+
+C'est pourquoi la carte de référentiel se recopie **au mot près**, et pourquoi ce
+contrôle-là doit rester mécanisé : l'œil humain lit le sens et pardonne la
+paraphrase. La machine compare les mots et ne pardonne rien — c'est exactement ce
+qu'on lui demande.
+
+Corollaire, dégagé en corrigeant le lot 4e : **le verbe du référentiel décide du
+dispositif**. « Modifier » impose de fournir l'existant ; « écrire » impose de ne
+rien fournir ; « concevoir » impose de partir du besoin. Choisir le mauvais verbe,
+ce n'est pas mal rédiger un tableau : c'est préparer la mauvaise séance.
+
+---
+
+## Règle d'or n°134 — un verrou expérientiel se mesure sur le geste, pas sur le compteur
+
+Le banc du jardin exigeait d'avoir « fait varier l'humidité », et le vérifiait en
+comptant **six valeurs distinctes touchées**. Un élève qui saisit 25 puis 55 dans
+le champ de valeur exacte n'en touche que deux : il a parfaitement fait le geste
+demandé, et la page le refusait — sans lui dire pourquoi, puisque le compteur
+n'était affiché nulle part.
+
+Un verrou doit vérifier **ce qui prouve le geste**, pas ce qui est facile à
+compter. Le verrou juste, ici : *avoir vu la pompe des deux côtés du seuil*. Il se
+franchit en deux manipulations sensées, et il est infranchissable sans avoir
+compris ce qu'on cherchait.
+
+La question à se poser en écrivant un verrou : **« quelle est la plus petite
+manipulation honnête qui le franchit ? »** Si la réponse est plus longue que le
+geste enseigné, le verrou est mal réglé.

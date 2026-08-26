@@ -3,385 +3,1563 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thème 3 · New York — 4e · Atelier : Jardin connecté — programmer et mettre au point (4e_C9.1-C9.3)</title>
+<title>Thème 3 · 4e — Le jardin connecté se programme (4e_C9.1 · 4e_C9.2 · 4e_C9.3)</title>
 <style>
-:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
-*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
-h1{font-size:1.7em;text-align:center;margin:24px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
-.badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}.badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}.badge.niveau{background:#0d2347;color:var(--hl)}.badge.theme{background:#2b1a3f;color:var(--head)}.badge.code{background:#173666;color:#fff}
-section.card{max-width:940px;margin:0 auto 20px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px 24px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
-h2{color:var(--head);font-size:1.12em;margin-top:0}
-.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0;font-style:italic}
-.problematique{font-size:1.12em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:14px 18px;border-radius:12px;text-align:center}
-.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0}.exo h4{margin:0 0 8px;color:#fff}
-.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}.btn.small{padding:5px 11px;font-size:.82em}
-.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0}
-.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:14px;overflow-x:auto;font-size:.88em;white-space:pre}
-table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
-input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
-.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:16px;margin-top:12px}
-footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.82em}
-@media(max-width:640px){section.card{padding:16px}}
-#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
-#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
-#navharm a:hover{border-color:var(--hl);color:var(--hl)}
-select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
-select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
-.qmark{font-weight:700;margin-left:8px;font-size:1.05em}
-.qmark.ok{color:var(--ok)}
-.qmark.ko{color:var(--err)}
-.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
-.feedback.show{display:block}
-.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
-.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
-.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
-details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
-details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
-details.correction>summary::-webkit-details-marker{display:none}
-details.correction>div{padding:0 14px 12px}
-.py-var{color:var(--hl)}
-.py-str{color:var(--ok)}
-.py-num{color:#ffb454}
-.py-kw{color:var(--head);font-weight:600}
-.py-op{color:var(--warn);font-weight:600}
-.py-com{color:#5b7bb8;font-style:italic}
-.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
-details.vs{border:2px solid #61dafb;border-radius:14px;margin:18px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
-details.vs>summary{cursor:pointer;padding:14px 18px;font-weight:700;font-size:1.03em;color:#61dafb;list-style:none;display:block;border-radius:12px}
-details.vs>summary::-webkit-details-marker{display:none}
-details.vs>summary:hover{background:rgba(97,218,251,.1)}
-details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
-details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
-@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
-@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
-details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
-details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
-.saved-note{text-align:center;color:#5b7bb8;font-size:.8em;min-height:1.2em}
-.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}</style>
-</head>
-<body>
-<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="qcm_4e_C9_jardin-programme.html">🧠 QCM</a></nav>
-
-<h1>💻 Jardin connecté — Programmer et mettre au point</h1>
-<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
-  <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
-  <p class="deja">L'an dernier, avec la <b>boîte étiquetée</b>, tu as compris ce qu'est une variable, tu as <b>testé un programme fourni</b>, et tu l'as <b>modifié</b> pour régler une barrière.</p>
-  <p class="change"><b>Cette année, ce qui change&nbsp;:</b> il n'y a plus de programme fourni : tu <b>l'écris</b>. Concevoir, écrire, tester, mettre au point — les quatre gestes, dans cet ordre, sur le jardin connecté. Et tu vas découvrir que le plus long n'est pas d'écrire, c'est de mettre au point.</p>
-  <p class="filet">Tu n'étais pas là ? Une variable est une boîte étiquetée : un nom, et une valeur qu'on peut changer.</p>
-</section>
-
-<style>
-  .gestes-outil{border:1px solid var(--border,#2a3550);border-left:4px solid #ffb300;
-    border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel,#0e1730)}
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88; --energie:#ffb454;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 20px 70px;line-height:1.55}
+  h1{font-size:1.75em;text-align:center;margin:26px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:8px;font-size:1.02em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:5px 14px;border-radius:999px;font-size:.78em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.socle{background:#123322;color:var(--ok)}
+  .badge.crcn{background:#3a2412;color:var(--energie)}
+  .badge.duree{background:#3a3212;color:var(--warn)}
+  section.card{max-width:940px;margin:0 auto 22px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.16em;margin-top:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  h3{color:var(--sub);font-size:1.02em;margin-bottom:8px}
+  h4{color:#fff;margin:14px 0 6px}
+  p{margin:.5em 0}
+  a{color:var(--hl);overflow-wrap:anywhere}
+  code{overflow-wrap:anywhere}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:940px;margin:0 auto 8px}
+  @media(max-width:760px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.78em;color:var(--sub);display:block;margin-bottom:3px}
+  input[type=text],input[type=number],input[type=date],select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  textarea{min-height:74px;resize:vertical}
+  input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:940px;margin:10px auto 20px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 18px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.92em}
+  .btn:hover,.btn:focus-visible{background:var(--btn-h)}
+  .btn.small{padding:6px 12px;font-size:.82em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.qcm{background:linear-gradient(90deg,#7a3fa0,#c68ef2);font-size:1.05em;padding:14px 26px}
+  .progress-wrap{max-width:940px;margin:0 auto 24px;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px 18px}
+  .progress-bar{height:14px;background:#08132c;border-radius:999px;overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .5s;border-radius:999px}
+  .progress-label{font-size:.85em;color:var(--sub)}
+  .declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:14px 18px;border-radius:0 12px 12px 0}
+  .courrier{background:#f4efe3;color:#26221a;border-radius:10px;padding:18px 22px;font-size:.95em;margin:12px 0;border:1px solid #c9bf9f}
+  .courrier .entete{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:.85em;color:#5a5340;border-bottom:1px solid #c9bf9f;padding-bottom:6px;margin-bottom:10px}
+  .courrier b{color:#1F3864}
+  .problematique{font-size:1.13em;font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:16px 20px;border-radius:12px;text-align:center}
+  table.refs{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+  table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  table.refs th{background:var(--input-bg);color:var(--hl)}
+  @media(max-width:680px){table.refs,table.recette{display:block;overflow-x:auto}}
+  /* Filet de sécurité : TOUT tableau d'une carte reste lisible, même sans classe. */
+  section.card table{width:100%;border-collapse:collapse;font-size:.9em;margin:10px 0}
+  section.card table th,section.card table td{padding:8px 11px;text-align:left;vertical-align:top;
+    border-bottom:1px solid var(--border)}
+  section.card table th{background:var(--input-bg);color:var(--hl);
+    border-bottom:2px solid var(--hl);font-size:.86em;letter-spacing:.02em}
+  section.card table th + th,section.card table td + td{border-left:1px solid var(--border)}
+  section.card table tbody tr:nth-child(even) td{background:rgba(155,190,252,.05)}
+  section.card table tbody tr:hover td{background:rgba(97,218,251,.09)}
+  @media(max-width:680px){section.card table{display:block;overflow-x:auto}}
+  .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
+  .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}
+  .seance-panel.active{display:block}
+  .activite{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:16px 0}
+  .activite>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px dashed var(--border);padding-bottom:8px;margin-bottom:12px}
+  .activite>header .num{background:var(--btn);color:#fff;border-radius:8px;padding:3px 11px;font-weight:700;font-size:.9em}
+  .activite>header h3{margin:0;color:#fff;font-size:1.05em}
+  .activite>header .duree{margin-left:auto;font-size:.78em;color:var(--warn)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.85em;margin-bottom:10px}
+  @media(max-width:700px){.meta-grid{grid-template-columns:1fr}}
+  .meta-grid>div{background:rgba(23,54,102,.5);border-radius:8px;padding:7px 11px}
+  .meta-grid b{color:var(--hl)}
+  .consigne{border-left:4px solid var(--hl);background:rgba(97,218,251,.06);padding:10px 14px;border-radius:0 10px 10px 0;margin:10px 0}
+  .consigne b{color:var(--hl)}
+  .exo{background:#08132c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .assoc{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px;align-items:center;margin:6px 0}
+  @media(max-width:640px){.assoc{grid-template-columns:1fr}}
+  .assoc label{font-size:.9em}
+  details{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:10px;padding:10px 14px;margin:8px 0}
+  details summary{cursor:pointer;font-weight:600;color:var(--hl)}
+  details.aide1 summary{color:var(--warn)}
+  details.aide2 summary{color:var(--energie)}
+  details.correction{background:#122a17;border-color:#2f6b40}
+  details.correction summary{color:var(--ok)}
+  details.prof{background:#1c1030;border-color:#6a3fa0}
+  details.prof summary{color:#e2b8ff}
+  details.etayage{margin:8px 0;border:1px solid #3f6bb5;border-left:4px solid #61dafb;border-radius:8px;background:rgba(13,35,71,.55);padding:6px 12px}
+  details.etayage>summary{cursor:pointer;font-weight:600;color:#61dafb}
+  details.etayage p{margin:6px 0}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  @media print{details.etayage{break-inside:avoid}}
+  .retenir{background:rgba(129,251,161,.08);border:1px solid #2f6b40;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .retenir b{color:var(--ok)}
+  .erreurs{background:rgba(255,123,136,.07);border:1px solid #6b2f38;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:.92em}
+  .erreurs b{color:var(--err)}
+  .critere{font-size:.85em;color:var(--sub);border-top:1px dashed var(--border);padding-top:8px;margin-top:10px}
+  .critere b{color:var(--warn)}
+  .feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
+  img.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  /* Règle d'or n°117 — alt court, description détaillée dépliable à côté */
+  .description-image{max-width:860px;margin:-4px auto 14px;font-size:.94em}
+  .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  @media print{ .choix-parcours-boutons{display:none} }
+  .courrier ol.exigences{margin:6px 0 10px 1.2em}
+  .courrier ol.exigences>li{margin:5px 0}
+  .courrier ol.exigences ul{margin:4px 0 4px 1em}
+  .repli-tout-en-un{max-width:940px;margin:0 auto 14px;padding:8px 12px;border-left:3px solid var(--sub);
+    background:rgba(155,190,252,.06);border-radius:0 8px 8px 0;font-size:.9em;color:var(--sub)}
+  .repli-tout-en-un a{color:var(--hl)}
+  .description-image summary{cursor:pointer;color:var(--sub);padding:4px 0}
+  .description-image ol{margin:6px 0 6px 1.3em}
+  .description-image p{margin:6px 0}
+  .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:760px){.versions{grid-template-columns:1fr}}
+  .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
+  .version h4{margin-top:0}
+  .version.va h4{color:var(--ok)}
+  .version.vb h4{color:var(--hl)}
+  .version.vc h4{color:var(--warn)}
+  .bilan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:700px){.bilan-grid{grid-template-columns:1fr}}
+  .confiance{display:flex;gap:8px;flex-wrap:wrap}
+  .confiance label{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:9px;padding:7px 12px;cursor:pointer;font-size:.88em}
+  .confiance input{accent-color:var(--hl)}
+  .saved-note{font-size:.78em;color:var(--ok);text-align:center;min-height:1.2em}
+  footer{max-width:940px;margin:30px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--btn);color:#fff;padding:10px 16px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
+  /* ── Banc de simulation de la station ── */
+  .banc{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;align-items:start}
+  @media(max-width:720px){.banc{grid-template-columns:1fr}}
+  .lcd-sim{border-radius:10px;padding:14px 16px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.25em;line-height:1.5;border:3px solid #222;min-height:74px;transition:background .3s;color:#08320f;box-shadow:inset 0 0 18px rgba(0,0,0,.25)}
+  .lcd-vert{background:#57d98a}
+  .lcd-jaune{background:#e8d44d;color:#3d3300}
+  .lcd-orange{background:#f2a94f;color:#4a2600}
+  .lcd-rouge{background:#f2545f;color:#3d0208}
+  .station-io{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+  .del-sim{width:26px;height:26px;border-radius:50%;background:#3a3a3a;border:3px solid #555;display:inline-block;vertical-align:middle}
+  /* Quatre voyants, un seul allumé à la fois. Le vert est FIXE : la pulsation
+     commence au jaune, pour qu'elle reste un signal et non un décor. */
+  .del-sim.vert.on{background:#57d98a;box-shadow:0 0 14px #57d98a;border-color:#8ff0b6}
+  .del-sim.jaune.on{background:#e8d44d;box-shadow:0 0 14px #e8d44d;border-color:#f6ec9b}
+  .del-sim.orange.on{background:#f2a94f;box-shadow:0 0 14px #f2a94f;border-color:#f8cf9b}
+  .del-sim.rouge.on{background:#ff2d3e;box-shadow:0 0 14px #ff2d3e;border-color:#ff9aa2}
+  @keyframes del-pulse{0%,100%{opacity:1}50%{opacity:.28}}
+  .del-sim.pulse{animation:del-pulse 1.6s ease-in-out infinite}
+  /* Règle n°119 : l'animation ne porte JAMAIS seule l'information — le niveau
+     reste écrit sur l'écran. Ici on la coupe simplement. */
+  @media (prefers-reduced-motion: reduce){ .del-sim.pulse{animation:none} }
+  .buzzer-sim{font-size:1.15em;padding:5px 12px;border-radius:8px;border:2px solid var(--border);background:#08132c}
+  .buzzer-sim.on{border-color:var(--err);color:var(--err);animation:buzz .5s infinite alternate}
+  @keyframes buzz{from{box-shadow:0 0 2px #ff7b88}to{box-shadow:0 0 14px #ff7b88}}
+  .btn-acquit{background:#8a1d2c;border:2px solid #ff7b88;color:#fff;border-radius:12px;padding:12px 20px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95em}
+  .btn-acquit:hover,.btn-acquit:focus-visible{background:#a92c3d}
+  input[type=range]{width:100%;accent-color:var(--hl)}
+  .verrous-liste{font-size:.85em;margin:10px 0 0;padding:0;list-style:none}
+  .verrous-liste li{margin:3px 0;color:var(--sub)}
+  .verrous-liste li.fait{color:var(--ok)}
+  .palier{border:1px solid var(--input-bd);border-left:5px solid var(--head);border-radius:0 12px 12px 0;background:rgba(13,35,71,.5);padding:12px 16px;margin:14px 0}
+  .palier h4{margin:0 0 8px;color:var(--head)}
+  .palier .faire{color:var(--hl);font-weight:600}
+  .palier .rituel{font-size:.85em;color:var(--warn);border-top:1px dashed var(--border);margin-top:10px;padding-top:8px}
+  pre.code{background:#08132c;border:1px solid var(--border);border-radius:10px;padding:12px 16px;overflow-x:auto;font-size:.85em;line-height:1.5;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+  pre.code .cmt{color:#7fa650}
+  pre.code .kw{color:#61dafb}
+  pre.code .fn{color:#c68ef2}
+  pre.code .num{color:#ffd66b}
+  table.recette{width:100%;border-collapse:collapse;font-size:.85em}
+  table.recette th,table.recette td{border:1px solid var(--border);padding:6px 8px;text-align:left;vertical-align:middle}
+  table.recette th{background:var(--input-bg);color:var(--hl)}
+  table.recette select,table.recette input{padding:4px 6px;font-size:.95em}
+  .regle-or-schema{border:3px solid #1F3864;border-radius:12px;padding:14px 18px;margin:18px 0;background:#EAF1FB;color:#111;font-weight:600;line-height:1.5}
+  .rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
+  .rappel-spiralaire h2{margin:.1em 0 .5em}
+  .rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}
+  .rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+  .gestes-outil{border:1px solid var(--border);border-left:4px solid #ffb300;border-radius:10px;padding:1rem 1.15rem;margin:1.1rem 0;background:var(--panel)}
   .gestes-outil h2{margin:0 0 .35rem;font-size:1.05em}
   .gestes-outil .pourquoi{margin:.2rem 0 .8rem;opacity:.85;font-size:.95em}
   .gestes-outil ol{margin:0;padding-left:1.3rem}
   .gestes-outil li{margin:.45rem 0}
   .gestes-outil li b:first-child{color:#ffb300}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement { display:none }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111;padding:0}
+    section.card,.activite,.exo,.palier{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    h1,h2,h3,h4,.problematique{color:#111;background:none}
+    .toolbar,.btn,.seance-tabs,.progress-wrap,.saved-note,.btn-acquit{display:none!important}
+    .seance-panel{display:block!important}
+    details{border-color:#999;background:#fff}
+    a{color:#111}
+  }
 </style>
-<!-- gestes-outil-v1 : règle d'or n°93 — les gestes d'outil, réenseignés à chaque niveau. -->
-<section class="card gestes-outil" aria-labelledby="gestes-vittascience">
-  <h2 id="gestes-vittascience">🧰 Avant de commencer — les quatre gestes de Vittascience</h2>
-  <p class="pourquoi">Quatre gestes à faire une fois, au début, et ta séance ne
-  se perdra pas. Tu les as peut-être déjà faits une autre année&nbsp;: refais-les,
-  c'est court. Et si tu ne les as jamais faits, tout est écrit ici — tu n'as
-  besoin de rien d'autre.</p>
-  <ol>
-    <li><b>Ouvrir.</b> Ouvre <b>Vittascience</b> dans le navigateur et connecte-toi avec le compte de la classe.</li>
-    <li><b>Nommer.</b> Clique sur le titre du projet, en haut, et remplace-le par <code>NIVEAU-SUJET-TON&nbsp;NOM</code>. Un projet sans nom est introuvable la semaine suivante.</li>
-    <li><b>Retrouver.</b> Ton projet est enregistré dans ton compte&nbsp;: tu le retrouveras depuis n'importe quel poste en te reconnectant, dans la liste de tes projets. Vérifie-le tout de suite&nbsp;: reviens à la liste, puis rouvre ton projet.</li>
-    <li><b>Sortir.</b> Pour garder une trace hors ligne&nbsp;: <b>Fichier → Exporter</b>, ou une capture d'écran du programme collée dans ton compte rendu.</li>
-  </ol>
+<style id="jardin-css">
+  /* Banc d'essai du jardin — mêmes conventions de couleur que le lot 3e (règle n°120) */
+  .banc-jardin{border:2px solid var(--hl);border-radius:14px;padding:16px;background:#08132c;margin:14px 0}
+  .banc-grille{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.banc-grille{grid-template-columns:1fr}}
+  .ecran-sim{font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;border-radius:8px;
+    padding:12px 14px;border:2px solid #2e5d9f;min-height:64px;transition:background .25s,color .25s}
+  .ecran-sim.pompe-on{background:#0e5a2a;color:#eafff0;border-color:#81fba1}
+  .ecran-sim.pompe-off{background:#12233f;color:#cfe0ff;border-color:#3a5ea8}
+  .pompe-sim{display:inline-block;width:20px;height:20px;border-radius:50%;background:#25324d;
+    border:2px solid #3a5ea8;vertical-align:middle;margin-right:6px;transition:background .2s,box-shadow .2s}
+  .pompe-sim.on{background:#40d47e;border-color:#81fba1;box-shadow:0 0 12px rgba(129,251,161,.75)}
+  .compteur-bascule{font-size:1.6em;font-weight:700;color:var(--warn)}
+  .verrous-banc{list-style:none;padding-left:0;font-size:.9em;margin:8px 0 0}
+  .verrous-banc li{padding:3px 0;color:var(--sub)}
+  .verrous-banc li.fait{color:var(--ok);font-weight:600}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
+  .repli-vitta{border:2px dashed var(--hl);border-radius:10px;padding:14px;background:#08132c;margin-top:8px}
+  .py{font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;background:#0a1b3d;
+    border:1px solid var(--border);border-radius:10px;padding:14px;overflow-x:auto;font-size:.9em;white-space:pre}
+  .py .kw{color:#c68ef2;font-weight:600}.py .num{color:#ffb454}.py .fn{color:#61dafb}
+  .py .cmt{color:#5b7bb8;font-style:italic}.py .str{color:#81fba1}
+  @media print{ .choix-parcours-boutons,.banc-jardin button{display:none} }
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../../index.html">⌂ Accueil</a>
+  <a href="qcm_4e_C9_jardin-programme.html">🧠 QCM</a>
+  <a class="skip-link" href="#s1">Aller au contenu</a>
+</nav>
+
+<h1>🌱 Le jardin connecté se programme — 4e</h1>
+<p class="subtitle">🎯 Ta mission : écrire le programme qui décide d'arroser — puis découvrir que le plus long n'est pas de l'écrire, c'est de le mettre au point.</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C9.1</span>
+  <span class="badge code">4e_C9.2</span>
+  <span class="badge code">4e_C9.3</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D4 · D5</span>
+  <span class="badge crcn">CRCN : 3.4 · 5.2</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+
+<section class="card rappel-spiralaire" aria-labelledby="rap-spi">
+  <h2 id="rap-spi">🔁 Ce que tu as déjà fait</h2>
+  <p>L'an dernier, avec la <b>boîte étiquetée</b>, tu as compris ce qu'est une variable, tu as <b>testé un programme fourni</b>, et tu l'as <b>modifié</b> pour régler une barrière.</p>
+  <p class="change"><b>Cette année, ce qui change :</b> il n'y a plus de programme fourni — tu l'<b>écris</b>. Concevoir, écrire, tester, mettre au point : les quatre gestes, dans cet ordre. Et tu vas découvrir que le plus long n'est pas d'écrire.</p>
+  <p class="filet">Tu n'étais pas là l'an dernier ? Une variable est une boîte étiquetée : un nom, et une valeur qu'on peut changer. C'est tout ce qu'il faut savoir pour commencer.</p>
 </section>
 
+<!-- ════════ BILLET D'ENTRÉE — règle d'or n°26 ════════ -->
+<section class="card" id="billet">
+  <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p>Trois questions sur ce que tu es censé savoir en arrivant. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> : elles servent à savoir, toi comme le professeur, sur quoi s'appuyer. Réponds franchement — « je ne sais pas » est une réponse utile.</p>
+  <div class="assoc"><label for="be_1">Une <b>variable</b>, en informatique, c'est…</label><select id="be_1"><option value="">— choisir —</option><option>une boîte qui porte un nom et contient une valeur qu'on peut changer</option><option>un nombre qui change tout seul</option><option>une erreur du programme</option><option>je ne sais pas encore</option></select></div>
+  <div class="assoc"><label for="be_2">Dans « SI la température &lt; 5 ALORS allumer le chauffage », le mot SI introduit…</label><select id="be_2"><option value="">— choisir —</option><option>une condition : une question à laquelle on répond OUI ou NON</option><option>une boucle qui répète</option><option>le nom d'une variable</option><option>je ne sais pas encore</option></select></div>
+  <div class="assoc"><label for="be_3">Un capteur d'humidité, dans la chaîne d'information, occupe la fonction…</label><select id="be_3"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>je ne sais pas encore</option></select></div>
+  <button class="btn small" id="btnBillet">Voir où j'en suis</button>
+  <div class="feedback" id="fbBillet" role="status"></div>
+</section>
 
-<div class="subtitle">Écrire, tester et corriger le programme qui pilote la nouvelle fonction du jardin scolaire à New York</div>
-<div class="badges">
-  <span class="badge niveau">4e</span>
-  <span class="badge theme">Thème 3 — Création, conception, réalisation</span>
-  <span class="badge code">4e_C9.1 · 4e_C9.2 · 4e_C9.3</span>
-  <span class="badge theme">Ancrage New York</span>
+<!-- ════════ RÉFÉRENTIEL — règles n°42, n°104, n°105 ════════ -->
+<section class="card referentiel-card">
+  <h2>📋 Ce que dit le programme officiel</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation du référentiel (recopiée, au mot près)</th><th>Où elle se travaille ici</th></tr>
+    <tr><td><b>4e_C9.1</b></td><td>Modifier un algorithme permettant de répondre au besoin ou au problème posé.</td><td>Activité 2 — l'algorithme d'arrosage existe déjà ; tu le <b>modifies</b> pour y ajouter la plage horaire. Puis activité 5, où tu le modifies de nouveau pour supprimer le clignotement.</td></tr>
+    <tr><td><b>4e_C9.2</b></td><td>Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme.</td><td>Activité 3 — l'algorigramme de l'activité 2 devient un vrai programme, en blocs puis en Python, et on retrouve chaque forme dessinée dans une ligne de code.</td></tr>
+    <tr><td><b>4e_C9.3</b></td><td>Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.</td><td>Activités 4, 5 et 6 — le programme commande une vraie pompe ; on le <b>met au point</b> par le jeu d'essais, le diagnostic du clignotement et sa correction, puis on réinvestit la structure sur le lampadaire.</td></tr>
+  </table>
+  <p style="font-size:.9em;color:var(--sub)"><b>Lis les verbes.</b> En 4e, on <b>modifie</b> un algorithme — on ne part pas de la page blanche, on complète quelque chose qui existe : c'est exactement ce que demande l'activité 2. En 3e, la même famille de compétences dira « écrire » et « concevoir ». La progression du cycle est dans ces verbes-là, pas dans la difficulté des programmes.</p>
+  <p style="font-size:.88em;color:var(--sub);margin-bottom:0"><b>Domaines du socle réellement évalués ici :</b> <b>D1.3</b> (langages mathématiques, scientifiques et informatiques — le programme écrit) · <b>D2</b> (méthodes et outils pour apprendre — la démarche d'essai) · <b>D4</b> (systèmes naturels et systèmes techniques — concevoir, tester, mettre au point). <b>D5</b> est <i>contexte</i> — le jardin, l'eau, la ville — et n'est pas évalué (règle n°126).</p>
+</section>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom" placeholder="ton nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom" placeholder="ton prénom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe" placeholder="4e…"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<div class="toolbar">
+  <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
+  <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
+  <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 J'ai le matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments : il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<div class="progress-wrap">
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progTxt"><div id="progFill"></div></div>
+  <p class="saved-note" id="progTxt">0 / 6 activités validées</p>
 </div>
 
 <section class="card">
-  <h2>📋 En-tête pédagogique</h2>
-  <table class="refs">
-    <tr><th>Niveau / Codes</th><td>4e — 4e_C9.1, 4e_C9.2, 4e_C9.3</td></tr>
-    <tr><th>Compétence principale</th><td>C9 — Concevoir, écrire, tester et mettre au point un programme</td></tr>
-    <tr><th>Domaines du socle</th><td>D2 · D4 · D5</td></tr>
-    <tr><th>Durée indicative</th><td>3 × 55 min</td></tr>
-    <tr><th>Ancrage</th><td>New York — school garden / rooftop · suite C7–C8</td></tr>
-  </table>
-  <div style="margin-top:14px">
-    <label>Nom : <input type="text" id="eleveNom" placeholder="Nom" style="width:140px"></label>
-    <label>Prénom : <input type="text" id="elevePrenom" placeholder="Prénom" style="width:140px"></label>
-    <label>Classe : <input type="text" id="eleveClasse" placeholder="4eX" style="width:80px"></label>
-    <span class="saved-note" id="savedNote"></span>
-  </div>
-</section>
-
-<section class="card">
-  <h2>🔁 Le contrat de la séquence (règle d'or n°18)</h2>
-  <div style="background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;font-size:.92em">
-  <p style="margin:0 0 6px"><b style="color:var(--hl)">FAIRE pour comprendre&nbsp;:</b> tu écris et EXÉCUTES ton programme dans l'éditeur 🧪 (blocs puis Python) avant toute définition.</p>
-  <p style="margin:0 0 6px"><b style="color:var(--hl)">COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: condition, plage, cas frontière, hystérésis — et l'algorigramme les DESSINE.</p>
-  <p style="margin:0"><b style="color:var(--hl)">REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le même squelette sur le lampadaire (réinvestissement) — même concept, autre habit.</p>
-  </div>
-</section>
-
-<section class="card">
   <h2>📖 Situation déclenchante</h2>
-  <p class="declencheur">Le support de capteur a été conçu (C7) et validé (C8). Il reste à écrire le programme qui décide d’arroser ou non selon l’humidité mesurée. À New York, le gel hivernal et les pluies d’automne imposent des seuils et une plage horaire raisonnables : on ne veut pas arroser sous la pluie ni la nuit en plein hiver. Tu es chargé d’écrire, tester et mettre au point ce programme.</p>
+  <div class="declencheur">
+    <p><b>Le jardin du collège a soif — ou pas.</b> Le support de capteur, vous l'avez conçu (C7) et validé (C8). Le capteur est en terre, la pompe est branchée. Il ne manque plus qu'une chose, et c'est la plus difficile : <b>quelqu'un doit décider</b> quand arroser.</p>
+    <p>Ce quelqu'un, cette année, ce sera un <b>programme</b>. Et il devra tenir compte de deux choses au moins : la terre est-elle sèche, et est-ce le bon moment ? Arroser à midi en plein soleil, c'est perdre la moitié de l'eau en vapeur ; arroser la nuit en hiver, c'est risquer le gel sur les racines.</p>
+  </div>
+  <p style="font-size:.9em;color:var(--sub)"><b>Ce jardin est le vôtre</b> — pas une invention pour l'exercice. Les seuils et la plage horaire, en revanche, sont des <b>valeurs de départ</b> proposées par le professeur : une partie du travail consistera justement à se demander si elles sont bonnes.</p>
 </section>
 
 <section class="card">
   <h2>❓ Problématique</h2>
-  <p class="problematique">Comment concevoir, écrire, tester et mettre au point un programme simple qui pilote correctement une nouvelle fonction d’un objet connecté&nbsp;?</p>
+  <p class="problematique">Comment écrire un programme qui décide tout seul — et comment savoir qu'il décide JUSTE ?</p>
 </section>
 
 <section class="card">
-  <h2>💡 Hypothèses initiales</h2>
-  <p>Avant de coder, formule ce que le programme doit faire (en langage naturel).</p>
-  <textarea id="hypothese" rows="3" placeholder="SI humidité &lt; seuil ALORS arroser, SINON…"></textarea>
-  <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
+  <h2>💡 Ton hypothèse de départ</h2>
+  <p>Avant de coder quoi que ce soit, écris avec tes mots la règle que le programme devra suivre. Tu la reliras à la fin : c'est le meilleur moyen de mesurer ce que tu auras appris.</p>
+  <label for="hyp1" style="display:block"><b>1.</b> Selon toi, de quoi le programme a-t-il besoin pour décider d'arroser ou non ?</label>
+  <textarea id="hyp1" placeholder="Il a besoin de… et il décide d'arroser quand…"></textarea>
+  <label for="hyp2" style="display:block;margin-top:10px"><b>2.</b> Comment ferais-tu pour vérifier qu'il décide juste, sans attendre qu'une plante meure ?</label>
+  <textarea id="hyp2" placeholder="Je testerais…"></textarea>
+  <details class="etayage">
+    <summary>🪜 Version étayée — des phrases à compléter</summary>
+    <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique.</p>
+    <ul>
+      <li>Le programme a besoin de connaître ____ et ____ . Il arrose quand ____ et quand ____ .</li>
+      <li>Pour vérifier sans risque, j'essaierais des valeurs ____ , notamment ____ , et je comparerais ce que le programme fait avec ce que ____ .</li>
+    </ul>
+  </details>
 </section>
 
 <section class="card">
-  <h2>🔧 Activité 1 — Concevoir et écrire le programme (4e_C9.1)</h2>
-  <div class="exo">
-    <h4>Objectif</h4>
-    <p>Traduire la règle de décision en un algorithme puis en un programme simple (pseudo-code ou blocs).</p>
-    <p><strong>Consigne :</strong> Complète le pseudo-code ci-dessous pour un seuil d’humidité de 40 % et une pompe (ou LED) d’arrosage.</p>
-    <div class="codebox">SEUIL = 40
+  <h2>🧰 Avant de commencer — les quatre gestes de Vittascience</h2>
+  <p style="color:var(--sub);font-size:.95em">Quatre gestes à faire une fois, au début, et ta séance ne se perdra pas. Tu les as peut-être déjà faits une autre année : refais-les, c'est court. Et si tu ne les as jamais faits, tout est écrit ici.</p>
+  <ol>
+    <li><b>Ouvrir.</b> Ouvre <b>Vittascience</b> dans le navigateur et connecte-toi avec le compte de la classe.</li>
+    <li><b>Nommer.</b> Clique sur le titre du projet, en haut, et remplace-le par <code>4e-JARDIN-TON NOM</code>. Un projet sans nom est introuvable la semaine suivante.</li>
+    <li><b>Retrouver.</b> Ton projet est enregistré dans ton compte : reviens à la liste de tes projets, puis rouvre-le. Vérifie-le <b>tout de suite</b>, pas la semaine prochaine.</li>
+    <li><b>Sortir.</b> Pour garder une trace hors ligne : <b>Fichier → Exporter</b>, ou une capture d'écran collée dans ton compte rendu.</li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <p>Les trois parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. Le sélecteur <b>🔀 Mon parcours</b>, en haut de page, range simplement au second plan ce qui ne te concerne pas — il ne retire aucune question.</p>
+  <div class="versions">
+    <div class="version va" data-parcours="a"><h4>🅰 Matériel réel</h4>
+      <p>Carte + capteur d'humidité + <b>relais</b> + pompe 12 V, avec son alimentation séparée. Le relais n'est pas un détail de câblage : c'est <b>lui</b> qui reçoit l'ordre du programme, et l'activité 1 explique pourquoi.</p>
+      <p style="color:var(--sub)">Sécurité : la carte reste en très basse tension. L'alimentation de la pompe est branchée et vérifiée <b>par le professeur</b>, jamais par vous, et jamais avant que le câblage ait été relu.</p></div>
+    <div class="version vb" data-parcours="b"><h4>🅱 Simulation</h4>
+      <p>Deux outils, deux rôles : l'éditeur <b>Vittascience</b> pour écrire et exécuter ton programme, et le <b>banc d'essai intégré</b> à cette page pour voir la pompe réagir, faire trembler la mesure et compter les basculements. Le banc fonctionne <b>hors connexion</b>.</p></div>
+    <div class="version vc" data-parcours="c"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans la page : le banc d'essai, les figures à lire, et les <b>traces d'exécution</b> fournies à l'activité 5. Tu peux tout faire, y compris à la maison, et être validé sur les mêmes critères.</p></div>
+  </div>
+</section>
+
+<!-- ════════ TABLEAU DE BORD — règle d'or n°30 ════════ -->
+<section class="card" id="taches">
+  <h2>🗺 Où en suis-je ?</h2>
+  <p style="font-size:.92em;color:var(--sub)">Cinq activités, réparties sur trois séances. Une case se coche quand l'activité est validée — pas quand elle est commencée.</p>
+  <div id="tachesBandeau" class="taches-bandeau"></div>
+</section>
+
+<!-- ════════ LE BANC D'ESSAI ════════ -->
+<section class="card" id="bancCard">
+  <h2>🧪 Le banc d'essai du jardin — ici même, sans rien installer</h2>
+  <p>Ce banc reproduit le comportement de la station d'arrosage. <b>Il fonctionne hors connexion</b>, et <b>toutes tes manipulations sont tracées</b> : plusieurs activités demandent des essais réellement faits ici. Ce n'est pas une illustration, c'est un instrument.</p>
+
+  <div class="banc-jardin">
+    <div class="banc-grille">
+      <div>
+        <div class="assoc"><label for="bHum">💧 Humidité du sol : <b id="bHumVal" style="color:var(--hl)">30</b> %</label>
+          <input type="range" id="bHum" min="0" max="100" value="30" step="1"></div>
+        <div class="assoc" style="margin-top:6px"><label for="bHumNum">Valeur exacte (%) — pratique pour viser 39 et 40 :</label>
+          <input type="number" id="bHumNum" min="0" max="100" step="1" value="30"></div>
+        <div class="assoc" style="margin-top:6px"><label for="bHeure">🕐 Heure de la journée : <b id="bHeureVal" style="color:var(--hl)">8</b> h</label>
+          <input type="range" id="bHeure" min="0" max="23" value="8" step="1"></div>
+
+        <fieldset style="margin-top:12px;border:1px solid var(--border);border-radius:10px;padding:10px 12px">
+          <legend style="font-size:.9em;color:var(--sub);padding:0 6px">La règle appliquée par le banc</legend>
+          <label style="display:block;margin:4px 0"><input type="radio" name="bMode" value="un" checked style="width:auto"> <b>UN seuil</b> : arroser si H &lt; 40 (et 6 ≤ heure ≤ 10)</label>
+          <label style="display:block;margin:4px 0"><input type="radio" name="bMode" value="deux" style="width:auto"> <b>DEUX seuils</b> : allumer si H &lt; 35, éteindre si H &gt; 45 — hystérésis</label>
+        </fieldset>
+
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn small" id="btnTrembler">🌫 Faire trembler la mesure autour de 40</button>
+          <button class="btn small ghost" id="btnRAZ">↺ Remettre le compteur à zéro</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="ecran-sim pompe-off" id="bEcran" role="status" aria-live="polite">
+          <div id="bL1">POMPE OFF</div>
+          <div id="bL2">H: 30 %   heure: 8 h</div>
+        </div>
+        <p style="margin:10px 0 4px"><span class="pompe-sim" id="bPompe"></span> <span id="bPompeTxt" style="font-size:.92em">pompe à l'arrêt</span></p>
+        <p style="margin:6px 0"><span style="font-size:.9em;color:var(--sub)">Basculements ON/OFF depuis la remise à zéro :</span><br>
+          <span class="compteur-bascule" id="bCompteur">0</span></p>
+        <p style="font-size:.85em;color:var(--sub);margin:2px 0 0" id="bDiag">Fais varier l'humidité et regarde ce compteur : c'est lui qui dira si ton programme est nerveux.</p>
+
+        <ul class="verrous-banc" aria-label="Ce que le banc a tracé">
+          <li id="v-varie">☐ J'ai fait varier l'humidité et observé la pompe</li>
+          <li id="v-plage">☐ J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte</li>
+          <li id="v-front">☐ J'ai testé les deux frontières : 39 % et 40 %</li>
+          <li id="v-clign">☐ J'ai provoqué le clignotement (mode UN seuil, mesure qui tremble)</li>
+          <li id="v-hyst">☐ J'ai vérifié que les DEUX seuils l'arrêtent, sur la même mesure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:.85em;color:var(--sub)"><b>Ce que le banc ne fait pas :</b> il n'a pas de vraie terre, et sa mesure ne tremble que quand tu le lui demandes. Un vrai capteur, lui, tremble tout le temps — un peu plus quand il fait chaud, un peu plus quand le contact est mauvais. Le banc rend visible un phénomène réel ; il ne le remplace pas.</p>
+</section>
+
+<nav class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
+  <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>Comprendre et dessiner</small><span class="done" id="done-s1"></span></button>
+  <button class="seance-tab" data-panel="s2" role="tab" aria-selected="false">Séance 2<br><small>Écrire et tester</small><span class="done" id="done-s2"></span></button>
+  <button class="seance-tab" data-panel="s3" role="tab" aria-selected="false">Séance 3<br><small>Mettre au point</small><span class="done" id="done-s3"></span></button>
+</nav>
+
+<!-- ══════════════════ SÉANCE 1 ══════════════════ -->
+<div class="seance-panel active" id="s1" role="tabpanel">
+<section class="card">
+  <h2>🌱 Séance 1 — Comprendre le système, puis dessiner la décision</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : qui décide, qui obéit — et à quoi ressemble une décision quand on la dessine ?</p>
+
+  <div class="activite" id="act1">
+    <header><span class="num">Activité 1</span><h3>Les deux chaînes du jardin — et le relais qui les sépare</h3><span class="duree">⏱ ~20 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> situer chaque organe du jardin connecté dans sa fonction, et comprendre pourquoi la pompe ne se branche pas sur une broche.</div>
+      <div><b>Compétence :</b> préalable aux trois codes C9 — comprendre le système avant de le programmer (le programme officiel suppose l'objet connu).</div>
+      <div><b>Production attendue :</b> les organes classés + une justification écrite sur le rôle du relais.</div>
+      <div><b>Ressources :</b> le schéma des deux chaînes ci-dessous.</div>
+    </div>
+    <img class="figure" src="Images/chaines_jardin_connecte.svg" alt="Schéma des deux chaînes du jardin connecté : en haut la chaîne d'information — l'humidité du sol et l'heure entrent dans ACQUÉRIR, puis TRAITER avec les seuils 35 et 45, puis COMMUNIQUER qui affiche POMPE ON ou OFF vers le jardinier ; en bas la chaîne d'énergie — ALIMENTER par une alimentation 12 V séparée, DISTRIBUER par le relais, CONVERTIR par le moteur de la pompe, TRANSMETTRE par l'arbre qui entraîne la turbine ; entre les deux, la flèche d'ordre descend de TRAITER et vient se poser sur le relais, et non sur le moteur" aria-describedby="desc-chaines-j">
+    <details class="description-image" id="desc-chaines-j">
+      <summary>📖 Description détaillée du schéma</summary>
+      <p><b>En haut, la chaîne d'information.</b> Deux entrées : l'<b>humidité du sol</b>, grandeur physique lue par le capteur, et l'<b>heure</b>, donnée par l'horloge de la carte. Remarque la différence : la première vient du monde et demande un capteur, la seconde non — et pourtant elle déclenche autant que l'autre. Elles arrivent à <b>ACQUÉRIR</b>, puis une flèche « données » mène à <b>TRAITER</b> (la carte, le programme, les seuils, la mémoire de l'état), puis une flèche « décision » mène à <b>COMMUNIQUER</b> (l'affichage « POMPE ON / OFF » et le voyant, vers le jardinier).</p>
+      <p><b>Entre les deux chaînes</b>, la flèche jaune de l'<b>ORDRE</b> descend de TRAITER et s'arrête sur le <b>RELAIS</b>. Pas sur le moteur : la pompe est en 12 V et consomme cent fois ce qu'une broche peut fournir. Le relais reçoit le petit signal et laisse passer la grosse énergie — c'est un <b>préactionneur</b>.</p>
+      <p><b>En bas, la chaîne d'énergie :</b> <b>ALIMENTER</b> (alimentation 12 V <b>séparée</b>, surtout pas l'USB), <b>DISTRIBUER</b> (le relais), <b>CONVERTIR</b> (le moteur : électricité → rotation), <b>TRANSMETTRE</b> (l'arbre entraîne la turbine, l'eau part). Ici, quelque chose <b>se déplace</b> — l'eau — donc TRANSMETTRE existe vraiment.</p>
+    </details>
+
+    <div class="consigne"><b>Consigne :</b> a) place chaque organe dans sa fonction ; b) réponds aux deux questions sur le relais ; c) explique par écrit pourquoi l'heure est une entrée alors qu'aucun capteur ne la mesure.</div>
+    <div class="exo">
+      <h4>a) Chaque organe à sa place</h4>
+      <div class="assoc"><label for="a1_1">Le capteur d'humidité planté dans la terre</label><select id="a1_1"><option value="">— choisir —</option><option>ACQUÉRIR</option><option>TRAITER</option><option>COMMUNIQUER</option><option>ALIMENTER</option><option>CONVERTIR</option></select></div>
+      <div class="assoc"><label for="a1_2">La carte et son programme</label><select id="a1_2"><option value="">— choisir —</option><option>TRAITER</option><option>ACQUÉRIR</option><option>COMMUNIQUER</option><option>DISTRIBUER</option><option>CONVERTIR</option></select></div>
+      <div class="assoc"><label for="a1_3">L'affichage « POMPE ON » et le voyant</label><select id="a1_3"><option value="">— choisir —</option><option>COMMUNIQUER</option><option>ACQUÉRIR</option><option>TRAITER</option><option>CONVERTIR</option><option>TRANSMETTRE</option></select></div>
+      <div class="assoc"><label for="a1_4">Le moteur de la pompe</label><select id="a1_4"><option value="">— choisir —</option><option>CONVERTIR</option><option>TRANSMETTRE</option><option>DISTRIBUER</option><option>ALIMENTER</option><option>COMMUNIQUER</option></select></div>
+      <div class="assoc"><label for="a1_5">Le relais</label><select id="a1_5"><option value="">— choisir —</option><option>DISTRIBUER — c'est le préactionneur</option><option>CONVERTIR</option><option>ACQUÉRIR</option><option>TRAITER</option><option>TRANSMETTRE</option></select></div>
+
+      <h4>b) Le relais, et la flèche d'ordre</h4>
+      <div class="assoc"><label for="a1_r1">Pourquoi la pompe ne se branche-t-elle pas directement sur une broche de la carte ?</label><select id="a1_r1"><option value="">— choisir —</option><option>elle demande beaucoup plus de courant qu'une broche ne peut en fournir : la carte serait détruite</option><option>parce que les broches sont déjà toutes utilisées</option><option>parce que la pompe n'a pas de fil</option><option>c'est possible, mais c'est mal rangé</option></select></div>
+      <div class="assoc"><label for="a1_r2">Le relais <b>fabrique-t-il</b> l'énergie qui fait tourner la pompe ?</label><select id="a1_r2"><option value="">— choisir —</option><option>non : il laisse passer, ou non, celle qui vient de l'alimentation 12 V</option><option>oui, il la produit à partir du signal de la carte</option><option>oui, il l'amplifie cent fois</option><option>non, il ne sert qu'à protéger les fils</option></select></div>
+
+      <h4>c) Une entrée sans capteur</h4>
+      <label for="a1_just" style="display:block">Le programme a <b>deux</b> entrées : l'humidité et l'heure. La première vient d'un capteur, la seconde non. Explique en quelques lignes pourquoi l'heure est quand même une <b>entrée</b> du système — et ce qui se passerait si on la retirait.</label>
+      <textarea id="a1_just" placeholder="L'heure est une entrée parce que…"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — des phrases à compléter</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre.</p>
+        <ul>
+          <li>L'heure est une entrée parce que le programme s'en sert pour ____ , exactement comme il se sert de ____ .</li>
+          <li>Ce qui change, c'est son ____ : elle ne vient pas du ____ mais de ____ .</li>
+          <li>Si on la retirait, le programme arroserait aussi ____ , ce qui poserait le problème de ____ .</li>
+        </ul>
+      </details>
+      <button class="btn small" data-check="1" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb1" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : demande-toi si l'organe <b>capte</b>, <b>décide</b>, <b>diffuse une information</b>, ou <b>manipule de l'énergie</b>. Pour b) : compare ce qu'une broche peut donner (quelques dizaines de milliampères) à ce qu'un moteur demande (souvent plus d'un ampère). Pour c) : une entrée, c'est ce qui <b>entre</b> dans la décision — peu importe d'où ça vient.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le relais est un <b>interrupteur commandé</b> : d'un côté un petit signal, de l'autre un gros circuit, et aucun lien électrique direct entre les deux. Il ne crée rien — il ouvre une porte. Quant à l'heure : le programme la <b>compare</b> exactement comme il compare l'humidité (<code>heure &gt;= 6</code>), donc elle joue le même rôle dans la décision.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> capteur d'humidité → <b>ACQUÉRIR</b> · carte + programme → <b>TRAITER</b> · affichage et voyant → <b>COMMUNIQUER</b> · moteur de la pompe → <b>CONVERTIR</b> · relais → <b>DISTRIBUER</b>, en tant que <b>préactionneur</b>.</p>
+      <p><b>b)</b> Une broche de carte fournit quelques dizaines de milliampères ; un moteur de pompe en demande souvent plus de mille. Brancher l'un sur l'autre ne fait pas « marcher moins bien » : cela <b>détruit</b> la sortie de la carte. Le relais ne fabrique aucune énergie — il <b>ouvre ou ferme le passage</b> de celle qui vient de l'alimentation 12 V. C'est pour cela que la flèche d'ORDRE s'arrête sur lui : il est le premier bloc de la chaîne d'énergie que le programme commande.</p>
+      <p><b>c) Justification attendue :</b> l'heure entre dans la décision au même titre que l'humidité — le programme la compare à des bornes. Ce qui change est son <b>origine</b> : elle ne vient pas du monde physique mais de l'horloge de la carte. Sans elle, le programme arroserait dès que la terre est sèche, y compris à 14 h en plein soleil (la moitié de l'eau part en vapeur) ou à 2 h du matin en hiver (risque de gel). <b>Une entrée n'a pas besoin d'un capteur pour être une entrée.</b></p>
+      <p><b>Méthode :</b> pour classer un organe, on ne regarde pas ce qu'il <i>est</i>, on regarde ce qu'il <i>fait</i> dans CE système. Le même relais serait rangé ailleurs dans un autre montage.</p>
+      <p><b>Limite :</b> notre chaîne s'arrête à la turbine. Le tuyau, l'arrosoir, la répartition de l'eau dans le sol — tout cela existe et compte, mais relève de l'étude du système hydraulique, pas de la programmation.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> ranger le relais dans CONVERTIR parce qu'il « fait tourner la pompe » — il ne convertit rien, il laisse passer ; croire qu'une entrée exige un capteur ; oublier que l'alimentation de la pompe est <b>séparée</b> de celle de la carte ; placer la flèche d'ORDRE sur le moteur alors qu'elle s'arrête au premier organe commandé.</div>
+    <div class="retenir"><b>📌 À retenir :</b> l'<b>information</b> décide, l'<b>énergie</b> obéit, et la flèche d'<b>ORDRE</b> descend de l'une vers l'autre. Quand la puissance est trop grande pour une broche, un <b>préactionneur</b> (ici un relais) s'intercale : il reçoit la commande et laisse passer l'énergie. Une <b>entrée</b> est tout ce qui entre dans la décision — l'heure en est une, sans capteur.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> au moins 6 réponses justes sur 7 <b>et</b> une justification qui dit à la fois <i>pourquoi l'heure est une entrée</i> et <i>ce qu'on perdrait sans elle</i>.</div>
+  </div>
+
+  <div class="activite" id="act2">
+    <header><span class="num">Activité 2</span><h3>De la règle à l'algorigramme — dessiner avant d'écrire</h3><span class="duree">⏱ ~25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> traduire une règle de décision en algorigramme normalisé, puis en pseudo-code.</div>
+      <div><b>Compétence :</b> <b>4e_C9.1</b> — <i>modifier</i> un algorithme permettant de répondre au besoin posé.</div>
+      <div><b>Production attendue :</b> l'algorigramme lu bloc par bloc + ton pseudo-code avec la plage horaire.</div>
+      <div><b>Ressources :</b> l'algorigramme ci-dessous — c'est le même programme que tu écriras, mais dessiné.</div>
+    </div>
+    <img class="figure" src="Images/algorigramme_arrosage.svg" alt="Algorigramme de l'arrosage en cinq blocs numérotés : 1 le terminal DÉBUT ; 2 un rectangle « mesurer l'humidité H et lire l'heure » ; 3 un losange « H inférieur à 40 ET heure comprise entre 6 et 10 ? » accompagné d'une bulle de commentaire en pointillés expliquant que le ET vit à l'intérieur de la question ; 4 sur la sortie OUI, un rectangle « allumer la pompe » ; 5 sur la sortie NON, un rectangle « éteindre la pompe » ; les deux chemins se rejoignent et une flèche remonte vers le bloc 2, formant la boucle de surveillance, sans aucun bloc FIN" aria-describedby="desc-algo-j">
+    <details class="description-image" id="desc-algo-j">
+      <summary>📖 Description détaillée de l'algorigramme</summary>
+      <p><b>Bloc 1 — DÉBUT</b>, un <i>terminal</i> (rectangle aux bouts arrondis) : le démarrage du système.</p>
+      <p><b>Bloc 2 — « Mesurer l'humidité H et lire l'heure »</b>, un <i>rectangle de traitement</i> : les deux entrées arrivent ici.</p>
+      <p><b>Bloc 3 — « H &lt; 40 ET 6 ≤ heure ≤ 10 ? »</b>, un <i>losange</i> : la seule forme qui pose une question, et qui a exactement deux sorties, OUI et NON. Une bulle en pointillés violets précise que le <b>ET vit à l'intérieur du losange</b> : ce n'est pas un second losange, c'est une seule décision portant sur deux conditions — et les deux doivent être vraies.</p>
+      <p><b>Blocs 4 et 5 :</b> sur OUI, « allumer la pompe » ; sur NON, « éteindre la pompe ». Deux rectangles, car ils <i>font</i> quelque chose.</p>
+      <p><b>Et la boucle :</b> les deux chemins se rejoignent, et une flèche remonte jusqu'au-dessus du bloc 2. Il n'y a <b>aucun bloc FIN</b>, et c'est voulu : un jardin ne se surveille pas une fois.</p>
+    </details>
+
+    <div class="consigne"><b>Consigne :</b> a) remets les cinq blocs dans l'ordre ; b) réponds aux questions de lecture ; c) écris le pseudo-code complet, plage horaire comprise.</div>
+    <div class="exo">
+      <h4>a) L'ordre des blocs</h4>
+      <p style="font-size:.92em;color:var(--sub)">Numérote de 1 à 5 dans l'ordre où le programme les parcourt.</p>
+      <div class="assoc"><label for="ag1">⬭ terminal — DÉBUT (au démarrage du système)</label><select id="ag1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="ag2">▭ traitement — Mesurer l'humidité H et lire l'heure</label><select id="ag2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="ag3">◇ décision — H &lt; 40 ET heure entre 6 et 10 ?</label><select id="ag3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="ag4">▭ action sur OUI — allumer la pompe</label><select id="ag4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div class="assoc"><label for="ag5">▭ action sur NON — éteindre la pompe</label><select id="ag5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+
+      <h4>b) Lire l'algorigramme de près</h4>
+      <div class="assoc"><label for="a2_q1">Le losange contient un <b>ET</b>. Pourquoi n'a-t-on pas dessiné <b>deux</b> losanges à la suite ?</label><select id="a2_q1"><option value="">— choisir —</option><option>parce que c'est UNE seule décision portant sur deux conditions — deux losanges donneraient le même résultat, mais diraient une autre chose</option><option>parce qu'on n'a pas la place sur la feuille</option><option>parce que le ET n'est pas autorisé dans un algorigramme</option><option>parce que le deuxième losange serait inutile : l'heure ne change rien</option></select></div>
+      <div class="assoc"><label for="a2_q2">Il n'y a <b>aucun bloc FIN</b>. Est-ce un oubli ?</label><select id="a2_q2"><option value="">— choisir —</option><option>non : la flèche qui remonte est la boucle de surveillance, le programme ne doit jamais s'arrêter</option><option>oui, il manque un bloc FIN après l'action</option><option>non, mais seulement parce que l'algorigramme est incomplet</option><option>oui, tout algorigramme doit finir par FIN</option></select></div>
+      <div class="assoc"><label for="a2_q3">Combien de <b>rectangles</b> (traitements) compte cet algorigramme ?</label><select id="a2_q3"><option value="">— choisir —</option><option>3 : la mesure, allumer, éteindre — le losange n'est pas un traitement</option><option>4 : les trois rectangles plus le losange</option><option>5 : tous les blocs</option><option>2 : allumer et éteindre seulement</option></select></div>
+      <div class="assoc"><label for="a2_q4">À H = 25 % et heure = 23 h, quel chemin la mesure suit-elle ?</label><select id="a2_q4"><option value="">— choisir —</option><option>la sortie NON — la terre est sèche, mais l'heure est hors plage, et le ET exige les DEUX</option><option>la sortie OUI — la terre est sèche, cela suffit</option><option>aucun des deux : le programme s'arrête</option><option>les deux à la fois</option></select></div>
+
+      <h4>c) Ton pseudo-code</h4>
+      <p>Voici le programme <b>sans</b> la plage horaire. Complète-le pour n'arroser qu'entre 6 h et 10 h.</p>
+      <div class="py">SEUIL = <span class="num">40</span>
 mesurer humidité → H
 SI H &lt; SEUIL ALORS
     allumer pompe
 SINON
     éteindre pompe
 FIN SI</div>
-    <p style="margin-top:12px"><strong>D'abord le dessin (règle n°18)&nbsp;:</strong> numérote les blocs de l'algorigramme de l'arrosage, de 1 à 5&nbsp;:</p>
-    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">⬭ début</span><select id="ag1" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage du système)</span></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ traitement</span><select id="ag2" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Mesurer l'humidité H et lire l'heure</span></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">◇ décision</span><select id="ag3" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>H &lt; 40 ET heure entre 6 et 10&nbsp;?</span></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ action OUI</span><select id="ag4" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → allumer la pompe</span></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px"><span style="font-size:.78em;color:var(--sub);min-width:88px;text-align:right">▭ action NON</span><select id="ag5" style="width:78px"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → éteindre la pompe, puis revenir à la mesure</span></div>
-    <button class="btn check" data-check="6" type="button">✅ Vérifier l'algorigramme</button>
-    <p class="feedback" id="fb6" role="status"></p>
-    <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
-    <p><b>1 — DÉBUT</b> (terminal). <b>2 — Mesurer H et lire l'heure</b> (rectangle&nbsp;: les ENTRÉES). <b>3 — H &lt; 40 ET heure entre 6 et 10&nbsp;?</b> (losange&nbsp;: la décision — le ET de la plage horaire vit DANS la question). <b>4 — OUI → pompe ON</b> et <b>5 — NON → pompe OFF puis retour</b>&nbsp;: la flèche qui remonte fait la boucle de surveillance. C'est exactement le programme que tu vas écrire — dessiné.</p></div></details>
-    <p style="margin-top:12px">Modifie maintenant le programme pour ajouter une <strong>plage horaire</strong> (ex. : arroser seulement entre 6 h et 10 h) :</p>
-    <textarea rows="6" id="prog1" placeholder="Écris ton pseudo-code modifié…"></textarea>
-    <details class="vs" id="vs1">
-      <summary>🧪 Écris et exécute ton programme ici — en blocs, puis lis le Python (et inversement)</summary>
-      <p class="vs-note">Construis d'abord la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire à droite ; puis modifie directement le Python (change le seuil, l'heure) et regarde les blocs suivre. Sans capteur réel : <code>H = 25</code> et <code>heure = 8</code>, et <code>print("POMPE ON")</code> à la place de la pompe.</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 1)"></iframe>
-    </details>
-    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
-    <p class="feedback" id="fb1" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS ton essai)</summary><div>
-<pre class="code codebox" style="white-space:pre">SEUIL = 40
-mesurer humidité → H
+      <label for="prog1" style="display:block;margin-top:10px">Recopie et complète — écris <b>ta</b> version, avec la plage horaire :</label>
+      <textarea id="prog1" style="min-height:130px" placeholder="SEUIL = 40&#10;mesurer humidité → H&#10;lire heure → heure&#10;SI …"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — un squelette à compléter</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ce squelette retire l'obstacle de la saisie, pas l'exigence.</p>
+        <div class="py">SEUIL = ____
+lire humidité → H
 lire heure → heure
-SI H &lt; SEUIL ET heure &gt;= 6 ET heure &lt;= 10 ALORS
+SI H ____ SEUIL <b>ET</b> heure ____ 6 <b>ET</b> heure ____ 10 ALORS
+    ____ la pompe
+SINON
+    ____ la pompe
+FIN SI</div>
+      </details>
+      <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
+      <div class="feedback" id="fb2" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Suis la figure du doigt, de haut en bas : par où entre-t-on ? que fait-on ensuite ? où pose-t-on la question ? Pour c) : tu n'as <b>rien à réécrire</b> — tu ajoutes deux conditions dans le SI existant, reliées par ET.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>« Entre 6 h et 10 h » se traduit par <b>deux</b> comparaisons : <code>heure &gt;= 6</code> ET <code>heure &lt;= 10</code>. Un seul « entre » en français, deux conditions en programmation — c'est un des pièges les plus fréquents. Et les trois conditions tiennent dans <b>un seul SI</b> : <code>SI H &lt; SEUIL ET heure &gt;= 6 ET heure &lt;= 10</code>.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a)</b> 1 DÉBUT · 2 mesurer H et lire l'heure · 3 le losange · 4 allumer (sur OUI) · 5 éteindre (sur NON).</p>
+      <p><b>b) Q1 :</b> c'est <b>une</b> décision sur deux conditions. Deux losanges à la suite donneraient le même comportement, mais ils raconteraient une autre histoire : « d'abord je regarde l'humidité, ensuite l'heure ». Or ici les deux comptent <b>ensemble</b>, et aucune ne passe avant l'autre. <b>Q2 :</b> l'absence de FIN est voulue — la flèche qui remonte est la <b>boucle</b>. Un programme de surveillance qui s'arrête est un programme en panne. </p>
+      <p></p>
+      <p><b>Q3 :</b> <b>3 rectangles</b> — mesurer, allumer, éteindre. Le losange ne <i>fait</i> rien : il <i>demande</i>. <b>Q4 :</b> la sortie <b>NON</b> : 25 &lt; 40 est vrai, mais 23 h n'est pas entre 6 et 10, et le ET exige que <b>tout</b> soit vrai.</p>
+      <p><b>c) Pseudo-code attendu :</b></p>
+      <div class="py">SEUIL = <span class="num">40</span>
+lire humidité → H
+lire heure → heure
+SI H &lt; SEUIL <b>ET</b> heure &gt;= <span class="num">6</span> <b>ET</b> heure &lt;= <span class="num">10</span> ALORS
     allumer pompe
 SINON
     éteindre pompe
-FIN SI</pre>
-<p>En Python (à essayer dans l'éditeur 🧪)&nbsp;:</p>
-<pre class="code codebox" style="white-space:pre">seuil = 40
-H = 25
-heure = 8
-if H &lt; seuil and heure &gt;= 6 and heure &lt;= 10:
-    print("POMPE ON")
-else:
-    print("POMPE OFF")</pre>
-<p>La plage horaire s'ajoute par un <b>ET</b> dans la condition — on COMPLÈTE le programme, on ne le réécrit pas.</p></div></details>
-    <p class="py-legende">🎨 Lis le code en couleurs&nbsp;: <span class="py-var">variables</span> · <span class="py-str">"textes"</span> · <span class="py-num">nombres</span> · <span class="py-kw">mots-clés</span> · <span class="py-op">=</span> et opérateurs</p>
-    <div class="retenir"><strong>À retenir :</strong> Un programme = variables + conditions (SI) + actions. On écrit d’abord en langage naturel, puis on code.</div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>📊 Activité 2 — Tester le programme (4e_C9.2)</h2>
-  <div class="exo">
-    <h4>Objectif</h4>
-    <p>Vérifier le comportement du programme avec des scénarios de test.</p>
-    <table class="refs">
-      <tr><th>Scénario</th><th>H (%)</th><th>Heure</th><th>TA prédiction (programme corrigé)</th></tr>
-      <tr><td>Sol sec, matin</td><td>25</td><td>8 h</td><td><select id="a2s1"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
-      <tr><td>Sol humide</td><td>55</td><td>8 h</td><td><select id="a2s2"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
-      <tr><td>Sol sec, nuit</td><td>25</td><td>23 h</td><td><select id="a2s3"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
-      <tr><td>Juste sous le seuil</td><td>39</td><td>7 h</td><td><select id="a2s4"><option value="">— je prédis —</option><option>Pompe ON</option><option>Pompe OFF</option></select></td></tr>
-    </table>
-    <p style="font-size:.88em;color:var(--sub)">Puis TESTE chaque scénario dans l'éditeur 🧪 de l'activité 1 (change <code>H</code> et <code>heure</code>) et REPORTE : la console confirme-t-elle tes prédictions&nbsp;?</p>
-    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
-    <p class="feedback" id="fb2" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div><p>ON · OFF · OFF (23 h est hors plage, même sol sec&nbsp;!) · ON (39 &lt; 40, à 7 h dans la plage — le scénario FRONTIÈRE, le plus précieux du banc). Tester = scénarios + attendu + observé, et toujours un cas frontière.</p></div></details>
-    <div class="retenir"><strong>À retenir :</strong> Tester = scénarios + résultat attendu + résultat observé. Un seul scénario ne suffit pas — et le cas frontière est le plus important.</div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>✏️ Activité 3 — Mettre au point (4e_C9.3)</h2>
-  <div class="exo">
-    <h4>Objectif</h4>
-    <p>Corriger un bug et améliorer le programme (hystérésis anti-clignotement).</p>
-    <p><strong>Bug observé :</strong> près du seuil 40 %, la pompe s’allume et s’éteint sans arrêt (mesure qui « vibre »).</p>
-    <p><strong>Consigne :</strong> Propose une correction avec deux seuils (ex. : allumer si H &lt; 35, éteindre si H &gt; 45).</p>
-    <textarea rows="5" id="prog3" placeholder="Pseudo-code avec hystérésis…"></textarea>
-    <details class="vs" id="vs2">
-      <summary>🧪 Mets au point ton hystérésis ici — Python fourni à compléter</summary>
-      <p class="vs-note">Recopie ce départ dans l'éditeur et complète les conditions&nbsp;: <code>etat = "OFF"</code> puis, dans la boucle, allumer si <code>H &lt; 35</code>, éteindre si <code>H &gt; 45</code> — entre les deux, NE RIEN CHANGER (c'est ça, l'hystérésis). Fais « vibrer » H autour de 40 et observe la console&nbsp;: plus de clignotement.</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
+FIN SI</div>
+      <p><b>Méthode :</b> on n'a rien réécrit — on a <b>complété</b> la condition existante. C'est presque toujours ainsi qu'un programme grandit : une exigence de plus, une condition de plus, au même endroit. Si tu as dû tout reprendre, c'est le signe que la structure de départ était mal posée.</p>
+      <p><b>Limite :</b> ce programme décide au moment où il regarde. Il ne sait rien de ce qui s'est passé avant — ni qu'il a plu cette nuit, ni qu'il a déjà arrosé il y a dix minutes. Se souvenir demanderait une <b>mémoire</b>, et c'est exactement ce que l'activité 5 va introduire.</p>
     </details>
-    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
-    <p class="feedback" id="fb3" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div>
-<pre class="code codebox" style="white-space:pre">SEUIL_BAS = 35
-SEUIL_HAUT = 45
-SI H &lt; SEUIL_BAS ALORS
-    allumer pompe
-SINON SI H &gt; SEUIL_HAUT ALORS
-    éteindre pompe
-FIN SI   # entre 35 et 45 : on ne change RIEN — fini le clignotement</pre></div></details>
-    <div class="retenir"><strong>À retenir :</strong> Mettre au point = identifier l’écart observé/attendu, corriger, retester. L’hystérésis évite les oscillations autour d’un seuil unique.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> écrire <code>6 &lt; heure &lt; 10</code> d'un seul trait — cela se lit en maths, pas dans un programme ; remplacer le ET par un OU, ce qui fait arroser dès que l'UNE des conditions est vraie (donc à 8 h même sur sol trempé) ; compter le losange parmi les traitements ; ajouter un bloc FIN et casser la boucle.</div>
+    <div class="retenir"><b>📌 À retenir :</b> un <b>algorigramme</b> se lit de haut en bas, avec trois formes seulement : le <b>terminal</b> commence, le <b>rectangle</b> fait, le <b>losange</b> demande — et le losange a toujours <b>deux</b> sorties. Un <b>ET</b> se place à l'intérieur d'une décision quand les conditions comptent ensemble. « Entre 6 et 10 » s'écrit avec <b>deux</b> comparaisons.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> l'ordre juste, au moins 3 questions de lecture sur 4, et un pseudo-code qui contient le ET, les deux bornes horaires, et les deux actions.</div>
   </div>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2">Séance 2 — Écrire et tester ›</button></p>
 </section>
+</div>
 
+<!-- ══════════════════ SÉANCE 2 ══════════════════ -->
+<div class="seance-panel" id="s2" role="tabpanel">
 <section class="card">
-  <h2>🔄 Activité de réinvestissement</h2>
-  <div class="exo">
-    <p>Adapte la même logique à un <strong>lampadaire</strong> (seuil de luminosité + hystérésis). Écris 5 lignes de pseudo-code.</p>
-    <textarea rows="4" id="reinv" placeholder="SEUIL_BAS / SEUIL_HAUT / SI …"></textarea>
-    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité</button>
-    <p class="feedback" id="fb4" role="status"></p>
-    <details class="correction"><summary>📖 Correction complète</summary><div>
-<pre class="code codebox" style="white-space:pre">SEUIL_BAS = 20
-SEUIL_HAUT = 60
-mesurer luminosité → L
+  <h2>⌨️ Séance 2 — Écrire le programme, puis le mettre à l'épreuve</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : mon programme fait-il ce que je crois qu'il fait — et comment le prouver ?</p>
+
+  <div class="activite" id="act3">
+    <header><span class="num">Activité 3</span><h3>Écrire et exécuter — des blocs au Python</h3><span class="duree">⏱ ~30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> écrire le programme dans l'éditeur, l'exécuter, et retrouver dans le code chaque élément de l'algorigramme.</div>
+      <div><b>Compétence :</b> <b>4e_C9.2</b> — <i>traduire</i> un algorithme en un programme.</div>
+      <div><b>Production attendue :</b> le programme enregistré sous ton nom + le journal de ce que tu as observé.</div>
+      <div><b>Ressources :</b> l'éditeur Vittascience ci-dessous, ou le banc d'essai de cette page si le réseau manque.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> écris le programme <b>en blocs</b> d'abord, regarde le Python s'écrire à côté, puis modifie le Python et regarde les blocs suivre. Enregistre sous <code>4e-JARDIN-TON NOM</code>. Enfin, remplis le journal : ce n'est pas un compte rendu, c'est ta trace de travail.</div>
+
+    <div class="palier" data-parcours="b">
+      <h4>🖥 L'éditeur Vittascience — ici même</h4>
+      <p class="faire">👉 FAIS : construis la décision en <b>BLOCS</b> (Logique → si / sinon), observe le Python s'écrire à droite, puis change le seuil directement dans le Python et regarde les blocs bouger. Sans capteur réel, on fixe les valeurs à la main : <code>H = 25</code> et <code>heure = 8</code>, et <code>print("POMPE ON")</code> tient lieu de pompe.</p>
+      <div class="vitta-cadre">
+        <iframe width="100%" height="560" loading="lazy" frameborder="0"
+          title="Éditeur Vittascience — Python et blocs, pour écrire le programme du jardin"
+          style="border:1px #d6d6d6 solid;border-radius:10px;background:#fff"
+          src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom"></iframe>
+      </div>
+      <details class="repli-vitta-details" style="margin-top:10px">
+        <summary>🔌 Le cadre ne s'affiche pas ? Voici comment travailler quand même</summary>
+        <div class="repli-vitta">
+          <p style="margin-top:0">Pas de connexion, réseau du collège filtré, page ouverte hors ligne : <b>tout reste faisable</b>.</p>
+          <ol style="margin-bottom:8px">
+            <li><b>Plan A — dans un onglet :</b> ouvre <a href="https://fr.vittascience.com/python/" target="_blank" rel="noopener">fr.vittascience.com/python</a>, mode mixte blocs / Python.</li>
+            <li><b>Plan B — sans connexion du tout :</b> écris ton programme <b>sur le cahier</b> (la logique est ce qui compte, la saisie se fera plus tard), et utilise le <b>banc d'essai</b> en haut de cette page pour voir la pompe réagir. Tu peux répondre à TOUTES les questions et valider l'activité.</li>
+          </ol>
+          <p style="margin-bottom:0;font-size:.9em;color:var(--sub)">L'éditeur Vittascience est le seul élément de cette séquence qui demande Internet. Le banc d'essai, lui, fonctionne hors ligne.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="exo">
+      <h4>a) Retrouver l'algorigramme dans le code</h4>
+      <p>Voici le programme de référence, en Python. Chaque question porte sur <b>une</b> ligne.</p>
+      <div class="py"><span class="cmt"># --- les réglages, écrits une seule fois, tout en haut ---</span>
+SEUIL = <span class="num">40</span>
+HEURE_DEBUT = <span class="num">6</span>
+HEURE_FIN = <span class="num">10</span>
+
+<span class="cmt"># --- les entrées (en vrai : le capteur et l'horloge) ---</span>
+H = <span class="num">25</span>
+heure = <span class="num">8</span>
+
+<span class="cmt"># --- la décision ---</span>
+<span class="kw">if</span> H &lt; SEUIL <span class="kw">and</span> heure &gt;= HEURE_DEBUT <span class="kw">and</span> heure &lt;= HEURE_FIN:
+    <span class="fn">print</span>(<span class="str">"POMPE ON"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"POMPE OFF"</span>)</div>
+      <div class="assoc"><label for="a3_q1">Pourquoi écrire <code>SEUIL = 40</code> en haut, au lieu de mettre 40 directement dans le <code>if</code> ?</label><select id="a3_q1"><option value="">— choisir —</option><option>pour changer le réglage à UN seul endroit, sans relire tout le programme</option><option>parce que Python interdit les nombres dans un if</option><option>pour que le programme s'exécute plus vite</option><option>c'est une décoration, cela ne change rien</option></select></div>
+      <div class="assoc"><label for="a3_q2">La ligne <code>if …</code> correspond à quelle forme de l'algorigramme ?</label><select id="a3_q2"><option value="">— choisir —</option><option>au losange — c'est la décision</option><option>au terminal DÉBUT</option><option>au rectangle « mesurer »</option><option>à la flèche de retour</option></select></div>
+      <div class="assoc"><label for="a3_q3">Que se passe-t-il si on remplace <code>and</code> par <code>or</code> ?</label><select id="a3_q3"><option value="">— choisir —</option><option>la pompe s'allume dès qu'UNE seule condition est vraie : elle arroserait un sol trempé, simplement parce qu'il est 8 h</option><option>rien : and et or font la même chose</option><option>le programme refuse de démarrer</option><option>la pompe ne s'allume plus jamais</option></select></div>
+      <div class="assoc"><label for="a3_q4">Dans le vrai jardin, quelles lignes seront remplacées par du matériel ?</label><select id="a3_q4"><option value="">— choisir —</option><option><code>H = 25</code> et <code>heure = 8</code> deviennent une lecture de capteur et d'horloge ; les <code>print</code> deviennent la commande du relais</option><option>uniquement la ligne du if</option><option>aucune : le programme est déjà complet</option><option>les trois lignes de réglage, qui n'ont pas de sens sur du matériel</option></select></div>
+
+      <h4>b) Mon journal d'exécution</h4>
+      <label for="a3_journal" style="display:block">Note ce que tu as <b>fait</b> et ce que tu as <b>vu</b> : les valeurs que tu as essayées, ce que la console a affiché, et ce qui t'a surpris. Pas « ça marche » — des valeurs et des résultats.</label>
+      <textarea id="a3_journal" style="min-height:110px" placeholder="J'ai mis H = … et heure = … , la console a affiché …&#10;Puis j'ai essayé …&#10;Ce qui m'a surpris : …"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — des phrases à compléter</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre.</p>
+        <ul>
+          <li>Avec H = ____ et heure = ____ , la console a affiché ____ . C'est ce que j'attendais parce que ____ .</li>
+          <li>J'ai ensuite changé ____ , et le résultat est devenu ____ .</li>
+          <li>Au banc d'essai, j'ai vérifié qu'à sol sec mais à ____ h, la pompe reste ____ .</li>
+          <li>Ce qui m'a surpris : ____ .</li>
+        </ul>
+      </details>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses (et mes essais au banc)</button>
+      <div class="feedback" id="fb3" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour a) : relis le code ligne à ligne en te demandant, à chaque fois, « quel bloc de l'algorigramme est-ce ? ». Pour b) : au banc d'essai, mets l'humidité à 25 puis fais glisser l'heure de 8 h à 23 h sans rien changer d'autre — et regarde.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Une <b>constante</b> écrite en haut (<code>SEUIL</code>) est un réglage ; un nombre écrit au milieu d'un test est un piège pour plus tard — le jour où le réglage change, il faudra le retrouver. Et pour le <code>or</code> : demande-toi ce que devient <code>H &lt; 40 or heure &gt;= 6</code> quand H vaut 90 et qu'il est 8 h. Le banc te le montrera en une seconde.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Q1 :</b> pour n'avoir <b>qu'un seul endroit</b> à modifier. Le jour où le professeur décide que 40 était trop bas, on change une ligne — pas cinq, disséminées. C'est aussi ce qui rend le programme lisible : <code>H &lt; SEUIL</code> se lit, <code>H &lt; 40</code> se déchiffre. </p>
+      <p></p>
+      <p><b>Q2 :</b> le <b>losange</b>.</p>
+      <p><b>Q3 :</b> avec <code>or</code>, il suffit qu'<b>une</b> condition soit vraie : à 8 h du matin, la pompe s'allumerait sur un sol détrempé. Le programme ne planterait pas — il se tromperait, ce qui est bien pire. </p>
+      <p><b>Q4 :</b> <code>H = 25</code> et <code>heure = 8</code> deviennent une lecture du capteur et de l'horloge ; les <code>print</code> deviennent la commande du <b>relais</b>. Le reste — les réglages, la décision — ne bouge pas d'une ligne.</p>
+      <p><b>Méthode :</b> écrire en blocs puis lire le Python n'est pas une béquille : c'est la même pensée dans deux écritures. Les blocs empêchent les fautes de frappe, le texte montre ce que la machine reçoit vraiment. Passer de l'un à l'autre, c'est vérifier qu'on a compris.</p>
+      <p><b>Limite :</b> tant que <code>H</code> est écrit à la main, tu testes ton <b>raisonnement</b>, pas ton <b>montage</b>. Les deux se testent, mais pas en même temps ni avec les mêmes outils — et c'est en général le montage qui réserve les surprises.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier les deux-points en fin de ligne <code>if</code> ; ne pas indenter la ligne qui suit (en Python, le décalage <b>est</b> la structure) ; écrire <code>=</code> au lieu de <code>==</code> dans un test ; oublier d'enregistrer sous son nom — une page rechargée, et tout est perdu.</div>
+    <div class="retenir"><b>📌 À retenir :</b> un programme se compose de <b>réglages</b> (les constantes, en haut), d'<b>entrées</b>, d'une <b>décision</b> et d'<b>actions</b>. <code>and</code> exige que tout soit vrai, <code>or</code> se contente d'une seule : la confusion des deux ne fait pas planter le programme, elle le fait <b>mentir</b>. Les blocs et le texte disent la même chose.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 4 réponses justes sur 4, un journal qui cite des <b>valeurs</b> et des <b>résultats</b>, et au banc d'essai : l'humidité variée ✔ et l'essai « sol sec hors plage » ✔.</div>
+  </div>
+
+  <div class="activite" id="act4">
+    <header><span class="num">Activité 4</span><h3>Tester — construire le jeu d'essais qui prouve</h3><span class="duree">⏱ ~25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> concevoir un jeu d'essais complet, écrire les résultats ATTENDUS avant l'exécution, puis exécuter et comparer.</div>
+      <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> un programme commandant un système réel.</div>
+      <div><b>Production attendue :</b> le tableau d'essais rempli — colonne « attendu » AVANT, colonne « observé » PENDANT.</div>
+      <div><b>Ressources :</b> l'anatomie d'un jeu de tests ci-dessous + le banc d'essai de cette page.</div>
+    </div>
+    <img class="figure" src="Images/jeu_de_tests_anatomie.svg" alt="Anatomie d'un jeu de tests : une droite graduée de l'humidité de 0 à 100 % portant le seuil de 40, avec quatre points d'essai — 25 % et 55 % en cas nominaux, puis 39 % et 40 % serrés contre le seuil en cas frontières ; en dessous, un tableau à quatre colonnes scénario, entrées, résultat attendu, résultat observé, avec quatre lignes dont la dernière, le cas frontière, a sa colonne observé vide ; deux encadrés rappellent que la colonne attendu se remplit avant de lancer, et que la quatrième famille oubliée est le cas absurde" aria-describedby="desc-tests-j">
+    <details class="description-image" id="desc-tests-j">
+      <summary>📖 Description détaillée de la planche</summary>
+      <p><b>En haut, la droite de l'humidité</b> avec le seuil à 40 %. Quatre essais y sont placés : <b>25 %</b> et <b>55 %</b>, francs de part et d'autre, les <b>cas nominaux</b> ; puis <b>39 %</b> et <b>40 %</b>, serrés contre le seuil, les <b>cas frontières</b>. Un point d'humidité les sépare — et c'est le seul essai qui distingue « &lt; 40 » de « ≤ 40 ». Les cas nominaux rassurent ; les cas frontières démontrent.</p>
+      <p><b>En bas, le tableau d'essais</b> à quatre colonnes : scénario, entrées, résultat ATTENDU, résultat OBSERVÉ. Sol sec le matin (25 / 8 h) → ON ; sol humide (55 / 8 h) → OFF ; sol sec mais la nuit (25 / 23 h) → OFF, parce que l'heure sort de la plage ; et le cas frontière (39 / 7 h) → ON, dont la colonne « observé » reste vide, à remplir pendant l'essai.</p>
+      <p><b>Deux avertissements.</b> La colonne ATTENDU se remplit <b>avant</b> de lancer : remplie après, elle ne prouve plus rien. Et la quatrième famille, celle qu'on oublie toujours, est le <b>cas absurde</b> : que fait le programme si le capteur renvoie 250 % ou −5 % ? Un capteur débranché ne renvoie pas « rien », il renvoie n'importe quoi.</p>
+    </details>
+
+    <div class="consigne"><b>Consigne :</b> a) remplis la colonne <b>ATTENDU</b> — <u>avant</u> de toucher au banc ; b) exécute chaque essai au banc d'essai de cette page et remplis <b>OBSERVÉ</b> ; c) réponds aux deux questions de méthode.</div>
+    <div class="exo">
+      <h4>a) et b) Le tableau d'essais</h4>
+      <table class="recette" aria-label="Tableau d'essais à remplir">
+        <tr><th>N°</th><th>Scénario</th><th>Entrées</th><th>ATTENDU (avant)</th><th>OBSERVÉ (pendant)</th></tr>
+        <tr><td>1</td><td>sol sec, le matin</td><td>H = 25 · 8 h</td>
+          <td><select id="a4_a1" aria-label="résultat attendu essai 1"><option value="">— attendu ? —</option><option>pompe ON</option><option>pompe OFF</option></select></td>
+          <td><select id="a4_o1" aria-label="résultat observé essai 1"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>2</td><td>sol humide, le matin</td><td>H = 55 · 8 h</td>
+          <td><select id="a4_a2" aria-label="résultat attendu essai 2"><option value="">— attendu ? —</option><option>pompe ON</option><option>pompe OFF</option></select></td>
+          <td><select id="a4_o2" aria-label="résultat observé essai 2"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>3</td><td>sol sec, mais la NUIT</td><td>H = 25 · 23 h</td>
+          <td><select id="a4_a3" aria-label="résultat attendu essai 3"><option value="">— attendu ? —</option><option>pompe ON</option><option>pompe OFF</option></select></td>
+          <td><select id="a4_o3" aria-label="résultat observé essai 3"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>4</td><td><b>frontière</b> — juste sous le seuil</td><td>H = 39 · 7 h</td>
+          <td><select id="a4_a4" aria-label="résultat attendu essai 4"><option value="">— attendu ? —</option><option>pompe ON</option><option>pompe OFF</option></select></td>
+          <td><select id="a4_o4" aria-label="résultat observé essai 4"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>5</td><td><b>frontière</b> — sur le seuil pile</td><td>H = 40 · 7 h</td>
+          <td><select id="a4_a5" aria-label="résultat attendu essai 5"><option value="">— attendu ? —</option><option>pompe ON</option><option>pompe OFF</option></select></td>
+          <td><select id="a4_o5" aria-label="résultat observé essai 5"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>6</td><td><b>absurde</b> — capteur débranché</td><td>H = 250 · 8 h</td>
+          <td><select id="a4_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>pompe OFF — mais le programme ne signale RIEN d'anormal</option><option>pompe ON</option><option>le programme s'arrête avec une erreur</option></select></td>
+          <td><select id="a4_o6" aria-label="résultat observé essai 6"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+      </table>
+      <p style="font-size:.9em;color:var(--sub)">Le banc d'essai de cette page accepte la <b>valeur exacte</b> : c'est ce qui permet de viser 39 puis 40 sans trembler. Les deux frontières sont tracées ✔ automatiquement.</p>
+
+      <h4>c) Deux questions de méthode</h4>
+      <div class="assoc"><label for="a4_m1">Pourquoi l'essai n° 5 (40 pile) est-il indispensable, alors qu'on a déjà l'essai n° 4 (39) ?</label><select id="a4_m1"><option value="">— choisir —</option><option>parce que lui seul distingue « H &lt; 40 » de « H ≤ 40 » : c'est la seule valeur où les deux écritures ne donnent pas le même résultat</option><option>parce qu'il faut toujours un nombre rond dans un jeu de tests</option><option>parce que 39 est trop proche de 40 pour être fiable</option><option>il n'est pas indispensable, c'est un essai de confort</option></select></div>
+      <div class="assoc"><label for="a4_m2">À l'essai n° 6, la pompe reste éteinte : le programme se comporte-t-il bien ?</label><select id="a4_m2"><option value="">— choisir —</option><option>non : il n'arrose pas, mais il ne DIT pas que la mesure est impossible — il se tait alors qu'il devrait alerter</option><option>oui, parfaitement : il n'arrose pas, c'est ce qu'on veut</option><option>oui, car 250 est supérieur au seuil</option><option>non : il devrait arroser, 250 est une valeur extrême</option></select></div>
+      <button class="btn small" data-check="4" style="margin-top:8px">✔ Vérifier mon jeu d'essais</button>
+      <div class="feedback" id="fb4" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Pour remplir « attendu », ne lance rien : relis la règle et raisonne. Pour l'essai 3, souviens-toi que le ET exige les <b>deux</b> conditions. Pour l'essai 6, demande-toi ce que fait le test <code>250 &lt; 40</code>.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Essais attendus : ON · OFF · OFF · ON · OFF · OFF. Le n° 5 est le plus instructif : <code>40 &lt; 40</code> est <b>faux</b>, donc la pompe reste éteinte à 40 pile. Si le cahier des charges voulait « arroser dès 40 », il faudrait écrire <code>&lt;=</code>. Un seul caractère sépare les deux comportements — et un seul essai les distingue.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Attendus :</b> 1 → <b>ON</b> · 2 → <b>OFF</b> (sol humide) · 3 → <b>OFF</b> (l'heure sort de la plage, même sol sec) · 4 → <b>ON</b> (39 &lt; 40, et 7 h est dans la plage) · 5 → <b>OFF</b> (40 &lt; 40 est <b>faux</b>) · 6 → <b>OFF</b>, mais sans aucune alerte.</p>
+      <p><b>c) Q1 :</b> l'essai à 40 pile est le seul qui sépare <code>&lt;</code> de <code>&lt;=</code>. Partout ailleurs, les deux écritures donnent exactement le même résultat — c'est précisément pour cela qu'un jeu de tests sans frontière peut passer au vert sur un programme faux.</p>
+      <p><b>Q2 :</b> le programme <b>n'arrose pas</b>, ce qui est heureux, mais il n'arrose pas <b>pour la mauvaise raison</b> : il croit que la terre est très humide. Il ne signale rien. Or 250 % d'humidité n'existe pas : cette valeur ne dit pas « il pleut », elle dit « le capteur est débranché » — et personne ne le saura. Un bon programme <b>vérifie ses entrées avant de leur faire confiance</b>. C'est le défi technique du bonus.</p>
+      <p><b>Méthode :</b> un jeu d'essais complet couvre <b>quatre familles</b> — les cas nominaux (ça marche), les cas frontières (le seuil est-il au bon endroit ?), les cas d'exclusion (l'autre condition bloque-t-elle bien ?), les cas absurdes (que fait-on quand l'entrée est impossible ?). Les trois premières familles vérifient ce que le programme <i>doit</i> faire ; la quatrième vérifie ce qu'il fait quand <b>le monde ne se comporte pas comme prévu</b>.</p>
+      <p><b>Limite :</b> six essais réussis prouvent que le programme respecte la règle. Ils ne prouvent pas que la <b>règle</b> est bonne : arroser à 39 % d'humidité, est-ce vraiment nécessaire ? Cette question-là n'est pas informatique, elle est agronomique — et elle se pose au jardin, pas à l'écran.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> remplir « attendu » après avoir vu le résultat (ce n'est plus un test, c'est un compte rendu) ; ne tester que des valeurs franches et conclure que tout va bien ; oublier le cas où la <b>seconde</b> condition bloque à elle seule ; croire qu'une valeur absurde fera planter le programme — elle passe tranquillement dans le test.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>tester</b>, c'est écrire le résultat ATTENDU <b>avant</b> l'exécution, puis comparer. Un jeu d'essais couvre quatre familles : nominaux, <b>frontières</b>, exclusions, <b>absurdes</b>. Les valeurs frontières sont les seules à distinguer <code>&lt;</code> de <code>&lt;=</code> — et une entrée impossible ne fait pas planter un programme : elle le fait se tromper en silence.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> les 6 attendus justes, les 6 observés remplis, les 2 questions de méthode justes, et au banc : les frontières 39 et 40 réellement exécutées ✔.</div>
+  </div>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3">Séance 3 — Mettre au point ›</button></p>
+</section>
+</div>
+
+<!-- ══════════════════ SÉANCE 3 ══════════════════ -->
+<div class="seance-panel" id="s3" role="tabpanel">
+<section class="card">
+  <h2>🔧 Séance 3 — Mettre au point : quand le programme a raison mais se comporte mal</h2>
+  <p style="color:var(--hl);font-weight:600">Question directrice : que faire d'un programme qui respecte la règle… et qui est pourtant inutilisable ?</p>
+
+  <div class="activite" id="act5">
+    <header><span class="num">Activité 5</span><h3>Le clignotement — diagnostiquer, corriger, re-tester</h3><span class="duree">⏱ ~30 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> identifier l'écart entre le comportement observé et le comportement acceptable, en trouver la cause, corriger par l'hystérésis, puis re-tester.</div>
+      <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>mettre au point</i> · et <b>4e_C9.1</b> — <i>modifier</i> l'algorithme pour corriger.</div>
+      <div><b>Production attendue :</b> le diagnostic écrit + le programme à deux seuils + la preuve au banc que le clignotement a cessé.</div>
+      <div><b>Ressources :</b> la trace d'exécution ci-dessous, le chronogramme, et le banc d'essai.</div>
+    </div>
+
+    <div class="consigne"><b>Consigne :</b> a) lis la trace et dis ce qui cloche ; b) comprends pourquoi avec le chronogramme ; c) écris la correction ; d) <b>prouve au banc</b> qu'elle fonctionne, sur la même mesure.</div>
+    <div class="exo">
+      <h4>a) La trace — que raconte-t-elle ?</h4>
+      <p>Un binôme a laissé tourner son programme dix minutes près d'un plant. Voici ce que la console a écrit <i>(trace enregistrée)</i> :</p>
+      <div class="py">10:31:02  H=41  POMPE OFF
+10:31:12  H=39  POMPE ON
+10:31:22  H=41  POMPE OFF
+10:31:32  H=40  POMPE OFF
+10:31:42  H=39  POMPE ON
+10:31:52  H=40  POMPE OFF
+10:32:02  H=39  POMPE ON
+10:32:12  H=41  POMPE OFF</div>
+      <div class="assoc"><label for="a5_q1">En 70 secondes, combien de fois la pompe a-t-elle changé d'état ?</label><select id="a5_q1"><option value="">— choisir —</option><option>6 fois — et l'humidité n'a bougé que de 2 points</option><option>2 fois</option><option>8 fois, une par ligne</option><option>aucune : elle est restée éteinte</option></select></div>
+      <div class="assoc"><label for="a5_q2">Le programme respecte-t-il la règle qu'on lui a donnée ?</label><select id="a5_q2"><option value="">— choisir —</option><option>oui, parfaitement — chaque ligne est juste ; c'est la RÈGLE qui est mal choisie, pas son application</option><option>non, il y a une erreur de code à la ligne du if</option><option>non, il inverse ON et OFF</option><option>impossible à dire sans voir le programme</option></select></div>
+      <div class="assoc"><label for="a5_q3">D'où vient le tremblement de la mesure entre 39 et 41 ?</label><select id="a5_q3"><option value="">— choisir —</option><option>d'un capteur réel : aucune mesure physique n'est parfaitement stable</option><option>d'un bug du programme qui modifie H</option><option>de l'heure qui change</option><option>de la pompe qui arrose et fait monter l'humidité</option></select></div>
+      <label for="a5_diag" style="display:block;margin-top:10px"><b>Ton diagnostic :</b> explique en quelques lignes pourquoi ce comportement est un problème <b>concret</b> — pour la pompe, pour le relais, pour la plante.</label>
+      <textarea id="a5_diag" placeholder="Ce comportement pose problème parce que…"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — des phrases à compléter</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre.</p>
+        <ul>
+          <li>La pompe change d'état ____ fois en ____ secondes, alors que l'humidité n'a varié que de ____ points.</li>
+          <li>Pour le <b>matériel</b>, c'est un problème parce que ____ s'use à chaque ____ .</li>
+          <li>Pour la <b>plante</b>, c'est un problème parce que l'eau arrive ____ .</li>
+          <li>Le programme n'a pourtant fait aucune erreur : chaque décision est ____ . Ce qui est en cause, c'est ____ .</li>
+        </ul>
+      </details>
+
+      <h4>b) Comprendre — un seuil contre deux seuils</h4>
+      <img class="figure" src="Images/hysteresis_chronogramme.svg" alt="Deux chronogrammes superposés. En haut, avec un seul seuil à 40 % : la courbe d'humidité oscille très légèrement autour de la ligne des 40 et la pompe bascule six fois en quelques minutes. En bas, exactement la même courbe d'humidité, mais avec deux seuils, 35 pour allumer et 45 pour éteindre : entre les deux s'étend une bande grisée, la bande morte, dans laquelle la pompe ne change pas d'état, et la ligne de la pompe ne bascule plus qu'une seule fois" aria-describedby="desc-hyst-j">
+      <details class="description-image" id="desc-hyst-j">
+        <summary>📖 Description détaillée du chronogramme</summary>
+        <p><b>En haut — un seul seuil à 40 %.</b> L'humidité descend, puis se met à osciller très légèrement autour de 40 : elle repasse six fois d'un côté à l'autre de la ligne, sans jamais s'en écarter de plus de deux points. La ligne de la pompe suit chaque passage : six basculements. Ce n'est pas un défaut du capteur — c'est une conséquence logique. Quand une valeur est <b>pile</b> sur la frontière, le moindre tremblement la fait changer de côté.</p>
+        <p><b>En bas — deux seuils, 35 pour allumer et 45 pour éteindre.</b> Exactement la <b>même</b> courbe traverse cette fois une bande grisée entre 35 et 45, la <b>bande morte</b>. Tant que la mesure reste dedans, la pompe <b>ne change pas d'état</b> : elle garde ce qu'elle avait. Un seul basculement sur toute la durée.</p>
+        <p><b>La règle, en une phrase :</b> la valeur qui fait ALLUMER n'est pas celle qui fait ÉTEINDRE. Pour changer d'avis, le système doit traverser <b>toute la bande</b> — et un tremblement de deux points n'y suffit pas.</p>
+        <p><b>Et le choix de la largeur ?</b> Trop étroite, la bande ne corrige rien. Trop large, le système devient paresseux : il attend trop longtemps avant de réagir. On la choisit en regardant de combien la mesure tremble réellement.</p>
+      </details>
+
+      <h4>c) Corriger</h4>
+      <label for="prog3" style="display:block">Écris le programme à <b>deux seuils</b>. Attention au cas du milieu : entre 35 et 45, que doit-il se passer ?</label>
+      <textarea id="prog3" style="min-height:120px" placeholder="SEUIL_BAS = 35&#10;SEUIL_HAUT = 45&#10;SI …"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — un squelette à compléter</summary>
+        <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre.</p>
+        <div class="py">SEUIL_BAS = ____
+SEUIL_HAUT = ____
+lire humidité → H
+SI H &lt; SEUIL_BAS ALORS
+    ____ la pompe
+SINON SI H &gt; SEUIL_HAUT ALORS
+    ____ la pompe
+<span class="cmt"># et entre les deux ? ____________________</span>
+FIN SI</div>
+      </details>
+      <div class="assoc"><label for="a5_q4">Entre 35 et 45, que doit faire le programme ?</label><select id="a5_q4"><option value="">— choisir —</option><option>RIEN — il garde l'état précédent, et c'est exactement ce qui supprime le clignotement</option><option>éteindre la pompe par sécurité</option><option>allumer la pompe, car on est sous 45</option><option>alterner une fois sur deux</option></select></div>
+      <div class="assoc"><label for="a5_q5">Que faut-il au programme pour « garder l'état précédent » ?</label><select id="a5_q5"><option value="">— choisir —</option><option>une MÉMOIRE : une variable qui retient si la pompe est allumée ou éteinte</option><option>rien de plus, cela se fait tout seul</option><option>un troisième seuil</option><option>un capteur supplémentaire</option></select></div>
+
+      <h4>d) Prouver au banc</h4>
+      <p>Le banc d'essai, en haut de page, applique la règle que tu choisis. Fais la démonstration en deux temps, et note ce que tu obtiens.</p>
+      <ol style="font-size:.95em">
+        <li>Mode <b>UN seuil</b> → clique sur <b>🌫 Faire trembler la mesure autour de 40</b> → relève le compteur de basculements.</li>
+        <li>Mode <b>DEUX seuils</b> → remets le compteur à zéro → <b>le même</b> tremblement → relève le compteur.</li>
+      </ol>
+      <div class="assoc" style="max-width:420px"><label for="a5_n1">Basculements avec UN seuil :</label><input type="number" id="a5_n1" min="0" max="99" placeholder="nombre"></div>
+      <div class="assoc" style="max-width:420px"><label for="a5_n2">Basculements avec DEUX seuils, même mesure :</label><input type="number" id="a5_n2" min="0" max="99" placeholder="nombre"></div>
+      <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier ma mise au point (et ma démonstration au banc)</button>
+      <div class="feedback" id="fb5" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Regarde la trace colonne par colonne : l'heure avance de 10 s, H oscille de 39 à 41, et la pompe suit. Demande-toi ce qu'un relais mécanique subit à ce rythme-là. Pour c) : la structure a <b>trois</b> cas, pas deux — et le troisième est celui où l'on ne fait rien.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un relais est un contact <b>mécanique</b> : il claque. Six claquements par minute, c'est plusieurs milliers par jour — et un relais a une durée de vie qui se compte en nombre de manœuvres, pas en années. Côté plante, l'eau arrive par à-coups de deux secondes : elle mouille la surface et ne descend jamais aux racines. Pour le code : <code>si H &lt; 35 → ON</code> ; <code>sinon si H &gt; 45 → OFF</code> ; <code>sinon → on ne touche à rien</code>. Ce « rien » n'est possible que si le programme <b>se souvient</b> de l'état de la pompe.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>a) Q1 :</b> <b>6 basculements</b> pour 2 points d'humidité. </p>
+      <p><b>Q2 :</b> le programme est <b>parfaitement juste</b> — chaque ligne applique exactement la règle. C'est la <b>règle</b> qui est mal choisie. C'est le point le plus important de la séance : <i>un programme peut être juste et inutilisable</i>. </p>
+      <p><b>Q3 :</b> le tremblement vient du <b>capteur réel</b> : aucune mesure physique n'est parfaitement stable, et près d'un seuil ce tremblement suffit à faire changer la décision.</p>
+      <p><b>Diagnostic attendu :</b> le relais est un contact mécanique qui s'use à chaque manœuvre ; à ce rythme il rendra l'âme en quelques semaines. La pompe démarre et s'arrête sans cesse, ce qui la fatigue et consomme des pointes de courant. Et la plante reçoit l'eau par à-coups de deux secondes : la surface est mouillée, les racines ne voient rien. <b>Trois problèmes concrets, aucun n'est un bug.</b></p>
+      <p><b>c) Correction attendue :</b></p>
+      <div class="py">SEUIL_BAS = <span class="num">35</span>
+SEUIL_HAUT = <span class="num">45</span>
+lire humidité → H
+SI H &lt; SEUIL_BAS ALORS
+    allumer pompe        <span class="cmt"># vraiment sec : on arrose</span>
+SINON SI H &gt; SEUIL_HAUT ALORS
+    éteindre pompe       <span class="cmt"># vraiment humide : on arrête</span>
+<span class="cmt"># entre 35 et 45 : AUCUNE instruction — la pompe garde son état</span>
+FIN SI</div>
+      <p><b>Q4 :</b> entre les deux seuils, on ne fait <b>rien</b> — et c'est précisément ce « rien » qui supprime le clignotement. </p>
+      <p><b>Q5 :</b> pour garder un état, il faut une <b>mémoire</b> : une variable qui retient si la pompe est allumée. Sans elle, le programme repartirait de zéro à chaque tour et ne saurait pas quoi « garder ».</p>
+      <p><b>d) Au banc :</b> le même tremblement donne <b>plusieurs</b> basculements avec un seuil, <b>zéro ou un</b> avec deux. La mesure n'a pas changé d'un point — c'est la règle de décision qui a changé.</p>
+      <p><b>Et le prix à payer ?</b> Regarde bien le banc en mode DEUX seuils : à 39 % d'humidité, la pompe <b>ne s'allume pas</b>. Elle attendra que la terre descende sous 35. Autrement dit, l'hystérésis a supprimé le clignotement en acceptant de <b>réagir plus tard</b>. C'est un échange, pas un progrès gratuit : on gagne en stabilité ce qu'on perd en réactivité. Tout l'art est de choisir la largeur de bande qui rend cet échange acceptable — et cela dépend de la plante, pas du programme.</p>
+      <p><b>Méthode :</b> mettre au point, c'est une boucle en quatre temps : <b>observer</b> l'écart (la trace), <b>expliquer</b> sa cause (le tremblement près du seuil), <b>corriger</b> (la bande morte), <b>re-tester dans les mêmes conditions</b>. Le dernier temps est celui qu'on saute le plus souvent — et sans lui, on ne sait pas si on a corrigé ou si on a eu de la chance.</p>
+      <p><b>Limite :</b> l'hystérésis règle le clignotement, pas tout. Si le capteur se met à renvoyer n'importe quoi, la bande morte n'y peut rien : elle lisse une mesure qui tremble, elle ne répare pas une mesure fausse.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> chercher un bug dans le code alors qu'il n'y en a pas ; écrire <code>SINON éteindre</code> à la place du troisième cas, ce qui supprime la bande morte et ramène le clignotement ; inverser les seuils (allumer à 45, éteindre à 35) — le système devient alors instable au lieu de se calmer ; corriger sans re-tester.</div>
+    <div class="retenir"><b>📌 À retenir :</b> <b>mettre au point</b> = observer l'écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Un programme peut être <b>juste et inutilisable</b> : le clignotement n'est pas un bug, c'est une règle mal choisie. L'<b>hystérésis</b> (deux seuils et une bande morte) stabilise une décision près d'une frontière — au prix d'une mémoire de l'état.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5, un diagnostic qui nomme au moins deux conséquences concrètes, un programme à trois cas dont le cas « ne rien faire », et la démonstration au banc : ✔ clignotement provoqué, ✔ clignotement supprimé.</div>
+  </div>
+
+  <div class="activite" id="act6">
+    <header><span class="num">Activité 6</span><h3>Réinvestir — le même squelette, un autre objet</h3><span class="duree">⏱ ~25 min</span></header>
+    <div class="meta-grid">
+      <div><b>Objectif :</b> transférer la structure « deux seuils + bande morte » sur un système différent, sans modèle fourni.</div>
+      <div><b>Compétence :</b> <b>4e_C9.3</b> — <i>réaliser</i> un programme commandant un autre système réel.</div>
+      <div><b>Production attendue :</b> le programme du lampadaire, écrit <b>sans squelette</b> (règle n°114).</div>
+      <div><b>Ressources :</b> ce que tu viens d'écrire — et rien d'autre.</div>
+    </div>
+    <div class="consigne"><b>Consigne :</b> un <b>lampadaire</b> de la cour doit s'allumer quand la nuit tombe et s'éteindre au petit jour. Il est équipé d'un capteur de luminosité qui renvoie L, de 0 (nuit noire) à 100 (plein soleil). Le même problème de clignotement se poserait au crépuscule. <b>Écris son programme.</b> Aucun squelette cette fois : c'est à toi de choisir la structure — et les valeurs.</div>
+    <div class="exo">
+      <label for="reinv" style="display:block">Ton programme du lampadaire :</label>
+      <textarea id="reinv" style="min-height:130px" placeholder="Écris ton programme complet : les réglages, la mesure, la décision…"></textarea>
+      <div class="assoc"><label for="a6_q1">Par rapport à la pompe, qu'est-ce qui s'inverse ?</label><select id="a6_q1"><option value="">— choisir —</option><option>le sens : on ALLUME quand la mesure est BASSE (il fait sombre), on éteint quand elle est haute</option><option>rien du tout, c'est exactement le même programme</option><option>les deux seuils doivent être égaux</option><option>il faut supprimer la bande morte</option></select></div>
+      <label for="a6_just" style="display:block;margin-top:10px"><b>Justifie tes deux seuils :</b> quelles valeurs as-tu choisies, et pourquoi cet écart-là plutôt qu'un autre ?</label>
+      <textarea id="a6_just" placeholder="J'ai choisi … et … parce que…"></textarea>
+      <details class="etayage">
+        <summary>🪜 Version étayée — des phrases à compléter <i>(uniquement pour la justification)</i></summary>
+        <p>Le programme, lui, reste <b>à écrire sans modèle</b> : c'est l'objet de l'activité. Ces phrases n'aident qu'à rédiger la justification.</p>
+        <ul>
+          <li>J'allume à L &lt; ____ et j'éteins à L &gt; ____ , soit une bande de ____ points.</li>
+          <li>J'ai choisi cet écart parce que la luminosité, au crépuscule, ____ .</li>
+          <li>Si la bande était plus étroite, ____ . Si elle était plus large, ____ .</li>
+        </ul>
+      </details>
+      <button class="btn small" data-check="6" style="margin-top:8px">✔ Vérifier mon réinvestissement</button>
+      <div class="feedback" id="fb6" role="status"></div>
+    </div>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Reprends ton programme de la pompe et demande-toi, ligne par ligne : qu'est-ce qui change ? La grandeur mesurée, les valeurs des seuils, le nom de l'action — et le <b>sens</b> de la comparaison.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Pour la pompe, « sec » = valeur <b>basse</b> = on allume. Pour le lampadaire, « sombre » = valeur <b>basse</b> = on allume aussi. Le sens ne s'inverse donc pas tant qu'on y réfléchit bien : dans les deux cas, on agit quand la mesure est basse. Ce qui change, ce sont les <b>valeurs</b> : la nuit tombe vers L = 20, le jour se lève vers L = 60 — et ce large écart n'est pas un hasard, le crépuscule est long.</p></details>
+    <details class="correction"><summary>✅ Correction complète</summary>
+      <p><b>Programme attendu (une version parmi d'autres) :</b></p>
+      <div class="py">SEUIL_BAS = <span class="num">20</span>      <span class="cmt"># il fait vraiment sombre</span>
+SEUIL_HAUT = <span class="num">60</span>     <span class="cmt"># il fait vraiment jour</span>
+lire luminosité → L
 SI L &lt; SEUIL_BAS ALORS
     allumer lampadaire
 SINON SI L &gt; SEUIL_HAUT ALORS
     éteindre lampadaire
-FIN SI</pre>
-<p>Même squelette que la pompe&nbsp;: seule la grandeur mesurée change. C'est LA force d'une structure bien conçue. (Le lampadaire complet t'attend en 5e_C4 du Thème 2.)</p></div></details>
+<span class="cmt"># entre 20 et 60 : on ne change rien</span>
+FIN SI</div>
+      <p><b>Ce qui ne change pas :</b> la structure entière — deux réglages, une mesure, trois cas dont un vide. <b>Ce qui change :</b> la grandeur, les valeurs, le nom de l'actionneur. Une structure bien choisie se réemploie ; c'est à cela qu'on la reconnaît.</p>
+      <p><b>Sur les valeurs :</b> l'écart 20-60 est <b>beaucoup plus large</b> que le 35-45 de la pompe, et c'est justifié : le crépuscule dure longtemps et la lumière y varie beaucoup — nuages, phares, reflets. Une bande étroite ferait clignoter le lampadaire pendant une demi-heure chaque soir. Toute valeur cohérente avec un tel raisonnement est acceptée : <b>c'est la justification qui est évaluée, pas le nombre</b>.</p>
+      <p><b>Limite :</b> un vrai lampadaire n'utilise pas que la luminosité — il a souvent une horloge, comme notre pompe, pour ne pas s'allumer sous un orage de midi. Tu retrouveras ce dispositif complet en Thème 2.</p>
+    </details>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> recopier le programme de la pompe sans changer les valeurs — le crépuscule n'a rien à voir avec un sol qui sèche ; choisir deux seuils très proches « pour être précis », ce qui ramène exactement le problème qu'on vient de résoudre ; oublier le troisième cas et écrire un simple SINON.</div>
+    <div class="retenir"><b>📌 À retenir :</b> une <b>structure</b> de programme se réinvestit d'un objet à l'autre : ce qui change, ce sont la grandeur, les valeurs et les noms — pas le squelette. La <b>largeur de la bande morte</b> se choisit d'après la façon dont la grandeur varie <b>en vrai</b> : quelques points pour un sol, plusieurs dizaines pour un crépuscule.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> un programme complet à trois cas, écrit sans squelette, avec deux seuils distincts <b>et</b> une justification qui relie l'écart choisi au comportement réel de la grandeur mesurée.</div>
   </div>
 </section>
+</div>
 
 <section class="card">
-  <h2>📝 Synthèse intégrée</h2>
-  <p>Concevoir un programme, c’est traduire une règle en variables et conditions. Le tester, c’est le confronter à des scénarios. Le mettre au point, c’est corriger les écarts (bugs, oscillations) jusqu’à ce que le comportement soit conforme. À New York, la plage horaire et le gel influencent les règles métier du jardin connecté. Et ce que tu viens de refaire avec le <b>lampadaire</b>, tu l'avais déjà fait avec la <b>pompe du jardin</b> — le concept commun s'appelle la <b>comparaison à un seuil (avec hystérésis)</b>&nbsp;: il se dessine en algorigramme comme il s'écrit en blocs ou en Python (règle n°18).</p>
+  <h2>📝 Ce qu'il faut retenir de toute la séquence</h2>
+  <p><b>Concevoir</b>, c'est traduire une règle en variables, conditions et actions — et le faire d'abord <b>en dessin</b> : l'algorigramme dit la même chose que le code, en montrant la structure au lieu de l'écrire. Trois formes suffisent : le terminal commence, le rectangle fait, le losange demande.</p>
+  <p><b>Écrire</b>, c'est poser les <b>réglages</b> en haut (les constantes), lire les <b>entrées</b> — qui ne viennent pas toutes d'un capteur : l'heure en est une —, puis décider. Un <code>and</code> exige que tout soit vrai ; un <code>or</code> se contente d'une seule condition, et la confusion des deux ne fait pas planter le programme : elle le fait <b>mentir</b>.</p>
+  <p><b>Tester</b>, c'est écrire le résultat <b>attendu avant</b> l'exécution, puis comparer. Quatre familles d'essais : nominaux, <b>frontières</b>, exclusions, <b>absurdes</b>. Les frontières sont les seules à distinguer <code>&lt;</code> de <code>&lt;=</code>.</p>
+  <p><b>Mettre au point</b>, c'est observer un écart, en trouver la cause, corriger, <b>re-tester dans les mêmes conditions</b>. Et c'est là qu'on apprend la chose la plus utile de l'année : <b>un programme peut être parfaitement juste et parfaitement inutilisable</b>. Le clignotement de la pompe n'était pas un bug — c'était une règle mal choisie. L'<b>hystérésis</b> la répare : deux seuils, une bande morte, et une mémoire de l'état.</p>
+  <p>Enfin, la structure « deux seuils + bande morte » ne s'arrête pas au jardin. Tu viens de la réemployer sur un lampadaire ; tu la retrouveras dans un thermostat, un régulateur, un chargeur de batterie. <b>Ce que tu as appris n'est pas un programme, c'est une forme.</b></p>
 </section>
 
 <section class="card">
   <h2>🙋 Bilan personnel</h2>
-  <p>Ce que j’ai appris : <input type="text" id="bilan1" style="width:100%"></p>
-  <p>Ce que je sais maintenant faire : <input type="text" id="bilan2" style="width:100%"></p>
-  <p>Ce que je dois encore revoir : <input type="text" id="bilan3" style="width:100%"></p>
-  <p>Mon niveau de confiance (1-4) : <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+  <div id="rappelHyp" class="rappel-hyp" style="display:none"></div>
+  <label for="bilan1" style="display:block">Ce que j'ai appris :</label>
+  <textarea id="bilan1" style="min-height:70px"></textarea>
+  <label for="bilan2" style="display:block;margin-top:8px">Ce que je sais faire maintenant, et que je ne savais pas faire avant :</label>
+  <textarea id="bilan2" style="min-height:70px"></textarea>
+  <label for="bilan3" style="display:block;margin-top:8px">Ce que je dois encore revoir :</label>
+  <textarea id="bilan3" style="min-height:70px"></textarea>
+  <fieldset style="margin-top:12px;border:1px solid var(--border);border-radius:10px;padding:10px 12px">
+    <legend style="font-size:.9em;color:var(--sub);padding:0 6px">Ma confiance — 4e_C9.1 (écrire et exécuter)</legend>
+    <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c91" value="1" style="width:auto"> 1</label>
+    <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c91" value="2" style="width:auto"> 2</label>
+    <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c91" value="3" style="width:auto"> 3</label>
+    <label style="display:inline-block"><input type="radio" name="conf_c91" value="4" style="width:auto"> 4</label>
+  </fieldset>
+  <fieldset style="margin-top:8px;border:1px solid var(--border);border-radius:10px;padding:10px 12px">
+    <legend style="font-size:.9em;color:var(--sub);padding:0 6px">Ma confiance — 4e_C9.2 et 4e_C9.3 (tester et mettre au point)</legend>
+    <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c93" value="1" style="width:auto"> 1</label>
+    <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c93" value="2" style="width:auto"> 2</label>
+    <label style="display:inline-block;margin-right:14px"><input type="radio" name="conf_c93" value="3" style="width:auto"> 3</label>
+    <label style="display:inline-block"><input type="radio" name="conf_c93" value="4" style="width:auto"> 4</label>
+  </fieldset>
 </section>
 
 <section class="card" style="text-align:center">
   <h2>🧠 Prêt·e à t'entraîner ?</h2>
-  <p>28 questions sur la conception, les tests et la mise au point de programmes — corrections détaillées.</p>
-  <a class="btn" href="qcm_4e_C9_jardin-programme.html" style="margin-top:8px">🚀 Ouvrir le QCM d'entraînement</a>
+  <p>30 questions sur la conception, l'écriture, les tests et la mise au point — avec, pour chacune, la correction et la <b>réfutation de chaque mauvaise réponse</b>.</p>
+  <a class="btn qcm" href="qcm_4e_C9_jardin-programme.html">🚀 Ouvrir le QCM d'entraînement</a>
 </section>
 
 <section class="card">
   <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
-  <div class="bonus">
-    <p><strong>Défi citoyen :</strong> Propose une règle d’arrosage « économe en eau » adaptée à un rooftop new-yorkais en période de canicule estivale.</p>
-    <textarea rows="3" id="defi1" placeholder="Ma règle économe (seuils, horaires, pluie…) — sauvegardée dans la page"></textarea>
-    <p style="margin-top:14px"><strong>Défi technique :</strong> Ajoute une alerte (LED rouge) si le capteur renvoie une valeur absurde (H &lt; 0 ou H &gt; 100) — code-la dans l'éditeur ci-dessous.</p>
-    <details class="vs" id="vs3">
-      <summary>🧪 L'éditeur du Bonus — code ton alerte ici, sans quitter la page</summary>
-      <p class="vs-note">Départ&nbsp;: <code>H = 250</code> (capteur débranché&nbsp;!) — écris la condition qui affiche <code>ALERTE CAPTEUR</code> quand H sort de 0-100. Blocs ou Python, comme tu préfères&nbsp;: les deux se répondent.</p>
-      <p class="saved-note vitta-hors-ligne">🌐 <b>Cette activité a besoin d'Internet.</b> L'éditeur ci-dessous est hébergé par Vittascience&nbsp;: si le cadre reste blanc, c'est la connexion, pas ton ordinateur. Dans ce cas, écris ton programme sur le cahier — la logique est ce qui compte, la saisie se fera à la séance suivante.</p>
-<iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
-    </details>
-    <p style="margin-top:8px"><strong>Ancrage New York :</strong> Pourquoi une plage horaire d’arrosage est-elle encore plus utile en ville (vent, ombre des immeubles, usage de l’eau)&nbsp;?</p>
-    <textarea rows="2" id="defi3" placeholder="Tes idées — sauvegardées dans la page"></textarea>
-  </div>
+  <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
+
+  <p>🔍 <b>Défi technique — le capteur qui ment.</b> À l'activité 4, l'essai n° 6 a montré qu'une mesure de 250 % passait sans que rien ne le signale. Écris la vérification qui manque : si H sort de l'intervalle 0-100, le programme doit <b>afficher une alerte</b> et <b>ne pas arroser</b>. Où placer ce test — avant ou après la décision d'arrosage ?</p>
+  <label for="defi1" style="display:block">Ma vérification, et l'endroit où je la place :</label>
+  <textarea id="defi1" style="min-height:80px" placeholder="Ma vérification, et où je la place…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi technique</summary>
+    <p>Le test se place <b>AVANT</b> tout le reste — c'est ce qu'on appelle une <b>garde</b> : on ne fait confiance à une entrée qu'après l'avoir vérifiée.</p>
+    <div class="py"><span class="kw">if</span> H &lt; <span class="num">0</span> <span class="kw">or</span> H &gt; <span class="num">100</span>:
+    <span class="fn">print</span>(<span class="str">"ALERTE CAPTEUR"</span>)
+    <span class="fn">print</span>(<span class="str">"POMPE OFF"</span>)
+<span class="kw">else</span>:
+    <span class="cmt"># ici seulement, la mesure est digne de confiance</span>
+    <span class="kw">if</span> H &lt; SEUIL <span class="kw">and</span> heure &gt;= HEURE_DEBUT <span class="kw">and</span> heure &lt;= HEURE_FIN:
+        <span class="fn">print</span>(<span class="str">"POMPE ON"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"POMPE OFF"</span>)</div>
+    <p>Remarque le <code>or</code> : ici il est <b>juste</b>, parce qu'une seule des deux anomalies suffit à disqualifier la mesure. Le même mot était faux à l'activité 3 — ce n'est pas le mot qui est bon ou mauvais, c'est ce qu'on veut dire.</p>
+    <p><b>Et la place ?</b> Après la décision, le test ne servirait à rien : la pompe aurait déjà reçu son ordre. Une garde qui arrive en retard n'est pas une garde.</p>
+  </details>
+
+  <p style="margin-top:16px">💧 <b>Défi citoyen — arroser moins.</b> New York, canicule d'été, restrictions d'eau. Propose une règle d'arrosage plus économe que la nôtre. Tu peux jouer sur les seuils, sur la plage horaire, ou ajouter une condition — mais dis à chaque fois <b>ce que tu gagnes</b> et <b>ce que tu risques</b>.</p>
+  <label for="defi2" style="display:block">Ma règle économe — ce qu'elle gagne, ce qu'elle risque :</label>
+  <textarea id="defi2" style="min-height:80px" placeholder="Ma règle économe, ce qu'elle gagne, ce qu'elle risque…"></textarea>
+  <details class="correction"><summary>✅ Corrigé du défi citoyen</summary>
+    <p>Plusieurs réponses sont défendables ; ce qui compte est le <b>couple gain / risque</b>. Trois pistes classiques :</p>
+    <ul>
+      <li><b>Abaisser le seuil</b> (arroser à 30 au lieu de 40) : on arrose moins souvent, mais on laisse la plante plus longtemps en manque — risque réel par forte chaleur.</li>
+      <li><b>Resserrer la plage horaire</b> sur le très tôt matin (5 h - 7 h) : c'est là que l'évaporation est la plus faible, donc chaque litre compte double. Risque : si le sol sèche à 14 h, il faudra attendre le lendemain.</li>
+      <li><b>Ajouter une condition de pluie</b> — un pluviomètre, ou simplement « ne pas arroser si l'humidité a monté toute seule depuis la dernière mesure ». Le plus économe, et le plus difficile : il faut une <b>mémoire</b> de la mesure précédente, exactement comme l'hystérésis a demandé une mémoire de l'état.</li>
+    </ul>
+    <p><b>Ce qu'il ne faut pas oublier de dire :</b> économiser l'eau n'est pas gratuit. Chaque règle plus économe déplace le risque vers la plante. Une décision technique est presque toujours un <b>arbitrage</b>, pas une optimisation.</p>
+  </details>
+
+  <p style="margin-top:16px">🏙 <b>Ancrage New York — l'ombre des tours.</b> Sur un toit new-yorkais, un jardin peut être à l'ombre d'une tour voisine une partie de la journée, et en plein vent le reste du temps. En quoi cela change-t-il la <b>plage horaire</b> d'arrosage — et pourquoi une même règle ne peut-elle pas convenir à deux toits différents ?</p>
+  <label for="defi3" style="display:block">Ce que l'ombre et le vent changent à la plage horaire :</label>
+  <textarea id="defi3" style="min-height:70px" placeholder="Tes idées…"></textarea>
+  <details class="correction"><summary>✅ Corrigé de l'ancrage</summary>
+    <p>L'ombre d'une tour déplace les heures fraîches : un toit à l'est est au soleil dès 7 h, un toit encaissé entre deux tours peut rester à l'ombre jusqu'à 11 h. La « bonne » plage horaire n'est donc pas une propriété de la ville, mais <b>de ce toit-là</b>. Quant au vent, il augmente l'évaporation exactement comme la chaleur : par grand vent, arroser revient en partie à humidifier l'air.</p>
+    <p><b>La leçon dépasse le jardin :</b> les valeurs d'un programme (seuils, horaires) ne sont pas universelles — elles dépendent du lieu d'installation. C'est pourquoi on les écrit <b>en haut, comme des réglages</b>, et non au milieu des tests. Un programme bien écrit s'adapte à un autre toit en changeant trois lignes.</p>
+  </details>
 </section>
 
-<footer>TechnoQuest — Thème 3 · 4e_C9 · Jardin connecté · Ancrage New York · Cycle 4 (2024) · v1 Agent Grok — v2 mise en conformité règles 11/13/14/15/16/17 (Fable, 30/07/2026, v1 archivée règle n°12). Sauvegarde locale uniquement — aucune donnée envoyée.</footer>
+<footer>
+  TechnoQuest — Thème 3 · 4e_C9.1 · 4e_C9.2 · 4e_C9.3 · Le jardin connecté se programme · Cycle 4, programme 2024.<br>
+  Sauvegarde <b>locale uniquement</b> (dans ce navigateur) — aucune donnée n'est envoyée.
+</footer>
 
 <script>
 (function(){
 "use strict";
-const KEY = "seq_4e_C9_jardin_programme";
+const KEY = "seq_4e_C9_jardin-connecte";
 const $ = id => document.getElementById(id);
-window.__exp = window.__exp || {};
+const txt = id => ($(id) ? $(id).value.trim() : "");
+const num = id => ($(id) ? parseInt($(id).value, 10) : NaN);
+window.__valid = window.__valid || {};
+window.__exp   = window.__exp   || {};
 
-/* règle n°13 : coloration des listings */
-function pyc(src){
-  const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  const KW = /^(print|def|return|if|elif|else|while|for|in|and|or|not|True|False|SI|SINON|ALORS|FIN|ET|OU|mesurer|lire|allumer|éteindre|input|range)$/;
-  return src.split("\n").map(line => {
-    let out = "", m;
-    const re = /"[^"]*"|#.*$|\d+(?:\.\d+)?|[A-Za-z_À-ſ][A-Za-z0-9_À-ſ]*|\s+|./g;
-    while((m = re.exec(line))){
-      const t = m[0]; let cls = "";
-      if(t[0] === '"') cls = "py-str";
-      else if(t[0] === "#") cls = "py-com";
-      else if(/^\d/.test(t)) cls = "py-num";
-      else if(/^[A-Za-z_À-ſ]/.test(t)) cls = KW.test(t) ? "py-kw" : "py-var";
-      else if(/^[=+\-*\/<>%→]/.test(t)) cls = "py-op";
-      out += cls ? '<span class="' + cls + '">' + esc(t) + '</span>' : esc(t);
-    }
-    return out;
-  }).join("\n");
+/* ══════ Sauvegarde locale ══════ */
+function collect(){
+  let d = {};
+  try{ d = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }catch(e){ d = {}; }
+  const o = {inputs: Object.assign({}, d.inputs||{}), radios: Object.assign({}, d.radios||{}),
+             valid: Object.assign({}, d.valid||{}, window.__valid || {}),
+             exp: Object.assign({}, d.exp||{}, window.__exp || {})};
+  document.querySelectorAll("input[id], select[id], textarea[id]").forEach(e=>{
+    if(e.type === "radio") return;
+    o.inputs[e.id] = e.value;
+  });
+  document.querySelectorAll('input[type="radio"][name]:checked').forEach(e=>{ o.radios[e.name] = e.value; });
+  return o;
 }
-document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = pyc(e.textContent); });
-
-/* suivi des éditeurs (règle n°16) */
-["vs1","vs2","vs3"].forEach(id => { const d = $(id); if(d) d.addEventListener("toggle", () => { if(d.open){ window.__exp[id] = true; save(); } }); });
-
-/* vérificateurs (règle n°14) */
-function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
-function sv(id, ok){ const e = $(id); if(!e) return false; const good = e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good; }
-function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
-const CHECKS = {
-  1(){ const s = pres("prog1", 20);
-    return {score: s, total: 1, exp: !!window.__exp.vs1, expMsg: "Ouvre l'éditeur 🧪 et exécute ta version (blocs puis Python) avant de valider — c'est le test qui fait foi."};
-  },
-  2(){ let s = 0;
-    s += sv("a2s1","Pompe ON"); s += sv("a2s2","Pompe OFF"); s += sv("a2s3","Pompe OFF"); s += sv("a2s4","Pompe ON");
-    return {score: s, total: 4, exp: true};
-  },
-  3(){ const s = pres("prog3", 20);
-    return {score: s, total: 1, exp: !!window.__exp.vs2, expMsg: "Ouvre l'éditeur 🧪 et fais vibrer H autour de 40 pour VOIR l'hystérésis avant de valider."};
-  },
-  4(){ return {score: pres("reinv", 20), total: 1, exp: true}; },
-  6(){ let s = 0; s += sv("ag1","1"); s += sv("ag2","2"); s += sv("ag3","3"); s += sv("ag4","4"); s += sv("ag5","5");
-    return {score: s, total: 5, exp: true}; }
-};
-document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
-  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
-  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
-  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
-  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
-  save();
-}));
-
-/* sauvegarde locale (règle n°15) */
-function save(){
-  const o = {inputs: {}, exp: window.__exp || {}};
-  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
-  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
-  const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
+let tSave = null;
+function save(avecNote){
+  try{ localStorage.setItem(KEY, JSON.stringify(collect())); }catch(e){}
+  if(avecNote && $("savedNote")){
+    $("savedNote").textContent = "💾 Travail sauvegardé dans ce navigateur.";
+    setTimeout(()=>{ if($("savedNote")) $("savedNote").textContent = ""; }, 2600);
+  }
 }
 function restore(){
-  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
-  if(!o) return;
-  Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
-  window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+  let d;
+  try{ d = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ return; }
+  if(!d) return;
+  Object.entries(d.inputs||{}).forEach(([id,v])=>{ const e=$(id); if(e && e.type!=="radio") e.value=v; });
+  Object.entries(d.radios||{}).forEach(([n,v])=>{
+    const e=document.querySelector('input[type="radio"][name="'+n+'"][value="'+v+'"]'); if(e) e.checked=true;
+  });
+  window.__valid = Object.assign({}, d.valid||{});
+  window.__exp   = Object.assign({}, d.exp||{});
 }
-document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+document.addEventListener("input", e=>{
+  if(e.target.matches("input, select, textarea")){ clearTimeout(tSave); tSave=setTimeout(()=>save(false), 500); }
+});
+document.addEventListener("change", e=>{
+  if(e.target.matches("input, select, textarea")){ clearTimeout(tSave); tSave=setTimeout(()=>save(false), 300); }
+});
+if($("btnSave")) $("btnSave").addEventListener("click", ()=>save(true));
+if($("btnPrint")) $("btnPrint").addEventListener("click", ()=>window.print());
+if($("btnReset")) $("btnReset").addEventListener("click", ()=>{
+  if(!confirm("Effacer TOUT ton travail enregistré dans ce navigateur ?")) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  location.reload();
+});
+
+/* ══════ Le billet d'entrée — sans note, hors progression (règle n°26) ══════ */
+if($("btnBillet")) $("btnBillet").addEventListener("click", ()=>{
+  const rep = [
+    $("be_1").value.startsWith("une boîte"),
+    $("be_2").value.startsWith("une condition"),
+    $("be_3").value === "ACQUÉRIR"
+  ];
+  const ok = rep.filter(Boolean).length;
+  const fb = $("fbBillet");
+  fb.className = "feedback show " + (ok === 3 ? "ok" : ok >= 1 ? "warn" : "ko");
+  let msg = ok + " / 3 — ";
+  if(ok === 3)      msg += "tous les acquis sont là, fonce !";
+  else if(ok === 2) msg += "presque tout est là ; le point qui manque sera rappelé en chemin.";
+  else if(ok === 1) msg += "un acquis sur trois : la séquence les reprend tous, tu ne pars pas de rien.";
+  else              msg += "rien de tout cela n'est encore là — et ce n'est pas grave : la séquence les enseigne. Dis-le au professeur, c'est tout.";
+  msg += " Ce billet ne compte pas dans ta progression.";
+  fb.textContent = msg;
+  window.__exp.billet = ok;
+  save(false);
+});
+
+/* ══════ LE BANC D'ESSAI DU JARDIN ══════ */
+const BANC = { pompe:false, bascules:0, mode:"un", tremblement:null };
+const SEUIL_UN = 40, H_DEBUT = 6, H_FIN = 10, S_BAS = 35, S_HAUT = 45;
+
+function bancMode(){
+  const r = document.querySelector('input[name="bMode"]:checked');
+  return r ? r.value : "un";
+}
+function bancDecide(H, heure){
+  /* Règle appliquée : un seul seuil, ou deux avec bande morte.
+     La plage horaire s'applique dans les DEUX cas : elle ne fait pas partie
+     du problème du clignotement, et la retirer brouillerait la démonstration. */
+  const dansPlage = (heure >= H_DEBUT && heure <= H_FIN);
+  if(!dansPlage) return false;
+  if(BANC.mode === "un") return (H < SEUIL_UN);
+  if(H < S_BAS)  return true;      // vraiment sec
+  if(H > S_HAUT) return false;     // vraiment humide
+  return BANC.pompe;               // bande morte : on garde l'état
+}
+function bancMaj(){
+  if(!$("bHum")) return;
+  BANC.mode = bancMode();
+  const H = parseInt($("bHum").value, 10);
+  const heure = parseInt($("bHeure").value, 10);
+  if($("bHumVal"))   $("bHumVal").textContent = H;
+  if($("bHeureVal")) $("bHeureVal").textContent = heure;
+  if($("bHumNum") && document.activeElement !== $("bHumNum")) $("bHumNum").value = H;
+
+  const avant = BANC.pompe;
+  BANC.pompe = bancDecide(H, heure);
+  if(BANC.pompe !== avant){
+    BANC.bascules++;
+    if($("bCompteur")) $("bCompteur").textContent = BANC.bascules;
+  }
+
+  const ec = $("bEcran");
+  if(ec){
+    ec.className = "ecran-sim " + (BANC.pompe ? "pompe-on" : "pompe-off");
+    $("bL1").textContent = BANC.pompe ? "POMPE ON" : "POMPE OFF";
+    $("bL2").textContent = "H: " + H + " %   heure: " + heure + " h";
+  }
+  if($("bPompe"))    $("bPompe").className = "pompe-sim" + (BANC.pompe ? " on" : "");
+  if($("bPompeTxt")) $("bPompeTxt").textContent = BANC.pompe ? "la pompe tourne" : "pompe à l'arrêt";
+
+  const d = $("bDiag");
+  if(d){
+    if(BANC.bascules >= 4)      d.textContent = "⚠ " + BANC.bascules + " basculements : à ce rythme, le relais s'use et l'eau n'atteint jamais les racines.";
+    else if(BANC.bascules > 0)  d.textContent = BANC.bascules + " basculement(s) — c'est un comportement calme.";
+    else                        d.textContent = "Fais varier l'humidité et regarde ce compteur : c'est lui qui dira si ton programme est nerveux.";
+  }
+
+  /* verrous expérientiels */
+  const e = window.__exp;
+  /* « avoir fait varier » ne se mesure pas au nombre de valeurs touchées, mais au
+     fait d'avoir traversé le seuil : il faut avoir vu la pompe des DEUX côtés. */
+  if(H < SEUIL_UN) e.vuSec = true;
+  if(H > SEUIL_UN) e.vuHumide = true;
+  if(e.vuSec && e.vuHumide) e.varie = true;
+  if(H < SEUIL_UN && (heure < H_DEBUT || heure > H_FIN) && !BANC.pompe) e.plage = true;
+  if(H === 39) e.front39 = true;
+  if(H === 40) e.front40 = true;
+  majVerrous();
+}
+function majVerrous(){
+  const e = window.__exp;
+  const L = {
+    "v-varie":  [!!e.varie,   "J'ai fait varier l'humidité et observé la pompe"],
+    "v-plage":  [!!e.plage,   "J'ai vérifié qu'à sol sec mais HORS plage horaire, la pompe reste éteinte"],
+    "v-front":  [!!(e.front39 && e.front40), "J'ai testé les deux frontières : 39 % et 40 %"],
+    "v-clign":  [!!e.clignote, "J'ai provoqué le clignotement (mode UN seuil, mesure qui tremble)"],
+    "v-hyst":   [!!e.hysteres, "J'ai vérifié que les DEUX seuils l'arrêtent, sur la même mesure"]
+  };
+  Object.entries(L).forEach(([id,[fait,lib]])=>{
+    const li = $(id); if(!li) return;
+    li.className = fait ? "fait" : "";
+    li.textContent = (fait ? "✔ " : "☐ ") + lib;
+  });
+}
+["bHum","bHeure"].forEach(id=>{ if($(id)) $(id).addEventListener("input", bancMaj); });
+if($("bHumNum")) $("bHumNum").addEventListener("input", ()=>{
+  let v = parseInt($("bHumNum").value, 10);
+  if(isNaN(v)) return;
+  v = Math.max(0, Math.min(100, v));
+  $("bHum").value = v; bancMaj();
+});
+document.querySelectorAll('input[name="bMode"]').forEach(r=>r.addEventListener("change", ()=>{ BANC.mode = bancMode(); bancMaj(); }));
+if($("btnRAZ")) $("btnRAZ").addEventListener("click", ()=>{
+  BANC.bascules = 0;
+  if($("bCompteur")) $("bCompteur").textContent = "0";
+  bancMaj();
+});
+
+/* Le tremblement : la MÊME suite de valeurs dans les deux modes — c'est ce qui
+   rend la comparaison honnête. On la fige donc au lieu de la tirer au hasard. */
+const TREMBLEMENT = [41,39,41,40,39,40,39,41,40,39,41,40];
+if($("btnTrembler")) $("btnTrembler").addEventListener("click", ()=>{
+  if(BANC.tremblement) return;
+  $("bHeure").value = 8;
+  let i = 0;
+  const modeAuDepart = bancMode();
+  BANC.tremblement = setInterval(()=>{
+    if(i >= TREMBLEMENT.length){
+      clearInterval(BANC.tremblement); BANC.tremblement = null;
+      const e = window.__exp;
+      if(modeAuDepart === "un"   && BANC.bascules >= 4) e.clignote = true;
+      if(modeAuDepart === "deux" && BANC.bascules <= 1) e.hysteres = true;
+      majVerrous(); save(false);
+      return;
+    }
+    $("bHum").value = TREMBLEMENT[i++];
+    bancMaj();
+  }, 220);
+});
+
+/* ══════ Vérificateurs ══════ */
+const CHECKS = {
+  1: function(){
+    let ok = 0;
+    const att = {a1_1:"ACQUÉRIR", a1_2:"TRAITER", a1_3:"COMMUNIQUER", a1_4:"CONVERTIR"};
+    Object.entries(att).forEach(([id,v])=>{ if($(id) && $(id).value === v) ok++; });
+    if($("a1_5").value.startsWith("DISTRIBUER")) ok++;
+    if($("a1_r1").value.startsWith("elle demande beaucoup plus")) ok++;
+    if($("a1_r2").value.startsWith("non : il laisse passer")) ok++;
+    const j = txt("a1_just");
+    const justOk = j.length >= 60 && (j.includes("heure") || j.includes("horloge"));
+    return {score:ok, total:7,
+      extra: justOk ? "" : " Rédige la justification c) : pourquoi l'heure est-elle une entrée, et que perdrait-on sans elle ?",
+      valide: ok >= 6 && justOk};
+  },
+  2: function(){
+    let ok = 0;
+    const ordre = {ag1:"1", ag2:"2", ag3:"3", ag4:"4", ag5:"5"};
+    let ordreJuste = true;
+    Object.entries(ordre).forEach(([id,v])=>{ if($(id).value !== v) ordreJuste = false; });
+    if(ordreJuste) ok++;
+    if($("a2_q1").value.startsWith("parce que c'est UNE seule")) ok++;
+    if($("a2_q2").value.startsWith("non : la flèche")) ok++;
+    if($("a2_q3").value.startsWith("3 :")) ok++;
+    if($("a2_q4").value.startsWith("la sortie NON")) ok++;
+    const p = txt("prog1").toLowerCase();
+    const progOk = p.length >= 60 && (p.includes(" et ") || p.includes("and")) &&
+                   p.includes("6") && p.includes("10") &&
+                   (p.includes("allum") && p.includes("teind"));
+    return {score:ok, total:5,
+      extra: progOk ? "" : " Ton pseudo-code doit contenir le ET, les DEUX bornes horaires (6 et 10) et les DEUX actions (allumer / éteindre).",
+      valide: ok >= 4 && progOk};
+  },
+  3: function(){
+    let ok = 0;
+    if($("a3_q1").value.startsWith("pour changer le réglage")) ok++;
+    if($("a3_q2").value.startsWith("au losange")) ok++;
+    if($("a3_q3").value.startsWith("la pompe s'allume dès qu'UNE")) ok++;
+    if($("a3_q4").value.startsWith("H = 25")) ok++;
+    const j = txt("a3_journal");
+    const chiffres = (j.match(/\d+/g) || []).length;
+    const journalOk = j.length >= 80 && chiffres >= 3;
+    const e = window.__exp;
+    const bancOk = !!(e.varie && e.plage);
+    let extra = "";
+    if(!journalOk) extra += " Ton journal doit citer des VALEURS et des résultats (au moins trois nombres), pas « ça marche ».";
+    if(!bancOk)    extra += " Au banc d'essai : fais varier l'humidité, puis vérifie qu'à sol sec HORS plage horaire la pompe reste éteinte.";
+    return {score:ok, total:4, extra, valide: ok === 4 && journalOk && bancOk};
+  },
+  4: function(){
+    let ok = 0;
+    const ATT = {a4_a1:"pompe ON", a4_a2:"pompe OFF", a4_a3:"pompe OFF", a4_a4:"pompe ON", a4_a5:"pompe OFF"};
+    Object.entries(ATT).forEach(([id,v])=>{ if($(id) && $(id).value === v) ok++; });
+    if($("a4_a6").value.startsWith("pompe OFF — mais")) ok++;
+    if($("a4_m1").value.startsWith("parce que lui seul distingue")) ok++;
+    if($("a4_m2").value.startsWith("non : il n'arrose pas")) ok++;
+    const obs = ["a4_o1","a4_o2","a4_o3","a4_o4","a4_o5","a4_o6"].filter(id=>$(id).value !== "").length;
+    const e = window.__exp;
+    const frontOk = !!(e.front39 && e.front40);
+    let extra = "";
+    if(obs < 6)    extra += " Remplis les 6 « observé » (" + obs + "/6) — PENDANT les essais, pas de mémoire.";
+    if(!frontOk)   extra += " Exécute réellement les deux frontières au banc : 39 % puis 40 % (champ « valeur exacte »).";
+    return {score:ok, total:8, extra, valide: ok === 8 && obs === 6 && frontOk};
+  },
+  5: function(){
+    let ok = 0;
+    if($("a5_q1").value.startsWith("6 fois")) ok++;
+    if($("a5_q2").value.startsWith("oui, parfaitement")) ok++;
+    if($("a5_q3").value.startsWith("d'un capteur réel")) ok++;
+    if($("a5_q4").value.startsWith("RIEN")) ok++;
+    if($("a5_q5").value.startsWith("une MÉMOIRE")) ok++;
+    const d = txt("a5_diag");
+    const diagOk = d.length >= 70;
+    const p = txt("prog3").toLowerCase();
+    const progOk = p.length >= 60 && p.includes("35") && p.includes("45") &&
+                   (p.includes("sinon si") || p.includes("elif"));
+    const n1 = num("a5_n1"), n2 = num("a5_n2");
+    const mesureOk = !isNaN(n1) && !isNaN(n2) && n1 >= 4 && n2 <= 1;
+    const e = window.__exp;
+    const bancOk = !!(e.clignote && e.hysteres);
+    let extra = "";
+    if(!diagOk)   extra += " Rédige ton diagnostic : quelles conséquences CONCRÈTES, pour le relais, la pompe et la plante ?";
+    if(!progOk)   extra += " Ton programme doit contenir les DEUX seuils (35 et 45) et un SINON SI — pas un simple SINON.";
+    if(!mesureOk) extra += " Relève les deux compteurs au banc : plusieurs basculements avec un seuil, au plus un avec deux.";
+    if(!bancOk)   extra += " Fais la démonstration au banc : provoque le clignotement en mode UN seuil, puis rejoue le MÊME tremblement en mode DEUX seuils.";
+    return {score:ok, total:5, extra, valide: ok === 5 && diagOk && progOk && mesureOk && bancOk};
+  },
+  6: function(){
+    let ok = 0;
+    if($("a6_q1").value.startsWith("le sens")) ok++;
+    const p = txt("reinv").toLowerCase();
+    const nombres = (p.match(/\d+/g) || []).map(Number);
+    const deuxSeuils = nombres.length >= 2 && (Math.max.apply(null, nombres) - Math.min.apply(null, nombres)) >= 5;
+    const progOk = p.length >= 70 && deuxSeuils &&
+                   (p.includes("sinon si") || p.includes("elif")) &&
+                   (p.includes("allum") && p.includes("teind"));
+    const j = txt("a6_just");
+    const justOk = j.length >= 60 && (j.match(/\d+/g) || []).length >= 2;
+    let extra = "";
+    if(!progOk) extra += " Ton programme doit être complet : deux seuils DIFFÉRENTS, un SINON SI, et les deux actions.";
+    if(!justOk) extra += " Justifie tes deux valeurs : pourquoi cet écart-là ? (cite les deux nombres)";
+    return {score:ok, total:1, extra, valide: ok === 1 && progOk && justOk};
+  }
+};
+
+const ENCOURAGE_OK = ["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
+const ENCOURAGE_MI = ["Bonne démarche — vérifie les points restants avec l'aide de niveau 1.","Tu y es presque : relis la consigne et corrige ce qui manque.","C'est en bonne voie : l'aide de niveau 2 peut débloquer le reste."];
+const ENCOURAGE_KO = ["Ce n'est pas encore acquis : ouvre l'aide de niveau 1, puis réessaie — c'est comme ça qu'on apprend.","Relis la ressource de l'activité, utilise les aides, puis tente une nouvelle vérification."];
+
+document.querySelectorAll("[data-check]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const n = btn.dataset.check;
+    const r = CHECKS[n]();
+    const fb = $("fb" + n);
+    const ratio = r.total ? r.score / r.total : 0;
+    let msg = r.score + " / " + r.total + " réponses correctes.";
+    if(r.valide){
+      fb.className = "feedback show ok";
+      msg += " " + ENCOURAGE_OK[r.score % ENCOURAGE_OK.length] + " Tu peux maintenant comparer avec la correction complète.";
+    } else if(ratio >= .5){
+      fb.className = "feedback show warn";
+      msg += " " + ENCOURAGE_MI[r.score % ENCOURAGE_MI.length];
+    } else {
+      fb.className = "feedback show ko";
+      msg += " " + ENCOURAGE_KO[r.score % ENCOURAGE_KO.length];
+    }
+    if(r.extra) msg += r.extra;
+    fb.textContent = msg;
+    window.__valid["act" + n] = !!r.valide;
+    majProgress(); majTaches(); save(false);
+  });
+});
+
+/* ══════ Progression et tableau de bord (règle n°30) ══════ */
+const ACTIVITES = [
+  {n:1, seance:"s1", libelle:"Les deux chaînes du jardin — et le relais"},
+  {n:2, seance:"s1", libelle:"De la règle à l'algorigramme"},
+  {n:3, seance:"s2", libelle:"Écrire et exécuter le programme"},
+  {n:4, seance:"s2", libelle:"Tester — le jeu d'essais"},
+  {n:5, seance:"s3", libelle:"Mettre au point — l'hystérésis"},
+  {n:6, seance:"s3", libelle:"Réinvestir — le lampadaire"}
+];
+function majProgress(){
+  const faits = ACTIVITES.filter(a=>window.__valid["act"+a.n]).length;
+  const total = ACTIVITES.length;
+  if($("progTxt")) $("progTxt").textContent = faits + " / " + total + " activités validées";
+  if($("progFill")) $("progFill").style.width = Math.round(faits/total*100) + "%";
+  const pb = document.querySelector(".progress-bar");
+  if(pb) pb.setAttribute("aria-valuenow", Math.round(faits/total*100));
+  ["s1","s2","s3"].forEach(s=>{
+    const dedans = ACTIVITES.filter(a=>a.seance===s);
+    const tous = dedans.every(a=>window.__valid["act"+a.n]);
+    const el = $("done-"+s); if(el) el.textContent = tous ? "✔" : "";
+  });
+}
+function majTaches(){
+  const c = $("tachesBandeau"); if(!c) return;
+  c.innerHTML = ACTIVITES.map(a=>{
+    const f = !!window.__valid["act"+a.n];
+    return '<div class="tache' + (f ? " fait" : "") + '">' +
+           '<span class="coche">' + (f ? "✔" : "☐") + "</span> " +
+           "<b>Activité " + a.n + "</b> — " + a.libelle + "</div>";
+  }).join("");
+}
+
+/* ══════ Rappel de l'hypothèse au bilan ══════ */
+function majHyp(){
+  let h = "";
+  if($("hyp1")) h = $("hyp1").value.trim();
+  else { try{ h = ((JSON.parse(localStorage.getItem(KEY)||"{}")||{}).inputs||{}).hyp1 || ""; }catch(e){ h=""; } h = h.trim(); }
+  const el = $("rappelHyp"); if(!el) return;
+  if(h){
+    el.style.display = "block";
+    el.innerHTML = "<b>🔎 Au début de la séquence, tu avais écrit :</b><br><i>« " +
+      h.replace(/&/g,"&amp;").replace(/</g,"&lt;") +
+      " »</i><br><span style='color:var(--sub)'>Relis-toi : qu'ajouterais-tu maintenant ?</span>";
+  } else { el.style.display = "none"; }
+}
+if($("hyp1")) $("hyp1").addEventListener("input", majHyp);
+
+/* ══════ Onglets de séance ══════ */
+document.querySelectorAll(".seance-tab").forEach(t=>{
+  t.addEventListener("click", ()=>{
+    document.querySelectorAll(".seance-tab").forEach(x=>{ x.classList.remove("active"); x.setAttribute("aria-selected","false"); });
+    document.querySelectorAll(".seance-panel").forEach(p=>p.classList.remove("active"));
+    t.classList.add("active"); t.setAttribute("aria-selected","true");
+    const p = $(t.dataset.panel); if(p) p.classList.add("active");
+  });
+});
+/* Règle d'or n°101 — chaque séance mène explicitement à la suivante */
+document.querySelectorAll(".vers-seance").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+    if(onglet){ onglet.click(); window.scrollTo({top:0, behavior:"smooth"}); }
+  });
+});
+
+/* ══════ Règle d'or n°122 — trois parcours ══════ */
+function majParcours(){
+  const choix = (window.__exp && window.__exp.parcours) || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = $("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 matériel réel", b:"🅱 simulation", c:"🅲 sans matériel", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix]||"tous") + "</b>.";
+  }
+}
+document.querySelectorAll(".parcours-btn").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    window.__exp = window.__exp || {};
+    window.__exp.parcours = b.dataset.choix;
+    majParcours(); save(false);
+  });
+});
+
+/* ══════ Règle d'or n°29 — mode essentiel ══════ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", ()=>{
+  document.body.classList.toggle("essentiel");
+  window.__exp.essentiel = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save(false);
+});
+
+/* ══════ Démarrage ══════ */
 restore();
+if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
+majEssentiel(); majParcours(); majProgress(); majTaches(); majHyp(); majVerrous(); bancMaj();
+})();
+</script>
+
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem 2rem 9rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:68vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  /* Refonte v2 : la legende ne doit JAMAIS chevaucher l'image agrandie.
+     Barre opaque collee en bas + image reduite (68vh) + reserve de place
+     sous l'image via le padding-bottom du fond. */
+  .loupe-legende{position:fixed;left:0;right:0;bottom:0;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;
+    background:#12151b;border-top:1px solid #3a4150;
+    padding:.75rem 2rem;max-height:22vh;overflow:auto;
+    box-shadow:0 -8px 24px rgba(0,0,0,.5)}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  /* L'indice « cliquer pour agrandir » ne doit JAMAIS couvrir l'image : l'infobulle
+     native (attribut title) se place au milieu du dessin et masque le contenu.
+     On l'affiche donc nous-mêmes, dans un coin, au survol ou au focus. */
+  .loupe-enveloppe{position:relative;display:block}
+  .loupe-badge{position:absolute;top:8px;right:8px;z-index:2;pointer-events:none;
+    background:rgba(12,14,18,.88);color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 .78rem/1 system-ui,sans-serif;padding:5px 8px;opacity:0;transition:opacity .12s}
+  .loupe-enveloppe:hover .loupe-badge,
+  .loupe-enveloppe:focus-within .loupe-badge{opacity:1}
+  @media print{.loupe-badge{display:none}}
+  @media (prefers-reduced-motion:reduce){.loupe-badge{transition:none}}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer ✕";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  —  Échap pour refermer"
+                                  : "Échap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  function armer(){
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      /* Badge dans le coin plutôt qu'infobulle native : celle-ci se pose au
+         milieu de l'image et masque ce qu'on demande justement de lire. */
+      if (!img.parentNode.classList.contains("loupe-enveloppe")) {
+        var env = document.createElement("span");
+        env.className = "loupe-enveloppe";
+        img.parentNode.insertBefore(env, img);
+        env.appendChild(img);
+        var badge = document.createElement("span");
+        badge.className = "loupe-badge";
+        badge.setAttribute("aria-hidden", "true");
+        badge.textContent = "🔍 Cliquer pour agrandir";
+        env.appendChild(badge);
+      }
+      img.removeAttribute("title");
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
 })();
 </script>
 </body>

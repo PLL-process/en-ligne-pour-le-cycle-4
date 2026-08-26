@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — Le jardin connecté se programme (4e_C9)</title>
+<style>
+  body{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;max-width:760px;margin:24px auto;
+       padding:0 18px 40px;line-height:1.6;color:#12203a}
+  h1{color:#1d4e89;font-size:1.5em;margin-bottom:2px}
+  h2{color:#1d4e89;font-size:1.1em;margin-top:26px;border-bottom:2px solid #d6e4f7;padding-bottom:4px}
+  .sous{color:#5b7bb8;margin-top:0}
+  .box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+  .cle{background:#fff8e1;border-left:4px solid #e5a000}
+  .att{background:#fdecee;border-left:4px solid #c0392b}
+  code{background:#eef3fb;padding:1px 5px;border-radius:4px;font-size:.94em}
+  pre{background:#0d2347;color:#e4eaf5;padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.86em}
+  table{width:100%;border-collapse:collapse;font-size:.9em;margin:10px 0}
+  th,td{border:1px solid #c9d8ee;padding:6px 9px;text-align:left}
+  th{background:#e8f0fc;color:#1d4e89}
+  .mots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .mot{background:#e8f0fc;border:1px solid #b9cbe4;border-radius:999px;padding:3px 11px;font-size:.86em}
+  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}
+  #navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;
+             color:#1d4e89;font-size:.88em;text-decoration:none}
+  #navharm a:hover{border-color:#1d4e89}
+  footer{margin-top:30px;color:#666;font-size:.85em;border-top:1px solid #d6e4f7;padding-top:10px}
+  @media print{#navharm{display:none} body{max-width:none} pre{background:#fff;color:#000;border:1px solid #999}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../../../index.html">⌂ Accueil</a>
+  <a href="../sequence_4e_C9_jardin-programme.html">← La séquence</a>
+  <a href="../qcm_4e_C9_jardin-programme.html">🧠 Le QCM</a>
+</nav>
+
+<h1>🌱 Synthèse élève — Le jardin connecté se programme</h1>
+<p class="sous"><b>4e · Thème 3 ·</b> 4e_C9.1 · 4e_C9.2 · 4e_C9.3 — à relire avant l'évaluation</p>
+
+<h2>1. Concevoir : dessiner avant d'écrire</h2>
+<p>Un <b>algorigramme</b> montre la structure d'un programme au lieu de l'écrire. Il n'utilise que <b>trois formes</b>, et chacune a un rôle unique :</p>
+<table>
+  <tr><th>Forme</th><th>Rôle</th><th>Nombre de sorties</th></tr>
+  <tr><td>⬭ terminal</td><td>commence (ou finit)</td><td>1</td></tr>
+  <tr><td>▭ rectangle</td><td><b>fait</b> quelque chose : mesurer, allumer, éteindre</td><td>1</td></tr>
+  <tr><td>◇ losange</td><td><b>demande</b> quelque chose — il ne fait rien, il oriente</td><td><b>2</b> : OUI et NON</td></tr>
+</table>
+<div class="box"><b>La flèche qui remonte est une instruction, pas une décoration.</b> C'est la <b>boucle</b> : elle dit « recommencer ». Un système qui surveille n'a pas de bloc FIN — et ce n'est pas un oubli.</div>
+
+<h2>2. Modifier un algorithme — ce que le programme de 4e demande</h2>
+<p>En 4e, on ne part pas de la page blanche : un algorithme existe déjà, et une exigence nouvelle arrive. <b>Modifier, c'est trouver le bon endroit et n'intervenir que là.</b></p>
+<div class="box">La règle de départ ne regardait que l'humidité. On ajoute une plage horaire : deux conditions de plus, <b>dans le SI existant</b>. Rien d'autre ne bouge.</div>
+<div class="att"><b>Piège de vocabulaire.</b> « Entre 6 h et 10 h » se traduit par <b>deux</b> comparaisons : <code>heure ≥ 6</code> <b>ET</b> <code>heure ≤ 10</code>. Un seul mot en français, deux tests en programmation.</div>
+<div class="cle"><b>ET ou OU ?</b> <b>ET</b> exige que TOUT soit vrai. <b>OU</b> se contente d'une seule condition. Se tromper ne fait pas planter le programme — cela le fait <b>mentir</b> : avec OU, la pompe s'allumerait sur un sol détrempé, simplement parce qu'il est 8 h.</div>
+
+<h2>3. Traduire en programme</h2>
+<pre>SEUIL = 40            # les réglages, en haut, nommés
+HEURE_DEBUT = 6
+HEURE_FIN = 10
+
+H = 25                # les entrées (en vrai : le capteur et l'horloge)
+heure = 8
+
+if H &lt; SEUIL and heure &gt;= HEURE_DEBUT and heure &lt;= HEURE_FIN:
+    print("POMPE ON")
+else:
+    print("POMPE OFF")</pre>
+<div class="box"><b>Pourquoi <code>SEUIL = 40</code> en haut ?</b> Pour n'avoir <b>qu'un seul endroit</b> à modifier le jour où le réglage change. Et parce que <code>H &lt; SEUIL</code> se lit, alors que <code>H &lt; 40</code> se déchiffre.</div>
+<div class="att"><b>Deux erreurs classiques.</b> <code>=</code> range une valeur, <code>==</code> compare. Et en Python, l'<b>indentation</b> (le décalage) n'est pas de la présentation : c'est la structure. Une ligne non décalée sous un <code>if</code> s'exécute toujours.</div>
+<p><b>Une entrée n'a pas besoin d'un capteur.</b> L'heure vient de l'horloge de la carte, et elle déclenche autant que l'humidité. Est une entrée <b>tout ce qui entre dans la décision</b> : le monde, le temps, ou un humain qui appuie sur un bouton.</p>
+
+<h2>4. Tester : prouver, pas espérer</h2>
+<p>Tester, c'est écrire le résultat <b>ATTENDU avant</b> l'exécution, puis comparer. Écrit après, il ne prouve plus rien.</p>
+<table>
+  <tr><th>Famille d'essai</th><th>Ce qu'elle vérifie</th><th>Exemple</th></tr>
+  <tr><td>nominal</td><td>ça marche dans les cas francs</td><td>H = 25 → ON · H = 55 → OFF</td></tr>
+  <tr><td><b>frontière</b></td><td>le seuil est-il au bon endroit ?</td><td>H = 39 → ON · <b>H = 40 → OFF</b></td></tr>
+  <tr><td>exclusion</td><td>l'autre condition bloque-t-elle ?</td><td>H = 25 à 23 h → OFF</td></tr>
+  <tr><td><b>absurde</b></td><td>et si l'entrée est impossible ?</td><td>H = 250 → il faudrait <b>alerter</b></td></tr>
+</table>
+<div class="cle"><b>Pourquoi l'essai à 40 pile est-il indispensable ?</b> Parce que c'est la <b>seule</b> valeur où <code>&lt;</code> et <code>&lt;=</code> ne donnent pas le même résultat. <code>40 &lt; 40</code> est faux. Un caractère de différence, deux comportements — et un seul essai pour les distinguer.</div>
+<div class="att"><b>Le cas absurde.</b> Un capteur débranché ne renvoie pas « rien » : il renvoie n'importe quoi. Avec H = 250, le programme n'arrose pas… mais pour la mauvaise raison, et <b>sans rien signaler</b>. Un programme fiable <b>vérifie ses entrées avant de leur faire confiance</b>.</div>
+
+<h2>5. Mettre au point : quand le programme est juste et pourtant inutilisable</h2>
+<div class="cle"><b>C'est la leçon la plus importante de la séquence.</b> La pompe qui s'allume et s'éteint six fois par minute n'a <b>aucun bug</b> : chaque décision prise est correcte. C'est la <b>règle</b> qui est mal choisie.</div>
+<p>Près d'un seuil unique, la mesure d'un capteur réel <b>tremble</b> — deux points suffisent à la faire changer de côté. La décision suit, et la pompe claque.</p>
+<p><b>La correction : l'hystérésis.</b> Deux seuils au lieu d'un, et une <b>bande morte</b> entre les deux.</p>
+<pre>SEUIL_BAS = 35
+SEUIL_HAUT = 45
+SI H &lt; SEUIL_BAS ALORS
+    allumer pompe          # vraiment sec
+SINON SI H &gt; SEUIL_HAUT ALORS
+    éteindre pompe         # vraiment humide
+# entre 35 et 45 : AUCUNE instruction — la pompe garde son état
+FIN SI</pre>
+<div class="box"><b>Trois cas, dont un vide</b> — et le cas vide est le plus important. Pour « garder son état », le programme a besoin d'une <b>mémoire</b> : une variable qui retient si la pompe est allumée.</div>
+<div class="att"><b>Ce que l'hystérésis coûte.</b> Ce n'est pas un progrès gratuit : à 39 % d'humidité, la pompe ne s'allume plus. On gagne en <b>stabilité</b> ce qu'on perd en <b>réactivité</b>. Choisir la largeur de la bande, c'est arbitrer — d'après la façon dont la mesure tremble <i>en vrai</i>.</div>
+
+<h2>6. La démarche complète, en quatre temps</h2>
+<div class="box"><b>Observer</b> l'écart (la trace) → <b>expliquer</b> sa cause → <b>corriger</b> → <b>re-tester dans les mêmes conditions</b>.</div>
+<p>Le quatrième temps est celui qu'on saute le plus souvent. Sans lui, on ne sait pas si on a corrigé — ou si on a eu de la chance. Et re-tester <b>avec d'autres valeurs</b> que celles qui avaient révélé le défaut ne prouve rien du tout.</p>
+<p>Après toute modification, on rejoue <b>tout</b> le jeu d'essais : c'est la <b>non-régression</b>. Corriger quelque chose peut casser ce qui marchait.</p>
+
+<h2>7. Ce qui se réinvestit</h2>
+<p>La structure « deux seuils + bande morte » ne s'arrête pas au jardin. Le lampadaire l'utilise (allumer sous 20, éteindre au-dessus de 60 — une bande <b>large</b>, parce que le crépuscule dure). Un thermostat, un régulateur, un chargeur de batterie aussi.</p>
+<div class="cle"><b>Ce que tu as appris n'est pas un programme : c'est une forme.</b> Ce qui change d'un objet à l'autre, ce sont la grandeur mesurée, les valeurs et les noms. Le squelette, lui, tient.</div>
+
+<h2>Les mots à savoir employer</h2>
+<div class="mots">
+  <span class="mot">algorigramme</span><span class="mot">terminal · rectangle · losange</span><span class="mot">boucle</span>
+  <span class="mot">variable</span><span class="mot">constante (réglage)</span><span class="mot">entrée</span><span class="mot">condition</span>
+  <span class="mot">ET · OU</span><span class="mot">seuil</span><span class="mot">cas frontière</span><span class="mot">cas absurde</span>
+  <span class="mot">résultat attendu / observé</span><span class="mot">non-régression</span>
+  <span class="mot">hystérésis</span><span class="mot">bande morte</span><span class="mot">mémoire d'état</span>
+  <span class="mot">préactionneur (relais)</span>
+</div>
+
+<footer>TechnoQuest · Thème 3 · 4e_C9.1 · 4e_C9.2 · 4e_C9.3 · Synthèse élève — Le jardin connecté se programme · Cycle 4, programme 2024.</footer>
+</body>
+</html>
