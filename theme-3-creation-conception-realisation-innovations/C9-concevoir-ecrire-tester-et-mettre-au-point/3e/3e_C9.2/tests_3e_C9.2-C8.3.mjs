@@ -546,6 +546,23 @@ const run = async () => {
     ok(`page ${i + 1} : pas de bouton d'onglet orphelin hérité du tout-en-un`,
        await page.locator("button.vers-seance").count() === 0);
   }
+
+  /* Règle d'or n°136 — un sélecteur ne vaut que par ce qu'il sélectionne.
+     Les pages 3 et 4 ne portent aucun bloc data-parcours : le sélecteur y
+     changeait la classe du body et n'y masquait rien. Le test compare donc,
+     page par page, la présence des boutons au nombre de blocs à filtrer. */
+  for (let i = 0; i < P4.length; i++) {
+    await page.goto(url(P4[i])); await page.waitForTimeout(300);
+    const boutons = await page.locator(".parcours-btn").count();
+    const cibles = await page.locator("[data-parcours]").count();
+    ok(`page ${i + 1} : le sélecteur de parcours n'est présent QUE s'il a des blocs à masquer`,
+       (boutons > 0) === (cibles > 0), `${boutons} boutons pour ${cibles} blocs`);
+    if (boutons === 0) {
+      const note = await page.locator("#parcoursRappel").textContent();
+      ok(`page ${i + 1} : et l'élève est renvoyé à l'endroit où le choix se fait`,
+         /page 1/i.test(note || ""), (note || "").trim().slice(0, 70));
+    }
+  }
   await page.goto(url(SEQ)); await page.waitForTimeout(300);
   ok("4 pages : AUCUNE question perdue par rapport au tout-en-un",
      perdus.length === 0, perdus.join(", ") || (refChamps.length + " champs couverts"));

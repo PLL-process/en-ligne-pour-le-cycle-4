@@ -240,19 +240,54 @@ def garder_banc(js, avec_banc):
     divergence possible entre les pages."""
     return js
 
+def selecteur_parcours_utile(toolbar, corps_assemble):
+    """Règle d'or n°136 — un sélecteur ne vaut que par ce qu'il sélectionne.
+
+    Les pages 3 et 4 ne portent AUCUN bloc `data-parcours` : le sélecteur
+    🅰/🅱/🅲 s'y affichait, changeait la classe du body, écrivait sa note — et
+    ne masquait rien. Mécanisme complet, branché sur rien, exactement ce que
+    la règle n°136 décrit. On le retire donc des pages qui n'ont rien à
+    filtrer, en disant à l'élève où son choix a été fait et qu'il est retenu.
+    """
+    if "data-parcours" in corps_assemble:
+        return toolbar
+    lignes, dedans, out = toolbar.split("\n"), False, []
+    for l in lignes:
+        if "choix-parcours-boutons" in l:
+            dedans = True
+            continue
+        if dedans:
+            if "</div>" in l:
+                dedans = False
+            continue
+        if 'id="parcoursNote"' in l:
+            # id DIFFÉRENT de « parcoursNote » : le script commun réécrit cette
+            # note à chaque affichage (« Parcours affiché : … »). Lui laisser le
+            # même identifiant, c'est voir notre phrase remplacée au chargement —
+            # trouvé par le test, pas par la relecture.
+            out.append('<p class="saved-note" id="parcoursRappel" role="status" style="text-align:center">'
+                       'Ton parcours 🅰/🅱/🅲 se choisit en <b>page 1</b> : il est retenu pour toute la '
+                       'séquence. Cette page-ci ne contient aucun bloc propre à un parcours.</p>')
+            continue
+        out.append(l)
+    return "\n".join(out)
+
+
 # ─────────────────────────────── écriture ───────────────────────────────
 for p in PAGES:
     corps = []
     for bloc in p["corps"]:
         corps.append(tabs(p["n"]) if bloc == "TABS" else sans_bouton_seance(bloc))
+    corps_assemble = "\n".join(corps)
+    toolbar = selecteur_parcours_utile(TOOLBAR, corps_assemble)
     js = corriger_script(SCRIPT, p["n"])
     js = garder_banc(js, any(b is BANC for b in p["corps"]))
     h1 = H1.replace("</h1>", f" — {p['titre']}</h1>")
     page = "\n".join([
         HEAD, "<body>", NAVCSS, CSS_SUP, NAV, h1,
         f'<p class="subtitle">{p["sous"]}</p>', REPLI,
-        BADGES, IDENTITE, TOOLBAR, PROGRESS,
-        "\n".join(corps),
+        BADGES, IDENTITE, toolbar, PROGRESS,
+        corps_assemble,
         suivant(p["n"]),
         FOOTER, js, LOUPE,
     ])
