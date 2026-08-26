@@ -6495,3 +6495,83 @@ Les six QCM de C7 et C8 sont de la **génération ancienne** : 24 à 28 question
 réparties, leurs explications sont là — mais ils n'expliquent pas pourquoi chaque mauvaise
 réponse est fausse, ce que font les QCM des lots C9. C'est le prochain chantier naturel du
 thème, et il est écrit dans chaque rapport plutôt que laissé à deviner.
+
+---
+
+# 27 août 2026 — le dépôt entier passé au crible des règles récentes
+
+*Demande de Pascal en partant : « on a ajouté de nouvelles règles et ces règles
+changent certaines choses, pour ne pas dire beaucoup de choses ». Il a raison, et
+la seule façon honnête de le savoir était de MESURER les 44 séquences.*
+
+## Ce qu'il fallait mesurer, et pourquoi aucun grep ne suffit
+
+Les règles n°135, n°136 et n°137 ont ceci de commun qu'elles décrivent des défauts
+**invisibles dans la source**. Un tableau sans séparation a une balise `<table>`
+parfaitement valide ; un sélecteur branché sur rien a ses boutons, sa classe et sa
+note ; un QCM concentré en position B a trente questions irréprochables. Il faut
+rendre la page et compter.
+
+D'où `mesures_rendu.mjs` : il ouvre les 44 séquences dans un vrai navigateur, aux
+deux tailles d'écran, clique les dispositifs et **compte leur effet**.
+
+## Trois fois de suite, ma mesure a menti — et c'est instructif
+
+**Premier mensonge : la contamination par le stockage local.** Toutes les
+séquences ouvertes en `file://` partagent la **même origine**, donc le même
+`localStorage`. Une page qui enregistrait « parcours = c » contaminait la suivante,
+qui se chargeait déjà dans cet état : le clic ne masquait plus rien, et la page
+saine était déclarée en défaut. Quatre fausses alertes. Correctif : vider le
+stockage avant chaque séquence.
+
+**Deuxième mensonge : compter les éléments invisibles.** Je comptais les blocs
+cachés avant et après le clic. Or un bloc rangé dans un onglet inactif est déjà
+invisible — sans que le dispositif y soit pour quoi que ce soit. Correctif : ne
+compter que ce qui était visible avant.
+
+**Troisième mensonge, le plus subtil.** Même corrigée, la mesure accusait le lot
+book-train : « mode essentiel branché sur rien ». Vérification faite, ses neuf
+cibles étaient toutes dans des panneaux inactifs — le dispositif fonctionne
+parfaitement dès qu'on est sur le bon onglet. Correctif : mesurer le `display`
+**propre** de la cible, qui ne dépend pas de celui de ses ancêtres.
+
+> **Ce que ces trois erreurs enseignent.** Un contrôle qui accuse à tort est pire
+> qu'un contrôle absent : il use la confiance, et le jour où il a raison, on ne le
+> croit plus. Avant de publier un chiffre, il faut se demander *ce que la mesure
+> mesure vraiment* — et aller vérifier à la main le premier cas qu'elle dénonce.
+> Sans cette vérification, j'annonçais neuf défauts là où il y en a six.
+
+## Le résultat, une fois la mesure fiable
+
+**44 séquences, 38 sans le moindre défaut de rendu.** Six défauts réels :
+
+| Où | Défaut |
+|---|---|
+| 3e_C9.2 — pages 3 et 4 (Thème 3) | sélecteur de parcours branché sur **rien** |
+| 3e_C4.3, 3e_C4.7, 3e_C5.1, 3e_C6.1 (Thème 2) | débordement horizontal sur téléphone (3 à 61 px) |
+
+## Ce qui est corrigé ici (Thème 3)
+
+Les pages 3 et 4 du découpage de la station portaient les quatre boutons
+🅰/🅱/🅲/tous, changeaient la classe du `body`, écrivaient leur note — et n'avaient
+**aucun bloc `data-parcours`** à filtrer. Le générateur retire désormais le
+sélecteur des pages qui n'ont rien à masquer, et le remplace par un rappel : le
+choix se fait en page 1, il est retenu pour toute la séquence.
+
+Deux tests l'exigent maintenant, page par page : *le sélecteur n'est présent que
+s'il a des blocs à masquer*, et *quand il est absent, l'élève est renvoyé à
+l'endroit où le choix se fait*. Ce second test a d'ailleurs immédiatement échoué :
+ma note de rappel portait `id="parcoursNote"`, l'identifiant que le script commun
+réécrit à chaque affichage — ma phrase était remplacée au chargement par
+« Parcours affiché : tous ». Un identifiant propre a réglé la chose. Encore un
+défaut qu'aucune relecture n'aurait vu : le HTML était juste, le JS était juste.
+
+**Thème 3 : 12 séquences, 0 manquement mécanisé, 0 défaut de rendu, 8 suites,
+431 tests.**
+
+## Ce qui reste, et pour qui
+
+Les quatre débordements mobiles sont dans le **Thème 2** : ils font l'objet d'une
+livraison séparée, sur une branche à ce nom, avec l'outil de mesure lui-même
+(`_outils/mesures_rendu.mjs`) pour que le contrôle soit rejouable par n'importe
+qui — et pas seulement par moi.
