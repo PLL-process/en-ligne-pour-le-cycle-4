@@ -6611,3 +6611,53 @@ rendu réel, pas dans la source.
 > série entière et se demander **ce que le numéro compte**. J'ai pris le suivant
 > du seul fichier que j'avais sous les yeux, ce qui revenait à supposer une
 > convention au lieu de la vérifier.
+
+---
+
+## Règle d'or n°138 — une ressource qui se nomme elle-même l'emporte sur son nom de fichier
+
+*Née le 27 août, d'une observation de Pascal devant l'index : « 4e_C7.2 » et
+« 4e_C7.6 » affichaient tous deux « Travaux pratiques — Socle assemblage ». Deux
+repères, un seul intitulé, et aucun moyen de voir qu'il existe une série.*
+
+La règle n°37 dit déjà que l'interface montre des **ressources**, pas des
+fichiers. L'index l'appliquait en nettoyant le nom de fichier : préfixe retiré,
+codes retirés, jetons recollés. Ce nettoyage produit un libellé lisible — mais il
+ne peut produire que ce que le nom de fichier contient. Or `tp_4e_socle_assemblage.html`
+ne sait ni que ce TP est le **n°2**, ni qu'il y en a **quatre**, ni que la série
+va de la 5e à la 3e.
+
+**La règle.** Quand une ressource porte un titre canonique dans son contenu —
+le `<h1>` d'une page — c'est ce titre qui fait foi dans l'index, et non le nom du
+fichier. Le nom de fichier reste le repli, pour les ressources qui ne se nomment
+pas.
+
+Appliqué aux TP : l'index lit `TP n°2 — Le dé sur son socle` dans le `<h1>`, y
+ajoute le niveau tiré du chemin, et affiche **« TP n°2 · 4e — Le dé sur son
+socle »**. La série entière et sa chronologie deviennent lisibles d'un coup d'œil,
+ce qui est précisément l'esprit du programme 2024 — une progression, pas quatre
+activités indépendantes.
+
+**Mesuré, pas supposé** : sur les 188 libellés de l'index, **six** changent — les
+trois TP, chacun présent en deux exemplaires sous deux codes. Les 182 autres sont
+identiques au caractère près. Un TP dont le `<h1>` ne suit pas la forme
+« TP n°N — … » garde son ancien libellé, sans traitement particulier : c'est le
+cas du TP mBot2, et c'est voulu.
+
+---
+
+# 27 août 2026 — la série des TP lisible depuis l'index
+
+Suite immédiate de la renumérotation : le numéro ne servait à rien tant qu'il
+n'était pas **visible là où l'on choisit une ressource**. `_outils/make_index.py`
+lit désormais le `<h1>` des TP (règle n°138 ci-dessus).
+
+| Avant | Après |
+|---|---|
+| Travaux pratiques — De onshape | TP n°1 · 5e — Le dé, dans Onshape |
+| Travaux pratiques — Socle assemblage | TP n°2 · 4e — Le dé sur son socle |
+| Travaux pratiques — Boitier etanche | TP n°4 · 3e — Le boîtier étanche |
+
+Au passage, les accents reviennent — « Boitier etanche » redevient « boîtier
+étanche ». Le nettoyage par jetons les avait perdus en chemin, et personne ne
+l'avait relevé parce qu'on lit l'index en diagonale.
