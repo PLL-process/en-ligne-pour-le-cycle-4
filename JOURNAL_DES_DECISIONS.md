@@ -6442,3 +6442,56 @@ de blocs masqués, une distribution de positions.
 
 C'est, je crois, la leçon de méthode de ces deux journées : **relire prouve que chaque
 morceau est juste ; seul un compte prouve que l'ensemble l'est**.
+
+---
+
+# 26 août 2026 (fin de nuit) — le Thème 3 est harmonisé en entier
+
+*Les deux dernières séquences de l'ancienne génération — 5e_C7.1 (le voyant du hall)
+et 3e_C7.1 (le capteur de confort) — reçoivent la même recette que l'arc de 4e.*
+
+## L'état du thème, en un tableau
+
+| Lot | Contrôle mécanisé | Suite rejouable |
+|---|---|---|
+| 5e_C7.1 · C8.3 · C9.3 | 0 manquement | 37 tests |
+| 4e_C7.1 · C7.2 · C7.3 | 0 manquement | 41 tests |
+| 3e_C7.1 · 3e_C8.1 | 0 manquement | 37 tests |
+| 4e_C8.1 · C8.2 · C8.3 | 0 manquement | 41 tests |
+| 5e_C9.1 → C9.3 | 0 manquement | 44 tests |
+| 4e_C9.1 → C9.3 | 0 manquement | 61 tests |
+| 3e_C9.1 | 0 manquement | 35 tests |
+| 3e_C9.2 + 3e_C8.3 | 0 manquement | 129 tests |
+
+**12 séquences analysées, 0 manquement mécaniquement établi, 8 suites committées,
+425 tests, tous verts.** C'est la première fois qu'un thème entier du dépôt est dans
+cet état.
+
+## Trois choses trouvées sur ces deux derniers lots
+
+**Une carte de référentiel en double.** Le lot 5e en possédait déjà une, et mieux écrite
+que celle que j'allais poser : elle porte l'histoire de la correction des codes — « cette
+séquence annonçait auparavant C7 · C8 · C9, c'est-à-dire douze compétences pour en servir
+trois ». J'ai retiré la mienne. Poser un dispositif sans regarder si le lot en avait déjà
+un, c'est écraser un travail antérieur au motif qu'on ne l'a pas cherché.
+
+**Un raccourci du contrôle n°42, à signaler à Pascal.** La règle cherche
+`referentiel-card`, puis le **premier `</table>` qui suit**. Comme le mot apparaît d'abord
+dans la feuille de style (`body.essentiel .referentiel-card{display:none}`), c'est le
+premier tableau de la page qui est lu — pas la carte. Le contrôle annonce alors « aucun
+code reconnu » sur une page qui porte pourtant une carte parfaitement conforme. Contourné
+en plaçant la carte avant tout autre tableau — ce qui est de toute façon sa place logique —
+mais le raccourci reste à corriger dans `_outils/` (périmètre Thème 2).
+
+**Un verrou qui n'existe pas.** Ces deux lots n'ont pas de verrou expérientiel à
+l'activité 0, contrairement à ceux de 4e. La suite l'écrit noir sur blanc — « contrôle NON
+applicable, donc NON exécuté » — au lieu de compter un succès qu'elle n'a pas obtenu. Un
+test qui ne s'exécute pas ne doit jamais ressembler à un test qui passe.
+
+## Ce qui reste, et qu'il faut dire
+
+Les six QCM de C7 et C8 sont de la **génération ancienne** : 24 à 28 questions au lieu de
+30, et **aucune réfutation par distracteur**. Leurs bonnes réponses sont maintenant bien
+réparties, leurs explications sont là — mais ils n'expliquent pas pourquoi chaque mauvaise
+réponse est fausse, ce que font les QCM des lots C9. C'est le prochain chantier naturel du
+thème, et il est écrit dans chaque rapport plutôt que laissé à deviner.

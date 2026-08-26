@@ -52,6 +52,38 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 .contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
 .contrat18 b{color:var(--hl)}
 .chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
 .simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
 .led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
 .led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
@@ -93,13 +125,78 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 </section>
 
 
+<section class="card referentiel-card">
+<h2>📚 Les trois compétences travaillées — en toutes lettres</h2>
+<p>Ce ne sont pas des familles, ce sont <b>trois compétences précises</b> du programme 2024,
+citées mot pour mot&nbsp;:</p>
+<table class="refs">
+<tr><td><b>5e_C7.1</b></td><td>Suivre un processus de conception et de réalisation dans une durée, avec des tâches identifiées.</td></tr>
+<tr><td><b>5e_C8.3</b></td><td>Vérifier le comportement et les performances d'un objet technique en suivant un protocole fourni.</td></tr>
+<tr><td><b>5e_C9.3</b></td><td>Réaliser et mettre au point un programme simple commandant un OST.</td></tr>
+</table>
+<p style="opacity:.85;font-size:.93em">Cette séquence annonçait auparavant «&nbsp;C7 · C8 · C9&nbsp;»,
+c'est-à-dire <b>douze</b> compétences pour en servir trois. Elle n'en revendique plus que ce qu'elle
+produit&nbsp;: le choix d'un matériau, l'assemblage d'un prototype ou la modification d'un programme
+fourni relèvent d'autres codes, qui restent à créer.</p>
+</section>
+
+<div class="toolbar">
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec le matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence s'appuie sur ce que tu as fait en 6e et à l'école. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<div class="exo">
+  <p><label for="be_1">1. Un objet technique répond d'abord à…
+  <select id="be_1"><option value="">— choisir —</option><option>un besoin : quelqu'un a un problème à résoudre</option><option>une envie de faire joli</option><option>une mode</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. Pour savoir si un objet fonctionne, on…
+  <select id="be_2"><option value="">— choisir —</option><option>l'essaie en suivant un protocole écrit</option><option>le regarde et on devine</option><option>demande au professeur</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. « SI la case est occupée ALORS voyant rouge » : cette phrase est…
+  <select id="be_3"><option value="">— choisir —</option><option>une condition — elle décide entre deux cas</option><option>un calcul</option><option>le nom d'un composant</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔀 Trois façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="a">🅰 <b>Avec le matériel</b> : la maquette du hall est câblée en très basse tension : capteur, voyant, carte. Tu vérifies le comportement <b>en vrai</b>, avec le protocole fourni.</p>
+<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de place de l'activité 0 fonctionne dans la page, sans rien installer, et l'éditeur embarqué prend le relais pour le programme. C'est le parcours principal.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : croquis et tableau de tests à compléter au cahier — <b>mêmes questions, mêmes validations</b>. Le simulateur reste utilisable pour observer.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
+</section>
+
+<section class="card" id="taches">
+<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</section>
+
 <section class="card">
 <h2>📋 En-tête pédagogique</h2>
-<table class="refs"><tr><th>Codes</th><td><b>5e_C7.1</b> · <b>5e_C8.3</b> · <b>5e_C9.3</b></td></tr><tr><th>Durée</th><td>6 × 55 min</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Ancrage</th><td>New York — hall d'une middle school</td></tr></table>
+<table class="refs"><tr><th>Codes</th><td><b>5e_C7.1</b> · <b>5e_C8.3</b> · <b>5e_C9.3</b></td></tr><tr><th>Durée</th><td><b>3 séances de 55 min</b> sur cette page — 110 min d'activités annoncées (le mini-projet complet se déroule sur 6 séances, atelier et réalisation compris)</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Ancrage</th><td>New York — hall d'une middle school</td></tr></table>
 <div style="margin-top:12px">
-<label>Nom&nbsp;: <input id="eleveNom" style="width:130px"></label>
-<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px"></label>
-<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px"></label>
+<label>Nom&nbsp;: <input id="eleveNom" style="width:130px" aria-label="Nom"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px" aria-label="Prénom"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px" aria-label="Classe"></label>
 <span class="saved-note" id="savedNote"></span>
 </div>
 </section>
@@ -111,21 +208,6 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 <p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: capteur, état, règle SI.</p>
 <p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis la même règle SI sur un NOUVEAU cas (le casier de bibliothèque) — même squelette, autre habit.</p>
 </div>
-</section>
-
-<section class="card referentiel-card">
-<h2>📚 Les trois compétences travaillées — en toutes lettres</h2>
-<p>Ce ne sont pas des familles, ce sont <b>trois compétences précises</b> du programme 2024,
-citées mot pour mot&nbsp;:</p>
-<table class="refs">
-<tr><th>5e_C7.1</th><td>Suivre un processus de conception et de réalisation dans une durée, avec des tâches identifiées.</td></tr>
-<tr><th>5e_C8.3</th><td>Vérifier le comportement et les performances d'un objet technique en suivant un protocole fourni.</td></tr>
-<tr><th>5e_C9.3</th><td>Réaliser et mettre au point un programme simple commandant un OST.</td></tr>
-</table>
-<p style="opacity:.85;font-size:.93em">Cette séquence annonçait auparavant «&nbsp;C7 · C8 · C9&nbsp;»,
-c'est-à-dire <b>douze</b> compétences pour en servir trois. Elle n'en revendique plus que ce qu'elle
-produit&nbsp;: le choix d'un matériau, l'assemblage d'un prototype ou la modification d'un programme
-fourni relèvent d'autres codes, qui restent à créer.</p>
 </section>
 
 <section class="card">
@@ -171,7 +253,7 @@ modification.</p>
 </section>
 
 <section class="card">
-<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur de place <span class="chrono">⏱ 10 min</span></h2>
+<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur de place <span class="chrono">⏱ ~10 min</span></h2>
 <div class="exo">
 <p><strong>Consigne&nbsp;:</strong> AVANT toute règle écrite, pose et enlève un sac plusieurs fois. Observe la LED.</p>
 <div class="simu">
@@ -180,9 +262,9 @@ modification.</p>
 <p style="font-size:.82em;color:var(--sub)">Fais au moins deux allers-retours (poser PUIS enlever, deux fois).</p>
 </div>
 <p style="margin-top:10px">Q1 — Quand la place est OCCUPÉE, la LED est…
-<select id="a0q1" style="width:auto"><option value="">— je choisis —</option><option>rouge</option><option>verte</option><option>éteinte</option></select></p>
+<select id="a0q1" style="width:auto" aria-label="Q1 de l'activité 0"><option value="">— je choisis —</option><option>rouge</option><option>verte</option><option>éteinte</option></select></p>
 <p>Q2 — Qu'est-ce qui JOUE LE RÔLE du capteur dans ce simulateur&nbsp;?
-<select id="a0q2" style="width:auto"><option value="">— je choisis —</option><option>Le bouton qu'on presse</option><option>La LED qui s'allume</option><option>L'écran de l'ordinateur</option></select></p>
+<select id="a0q2" style="width:auto" aria-label="Q2 de l'activité 0"><option value="">— je choisis —</option><option>Le bouton qu'on presse</option><option>La LED qui s'allume</option><option>L'écran de l'ordinateur</option></select></p>
 <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
 <p class="feedback" id="fb0" role="status"></p>
 <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS tes essais)</summary><div>
@@ -192,16 +274,27 @@ modification.</p>
 </section>
 
 <section class="card">
-<h2>🔧 Activité 1 — Imaginer <span style="font-size:.72em;opacity:.85">(5e_C7.1)</span> <span class="chrono">⏱ 30 min</span></h2>
+<h2>🔧 Activité 1 — Imaginer <span style="font-size:.72em;opacity:.85">(5e_C7.1)</span> <span class="chrono">⏱ ~30 min</span></h2>
 <div class="exo">
 <h4>1a — Ton planning</h4>
 <table class="refs"><tr><th>#</th><th>Tâche</th><th>min</th></tr>
-<tr><td>1</td><td><input id="a1t1" placeholder="Besoin"></td><td>20</td></tr>
-<tr><td>2</td><td><input id="a1t2" placeholder="2 solutions"></td><td>25</td></tr>
-<tr><td>3</td><td><input id="a1t3" placeholder="Matériau"></td><td>20</td></tr>
-<tr><td>4</td><td><input id="a1t4" placeholder="Prototype"></td><td>40</td></tr></table>
+<tr><td>1</td><td><input id="a1t1" placeholder="Besoin" aria-label="Tâche 1 du planning"></td><td>20</td></tr>
+<tr><td>2</td><td><input id="a1t2" placeholder="2 solutions" aria-label="Tâche 2 du planning"></td><td>25</td></tr>
+<tr><td>3</td><td><input id="a1t3" placeholder="Matériau" aria-label="Tâche 3 du planning"></td><td>20</td></tr>
+<tr><td>4</td><td><input id="a1t4" placeholder="Prototype" aria-label="Tâche 4 du planning"></td><td>40</td></tr></table>
 <h4 style="margin-top:12px">1b — Tes deux solutions et ton choix</h4>
-<textarea rows="3" id="a1sol" placeholder="Solution A… / Solution B… / Je choisis… parce que…"></textarea>
+<label for="a1sol">✍ Deux solutions vraiment différentes, puis ton choix justifié :</label>
+<textarea rows="3" id="a1sol" placeholder="Solution A… / Solution B… / Je choisis… parce que…" aria-label="Mes deux solutions et mon choix"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts
+  de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Solution A : ____ . Solution B : ____ .</li>
+    <li>Elles sont vraiment différentes parce que ____ .</li>
+    <li>Je choisis ____ , parce que ____ et parce que ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
 <p class="feedback" id="fb1" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div><p>Exemples&nbsp;: <b>A</b> — bouton-poussoir sous la tablette + LED&nbsp;; <b>B</b> — capteur de distance qui «&nbsp;voit&nbsp;» le sac. Choix argumenté par un critère nommé (simplicité, prix, solidité dans un hall fréquenté). Organiser → plusieurs idées → choix avec critères&nbsp;: une seule idée n'est pas une conception.</p></div></details>
@@ -210,14 +303,14 @@ modification.</p>
 </section>
 
 <section class="card">
-<h2>🧪 Activité 2 — Valider <span style="font-size:.72em;opacity:.85">(5e_C8.3)</span> <span class="chrono">⏱ 25 min</span></h2>
+<h2>🧪 Activité 2 — Valider <span style="font-size:.72em;opacity:.85">(5e_C8.3)</span> <span class="chrono">⏱ ~25 min</span></h2>
 <div class="exo">
 <p>PRÉDIS chaque résultat, puis VÉRIFIE-le au simulateur de l'activité 0 (pose / enlève le sac) et compare&nbsp;:</p>
 <table class="refs"><tr><th>Test</th><th>Attendu</th><th>Le simulateur confirme-t-il&nbsp;?</th></tr>
-<tr><td>Poser le sac</td><td><select id="a2a1"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c1"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Enlever le sac</td><td><select id="a2a2"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c2"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
-<tr><td>Visible à 2 m</td><td>Oui (LED assez brillante)</td><td><select id="a2c3"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr></table>
-<p style="margin-top:8px">Décision&nbsp;: <select id="a2dec" style="width:auto"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<tr><td>Poser le sac</td><td><select id="a2a1" aria-label="Essai 1 — résultat attendu"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c1" aria-label="Essai 1 — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Enlever le sac</td><td><select id="a2a2" aria-label="Essai 2 — résultat attendu"><option value="">— je prédis —</option><option>LED rouge</option><option>LED verte</option></select></td><td><select id="a2c2" aria-label="Essai 2 — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr>
+<tr><td>Visible à 2 m</td><td>Oui (LED assez brillante)</td><td><select id="a2c3" aria-label="Essai 3 — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option></select></td></tr></table>
+<p style="margin-top:8px">Décision&nbsp;: <select id="a2dec" style="width:auto" aria-label="Décision globale"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
 <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
 <p class="feedback" id="fb2" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div><p>Poser → LED <b>rouge</b> · Enlever → LED <b>verte</b> · Visible → Oui. Tout est conforme → décision <b>Validée</b>. On valide seulement si les tests importants réussissent — et chaque test a son résultat attendu ÉCRIT AVANT d'essayer.</p></div></details>
@@ -226,21 +319,21 @@ modification.</p>
 </section>
 
 <section class="card">
-<h2>💻 Activité 3 — La règle SI en schéma, puis en programme <span style="font-size:.72em;opacity:.85">(5e_C9.3)</span> <span class="chrono">⏱ 30 min</span></h2>
+<h2>💻 Activité 3 — La règle SI en schéma, puis en programme <span style="font-size:.72em;opacity:.85">(5e_C9.3)</span> <span class="chrono">⏱ ~30 min</span></h2>
 <div class="exo">
 <h4>3a — Remets l'algorigramme en ordre (représentation schématique, règle n°18)</h4>
 <p>Ce que le simulateur FAIT se dessine. Numérote les blocs de 1 à 5&nbsp;:</p>
-<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage de l'indicateur)</span></div>
-<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Lire le capteur (sac posé ou non)</span></div>
-<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Place occupée&nbsp;?</span></div>
-<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → LED rouge</span></div>
-<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → LED verte, puis revenir à la lecture</span></div>
+<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1" aria-label="Rang de l'étape 1 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage de l'indicateur)</span></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2" aria-label="Rang de l'étape 2 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Lire le capteur (sac posé ou non)</span></div>
+<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3" aria-label="Rang de l'étape 3 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Place occupée&nbsp;?</span></div>
+<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4" aria-label="Rang de l'étape 4 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → LED rouge</span></div>
+<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5" aria-label="Rang de l'étape 5 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → LED verte, puis revenir à la lecture</span></div>
 <button class="btn check" data-check="3" type="button">✅ Vérifier l'algorigramme</button>
 <p class="feedback" id="fb3" role="status"></p>
 <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
 <p><b>1 — DÉBUT</b> (un algorigramme commence par un terminal). <b>2 — Lire le capteur</b> (rectangle&nbsp;: l'ENTRÉE de l'information). <b>3 — Place occupée&nbsp;?</b> (losange&nbsp;: la DÉCISION, toujours deux sorties). <b>4 — OUI → rouge</b> et <b>5 — NON → verte, puis retour</b>&nbsp;: la flèche qui remonte fait la BOUCLE — l'indicateur surveille en continu, comme le simulateur que tu as manipulé.</p></div></details>
 <h4 style="margin-top:14px">3b — Écris la règle, puis fais-la vivre en blocs ↔ Python</h4>
-<textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI"></textarea>
+<textarea rows="5" id="prog" placeholder="SI place occupée ALORS&#10;  LED rouge&#10;SINON&#10;  LED verte&#10;FIN SI" aria-label="Mon programme, en pseudo-code"></textarea>
 <details class="vs" id="vs1">
 <summary>🧪 Code ta règle ici — en blocs, puis lis le Python (et inversement)</summary>
 <p class="vs-note">Construis la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis change le Python (<code>occupee = True</code> puis <code>False</code>) et regarde les blocs suivre. Sans LED réelle&nbsp;: <code>print("ROUGE")</code> et <code>print("VERT")</code>. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
@@ -262,10 +355,22 @@ else:
 </section>
 
 <section class="card">
-<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ 15 min</span></h2>
+<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
 <p>Même logique pour un <b>casier de bibliothèque</b> (livre présent / absent). Écris la règle SI (4 lignes)&nbsp;:</p>
-<textarea rows="4" id="reinv" placeholder="SI livre présent ALORS&#10;  …&#10;SINON&#10;  …"></textarea>
+<label for="reinv">✍ La même règle SI, sur un autre objet — en quatre lignes :</label>
+<textarea rows="4" id="reinv" placeholder="SI livre présent ALORS&#10;  …&#10;SINON&#10;  …" aria-label="Mon réinvestissement"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts
+  de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Ce que l'objet mesure : ____ .</li>
+    <li>SI ____ ALORS ____ .</li>
+    <li>SINON ____ .</li>
+    <li>Ce qui change par rapport au voyant du hall : ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
 <p class="feedback" id="fb5" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
@@ -286,8 +391,8 @@ FIN SI</pre>
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
-<p>J'ai appris&nbsp;: <input id="bilan1"></p><p>Je sais faire&nbsp;: <input id="bilan2"></p><p>À revoir&nbsp;: <input id="bilan3"></p>
-<p>Confiance (1-4)&nbsp;: <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+<p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Ce que j'ai appris"></p><p>Je sais faire&nbsp;: <input id="bilan2" aria-label="Ce que je sais faire"></p><p>À revoir&nbsp;: <input id="bilan3" aria-label="Ce qui est à revoir"></p>
+<p>Confiance (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Ma confiance"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
 <section class="card">
@@ -320,11 +425,11 @@ ailleurs.</p>
 <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <div class="bonus">
 <p><b>Citoyen&nbsp;:</b> Quel autre objet du collège améliorer, et pour quel besoin&nbsp;?</p>
-<textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page"></textarea>
+<textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 1"></textarea>
 <p style="margin-top:10px"><b>Technique&nbsp;:</b> Ajoute un test «&nbsp;tenue si on secoue le support&nbsp;» (étape + résultat attendu)&nbsp;:</p>
-<textarea rows="2" id="defi2" placeholder="Ton test — sauvegardé dans la page"></textarea>
+<textarea rows="2" id="defi2" placeholder="Ton test — sauvegardé dans la page" aria-label="Défi 2"></textarea>
 <p style="margin-top:10px"><b>New York&nbsp;:</b> Pourquoi un indicateur visible est-il utile dans un hall très fréquenté&nbsp;?</p>
-<textarea rows="2" id="defi3" placeholder="Ton explication — sauvegardée dans la page"></textarea>
+<textarea rows="2" id="defi3" placeholder="Ton explication — sauvegardée dans la page" aria-label="Défi 3"></textarea>
 </div>
 </section>
 
@@ -377,6 +482,7 @@ $("simBtn").addEventListener("click", () => {
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return 0; const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good ? 1 : 0; }
 function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim()); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+const par = {s: []};
 const CHECKS = {
   0(){ let s = 0; s += sv("a0q1","rouge"); s += sv("a0q2","Le bouton qu'on presse");
     return {score: s, total: 2, exp: !!window.__exp.sim, expMsg: "Pose et enlève d'abord le sac (deux allers-retours complets) — c'est l'expérience qui fait foi."}; },
@@ -392,7 +498,8 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; 
+    if(!par.s.includes(n)){ par.s.push(n); } updateProg(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -400,7 +507,7 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 /* sauvegarde locale (règle n°15) */
 function save(){
-  const o = {inputs: {}, exp: window.__exp || {}};
+  const o = {inputs: {}, exp: window.__exp || {}, par};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
@@ -410,9 +517,92 @@ function restore(){
   if(!o) return;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+  (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
+  updateProg();
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+/* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
+const TACHES = [
+  {n:"0", libelle:"FAIRE d'abord — le simulateur de place"},
+  {n:"1", libelle:"Imaginer deux solutions, et en choisir une"},
+  {n:"2", libelle:"Valider en suivant le protocole fourni"},
+  {n:"3", libelle:"La règle SI, du schéma au programme"},
+  {n:"4", libelle:"Mettre au point le programme"},
+  {n:"5", libelle:"REFAIRE — la même règle sur un autre objet"}
+];
+function majTaches(){
+  const c = $("tachesBandeau"); if(!c) return;
+  c.innerHTML = TACHES.map(t => {
+    const fait = par.s.includes(t.n);
+    return '<div class="tache' + (fait ? " fait" : "") + '"><span class="coche">' +
+           (fait ? "✔" : "☐") + "</span> <b>Activité " + t.n + "</b> — " + t.libelle + "</div>";
+  }).join("");
+}
+function updateProg(){
+  const n = par.s.length;
+  if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
+  if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
+  if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  majTaches();
+}
+
+/* ══ Règle d'or n°26 — le billet d'entrée, sans note et hors progression ══ */
+if($("btnBillet")) $("btnBillet").addEventListener("click", () => {
+  const bon = [
+    $("be_1").value.startsWith("un besoin"),
+    $("be_2").value.startsWith("l'essaie en suivant"),
+    $("be_3").value.startsWith("une condition")
+  ];
+  const ok = bon.filter(Boolean).length;
+  const fb = $("fbBillet");
+  fb.className = "feedback show " + (ok === 3 ? "ok" : ok >= 1 ? "warn" : "ko");
+  let m = ok + " / 3 — ";
+  if(ok === 3)      m += "les trois acquis sont là : la séquence va pouvoir aller vite.";
+  else if(ok === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+  else if(ok === 1) m += "un acquis sur trois : la séquence les reprend tous, tu ne pars pas de rien.";
+  else              m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
+  m += " Ce billet ne compte pas dans ta progression.";
+  fb.textContent = m;
+  window.__exp.billet = ok;
+  save();
+});
+
+/* ══ Règle d'or n°29 — mode essentiel ══ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  window.__exp.essentiel = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
+/* ══ Règles d'or n°122 et n°136 — le sélecteur ne vaut que par ce qu'il sélectionne ══ */
+function majParcours(){
+  const choix = window.__exp.parcours || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = $("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 avec le matériel", b:"🅱 en simulation", c:"🅲 sur papier", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
+  }
+}
+document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("click", () => {
+  window.__exp.parcours = b.dataset.choix;
+  majParcours(); save();
+}));
+
 restore();
+if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
+majEssentiel(); majParcours(); updateProg();
 })();
 </script>
 </body>
