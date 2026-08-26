@@ -203,6 +203,36 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   section.card table tbody tr:nth-child(even) td{background:rgba(155,190,252,.05)}
   section.card table tbody tr:hover td{background:rgba(97,218,251,.09)}
   @media(max-width:680px){section.card table{display:block;overflow-x:auto}}
+
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .prof{display:none}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  @media print{ .choix-parcours-boutons{display:none} }
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══
+     Deux causes de défilement horizontal sur téléphone, toutes deux invisibles
+     au bureau : un tableau plus large que l'écran, et une URL longue qui n'offre
+     aucun point de coupure. On les traite sur l'ÉLÉMENT, une fois pour toutes. */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -270,12 +300,43 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
   <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
 </div>
+
+<section class="card" id="taches">
+  <h2>🗺 Où en suis-je ?</h2>
+  <p style="font-size:.92em;color:var(--sub)">Cinq activités, réparties sur quatre séances. Une case se coche quand l'activité est <b>validée</b> — pas quand elle est commencée.</p>
+  <div id="tachesBandeau" class="taches-bandeau"></div>
+</section>
+
+<section class="card" id="billet">
+  <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p>Cet atelier s'appuie sur ce que tu as fait en 4e et en 5e. Trois questions pour savoir, toi comme le professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas » est une réponse utile.</p>
+  <div class="exo">
+    <label for="be_1" style="display:block;margin:8px 0">1. En 5e, tu as rencontré la <b>boîte étiquetée</b>. Une variable, c'est…
+      <select id="be_1"><option value="">— choisir —</option><option>un nom, et une valeur qu'on peut remplacer</option><option>un nombre qui change tout seul</option><option>une ligne de programme</option><option>je ne sais pas encore</option></select></label>
+    <label for="be_2" style="display:block;margin:8px 0">2. En 4e, tu as corrigé un programme qui faisait clignoter une pompe. Un programme qui donne un mauvais résultat…
+      <select id="be_2"><option value="">— choisir —</option><option>peut très bien fonctionner sans planter — il se trompe, c'est tout</option><option>s'arrête toujours avec un message d'erreur</option><option>ne démarre jamais</option><option>je ne sais pas encore</option></select></label>
+    <label for="be_3" style="display:block;margin:8px 0">3. Pour prouver qu'un programme marche, il faut…
+      <select id="be_3"><option value="">— choisir —</option><option>écrire les résultats attendus AVANT de l'exécuter</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>compter ses lignes</option><option>je ne sais pas encore</option></select></label>
+    <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+    <p class="feedback" id="fbBillet" role="status"></p>
+  </div>
+</section>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -324,6 +385,28 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   </figure>
 </section>
 
+<section class="card referentiel-card">
+  <h2>📋 Ce que dit le programme officiel</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation du référentiel (recopiée, au mot près)</th><th>Où elle se travaille ici</th></tr>
+    <tr><td><b>3e_C9.1</b></td><td>Élaborer ou concevoir un algorithme permettant de répondre au besoin visé, puis le traduire en un programme structuré (appel de sous-programmes ou de fonctions), le tester et le mettre au point.</td><td><b>Activité 5</b> — c'est là que la compétence se joue entièrement : tu <i>élabores</i> l'algorithme du capteur d'air, tu le <i>traduis</i> en une <b>fonction</b> (le « programme structuré » du référentiel), tu la <i>testes</i> au banc, et tu la <i>mets au point</i> après avoir trouvé le défaut de frontière.<br>Les activités 1 à 4 la <b>préparent</b> : on n'élabore pas un programme quand on croit encore que <code>=</code> veut dire « égal ».</td></tr>
+  </table>
+  <p style="font-size:.9em;color:var(--sub)"><b>Quatre verbes dans une seule compétence</b> — élaborer, traduire, tester, mettre au point. C'est le sommet du cycle, et c'est pour cela que l'atelier est long : chacun demande son moment.</p>
+  <details class="approfondissement">
+    <summary>📈 Où cette compétence se situe dans le cycle — la même famille, quatre années</summary>
+    <table class="refs">
+      <tr><th>Niveau</th><th>Le verbe</th><th>Ce qu'on fournit à l'élève</th></tr>
+      <tr><td>5e_C9.1</td><td><b>analyser</b> un programme simple fourni et le <b>tester</b></td><td>tout : le programme existe, il fonctionne</td></tr>
+      <tr><td>5e_C9.2</td><td><b>modifier</b> un programme fourni</td><td>le programme, à retoucher</td></tr>
+      <tr><td>4e_C9.1</td><td><b>modifier</b> un <i>algorithme</i></td><td>l'algorithme, amputé d'une exigence</td></tr>
+      <tr><td>4e_C9.2</td><td><b>traduire</b> un algorithme en programme</td><td>l'algorithme complet</td></tr>
+      <tr><td><b>3e_C9.1</b></td><td><b>élaborer</b>, traduire, tester, mettre au point</td><td><b>rien que le besoin</b></td></tr>
+      <tr><td>3e_C9.2</td><td><b>réaliser et mettre au point</b>, avec interaction humain-machine</td><td>rien que le cahier des charges</td></tr>
+    </table>
+    <p>Lis la dernière colonne de haut en bas : <b>on retire progressivement ce qu'on donne</b>. La difficulté du cycle ne tient pas à des programmes plus longs — elle tient à ce qui manque au départ. En 3e, il ne reste que le besoin, et c'est à toi de fabriquer tout le reste.</p>
+  </details>
+</section>
+
 <section class="card">
   <h2>❓ Problématique</h2>
   <p class="problematique">Comment élaborer un algorithme, le traduire en un programme structuré,
@@ -331,15 +414,24 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   <div class="exo">
     <label for="hyp1"><b>✍ Mon hypothèse :</b> d'après toi, que se passe-t-il dans la mémoire de l'ordinateur quand un programme exécute <code>minutes = 4</code> puis <code>minutes = minutes - 1</code> ? Où va l'ancien 4 ?</label>
     <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+    <details class="etayage">
+      <summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+      <ul>
+        <li>Je pense que le panneau se trompe parce que ____ .</li>
+        <li>Pour le prouver, je regarderais d'abord ____ , puis ____ .</li>
+        <li>Ce dont je suis sûr, c'est que ____ . Ce dont je ne suis pas sûr : ____ .</li>
+      </ul>
+    </details>
   </div>
 </section>
 
 <section class="card">
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
-    <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience piloté vers une carte réelle (Arduino/mBot2 du collège, <b>très basse tension uniquement</b> — le TP mBot2 du dossier prolonge cet atelier).</p>
-    <p>🅱 <b>En simulation</b> : l'éditeur Python Vittascience est <b>embarqué dans cette page</b> — blocs et Python côte à côte, console intégrée. C'est le parcours principal. Cherche les <b>barres 🧪 bleues</b> dans les séances 2, 3 et 4 : un clic les déplie.</p>
-    <p>🅲 <b>Sans matériel</b> : le simulateur de mémoire (séance 1, activité 1 — le bouton « ▶ Étape suivante ») + les tables de suivi (séance 1, activité 2) à refaire au cahier.</p>
+    <p data-parcours="a">🅰 <b>Avec matériel</b> : l'éditeur Vittascience piloté vers une carte réelle (Arduino/mBot2 du collège, <b>très basse tension uniquement</b> — le TP mBot2 du dossier prolonge cet atelier).</p>
+    <p data-parcours="b">🅱 <b>En simulation</b> : l'éditeur Python Vittascience est <b>embarqué dans cette page</b> — blocs et Python côte à côte, console intégrée. C'est le parcours principal. Cherche les <b>barres 🧪 bleues</b> dans les séances 2, 3 et 4 : un clic les déplie.</p>
+    <p data-parcours="c">🅲 <b>Sans matériel</b> : le simulateur de mémoire (séance 1, activité 1 — le bouton « ▶ Étape suivante ») + les tables de suivi (séance 1, activité 2) à refaire au cahier.</p>
   </div>
   <div class="retenir"><b>📡 Méthode de l'atelier — prédire → tester → reporter :</b> à chaque exercice,
   tu PRÉDIS d'abord le résultat (sans ordinateur), tu TESTES ensuite dans l'éditeur embarqué,
@@ -361,7 +453,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   <p style="color:var(--hl);font-weight:600">Question directrice : que se passe-t-il RÉELLEMENT dans la mémoire quand un programme s'exécute ?</p>
 
   <div class="activite" id="act1">
-    <header><span class="num">Activité 1</span><h3>Exécute le programme À LA MAIN — le simulateur de mémoire</h3><span class="duree">⏱ 25 min</span></header>
+    <header><span class="num">Activité 1</span><h3>Exécute le programme À LA MAIN — le simulateur de mémoire</h3><span class="duree">⏱ ~25 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> comprendre qu'une variable est une boîte étiquetée, et qu'affecter = REMPLACER son contenu.</div>
       <div><b>Compétence :</b> 3e_C9.1 (analyser avant d'élaborer).</div>
@@ -395,13 +487,13 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
     </div>
     <div class="exo">
       <p><b>Après l'exécution complète, réponds :</b></p>
-      <label>1. Après la ligne <code>minutes = minutes - 1</code>, que contient la boîte <code>minutes</code> ?
+      <label for="a1q1">1. Après la ligne <code>minutes = minutes - 1</code>, que contient la boîte <code>minutes</code> ?
       <select id="a1q1"><option value="">— je choisis —</option><option>4</option><option>3</option><option>4 et 3 en même temps</option><option>rien, elle est vidée</option></select></label>
-      <label>2. Où est passé l'ancien contenu (le 4) ?
+      <label for="a1q2">2. Où est passé l'ancien contenu (le 4) ?
       <select id="a1q2"><option value="">— je choisis —</option><option>il est rangé dans une autre boîte</option><option>il est perdu : affecter, c'est REMPLACER</option><option>il reste derrière le 3</option><option>il retourne dans le programme</option></select></label>
-      <label>3. Le signe <code>=</code> en Python signifie :
+      <label for="a1q3">3. Le signe <code>=</code> en Python signifie :
       <select id="a1q3"><option value="">— je choisis —</option><option>« est égal à », comme en maths</option><option>« mets cette valeur dans la boîte »</option><option>« compare les deux côtés »</option><option>« affiche à l'écran »</option></select></label>
-      <label>4. <code>minutes = minutes - 1</code> se lit :
+      <label for="a1q4">4. <code>minutes = minutes - 1</code> se lit :
       <select id="a1q4"><option value="">— je choisis —</option><option>de gauche à droite, comme une phrase</option><option>de droite à gauche : je CALCULE d'abord, je RANGE ensuite</option><option>dans n'importe quel sens</option><option>c'est une équation impossible</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le simulateur : à la ligne 4, la boîte <code>minutes</code> a-t-elle DEUX valeurs, ou une seule ? Une boîte ne contient jamais qu'UNE valeur à la fois.</p></details>
@@ -422,7 +514,7 @@ figcaption{color:#9bbefc;font-size:.85em;text-align:center;margin-top:6px}
   </div>
 
   <div class="activite" id="act2">
-    <header><span class="num">Activité 2</span><h3>La table de suivi — la méthode du technicien</h3><span class="duree">⏱ 25 min</span></header>
+    <header><span class="num">Activité 2</span><h3>La table de suivi — la méthode du technicien</h3><span class="duree">⏱ ~25 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> suivre les valeurs d'un programme ligne par ligne AVEC UNE TABLE — la méthode qui marche à tous les coups.</div>
       <div><b>Compétence :</b> 3e_C9.1.</div>
@@ -436,15 +528,15 @@ passages = passages + groupe
 groupe = groupe - 1
 passages = passages + groupe</pre>
     <div class="exo">
-      <label>Après la ligne 3, <code>passages</code> vaut :
+      <label for="a2q1">Après la ligne 3, <code>passages</code> vaut :
       <select id="a2q1"><option value="">—</option><option>0</option><option>3</option><option>6</option><option>« passages + groupe »</option></select></label>
-      <label>Après la ligne 4, <code>groupe</code> vaut :
+      <label for="a2q2">Après la ligne 4, <code>groupe</code> vaut :
       <select id="a2q2"><option value="">—</option><option>3</option><option>2</option><option>1</option><option>0</option></select></label>
-      <label>Après la ligne 5, <code>passages</code> vaut :
+      <label for="a2q3">Après la ligne 5, <code>passages</code> vaut :
       <select id="a2q3"><option value="">—</option><option>3</option><option>5</option><option>6</option><option>8</option></select></label>
-      <label>Combien de FOIS la boîte <code>passages</code> a-t-elle changé de contenu (ligne 1 comprise) ?
+      <label for="a2q4">Combien de FOIS la boîte <code>passages</code> a-t-elle changé de contenu (ligne 1 comprise) ?
       <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
-      <label>Quelle phrase décrit le rôle de ce programme ?
+      <label for="a2q5">Quelle phrase décrit le rôle de ce programme ?
       <select id="a2q5"><option value="">—</option><option>il compte des passages en accumulant dans une variable</option><option>il compare deux nombres</option><option>il affiche un message</option><option>il efface la mémoire</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais ta table au brouillon : deux colonnes (<code>passages</code>, <code>groupe</code>), une ligne par ligne de programme. Remplis case par case, sans sauter.</p></details>
@@ -463,6 +555,7 @@ passages = passages + groupe</pre>
     <p class="critere"><b>🎯 Critère de réussite :</b> ma table donne la même chose que l'ordinateur — vérifie-le en recopiant le programme dans l'éditeur de la séance 2 !</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Les types ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -472,7 +565,7 @@ passages = passages + groupe</pre>
   <p style="color:var(--hl);font-weight:600">Question directrice : pourquoi le panneau affiche-t-il « 412 min » — et quel rapport avec des guillemets ?</p>
 
   <div class="activite" id="act3">
-    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter : le piège des guillemets</h3><span class="duree">⏱ 55 min</span></header>
+    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter : le piège des guillemets</h3><span class="duree">⏱ ~45 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> distinguer les types (int, float, str, bool) et découvrir EXPÉRIMENTALEMENT ce que fait <code>+</code> selon le type.</div>
       <div><b>Compétence :</b> 3e_C9.1 · CRCN 3.4 Programmer (Niv. 3) — trace : tes reports d'expérience enregistrés dans la page.</div>
@@ -486,15 +579,17 @@ passages = passages + groupe</pre>
     <div class="consigne"><b>Consigne :</b> pour chaque expérience : ① PRÉDIS le résultat (sans ordinateur) ; ② OUVRE l'éditeur, recopie le code, exécute ; ③ REPORTE ce que la console a VRAIMENT affiché. Ta prédiction peut être fausse — ton report, lui, doit être exact.</div>
     <div class="exo">
       <p><b>Expérience A :</b> <code>print(3 + 4)</code></p>
-      <label>① Je prédis :
+      <label for="a3p1">① Je prédis :
       <select id="a3p1"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
       <p><b>Expérience B :</b> <code>print("3" + "4")</code></p>
-      <label>① Je prédis :
+      <label for="a3p2">① Je prédis :
       <select id="a3p2"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
       <p><b>Expérience C :</b> <code>print("Train " + "Q", 2 + 1, "min")</code></p>
-      <label>① Je prédis :
+      <label for="a3p3">① Je prédis :
       <select id="a3p3"><option value="">—</option><option>Train Q 3 min</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>une erreur</option></select></label>
     </div>
+    <p class="saved-note" data-parcours="a">🅰 <b>Avec la carte</b> : exécute les trois expériences dans l'éditeur, puis téléverse la dernière sur la carte — l'affichage doit être identique à la console.</p>
+    <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : ouvre quand même la barre 🧪 (elle enregistre ton passage), écris les trois expériences au cahier et reporte les résultats donnés par la correction de l'activité.</p>
     <details class="vs" id="vs1">
       <summary>🧪 ② Ouvrir l'éditeur Python Vittascience — teste tes trois expériences ici</summary>
       <p class="vs-note">L'éditeur s'ouvre DANS la page : blocs à gauche, Python à droite, console en bas. Recopie chaque ligne puis clique ▶. (Connexion Internet nécessaire pour l'éditeur ; le reste de la page fonctionne hors ligne.)</p>
@@ -503,15 +598,15 @@ passages = passages + groupe</pre>
     </details>
     <div class="exo">
       <p><b>③ Je reporte ce que la console a affiché :</b></p>
-      <label>Expérience A a affiché :
+      <label for="a3r1">Expérience A a affiché :
       <select id="a3r1"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
-      <label>Expérience B a affiché :
+      <label for="a3r2">Expérience B a affiché :
       <select id="a3r2"><option value="">—</option><option>7</option><option>34</option><option>une erreur</option></select></label>
-      <label>Expérience C a affiché :
+      <label for="a3r3">Expérience C a affiché :
       <select id="a3r3"><option value="">—</option><option>Train Q 3 min</option><option>Train Q 21 min</option><option>TrainQ3min</option><option>une erreur</option></select></label>
-      <label>Conclusion — que fait <code>+</code> entre deux <b>textes</b> (str) ?
+      <label for="a3r4">Conclusion — que fait <code>+</code> entre deux <b>textes</b> (str) ?
       <select id="a3r4"><option value="">—</option><option>il additionne leurs valeurs</option><option>il les COLLE bout à bout (concaténation)</option><option>il provoque toujours une erreur</option><option>il les compare</option></select></label>
-      <label>Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Le panneau affiche donc :
+      <label for="a3r5">Et maintenant, LE bug du panneau : le stagiaire a écrit <code>minutes = "4" + "1"</code> au lieu de <code>minutes = 4 + 1</code>. Le panneau affiche donc :
       <select id="a3r5"><option value="">—</option><option>5 min</option><option>41 min… voilà d'où viennent les minutes fantômes !</option><option>une erreur</option><option>4 min</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde le document 2 : la carte <b>str</b> dit « entre guillemets = TEXTE, même si ce sont des chiffres ». Que fait <code>+</code> avec deux textes ?</p></details>
@@ -533,6 +628,7 @@ passages = passages + groupe</pre>
     <p class="critere"><b>🎯 Critère de réussite :</b> je peux prédire le résultat de <code>x + y</code> rien qu'en regardant les guillemets.</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Le panneau bugué ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
@@ -542,7 +638,7 @@ passages = passages + groupe</pre>
   <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu trouver les TROIS bugs que la classe de Manhattan a manqués ?</p>
 
   <div class="activite" id="act4">
-    <header><span class="num">Activité 4</span><h3>La chasse aux bugs — analyse le programme du stagiaire</h3><span class="duree">⏱ 55 min</span></header>
+    <header><span class="num">Activité 4</span><h3>La chasse aux bugs — analyse le programme du stagiaire</h3><span class="duree">⏱ ~45 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> analyser un programme réel, localiser 3 bugs de natures différentes, les corriger, PROUVER la correction dans l'éditeur.</div>
       <div><b>Compétence :</b> 3e_C9.1 (tester, mettre au point).</div>
@@ -560,21 +656,23 @@ passages = passages + groupe</pre>
 8  print(message, minutes, "min |", temperature_c, "C")</pre>
     <div class="exo">
       <p><b>🔎 Bug n°1 — les minutes fantômes.</b></p>
-      <label>Il se cache à la ligne :
+      <label for="a4b1l">Il se cache à la ligne :
       <select id="a4b1l"><option value="">—</option><option>1</option><option>3</option><option>6</option><option>8</option></select></label>
-      <label>La correction :
+      <label for="a4b1c">La correction :
       <select id="a4b1c"><option value="">—</option><option>minutes = 2 + 1 (des nombres, pas des textes)</option><option>minutes = "2 + 1"</option><option>minutes = "21"</option><option>supprimer la ligne</option></select></label>
       <p><b>🔎 Bug n°2 — la virgule qui fâche Python.</b></p>
-      <label>Il se cache à la ligne :
+      <label for="a4b2l">Il se cache à la ligne :
       <select id="a4b2l"><option value="">—</option><option>4</option><option>5</option><option>6</option><option>7</option></select></label>
-      <label>La correction :
+      <label for="a4b2c">La correction :
       <select id="a4b2c"><option value="">—</option><option>écrire 1.8 : en Python, la virgule décimale est un POINT</option><option>écrire 18 sans virgule</option><option>mettre 1,8 entre guillemets</option><option>remplacer / par ×</option></select></label>
       <p><b>🔎 Bug n°3 — le calcul impossible.</b> Même corrigée en <code>2 + 1</code>… la ligne 7 va planter si on garde la ligne 3 d'origine.</p>
-      <label>Pourquoi <code>minutes - 1</code> plantait-il avec la version d'origine ?
+      <label for="a4b3c">Pourquoi <code>minutes - 1</code> plantait-il avec la version d'origine ?
       <select id="a4b3c"><option value="">—</option><option>on ne peut pas soustraire un nombre d'un TEXTE ("21" - 1 → erreur de type)</option><option>7 est un numéro de ligne interdit</option><option>minutes est écrit en minuscules</option><option>il manque des parenthèses</option></select></label>
-      <label>Une fois les 3 bugs corrigés, la ligne 8 affiche :
+      <label for="a4b4">Une fois les 3 bugs corrigés, la ligne 8 affiche :
       <select id="a4b4"><option value="">—</option><option>Q - 96 St - 2 min | 25.0 C</option><option>Q - 96 St - 21 min | 25.0 C</option><option>Q96St2min25C</option><option>une erreur</option></select></label>
     </div>
+    <p class="saved-note" data-parcours="a">🅰 <b>Avec la carte</b> : le programme corrigé est celui que tu téléverses — le panneau réel affiche alors la bonne durée.</p>
+    <p class="saved-note" data-parcours="c">🅲 <b>Sans matériel</b> : ouvre la barre 🧪, recopie le programme corrigé au cahier ligne à ligne, et vérifie ta ligne 8 avec la correction complète.</p>
     <details class="vs" id="vs2">
       <summary>🧪 Assemble et exécute le programme CORRIGÉ ici — la preuve par la console 🔓</summary>
       <p class="vs-note">Recopie le programme avec tes 3 corrections, exécute, et compare avec ta réponse ci-dessus. C'est ton badge d'exécution : la vérification de l'activité l'exige.</p>
@@ -600,6 +698,7 @@ passages = passages + groupe</pre>
     <p class="critere"><b>🎯 Critère de réussite :</b> mon programme corrigé affiche exactement <code>Q - 96 St - 2 min | 25.0 C</code> dans la console.</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4" type="button">Séance 4 — Mise au point ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 4 ══════ -->
@@ -609,7 +708,7 @@ passages = passages + groupe</pre>
   <p style="color:var(--hl);font-weight:600">Question directrice : comment PROUVER qu'un programme répond au besoin — et pas seulement qu'il « a marché une fois » ?</p>
 
   <div class="activite" id="act5">
-    <header><span class="num">Activité 5</span><h3>Élaborer, traduire, mettre au point — le banc de tests</h3><span class="duree">⏱ 55 min</span></header>
+    <header><span class="num">Activité 5</span><h3>Élaborer, traduire, mettre au point — le banc de tests</h3><span class="duree">⏱ ~45 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> élaborer un algorithme, le traduire en fonction Python, puis le mettre au point avec un banc de tests — cas limites compris.</div>
       <div><b>Compétence :</b> 3e_C9.1 en entier (élaborer → traduire → tester → mettre au point).</div>
@@ -630,13 +729,13 @@ passages = passages + groupe</pre>
         return 2
     else:
         return ▢3</pre>
-      <label>▢1 :
+      <label for="a5t1">▢1 :
       <select id="a5t1"><option value="">—</option><option>&gt;</option><option>&lt;</option><option>==</option><option>=</option></select></label>
-      <label>▢2 :
+      <label for="a5t2">▢2 :
       <select id="a5t2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>"3"</option></select></label>
-      <label>▢3 :
+      <label for="a5t3">▢3 :
       <select id="a5t3"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
-      <label>Pourquoi une FONCTION plutôt que du code en vrac ?
+      <label for="a5t4">Pourquoi une FONCTION plutôt que du code en vrac ?
       <select id="a5t4"><option value="">—</option><option>on peut l'appeler mille fois avec des valeurs différentes, et la tester séparément</option><option>c'est plus joli</option><option>Python l'exige toujours</option><option>ça rend le programme plus rapide</option></select></label>
     </div>
     <div class="consigne"><b>② Le banc de mise au point :</b> exécute les 4 tests (dans l'ordre que tu veux) en cliquant ▶ — la page calcule ce que TA fonction (celle du document 3, avec <code>air &gt; 100</code>) renvoie vraiment.</div>
@@ -652,11 +751,11 @@ passages = passages + groupe</pre>
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
       <p><b>③ Tranche le cas limite :</b> la MTA précise son besoin : « à 100 exactement, l'air est déjà trop pollué : il faut ventiler à fond ».</p>
-      <label>Le test T4 a montré que la fonction renvoie :
+      <label for="a5q1">Le test T4 a montré que la fonction renvoie :
       <select id="a5q1"><option value="">—</option><option>3</option><option>2</option><option>1</option><option>une erreur</option></select></label>
-      <label>Pour respecter le besoin, il faut corriger la condition en :
+      <label for="a5q2">Pour respecter le besoin, il faut corriger la condition en :
       <select id="a5q2"><option value="">—</option><option>air &gt;= 100</option><option>air &gt; 99.9</option><option>air == 100</option><option>air &lt; 100</option></select></label>
-      <label>Après cette correction, que DOIT-on faire ?
+      <label for="a5q3">Après cette correction, que DOIT-on faire ?
       <select id="a5q3"><option value="">—</option><option>rien, la correction est évidente</option><option>rejouer TOUS les tests du banc, pas seulement T4</option><option>supprimer le test T4</option><option>changer aussi les autres return</option></select></label>
     </div>
     <details class="vs" id="vs3">
@@ -692,6 +791,15 @@ passages = passages + groupe</pre>
     <p class="hyp-recall" id="hypRecall"></p>
     <label for="bilanTxt"><b>✍ Ce que je répondrais maintenant :</b></label>
     <textarea id="bilanTxt" rows="3" placeholder="L'ancienne valeur est… parce que affecter, c'est…"></textarea>
+    <details class="etayage">
+      <summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre.</p>
+      <ul>
+        <li>L'ancienne valeur est ____ , parce qu'affecter une variable, c'est ____ son contenu.</li>
+        <li>Le signe <code>=</code> ne veut pas dire ____ , il veut dire ____ .</li>
+        <li>Ce que je croyais au début de l'atelier, c'était ____ ; maintenant je sais que ____ .</li>
+      </ul>
+    </details>
   </div>
   <div class="auto-eval">
     <p><b>🚦 Je me positionne</b> (🔴 pas encore · 🟡 avec aide · 🟢 seul·e · ⭐ je peux l'expliquer) :</p>
@@ -893,7 +1001,87 @@ function updateProg(){
   $("progBar").setAttribute("aria-valuenow", n);
   const map = {s1:["1","2"], s2:["3"], s3:["4"], s4:["5"]};
   Object.entries(map).forEach(([p, acts]) => { const d = $("done-" + p); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
+  majTaches();
 }
+
+/* ══ Règle d'or n°30 — le tableau de bord des tâches ══ */
+const TACHES = [
+  {n:"1", libelle:"Exécuter le programme à la main — le simulateur de mémoire"},
+  {n:"2", libelle:"La table de suivi — la méthode du technicien"},
+  {n:"3", libelle:"Prédire → tester → reporter : le piège des guillemets"},
+  {n:"4", libelle:"La chasse aux bugs — analyser le programme du stagiaire"},
+  {n:"5", libelle:"Élaborer, traduire, mettre au point — le banc de tests"}
+];
+function majTaches(){
+  const c = $("tachesBandeau"); if(!c) return;
+  c.innerHTML = TACHES.map(t => {
+    const fait = par.s.includes(t.n);
+    return '<div class="tache' + (fait ? " fait" : "") + '"><span class="coche">' +
+           (fait ? "✔" : "☐") + "</span> <b>Activité " + t.n + "</b> — " + t.libelle + "</div>";
+  }).join("");
+}
+
+/* ══ Règle d'or n°26 — le billet d'entrée, sans note et hors progression ══ */
+if($("btnBillet")) $("btnBillet").addEventListener("click", () => {
+  const bon = [
+    $("be_1").value.startsWith("un nom"),
+    $("be_2").value.startsWith("peut très bien"),
+    $("be_3").value.startsWith("écrire les résultats")
+  ];
+  const ok = bon.filter(Boolean).length;
+  const fb = $("fbBillet");
+  fb.className = "feedback show " + (ok === 3 ? "ok" : ok >= 1 ? "warn" : "ko");
+  let m = ok + " / 3 — ";
+  if(ok === 3)      m += "les trois acquis sont là : cet atelier va pouvoir aller vite et loin.";
+  else if(ok === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+  else if(ok === 1) m += "un acquis sur trois : l'atelier les reprend tous, tu ne pars pas de rien.";
+  else              m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est précisément ce que l'atelier enseigne. Dis-le au professeur.";
+  m += " Ce billet ne compte pas dans ta progression.";
+  fb.textContent = m;
+  window.__exp = window.__exp || {};
+  window.__exp.billet = ok;
+  save();
+});
+
+/* ══ Règle d'or n°29 — mode essentiel ══ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  window.__exp = window.__exp || {};
+  window.__exp.essentiel = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══ Règle d'or n°122 — trois parcours, pas trois paragraphes ══ */
+function majParcours(){
+  const choix = (window.__exp && window.__exp.parcours) || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = $("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 avec matériel", b:"🅱 en simulation", c:"🅲 sans matériel", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
+  }
+}
+document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("click", () => {
+  window.__exp = window.__exp || {};
+  window.__exp.parcours = b.dataset.choix;
+  majParcours(); save();
+}));
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 
 /* ── sauvegarde ── */
 function save(){
@@ -927,6 +1115,8 @@ document.addEventListener("change", e => {
   if(e.target.id === "hyp1"){ const r = $("hypRecall"); if(r) r.textContent = "« " + e.target.value + " »"; }
 });
 restore();
+if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
+majEssentiel(); majParcours(); majTaches();
 const h = $("hyp1"), r = $("hypRecall");
 if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse de départ apparaîtra ici — retourne l'écrire si besoin)";
 })();
