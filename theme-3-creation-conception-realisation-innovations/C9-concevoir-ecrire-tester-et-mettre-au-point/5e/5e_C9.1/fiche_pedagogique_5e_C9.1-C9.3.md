@@ -29,3 +29,15 @@ embarqué (principal) · 🅲 tables de suivi au cahier (hors ligne).
 ## Évaluation
 Formative : vérificateurs + QCM 30 q (BOI/LIR/MOD 10-10-10 → positionnement par famille).
 Sommative : à construire, corrigé jamais publié.
+
+## Dispositifs de classe (harmonisation du 26 août 2026)
+**Billet d'entrée** (3 questions sur les acquis de cycle 3, corrigé immédiat, **hors progression**) ·
+**mode essentiel** (masque référentiel, corrections et compléments) · **tableau de bord** des
+5 activités · **deux versions étayées** pour les zones de rédaction · **durées annoncées**
+(130 min d'activités pour 165 disponibles) · **carte de référentiel** avec les trois formulations
+officielles et le tableau de progression du cycle · **sélecteur de parcours** 🅰/🅱/🅲 qui masque
+réellement ce qui ne concerne pas l'élève, **sans retirer aucune question**.
+
+> Le tableau de progression du cycle, dépliable dans la carte de référentiel, dit à l'élève de 5e
+> ce qui l'attend : de la 5e à la 3e, on ne donne pas des programmes plus longs, **on retire
+> progressivement ce qu'on fournit au départ**. Cette année, on fournit tout — et on apprend à lire.
