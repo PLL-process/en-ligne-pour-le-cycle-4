@@ -106,13 +106,13 @@ const run = async () => {
   await shot(page, "act1_validee");
 
   /* activité 2 */
-  await page.fill("#a2_s1", "150"); await page.fill("#a2_s2", "100");
-  await page.selectOption("#a2_s3", "veille");
+  await page.fill("#a2_s1", "178"); await page.fill("#a2_s2", "118"); await page.fill("#a2_s3", "63");
+  await page.selectOption("#a2_s4", "veille");
   for (const id of ["a2_q1","a2_q2","a2_q3","a2_q4","a2_q5","a2_q6","a2_q7","a2_q8","a2_q9","a2_q10"])
     await page.selectOption("#"+id, { index: 1 });
   await page.click('[data-check="2"]');
-  ok("activité 2 validée (algorithme + algorigramme 13/13, dont les 6 questions de lecture fine)",
-     (await page.textContent("#fb2")).includes("13 / 13"), await page.textContent("#fb2"));
+  ok("activité 2 validée (algorithme à 3 seuils + algorigramme 14/14, dont les 6 questions de lecture fine)",
+     (await page.textContent("#fb2")).includes("14 / 14"), await page.textContent("#fb2"));
   await shot(page, "act2_validee");
 
   /* refonte v2 : les 6 questions ajoutées sous l'algorigramme existent bien */
@@ -123,34 +123,76 @@ const run = async () => {
 
   /* verrou : act3 doit REFUSER sans expériences au banc */
   await page.click('.seance-tab[data-panel="s2"]');
-  await page.fill("#a3_p1", "50");    // maquette Vittascience : 512 x 100 / 1023
-  await page.fill("#a3_p1b", "125");  // pont vers l'échelle de la station réelle
-  for (const id of ["a3_p2", "a3_p2b", "a3_p3", "a3_p3b"]) await page.selectOption("#"+id, { index: 1 });
+  await page.fill("#a3_p1", "125");   // échelle unique : 512 x 250 / 1023
+  for (const id of ["a3_p1b", "a3_p2", "a3_p2b", "a3_p3", "a3_p3b"]) await page.selectOption("#"+id, { index: 1 });
   await page.click('[data-check="3"]');
   ok("verrou expérientiel : act. 3 refusée sans manipulation au banc",
      (await page.textContent("#fb3")).includes("banc"), (await page.textContent("#fb3")).slice(0, 90));
   await shot(page, "act3_verrou_refuse");
 
   /* le banc : faire varier le vent, atteindre les 3 niveaux */
-  for (const v of [10, 30, 60, 80, 42]) { await page.fill("#simVentNum", String(v)); await page.waitForTimeout(250); }
-  ok("banc : LCD en VEILLE à 42 km/h", (await page.getAttribute("#simLcd", "class")).includes("lcd-vert"),
-     await page.textContent("#simL1"));
-  await shot(page, "banc_veille_42", "#bancCard");
-  await page.fill("#simVentNum", "120"); await page.waitForTimeout(300);
-  ok("banc : LCD en VIGILANCE à 120 km/h + DEL allumée",
+  /* un seul voyant allumé à la fois : invariant vérifié à chaque palier */
+  const voyants = async () => page.evaluate(() =>
+    ["Vert","Jaune","Orange","Rouge"].map(c =>
+      document.getElementById("simDel"+c).className.includes("on") ? 1 : 0));
+
+  for (const v of [10, 30, 70, 130, 40]) { await page.fill("#simVentNum", String(v)); await page.waitForTimeout(250); }
+  ok("banc : VEILLE à 40 km/h — vert seul", (await page.getAttribute("#simLcd", "class")).includes("lcd-vert") &&
+     JSON.stringify(await voyants()) === "[1,0,0,0]", await page.textContent("#simL1"));
+  await shot(page, "banc_veille_40", "#bancCard");
+
+  await page.fill("#simVentNum", "90"); await page.waitForTimeout(300);
+  ok("banc : TEMPÊTE TROPICALE à 90 km/h — jaune seul, buzzer muet",
+     (await page.getAttribute("#simLcd", "class")).includes("lcd-jaune") &&
+     JSON.stringify(await voyants()) === "[0,1,0,0]" &&
+     !(await page.getAttribute("#simBuz", "class")).includes("on"), await page.textContent("#simL1"));
+  await shot(page, "banc_tempete_90", "#bancCard");
+
+  await page.fill("#simVentNum", "150"); await page.waitForTimeout(300);
+  ok("banc : OURAGAN à 150 km/h — orange seul, buzzer muet",
      (await page.getAttribute("#simLcd", "class")).includes("lcd-orange") &&
-     (await page.getAttribute("#simDel", "class")).includes("on"));
-  await shot(page, "banc_vigilance_120", "#bancCard");
-  await page.fill("#simVentNum", "187"); await page.waitForTimeout(300);
-  ok("banc : ALERTE ROUGE à 187 km/h + buzzer qui sonne",
+     JSON.stringify(await voyants()) === "[0,0,1,0]" &&
+     !(await page.getAttribute("#simBuz", "class")).includes("on"), await page.textContent("#simL1"));
+  await shot(page, "banc_ouragan_150", "#bancCard");
+
+  await page.fill("#simVentNum", "200"); await page.waitForTimeout(300);
+  ok("banc : OURAGAN MAJEUR à 200 km/h — rouge seul + buzzer qui sonne",
      (await page.getAttribute("#simLcd", "class")).includes("lcd-rouge") &&
-     (await page.getAttribute("#simBuz", "class")).includes("on"));
-  await shot(page, "banc_alerte_187", "#bancCard");
+     JSON.stringify(await voyants()) === "[0,0,0,1]" &&
+     (await page.getAttribute("#simBuz", "class")).includes("on"), await page.textContent("#simL1"));
+  await shot(page, "banc_majeur_200", "#bancCard");
+
+  /* règle n°119 : le niveau est TOUJOURS écrit en toutes lettres, jamais seulement une couleur */
+  const libelles = {};
+  for (const [v, attendu] of [[40,"VEILLE"],[90,"TEMPETE"],[150,"OURAGAN"],[200,"MAJEUR"]]) {
+    await page.fill("#simVentNum", String(v)); await page.waitForTimeout(220);
+    libelles[v] = (await page.textContent("#simL1")).includes(attendu);
+  }
+  ok("règle n°119 : le niveau est écrit en toutes lettres aux 4 paliers",
+     Object.values(libelles).every(Boolean), JSON.stringify(libelles));
+
+  /* les SIX frontières, testées une par une — le cœur de la compétence C8.3 */
+  const frontieres = [[62,"lcd-vert"],[63,"lcd-jaune"],[117,"lcd-jaune"],
+                      [118,"lcd-orange"],[177,"lcd-orange"],[178,"lcd-rouge"]];
+  for (const [v, classe] of frontieres) {
+    await page.fill("#simVentNum", String(v)); await page.waitForTimeout(260);
+    ok("frontière " + v + " km/h → " + classe.replace("lcd-",""),
+       (await page.getAttribute("#simLcd", "class")).includes(classe), await page.textContent("#simL1"));
+  }
+  await shot(page, "banc_six_frontieres", "#bancCard");
+
+  /* verrou de rédaction : act3 refusée tant que le journal de paliers est vide */
+  await page.click('[data-check="3"]');
+  ok("verrou de rédaction : act. 3 refusée tant que le journal de paliers est vide",
+     (await page.textContent("#fb3")).includes("journal de paliers"),
+     (await page.textContent("#fb3")).slice(0, 90));
 
   /* act3 doit maintenant passer */
+  await page.fill("#a3_journal", "Palier 1 : potentiomètre à mi-course, le moniteur affichait 125 km/h ; la valeur monte quand je tourne, donc la lecture fonctionne. Palier 2 : à 62 j'ai lu VEILLE, à 63 TEMPETE TROPICALE. Palier 3 : à 150, l'orange seul était allumé, les trois autres éteints, buzzer muet.");
+  await page.waitForTimeout(200);
   await page.click('[data-check="3"]');
   ok("activité 3 validée après manipulations (verrous lecture + 3 niveaux)",
-     (await page.textContent("#fb3")).includes("6 / 6") && !(await page.textContent("#fb3")).includes("banc"),
+     (await page.textContent("#fb3")).includes("6 / 6") && !(await page.textContent("#fb3")).includes("banc d'essai"),
      await page.textContent("#fb3"));
   await shot(page, "act3_validee");
 
@@ -160,23 +202,45 @@ const run = async () => {
   ok("séance 2 : repli hors-ligne présent (lien direct + planches + banc)",
      (await page.textContent("#vitta-embed")).includes("fr.vittascience.com/arduino") &&
      (await page.textContent("#vitta-embed")).includes("Plan B"));
-  ok("séance 2 : tableau de correspondance des deux échelles présent",
-     (await page.textContent("#act3")).includes("seuil_alerte") &&
-     (await page.textContent("#act3")).includes("150 km/h"));
+  ok("séance 2 : une SEULE échelle, affirmée et sans reste (aucune trace de la maquette 0-100)",
+     (await page.textContent("#act3")).includes("Une seule échelle, une seule station") &&
+     (await page.textContent("#act3")).includes("250 km/h") &&
+     !(await page.textContent("#act3")).includes("seuil_vigilance"));
+  const texteAct3 = await page.textContent("#act3");
+  ok("séance 2 : les trois seuils de Saffir-Simpson sont dans les paliers",
+     ["63","118","178"].every(v => texteAct3.includes(v)));
   ok("séance 2 : ArduBlock est devenu un bonus facultatif hors parcours",
      (await page.textContent("#act3")).includes("Bonus (facultatif — hors parcours obligatoire)") &&
      (await page.textContent("#act3")).includes("ArduBlock"));
   for (const src of ["Images/bonus_ardublock_palier1.png", "Images/bonus_ardublock_palier2.png"])
     ok("capture réelle ArduBlock présente : " + src, (await page.locator(`img[src="${src}"]`).count()) === 1);
 
+  /* ── règles n°94 / n°121 : les captures RÉELLES du programme Vittascience ── */
+  const CAPS = ["C_1_demarrage","C_2_boucle_haut","C_3_boucle_bas",
+                "C_4_mode_vert","C_5_mode_jaune","C_6_mode_orange","C_7_mode_rouge",
+                "C_frontiere_062kmh_brut254","C_frontiere_063kmh_brut258",
+                "C_frontiere_117kmh_brut479","C_frontiere_118kmh_brut483",
+                "C_frontiere_177kmh_brut725","C_frontiere_178kmh_brut729"];
+  for (const c of CAPS)
+    ok("capture réelle Vittascience présente : " + c,
+       await page.locator(`img[src="Images/vittascience/${c}.png"]`).count() === 1);
+  ok("règle n°117 : chaque capture réelle porte un alt d'au moins 120 caractères",
+     await page.evaluate(() => [...document.querySelectorAll('img[src^="Images/vittascience/"]')]
+       .every(i => (i.getAttribute("alt") || "").length >= 120)));
+  ok("réserve honnête : le simulateur dessine tous les voyants en vert, et c'est écrit",
+     (await page.textContent("body")).includes("tous les voyants sont dessinés en vert") &&
+     (await page.textContent("body")).includes("les voyants sont tous dessinés en vert"));
+  ok("écart assumé : les 300 ms du programme réel sont expliqués, pas masqués",
+     (await page.textContent("#act3")).includes("300 ms"));
+
   /* séance 3 : acquittement puis re-déclenchement */
   await page.click('.seance-tab[data-panel="s3"]');
   await page.fill("#simVentNum", "200"); await page.waitForTimeout(300);
   await page.click("#btnAcquit"); await page.waitForTimeout(300);
-  ok("banc : acquittement — buzzer muet, écran TOUJOURS rouge, DEL allumée",
+  ok("banc : acquittement — buzzer muet, écran TOUJOURS rouge, voyant rouge TOUJOURS allumé",
      !(await page.getAttribute("#simBuz", "class")).includes("on") &&
      (await page.getAttribute("#simLcd", "class")).includes("lcd-rouge") &&
-     (await page.getAttribute("#simDel", "class")).includes("on"));
+     (await page.getAttribute("#simDelRouge", "class")).includes("on"));
   await shot(page, "banc_acquitte", "#bancCard");
   await page.fill("#simVentNum", "50"); await page.waitForTimeout(400);
   await page.fill("#simVentNum", "210"); await page.waitForTimeout(400);
@@ -201,28 +265,27 @@ const run = async () => {
   /* séance 4 : activité 6 */
   await page.click('.seance-tab[data-panel="s4"]');
   for (const id of ["a6_v1","a6_v2","a6_v3","a6_v4","a6_v5"]) await page.selectOption("#"+id, { index: 1 });
-  await page.fill("#a6_redac", "Essais nominaux : 42 (veille), 120 (vigilance), 200 (alerte). Frontières : 99, 100, 149, 150 car les bugs vivent aux frontières. Performance : je chronomètre le temps entre le franchissement de 150 et l'affichage, exigence moins d'une seconde. Interaction : appui sur le bouton pendant l'alarme (le son se coupe), puis redescente et remontée (le buzzer repart). Règle de décision : recette prononcée si 10 essais sur 10 sont réussis, sinon ajournée avec réserves.");
+  await page.fill("#a6_redac", "Essais nominaux : 40 (veille), 90 (tempête tropicale), 150 (ouragan), 200 (ouragan majeur). Frontières : 62 et 63, 117 et 118, 177 et 178, car les bugs vivent aux frontières. Performance : je chronomètre le temps entre le franchissement de 178 et l'affichage, exigence moins d'une seconde. Interaction : appui sur le bouton pendant l'alarme (le son se coupe), puis redescente et remontée (le buzzer repart). Règle de décision : recette prononcée si 13 essais sur 13 sont réussis, sinon ajournée avec réserves.");
   await page.click('[data-check="6"]');
   ok("activité 6 validée (protocole rédigé, 4 familles + règle)", (await page.textContent("#fb6")).includes("5 / 5") && !(await page.textContent("#fb6")).includes("familles"));
   await shot(page, "act6_protocole_redige");
 
   /* activité 7 : exécution — frontières exactes + chrono */
-  for (const v of [99, 100, 149, 150]) { await page.fill("#simVentNum", String(v)); await page.waitForTimeout(350); }
+  for (const v of [62, 63, 117, 118, 177, 178]) { await page.fill("#simVentNum", String(v)); await page.waitForTimeout(320); }
   await shot(page, "banc_frontieres_executees", "#bancCard");
   await page.click("#btnChrono");
   await page.waitForTimeout(1800);
   const chrono = await page.textContent("#chronoNote");
   ok("banc : temps de réponse mesuré et conforme (< 1 s)", chrono.includes("CONFORME ✔"), chrono.slice(0, 90));
   await shot(page, "banc_chrono", "#bancCard");
-  await page.selectOption("#a7_a4", "veille");
-  await page.selectOption("#a7_a5", "vigilance orange");
-  await page.selectOption("#a7_a6", "vigilance orange");
-  await page.selectOption("#a7_a7", "alerte rouge");
-  for (let i = 1; i <= 10; i++) await page.selectOption("#a7_r" + i, "conforme");
-  await page.fill("#a7_pv", "Procès-verbal de recette — le 19/08, nous avons exécuté les 10 essais du protocole sur le banc de simulation. 10 conformes sur 10, frontières vérifiées, temps de réponse 0,3 s (exigence < 1 s). Recette prononcée, sans réserve.");
+  for (const [id, v] of [["a7_a5","veille"],["a7_a6","tempête tropicale"],["a7_a7","tempête tropicale"],
+                         ["a7_a8","ouragan"],["a7_a9","ouragan"],["a7_a10","ouragan majeur"]])
+    await page.selectOption("#" + id, v);
+  for (let i = 1; i <= 13; i++) await page.selectOption("#a7_r" + i, "conforme");
+  await page.fill("#a7_pv", "Procès-verbal de recette — le 19/08, nous avons exécuté les 13 essais du protocole sur le banc de simulation. 13 conformes sur 13, les six frontières vérifiées, temps de réponse 0,3 s (exigence < 1 s). Recette prononcée, sans réserve.");
   await page.click('[data-check="7"]');
-  ok("activité 7 validée (frontières + chrono exécutés, 10 verdicts, PV)",
-     (await page.textContent("#fb7")).includes("4 / 4") && !(await page.textContent("#fb7")).includes("banc"));
+  ok("activité 7 validée (6 frontières + chrono exécutés, 13 verdicts, PV)",
+     (await page.textContent("#fb7")).includes("6 / 6") && !(await page.textContent("#fb7")).includes("banc"));
   await shot(page, "act7_recette_validee");
 
   /* progression + persistance */
@@ -237,7 +300,7 @@ const run = async () => {
   await page.waitForTimeout(900); /* laisse la sauvegarde différée s'écrire */
   await page.reload(); await page.waitForTimeout(700);
   ok("persistance : progression 7/7 restaurée après rechargement", (await page.textContent("#progTxt")).includes("7 / 7"));
-  ok("persistance : réponses restaurées (a2_s1 = 150)", (await page.inputValue("#a2_s1")) === "150");
+  ok("persistance : réponses restaurées (a2_s1 = 178)", (await page.inputValue("#a2_s1")) === "178");
   ok("persistance : verrous du banc restaurés (frontières cochées)",
      (await page.textContent("#v-bornes")).startsWith("✔"));
   await shot(page, "persistance_apres_rechargement");
@@ -272,6 +335,36 @@ const run = async () => {
      jumelage && jumelage.texte.includes("hors parcours obligatoire"));
   ok("encadré jumelage : la limite du prototype est nommée (il ne mesure que le vent)",
      jumelage && jumelage.texte.includes("montée des eaux"));
+
+  /* ── règle n°101 : chaque séance mène explicitement à la suivante ── */
+  ok("règle n°101 : 3 boutons « séance suivante » dans la page tout-en-un",
+     await page.locator("button.vers-seance").count() === 3);
+  await page.click('.seance-tab[data-panel="s1"]');
+  await page.locator('button.vers-seance[data-vers="s2"]').click();
+  await page.waitForTimeout(250);
+  ok("règle n°101 : le bouton bascule réellement sur la séance suivante",
+     await page.locator("#s2.active").count() === 1);
+
+  /* ── règle n°122 : trois parcours, pas trois paragraphes ── */
+  ok("règle n°122 : le sélecteur de parcours est dans la barre d'outils (4 boutons)",
+     await page.locator(".toolbar .parcours-btn").count() === 4);
+  await page.click('.parcours-btn[data-choix="c"]');
+  await page.waitForTimeout(200);
+  ok("règle n°122 : choisir 🅲 masque les blocs propres au parcours 🅰",
+     await page.evaluate(() => document.body.classList.contains("parcours-c") &&
+       [...document.querySelectorAll('[data-parcours="a"]')]
+         .every(e => getComputedStyle(e).display === "none")));
+  ok("règle n°122 : le choix ne retire AUCUNE question",
+     await page.evaluate(() => [...document.querySelectorAll("input[id],select[id],textarea[id]")]
+       .filter(e => e.closest("[data-parcours]")).length === 0));
+  await page.waitForTimeout(700);
+  await page.reload(); await page.waitForTimeout(600);
+  ok("règle n°122 : le parcours choisi est restauré après rechargement",
+     await page.evaluate(() => document.body.classList.contains("parcours-c")));
+  await page.click('.parcours-btn[data-choix="tous"]');
+  await page.waitForTimeout(200);
+  ok("règle n°122 : « Tout afficher » remet tout en place",
+     await page.evaluate(() => !document.body.className.includes("parcours-")));
 
   await page.click("#btnEssentiel");
   ok("mode essentiel : référentiel et corrections masqués",
@@ -393,6 +486,77 @@ const run = async () => {
      (await page.textContent("#rNote")).includes("4,0") && (await page.textContent("#rNon")) === "18");
   await shot(page, "qcm_scenario_non_repondues");
   ok("QCM : zéro erreur JS sur tout le parcours", erreursJS.length === 0, erreursJS.join(" | "));
+
+  /* ════════ LE DÉCOUPAGE EN QUATRE PAGES (règle d'or n°116) ════════
+     Trois exigences, et pas une de moins :
+       1. aucune question perdue — l'union des 4 pages = la page tout-en-un ;
+       2. les réponses sont PARTAGÉES : répondre page 1 puis aller page 4
+          ne doit rien effacer (le piège de collect() qui écrase) ;
+       3. chaque page mène à la suivante, et toutes ramènent au tout-en-un. */
+  const P4 = ["sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html",
+              "sequence_3e_C9.2-C8.3_station_2_programmer.html",
+              "sequence_3e_C9.2-C8.3_station_3_interaction.html",
+              "sequence_3e_C9.2-C8.3_station_4_recette.html"];
+
+  /* champs interactifs de la page tout-en-un, référence de comparaison */
+  const champs = f => page.evaluate(() =>
+    [...document.querySelectorAll("input[id], select[id], textarea[id]")]
+      .map(e => e.id).filter(id => !id.startsWith("sim") && !id.startsWith("id_")).sort());
+  await page.goto(url(SEQ)); await page.waitForTimeout(500);
+  const refChamps = await champs();
+
+  const union = new Set();
+  for (const f of P4) {
+    await page.goto(url(f)); await page.waitForTimeout(450);
+    (await champs()).forEach(id => union.add(id));
+  }
+  const perdus = refChamps.filter(id => !union.has(id));
+  for (let i = 0; i < P4.length; i++) {
+    await page.goto(url(P4[i])); await page.waitForTimeout(300);
+    ok(`page ${i + 1} : pas de bouton d'onglet orphelin hérité du tout-en-un`,
+       await page.locator("button.vers-seance").count() === 0);
+  }
+  await page.goto(url(SEQ)); await page.waitForTimeout(300);
+  ok("4 pages : AUCUNE question perdue par rapport au tout-en-un",
+     perdus.length === 0, perdus.join(", ") || (refChamps.length + " champs couverts"));
+  ok("4 pages : zéro erreur JS au chargement des quatre", erreursJS.length === 0, erreursJS.join(" | "));
+
+  /* liens : chaque page renvoie au tout-en-un et porte les 4 onglets-liens */
+  for (let i = 0; i < P4.length; i++) {
+    await page.goto(url(P4[i])); await page.waitForTimeout(300);
+    const liens = await page.evaluate(() => [...document.querySelectorAll("a[href]")].map(a => a.getAttribute("href")));
+    ok(`page ${i + 1} : ramène au tout-en-un`,
+       liens.includes("sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html"));
+    ok(`page ${i + 1} : porte les 4 onglets-liens`,
+       await page.locator("nav.seance-tabs a.seance-tab").count() === 4);
+  }
+
+  /* persistance croisée : on répond page 1, on va page 4, on revient */
+  await page.goto(url(P4[0])); await page.waitForTimeout(450);
+  await page.evaluate(() => localStorage.clear());
+  await page.reload(); await page.waitForTimeout(450);
+  await page.fill("#hyp1", "Hypothèse écrite sur la PAGE 1, elle doit survivre au passage par la page 4.");
+  await page.selectOption("#a1_e1", { index: 2 });
+  await page.waitForTimeout(900);   /* sauvegarde différée */
+
+  await page.goto(url(P4[3])); await page.waitForTimeout(500);
+  await page.fill("#a6_redac", "Protocole écrit sur la PAGE 4 : 4 nominaux, 6 frontières (62, 63, 117, 118, 177, 178), chrono, 2 essais d'interaction.");
+  await page.waitForTimeout(900);
+  ok("4 pages : le rappel d'hypothèse de la page 1 remonte jusqu'à la page 4",
+     (await page.textContent("#rappelHyp")).includes("PAGE 1"), (await page.textContent("#rappelHyp")).slice(0, 60));
+
+  await page.goto(url(P4[0])); await page.waitForTimeout(500);
+  ok("4 pages : la réponse de la page 1 a SURVÉCU au passage par la page 4",
+     (await page.inputValue("#hyp1")).includes("PAGE 1") && (await page.inputValue("#a1_e1")) !== "");
+
+  await page.goto(url(SEQ)); await page.waitForTimeout(500);
+  ok("4 pages : le tout-en-un relit les réponses des DEUX pages",
+     (await page.inputValue("#hyp1")).includes("PAGE 1") &&
+     (await page.inputValue("#a6_redac")).includes("PAGE 4"));
+  ok("tout-en-un : le chemin vers les 4 pages est proposé",
+     await page.locator("#vers-quatre-pages a").count() === 4);
+  await shot(page, "quatre_pages_persistance_croisee");
+  await page.evaluate(() => localStorage.clear());
 
   /* ════════ Synthèses + mobile ════════ */
   for (const f of ["Synthèses/synthese_eleve_3e_C9.2-C8.3.html", "Synthèses/synthese_professeur_3e_C9.2-C8.3.html"]) {
