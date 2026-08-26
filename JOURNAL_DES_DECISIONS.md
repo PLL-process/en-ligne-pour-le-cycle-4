@@ -5857,8 +5857,10 @@ de nom lui coûte plus cher que le gain de précision du meilleur vocabulaire. L
 vocabulaire du phénomène n'est pas perdu pour autant — il est là où il compte, **sur
 l'écran de la station**, en toutes lettres, là où un habitant le lira.
 
-Si Pascal préfère l'inverse, le retour en arrière tient en un remplacement — mais il
-faudra alors refaire les treize captures.
+**Arbitrage validé par Pascal le 26 août** : « j'ai aligné le texte sur les captures,
+pas l'inverse — c'est parfait ». La règle n°128 s'applique donc au dépôt entier, et
+son corollaire avec elle : **fixer les noms AVANT de construire quoi que ce soit sur
+un poste**, parce qu'une capture les gèle.
 
 ## Ce qui n'a pas été fait, et qui est écrit comme tel
 
