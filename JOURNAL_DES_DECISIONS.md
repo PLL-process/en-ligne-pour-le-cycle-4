@@ -6359,3 +6359,139 @@ ce qui n'arrive que si l'on s'astreint à le faire.
 
 **La compétence C9 est harmonisée sur les trois niveaux du cycle**, et chacun des
 quatre lots porte désormais une suite qu'un autre que moi peut rejouer.
+
+---
+
+## Règle d'or n°137 — un QCM se mesure aussi par la POSITION de ses bonnes réponses
+
+*Née le 26 août, en harmonisant l'arc « jardin connecté » de 4e. Trouvée par un test
+qui comptait, pas par une relecture — comme les deux précédentes.*
+
+Dans le QCM de 4e_C7, les **28 bonnes réponses étaient en position B**. Dans celui de
+4e_C8 aussi. Un élève qui clique la deuxième proposition à chaque question obtenait
+**28/28** — sans rien savoir, et sans tricher : en découvrant un motif.
+
+**Ce que ce défaut a de particulier**, c'est qu'il est invisible partout où l'on
+regarde d'habitude. Chaque question, prise seule, est irréprochable : l'énoncé est
+juste, les distracteurs sont plausibles, l'explication est bonne. Le défaut n'existe
+qu'au **niveau de la collection**, et aucune relecture question par question ne peut
+le voir. Il faut compter.
+
+**La règle.** Tout QCM du dépôt répartit ses bonnes réponses sur les quatre positions,
+à une unité près. Le contrôle est une ligne : compter les positions, et échouer si
+l'une manque. Un QCM dont les bonnes réponses sont concentrées ne mesure plus la
+connaissance : il mesure la vitesse à laquelle l'élève trouve le motif.
+
+**Corollaire sur la façon de corriger.** On ne redistribue pas au hasard : un tirage
+aléatoire donne un fichier différent à chaque exécution, impossible à relire et
+impossible à rejouer. On fait **tourner** les propositions (l'ordre relatif des
+distracteurs est conservé) vers une suite de positions **écrite en clair** dans
+l'outil. Et l'outil vérifie, après rotation, que la proposition arrivée à la nouvelle
+position est bien le texte de l'ancienne bonne réponse — sans cette assertion, une
+erreur de rotation fausserait silencieusement tout le QCM.
+
+---
+
+# 26 août 2026 (nuit) — l'arc « jardin connecté » de 4e harmonisé, et un QCM qui ne mesurait rien
+
+*Le C9 étant complet sur les trois niveaux, la suite logique était l'amont : C7
+(concevoir le support) et C8 (le valider), même objet-fil, même année. Les deux
+séquences sont d'une génération antérieure du dépôt — pas de tableau de bord, pas de
+mode essentiel, pas de progression.*
+
+## Ce qui a été posé, sans toucher au fond
+
+Billet d'entrée, mode essentiel, tableau de bord des six activités, versions étayées,
+durées à la convention, carte de référentiel, sélecteur de parcours agissant, barre de
+progression reliée aux validations. **Cinq manquements mécanisés → zéro**, sur chacun
+des deux lots. Deux suites committées, **41 tests chacune**, toutes vertes.
+
+## Le défaut qui comptait vraiment
+
+Voir la règle n°137 ci-dessus : les 56 bonnes réponses des deux QCM étaient en position
+B. Le balayage des 40 QCM du dépôt a ensuite trouvé **deux autres cas dans le Thème 3**
+(5e_C7 : 24 questions, 3e_C7 : 26 questions — corrigés) et **trois dans le Thème 2**,
+hors périmètre :
+
+| Fichier (Thème 2 — pour Pascal) | Constat |
+|---|---|
+| `3e_C4.7/qcm_3e_C4.7-C4.8_internet_sainte_luce.html` | 30 q · 8 / **21** / 1 / 0 |
+| `3e_C4.3/qcm_3e_C4.3-C4.6_station_alerte_cyclonique.html` | 32 q · 4 / **20** / 8 / 0 |
+| `4e_C4.1/qcm_automatisation_premium.html` | 10 q · format différent, position non lisible |
+
+Je n'y touche pas — c'est le périmètre du Thème 2. L'outil qui corrige,
+`repartir_qcm.mjs`, est committé dans `4e_C7.1/` et fonctionne sur n'importe quel QCM
+de ce format.
+
+## Une décision de formulation, à valider
+
+La séquence 4e_C7 annonçait « 4 × 55 min » pour **85 minutes** d'activités. Les deux
+séances manquantes ne sont pas perdues : elles se passent sur le TP « Le dé sur son
+socle » et sur l'atelier de planification, tous deux liés en bas de page. L'en-tête dit
+maintenant « 2 séances de 55 min **sur cette page** (+ 2 séances sur le TP et
+l'atelier) ». C'est une formulation, pas un changement de contenu — mais elle engage la
+lecture du lot, et si le découpage réel est autre, c'est à corriger d'un mot.
+
+## Ce que les trois dernières règles ont en commun
+
+n°135 (l'habillage posé sur la classe, pas sur l'élément), n°136 (le sélecteur branché
+sur rien), n°137 (les bonnes réponses toutes au même endroit) : **aucune des trois ne
+se voit en relisant**. Chaque pièce, prise seule, est correcte. Le défaut n'apparaît
+qu'en mesurant quelque chose au niveau de l'ensemble — une couleur calculée, un compte
+de blocs masqués, une distribution de positions.
+
+C'est, je crois, la leçon de méthode de ces deux journées : **relire prouve que chaque
+morceau est juste ; seul un compte prouve que l'ensemble l'est**.
+
+---
+
+# 26 août 2026 (fin de nuit) — le Thème 3 est harmonisé en entier
+
+*Les deux dernières séquences de l'ancienne génération — 5e_C7.1 (le voyant du hall)
+et 3e_C7.1 (le capteur de confort) — reçoivent la même recette que l'arc de 4e.*
+
+## L'état du thème, en un tableau
+
+| Lot | Contrôle mécanisé | Suite rejouable |
+|---|---|---|
+| 5e_C7.1 · C8.3 · C9.3 | 0 manquement | 37 tests |
+| 4e_C7.1 · C7.2 · C7.3 | 0 manquement | 41 tests |
+| 3e_C7.1 · 3e_C8.1 | 0 manquement | 37 tests |
+| 4e_C8.1 · C8.2 · C8.3 | 0 manquement | 41 tests |
+| 5e_C9.1 → C9.3 | 0 manquement | 44 tests |
+| 4e_C9.1 → C9.3 | 0 manquement | 61 tests |
+| 3e_C9.1 | 0 manquement | 35 tests |
+| 3e_C9.2 + 3e_C8.3 | 0 manquement | 129 tests |
+
+**12 séquences analysées, 0 manquement mécaniquement établi, 8 suites committées,
+425 tests, tous verts.** C'est la première fois qu'un thème entier du dépôt est dans
+cet état.
+
+## Trois choses trouvées sur ces deux derniers lots
+
+**Une carte de référentiel en double.** Le lot 5e en possédait déjà une, et mieux écrite
+que celle que j'allais poser : elle porte l'histoire de la correction des codes — « cette
+séquence annonçait auparavant C7 · C8 · C9, c'est-à-dire douze compétences pour en servir
+trois ». J'ai retiré la mienne. Poser un dispositif sans regarder si le lot en avait déjà
+un, c'est écraser un travail antérieur au motif qu'on ne l'a pas cherché.
+
+**Un raccourci du contrôle n°42, à signaler à Pascal.** La règle cherche
+`referentiel-card`, puis le **premier `</table>` qui suit**. Comme le mot apparaît d'abord
+dans la feuille de style (`body.essentiel .referentiel-card{display:none}`), c'est le
+premier tableau de la page qui est lu — pas la carte. Le contrôle annonce alors « aucun
+code reconnu » sur une page qui porte pourtant une carte parfaitement conforme. Contourné
+en plaçant la carte avant tout autre tableau — ce qui est de toute façon sa place logique —
+mais le raccourci reste à corriger dans `_outils/` (périmètre Thème 2).
+
+**Un verrou qui n'existe pas.** Ces deux lots n'ont pas de verrou expérientiel à
+l'activité 0, contrairement à ceux de 4e. La suite l'écrit noir sur blanc — « contrôle NON
+applicable, donc NON exécuté » — au lieu de compter un succès qu'elle n'a pas obtenu. Un
+test qui ne s'exécute pas ne doit jamais ressembler à un test qui passe.
+
+## Ce qui reste, et qu'il faut dire
+
+Les six QCM de C7 et C8 sont de la **génération ancienne** : 24 à 28 questions au lieu de
+30, et **aucune réfutation par distracteur**. Leurs bonnes réponses sont maintenant bien
+réparties, leurs explications sont là — mais ils n'expliquent pas pourquoi chaque mauvaise
+réponse est fausse, ce que font les QCM des lots C9. C'est le prochain chantier naturel du
+thème, et il est écrit dans chaque rapport plutôt que laissé à deviner.

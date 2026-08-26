@@ -71,6 +71,38 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
     section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
   }
   figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
 </style>
 </head>
 <body>
@@ -113,17 +145,77 @@ details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
 <div class="badges"><span class="badge">3e</span><span class="badge">Thème 3 — Création, conception, réalisation</span><span class="badge">3e_C7.1 · 3e_C8.1</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
 
 <section class="card">
+<div class="toolbar">
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec le matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card referentiel-card">
+<h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+<table class="refs">
+<tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+<tr><td><b>3e_C7.1</b></td><td>Élaborer un processus de conception et de réalisation dans une durée, avec des tâches identifiées.</td><td>Activité 1 (concevoir, sans planning fourni)</td></tr>
+<tr><td><b>3e_C8.1</b></td><td>Mettre en œuvre une simulation pour valider la tenue mécanique d'un matériau.</td><td>Activité 0 (simulateur thermique) et activité 2</td></tr>
+</table>
+<div class="retenir"><b>Le verbe de 3e est « élaborer »</b> : personne ne te donne le processus, tu l'écris. En 5e on te le <b>fournissait</b> et tu le suivais ; en 4e tu l'<b>organisais</b> à partir de tâches données. Ici, la page blanche est le sujet.</div>
+</section>
+
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence s'appuie sur ce que tu as fait en 4e — concevoir un support, puis le valider par des tests. <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<div class="exo">
+  <p><label for="be_1">1. Élaborer un processus de conception, cela veut dire…
+  <select id="be_1"><option value="">— choisir —</option><option>écrire soi-même les tâches, leur ordre et leur durée</option><option>suivre un planning donné par le professeur</option><option>fabriquer le plus vite possible</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. Une simulation sert à…
+  <select id="be_2"><option value="">— choisir —</option><option>essayer sans fabriquer, pour éliminer les mauvaises pistes</option><option>remplacer définitivement les essais réels</option><option>faire joli dans le compte rendu</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Un essai n'a de valeur que si…
+  <select id="be_3"><option value="">— choisir —</option><option>le résultat attendu a été écrit AVANT</option><option>on le refait plusieurs fois</option><option>le professeur le valide</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
+<section class="card">
+<h2>🔀 Trois façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="a">🅰 <b>Avec le matériel</b> : capteur de température, carte et voyant en très basse tension : tu mesures la salle en vrai, et tu compares avec le simulateur.</p>
+<p data-parcours="b">🅱 <b>En simulation</b> : le simulateur thermique de l'activité 0 fonctionne dans la page, hors connexion, et sert de banc d'essai pour tous les cas — y compris ceux qu'on ne peut pas provoquer en classe. C'est le parcours principal.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : croquis, tableau d'essais et algorigramme au cahier — <b>mêmes questions, mêmes validations</b>.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
+</section>
+
+<section class="card" id="taches">
+<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</section>
+
 <h2>📋 En-tête pédagogique</h2>
 <table class="refs">
 <tr><th>Codes</th><td>3e_C7.1 (principal) · 3e_C8.1 (mutualisé)</td></tr>
-<tr><th>Durée</th><td>4 × 55 min</td></tr>
+<tr><th>Durée</th><td><b>2 séances de 55 min</b> sur cette page — 100 min d'activités annoncées (le projet complet occupe 4 séances, réalisation et essais compris)</td></tr>
 <tr><th>Socle</th><td>D2 (méthodes) · D4 (systèmes techniques) · D5 (représentations du monde)</td></tr>
 <tr><th>Ancrage</th><td>New York — collège en zone d'îlot de chaleur (rooftop / cour asphaltée)</td></tr>
 </table>
 <div style="margin-top:12px">
-<label>Nom&nbsp;: <input id="eleveNom" style="width:130px"></label>
-<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px"></label>
-<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px"></label>
+<label>Nom&nbsp;: <input id="eleveNom" style="width:130px" aria-label="Nom"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px" aria-label="Prénom"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px" aria-label="Classe"></label>
 <span class="saved-note" id="savedNote"></span>
 </div>
 </section>
@@ -200,12 +292,23 @@ qu'une température mesurée.</p>
 
 <section class="card">
 <h2>💡 Hypothèse de départ</h2>
-<textarea id="hyp" rows="2" placeholder="Je pense que la solution doit… parce que…"></textarea>
+<label for="hyp">✍ Mon hypothèse : d'après toi, à partir de quelle température faut-il alerter — et pourquoi celle-là ?</label>
+<textarea id="hyp" rows="2" placeholder="Je pense que la solution doit… parce que…" aria-label="Mon hypothèse de départ"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts
+  de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Je pense qu'il faut alerter à partir de ____ °C.</li>
+    <li>Parce que ____ .</li>
+    <li>Ce qui pourrait rendre ce seuil mauvais : ____ .</li>
+  </ul>
+</details>
 <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
 <section class="card">
-<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur thermique <span class="chrono">⏱ 10 min</span></h2>
+<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le simulateur thermique <span class="chrono">⏱ ~10 min</span></h2>
 <div class="exo">
 <p><strong>Consigne&nbsp;:</strong> AVANT toute définition, fais varier la température de la salle avec le curseur. Observe la LED d'alerte. Franchis le seuil dans les deux sens (monter PUIS redescendre).</p>
 <div class="simu">
@@ -215,9 +318,9 @@ qu'une température mesurée.</p>
 <p style="font-size:.82em;color:var(--sub)">Le seuil est caché quelque part entre 25 et 30&nbsp;°C… à toi de le trouver en manipulant.</p>
 </div>
 <p style="margin-top:10px">Q1 — À partir de quelle température la LED s'allume-t-elle&nbsp;?
-<select id="a0q1" style="width:auto"><option value="">— je choisis —</option><option>26 °C</option><option>28 °C</option><option>30 °C</option><option>32 °C</option></select></p>
+<select id="a0q1" style="width:auto" aria-label="Q1 de l'activité 0"><option value="">— je choisis —</option><option>26 °C</option><option>28 °C</option><option>30 °C</option><option>32 °C</option></select></p>
 <p>Q2 — Quand tu REDESCENDS sous cette température, la LED…
-<select id="a0q2" style="width:auto"><option value="">— je choisis —</option><option>reste allumée pour toujours</option><option>s'éteint aussitôt</option><option>clignote sans fin</option></select></p>
+<select id="a0q2" style="width:auto" aria-label="Q2 de l'activité 0"><option value="">— je choisis —</option><option>reste allumée pour toujours</option><option>s'éteint aussitôt</option><option>clignote sans fin</option></select></p>
 <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
 <p class="feedback" id="fb0" role="status"></p>
 <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS ton essai)</summary><div>
@@ -227,11 +330,22 @@ qu'une température mesurée.</p>
 </section>
 
 <section class="card">
-<h2>🔧 Activité 1 — Concevoir (C7) <span class="chrono">⏱ 20 min</span></h2>
+<h2>🔧 Activité 1 — Concevoir (C7) <span class="chrono">⏱ ~20 min</span></h2>
 <div class="exo">
 <p><strong>Besoin&nbsp;:</strong> alerter si T &gt; 28&nbsp;°C (seuil de confort trouvé au simulateur).</p>
 <p>Propose <strong>deux solutions</strong> (matériel TBT — très basse tension uniquement — ou simulation) et choisis-en une avec 2 critères (coût, lisibilité, robustesse…).</p>
-<textarea rows="4" id="a1sol" placeholder="Solution A…&#10;Solution B…&#10;Choix + 2 critères…"></textarea>
+<label for="a1sol">✍ Deux solutions vraiment différentes, puis ton choix justifié par deux critères nommés :</label>
+<textarea rows="4" id="a1sol" placeholder="Solution A…&#10;Solution B…&#10;Choix + 2 critères…" aria-label="Mes deux solutions et mon choix"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts
+  de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Solution A : ____ . Solution B : ____ .</li>
+    <li>Elles diffèrent vraiment parce que ____ .</li>
+    <li>Je choisis ____ . Premier critère : ____ . Second critère : ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
 <p class="feedback" id="fb1" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
@@ -241,17 +355,17 @@ qu'une température mesurée.</p>
 </section>
 
 <section class="card">
-<h2>🧪 Activité 2 — Valider par des tests (C8) + CRCN 1.3 <span class="chrono">⏱ 25 min</span></h2>
+<h2>🧪 Activité 2 — Valider par des tests (C8) + CRCN 1.3 <span class="chrono">⏱ ~25 min</span></h2>
 <div class="exo">
 <p>Protocole minimal — <em>trace CRCN 1.3</em>. Pour chaque scénario, PRÉDIS le comportement attendu, puis VÉRIFIE-le au simulateur de l'activité 0 (règle le curseur sur la valeur du scénario) et note ce que tu observes.</p>
 <table class="refs">
 <tr><th>Scénario</th><th>T (°C)</th><th>Ta prédiction</th><th>Observé au simulateur</th></tr>
-<tr><td>Salle fraîche</td><td>22</td><td><select id="a2p1"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o1"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
-<tr><td>Seuil exact</td><td>28</td><td><select id="a2p2"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o2"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
-<tr><td>Surchauffe</td><td>32</td><td><select id="a2p3"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o3"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
-<tr><td>Retour au frais</td><td>24</td><td><select id="a2p4"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o4"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Salle fraîche</td><td>22</td><td><select id="a2p1" aria-label="Essai « salle fraîche » — ma prédiction"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o1" aria-label="Essai « salle fraîche » — observé"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Seuil exact</td><td>28</td><td><select id="a2p2" aria-label="Essai 2 — ma prédiction"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o2" aria-label="Essai 2 — observé"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Surchauffe</td><td>32</td><td><select id="a2p3" aria-label="Essai 3 — ma prédiction"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o3" aria-label="Essai 3 — observé"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
+<tr><td>Retour au frais</td><td>24</td><td><select id="a2p4" aria-label="Essai 4 — ma prédiction"><option value="">— je prédis —</option><option>Alerte ON</option><option>Alerte OFF</option></select></td><td><select id="a2o4" aria-label="Essai 4 — observé"><option value="">— j'observe —</option><option>LED allumée</option><option>LED éteinte</option></select></td></tr>
 </table>
-<p style="margin-top:8px">Décision globale&nbsp;: <select id="a2dec" style="width:auto"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<p style="margin-top:8px">Décision globale&nbsp;: <select id="a2dec" style="width:auto" aria-label="Décision globale"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
 <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
 <p class="feedback" id="fb2" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
@@ -261,21 +375,21 @@ qu'une température mesurée.</p>
 </section>
 
 <section class="card">
-<h2>📐 Activité 3 — L'algorigramme, puis le code (CRCN 3.4) <span class="chrono">⏱ 30 min</span></h2>
+<h2>📐 Activité 3 — L'algorigramme, puis le code (CRCN 3.4) <span class="chrono">⏱ ~30 min</span></h2>
 <div class="exo">
 <h4>3a — Remets l'algorigramme en ordre (représentation schématique, règle n°18)</h4>
 <p>Le raisonnement que tu as FAIT à la main au simulateur se dessine. Numérote les blocs de 1 à 5 pour reconstruire l'algorigramme de l'alerte&nbsp;:</p>
-<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage du capteur)</span></div>
-<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Mesurer la température T de la salle</span></div>
-<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>T &gt; 28&nbsp;?</span></div>
-<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → allumer la LED d'alerte</span></div>
-<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → éteindre la LED, puis revenir à la mesure</span></div>
+<div class="algostep"><span class="algoshape">⬭ début</span><select id="a3o1" aria-label="Rang de l'étape 1 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (au démarrage du capteur)</span></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a3o2" aria-label="Rang de l'étape 2 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Mesurer la température T de la salle</span></div>
+<div class="algostep"><span class="algoshape">◇ décision</span><select id="a3o3" aria-label="Rang de l'étape 3 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>T &gt; 28&nbsp;?</span></div>
+<div class="algostep"><span class="algoshape">▭ action OUI</span><select id="a3o4" aria-label="Rang de l'étape 4 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → allumer la LED d'alerte</span></div>
+<div class="algostep"><span class="algoshape">▭ action NON</span><select id="a3o5" aria-label="Rang de l'étape 5 de l'algorigramme"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>NON → éteindre la LED, puis revenir à la mesure</span></div>
 <button class="btn check" data-check="3" type="button">✅ Vérifier l'algorigramme</button>
 <p class="feedback" id="fb3" role="status"></p>
 <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
 <p><b>1 — DÉBUT</b> (ellipse&nbsp;: un algorigramme commence toujours par un terminal). <b>2 — Mesurer T</b> (rectangle&nbsp;: un traitement — c'est l'ENTRÉE de la donnée). <b>3 — T &gt; 28&nbsp;?</b> (losange&nbsp;: une DÉCISION a toujours deux sorties, OUI et NON — jamais une seule). <b>4 — OUI → LED allumée</b> (rectangle&nbsp;: la SORTIE côté alerte). <b>5 — NON → LED éteinte puis retour à la mesure</b> (la flèche qui REMONTE fait la boucle&nbsp;: le capteur surveille en continu). Entrée → décision → sorties → boucle&nbsp;: les quatre familles de blocs y sont.</p></div></details>
 <h4 style="margin-top:16px">3b — Écris le pseudo-code, puis fais-le vivre en blocs ↔ Python</h4>
-<textarea rows="5" id="algo" placeholder="SEUIL = 28&#10;mesurer T&#10;SI T &gt; SEUIL ALORS&#10;  allumer LED alerte&#10;SINON&#10;  éteindre LED&#10;FIN SI"></textarea>
+<textarea rows="5" id="algo" placeholder="SEUIL = 28&#10;mesurer T&#10;SI T &gt; SEUIL ALORS&#10;  allumer LED alerte&#10;SINON&#10;  éteindre LED&#10;FIN SI" aria-label="Mon algorigramme, en pseudo-code"></textarea>
 <details class="vs" id="vs1">
 <summary>🧪 Code ton alerte ici — en blocs, puis lis le Python (et inversement)</summary>
 <p class="vs-note">Construis d'abord la décision en BLOCS (logique → si/sinon) et observe le Python s'écrire&nbsp;; puis modifie directement le Python (change le seuil à 26) et regarde les blocs suivre. Sans capteur réel&nbsp;: <code>T = 32</code> et <code>print("ALERTE")</code> à la place de la LED. Les DEUX SENS comptent&nbsp;: blocs → texte, texte → blocs.</p>
@@ -283,9 +397,20 @@ qu'une température mesurée.</p>
 <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (activité 3)"></iframe>
 </details>
 <p><strong>Bug possible&nbsp;:</strong> près de 28&nbsp;°C, la LED clignote. Propose une correction (hystérésis ou seuil OFF différent)&nbsp;:</p>
-<textarea rows="3" id="a3hys" placeholder="Correction…"></textarea>
+<textarea rows="3" id="a3hys" placeholder="Correction…" aria-label="Ma correction du clignotement"></textarea>
 <p><strong>Diagnostic (CRCN 5.1)&nbsp;:</strong> LED éteinte alors que T = 33&nbsp;°C. Cause probable + test discriminant&nbsp;:</p>
-<textarea rows="2" id="a3diag" placeholder="Cause… Test…"></textarea>
+<label for="a3diag">✍ Cause probable du clignotement, et le test qui la départage d'une autre cause :</label>
+<textarea rows="2" id="a3diag" placeholder="Cause… Test…" aria-label="Mon diagnostic"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts
+  de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Cause probable : ____ .</li>
+    <li>Mais ce pourrait aussi être ____ .</li>
+    <li>Test qui départage : ____ , et j'attends comme résultat ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 3b</button>
 <p class="feedback" id="fb4" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
@@ -302,10 +427,22 @@ else:
 </section>
 
 <section class="card">
-<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ 15 min</span></h2>
+<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
 <p>Adapte la même logique à un <strong>seuil d'humidité</strong> pour un local archives (éviter les moisissures&nbsp;: alerte si H &gt; 60&nbsp;%). 4 lignes de pseudo-code&nbsp;:</p>
-<textarea rows="4" id="reinv" placeholder="SEUIL = 60&#10;mesurer H&#10;SI …"></textarea>
+<label for="reinv">✍ Le même raisonnement, sur l'humidité — en quatre lignes :</label>
+<textarea rows="4" id="reinv" placeholder="SEUIL = 60&#10;mesurer H&#10;SI …" aria-label="Mon réinvestissement"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts
+  de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Grandeur mesurée : ____ , et son seuil : ____ .</li>
+    <li>SI ____ ALORS ____ .</li>
+    <li>SINON ____ .</li>
+    <li>Ce qu'il faudrait ajouter pour éviter le clignotement : ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
 <p class="feedback" id="fb5" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div>
@@ -328,10 +465,10 @@ FIN SI</pre>
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
-<p>J'ai appris&nbsp;: <input id="bilan1"></p>
-<p>Je sais faire (observable)&nbsp;: <input id="bilan2"></p>
-<p>À revoir&nbsp;: <input id="bilan3"></p>
-<p>Confiance CRCN 3.4 (1-4)&nbsp;: <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+<p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Ce que j'ai appris"></p>
+<p>Je sais faire (observable)&nbsp;: <input id="bilan2" aria-label="Ce que je sais faire"></p>
+<p>À revoir&nbsp;: <input id="bilan3" aria-label="Ce qui est à revoir"></p>
+<p>Confiance CRCN 3.4 (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Ma confiance"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
 <section class="card">
@@ -358,7 +495,7 @@ FIN SI</pre>
 <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <div class="bonus">
 <p><strong>Citoyen&nbsp;:</strong> Quelles mesures urbaines (arbres, toits clairs) réduisent l'îlot de chaleur autour d'une école new-yorkaise&nbsp;?</p>
-<textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page"></textarea>
+<textarea rows="2" id="defi1" placeholder="Tes idées — sauvegardées dans la page" aria-label="Défi 1"></textarea>
 <p style="margin-top:12px"><strong>Technique&nbsp;:</strong> Ajoute un 2ᵉ seuil (pré-alerte à 26&nbsp;°C, alerte à 28&nbsp;°C) — code-le dans l'éditeur ci-dessous.</p>
 <details class="vs" id="vs2">
 <summary>🧪 L'éditeur du Bonus — code ta pré-alerte ici, sans quitter la page</summary>
@@ -367,7 +504,7 @@ FIN SI</pre>
 <iframe loading="lazy" src="https://fr.vittascience.com/python/?mode=mixed&amp;console=bottom" title="Éditeur Python Vittascience embarqué (Bonus)"></iframe>
 </details>
 <p style="margin-top:8px"><strong>CRCN 3.4 N3&nbsp;:</strong> Propose une hystérésis 27 / 29 et justifie pourquoi cela stabilise l'alerte&nbsp;:</p>
-<textarea rows="2" id="defi3" placeholder="Ta justification — sauvegardée dans la page"></textarea>
+<textarea rows="2" id="defi3" placeholder="Ta justification — sauvegardée dans la page" aria-label="Défi 3"></textarea>
 </div>
 </section>
 
@@ -427,6 +564,7 @@ majSim();
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return false; const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good ? 1 : 0; }
 function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim()); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+const par = {s: []};
 const CHECKS = {
   0(){ let s = 0; s += sv("a0q1","28 °C"); s += sv("a0q2","s'éteint aussitôt");
     return {score: s, total: 2, exp: !!(window.__exp.simMontee && window.__exp.simDescente), expMsg: "Manipule d'abord le curseur : franchis le seuil en MONTANT puis en DESCENDANT — c'est l'expérience qui fait foi."}; },
@@ -445,7 +583,8 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; 
+    if(!par.s.includes(n)){ par.s.push(n); } updateProg(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -453,7 +592,7 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 /* sauvegarde locale (règle n°15) */
 function save(){
-  const o = {inputs: {}, exp: window.__exp || {}};
+  const o = {inputs: {}, exp: window.__exp || {}, par};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id && e.type !== "range") o.inputs[e.id] = e.value; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
@@ -463,9 +602,92 @@ function restore(){
   if(!o) return;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+  (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
+  updateProg();
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+/* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
+const TACHES = [
+  {n:"0", libelle:"FAIRE d'abord — le simulateur thermique"},
+  {n:"1", libelle:"Concevoir : deux solutions, un choix argumenté"},
+  {n:"2", libelle:"Valider par des essais prédits à l'avance"},
+  {n:"3", libelle:"L'algorigramme, puis le code"},
+  {n:"4", libelle:"Mettre au point : le seuil qui fait clignoter"},
+  {n:"5", libelle:"REFAIRE — le même raisonnement sur l'humidité"}
+];
+function majTaches(){
+  const c = $("tachesBandeau"); if(!c) return;
+  c.innerHTML = TACHES.map(t => {
+    const fait = par.s.includes(t.n);
+    return '<div class="tache' + (fait ? " fait" : "") + '"><span class="coche">' +
+           (fait ? "✔" : "☐") + "</span> <b>Activité " + t.n + "</b> — " + t.libelle + "</div>";
+  }).join("");
+}
+function updateProg(){
+  const n = par.s.length;
+  if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
+  if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
+  if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  majTaches();
+}
+
+/* ══ Règle d'or n°26 — le billet d'entrée, sans note et hors progression ══ */
+if($("btnBillet")) $("btnBillet").addEventListener("click", () => {
+  const bon = [
+    $("be_1").value.startsWith("écrire soi-même"),
+    $("be_2").value.startsWith("essayer sans fabriquer"),
+    $("be_3").value.startsWith("le résultat attendu a été écrit")
+  ];
+  const ok = bon.filter(Boolean).length;
+  const fb = $("fbBillet");
+  fb.className = "feedback show " + (ok === 3 ? "ok" : ok >= 1 ? "warn" : "ko");
+  let m = ok + " / 3 — ";
+  if(ok === 3)      m += "les trois acquis sont là : la séquence va pouvoir aller vite.";
+  else if(ok === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+  else if(ok === 1) m += "un acquis sur trois : la séquence les reprend tous, tu ne pars pas de rien.";
+  else              m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
+  m += " Ce billet ne compte pas dans ta progression.";
+  fb.textContent = m;
+  window.__exp.billet = ok;
+  save();
+});
+
+/* ══ Règle d'or n°29 — mode essentiel ══ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  window.__exp.essentiel = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
+/* ══ Règles d'or n°122 et n°136 — le sélecteur ne vaut que par ce qu'il sélectionne ══ */
+function majParcours(){
+  const choix = window.__exp.parcours || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = $("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 avec le matériel", b:"🅱 en simulation", c:"🅲 sur papier", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
+  }
+}
+document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("click", () => {
+  window.__exp.parcours = b.dataset.choix;
+  majParcours(); save();
+}));
+
 restore();
+if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
+majEssentiel(); majParcours(); updateProg();
 })();
 </script>
 </body>

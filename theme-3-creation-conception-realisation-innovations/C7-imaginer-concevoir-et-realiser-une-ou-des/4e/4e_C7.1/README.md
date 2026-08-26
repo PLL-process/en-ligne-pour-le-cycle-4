@@ -1,21 +1,17 @@
-# 4e_C7.1 — Organiser un processus de conception et de réalisation
 
-**Thème 3** — Création, conception, réalisation, innovations : des objets à concevoir et à réaliser
 
-**Compétence** : Organiser un processus de conception et de réalisation dans une durée, avec des tâches identifiées.
+## Harmonisation du 26 août 2026
 
-**Sujet du lot** : Le jardin connecté du collège — concevoir et réaliser une amélioration
+Dispositifs communs du dépôt installés (billet d'entrée hors progression, mode essentiel,
+tableau de bord, versions étayées, durées à la convention, carte de référentiel, sélecteur
+de parcours agissant, barre de progression). Contrôle mécanisé : **5 manquements → 0**.
 
-## Fichiers du lot (en production)
+- **`tests_4e_C7.mjs`** — la suite du lot, rejouable : `node tests_4e_C7.mjs .` (41 tests).
+- **`repartir_qcm.mjs`** — l'outil qui a redistribué les bonnes réponses du QCM. Ses 28
+  bonnes réponses étaient **toutes en position B** : cliquer la deuxième proposition
+  partout donnait 28/28. Elles sont désormais réparties 7 par position, selon une suite
+  écrite en clair dans l'outil — reproductible, pas tirée au hasard.
 
-- sequence_4e_C7_jardin-conception.html (séquence principale)
-- qcm_4e_C7_jardin-conception.html
-- synthese_eleve_4e_C7.html
-- synthese_professeur_4e_C7.html
-- fiche_pedagogique_4e_C7.md
-- matrice_couverture_4e_C7.csv
-- SOURCES_MEDIAS.md
-
-Branche : `fable/theme-3/lot-01-4e-C7-jardin-connecte-conception`
-
-Agent : Grok (Thème 3)
+Le QCM reste de la **génération ancienne** (28 questions, sans réfutation par
+distracteur) : la mise à niveau au standard des lots C9 n'est pas faite, et c'est dit
+plutôt que sous-entendu.
