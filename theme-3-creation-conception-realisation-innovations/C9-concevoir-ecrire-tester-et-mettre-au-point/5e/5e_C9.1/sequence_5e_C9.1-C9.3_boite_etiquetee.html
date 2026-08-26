@@ -201,6 +201,28 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   section.card table tbody tr:nth-child(even) td{background:rgba(155,190,252,.05)}
   section.card table tbody tr:hover td{background:rgba(97,218,251,.09)}
   @media(max-width:680px){section.card table{display:block;overflow-x:auto}}
+
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .prof{display:none}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  @media print{ .choix-parcours-boutons{display:none} }
 </style>
 </head>
 <body>
@@ -261,12 +283,40 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   <button class="btn" id="btnSave">💾 Sauvegarder mon travail</button>
   <button class="btn ghost" id="btnPrint">🖨 Imprimer / PDF</button>
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 En simulation</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 <div class="progress-wrap">
   <span class="progress-label">Ma progression : <b id="progTxt">0 / 5 activités validées</b></span>
   <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
 </div>
+
+<section class="card" id="billet">
+  <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p>Cet atelier s'appuie sur ce que tu as programmé à l'école et en 6e, souvent par blocs.
+  Trois questions pour savoir, toi comme le professeur, sur quoi on peut s'appuyer.
+  <b>Elles ne comptent pas dans ta progression et ne sont pas notées</b> — « je ne sais pas encore »
+  est une réponse utile.</p>
+  <div class="exo">
+    <label for="be_1" style="display:block;margin:8px 0">1. Dans un programme, quand on écrit <code>score = 10</code>, cela veut dire…
+      <select id="be_1"><option value="">— choisir —</option><option>range le nombre 10 dans quelque chose qui s'appelle score</option><option>score est égal à 10, comme en mathématiques</option><option>affiche 10 à l'écran</option><option>je ne sais pas encore</option></select></label>
+    <label for="be_2" style="display:block;margin:8px 0">2. Un programme qui affiche un résultat FAUX…
+      <select id="be_2"><option value="">— choisir —</option><option>peut très bien tourner sans planter — il se trompe, c'est tout</option><option>s'arrête forcément avec un message rouge</option><option>ne démarre jamais</option><option>je ne sais pas encore</option></select></label>
+    <label for="be_3" style="display:block;margin:8px 0">3. Pour savoir si un programme fait ce qu'on lui demande, le mieux est de…
+      <select id="be_3"><option value="">— choisir —</option><option>écrire ce qu'on ATTEND, puis l'exécuter et comparer</option><option>le lancer une fois et regarder si ça a l'air bon</option><option>relire le programme sans l'exécuter</option><option>je ne sais pas encore</option></select></label>
+    <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+    <p class="feedback" id="fbBillet" role="status"></p>
+  </div>
+</section>
 
 <section class="card">
   <h2>📖 Situation déclenchante</h2>
@@ -295,19 +345,60 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   <div class="exo">
     <label for="hyp1"><b>✍ Mon hypothèse :</b> d'après toi, comment un programme peut-il « compter » les places restantes du manège ? Où garde-t-il le nombre en mémoire ?</label>
     <textarea id="hyp1" rows="3" placeholder="J'écris mon hypothèse ici — on la retrouvera au bilan…"></textarea>
+    <details class="etayage">
+      <summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de
+      phrases retirent l'obstacle de la rédaction, pas l'exigence.</p>
+      <ul>
+        <li>Je pense que le programme garde le nombre de places dans ____ .</li>
+        <li>Quand quelqu'un monte, le nombre doit ____ ; quand quelqu'un descend, il doit ____ .</li>
+        <li>Ce dont je suis sûr : ____ . Ce dont je ne suis pas sûr : ____ .</li>
+      </ul>
+    </details>
   </div>
+</section>
+
+<section class="card referentiel-card">
+  <h2>🎯 Ce que dit le programme — et où tu en es dans le cycle</h2>
+  <table>
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cet atelier</th></tr>
+    <tr><td><b>5e_C9.1</b></td><td>Analyser un programme simple fourni et tester s'il répond au besoin ou au problème posé.</td><td>Activités 1 à 4</td></tr>
+    <tr><td><b>5e_C9.2</b></td><td>Modifier un programme fourni pour répondre au besoin ou à un problème posé.</td><td>Activité 5 ①</td></tr>
+    <tr><td><b>5e_C9.3</b></td><td>Réaliser et mettre au point un programme simple commandant un OST (objet ou système technique).</td><td>Activité 5 ②</td></tr>
+  </table>
+  <details class="approfondissement">
+    <summary>🪜 Où mène cet atelier — les trois années du cycle en un tableau</summary>
+    <p>La difficulté du cycle ne tient pas à des programmes plus longs. Elle tient à
+    <b>ce qu'on retire</b> de ce qu'on te fournit au départ. Lis la dernière colonne de haut en bas :</p>
+    <table>
+      <tr><th>Niveau</th><th>Le verbe</th><th>Ce qu'on te fournit</th></tr>
+      <tr><td><b>5e (ici)</b></td><td><b>analyser</b> un programme fourni, et le <b>tester</b></td><td><b>tout</b> : le programme existe déjà</td></tr>
+      <tr><td>5e (act. 5)</td><td><b>modifier</b> un programme fourni</td><td>le programme, à retoucher</td></tr>
+      <tr><td>4e</td><td><b>modifier</b> un <i>algorithme</i>, puis le <b>traduire</b></td><td>l'algorithme, amputé d'une exigence</td></tr>
+      <tr><td>3e</td><td><b>élaborer</b>, traduire, tester, mettre au point</td><td><b>rien que le besoin</b></td></tr>
+    </table>
+    <p>Autrement dit : cette année, on te donne le programme et on t'apprend à le <b>lire</b>.
+    C'est le geste le plus utile de tous — et le seul qui serve encore quand le programme
+    vient de quelqu'un d'autre.</p>
+  </details>
 </section>
 
 <section class="card">
   <h2>🔀 Trois façons de vivre l'atelier</h2>
   <div class="donnees">
-    <p>🅰 <b>Avec matériel</b> : l'éditeur Vittascience relié à une carte réelle (<b>très basse tension uniquement</b>) — une LED joue la barrière.</p>
-    <p>🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python Vittascience <b>embarqué</b> : cherche les <b>barres 🧪 bleues</b> des séances 2 et 3, un clic les déplie. C'est le parcours principal.</p>
-    <p>🅲 <b>Sans matériel</b> : les schémas + les tables de suivi à compléter au cahier.</p>
+    <p data-parcours="a">🅰 <b>Avec matériel</b> : l'éditeur Vittascience relié à une carte réelle (<b>très basse tension uniquement</b>) — une LED joue la barrière.</p>
+    <p data-parcours="b">🅱 <b>En simulation</b> : le simulateur de mémoire (séance 1 — le bouton « ▶ Étape suivante ») + l'éditeur Python Vittascience <b>embarqué</b> : cherche les <b>barres 🧪 bleues</b> des séances 2 et 3, un clic les déplie. C'est le parcours principal.</p>
+    <p data-parcours="c">🅲 <b>Sans matériel</b> : les schémas + les tables de suivi à compléter au cahier.</p>
   </div>
   <div class="retenir"><b>📡 La méthode de l'atelier — prédire → tester → reporter :</b> tu PRÉDIS d'abord
   (sans ordinateur), tu TESTES ensuite, tu REPORTES ce que tu as vu. Se tromper en prédisant
   n'enlève rien : c'est là qu'on apprend le plus.</div>
+</section>
+
+<section class="card" id="taches">
+  <h2>🗺 Où j'en suis — les 5 activités de l'atelier</h2>
+  <p>Coche-toi au fur et à mesure : chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+  <div class="taches-bandeau" id="tachesBandeau"></div>
 </section>
 
 <div class="seance-tabs" role="tablist" id="seances">
@@ -323,7 +414,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   <p style="color:var(--hl);font-weight:600">Question directrice : où le programme range-t-il le nombre de places — et que devient l'ancien nombre ?</p>
 
   <div class="activite" id="act1">
-    <header><span class="num">Activité 1</span><h3>Exécute le compteur À LA MAIN</h3><span class="duree">⏱ 25 min</span></header>
+    <header><span class="num">Activité 1</span><h3>Exécute le compteur À LA MAIN</h3><span class="duree">⏱ ~20 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> découvrir que chaque variable est une boîte étiquetée, et que le signe = RANGE une valeur dedans.</div>
       <div><b>Compétence :</b> 5e_C9.1 (analyser un programme simple fourni).</div>
@@ -356,11 +447,11 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
       </div>
     </div>
     <div class="exo">
-      <label>1. Après la ligne 3, la boîte <code>places</code> contient :
+      <label for="a1q1">1. Après la ligne 3, la boîte <code>places</code> contient :
       <select id="a1q1"><option value="">— je choisis —</option><option>24</option><option>21</option><option>24 et 21</option><option>3</option></select></label>
-      <label>2. Où est passé le 24 qui était dans la boîte ?
+      <label for="a1q2">2. Où est passé le 24 qui était dans la boîte ?
       <select id="a1q2"><option value="">— je choisis —</option><option>il a été REMPLACÉ par 21 — une boîte ne garde qu'UNE valeur</option><option>il est caché derrière le 21</option><option>il est parti dans la boîte montes</option><option>il s'affiche à l'écran</option></select></label>
-      <label>3. En Python, le signe <code>=</code> veut dire :
+      <label for="a1q3">3. En Python, le signe <code>=</code> veut dire :
       <select id="a1q3"><option value="">— je choisis —</option><option>« est égal à », comme en maths</option><option>« RANGE cette valeur dans la boîte »</option><option>« compare les deux nombres »</option><option>« affiche le résultat »</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Rejoue le simulateur et regarde UNIQUEMENT la boîte <code>places</code> à la ligne 3 : combien de nombres vois-tu dedans en même temps ?</p></details>
@@ -379,7 +470,7 @@ details.vs .vs-note{padding:0 16px 10px;color:#9bbefc;font-size:.85em}
   </div>
 
   <div class="activite" id="act2">
-    <header><span class="num">Activité 2</span><h3>La table de suivi — ta méthode du doigt</h3><span class="duree">⏱ 25 min</span></header>
+    <header><span class="num">Activité 2</span><h3>La table de suivi — ta méthode du doigt</h3><span class="duree">⏱ ~20 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> suivre un programme SANS ordinateur, avec une table (une colonne par boîte).</div>
       <div><b>Compétence :</b> 5e_C9.1.</div>
@@ -394,13 +485,13 @@ places = places - montes
 descendus = 2
 places = places + descendus</pre>
     <div class="exo">
-      <label>1. Après la ligne 3, <code>places</code> vaut :
+      <label for="a2q1">1. Après la ligne 3, <code>places</code> vaut :
       <select id="a2q1"><option value="">—</option><option>24</option><option>19</option><option>29</option><option>5</option></select></label>
-      <label>2. Que fait la ligne 5 ?
+      <label for="a2q2">2. Que fait la ligne 5 ?
       <select id="a2q2"><option value="">—</option><option>elle AJOUTE les 2 places libérées par ceux qui descendent</option><option>elle enlève encore 2 places</option><option>elle efface la boîte places</option><option>elle affiche le résultat</option></select></label>
-      <label>3. À la fin, <code>places</code> vaut :
+      <label for="a2q3">3. À la fin, <code>places</code> vaut :
       <select id="a2q3"><option value="">—</option><option>17</option><option>19</option><option>21</option><option>large : 24</option></select></label>
-      <label>4. Combien de fois le contenu de la boîte <code>places</code> a-t-il changé (ligne 1 comprise) ?
+      <label for="a2q4">4. Combien de fois le contenu de la boîte <code>places</code> a-t-il changé (ligne 1 comprise) ?
       <select id="a2q4"><option value="">—</option><option>1 fois</option><option>2 fois</option><option>3 fois</option><option>5 fois</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Fais deux colonnes au brouillon : <code>places</code> et <code>montes/descendus</code>. Remplis ligne par ligne, sans sauter.</p></details>
@@ -417,6 +508,7 @@ places = places + descendus</pre>
     <p class="critere"><b>🎯 Critère de réussite :</b> ma table donne le même résultat que l'ordinateur (vérifie-le en séance 2 !).</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2" type="button">Séance 2 — Lire et tester ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 2 ══════ -->
@@ -426,7 +518,7 @@ places = places + descendus</pre>
   <p style="color:var(--hl);font-weight:600">Question directrice : le programme du responsable répond-il au besoin ? Comment le PROUVER ?</p>
 
   <div class="activite" id="act3">
-    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter, dans l'éditeur embarqué</h3><span class="duree">⏱ 25 min</span></header>
+    <header><span class="num">Activité 3</span><h3>Prédire → tester → reporter, dans l'éditeur embarqué</h3><span class="duree">⏱ ~20 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> exécuter tes premiers programmes dans le VRAI éditeur — et découvrir le piège des guillemets.</div>
       <div><b>Compétence :</b> 5e_C9.1 · CRCN 3.4 (Niv. 1-2) — trace : tes reports enregistrés dans la page.</div>
@@ -437,10 +529,10 @@ places = places + descendus</pre>
     ③ REPORTE ce que la console affiche vraiment.</div>
     <div class="exo">
       <p><b>Expérience A :</b> <code>print(20 + 4)</code></p>
-      <label>① Je prédis :
+      <label for="a3p1">① Je prédis :
       <select id="a3p1"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
       <p><b>Expérience B :</b> <code>print("20" + "4")</code></p>
-      <label>① Je prédis :
+      <label for="a3p2">① Je prédis :
       <select id="a3p2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
     </div>
     <details class="vs" id="vs1">
@@ -451,13 +543,13 @@ places = places + descendus</pre>
     </details>
     <div class="exo">
       <p><b>③ Je reporte :</b></p>
-      <label>Expérience A a affiché :
+      <label for="a3r1">Expérience A a affiché :
       <select id="a3r1"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
-      <label>Expérience B a affiché :
+      <label for="a3r2">Expérience B a affiché :
       <select id="a3r2"><option value="">—</option><option>24</option><option>204</option><option>une erreur</option></select></label>
-      <label>Conclusion — entre guillemets, « 20 » et « 4 » sont :
+      <label for="a3r3">Conclusion — entre guillemets, « 20 » et « 4 » sont :
       <select id="a3r3"><option value="">—</option><option>des nombres qu'on additionne</option><option>du TEXTE que le + COLLE bout à bout</option><option>des erreurs</option><option>des noms de boîtes</option></select></label>
-      <label>Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…
+      <label for="a3r4">Et voilà le premier indice du compteur fou : s'il affiche « 87 » en collant « 8 » et « 7 », c'est que quelqu'un a mis…
       <select id="a3r4"><option value="">—</option><option>des guillemets autour des nombres</option><option>trop de visiteurs</option><option>la mauvaise étiquette de boîte</option><option>un écran trop petit</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde bien les guillemets. En Python, TOUT ce qui est entre guillemets est du TEXTE — même des chiffres.</p></details>
@@ -476,7 +568,7 @@ places = places + descendus</pre>
   </div>
 
   <div class="activite" id="act4">
-    <header><span class="num">Activité 4</span><h3>Le programme du responsable : réponds-il au besoin ?</h3><span class="duree">⏱ 30 min</span></header>
+    <header><span class="num">Activité 4</span><h3>Le programme du responsable : réponds-il au besoin ?</h3><span class="duree">⏱ ~25 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> TESTER un programme fourni sur plusieurs cas et conclure : répond-il au besoin, oui ou non ?</div>
       <div><b>Compétence :</b> 5e_C9.1 (tester s'il répond au besoin ou au problème posé).</div>
@@ -502,11 +594,11 @@ print("Places libres :", places)</pre>
     </div>
     <p id="benchBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
-      <label>1. Le test T3 montre que le programme :
+      <label for="a4q1">1. Le test T3 montre que le programme :
       <select id="a4q1"><option value="">—</option><option>SOUSTRAIT les descendus au lieu de les AJOUTER (19 au lieu de 23)</option><option>fonctionne parfaitement</option><option>affiche du texte collé</option><option>ne démarre pas</option></select></label>
-      <label>2. Quelqu'un qui DESCEND du manège, ça devrait :
+      <label for="a4q2">2. Quelqu'un qui DESCEND du manège, ça devrait :
       <select id="a4q2"><option value="">—</option><option>LIBÉRER une place (donc places + descendus)</option><option>occuper une place de plus</option><option>ne rien changer</option><option>fermer la barrière</option></select></label>
-      <label>3. Ton verdict de technicien :
+      <label for="a4q3">3. Ton verdict de technicien :
       <select id="a4q3"><option value="">—</option><option>le programme NE répond PAS au besoin : la ligne 5 doit devenir places = places + descendus</option><option>le programme répond au besoin</option><option>impossible de conclure</option><option>il faut changer d'ordinateur</option></select></label>
     </div>
     <details class="aide"><summary>💡 Aide niveau 1 — un indice</summary><p>Regarde T3 : « attendu 23 » mais qu'as-tu OBTENU ? Puis relis la ligne 5 : un moins… pour des gens qui LIBÈRENT des places ?</p></details>
@@ -524,6 +616,7 @@ print("Places libres :", places)</pre>
     <p class="critere"><b>🎯 Critère de réussite :</b> je sais dire lequel des 3 tests a démasqué le bug, et pourquoi.</p>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3" type="button">Séance 3 — Modifier et régler ›</button></p>
 </div>
 
 <!-- ══════ SÉANCE 3 ══════ -->
@@ -533,7 +626,7 @@ print("Places libres :", places)</pre>
   <p style="color:var(--hl);font-weight:600">Question directrice : sauras-tu corriger le compteur — puis faire OBÉIR la barrière à ta variable ?</p>
 
   <div class="activite" id="act5">
-    <header><span class="num">Activité 5</span><h3>Corriger, adapter… puis commander la barrière</h3><span class="duree">⏱ 45 min</span></header>
+    <header><span class="num">Activité 5</span><h3>Corriger, adapter… puis commander la barrière</h3><span class="duree">⏱ ~45 min</span></header>
     <div class="meta-grid">
       <div><b>Objectif :</b> modifier le programme fourni (C9.2) puis réaliser et mettre au point le programme de la barrière (C9.3).</div>
       <div><b>Compétences :</b> 5e_C9.2 et 5e_C9.3.</div>
@@ -543,11 +636,11 @@ print("Places libres :", places)</pre>
     <div class="consigne"><b>Consigne — partie ① MODIFIER :</b> le responsable valide ton diagnostic et
     annonce du neuf : le Cyclone reçoit un nouveau train de <b>32 places</b>. Deux modifications à faire.</div>
     <div class="exo">
-      <label>1. Pour corriger le bug des descendus, la ligne 5 devient :
+      <label for="a5q1">1. Pour corriger le bug des descendus, la ligne 5 devient :
       <select id="a5q1"><option value="">—</option><option>places = places + descendus</option><option>places = places - descendus</option><option>places = descendus - places</option><option>descendus = places</option></select></label>
-      <label>2. Pour le nouveau train de 32 places, il faut modifier :
+      <label for="a5q2">2. Pour le nouveau train de 32 places, il faut modifier :
       <select id="a5q2"><option value="">—</option><option>la ligne 1 : places = 32</option><option>la ligne 2 : montes = 32</option><option>la ligne 6 : print(32)</option><option>toutes les lignes</option></select></label>
-      <label>3. Pourquoi ne change-t-on QUE cette ligne-là ?
+      <label for="a5q3">3. Pourquoi ne change-t-on QUE cette ligne-là ?
       <select id="a5q3"><option value="">—</option><option>parce que le nombre de sièges n'est écrit qu'à UN endroit : au remplissage initial de la boîte</option><option>parce que c'est la ligne la plus courte</option><option>parce que Python interdit de changer les autres</option><option>par superstition de technicien</option></select></label>
     </div>
     <figure>
@@ -567,9 +660,9 @@ print("Places libres :", places)</pre>
     </div>
     <p id="barrBadge" style="color:var(--ok);font-weight:700"></p>
     <div class="exo">
-      <label>4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :
+      <label for="a5q4">4. À <code>places = 0</code>, la condition <code>places &gt; 0</code> est :
       <select id="a5q4"><option value="">—</option><option>FAUSSE — donc la barrière se ferme : exactement ce qu'on veut</option><option>vraie — la barrière s'ouvre</option><option>impossible à calculer</option><option>une erreur</option></select></label>
-      <label>5. Pourquoi le test B3 est-il LE plus important ?
+      <label for="a5q5">5. Pourquoi le test B3 est-il LE plus important ?
       <select id="a5q5"><option value="">—</option><option>c'est le cas FRONTIÈRE : c'est là que les visiteurs de trop passeraient si la règle était mal écrite</option><option>parce que 0 est un joli nombre</option><option>il ne l'est pas, B1 suffit</option><option>parce qu'il est le dernier de la liste</option></select></label>
     </div>
     <details class="vs" id="vs2">
@@ -603,6 +696,15 @@ print("Places libres :", places)</pre>
     <p class="hyp-recall" id="hypRecall"></p>
     <label for="bilanTxt"><b>✍ Ce que je répondrais maintenant :</b></label>
     <textarea id="bilanTxt" rows="3" placeholder="Le nombre est rangé dans… et le signe = sert à…"></textarea>
+    <details class="etayage">
+      <summary>🪜 Version étayée — des phrases à compléter</summary>
+      <p>Mêmes mots attendus, même exigence : on t'aide à démarrer la phrase, pas à répondre.</p>
+      <ul>
+        <li>Le nombre de places est rangé dans une ____ , qui porte le nom ____ .</li>
+        <li>Le signe <code>=</code> ne veut pas dire « est égal à » : il veut dire ____ .</li>
+        <li>Pour prouver que le programme répond au besoin, j'ai comparé ____ et ____ .</li>
+      </ul>
+    </details>
   </div>
   <div class="auto-eval">
     <p><b>🚦 Je me positionne</b> (🔴 pas encore · 🟡 avec aide · 🟢 seul·e · ⭐ je peux l'expliquer) :</p>
@@ -792,7 +894,87 @@ function updateProg(){
   $("progBar").setAttribute("aria-valuenow", n);
   const map = {s1:["1","2"], s2:["3","4"], s3:["5"]};
   Object.entries(map).forEach(([p, acts]) => { const d = $("done-" + p); if(d) d.textContent = acts.every(a => par.s.includes(a)) ? " ✔" : ""; });
+  majTaches();
 }
+
+/* ══ Règle d'or n°30 — le tableau de bord des tâches ══ */
+const TACHES = [
+  {n:"1", libelle:"Exécuter le compteur à la main — le simulateur de mémoire"},
+  {n:"2", libelle:"La table de suivi — la méthode du doigt"},
+  {n:"3", libelle:"Prédire → tester → reporter : le piège des guillemets"},
+  {n:"4", libelle:"Le programme du responsable répond-il au besoin ?"},
+  {n:"5", libelle:"Corriger, adapter, puis commander la barrière"}
+];
+function majTaches(){
+  const c = $("tachesBandeau"); if(!c) return;
+  c.innerHTML = TACHES.map(t => {
+    const fait = par.s.includes(t.n);
+    return '<div class="tache' + (fait ? " fait" : "") + '"><span class="coche">' +
+           (fait ? "✔" : "☐") + "</span> <b>Activité " + t.n + "</b> — " + t.libelle + "</div>";
+  }).join("");
+}
+
+/* ══ Règle d'or n°26 — le billet d'entrée, sans note et hors progression ══ */
+if($("btnBillet")) $("btnBillet").addEventListener("click", () => {
+  const bon = [
+    $("be_1").value.startsWith("range le nombre"),
+    $("be_2").value.startsWith("peut très bien"),
+    $("be_3").value.startsWith("écrire ce qu'on ATTEND")
+  ];
+  const ok = bon.filter(Boolean).length;
+  const fb = $("fbBillet");
+  fb.className = "feedback show " + (ok === 3 ? "ok" : ok >= 1 ? "warn" : "ko");
+  let m = ok + " / 3 — ";
+  if(ok === 3)      m += "les trois acquis sont là : cet atelier va pouvoir aller vite.";
+  else if(ok === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+  else if(ok === 1) m += "un acquis sur trois : l'atelier les reprend tous, tu ne pars pas de rien.";
+  else              m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que l'atelier enseigne. Dis-le au professeur.";
+  m += " Ce billet ne compte pas dans ta progression.";
+  fb.textContent = m;
+  window.__exp = window.__exp || {};
+  window.__exp.billet = ok;
+  save();
+});
+
+/* ══ Règle d'or n°29 — mode essentiel ══ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  window.__exp = window.__exp || {};
+  window.__exp.essentiel = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+
+/* ══ Règles d'or n°122 et n°136 — le sélecteur ne vaut que par ce qu'il sélectionne ══ */
+function majParcours(){
+  const choix = (window.__exp && window.__exp.parcours) || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = $("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 avec matériel", b:"🅱 en simulation", c:"🅲 sans matériel", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
+  }
+}
+document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("click", () => {
+  window.__exp = window.__exp || {};
+  window.__exp.parcours = b.dataset.choix;
+  majParcours(); save();
+}));
+
+/* ══ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══ */
+document.querySelectorAll(".vers-seance").forEach(b => b.addEventListener("click", () => {
+  const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+  if(onglet){ onglet.click(); }
+}));
 function save(){
   const o = {inputs: {}, par, exp: window.__exp || {}, ae: {}};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
@@ -825,6 +1007,8 @@ document.addEventListener("change", e => {
   if(e.target.id === "hyp1"){ const r = $("hypRecall"); if(r) r.textContent = "« " + e.target.value + " »"; }
 });
 restore();
+if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
+majEssentiel(); majParcours(); majTaches();
 const h = $("hyp1"), r = $("hypRecall");
 if(h && r) r.textContent = h.value ? "« " + h.value + " »" : "(ton hypothèse de départ apparaîtra ici)";
 })();

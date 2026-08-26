@@ -6293,3 +6293,69 @@ supprime pas la question.
 > six dispositifs, je les avais déclarés posés — et l'un des sept était creux. Je
 > ne l'aurais jamais vu en relisant mon propre travail, parce qu'en relisant on
 > retrouve ce qu'on croit avoir écrit.
+
+---
+
+# 26 août 2026 (soir) — 5e_C9.1 harmonisée : le C9 est complet
+
+*Dernière marche du C9 reprise, dans l'ordre annoncé. Comme pour le 3e, le contenu
+n'avait pas besoin d'être touché — le compteur du Cyclone de Coney Island, le
+programme fourni qui ment sans planter, le cas frontière de la barrière à zéro
+place. Il manquait les dispositifs communs, et une carte de référentiel.*
+
+## Ce qui a été posé
+
+Billet d'entrée (n°26 — sur les acquis de **cycle 3**, pas de 4e : c'est la première
+marche), mode essentiel (n°29), tableau de bord (n°30), versions étayées (n°31),
+étiquettes explicites (n°34), durées à la convention (n°23), carte de référentiel
+(n°42), sélecteur de parcours (n°122) et boutons de séance suivante (n°101).
+Quatre manquements mécanisés → zéro. `tests_5e_C9.1-C9.3.mjs` : **44 tests, tous verts**.
+
+## Les deux fautes que la suite a rattrapées — et ce qu'elles confirment
+
+**Première.** La feuille de style des nouveaux dispositifs a été insérée **hors de
+toute balise `<style>`**. Le bouton basculait, la classe `parcours-c` s'appliquait au
+`body`, la note s'écrivait — et rien ne se masquait. C'est mot pour mot le défaut de
+la règle n°136, commis **le jour même où je l'ai écrite**, sur le lot suivant.
+
+Ce n'est pas une ironie, c'est une confirmation : ce défaut-là ne se voit pas en
+relisant, parce que tout ce qu'on relit est correct. Le CSS est juste, le JS est
+juste, le HTML est juste. Seul le **lien** entre eux manque, et il ne s'écrit nulle
+part. Il n'y a qu'une façon de le voir : compter, au rendu, ce qui a effectivement
+disparu.
+
+**Seconde.** L'ajout automatique des `for=` sur les étiquettes a mangé le `>` fermant
+de la balise `<label>`, avalant les listes déroulantes dans leur propre étiquette. La
+page se chargeait **sans la moindre erreur** — un navigateur répare ce genre de HTML
+en silence. C'est Playwright qui a refusé de sélectionner une option « dans un élément
+qui n'est pas un `<select>` ».
+
+> **Ce que j'en retiens.** Une transformation automatique sur du HTML doit être
+> vérifiée par un test qui **manipule** le résultat, jamais par une relecture ni par
+> un compte d'occurrences : le compte était bon (21 étiquettes ajoutées), et le
+> fichier était cassé. L'avertissement est désormais écrit en commentaire dans le
+> script de transformation, à l'endroit exact où la faute est possible.
+
+## Un README qui renvoyait ailleurs
+
+`5e_C9.1/README.md` annonçait encore « **COUVERT** — mutualisé dans le mini-projet
+Thème 3 ». C'était vrai avant que l'atelier existe. Depuis, un collègue arrivant dans
+le dossier était renvoyé vers une autre ressource alors que celle qu'il cherchait
+était sous ses yeux, complète, avec son QCM et ses synthèses. Réécrit.
+
+C'est le genre de désaccord qu'aucun contrôle mécanisé ne voit : le README est
+présent, il est bien formé, il pointe vers un fichier qui existe. Il est simplement
+**périmé**. La seule parade connue reste de relire le README quand on touche au lot —
+ce qui n'arrive que si l'on s'astreint à le faire.
+
+## Où en est le C9
+
+| Lot | Contrôle mécanisé | Suite committée |
+|---|---|---|
+| 5e_C9.1 → C9.3 | 0 manquement | ✔ 44 tests |
+| 4e_C9.1 → C9.3 | 0 manquement | ✔ 61 tests |
+| 3e_C9.1 | 0 manquement | ✔ 35 tests |
+| 3e_C9.2 + 3e_C8.3 | 0 manquement | ✔ 129 tests |
+
+**La compétence C9 est harmonisée sur les trois niveaux du cycle**, et chacun des
+quatre lots porte désormais une suite qu'un autre que moi peut rejouer.
