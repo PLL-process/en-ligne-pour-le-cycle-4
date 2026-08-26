@@ -6575,3 +6575,39 @@ Les quatre débordements mobiles sont dans le **Thème 2** : ils font l'objet d'
 livraison séparée, sur une branche à ce nom, avec l'outil de mesure lui-même
 (`_outils/mesures_rendu.mjs`) pour que le contrôle soit rejouable par n'importe
 qui — et pas seulement par moi.
+
+---
+
+# 27 août 2026 — la série des TP de CAO renumérotée, sur arbitrage de Pascal
+
+*Erreur de ma part, tranchée par lui. En écrivant un second TP de 4e, j'ai pris
+le numéro « n°3 » parce qu'il suivait le n°2 du TP de 4e que je venais de lire.
+Je n'avais pas regardé qu'un n°3 existait déjà.*
+
+## Ce que la numérotation voulait dire, et ce qu'elle veut dire maintenant
+
+Elle désignait le **niveau** : n°1 pour la 5e, n°2 pour la 4e, n°3 pour la 3e.
+Un seul TP par année, un numéro par année. Cette convention n'avait pas de place
+pour un **second TP de 4e** — et c'est exactement ce que « Le dé sur sa pointe »
+est venu être.
+
+Arbitrage de Pascal : le numéro devient un **rang dans la série**, pas un code de
+niveau.
+
+| Rang | TP | Niveau |
+|---|---|---|
+| n°1 | Le dé, dans Onshape | 5e |
+| n°2 | Le dé sur son socle | 4e |
+| n°3 | Le dé sur sa pointe, et la porte n°2 | 4e |
+| n°4 | Le boîtier étanche | 3e |
+
+Le boîtier étanche passe donc de n°3 à n°4 — quatre remplacements, dans les trois
+copies du fichier et dans son scénario JSON. Les quatre titres ont été relus au
+rendu réel, pas dans la source.
+
+> **Ce que je retiens.** Un numéro dans un titre n'est jamais un simple ornement :
+> il porte une convention, et cette convention porte une hypothèse — ici « un TP
+> par niveau ». Avant d'ajouter un élément à une série numérotée, il faut lire la
+> série entière et se demander **ce que le numéro compte**. J'ai pris le suivant
+> du seul fichier que j'avais sous les yeux, ce qui revenait à supposer une
+> convention au lieu de la vérifier.
