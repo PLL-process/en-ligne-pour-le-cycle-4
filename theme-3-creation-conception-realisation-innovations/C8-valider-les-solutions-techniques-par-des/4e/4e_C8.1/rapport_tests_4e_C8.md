@@ -1,31 +1,89 @@
-# Rapport de tests — 4e_C8 Valider une solution technique
+# Rapport de tests — 4e_C8 « Jardin connecté : valider » (4e_C8.1 · C8.2 · C8.3)
 
-**Date** : 2026-07-25  
-**Agent** : Grok  
-**Branche** : `fable/theme-3/lot-02-4e-C8-qcm-fix`
+Date : 2026-08-26 (**harmonisation du lot** ; version antérieure : 2026-07-25, agent Grok) ·
+Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
+viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C8.mjs`
+(**committée dans ce dossier**, rejouable : `node tests_4e_C8.mjs .`).
 
-## Anomalie audit Tranche 1 corrigée
+> Règle d'or n°136 : chaque dispositif est vérifié par la **mesure de son effet** — un
+> nombre —, jamais par la présence de ses commandes.
 
-| Gravité | Constat | Action |
-|---------|---------|--------|
-| **P1** | Lien cassé `qcm_4e_C8_jardin-validation.html` | QCM créé (28 questions) |
-| **P2** | Aucun QCM dans le périmètre | Idem |
-| **P2** | Synthèses absentes du lot | `synthese_eleve_4e_C8.html` + `synthese_professeur_4e_C8.html` |
+## 1. Tests automatisés exécutés — 41/41 réussis
 
-## Contenu livré
+### Les dispositifs installés à l'harmonisation
 
-- QCM 28 questions : protocole, conformité, décision, amélioration, sécurité, ancrage Martinique
-- Identité + réponses en localStorage
-- Minuteur démarrable / pause / désactivable
-- Corrections détaillées + réessai des erreurs
-- Matrice de couverture séquence ↔ QCM
-- Rule 4 déjà conforme sur la séquence (Prêt·e + un seul bouton + Bonus)
+| Règle | Vérification exécutée | Résultat |
+|---|---|---|
+| n°23 | cadre « 3 séances de 55 min » reconnaissable, 5 durées à la convention `~n min`, total 80 min pour 165 | ✅ |
+| n°26 | billet d'entrée (acquis de 4e_C7), **hors progression** — la progression reste à 0 | ✅ |
+| n°29 | le mode essentiel masque la carte de référentiel **et les corrections** ; un second clic rétablit | ✅ |
+| n°30 | le tableau de bord liste les 6 activités, aucune cochée au départ | ✅ |
+| n°31 | 4 versions étayées (hypothèse, diagnostic, améliorations, réinvestissement) | ✅ |
+| n°34 | aucun champ sans étiquette (38 champs) | ✅ |
+| n°42 | les 3 formulations de la carte sont celles du programme, au mot près | ✅ |
+| n°122 · n°136 | choisir 🅲 masque **1 bloc 🅱 sur 1**, sans retirer aucun des 6 vérificateurs | ✅ |
+| n°135 | aucun tableau visible sans séparation lisible | ✅ |
 
-## Non exécuté dans ce lot
+### Le parcours élève
 
-- Tests navigateur Playwright (tranche 4 de l'audit global)
-- Régénération index / nouveautes (à faire après fusion Pascal)
+| Test | Résultat |
+|---|---|
+| Chargement `file://` sans erreur JS | ✅ |
+| Act. 0 : **refusée** tant que 3 tests n'ont pas été lancés au banc virtuel | ✅ |
+| Act. 0 : le banc rend un verdict, puis l'activité se valide 2/2 | ✅ |
+| Act. 1 : le raisonnement de validation validé 5/5 — et **refusé (4/5) sur un ordre faux** | ✅ |
+| Progression 1/6 · tâche cochée au tableau de bord · barre à 17 % | ✅ |
+| **Sauvegarde / restauration** après rechargement | ✅ |
+| La page ne sort pas sur le réseau (hors connexion complet) | ✅ |
+| Mobile 390 px : débord horizontal = **0**, zéro erreur JS | ✅ |
+| Zéro lien local cassé (4 HTML parcourus) | ✅ |
 
-## Sécurité
+### QCM
 
-Rappel maintenu : très basse tension uniquement ; pas de 230 V.
+| Test | Résultat |
+|---|---|
+| 28 questions, 4 propositions chacune, une explication sur chacune | ✅ |
+| Bonnes réponses réparties **7/7/7/7** sur les quatre positions | ✅ |
+| État déclaré : génération ancienne, sans réfutation par distracteur | ✅ |
+
+## 2. Contrôles statiques
+
+- **Règles d'or mécanisées** (`python3 _outils/verif_regles_audit.py …`) : **0 manquement**.
+  Avant l'harmonisation : cinq — n°23, n°26, n°29, n°30, n°31 et n°34.
+- **Aucun envoi réseau** : la page fonctionne entièrement hors connexion, sauvegarde
+  `localStorage` comprise. La suite le vérifie en écoutant les requêtes sortantes.
+
+## 3. Ce que la campagne a trouvé — le défaut le plus grave du lot
+
+**Les 28 bonnes réponses du QCM étaient toutes en position B.**
+
+Un élève qui clique la deuxième proposition à chaque question obtenait **28/28** sans
+rien savoir. Le QCM ne mesurait plus rien : il récompensait la découverte d'un motif,
+pas la connaissance. Et cela ne se voyait ni à l'écran, ni à l'usage — il faut
+**compter les positions** pour que ça saute aux yeux.
+
+Corrigé : les propositions de chaque question ont été **tournées** (l'ordre relatif des
+distracteurs est conservé) pour amener la bonne réponse sur une position voulue. La
+suite de positions est écrite en clair dans l'outil `repartir_qcm.mjs` : équilibrée
+(7 par lettre), sans cycle apparent, et **reproductible** — ce n'est pas un tirage au
+hasard qui donnerait un fichier différent à chaque exécution. L'outil vérifie après
+rotation que `opts[nouvelle position]` est bien le texte de l'ancienne bonne réponse ;
+sans cette assertion, une erreur de rotation aurait faussé silencieusement tout le QCM.
+
+> **Le balayage qui a suivi.** Le même contrôle passé sur les 40 QCM du dépôt a trouvé
+> **deux autres cas dans le Thème 3** (5e_C7 : 24 questions toutes en B ; 3e_C7 :
+> 26 questions toutes en B) — corrigés au passage — et **trois cas dans le Thème 2**,
+> hors de mon périmètre, signalés à Pascal sans y toucher.
+
+## 4. Ce qui reste à faire (déclaré, pas caché)
+
+- **Le QCM est de la génération ancienne du dépôt** : 28 questions au lieu de 30, format
+  `{q, opts, ok, exp}`, et **aucune réfutation par distracteur**. Le standard actuel
+  (voir les lots C9) explique pourquoi chaque mauvaise réponse est fausse. La mise à
+  niveau n'est pas faite ici — la dire est plus utile que de la laisser croire.
+- Relecture orthotypographique humaine ; rendu à l'impression ; appareils réels.
+
+## 5. Échecs
+
+Aucun test en échec à la remise (41/41). Le défaut majeur trouvé — le QCM entièrement
+concentré en position B — est décrit au §3 ; il touchait ce lot comme son jumeau 4e_C7.

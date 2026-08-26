@@ -56,6 +56,33 @@ details.correction>div{padding:0 14px 12px}
     section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
   }
   figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
 </style>
 </head>
 <body>
@@ -72,13 +99,67 @@ details.correction>div{padding:0 14px 12px}
 <div class="subtitle">Protocole de tests avant de généraliser — New York</div>
 <div class="badges"><span class="badge">4e</span><span class="badge">Thème 3 — Création, conception, réalisation</span><span class="badge">4e_C8.1 · C8.2 · C8.3</span><span class="badge">New York</span><span class="badge">CRCN règle 7</span></div>
 
+<div class="toolbar">
+  <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+  <button class="btn ghost" id="btnPrint" type="button">🖨 Imprimer / PDF</button>
+</div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 Avec le prototype</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Au banc virtuel</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sur papier</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
+<p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments : il ne reste que les consignes et les exercices.</p>
+<div class="progress-wrap">
+  <span class="progress-label">Ma progression : <b id="progTxt">0 / 6 activités validées</b></span>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+</div>
+
+<section class="card referentiel-card">
+<h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+<table class="refs">
+<tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+<tr><td><b>4e_C8.1</b></td><td>Paramétrer une simulation fournie pour valider la tenue mécanique d'un matériau.</td><td>Activité 0 (banc de tests virtuel)</td></tr>
+<tr><td><b>4e_C8.2</b></td><td>Proposer un protocole de test pour valider la tenue mécanique d'un matériau.</td><td>Activités 1 et 2</td></tr>
+<tr><td><b>4e_C8.3</b></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Activités 2, 3 et le réinvestissement</td></tr>
+</table>
+<div class="retenir"><b>Le verbe est « proposer un protocole »</b>, pas « tester ». Ce qu'on évalue, c'est le
+<b>résultat attendu écrit à l'avance</b> — un essai dont l'attendu est rédigé après coup ne prouve rien.
+En 3e, ce protocole deviendra une <b>recette</b> avec procès-verbal (lot 3e_C9.2).</div>
+</section>
+
+<section class="card" id="billet">
+<h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+<p>Cette séquence prolonge la conception du support (4e_C7). Trois questions pour savoir, toi comme le
+professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
+notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+<div class="exo">
+  <p><label for="be_1">1. Un prototype, c'est…
+  <select id="be_1"><option value="">— choisir —</option><option>un premier exemplaire fabriqué pour être mis à l'épreuve</option><option>le produit fini, prêt à vendre</option><option>un dessin de l'objet</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. En 4e_C7, tu as choisi un matériau. Sur quoi t'es-tu appuyé ?
+  <select id="be_2"><option value="">— choisir —</option><option>des critères nommés, éprouvés au banc météo</option><option>l'aspect du matériau</option><option>ce que le professeur avait choisi</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Pour savoir si un essai est réussi, il faut…
+  <select id="be_3"><option value="">— choisir —</option><option>avoir écrit le résultat attendu AVANT de lancer l'essai</option><option>regarder si ça a l'air de marcher</option><option>refaire l'essai plusieurs fois</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn small" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p class="feedback" id="fbBillet" role="status"></p>
+</div>
+</section>
+
+<section class="card" id="taches">
+<h2>🗺 Où j'en suis — les 6 activités de cette séquence</h2>
+<p>Chaque activité validée se colore ici. Rien ne se perd si tu t'arrêtes en route.</p>
+<div class="taches-bandeau" id="tachesBandeau"></div>
+</section>
+
 <section class="card">
 <h2>📋 En-tête pédagogique</h2>
-<table class="refs"><tr><th>Codes</th><td>4e_C8.1 · C8.2 · C8.3</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Durée</th><td>3 × 55 min</td></tr><tr><th>Ancrage</th><td>New York — school garden / rooftop</td></tr></table>
+<table class="refs"><tr><th>Codes</th><td>4e_C8.1 · C8.2 · C8.3</td></tr><tr><th>Socle</th><td>D2 · D3 · D4 · D5</td></tr><tr><th>Durée</th><td><b>3 séances de 55 min</b></td></tr><tr><th>Ancrage</th><td>New York — school garden / rooftop</td></tr></table>
 <div style="margin-top:12px">
-<label>Nom&nbsp;: <input id="eleveNom" style="width:130px"></label>
-<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px"></label>
-<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px"></label>
+<label>Nom&nbsp;: <input id="eleveNom" style="width:130px" aria-label="Nom"></label>
+<label>Prénom&nbsp;: <input id="elevePrenom" style="width:130px" aria-label="Prénom"></label>
+<label>Classe&nbsp;: <input id="eleveClasse" style="width:70px" aria-label="Classe"></label>
 <span class="saved-note" id="savedNote"></span>
 </div>
 </section>
@@ -90,6 +171,17 @@ details.correction>div{padding:0 14px 12px}
 <p style="margin:0 0 6px"><b>COMPRENDRE&nbsp;:</b> les «&nbsp;À retenir&nbsp;» nomment les concepts&nbsp;: protocole, résultat attendu, conformité, diagnostic.</p>
 <p style="margin:0"><b>REFAIRE pour comprendre encore&nbsp;:</b> tu réinvestis le protocole sur un NOUVEAU critère 100&nbsp;% new-yorkais (gel, vent de canyon…).</p>
 </div>
+</section>
+
+<section class="card">
+<h2>🔀 Trois façons de vivre la séquence</h2>
+<div class="exo">
+<p data-parcours="a">🅰 <b>Avec le prototype</b> : le support construit en 4e_C7 passe réellement à l'épreuve — secousses, arrosoir, congélateur du labo. Les observés du tableau sont <b>les tiens</b>.</p>
+<p data-parcours="b">🅱 <b>Au banc virtuel</b> : le banc de l'activité 0 lance les quatre tests dans la page, sans matériel. C'est le parcours principal, et il fonctionne hors connexion.</p>
+<p data-parcours="c">🅲 <b>Sur papier</b> : protocole rédigé et résultats fournis — <b>mêmes questions, mêmes validations</b>. Ce qui est évalué ici, c'est le protocole, pas la manipulation.</p>
+</div>
+<div class="retenir"><b>Aucun parcours ne retire de question.</b> Le sélecteur en haut de page masque seulement
+ce qui ne te concerne pas ; tout ce qui est évalué reste demandé à tout le monde.</div>
 </section>
 
 <section class="card">
@@ -131,25 +223,36 @@ details.correction>div{padding:0 14px 12px}
 
 <section class="card">
 <h2>💡 Hypothèse</h2>
+<label for="hypothese">✍ Mon hypothèse : d'après toi, lequel des quatre tests le support va-t-il rater — et pourquoi ?</label>
 <textarea id="hypothese" rows="2" placeholder="Je pense que le support tiendra / ne tiendra pas parce que…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases
+  retirent l'obstacle de la rédaction, pas l'exigence.</p>
+  <ul>
+    <li>Je pense que le test le plus difficile à passer sera ____ .</li>
+    <li>Parce que la pièce fragile est ____ , et que dehors elle subit ____ .</li>
+    <li>Si je me trompe, ce sera sans doute parce que ____ .</li>
+  </ul>
+</details>
 <p class="saved-note">💾 Sauvegarde automatique dans la page, à chaque modification.</p>
 </section>
 
 <section class="card">
-<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le banc de tests virtuel <span class="chrono">⏱ 10 min</span></h2>
+<h2>🖐️ Activité 0 — FAIRE d'abord&nbsp;: le banc de tests virtuel <span class="chrono">⏱ ~10 min</span></h2>
 <div class="exo">
 <p><strong>Consigne&nbsp;:</strong> AVANT de parler «&nbsp;protocole&nbsp;», lance les tests un par un sur le prototype virtuel et OBSERVE. Lance au moins <b>trois</b> tests différents.</p>
 <div class="simu">
 <p>
-<label>Test à lancer&nbsp;: <select id="simTest" style="width:auto"><option>Stabilité (secousses 10 s)</option><option>Pluie battante (30 s)</option><option>LED visible à 3 m plein soleil</option><option>Nuit de gel (-8 °C)</option></select></label>
+<label>Test à lancer&nbsp;: <select id="simTest" style="width:auto" aria-label="Test à lancer au banc virtuel"><option>Stabilité (secousses 10 s)</option><option>Pluie battante (30 s)</option><option>LED visible à 3 m plein soleil</option><option>Nuit de gel (-8 °C)</option></select></label>
 &nbsp;<button class="btn" id="simGo" type="button">▶️ Lancer le test</button>
 </p>
 <div class="banc-resultat" id="simRes" role="status">Le banc attend ton premier test…</div>
 </div>
 <p style="margin-top:10px">Q1 — Quel test le prototype RATE-t-il&nbsp;?
-<select id="a0q1" style="width:auto"><option value="">— je choisis —</option><option>Stabilité</option><option>Pluie battante</option><option>LED à 3 m</option><option>Nuit de gel</option></select></p>
+<select id="a0q1" style="width:auto" aria-label="Q1 — Quel test le prototype rate-t-il ?"><option value="">— je choisis —</option><option>Stabilité</option><option>Pluie battante</option><option>LED à 3 m</option><option>Nuit de gel</option></select></p>
 <p>Q2 — Sans le résultat ATTENDU écrit à l'avance, peux-tu dire si un test est réussi&nbsp;?
-<select id="a0q2" style="width:auto"><option value="">— je choisis —</option><option>Non — sans attendu, impossible de juger</option><option>Oui — on voit bien si ça marche</option></select></p>
+<select id="a0q2" style="width:auto" aria-label="Q2 — Sans résultat attendu écrit à l'avance, peut-on juger un test ?"><option value="">— je choisis —</option><option>Non — sans attendu, impossible de juger</option><option>Oui — on voit bien si ça marche</option></select></p>
 <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
 <p class="feedback" id="fb0" role="status"></p>
 <details class="correction"><summary>📖 Correction complète (à ouvrir APRÈS tes essais)</summary><div>
@@ -159,14 +262,14 @@ details.correction>div{padding:0 14px 12px}
 </section>
 
 <section class="card">
-<h2>📐 Activité 1 — Le protocole en diagramme de flux, puis en tableau (C8.1) · trace CRCN 1.3 <span class="chrono">⏱ 20 min</span></h2>
+<h2>📐 Activité 1 — Le protocole en diagramme de flux, puis en tableau (C8.1) · trace CRCN 1.3 <span class="chrono">⏱ ~20 min</span></h2>
 <div class="exo">
 <h4>1a — Remets le raisonnement de validation en ordre (représentation schématique, règle n°18)</h4>
-<div class="algostep"><span class="algoshape">⬭ début</span><select id="a1o1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (prototype prêt)</span></div>
-<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a1o2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Écrire le résultat ATTENDU du test</span></div>
-<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a1o3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Exécuter le test et NOTER l'observé</span></div>
-<div class="algostep"><span class="algoshape">◇ décision</span><select id="a1o4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Observé = attendu&nbsp;?</span></div>
-<div class="algostep"><span class="algoshape">▭ sorties</span><select id="a1o5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → valider ce critère&nbsp;; NON → améliorer, puis la flèche REMONTE (retester)</span></div>
+<div class="algostep"><span class="algoshape">⬭ début</span><select id="a1o1" aria-label="Rang de l'étape « DÉBUT (prototype prêt) »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>DÉBUT (prototype prêt)</span></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a1o2" aria-label="Rang de l'étape « Écrire le résultat attendu »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Écrire le résultat ATTENDU du test</span></div>
+<div class="algostep"><span class="algoshape">▭ traitement</span><select id="a1o3" aria-label="Rang de l'étape « Exécuter le test et noter l'observé »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Exécuter le test et NOTER l'observé</span></div>
+<div class="algostep"><span class="algoshape">◇ décision</span><select id="a1o4" aria-label="Rang de l'étape « Observé = attendu ? »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Observé = attendu&nbsp;?</span></div>
+<div class="algostep"><span class="algoshape">▭ sorties</span><select id="a1o5" aria-label="Rang de l'étape « Valider ou améliorer puis retester »"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>OUI → valider ce critère&nbsp;; NON → améliorer, puis la flèche REMONTE (retester)</span></div>
 <button class="btn check" data-check="1" type="button">✅ Vérifier le diagramme</button>
 <p class="feedback" id="fb1" role="status"></p>
 <details class="correction"><summary>📖 Correction bloc par bloc</summary><div>
@@ -174,10 +277,10 @@ details.correction>div{padding:0 14px 12px}
 <h4 style="margin-top:14px">1b — Ton protocole (CRCN 1.3)</h4>
 <p><b>Consigne&nbsp;:</b> complète le protocole (étapes + résultat attendu). Cette table <b>est</b> la représentation du raisonnement de validation.</p>
 <table class="refs"><tr><th>#</th><th>Action</th><th>Résultat attendu</th></tr>
-<tr><td>1</td><td><input id="a1p1a" placeholder="Fixer le support…"></td><td><input id="a1p1b" placeholder="Reste stable"></td></tr>
-<tr><td>2</td><td><input id="a1p2a" placeholder="Simuler pluie…"></td><td><input id="a1p2b" placeholder="Aucune infiltration"></td></tr>
-<tr><td>3</td><td><input id="a1p3a" placeholder="Vérifier LED…"></td><td><input id="a1p3b" placeholder="S'allume correctement"></td></tr>
-<tr><td>4</td><td><input id="a1p4a" placeholder="Test gel / vent…"></td><td><input id="a1p4b" placeholder="…"></td></tr></table>
+<tr><td>1</td><td><input id="a1p1a" placeholder="Fixer le support…" aria-label="Protocole, étape 1 — action"></td><td><input id="a1p1b" placeholder="Reste stable" aria-label="Protocole, étape 1 — résultat attendu"></td></tr>
+<tr><td>2</td><td><input id="a1p2a" placeholder="Simuler pluie…" aria-label="Protocole, étape 2 — action"></td><td><input id="a1p2b" placeholder="Aucune infiltration" aria-label="Protocole, étape 2 — résultat attendu"></td></tr>
+<tr><td>3</td><td><input id="a1p3a" placeholder="Vérifier LED…" aria-label="Protocole, étape 3 — action"></td><td><input id="a1p3b" placeholder="S'allume correctement" aria-label="Protocole, étape 3 — résultat attendu"></td></tr>
+<tr><td>4</td><td><input id="a1p4a" placeholder="Test gel / vent…" aria-label="Protocole, étape 4 — action"></td><td><input id="a1p4b" placeholder="…" aria-label="Protocole, étape 4 — résultat attendu"></td></tr></table>
 <button class="btn check" data-check="2" type="button">✅ Vérifier le protocole</button>
 <p class="feedback" id="fb2" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div><p>Chaque ligne = une action CONCRÈTE + un attendu OBSERVABLE (et si possible chiffré)&nbsp;: «&nbsp;secouer 10 s → bouge de moins de 1 cm&nbsp;», «&nbsp;arroser 30 s → zéro goutte à l'intérieur&nbsp;», «&nbsp;LED à 3 m plein soleil → visible&nbsp;», «&nbsp;nuit à -8&nbsp;°C → attache intacte&nbsp;». Un protocole = étapes ordonnées + résultat attendu pour chaque étape.</p></div></details>
@@ -186,17 +289,27 @@ details.correction>div{padding:0 14px 12px}
 </section>
 
 <section class="card">
-<h2>📊 Activité 2 — Analyser les résultats (C8.2) <span class="chrono">⏱ 20 min</span></h2>
+<h2>📊 Activité 2 — Analyser les résultats (C8.2) <span class="chrono">⏱ ~20 min</span></h2>
 <div class="exo">
 <p>Le banc virtuel (activité 0) t'a donné les observés. Juge la conformité de chacun&nbsp;:</p>
 <table class="refs"><tr><th>Test</th><th>Attendu</th><th>Observé au banc</th><th>Conforme&nbsp;?</th></tr>
-<tr><td>Stabilité 10 s</td><td>Bouge &lt; 1 cm</td><td>Bougé légèrement (0,5 cm)</td><td><select id="a2c1"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
-<tr><td>Étanchéité 30 s</td><td>Aucune goutte</td><td>Aucune goutte</td><td><select id="a2c2"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
-<tr><td>LED à 3 m</td><td>Visible plein soleil</td><td>Visible plein soleil</td><td><select id="a2c3"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
-<tr><td>Nuit de gel -8&nbsp;°C</td><td>Attache intacte</td><td>Attache fissurée</td><td><select id="a2c4"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr></table>
-<p style="margin-top:10px">Décision globale&nbsp;: <select id="a2dec" style="width:auto"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
+<tr><td>Stabilité 10 s</td><td>Bouge &lt; 1 cm</td><td>Bougé légèrement (0,5 cm)</td><td><select id="a2c1" aria-label="Stabilité 10 s — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
+<tr><td>Étanchéité 30 s</td><td>Aucune goutte</td><td>Aucune goutte</td><td><select id="a2c2" aria-label="Étanchéité 30 s — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
+<tr><td>LED à 3 m</td><td>Visible plein soleil</td><td>Visible plein soleil</td><td><select id="a2c3" aria-label="LED à 3 m — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr>
+<tr><td>Nuit de gel -8&nbsp;°C</td><td>Attache intacte</td><td>Attache fissurée</td><td><select id="a2c4" aria-label="Nuit de gel -8 °C — conforme ?"><option value="">—</option><option>Oui</option><option>Non</option><option>Partiel</option></select></td></tr></table>
+<p style="margin-top:10px">Décision globale&nbsp;: <select id="a2dec" style="width:auto" aria-label="Décision globale sur le prototype"><option value="">—</option><option>Validée</option><option>À améliorer</option><option>Rejetée</option></select></p>
 <p><strong>Diagnostic (CRCN 5.1)&nbsp;:</strong> l'attache a cassé au gel. Cause probable + test discriminant&nbsp;:</p>
+<label for="a2diag">✍ Cause probable de la casse, et le test qui permettrait de la <b>départager</b> d'une autre cause :</label>
 <textarea rows="2" id="a2diag" placeholder="Cause… Test…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Un diagnostic n'est pas une cause : c'est une cause <b>plus le moyen de la vérifier</b>.</p>
+  <ul>
+    <li>Cause probable : l'attache a cassé parce que ____ .</li>
+    <li>Mais ce pourrait aussi être ____ .</li>
+    <li>Test qui départage les deux : ____ , et j'attends comme résultat ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 2</button>
 <p class="feedback" id="fb3" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div><p>Oui · Oui · Oui · <b>Non</b> (fissure = non conforme à «&nbsp;intacte&nbsp;»). Décision&nbsp;: <b>À améliorer</b> — trois critères passent, mais le gel est une contrainte RÉELLE d'un hiver new-yorkais&nbsp;: on ne généralise pas un support qui casse en janvier. Diagnostic&nbsp;: cause probable = plastique inadapté au froid&nbsp;; test discriminant = même test avec une attache en inox&nbsp;: si elle tient, c'est bien le matériau.</p></div></details>
@@ -205,9 +318,19 @@ details.correction>div{padding:0 14px 12px}
 </section>
 
 <section class="card">
-<h2>✏️ Activité 3 — Améliorations (C8.3) <span class="chrono">⏱ 15 min</span></h2>
+<h2>✏️ Activité 3 — Améliorations (C8.3) <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
+<label for="a3amel">✍ Deux améliorations, chacune rattachée à <b>un résultat de test précis</b> :</label>
 <textarea rows="3" id="a3amel" placeholder="Amélioration 1…&#10;Amélioration 2…&#10;Justification liée à un résultat de test…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Une amélioration qui ne cite aucun résultat d'essai est une idée, pas une correction.</p>
+  <ul>
+    <li>Amélioration 1 : ____ , parce que le test ____ a donné ____ .</li>
+    <li>Amélioration 2 : ____ , parce que le test ____ a donné ____ .</li>
+    <li>Après ces changements, il faudra <b>rejouer</b> les essais ____ (et pas seulement celui qui avait raté).</li>
+  </ul>
+</details>
 <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 3</button>
 <p class="feedback" id="fb4" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div><p>Exemples&nbsp;: remplacer l'attache plastique par de l'inox (lié au test de gel raté)&nbsp;; ajouter un capot incliné (lié au test de pluie, pour durer). Une amélioration = réaliste + testable + LIÉE à un résultat — jamais «&nbsp;pour faire joli&nbsp;».</p></div></details>
@@ -216,10 +339,19 @@ details.correction>div{padding:0 14px 12px}
 </section>
 
 <section class="card">
-<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ 15 min</span></h2>
+<h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~15 min</span></h2>
 <div class="exo">
 <p>Nouveau critère adapté à New York (gel, vent de canyon, pollution…). Écris l'étape + le résultat attendu — comme au protocole&nbsp;:</p>
+<label for="reinv">✍ Le même raisonnement, sur un nouvel objet — un critère, une étape, un attendu <b>chiffré</b> :</label>
 <textarea rows="2" id="reinv" placeholder="Critère + étape + attendu chiffré…"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — le squelette, à remplir</summary>
+  <ul>
+    <li>Critère à valider : ____ .</li>
+    <li>Étape du protocole : ____ .</li>
+    <li>Résultat attendu, avec un nombre et une unité : ____ .</li>
+  </ul>
+</details>
 <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
 <p class="feedback" id="fb5" role="status"></p>
 <details class="correction"><summary>📖 Correction complète</summary><div><p>Exemple&nbsp;: «&nbsp;Vent de canyon — souffler au ventilateur puissance max pendant 20 s → le support ne bouge pas et la LED reste lisible&nbsp;». Ce que tu viens de refaire avec le <b>vent</b>, tu l'avais déjà fait avec la <b>pluie et le gel</b> — le concept commun s'appelle le <b>protocole de validation</b> (attendu → observé → conformité).</p></div></details>
@@ -234,8 +366,8 @@ details.correction>div{padding:0 14px 12px}
 
 <section class="card">
 <h2>🙋 Bilan personnel</h2>
-<p>J'ai appris&nbsp;: <input id="bilan1"></p><p>Je sais faire&nbsp;: <input id="bilan2"></p><p>À revoir&nbsp;: <input id="bilan3"></p>
-<p>Confiance CRCN 1.3 (1-4)&nbsp;: <select id="bilan4" style="width:auto"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
+<p>J'ai appris&nbsp;: <input id="bilan1" aria-label="Auto-positionnement 1"></p><p>Je sais faire&nbsp;: <input id="bilan2" aria-label="Auto-positionnement 2"></p><p>À revoir&nbsp;: <input id="bilan3" aria-label="Auto-positionnement 3"></p>
+<p>Confiance CRCN 1.3 (1-4)&nbsp;: <select id="bilan4" style="width:auto" aria-label="Auto-positionnement 4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option></select></p>
 </section>
 
 <section class="card" style="text-align:center">
@@ -248,11 +380,11 @@ details.correction>div{padding:0 14px 12px}
 <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
 <div class="bonus">
 <p><b>Citoyen&nbsp;:</b> Rends ton protocole réutilisable par d'autres écoles de New York — qu'est-ce qui doit être précisé pour qu'une autre classe l'exécute sans toi&nbsp;?</p>
-<textarea rows="2" id="defi1" placeholder="Tes précisions — sauvegardées dans la page"></textarea>
+<textarea rows="2" id="defi1" placeholder="Tes précisions — sauvegardées dans la page" aria-label="Défi 1 — mes précisions"></textarea>
 <p style="margin-top:10px"><b>Technique&nbsp;:</b> Ajoute le critère «&nbsp;montage par un élève de 6e&nbsp;» (étape + attendu observable)&nbsp;:</p>
-<textarea rows="2" id="defi2" placeholder="Ton critère — sauvegardé dans la page"></textarea>
+<textarea rows="2" id="defi2" placeholder="Ton critère — sauvegardé dans la page" aria-label="Défi 2 — mon critère"></textarea>
 <p style="margin-top:10px"><b>New York&nbsp;:</b> Quels aléas (gel, canyon, pollution, saisons) intégrer à un protocole rooftop&nbsp;?</p>
-<textarea rows="2" id="defi3" placeholder="Tes aléas — sauvegardés dans la page"></textarea>
+<textarea rows="2" id="defi3" placeholder="Tes aléas — sauvegardés dans la page" aria-label="Défi 3 — mes aléas"></textarea>
 </div>
 </section>
 
@@ -284,6 +416,7 @@ $("simGo").addEventListener("click", () => {
 function qmark(e, state){ let m = e.previousElementSibling; if(!(m && m.classList && m.classList.contains("qmark"))){ m = document.createElement("span"); m.className = "qmark"; e.insertAdjacentElement("beforebegin", m); } if(state === null){ m.textContent = ""; m.className = "qmark"; } else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); } }
 function sv(id, ok){ const e = $(id); if(!e) return 0; const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok; e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value); qmark(e, e.value ? good : null); return good ? 1 : 0; }
 function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15); e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim()); qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+const par = {s: []};
 const CHECKS = {
   0(){ let s = 0; s += sv("a0q1","Nuit de gel"); s += sv("a0q2","Non — sans attendu, impossible de juger");
     const essais = Object.keys((window.__exp.banc)||{}).length;
@@ -300,7 +433,8 @@ const CHECKS = {
 document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
   const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
   if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
-  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; }
+  if(ratio === 1){ fb.textContent = "🎉 Bravo — activité validée ✔ " + r.score + "/" + r.total + " ! Ouvre la correction pour comparer avec la version du technicien."; fb.className = "feedback show ok"; 
+    if(!par.s.includes(n)){ par.s.push(n); } updateProg(); }
   else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — il y a du très bon ! Les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
   else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — pas de panique : complète ta réponse (la correction reste à portée), et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
   save();
@@ -308,7 +442,7 @@ document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("cli
 
 /* sauvegarde locale (règle n°15) */
 function save(){
-  const o = {inputs: {}, exp: window.__exp || {}};
+  const o = {inputs: {}, exp: window.__exp || {}, par};
   document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
   try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
   const sn = $("savedNote"); if(sn){ sn.textContent = "💾 Sauvegardé (" + new Date().toLocaleTimeString() + ")"; }
@@ -318,9 +452,93 @@ function restore(){
   if(!o) return;
   Object.entries(o.inputs || {}).forEach(([id, v]) => { const e = $(id); if(e) e.value = v; });
   window.__exp = Object.assign(window.__exp || {}, o.exp || {});
+  (o.par && o.par.s || []).forEach(x => { if(!par.s.includes(x)) par.s.push(x); });
+  updateProg();
 }
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
+
+/* ══ Règle d'or n°30 — le tableau de bord des tâches, et la progression ══ */
+const TACHES = [
+  {n:"0", libelle:"FAIRE d'abord — le banc de tests virtuel"},
+  {n:"1", libelle:"Le raisonnement de validation, en diagramme"},
+  {n:"2", libelle:"Le protocole : actions et résultats attendus"},
+  {n:"3", libelle:"Juger la conformité, et poser un diagnostic"},
+  {n:"4", libelle:"Deux améliorations, appuyées sur des essais"},
+  {n:"5", libelle:"REFAIRE — un protocole sur un nouvel objet"}
+];
+function majTaches(){
+  const c = $("tachesBandeau"); if(!c) return;
+  c.innerHTML = TACHES.map(t => {
+    const fait = par.s.includes(t.n);
+    return '<div class="tache' + (fait ? " fait" : "") + '"><span class="coche">' +
+           (fait ? "✔" : "☐") + "</span> <b>Activité " + t.n + "</b> — " + t.libelle + "</div>";
+  }).join("");
+}
+function updateProg(){
+  const n = par.s.length;
+  if($("progTxt")) $("progTxt").textContent = n + " / 6 activités validées";
+  if($("progFill")) $("progFill").style.width = Math.round(n * 100 / 6) + "%";
+  if($("progBar")) $("progBar").setAttribute("aria-valuenow", n);
+  majTaches();
+}
+
+/* ══ Règle d'or n°26 — le billet d'entrée, sans note et hors progression ══ */
+if($("btnBillet")) $("btnBillet").addEventListener("click", () => {
+  const bon = [
+    $("be_1").value.startsWith("un premier exemplaire"),
+    $("be_2").value.startsWith("des critères nommés"),
+    $("be_3").value.startsWith("avoir écrit le résultat attendu")
+  ];
+  const ok = bon.filter(Boolean).length;
+  const fb = $("fbBillet");
+  fb.className = "feedback show " + (ok === 3 ? "ok" : ok >= 1 ? "warn" : "ko");
+  let m = ok + " / 3 — ";
+  if(ok === 3)      m += "les trois acquis sont là : la séquence va pouvoir aller vite.";
+  else if(ok === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+  else if(ok === 1) m += "un acquis sur trois : la séquence les reprend tous, tu ne pars pas de rien.";
+  else              m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
+  m += " Ce billet ne compte pas dans ta progression.";
+  fb.textContent = m;
+  window.__exp.billet = ok;
+  save();
+});
+
+/* ══ Règle d'or n°29 — mode essentiel ══ */
+function majEssentiel(){
+  const b = $("btnEssentiel"); if(!b) return;
+  const on = document.body.classList.contains("essentiel");
+  b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+}
+if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", () => {
+  document.body.classList.toggle("essentiel");
+  window.__exp.essentiel = document.body.classList.contains("essentiel") ? 1 : 0;
+  majEssentiel(); save();
+});
+if($("btnPrint")) $("btnPrint").addEventListener("click", () => window.print());
+
+/* ══ Règles d'or n°122 et n°136 — le sélecteur ne vaut que par ce qu'il sélectionne ══ */
+function majParcours(){
+  const choix = window.__exp.parcours || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b => {
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = $("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 avec le prototype", b:"🅱 au banc virtuel", c:"🅲 sur papier", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix] || "tous") + "</b>.";
+  }
+}
+document.querySelectorAll(".parcours-btn").forEach(b => b.addEventListener("click", () => {
+  window.__exp.parcours = b.dataset.choix;
+  majParcours(); save();
+}));
+
 restore();
+if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
+majEssentiel(); majParcours(); updateProg();
 })();
 </script>
 

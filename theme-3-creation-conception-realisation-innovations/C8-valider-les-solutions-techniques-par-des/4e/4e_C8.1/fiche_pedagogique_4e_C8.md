@@ -22,3 +22,17 @@ Faire passer l’élève de « j’ai conçu » à « je sais prouver que ça ma
 
 ## Évaluation LSU
 Production d’équipe (protocole + tableau de résultats + décision + améliorations) + auto-positionnement.
+
+## Harmonisation du 26 août 2026
+
+Le lot a reçu les dispositifs communs du dépôt : billet d'entrée hors progression, mode
+essentiel, tableau de bord des six activités, versions étayées, durées à la convention,
+carte de référentiel recopiant le programme au mot près, sélecteur de parcours 🅰/🅱/🅲
+réellement agissant, et une barre de progression qui suit les validations. Contrôle
+mécanisé : **cinq manquements → zéro**. Suite committée : **41 tests, tous verts**.
+
+**Le défaut le plus grave n'était pas là.** Les 28 bonnes réponses du QCM étaient toutes
+en position B : un élève qui clique la deuxième proposition à chaque question obtenait
+28/28 sans rien savoir. Les propositions ont été redistribuées (7 par position) par
+`repartir_qcm.mjs`, dont la suite de positions est écrite en clair — reproductible, pas
+tirée au hasard. Le détail est dans le rapport de tests.
