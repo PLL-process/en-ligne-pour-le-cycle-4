@@ -29,14 +29,18 @@ PV de recette, pas le QCM (qui consolide).
 
 - **Situation** : la mairie commande au club techno un prototype de station
   d'alerte cyclonique pour la cour (courrier de commande dans la page) : mesure du
-  vent, trois niveaux (veille / vigilance orange dès 100 km/h / alerte rouge dès
-  150 km/h), alarme sonore acquittable par l'agent d'accueil, réaction < 1 s.
+  vent, quatre niveaux repris de l'échelle de Saffir-Simpson (veille /
+  tempête tropicale dès 63 km/h / ouragan dès 118 / ouragan majeur dès 178),
+  un seul voyant allumé à la fois et qui pulse à partir du jaune, alarme sonore
+  en ouragan majeur seulement, acquittable par l'agent, réaction < 1 s.
   Avant mise en service : **procès-verbal de recette** exigé.
 - **Problématique** : *Comment écrire, puis mettre au point, un programme qui
   commande la station et dialogue avec un humain — et comment prouver à la mairie
   qu'il respecte le cahier des charges ?*
 - **Honnêteté du dispositif** : seuils = cahier des charges pédagogique de la
-  mairie (les vigilances réelles de Météo-France croisent d'autres critères) ;
+  mairie, qui les reprend de l'échelle de Saffir-Simpson ; une VIGILANCE
+  (Météo-France) et une ALERTE (préfecture) sont d'une autre nature — la
+  séquence distingue explicitement mesure, vigilance et alerte ;
   anémomètre **simulé par un potentiomètre**, dit explicitement aux élèves.
 
 ## Déroulé (4 × 1 h 30)
@@ -45,7 +49,7 @@ PV de recette, pas le QCM (qui consolide).
 Accroche (15 min) : courrier + hypothèses + billet d'entrée sans note.
 Act. 1 (30 min) : exigences (comportement/performance), les deux chaînes, place
 du bouton (règle n°6 : information en haut, énergie en bas, ordre qui descend).
-Act. 2 (35 min) : algorithme en langage naturel puis algorigramme des 3 niveaux
+Act. 2 (35 min) : algorithme en langage naturel puis algorigramme des 4 niveaux
 (ordre des tests ; encart 🎓 DNB). Synthèse (10 min).
 
 ### S2 — Programmer la station en blocs (C9.2)
@@ -61,7 +65,7 @@ Act. 5 (35 min) : lecture guidée du C++ généré (const, map, else if, sous-pr
 `afficherEtat()`) + diagnostic sur trace série (version 🅲 incluse).
 
 ### S4 — La recette (C8.3)
-Act. 6 (40 min) : **rédiger** le protocole : nominaux, cas limites 99/100/149/150,
+Act. 6 (40 min) : **rédiger** le protocole : nominaux, cas limites aux six frontières 62/63, 117/118, 177/178,
 performance chronométrée, 2 essais d'interaction, règle de décision.
 Act. 7 (35 min) : **exécuter** au banc (frontières et chrono tracés), tableau
 essai/attendu/observé/verdict rempli PENDANT, **PV de recette** rédigé et signé.
@@ -77,7 +81,7 @@ essai/attendu/observé/verdict rempli PENDANT, **PV de recette** rédigé et sig
 **Point de vigilance outil (refonte v2)** : la séance 2 se fait désormais sur
 **Vittascience**, interface Arduino en mode **BLOCS**
 (`fr.vittascience.com/arduino`). Motif : Vittascience **simule**, ArduBlock non —
-or les tests aux **valeurs frontières** (39/40, 69/70), cœur de la compétence
+or les tests aux **six valeurs frontières** (62/63, 117/118, 177/178), cœur de la compétence
 C8.3, exigent de pouvoir rejouer une valeur exacte à volonté, sans carte et sans
 attendre son tour. Conséquence à anticiper : Vittascience demande une
 **connexion Internet** ; c'est le seul point de la séquence dans ce cas, et un

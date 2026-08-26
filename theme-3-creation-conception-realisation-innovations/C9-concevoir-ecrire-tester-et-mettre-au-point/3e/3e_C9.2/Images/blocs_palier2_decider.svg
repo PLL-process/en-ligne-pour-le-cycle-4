@@ -1,69 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p2 d-p2">
-<title id="t-p2">Palier 2 dans Vittascience — la cascade si, sinon si, sinon qui décide du niveau d'alerte</title>
-<desc id="d-p2">Reconstitution schématique de l'écran Vittascience (interface Arduino, mode blocs) pour le palier 2 de la station d'alerte cyclonique. Les blocs de lecture du palier 1 (au démarrage, puis la lecture de l'entrée analogique A0) restent au-dessus, dans le bloc répéter indéfiniment.
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-p2 d-p2">
+<title id="t-p2">Palier 2 dans Vittascience — la cascade si, sinon si, sinon si, sinon qui décide des quatre niveaux</title>
+<desc id="d-p2">Reconstitution schématique de l'écran Vittascience (interface Arduino, mode blocs) pour le palier 2 de la station d'alerte cyclonique. Les blocs de lecture du palier 1 (au démarrage, puis la lecture de l'entrée analogique A1) restent au-dessus, dans le bloc répéter indéfiniment.
 
-À gauche, une seule structure de blocs, la cascade si / sinon si / sinon, à lire de haut en bas.
-Premier test : « si niveau_vent ≥ seuil_alerte alors », et à l'intérieur le bloc « afficher ALERTE sur le moniteur ».
-Deuxième test : « sinon si niveau_vent ≥ seuil_vigilance alors », et à l'intérieur le bloc « afficher VIGILANCE sur le moniteur ».
+À gauche, une seule structure de blocs, la cascade si / sinon si / sinon si / sinon, à lire de haut en bas.
+Premier test : « si vitesseVent ≥ seuilRouge alors », et à l'intérieur le bloc « afficher OURAGAN MAJEUR sur le moniteur ».
+Deuxième test : « sinon si vitesseVent ≥ seuilOrange alors », et à l'intérieur le bloc « afficher OURAGAN sur le moniteur ».
+Troisième test : « sinon si vitesseVent ≥ seuilJaune alors », et à l'intérieur le bloc « afficher TEMPETE TROPICALE sur le moniteur ».
 Enfin « sinon », et à l'intérieur le bloc « afficher VEILLE sur le moniteur ».
 À ce palier, chaque branche se contente d'écrire son nom sur le moniteur : aucune sortie n'est encore commandée, on vérifie seulement que la décision est juste.
 
-À droite, un encart d'avertissement à contour jaune : on teste le seuil le PLUS HAUT d'abord — sinon un niveau de 85 s'arrêterait à VIGILANCE. En effet 85 est supérieur ou égal à 40 comme à 70 : si le test de 40 était écrit en premier, la cascade s'arrêterait à la branche VIGILANCE et la branche ALERTE ne serait jamais atteinte.
+À droite, un encart d'avertissement à contour jaune : on teste le seuil le PLUS HAUT d'abord — sinon une vitesse de 200 km/h s'arrêterait à TEMPETE TROPICALE. En effet 200 est supérieur ou égal à 63 comme à 118 et à 178 : si le test de 63 était écrit en premier, la cascade s'arrêterait à cette branche-là et les deux branches supérieures ne seraient jamais atteintes. Avec quatre niveaux, l'erreur coûte deux niveaux d'un coup.
 
-En dessous, un rappel des quatre valeurs frontières à essayer avec le capteur rotatif pour tester le programme : niveau_vent égal à 39 doit donner VEILLE, 40 doit donner VIGILANCE, 69 doit donner VIGILANCE, et 70 doit donner ALERTE. Les seuils valent seuil_vigilance égal 40 et seuil_alerte égal 70, sur l'échelle scolaire de 0 à 100 sans unité.</desc>
-<rect width="800" height="420" fill="#050f24"/>
+En dessous, un rappel des six valeurs frontières à essayer avec le potentiomètre pour tester le programme : 62 km/h doit donner VEILLE et 63 doit donner TEMPETE TROPICALE ; 117 doit donner TEMPETE TROPICALE et 118 doit donner OURAGAN ; 177 doit donner OURAGAN et 178 doit donner OURAGAN MAJEUR. Les seuils valent seuilJaune égal 63, seuilOrange égal 118 et seuilRouge égal 178, en kilomètres par heure. Chaque seuil se teste deux fois : juste dessous, et pile dessus.</desc>
+<rect width="800" height="500" fill="#050f24"/>
 <text x="400" y="28" text-anchor="middle" fill="#81aaff" font-size="18" font-weight="700">Palier 2 — décider du niveau (Vittascience, mode BLOCS)</text>
-<text x="400" y="49" text-anchor="middle" fill="#9bbefc" font-size="12">seuil_vigilance = 40 · seuil_alerte = 70 — échelle 0 à 100, sans unité</text>
+<text x="400" y="49" text-anchor="middle" fill="#9bbefc" font-size="12">seuilJaune = 63 · seuilOrange = 118 · seuilRouge = 178 — en km/h</text>
 
 <!-- rappel palier 1 -->
 <rect x="34" y="64" width="430" height="26" rx="6" fill="#0d2347" stroke="#274a8a"/>
-<text x="249" y="82" text-anchor="middle" fill="#9bbefc" font-size="11">… la lecture de A0 (palier 1) reste au-dessus, dans « répéter indéfiniment » …</text>
+<text x="249" y="82" text-anchor="middle" fill="#9bbefc" font-size="11">… la lecture de A1 (palier 1) reste au-dessus, dans « répéter indéfiniment » …</text>
 
 <!-- cascade -->
-<rect x="34" y="100" width="430" height="238" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2"/>
+<rect x="34" y="100" width="430" height="312" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2"/>
 
 <rect x="46" y="112" width="406" height="34" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
-<text x="58" y="134" font-size="12.5" fill="#e4eaf5" font-weight="700">si <tspan fill="#ffd66b">niveau_vent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ff7b88">seuil_alerte</tspan>  alors</text>
+<text x="58" y="134" font-size="12.5" fill="#e4eaf5" font-weight="700">si <tspan fill="#ffd66b">vitesseVent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ff7b88">seuilRouge</tspan>  alors</text>
 
 <rect x="66" y="150" width="386" height="32" rx="6" fill="#3a1218" stroke="#ff7b88" stroke-width="1.5"/>
-<text x="78" y="171" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ff7b88" font-weight="700">« ALERTE »</tspan> sur le moniteur</text>
+<text x="78" y="171" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ff7b88" font-weight="700">« OURAGAN MAJEUR »</tspan></text>
 
 <rect x="46" y="186" width="406" height="34" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
-<text x="58" y="208" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon si <tspan fill="#ffd66b">niveau_vent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ffb454">seuil_vigilance</tspan>  alors</text>
+<text x="58" y="208" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon si <tspan fill="#ffd66b">vitesseVent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ffb454">seuilOrange</tspan>  alors</text>
 
 <rect x="66" y="224" width="386" height="32" rx="6" fill="#3a2412" stroke="#ffb454" stroke-width="1.5"/>
-<text x="78" y="245" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ffb454" font-weight="700">« VIGILANCE »</tspan> sur le moniteur</text>
+<text x="78" y="245" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ffb454" font-weight="700">« OURAGAN »</tspan></text>
 
-<rect x="46" y="260" width="406" height="30" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
-<text x="58" y="280" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon</text>
+<rect x="46" y="260" width="406" height="34" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="58" y="282" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon si <tspan fill="#ffd66b">vitesseVent</tspan> <tspan fill="#61dafb">≥</tspan> <tspan fill="#ffe680">seuilJaune</tspan>  alors</text>
 
-<rect x="66" y="294" width="386" height="32" rx="6" fill="#123322" stroke="#81fba1" stroke-width="1.5"/>
-<text x="78" y="315" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#81fba1" font-weight="700">« VEILLE »</tspan> sur le moniteur</text>
+<rect x="66" y="298" width="386" height="32" rx="6" fill="#3a3512" stroke="#ffe680" stroke-width="1.5"/>
+<text x="78" y="319" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#ffe680" font-weight="700">« TEMPETE TROPICALE »</tspan></text>
+
+<rect x="46" y="334" width="406" height="30" rx="6" fill="#5a2a7a" stroke="#c68ef2" stroke-width="1.5"/>
+<text x="58" y="354" font-size="12.5" fill="#e4eaf5" font-weight="700">sinon</text>
+
+<rect x="66" y="368" width="386" height="32" rx="6" fill="#123322" stroke="#81fba1" stroke-width="1.5"/>
+<text x="78" y="389" font-size="12.5" fill="#e4eaf5">afficher <tspan fill="#81fba1" font-weight="700">« VEILLE »</tspan></text>
 
 <!-- encart avertissement -->
-<rect x="486" y="64" width="280" height="152" rx="10" fill="#2a2210" stroke="#ffd66b" stroke-width="2"/>
+<rect x="486" y="64" width="280" height="158" rx="10" fill="#2a2210" stroke="#ffd66b" stroke-width="2"/>
 <text x="626" y="88" text-anchor="middle" fill="#ffd66b" font-size="12.5" font-weight="700">⚠ l'ORDRE des tests décide de tout</text>
 <text x="500" y="112" fill="#e4eaf5" font-size="12">on teste le seuil le <tspan font-weight="700" fill="#ffd66b">PLUS HAUT</tspan></text>
-<text x="500" y="130" fill="#e4eaf5" font-size="12">d'abord — sinon un niveau de <tspan font-weight="700" fill="#ffd66b">85</tspan></text>
-<text x="500" y="148" fill="#e4eaf5" font-size="12">s'arrêterait à <tspan font-weight="700" fill="#ffb454">VIGILANCE</tspan>.</text>
-<text x="500" y="172" fill="#9bbefc" font-size="11.5">85 ≥ 40 est vrai AUSSI : la cascade</text>
-<text x="500" y="189" fill="#9bbefc" font-size="11.5">s'arrête au premier test réussi et</text>
-<text x="500" y="206" fill="#9bbefc" font-size="11.5">n'atteint jamais la branche ALERTE.</text>
+<text x="500" y="130" fill="#e4eaf5" font-size="12">d'abord — sinon <tspan font-weight="700" fill="#ffd66b">200 km/h</tspan> s'arrêterait</text>
+<text x="500" y="148" fill="#e4eaf5" font-size="12">à <tspan font-weight="700" fill="#ffe680">TEMPETE TROPICALE</tspan>.</text>
+<text x="500" y="172" fill="#9bbefc" font-size="11.5">200 ≥ 63 est vrai AUSSI : la cascade</text>
+<text x="500" y="189" fill="#9bbefc" font-size="11.5">s'arrête au premier test réussi.</text>
+<text x="500" y="212" fill="#ff7b88" font-size="11.5" font-weight="700">Avec 4 niveaux, l'erreur en coûte DEUX.</text>
 
 <!-- frontières -->
-<rect x="486" y="230" width="280" height="146" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
-<text x="626" y="254" text-anchor="middle" fill="#61dafb" font-size="12.5" font-weight="700">les 4 frontières à tester</text>
-<line x1="500" y1="264" x2="752" y2="264" stroke="#274a8a"/>
+<rect x="486" y="236" width="280" height="196" rx="10" fill="#08132c" stroke="#61dafb" stroke-width="2"/>
+<text x="626" y="260" text-anchor="middle" fill="#61dafb" font-size="12.5" font-weight="700">les 6 frontières à tester</text>
+<text x="626" y="277" text-anchor="middle" fill="#9bbefc" font-size="11">3 seuils × 2 essais (dessous / pile dessus)</text>
+<line x1="500" y1="286" x2="752" y2="286" stroke="#274a8a"/>
 <g font-family="monospace" font-size="12.5">
-  <text x="506" y="286" fill="#e4eaf5">niveau_vent = 39</text>
-  <text x="640" y="286" fill="#81fba1">→ VEILLE</text>
-  <text x="506" y="310" fill="#e4eaf5">niveau_vent = 40</text>
-  <text x="640" y="310" fill="#ffb454">→ VIGILANCE</text>
-  <text x="506" y="334" fill="#e4eaf5">niveau_vent = 69</text>
-  <text x="640" y="334" fill="#ffb454">→ VIGILANCE</text>
-  <text x="506" y="358" fill="#e4eaf5">niveau_vent = 70</text>
-  <text x="640" y="358" fill="#ff7b88">→ ALERTE</text>
+  <text x="506" y="306" fill="#e4eaf5">62 km/h</text>
+  <text x="586" y="306" fill="#81fba1">→ VEILLE</text>
+  <text x="506" y="326" fill="#e4eaf5">63 km/h</text>
+  <text x="586" y="326" fill="#ffe680">→ TEMPETE</text>
+  <text x="506" y="350" fill="#e4eaf5">117 km/h</text>
+  <text x="586" y="350" fill="#ffe680">→ TEMPETE</text>
+  <text x="506" y="370" fill="#e4eaf5">118 km/h</text>
+  <text x="586" y="370" fill="#ffb454">→ OURAGAN</text>
+  <text x="506" y="394" fill="#e4eaf5">177 km/h</text>
+  <text x="586" y="394" fill="#ffb454">→ OURAGAN</text>
+  <text x="506" y="414" fill="#e4eaf5">178 km/h</text>
+  <text x="586" y="414" fill="#ff7b88">→ MAJEUR</text>
 </g>
 
-<text x="400" y="400" text-anchor="middle" fill="#9bbefc" font-size="11.5" font-style="italic">Reconstitution schématique de l'écran Vittascience — les libellés peuvent varier légèrement selon la version.</text>
+<text x="400" y="466" text-anchor="middle" fill="#9bbefc" font-size="11.5" font-style="italic">Reconstitution schématique de l'écran Vittascience — les libellés peuvent varier légèrement selon la version.</text>
 </svg>

@@ -1,93 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-algo d-algo">
-<title id="t-algo">Algorigramme de la station d'alerte : lecture du vent puis décision entre trois niveaux avec deux losanges de test</title>
-<desc id="d-algo">Algorigramme au format attendu au DNB, à lire de haut en bas. Un ovale Début, puis un rectangle « Lire la vitesse du vent (A1) ». Premier losange de décision : « vitesse supérieure ou égale à 150 kilomètres par heure ? ». Si oui, rectangle « ALERTE ROUGE : LCD rouge + DEL + buzzer ». Si non, deuxième losange : « vitesse supérieure ou égale à 100 kilomètres par heure ? ». Si oui, rectangle « VIGILANCE ORANGE : LCD orange + DEL ». Si non, rectangle « VEILLE : LCD vert, tout éteint ». Les trois branches se rejoignent puis une flèche remonte vers la lecture du capteur : c'est la boucle, la station recommence sans fin. Une bulle à contour violet pointillé, rattachée à cette flèche de retour, porte la mention « commentaire — pas un symbole » : elle explique la boucle sans faire partie de l'algorigramme. Un encadré rappelle la légende des symboles : ovale début et fin, rectangle traitement, losange décision à deux sorties oui et non, flèches de sens de lecture.</desc>
-<rect width="900" height="640" fill="#050f24"/>
-<text x="430" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">L'algorigramme de la station — trois niveaux, deux questions</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 800" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-algo d-algo">
+<title id="t-algo">Algorigramme de la station d'alerte : lecture du vent puis décision entre quatre niveaux avec trois losanges de test</title>
+<desc id="d-algo">Algorigramme au format attendu au DNB, à lire de haut en bas. Un ovale Début, puis un rectangle de traitement « Lire la vitesse du vent (A1) », qui convertit la mesure brute 0-1023 en kilomètres par heure de 0 à 250. Premier losange de décision : « vitesse supérieure ou égale à 178 kilomètres par heure ? », c'est le seuil de l'ouragan majeur. Si oui, on va au rectangle rouge « OURAGAN MAJEUR : LCD rouge, voyant rouge D4 et buzzer ». Si non, on descend au deuxième losange : « vitesse supérieure ou égale à 118 kilomètres par heure ? », le seuil de l'ouragan. Si oui, rectangle orange « OURAGAN : LCD orange et voyant orange D3 qui pulse ». Si non, on descend au troisième losange : « vitesse supérieure ou égale à 63 kilomètres par heure ? », le seuil de la tempête tropicale. Si oui, rectangle jaune « TEMPÊTE TROPICALE : LCD jaune et voyant jaune D7 qui pulse ». Si non, rectangle vert « VEILLE : LCD vert, voyant vert D6 fixe, rien d'autre ». Il y a donc trois losanges, cinq rectangles de traitement en comptant la lecture, et quatre issues possibles : ouragan majeur, ouragan, tempête tropicale, veille. Les quatre branches se rejoignent en bas, puis une flèche remonte le long du bord gauche jusqu'au rectangle de lecture : c'est la boucle, la station recommence sans fin, environ cinq fois par seconde. Une bulle à contour violet pointillé, rattachée par un trait pointillé à cette flèche de retour, porte la mention « commentaire — pas un symbole » : elle explique la boucle sans faire partie de l'algorigramme. En haut à droite, un encadré rappelle la légende des symboles : ovale début et fin, rectangle traitement ou action, losange décision à deux sorties oui et non, flèche du sens de lecture, bulle pointillée pour un commentaire. Les losanges se lisent dans l'ordre, du seuil le plus haut au plus bas.</desc>
+<rect width="900" height="800" fill="#050f24"/>
+<text x="370" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">L'algorigramme de la station — quatre niveaux, trois questions</text>
 
 <defs>
   <marker id="fa" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#61dafb"/></marker>
 </defs>
 
 <!-- Début -->
-<ellipse cx="430" cy="72" rx="70" ry="24" fill="#123322" stroke="#81fba1" stroke-width="2"/>
-<text x="430" y="78" text-anchor="middle" fill="#81fba1" font-size="14" font-weight="700">DÉBUT</text>
-<line x1="430" y1="96" x2="430" y2="126" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<ellipse cx="370" cy="78" rx="70" ry="24" fill="#123322" stroke="#81fba1" stroke-width="2"/>
+<text x="370" y="84" text-anchor="middle" fill="#81fba1" font-size="14" font-weight="700">DÉBUT</text>
+<line x1="370" y1="102" x2="370" y2="132" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
 
-<!-- Lire -->
-<rect x="310" y="128" width="240" height="52" rx="6" fill="#173666" stroke="#61dafb" stroke-width="2"/>
-<text x="430" y="150" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">Lire la vitesse du vent (A1)</text>
-<text x="430" y="168" text-anchor="middle" fill="#9bbefc" font-size="11">mesure brute 0-1023 → km/h (0-250)</text>
-<line x1="430" y1="180" x2="430" y2="212" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<!-- Rectangle de traitement 1 : lecture -->
+<rect x="250" y="134" width="240" height="52" rx="6" fill="#173666" stroke="#61dafb" stroke-width="2"/>
+<text x="370" y="156" text-anchor="middle" fill="#e4eaf5" font-size="13" font-weight="700">Lire la vitesse du vent (A1)</text>
+<text x="370" y="174" text-anchor="middle" fill="#9bbefc" font-size="11">mesure brute 0-1023 → km/h (0-250)</text>
+<line x1="370" y1="186" x2="370" y2="218" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
 
-<!-- Losange 1 -->
-<polygon points="430,214 560,266 430,318 300,266" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
-<text x="430" y="260" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">vitesse ≥ 150 km/h ?</text>
-<text x="430" y="280" text-anchor="middle" fill="#9bbefc" font-size="11">(seuil d'alerte rouge)</text>
-<text x="588" y="258" fill="#81fba1" font-size="13" font-weight="700">OUI</text>
-<text x="418" y="342" fill="#ff7b88" font-size="13" font-weight="700" text-anchor="end">NON</text>
+<!-- Losange 1 : 178 km/h -->
+<polygon points="370,220 480,272 370,324 260,272" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+<text x="370" y="266" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">vitesse ≥ 178 km/h ?</text>
+<text x="370" y="286" text-anchor="middle" fill="#9bbefc" font-size="11">(seuil ouragan majeur)</text>
+<text x="490" y="264" fill="#81fba1" font-size="13" font-weight="700">OUI</text>
+<text x="362" y="346" fill="#ff7b88" font-size="13" font-weight="700" text-anchor="end">NON</text>
 
-<!-- Branche OUI 1 -->
-<line x1="560" y1="266" x2="660" y2="266" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
-<rect x="662" y="238" width="210" height="58" rx="6" fill="#3a1218" stroke="#ff7b88" stroke-width="2"/>
-<text x="767" y="262" text-anchor="middle" fill="#ff7b88" font-size="13" font-weight="700">ALERTE ROUGE</text>
-<text x="767" y="281" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD rouge + DEL + buzzer</text>
-<line x1="767" y1="296" x2="767" y2="530" stroke="#61dafb" stroke-width="2.5"/>
+<!-- Branche OUI 1 : rectangle de traitement 2 -->
+<line x1="480" y1="272" x2="636" y2="272" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<rect x="638" y="244" width="246" height="58" rx="6" fill="#3a1218" stroke="#ff7b88" stroke-width="2"/>
+<text x="761" y="268" text-anchor="middle" fill="#ff7b88" font-size="13" font-weight="700">OURAGAN MAJEUR</text>
+<text x="761" y="288" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD rouge + voyant rouge D4 + buzzer</text>
+<line x1="761" y1="302" x2="761" y2="724" stroke="#61dafb" stroke-width="2.5"/>
 
-<!-- Losange 2 -->
-<line x1="430" y1="318" x2="430" y2="352" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
-<polygon points="430,354 560,406 430,458 300,406" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
-<text x="430" y="400" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">vitesse ≥ 100 km/h ?</text>
-<text x="430" y="420" text-anchor="middle" fill="#9bbefc" font-size="11">(seuil de vigilance)</text>
-<text x="588" y="398" fill="#81fba1" font-size="13" font-weight="700">OUI</text>
-<text x="418" y="482" fill="#ff7b88" font-size="13" font-weight="700" text-anchor="end">NON</text>
+<!-- Losange 2 : 118 km/h -->
+<line x1="370" y1="324" x2="370" y2="358" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<polygon points="370,360 480,412 370,464 260,412" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+<text x="370" y="406" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">vitesse ≥ 118 km/h ?</text>
+<text x="370" y="426" text-anchor="middle" fill="#9bbefc" font-size="11">(seuil ouragan)</text>
+<text x="490" y="404" fill="#81fba1" font-size="13" font-weight="700">OUI</text>
+<text x="362" y="486" fill="#ff7b88" font-size="13" font-weight="700" text-anchor="end">NON</text>
 
-<!-- Branche OUI 2 -->
-<line x1="560" y1="406" x2="660" y2="406" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
-<rect x="662" y="378" width="210" height="58" rx="6" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
-<text x="767" y="402" text-anchor="middle" fill="#ffb454" font-size="13" font-weight="700">VIGILANCE ORANGE</text>
-<text x="767" y="421" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD orange + DEL (pas de buzzer)</text>
-<line x1="767" y1="436" x2="767" y2="530" stroke="#61dafb" stroke-width="2.5"/>
+<!-- Branche OUI 2 : rectangle de traitement 3 -->
+<line x1="480" y1="412" x2="636" y2="412" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<rect x="638" y="384" width="246" height="58" rx="6" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="761" y="408" text-anchor="middle" fill="#ffb454" font-size="13" font-weight="700">OURAGAN</text>
+<text x="761" y="428" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD orange + voyant orange D3 qui pulse</text>
+<line x1="761" y1="442" x2="761" y2="724" stroke="#61dafb" stroke-width="2.5"/>
 
-<!-- Branche NON 2 : veille -->
-<line x1="430" y1="458" x2="430" y2="492" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
-<rect x="325" y="494" width="210" height="58" rx="6" fill="#123322" stroke="#81fba1" stroke-width="2"/>
-<text x="430" y="518" text-anchor="middle" fill="#81fba1" font-size="13" font-weight="700">VEILLE</text>
-<text x="430" y="537" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD vert — DEL et buzzer éteints</text>
+<!-- Losange 3 : 63 km/h -->
+<line x1="370" y1="464" x2="370" y2="498" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<polygon points="370,500 480,552 370,604 260,552" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+<text x="370" y="546" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">vitesse ≥ 63 km/h ?</text>
+<text x="370" y="566" text-anchor="middle" fill="#9bbefc" font-size="11">(seuil tempête tropicale)</text>
+<text x="490" y="544" fill="#81fba1" font-size="13" font-weight="700">OUI</text>
+<text x="362" y="626" fill="#ff7b88" font-size="13" font-weight="700" text-anchor="end">NON</text>
 
-<!-- Rejonction + boucle -->
-<line x1="430" y1="552" x2="430" y2="580" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="767" y1="530" x2="767" y2="580" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="430" y1="580" x2="767" y2="580" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="430" y1="580" x2="90" y2="580" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="90" y1="580" x2="90" y2="154" stroke="#61dafb" stroke-width="2.5"/>
-<line x1="90" y1="154" x2="308" y2="154" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
-<!-- Repère de lecture — surtout PAS un symbole d'algorigramme (refonte v2).
+<!-- Branche OUI 3 : rectangle de traitement 4 -->
+<line x1="480" y1="552" x2="636" y2="552" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<rect x="638" y="524" width="246" height="58" rx="6" fill="#3a3212" stroke="#ffd66b" stroke-width="2"/>
+<text x="761" y="548" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">TEMPÊTE TROPICALE</text>
+<text x="761" y="568" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD jaune + voyant jaune D7 qui pulse</text>
+<line x1="761" y1="582" x2="761" y2="724" stroke="#61dafb" stroke-width="2.5"/>
+
+<!-- Branche NON 3 : rectangle de traitement 5 (veille) -->
+<line x1="370" y1="604" x2="370" y2="638" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+<rect x="237" y="640" width="266" height="58" rx="6" fill="#123322" stroke="#81fba1" stroke-width="2"/>
+<text x="370" y="664" text-anchor="middle" fill="#81fba1" font-size="13" font-weight="700">VEILLE</text>
+<text x="370" y="684" text-anchor="middle" fill="#e4eaf5" font-size="11">LCD vert — voyant vert D6 fixe, rien d'autre</text>
+<line x1="370" y1="698" x2="370" y2="724" stroke="#61dafb" stroke-width="2.5"/>
+
+<!-- Rejonction des quatre branches + boucle de retour -->
+<line x1="28" y1="724" x2="761" y2="724" stroke="#61dafb" stroke-width="2.5"/>
+<line x1="28" y1="724" x2="28" y2="164" stroke="#61dafb" stroke-width="2.5"/>
+<line x1="28" y1="164" x2="248" y2="164" stroke="#61dafb" stroke-width="2.5" marker-end="url(#fa)"/>
+
+<!-- Repère de lecture — surtout PAS un symbole d'algorigramme.
      Bulle très arrondie, contour pointillé violet (couleur réservée aux
-     commentaires, jamais celle du flux) + trait de rattachement pointillé vers
-     la flèche de retour : impossible de la confondre avec un rectangle de
-     traitement. -->
-<line x1="90" y1="362" x2="104" y2="362" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="3 4"/>
-<circle cx="90" cy="362" r="4" fill="#c68ef2"/>
-<rect x="106" y="322" width="190" height="80" rx="24" ry="24"
+     commentaires, jamais celle du flux) + trait de rattachement pointillé
+     vers la flèche de retour : impossible de la confondre avec un
+     rectangle de traitement. -->
+<line x1="28" y1="412" x2="46" y2="412" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="3 4"/>
+<circle cx="28" cy="412" r="4" fill="#c68ef2"/>
+<rect x="46" y="362" width="200" height="100" rx="24" ry="24"
       fill="#1c1233" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="6 4"/>
-<text x="201" y="344" text-anchor="middle" fill="#c68ef2" font-size="10" font-style="italic">commentaire — pas un symbole</text>
-<text x="201" y="362" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">🔁 LA BOUCLE</text>
-<text x="201" y="380" text-anchor="middle" fill="#e4eaf5" font-size="11">la station recommence</text>
-<text x="201" y="394" text-anchor="middle" fill="#e4eaf5" font-size="11">sans fin (≈ 5 fois/seconde)</text>
+<text x="146" y="386" text-anchor="middle" fill="#c68ef2" font-size="11" font-style="italic">commentaire — pas un symbole</text>
+<text x="146" y="408" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">🔁 LA BOUCLE</text>
+<text x="146" y="430" text-anchor="middle" fill="#e4eaf5" font-size="11">la station recommence</text>
+<text x="146" y="448" text-anchor="middle" fill="#e4eaf5" font-size="11">sans fin (≈ 5 fois/seconde)</text>
 
 <!-- Légende DNB -->
-<rect x="590" y="60" width="292" height="172" rx="10" fill="#0a1b3d" stroke="#274a8a"/>
-<text x="736" y="82" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">🎓 Les symboles (attendus au DNB)</text>
-<ellipse cx="625" cy="102" rx="26" ry="11" fill="none" stroke="#81fba1" stroke-width="1.5"/>
-<text x="660" y="106" fill="#e4eaf5" font-size="11">ovale : début / fin</text>
-<rect x="601" y="120" width="50" height="18" fill="none" stroke="#61dafb" stroke-width="1.5"/>
-<text x="660" y="133" fill="#e4eaf5" font-size="11">rectangle : traitement (action)</text>
-<polygon points="626,146 650,157 626,168 602,157" fill="none" stroke="#ffd66b" stroke-width="1.5"/>
-<text x="660" y="161" fill="#e4eaf5" font-size="11">losange : décision → OUI / NON</text>
-<line x1="606" y1="183" x2="646" y2="183" stroke="#61dafb" stroke-width="2" marker-end="url(#fa)"/>
-<text x="660" y="187" fill="#e4eaf5" font-size="11">flèche : sens de lecture</text>
-<rect x="601" y="205" width="50" height="16" rx="8" fill="none" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="5 3"/>
-<text x="660" y="217" fill="#c68ef2" font-size="11">bulle pointillée : commentaire</text>
+<rect x="596" y="48" width="288" height="176" rx="10" fill="#0a1b3d" stroke="#274a8a"/>
+<text x="740" y="70" text-anchor="middle" fill="#c68ef2" font-size="12" font-weight="700">🎓 Les symboles (attendus au DNB)</text>
+<ellipse cx="632" cy="92" rx="26" ry="11" fill="none" stroke="#81fba1" stroke-width="1.5"/>
+<text x="668" y="96" fill="#e4eaf5" font-size="11">ovale : début / fin</text>
+<rect x="608" y="112" width="50" height="18" fill="none" stroke="#61dafb" stroke-width="1.5"/>
+<text x="668" y="125" fill="#e4eaf5" font-size="11">rectangle : traitement (action)</text>
+<polygon points="633,141 657,152 633,163 609,152" fill="none" stroke="#ffd66b" stroke-width="1.5"/>
+<text x="668" y="156" fill="#e4eaf5" font-size="11">losange : décision → OUI / NON</text>
+<line x1="612" y1="180" x2="652" y2="180" stroke="#61dafb" stroke-width="2" marker-end="url(#fa)"/>
+<text x="668" y="184" fill="#e4eaf5" font-size="11">flèche : sens de lecture</text>
+<rect x="608" y="200" width="50" height="16" rx="8" fill="none" stroke="#c68ef2" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="668" y="212" fill="#c68ef2" font-size="11">bulle pointillée : commentaire</text>
 
-<text x="430" y="622" text-anchor="middle" fill="#9bbefc" font-size="12" font-style="italic">Lire les losanges DANS L'ORDRE : on teste d'abord le seuil le plus haut (150) — sinon une rafale à 180 km/h serait rangée en « vigilance ».</text>
+<text x="450" y="756" text-anchor="middle" fill="#9bbefc" font-size="12" font-style="italic">Lire les losanges DANS L'ORDRE : on teste d'abord le seuil le plus haut (178) — sinon un vent à 200 km/h</text>
+<text x="450" y="776" text-anchor="middle" fill="#9bbefc" font-size="12" font-style="italic">serait rangé en « ouragan » au lieu d'« ouragan majeur ».</text>
 </svg>

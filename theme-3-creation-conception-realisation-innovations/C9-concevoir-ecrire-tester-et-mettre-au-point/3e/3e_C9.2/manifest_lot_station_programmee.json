@@ -4,13 +4,18 @@
   "agent": "Fable",
   "theme": 3,
   "niveau": "3e",
-  "codes": ["3e_C9.2", "3e_C8.3"],
+  "codes": [
+    "3e_C9.2",
+    "3e_C8.3"
+  ],
   "dossier_principal": "3e_C9.2",
-  "couverts_par_pointeur": ["3e_C8.3"],
+  "couverts_par_pointeur": [
+    "3e_C8.3"
+  ],
   "competences_parentes": "C9 — Concevoir, écrire, tester et mettre au point un programme · C8 — Valider les solutions techniques par des essais et des tests",
   "duree": "4 séances de 1 h 30",
-  "branche": "fable/theme-3/station-alerte-cyclonique",
-  "date_production": "2026-08-19",
+  "branche": "fable/theme-3/station-quatre-pages",
+  "date_production": "2026-08-26",
   "fichiers": {
     "sequence": "sequence_3e_C9.2-C8.3_station_alerte_cyclonique.html",
     "qcm": "qcm_3e_C9.2-C8.3_station_alerte_cyclonique.html",
@@ -36,11 +41,43 @@
       "Images/blocs_palier1_lire_vent.svg",
       "Images/blocs_palier2_decider.svg",
       "Images/blocs_palier3_afficher.svg",
-      "Images/blocs_palier4_acquitter.svg"
+      "Images/blocs_palier4_acquitter.svg",
+      "Images/ordre_preactionneur_trois_cas.svg"
     ],
     "readme_pointeurs": [
       "../../../C8-valider-les-solutions-techniques-par-des/3e/3e_C8.3/README.md"
-    ]
+    ],
+    "sequence_quatre_pages": [
+      "sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html",
+      "sequence_3e_C9.2-C8.3_station_2_programmer.html",
+      "sequence_3e_C9.2-C8.3_station_3_interaction.html",
+      "sequence_3e_C9.2-C8.3_station_4_recette.html"
+    ],
+    "suite_de_tests": "tests_3e_C9.2-C8.3.mjs",
+    "captures_reelles": {
+      "ardublock": [
+        "Images/bonus_ardublock_palier1.png",
+        "Images/bonus_ardublock_palier2.png"
+      ],
+      "vittascience_structure": [
+        "Images/vittascience/C_1_demarrage.png",
+        "Images/vittascience/C_2_boucle_haut.png",
+        "Images/vittascience/C_3_boucle_bas.png",
+        "Images/vittascience/C_4_mode_vert.png",
+        "Images/vittascience/C_5_mode_jaune.png",
+        "Images/vittascience/C_6_mode_orange.png",
+        "Images/vittascience/C_7_mode_rouge.png"
+      ],
+      "vittascience_frontieres": [
+        "Images/vittascience/C_frontiere_062kmh_brut254.png",
+        "Images/vittascience/C_frontiere_063kmh_brut258.png",
+        "Images/vittascience/C_frontiere_117kmh_brut479.png",
+        "Images/vittascience/C_frontiere_118kmh_brut483.png",
+        "Images/vittascience/C_frontiere_177kmh_brut725.png",
+        "Images/vittascience/C_frontiere_178kmh_brut729.png"
+      ]
+    },
+    "generateur_des_pages": "generer_les_quatre_pages.py"
   },
   "contenu": {
     "activites": 7,
@@ -54,7 +91,10 @@
       "7. Exécuter la recette et signer le PV (C8.3)"
     ],
     "questions_qcm": 30,
-    "questions_par_code": {"3e_C9.2": 15, "3e_C8.3": 15},
+    "questions_par_code": {
+      "3e_C9.2": 15,
+      "3e_C8.3": 15
+    },
     "questions_illustrees": 4,
     "repartition_bonnes_reponses": "8/7/7/8 (fix_r.js, graine 20260819)",
     "cles_localstorage": {
@@ -62,23 +102,33 @@
       "qcm": "qcm_3eC92-3eC83_station-alerte"
     },
     "verrous_experientiels": [
-      "lecture (vent varié au banc)", "niveaux (3 niveaux atteints)",
-      "acquit (alarme acquittée)", "retrigger (alarme repartie après acquittement)",
-      "borne99/borne100/borne149/borne150 (frontières exécutées)", "chrono (performance mesurée)"
+      "lecture (vent varié au banc)",
+      "niveaux (4 niveaux atteints)",
+      "acquit (alarme acquittée)",
+      "retrigger (alarme repartie après acquittement)",
+      "borne62/borne63/borne117/borne118/borne177/borne178 (six frontières exécutées)",
+      "chrono (performance mesurée)"
     ],
     "syntheses": 2,
     "versions": {
-      "A_materiel": "Séance 2 (maquette Vittascience) : Arduino UNO + Grove, capteur rotatif A0, voyants D2 vert / D3 orange / D4 rouge, buzzer D5, échelle niveau_vent 0-100 seuils 40/70. Séances 3-4 (station du labo) : potentiomètre A1, bouton D2, DEL D3, buzzer D5, LCD I2C, échelle km/h 0-250 seuils 100/150. Logiciel : Vittascience (interface Arduino, mode BLOCS, simulateur intégré) ; ArduBlock Éducation 1.7 en bonus facultatif. TBT 5 V",
-      "B_simulation": "banc d'essai de la station intégré à la page (boucle 200 ms, verrous)",
+      "A_materiel": "Un seul montage, une seule échelle : Arduino UNO + Grove, potentiomètre A1 (anémomètre simulé, 0-250 km/h), bouton D2, voyants D6 vert / D7 jaune / D3 orange / D4 rouge, buzzer D5, LCD RGB I2C. Seuils Saffir-Simpson 63 / 118 / 178 km/h ; six frontières de recette 62-63, 117-118, 177-178. Logiciel : Vittascience (interface Arduino, mode BLOCS, simulateur intégré) ; ArduBlock Éducation 1.7 en bonus facultatif. TBT 5 V",
+      "B_simulation": "banc d'essai de la station intégré à la page (boucle 200 ms, verrous) — le programme Vittascience de référence, lui, attend 300 ms : écart signalé en légende, jamais masqué",
       "C_sans_materiel": "banc intégré + traces d'exécution fournies (act. 5 et 7)"
+    },
+    "decoupage": {
+      "regle_or": "n°116 — découpage en quatre pages, une par séance",
+      "invariant": "l'union des 4 pages = la page tout-en-un, aucune question perdue (vérifié par la suite de tests)",
+      "persistance": "clé localStorage unique partagée par les 5 fichiers ; les réponses circulent dans les deux sens",
+      "repli": "la page tout-en-un reste le repli hors-ligne (règle n°122) et est atteignable depuis chacune des 4 pages",
+      "engendre": "les 4 pages sont ENGENDRÉES depuis la page tout-en-un par generer_les_quatre_pages.py — ne jamais les éditer à la main"
     }
   },
   "compilation_reference": {
     "fqbn": "arduino:avr:uno",
-    "resultat": "text 6764 · data 176 · bss 393 — OK (19/08/2026, avr-gcc 7.3 + ArduinoCore-avr + Grove_LCD_RGB_Backlight)",
+    "resultat": "text 6764 · data 176 · bss 393 — OK (19/08/2026, à recompiler après le renommage des seuils, avr-gcc 7.3 + ArduinoCore-avr + Grove_LCD_RGB_Backlight)",
     "banc_docker": "banc-docker/ (enseignant, arduino-cli 1.5.1)"
   },
-  "medias_licences": "9 SVG originaux CC0 (dont 4 reconstitutions schématiques étiquetées, jamais de fausses captures) — voir SOURCES_MEDIAS.md",
+  "medias_licences": "10 SVG originaux CC0 (dont 4 reconstitutions schématiques étiquetées, jamais de fausses captures) + 15 captures d'écran RÉELLES (2 ArduBlock, 13 Vittascience) — voir SOURCES_MEDIAS.md",
   "hors_perimetre_modifie": [
     "nouveautes.json (entrée du lot)",
     "_outils/build_audit.py (OVERLAY : 3e_C9.2 et 3e_C8.3)",

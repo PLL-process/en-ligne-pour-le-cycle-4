@@ -103,6 +103,25 @@
   .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
   .feedback.mixte{background:rgba(255,214,102,.13);color:var(--warn)}
   img.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  /* Règle d'or n°117 — alt court, description détaillée dépliable à côté */
+  .description-image{max-width:860px;margin:-4px auto 14px;font-size:.94em}
+  .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  @media print{ .choix-parcours-boutons{display:none} }
+  .courrier ol.exigences{margin:6px 0 10px 1.2em}
+  .courrier ol.exigences>li{margin:5px 0}
+  .courrier ol.exigences ul{margin:4px 0 4px 1em}
+  .repli-tout-en-un{max-width:940px;margin:0 auto 14px;padding:8px 12px;border-left:3px solid var(--sub);
+    background:rgba(155,190,252,.06);border-radius:0 8px 8px 0;font-size:.9em;color:var(--sub)}
+  .repli-tout-en-un a{color:var(--hl)}
+  .description-image summary{cursor:pointer;color:var(--sub);padding:4px 0}
+  .description-image ol{margin:6px 0 6px 1.3em}
+  .description-image p{margin:6px 0}
   .versions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   @media(max-width:760px){.versions{grid-template-columns:1fr}}
   .version{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:.88em}
@@ -124,11 +143,22 @@
   @media(max-width:720px){.banc{grid-template-columns:1fr}}
   .lcd-sim{border-radius:10px;padding:14px 16px;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.25em;line-height:1.5;border:3px solid #222;min-height:74px;transition:background .3s;color:#08320f;box-shadow:inset 0 0 18px rgba(0,0,0,.25)}
   .lcd-vert{background:#57d98a}
+  .lcd-jaune{background:#e8d44d;color:#3d3300}
   .lcd-orange{background:#f2a94f;color:#4a2600}
   .lcd-rouge{background:#f2545f;color:#3d0208}
   .station-io{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
   .del-sim{width:26px;height:26px;border-radius:50%;background:#3a3a3a;border:3px solid #555;display:inline-block;vertical-align:middle}
-  .del-sim.on{background:#ff2d3e;box-shadow:0 0 14px #ff2d3e}
+  /* Quatre voyants, un seul allumé à la fois. Le vert est FIXE : la pulsation
+     commence au jaune, pour qu'elle reste un signal et non un décor. */
+  .del-sim.vert.on{background:#57d98a;box-shadow:0 0 14px #57d98a;border-color:#8ff0b6}
+  .del-sim.jaune.on{background:#e8d44d;box-shadow:0 0 14px #e8d44d;border-color:#f6ec9b}
+  .del-sim.orange.on{background:#f2a94f;box-shadow:0 0 14px #f2a94f;border-color:#f8cf9b}
+  .del-sim.rouge.on{background:#ff2d3e;box-shadow:0 0 14px #ff2d3e;border-color:#ff9aa2}
+  @keyframes del-pulse{0%,100%{opacity:1}50%{opacity:.28}}
+  .del-sim.pulse{animation:del-pulse 1.6s ease-in-out infinite}
+  /* Règle n°119 : l'animation ne porte JAMAIS seule l'information — le niveau
+     reste écrit sur l'écran. Ici on la coupe simplement. */
+  @media (prefers-reduced-motion: reduce){ .del-sim.pulse{animation:none} }
   .buzzer-sim{font-size:1.15em;padding:5px 12px;border-radius:8px;border:2px solid var(--border);background:#08132c}
   .buzzer-sim.on{border-color:var(--err);color:var(--err);animation:buzz .5s infinite alternate}
   @keyframes buzz{from{box-shadow:0 0 2px #ff7b88}to{box-shadow:0 0 14px #ff7b88}}
@@ -204,6 +234,11 @@
 <a class="skip-link" href="#seances">Aller directement aux activités</a>
 <h1>Thème 3 · Martinique — 3e : La station d'alerte cyclonique se programme</h1>
 <p class="subtitle">🎯 Ta mission : programmer la station commandée par la mairie — puis PROUVER qu'elle marche, protocole de test à l'appui, avant sa mise en service dans la cour.</p>
+<p class="repli-tout-en-un" id="vers-quatre-pages">📚 <b>Cette page contient la séquence entière</b> — pratique quand le réseau est capricieux, ou pour tout avoir sous la main. Tu préfères avancer séance par séance, avec des pages plus courtes ? Les <b>quatre pages</b> partagent exactement les mêmes réponses enregistrées :
+<a href="sequence_3e_C9.2-C8.3_station_1_besoin-et-algorithme.html">1 · Besoin et algorithme</a> ·
+<a href="sequence_3e_C9.2-C8.3_station_2_programmer.html">2 · Programmer par paliers</a> ·
+<a href="sequence_3e_C9.2-C8.3_station_3_interaction.html">3 · L'humain dans la boucle</a> ·
+<a href="sequence_3e_C9.2-C8.3_station_4_recette.html">4 · Protocole et recette</a>.</p>
 
 <section class="card rappel-spiralaire" aria-labelledby="rap-spi">
   <h2 id="rap-spi">&#128260; Ce que tu as déjà fait</h2>
@@ -236,7 +271,7 @@
   varier légèrement selon la version du site — au moindre doute, demande au professeur.)</i></p>
   <ol>
     <li><b>Ouvrir la bonne interface.</b> Va sur <a href="https://fr.vittascience.com/arduino/" target="_blank" rel="noopener">fr.vittascience.com/arduino</a> et vérifie deux choses : l'interface <b>Arduino</b>, et la bascule sur <b>BLOCS</b> (et non CODE). Connecte-toi avec le compte de la classe si le professeur te le demande — c'est ce qui permet d'enregistrer.</li>
-    <li><b>Repérer les cinq catégories.</b> À gauche de l'espace de travail : <b>Variables</b> (créer et régler <code>niveau_vent</code>, <code>seuil_vigilance</code>, <code>seuil_alerte</code>), <b>Logique</b> (les blocs <i>si / sinon si / sinon</i> et les comparaisons), <b>Boucles</b> (<i>répéter indéfiniment</i>), <b>Entrées / sorties</b> (lire A0, piloter D2 à D5) et <b>Fonctions</b> (définir et appeler tes sous-programmes). Tout le programme de la séance vient de ces cinq-là.</li>
+    <li><b>Repérer les cinq catégories.</b> À gauche de l'espace de travail : <b>Variables</b> (créer et régler <code>vitesseVent</code>, <code>seuilJaune</code>, <code>seuilOrange</code>, <code>seuilRouge</code>), <b>Logique</b> (les blocs <i>si / sinon si / sinon</i> et les comparaisons), <b>Boucles</b> (<i>répéter indéfiniment</i>), <b>Entrées / sorties</b> (lire A1, piloter D3 à D7) et <b>Fonctions</b> (définir et appeler tes sous-programmes). Tout le programme de la séance vient de ces cinq-là.</li>
     <li><b>Nommer et enregistrer.</b> Enregistre tout de suite ton programme sous le nom <code>3e-STATION-palier1-TON&nbsp;NOM</code>. Un programme sans nom est introuvable la semaine suivante — et tu enregistreras une version <b>à chaque palier</b>, sous son propre nom : c'est ta trace de progression.</li>
     <li><b>Simuler, puis (si tu as la carte) téléverser.</b> Le <b>simulateur</b> intégré fait tourner ton programme <b>sans aucun matériel</b> : tu tournes le capteur rotatif à la souris et tu vois les voyants réagir. Le <b>moniteur</b> affiche ce que ton programme raconte. En version 🅰 seulement, le bouton de téléversement envoie ensuite le programme dans la vraie carte — après avoir vérifié la carte et le port.</li>
   </ol>
@@ -265,6 +300,14 @@
   <button class="btn ghost" id="btnReset">🗑 Effacer ma sauvegarde</button>
   <button class="btn ghost" id="btnEssentiel" aria-pressed="false">🎯 Mode essentiel : OFF</button>
 </div>
+<div class="toolbar choix-parcours-boutons" role="group" aria-label="Choisir un parcours">
+  <span class="parcours-label">🔀 Mon parcours :</span>
+  <button class="btn ghost parcours-btn" data-choix="a" aria-pressed="false">🅰 J'ai le matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="b" aria-pressed="false">🅱 Je simule</button>
+  <button class="btn ghost parcours-btn" data-choix="c" aria-pressed="false">🅲 Sans matériel</button>
+  <button class="btn ghost parcours-btn" data-choix="tous" aria-pressed="true">👁 Tout afficher</button>
+</div>
+<p class="saved-note" id="parcoursNote" role="status" aria-live="polite" style="text-align:center">Parcours affiché : <b>tous</b>.</p>
 <p class="saved-note" style="text-align:center">Le <b>mode essentiel</b> masque le référentiel, les corrections et les compléments&nbsp;: il ne reste que les consignes et les exercices. À activer si la page te paraît trop chargée.</p>
 <p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
 
@@ -285,27 +328,59 @@
     <p>Madame, Monsieur,</p>
     <p>À la suite de votre exposition, la commune souhaite confier au club technologie la réalisation d'un
     <b>prototype de station d'alerte cyclonique</b> pour la cour du collège. Le prototype devra&nbsp;:</p>
-    <p>— <b>mesurer la vitesse du vent</b> en continu&nbsp;;<br>
-    — <b>afficher en permanence</b> le niveau d'alerte et la vitesse&nbsp;: <b>veille</b> (écran vert),
-    <b>vigilance orange</b> à partir de <b>100 km/h</b>, <b>alerte rouge</b> à partir de <b>150 km/h</b>&nbsp;;<br>
-    — en alerte rouge, <b>allumer un signal lumineux et déclencher une alarme sonore</b>&nbsp;;<br>
-    — permettre à l'agent d'accueil d'<b>acquitter l'alarme sonore d'un appui sur un bouton</b> — sans jamais
-    éteindre l'affichage ni le signal lumineux&nbsp;;<br>
-    — réagir à un changement de vent en <b>moins d'une seconde</b>.</p>
+    <ol class="exigences">
+      <li><b>Mesurer la vitesse du vent</b> en continu.</li>
+      <li><b>Afficher en permanence</b> le niveau et la vitesse, sur <b>quatre niveaux</b> repris des seuils
+      officiels de l'échelle des cyclones&nbsp;:
+        <ul>
+          <li><b>veille</b> — écran vert — en dessous de <b>63 km/h</b>&nbsp;;</li>
+          <li><b>tempête tropicale</b> — écran jaune — à partir de <b>63 km/h</b>&nbsp;;</li>
+          <li><b>ouragan</b> — écran orange — à partir de <b>118 km/h</b>&nbsp;;</li>
+          <li><b>ouragan majeur</b> — écran rouge — à partir de <b>178 km/h</b>.</li>
+        </ul>
+      </li>
+      <li><b>Allumer un voyant</b> dédié à chaque niveau — <b>un seul à la fois</b> — et le faire <b>pulser</b>
+      dès la tempête tropicale, le vert restant fixe.</li>
+      <li>En <b>ouragan majeur</b> seulement, <b>déclencher une alarme sonore</b>.</li>
+      <li>Permettre à l'agent d'accueil d'<b>acquitter l'alarme sonore d'un appui sur un bouton</b> — sans
+      jamais éteindre l'affichage ni le signal lumineux.</li>
+      <li>Réagir à un changement de vent en <b>moins d'une seconde</b>.</li>
+    </ol>
     <p>Avant toute mise en service, vos services fourniront un <b>procès-verbal de recette</b>&nbsp;: la liste des
     essais réalisés prouvant que le prototype respecte chacune de ces exigences. Vous en établirez
     <b>deux exemplaires</b>&nbsp;: l'un pour nos services, l'autre pour la <b>ville jumelée de New York</b>, qui suit
     nos travaux sur le risque cyclonique depuis l'ouragan Sandy.</p>
     <p style="text-align:right">Le maire-adjoint aux risques majeurs</p>
   </div>
-  <p style="font-size:.9em;color:var(--sub)">Les seuils de 100 et 150 km/h sont ceux du <b>cahier des charges de la mairie</b> pour ce prototype pédagogique — les vraies vigilances de Météo-France croisent bien d'autres critères (pluie, houle, trajectoire). Le prototype mesure le vent avec un <b>potentiomètre qui SIMULE l'anémomètre</b> : tourner le bouton, c'est faire souffler le vent. <i>(Données et matériel réels de la version 🅰 : très basse tension 5 V uniquement.)</i></p>
+  <p style="font-size:.9em;color:var(--sub)"><b>D'où viennent 63, 118 et 178 ?</b> Ce ne sont pas des nombres inventés pour l'exercice : ce sont les <b>seuils de l'échelle de Saffir-Simpson</b>, celle qui sert à classer les cyclones. <b>63 km/h</b> marque l'entrée en <b>tempête tropicale</b>, <b>118 km/h</b> l'entrée en <b>ouragan</b> (catégorie 1), <b>178 km/h</b> l'<b>ouragan majeur</b> (catégorie 3).</p>
+  <p style="font-size:.9em;color:var(--sub)">Attention toutefois : une vraie <b>vigilance</b> de Météo-France ne se décide pas sur le seul vent — elle croise la pluie, la houle et la trajectoire. Notre prototype, lui, ne mesure que le vent. Et il le mesure avec un <b>potentiomètre qui SIMULE l'anémomètre</b> : tourner le bouton, c'est faire souffler le vent. <i>(Matériel réel de la version 🅰 : très basse tension 5 V uniquement.)</i></p>
+  <p style="font-size:.85em;color:var(--sub)"><i>Le courrier de la mairie est un <b>scénario pédagogique fictif inspiré de situations réelles</b> : la commande, elle, est inventée pour la séquence — les seuils, non.</i></p>
   <div class="retenir" style="margin-top:1rem"><b>🌀 Aux Antilles, la vigilance cyclonique compte CINQ niveaux</b> — et elle ne s'arrête pas au rouge :
     <b>jaune</b> (soyez attentif) → <b>orange</b> (préparez-vous) → <b>rouge</b> (confinement : plus personne dehors)
     → <b>violet</b> (confinement absolu, danger extrême — même les secours ne circulent plus) → <b>gris</b>
     (phase de sauvegarde, après le passage : on ressort prudemment, on fait le bilan et on porte secours).
-    <b>Notre prototype n'en programme que trois</b> (veille · vigilance · alerte) : c'est une <b>maquette scolaire</b>,
-    pas un dispositif officiel. Retiens l'ordre complet — <i>du jaune au gris en passant par le violet</i> — il revient
-    dans le défi bonus.</div>
+    Retiens l'ordre complet — <i>du jaune au gris en passant par le violet</i> — il revient dans le défi bonus.</div>
+
+  <div class="retenir" style="margin-top:1rem"><b>📣 Mesure, vigilance, alerte : trois choses différentes</b> — et
+    c'est la clé pour comprendre ce que ta station peut, et ne peut pas, faire.
+    <div style="overflow-x:auto;margin-top:10px">
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr><th scope="col">Ce que c'est</th><th scope="col">Qui la produit</th><th scope="col">Ce que ça dit</th></tr></thead>
+        <tbody>
+          <tr><td><b>La mesure</b></td><td>un <b>capteur</b> — l'anémomètre de ta station</td><td>« le vent souffle à 122 km/h ». Un nombre, rien d'autre. Aucune décision.</td></tr>
+          <tr><td><b>La vigilance</b></td><td><b>Météo-France</b>, qui émet les bulletins de vigilance cyclonique</td><td>« voilà ce qui risque d'arriver, et à quel point il faut s'y préparer ». C'est une <b>prévision</b>, et elle croise le vent, la pluie, la houle et la trajectoire.</td></tr>
+          <tr><td><b>L'alerte</b></td><td>la <b>préfecture</b>, qui émet les alertes à la population <b>avec les consignes de sécurité</b></td><td>« voilà ce que vous devez faire, maintenant » : rester chez soi, ne pas circuler, fermer les écoles. C'est une <b>décision</b> qui engage.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:10px 0 0"><b>Ta station s'arrête à la première ligne.</b> Elle mesure, elle affiche, elle alerte
+    <i>les gens qui sont devant elle</i> — elle ne prononce ni vigilance ni alerte, et elle ne le pourra jamais :
+    ce ne sont pas des mesures, ce sont des <b>décisions humaines</b>, prises par des institutions responsables de
+    leurs conséquences. C'est pour cela que les niveaux de notre prototype s'appellent <b>veille · tempête tropicale ·
+    ouragan · ouragan majeur</b> — des états du vent — et non « vigilance jaune » ou « alerte rouge ».</p>
+    <p style="margin:8px 0 0;font-size:.9em;color:var(--sub)">Source : préfecture de la Martinique, risque cyclonique
+    — « les bulletins de vigilance cyclonique sont émis par Météo France », « les alertes à la population sont émises
+    par la Préfecture avec des consignes de sécurité ».</p></div>
 
   <details class="prof approfondissement" style="margin-top:1rem">
     <summary>🗽 Pourquoi New York lit-elle aussi ce dossier ?</summary>
@@ -374,7 +449,7 @@
   <h2>💭 Mes hypothèses de départ</h2>
   <p>Avant les activités, réponds avec tes idées actuelles. Tu y reviendras à la fin : avoir changé d'avis, c'est avoir appris !</p>
   <div class="exo">
-    <label for="hyp1"><b>1.</b> D'après toi, de quoi le programme de la station a-t-il besoin pour décider entre « veille », « vigilance » et « alerte » ?</label>
+    <label for="hyp1"><b>1.</b> D'après toi, de quoi le programme de la station a-t-il besoin pour décider entre « veille », « tempête tropicale », « ouragan » et « ouragan majeur » ?</label>
     <textarea id="hyp1" placeholder="J'imagine que le programme…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
@@ -413,27 +488,29 @@
   <h2>🧰 Choix de l'outil</h2>
   <table class="refs">
     <tr><th>Outil retenu</th><th>Pourquoi</th><th>Alternative</th></tr>
-    <tr><td><b>Vittascience</b> — interface Arduino, mode BLOCS (fr.vittascience.com)</td><td>Programmation par blocs en français <b>avec simulateur intégré</b> : chaque palier se vérifie immédiatement, <b>sans carte, sans câble, sans attendre son tour</b> — y compris à la maison. Le téléversement vers l'UNO reste possible pour la version 🅰. C'est la simulation qui a fait la différence : c'est elle qui permet de tester les <b>frontières</b> (39/40, 69/70), geste central de la compétence C8.3.<br><i>Écart assumé :</i> Vittascience demande une connexion Internet — un repli hors-ligne complet est prévu en séance 2.</td><td><b>ArduBlock Éducation 1.7</b> (le logiciel du labo, sans simulateur) : conservé en <b>bonus facultatif</b> de la séance 2, avec les captures réelles des paliers 1 et 2 · Arduino IDE avec le programme C++ de référence (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>)</td></tr>
-    <tr><td>Arduino UNO + shield Grove — <b>maquette de programmation</b> (séance 2)</td><td>Le montage sur lequel tourne le programme Vittascience : capteur rotatif Grove (<b>A0</b>), voyants vert (<b>D2</b>), orange (<b>D3</b>), rouge (<b>D4</b>), buzzer (<b>D5</b>). Très basse tension 5 V. <b>Utilisable sans aucun matériel</b> grâce au simulateur.</td><td>Le simulateur intégré de Vittascience</td></tr>
-    <tr><td>Arduino UNO + shield Grove — <b>station du labo</b> (versions 🅰, séances 3 et 4)</td><td>Matériel confirmé du labo, avec l'interface humain-machine complète : LCD RGB (I2C), bouton d'acquittement (D2), DEL (D3), buzzer (D5), potentiomètre « anémomètre simulé » (A1), en km/h. C'est la station que l'on <b>recette</b>.</td><td>Banc de simulation intégré à cette page (version 🅱)</td></tr>
+    <tr><td><b>Vittascience</b> — interface Arduino, mode BLOCS (fr.vittascience.com)</td><td>Programmation par blocs en français <b>avec simulateur intégré</b> : chaque palier se vérifie immédiatement, <b>sans carte, sans câble, sans attendre son tour</b> — y compris à la maison. Le téléversement vers l'UNO reste possible pour la version 🅰. C'est la simulation qui a fait la différence : c'est elle qui permet de tester les <b>six frontières</b> (62/63, 117/118, 177/178), geste central de la compétence C8.3.<br><i>Écart assumé :</i> Vittascience demande une connexion Internet — un repli hors-ligne complet est prévu en séance 2.</td><td><b>ArduBlock Éducation 1.7</b> (le logiciel du labo, sans simulateur) : conservé en <b>bonus facultatif</b> de la séance 2, avec les captures réelles des paliers 1 et 2 · Arduino IDE avec le programme C++ de référence (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>)</td></tr>
+    <tr><td>Arduino UNO + shield Grove — <b>le montage de la station</b> (séances 2 à 4)</td><td>Un seul et même montage du début à la fin : potentiomètre « anémomètre simulé » (<b>A1</b>), voyants vert (<b>D6</b>), jaune (<b>D7</b>), orange (<b>D3</b>), rouge (<b>D4</b>), buzzer (<b>D5</b>), bouton d'acquittement (<b>D2</b>), écran LCD RGB (<b>I2C</b>). Très basse tension 5 V. <b>Utilisable sans aucun matériel</b> grâce au simulateur.</td><td>Le simulateur intégré de Vittascience</td></tr>
+    <tr><td>Le même montage, <b>au labo</b> (versions 🅰, séances 3 et 4)</td><td>Matériel confirmé du labo. C'est là que l'interface humain-machine prend tout son sens : le bouton d'acquittement se presse vraiment, et c'est cette station-là que l'on <b>recette</b>.</td><td>Banc de simulation intégré à cette page (version 🅱)</td></tr>
     <tr><td>Banc de simulation intégré (cette page)</td><td>La MÊME station, simulée : curseur de vent, LCD, DEL, buzzer, bouton d'acquittement. Fonctionne hors connexion, trace tes expériences, sert de banc d'essai pour la recette.</td><td>—</td></tr>
   </table>
   <p style="font-size:.85em;color:var(--sub)">Côté professeur : un <b>banc Docker</b> (dossier <code>banc-docker/</code>) vérifie que le programme C++ de référence compile pour <code>arduino:avr:uno</code> — réservé à l'enseignant, les élèves n'en ont pas besoin.</p>
 </section>
 
-<section class="card">
-  <h2>🔀 Trois façons de vivre la séquence</h2>
+<section class="card" id="choix-parcours">
+  <h2>🔀 Choisis ta façon de vivre la séquence</h2>
+  <p>Les trois parcours visent les <b>mêmes</b> objectifs et donnent lieu aux <b>mêmes</b> validations : le 🅲 n'est pas un lot de consolation. Ce que tu choisis ici ne change pas le travail demandé — cela range simplement au second plan ce qui ne te concerne pas.</p>
+  <p style="font-size:.92em;color:var(--sub)">Le sélecteur <b>🔀 Mon parcours</b> est en haut de page, sous la barre d'outils : il te suit d'une page à l'autre.</p>
   <div class="versions">
-    <div class="version va"><h4>🅰 Matériel réel</h4>
-      <p><b>Séance 2 (maquette) :</b> Arduino UNO + Grove Base Shield (sélecteur <b>5 V</b>), capteur rotatif sur <b>A0</b>, voyants <b>D2</b> vert · <b>D3</b> orange · <b>D4</b> rouge, buzzer <b>D5</b> — programme construit en blocs sur <b>Vittascience</b> et téléversé pour de vrai.</p>
-      <p><b>Séances 3 et 4 (station du labo) :</b> potentiomètre sur <b>A1</b>, bouton d'acquittement sur <b>D2</b>, DEL sur <b>D3</b>, buzzer sur <b>D5</b>, LCD RGB sur <b>I2C</b> — c'est la station complète, celle que l'on recette.</p>
+    <div class="version va" data-parcours="a"><h4>🅰 Matériel réel</h4>
+      <p><b>Un seul montage, de la séance 2 à la séance 4 :</b> Arduino UNO + Grove Base Shield (sélecteur <b>5 V</b>), potentiomètre sur <b>A1</b>, voyants <b>D6</b> vert · <b>D7</b> jaune · <b>D3</b> orange · <b>D4</b> rouge, buzzer <b>D5</b>, bouton d'acquittement <b>D2</b>, écran LCD RGB sur <b>I2C</b> — programme construit en blocs sur <b>Vittascience</b> et téléversé pour de vrai.</p>
+      <p><b>Ce qui change d'une séance à l'autre</b>, ce n'est pas le câblage : c'est ce que le programme sait faire. Séance 2, il décide et il affiche ; séance 3, il écoute l'humain.</p>
       <p style="color:var(--sub)">Sécurité : très basse tension uniquement, jamais de secteur 230 V ; câblage vérifié par le professeur avant branchement USB ; ne jamais brancher ou débrancher un module sous tension.</p></div>
-    <div class="version vb"><h4>🅱 Simulation</h4>
-      <p>Deux simulateurs, deux rôles : celui de <b>Vittascience</b> pour <b>construire et éprouver ton programme</b> en séance 2 (échelle 0-100), et le <b>banc de simulation intégré</b> à cette page pour <b>vivre la station complète</b> — mêmes seuils, bouton d'acquittement, en km/h. Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
-    <div class="version vc"><h4>🅲 Sans matériel</h4>
-      <p>Tout est dans la page : le banc de simulation + des <b>traces d'exécution enregistrées</b> à analyser dans les activités 5 et 7. Personne n'est pénalisé si le matériel manque — y compris à la maison.</p></div>
+    <div class="version vb" data-parcours="b"><h4>🅱 Simulation</h4>
+      <p>Deux simulateurs, deux rôles : celui de <b>Vittascience</b> pour <b>construire et éprouver ton programme</b> en séance 2, et le <b>banc de simulation intégré</b> à cette page pour <b>vivre la station complète</b> — bouton d'acquittement compris. <b>Même échelle des deux côtés</b> (0 à 250 km/h) et <b>mêmes seuils</b> (63, 118, 178) : ce que tu vérifies chez l'un se retrouve chez l'autre. Chaque expérience faite au banc est tracée et comptera pour valider tes activités.</p></div>
+    <div class="version vc" data-parcours="c"><h4>🅲 Sans matériel</h4>
+      <p>Tout est dans la page : le banc de simulation + des <b>traces d'exécution enregistrées</b> à analyser dans les activités 5 et 7, et les <b>treize captures réelles</b> du programme de référence. Personne n'est pénalisé si le matériel manque — y compris à la maison.</p></div>
   </div>
-  <p style="font-size:.85em;color:var(--sub)">Les trois versions visent les <b>mêmes</b> objectifs : la 🅲 n'est pas un lot de consolation.</p>
+  <p style="font-size:.85em;color:var(--sub)">Tu peux changer d'avis à tout moment : ce choix est enregistré avec ton travail, et « Tout afficher » remet tout en place.</p>
 </section>
 <div class="seance-tabs" id="seances" role="tablist" aria-label="Séances de la séquence">
   <button class="seance-tab active" data-panel="s1" role="tab" aria-selected="true">Séance 1<br><small>« La mairie vous appelle »</small><span class="done" id="done-s1"></span></button>
@@ -445,12 +522,12 @@
 
 <section class="card" id="bancCard" aria-labelledby="banc-titre">
   <h2 id="banc-titre">🌀 Le banc d'essai de la station (version 🅱 — toujours disponible)</h2>
-  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1), l'écran, la DEL (D3), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 4.</p>
+  <p style="font-size:.9em;color:var(--sub)">C'est la station, simulée fidèlement : le curseur joue le rôle du potentiomètre-anémomètre (A1) ; l'écran, les quatre voyants (vert D6, jaune D7, orange D3, rouge D4), le buzzer (D5) et le bouton (D2) réagissent comme sur la vraie carte — y compris la boucle du programme, exécutée environ 5 fois par seconde. <b>Tes expériences ici sont tracées</b> : elles servent à valider les activités et à exécuter ta recette de la séance 4.</p>
   <div class="banc">
     <div>
       <label for="simVent"><b>🌬 Vitesse du vent simulée (tourne le potentiomètre) :</b></label>
       <input type="range" id="simVent" min="0" max="250" value="42" step="1" aria-describedby="simVentVal">
-      <div class="assoc" style="margin-top:6px"><label for="simVentNum" id="simVentVal">Valeur exacte (km/h) — pratique pour viser 99, 100, 149, 150 :</label><input type="number" id="simVentNum" min="0" max="250" step="1" value="42"></div>
+      <div class="assoc" style="margin-top:6px"><label for="simVentNum" id="simVentVal">Valeur exacte (km/h) — pratique pour viser 62, 63, 117, 118, 177, 178 :</label><input type="number" id="simVentNum" min="0" max="250" step="1" value="42"></div>
       <p style="font-size:.82em;color:var(--sub)">Mesure brute correspondante (CAN 10 bits) : <b id="simBrut" style="color:var(--hl)">—</b> / 1023</p>
       <div class="station-io">
         <button class="btn-acquit" id="btnAcquit">🖐 ACQUITTER (bouton D2)</button>
@@ -460,19 +537,23 @@
     </div>
     <div>
       <div class="lcd-sim lcd-vert" id="simLcd" role="status" aria-live="polite">
-        <div id="simL1">Veille</div>
+        <div id="simL1">VEILLE</div>
         <div id="simL2">Vent: 42 km/h</div>
       </div>
       <div class="station-io" aria-live="polite">
-        <span><span class="del-sim" id="simDel"></span> <span style="font-size:.85em">DEL (D3)</span></span>
+        <span><span class="del-sim vert" id="simDelVert"></span> <span style="font-size:.85em">vert D6</span></span>
+        <span><span class="del-sim jaune" id="simDelJaune"></span> <span style="font-size:.85em">jaune D7</span></span>
+        <span><span class="del-sim orange" id="simDelOrange"></span> <span style="font-size:.85em">orange D3</span></span>
+        <span><span class="del-sim rouge" id="simDelRouge"></span> <span style="font-size:.85em">rouge D4</span></span>
         <span class="buzzer-sim" id="simBuz">🔇 buzzer muet</span>
       </div>
+      <p style="font-size:.82em;color:var(--sub);margin:2px 0 8px">Un <b>seul</b> voyant allumé à la fois. Le <b>vert est fixe</b> ; les trois autres <b>pulsent</b> — la pulsation est un signal, pas une décoration. Le niveau est <b>toujours écrit</b> sur l'écran : tu n'as jamais besoin de la couleur seule pour le lire.</p>
       <ul class="verrous-liste" id="verrousListe" aria-label="Expériences tracées au banc">
         <li id="v-lecture">☐ J'ai fait varier le vent et observé la mesure</li>
-        <li id="v-niveaux">☐ J'ai atteint les 3 niveaux (veille · vigilance · alerte)</li>
+        <li id="v-niveaux">☐ J'ai atteint les 4 niveaux (veille · tempête tropicale · ouragan · ouragan majeur)</li>
         <li id="v-acquit">☐ J'ai acquitté une alarme qui sonnait</li>
         <li id="v-retrigger">☐ Après acquittement, j'ai déclenché une NOUVELLE alerte (le buzzer est reparti)</li>
-        <li id="v-bornes">☐ J'ai testé les 4 frontières : 99 · 100 · 149 · 150 km/h</li>
+        <li id="v-bornes">☐ J'ai testé les 6 frontières : 62 · 63 · 117 · 118 · 177 · 178 km/h</li>
         <li id="v-chrono">☐ J'ai mesuré le temps de réponse</li>
       </ul>
     </div>
@@ -493,19 +574,41 @@
       <div><b>Production attendue :</b> tableau des exigences + chaînes complétées (à recopier dans le cahier).</div>
       <div><b>Ressources :</b> le courrier de la mairie (en haut de page) + le schéma des deux chaînes ci-dessous.</div>
     </div>
-    <img class="figure" src="Images/chaine_info_energie_station.svg" alt="Schéma des deux chaînes de la station : en haut la chaîne d'information (Acquérir avec l'anémomètre A1 et le bouton D2, Traiter avec le microcontrôleur et les seuils 100 et 150 km/h, Communiquer avec le LCD, la DEL et le buzzer), en bas la chaîne d'énergie (Alimenter par USB 5 V, Distribuer par le shield, Convertir en lumière et en son), et entre les deux la flèche d'ordre qui descend du bloc Traiter">
+    <img class="figure" src="Images/chaine_info_energie_station.svg" alt="Schéma des deux chaînes de la station : en haut la chaîne d'information (Acquérir avec l'anémomètre A1 et le bouton D2, Traiter avec le microcontrôleur et les seuils 63, 118 et 178 km/h, Communiquer avec le LCD, les quatre voyants et le buzzer), en bas la chaîne d'énergie (Alimenter par USB 5 V, Distribuer par le shield, Convertir en lumière et en son, et un bloc Transmettre dessiné en pointillés parce qu'il est absent de cette station), et entre les deux la flèche d'ordre qui descend du bloc Traiter et vient se poser sur le bloc Convertir" aria-describedby="desc-chaines">
+    <details class="description-image" id="desc-chaines">
+      <summary>📖 Description détaillée du schéma des deux chaînes</summary>
+      <p><b>En haut, la chaîne d'information.</b> Deux entrées à gauche : le <b>vent</b>, grandeur physique lue par l'anémomètre simulé sur <b>A1</b> (signal analogique 0-5 V) ; et l'<b>appui de l'agent</b> sur le bouton d'acquittement <b>D2</b> (signal logique 0 / 1). Toutes deux arrivent au bloc <b>ACQUÉRIR</b> (entrées A1 et D2, convertisseur analogique-numérique 10 bits, 0 à 1023). Une flèche étiquetée « <b>données</b> » mène à <b>TRAITER</b> (microcontrôleur + programme, seuils 63, 118 et 178 km/h, plus la mémoire de l'acquittement). Une flèche étiquetée « <b>décisions</b> » mène à <b>COMMUNIQUER</b> (écran LCD avec le niveau et la vitesse, les quatre voyants, le buzzer), tourné vers l'agent d'accueil.</p>
+      <p><b>Entre les deux chaînes</b>, une grande flèche jaune descend de TRAITER et vient se poser précisément sur le bloc <b>CONVERTIR</b> : c'est l'<b>ORDRE</b>. Elle atterrit là parce qu'il n'y a <b>pas de préactionneur</b> dans cette station : la broche du microcontrôleur alimente elle-même le voyant et le buzzer. La commande et la puissance passent par le même fil — ce qui n'est possible que parce que la puissance en jeu est minuscule.</p>
+      <p><b>En bas, la chaîne d'énergie</b>, de gauche à droite : <b>ALIMENTER</b> (USB, 5 V, très basse tension) ; <b>DISTRIBUER</b> (le shield Grove répartit le 5 V vers chaque module) ; <b>CONVERTIR</b> (électricité → lumière pour les voyants, électricité → son pour le buzzer). Un quatrième bloc, <b>TRANSMETTRE</b>, est dessiné <b>en pointillés et grisé : il est ABSENT</b>. Transmettre, c'est acheminer un <b>mouvement</b> (engrenage, courroie, axe) — et ici rien ne bouge. Une station qui ouvrirait un volet anticyclonique, elle, en aurait besoin.</p>
+    </details>
+
+    <details class="approfondissement" style="margin:1rem 0">
+      <summary>🔎 Deux questions que le schéma soulève — et leur réponse complète</summary>
+      <p><b>1. Pourquoi la flèche d'ORDRE arrive-t-elle sur CONVERTIR, et pas ailleurs ?</b> Dans la plupart des systèmes, elle arrive sur un <b>préactionneur</b> : un relais, un contacteur, un pont en H — l'organe qui reçoit un petit signal de commande et laisse passer une grosse énergie. Notre station n'en a pas : une broche de l'Arduino UNO fournit <b>20 mA</b> de façon nominale (et ne doit jamais dépasser <b>40 mA</b>, sous peine de destruction du microcontrôleur — <a href="https://store.arduino.cc/products/arduino-uno-rev3" target="_blank" rel="noopener">fiche technique officielle</a>), et un voyant se contente justement d'une vingtaine de milliampères. La broche peut donc <b>commander ET alimenter</b> : un seul fil fait les deux.</p>
+      <p><b>2. Pourquoi n'y a-t-il pas de fonction TRANSMETTRE ?</b> Parce que <b>rien ne se déplace</b>. Transmettre, c'est acheminer et adapter un mouvement — un réducteur, une courroie, une crémaillère. Notre station allume et sonne : la lumière et le son ne sont pas des mouvements qu'il faut conduire quelque part. Un bloc qui n'a rien à faire ne se dessine pas « pour faire complet » : on montre qu'on l'a cherché, et on dit pourquoi il est absent.</p>
+      <p>La planche ci-dessous compare <b>trois cas</b> — et c'est en les mettant côte à côte qu'on voit la règle apparaître.</p>
+      <img class="figure" src="Images/ordre_preactionneur_trois_cas.svg" alt="Trois cas comparés en trois bandes. Cas 1, notre station : la flèche d'ordre part de Traiter et arrive directement sur Convertir, le voyant 5 volts d'environ 20 milliampères, sans préactionneur et sans Transmettre. Cas 2, un gyrophare 12 volts d'environ 1 ampère : la flèche d'ordre arrive sur un relais, appelé préactionneur, alimenté par une alimentation 12 volts séparée, et le gyrophare reste le bloc Convertir ; un avertissement rappelle qu'un ampère vaut cinquante fois les vingt milliampères nominaux d'une broche. Cas 3, un portail anticyclonique : la flèche d'ordre arrive sur un pont en H, puis le moteur convertit l'électricité en rotation, puis un bloc Transmettre — réducteur et crémaillère — achemine et adapte ce mouvement jusqu'au vantail qui se ferme" aria-describedby="desc-3cas">
+      <details class="description-image" id="desc-3cas">
+        <summary>📖 Description détaillée de la planche des trois cas</summary>
+        <p><b>① Notre station — un voyant 5 V (≈ 20 mA).</b> L'ORDRE part de TRAITER (broche D4) et arrive <b>directement</b> sur CONVERTIR, c'est-à-dire le voyant. La broche fait deux choses à la fois : elle commande et elle alimente. Aucun préactionneur, aucun TRANSMETTRE.</p>
+        <p><b>② Un gyrophare 12 V (≈ 1 A).</b> L'ORDRE part de TRAITER et arrive sur un <b>RELAIS</b> — le préactionneur. Le relais est relié d'un côté à une <b>alimentation 12 V séparée</b>, de l'autre au gyrophare, qui reste le bloc CONVERTIR. Brancher le gyrophare en direct détruirait le microcontrôleur : 1 A, c'est <b>50 fois</b> les 20 mA nominaux et <b>25 fois</b> le maximum absolu de 40 mA. Le relais ne fabrique pas d'énergie : c'est un <b>interrupteur commandé</b>, il ouvre la porte à celle du 12 V. Toujours pas de TRANSMETTRE : le gyrophare tourne sur lui-même, mais rien n'est acheminé.</p>
+        <p><b>③ Un portail anticyclonique.</b> L'ORDRE arrive sur un <b>pont en H</b> (préactionneur qui choisit en plus le sens de rotation), puis <b>CONVERTIR</b> — le moteur transforme l'électricité en mouvement de rotation —, puis enfin <b>TRANSMETTRE</b> : le réducteur et la crémaillère acheminent ce mouvement jusqu'au vantail et l'adaptent (beaucoup de tours rapides et peu de force deviennent un déplacement lent et fort). Le vantail se ferme.</p>
+        <p><b>La règle, en une phrase :</b> la flèche d'ORDRE atterrit sur le <b>premier bloc de la chaîne d'énergie qu'elle commande</b> — le convertisseur lui-même quand la puissance est minuscule, le préactionneur dès qu'elle ne l'est plus.</p>
+      </details>
+      <p style="font-size:.9em;color:var(--sub)"><b>Source de la valeur des broches :</b> fiche technique officielle de l'Arduino UNO Rev3 — « DC Current per I/O Pin : 20 mA », avec la mention qu'un maximum de 40 mA ne doit jamais être dépassé sous peine de dommage permanent du microcontrôleur.</p>
+    </details>
     <div class="consigne"><b>Consigne :</b> a) relis le courrier de la mairie et repère les exigences ; b) place chaque organe dans sa fonction ; c) justifie la place du bouton d'acquittement — c'est LA nouveauté de cette séquence.</div>
     <div class="exo">
       <h4>a) Le courrier, ligne à ligne</h4>
       <div class="assoc"><label for="a1_e1">« réagir en moins d'une seconde » est une exigence de…</label><select id="a1_e1"><option value="">— choisir —</option><option>comportement (ce que fait la station)</option><option>performance (à quelle vitesse / avec quelle qualité)</option><option>coût</option><option>esthétique</option></select></div>
       <div class="assoc"><label for="a1_e2">« l'agent peut acquitter l'alarme d'un appui » est une exigence de…</label><select id="a1_e2"><option value="">— choisir —</option><option>comportement (ce que fait la station)</option><option>performance (à quelle vitesse / avec quelle qualité)</option><option>coût</option><option>esthétique</option></select></div>
-      <div class="assoc"><label for="a1_e3">Qui fournit les valeurs 100 et 150 km/h ?</label><select id="a1_e3"><option value="">— choisir —</option><option>le cahier des charges de la mairie</option><option>le hasard</option><option>le programme les invente</option><option>le potentiomètre</option></select></div>
+      <div class="assoc"><label for="a1_e3">Qui fournit les valeurs 63, 118 et 178 km/h ?</label><select id="a1_e3"><option value="">— choisir —</option><option>le cahier des charges de la mairie</option><option>le hasard</option><option>le programme les invente</option><option>le potentiomètre</option></select></div>
       <h4>b) Chaque organe à sa place</h4>
       <div class="assoc"><label for="a1_1">Potentiomètre « anémomètre » (A1)</label><select id="a1_1"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
       <div class="assoc"><label for="a1_2">Bouton d'acquittement (D2)</label><select id="a1_2"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
       <div class="assoc"><label for="a1_3">Microcontrôleur + programme</label><select id="a1_3"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
       <div class="assoc"><label for="a1_4">Écran LCD RGB (I2C)</label><select id="a1_4"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
-      <div class="assoc"><label for="a1_5">DEL rouge (D3) et buzzer (D5)</label><select id="a1_5"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
+      <div class="assoc"><label for="a1_5">Les quatre voyants (D6, D7, D3, D4) et le buzzer (D5)</label><select id="a1_5"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
       <div class="assoc"><label for="a1_6">Câble USB 5 V</label><select id="a1_6"><option value="">— choisir —</option><option>Acquérir</option><option>Traiter</option><option>Communiquer</option><option>Alimenter</option></select></div>
       <h4>c) La nouveauté</h4>
       <label for="a1_just" style="display:block"><b>Justifie :</b> le bouton d'acquittement fait entrer une information dans la station. Laquelle, et qui la produit ? En quoi est-ce différent de l'anémomètre ?</label>
@@ -523,12 +626,13 @@
       <div class="feedback" id="fb1" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Comportement = « QUE fait la station ? » ; performance = « à quelle VITESSE, avec quelle précision ? ». Pour b) : cet organe capte-t-il, décide-t-il, diffuse-t-il, ou fournit-il seulement de l'énergie ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le bouton est du côté « Acquérir » : il fait ENTRER une information (l'appui) exactement comme l'anémomètre fait entrer le vent. La différence est la SOURCE : l'anémomètre capte le monde physique, le bouton capte une décision humaine. Le LCD, la DEL et le buzzer font SORTIR l'information : « Communiquer ».</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Le bouton est du côté « Acquérir » : il fait ENTRER une information (l'appui) exactement comme l'anémomètre fait entrer le vent. La différence est la SOURCE : l'anémomètre capte le monde physique, le bouton capte une décision humaine. Le LCD, les voyants et le buzzer font SORTIR l'information : « Communiquer ».</p></details>
     <details class="correction"><summary>✅ Correction complète (à ouvrir après vérification)</summary>
-      <p><b>a)</b> « moins d'une seconde » → <b>performance</b> · « acquitter d'un appui » → <b>comportement</b> · 100 et 150 km/h → <b>le cahier des charges de la mairie</b> (jamais le hasard : en séance 4, la recette vérifiera CES valeurs-là).</p>
-      <p><b>b)</b> potentiomètre → Acquérir · bouton → <b>Acquérir</b> · microcontrôleur → Traiter · LCD → Communiquer · DEL + buzzer → Communiquer · USB → Alimenter.</p>
+      <p><b>a)</b> « moins d'une seconde » → <b>performance</b> · « acquitter d'un appui » → <b>comportement</b> · 63, 118 et 178 km/h → <b>le cahier des charges de la mairie</b> (jamais le hasard : en séance 4, la recette vérifiera CES valeurs-là).</p>
+      <p><b>b)</b> potentiomètre → Acquérir · bouton → <b>Acquérir</b> · microcontrôleur → Traiter · LCD → Communiquer · les 4 voyants + buzzer → Communiquer · USB → Alimenter.</p>
       <p><b>c) Justification attendue :</b> le bouton fait entrer l'information « l'agent a pris connaissance de l'alarme », produite par un <b>humain</b>. L'anémomètre capte une grandeur <b>physique</b> (le vent) sans intervention humaine ; le bouton capte une <b>décision humaine</b>. Ce dialogue — la machine alerte, l'humain répond, la machine en tient compte — est l'<b>interaction humain-machine</b> exigée par le programme (3e_C9.2).</p>
       <div class="regle-or-schema" role="note">📐 Règle d'or du schéma : l'INFORMATION en haut, l'ÉNERGIE en bas, la flèche d'ORDRE qui descend — le cerveau au-dessus des muscles, la commande au-dessus de la puissance. La disposition EST une leçon : elle montre qui commande, sans un mot.</div>
+      <p><b>Où atterrit cette flèche, exactement ?</b> Sur <b>CONVERTIR</b> ici, parce qu'il n'y a pas de préactionneur : une broche de l'UNO donne 20 mA, et un voyant s'en contente. Avec un gyrophare de 12 V, elle atterrirait sur un <b>relais</b>. Et <b>TRANSMETTRE</b> est absent parce que rien ne se déplace. Les trois cas sont dépliés dans l'encadré 🔎 au-dessus de la consigne.</p>
       <p><b>Recopie les deux chaînes dans ton cahier</b> en respectant cette disposition : c'est elle qu'on te demandera au DNB.</p>
       <p><b>Limite :</b> le bouton pourrait aussi être vu comme une « commande » plutôt qu'un capteur — en 3e, on retient qu'il fait ENTRER une information, donc Acquérir.</p>
     </details>
@@ -540,7 +644,7 @@
   <div class="activite" id="act2">
     <header><span class="num">Activité 2</span><h3>De l'algorithme en français à l'algorigramme</h3><span class="duree">⏱ ~35 min</span></header>
     <div class="meta-grid">
-      <div><b>Objectif :</b> élaborer l'algorithme des trois niveaux d'alerte, puis le lire sous forme d'algorigramme normalisé.</div>
+      <div><b>Objectif :</b> élaborer l'algorithme des quatre niveaux d'alerte, puis le lire sous forme d'algorigramme normalisé.</div>
       <div><b>Compétence :</b> 3e_C9.2 — élaborer l'algorithme avant d'écrire le programme.</div>
       <div><b>Production attendue :</b> algorithme complété + algorigramme recopié dans le cahier.</div>
       <div><b>Ressources :</b> l'algorigramme ci-dessous (à lire APRÈS avoir complété l'algorithme).</div>
@@ -551,48 +655,72 @@
       <p style="font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#08132c;padding:12px;border-radius:8px;line-height:2">
         RÉPÉTER sans fin :<br>
         &nbsp;&nbsp;lire la vitesse du vent<br>
-        &nbsp;&nbsp;SI vitesse ≥ <input type="number" id="a2_s1" style="width:80px;display:inline-block"> ALORS niveau ← alerte rouge<br>
-        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" style="width:80px;display:inline-block"> ALORS niveau ← vigilance orange<br>
-        &nbsp;&nbsp;SINON niveau ← <select id="a2_s3" aria-label="niveau si aucun seuil n'est atteint" style="width:150px;display:inline-block"><option value="">— choisir —</option><option>veille</option><option>alerte rouge</option><option>vigilance orange</option><option>panne</option></select><br>
+        &nbsp;&nbsp;SI vitesse ≥ <input type="number" id="a2_s1" style="width:80px;display:inline-block"> ALORS niveau ← ouragan majeur<br>
+        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s2" style="width:80px;display:inline-block"> ALORS niveau ← ouragan<br>
+        &nbsp;&nbsp;SINON SI vitesse ≥ <input type="number" id="a2_s3" style="width:80px;display:inline-block"> ALORS niveau ← tempête tropicale<br>
+        &nbsp;&nbsp;SINON niveau ← <select id="a2_s4" aria-label="niveau si aucun seuil n'est atteint" style="width:150px;display:inline-block"><option value="">— choisir —</option><option>veille</option><option>ouragan majeur</option><option>tempête tropicale</option><option>panne</option></select><br>
         &nbsp;&nbsp;afficher le niveau et la vitesse
       </p>
       <h4>b) Lire l'algorigramme</h4>
-      <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station : ovale Début, rectangle Lire la vitesse du vent, losange vitesse supérieure ou égale à 150, si oui alerte rouge, sinon losange vitesse supérieure ou égale à 100, si oui vigilance orange, sinon veille ; les branches se rejoignent et une flèche remonte vers la lecture : c'est la boucle ; une bulle à contour violet en pointillés, rattachée à cette flèche de retour et marquée « commentaire — pas un symbole », explique la boucle sans faire partie de l'algorigramme ; légende des symboles ovale, rectangle, losange, flèche, bulle pointillée">
-      <div class="assoc"><label for="a2_q1">Le vent souffle à 130 km/h. Quel chemin l'algorigramme suit-il ?</label><select id="a2_q1"><option value="">— choisir —</option><option>losange 150 : NON → losange 100 : OUI → vigilance orange</option><option>losange 150 : OUI → alerte rouge</option><option>losange 100 : OUI → alerte rouge</option><option>aucun losange : veille</option></select></div>
-      <div class="assoc"><label for="a2_q2">Pourquoi teste-t-on 150 AVANT 100 ?</label><select id="a2_q2"><option value="">— choisir —</option><option>parce qu'une rafale à 180 km/h doit finir en « alerte », pas en « vigilance »</option><option>parce que 150 est plus facile à calculer</option><option>par habitude, l'ordre n'a aucun effet</option><option>parce que le losange 100 est en panne</option></select></div>
+      <img class="figure" src="Images/algorigramme_alerte.svg" alt="Algorigramme de la station d'alerte : quatre niveaux, trois losanges de décision." aria-describedby="desc-algo">
+      <details class="description-image" id="desc-algo">
+        <summary>📖 Description détaillée de l'algorigramme (utile si l'image est petite, illisible ou absente)</summary>
+        <p>On lit de haut en bas. Un <b>ovale</b> « DÉBUT », puis un <b>rectangle</b> « Lire la vitesse du vent (A1) »,
+        qui convertit la mesure brute 0-1023 en km/h de 0 à 250.</p>
+        <p>Vient ensuite une cascade de <b>trois losanges</b> de décision :</p>
+        <ol>
+          <li>« vitesse ≥ <b>178</b> km/h ? » (seuil ouragan majeur) — si <b>OUI</b> : rectangle
+            <b>OURAGAN MAJEUR</b>, écran rouge, voyant rouge D4, buzzer ;</li>
+          <li>sinon « vitesse ≥ <b>118</b> km/h ? » (seuil ouragan) — si <b>OUI</b> : rectangle
+            <b>OURAGAN</b>, écran orange, voyant orange D3 qui pulse ;</li>
+          <li>sinon « vitesse ≥ <b>63</b> km/h ? » (seuil tempête tropicale) — si <b>OUI</b> : rectangle
+            <b>TEMPÊTE TROPICALE</b>, écran jaune, voyant jaune D7 qui pulse ;</li>
+        </ol>
+        <p>si <b>NON</b> au dernier losange : rectangle <b>VEILLE</b>, écran vert, voyant vert D6 fixe, rien d'autre.</p>
+        <p>Les <b>quatre branches se rejoignent</b> en bas, puis une flèche remonte le long du bord gauche jusqu'au
+        rectangle de lecture : c'est <b>la boucle</b>, la station recommence sans fin, environ cinq fois par seconde.</p>
+        <p>Une <b>bulle à contour violet en pointillés</b>, rattachée à cette flèche de retour par un trait pointillé,
+        porte la mention « commentaire — pas un symbole » : elle explique la boucle sans faire partie de
+        l'algorigramme.</p>
+        <p>En haut à droite, un encadré rappelle la <b>légende des symboles</b> attendus au DNB : ovale = début / fin,
+        rectangle = traitement (action), losange = décision à deux sorties OUI / NON, flèche = sens de lecture,
+        bulle pointillée = commentaire.</p>
+      </details>
+      <div class="assoc"><label for="a2_q1">Le vent souffle à 130 km/h. Quel chemin l'algorigramme suit-il ?</label><select id="a2_q1"><option value="">— choisir —</option><option>losange 178 : NON → losange 118 : OUI → ouragan</option><option>losange 178 : OUI → ouragan majeur</option><option>losange 63 : OUI → ouragan majeur</option><option>aucun losange : veille</option></select></div>
+      <div class="assoc"><label for="a2_q2">Pourquoi teste-t-on 178 AVANT 118, et 118 avant 63 ?</label><select id="a2_q2"><option value="">— choisir —</option><option>parce qu'un vent à 200 km/h doit finir en « ouragan majeur », pas en « ouragan »</option><option>parce que 178 est plus facile à calculer</option><option>par habitude, l'ordre n'a aucun effet</option><option>parce que le losange 63 est en panne</option></select></div>
       <div class="assoc"><label for="a2_q3">Que représente la flèche qui remonte vers « Lire la vitesse » ?</label><select id="a2_q3"><option value="">— choisir —</option><option>la boucle : la station recommence sans fin</option><option>une erreur de dessin</option><option>le retour du courant électrique</option><option>la fin du programme</option></select></div>
       <div class="assoc"><label for="a2_q4">Dans un algorigramme, le losange représente…</label><select id="a2_q4"><option value="">— choisir —</option><option>une décision, avec deux sorties OUI / NON</option><option>une action</option><option>le début du programme</option><option>un capteur</option></select></div>
 
       <h4 style="margin-top:18px">c) Lire l'algorigramme au millimètre — six questions de plus</h4>
       <p style="font-size:.92em;color:var(--sub)">Les quatre premières questions t'ont fait suivre un chemin. Ces six-là te font <b>lire les symboles</b> et <b>tester les frontières</b> : c'est exactement le geste demandé au DNB.</p>
-      <div class="assoc"><label for="a2_q5">Le vent souffle à <b>150 km/h PILE</b>. Où l'algorigramme t'emmène-t-il ?</label><select id="a2_q5"><option value="">— choisir —</option><option>alerte rouge : « ≥ 150 » veut dire 150 COMPRIS</option><option>vigilance orange : 150 n'est pas encore « au-dessus » de 150</option><option>veille : le losange ne répond ni OUI ni NON</option><option>impossible à savoir sans faire tourner le programme</option></select></div>
-      <div class="assoc"><label for="a2_q6">Combien cet algorigramme compte-t-il de <b>rectangles de traitement</b> ?</label><select id="a2_q6"><option value="">— choisir —</option><option>4 : la lecture du vent, puis les trois niveaux</option><option>2 : les deux losanges</option><option>3 : seulement les trois niveaux</option><option>1 : la boucle</option></select></div>
+      <div class="assoc"><label for="a2_q5">Le vent souffle à <b>178 km/h PILE</b>. Où l'algorigramme t'emmène-t-il ?</label><select id="a2_q5"><option value="">— choisir —</option><option>ouragan majeur : « ≥ 178 » veut dire 178 COMPRIS</option><option>ouragan : 178 n'est pas encore « au-dessus » de 178</option><option>veille : le losange ne répond ni OUI ni NON</option><option>impossible à savoir sans faire tourner le programme</option></select></div>
+      <div class="assoc"><label for="a2_q6">Combien cet algorigramme compte-t-il de <b>rectangles de traitement</b> ?</label><select id="a2_q6"><option value="">— choisir —</option><option>5 : la lecture du vent, puis les quatre niveaux</option><option>3 : les trois losanges</option><option>4 : seulement les quatre niveaux</option><option>1 : la boucle</option></select></div>
       <div class="assoc"><label for="a2_q7">La bulle violette en pointillés « 🔁 LA BOUCLE », à gauche du dessin, c'est…</label><select id="a2_q7"><option value="">— choisir —</option><option>un commentaire de lecture : il explique le dessin sans faire partie de l'algorigramme</option><option>un rectangle de traitement : une action que la station exécute</option><option>un losange de décision déguisé</option><option>le symbole normalisé de la boucle</option></select></div>
       <div class="assoc"><label for="a2_q8">On <b>efface la flèche qui remonte</b>. Que devient la station ?</label><select id="a2_q8"><option value="">— choisir —</option><option>elle mesure le vent UNE SEULE FOIS, affiche un niveau, puis ne bouge plus</option><option>elle mesure deux fois plus vite</option><option>rien ne change : la flèche est décorative</option><option>elle repart au DÉBUT toute seule</option></select></div>
-      <div class="assoc"><label for="a2_q9">Combien de <b>chemins différents</b> peut suivre une mesure, entre la lecture du vent et le retour de boucle ?</label><select id="a2_q9"><option value="">— choisir —</option><option>3 — un par niveau : alerte, vigilance, veille</option><option>2 — un par losange</option><option>1 — l'algorigramme est une ligne droite</option><option>une infinité, puisque la boucle ne s'arrête jamais</option></select></div>
+      <div class="assoc"><label for="a2_q9">Combien de <b>chemins différents</b> peut suivre une mesure, entre la lecture du vent et le retour de boucle ?</label><select id="a2_q9"><option value="">— choisir —</option><option>4 — un par niveau : ouragan majeur, ouragan, tempête tropicale, veille</option><option>3 — un par losange</option><option>1 — l'algorigramme est une ligne droite</option><option>une infinité, puisque la boucle ne s'arrête jamais</option></select></div>
       <div class="assoc"><label for="a2_q10">Ce qu'un algorigramme ne dit <b>PAS</b> :</label><select id="a2_q10"><option value="">— choisir —</option><option>dans quel langage on programmera : blocs, C++, Python… le raisonnement, lui, reste le même</option><option>l'ordre dans lequel les tests se font</option><option>ce que le système fait quand aucun seuil n'est atteint</option><option>où se prennent les décisions</option></select></div>
 
       <button class="btn small" data-check="2" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb2" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Les deux seuils sont écrits noir sur blanc dans le courrier de la mairie. Pour b) : suis le chemin avec le doigt, losange par losange, en répondant OUI ou NON à chaque question. Pour c) : ne devine pas, <b>compte sur le dessin</b> — les rectangles, les chemins possibles — et relis la légende « 🎓 Les symboles » en haut à droite de l'image.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 150 ? NON → on descend au 2e losange. 130 ≥ 100 ? OUI → vigilance. Maintenant imagine 180 km/h avec les losanges INVERSÉS (100 testé d'abord) : 180 ≥ 100 ? OUI → « vigilance »… et le test 150 n'est jamais atteint. Voilà pourquoi l'ordre compte.</p>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>130 ≥ 178 ? NON → on descend au losange suivant. 130 ≥ 118 ? OUI → ouragan. Maintenant imagine 200 km/h avec les losanges INVERSÉS (63 testé d'abord) : 200 ≥ 63 ? OUI → « tempête tropicale »… et les tests 118 et 178 ne sont jamais atteints. Voilà pourquoi l'ordre compte.</p>
       <p><b>Pour c) :</b> le symbole « ≥ » se lit « supérieur <b>ou égal</b> » — la valeur du seuil est donc DEDANS. Les rectangles se repèrent à leur forme (angles droits) : la lecture du vent en est un, chaque niveau en est un. Une forme <b>en pointillés</b> n'est jamais un symbole d'algorigramme : c'est une note posée à côté du dessin, comme une bulle dans une BD. Et pour compter les chemins : chaque OUI qui sort d'un losange ouvre un chemin, le dernier NON en ouvre un aussi.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> SI vitesse ≥ <b>150</b> → alerte rouge ; SINON SI vitesse ≥ <b>100</b> → vigilance orange ; SINON → <b>veille</b>.</p>
-      <p><b>b)</b> 130 km/h → losange 150 : NON → losange 100 : OUI → <b>vigilance orange</b>. On teste 150 d'abord car <b>une rafale à 180 doit finir en alerte</b> : si on testait 100 d'abord, 180 ≥ 100 serait vrai et le programme s'arrêterait à « vigilance » — un bug dangereux. La flèche qui remonte est <b>la boucle</b> : une station de surveillance ne s'arrête jamais. Le losange est <b>une décision à deux sorties OUI/NON</b>.</p>
+      <p><b>a)</b> SI vitesse ≥ <b>178</b> → ouragan majeur ; SINON SI vitesse ≥ <b>118</b> → ouragan ; SINON SI vitesse ≥ <b>63</b> → tempête tropicale ; SINON → <b>veille</b>.</p>
+      <p><b>b)</b> 130 km/h → losange 178 : NON → losange 118 : OUI → <b>ouragan</b>. On teste 178 d'abord car <b>un vent à 200 km/h doit finir en ouragan majeur</b> : si on testait 63 d'abord, 200 ≥ 63 serait vrai et le programme s'arrêterait à « tempête tropicale » — un bug dangereux, et d'autant plus qu'il l'est deux fois ici, avec trois seuils au lieu de deux. La flèche qui remonte est <b>la boucle</b> : une station de surveillance ne s'arrête jamais. Le losange est <b>une décision à deux sorties OUI/NON</b>.</p>
       <p><b>c) Lecture fine — les six réponses.</b></p>
-      <p><b>150 km/h pile → alerte rouge :</b> « ≥ » se lit « supérieur OU ÉGAL », la valeur du seuil appartient au niveau du dessus. C'est LA frontière que tout protocole de recette doit tester (tu la retrouveras en séance 4, essai n° 7).</p>
-      <p><b>4 rectangles :</b> la lecture du vent, puis ALERTE ROUGE, VIGILANCE ORANGE et VEILLE ; les losanges ne sont pas des traitements, ils ne <i>font</i> rien, ils <i>demandent</i>.</p>
+      <p><b>178 km/h pile → ouragan majeur :</b> « ≥ » se lit « supérieur OU ÉGAL », la valeur du seuil appartient au niveau du dessus. Avec trois seuils, cela fait <b>six frontières</b> à tester — 62/63, 117/118, 177/178 — et tu les retrouveras toutes en séance 4.</p>
+      <p><b>5 rectangles :</b> la lecture du vent, puis OURAGAN MAJEUR, OURAGAN, TEMPÊTE TROPICALE et VEILLE ; les losanges ne sont pas des traitements, ils ne <i>font</i> rien, ils <i>demandent</i>.</p>
       <p><b>La bulle violette en pointillés est un commentaire :</b> elle explique le dessin, elle n'en fait pas partie. Repère infaillible : elle est <b>en pointillés</b> et <b>hors du flux</b> des flèches. Si tu recopies l'algorigramme au propre dans ton cahier, tu peux garder la note… mais pas sous forme de rectangle, sinon tu inventes une action qui n'existe pas.</p>
       <p><b>Sans la flèche de retour</b>, la station mesurerait le vent une seule fois, afficherait un niveau et resterait figée : une station de surveillance sans boucle ne surveille rien.</p>
-      <p><b>3 chemins :</b> OUI du losange 150, OUI du losange 100, NON du losange 100 ; ils se rejoignent avant la boucle.</p>
+      <p><b>4 chemins :</b> OUI du losange 178, OUI du losange 118, OUI du losange 63, NON du losange 63 ; ils se rejoignent avant la boucle. Retiens la règle : <b>autant de chemins que de niveaux</b> — un losange de plus, c'est un niveau de plus.</p>
       <p><b>Ce que l'algorigramme ne dit pas :</b> le langage. Blocs Vittascience, C++ ou Python, le raisonnement dessiné reste identique — c'est justement pour cela qu'on le dessine AVANT de choisir l'outil.</p>
       <p><b>Méthode :</b> élaborer l'algorithme AVANT de programmer, c'est décider des variables, des seuils et de l'ordre des tests en français — quand corriger ne coûte encore rien.</p>
       <p><b>Exemple pour s'en souvenir :</b> un videur vérifie d'abord la carte VIP, puis l'entrée normale : s'il vérifiait l'entrée normale d'abord, les VIP feraient la queue avec tout le monde.</p>
       <p><b>Limite :</b> notre algorithme relit le vent 5 fois par seconde — un vrai anémomètre lisse la mesure sur plusieurs secondes pour éviter qu'une rafale isolée fasse clignoter l'alerte.</p>
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser les deux seuils (tester 100 d'abord) — le niveau « alerte » devient inatteignable ; oublier le SINON et écrire deux SI indépendants — à 180 km/h les deux seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin ; lire « ≥ 150 » comme « au-dessus de 150 » et exclure 150 lui-même ; prendre la bulle de commentaire pour un symbole de l'algorigramme (et la recopier en rectangle dans son cahier) ; compter les losanges parmi les traitements.</div>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> inverser l'ordre des seuils (tester 63 d'abord) — les niveaux « ouragan » et « ouragan majeur » deviennent inatteignables ; oublier les SINON et écrire trois SI indépendants — à 200 km/h les trois seraient vrais l'un après l'autre et l'affichage dépendrait du dernier exécuté ; croire que la boucle est une erreur de dessin ; lire « ≥ 178 » comme « au-dessus de 178 » et exclure 178 lui-même ; prendre la bulle de commentaire pour un symbole de l'algorigramme (et la recopier en rectangle dans son cahier) ; compter les losanges parmi les traitements.</div>
     <div class="retenir"><b>📌 À retenir :</b> un <b>algorithme</b> s'élabore en français avant d'être traduit en blocs. Dans des SI/SINON en cascade, <b>on teste le seuil le plus haut d'abord</b>. L'<b>algorigramme</b> (🎓 attendu au DNB) le dessine : ovale = début/fin, rectangle = traitement, losange = décision OUI/NON, flèche qui remonte = boucle. <b>Seules ces formes-là sont des symboles</b> : tout ce qui est en pointillés, hors du flux des flèches, n'est qu'un commentaire de lecture. Et « <b>≥</b> » veut dire <b>supérieur OU ÉGAL</b> : le seuil appartient au niveau du dessus.</div>
     <div class="critere"><b>🎯 Critère de réussite :</b> algorithme 3/3 et lecture d'algorigramme au moins 9/10 (sur les questions b et c) — et tu sais expliquer à l'oral pourquoi 150 se teste avant 100, et pourquoi 150 km/h pile déclenche l'alerte.</div>
     <details class="prof approfondissement"><summary>🎓 Encart DNB — l'algorigramme est un grand classique de l'épreuve</summary>
@@ -600,6 +728,7 @@
     </details>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s2">Séance 2 — Programmer par paliers ›</button></p>
 </div>
 
 <!-- ══════════════════ SÉANCE 2 ══════════════════ -->
@@ -613,28 +742,25 @@
     <div class="meta-grid">
       <div><b>Objectif :</b> construire, dans <b>Vittascience (interface Arduino, mode BLOCS)</b>, le programme qui lit le vent, décide du niveau et déclenche l'alerte — et le vérifier dans le <b>simulateur intégré</b>.</div>
       <div><b>Compétence :</b> 3e_C9.2 — réaliser un programme commandant un système réel.</div>
-      <div><b>Production attendue :</b> les 4 programmes enregistrés sur Vittascience (<code>3e-STATION-palier1</code> … <code>3e-STATION-complet</code>, suivis de TON NOM) + les 3 états obtenus au simulateur + réponses vérifiées.</div>
-      <div><b>Ressources :</b> l'interface Vittascience intégrée ci-dessous, les 4 planches de paliers, le tableau de correspondance des deux échelles, et le banc d'essai de la station (en haut de page).</div>
+      <div><b>Production attendue :</b> les 4 programmes enregistrés sur Vittascience (<code>3e-STATION-palier1</code> … <code>3e-STATION-complet</code>, suivis de TON NOM) + les <b>4 niveaux</b> et les <b>6 frontières</b> obtenus au simulateur + le <b>journal de tes paliers</b> ci-dessous.</div>
+      <div><b>Ressources :</b> l'interface Vittascience intégrée ci-dessous, les 4 planches de paliers, et le banc d'essai de la station (en haut de page).</div>
     </div>
 
-    <div class="retenir"><b>⚖️ Deux échelles — à ne jamais mélanger.</b> Le <b>capteur rotatif</b> de la maquette ne mesure pas des km/h : il donne un <b>niveau de vent de 0 à 100</b>, sans unité. C'est cette échelle-là, et elle seule, qui vit dans ton programme. Les <b>km/h</b> (et les seuils 100 / 150 du courrier de la mairie) restent l'échelle de la <b>vraie station</b> : celle du banc d'essai, du protocole de recette et du procès-verbal. Le tableau ci-dessous est le <b>seul</b> pont autorisé entre les deux.
+    <div class="retenir"><b>📏 Une seule échelle, une seule station.</b> Tu programmes en <b>km/h</b>, du début à la fin — dans l'éditeur, au banc d'essai, dans le protocole de recette et dans le procès-verbal. Il n'y a pas d'échelle « d'exercice » à côté de l'échelle « réelle » : c'est la même, et chaque nombre porte son unité.
       <div style="overflow-x:auto;margin-top:10px">
         <table style="width:100%;border-collapse:collapse">
-          <caption style="text-align:left;font-size:.9em;color:var(--sub);padding-bottom:6px">Correspondance maquette ↔ station réelle (valeurs de <b>maquette scolaire</b> — ce ne sont pas les procédures officielles d'alerte)</caption>
-          <thead><tr><th scope="col">Dans ton programme (maquette)</th><th scope="col">Sur la vraie station</th><th scope="col">Niveau</th></tr></thead>
+          <caption style="text-align:left;font-size:.9em;color:var(--sub);padding-bottom:6px">Le montage et ses quatre niveaux — les seuils viennent de l'échelle de Saffir-Simpson</caption>
+          <thead><tr><th scope="col">Niveau</th><th scope="col">Vitesse</th><th scope="col">Voyant</th><th scope="col">Buzzer</th><th scope="col">Écran</th></tr></thead>
           <tbody>
-            <tr><td><code>niveau_vent</code> de 0 à 100</td><td>vitesse de 0 à 250 km/h</td><td>—</td></tr>
-            <tr><td><code>niveau_vent</code> &lt; 40</td><td>moins de 100 km/h</td><td>veille</td></tr>
-            <tr><td><code>seuil_vigilance</code> = <b>40</b></td><td><b>100 km/h</b></td><td>vigilance orange</td></tr>
-            <tr><td><code>seuil_alerte</code> = <b>70</b></td><td><b>150 km/h</b></td><td>alerte rouge</td></tr>
-            <tr><td>frontières à tester : 39 / 40 / 69 / 70</td><td>99 / 100 / 149 / 150 km/h</td><td>séance 4</td></tr>
-            <tr><td>entrée : capteur rotatif Grove sur <b>A0</b></td><td>potentiomètre « anémomètre simulé » sur <b>A1</b></td><td>Acquérir</td></tr>
-            <tr><td>sorties : voyants <b>D2</b> vert · <b>D3</b> orange · <b>D4</b> rouge + buzzer <b>D5</b></td><td>écran LCD couleur + DEL <b>D3</b> + buzzer <b>D5</b> + bouton <b>D2</b></td><td>Communiquer</td></tr>
+            <tr><td><b>VEILLE</b></td><td>moins de 63 km/h</td><td>vert <b>D6</b>, <b>fixe</b></td><td>muet</td><td>fond vert, « VEILLE »</td></tr>
+            <tr><td><b>TEMPÊTE TROPICALE</b></td><td>à partir de <b>63</b></td><td>jaune <b>D7</b>, qui pulse</td><td>muet</td><td>fond jaune</td></tr>
+            <tr><td><b>OURAGAN</b></td><td>à partir de <b>118</b></td><td>orange <b>D3</b>, qui pulse</td><td>muet</td><td>fond orange</td></tr>
+            <tr><td><b>OURAGAN MAJEUR</b></td><td>à partir de <b>178</b></td><td>rouge <b>D4</b>, qui pulse</td><td><b>sonne</b></td><td>fond rouge</td></tr>
           </tbody>
         </table>
       </div>
-      <p style="margin:8px 0 0"><b>Règle de travail :</b> dans l'interface Vittascience, tu parles en <b>niveau de vent (0-100)</b>. Dans le PV de recette, tu parles en <b>km/h</b>. Une phrase ne mélange jamais les deux.</p>
-      <p style="margin:8px 0 0;font-size:.93em">Les deux dernières lignes disent la même chose pour le <b>matériel</b> : la maquette et la station du labo ne sont pas câblées pareil. Ce n'est pas un détail à subir, c'est la leçon centrale de la séance — <b>le raisonnement ne dépend ni de l'échelle, ni du câblage, ni du logiciel</b>. Ce qui change, c'est la manière de le dire à une machine.</p>
+      <p style="margin:8px 0 0"><b>Entrée :</b> potentiomètre « anémomètre simulé » sur <b>A1</b> — lecture brute 0-1023, convertie en <b>0 à 250 km/h</b>. <b>Bouton d'acquittement</b> sur <b>D2</b> (séance 3). <b>Écran LCD RGB</b> sur <b>I2C</b>.</p>
+      <p style="margin:8px 0 0"><b>Un seul voyant allumé à la fois</b>, et le vert ne pulse pas : une lumière qui clignote en permanence, on finit par ne plus la voir. La pulsation doit rester un <b>signal</b>. Et le niveau est <b>toujours écrit en toutes lettres</b> sur l'écran : personne ne doit dépendre de la couleur ou du clignotement pour savoir où on en est.</p>
     </div>
 
     <div class="consigne"><b>Consigne :</b> avance <b>palier par palier</b> : à chaque palier, construis les blocs, lance le <b>simulateur</b>, compare avec la planche du résultat attendu, <b>enregistre sous le nom du palier</b>, PUIS passe au suivant. Tes manipulations au banc d'essai de cette page (en haut) sont tracées et comptent aussi pour la validation. Premier geste : <b>enregistre et nomme ton programme</b> <code>3e-STATION-palier1-TON NOM</code> (un programme sans nom est introuvable la semaine suivante).</div>
@@ -643,55 +769,115 @@
       <h4>🖥 L'interface Vittascience — ici même</h4>
       <p class="faire">👉 FAIS : programme directement dans le cadre ci-dessous. <b>Mode BLOCS</b> (bascule <b>BLOCS / CODE</b> en haut de l'espace de travail) : tu glisses les blocs depuis les catégories <b>Variables · Logique · Boucles · Entrées / sorties · Fonctions</b>, et tu vérifies ton programme avec le <b>simulateur</b> — <b>sans aucun matériel</b>.</p>
 
-      <!-- EMPLACEMENT DE L'IFRAME VITTASCIENCE.
-           Le code d'intégration officiel (Partager → Intégrer, sur fr.vittascience.com)
-           se colle ICI, en remplacement du bloc .repli-vitta ci-dessous. Ne pas
-           fabriquer l'URL d'embed à la main. Tant que le code n'est pas fourni,
-           le repli hors-ligne ci-dessous s'affiche : la séquence reste utilisable. -->
-      <div class="repli-vitta" style="border:2px dashed var(--hl);border-radius:10px;padding:16px;background:#08132c">
-        <p style="margin-top:0"><b>🔌 Si le cadre Vittascience ne s'affiche pas</b> (pas de connexion, filtrage du réseau du collège, page ouverte hors ligne) — tout reste faisable :</p>
-        <ol style="margin-bottom:8px">
-          <li><b>Plan A — dans un onglet :</b> ouvre <a href="https://fr.vittascience.com/arduino/" target="_blank" rel="noopener">fr.vittascience.com/arduino</a>, choisis l'interface <b>Arduino</b> en mode <b>BLOCS</b>, et construis le même programme. Les liens directs vers les programmes de la classe sont donnés par le professeur.</li>
-          <li><b>Plan B — sans connexion du tout :</b> les <b>planches de paliers</b> ci-dessous montrent le programme bloc à bloc, et le <b>banc d'essai</b> en haut de cette page reproduit le comportement de la station. Tu peux répondre à TOUTES les questions et valider l'activité — la construction des blocs se fera à la séance suivante ou à la maison.</li>
-        </ol>
-        <p style="margin-bottom:0;font-size:.9em;color:var(--sub)">Vittascience est le seul élément de cette séquence qui demande Internet. Tout le reste fonctionne hors connexion.</p>
+      <!-- Interface Vittascience intégrée — code d'intégration officiel
+           (Partager → Intégrer) du programme 3e-STATION-C-4niveaux-lcd. -->
+      <div class="vitta-cadre">
+        <iframe width='100%' height='620' allowfullscreen frameborder='0'
+                title="Éditeur Vittascience — interface Arduino en mode blocs, programme de la station d'alerte cyclonique"
+                style='border:1px #d6d6d6 solid;'
+                src="https://fr.vittascience.com/arduino/?link=6a8e2a2348ed2&embed=1"></iframe>
       </div>
-    </div>
+      <p style="font-size:.92em;color:var(--sub);margin-top:6px">Le cadre ci-dessus est l'<b>éditeur Vittascience lui-même</b> : tu y programmes et tu y simules, sans rien installer. Pour travailler au calme dans un onglet à part : <a href="https://fr.vittascience.com/arduino/?link=6a8e2a2348ed2" target="_blank" rel="noopener">ouvrir le programme dans un nouvel onglet</a>.</p>
+
+      <details class="repli-vitta-details" style="margin-top:10px">
+        <summary>🔌 Le cadre ne s'affiche pas ? Voici comment travailler quand même</summary>
+        <div class="repli-vitta" style="border:2px dashed var(--hl);border-radius:10px;padding:16px;background:#08132c;margin-top:8px">
+          <p style="margin-top:0">Pas de connexion, réseau du collège filtré, page ouverte hors ligne : <b>tout reste faisable</b>.</p>
+          <ol style="margin-bottom:8px">
+            <li><b>Plan A — dans un onglet :</b> ouvre <a href="https://fr.vittascience.com/arduino/" target="_blank" rel="noopener">fr.vittascience.com/arduino</a>, interface <b>Arduino</b>, mode <b>BLOCS</b>. Les liens directs des programmes de la classe sont donnés par le professeur.</li>
+            <li><b>Plan B — sans connexion du tout :</b> les <b>planches de paliers</b> et les <b>captures réelles</b> ci-dessous montrent le programme bloc à bloc, et le <b>banc d'essai</b> en haut de cette page reproduit le comportement de la station. Tu peux répondre à TOUTES les questions et valider l'activité — la construction des blocs se fera à la séance suivante ou à la maison.</li>
+          </ol>
+          <p style="margin-bottom:0;font-size:.9em;color:var(--sub)">Vittascience est le seul élément de cette séquence qui demande Internet. Tout le reste fonctionne hors connexion.</p>
+        </div>
+      </details>
+    
 
     <div class="palier">
       <h4>Palier 1 — Lire le vent</h4>
-      <p class="faire">👉 FAIS : <b>au démarrage</b>, crée les trois variables et donne-leur leur valeur — <code>niveau_vent</code> à 0, <code>seuil_vigilance</code> à <b>40</b>, <code>seuil_alerte</code> à <b>70</b> (bloc <i>mettre … à</i>, catégorie <b>Variables</b>). Puis, <b>dans la boucle</b> <i>répéter indéfiniment</i> : mets dans <code>niveau_vent</code> la valeur <i>arrondie</i> de <i>lire entrée analogique <b>A0</b></i> <b>× 100 ÷ 1023</b>, et <i>affiche <code>niveau_vent</code> sur le moniteur série</i>. Termine par <i>attendre 200 millisecondes</i>.</p>
-      <img class="figure" src="Images/blocs_palier1_lire_vent.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 1. À gauche, un bloc « au démarrage » contient trois blocs : mettre niveau_vent à 0, mettre seuil_vigilance à 40, mettre seuil_alerte à 70. En dessous, un bloc « répéter indéfiniment » contient : mettre niveau_vent à arrondir de lire entrée analogique A0 multiplié par 100 divisé par 1023 ; afficher niveau_vent sur le moniteur ; attendre 200 millisecondes. À droite, une vignette du moniteur série attendu montre des valeurs de niveau_vent qui montent : 0, 12, 38, 51, 74, 92 quand on tourne le bouton du capteur rotatif, et un rappel que l'échelle scolaire va de 0 à 100 sans unité">
-      <p>👀 <b>VÉRIFIE au simulateur :</b> tourne le <b>capteur rotatif</b> — la valeur affichée au moniteur doit monter et descendre avec ton geste, entre <b>0 et 100</b>. Si elle dépasse 100 ou reste bloquée à 0, c'est la conversion qu'il faut relire.</p>
-      <div class="assoc"><label for="a3_p1">Le capteur rotatif est à mi-course : la lecture brute de A0 vaut environ 512. Que vaut alors <code>niveau_vent</code> ?</label><input type="number" id="a3_p1" placeholder="niveau de vent (0-100)"></div>
-      <div class="assoc"><label for="a3_p1b">Avec le tableau de correspondance : à quelle vitesse de la <b>vraie station</b> ce niveau correspond-il ?</label><input type="number" id="a3_p1b" placeholder="km/h"></div>
+      <p class="faire">👉 FAIS : <b>au démarrage</b>, crée les quatre variables et donne-leur leur valeur — <code>vitesseVent</code> à 0, <code>seuilJaune</code> à <b>63</b>, <code>seuilOrange</code> à <b>118</b>, <code>seuilRouge</code> à <b>178</b> (bloc <i>mettre … à</i>, catégorie <b>Variables</b>). Puis, <b>dans la boucle</b> <i>répéter indéfiniment</i> : mets dans <code>vitesseVent</code> la valeur <i>arrondie</i> de <i>lire entrée analogique <b>A1</b></i> <b>× 250 ÷ 1023</b>, et <i>affiche <code>vitesseVent</code> sur le moniteur série</i>. Termine par <i>attendre 200 millisecondes</i>.</p>
+      <p style="font-size:.92em;color:var(--sub)">💡 <b>Raccourci accepté :</b> Vittascience propose un bloc <i>transformer la valeur … de [0 à 1023] vers [0 à 250]</i> qui fait la conversion en un seul geste. Les deux écritures sont justes — mais fais d'abord le calcul à la main : c'est lui qu'on te demandera d'expliquer, pas le bloc. (En C++, ce même bloc s'appelle <code>map()</code> : tu le retrouveras en séance 3.)</p>
+      <img class="figure" src="Images/blocs_palier1_lire_vent.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 1. Un bloc « au démarrage » contient quatre blocs : mettre vitesseVent à 0, mettre seuilJaune à 63, mettre seuilOrange à 118, mettre seuilRouge à 178. En dessous, un bloc « répéter indéfiniment » contient : mettre vitesseVent à arrondir de lire entrée analogique A1 multiplié par 250 divisé par 1023 ; afficher vitesseVent sur le moniteur ; attendre 200 millisecondes. À droite, une vignette du moniteur série attendu montre des valeurs de vitesseVent qui montent : 0, 31, 95, 125, 186, 231 quand on tourne le bouton du potentiomètre, et un rappel qu'une seule échelle est utilisée du début à la fin, de 0 à 250 km/h">
+      <div class="retenir" style="margin:10px 0"><b>🎨 Pourquoi les seuils portent-ils un nom de COULEUR ?</b> Parce que c'est la couleur qui se lit d'un coup d'œil sur la station, et parce que <code>seuilJaune</code> se retrouve instantanément dans le programme quand on cherche « le seuil du voyant jaune ». Le <b>niveau</b>, lui, garde son nom réel — <b>tempête tropicale</b>, <b>ouragan</b>, <b>ouragan majeur</b> — parce que c'est celui-là qui s'écrit sur l'écran, et qu'un habitant ne connaît pas nos variables. Deux vocabulaires, deux usages : celui du programmeur et celui de la population.</div>
+      <p>👀 <b>VÉRIFIE au simulateur :</b> tourne le <b>potentiomètre</b> — la valeur affichée au moniteur doit monter et descendre avec ton geste, entre <b>0 et 250 km/h</b>. Si elle dépasse 250 ou reste bloquée à 0, c'est la conversion qu'il faut relire.</p>
+      <div class="assoc"><label for="a3_p1">Le potentiomètre est à mi-course : la lecture brute de A1 vaut environ 512. Que vaut alors <code>vitesseVent</code> ?</label><input type="number" id="a3_p1" placeholder="km/h"></div>
+      <div class="assoc"><label for="a3_p1b">À cette vitesse, dans quel niveau la station se trouve-t-elle ?</label><select id="a3_p1b"><option value="">— choisir —</option><option>ouragan : 125 est au-dessus de 118, mais en dessous de 178</option><option>tempête tropicale</option><option>ouragan majeur</option><option>veille</option></select></div>
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier1-TON NOM</code> avant de passer au palier 2.</p>
     </div>
 
     <div class="palier">
       <h4>Palier 2 — Décider du niveau</h4>
-      <p class="faire">👉 FAIS : sous la lecture, pose la cascade de ton algorithme (activité 2) avec le bloc <i>si / sinon si / sinon</i> (catégorie <b>Logique</b>) : d'abord <code>niveau_vent</code> <b>≥</b> <code>seuil_alerte</code>, sinon si <code>niveau_vent</code> <b>≥</b> <code>seuil_vigilance</code>, sinon le dernier cas. Utilise bien l'opérateur <b>« supérieur ou égal »</b> (≥), pas « supérieur » (&gt;). Pour l'instant, chaque branche se contente d'afficher son nom au moniteur.</p>
-      <img class="figure" src="Images/blocs_palier2_decider.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 2. Une cascade de blocs : si niveau_vent supérieur ou égal à seuil_alerte alors afficher ALERTE sur le moniteur ; sinon si niveau_vent supérieur ou égal à seuil_vigilance alors afficher VIGILANCE ; sinon afficher VEILLE. Un bandeau rappelle que la lecture de A0 du palier 1 reste au-dessus, dans répéter indéfiniment. À droite, un encart d'avertissement explique qu'on teste le seuil le plus haut d'abord, sinon un niveau de 85 s'arrêterait à VIGILANCE puisque 85 est aussi supérieur à 40 et que la cascade s'arrête au premier test réussi. Un second encart liste les quatre frontières à tester : 39 donne VEILLE, 40 donne VIGILANCE, 69 donne VIGILANCE, 70 donne ALERTE">
-      <p>👀 <b>VÉRIFIE au simulateur :</b> trois positions du capteur → trois messages. Puis <b>les frontières</b>, qui sont le vrai test : à <b>39</b> puis <b>40</b> (le passage en vigilance), à <b>69</b> puis <b>70</b> (le passage en alerte). Au banc d'essai de cette page, fais aussi passer la station par les <b>trois niveaux</b> (le banc le trace ✔).</p>
-      <div class="assoc"><label for="a3_p2">Ton camarade a mis le test « ≥ <code>seuil_vigilance</code> » EN PREMIER. À un niveau de vent de 85, son programme annonce…</label><select id="a3_p2"><option value="">— choisir —</option><option>niveau 1 (vigilance) — c'est le bug !</option><option>niveau 2 (alerte), comme le tien</option><option>niveau 0 (veille)</option><option>un message d'erreur</option></select></div>
-      <div class="assoc"><label for="a3_p2b">Une camarade a utilisé « &gt; <code>seuil_alerte</code> » au lieu de « ≥ ». Sur quelle valeur exactement son programme se trompe-t-il ?</label><select id="a3_p2b"><option value="">— choisir —</option><option>sur 70 pile, et sur elle seule : elle affiche « vigilance » au lieu de « alerte »</option><option>sur toutes les valeurs au-dessus de 70</option><option>sur toutes les valeurs en dessous de 40</option><option>sur aucune : « &gt; » et « ≥ » font la même chose</option></select></div>
+      <p class="faire">👉 FAIS : sous la lecture, pose la cascade de ton algorithme (activité 2) avec le bloc <i>si / sinon si / sinon</i> (catégorie <b>Logique</b>) : d'abord <code>vitesseVent</code> <b>≥</b> <code>seuilRouge</code>, sinon si <b>≥</b> <code>seuilOrange</code>, sinon si <b>≥</b> <code>seuilJaune</code>, sinon le dernier cas. Utilise bien l'opérateur <b>« supérieur ou égal »</b> (≥), pas « supérieur » (&gt;). Pour l'instant, chaque branche se contente d'afficher son nom au moniteur.</p>
+      <img class="figure" src="Images/blocs_palier2_decider.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 2. Une cascade de blocs : si vitesseVent supérieur ou égal à seuilRouge alors afficher OURAGAN MAJEUR ; sinon si vitesseVent supérieur ou égal à seuilOrange alors afficher OURAGAN ; sinon si vitesseVent supérieur ou égal à seuilJaune alors afficher TEMPETE TROPICALE ; sinon afficher VEILLE. Un bandeau rappelle que la lecture de A1 du palier 1 reste au-dessus, dans répéter indéfiniment. À droite, un encart d'avertissement explique qu'on teste le seuil le plus haut d'abord, sinon 200 km/h s'arrêterait à TEMPETE TROPICALE puisque 200 est aussi supérieur à 63 et que la cascade s'arrête au premier test réussi — avec quatre niveaux, l'erreur en coûte deux. Un second encart liste les six frontières à tester, trois seuils multipliés par deux essais : 62 donne VEILLE, 63 donne TEMPETE, 117 donne TEMPETE, 118 donne OURAGAN, 177 donne OURAGAN, 178 donne OURAGAN MAJEUR">
+      <p>👀 <b>VÉRIFIE au simulateur :</b> quatre positions du potentiomètre → quatre messages. Puis <b>les six frontières</b>, qui sont le vrai test : <b>62</b> puis <b>63</b>, <b>117</b> puis <b>118</b>, <b>177</b> puis <b>178</b>. Au banc d'essai de cette page, fais aussi passer la station par les <b>quatre niveaux</b> (le banc le trace ✔).</p>
+      <div class="assoc"><label for="a3_p2">Ton camarade a mis le test « ≥ <code>seuilJaune</code> » EN PREMIER. À 200 km/h, son programme annonce…</label><select id="a3_p2"><option value="">— choisir —</option><option>tempête tropicale — c'est le bug, et il coûte DEUX niveaux !</option><option>ouragan majeur, comme le tien</option><option>veille</option><option>un message d'erreur</option></select></div>
+      <div class="assoc"><label for="a3_p2b">Une camarade a utilisé « &gt; <code>seuilRouge</code> » au lieu de « ≥ ». Sur quelle valeur exactement son programme se trompe-t-il ?</label><select id="a3_p2b"><option value="">— choisir —</option><option>sur 178 pile, et sur elle seule : elle affiche « ouragan » au lieu d'« ouragan majeur »</option><option>sur toutes les valeurs au-dessus de 178</option><option>sur toutes les valeurs en dessous de 63</option><option>sur aucune : « &gt; » et « ≥ » font la même chose</option></select></div>
       <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier2-TON NOM</code>. Si un doute : compare bloc à bloc avec la planche, PUIS appelle le professeur.</p>
     </div>
 
     <div class="palier">
       <h4>Palier 3 — Alerter : la station parle</h4>
-      <p class="faire">👉 FAIS : dans la catégorie <b>Fonctions</b>, <i>définis</i> trois sous-programmes — <code>mode_veille</code>, <code>mode_vigilance</code>, <code>mode_alerte</code>. <b>Chacun impose l'état des QUATRE sorties</b> : voyant vert <b>D2</b>, orange <b>D3</b>, rouge <b>D4</b>, buzzer <b>D5</b>. Puis remplace le contenu de chaque branche de ta cascade par un simple <i>appeler <code>mode_…</code></i>.</p>
-      <div class="retenir" style="margin:10px 0"><b>🔑 Pourquoi imposer les QUATRE sorties à chaque fois ?</b> Si <code>mode_vigilance</code> se contente d'<i>allumer</i> l'orange, le voyant rouge allumé une seconde plus tôt <b>reste allumé</b> : la station afficherait deux niveaux à la fois. Un mode ne dit pas « ce que j'allume », il dit <b>« à quoi ressemble la station entière quand je suis en vigilance »</b>. Éteindre est aussi important qu'allumer.</div>
-      <img class="figure" src="Images/blocs_palier3_afficher.svg" alt="Reconstitution schématique de l'écran Vittascience au palier 3. À gauche, trois sous-programmes définis : mode_veille impose voyant vert D2 allumé, voyant orange D3 éteint, voyant rouge D4 éteint, buzzer D5 arrêté ; mode_vigilance impose vert éteint, orange allumé, rouge éteint, buzzer arrêté ; mode_alerte impose vert éteint, orange éteint, rouge allumé, buzzer activé. À droite, la cascade du palier 2 dont chaque branche ne contient plus qu'un appel : appeler mode_alerte, appeler mode_vigilance, appeler mode_veille. Un encart rappelle que chaque mode impose l'état des quatre sorties, car éteindre est aussi important qu'allumer, sans quoi le voyant du mode précédent resterait allumé et la station afficherait deux niveaux à la fois. Un dernier encart rappelle le brochage : A0 capteur rotatif, D2 vert, D3 orange, D4 rouge, D5 buzzer">
-      <p>👀 <b>VÉRIFIE au simulateur :</b> vert seul en veille, orange seul dès 40, rouge <b>+ buzzer</b> dès 70 — et <b>jamais deux voyants ensemble</b>. Balaye lentement toute la course du capteur en surveillant ce point.</p>
-      <div class="assoc"><label for="a3_p3">Le niveau de vent est à 52 (soit ≈ 130 km/h sur la vraie station). L'état correct de la station est…</label><select id="a3_p3"><option value="">— choisir —</option><option>orange seul allumé, vert et rouge éteints, buzzer muet</option><option>vert allumé, tout le reste éteint</option><option>rouge allumé et buzzer qui sonne</option><option>vert et orange allumés tous les deux</option></select></div>
-      <div class="assoc"><label for="a3_p3b">En simulant, tu vois l'orange ET le rouge allumés en même temps. La cause la plus probable :</label><select id="a3_p3b"><option value="">— choisir —</option><option>un sous-programme allume sa sortie sans éteindre les trois autres</option><option>le capteur rotatif est cassé</option><option>la boucle tourne trop vite</option><option>il manque le bloc « attendre 200 millisecondes »</option></select></div>
-      <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier3-TON NOM</code>, puis une copie propre et commentée sous <code>3e-STATION-complet-TON NOM</code>. Ton programme commande maintenant un système entier : capteur → décision → voyants et buzzer.</p>
+      <p class="faire">👉 FAIS : dans la catégorie <b>Fonctions</b>, <i>définis</i> quatre sous-programmes — <code>mode_vert</code>, <code>mode_jaune</code>, <code>mode_orange</code>, <code>mode_rouge</code>. <b>Chacun impose l'état des SEPT sorties</b> : les quatre voyants (vert <b>D6</b>, jaune <b>D7</b>, orange <b>D3</b>, rouge <b>D4</b>), le buzzer <b>D5</b> et les deux lignes de l'écran. Puis remplace le contenu de chaque branche de ta cascade par un simple <i>appeler <code>mode_…</code></i>.</p>
+      <div class="retenir" style="margin:10px 0"><b>🔑 Pourquoi imposer TOUTES les sorties à chaque fois ?</b> Si <code>mode_orange</code> se contente d'<i>allumer</i> l'orange, le voyant rouge allumé une seconde plus tôt <b>reste allumé</b> : la station afficherait deux niveaux à la fois. Un mode ne dit pas « ce que j'allume », il dit <b>« à quoi ressemble la station entière quand je suis en ouragan »</b>. Éteindre est aussi important qu'allumer — et avec quatre voyants, l'oubli se voit tout de suite.</div>
+      <img class="figure" src="Images/blocs_palier3_afficher.svg" alt="Planche du palier 3 : quatre sous-programmes de mode, chacun imposant l'état de toutes les sorties." aria-describedby="desc-palier3">
+      <details class="description-image" id="desc-palier3">
+        <summary>📖 Description détaillée de la planche</summary>
+        <p>À gauche, quatre sous-programmes définis : <b>mode_vert</b> (vert allumé, jaune, orange et rouge éteints, buzzer arrêté, écran vert « VEILLE ») ; <b>mode_jaune</b> (jaune seul allumé et pulsant, écran jaune « TEMPETE TROP. ») ; <b>mode_orange</b> (orange seul, écran orange « OURAGAN ») ; <b>mode_rouge</b> (rouge seul, <b>buzzer activé</b>, écran rouge « OURAGAN MAJEUR »).</p>
+        <p>À droite, la cascade du palier 2 dont chaque branche ne contient plus qu'un appel : appeler mode_rouge, appeler mode_orange, appeler mode_jaune, appeler mode_vert. La deuxième ligne de l'écran affiche toujours « Vent: NNN km/h ».</p>
+      </details>
+      <p>👀 <b>VÉRIFIE au simulateur :</b> vert seul en dessous de 63, jaune seul dès <b>63</b>, orange seul dès <b>118</b>, rouge <b>+ buzzer</b> dès <b>178</b> — et <b>jamais deux voyants ensemble</b>. Balaye lentement toute la course du potentiomètre en surveillant ce point.</p>
+      <div class="assoc"><label for="a3_p3">Le vent souffle à 130 km/h. L'état correct de la station est…</label><select id="a3_p3"><option value="">— choisir —</option><option>orange seul allumé et pulsant, les trois autres voyants éteints, buzzer muet, écran « OURAGAN »</option><option>vert allumé, tout le reste éteint</option><option>rouge allumé et buzzer qui sonne</option><option>jaune et orange allumés tous les deux</option></select></div>
+      <div class="assoc"><label for="a3_p3b">En simulant, tu vois l'orange ET le rouge allumés en même temps. La cause la plus probable :</label><select id="a3_p3b"><option value="">— choisir —</option><option>un sous-programme allume sa sortie sans éteindre les autres</option><option>le potentiomètre est cassé</option><option>la boucle tourne trop vite</option><option>il manque le bloc « attendre 200 millisecondes »</option></select></div>
+      <p class="rituel">💾 Rituel : enregistre sous <code>3e-STATION-palier3-TON NOM</code>, puis une copie propre et commentée sous <code>3e-STATION-complet-TON NOM</code>. Ton programme commande maintenant un système entier : capteur → décision → écran, voyants et buzzer.</p>
     </div>
 
     <div class="palier">
       <h4>Palier 4 — (aperçu) L'humain entre dans la boucle</h4>
       <p>Le bouton d'acquittement — couper le buzzer sans éteindre l'alerte — c'est la <b>séance 3</b>, le cœur de l'interaction humain-machine. La planche est déjà là si tu es en avance, mais la logique de l'événement « le niveau vient de changer » mérite une séance entière.</p>
+    </div>
+
+    <div class="palier" id="captures-reference">
+      <h4>📸 Le programme de référence, tel qu'il tourne vraiment</h4>
+      <p>Les images ci-dessous ne sont pas des dessins : ce sont des <b>captures d'écran du programme complet</b>,
+      construit et exécuté sur Vittascience. Elles servent de <b>preuve</b> et de <b>modèle de comparaison</b> —
+      si ton programme ne fait pas la même chose, l'écart est chez toi, pas dans l'énoncé.</p>
+
+      <figure style="margin:1rem 0">
+        <img class="figure" src="Images/vittascience/C_1_demarrage.png" alt="Capture d'écran réelle de Vittascience : le bloc « Au démarrage » du programme de référence. Il contient, dans l'ordre : initialiser la communication série à 9600 bauds ; affecter à seuilJaune la valeur 63 ; affecter à seuilOrange la valeur 118 ; affecter à seuilRouge la valeur 178 ; affecter à pasPulsation la valeur 2 ; affecter à compteurPulsation la valeur 0 ; affecter à vitesseVent la valeur 0 ; affecter à niveauAlerte la valeur texte VEILLE ; affecter à pulsation la valeur faux ; affecter à niveauPrecedent la valeur texte VEILLE">
+        <figcaption style="font-size:.9em;color:var(--sub)"><b>Au démarrage.</b> Neuf affectations, et pas une de plus : les <b>trois seuils</b>, les deux compteurs de la pulsation, et l'état initial de la station (<code>VEILLE</code>, pas de pulsation). Remarque que <code>niveauPrecedent</code> est initialisé <b>lui aussi</b> à <code>VEILLE</code> : sans cela, la station croirait au premier tour que le niveau vient de changer, et ferait sonner le buzzer pour rien.</figcaption>
+      </figure>
+
+      <figure style="margin:1rem 0">
+        <img class="figure" src="Images/vittascience/C_2_boucle_haut.png" alt="Capture d'écran réelle de Vittascience : le haut du bloc « Répéter indéfiniment ». Premier bloc : affecter à vitesseVent la valeur arrondie de transformer la valeur du potentiomètre rotatif sur la broche A1 de la fourchette 0 à 1023 vers la fourchette 0 à 250. Puis : affecter à compteurPulsation la valeur compteurPulsation plus 1 ; si compteurPulsation supérieur ou égal à pasPulsation alors remettre compteurPulsation à 0 et affecter à pulsation la valeur non pulsation. Vient ensuite la cascade de décision : si vitesseVent supérieur ou égal à seuilRouge alors affecter à niveauAlerte le texte OURAGAN MAJEUR ; sinon si supérieur ou égal à seuilOrange alors OURAGAN ; sinon si supérieur ou égal à seuilJaune alors TEMPETE TROP. ; sinon VEILLE">
+        <figcaption style="font-size:.9em;color:var(--sub)"><b>Le haut de la boucle : lire, puis décider.</b> Trois choses à voir. ① La conversion se fait ici avec le bloc <i>transformer la valeur … de [0 à 1023] vers [0 à 250]</i> — le raccourci dont on parlait au palier 1. ② La <b>pulsation</b> n'est pas un clignotement magique : un compteur monte à chaque tour, et quand il atteint <code>pasPulsation</code> (2), il bascule <code>pulsation</code> du vrai au faux. ③ La <b>cascade</b> est exactement celle de ton algorigramme, <b>seuil le plus haut d'abord</b> — et elle ne fait qu'une chose : écrire un <b>nom</b> dans <code>niveauAlerte</code>. Décider et agir sont deux moments séparés.</figcaption>
+      </figure>
+
+      <figure style="margin:1rem 0">
+        <img class="figure" src="Images/vittascience/C_3_boucle_bas.png" alt="Capture d'écran réelle de Vittascience : le bas du bloc « Répéter indéfiniment ». Une seconde cascade aiguille selon le contenu de niveauAlerte : si niveauAlerte égale OURAGAN MAJEUR alors appeler mode_rouge ; sinon si OURAGAN alors mode_orange ; sinon si TEMPETE TROP. alors mode_jaune ; sinon mode_vert. Puis deux blocs écrire dans la console : le texte Vent suivi de vitesseVent puis km/h avec un saut de ligne, et le texte Niveau deux-points suivi de niveauAlerte avec un saut de ligne. Le dernier bloc est attendre 300 millisecondes">
+        <figcaption style="font-size:.9em;color:var(--sub)"><b>Le bas de la boucle : agir, puis tracer.</b> La deuxième cascade ne compare plus des nombres mais des <b>noms</b>, et chaque branche se réduit à <b>un seul appel</b> — <code>mode_rouge</code>, <code>mode_orange</code>, <code>mode_jaune</code>, <code>mode_vert</code>. C'est la structuration en sous-programmes exigée en 3<sup>e</sup>. Les deux <i>écrire dans la console</i> sont la <b>trace</b> : c'est elle qui te sauvera en séance 3 quand il faudra diagnostiquer une panne. <b>Écart avec la consigne du palier 1 :</b> ce programme-là attend <b>300 ms</b> et non 200. Rien de faux — c'est un réglage, pas une règle : plus l'attente est longue, plus l'affichage est calme, mais plus la station réagit tard. Dans les deux cas on reste très loin de la seconde exigée par la mairie.</figcaption>
+      </figure>
+
+      <details class="description-image">
+        <summary>📖 Les quatre sous-programmes de mode, en captures</summary>
+        <p>Chacun impose l'état de <b>toutes</b> les sorties, puis n'ajoute que ce qui lui est propre. Ouvre-les et compare-les deux à deux : ce qu'ils ont en commun est la règle, ce qui les distingue est le niveau.</p>
+        <figure style="margin:1rem 0">
+          <img class="figure" src="Images/vittascience/C_4_mode_vert.png" alt="Capture d'écran réelle de Vittascience : le sous-programme mode_vert. Il efface l'écran LCD, affiche le texte VEILLE sur la ligne 0, affiche sur la ligne 1 le texte Vent suivi de vitesseVent puis km/h, met les broches D6, D7, D3 et D4 à l'état BAS, arrête le buzzer sur D5, puis allume la broche D6 à l'état HAUT et éclaire l'écran en vert">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>mode_vert</b> — le vert est <b>allumé fixe</b> : aucun test de pulsation ici. Une lumière qui clignote en permanence finit par ne plus se voir ; la pulsation doit rester un signal.</figcaption>
+        </figure>
+        <figure style="margin:1rem 0">
+          <img class="figure" src="Images/vittascience/C_5_mode_jaune.png" alt="Capture d'écran réelle de Vittascience : le sous-programme mode_jaune. Il efface l'écran LCD, affiche TEMPETE TROP. sur la ligne 0 et Vent suivi de vitesseVent puis km/h sur la ligne 1, met les quatre broches D6, D7, D3 et D4 à l'état BAS, met le buzzer D5 à l'état BAS, puis un bloc si pulsation alors met D7 à l'état HAUT et éclaire l'écran LCD en jaune vif rouge 255 vert 255 bleu 0, sinon éclaire l'écran en jaune sombre rouge 90 vert 90 bleu 0">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>mode_jaune</b> — le cœur du dispositif d'affichage. Le voyant D7 ne s'allume que <b>si <code>pulsation</code></b>, et l'écran bascule en même temps du <b>jaune vif</b> (255, 255, 0) au <b>jaune sombre</b> (90, 90, 0). Deux signaux qui battent ensemble : celui qui ne voit pas bien le petit voyant voit respirer l'écran entier. Et le <b>nom du niveau reste écrit</b> pendant tout ce temps — la couleur seule ne dit jamais rien.</figcaption>
+        </figure>
+        <figure style="margin:1rem 0">
+          <img class="figure" src="Images/vittascience/C_6_mode_orange.png" alt="Capture d'écran réelle de Vittascience : le sous-programme mode_orange, construit exactement comme mode_jaune mais affichant OURAGAN, pilotant la broche D3 et éclairant l'écran en orange vif puis en orange sombre selon la pulsation, le buzzer restant muet">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>mode_orange</b> — même structure, autre broche (D3), autre texte, autres teintes. Le buzzer reste <b>muet</b> : à ce niveau, on prévient, on n'alarme pas encore.</figcaption>
+        </figure>
+        <figure style="margin:1rem 0">
+          <img class="figure" src="Images/vittascience/C_7_mode_rouge.png" alt="Capture d'écran réelle de Vittascience : le sous-programme mode_rouge, construit comme les précédents mais affichant OURAGAN MAJEUR, pilotant la broche D4, éclairant l'écran en rouge vif puis rouge sombre selon la pulsation, et activant le buzzer sur la broche D5">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>mode_rouge</b> — <b>le seul</b> qui fait sonner le buzzer. Un seul niveau sur quatre a le droit de faire du bruit : c'est ce qui donne au bruit sa valeur.</figcaption>
+        </figure>
+      </details>
+
+      <div class="erreurs" style="margin-top:12px"><b>⚠ Ce que le simulateur ne montre pas fidèlement :</b> dans le simulateur de Vittascience, <b>tous les voyants sont dessinés en vert</b>, quelle que soit la couleur réelle de la DEL branchée. Ne te fie donc pas à la couleur de l'image : lis <b>quelle broche</b> est ON (D6, D7, D3 ou D4) et <b>ce qui est écrit sur l'écran</b>. C'est exactement pour cette raison que le niveau est toujours écrit <b>en toutes lettres</b> — et c'est une bonne leçon d'IHM : un système qui ne parle que par la couleur ne parle pas à tout le monde.</div>
     </div>
 
     <details class="prof approfondissement">
@@ -711,7 +897,7 @@
       </figure>
       <figure style="margin:1rem 0">
         <img class="figure" src="Images/bonus_ardublock_palier2.png" alt="Capture d'écran réelle du logiciel ArduBlock Éducation 1.7, fenêtre intitulée 3e-STATION-palier2.abp. À gauche, la palette des catégories de blocs : Structure, Sous-programmes, Broches, Tests, Opérateurs mathématiques, Variables/Constantes, Temps, Moniteur série, Sons, Capteurs, Actionneurs, Afficheurs. Au centre, un grand bloc Boucle contient : définir la variable entière mesureBrute avec la valeur de la broche Entrée Analogique A1 ; définir la variable entière vitesseVent avec un bloc Réétalonner qui transforme la fourchette 0-1023 en 0-250 ; puis un bloc Si-Sinon dont le test est vitesseVent supérieur ou égal à 150 et qui met niveauAlerte à 2, sinon un second Si-Sinon dont le test est vitesseVent supérieur ou égal à 100 et qui met niveauAlerte à 1, sinon niveauAlerte à 0 ; enfin un bloc Écrire sur le port série qui envoie vitesseVent">
-        <figcaption style="font-size:.9em;color:var(--sub)">Palier 2 dans ArduBlock Éducation 1.7 — capture réelle du logiciel. Le programme est enregistré sous <code>3e-STATION-palier2.abp</code>. <b>Attention à l'échelle :</b> cette version-là travaille directement en <b>km/h (0-250, seuils 100 et 150)</b>, celle de la vraie station — alors que sur Vittascience tu travailles sur la <b>maquette (0-100, seuils 40 et 70)</b>. Deux échelles, un seul raisonnement : c'est tout l'intérêt du tableau de correspondance.</figcaption>
+        <figcaption style="font-size:.9em;color:var(--sub)">Palier 2 dans ArduBlock Éducation 1.7 — capture réelle du logiciel. Le programme est enregistré sous <code>3e-STATION-palier2.abp</code>. <b>Attention aux seuils :</b> cette capture est <b>antérieure</b> au choix des seuils de Saffir-Simpson — elle montre encore <b>100 et 150</b>, et seulement <b>trois</b> niveaux. L'échelle, elle, est déjà la bonne (km/h, 0-250). Elle n'a pas été retouchée : une capture montre ce que le logiciel affichait ce jour-là. À toi de repérer les deux écarts avec ton programme d'aujourd'hui — c'est un bon exercice de lecture.</figcaption>
       </figure>
       <p><b>Défi (sans vérificateur) :</b> compare une capture ArduBlock et la planche Vittascience du même palier. Écris trois
       phrases : <b>ce qui a changé</b> (les mots, les couleurs, la façon d'emboîter), <b>ce qui n'a pas changé</b> (le
@@ -721,31 +907,46 @@
     </details>
 
     <div class="exo">
-      <button class="btn small" data-check="3" style="margin-top:2px">✔ Vérifier mes réponses (et mes expériences au banc)</button>
+      <h4>Mon journal de paliers</h4>
+      <label for="a3_journal" style="display:block">Après chaque palier, écris <b>ce que tu as vérifié au simulateur</b> et <b>ce que tu as observé</b> — pas « ça marche », mais la valeur essayée et ce qui s'est affiché. C'est ce journal qui te permettra de retrouver le coupable quand quelque chose cassera.</label>
+      <textarea id="a3_journal" style="min-height:110px" placeholder="Palier 1 : j'ai tourné le potentiomètre à mi-course, le moniteur affichait …&#10;Palier 2 : à 62 j'ai lu …, à 63 j'ai lu …&#10;Palier 3 : …"></textarea>
+<details class="etayage">
+  <summary>🪜 Version étayée — des phrases à compléter</summary>
+  <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
+  <ul>
+    <li><b>Palier 1</b> — j'ai mis le potentiomètre à ____ , le moniteur a affiché ____ km/h. La valeur monte quand ____ , donc la lecture ____ .</li>
+    <li><b>Palier 2</b> — j'ai essayé les frontières ____ et ____ : la première a donné ____ , la seconde ____ . C'est bien ce qu'exige le cahier des charges, parce que « à partir de » veut dire ____ .</li>
+    <li><b>Palier 3</b> — à ____ km/h, le voyant ____ était seul allumé et les ____ autres étaient éteints ; le buzzer était ____ .</li>
+    <li><b>Ce qui m'a résisté</b> — au palier ____ , je m'attendais à ____ et j'ai obtenu ____ . J'ai corrigé en ____ .</li>
+  </ul>
+</details>
+      <button class="btn small" data-check="3" style="margin-top:8px">✔ Vérifier mes réponses (et mes expériences au banc)</button>
       <div class="feedback" id="fb3" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Palier 1 : 512 est à peu près la <b>moitié</b> de 1023 — et l'échelle de la maquette va de 0 à 100. Pour la deuxième question, cherche la ligne « 0 à 100 ↔ 0 à 250 km/h » du tableau de correspondance. Palier 2 : rejoue le scénario de l'activité 2, mais avec les valeurs de la maquette ; et relis ce que « ≥ » veut dire exactement. Palier 3 : 52 est entre 40 et 70 — et pense à l'état des <b>quatre</b> sorties, pas d'une seule.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Palier 1 : 512 × 100 ÷ 1023 ≈ <b>50</b> (accepté : 49 à 51) ; et 50 sur 100, c'est la moitié de l'échelle, donc ≈ <b>125 km/h</b> sur la vraie station.</p><p>Palier 2 : 85 ≥ 40 est vrai → son programme s'arrête à « vigilance » sans jamais tester le seuil d'alerte, c'est le bug ; et « &gt; 70 » exclut 70 lui-même : à 70 pile, son programme dit « vigilance » alors que le cahier des charges dit « alerte ».</p><p>Palier 3 : entre 40 et 70 → orange SEUL (vert et rouge éteints), buzzer muet ; deux voyants allumés en même temps = un mode qui a oublié d'éteindre les autres.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Palier 1 : 512 est à peu près la <b>moitié</b> de 1023, et l'échelle va de 0 à 250 km/h. Pour la deuxième question, situe le résultat parmi les trois seuils. Palier 2 : rejoue le scénario de l'activité 2 avec 200 km/h ; et relis ce que « ≥ » veut dire exactement. Palier 3 : 130 est entre 118 et 178 — et pense à l'état de <b>toutes</b> les sorties, pas d'une seule.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Palier 1 : 512 × 250 ÷ 1023 ≈ <b>125 km/h</b> (accepté : 123 à 127) — et 125 est au-dessus de 118 sans atteindre 178, donc <b>ouragan</b>.</p><p>Palier 2 : 200 ≥ 63 est vrai → son programme s'arrête à « tempête tropicale » sans jamais tester les deux seuils supérieurs : le bug coûte <b>deux</b> niveaux. Et « &gt; 178 » exclut 178 lui-même : à 178 pile, son programme dit « ouragan » alors que le cahier des charges dit « ouragan majeur ».</p><p>Palier 3 : entre 118 et 178 → orange SEUL, les trois autres voyants éteints, buzzer muet ; deux voyants allumés en même temps = un mode qui a oublié d'éteindre les autres.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>P1 :</b> <code>niveau_vent</code> ≈ <b>50</b> (512 × 100 ÷ 1023). La conversion est une <b>proportionnalité</b> : on transporte une mesure d'une échelle (0-1023, ce que sait lire la carte) vers une autre (0-100, ce que comprend l'humain). Sur la vraie station, ce même demi-tour de capteur correspond à ≈ <b>125 km/h</b> — la moitié de 250. Même geste, deux échelles : c'est exactement ce que fait le tableau de correspondance.</p>
-      <p><b>P2 :</b> <b>niveau 1 (vigilance)</b> — c'est le bug ! L'ordre des SI est un choix d'<b>algorithme</b>, pas de dessin : le seuil le plus haut se teste en premier. <b>Et le piège du « &gt; » :</b> il se trompe sur <b>70 pile, et sur 70 seulement</b>. Un programme faux sur UNE valeur sur cent reste faux : c'est précisément pour attraper ces erreurs-là qu'on teste les <b>frontières</b> (39/40 et 69/70) et pas seulement « une petite valeur, une moyenne, une grande ».</p>
+      <p><b>P1 :</b> <code>vitesseVent</code> ≈ <b>125 km/h</b> (512 × 250 ÷ 1023). La conversion est une <b>proportionnalité</b> : on transporte une mesure d'une échelle (0-1023, ce que sait lire la carte) vers une autre (0-250 km/h, ce que comprend l'humain). Et 125 km/h, c'est déjà un <b>ouragan</b> : au-dessus de 118, en dessous de 178.</p>
+      <p><b>P2 :</b> <b>tempête tropicale</b> — c'est le bug ! L'ordre des SI est un choix d'<b>algorithme</b>, pas de dessin : le seuil le plus haut se teste en premier. <b>Et le piège du « &gt; » :</b> il se trompe sur <b>178 pile, et sur 178 seulement</b>. Un programme faux sur UNE valeur sur deux cent cinquante reste faux : c'est précisément pour attraper ces erreurs-là qu'on teste les <b>six frontières</b> (62/63, 117/118, 177/178) et pas seulement « une petite valeur, une moyenne, une grande ».</p>
       <p><b>P3 :</b> <b>orange seul</b>, vert et rouge éteints, buzzer muet — le buzzer attend l'alerte, et l'acquittement viendra en séance 3. Si tu vois deux voyants ensemble, cherche le sous-programme qui <b>allume sans éteindre</b> : chaque mode doit imposer l'état des QUATRE sorties, sinon la station garde l'affichage du niveau précédent.</p>
       <p><b>Méthode :</b> le développement par paliers (une fonctionnalité à la fois, testée avant la suivante) est LA méthode des professionnels : quand quelque chose casse, le coupable est forcément dans le dernier palier. Le simulateur de Vittascience rend ce va-et-vient immédiat — c'est pour cela qu'on l'utilise.</p>
-      <p><b>Limite :</b> le capteur rotatif <b>ne mesure pas le vent</b> : il simule l'anémomètre, et son échelle 0-100 n'a pas d'unité. Et nos blocs re-décident à chaque tour de boucle (5 fois par seconde) : un vrai produit lisserait la mesure pour éviter le clignotement autour d'un seuil.</p>
+      <p><b>Limite :</b> le potentiomètre <b>ne mesure pas le vent</b> : il simule l'anémomètre, et sa graduation en km/h est une convention de la maquette — un vrai anémomètre compte des tours. Cela ne change rien au raisonnement, seulement à l'origine du nombre. Et nos blocs re-décident à chaque tour de boucle (5 fois/seconde) : un vrai produit lisserait la mesure pour éviter le clignotement autour d'un seuil.</p>
+
     </details>
-    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier d'enregistrer à chaque palier (une page rechargée = tout perdu) ; mettre les seuils <b>dans la boucle</b> au lieu de « au démarrage », ou écrire 40 et 70 en dur dans les tests au lieu d'utiliser les variables — on perd alors tout l'intérêt de pouvoir régler les seuils en un seul endroit ; utiliser « supérieur » au lieu de « supérieur ou égal » ; oublier d'éteindre les sorties des autres modes ; <b>mélanger les deux échelles</b> — écrire 100 ou 150 dans un bloc Vittascience alors que la maquette travaille de 0 à 100 ; sortir la lecture du capteur de la boucle — la valeur se fige à jamais.</div>
-    <div class="retenir"><b>📌 À retenir :</b> traduire un algorithme en blocs = même logique, autre écriture. On construit <b>par paliers</b> : lire → décider → alerter, en <b>testant chaque palier au simulateur</b> avant d'empiler le suivant. Les <b>seuils sont des variables</b> réglées au démarrage, jamais des nombres cachés au fond des tests. Chaque <b>sous-programme de mode</b> impose l'état de TOUTES les sorties. Et l'<b>échelle du programme</b> (0-100) n'est pas l'<b>échelle de la station</b> (km/h) : le tableau de correspondance est le seul pont.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5 + au banc d'essai : vent varié ET les 3 niveaux atteints (coches ✔ du banc). Sur Vittascience : les 4 programmes enregistrés, et au simulateur les frontières <b>39/40</b> et <b>69/70</b> vérifiées — avec un seul voyant allumé à la fois. En version 🅰 : le professeur voit les voyants passer vert → orange → rouge sur ta carte.</div>
-    <details class="prof"><summary>🅰 Fiche version matériel réel (à faire valider par le professeur)</summary>
+    <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> oublier d'enregistrer à chaque palier (une page rechargée = tout perdu) ; mettre les seuils <b>dans la boucle</b> au lieu de « au démarrage », ou écrire 63, 118 et 178 en dur dans les tests au lieu d'utiliser les variables — on perd alors tout l'intérêt de pouvoir régler les seuils en un seul endroit ; utiliser « supérieur » au lieu de « supérieur ou égal » ; oublier d'éteindre les sorties des autres modes ; <b>oublier la conversion</b> — comparer directement la lecture brute de A1 (0-1023) aux seuils en km/h ; sortir la lecture du capteur de la boucle — la valeur se fige à jamais.</div>
+    <div class="retenir"><b>📌 À retenir :</b> traduire un algorithme en blocs = même logique, autre écriture. On construit <b>par paliers</b> : lire → décider → alerter, en <b>testant chaque palier au simulateur</b> avant d'empiler le suivant. Les <b>seuils sont des variables</b> réglées au démarrage, jamais des nombres cachés au fond des tests. Chaque <b>sous-programme de mode</b> impose l'état de TOUTES les sorties. Et la <b>lecture brute</b> du capteur (0-1023) n'est pas la <b>vitesse du vent</b> (0-250 km/h) : la conversion × 250 ÷ 1023 est le seul pont entre les deux.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes sur 5 + au banc d'essai : vent varié ET les <b>4</b> niveaux atteints (coches ✔ du banc). Sur Vittascience : les 4 programmes enregistrés, et au simulateur les <b>six</b> frontières <b>62/63</b>, <b>117/118</b> et <b>177/178</b> vérifiées — avec un seul voyant allumé à la fois. En version 🅰 : le professeur voit les voyants passer vert → jaune → orange → rouge sur ta carte.</div>
+    <details class="prof" data-parcours="a"><summary>🅰 Fiche version matériel réel (à faire valider par le professeur)</summary>
       <p><b>Montage de la MAQUETTE (celui de cette séance) :</b> shield Grove sélecteur <b>5 V</b> — capteur rotatif <b>A0</b>, voyant vert <b>D2</b>, voyant orange <b>D3</b>, voyant rouge <b>D4</b>, buzzer <b>D5</b>. C'est le montage sur lequel le programme Vittascience se téléverse tel quel. Câblage vérifié par le professeur AVANT le branchement USB.</p>
       <p><b>Montage de la STATION du labo (séances 3 et 4) :</b> le schéma ci-dessous — potentiomètre <b>A1</b>, bouton d'acquittement <b>D2</b>, DEL <b>D3</b>, buzzer <b>D5</b>, LCD RGB <b>I2C</b>. C'est la station complète, avec son interface humain-machine ; elle travaille en km/h.</p>
       <img class="figure" src="Images/montage_station_grove.svg" alt="Schéma de câblage de la station : Arduino UNO avec shield Grove au centre, LCD RGB sur I2C, potentiomètre anémomètre simulé sur A1, bouton d'acquittement sur D2, DEL rouge sur D3, buzzer sur D5, alimentation USB 5 volts, encadré sécurité très basse tension">
-      <p><b>Dépannage :</b> rien sur le LCD → connecteur I2C et bibliothèque Grove ; valeur figée → mauvais port analogique (vérifie <b>A0</b> sur la maquette, <b>A1</b> sur la station) ; deux voyants allumés ensemble sur la maquette → un sous-programme de mode qui n'éteint pas les autres sorties ; le téléversement échoue → carte ou port mal choisis (gestes d'outil) ; valeurs qui « tremblent » → normal, le CAN hésite entre deux paliers.</p>
+      <p><b>Dépannage :</b> rien sur le LCD → connecteur I2C et bibliothèque Grove ; valeur figée → mauvais port analogique (vérifie que la lecture se fait bien sur <b>A1</b>) ; deux voyants allumés ensemble → un sous-programme de mode qui n'éteint pas les autres sorties ; le téléversement échoue → carte ou port mal choisis (gestes d'outil) ; valeurs qui « tremblent » → normal, le CAN hésite entre deux paliers.</p>
       <p><b>Sécurité :</b> très basse tension 5 V uniquement ; jamais de secteur 230 V ; ne jamais brancher/débrancher un module sous tension ; en cas d'odeur ou d'échauffement, débrancher l'USB et appeler le professeur.</p>
       <p><b>Programme de référence :</b> le C++ commenté ligne à ligne est fourni (<a href="station_alerte_cyclonique/station_alerte_cyclonique.ino">station_alerte_cyclonique.ino</a>) — compilation vérifiée pour <code>arduino:avr:uno</code> (6 764 octets de flash). Les élèves le liront en séance 3.</p>
     </details>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s3">Séance 3 — L'humain dans la boucle ›</button></p>
 </div>
 
 <!-- ══════════════════ SÉANCE 3 ══════════════════ -->
@@ -765,10 +966,10 @@
     <div class="consigne"><b>Consigne :</b> a) ajoute le palier 4 à ton programme (ou reproduis-le au banc d'essai) ; b) fais les DEUX expériences : acquitter une alarme, puis déclencher une NOUVELLE alerte ; c) lis le chronogramme et réponds.</div>
     <img class="figure" src="Images/blocs_palier4_acquitter.svg" alt="Reconstitution schématique du palier 4 : un bloc si le bouton D2 est appuyé range vrai dans alarmeAcquittee ; un bloc si niveauAlerte est différent de niveauPrecedent range faux dans alarmeAcquittee ; le buzzer D5 sonne si le niveau vaut 2 et que l'alarme n'est pas acquittée ; enfin niveauPrecedent mémorise niveauAlerte ; à droite les trois constats attendus : le buzzer sonne, l'appui le coupe, une nouvelle alerte le fait repartir">
     <div class="exo">
-      <p><b>🧪 Les deux expériences au banc d'essai</b> (elles sont tracées ✔) : ① monte le vent au-dessus de 150, laisse sonner, puis <b>ACQUITTE</b> — le son se tait, l'écran reste rouge ; ② redescends sous 100, puis remonte au-dessus de 150 — le buzzer <b>repart tout seul</b>.</p>
+      <p><b>🧪 Les deux expériences au banc d'essai</b> (elles sont tracées ✔) : ① monte le vent au-dessus de 178, laisse sonner, puis <b>ACQUITTE</b> — le son se tait, l'écran reste rouge ; ② redescends sous 100, puis remonte au-dessus de 150 — le buzzer <b>repart tout seul</b>.</p>
       <h4>Lire le chronogramme</h4>
-      <img class="figure" src="Images/ihm_acquittement_chronogramme.svg" alt="Chronogramme sur quatre lignes : le niveau d'alerte passe par veille, vigilance, alerte rouge, revient en vigilance puis repasse en alerte ; le bouton est appuyé brièvement pendant la première alerte ; le buzzer sonne du début de l'alerte jusqu'à l'appui, se tait, puis ressonne à la nouvelle alerte ; la DEL reste allumée sans interruption dès la vigilance">
-      <div class="assoc"><label for="a4_q1">À t3, l'agent appuie sur le bouton. Que se passe-t-il ?</label><select id="a4_q1"><option value="">— choisir —</option><option>le buzzer se tait, mais l'écran et la DEL restent en alerte</option><option>toute la station s'éteint</option><option>l'alerte passe en vigilance</option><option>rien : le bouton ne sert qu'au démarrage</option></select></div>
+      <img class="figure" src="Images/ihm_acquittement_chronogramme.svg" alt="Chronogramme sur quatre lignes : le niveau d'alerte passe par veille, ouragan, ouragan majeur, revient en ouragan puis repasse en ouragan majeur ; le bouton est appuyé brièvement pendant le premier ouragan majeur ; le buzzer sonne du début de l'ouragan majeur jusqu'à l'appui, se tait, puis ressonne au nouvel ouragan majeur ; l'affichage — voyant allumé et niveau écrit sur l'écran — reste présent sans interruption">
+      <div class="assoc"><label for="a4_q1">À t3, l'agent appuie sur le bouton. Que se passe-t-il ?</label><select id="a4_q1"><option value="">— choisir —</option><option>le buzzer se tait, mais l'écran et la DEL restent en alerte</option><option>toute la station s'éteint</option><option>la station redescend d'un niveau</option><option>rien : le bouton ne sert qu'au démarrage</option></select></div>
       <div class="assoc"><label for="a4_q2">À t5, le buzzer repart SANS nouvel appui. Pourquoi ?</label><select id="a4_q2"><option value="">— choisir —</option><option>le changement de niveau est un NOUVEL événement : l'acquittement est effacé</option><option>le bouton est resté coincé</option><option>le programme a un bug</option><option>la batterie est rechargée</option></select></div>
       <div class="assoc"><label for="a4_q3">Pourquoi la DEL ne s'acquitte-t-elle PAS ?</label><select id="a4_q3"><option value="">— choisir —</option><option>le cahier des charges l'exige : l'information visuelle doit rester tant que dure l'alerte</option><option>c'est un oubli du programmeur</option><option>la DEL est trop petite pour s'éteindre</option><option>le bouton ne peut commander qu'une sortie</option></select></div>
       <div class="assoc"><label for="a4_q4">Quelle variable joue le rôle de « mémoire du tour précédent » ?</label><select id="a4_q4"><option value="">— choisir —</option><option>niveauPrecedent</option><option>vitesseVent</option><option>mesureBrute</option><option>le moniteur série</option></select></div>
@@ -811,18 +1012,22 @@
     <div class="exo">
       <h4>Extrait 1 — les constantes et les variables (le début du fichier)</h4>
 <pre class="code"><span class="kw">const int</span> BROCHE_VENT   = A1;  <span class="cmt">// potentiomètre « anémomètre » sur A1</span>
-<span class="kw">const int</span> SEUIL_VIGILANCE = <span class="num">100</span>;  <span class="cmt">// au-dessus : vigilance orange</span>
-<span class="kw">const int</span> SEUIL_ALERTE    = <span class="num">150</span>;  <span class="cmt">// au-dessus : alerte rouge</span>
+<span class="kw">const int</span> SEUIL_JAUNE  = <span class="num">63</span>;   <span class="cmt">// à partir de 63 : tempête tropicale</span>
+<span class="kw">const int</span> SEUIL_ORANGE = <span class="num">118</span>;  <span class="cmt">// à partir de 118 : ouragan</span>
+<span class="kw">const int</span> SEUIL_ROUGE  = <span class="num">178</span>;  <span class="cmt">// à partir de 178 : ouragan majeur</span>
 <span class="kw">int</span>  vitesseVent   = <span class="num">0</span>;        <span class="cmt">// vitesse du vent calculée, en km/h</span>
+<span class="kw">int</span>  niveauAlerte  = <span class="num">0</span>;        <span class="cmt">// 0 veille · 1 tempête · 2 ouragan · 3 majeur</span>
 <span class="kw">bool</span> alarmeAcquittee = <span class="kw">false</span>;  <span class="cmt">// true si l'humain a acquitté l'alarme</span></pre>
       <div class="assoc"><label for="a5_q1">Pourquoi les seuils sont-ils déclarés <code>const</code> (constantes) ?</label><select id="a5_q1"><option value="">— choisir —</option><option>ils ne changent jamais pendant l'exécution : le programme interdit de les modifier par accident</option><option>pour qu'ils changent tout seuls avec le vent</option><option>parce que « const » rend le programme plus rapide à téléverser</option><option>c'est obligatoire pour tous les nombres</option></select></div>
       <h4>Extrait 2 — la conversion et la décision (dans <code>loop()</code>)</h4>
 <pre class="code"><span class="kw">int</span> mesureBrute = <span class="fn">analogRead</span>(BROCHE_VENT);          <span class="cmt">// valeur brute du CAN (0-1023)</span>
 vitesseVent = <span class="fn">map</span>(mesureBrute, <span class="num">0</span>, <span class="num">1023</span>, <span class="num">0</span>, <span class="num">250</span>);    <span class="cmt">// conversion en km/h</span>
-<span class="kw">if</span> (vitesseVent &gt;= SEUIL_ALERTE) {
-  niveauAlerte = <span class="num">2</span>;                                 <span class="cmt">// alerte rouge</span>
-} <span class="kw">else if</span> (vitesseVent &gt;= SEUIL_VIGILANCE) {
-  niveauAlerte = <span class="num">1</span>;                                 <span class="cmt">// vigilance orange</span>
+<span class="kw">if</span> (vitesseVent &gt;= SEUIL_ROUGE) {
+  niveauAlerte = <span class="num">3</span>;                                 <span class="cmt">// ouragan majeur</span>
+} <span class="kw">else if</span> (vitesseVent &gt;= SEUIL_ORANGE) {
+  niveauAlerte = <span class="num">2</span>;                                 <span class="cmt">// ouragan</span>
+} <span class="kw">else if</span> (vitesseVent &gt;= SEUIL_JAUNE) {
+  niveauAlerte = <span class="num">1</span>;                                 <span class="cmt">// tempête tropicale</span>
 } <span class="kw">else</span> {
   niveauAlerte = <span class="num">0</span>;                                 <span class="cmt">// simple veille</span>
 }</pre>
@@ -832,39 +1037,43 @@ vitesseVent = <span class="fn">map</span>(mesureBrute, <span class="num">0</span
 <pre class="code"><span class="cmt">// Sous-programme (fonction) : affiche le niveau et la vitesse sur le LCD</span>
 <span class="cmt">// — la structuration en sous-programmes est exigée en 3e.</span>
 <span class="kw">void</span> <span class="fn">afficherEtat</span>() {
-  ecran.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">0</span>);
-  <span class="kw">if</span> (niveauAlerte == <span class="num">2</span>) {
+  ecran.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">0</span>);            <span class="cmt">// ligne 1 : le niveau</span>
+  <span class="kw">if</span> (niveauAlerte == <span class="num">3</span>) {
     ecran.<span class="fn">setRGB</span>(<span class="num">255</span>, <span class="num">0</span>, <span class="num">0</span>);      <span class="cmt">// fond ROUGE</span>
-    ecran.<span class="fn">print</span>(<span class="num">"ALERTE ROUGE !  "</span>);
-  } <span class="cmt">/* … orange, vert … */</span>
+    ecran.<span class="fn">print</span>(<span class="num">"OURAGAN MAJEUR  "</span>);
+  } <span class="cmt">/* … puis ouragan, tempête, veille … */</span>
+  ecran.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">1</span>);            <span class="cmt">// ligne 2 : la mesure</span>
+  ecran.<span class="fn">print</span>(<span class="num">"Vent: "</span>); ecran.<span class="fn">print</span>(vitesseVent); ecran.<span class="fn">print</span>(<span class="num">" km/h   "</span>);
 }</pre>
       <div class="assoc"><label for="a5_q4">Quel est l'intérêt de ranger l'affichage dans le sous-programme <code>afficherEtat()</code> ?</label><select id="a5_q4"><option value="">— choisir —</option><option>la boucle reste lisible, et l'affichage se teste et se corrige à UN seul endroit</option><option>le programme devient plus lent, donc plus sûr</option><option>c'est purement décoratif</option><option>ça évite d'utiliser des variables</option></select></div>
       <h4>d) La trace d'exécution (version 🅲 — mise au point au moniteur)</h4>
       <p style="font-size:.9em">Le programme envoie sa trace au moniteur série. Voici ce qu'un binôme a relevé sur SA station <i>(trace enregistrée — données simulées)</i> :</p>
-<pre class="code">vent(km/h)=97   niveau=0
-vent(km/h)=103  niveau=0   ⬅ ⚠
-vent(km/h)=126  niveau=0   ⬅ ⚠
-vent(km/h)=161  niveau=2</pre>
-      <div class="assoc"><label for="a5_q5">À 103 et 126 km/h, leur station affiche encore « niveau=0 ». Quelle est l'hypothèse de panne la PLUS probable ?</label><select id="a5_q5"><option value="">— choisir —</option><option>leur seuil de vigilance est mal réglé (par exemple 150 au lieu de 100) ou le SINON SI a disparu</option><option>le potentiomètre est cassé (la vitesse ne monte plus)</option><option>le moniteur série ment</option><option>le CAN ne sait pas compter au-delà de 100</option></select></div>
+<pre class="code">vent(km/h)=58   niveau=0
+vent(km/h)=71   niveau=0   ⬅ ⚠
+vent(km/h)=95   niveau=0   ⬅ ⚠
+vent(km/h)=112  niveau=0   ⬅ ⚠
+vent(km/h)=131  niveau=2
+vent(km/h)=186  niveau=3</pre>
+      <div class="assoc"><label for="a5_q5">À 71, 95 et 112 km/h, leur station affiche encore « niveau=0 » — alors qu'elle devrait annoncer une tempête tropicale dès 63. Quelle est l'hypothèse de panne la PLUS probable ?</label><select id="a5_q5"><option value="">— choisir —</option><option>leur seuil de tempête tropicale est mal réglé (par exemple 118 au lieu de 63) ou le SINON SI a disparu</option><option>le potentiomètre est cassé (la vitesse ne monte plus)</option><option>le moniteur série ment</option><option>le CAN ne sait pas compter au-delà de 100</option></select></div>
       <label for="a5_exp" style="display:block;margin-top:10px"><b>Justifie :</b> pourquoi la panne ne peut PAS venir du capteur ni de la conversion ? Appuie-toi sur la trace.</label>
       <textarea id="a5_exp" placeholder="La trace montre que…"></textarea>
 <details class="etayage">
   <summary>🪜 Version étayée — des phrases à compléter</summary>
   <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-les et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
-    <li>La trace montre que la vitesse ____ correctement (97 → 161), donc le capteur et la conversion ____.</li>
+    <li>La trace montre que la vitesse ____ correctement (58 → 186), donc le capteur et la conversion ____.</li>
     <li>Le problème apparaît entre la vitesse et le ____ : c'est donc la ____ qui est en cause.</li>
-    <li>À 161 km/h le niveau 2 s'affiche, donc le seuil ____ fonctionne : c'est le seuil ____ qui est mal réglé (ou son SINON SI absent).</li>
+    <li>À 131 km/h le niveau 2 s'affiche et à 186 le niveau 3, donc les seuils ____ et ____ fonctionnent : c'est le seuil ____ qui est mal réglé (ou son SINON SI absent).</li>
   </ul>
 </details>
       <button class="btn small" data-check="5" style="margin-top:8px">✔ Vérifier mes réponses</button>
       <div class="feedback" id="fb5" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relie chaque extrait au palier qui l'a construit : extrait 2 = paliers 1 et 2. Pour d) : la colonne « vent » monte normalement — quelle colonne se comporte mal, et quel morceau du programme la fabrique ?</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La vitesse affichée (97 → 161) prouve que capteur + CAN + conversion marchent. Le niveau reste à 0 entre 100 et 150 : c'est la DÉCISION qui rate. Et comme 161 donne bien niveau 2, le test « ≥ 150 » existe : c'est le test « ≥ 100 » qui est faux ou absent.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>La vitesse affichée (58 → 186) prouve que capteur + CAN + conversion marchent. Le niveau reste à 0 sur TOUTE la plage 63-117, là où il devrait valoir 1 : c'est la DÉCISION qui rate. Et comme 131 donne bien niveau 2 et 186 niveau 3, les tests « ≥ 118 » et « ≥ 178 » existent et fonctionnent : le défaut est isolé sur le test « ≥ 63 » — faux, ou absent. <b>Trois lignes de trace ont suffi à innocenter tout le reste de la chaîne.</b></p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <b>Q2 :</b> le calcul de conversion du palier 1 — <code>× 100 ÷ 1023</code> sur la maquette Vittascience, <code>map()</code> côté C++, « réétalonner » dans ArduBlock : trois écritures, une seule idée, la proportionnalité. <b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <b>Q5 :</b> seuil de vigilance mal réglé ou SINON SI absent.</p>
-      <p><b>Justification attendue :</b> la trace prouve que la vitesse monte correctement (97 → 103 → 126 → 161) : capteur, CAN et conversion fonctionnent. La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. Et puisque 161 déclenche bien le niveau 2, le test ≥ 150 marche : le défaut est dans le test ≥ 100.</p>
+      <p><b>Q1 :</b> <code>const</code> = valeur que le programme s'interdit de modifier : les seuils viennent du cahier des charges, pas de l'exécution. <b>Q2 :</b> le calcul de conversion du palier 1 — <code>× 250 ÷ 1023</code> dans les blocs Vittascience, <code>map()</code> côté C++, « réétalonner » dans ArduBlock : trois écritures, une seule idée, la proportionnalité. <b>Q3 :</b> le SINON SI — testé seulement si le premier SI a dit non. <b>Q4 :</b> lisibilité + un seul endroit à tester et corriger : c'est la <b>structuration en sous-programmes</b> exigée en 3e. <b>Q5 :</b> un seuil mal réglé (<code>seuilJaune</code>, <code>seuilOrange</code> ou <code>seuilRouge</code>) ou un SINON SI absent.</p>
+      <p><b>Justification attendue :</b> la trace prouve que la vitesse monte correctement (58 → 71 → 95 → 112 → 131 → 186) : capteur, CAN et conversion fonctionnent. La panne apparaît entre la vitesse et le NIVEAU : c'est la décision. Et puisque 131 déclenche le niveau 2 et 186 le niveau 3, les tests ≥ 118 et ≥ 178 marchent : le défaut est dans le test ≥ 63 — le plus probable étant que <code>seuilJaune</code> ait été réglé à 118 par recopie, ou que sa branche SINON SI ait été supprimée.</p>
       <p><b>Méthode (mise au point) :</b> la trace du moniteur série découpe la chaîne en tronçons : on cherche le PREMIER endroit où les valeurs deviennent fausses — tout ce qui est en amont est innocenté. C'est exactement le raisonnement du banc de tests de l'atelier 3e_C9.1.</p>
       <p><b>Limite :</b> lire le C++ n'est pas au programme de 3e pour l'ÉCRIRE — mais savoir le lire te permet de vérifier ce que tes blocs fabriquent, et c'est un immense avantage au lycée.</p>
     </details>
@@ -873,6 +1082,7 @@ vent(km/h)=161  niveau=2</pre>
     <div class="critere"><b>🎯 Critère de réussite :</b> 5 réponses justes et une justification qui utilise la trace pour innocenter le capteur ET désigner le test fautif.</div>
   </div>
 </section>
+<p class="page-suivante"><button class="btn vers-seance" data-vers="s4">Séance 4 — La recette ›</button></p>
 </div>
 
 <!-- ══════════════════ SÉANCE 4 ══════════════════ -->
@@ -889,13 +1099,13 @@ vent(km/h)=161  niveau=2</pre>
       <div><b>Production attendue :</b> TON protocole rédigé (tableau + phrase de méthode) — AVANT toute exécution.</div>
       <div><b>Ressources :</b> l'anatomie d'un protocole ci-dessous + le courrier de la mairie.</div>
     </div>
-    <img class="figure" src="Images/protocole_recette_anatomie.svg" alt="Anatomie d'un protocole de test : une droite graduée du vent porte les seuils 100 et 150 avec quatre valeurs de test par paires, 99 et 100, 149 et 150 ; un tableau de recette à cinq colonnes numéro, condition d'entrée, résultat attendu, résultat observé, verdict avec trois lignes d'exemple ; un chronomètre illustre la mesure du temps de réponse, exigence moins d'une seconde ; une phrase conclut qu'un test non écrit à l'avance n'est pas un test">
-    <div class="consigne"><b>Consigne :</b> c'est TOI l'expert chargé de la recette. a) choisis les valeurs à tester et justifie-les ; b) écris le résultat attendu de chaque essai <b>avant</b> de toucher au banc ; c) rédige la règle de décision du PV. Ton protocole doit couvrir : les 3 comportements nominaux, les 4 frontières, la performance, et l'acquittement (2 essais).</div>
+    <img class="figure" src="Images/protocole_recette_anatomie.svg" alt="Anatomie d'un protocole de test : une droite graduée du vent en kilomètres par heure porte les trois seuils 63, 118 et 178, avec six valeurs de test groupées par paires, 62 et 63, 117 et 118, 177 et 178 ; un tableau de recette à cinq colonnes numéro, condition d'entrée, résultat attendu, résultat observé, verdict avec trois lignes d'exemple ; un chronomètre illustre la mesure du temps de réponse, exigence moins d'une seconde ; une phrase conclut qu'un test non écrit à l'avance n'est pas un test">
+    <div class="consigne"><b>Consigne :</b> c'est TOI l'expert chargé de la recette. a) choisis les valeurs à tester et justifie-les ; b) écris le résultat attendu de chaque essai <b>avant</b> de toucher au banc ; c) rédige la règle de décision du PV. Ton protocole doit couvrir : les <b>4</b> comportements nominaux, les <b>6</b> frontières (deux par seuil), la performance, et l'acquittement (2 essais).</div>
     <div class="exo">
       <h4>a) Les valeurs d'essai</h4>
-      <div class="assoc"><label for="a6_v1">Pour vérifier le comportement « veille », une bonne valeur nominale est…</label><select id="a6_v1"><option value="">— choisir —</option><option>42 km/h (franchement dans la zone)</option><option>99 km/h (trop près de la frontière pour un test nominal)</option><option>150 km/h</option><option>0 km/h uniquement</option></select></div>
-      <div class="assoc"><label for="a6_v2">Autour du seuil de 100, le protocole doit tester…</label><select id="a6_v2"><option value="">— choisir —</option><option>99 ET 100 : juste sous la frontière, et pile dessus</option><option>seulement 100</option><option>50 et 150, c'est pareil</option><option>101 seulement, pour être sûr</option></select></div>
-      <div class="assoc"><label for="a6_v3">À 150 km/h PILE, le cahier des charges impose…</label><select id="a6_v3"><option value="">— choisir —</option><option>l'alerte rouge : « à partir de 150 » veut dire 150 compris (≥)</option><option>la vigilance : 150 n'est pas encore « au-dessus »</option><option>au choix du programmeur</option><option>l'écran s'éteint</option></select></div>
+      <div class="assoc"><label for="a6_v1">Pour vérifier le comportement « veille », une bonne valeur nominale est…</label><select id="a6_v1"><option value="">— choisir —</option><option>40 km/h (franchement dans la zone)</option><option>62 km/h (trop près de la frontière pour un test nominal)</option><option>150 km/h</option><option>0 km/h uniquement</option></select></div>
+      <div class="assoc"><label for="a6_v2">Autour du seuil de 118 km/h, le protocole doit tester…</label><select id="a6_v2"><option value="">— choisir —</option><option>117 ET 118 : juste sous la frontière, et pile dessus</option><option>seulement 118</option><option>90 et 150, c'est pareil</option><option>119 seulement, pour être sûr</option></select></div>
+      <div class="assoc"><label for="a6_v3">À 178 km/h PILE, le cahier des charges impose…</label><select id="a6_v3"><option value="">— choisir —</option><option>OURAGAN MAJEUR : « à partir de 178 » veut dire 178 compris (≥)</option><option>OURAGAN : 178 n'est pas encore « au-dessus »</option><option>au choix du programmeur</option><option>l'écran s'éteint</option></select></div>
       <div class="assoc"><label for="a6_v4">Pour vérifier la PERFORMANCE, l'essai doit…</label><select id="a6_v4"><option value="">— choisir —</option><option>chronométrer le délai entre le franchissement du seuil et le changement d'affichage, exigence : moins de 1 s</option><option>regarder si « ça a l'air rapide »</option><option>compter les blocs du programme</option><option>mesurer la longueur des câbles</option></select></div>
       <div class="assoc"><label for="a6_v5">Pour l'acquittement, il faut DEUX essais parce que…</label><select id="a6_v5"><option value="">— choisir —</option><option>il faut prouver que le son se coupe À l'appui ET qu'il repart à l'événement suivant</option><option>le bouton s'use vite</option><option>un seul essai suffirait, mais deux font plus sérieux</option><option>la mairie paie au nombre d'essais</option></select></div>
       <h4>b) Mon protocole rédigé</h4>
@@ -905,8 +1115,8 @@ vent(km/h)=161  niveau=2</pre>
   <summary>🪜 Version étayée — un squelette de protocole à compléter</summary>
   <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ce squelette retire l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-le et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
-    <li>Essais nominaux : je règle le vent à ____ (veille), ____ (vigilance), ____ (alerte) et j'attends respectivement ____.</li>
-    <li>Essais aux frontières : ____ , ____ , ____ , ____ — parce que c'est là que ____.</li>
+    <li>Essais nominaux : je règle le vent à ____ (veille), ____ (tempête tropicale), ____ (ouragan), ____ (ouragan majeur) et j'attends respectivement ____.</li>
+    <li>Essais aux frontières : ____ et ____ autour du seuil ____ ; ____ et ____ autour du seuil ____ ; ____ et ____ autour du seuil ____ — parce que c'est là que ____.</li>
     <li>Essai de performance : je chronomètre ____ ; l'exigence est ____.</li>
     <li>Essais d'interaction : j'appuie sur le bouton pendant ____ et je vérifie que ____ ; puis je ____ et je vérifie que le buzzer ____.</li>
     <li>Règle de décision : je prononce la recette si ____ essais sur ____ sont réussis, sinon ____.</li>
@@ -916,12 +1126,12 @@ vent(km/h)=161  niveau=2</pre>
       <div class="feedback" id="fb6" role="status"></div>
     </div>
     <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Relis le courrier de la mairie exigence par exigence : chaque phrase du courrier doit avoir AU MOINS un essai dans ton protocole. Les frontières sont les valeurs où le comportement DOIT changer.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un protocole complet ici : 3 nominaux (ex. 42, 120, 200) + 4 frontières (99, 100, 149, 150) + 1 performance (chrono &lt; 1 s) + 2 interaction (acquitter ; re-déclencher) = <b>10 essais</b>. « À partir de 150 » = 150 compris : c'est le cahier des charges qui tranche le ≥, pas le programmeur.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>Un protocole complet ici : <b>4</b> nominaux (ex. 40, 90, 150, 200) + <b>6</b> frontières (62 et 63 ; 117 et 118 ; 177 et 178) + 1 performance (chrono &lt; 1 s) + 2 interaction (acquitter ; re-déclencher) = <b>13 essais</b>. Compte les frontières : <b>trois seuils × deux essais chacun</b> (juste dessous, pile dessus). « À partir de 178 » = 178 compris : c'est le cahier des charges qui tranche le ≥, pas le programmeur.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>a)</b> 42 km/h (nominal franc) · 99 ET 100 · alerte rouge à 150 pile (« à partir de » = compris, d'où le ≥ du programme) · chronométrer le délai seuil → affichage (exigence &lt; 1 s) · deux essais d'acquittement (couper À l'appui, repartir à l'événement suivant).</p>
-      <p><b>b) Protocole attendu (exemple) :</b> essais 1-3 nominaux : 42 → veille (écran vert, tout éteint) ; 120 → vigilance (orange + DEL, buzzer muet) ; 200 → alerte (rouge + DEL + buzzer). Essais 4-7 frontières : 99 → veille ; 100 → vigilance ; 149 → vigilance ; 150 → alerte.</p><p>Essai 8 performance : franchissement de 150, chrono &lt; 1 s. Essais 9-10 interaction : appui pendant l'alarme → le son se coupe, l'écran et la DEL restent ; redescente puis remontée → le buzzer repart. <b>Règle de décision :</b> recette prononcée si 10/10 réussis ; un seul échec = réserve, correction, puis on REJOUE TOUT le protocole (non-régression).</p>
-      <p><b>Méthode :</b> chaque exigence du cahier des charges → au moins un essai ; chaque seuil → deux essais (dessous / dessus) ; chaque exigence chiffrée → une mesure, pas une impression.</p>
-      <p><b>Limite :</b> 10 essais prouvent la conformité au cahier des charges — pas l'absence de TOUT défaut (pluie sur le boîtier, câble arraché… d'autres protocoles existent pour ça).</p>
+      <p><b>a)</b> 40 km/h (nominal franc) · 117 ET 118 · OURAGAN MAJEUR à 178 pile (« à partir de » = compris, d'où le ≥ du programme) · chronométrer le délai seuil → affichage (exigence &lt; 1 s) · deux essais d'acquittement (couper À l'appui, repartir à l'événement suivant).</p>
+      <p><b>b) Protocole attendu (exemple) :</b> essais 1-4 nominaux : 40 → veille (écran vert, vert fixe, tout le reste éteint) ; 90 → tempête tropicale (jaune qui pulse, buzzer muet) ; 150 → ouragan (orange qui pulse, buzzer muet) ; 200 → ouragan majeur (rouge qui pulse + buzzer). Essais 5-10 frontières : 62 → veille et 63 → tempête ; 117 → tempête et 118 → ouragan ; 177 → ouragan et 178 → ouragan majeur.</p><p>Essai 11 performance : franchissement de 178, chrono &lt; 1 s. Essais 12-13 interaction : appui sur le bouton pendant l'alarme → le son se coupe, l'écran et le voyant restent ; redescente puis remontée au-dessus de 178 → le buzzer repart. <b>Règle de décision :</b> recette prononcée si 13/13 réussis ; un seul échec = réserve, correction, puis on REJOUE TOUT le protocole (non-régression).</p>
+      <p><b>Méthode :</b> chaque exigence du cahier des charges → au moins un essai ; chaque seuil → deux essais (dessous / dessus), donc trois seuils font six essais ; chaque exigence chiffrée → une mesure, pas une impression.</p>
+      <p><b>Limite :</b> 13 essais prouvent la conformité au cahier des charges — pas l'absence de TOUT défaut (pluie sur le boîtier, câble arraché… d'autres protocoles existent pour ça).</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> ne tester que les cas nominaux « ça marche chez moi » — les pannes vivent aux frontières ; écrire le résultat attendu APRÈS l'essai (ce n'est plus un test, c'est une impression) ; oublier les essais d'interaction humain-machine ; une règle de décision floue (« si ça a l'air bon »).</div>
     <div class="retenir"><b>📌 À retenir :</b> un <b>protocole de test</b> se rédige AVANT l'exécution : essais nominaux + <b>cas limites aux frontières</b> des seuils + exigences de <b>performance chiffrées</b> + interaction humain-machine, avec pour chaque essai le résultat ATTENDU et une <b>règle de décision</b> explicite.</div>
@@ -936,21 +1146,24 @@ vent(km/h)=161  niveau=2</pre>
       <div><b>Production attendue :</b> tableau de recette rempli PENDANT les essais + PV signé.</div>
       <div><b>Ressources :</b> le banc d'essai de la station (en haut de page) — ou la carte réelle (version 🅰).</div>
     </div>
-    <div class="consigne"><b>Consigne :</b> exécute les essais AU BANC (les frontières 99, 100, 149, 150 et le chrono sont tracés ✔ automatiquement), consigne chaque observation <b>pendant</b> l'essai, remplis le verdict, puis rédige le PV. En version 🅰, fais la même chose sur la carte réelle avec le professeur.</div>
+    <div class="consigne"><b>Consigne :</b> exécute les essais AU BANC (les six frontières 62, 63, 117, 118, 177, 178 et le chrono sont tracés ✔ automatiquement), consigne chaque observation <b>pendant</b> l'essai, remplis le verdict, puis rédige le PV. En version 🅰, fais la même chose sur la carte réelle avec le professeur.</div>
     <div class="exo">
       <h4>Le tableau de recette</h4>
       <table class="recette" aria-label="Tableau de recette à remplir">
         <tr><th>N°</th><th>Essai</th><th>Résultat attendu</th><th>Observé ?</th></tr>
-        <tr><td>1</td><td>vent 42 km/h</td><td>écran vert « Veille », DEL et buzzer éteints</td><td><select id="a7_r1" aria-label="résultat observé essai 1"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>2</td><td>vent 120 km/h</td><td>orange + DEL, buzzer muet</td><td><select id="a7_r2" aria-label="résultat observé essai 2"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>3</td><td>vent 200 km/h</td><td>rouge + DEL + buzzer</td><td><select id="a7_r3" aria-label="résultat observé essai 3"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>4</td><td>frontière : 99 km/h</td><td><select id="a7_a4" aria-label="résultat attendu essai 4"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r4" aria-label="résultat observé essai 4"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>5</td><td>frontière : 100 km/h</td><td><select id="a7_a5" aria-label="résultat attendu essai 5"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r5" aria-label="résultat observé essai 5"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>6</td><td>frontière : 149 km/h</td><td><select id="a7_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r6" aria-label="résultat observé essai 6"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>7</td><td>frontière : 150 km/h</td><td><select id="a7_a7" aria-label="résultat attendu essai 7"><option value="">— attendu ? —</option><option>veille</option><option>vigilance orange</option><option>alerte rouge</option></select></td><td><select id="a7_r7" aria-label="résultat observé essai 7"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>8</td><td>performance : chrono seuil → affichage</td><td>moins de 1 seconde</td><td><select id="a7_r8" aria-label="résultat observé essai 8"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>9</td><td>appui pendant l'alarme</td><td>le son se coupe, écran et DEL restent</td><td><select id="a7_r9" aria-label="résultat observé essai 9"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
-        <tr><td>10</td><td>redescente puis nouvelle alerte</td><td>le buzzer repart sans appui</td><td><select id="a7_r10" aria-label="résultat observé essai 10"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>1</td><td>vent 40 km/h</td><td>écran vert « VEILLE », voyant vert fixe, buzzer muet</td><td><select id="a7_r1" aria-label="résultat observé essai 1"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>2</td><td>vent 90 km/h</td><td>écran jaune, voyant jaune qui pulse, buzzer muet</td><td><select id="a7_r2" aria-label="résultat observé essai 2"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>3</td><td>vent 150 km/h</td><td>écran orange, voyant orange qui pulse, buzzer muet</td><td><select id="a7_r3" aria-label="résultat observé essai 3"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>4</td><td>vent 200 km/h</td><td>écran rouge, voyant rouge qui pulse, buzzer qui sonne</td><td><select id="a7_r4" aria-label="résultat observé essai 4"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>5</td><td>frontière : 62 km/h</td><td><select id="a7_a5" aria-label="résultat attendu essai 5"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r5" aria-label="résultat observé essai 5"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>6</td><td>frontière : 63 km/h</td><td><select id="a7_a6" aria-label="résultat attendu essai 6"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r6" aria-label="résultat observé essai 6"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>7</td><td>frontière : 117 km/h</td><td><select id="a7_a7" aria-label="résultat attendu essai 7"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r7" aria-label="résultat observé essai 7"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>8</td><td>frontière : 118 km/h</td><td><select id="a7_a8" aria-label="résultat attendu essai 8"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r8" aria-label="résultat observé essai 8"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>9</td><td>frontière : 177 km/h</td><td><select id="a7_a9" aria-label="résultat attendu essai 9"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r9" aria-label="résultat observé essai 9"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>10</td><td>frontière : 178 km/h</td><td><select id="a7_a10" aria-label="résultat attendu essai 10"><option value="">— attendu ? —</option><option>veille</option><option>tempête tropicale</option><option>ouragan</option><option>ouragan majeur</option></select></td><td><select id="a7_r10" aria-label="résultat observé essai 10"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>11</td><td>performance : chrono seuil → affichage</td><td>moins de 1 seconde</td><td><select id="a7_r11" aria-label="résultat observé essai 11"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>12</td><td>appui pendant l'alarme</td><td>le son se coupe, écran et voyant restent</td><td><select id="a7_r12" aria-label="résultat observé essai 12"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
+        <tr><td>13</td><td>redescente puis nouvelle alerte</td><td>le buzzer repart sans appui</td><td><select id="a7_r13" aria-label="résultat observé essai 13"><option value="">—</option><option>conforme</option><option>non conforme</option></select></td></tr>
       </table>
       <h4>Le procès-verbal</h4>
       <label for="a7_pv" style="display:block">Rédige le PV pour la mairie : essais réalisés, résultats, réserves éventuelles, et ta conclusion (« recette prononcée » ou « recette ajournée »).</label>
@@ -960,7 +1173,7 @@ vent(km/h)=161  niveau=2</pre>
   <p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre&nbsp;: ce squelette retire l'obstacle de la rédaction, pas l'exigence scientifique. Recopie-le et complète chaque «&nbsp;____&nbsp;».</p>
   <ul>
     <li>Le ____ , nous avons exécuté les ____ essais du protocole sur ____ (banc de simulation / carte réelle).</li>
-    <li>Résultats : ____ essais conformes sur ____ . Les essais aux frontières (99, 100, 149, 150 km/h) ont montré que ____.</li>
+    <li>Résultats : ____ essais conformes sur ____ . Les essais aux six frontières (62, 63, 117, 118, 177, 178 km/h) ont montré que ____.</li>
     <li>La performance mesurée est de ____ , pour une exigence de ____ .</li>
     <li>Conclusion : la recette est ____ , avec les réserves suivantes : ____ .</li>
   </ul>
@@ -968,18 +1181,56 @@ vent(km/h)=161  niveau=2</pre>
       <button class="btn small" data-check="7" style="margin-top:8px">✔ Vérifier ma recette (essais tracés compris)</button>
       <div class="feedback" id="fb7" role="status"></div>
     </div>
-    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Utilise le champ « valeur exacte » du banc pour viser 99, 100, 149 et 150 pile. Les attendus des essais 4 à 7 se déduisent du courrier : « à partir de 100 », « à partir de 150 » — frontière comprise.</p></details>
-    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>99 → veille · 100 → vigilance orange · 149 → vigilance orange · 150 → alerte rouge. Le bouton ⏱ du banc mesure le temps de réponse pour toi (la boucle tourne toutes les 200 ms : tu devrais mesurer ≈ 0,2-0,4 s, conforme). N'oublie pas : le PV se signe sur ce que tu as OBSERVÉ, pas sur ce que tu espérais.</p></details>
+    <details class="aide1"><summary>💡 Aide de niveau 1</summary><p>Utilise le champ « valeur exacte » du banc pour viser 62, 63, 117, 118, 177 et 178 pile. Les attendus des essais 5 à 10 se déduisent du courrier : « à partir de 63 », « à partir de 118 », « à partir de 178 » — frontière comprise à chaque fois.</p></details>
+    <details class="aide2"><summary>💡💡 Aide de niveau 2</summary><p>62 → veille (vert fixe) · 63 → tempête tropicale (jaune) · 117 → tempête tropicale · 118 → ouragan (orange) · 177 → ouragan · 178 → ouragan majeur (rouge + buzzer). Le bouton ⏱ du banc mesure le temps de réponse pour toi (la boucle tourne toutes les 200 ms : tu devrais mesurer ≈ 0,2-0,4 s, conforme). N'oublie pas : le PV se signe sur ce que tu as OBSERVÉ, pas sur ce que tu espérais.</p></details>
     <details class="correction"><summary>✅ Correction complète</summary>
-      <p><b>Attendus des frontières :</b> 99 → veille · 100 → vigilance · 149 → vigilance · 150 → alerte. Tous les essais du banc doivent être « conforme » (le programme de référence respecte le cahier des charges) — si tu observes autre chose, note-le : c'est une VRAIE observation, elle va dans le PV.</p>
-      <p><b>PV attendu (exemple) :</b> « Le [date], nous avons exécuté les 10 essais du protocole sur le banc de simulation. 10 essais conformes sur 10. Les frontières confirment : veille jusqu'à 99 km/h, vigilance de 100 à 149, alerte dès 150. Temps de réponse mesuré ≈ 0,3 s (exigence : &lt; 1 s). L'alarme s'acquitte à l'appui et repart au changement de niveau. Recette prononcée, sans réserve. Signé : l'équipe de recette 3e. »</p>
-      <p><b>🗽 Le second exemplaire.</b> Souviens-toi que le PV part aussi à New York. Relis le tien en te demandant : <b>un lecteur qui n'a jamais vu la station comprendrait-il ce qui a été testé, avec quelles valeurs, et ce qui a été observé ?</b> Si la réponse est non, ce n'est pas le lecteur qui manque d'informations — c'est le PV. Écris les valeurs (99, 100, 149, 150), l'unité (km/h) et les résultats observés, jamais « ça marche ».</p>
+      <p><b>Attendus des six frontières :</b> 62 → veille · 63 → tempête tropicale · 117 → tempête tropicale · 118 → ouragan · 177 → ouragan · 178 → ouragan majeur. Un seuil se teste toujours <b>deux fois</b> : juste dessous, et pile dessus. Tous les essais du banc doivent être « conforme » (le programme de référence respecte le cahier des charges) — si tu observes autre chose, note-le : c'est une VRAIE observation, elle va dans le PV.</p>
+      <p><b>PV attendu (exemple) :</b> « Le [date], nous avons exécuté les 13 essais du protocole sur le banc de simulation. 13 essais conformes sur 13. Les frontières confirment : veille jusqu'à 62 km/h, tempête tropicale de 63 à 117, ouragan de 118 à 177, ouragan majeur dès 178. Temps de réponse mesuré ≈ 0,3 s (exigence : &lt; 1 s). L'alarme s'acquitte à l'appui et repart au changement de niveau. Recette prononcée, sans réserve. Signé : l'équipe de recette 3e. »</p>
+      <p><b>🗽 Le second exemplaire.</b> Souviens-toi que le PV part aussi à New York. Relis le tien en te demandant : <b>un lecteur qui n'a jamais vu la station comprendrait-il ce qui a été testé, avec quelles valeurs, et ce qui a été observé ?</b> Si la réponse est non, ce n'est pas le lecteur qui manque d'informations — c'est le PV. Écris les valeurs (62, 63, 117, 118, 177, 178), l'unité (km/h) et les résultats observés, jamais « ça marche ».</p>
+      <details class="description-image" style="margin:14px auto">
+        <summary>📸 Les six frontières, prouvées en captures réelles du simulateur</summary>
+        <p>Voici ce que fait le <b>programme de référence</b> aux six valeurs frontières. Ces images n'ont pas été
+        retouchées : ce sont des captures du simulateur de Vittascience, prises l'une après l'autre en déplaçant
+        le potentiomètre. Lis-les <b>par paires</b> : c'est le passage d'une image à la suivante qui prouve le
+        « ≥ ». Entre 62 et 63, un seul kilomètre-heure sépare deux niveaux — et c'est exactement le kilomètre-heure
+        qu'un test « une petite, une moyenne, une grande valeur » n'aurait jamais essayé.</p>
+        <figure style="margin:.8rem 0">
+          <img class="figure" src="Images/vittascience/C_frontiere_062kmh_brut254.png" alt="Capture d'écran réelle du simulateur Vittascience à 62 km/h : l'écran est vert et affiche VEILLE avec Vent 62 km/h, le potentiomètre indique 254, la broche D6 est ON, les broches D7, D3 et D4 sont OFF, le buzzer est OFF">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>62 km/h</b> → écran « VEILLE », voyant <b>D6 (vert)</b> seul allumé — niveau <b>veille</b>. Valeur brute du potentiomètre : <b>254</b> / 1023.</figcaption>
+        </figure>
+        <figure style="margin:.8rem 0">
+          <img class="figure" src="Images/vittascience/C_frontiere_063kmh_brut258.png" alt="Capture d'écran réelle du simulateur Vittascience à 63 km/h : l'écran est jaune et affiche TEMPETE TROP. avec Vent 63 km/h, le potentiomètre indique 258, la broche D7 est ON, les broches D6, D3 et D4 sont OFF, le buzzer est OFF">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>63 km/h</b> → écran « TEMPETE TROP. », voyant <b>D7 (jaune)</b> seul allumé — niveau <b>tempête tropicale</b>. Valeur brute du potentiomètre : <b>258</b> / 1023.</figcaption>
+        </figure>
+        <figure style="margin:.8rem 0">
+          <img class="figure" src="Images/vittascience/C_frontiere_117kmh_brut479.png" alt="Capture d'écran réelle du simulateur Vittascience à 117 km/h : l'écran est jaune et affiche TEMPETE TROP. avec Vent 117 km/h, le potentiomètre indique 479, la broche D7 est ON, les autres voyants sont OFF, le buzzer est OFF">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>117 km/h</b> → écran « TEMPETE TROP. », voyant <b>D7 (jaune)</b> seul allumé — niveau <b>tempête tropicale</b>. Valeur brute du potentiomètre : <b>479</b> / 1023.</figcaption>
+        </figure>
+        <figure style="margin:.8rem 0">
+          <img class="figure" src="Images/vittascience/C_frontiere_118kmh_brut483.png" alt="Capture d'écran réelle du simulateur Vittascience à 118 km/h : l'écran est orange et affiche OURAGAN avec Vent 118 km/h, le potentiomètre indique 483, la broche D3 est ON, les autres voyants sont OFF, le buzzer est OFF">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>118 km/h</b> → écran « OURAGAN », voyant <b>D3 (orange)</b> seul allumé — niveau <b>ouragan</b>. Valeur brute du potentiomètre : <b>483</b> / 1023.</figcaption>
+        </figure>
+        <figure style="margin:.8rem 0">
+          <img class="figure" src="Images/vittascience/C_frontiere_177kmh_brut725.png" alt="Capture d'écran réelle du simulateur Vittascience à 177 km/h : l'écran est orange et affiche OURAGAN avec Vent 177 km/h, le potentiomètre indique 725, la broche D3 est ON, les autres voyants sont OFF, le buzzer est OFF">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>177 km/h</b> → écran « OURAGAN », voyant <b>D3 (orange)</b> seul allumé — niveau <b>ouragan</b>. Valeur brute du potentiomètre : <b>725</b> / 1023.</figcaption>
+        </figure>
+        <figure style="margin:.8rem 0">
+          <img class="figure" src="Images/vittascience/C_frontiere_178kmh_brut729.png" alt="Capture d'écran réelle du simulateur Vittascience à 178 km/h : l'écran est rouge et affiche OURAGAN MAJEUR avec Vent 178 km/h, le potentiomètre indique 729, la broche D4 est ON, les autres voyants sont OFF, et le buzzer sur D5 est ACTIF">
+          <figcaption style="font-size:.9em;color:var(--sub)"><b>178 km/h</b> → écran « OURAGAN MAJEUR », voyant <b>D4 (rouge)</b> seul allumé — niveau <b>ouragan majeur</b>. Valeur brute du potentiomètre : <b>729</b> / 1023.</figcaption>
+        </figure>
+        <p style="margin-top:10px"><b>Deux choses à ne pas manquer.</b> ① La <b>valeur brute</b> change à peine
+        (725 → 729) alors que le niveau, lui, <b>bascule</b> : le seuil est une falaise, pas une pente.
+        ② Dans le simulateur, <b>les voyants sont tous dessinés en vert</b>, quelle que soit la couleur réelle de la
+        DEL. Ne juge donc pas à la couleur de l'image : regarde <b>quelle broche est ON</b>, et surtout ce qui est
+        <b>écrit sur l'écran</b>. Une station qui ne parlerait que par la couleur serait illisible — pour le
+        simulateur comme pour un daltonien.</p>
+      </details>
       <p><b>Méthode :</b> observer PENDANT l'essai, verdict essai par essai, conclusion GLOBALE seulement à la fin — et si un essai échoue après correction du programme, on rejoue TOUT (non-régression, comme en 3e_C9.1).</p>
       <p><b>Limite :</b> la recette prouve la conformité AU CAHIER DES CHARGES ce jour-là, sur ce banc : la version 🅰 au labo peut réserver des surprises (contacts, lumière ambiante…) — c'est pour ça que les industriels recettent sur le matériel final.</p>
     </details>
     <div class="erreurs"><b>⚠ Erreurs fréquentes :</b> remplir la colonne « observé » de mémoire après coup ; cocher « conforme » parce qu'on VEUT que ça marche (le PV engage ta signature !) ; conclure « recette prononcée » avec un essai non conforme sans même une réserve ; oublier de re-tester après une correction.</div>
     <div class="retenir"><b>📌 À retenir :</b> exécuter une recette = dérouler le protocole SANS improviser, consigner chaque observation <b>pendant</b> l'essai, puis prononcer une décision engageante : recette prononcée / ajournée, avec réserves. Le <b>PV</b> est un document technique ET contractuel : il se signe.</div>
-    <div class="critere"><b>🎯 Critère de réussite :</b> 4 attendus de frontières justes, 10 verdicts remplis, les 4 frontières + le chrono réellement exécutés au banc (coches ✔), et un PV rédigé avec une conclusion explicite.</div>
+    <div class="critere"><b>🎯 Critère de réussite :</b> 6 attendus de frontières justes, 13 verdicts remplis, les 6 frontières + le chrono réellement exécutés au banc (coches ✔), et un PV rédigé avec une conclusion explicite.</div>
   </div>
 </section>
 </div>
@@ -992,7 +1243,7 @@ vent(km/h)=161  niveau=2</pre>
   <h4>2. Commander un système réel avec un humain dans la boucle (activités 4-5)</h4>
   <p>Le programme lit des capteurs (A1) ET une entrée humaine (bouton D2). L'<b>acquittement</b> se programme avec un booléen-mémoire (<code>alarmeAcquittee</code>) et la détection d'<b>événement</b> (<code>niveauAlerte ≠ niveauPrecedent</code>). Les blocs deviennent du C++ : la conversion d'échelle → <code>map()</code>, « si / sinon si / sinon » → <code>if / else if / else</code>, affichage dans un <b>sous-programme</b> (<code>afficherEtat()</code>). La <b>mise au point</b> lit la trace du moniteur série pour innocenter la chaîne tronçon par tronçon.</p>
   <h4>3. Prouver : le protocole de test (activités 6-7)</h4>
-  <p>Un <b>protocole de test</b> se rédige AVANT : essais nominaux + <b>cas limites aux frontières</b> (99/100, 149/150) + <b>performance mesurée</b> (&lt; 1 s) + interaction humain-machine, chacun avec son résultat ATTENDU. L'exécution remplit le tableau <i>essai / attendu / observé / verdict</i> PENDANT les essais, et le <b>PV de recette</b> conclut : prononcée ou ajournée. Après correction : on rejoue tout (<b>non-régression</b>).</p>
+  <p>Un <b>protocole de test</b> se rédige AVANT : essais nominaux + <b>cas limites aux frontières</b> (62/63, 117/118, 177/178) + <b>performance mesurée</b> (&lt; 1 s) + interaction humain-machine, chacun avec son résultat ATTENDU. L'exécution remplit le tableau <i>essai / attendu / observé / verdict</i> PENDANT les essais, et le <b>PV de recette</b> conclut : prononcée ou ajournée. Après correction : on rejoue tout (<b>non-régression</b>).</p>
   <h4>🇬🇧 Vocabulaire utile</h4>
   <p class="tag-zone"><span class="tag">programme = program</span><span class="tag">capteur = sensor</span><span class="tag">seuil = threshold</span><span class="tag">boucle = loop</span><span class="tag">acquitter = to acknowledge</span><span class="tag">événement = event</span><span class="tag">tester = to test</span><span class="tag">protocole de test = test protocol</span><span class="tag">recette = acceptance test</span><span class="tag">téléverser = to upload</span></p>
 </section>
@@ -1078,10 +1329,10 @@ vent(km/h)=161  niveau=2</pre>
   <p>Pour aller plus loin, au choix — chaque défi a son corrigé replié :</p>
   <p>🟣 <b>Défi « niveau violet » :</b> aux Antilles, la vigilance ne s'arrête pas au rouge — après le rouge vient le
   <b>violet</b> (confinement absolu), puis le <b>gris</b> (phase de sauvegarde, après le passage). La mairie voudrait
-  que le prototype se rapproche de ce vocabulaire réel : un 4<sup>e</sup> niveau « violet » à partir de 200 km/h
-  (écran violet, buzzer qui sonne par intermittence). Où insérer le nouveau test dans l'algorigramme, et pourquoi
+  que le prototype se rapproche de ce vocabulaire réel : un 5<sup>e</sup> niveau « violet » à partir de <b>209 km/h</b> (l'entrée en catégorie 4 de
+  Saffir-Simpson : écran violet, buzzer qui sonne par intermittence). Où insérer le nouveau test dans l'algorigramme, et pourquoi
   À CET ENDROIT ? Et pourquoi le niveau <b>gris</b>, lui, ne peut-il PAS se déduire de la seule vitesse du vent ?</p>
-  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 200 » s'insère EN PREMIER, avant « ≥ 150 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « alerte rouge » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, 199 et 200. Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
+  <details class="correction"><summary>✅ Corrigé du défi violet</summary><p>Le test « ≥ 209 » s'insère EN PREMIER, avant « ≥ 178 » : dans une cascade de SI/SINON, le seuil le plus haut se teste toujours d'abord — sinon 220 km/h s'arrêterait à « ouragan majeur » sans jamais atteindre « violet ». Il faut aussi ajouter le comportement (couleur violette, intermittence du buzzer : sonner/attendre dans la boucle) ET mettre à jour le protocole de recette : deux nouvelles frontières à tester, <b>208 et 209</b> — le protocole passerait ainsi de 13 à 16 essais (un nominal de plus, deux frontières de plus). Erreur classique : ajouter le test en dernier — il devient inatteignable.</p>
   <p><b>Le cas du gris.</b> Le gris n'est pas « moins de vent » : c'est <b>l'après</b>, décidé par le préfet quand le
   phénomène est passé. Un vent retombé à 30 km/h peut correspondre au gris… comme au jaune de la veille, ou à un
   jour ordinaire. Une même entrée, plusieurs sorties possibles : la vitesse du vent <b>ne suffit pas</b>. Il faudrait
@@ -1162,7 +1413,9 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
 
 /* ══════ Le banc d'essai de la station ══════
    Fidèle au programme de référence : boucle exécutée toutes les 200 ms,
-   seuils 100 / 150, acquittement mémorisé, ré-armement au changement de niveau. */
+   seuils 63 / 118 / 178 (Saffir-Simpson), quatre niveaux, un seul voyant à la
+   fois, pulsation à partir du jaune, acquittement mémorisé, ré-armement au
+   changement de niveau. */
 const SIM = {
   vent: 42, niveau: 0, niveauPrecedent: -1, acquittee: false,
   mouvements: 0, dernierVent: 42, niveauxVus: {}, chronoArme: false, chronoT0: 0
@@ -1177,13 +1430,13 @@ function simSetVent(v){
 $("simVent").addEventListener("input", e=>simSetVent(parseInt(e.target.value,10)||0));
 $("simVentNum").addEventListener("input", e=>{ const v=parseInt(e.target.value,10); if(!isNaN(v)) simSetVent(v); });
 $("btnAcquit").addEventListener("click", ()=>{
-  if(SIM.niveau===2 && !SIM.acquittee){ window.__exp.acquitEnCours = true; }
+  if(SIM.niveau===3 && !SIM.acquittee){ window.__exp.acquitEnCours = true; }
   SIM.acquittee = true;
 });
 function simTick(){
   /* 1. traiter : décider du niveau (même cascade que le programme) */
   const v = SIM.vent;
-  SIM.niveau = (v >= 150) ? 2 : (v >= 100) ? 1 : 0;
+  SIM.niveau = (v >= 178) ? 3 : (v >= 118) ? 2 : (v >= 63) ? 1 : 0;
   /* 2. événement : changement de niveau → ré-armement de l'alarme */
   if(SIM.niveau !== SIM.niveauPrecedent){
     if(SIM.acquittee && SIM.niveauPrecedent !== -1){ window.__exp.apresAcquit = true; }
@@ -1191,11 +1444,18 @@ function simTick(){
   }
   /* 3. commander : LCD, DEL, buzzer */
   const lcd = $("simLcd"), l1 = $("simL1"), l2 = $("simL2");
-  lcd.className = "lcd-sim " + (SIM.niveau===2 ? "lcd-rouge" : SIM.niveau===1 ? "lcd-orange" : "lcd-vert");
-  l1.textContent = SIM.niveau===2 ? "ALERTE ROUGE !" : SIM.niveau===1 ? "Vigilance orange" : "Veille";
+  const TEINTE = ["lcd-vert","lcd-jaune","lcd-orange","lcd-rouge"];
+  const NOM    = ["VEILLE","TEMPETE TROP.","OURAGAN","OURAGAN MAJEUR"];
+  lcd.className = "lcd-sim " + TEINTE[SIM.niveau];
+  l1.textContent = NOM[SIM.niveau];               /* règle n°119 : le niveau est TOUJOURS écrit */
   l2.textContent = "Vent: " + v + " km/h";
-  $("simDel").className = "del-sim" + (SIM.niveau>=1 ? " on" : "");
-  const sonne = (SIM.niveau===2) && !SIM.acquittee;
+  /* un seul voyant allumé ; le vert est fixe, les autres pulsent */
+  [["simDelVert",0],["simDelJaune",1],["simDelOrange",2],["simDelRouge",3]].forEach(([id,n])=>{
+    const el = $(id); if(!el) return;
+    el.className = "del-sim " + id.replace("simDel","").toLowerCase()
+                 + (SIM.niveau===n ? " on" : "") + (SIM.niveau===n && n>0 ? " pulse" : "");
+  });
+  const sonne = (SIM.niveau===3) && !SIM.acquittee;
   const buz = $("simBuz");
   buz.className = "buzzer-sim" + (sonne ? " on" : "");
   buz.textContent = sonne ? "🔊 buzzer : ALARME !" : "🔇 buzzer muet";
@@ -1204,20 +1464,17 @@ function simTick(){
   if(SIM.vent !== SIM.dernierVent){ SIM.dernierVent = SIM.vent; }
   if(SIM.mouvements >= 6) e.lecture = true;
   SIM.niveauxVus[SIM.niveau] = true;
-  if(SIM.niveauxVus[0] && SIM.niveauxVus[1] && SIM.niveauxVus[2]) e.niveaux = true;
-  if(e.acquitEnCours && SIM.acquittee && SIM.niveau===2){ e.acquit = true; e.acquitEnCours = false; }
-  if(e.apresAcquit && SIM.niveau===2 && sonne){ e.retrigger = true; e.apresAcquit = false; }
-  if(v===99) e.borne99 = true;
-  if(v===100) e.borne100 = true;
-  if(v===149) e.borne149 = true;
-  if(v===150) e.borne150 = true;
+  if(SIM.niveauxVus[0] && SIM.niveauxVus[1] && SIM.niveauxVus[2] && SIM.niveauxVus[3]) e.niveaux = true;
+  if(e.acquitEnCours && SIM.acquittee && SIM.niveau===3){ e.acquit = true; e.acquitEnCours = false; }
+  if(e.apresAcquit && SIM.niveau===3 && sonne){ e.retrigger = true; e.apresAcquit = false; }
+  [62,63,117,118,177,178].forEach(b=>{ if(v===b) e["borne"+b] = true; });
   /* 5. chrono de performance */
-  if(SIM.chronoArme && SIM.niveau===2){
+  if(SIM.chronoArme && SIM.niveau===3){
     const dt = (performance.now() - SIM.chronoT0) / 1000;
     SIM.chronoArme = false;
     e.chrono = true;
     $("chronoNote").textContent = "⏱ Temps de réponse mesuré : " + dt.toFixed(2).replace(".",",") +
-      " s (franchissement de 150 km/h → affichage « ALERTE ROUGE ») — exigence de la mairie : moins de 1 s → " +
+      " s (franchissement de 178 km/h → affichage « OURAGAN MAJEUR ») — exigence de la mairie : moins de 1 s → " +
       (dt < 1 ? "CONFORME ✔" : "NON CONFORME ✘");
     save(false);
   }
@@ -1225,23 +1482,26 @@ function simTick(){
   majVerrous();
 }
 $("btnChrono").addEventListener("click", ()=>{
-  simSetVent(140);
-  $("chronoNote").textContent = "⏱ Mesure en cours : vent stabilisé à 140 km/h, franchissement du seuil dans un instant…";
+  /* Refonte v3 : le chrono doit FRANCHIR un seuil réel. On se stabilise juste
+     sous 178 (ouragan), puis on passe au-dessus : c'est le seuil le plus haut,
+     celui dont dépend l'exigence de la mairie. */
+  simSetVent(170);
+  $("chronoNote").textContent = "⏱ Mesure en cours : vent stabilisé à 170 km/h, franchissement du seuil de 178 dans un instant…";
   setTimeout(()=>{
     SIM.chronoT0 = performance.now();
     SIM.chronoArme = true;
-    simSetVent(160);
+    simSetVent(185);
   }, 600);
 });
 const VERROUS_UI = {
   "v-lecture":  ["lecture",  "J'ai fait varier le vent et observé la mesure"],
-  "v-niveaux":  ["niveaux",  "J'ai atteint les 3 niveaux (veille · vigilance · alerte)"],
+  "v-niveaux":  ["niveaux",  "J'ai atteint les 4 niveaux (veille · tempête tropicale · ouragan · ouragan majeur)"],
   "v-acquit":   ["acquit",   "J'ai acquitté une alarme qui sonnait"],
   "v-retrigger":["retrigger","Après acquittement, j'ai déclenché une NOUVELLE alerte (le buzzer est reparti)"],
-  "v-bornes":   [null,       "J'ai testé les 4 frontières : 99 · 100 · 149 · 150 km/h"],
+  "v-bornes":   [null,       "J'ai testé les 6 frontières : 62 · 63 · 117 · 118 · 177 · 178 km/h"],
   "v-chrono":   ["chrono",   "J'ai mesuré le temps de réponse"]
 };
-function bornesOk(){ const e=window.__exp; return !!(e.borne99 && e.borne100 && e.borne149 && e.borne150); }
+function bornesOk(){ const e=window.__exp; return [62,63,117,118,177,178].every(b=>e["borne"+b]); }
 function majVerrous(){
   const e = window.__exp;
   Object.entries(VERROUS_UI).forEach(([id, [cle, libelle]])=>{
@@ -1270,36 +1530,39 @@ const CHECKS = {
   },
   2: function(){
     let ok=0;
-    if(num("a2_s1")===150) ok++;
-    if(num("a2_s2")===100) ok++;
-    if($("a2_s3").value==="veille") ok++;
-    if($("a2_q1").value.startsWith("losange 150 : NON")) ok++;
-    if($("a2_q2").value.startsWith("parce qu'une rafale à 180")) ok++;
+    if(num("a2_s1")===178) ok++;
+    if(num("a2_s2")===118) ok++;
+    if(num("a2_s3")===63) ok++;
+    if($("a2_s4").value==="veille") ok++;
+    if($("a2_q1").value.startsWith("losange 178 : NON")) ok++;
+    if($("a2_q2").value.startsWith("parce qu'un vent à 200")) ok++;
     if($("a2_q3").value.startsWith("la boucle")) ok++;
     if($("a2_q4").value.startsWith("une décision")) ok++;
     // Refonte v2 : six questions de lecture fine de l'algorigramme (c)
-    if($("a2_q5").value.startsWith("alerte rouge")) ok++;
-    if($("a2_q6").value.startsWith("4 :")) ok++;
+    if($("a2_q5").value.startsWith("ouragan majeur")) ok++;
+    if($("a2_q6").value.startsWith("5 :")) ok++;
     if($("a2_q7").value.startsWith("un commentaire de lecture")) ok++;
     if($("a2_q8").value.startsWith("elle mesure le vent UNE SEULE FOIS")) ok++;
-    if($("a2_q9").value.startsWith("3 —")) ok++;
+    if($("a2_q9").value.startsWith("4 —")) ok++;
     if($("a2_q10").value.startsWith("dans quel langage")) ok++;
-    return {score:ok,total:13,valide:ok>=12};
+    return {score:ok,total:14,valide:ok>=13};
   },
   3: function(){
     let ok=0;
-    // Refonte v2 (Vittascience) : échelle de la MAQUETTE 0-100, seuils 40/70.
-    if(Math.abs(num("a3_p1")-50)<=1) ok++;          // 512 x 100 / 1023
-    if(Math.abs(num("a3_p1b")-125)<=2) ok++;        // pont vers l'échelle réelle
-    if($("a3_p2").value.startsWith("niveau 1")) ok++;
-    if($("a3_p2b").value.startsWith("sur 70 pile")) ok++;
+    // Refonte v3 : échelle UNIQUE 0-250 km/h, seuils 63 / 118 / 178 (Saffir-Simpson).
+    if(Math.abs(num("a3_p1")-125)<=2) ok++;         // 512 x 250 / 1023
+    if($("a3_p1b").value.startsWith("ouragan : 125")) ok++;
+    if($("a3_p2").value.startsWith("tempête tropicale")) ok++;
+    if($("a3_p2b").value.startsWith("sur 178 pile")) ok++;
     if($("a3_p3").value.startsWith("orange seul")) ok++;
     if($("a3_p3b").value.startsWith("un sous-programme allume")) ok++;
     const e=window.__exp;
     const expOk = !!(e.lecture && e.niveaux);
-    return {score:ok,total:6,
-      extra: expOk?"":" Il manque tes expériences au banc d'essai : fais varier le vent et passe par les TROIS niveaux (les coches ✔ du banc doivent s'allumer).",
-      valide: ok===6 && expOk};
+    const journalOk = txt("a3_journal").length>=80;
+    let extra3 = "";
+    if(!expOk) extra3 += " Il manque tes expériences au banc d'essai : fais varier le vent et passe par les QUATRE niveaux (les coches ✔ du banc doivent s'allumer).";
+    if(!journalOk) extra3 += " Écris ton journal de paliers : pour chaque palier, la valeur essayée et ce que tu as observé — pas « ça marche ».";
+    return {score:ok,total:6, extra: extra3, valide: ok===6 && expOk && journalOk};
   },
   4: function(){
     let ok=0;
@@ -1321,38 +1584,39 @@ const CHECKS = {
     if($("a5_q2").value.startsWith("le calcul de conversion")) ok++;
     if($("a5_q3").value.startsWith("le SINON SI")) ok++;
     if($("a5_q4").value.startsWith("la boucle reste lisible")) ok++;
-    if($("a5_q5").value.startsWith("leur seuil de vigilance")) ok++;
+    if($("a5_q5").value.startsWith("leur seuil de tempête")) ok++;
     const e=txt("a5_exp");
     const expOk = e.length>=30 && (e.includes("capteur")||e.includes("vitesse")||e.includes("conversion"));
     return {score:ok,total:5,extra: expOk?"":" Ta justification doit s'appuyer sur la trace : la vitesse monte correctement, donc le capteur et la conversion sont innocentés.",valide: ok===5 && expOk};
   },
   6: function(){
     let ok=0;
-    if($("a6_v1").value.startsWith("42 km/h")) ok++;
-    if($("a6_v2").value.startsWith("99 ET 100")) ok++;
-    if($("a6_v3").value.startsWith("l'alerte rouge")) ok++;
+    if($("a6_v1").value.startsWith("40 km/h")) ok++;
+    if($("a6_v2").value.startsWith("117 ET 118")) ok++;
+    if($("a6_v3").value.startsWith("OURAGAN MAJEUR")) ok++;
     if($("a6_v4").value.startsWith("chronométrer")) ok++;
     if($("a6_v5").value.startsWith("il faut prouver")) ok++;
     const r=txt("a6_redac");
-    const redacOk = r.length>=120 && (r.includes("99")||r.includes("149")) && (r.includes("seconde")||r.includes("chrono")||r.includes("temps")) && (r.includes("acquit")||r.includes("bouton")||r.includes("appui"));
-    return {score:ok,total:5,extra: redacOk?"":" Ton protocole rédigé doit contenir les 4 familles : nominaux, frontières (99/100/149/150), performance (chrono), interaction (bouton) — et une règle de décision.",valide: ok===5 && redacOk};
+    const frontieres = ["62","63","117","118","177","178"].filter(v=>r.includes(v)).length;
+    const redacOk = r.length>=120 && frontieres>=4 && (r.includes("seconde")||r.includes("chrono")||r.includes("temps")) && (r.includes("acquit")||r.includes("bouton")||r.includes("appui"));
+    return {score:ok,total:5,extra: redacOk?"":" Ton protocole rédigé doit contenir les 4 familles : nominaux, les 6 frontières (62/63, 117/118, 177/178), performance (chrono), interaction (bouton) — et une règle de décision.",valide: ok===5 && redacOk};
   },
   7: function(){
     let ok=0;
-    if($("a7_a4").value==="veille") ok++;
-    if($("a7_a5").value==="vigilance orange") ok++;
-    if($("a7_a6").value==="vigilance orange") ok++;
-    if($("a7_a7").value==="alerte rouge") ok++;
-    const verdicts = ["a7_r1","a7_r2","a7_r3","a7_r4","a7_r5","a7_r6","a7_r7","a7_r8","a7_r9","a7_r10"];
+    /* Six frontières : chacune se lit du côté où elle tombe. */
+    const ATTENDUS = {a7_a5:"veille", a7_a6:"tempête tropicale", a7_a7:"tempête tropicale",
+                      a7_a8:"ouragan", a7_a9:"ouragan", a7_a10:"ouragan majeur"};
+    Object.entries(ATTENDUS).forEach(([id,v])=>{ if($(id) && $(id).value===v) ok++; });
+    const verdicts = Array.from({length:13}, (_,k)=>"a7_r"+(k+1));
     const remplis = verdicts.filter(id=>$(id).value!=="").length;
     const pvOk = txt("a7_pv").length>=80 && (txt("a7_pv").includes("recette")||txt("a7_pv").includes("prononc")||txt("a7_pv").includes("ajourn"));
     const e=window.__exp;
     const bancOk = bornesOk() && !!e.chrono;
     let extra="";
-    if(remplis<10) extra += ` Remplis les 10 verdicts (${remplis}/10) — PENDANT les essais, pas de mémoire.`;
-    if(!bancOk) extra += " Exécute réellement les essais au banc : les 4 frontières (99, 100, 149, 150) et la mesure ⏱ doivent être cochées ✔.";
+    if(remplis<13) extra += ` Remplis les 13 verdicts (${remplis}/13) — PENDANT les essais, pas de mémoire.`;
+    if(!bancOk) extra += " Exécute réellement les essais au banc : les 6 frontières (62, 63, 117, 118, 177, 178) et la mesure ⏱ doivent être cochées ✔.";
     if(!pvOk) extra += " Rédige le PV avec une conclusion explicite (recette prononcée / ajournée).";
-    return {score:ok,total:4,extra,valide: ok===4 && remplis===10 && bancOk && pvOk};
+    return {score:ok,total:6,extra,valide: ok===6 && remplis===13 && bancOk && pvOk};
   }
 };
 const ENCOURAGE_OK=["Excellent travail : tout est validé !","Bravo, activité maîtrisée !","Très bien : tu peux passer à la suite en confiance."];
@@ -1395,6 +1659,42 @@ function majHyp(){
 }
 $("hyp1").addEventListener("input", majHyp);
 
+/* ══════ Règle d'or n°101 — chaque séance mène explicitement à la suivante ══════ */
+document.querySelectorAll(".vers-seance").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    const onglet = document.querySelector('.seance-tab[data-panel="' + b.dataset.vers + '"]');
+    if(onglet){ onglet.click(); window.scrollTo({top:0, behavior:"smooth"}); }
+  });
+});
+
+/* ══════ Règle d'or n°122 — trois parcours, pas trois paragraphes ══════
+   Le choix range au second plan ce qui ne concerne pas l'élève ; il ne retire
+   AUCUNE question et ne change AUCUNE validation. « tous » remet tout. */
+function majParcours(){
+  const choix = (window.__exp && window.__exp.parcours) || "tous";
+  document.body.classList.remove("parcours-a","parcours-b","parcours-c");
+  if(choix !== "tous") document.body.classList.add("parcours-" + choix);
+  document.querySelectorAll(".parcours-btn").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.choix === choix ? "true" : "false");
+  });
+  const n = document.getElementById("parcoursNote");
+  if(n){
+    const NOMS = {a:"🅰 matériel réel", b:"🅱 simulation", c:"🅲 sans matériel", tous:"tous"};
+    n.innerHTML = "Parcours affiché : <b>" + (NOMS[choix]||"tous") + "</b>.";
+  }
+}
+(function(){
+  document.querySelectorAll(".parcours-btn").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      window.__exp = window.__exp || {};
+      window.__exp.parcours = b.dataset.choix;
+      majParcours();
+      if(typeof save === "function") save(false);
+    });
+  });
+  majParcours();
+})();
+
 /* ══════ Règle d'or n°29 — mode essentiel ══════ */
 function majEssentiel(){
   const b = document.getElementById("btnEssentiel");
@@ -1419,11 +1719,11 @@ function majEssentiel(){
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
 simSetVent(42); SIM.mouvements = 0;
-majEssentiel(); majProgress(); majHyp(); majVerrous(); simTick();
+majEssentiel(); majParcours(); majProgress(); majHyp(); majVerrous(); simTick();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
-  "s1": {titre:"Séance 1 — « La mairie vous appelle »", taches:[{n:1, libelle:"Relire le cahier des charges et poser les deux chaînes"}, {n:2, libelle:"Élaborer l'algorithme et lire l'algorigramme des trois niveaux"}]},
+  "s1": {titre:"Séance 1 — « La mairie vous appelle »", taches:[{n:1, libelle:"Relire le cahier des charges et poser les deux chaînes"}, {n:2, libelle:"Élaborer l'algorithme et lire l'algorigramme des quatre niveaux"}]},
   "s2": {titre:"Séance 2 — Programmer en blocs (Vittascience)", taches:[{n:3, libelle:"Construire le programme palier par palier sur Vittascience : lire, décider, alerter"}]},
   "s3": {titre:"Séance 3 — L'humain dans la boucle", taches:[{n:4, libelle:"Programmer l'acquittement et comprendre l'événement"}, {n:5, libelle:"Lire le C++ généré et diagnostiquer avec la trace"}]},
   "s4": {titre:"Séance 4 — La recette : prouver que ça marche", taches:[{n:6, libelle:"Rédiger le protocole de test (nominaux, frontières, performance, interaction)"}, {n:7, libelle:"Exécuter la recette au banc et signer le procès-verbal"}]}
@@ -1474,6 +1774,17 @@ majTaches();
   .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
     outline-offset:3px}
   .loupe-cliquable{cursor:zoom-in}
+  /* L'indice « cliquer pour agrandir » ne doit JAMAIS couvrir l'image : l'infobulle
+     native (attribut title) se place au milieu du dessin et masque le contenu.
+     On l'affiche donc nous-mêmes, dans un coin, au survol ou au focus. */
+  .loupe-enveloppe{position:relative;display:block}
+  .loupe-badge{position:absolute;top:8px;right:8px;z-index:2;pointer-events:none;
+    background:rgba(12,14,18,.88);color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 .78rem/1 system-ui,sans-serif;padding:5px 8px;opacity:0;transition:opacity .12s}
+  .loupe-enveloppe:hover .loupe-badge,
+  .loupe-enveloppe:focus-within .loupe-badge{opacity:1}
+  @media print{.loupe-badge{display:none}}
+  @media (prefers-reduced-motion:reduce){.loupe-badge{transition:none}}
   @media print{.loupe-fond{display:none !important}}
   @media (prefers-reduced-motion:no-preference){
     .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
@@ -1536,9 +1847,20 @@ majTaches();
       if (img.dataset.loupe === "non") continue;      // opt-out explicite
       img.classList.add("loupe-cliquable");
       img.tabIndex = 0;
-      if (!img.getAttribute("title")) {
-        img.setAttribute("title", "Cliquer pour agrandir");
+      /* Badge dans le coin plutôt qu'infobulle native : celle-ci se pose au
+         milieu de l'image et masque ce qu'on demande justement de lire. */
+      if (!img.parentNode.classList.contains("loupe-enveloppe")) {
+        var env = document.createElement("span");
+        env.className = "loupe-enveloppe";
+        img.parentNode.insertBefore(env, img);
+        env.appendChild(img);
+        var badge = document.createElement("span");
+        badge.className = "loupe-badge";
+        badge.setAttribute("aria-hidden", "true");
+        badge.textContent = "🔍 Cliquer pour agrandir";
+        env.appendChild(badge);
       }
+      img.removeAttribute("title");
       img.addEventListener("click", function(){ ouvrir(this); });
       img.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }

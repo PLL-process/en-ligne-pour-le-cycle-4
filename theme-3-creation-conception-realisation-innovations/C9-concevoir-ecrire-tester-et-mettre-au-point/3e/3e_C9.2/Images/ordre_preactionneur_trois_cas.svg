@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 760" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-3cas d-3cas">
+<title id="t-3cas">Trois cas pour comprendre où atterrit la flèche d'ORDRE : voyant 5 V, gyrophare 12 V avec relais, portail avec moteur et transmission</title>
+<desc id="d-3cas">Trois bandes superposées, une par cas, chacune lue de gauche à droite depuis le bloc TRAITER.
+
+Cas 1, notre station : un voyant de 5 volts qui consomme environ 20 milliampères. La flèche d'ORDRE part de TRAITER et arrive directement sur CONVERTIR, c'est-à-dire le voyant lui-même. Un encadré précise que la broche du microcontrôleur fournit à la fois la commande et la puissance, ce qui n'est possible que parce que 20 milliampères est justement la valeur nominale d'une broche de l'UNO. Aucun bloc TRANSMETTRE : rien ne bouge.
+
+Cas 2, un gyrophare de 12 volts qui consomme environ 1 ampère. La flèche d'ORDRE part de TRAITER et arrive sur un bloc nouveau, le RELAIS, appelé préactionneur. Le relais est relié d'un côté à une alimentation 12 volts séparée, de l'autre au gyrophare, qui reste le bloc CONVERTIR. Un encadré d'avertissement explique que brancher le gyrophare directement sur la broche détruirait le microcontrôleur : 1 ampère, c'est cinquante fois la valeur nominale de 20 milliampères d'une broche, et vingt-cinq fois le maximum absolu de 40 milliampères. Le relais ne fabrique pas l'énergie : il laisse passer, ou non, celle qui vient de l'alimentation séparée — c'est un interrupteur commandé. Toujours aucun bloc TRANSMETTRE : le gyrophare tourne sur lui-même, mais rien n'est acheminé.
+
+Cas 3, un portail anticyclonique qui doit se fermer. La flèche d'ORDRE part de TRAITER et arrive sur un pont en H, préactionneur qui sait en plus choisir le sens de rotation. Vient ensuite CONVERTIR, le moteur, qui transforme l'électricité en mouvement de rotation. Puis, pour la première fois, un bloc TRANSMETTRE : le réducteur et la crémaillère, qui acheminent ce mouvement jusqu'au vantail et l'adaptent — beaucoup de tours rapides et peu de force deviennent un déplacement lent et fort. Enfin le vantail se ferme. Un encadré conclut : c'est parce que quelque chose se DÉPLACE qu'il faut TRANSMETTRE ; allumer et sonner ne déplacent rien.
+
+Une phrase de synthèse en bas : la flèche d'ORDRE atterrit toujours sur le premier bloc de la chaîne d'énergie qu'elle commande — le convertisseur lui-même quand la puissance est minuscule, le préactionneur dès qu'elle ne l'est plus.</desc>
+<rect width="980" height="760" fill="#050f24"/>
+<text x="490" y="30" text-anchor="middle" fill="#81aaff" font-size="20" font-weight="700">Où atterrit la flèche d'ORDRE ? Trois cas, une seule règle</text>
+
+<defs>
+  <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#ffd66b"/></marker>
+  <marker id="ae" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#ffb454"/></marker>
+  <marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#81fba1"/></marker>
+</defs>
+
+<!-- ════ CAS 1 ════ -->
+<rect x="20" y="52" width="940" height="186" rx="12" fill="rgba(129,251,161,.05)" stroke="#81fba1" stroke-dasharray="6 4"/>
+<text x="40" y="76" fill="#81fba1" font-size="14" font-weight="700">① NOTRE STATION — un voyant 5 V (≈ 20 mA)</text>
+
+<rect x="45" y="96" width="150" height="72" rx="10" fill="#173666" stroke="#61dafb" stroke-width="2"/>
+<text x="120" y="126" text-anchor="middle" fill="#61dafb" font-size="14" font-weight="700">TRAITER</text>
+<text x="120" y="146" text-anchor="middle" fill="#e4eaf5" font-size="11">broche D4 (sortie)</text>
+
+<path d="M197 132 L 288 132" stroke="#ffd66b" stroke-width="5" marker-end="url(#ao)"/>
+<text x="242" y="112" text-anchor="middle" fill="#ffd66b" font-size="11" font-weight="700">ORDRE</text>
+
+<rect x="292" y="96" width="180" height="72" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="382" y="122" text-anchor="middle" fill="#ffb454" font-size="14" font-weight="700">CONVERTIR</text>
+<text x="382" y="141" text-anchor="middle" fill="#e4eaf5" font-size="11">le voyant : électricité → lumière</text>
+<text x="382" y="157" text-anchor="middle" fill="#9bbefc" font-size="10.5">≈ 20 mA sous 5 V</text>
+
+<path d="M474 132 L 530 132" stroke="#ffb454" stroke-width="3" marker-end="url(#ae)"/>
+<text x="566" y="138" fill="#e4eaf5" font-size="20">💡</text>
+
+<rect x="610" y="90" width="330" height="84" rx="8" fill="rgba(129,251,161,.08)" stroke="#81fba1"/>
+<text x="775" y="112" text-anchor="middle" fill="#81fba1" font-size="12" font-weight="700">La broche fait DEUX choses à la fois</text>
+<text x="775" y="131" text-anchor="middle" fill="#e4eaf5" font-size="11">elle commande ET elle alimente : un seul fil suffit.</text>
+<text x="775" y="148" text-anchor="middle" fill="#e4eaf5" font-size="11">Possible parce que 20 mA est exactement la valeur</text>
+<text x="775" y="164" text-anchor="middle" fill="#e4eaf5" font-size="11">nominale d'une broche de l'UNO (max absolu 40 mA).</text>
+
+<text x="490" y="200" text-anchor="middle" fill="#9bbefc" font-size="11.5">Pas de préactionneur. <tspan fill="#5c6b8a" font-weight="700">Pas de TRANSMETTRE</tspan> non plus : la lumière n'est pas un mouvement, rien n'est acheminé.</text>
+<text x="490" y="222" text-anchor="middle" fill="#81fba1" font-size="11.5" font-weight="700">➜ l'ORDRE atterrit sur CONVERTIR.</text>
+
+<!-- ════ CAS 2 ════ -->
+<rect x="20" y="252" width="940" height="212" rx="12" fill="rgba(255,180,84,.05)" stroke="#ffb454" stroke-dasharray="6 4"/>
+<text x="40" y="276" fill="#ffb454" font-size="14" font-weight="700">② ET SI C'ÉTAIT UN GYROPHARE 12 V (≈ 1 A) ?</text>
+
+<rect x="45" y="296" width="130" height="72" rx="10" fill="#173666" stroke="#61dafb" stroke-width="2"/>
+<text x="110" y="326" text-anchor="middle" fill="#61dafb" font-size="14" font-weight="700">TRAITER</text>
+<text x="110" y="346" text-anchor="middle" fill="#e4eaf5" font-size="11">broche D4</text>
+
+<path d="M177 332 L 248 332" stroke="#ffd66b" stroke-width="5" marker-end="url(#ao)"/>
+<text x="212" y="312" text-anchor="middle" fill="#ffd66b" font-size="11" font-weight="700">ORDRE</text>
+
+<rect x="252" y="290" width="180" height="84" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2"/>
+<text x="342" y="314" text-anchor="middle" fill="#c68ef2" font-size="14" font-weight="700">RELAIS</text>
+<text x="342" y="332" text-anchor="middle" fill="#ffd66b" font-size="11" font-weight="700">= PRÉACTIONNEUR</text>
+<text x="342" y="349" text-anchor="middle" fill="#e4eaf5" font-size="10.5">interrupteur commandé :</text>
+<text x="342" y="364" text-anchor="middle" fill="#e4eaf5" font-size="10.5">il LAISSE PASSER l'énergie</text>
+
+<rect x="252" y="390" width="180" height="46" rx="8" fill="#0d2347" stroke="#274a8a"/>
+<text x="342" y="409" text-anchor="middle" fill="#e4eaf5" font-size="11" font-weight="700">🔌 alimentation 12 V</text>
+<text x="342" y="425" text-anchor="middle" fill="#9bbefc" font-size="10.5">séparée — pas l'USB</text>
+<path d="M342 388 L 342 376" stroke="#ffb454" stroke-width="3" marker-end="url(#ae)"/>
+
+<path d="M434 332 L 500 332" stroke="#ffb454" stroke-width="3" marker-end="url(#ae)"/>
+<rect x="504" y="296" width="180" height="72" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="594" y="322" text-anchor="middle" fill="#ffb454" font-size="14" font-weight="700">CONVERTIR</text>
+<text x="594" y="341" text-anchor="middle" fill="#e4eaf5" font-size="11">le gyrophare : → lumière</text>
+<text x="594" y="357" text-anchor="middle" fill="#9bbefc" font-size="10.5">≈ 1 A sous 12 V</text>
+
+<rect x="706" y="288" width="234" height="96" rx="8" fill="rgba(255,123,136,.1)" stroke="#ff7b88"/>
+<text x="823" y="309" text-anchor="middle" fill="#ff7b88" font-size="12" font-weight="700">⚠ En direct sur la broche : DESTRUCTION</text>
+<text x="823" y="328" text-anchor="middle" fill="#e4eaf5" font-size="11">1 A = <tspan font-weight="700" fill="#ffd66b">50 ×</tspan> les 20 mA nominaux</text>
+<text x="823" y="345" text-anchor="middle" fill="#e4eaf5" font-size="11">et <tspan font-weight="700" fill="#ffd66b">25 ×</tspan> le maximum absolu (40 mA).</text>
+<text x="823" y="365" text-anchor="middle" fill="#9bbefc" font-size="10.5">Le relais ne fabrique pas l'énergie :</text>
+<text x="823" y="379" text-anchor="middle" fill="#9bbefc" font-size="10.5">il ouvre la porte à celle du 12 V.</text>
+
+<text x="490" y="428" text-anchor="middle" fill="#5c6b8a" font-size="11.5" font-weight="700">Toujours pas de TRANSMETTRE : le gyrophare tourne sur lui-même, mais rien n'est acheminé jusqu'ailleurs.</text>
+<text x="490" y="450" text-anchor="middle" fill="#ffb454" font-size="11.5" font-weight="700">➜ l'ORDRE atterrit sur le PRÉACTIONNEUR.</text>
+
+<!-- ════ CAS 3 ════ -->
+<rect x="20" y="478" width="940" height="196" rx="12" fill="rgba(198,142,242,.05)" stroke="#c68ef2" stroke-dasharray="6 4"/>
+<text x="40" y="502" fill="#c68ef2" font-size="14" font-weight="700">③ ET SI LA STATION FERMAIT UN PORTAIL ANTICYCLONIQUE ?</text>
+
+<rect x="40" y="520" width="118" height="66" rx="10" fill="#173666" stroke="#61dafb" stroke-width="2"/>
+<text x="99" y="548" text-anchor="middle" fill="#61dafb" font-size="13" font-weight="700">TRAITER</text>
+<text x="99" y="566" text-anchor="middle" fill="#e4eaf5" font-size="10.5">broches D4 / D5</text>
+
+<path d="M160 553 L 214 553" stroke="#ffd66b" stroke-width="5" marker-end="url(#ao)"/>
+<text x="187" y="536" text-anchor="middle" fill="#ffd66b" font-size="10.5" font-weight="700">ORDRE</text>
+
+<rect x="218" y="520" width="150" height="66" rx="10" fill="#2a1b45" stroke="#c68ef2" stroke-width="2"/>
+<text x="293" y="543" text-anchor="middle" fill="#c68ef2" font-size="13" font-weight="700">PONT EN H</text>
+<text x="293" y="559" text-anchor="middle" fill="#ffd66b" font-size="10" font-weight="700">préactionneur</text>
+<text x="293" y="574" text-anchor="middle" fill="#e4eaf5" font-size="10">il choisit aussi le SENS</text>
+
+<path d="M370 553 L 414 553" stroke="#ffb454" stroke-width="3" marker-end="url(#ae)"/>
+<rect x="418" y="520" width="150" height="66" rx="10" fill="#3a2412" stroke="#ffb454" stroke-width="2"/>
+<text x="493" y="543" text-anchor="middle" fill="#ffb454" font-size="13" font-weight="700">CONVERTIR</text>
+<text x="493" y="559" text-anchor="middle" fill="#e4eaf5" font-size="10.5">le moteur : électricité</text>
+<text x="493" y="574" text-anchor="middle" fill="#e4eaf5" font-size="10.5">→ mouvement de rotation</text>
+
+<path d="M570 553 L 614 553" stroke="#81fba1" stroke-width="3" marker-end="url(#ag)"/>
+<rect x="618" y="520" width="170" height="66" rx="10" fill="#123322" stroke="#81fba1" stroke-width="2.5"/>
+<text x="703" y="543" text-anchor="middle" fill="#81fba1" font-size="13" font-weight="700">TRANSMETTRE</text>
+<text x="703" y="559" text-anchor="middle" fill="#e4eaf5" font-size="10.5">réducteur + crémaillère :</text>
+<text x="703" y="574" text-anchor="middle" fill="#e4eaf5" font-size="10.5">vite et faible → lent et fort</text>
+
+<path d="M790 553 L 830 553" stroke="#81fba1" stroke-width="3" marker-end="url(#ag)"/>
+<text x="852" y="548" fill="#e4eaf5" font-size="20">🚪</text>
+<text x="880" y="576" text-anchor="middle" fill="#9bbefc" font-size="10.5">le vantail se ferme</text>
+
+<text x="490" y="618" text-anchor="middle" fill="#81fba1" font-size="11.5" font-weight="700">C'est parce que quelque chose SE DÉPLACE qu'apparaît enfin TRANSMETTRE.</text>
+<text x="490" y="640" text-anchor="middle" fill="#9bbefc" font-size="11.5">Allumer et sonner ne déplacent rien — c'est pour cela que notre station n'a pas ce bloc.</text>
+<text x="490" y="662" text-anchor="middle" fill="#c68ef2" font-size="11.5" font-weight="700">➜ l'ORDRE atterrit sur le PRÉACTIONNEUR, et la chaîne est complète.</text>
+
+<!-- synthèse -->
+<rect x="60" y="694" width="860" height="48" rx="8" fill="rgba(255,214,107,.1)" stroke="#ffd66b"/>
+<text x="490" y="715" text-anchor="middle" fill="#ffd66b" font-size="13" font-weight="700">La règle : la flèche d'ORDRE atterrit sur le PREMIER bloc de la chaîne d'énergie qu'elle commande.</text>
+<text x="490" y="733" text-anchor="middle" fill="#e4eaf5" font-size="12">Le convertisseur lui-même quand la puissance est minuscule ; le préactionneur dès qu'elle ne l'est plus.</text>
+</svg>

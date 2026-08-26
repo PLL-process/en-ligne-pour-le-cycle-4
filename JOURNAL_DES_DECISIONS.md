@@ -5726,10 +5726,21 @@ D2/D4/D5 dans la fiche.
 
 ## Le tableau d'harmonisation (règle n°95)
 
-*État au 21 août 2026. « ✔ » conforme · « ✘ » non conforme, à reprendre · « — » sans
+*État au **26 août 2026**. « ✔ » conforme · « ✘ » non conforme, à reprendre · « — » sans
 objet · « ? » non encore vérifié. Ce tableau est le reste-à-faire du dépôt : il se met
 à jour à chaque lot, et aucune règle n'est réputée appliquée tant que sa ligne n'est
 pas pleine.*
+
+*Mise à jour du 26 août : la colonne **3e_C9.2** passe au vert sur quatorze lignes
+supplémentaires (n°100, 101, 109 à 114, 116, 117, 119 à 122). Chacune est **couverte
+par un test de la suite** `tests_3e_C9.2-C8.3.mjs` ou par un contrôle de
+`_outils/verif_regles_audit.py`, pas par une relecture : n°116 par le test d'union des
+champs et de persistance croisée, n°122 par le test du sélecteur de parcours, n°119 par
+la vérification que le niveau est écrit en toutes lettres aux quatre paliers, n°121 par
+la présence des treize captures réelles, n°101 par le clic sur le bouton de fin de
+séance. Les lignes qui restent au « ? » ou au « ✘ » (n°96 à 99, 115, 124, 126) n'ont
+pas été touchées par cette refonte : elles concernent la mise en page des corrections,
+les exercices jumeaux et la matrice, et attendent leur tour.*
 
 | Règle | 5e_C9.1 | 4e_C9 | 3e_C9.1 | 3e_C9.2 |
 |---|---|---|---|---|
@@ -5737,8 +5748,8 @@ pas pleine.*
 | n°97 correction mise en page | ✘ | ? | ? | ? |
 | n°98 options en colonne | ✘ | ? | ? | ? |
 | n°99 exercice jumeau après aide | ✘ | ✘ | ✘ | ✘ |
-| n°100 dispositif intégré nommé | ✘ | ? | ? | ✘ |
-| n°101 bouton de séance suivante | ✘ | ✘ | ✘ | ✘ |
+| n°100 dispositif intégré nommé | ✘ | ? | ? | ✔ |
+| n°101 bouton de séance suivante | ✘ | ✘ | ✘ | ✔ |
 | n°102 impression propre | ? | ? | ? | ✔ |
 | n°103 blocs de fin en fin de page | ✘ | ? | ? | ✔ |
 | n°104 code avec niveau | ✘ | ? | ? | ✔ |
@@ -5746,20 +5757,20 @@ pas pleine.*
 | n°106 code = verbe travaillé | ? | ✘ | ? | ✔ |
 | n°107 nom propre expliqué | ✘ | — | — | ✔ |
 | n°108 outil nommé et vérifié | ✘ | ? | ? | ✔ |
-| n°109 nombres recalculés et testés | ? | ? | ✘ | ✘ |
-| n°110 exemple filé cohérent | ? | ? | ✘ | ? |
-| n°111 fiction déclarée, chiffre sourcé | ✘ | ? | ? | ✘ |
-| n°112 statut des ressources | ? | ? | ✘ | ? |
-| n°113 trace du programme réalisé | ✘ | ✘ | ? | ✘ |
-| n°114 conception sans squelette (3e) | — | — | ✘ | ✘ |
+| n°109 nombres recalculés et testés | ? | ? | ✘ | ✔ |
+| n°110 exemple filé cohérent | ? | ? | ✘ | ✔ |
+| n°111 fiction déclarée, chiffre sourcé | ✘ | ? | ? | ✔ |
+| n°112 statut des ressources | ? | ? | ✘ | ✔ |
+| n°113 trace du programme réalisé | ✘ | ✘ | ? | ✔ |
+| n°114 conception sans squelette (3e) | — | — | ✘ | ✔ |
 | n°115 problème observé avant solution | ? | ✘ | ? | ? |
-| n°116 découpage au-delà du seuil | ✔ | ✔ | ? | ✘ |
-| n°117 alt court + description | ✘ | ✘ | ✘ | ✘ |
+| n°116 découpage au-delà du seuil | ✔ | ✔ | ? | ✔ |
+| n°117 alt court + description | ✘ | ✘ | ✘ | ✔ |
 | n°118 socle accessible minimal | ? | ✘ | ? | ✔ |
 | n°119 ni couleur seule, ni animation seule | ? | ? | ? | ✔ |
-| n°120 couleur constante par notion | ✘ | ? | ? | ? |
-| n°121 capture d'un geste nécessaire | ✘ | ✘ | ✘ | ✘ |
-| n°122 trois parcours, trois affichages | ✘ | ✘ | ✘ | ✘ |
+| n°120 couleur constante par notion | ✘ | ? | ? | ✔ |
+| n°121 capture d'un geste nécessaire | ✘ | ✘ | ✘ | ✔ |
+| n°122 trois parcours, trois affichages | ✘ | ✘ | ✘ | ✔ |
 | n°123 fonctions des chaînes nommées | ✘ | ? | — | ✔ |
 | n°124 colonnes de la matrice | ✘ | ✘ | ✘ | ✘ |
 | n°125 distracteurs plausibles et réfutés | ✘ | ✘ | ✔ | ✔ |
@@ -5774,3 +5785,191 @@ noires ne sont pas les plus difficiles (n°101 un bouton, n°121 des captures, n
 sélecteur de parcours). Ce sont celles auxquelles personne n'avait pensé — et le seul
 moyen d'y penser a été de **regarder la page en élève**, puis de la faire auditer par
 quelqu'un d'autre. Aucun des deux audits, seul, n'aurait produit cette liste.
+
+---
+
+# 26 août 2026 — La station d'alerte cyclonique, v3 : quatre niveaux, quatre pages, treize captures
+
+*Refonte v3 du lot 3e_C9.2 + 3e_C8.3, en application des 32 règles dégagées des deux
+audits du 21 août. C'est le premier lot à passer entièrement au nouveau standard : il
+sert de gabarit pour l'harmonisation des autres.*
+
+## Ce qui a changé, et pourquoi
+
+**Une seule échelle.** La version précédente faisait cohabiter une « maquette »
+graduée 0-100 sans unité et une « station » en km/h, reliées par un tableau de
+correspondance. C'était le premier risque de confusion de la séquence — et c'est là
+qu'une erreur de correspondance s'était glissée (règle n°109). La v3 supprime le
+problème par construction : **des km/h, de 0 à 250, du premier bloc au procès-verbal**.
+Il n'y a plus de pont à traverser, donc plus de pont où tomber.
+
+**Quatre niveaux, trois seuils, six frontières.** Les seuils 63 / 118 / 178 km/h sont
+ceux de l'échelle de Saffir-Simpson — entrée en tempête tropicale, en ouragan, en
+ouragan majeur. Ce ne sont plus des nombres d'exercice, et la page le dit. Le
+quatrième niveau entre dans le parcours **obligatoire** : ajouter un niveau ne
+complique pas l'algorithme, il rend l'erreur d'ordre des tests deux fois plus coûteuse
+— un vent à 200 km/h mal testé ne perd plus un niveau mais **deux**. La compétence
+C8.3 y gagne : trois seuils font **six** frontières à éprouver, et le protocole de
+recette passe de dix à **treize essais**.
+
+**Quatre pages, sans rien perdre.** La séquence existe désormais en cinq fichiers :
+la page complète, et quatre pages d'une séance chacune, engendrées par un générateur
+à partir de la même source. Les cinq partagent la même clé d'enregistrement. La page
+complète n'est pas dépréciée : elle reste le **repli** quand le réseau tombe
+(règle n°122), et chaque page y ramène.
+
+**Treize captures réelles.** Le programme de référence a été construit sur
+Vittascience et photographié : la structure (démarrage, boucle, quatre modes) et le
+simulateur **aux six frontières**, prises l'une après l'autre. Ces six-là sont la
+pièce maîtresse du lot : entre 177 et 178 km/h, la valeur brute du potentiomètre passe
+de 725 à 729 — presque rien — et le niveau **bascule**. Le « ≥ » cesse d'être une
+convention d'écriture pour devenir un fait observable.
+
+## Deux défauts trouvés par les tests, et ce qu'ils enseignent
+
+**Le chrono était devenu muet.** Le bouton « mesurer le temps de réponse » stabilisait
+le vent à 140 km/h puis le portait à 160 — deux valeurs qui, sur l'ancienne échelle,
+encadraient le seuil de 150, et qui sur la nouvelle appartiennent **au même niveau**.
+Le dispositif n'avait pas changé d'une ligne ; il ne mesurait plus rien. Aucune erreur
+n'était levée : il affichait paisiblement « mesure en cours » pour l'éternité.
+
+**La trace d'exécution mentait.** L'activité 5 demandait de diagnostiquer une panne à
+partir d'un relevé du moniteur série. La question parlait de 71 et 95 km/h, la trace
+affichait 97, 103, 126, 161, et les niveaux annoncés ne correspondaient à aucun seuil
+de la v3. Un élève appliquant correctement la méthode serait arrivé à une conclusion
+fausse — le pire des cas.
+
+Les deux ont la même cause : **on avait changé les seuils, pas les données d'exercice
+qui en dépendaient**. Les nombres d'un exemple vieillissent comme le code, sauf que
+rien ne les compile.
+
+## Un arbitrage qui mérite d'être dit, parce qu'il est discutable
+
+Les captures montrent des variables nommées `seuilJaune`, `seuilOrange`, `seuilRouge`
+et des sous-programmes `mode_vert` … `mode_rouge`. La séquence, elle, écrivait
+`seuilTempete`, `seuilOuragan`, `seuilMajeur`, `mode_veille` … `mode_majeur` — des noms
+qui désignent le **phénomène** plutôt que la couleur, ce qui est en principe préférable.
+
+**C'est le texte qui a plié, pas la capture.** Une capture ne se refait pas à volonté :
+elle demande le poste, le compte, le logiciel et le temps. Un texte se réécrit en une
+commande. Et l'élève, lui, a les deux sous les yeux en même temps : le moindre écart
+de nom lui coûte plus cher que le gain de précision du meilleur vocabulaire. Le
+vocabulaire du phénomène n'est pas perdu pour autant — il est là où il compte, **sur
+l'écran de la station**, en toutes lettres, là où un habitant le lira.
+
+Si Pascal préfère l'inverse, le retour en arrière tient en un remplacement — mais il
+faudra alors refaire les treize captures.
+
+## Ce qui n'a pas été fait, et qui est écrit comme tel
+
+La **compilation AVR** du programme de référence n'a pas été refaite : `arduino-cli`
+n'est pas atteignable depuis l'environnement de production du lot. Le programme a en
+revanche passé une vérification syntaxique C++ complète (`g++ -Wall -Wextra` sur
+bouchons), et le banc Docker du dossier reste là pour la vraie compilation sur le
+poste. Le chiffre de taille mémoire du 19 août porte sur la v2 : il est **périmé**, et
+le rapport de tests le dit plutôt que de le recopier.
+
+---
+
+## Règle d'or n°127 — une capture ne se retouche pas ; l'écart s'explique
+
+Quand une capture d'écran réelle diverge de ce que la page annonce — une temporisation
+de 300 ms là où la consigne dit 200, des seuils antérieurs à un changement — on
+**n'efface pas l'écart, on l'écrit**. En légende, en une phrase, avec ce qui le rend
+sans conséquence, ou avec ce qu'il apprend.
+
+Retoucher une capture, c'est fabriquer une preuve. La règle n°94 interdit de présenter
+une reconstitution comme une capture ; celle-ci en est le prolongement : une capture
+authentique le reste jusqu'au bout, y compris quand elle dérange.
+
+Mieux : l'écart est souvent un meilleur exercice que l'accord. « Repère les deux
+différences entre cette capture et ton programme » vaut mieux qu'une image lisse que
+personne ne regarde.
+
+---
+
+## Règle d'or n°128 — entre un texte et une capture, c'est le texte qui plie
+
+Quand un document rédigé et une capture réelle nomment différemment la même chose,
+**c'est le document qu'on aligne**, jamais l'inverse.
+
+La raison est pratique et sans appel : une capture demande le poste, le compte, le
+logiciel et le temps de quelqu'un ; un texte se réécrit en une commande. Et l'élève a
+les deux sous les yeux **en même temps** : un écart de nom lui coûte plus cher que ne
+lui rapporte le vocabulaire le mieux choisi.
+
+Le corollaire compte autant : **avant** de construire quoi que ce soit sur un poste,
+on fixe les noms — variables, sous-programmes, fichiers — et on les écrit quelque part.
+Un nom choisi à la volée pendant la construction devient, une capture plus tard, un
+nom qu'on ne peut plus changer.
+
+---
+
+## Règle d'or n°129 — changer un seuil, c'est casser tout ce qui le franchissait
+
+Un seuil n'est pas seulement un nombre dans une comparaison : c'est aussi **la
+frontière que d'autres dispositifs traversent** — un chronomètre qui se déclenche au
+franchissement, une animation qui bascule, un test qui compare un avant et un après.
+
+Après tout changement de seuil, on rejoue **explicitement** chaque mécanisme qui
+dépend d'un franchissement, et pas seulement les comparaisons elles-mêmes. Ces
+dispositifs-là ne lèvent aucune erreur quand ils cessent de fonctionner : ils attendent
+un événement qui n'arrive plus, et affichent tranquillement « en cours ».
+
+Le pire des défauts n'est pas celui qui plante. C'est celui qui patiente.
+
+---
+
+## Règle d'or n°130 — un découpage se prouve sans perte, avant d'être livré
+
+Découper une séquence en pages crée deux risques qu'aucune relecture ne voit :
+une question **oubliée** en route, et des réponses **écrasées** quand deux pages
+partagent le même enregistrement.
+
+Les deux se prouvent par un test, écrit **avant** la livraison :
+
+1. **l'union** des champs interactifs des pages découpées recouvre exactement ceux de
+   la page d'origine — pas « à peu près », exactement, la liste à la main ;
+2. la **persistance croisée** : répondre sur la page A, aller répondre sur la page B,
+   revenir sur A — et retrouver sa réponse. Dans les deux sens, et en relisant depuis
+   la page complète.
+
+Ce test a effectivement attrapé le défaut dans ce lot : la fonction qui rassemblait les
+réponses écrasait l'enregistrement au lieu de le fusionner. Chaque changement de page
+aurait effacé la séance précédente — silencieusement, et seulement chez l'élève.
+
+---
+
+## Règle d'or n°131 — la flèche d'ORDRE atterrit quelque part, et on dit où
+
+Dans un schéma des deux chaînes, la flèche d'ordre ne descend pas « vers la chaîne
+d'énergie » en général : elle arrive sur **le premier bloc qu'elle commande**. Le
+préactionneur quand il y en a un ; le convertisseur lui-même quand la puissance est
+assez faible pour qu'une broche de microcontrôleur l'alimente directement.
+
+Et une fonction **absente** de la chaîne se dessine — en pointillés, grisée — avec sa
+raison écrite à côté. Une station qui allume et qui sonne n'a pas de fonction
+TRANSMETTRE, parce que rien ne s'y déplace : le dire vaut mieux que le taire, car
+l'élève qui a appris la liste des fonctions cherchera celle qui manque.
+
+La question « et si c'était un gyrophare de 12 V ? » n'est pas un supplément : c'est
+ce qui rend la règle visible. Trois cas côte à côte — le voyant direct, le relais, le
+portail avec sa transmission — enseignent plus que le cas seul, quel qu'il soit.
+
+---
+
+## Règle d'or n°132 — les données d'exercice vieillissent comme le code, sans compilateur
+
+Une trace d'exécution, un tableau de recette, un relevé de moniteur série, un exemple
+chiffré dans un corrigé : ce sont des **données dérivées** des paramètres de la
+séquence. Quand un paramètre change, elles deviennent fausses — et rien ne le signale,
+parce qu'aucun outil ne les vérifie.
+
+Elles doivent donc figurer explicitement dans la liste de ce qu'on rejoue à chaque
+changement de barème, de seuil ou d'échelle. Et le test qui les couvre doit vérifier
+la **cohérence interne** de l'exemple (la question parle-t-elle des mêmes valeurs que
+la trace ?), pas seulement sa présence.
+
+Un exemple faux est plus nuisible qu'un exemple absent : l'élève qui applique
+correctement la méthode y arrive à une conclusion fausse, et conclut que la méthode
+est mauvaise.
