@@ -385,7 +385,20 @@
     .python-code .function {color:#61afef;}
     .python-code .number {color:#d19a66;}
     .python-code .operator {color:#abb2bf;}
-  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}</style>
+  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  /* ══ Harmonisation du 27/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel .bouton-correction{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px auto;max-width:1000px;justify-content:center}
+  .toolbar .btn-essentiel{padding:8px 14px;border-radius:10px;border:1px solid #b9cbe4;
+    background:transparent;color:inherit;font:inherit;cursor:pointer}
+  .toolbar .btn-essentiel[aria-pressed="true"]{outline:3px solid #ffd166;outline-offset:2px}
+  .etayage{border:1px solid rgba(127,127,127,.5);border-radius:10px;margin:10px 0;
+    background:rgba(127,127,127,.08)}
+  .etayage>summary{cursor:pointer;padding:9px 13px;font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  #billet-entree ol{margin:.4em 0 .4em 1.2em}
+  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site">
@@ -432,6 +445,26 @@
   <p class="filet">Tu n'as pas fait la 5e ici ? Ce qu'il faut savoir tient en une phrase : tes données passent par des machines qui ne t'appartiennent pas.</p>
 </section>
 
+<div class="toolbar">
+  <button class="btn-essentiel" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p style="text-align:center;font-size:.85em;opacity:.8">Le <b>mode essentiel</b> masque le tableau des compétences et les boutons d'aide et de correction : il ne reste que les consignes et les exercices.</p>
+
+<section class="card" id="billet-entree">
+  <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p>Cette séquence s'appuie sur ce que tu as fait en 5e. Trois questions pour savoir, toi comme le
+  professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne sont pas
+  notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+  <p><label for="be_1">1. En 5e, tu as suivi le chemin d'une donnée. Elle passe par…
+  <select id="be_1"><option value="">— choisir —</option><option>des machines qui ne t'appartiennent pas</option><option>uniquement ton téléphone</option><option>le nuage, qui est un endroit sans machines</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. Une donnée personnelle, c'est…
+  <select id="be_2"><option value="">— choisir —</option><option>toute information qui permet de reconnaître quelqu'un</option><option>seulement le nom et le prénom</option><option>seulement ce qu'on publie soi-même</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Un mot de passe solide, c'est d'abord un mot de passe…
+  <select id="be_3"><option value="">— choisir —</option><option>long, et différent d'un service à l'autre</option><option>compliqué mais réutilisé partout</option><option>court, pour ne pas l'oublier</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn btn-secondary" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p id="fbBillet" role="status" style="min-height:1.4em;font-weight:600"></p>
+</section>
+
 
     <div class="terminal" id="terminalIntro" aria-live="polite"></div>
 
@@ -459,11 +492,11 @@
   <div class="section panel">
     <h2>❓ Problématique</h2>
     <p>Comment protéger mes données, mes comptes et ma e‑réputation tout en utilisant des services numériques (e-mails, réseaux sociaux, etc.) ?</p>
-    <div class="response-label">Ta réponse ici 👇</div><textarea id="pbm"></textarea>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="pbm" aria-label="Ma réponse à la problématique : comment protéger mes données, mes comptes et ma e-réputation"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Pour protéger mes comptes, je dois d'abord ____ .</li><li>Pour protéger mes données, je dois ____ .</li><li>Ce qui est le plus difficile à tenir au quotidien, c'est ____ .</li></ul></details>
   </div>
 
   <!-- Compétences -->
-  <div class="section panel">
+  <div class="section panel referentiel-card">
     <h2>📊 Compétences & connaissances (Socle / Techno / CRCN)</h2>
     <table class="competences">
       <thead><tr><th>Domaine</th><th>Formulation</th><th>Traces (exemples)</th></tr></thead>
@@ -661,7 +694,7 @@ lui-même.</p>
 </div>
 
     <h3>💬  1.d&nbsp;—&nbsp;Pourquoi dit‑on que les humains sont le maillon faible ? (non noté)</h3>
-    <div class="response-label">Ta réponse ici 👇</div><textarea id="q1why"></textarea>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q1why" aria-label="1.d — Pourquoi dit-on que les humains sont le maillon faible ?"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>On dit que l'humain est le maillon faible parce que ____ .</li><li>Un exemple concret : ____ .</li><li>Pourtant, l'humain est aussi le maillon FORT quand ____ .</li></ul></details>
 
     <h3>✏️ 1.e&nbsp;—&nbsp;Micro‑questions — Mots de passe (1 point)</h3>
 
@@ -709,7 +742,7 @@ lui-même.</p>
   </div>
 </div>
 
-    <div class="response-label">Ta justification ici 👇</div><textarea id="mpJust"></textarea>
+    <div class="response-label">Ta justification ici 👇</div><textarea id="mpJust" aria-label="Ma justification sur le mot de passe"></textarea>
 
     <h3>🔒 <strong> 1.f - Quiz Menaces & Solutions (6 questions)</strong></h3>
 
@@ -802,8 +835,8 @@ lui-même.</p>
 </div>
 
       <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
-        <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help1').style.display='flex'">? Aide</button>
-        <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr1').style.display='flex'">🔑 Correction</button>
+        <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help1').style.display='flex'">? Aide</button>
+        <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr1').style.display='flex'">🔑 Correction</button>
         <button class="btn" id="chk1" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
         <span id="res1" class="badge"></span>
       </div>
@@ -1014,8 +1047,8 @@ Fin du programme.</code></pre>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help2').style.display='flex'">? Aide</button>
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr2').style.display='flex'">🔑 Correction</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help2').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr2').style.display='flex'">🔑 Correction</button>
       <button class="btn" id="chk2" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
       <span id="res2" class="badge"></span>
     </div>
@@ -1122,7 +1155,7 @@ Fin du programme.</code></pre>
 
     <h3>❓ 3.b&nbsp;—&nbsp;Pourquoi sont‑elles sensibles ? (non noté)</h3>
     <p>Expliquez pourquoi il faut protéger ces données et ce qu’il pourrait arriver si elles étaient dévoilées.</p>
-    <div class="response-label">Ta réponse ici 👇</div><textarea id="q3b"></textarea>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q3b" aria-label="3.b — Pourquoi ces données sont-elles sensibles ?"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Ces données sont sensibles parce qu'elles permettent de ____ .</li><li>Si elles étaient dévoilées, il pourrait arriver ____ .</li><li>La personne qui en subirait les conséquences serait ____ .</li></ul></details>
     <button onclick="toggleAnswer('ans4_3b')">Voir la correction</button>
 <div class="answer" id="ans4_3b">
   <p>
@@ -1136,7 +1169,7 @@ Fin du programme.</code></pre>
 
 
   <h3>❓3.c&nbsp;—&nbsp;Qu’est‑ce qu’un identifiant de connexion et pourquoi faut‑il le protéger ?</h3>
-  <textarea placeholder="Votre réponse…" rows="2"></textarea></div><br/>
+  <textarea placeholder="Votre réponse…" rows="2" aria-label="3.c — Qu'est-ce qu'un identifiant de connexion, et pourquoi le protéger ?"></textarea></div><br/>
   <button onclick="toggleAnswer('mq3_id')">Voir la correction</button>
   <div class="answer" id="mq3_id">
     <p>✅ Un identifiant (login) permet d’accéder à vos services en ligne (ENT, réseau social, messagerie). S’il est divulgué avec votre mot de passe, un attaquant peut accéder à vos comptes et usurper votre identité.</p>
@@ -1239,8 +1272,8 @@ Fin du programme.</code></pre>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help3').style.display='flex'">? Aide</button>
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr3').style.display='flex'">🔑 Correction</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help3').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr3').style.display='flex'">🔑 Correction</button>
       <button class="btn" id="chk3" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
       <button class="btn btn-secondary" id="rst3" style="padding:6px 10px;font-size:0.8rem;width:auto">Réinitialiser</button>
       <span id="res3" class="badge"></span>
@@ -1373,7 +1406,7 @@ Fin du programme.</code></pre>
 
 
     <h3>❓4.b&nbsp;—&nbsp;Quelle est la différence entre un ransomware et un phishing ? (non noté)</h3>
-    <div class="response-label">Ta réponse ici 👇</div><textarea id="q4why"></textarea>
+    <div class="response-label">Ta réponse ici 👇</div><textarea id="q4why" aria-label="4.b — Différence entre un rançongiciel et un hameçonnage"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Un rançongiciel ____ , tandis qu'un hameçonnage ____ .</li><li>Le premier s'attaque à ____ , le second à ____ .</li><li>Ce qu'ils ont en commun : ____ .</li></ul></details>
 
     <h3>🔒 <strong>4.c&nbsp;—&nbsp;Quiz Protection Données (7 questions)</strong></h3>
 
@@ -1468,8 +1501,8 @@ Fin du programme.</code></pre>
 </div>
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help4').style.display='flex'">? Aide</button>
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr4').style.display='flex'">🔑 Correction</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help4').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr4').style.display='flex'">🔑 Correction</button>
       <button class="btn" id="chk4" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
       <span id="res4" class="badge"></span>
     </div>
@@ -1565,7 +1598,7 @@ Fin du programme.</code></pre>
     <p>Exemple : Je vais désactiver la géolocalisation de mon appli photo sauf quand j’en ai besoin, et je me déconnecterai des comptes après chaque usage sur l’ordi du collège…</p>
 
     <!-- Champ de réponse libre -->
-    <textarea id="q5b-response" rows="5" placeholder="👉 Rédige ta réponse ici..." style="width:100%;border-radius:8px;padding:8px;"></textarea>
+    <textarea id="q5b-response" aria-label="5.b — Mes engagements : quoi, quand, comment" rows="5" placeholder="👉 Rédige ta réponse ici..." style="width:100%;border-radius:8px;padding:8px;"></textarea>
   </div>
 </div>
 
@@ -1666,8 +1699,8 @@ Fin du programme.</code></pre>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help5').style.display='flex'">? Aide</button>
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr5').style.display='flex'">🔑 Correction</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help5').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr5').style.display='flex'">🔑 Correction</button>
       <button class="btn" id="chk5" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
       <span id="res5" class="badge"></span>
     </div>
@@ -1950,8 +1983,8 @@ Fin du programme.</code></pre>
 
 
     <div class="note-bar" style="flex-direction:row;gap:4px;padding:6px">
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help6').style.display='flex'">? Aide</button>
-      <button class="btn btn-secondary" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr6').style.display='flex'">🔑 Correction</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('help6').style.display='flex'">? Aide</button>
+      <button class="btn btn-secondary bouton-correction" style="padding:6px 10px;font-size:0.8rem;width:auto" onclick="document.getElementById('corr6').style.display='flex'">🔑 Correction</button>
       <button class="btn" id="chk6" style="padding:6px 10px;font-size:0.8rem;width:auto">Vérifier</button>
       <span id="res6" class="badge"></span>
     </div>
@@ -1983,9 +2016,9 @@ Fin du programme.</code></pre>
   <!-- Métacognition & Synthèse -->
   <div class="section panel">
     <h2>🧠 Métacognition (non notée)</h2>
-    <div class="response-label">Ce que j’ai appris</div><textarea id="meta1"></textarea>
-    <div class="response-label">Ce que je dois encore comprendre / questions</div><textarea id="meta2"></textarea>
-    <div class="response-label">Ma stratégie pour la prochaine séance</div><textarea id="meta3"></textarea>
+    <div class="response-label">Ce que j’ai appris</div><textarea id="meta1" aria-label="Ce que j'ai appris"></textarea>
+    <div class="response-label">Ce que je dois encore comprendre / questions</div><textarea id="meta2" aria-label="Ce que je dois encore comprendre"></textarea>
+    <div class="response-label">Ma stratégie pour la prochaine séance</div><textarea id="meta3" aria-label="Ma stratégie pour la prochaine séance"></textarea>
   </div>
 
   <div class="section panel">
@@ -2710,6 +2743,39 @@ function score6(){
   } else {
     armer();
   }
+})();
+</script>
+<script>
+/* ══ Règles d'or n°26 et n°29 — billet d'entrée sans note, et mode essentiel ══
+   Règle n°136 : les deux dispositifs visent des cibles qui EXISTENT dans cette
+   page — la carte des compétences et les douze boutons d'aide et de correction.
+   Le contrôle du dépôt (_outils/mesures_rendu.mjs) compte ce qui disparaît. */
+(function(){
+  var b = document.getElementById("btnEssentiel");
+  if(b){
+    var maj = function(){
+      var on = document.body.classList.contains("essentiel");
+      b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      try{ localStorage.setItem("essentiel_4e_C1.4", on ? "1" : "0"); }catch(e){}
+    };
+    b.addEventListener("click", function(){ document.body.classList.toggle("essentiel"); maj(); });
+    try{ if(localStorage.getItem("essentiel_4e_C1.4") === "1") document.body.classList.add("essentiel"); }catch(e){}
+    maj();
+  }
+  var bb = document.getElementById("btnBillet");
+  if(bb) bb.addEventListener("click", function(){
+    var v = function(id){ var e = document.getElementById(id); return e ? e.value : ""; };
+    var bon = [ v("be_1").indexOf("des machines qui ne t'appartiennent pas") === 0,
+                v("be_2").indexOf("toute information") === 0,
+                v("be_3").indexOf("long, et différent") === 0 ];
+    var n = bon.filter(Boolean).length, m = n + " / 3 — ";
+    if(n === 3)      m += "les trois acquis sont là : la séquence va pouvoir aller vite.";
+    else if(n === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+    else if(n === 1) m += "un acquis sur trois : la séquence les reprend tous, tu ne pars pas de rien.";
+    else             m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
+    document.getElementById("fbBillet").textContent = m + " Ce billet ne compte pas dans ta progression.";
+  });
 })();
 </script>
 </body>

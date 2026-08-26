@@ -59,6 +59,10 @@ button{cursor:pointer}
 .match-option{background-color:var(--drag-bg);border:1px solid var(--drop-border);border-radius:4px;padding:4px 8px;margin:4px;display:inline-block;cursor:grab}
 .match-drop.ok{border-color:#28a745}
 .match-drop.ko{border-color:#e74c3c}
+/* Règle d'or n°34 — jamais la couleur SEULE : un symbole double le bord coloré,
+   sans quoi un élève daltonien ne distingue pas juste de faux. */
+.match-drop.ok::after{content:" ✔ juste";color:#28a745;font-weight:700;font-size:.85em;display:block}
+.match-drop.ko::after{content:" ✘ à revoir";color:#e74c3c;font-weight:700;font-size:.85em;display:block}
 
 .hud strong{font-weight:700}
 
@@ -93,7 +97,19 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 .consigne{background:rgba(97,175,239,0.12); border-left:4px solid #61afef; padding:10px 12px; border-radius:6px; color:#cfe6ff}
 .consigne strong{color:#cfe6ff}
 .copy-btn{margin:8px 0 12px; display:inline-block}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}</style>
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}
+  /* ══ Harmonisation du 27/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel .bouton-correction{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px auto;max-width:1000px;justify-content:center}
+  .toolbar .btn-essentiel{padding:8px 14px;border-radius:10px;border:1px solid #b9cbe4;
+    background:transparent;color:inherit;font:inherit;cursor:pointer}
+  .toolbar .btn-essentiel[aria-pressed="true"]{outline:3px solid #ffd166;outline-offset:2px}
+  .etayage{border:1px solid rgba(127,127,127,.5);border-radius:10px;margin:10px 0;
+    background:rgba(127,127,127,.08)}
+  .etayage>summary{cursor:pointer;padding:9px 13px;font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}</style>
 </head>
 <body>
 <nav id="navharm" aria-label="Navigation du site">
@@ -110,8 +126,28 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <p class="filet">Tu n'as pas suivi les années précédentes ? Aucune importance ici : on part de ce que tu observes autour de toi.</p>
 </section>
 
+<div class="toolbar">
+  <button class="btn-essentiel" id="btnEssentiel" type="button" aria-pressed="false">🎯 Mode essentiel : OFF</button>
+</div>
+<p style="text-align:center;font-size:.85em;opacity:.8">Le <b>mode essentiel</b> masque la fiche d'activité et les boutons « Voir la correction » : il ne reste que les consignes et les exercices.</p>
+
+<section class="card" id="billet-entree">
+  <h2>🎫 Billet d'entrée — trois questions, sans note</h2>
+  <p>Cette séquence s'appuie sur ce que tu as fait en 5e et en 4e. Trois questions pour savoir, toi
+  comme le professeur, sur quoi on peut s'appuyer. <b>Elles ne comptent pas dans ta progression et ne
+  sont pas notées</b> — « je ne sais pas encore » est une réponse utile.</p>
+  <p><label for="be_1">1. L'essentiel de l'impact environnemental d'un smartphone vient…
+  <select id="be_1"><option value="">— choisir —</option><option>de sa fabrication</option><option>de la recharge quotidienne</option><option>de son transport</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_2">2. En 4e, tu as protégé tes données. Une donnée personnelle, c'est…
+  <select id="be_2"><option value="">— choisir —</option><option>toute information qui permet de reconnaître quelqu'un</option><option>seulement un mot de passe</option><option>seulement ce qui est publié en ligne</option><option>je ne sais pas encore</option></select></label></p>
+  <p><label for="be_3">3. Prolonger la durée de vie d'un appareil, c'est surtout…
+  <select id="be_3"><option value="">— choisir —</option><option>l'entretenir et le faire réparer plutôt que le remplacer</option><option>l'éteindre plus souvent</option><option>acheter le modèle le plus récent</option><option>je ne sais pas encore</option></select></label></p>
+  <button class="btn-essentiel" id="btnBillet" type="button">Voir où j'en suis</button>
+  <p id="fbBillet" role="status" style="min-height:1.4em;font-weight:600"></p>
+</section>
+
 <!-- Fiche d'activité -->
-<table class="info">
+<table class="info referentiel-card">
 <tr><td>Thématique abordée :</td><td>Écologie du numérique et usages responsables (impression raisonnée), protection des données, initiation Python appliquée aux usages (HTTP/HTTPS).</td></tr>
 <tr><td>Attendu de fin de cycle :</td><td>C1.5 – Identifier des règles permettant de sécuriser un environnement numérique et respecter la propriété intellectuelle ; <br/>
     C1.6 – Appréhender la responsabilité de chacun dans les dérives (e-réputation, atteinte à la vie privée, données personnelles).<br/>
@@ -143,7 +179,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     <h2>❓ Problématique</h2>
     <p>Comment protéger efficacement sa vie numérique tout en respectant les droits des autres et en comprenant l’impact de ses actions en ligne&nbsp;?</p>
     <textarea placeholder="Votre reformulation de la problématique…"></textarea>
-    <button onclick="toggleAnswer('corr_prob')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('corr_prob')">Voir la correction</button>
     <div class="answer" id="corr_prob">
       Voici une reformulation simple :
 
@@ -163,7 +199,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     <h3>⚡ Situation déclenchante</h3>
     <p>Un ami publie sur les réseaux sociaux une photo de vous prise au cours du week-end. Cette publication révèle votre localisation et votre identité sans votre accord. Quelles sont les conséquences possibles&nbsp;? Comment aurait-il dû agir avant de diffuser cette information&nbsp;? Quels conseils donneriez-vous à vos proches&nbsp;?</p>
     <textarea placeholder="Votre analyse…"></textarea>
-    <button onclick="toggleAnswer('corr_sit')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('corr_sit')">Voir la correction</button>
     <div class="answer" id="corr_sit">
       Conséquences possibles : atteinte à la vie privée, risques d’usurpation, harcèlement, diffusion non maîtrisée. Bonnes pratiques : demander le consentement, recadrer/masquer, limiter l’audience, paramétrer la confidentialité, retirer la publication sur demande.
     </div>
@@ -185,7 +221,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     </div>
     <div class='drop-zone'><h4>Bonne pratique</h4><ul id='goodrep'></ul></div>
     <div class='drop-zone'><h4>Mauvaise pratique</h4><ul id='badrep'></ul></div>
-    <button onclick="toggleAnswer('ans3_1a')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_1a')">Voir la correction</button>
     <div class='answer' id='ans3_1a'><p>Bonnes pratiques : Vérifier les paramètres de confidentialité ; Participer à des discussions respectueuses ; Utiliser un pseudonyme (dans certains contextes). Mauvaises pratiques : Publier des photos embarrassantes ; Partager des informations fausses ou privées ; Critiquer violemment quelqu’un en ligne.</p></div>
 
     <h3>1.b – Questions</h3>
@@ -193,7 +229,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
       <li>Peut‑on vraiment être « invisible » sur Internet ? Expliquez pourquoi.</li>
      
        <textarea rows='4' placeholder='Vos réponses...'></textarea>
-    <button onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
     <div class='answer' id='ans3_1b'><p>Il est très difficile d’être invisible car les sites, fournisseurs d’accès et applications conservent des traces de nos connexions. </p></div>
   
       
@@ -201,7 +237,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
       <li>Quelles mesures simples prendre pour protéger votre e‑réputation ?</li>
    
     <textarea rows='4' placeholder='Vos réponses...'></textarea>
-    <button onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_1b')">Voir la correction</button>
     <div class='answer' id='ans3_1b'><p>Il est très difficile d’être invisible car les sites, fournisseurs d’accès et applications conservent des traces de nos connexions. On peut toutefois réduire son empreinte en limitant les publications, en utilisant des paramètres de confidentialité, en choisissant des pseudos, en demandant la suppression de contenus inappropriés et en faisant attention à ce que l’on partage.</p></div>
        </ol>
   </div>
@@ -230,7 +266,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     </div>
     <div class='drop-zone'><h4>Avantage</h4><ul id='pro'></ul></div>
     <div class='drop-zone'><h4>Inconvénient</h4><ul id='con'></ul></div>
-    <button onclick="toggleAnswer('ans3_2a')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_2a')">Voir la correction</button>
     <div class='answer' id='ans3_2a'><p>Avantages : Visibilité internationale ; Frais de démarrage réduits ; Accès 24 h/24 ; Souplesse de travail. Inconvénients : Risque accru de cyberattaques ; Concurrence mondiale ; Nécessité de connaissances juridiques.</p></div>
 
     <h3>2.b – Questions</h3>
@@ -242,7 +278,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
       <li>Pourquoi est‑il important de respecter les lois (RGPD, propriété intellectuelle) lorsqu’on a un site ?</li>
     
     <textarea rows='4' placeholder='Vos réponses...'></textarea>
-    <button onclick="toggleAnswer('ans3_2b')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_2b')">Voir la correction</button>
     <div class='answer' id='ans3_2b'><p>Il faut un hébergement fiable, un certificat HTTPS, un système de paiement sécurisé, des sauvegardes régulières et un antivirus. Le respect des lois protège les utilisateurs et l’entreprise : RGPD pour les données personnelles, respect des licences et droits d’auteur pour les contenus utilisés, informations légales (mentions obligatoires) pour instaurer la confiance.</p></div>
       
    </ol>
@@ -287,7 +323,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     <ol>
       <li>Les métiers d’hier sont-ils les mêmes que les métiers de demain ?</li>
       <textarea rows='4' placeholder='Vos réponses...'></textarea>
-    <button onclick="toggleAnswer('ans3_2c1')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_2c1')">Voir la correction</button>
     <div class='answer' id='ans3_2c1'><p>Non, les métiers d’hier ne seront pas exactement les mêmes que ceux de demain. Le numérique transforme profondément le monde du travail. Comme le souligne Xavier Gendron, les révolutions industrielles entraînent la disparition de certains métiers, l’apparition de nouveaux, mais surtout la transformation des métiers existants. Ce ne sont plus les tâches qui définissent un métier, mais les compétences. Par exemple, un comptable d’hier utilisait des registres papier, tandis qu’un comptable d’aujourd’hui maîtrise des logiciels automatisés. Le métier reste, mais il évolue.
 
 🔍 Idée clé : Les métiers changent de forme, de méthode et d’outils, mais pas toujours de nom.</p></div>
@@ -295,7 +331,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
       <li>En quoi la robotique a-t-elle fait évoluer les métiers ?</li>
     
     <textarea rows='4' placeholder='Vos réponses...'></textarea>
-    <button onclick="toggleAnswer('ans3_2c2')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_2c2')">Voir la correction</button>
     <div class='answer' id='ans3_2c2'><p>La robotique a modifié les métiers en réduisant les tâches répétitives, pénibles ou aliénantes, comme le dit Charles Christory. Elle permet aux travailleurs de se concentrer sur des activités plus créatives et valorisantes. Dans le domaine de la logistique, Nathalie Balla explique que l’automatisation des entrepôts a changé la relation de l’homme à son travail : la machine apporte désormais la marchandise au collaborateur, ce qui rend le travail moins fatigant et plus agréable.
 
 🔍 Idée clé : La robotique transforme les conditions de travail, améliore le confort et redéfinit les rôles humains.</p></div>
@@ -303,7 +339,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
        <li>Citez un métier qui va sans doute profondément évoluer avec le numérique.</li>
     
     <textarea rows='4' placeholder='Vos réponses...'></textarea>
-    <button onclick="toggleAnswer('ans3_2c3')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('ans3_2c3')">Voir la correction</button>
     <div class='answer' id='ans3_2c3'><p>Un exemple clair est le métier de logisticien ou d’agent d’entrepôt, comme mentionné par Nathalie Balla. Ce métier est fortement influencé par l’automatisation : les tâches physiques sont réduites, les outils numériques prennent une place centrale, et les compétences requises évoluent vers la gestion de systèmes automatisés. D’autres métiers comme enseignant, journaliste, ou assistant administratif sont également en pleine mutation avec l’intelligence artificielle, les plateformes numériques et les outils collaboratifs.
 
 🔍 Idée clé : Les métiers liés à la gestion, la production, la communication et l’analyse sont tous concernés par cette évolution.</p></div>   
@@ -354,7 +390,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q1 -->
   <p>1) Qu’appelle-t-on <strong>écologie du numérique</strong> ?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe1')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe1')">Voir la correction</button>
   <div class="answer" id="corr_qe1">
     Utilisation <em>durable, responsable et raisonnée</em> des appareils et services numériques pour réduire leur pollution et leur empreinte environnementale. :contentReference[oaicite:0]{index=0}
   </div>
@@ -362,7 +398,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q2 -->
   <p>2) En France (2022), quelle part de l’empreinte carbone totale provient du secteur numérique&nbsp;?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe2')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe2')">Voir la correction</button>
   <div class="answer" id="corr_qe2">
     Environ <strong>4,4&nbsp;%</strong> de l’empreinte carbone. :contentReference[oaicite:1]{index=1}
   </div>
@@ -370,7 +406,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q3 -->
   <p>3) Quelle part de l’impact carbone du numérique provient principalement de nos <strong>équipements</strong> (smartphones, ordinateurs, TV)&nbsp;?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe3')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe3')">Voir la correction</button>
   <div class="answer" id="corr_qe3">
     Environ <strong>50&nbsp;%</strong>. :contentReference[oaicite:2]{index=2}
   </div>
@@ -378,7 +414,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q4 -->
   <p>4) Et des <strong>centres de données</strong>&nbsp;?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe4')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe4')">Voir la correction</button>
   <div class="answer" id="corr_qe4">
     Environ <strong>46&nbsp;%</strong> (ordre de grandeur donné dans le document). :contentReference[oaicite:3]{index=3}
   </div>
@@ -386,7 +422,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q5 -->
   <p>5) Pourquoi dit-on que <strong>80&nbsp;%</strong> des émissions d’un appareil sont liées à sa <strong>fabrication</strong>&nbsp;?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe5')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe5')">Voir la correction</button>
   <div class="answer" id="corr_qe5">
     L’extraction des ressources, la transformation des matériaux, l’assemblage et le transport sont très énergivores et émetteurs de GES, bien plus que l’usage unitaire. :contentReference[oaicite:4]{index=4}
   </div>
@@ -394,7 +430,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q6 -->
   <p>6) Donnez les ordres de grandeur nécessaires pour fabriquer un <strong>ordinateur</strong> (combustibles, produits chimiques, eau).</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe6')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe6')">Voir la correction</button>
   <div class="answer" id="corr_qe6">
     ≈ <strong>240&nbsp;kg</strong> de combustibles fossiles, <strong>22&nbsp;kg</strong> de produits chimiques et <strong>1,5&nbsp;tonne</strong> d’eau. :contentReference[oaicite:5]{index=5}
   </div>
@@ -402,7 +438,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q7 -->
   <p>7) Citez <strong>trois gestes</strong> parmi “Les 10 bons gestes du numérique” qui réduisent l’empreinte environnementale.</p>
   <textarea placeholder="Votre réponse… (ex. éteindre les appareils, Wi-Fi plutôt que 4G/5G, limiter le streaming HD, trier sa boîte mail, etc.)"></textarea>
-  <button onclick="toggleAnswer('corr_qe7')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe7')">Voir la correction</button>
   <div class="answer" id="corr_qe7">
     Exemples : éteindre/mettre en veille les appareils, fermer les applis inutilisées, limiter la vidéo en streaming HD, préférer le Wi-Fi à la 4G/5G, compresser les pièces jointes, trier/supprimer les mails, n’imprimer que si nécessaire. :contentReference[oaicite:6]{index=6}
   </div>
@@ -410,7 +446,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q8 -->
   <p>8) Expliquez ce que sont les <strong>terres rares</strong> et donnez un exemple d’usage.</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe8')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe8')">Voir la correction</button>
   <div class="answer" id="corr_qe8">
     Groupe d’environ 17 éléments (ex. yttrium, cérium) aux propriétés électromagnétiques utiles : batteries, écrans, LED, etc. Leur extraction a un impact environnemental. :contentReference[oaicite:7]{index=7}
   </div>
@@ -418,7 +454,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q9 -->
   <p>9) Pourquoi privilégier des appareils <strong>réparables / reconditionnés / éco-conçus</strong>&nbsp;?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe9')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe9')">Voir la correction</button>
   <div class="answer" id="corr_qe9">
     Pour <strong>prolonger la durée de vie</strong>, éviter de nouvelles fabrications (très émettrices), limiter l’extraction de ressources et le volume de déchets. :contentReference[oaicite:8]{index=8}
   </div>
@@ -426,7 +462,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <!-- Q10 -->
   <p>10) Donnez un argument pour <strong>limiter l’usage d’IA génératives</strong> et du <strong>streaming HD</strong> quand ce n’est pas nécessaire.</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_qe10')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_qe10')">Voir la correction</button>
   <div class="answer" id="corr_qe10">
     Ces services sollicitent fortement les data centers et les réseaux : ils consomment énergie et eau ; réduire ces usages diminue l’empreinte environnementale. :contentReference[oaicite:9]{index=9}
   </div>
@@ -436,14 +472,14 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 
   <p>1) Quel est l’intérêt de n’imprimer que <strong>quelques pages</strong> d’un document (menu “Pages”)&nbsp;?</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_print1')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_print1')">Voir la correction</button>
   <div class="answer" id="corr_print1">
     Économiser <strong>papier</strong> et <strong>encre</strong> en n’imprimant que les pages utiles (éviter les pages blanches/annexes).
   </div>
 
   <p>2) Citez un réglage du menu d’impression qui permet d’<strong>économiser du papier</strong>.</p>
   <textarea placeholder="Votre réponse… (ex. recto-verso, 2 ou 4 pages par feuille)"></textarea>
-  <button onclick="toggleAnswer('corr_print2')">Voir la correction</button>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_print2')">Voir la correction</button>
   <div class="answer" id="corr_print2">
     <strong>Recto-verso</strong> et/ou “<strong>plusieurs pages par feuille</strong>” (2, 4, 6…). On peut aussi utiliser le mode <em>brouillon</em> et l’<em>aperçu</em> avant impression.
   </div>
@@ -451,7 +487,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
  <!-- Q3 -->
 <p>3) Quand est-il <strong>préférable d’exporter en PDF</strong> plutôt que d’imprimer sur papier&nbsp;? Donnez deux situations concrètes (ex. dépôt sur ENT, relecture, archivage).</p>
 <textarea placeholder="Votre réponse…"></textarea>
-<button onclick="toggleAnswer('corr_print3')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_print3')">Voir la correction</button>
 <div class="answer" id="corr_print3">
   Quand le document est à <strong>partager/archiver</strong> ou à <strong>relire à l’écran</strong> (ENT, mail, Teams…), un PDF est suffisant et évite le papier. 
   On imprime seulement les versions finales indispensables.
@@ -460,7 +496,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- Q4 -->
 <p>4) Citez <strong>deux réglages</strong> qui réduisent la consommation d’<strong>encre</strong> à l’impression et expliquez leur effet.</p>
 <textarea placeholder="Votre réponse… (ex. mode brouillon/économie, niveaux de gris, retirer l’arrière-plan, police éco…)"></textarea>
-<button onclick="toggleAnswer('corr_print4')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_print4')">Voir la correction</button>
 <div class="answer" id="corr_print4">
   <em>Mode brouillon</em> (moins d’encre, plus rapide) ; <em>niveaux de gris/noir et blanc</em> (évite l’encre couleur). 
   On peut aussi retirer l’arrière-plan et utiliser une police économe.
@@ -508,7 +544,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- Q5 -->
 <p>5) À quoi servent les options <strong>« Aperçu avant impression »</strong> et <strong>« Pages : 3-5, 8 »</strong> ? En quoi cela rend l’impression plus écologique&nbsp;?</p>
 <textarea placeholder="Votre réponse…"></textarea>
-<button onclick="toggleAnswer('corr_print5')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_print5')">Voir la correction</button>
 <div class="answer" id="corr_print5">
   L’aperçu évite les erreurs (marges/coupes). Le sélecteur de pages imprime <strong>seulement l’utile</strong> (3-5, 8), 
   limitant papier/encre et ré-impressions.
@@ -517,7 +553,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- Q6 -->
 <p>6) Expliquez l’intérêt de <strong>« 2 ou 4 pages par feuille »</strong>. Dans quel cas est-ce pertinent&nbsp;?</p>
 <textarea placeholder="Votre réponse…"></textarea>
-<button onclick="toggleAnswer('corr_print6')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_print6')">Voir la correction</button>
 <div class="answer" id="corr_print6">
   Regroupe plusieurs pages sur une feuille : idéal pour <strong>fiches de relecture</strong> ou diaporamas. 
   On lit encore confortablement tout en divisant le nombre de feuilles imprimées.
@@ -526,7 +562,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- Q7 -->
 <p>7) Vous devez rendre un devoir signé. Proposez une <strong>stratégie raisonnée</strong> selon les besoins : (a) signature manuscrite exigée, (b) signature numérique acceptée.</p>
 <textarea placeholder="Votre réponse…"></textarea>
-<button onclick="toggleAnswer('corr_print7')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_print7')">Voir la correction</button>
 <div class="answer" id="corr_print7">
   (a) Imprimer en <strong>recto-verso</strong> et <strong>niveaux de gris</strong> si possible ; <br>
   ✍️ Ajouter une <strong>signature manuscrite</strong> après impression, puis scanner si nécessaire.<br><br>
@@ -595,12 +631,12 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 
     <p>Pourquoi est-il déconseillé d’utiliser le même mot de passe sur plusieurs services&nbsp;?</p>
     <textarea placeholder="Votre réponse…"></textarea>
-    <button onclick="toggleAnswer('corr_q1')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('corr_q1')">Voir la correction</button>
     <div class="answer" id="corr_q1">Si un service est compromis, toutes les autres connexions sont exposées. Préférer un mot de passe unique par service (+ phrase de passe + 2FA).</div>
 
     <p>Que signifie le cadenas dans la barre d’adresse d’un navigateur&nbsp;?</p>
     <textarea placeholder="Votre réponse…"></textarea>
-    <button onclick="toggleAnswer('corr_q2')">Voir la correction</button>
+    <button class="bouton-correction" onclick="toggleAnswer('corr_q2')">Voir la correction</button>
     <div class="answer" id="corr_q2">Le cadenas indique que la connexion est chiffrée (HTTPS/TLS) entre le navigateur et le site. Il n’atteste pas, à lui seul, de la fiabilité du contenu.</div>
   </div>
 
@@ -611,7 +647,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- D1 -->
 <p><strong>D1 – Commentaires</strong> : ajoutez, au début du programme, un commentaire qui explique ce que fait le script (contrôle de l’URL en HTTPS).</p>
 <textarea placeholder="Votre justification / capture de sortie…"></textarea>
-<button onclick="toggleAnswer('corr_d1')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d1')">Voir la correction</button>
 <div class="answer" id="corr_d1">
   Exemple : <code># Vérifie si l’URL commence par https:// et affiche un message de sécurité</code>. Un commentaire n’est pas exécuté ; il sert à documenter.
 </div>
@@ -619,7 +655,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- D2 -->
 <p><strong>D2 – Variables</strong> : changez la valeur de <code>url</code> (ex. <code>"https://college.fr"</code>, puis <code>"http://example.com"</code>) et observez les messages.</p>
 <textarea placeholder="Que s’affiche-t-il ? Expliquez."></textarea>
-<button onclick="toggleAnswer('corr_d2')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d2')">Voir la correction</button>
 <div class="answer" id="corr_d2">
   Avec <code>https://…</code> → « Connexion sécurisée ». Avec <code>http://…</code> → « Connexion non sécurisée : attention ! ». 
   <code>startswith("https://")</code> renvoie <code>True</code> ou <code>False</code>.
@@ -628,7 +664,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 <!-- D3 -->
 <p><strong>D3 – print()</strong> : affichez la valeur de <code>url</code> avant le test (ex. <code>print("Test de :", url)</code>). À quoi sert cette trace ?</p>
 <textarea placeholder="Votre réponse…"></textarea>
-<button onclick="toggleAnswer('corr_d3')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d3')">Voir la correction</button>
 <div class="answer" id="corr_d3">
   Vérifier la donnée traitée (débogage). On sait exactement quelle URL est testée.
 </div>
@@ -663,7 +699,7 @@ Si <code>url = "https://openclassrooms.com"</code>, alors<br>
  
 
 <textarea placeholder="Code / explication… (ex. domaine = url[:10])"></textarea>
-<button onclick="toggleAnswer('corr_d4')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d4')">Voir la correction</button>
 
 <div class="answer" id="corr_d4">
   ✅ <strong>Correction :</strong><br>
@@ -688,7 +724,7 @@ Si <code>url = "https://openclassrooms.com"</code>, alors<br>
 <!-- D5 -->
 <p><strong>D5 – Condition if/else</strong> : ajoutez un <code>elif</code> pour afficher <em>« Format d’URL inattendu »</em> si l’URL ne commence ni par <code>http://</code> ni par <code>https://</code>.</p>
 <textarea placeholder="Votre réponse / code…"></textarea>
-<button onclick="toggleAnswer('corr_d5')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d5')">Voir la correction</button>
 <div class="answer" id="corr_d5">
   Schéma : <code>if url.startswith("https://") ... elif url.startswith("http://") ... else: print("Format d’URL inattendu")</code>.
 </div>
@@ -696,7 +732,7 @@ Si <code>url = "https://openclassrooms.com"</code>, alors<br>
 <!-- D6 -->
 <p><strong>D6 – Indentation</strong> : désindentez volontairement une ligne, exécutez, puis corrigez. Quel message d’erreur obtenez-vous ?</p>
 <textarea placeholder="Message d’erreur / correction…"></textarea>
-<button onclick="toggleAnswer('corr_d6')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d6')">Voir la correction</button>
 <div class="answer" id="corr_d6">
   Erreur de type <em>IndentationError</em> (ou <em>expected an indented block</em>). Python utilise l’indentation pour délimiter les blocs.
 </div>
@@ -704,7 +740,7 @@ Si <code>url = "https://openclassrooms.com"</code>, alors<br>
 <!-- D7 -->
 <p><strong>D7 – Entrée utilisateur</strong> : remplacez la ligne qui fixe <code>url</code> par <code>url = input("Entrez une URL : ")</code> et testez plusieurs cas.</p>
 <textarea placeholder="Vos essais (https, http, texte)…"></textarea>
-<button onclick="toggleAnswer('corr_d7')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d7')">Voir la correction</button>
 <div class="answer" id="corr_d7">
   <code>input()</code> lit une chaîne tapée au clavier. Le reste du programme fonctionne sans changer la logique.
 </div>
@@ -727,7 +763,7 @@ Dans cet exercice, vous devez vérifier si une chaîne appelée <code>url</code>
 💬 Affichez le message <code>"URL vide"</code> si l’une des deux conditions est vraie.</p>
 
 <textarea placeholder="Votre condition…"></textarea>
-<button onclick="toggleAnswer('corr_d8')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d8')">Voir la correction</button>
 
 <div class="answer" id="corr_d8">
   ✅ <strong>Correction :</strong><br>
@@ -759,7 +795,7 @@ Dans cet exercice, vous devez écrire une fonction appelée <code>est_securisee(
 - Une fois la fonction écrite, vous devez l’<strong>appeler</strong> pour l’utiliser, en lui passant une URL comme argument.</p>
 
 <textarea placeholder="Définition + appel…"></textarea>
-<button onclick="toggleAnswer('corr_d9')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d9')">Voir la correction</button>
 
 <div class="answer" id="corr_d9">
   ✅ <strong>Correction complète avec affichage :</strong><br><br>
@@ -803,7 +839,7 @@ else:
     <span class="tok-fn">print</span>(<span class="tok-str">"⚠️ L'URL n'est pas sécurisée. Utilisez HTTPS."</span>)  <span class="tok-cmt"># message d'alerte</span>
 </code></div>
 
-<button onclick="toggleAnswer('corr_d9b')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d9b')">Voir la correction</button>
 <div class="answer" id="corr_d9b">
   <p><strong>Pourquoi ça marche ?</strong> <code>lower()</code> convertit l’URL en minuscules avant la comparaison ; <code>startswith()</code> devient insensible à la casse.</p>
 </div>
@@ -833,7 +869,7 @@ else:
 </p>
 
 <textarea placeholder="Votre boucle / sortie attendue…"></textarea>
-<button onclick="toggleAnswer('corr_d10')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d10')">Voir la correction</button>
 
 <div class="answer" id="corr_d10">
   ✅ <strong>Correction complète :</strong><br><br>
@@ -894,7 +930,7 @@ for u in urls:
 </p>
 
 <textarea placeholder="Votre fonction finale…"></textarea>
-<button onclick="toggleAnswer('corr_d11')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d11')">Voir la correction</button>
 
 <div class="answer" id="corr_d11">
   ✅ <strong>Correction complète et stylisée :</strong><br><br>
@@ -955,7 +991,7 @@ for u in urls:
     <span class="tok-fn">print</span>(<span class="tok-str">"ℹ️ L'URL ne contient pas de protocole (http/https). Ajoutez-en pour plus de sécurité."</span>)  <span class="tok-cmt"># info</span>
   </code></div>
 
-<button onclick="toggleAnswer('corr_d11b')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_d11b')">Voir la correction</button>
 <div class="answer" id="corr_d11b">
   <p>Le script traite les trois cas : HTTPS (sécurisé), HTTP (non sécurisé), <em>aucun protocole</em> (information à l’utilisateur).</p>
 </div></br>
@@ -1002,7 +1038,7 @@ for u in urls:
 <span class="tok-fn">print</span>( <span class="tok-fn">analyse_url</span>(<span class="tok-id">url</span>) )                      <span class="tok-cmt"># afficher le diagnostic</span>
 </code></div>
 
-<button onclick="toggleAnswer('corr_bonus')">Voir la correction</button>
+<button class="bouton-correction" onclick="toggleAnswer('corr_bonus')">Voir la correction</button>
 <div class="answer" id="corr_bonus">
   <ul>
     <li><strong>Vide</strong> → ⚠️ Saisie vide.</li>
@@ -1035,21 +1071,24 @@ for u in urls:
 
   <p>1) Ce que j’ai compris de l’<strong>écologie du numérique</strong> et de l’empreinte des équipements / data centers.</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_meta1')">Voir la correction</button>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>L'essentiel de l'impact vient de ____ , et non de ____ .</li><li>Un centre de données pèse surtout par ____ .</li><li>Ce qui m'a le plus surpris : ____ .</li></ul></details>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_meta1')">Voir la correction</button>
   <div class="answer" id="corr_meta1">
     Idées clés : l’essentiel de l’impact est lié à la <strong>fabrication</strong> ; les équipements pèsent plus que les usages individuels ; data centers et réseaux contribuent fortement.
   </div>
 
   <p>2) <strong>Trois gestes</strong> que je peux appliquer dès cette semaine (impression raisonnée, mails, vidéos, Wi-Fi…)</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_meta2')">Voir la correction</button>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Geste 1 : ____ , que je ferai ____ .</li><li>Geste 2 : ____ , que je ferai ____ .</li><li>Geste 3 : ____ , que je ferai ____ .</li></ul></details>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_meta2')">Voir la correction</button>
   <div class="answer" id="corr_meta2">
     Ex. : trier ma boîte mail et compresser les PJ ; limiter le streaming HD ; préférer le Wi-Fi à la 4G/5G ; activer recto-verso par défaut.
   </div>
 
   <p>3) Comment <strong>prolonger la durée de vie</strong> d’un appareil ? (soin, réparation, reconditionné, accessoires adaptés…)</p>
   <textarea placeholder="Votre réponse…"></textarea>
-  <button onclick="toggleAnswer('corr_meta3')">Voir la correction</button>
+  <details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>Pour prolonger la vie d'un appareil, je peux d'abord ____ .</li><li>Quand il tombe en panne, plutôt que de le remplacer, je peux ____ .</li><li>Au moment d'en acheter un, je regarderai ____ .</li></ul></details>
+  <button class="bouton-correction" onclick="toggleAnswer('corr_meta3')">Voir la correction</button>
   <div class="answer" id="corr_meta3">
     Protéger (housse/verre trempé), entretenir la batterie, réparer/faire réparer, privilégier produits réparables/reconditionnés, éviter les remplacements de confort.
   </div>
@@ -1178,5 +1217,36 @@ for u in urls:
 
 
 
+<script>
+/* ══ Règles d'or n°26 et n°29 ══ — et n°136 : les deux dispositifs visent des
+   cibles qui existent (la fiche d'activité, les 46 boutons de correction). */
+(function(){
+  var b = document.getElementById("btnEssentiel");
+  if(b){
+    var maj = function(){
+      var on = document.body.classList.contains("essentiel");
+      b.textContent = on ? "🎯 Mode essentiel : ON" : "🎯 Mode essentiel : OFF";
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      try{ localStorage.setItem("essentiel_3e_C1.5", on ? "1" : "0"); }catch(e){}
+    };
+    b.addEventListener("click", function(){ document.body.classList.toggle("essentiel"); maj(); });
+    try{ if(localStorage.getItem("essentiel_3e_C1.5") === "1") document.body.classList.add("essentiel"); }catch(e){}
+    maj();
+  }
+  var bb = document.getElementById("btnBillet");
+  if(bb) bb.addEventListener("click", function(){
+    var v = function(id){ var e = document.getElementById(id); return e ? e.value : ""; };
+    var bon = [ v("be_1").indexOf("de sa fabrication") === 0,
+                v("be_2").indexOf("toute information") === 0,
+                v("be_3").indexOf("l'entretenir") === 0 ];
+    var n = bon.filter(Boolean).length, m = n + " / 3 — ";
+    if(n === 3)      m += "les trois acquis sont là : la séquence va pouvoir aller vite.";
+    else if(n === 2) m += "presque tout est là ; le point qui manque sera repris en chemin.";
+    else if(n === 1) m += "un acquis sur trois : la séquence les reprend tous, tu ne pars pas de rien.";
+    else             m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
+    document.getElementById("fbBillet").textContent = m + " Ce billet ne compte pas dans ta progression.";
+  });
+})();
+</script>
 </body>
 </html>
