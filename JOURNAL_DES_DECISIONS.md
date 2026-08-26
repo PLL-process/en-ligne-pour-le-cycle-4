@@ -6097,3 +6097,63 @@ compris ce qu'on cherchait.
 La question à se poser en écrivant un verrou : **« quelle est la plus petite
 manipulation honnête qui le franchit ? »** Si la réponse est plus longue que le
 geste enseigné, le verrou est mal réglé.
+
+---
+
+## Règle d'or n°135 — on habille l'élément, pas seulement la classe
+
+*Née d'une remarque de Pascal, le 26 août : « il y a 3 colonnes, mais elles sont
+difficiles à départager visuellement. Y compris pour moi. »*
+
+Une mise en forme qui **dépend d'une classe** n'est pas une mise en forme : c'est
+un **pari** sur le fait qu'on n'oubliera jamais de l'écrire. Le jour où on
+l'oublie — et ce jour arrive —, l'élément se retrouve **entièrement nu**, sans
+même le minimum vital.
+
+Le cas d'école : dans le lot 3e_C9.2, un tableau à trois colonnes portait
+`style="border-collapse:collapse"` et **aucune classe**. Les feuilles du dépôt ne
+stylent que `table.refs` et `table.recette` : ce tableau-là n'avait donc **pas une
+seule bordure**, et trois colonnes de texte long flottaient côte à côte. Pascal l'a
+signalé en disant qu'il n'arrivait pas lui-même à les départager — un élève de 3e
+n'avait aucune chance.
+
+**La règle.** Tout élément dont la lisibilité dépend de sa mise en forme reçoit un
+**filet de sécurité posé sur le sélecteur d'élément**, pas seulement sur la classe.
+Pour les tableaux, dans chaque feuille de séquence :
+
+```css
+section.card table{border-collapse:collapse;width:100%}
+section.card table th,section.card table td{padding:8px 11px;border-bottom:1px solid var(--border)}
+section.card table th + th,section.card table td + td{border-left:1px solid var(--border)}
+section.card table tbody tr:nth-child(even) td{background:rgba(155,190,252,.05)}
+```
+
+Oublier la classe ne produit alors plus une page **illisible**, seulement une page
+**moins soignée**. C'est toute la différence entre un défaut et un accident.
+
+**Ce qui rend un tableau illisible, précisément.** Ce n'est pas l'absence totale de
+bordure : c'est l'absence de **séparateur vertical** entre colonnes. Sans lui, l'œil
+doit deviner quelle cellule appartient à quelle ligne, et l'effort croît avec le
+nombre de colonnes. Le contrôle mécanisable est donc celui-là — *un tableau de trois
+colonnes ou plus a-t-il un séparateur de colonne ou une alternance de lignes ?* —
+et non « a-t-il une bordure ».
+
+**Ce que la mesure a donné.** Sur les 44 séquences du dépôt : 19 portent au moins un
+`<table>` sans classe, mais **une seule** avait des cellules totalement dépourvues
+de bordure. En revanche, **quatre tableaux** dans **trois séquences** échouaient au
+bon critère — dont deux tableaux à **six colonnes**, les bancs d'essai de 5e_C9.1 et
+3e_C9.1. Les quatre sont corrigés ; le filet est posé dans les trois séquences.
+
+> **La leçon de méthode.** La recherche par `grep` annonçait 19 fichiers en défaut ;
+> le rendu réel en donnait 1, puis 3 avec le bon critère. Chercher dans le texte
+> source répond à « la classe est-elle écrite ? » ; **rendre la page** répond à « le
+> lecteur voit-il quelque chose de lisible ? ». Ce sont deux questions différentes,
+> et seule la seconde nous intéresse.
+
+**Et quand trois colonnes restent trois colonnes de trop.** Le filet rend un tableau
+lisible ; il ne le rend pas *évident*. Quand chaque colonne porte une idée et non
+une donnée — « ce que c'est / qui la produit / ce que ça dit » —, ce n'est plus un
+tableau qu'il faut, ce sont des **cartes** : une par ligne, empilées, chacune avec
+son titre, sa couleur et sa hiérarchie interne. C'est ce qu'est devenu l'encadré
+mesure / vigilance / alerte. Bénéfice second, et gratuit : sur un téléphone, trois
+cartes s'empilent alors que trois colonnes s'écrasent.

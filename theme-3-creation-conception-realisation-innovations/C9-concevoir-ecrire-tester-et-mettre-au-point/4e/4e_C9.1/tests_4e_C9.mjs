@@ -258,6 +258,18 @@ const run = async () => {
   await shot(page, "mode_essentiel");
   await page.click("#btnEssentiel");
 
+  ok("règle n°135 : tout tableau de 3 colonnes ou plus a un séparateur ou une alternance",
+     await page.evaluate(() => [...document.querySelectorAll("table")]
+       .filter(t => t.rows.length > 2 && t.rows[0].cells.length >= 3)
+       .every(t => {
+         const c = t.rows[1].cells[1]; if (!c) return true;
+         const st = getComputedStyle(c);
+         const separ = parseFloat(st.borderLeftWidth) > 0 || parseFloat(st.borderRightWidth) > 0;
+         const zebre = getComputedStyle(t.rows[1]).backgroundColor
+                    !== getComputedStyle(t.rows[2]).backgroundColor;
+         return separ || zebre;
+       })));
+
   ok("règle n°117 : chaque figure porte un alt long et une description dépliable",
      await page.evaluate(() => {
        const figs = [...document.querySelectorAll("img.figure")];

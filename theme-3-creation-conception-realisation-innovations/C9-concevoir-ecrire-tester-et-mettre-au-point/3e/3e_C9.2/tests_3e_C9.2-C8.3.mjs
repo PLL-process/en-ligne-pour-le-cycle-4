@@ -354,12 +354,16 @@ const run = async () => {
        const p = document.querySelector(".niv-mesure .niv-ici");
        return !!p && p.textContent.includes("s'arrête ICI");
      }));
-  ok("lisibilité : tout tableau d'une carte a des séparateurs de colonnes",
-     await page.evaluate(() => [...document.querySelectorAll("section.card table")]
-       .filter(t => t.rows.length > 1)
+  ok("règle n°135 : tout tableau de 3 colonnes ou plus a un séparateur ou une alternance",
+     await page.evaluate(() => [...document.querySelectorAll("table")]
+       .filter(t => t.rows.length > 2 && t.rows[0].cells.length >= 3)
        .every(t => {
-         const c = t.rows[1] && t.rows[1].cells[1];
-         return c && getComputedStyle(c).borderLeftWidth !== "0px";
+         const c = t.rows[1].cells[1]; if (!c) return true;
+         const st = getComputedStyle(c);
+         const separ = parseFloat(st.borderLeftWidth) > 0 || parseFloat(st.borderRightWidth) > 0;
+         const zebre = getComputedStyle(t.rows[1]).backgroundColor
+                    !== getComputedStyle(t.rows[2]).backgroundColor;
+         return separ || zebre;
        })));
 
   /* ── règle n°101 : chaque séance mène explicitement à la suivante ── */
