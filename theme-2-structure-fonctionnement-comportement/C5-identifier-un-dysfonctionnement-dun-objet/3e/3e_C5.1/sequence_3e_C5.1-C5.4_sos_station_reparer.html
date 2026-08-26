@@ -144,7 +144,15 @@
   body.essentiel .referentiel-card,
   body.essentiel details.correction,
   body.essentiel .approfondissement { display:none }
-.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}</style>
+.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══
+     Deux causes de défilement horizontal sur téléphone, toutes deux invisibles
+     au bureau : un tableau plus large que l'écran, et une URL longue qui n'offre
+     aucun point de coupure. On les traite sur l'ÉLÉMENT, une fois pour toutes. */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+</style>
 </head>
 <body>
 <style id="navharm-css">
