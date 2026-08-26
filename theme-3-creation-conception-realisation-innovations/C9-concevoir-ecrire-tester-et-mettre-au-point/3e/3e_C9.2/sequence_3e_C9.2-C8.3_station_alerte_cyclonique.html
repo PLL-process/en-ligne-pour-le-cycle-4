@@ -55,6 +55,18 @@
   table.refs th,table.refs td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
   table.refs th{background:var(--input-bg);color:var(--hl)}
   @media(max-width:680px){table.refs,table.recette{display:block;overflow-x:auto}}
+  /* Filet de sécurité : TOUT tableau d'une carte reste lisible, même sans classe.
+     Sans cela, un tableau à trois colonnes sans bordure oblige l'œil à deviner
+     quelle cellule va avec quelle ligne — signalé en classe le 26/08/2026. */
+  section.card table{width:100%;border-collapse:collapse;font-size:.9em;margin:10px 0}
+  section.card table th,section.card table td{padding:8px 11px;text-align:left;vertical-align:top;
+    border-bottom:1px solid var(--border)}
+  section.card table th{background:var(--input-bg);color:var(--hl);
+    border-bottom:2px solid var(--hl);font-size:.86em;letter-spacing:.02em}
+  section.card table th + th,section.card table td + td{border-left:1px solid var(--border)}
+  section.card table tbody tr:nth-child(even) td{background:rgba(155,190,252,.05)}
+  section.card table tbody tr:hover td{background:rgba(97,218,251,.09)}
+  @media(max-width:680px){section.card table{display:block;overflow-x:auto}}
   .tag{display:inline-block;background:var(--input-bg);border:1px solid var(--input-bd);border-radius:8px;padding:2px 9px;font-size:.78em;margin:2px 3px 2px 0}
   .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 16px;max-width:940px}
   .seance-tab{flex:1;min-width:150px;padding:11px 8px;border-radius:10px;background:var(--input-bg);border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.85em;font-weight:600;color:var(--text);font-family:inherit}
@@ -105,6 +117,36 @@
   img.figure{width:100%;max-width:860px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
   /* Règle d'or n°117 — alt court, description détaillée dépliable à côté */
   .description-image{max-width:860px;margin:-4px auto 14px;font-size:.94em}
+  /* Les trois niveaux mesure / vigilance / alerte — trois cartes, pas un tableau :
+     à trois colonnes serrées, l'œil ne sait plus quelle cellule va avec quelle ligne. */
+  .trois-niveaux{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:12px}
+  .trois-niveaux .niv{position:relative;border-radius:12px;padding:12px 16px 12px 20px;
+    background:#0a1b3d;border:1px solid var(--border);border-left-width:6px}
+  .trois-niveaux .niv + .niv{margin-left:18px}          /* l'escalier : chaque niveau surplombe le précédent */
+  @media(max-width:640px){ .trois-niveaux .niv + .niv{margin-left:0} }
+  .niv-tete{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .niv-rang{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;
+    border-radius:50%;font-size:.82em;font-weight:700;color:#050f24;flex:none}
+  .niv-nom{font-weight:700;letter-spacing:.04em;font-size:1.02em}
+  .niv-genre{font-size:.88em;color:var(--sub)}
+  .niv-qui,.niv-dit{font-size:.94em;margin:5px 0}
+  .niv-eti{display:inline-block;min-width:112px;font-size:.76em;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--sub);font-weight:700}
+  .niv-glose{color:var(--sub);font-size:.93em}
+  .niv-ici{margin-top:8px;font-size:.92em;color:var(--hl)}
+  /* La spécificité compte : « .trois-niveaux .niv » (deux classes) l'emportait sur
+     « .niv-mesure » (une seule), et les trois bords sortaient de la même couleur.
+     Trouvé par le test qui compare les trois bords — pas à l'œil. */
+  .trois-niveaux .niv-mesure{border-left-color:var(--hl)}
+  .trois-niveaux .niv-mesure .niv-nom{color:var(--hl)}
+  .trois-niveaux .niv-mesure .niv-rang{background:var(--hl)}
+  .trois-niveaux .niv-vigilance{border-left-color:var(--warn)}
+  .trois-niveaux .niv-vigilance .niv-nom{color:var(--warn)}
+  .trois-niveaux .niv-vigilance .niv-rang{background:var(--warn)}
+  .trois-niveaux .niv-alerte{border-left-color:var(--err)}
+  .trois-niveaux .niv-alerte .niv-nom{color:var(--err)}
+  .trois-niveaux .niv-alerte .niv-rang{background:var(--err)}
+  @media print{ .trois-niveaux .niv{background:#fff;border-color:#999} .trois-niveaux .niv + .niv{margin-left:12px} }
   .page-suivante{max-width:940px;margin:20px auto 4px;text-align:right}
   .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
   .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
@@ -363,17 +405,40 @@
 
   <div class="retenir" style="margin-top:1rem"><b>📣 Mesure, vigilance, alerte : trois choses différentes</b> — et
     c'est la clé pour comprendre ce que ta station peut, et ne peut pas, faire.
-    <div style="overflow-x:auto;margin-top:10px">
-      <table style="width:100%;border-collapse:collapse">
-        <thead><tr><th scope="col">Ce que c'est</th><th scope="col">Qui la produit</th><th scope="col">Ce que ça dit</th></tr></thead>
-        <tbody>
-          <tr><td><b>La mesure</b></td><td>un <b>capteur</b> — l'anémomètre de ta station</td><td>« le vent souffle à 122 km/h ». Un nombre, rien d'autre. Aucune décision.</td></tr>
-          <tr><td><b>La vigilance</b></td><td><b>Météo-France</b>, qui émet les bulletins de vigilance cyclonique</td><td>« voilà ce qui risque d'arriver, et à quel point il faut s'y préparer ». C'est une <b>prévision</b>, et elle croise le vent, la pluie, la houle et la trajectoire.</td></tr>
-          <tr><td><b>L'alerte</b></td><td>la <b>préfecture</b>, qui émet les alertes à la population <b>avec les consignes de sécurité</b></td><td>« voilà ce que vous devez faire, maintenant » : rester chez soi, ne pas circuler, fermer les écoles. C'est une <b>décision</b> qui engage.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="margin:10px 0 0"><b>Ta station s'arrête à la première ligne.</b> Elle mesure, elle affiche, elle alerte
+    <ol class="trois-niveaux" aria-label="Les trois niveaux : mesure, vigilance, alerte">
+      <li class="niv niv-mesure">
+        <div class="niv-tete">
+          <span class="niv-rang">1</span>
+          <span class="niv-nom">LA MESURE</span>
+          <span class="niv-genre">un <b>fait</b></span>
+        </div>
+        <div class="niv-qui"><span class="niv-eti">Qui la produit</span> un <b>capteur</b> — l'anémomètre de ta station</div>
+        <div class="niv-dit"><span class="niv-eti">Ce que ça dit</span> «&nbsp;le vent souffle à 122&nbsp;km/h&nbsp;»<br>
+          <span class="niv-glose">Un nombre, rien d'autre. <b>Aucune décision.</b></span></div>
+        <div class="niv-ici">📍 <b>Ta station s'arrête ICI.</b></div>
+      </li>
+      <li class="niv niv-vigilance">
+        <div class="niv-tete">
+          <span class="niv-rang">2</span>
+          <span class="niv-nom">LA VIGILANCE</span>
+          <span class="niv-genre">une <b>prévision</b></span>
+        </div>
+        <div class="niv-qui"><span class="niv-eti">Qui la produit</span> <b>Météo-France</b>, qui émet les bulletins de vigilance cyclonique</div>
+        <div class="niv-dit"><span class="niv-eti">Ce que ça dit</span> «&nbsp;voilà ce qui <b>risque</b> d'arriver, et à quel point il faut s'y préparer&nbsp;»<br>
+          <span class="niv-glose">Elle croise le vent, <b>la pluie, la houle et la trajectoire</b> — pas le vent seul.</span></div>
+      </li>
+      <li class="niv niv-alerte">
+        <div class="niv-tete">
+          <span class="niv-rang">3</span>
+          <span class="niv-nom">L'ALERTE</span>
+          <span class="niv-genre">une <b>décision</b></span>
+        </div>
+        <div class="niv-qui"><span class="niv-eti">Qui la produit</span> la <b>préfecture</b>, qui émet les alertes à la population <b>avec les consignes de sécurité</b></div>
+        <div class="niv-dit"><span class="niv-eti">Ce que ça dit</span> «&nbsp;voilà ce que vous <b>devez faire</b>, maintenant&nbsp;»<br>
+          <span class="niv-glose">Rester chez soi, ne pas circuler, fermer les écoles. Une décision <b>qui engage</b>.</span></div>
+      </li>
+    </ol>
+    <p style="margin:10px 0 0"><b>Ta station s'arrête au premier niveau.</b> Elle mesure, elle affiche, elle alerte
     <i>les gens qui sont devant elle</i> — elle ne prononce ni vigilance ni alerte, et elle ne le pourra jamais :
     ce ne sont pas des mesures, ce sont des <b>décisions humaines</b>, prises par des institutions responsables de
     leurs conséquences. C'est pour cela que les niveaux de notre prototype s'appellent <b>veille · tempête tropicale ·

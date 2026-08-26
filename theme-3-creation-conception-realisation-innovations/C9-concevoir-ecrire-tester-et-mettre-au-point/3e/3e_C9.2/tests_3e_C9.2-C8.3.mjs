@@ -336,6 +336,36 @@ const run = async () => {
   ok("encadré jumelage : la limite du prototype est nommée (il ne mesure que le vent)",
      jumelage && jumelage.texte.includes("montée des eaux"));
 
+  /* ── lisibilité : mesure / vigilance / alerte en trois cartes, pas en tableau ── */
+  ok("mesure/vigilance/alerte : trois cartes distinctes, numérotées 1-2-3",
+     await page.evaluate(() => {
+       const n = [...document.querySelectorAll(".trois-niveaux .niv")];
+       return n.length === 3 &&
+              n.map(x => x.querySelector(".niv-rang").textContent.trim()).join("") === "123";
+     }));
+  ok("mesure/vigilance/alerte : chaque carte porte une couleur de bord distincte",
+     await page.evaluate(() => {
+       const c = [...document.querySelectorAll(".trois-niveaux .niv")]
+         .map(x => getComputedStyle(x).borderLeftColor);
+       return new Set(c).size === 3;
+     }));
+  ok("mesure/vigilance/alerte : la place de la station est marquée sur le niveau 1",
+     await page.evaluate(() => {
+       const p = document.querySelector(".niv-mesure .niv-ici");
+       return !!p && p.textContent.includes("s'arrête ICI");
+     }));
+  ok("règle n°135 : tout tableau de 3 colonnes ou plus a un séparateur ou une alternance",
+     await page.evaluate(() => [...document.querySelectorAll("table")]
+       .filter(t => t.rows.length > 2 && t.rows[0].cells.length >= 3)
+       .every(t => {
+         const c = t.rows[1].cells[1]; if (!c) return true;
+         const st = getComputedStyle(c);
+         const separ = parseFloat(st.borderLeftWidth) > 0 || parseFloat(st.borderRightWidth) > 0;
+         const zebre = getComputedStyle(t.rows[1]).backgroundColor
+                    !== getComputedStyle(t.rows[2]).backgroundColor;
+         return separ || zebre;
+       })));
+
   /* ── règle n°101 : chaque séance mène explicitement à la suivante ── */
   ok("règle n°101 : 3 boutons « séance suivante » dans la page tout-en-un",
      await page.locator("button.vers-seance").count() === 3);

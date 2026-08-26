@@ -33,3 +33,15 @@ Sommative : à construire par l'enseignant, corrigé jamais publié dans le dép
 ## Différenciation
 DYS : listes déroulantes exclusivement, phrases courtes, aides à 2 niveaux. Rapides : défis bonus
 (banc de tests AVANT les fonctions, cas limites MetroCard), TP mBot2.
+
+## Dispositifs de classe (harmonisation du 26 août 2026)
+**Billet d'entrée** (3 questions, corrigé immédiat, **hors progression** — il sert à savoir
+d'où part la classe, pas à noter) · **mode essentiel** (masque référentiel, corrections et
+compléments : il ne reste que les consignes) · **tableau de bord** des 5 activités, coché au
+fur et à mesure · **deux versions étayées** pour les zones de rédaction · **durées annoncées**
+(185 min d'activités pour 220 disponibles — la marge est voulue) · **sélecteur de parcours**
+🅰/🅱/🅲 qui masque ce qui ne concerne pas l'élève **sans retirer aucune question**.
+
+> Les barres 🧪 des éditeurs restent visibles dans les trois parcours : ce sont elles qui
+> portent le verrou d'expérience des activités 3 et 4. En 🅲, une consigne dédiée dit quoi
+> faire au cahier.

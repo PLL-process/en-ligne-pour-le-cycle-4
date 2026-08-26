@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 580" font-family="system-ui, 'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="t-jt d-jt">
+<title id="t-jt">Anatomie d'un jeu de tests : quatre familles de scénarios, et le cas frontière qui décide de tout</title>
+<desc id="d-jt">Document à lire, en deux parties.
+
+Partie 1, une droite graduée de l'humidité de 0 à 100 %, portant le seuil de 40 %. Quatre points de test y sont placés, chacun d'une couleur et d'une famille différente. À 25 %, franchement sous le seuil, un point vert appelé « cas nominal SEC ». À 55 %, franchement au-dessus, un point vert appelé « cas nominal HUMIDE ». Serrés contre le seuil, deux points jaunes : 39 % et 40 %, appelés « cas FRONTIÈRES ». Une accolade signale que ces deux-là, séparés d'un seul point d'humidité, sont ceux qui distinguent « inférieur à » de « inférieur ou égal à » — et qu'un jeu de tests qui les oublie ne prouve rien sur le seuil.
+
+Partie 2, un tableau à quatre colonnes : scénario, entrées, résultat ATTENDU, résultat OBSERVÉ. Quatre lignes. Ligne 1 : sol sec le matin, H égale 25 et heure égale 8, attendu pompe ON, observé conforme. Ligne 2 : sol humide, H égale 55 et heure égale 8, attendu pompe OFF, observé conforme. Ligne 3 : sol sec mais la nuit, H égale 25 et heure égale 23, attendu pompe OFF — car l'heure sort de la plage, même si le sol est sec — observé conforme. Ligne 4, mise en évidence : juste sous le seuil, H égale 39 et heure égale 7, attendu pompe ON, et la colonne observé est vide, à remplir pendant l'essai.
+
+Un avertissement encadré rappelle la règle d'or du test : la colonne ATTENDU se remplit AVANT de lancer le programme. Remplie après, elle ne prouve plus rien — on écrit alors simplement ce qu'on a vu, et on appelle ça une réussite.
+
+Un dernier encart nomme la quatrième famille, celle qu'on oublie toujours : le cas ABSURDE. Que fait le programme si le capteur renvoie 250 % ou moins 5 % ? Un capteur débranché ne renvoie pas « rien », il renvoie n'importe quoi.</desc>
+<rect width="940" height="580" fill="#050f24"/>
+<text x="470" y="30" text-anchor="middle" fill="#81aaff" font-size="19" font-weight="700">Un jeu de tests : quatre familles, et une qui compte double</text>
+
+<!-- ═══ partie 1 : la droite ═══ -->
+<text x="40" y="66" fill="#61dafb" font-size="14" font-weight="700">① Où placer ses essais sur l'échelle d'humidité</text>
+<line x1="80" y1="128" x2="880" y2="128" stroke="#9bbefc" stroke-width="2"/>
+<g fill="#9bbefc" font-size="11" text-anchor="middle">
+  <line x1="80" y1="122" x2="80" y2="134" stroke="#9bbefc" stroke-width="2"/><text x="80" y="150">0 %</text>
+  <line x1="880" y1="122" x2="880" y2="134" stroke="#9bbefc" stroke-width="2"/><text x="880" y="150">100 %</text>
+</g>
+<line x1="400" y1="108" x2="400" y2="148" stroke="#ffd66b" stroke-width="3"/>
+<text x="400" y="102" text-anchor="middle" fill="#ffd66b" font-size="12.5" font-weight="700">SEUIL 40 %</text>
+
+<circle cx="280" cy="128" r="7" fill="#81fba1"/>
+<text x="280" y="176" text-anchor="middle" fill="#81fba1" font-size="12" font-weight="700">25 %</text>
+<text x="280" y="192" text-anchor="middle" fill="#9bbefc" font-size="10.5">nominal SEC</text>
+
+<circle cx="520" cy="128" r="7" fill="#81fba1"/>
+<text x="520" y="176" text-anchor="middle" fill="#81fba1" font-size="12" font-weight="700">55 %</text>
+<text x="520" y="192" text-anchor="middle" fill="#9bbefc" font-size="10.5">nominal HUMIDE</text>
+
+<circle cx="392" cy="128" r="6" fill="#ffd66b"/>
+<circle cx="408" cy="128" r="6" fill="#ff7b88"/>
+<text x="366" y="222" text-anchor="middle" fill="#ffd66b" font-size="12" font-weight="700">39</text>
+<text x="436" y="222" text-anchor="middle" fill="#ff7b88" font-size="12" font-weight="700">40</text>
+<path d="M370 200 q30 -12 60 0" fill="none" stroke="#ffd66b" stroke-width="1.5"/>
+<text x="400" y="244" text-anchor="middle" fill="#ffd66b" font-size="12" font-weight="700">les cas FRONTIÈRES</text>
+<text x="400" y="262" text-anchor="middle" fill="#e4eaf5" font-size="11">un seul point d'écart — et c'est le seul essai qui</text>
+<text x="400" y="278" text-anchor="middle" fill="#e4eaf5" font-size="11">distingue « &lt; 40 » de « ≤ 40 ».</text>
+<text x="700" y="230" text-anchor="middle" fill="#9bbefc" font-size="11.5">Les cas nominaux rassurent.</text>
+<text x="700" y="248" text-anchor="middle" fill="#ffd66b" font-size="11.5" font-weight="700">Les cas frontières démontrent.</text>
+<text x="700" y="270" text-anchor="middle" fill="#e4eaf5" font-size="11">Un jeu de tests sans frontière ne prouve</text>
+<text x="700" y="286" text-anchor="middle" fill="#e4eaf5" font-size="11">rien du tout sur le seuil.</text>
+
+<!-- ═══ partie 2 : le tableau ═══ -->
+<text x="40" y="326" fill="#61dafb" font-size="14" font-weight="700">② Le tableau d'essais : une ligne = un scénario, écrit AVANT d'être lancé</text>
+<g font-size="12">
+  <rect x="40" y="340" width="860" height="32" fill="#173666" stroke="#274a8a"/>
+  <text x="150" y="361" text-anchor="middle" fill="#61dafb" font-weight="700">Scénario</text>
+  <text x="390" y="361" text-anchor="middle" fill="#61dafb" font-weight="700">Entrées</text>
+  <text x="620" y="361" text-anchor="middle" fill="#61dafb" font-weight="700">Résultat ATTENDU</text>
+  <text x="820" y="361" text-anchor="middle" fill="#61dafb" font-weight="700">Résultat OBSERVÉ</text>
+
+  <rect x="40" y="372" width="860" height="30" fill="#0d2347" stroke="#274a8a"/>
+  <text x="150" y="392" text-anchor="middle" fill="#e4eaf5">sol sec, le matin</text>
+  <text x="390" y="392" text-anchor="middle" fill="#e4eaf5">H = 25 · heure = 8</text>
+  <text x="620" y="392" text-anchor="middle" fill="#81fba1" font-weight="700">pompe ON</text>
+  <text x="820" y="392" text-anchor="middle" fill="#81fba1">conforme</text>
+
+  <rect x="40" y="402" width="860" height="30" fill="#0a1b3d" stroke="#274a8a"/>
+  <text x="150" y="422" text-anchor="middle" fill="#e4eaf5">sol humide</text>
+  <text x="390" y="422" text-anchor="middle" fill="#e4eaf5">H = 55 · heure = 8</text>
+  <text x="620" y="422" text-anchor="middle" fill="#ffb454" font-weight="700">pompe OFF</text>
+  <text x="820" y="422" text-anchor="middle" fill="#81fba1">conforme</text>
+
+  <rect x="40" y="432" width="860" height="34" fill="#0d2347" stroke="#274a8a"/>
+  <text x="150" y="447" text-anchor="middle" fill="#e4eaf5">sol sec, mais la NUIT</text>
+  <text x="390" y="452" text-anchor="middle" fill="#e4eaf5">H = 25 · heure = 23</text>
+  <text x="620" y="447" text-anchor="middle" fill="#ffb454" font-weight="700">pompe OFF</text>
+  <text x="620" y="462" text-anchor="middle" fill="#9bbefc" font-size="10">l'heure sort de la plage, même sol sec</text>
+  <text x="820" y="452" text-anchor="middle" fill="#81fba1">conforme</text>
+
+  <rect x="40" y="466" width="860" height="34" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+  <text x="150" y="481" text-anchor="middle" fill="#ffd66b" font-weight="700">juste sous le seuil</text>
+  <text x="150" y="495" text-anchor="middle" fill="#9bbefc" font-size="10">le cas FRONTIÈRE</text>
+  <text x="390" y="487" text-anchor="middle" fill="#e4eaf5">H = 39 · heure = 7</text>
+  <text x="620" y="487" text-anchor="middle" fill="#81fba1" font-weight="700">pompe ON</text>
+  <text x="820" y="487" text-anchor="middle" fill="#ffd66b" font-weight="700">☐ à remplir PENDANT</text>
+</g>
+
+<!-- avertissement -->
+<rect x="40" y="514" width="500" height="46" rx="8" fill="rgba(255,214,107,.1)" stroke="#ffd66b"/>
+<text x="290" y="534" text-anchor="middle" fill="#ffd66b" font-size="12.5" font-weight="700">La colonne ATTENDU se remplit AVANT de lancer.</text>
+<text x="290" y="551" text-anchor="middle" fill="#e4eaf5" font-size="11">Remplie après, elle ne prouve plus rien : on écrit ce qu'on a vu, et on appelle ça une réussite.</text>
+
+<rect x="556" y="514" width="344" height="46" rx="8" fill="rgba(255,123,136,.1)" stroke="#ff7b88"/>
+<text x="728" y="534" text-anchor="middle" fill="#ff7b88" font-size="12.5" font-weight="700">La 4ᵉ famille, celle qu'on oublie : le cas ABSURDE</text>
+<text x="728" y="551" text-anchor="middle" fill="#e4eaf5" font-size="11">H = 250 ? H = −5 ? Un capteur débranché ne renvoie pas « rien ».</text>
+</svg>

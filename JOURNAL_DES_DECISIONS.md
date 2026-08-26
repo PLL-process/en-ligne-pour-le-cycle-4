@@ -5731,6 +5731,13 @@ objet · « ? » non encore vérifié. Ce tableau est le reste-à-faire du dép�
 à jour à chaque lot, et aucune règle n'est réputée appliquée tant que sa ligne n'est
 pas pleine.*
 
+*Mise à jour du 26 août (soir) : la colonne **4e_C9** est reprise après la
+réécriture complète du lot du jardin connecté. Deux lignes restent **rouges et le
+disent** : la n°99 (aucun exercice jumeau après l'aide de niveau 2 — c'est le
+prochain chantier de ce lot) et la n°124 (la matrice a huit colonnes normalisées,
+mais pas encore le niveau cognitif, le CRCN ni le critère de réussite). Le reste
+est couvert par la suite de tests ou par `verif_regles_audit.py`.*
+
 *Mise à jour du 26 août : la colonne **3e_C9.2** passe au vert sur quatorze lignes
 supplémentaires (n°100, 101, 109 à 114, 116, 117, 119 à 122). Chacune est **couverte
 par un test de la suite** `tests_3e_C9.2-C8.3.mjs` ou par un contrôle de
@@ -5744,37 +5751,37 @@ les exercices jumeaux et la matrice, et attendent leur tour.*
 
 | Règle | 5e_C9.1 | 4e_C9 | 3e_C9.1 | 3e_C9.2 |
 |---|---|---|---|---|
-| n°96 correction exhaustive | ✘ | ? | ? | ? |
-| n°97 correction mise en page | ✘ | ? | ? | ? |
-| n°98 options en colonne | ✘ | ? | ? | ? |
+| n°96 correction exhaustive | ✘ | ✔ | ? | ? |
+| n°97 correction mise en page | ✘ | ✔ | ? | ? |
+| n°98 options en colonne | ✘ | ✔ | ? | ? |
 | n°99 exercice jumeau après aide | ✘ | ✘ | ✘ | ✘ |
-| n°100 dispositif intégré nommé | ✘ | ? | ? | ✔ |
-| n°101 bouton de séance suivante | ✘ | ✘ | ✘ | ✔ |
-| n°102 impression propre | ? | ? | ? | ✔ |
-| n°103 blocs de fin en fin de page | ✘ | ? | ? | ✔ |
-| n°104 code avec niveau | ✘ | ? | ? | ✔ |
-| n°105 formulation BO partout | ✘ | ✘ | ? | ✔ |
-| n°106 code = verbe travaillé | ? | ✘ | ? | ✔ |
-| n°107 nom propre expliqué | ✘ | — | — | ✔ |
-| n°108 outil nommé et vérifié | ✘ | ? | ? | ✔ |
-| n°109 nombres recalculés et testés | ? | ? | ✘ | ✔ |
-| n°110 exemple filé cohérent | ? | ? | ✘ | ✔ |
-| n°111 fiction déclarée, chiffre sourcé | ✘ | ? | ? | ✔ |
-| n°112 statut des ressources | ? | ? | ✘ | ✔ |
-| n°113 trace du programme réalisé | ✘ | ✘ | ? | ✔ |
-| n°114 conception sans squelette (3e) | — | — | ✘ | ✔ |
-| n°115 problème observé avant solution | ? | ✘ | ? | ? |
+| n°100 dispositif intégré nommé | ✘ | ✔ | ✔ | ✔ |
+| n°101 bouton de séance suivante | ✘ | ✔ | ✔ | ✔ |
+| n°102 impression propre | ? | ✔ | ✔ | ✔ |
+| n°103 blocs de fin en fin de page | ✘ | ✔ | ✔ | ✔ |
+| n°104 code avec niveau | ✘ | ✔ | ✔ | ✔ |
+| n°105 formulation BO partout | ✘ | ✔ | ✔ | ✔ |
+| n°106 code = verbe travaillé | ? | ✔ | ✔ | ✔ |
+| n°107 nom propre expliqué | ✘ | ✔ | — | ✔ |
+| n°108 outil nommé et vérifié | ✘ | ✔ | ? | ✔ |
+| n°109 nombres recalculés et testés | ? | ✔ | ✘ | ✔ |
+| n°110 exemple filé cohérent | ? | ✔ | ✘ | ✔ |
+| n°111 fiction déclarée, chiffre sourcé | ✘ | ✔ | ? | ✔ |
+| n°112 statut des ressources | ? | ✔ | ✔ | ✔ |
+| n°113 trace du programme réalisé | ✘ | ✔ | ? | ✔ |
+| n°114 conception sans squelette (3e) | — | ✔ | ✘ | ✔ |
+| n°115 problème observé avant solution | ? | ✔ | ? | ? |
 | n°116 découpage au-delà du seuil | ✔ | ✔ | ? | ✔ |
-| n°117 alt court + description | ✘ | ✘ | ✘ | ✔ |
-| n°118 socle accessible minimal | ? | ✘ | ? | ✔ |
-| n°119 ni couleur seule, ni animation seule | ? | ? | ? | ✔ |
-| n°120 couleur constante par notion | ✘ | ? | ? | ✔ |
-| n°121 capture d'un geste nécessaire | ✘ | ✘ | ✘ | ✔ |
-| n°122 trois parcours, trois affichages | ✘ | ✘ | ✘ | ✔ |
-| n°123 fonctions des chaînes nommées | ✘ | ? | — | ✔ |
+| n°117 alt court + description | ✘ | ✔ | ✔ | ✔ |
+| n°118 socle accessible minimal | ? | ✔ | ✔ | ✔ |
+| n°119 ni couleur seule, ni animation seule | ? | ✔ | ? | ✔ |
+| n°120 couleur constante par notion | ✘ | ✔ | ✔ | ✔ |
+| n°121 capture d'un geste nécessaire | ✘ | ✔ | ✘ | ✔ |
+| n°122 trois parcours, trois affichages | ✘ | ✔ | ✔ | ✔ |
+| n°123 fonctions des chaînes nommées | ✘ | ✔ | — | ✔ |
 | n°124 colonnes de la matrice | ✘ | ✘ | ✘ | ✘ |
-| n°125 distracteurs plausibles et réfutés | ✘ | ✘ | ✔ | ✔ |
-| n°126 domaine contextualisé vs évalué | ? | ✘ | ? | ? |
+| n°125 distracteurs plausibles et réfutés | ✘ | ✔ | ✔ | ✔ |
+| n°126 domaine contextualisé vs évalué | ? | ✔ | ✔ | ? |
 
 **Ordre de traitement retenu** : 3e_C9.2 (station) d'abord — elle cumule le découpage
 en quatre pages, la bascule des seuils, le quatrième niveau et l'écran ; puis 4e, la
@@ -5857,8 +5864,10 @@ de nom lui coûte plus cher que le gain de précision du meilleur vocabulaire. L
 vocabulaire du phénomène n'est pas perdu pour autant — il est là où il compte, **sur
 l'écran de la station**, en toutes lettres, là où un habitant le lira.
 
-Si Pascal préfère l'inverse, le retour en arrière tient en un remplacement — mais il
-faudra alors refaire les treize captures.
+**Arbitrage validé par Pascal le 26 août** : « j'ai aligné le texte sur les captures,
+pas l'inverse — c'est parfait ». La règle n°128 s'applique donc au dépôt entier, et
+son corollaire avec elle : **fixer les noms AVANT de construire quoi que ce soit sur
+un poste**, parce qu'une capture les gèle.
 
 ## Ce qui n'a pas été fait, et qui est écrit comme tel
 
@@ -5973,3 +5982,314 @@ la trace ?), pas seulement sa présence.
 Un exemple faux est plus nuisible qu'un exemple absent : l'élève qui applique
 correctement la méthode y arrive à une conclusion fausse, et conclut que la méthode
 est mauvaise.
+
+---
+
+# 26 août 2026 (soir) — Le jardin connecté de 4e, refait au standard
+
+*Deuxième lot passé au standard dégagé des audits du 21 août, dans l'ordre décidé :
+la 4e, la plus en retard. Réécriture complète — il ne restait à peu près que le
+sujet.*
+
+## Ce qui n'allait pas, et ce que le contrôle a trouvé tout seul
+
+Le vérificateur mécanisé relevait **cinq manquements** d'entrée : aucune durée
+annoncée (n°23), pas de diagnostic d'entrée (n°26), pas de mode essentiel (n°29),
+cinq tâches enchaînées sans tableau de bord (n°30), six zones de rédaction sans la
+moindre version étayée (n°31), seize champs sans étiquette (n°34). Le lot n'avait
+par ailleurs **aucune image** — pas une seule — dans une séquence dont le cœur est
+un phénomène temporel.
+
+Mais le défaut le plus grave ne se voyait ni à l'écran ni à l'exécution.
+
+## Les mauvais verbes en face des codes
+
+Le lot annonçait, pour 4e_C9.1, « concevoir le programme avant de l'écrire », et
+pour 4e_C9.3, « réinvestir une structure ». Le programme 2024 dit :
+
+* **4e_C9.1** — *Modifier* un algorithme permettant de répondre au besoin ou au problème posé.
+* **4e_C9.2** — *Traduire* un algorithme … en un programme.
+* **4e_C9.3** — *Réaliser et mettre au point* un programme commandant un système réel…
+
+« Concevoir » est un verbe de **3e**. En annonçant ce verbe-là en 4e, le lot
+promettait — et pouvait demander — autre chose que ce que le cycle prévoit à ce
+moment-là. **« Modifier » interdit la page blanche** : il faut fournir un
+algorithme amputé d'une exigence, et faire chercher l'endroit où intervenir. Ce
+n'est pas la même séance.
+
+Ce défaut a survécu un mois parce qu'il est **invisible à l'usage** : la page
+fonctionnait très bien. Il a fallu le contrôle n°42, qui compare la carte de
+référentiel au texte officiel **mot à mot**, pour qu'il apparaisse — et il est
+apparu en trois secondes.
+
+## Ce qui a été bâti
+
+**Le banc d'essai du jardin**, intégré, hors ligne, qui rend visible ce qu'aucun
+texte ne montre : curseurs d'humidité et d'heure, sélecteur de règle (un seuil /
+deux seuils), et surtout un **compteur de basculements**. Mode un seuil, on fait
+trembler la mesure : huit basculements. Mode deux seuils, même tremblement : zéro.
+La mesure n'a pas bougé d'un point.
+
+Le tremblement est une **suite figée dans le code**, pas un tirage aléatoire. Sans
+cela on comparerait deux mesures différentes, et la démonstration ne prouverait
+rien. C'est aussi ce qui la rend reproductible d'un poste à l'autre — un élève
+peut inscrire les nombres obtenus dans son compte rendu et être sûr qu'ils
+tiendront.
+
+**Quatre figures**, dont une qui porte toute la séance 3 : le chronogramme qui
+superpose la même mesure traitée à un seuil et à deux, avec la bande morte tramée.
+
+**Trente questions de QCM** en remplacement de vingt-huit sommaires, dix par code,
+quatre illustrées, chaque distracteur réfuté nommément.
+
+## L'idée que la séquence essaie de faire passer
+
+Elle tient dans l'activité 5, et c'est la seule chose qui devrait rester dans dix
+ans : **un programme peut être parfaitement juste et parfaitement inutilisable.**
+La pompe qui claque six fois par minute n'a aucun bug — chaque décision qu'elle
+prend est correcte. C'est la *règle* qui est mal choisie.
+
+Les élèves vont chercher le bug. Il faut les laisser chercher un peu, puis
+demander : « et si aucune ligne n'était fausse ? ».
+
+## Et le prix de la correction, dit lui aussi
+
+L'hystérésis n'est pas un progrès gratuit : à 39 % d'humidité, la pompe ne
+s'allume plus. On gagne en stabilité ce qu'on perd en réactivité. La séquence le
+dit, le banc le montre, et l'activité 6 demande de **justifier** la largeur de
+bande choisie plutôt que de la recopier. Une décision technique est presque
+toujours un arbitrage — c'est vrai du jardin comme du reste.
+
+---
+
+## Règle d'or n°133 — le contrôle qui compare mot à mot est le seul qui voie les erreurs de niveau
+
+Une formulation de compétence réécrite « avec ses mots » se lit très bien. Elle
+peut pourtant annoncer un **autre niveau du cycle** que celui de la page — et rien,
+dans l'usage, ne le signale : la séquence fonctionne, les élèves travaillent, le
+professeur ne voit rien.
+
+C'est pourquoi la carte de référentiel se recopie **au mot près**, et pourquoi ce
+contrôle-là doit rester mécanisé : l'œil humain lit le sens et pardonne la
+paraphrase. La machine compare les mots et ne pardonne rien — c'est exactement ce
+qu'on lui demande.
+
+Corollaire, dégagé en corrigeant le lot 4e : **le verbe du référentiel décide du
+dispositif**. « Modifier » impose de fournir l'existant ; « écrire » impose de ne
+rien fournir ; « concevoir » impose de partir du besoin. Choisir le mauvais verbe,
+ce n'est pas mal rédiger un tableau : c'est préparer la mauvaise séance.
+
+---
+
+## Règle d'or n°134 — un verrou expérientiel se mesure sur le geste, pas sur le compteur
+
+Le banc du jardin exigeait d'avoir « fait varier l'humidité », et le vérifiait en
+comptant **six valeurs distinctes touchées**. Un élève qui saisit 25 puis 55 dans
+le champ de valeur exacte n'en touche que deux : il a parfaitement fait le geste
+demandé, et la page le refusait — sans lui dire pourquoi, puisque le compteur
+n'était affiché nulle part.
+
+Un verrou doit vérifier **ce qui prouve le geste**, pas ce qui est facile à
+compter. Le verrou juste, ici : *avoir vu la pompe des deux côtés du seuil*. Il se
+franchit en deux manipulations sensées, et il est infranchissable sans avoir
+compris ce qu'on cherchait.
+
+La question à se poser en écrivant un verrou : **« quelle est la plus petite
+manipulation honnête qui le franchit ? »** Si la réponse est plus longue que le
+geste enseigné, le verrou est mal réglé.
+
+---
+
+## Règle d'or n°135 — on habille l'élément, pas seulement la classe
+
+*Née d'une remarque de Pascal, le 26 août : « il y a 3 colonnes, mais elles sont
+difficiles à départager visuellement. Y compris pour moi. »*
+
+Une mise en forme qui **dépend d'une classe** n'est pas une mise en forme : c'est
+un **pari** sur le fait qu'on n'oubliera jamais de l'écrire. Le jour où on
+l'oublie — et ce jour arrive —, l'élément se retrouve **entièrement nu**, sans
+même le minimum vital.
+
+Le cas d'école : dans le lot 3e_C9.2, un tableau à trois colonnes portait
+`style="border-collapse:collapse"` et **aucune classe**. Les feuilles du dépôt ne
+stylent que `table.refs` et `table.recette` : ce tableau-là n'avait donc **pas une
+seule bordure**, et trois colonnes de texte long flottaient côte à côte. Pascal l'a
+signalé en disant qu'il n'arrivait pas lui-même à les départager — un élève de 3e
+n'avait aucune chance.
+
+**La règle.** Tout élément dont la lisibilité dépend de sa mise en forme reçoit un
+**filet de sécurité posé sur le sélecteur d'élément**, pas seulement sur la classe.
+Pour les tableaux, dans chaque feuille de séquence :
+
+```css
+section.card table{border-collapse:collapse;width:100%}
+section.card table th,section.card table td{padding:8px 11px;border-bottom:1px solid var(--border)}
+section.card table th + th,section.card table td + td{border-left:1px solid var(--border)}
+section.card table tbody tr:nth-child(even) td{background:rgba(155,190,252,.05)}
+```
+
+Oublier la classe ne produit alors plus une page **illisible**, seulement une page
+**moins soignée**. C'est toute la différence entre un défaut et un accident.
+
+**Ce qui rend un tableau illisible, précisément.** Ce n'est pas l'absence totale de
+bordure : c'est l'absence de **séparateur vertical** entre colonnes. Sans lui, l'œil
+doit deviner quelle cellule appartient à quelle ligne, et l'effort croît avec le
+nombre de colonnes. Le contrôle mécanisable est donc celui-là — *un tableau de trois
+colonnes ou plus a-t-il un séparateur de colonne ou une alternance de lignes ?* —
+et non « a-t-il une bordure ».
+
+**Ce que la mesure a donné.** Sur les 44 séquences du dépôt : 19 portent au moins un
+`<table>` sans classe, mais **une seule** avait des cellules totalement dépourvues
+de bordure. En revanche, **quatre tableaux** dans **trois séquences** échouaient au
+bon critère — dont deux tableaux à **six colonnes**, les bancs d'essai de 5e_C9.1 et
+3e_C9.1. Les quatre sont corrigés ; le filet est posé dans les trois séquences.
+
+> **La leçon de méthode.** La recherche par `grep` annonçait 19 fichiers en défaut ;
+> le rendu réel en donnait 1, puis 3 avec le bon critère. Chercher dans le texte
+> source répond à « la classe est-elle écrite ? » ; **rendre la page** répond à « le
+> lecteur voit-il quelque chose de lisible ? ». Ce sont deux questions différentes,
+> et seule la seconde nous intéresse.
+
+**Deuxième volet, trouvé en balayant : le débordement sur téléphone.** Même
+famille, même cause. Deux choses font défiler une page horizontalement à 390 px —
+un tableau plus large que l'écran, et une URL longue sans point de coupure — et
+les deux sont **invisibles au bureau**. Sur les 44 séquences du dépôt, **huit**
+débordaient, de 3 à 218 pixels. Le filet, encore une fois, se pose sur l'élément :
+
+```css
+@media(max-width:680px){ section.card table{display:block;overflow-x:auto} }
+figcaption,.saved-note{overflow-wrap:anywhere}
+```
+
+Le pire cas était une légende de photo : `commons.wikimedia.org/wiki/File:Coney_Island_Stillwell_Avenue_Entrance_001.jpg`.
+Les traits de soulignement n'offrent aucune coupure par défaut, et 218 pixels de
+page partaient hors écran — sur une séquence par ailleurs excellente. **Personne
+ne l'aurait vu en la relisant**, parce qu'on relit sur un écran d'ordinateur.
+
+**Et quand trois colonnes restent trois colonnes de trop.** Le filet rend un tableau
+lisible ; il ne le rend pas *évident*. Quand chaque colonne porte une idée et non
+une donnée — « ce que c'est / qui la produit / ce que ça dit » —, ce n'est plus un
+tableau qu'il faut, ce sont des **cartes** : une par ligne, empilées, chacune avec
+son titre, sa couleur et sa hiérarchie interne. C'est ce qu'est devenu l'encadré
+mesure / vigilance / alerte. Bénéfice second, et gratuit : sur un téléphone, trois
+cartes s'empilent alors que trois colonnes s'écrasent.
+
+---
+
+## Règle d'or n°136 — un dispositif est installé quand son effet est mesuré, pas quand ses commandes sont posées
+
+*Née le 26 août, en écrivant la suite de tests du lot 3e_C9.1 — c'est-à-dire en
+essayant de prouver ce que je venais de déclarer fait.*
+
+Le sélecteur de parcours du lot était complet : trois boutons 🅰/🅱/🅲, l'état
+`aria-pressed` correct, la classe `parcours-a|b|c` appliquée au `body`, la note
+« Parcours affiché : 🅲 sans matériel » qui s'écrivait bien. Sept lignes de CSS
+prêtes à masquer `[data-parcours]`. Et **aucun élément de la page ne portait
+`data-parcours`**.
+
+Le dispositif masquait donc **zéro bloc sur zéro bloc concerné** — et affichait
+sereinement qu'il avait changé de parcours. Toute question de la forme « le
+sélecteur est-il présent ? », « la classe s'applique-t-elle ? », « la note
+change-t-elle ? » répondait **oui**. Il a fallu la seule question qui compte —
+*combien de blocs sont effectivement masqués ?* — pour que le vide apparaisse.
+
+**La règle.** Un dispositif ne se déclare pas installé sur la présence de ses
+commandes. Il se déclare installé sur la **mesure de son effet**, exprimée en
+nombre : *n blocs masqués sur n concernés*, *la carte de référentiel passe de
+visible à invisible*, *le panneau actif change*, *la progression reste à 0*. Un
+contrôle dont le résultat attendu est « oui » plutôt qu'un nombre ne contrôle rien.
+
+C'est la sœur de la règle n°135 : là, on avait posé la classe sans l'habillage ;
+ici, on avait posé le sélecteur sans ce qu'il sélectionne. Même famille de
+défaut — **le mécanisme complet, branché sur rien** — et même remède : mesurer au
+rendu, pas dans la source.
+
+**Corollaire pour les tests.** Un test qui ne peut pas échouer ne prouve rien.
+`0 masqués sur 0 concernés` doit être un **échec**, pas un succès : c'est ce
+choix-là, dans une seule ligne de la suite, qui a fait apparaître le défaut.
+
+---
+
+# 26 août 2026 (nuit) — 3e_C9.1 harmonisée, et deux balayages du dépôt
+
+*Troisième lot repris dans l'ordre décidé. Contrairement au 4e, celui-ci n'avait
+pas besoin d'être réécrit : le contenu est excellent — l'exécution à la main dans
+un simulateur de mémoire, le piège des guillemets, la chasse aux bugs. Il lui
+manquait les **dispositifs communs** du dépôt, pas des idées.*
+
+## Ce qui a été posé, sans toucher au fond
+
+Billet d'entrée (n°26), mode essentiel (n°29), tableau de bord des tâches (n°30),
+versions étayées pour les deux zones de rédaction (n°31), sélecteur de parcours
+(n°122), boutons de séance suivante (n°101), carte de référentiel (n°42). Cinq
+manquements mécanisés → zéro.
+
+## Un faux positif du contrôle, et ce qu'il enseigne
+
+La règle n°34 signalait **trente champs sans étiquette**. Vérification faite :
+les trente étaient enveloppés dans un `<label>`, ce qui est parfaitement valide —
+c'est la forme *implicite* de l'étiquetage, et les lecteurs d'écran la gèrent.
+Le contrôle ne cherchait que la forme *explicite*, `<label for="…">`.
+
+**Le contrôle avait tort, et il avait raison de le dire quand même.** La forme
+explicite est plus robuste : elle survit à un déplacement du champ hors du label,
+ce que la forme implicite ne fait pas. J'ai donc ajouté `for="…"` aux trente
+labels — un attribut, aucun changement visuel — plutôt que de discuter avec
+l'outil. Mais le faux positif est signalé à Pascal : un contrôle qui accuse à tort
+finit par être ignoré, et c'est alors qu'il laissera passer un vrai défaut.
+
+## Ce que les durées annoncées cachaient
+
+Le contrôle n°23 ne voyait aucune durée : la page écrivait « ⏱ 25 min » quand la
+convention du dépôt est « ⏱ ~25 min », avec le tilde. Un détail — sauf qu'en les
+rendant visibles, le total apparaissait : **215 minutes annoncées pour 220
+disponibles**, marge de service comprise. Autrement dit, quatre séances remplies à
+ras bord, sans une minute pour installer, ranger, ou laisser un élève finir.
+
+Les durées ont été ramenées à 45 minutes de travail dans un créneau de 55. Ce
+n'est pas un ajustement cosmétique : c'est la différence entre une séance qui
+tient et une séance qui déborde toujours de dix minutes.
+
+## Le progrès du cycle, enfin visible en un tableau
+
+En recopiant la formulation officielle de 3e_C9.1 — *« Élaborer ou concevoir un
+algorithme … puis le traduire en un programme structuré … le tester et le mettre
+au point »* —, la progression du cycle est apparue d'un bloc :
+
+| Niveau | Le verbe | Ce qu'on fournit à l'élève |
+|---|---|---|
+| 5e_C9.1 | **analyser** un programme fourni, et le **tester** | tout : le programme existe et fonctionne |
+| 5e_C9.2 | **modifier** un programme fourni | le programme, à retoucher |
+| 4e_C9.1 | **modifier** un *algorithme* | l'algorithme, amputé d'une exigence |
+| 4e_C9.2 | **traduire** un algorithme en programme | l'algorithme complet |
+| 3e_C9.1 | **élaborer**, traduire, tester, mettre au point | **rien que le besoin** |
+| 3e_C9.2 | **réaliser et mettre au point**, avec IHM | rien que le cahier des charges |
+
+Lue de haut en bas, la dernière colonne dit tout : **on retire progressivement ce
+qu'on donne**. La difficulté du cycle ne tient pas à des programmes plus longs,
+elle tient à ce qui manque au départ. Ce tableau est entré dans la séquence, en
+encadré dépliable — un élève de 3e a le droit de savoir où il en est.
+
+## Le sélecteur de parcours branché sur rien — et la suite qui l'a trouvé
+
+Le lot n'avait **aucune suite de tests committée**. Son rapport annonçait 30/30 au
+30 juillet : la campagne avait bien eu lieu, mais rien dans le dépôt ne permettait
+de la rejouer. Un rapport qu'on ne peut pas rejouer est une affirmation, pas une
+preuve — et il vieillit en silence pendant qu'on modifie la page.
+
+`tests_3e_C9.1.mjs` est donc écrite et committée : **35 tests**, tous verts, qui
+vérifient chacun des six dispositifs posés *par son effet à l'écran*. Elle a
+immédiatement rapporté deux échecs, dont celui qui a fondé la règle n°136 : le
+sélecteur de parcours ne masquait rien.
+
+Ce qui n'a **pas** été masqué en 🅲, et c'est délibéré : les barres 🧪 des éditeurs
+Vittascience. Ce sont elles qui portent le verrou d'expérience des activités 3 et
+4 ; les masquer aurait retiré deux validations, ce qu'interdit la règle n°122. En
+🅲, une consigne dédiée dit quoi faire au cahier — on remplace le geste, on ne
+supprime pas la question.
+
+> **Ce que je retiens pour les lots suivants.** Écrire la suite de tests n'est pas
+> la formalité qui clôt une harmonisation : c'est l'opération qui la vérifie. Les
+> six dispositifs, je les avais déclarés posés — et l'un des sept était creux. Je
+> ne l'aurais jamais vu en relisant mon propre travail, parce qu'en relisant on
+> retrouve ce qu'on croit avoir écrit.

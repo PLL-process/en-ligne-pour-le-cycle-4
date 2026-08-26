@@ -13,6 +13,8 @@
   programme / mise au point), corrections détaillées, 3 illustrées.
 * **`Synthèses/`** — synthèse élève (imprimable A4) et synthèse professeur (réponses, remédiations, CRCN).
 * **`fiche_pedagogique_3e_C9.1.md`**, **`matrice_couverture_3e_C9.1.csv`**, **`SOURCES_MEDIAS.md`**.
+* **`tests_3e_C9.1.mjs`** — la suite Playwright du lot, **rejouable** : `node tests_3e_C9.1.mjs .`
+  (35 tests ; le détail et ce qui n'est PAS testé sont dans `rapport_tests_3e_C9.1.md`).
 * **`tp_mbot2_python.html`** — TP robot réel (version 🅰, très basse tension), prolongement de l'atelier.
 * `qcm_python_variables.html` — QCM hérité (24 q), conservé en complément.
 
@@ -22,3 +24,11 @@ Cet atelier est la **refonte** de la ressource « Vittascience – variables » 
 adaptée P. Gouacide, utilisée aux trois niveaux). L'ancienne version est archivée dans
 `_archive-anciennes-versions/C7_C9_…/3e_C9.1/` ; son URL historique redirige vers l'atelier.
 Les marches 5e et 4e de l'**arc variables** suivront le même fil New York.
+
+## Harmonisation du 26 août 2026
+
+Le lot a reçu les six dispositifs qui lui manquaient — durées annoncées, billet
+d'entrée hors progression, mode essentiel, tableau de bord des tâches, versions
+étayées, étiquettes de champs — et son sélecteur de parcours, qui était présent
+mais **sans effet**, agit désormais réellement. Le contrôle mécanisé passe de
+six manquements à **zéro**.
