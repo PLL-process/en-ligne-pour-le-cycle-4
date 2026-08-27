@@ -128,10 +128,40 @@ bonne granularité pour une relecture.
 
 | Lot | Portée | Questions | Ce qu'on y fait |
 |---|---|---:|---|
-| **1** | Thème 3, les 5 QCM restants | 150 | rééquilibrage des longueurs, absolus déclarés, distracteurs invraisemblables |
+| ~~**1**~~ | ~~Thème 3, les 5 QCM restants~~ | ~~150~~ | **fait le 27 août** — voir ci-dessous |
 | **2** | Thème 1, 11 QCM lisibles | 330 | idem, plus la répartition de `qcm_systemes_information_donnees` |
 | **3** | Thème 2, 16 QCM lisibles | 490 | idem |
 | **4** | les 10 QCM non lisibles | ? | d'abord les rendre mesurables, ensuite les traiter |
 
 Chaque lot porte sa propre mesure avant/après, et la suite de tests reçoit les
 deux contrôles de longueur en cliquet — comme pour les quatre QCM du 27 août.
+
+
+## Lot 1 — le Thème 3 est bouclé
+
+Les cinq QCM restants ont été repris le 27 août. Le thème entier tient
+désormais entre 40 % et 57 %, avec zéro ou une question visiblement
+déséquilibrée par fichier.
+
+| QCM | avant | après | visibles avant → après |
+|---|---:|---:|---|
+| `qcm_5e_C9.1-C9.3_boite_etiquetee` | 97 % | **43 %** | 25 → 0 |
+| `qcm_3e_C9.2-C8.3_station_alerte_cyclonique` | 93 % | **47 %** | 26 → 1 |
+| `qcm_3e_C9.1_variables_types_systemes` | 90 % | **47 %** | 25 → 1 |
+| `qcm_4e_C9_jardin-programme` | 83 % | **40 %** | 25 → 1 |
+| `qcm_C7.1_planification_taches` | 70 % | **50 %** | 16 → 0 |
+
+Au-delà des longueurs, une vingtaine de distracteurs plaisantins ont été
+remplacés — « pour user les boutons », « l'imprimer en grand », « que
+l'ordinateur est fatigué », « Achetez un nouveau manège », « humeur du
+testeur », « quand le professeur a le dos tourné ». Chaque remplacement a
+emporté la réécriture de sa réfutation.
+
+C'est en les remplaçant qu'est née la **règle n°148** : le meilleur
+distracteur n'est pas une erreur, c'est une vérité mal placée. « Vérifier
+qu'il s'exécute sans message d'erreur » est une vraie vérification, et elle
+est insuffisante. Sa réfutation ne dit pas « c'est faux », elle dit « c'est
+vrai, et ce n'est pas la question » — et c'est cette phrase-là qui enseigne.
+
+**Total du dépôt : 87 % → 81 %.** Le reste tient dans les Thèmes 1 et 2, où
+rien n'a encore été touché.

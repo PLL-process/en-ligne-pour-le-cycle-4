@@ -7010,3 +7010,111 @@ les 10 QCM non lisibles — qu'il faudra d'abord rendre mesurables.
 **Ce que la mesure ne dit pas, et qu'aucune mesure ne dira.** Rien de la
 justesse pédagogique. Les 87 % disent qu'un défaut de FORME rend les QCM
 devinables ; ils ne disent pas que le fond est mauvais.
+
+---
+
+## Règle d'or n°145 — un contre-exemple doit être vrai ET rencontrable
+
+*Née le 27 août 2026 d'une objection de Pascal, en une phrase : « un IP38
+protège mieux de l'eau qu'un IP54. Tous voulaient peut-être dire IP68. »*
+
+J'avais écrit, pour montrer qu'on ne lit pas un indice IP comme un nombre :
+
+> « Un IP38 protège MIEUX de l'eau qu'un IP54 — 8 contre 4 sur le second
+> chiffre — alors que 38 est plus petit que 54. »
+
+L'affirmation est **exacte**. La norme IEC 60529 autorise toutes les
+combinaisons des deux chiffres, et 8 bat 4 sur la protection contre l'eau.
+Elle est aussi **inutilisable** : IP38 ne se rencontre dans aucun catalogue.
+Un appareil qui supporte l'immersion est en pratique scellé, donc étanche à la
+poussière, donc 6 en premier chiffre. Les codes courants sont IP23, IP44,
+IP54, IP65, IP67, IP68, IP69K.
+
+Un élève qui vérifie « IP38 » ne trouve rien — et l'exemple s'effondre au
+moment précis où il devait convaincre. Pire : il apprend que ce qu'on lui dit
+en classe ne se retrouve pas dans le monde.
+
+**La règle.** Un contre-exemple ne se contente pas d'être licite au regard
+d'une règle : il doit exister quelque part où l'élève peut aller le voir. Un
+cas seulement permis par une norme ne prouve rien à qui ne le croisera jamais.
+
+Remplacé par **IPX8**, l'indice des montres et des téléphones étanches. Le X
+n'est pas un chiffre : il dit que la poussière n'a pas été testée. Comparer
+IPX8 et IP65 comme deux nombres devient alors visiblement impossible — et
+l'élève a l'objet dans la poche.
+
+---
+
+## Règle d'or n°146 — un outil de mesure déclare ce qu'il n'a pas su lire
+
+*Née en écrivant `audit_qcm_trois_themes.mjs`.*
+
+L'outil lit 36 QCM sur 46. Les dix autres sont d'anciennes générations, avec
+un moteur et un schéma de banque différents. Il aurait été facile — et
+confortable — de les ignorer silencieusement : le rapport aurait porté sur
+« les QCM du dépôt » et affiché des totaux propres.
+
+C'est exactement le mensonge à ne pas faire. Un QCM qu'un outil ne sait pas
+lire n'est pas un QCM sain : c'est un QCM **non mesuré**, et rien ne dit qu'il
+échappe au défaut cherché — au contraire, son ancienneté le rend suspect.
+
+**La règle.** Tout outil de mesure publie, à côté de son résultat, la liste
+nominative de ce qu'il n'a pas su traiter. Un dénominateur qui exclut
+silencieusement les cas difficiles fabrique un résultat flatteur et faux.
+
+C'est la sœur de la règle n°136 : un dispositif s'installe quand son effet est
+mesuré. Encore faut-il savoir sur quoi la mesure a porté.
+
+---
+
+## Règle d'or n°147 — une règle d'or naît sur un lot, elle s'adopte après mesure sur l'ensemble
+
+*Née de l'enchaînement des 26 et 27 août.*
+
+La règle n°144 — la bonne réponse ne doit pas être la plus longue — est née
+sur quatre QCM. Elle aurait pu y rester : quatre fichiers corrigés, une règle
+écrite, un lot fermé. La mesure sur les 46 QCM du dépôt a montré autre chose :
+**945 questions sur 1086, soit 87 %**. La règle ne décrivait pas un accident
+de rédaction, elle décrivait une habitude d'écriture — la mienne.
+
+Une règle écrite sans mesure d'ensemble reste une anecdote élevée au rang de
+principe. Une règle mesurée devient un chantier, avec son ordre de bataille et
+ses chiffres avant/après.
+
+**La règle.** Toute règle d'or nouvelle est suivie d'une mesure sur l'ensemble
+du dépôt, si cette mesure est mécanisable — et l'outil qui la produit est
+versionné avec elle. Ce qui n'est pas mesurable se dit tel quel.
+
+---
+
+## Règle d'or n°148 — le meilleur distracteur est vrai, mais hors sujet
+
+*Née en réécrivant les 150 questions des cinq QCM restants du Thème 3.*
+
+Le principe n°1 de la relecture d'août disait : « un distracteur doit
+représenter une erreur concevable d'élève, pas une plaisanterie ». En
+appliquant ce principe à 150 questions, une hiérarchie est apparue entre les
+distracteurs plausibles eux-mêmes.
+
+| Qualité | Exemple | Ce que l'élève apprend |
+|---|---|---|
+| plaisanterie | « pour user les boutons » | rien : il l'élimine sans savoir |
+| erreur franche | « 99 : b suit toujours a » | on lui dit qu'il a tort |
+| **vrai mais hors sujet** | « vérifier qu'il s'exécute sans message d'erreur » | il découvre une DISTINCTION |
+
+Le troisième est le seul qui enseigne quelque chose à l'élève qui le choisit.
+« Vérifier qu'il s'exécute sans erreur » est une vraie vérification — et elle
+est insuffisante : un programme peut tourner parfaitement et compter faux.
+« Le réécrire à ma façon pour mieux le comprendre » est une vraie méthode —
+qui détruit le travail d'un collègue avant d'avoir compris ce qu'il faisait.
+« Il y a un bug quelque part, je cherche » est une vraie réponse — celle qu'on
+donne AVANT d'avoir trouvé, et qui gaspille un diagnostic déjà fait.
+
+**La règle.** Un bon distracteur n'est pas une erreur : c'est une vérité mal
+placée. Sa réfutation ne dit alors pas « c'est faux » mais « c'est vrai, et ce
+n'est pas la question » — et c'est cette phrase-là qui fait comprendre.
+
+**Conséquence pratique.** Ces distracteurs-là sont naturellement de la même
+longueur que la bonne réponse, puisqu'ils portent une idée complète. La règle
+n°148 sert donc aussi la n°144 : chercher des vérités hors sujet équilibre les
+propositions sans y penser.
