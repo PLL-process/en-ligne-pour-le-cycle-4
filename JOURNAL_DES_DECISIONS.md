@@ -6970,3 +6970,43 @@ raisonnement — celles qui se voient en relisant. Elle ne retrouve pas les
 erreurs de FAIT logées dans la réponse qu'on croit juste : pour les voir, il
 faut quelqu'un qui ne les a pas écrites. Le rapport valait donc bien plus que
 sa liste de numéros, et il fallait le demander plutôt que de s'en passer.
+
+---
+
+## La règle n°144 mesurée sur les 46 QCM du dépôt
+
+*Écrit le 27 août 2026, aussitôt après la règle elle-même. Elle était née de
+quatre QCM ; il fallait savoir si elle valait pour les autres.*
+
+Elle vaut, et davantage.
+
+> **945 questions sur 1086 — 87 % — ont pour bonne réponse la proposition la
+> plus longue. Sur 807 d'entre elles, l'écart dépasse 20 % : il se VOIT.**
+
+Le hasard donnerait 25 %. Autrement dit, sur l'ensemble du dépôt, un élève qui
+n'ouvre aucun cours et coche systématiquement la ligne la plus longue obtient
+environ **87 %**.
+
+L'outil qui le mesure est versionné : `audit_qcm_trois_themes.mjs`, avec son
+CSV et l'état des lieux QCM par QCM. Il ne corrige rien et ne juge rien — il
+compte ce que les règles d'or permettent de compter, et il déclare
+explicitement les dix QCM d'anciennes générations qu'il ne sait pas lire :
+**non mesurés**, jamais **sains**.
+
+**Ce que la mesure dit d'encourageant.** La répartition A/B/C/D de la règle
+n°137 est tenue sur 34 QCM sur 36. Aucune question incomplète sur 1086. Plus
+aucun « undefined » affiché nulle part. Le fond est là — c'est justement ce
+qui rend le défaut de forme coûteux : il permet de s'en passer.
+
+**Une anomalie isolée à traiter** : `qcm_systemes_information_donnees` porte
+une répartition **7/16/6/1**. Seize bonnes réponses en B, une seule en D. Ce
+fichier a un moteur différent et n'est jamais passé par `fix_r.js`.
+
+**L'ordre de bataille**, un lot par thème parce que la garde-périmètre l'impose
+et parce que c'est la bonne granularité de relecture : Thème 3 (5 QCM restants,
+150 questions), puis Thème 1 (11 QCM, 330), puis Thème 2 (16 QCM, 490), puis
+les 10 QCM non lisibles — qu'il faudra d'abord rendre mesurables.
+
+**Ce que la mesure ne dit pas, et qu'aucune mesure ne dira.** Rien de la
+justesse pédagogique. Les 87 % disent qu'un défaut de FORME rend les QCM
+devinables ; ils ne disent pas que le fond est mauvais.
