@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 460" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Un test discriminant : un seul essai qui départage deux causes possibles</title>
+  <desc id="d">Schéma en arbre. En haut, le symptôme constaté : la LED reste éteinte alors qu'il fait 33 degrés dans la salle. Deux hypothèses en découlent. Hypothèse A : le capteur est débranché ou en panne. Hypothèse B : la condition du programme est mal écrite, par exemple un seuil saisi à 330 au lieu de 33. Au centre, un seul test, appelé test discriminant : afficher à l'écran la valeur mesurée par le capteur. À droite, les deux résultats possibles et ce qu'ils prouvent. Si la valeur affichée est absurde, par exemple moins 127, alors la mesure n'arrive pas : c'est l'hypothèse A, le capteur. Si la valeur affichée est correcte, par exemple 33, alors la mesure arrive bien et c'est la comparaison qui est fautive : c'est l'hypothèse B. En bas, la règle : un test n'est utile que si son résultat ne peut pas être le même selon les deux hypothèses ; changer plusieurs choses à la fois fait parfois disparaître la panne sans jamais l'expliquer.</desc>
+  <rect width="940" height="460" fill="#050f24"/>
+  <text x="470" y="30" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">Diagnostiquer : un seul test bien choisi vaut dix bricolages</text>
+
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M0 0 L10 5 L0 10 z" fill="#61dafb"/></marker></defs>
+
+  <!-- symptome -->
+  <rect x="300" y="52" width="340" height="56" rx="10" fill="#1a1230" stroke="#ff7b88" stroke-width="2.5"/>
+  <text x="470" y="76" fill="#ff7b88" font-size="13" font-weight="bold" text-anchor="middle">SYMPTÔME</text>
+  <text x="470" y="96" fill="#e4eaf5" font-size="12" text-anchor="middle">la LED reste éteinte alors qu'il fait 33 °C</text>
+
+  <path d="M400 110 L250 148" stroke="#61dafb" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M540 110 L690 148" stroke="#61dafb" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- hypotheses -->
+  <rect x="40" y="152" width="380" height="76" rx="10" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+  <text x="230" y="176" fill="#ffd66b" font-size="12.5" font-weight="bold" text-anchor="middle">HYPOTHÈSE A</text>
+  <text x="230" y="198" fill="#e4eaf5" font-size="12" text-anchor="middle">le capteur est débranché ou en panne</text>
+  <text x="230" y="217" fill="#9bbefc" font-size="10.5" text-anchor="middle">la mesure n'arrive pas jusqu'au programme</text>
+
+  <rect x="520" y="152" width="380" height="76" rx="10" fill="#0d2347" stroke="#ffd66b" stroke-width="2"/>
+  <text x="710" y="176" fill="#ffd66b" font-size="12.5" font-weight="bold" text-anchor="middle">HYPOTHÈSE B</text>
+  <text x="710" y="198" fill="#e4eaf5" font-size="12" text-anchor="middle">la condition est mal écrite</text>
+  <text x="710" y="217" fill="#9bbefc" font-size="10.5" text-anchor="middle">seuil saisi 330 au lieu de 33, par exemple</text>
+
+  <path d="M230 230 L400 262" stroke="#61dafb" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M710 230 L540 262" stroke="#61dafb" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- le test -->
+  <rect x="290" y="266" width="360" height="62" rx="10" fill="#0a1b3d" stroke="#c68ef2" stroke-width="2.5"/>
+  <text x="470" y="290" fill="#c68ef2" font-size="13" font-weight="bold" text-anchor="middle">UN SEUL TEST — le test discriminant</text>
+  <text x="470" y="314" fill="#e4eaf5" font-size="12.5" text-anchor="middle" font-family="monospace">print(T)</text>
+
+  <path d="M290 297 L200 297 L200 348" stroke="#61dafb" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <path d="M650 297 L740 297 L740 348" stroke="#61dafb" stroke-width="2" fill="none" marker-end="url(#a)"/>
+
+  <!-- resultats -->
+  <rect x="40" y="350" width="320" height="66" rx="10" fill="#0a1b3d" stroke="#ffd66b" stroke-width="2"/>
+  <text x="200" y="372" fill="#e4eaf5" font-size="12" text-anchor="middle">affiche <tspan font-family="monospace" fill="#ff7b88">-127</tspan> — valeur absurde</text>
+  <text x="200" y="396" fill="#ffd66b" font-size="12.5" text-anchor="middle" font-weight="bold">→ c'est le CAPTEUR (A)</text>
+
+  <rect x="580" y="350" width="320" height="66" rx="10" fill="#0a1b3d" stroke="#81fba1" stroke-width="2"/>
+  <text x="740" y="372" fill="#e4eaf5" font-size="12" text-anchor="middle">affiche <tspan font-family="monospace" fill="#81fba1">33</tspan> — valeur correcte</text>
+  <text x="740" y="396" fill="#81fba1" font-size="12.5" text-anchor="middle" font-weight="bold">→ c'est la CONDITION (B)</text>
+
+  <text x="470" y="368" fill="#c68ef2" font-size="11.5" text-anchor="middle" font-weight="bold">Deux résultats</text>
+  <text x="470" y="386" fill="#c68ef2" font-size="11.5" text-anchor="middle" font-weight="bold">impossibles à confondre</text>
+  <text x="470" y="404" fill="#9bbefc" font-size="10.5" text-anchor="middle">c'est ce qui fait un bon test</text>
+
+  <text x="470" y="446" fill="#9bbefc" font-size="12" text-anchor="middle">Changer plusieurs choses à la fois fait parfois disparaître la panne — sans jamais l'expliquer.</text>
+</svg>

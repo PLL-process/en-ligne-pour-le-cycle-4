@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" font-family="Verdana, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">La chaîne de l'indicateur de rangement : capteur, décision, actionneur</title>
+  <desc id="d">Schéma en trois blocs reliés par des flèches, lus de gauche à droite. Premier bloc, le CAPTEUR : un bouton-poussoir placé sous la tablette d'une case du hall ; il détecte si un sac est posé ; il fournit une information, soit occupée soit libre. Deuxième bloc, la DÉCISION : la carte programmable applique la règle SI la case est occupée ALORS rouge SINON vert ; elle ne détecte rien et n'éclaire rien, elle choisit. Troisième bloc, l'ACTIONNEUR : la LED au-dessus de la case s'allume en rouge si la case est occupée, en vert si elle est libre ; elle agit sur le monde en se rendant visible à trois mètres. En bas, les deux cas complets : sac posé donne capteur occupée, décision rouge, LED rouge ; case vide donne capteur libre, décision vert, LED verte. Une flèche de retour part de l'actionneur et remonte vers le capteur : l'indicateur recommence sans cesse, il surveille en continu.</desc>
+  <rect width="940" height="440" fill="#050f24"/>
+  <text x="470" y="30" fill="#81aaff" font-size="19" font-weight="bold" text-anchor="middle">L'indicateur du hall — trois rôles, jamais interchangeables</text>
+
+  <!-- CAPTEUR -->
+  <rect x="30" y="60" width="250" height="150" rx="12" fill="#0d2347" stroke="#81fba1" stroke-width="2.5"/>
+  <text x="155" y="86" fill="#81fba1" font-size="14" font-weight="bold" text-anchor="middle">1 · CAPTEUR</text>
+  <text x="155" y="108" fill="#e4eaf5" font-size="12.5" text-anchor="middle">le bouton sous la tablette</text>
+  <rect x="105" y="122" width="100" height="34" rx="17" fill="#0a1b3d" stroke="#81fba1" stroke-width="2"/>
+  <circle cx="155" cy="139" r="10" fill="#81fba1"/>
+  <text x="155" y="180" fill="#9bbefc" font-size="12" text-anchor="middle">il DÉTECTE un état</text>
+  <text x="155" y="198" fill="#9bbefc" font-size="12" text-anchor="middle">occupée · libre</text>
+
+  <!-- DECISION -->
+  <rect x="345" y="60" width="250" height="150" rx="12" fill="#0d2347" stroke="#c68ef2" stroke-width="2.5"/>
+  <text x="470" y="86" fill="#c68ef2" font-size="14" font-weight="bold" text-anchor="middle">2 · DÉCISION</text>
+  <text x="470" y="108" fill="#e4eaf5" font-size="12.5" text-anchor="middle">la carte programmable</text>
+  <rect x="372" y="120" width="196" height="46" rx="8" fill="#08132c" stroke="#274a8a" stroke-width="2"/>
+  <text x="470" y="139" fill="#e4eaf5" font-size="12" text-anchor="middle" font-family="monospace">SI occupée ALORS rouge</text>
+  <text x="470" y="157" fill="#e4eaf5" font-size="12" text-anchor="middle" font-family="monospace">SINON vert</text>
+  <text x="470" y="190" fill="#9bbefc" font-size="12" text-anchor="middle">elle CHOISIT — elle ne détecte pas,</text>
+  <text x="470" y="206" fill="#9bbefc" font-size="12" text-anchor="middle">elle n'éclaire pas</text>
+
+  <!-- ACTIONNEUR -->
+  <rect x="660" y="60" width="250" height="150" rx="12" fill="#0d2347" stroke="#ffd66b" stroke-width="2.5"/>
+  <text x="785" y="86" fill="#ffd66b" font-size="14" font-weight="bold" text-anchor="middle">3 · ACTIONNEUR</text>
+  <text x="785" y="108" fill="#e4eaf5" font-size="12.5" text-anchor="middle">la LED au-dessus de la case</text>
+  <circle cx="753" cy="141" r="15" fill="#ff7b88" stroke="#ff7b88" stroke-width="2"/>
+  <circle cx="817" cy="141" r="15" fill="#0a1b3d" stroke="#81fba1" stroke-width="2"/>
+  <text x="753" y="175" fill="#ff7b88" font-size="11" text-anchor="middle">occupée</text>
+  <text x="817" y="175" fill="#81fba1" font-size="11" text-anchor="middle">libre</text>
+  <text x="785" y="198" fill="#9bbefc" font-size="12" text-anchor="middle">elle AGIT : visible à 3 m</text>
+
+  <!-- fleches -->
+  <path d="M285 135 L338 135" stroke="#61dafb" stroke-width="3" fill="none" marker-end="url(#fl)"/>
+  <path d="M600 135 L653 135" stroke="#61dafb" stroke-width="3" fill="none" marker-end="url(#fl)"/>
+  <defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M0 0 L10 5 L0 10 z" fill="#61dafb"/></marker></defs>
+  <text x="311" y="126" fill="#61dafb" font-size="11" text-anchor="middle">info</text>
+  <text x="626" y="126" fill="#61dafb" font-size="11" text-anchor="middle">ordre</text>
+
+  <!-- boucle -->
+  <path d="M785 216 L785 254 L155 254 L155 218" stroke="#5b7bb8" stroke-width="2.5" fill="none" stroke-dasharray="7 5" marker-end="url(#flb)"/>
+  <defs><marker id="flb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5b7bb8"/></marker></defs>
+  <rect x="300" y="244" width="340" height="20" fill="#050f24"/>
+  <text x="470" y="259" fill="#5b7bb8" font-size="11.5" text-anchor="middle">et on recommence — l'indicateur surveille en continu</text>
+
+  <!-- les deux cas -->
+  <rect x="30" y="278" width="880" height="132" rx="12" fill="#0a1b3d" stroke="#274a8a" stroke-width="2"/>
+  <text x="470" y="302" fill="#81aaff" font-size="13.5" font-weight="bold" text-anchor="middle">Les deux cas, en entier</text>
+
+  <text x="70" y="336" fill="#e4eaf5" font-size="12.5">Un sac est posé</text>
+  <text x="285" y="336" fill="#81fba1" font-size="12.5" text-anchor="middle">capteur : occupée</text>
+  <text x="500" y="336" fill="#c68ef2" font-size="12.5" text-anchor="middle">règle : ALORS rouge</text>
+  <text x="740" y="336" fill="#ff7b88" font-size="12.5" text-anchor="middle">LED rouge</text>
+  <circle cx="836" cy="331" r="9" fill="#ff7b88"/>
+
+  <line x1="60" y1="352" x2="880" y2="352" stroke="#274a8a" stroke-width="1"/>
+
+  <text x="70" y="382" fill="#e4eaf5" font-size="12.5">La case est vide</text>
+  <text x="285" y="382" fill="#81fba1" font-size="12.5" text-anchor="middle">capteur : libre</text>
+  <text x="500" y="382" fill="#c68ef2" font-size="12.5" text-anchor="middle">règle : SINON vert</text>
+  <text x="740" y="382" fill="#81fba1" font-size="12.5" text-anchor="middle">LED verte</text>
+  <circle cx="836" cy="377" r="9" fill="#81fba1"/>
+</svg>

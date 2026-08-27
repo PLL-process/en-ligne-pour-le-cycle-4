@@ -17,3 +17,18 @@ Palette commune du projet (Jardin connecté / CodeLab Techno) :
 - Séquence existante Thème 2 4e_C6.2 « Jardin connecté » (lien conceptuel uniquement, aucun fichier modifié)
 
 Aucune image de manuel, aucun hotlink, aucune licence non identifiable.
+
+## Images du QCM — ajoutées le 27/08/2026 (règle d'or n°1, images v2)
+
+| Fichier | Origine | Licence | Ce qu'il donne à LIRE |
+|---|---|---|---|
+| `Images/banc_meteo_materiaux.svg` | Création originale Fable (2026) | CC0 | les douze essais du banc météo : trois matériaux confrontés à quatre météos new-yorkaises |
+| `Images/demarche_projet_boucle.svg` | Création originale Fable (2026) | CC0 | la démarche de projet en cinq étapes, sa boucle de retour, et ses trois pièges |
+| `Images/contrainte_assemblage.svg` | Création originale Fable (2026) | CC0 | placer à l'œil contre poser une contrainte, quand la cote de la boîte passe de 60 à 70 mm |
+
+Trois documents originaux, tracés à la main en SVG dans la palette du dépôt.
+Chacun porte un `<title>` et un `<desc>` : le `<desc>` est le **document de
+remplacement complet**, pas une légende — un élève qui n'accède pas à l'image
+dispose de la même information, en toutes lettres.
+
+Aucune image externe. Aucun hotlinking. Aucun scan de manuel.
