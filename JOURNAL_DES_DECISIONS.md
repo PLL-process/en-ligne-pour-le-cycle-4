@@ -6661,3 +6661,51 @@ lit désormais le `<h1>` des TP (règle n°138 ci-dessus).
 Au passage, les accents reviennent — « Boitier etanche » redevient « boîtier
 étanche ». Le nettoyage par jetons les avait perdus en chemin, et personne ne
 l'avait relevé parce qu'on lit l'index en diagonale.
+
+---
+
+# 27 août 2026 — les QCM de C7 et C8 changent de génération
+
+Quatre QCM du Thème 3 dataient d'avant le standard C9 : 5e_C7.1, 4e_C7.1,
+4e_C8.1 et 3e_C7.1. On les disait « sans réfutation par distracteur ». En les
+ouvrant, le défaut était plus grave que ça.
+
+**Les distracteurs n'étaient pas des distracteurs.** Extraits authentiques du
+QCM de 5e :
+
+| Question | Propositions offertes |
+|---|---|
+| « Un planning sert à : » | Remplacer les tests · Éviter de réfléchir · **Rien** · Organiser les tâches |
+| « A / B / C = » | Trois profs · Trois notes · Matériel / simulation / papier · Trois langues |
+| « LED qui ne s'allume pas → » | Ignorer · **Changer d'école** · Valider quand même · Non conforme |
+
+Un élève qui ne sait rien élimine « Rien », « Trois profs » et « Changer
+d'école » en trois secondes, et tombe sur la bonne réponse par soustraction. Le
+QCM ne mesurait pas la connaissance : il mesurait la lecture.
+
+**Décision : on ne rajoute pas de réfutations sous ces questions-là.** Une
+réfutation de « Trois profs » n'enseignerait rien. Les quatre banques sont
+**réécrites**, ancrées dans le contenu réel de leur séquence — M. Alvarez et ses
+trois chutes en un mois, M. Ortiz qui ne replante pas sans arrosage, Mme Reyes
+qui n'a aucun chiffre à opposer à l'emploi du temps.
+
+**Ce qui change, en chiffres** : 24-28 questions → **30** · 0 réfutation →
+**90 par QCM** · 0 image → **3 documents SVG à lire** · 0 test → **13 par QCM**.
+Soit 120 questions, 360 réfutations, 12 SVG originaux, 52 tests verts.
+
+**Les fichiers gardent leur nom.** `qcm_5e_C7_mini-projet.html` reste
+`qcm_5e_C7_mini-projet.html` : aucun lien du dépôt n'est cassé, aucun orphelin
+n'est créé. C'est le contenu qui change de génération, pas l'adresse — et la
+règle n°138 veut de toute façon que la ressource se nomme dans son `<h1>`.
+
+**Un contrôle nouveau, et il compte.** La suite vérifie que la réfutation
+affichée après une réponse fausse est bien celle de la proposition CHOISIE.
+C'est le garde-fou contre le piège rencontré en juillet sur les QCM du Thème 2 :
+les tableaux `o` et `d` sont parallèles, et les permuter séparément colle à
+chaque mauvaise réponse l'explication d'une autre — un QCM qui explique de
+travers, sans que rien ne le signale.
+
+**Ce qui reste à faire, et qui n'appartient pas à la machine** : relire les
+120 questions. Aucun test ne dira qu'un distracteur est plausible ni qu'une
+réfutation enseigne. C'est écrit en toutes lettres dans le rapport.
+

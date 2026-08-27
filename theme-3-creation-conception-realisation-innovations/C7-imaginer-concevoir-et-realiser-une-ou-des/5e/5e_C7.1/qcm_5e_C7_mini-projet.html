@@ -3,87 +3,899 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QCM — Mini-projet 5e</title>
+<title>Thème 3 · New York — 5e · QCM — Mini-projet : l'indicateur de rangement (5e_C7.1 · C8.3 · C9.3)</title>
 <style>
-:root{--bg:#050f24;--panel:#0d2347;--border:#274a8a;--text:#e4eaf5;--accent:#61dafb;--ok:#81fba1;--err:#ff7b88}
-*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;margin:0;padding:14px;line-height:1.45}
-.container{max-width:800px;margin:0 auto}h1{color:var(--accent);text-align:center;font-size:1.3em}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}
-.progress{height:8px;background:#0a1b3d;border-radius:4px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,#61dafb,#c68ef2);width:0%}
-.btn{background:#1d4e89;color:#fff;border:none;border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:600;margin:3px}
-.q{display:none}.q.active{display:block}.options label{display:block;padding:7px 10px;margin:4px 0;background:#0a1b3d;border-radius:8px;cursor:pointer}
-.feedback{margin-top:8px;padding:8px;border-radius:8px;display:none}.feedback.show{display:block}.feedback.ok{background:rgba(129,251,161,.12)}.feedback.err{background:rgba(255,123,136,.12)}
-#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
 </head>
 <body>
-<nav id="navharm" aria-label="Navigation du site">
-  <a href="../../../../index.html">&#8962; Accueil</a>
-  <a href="sequence_5e_C7_mini-projet-objet.html">&#8592; La séquence</a>
-</nav>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C7_mini-projet-objet.html">← Séquence</a></nav>
+<h1>Thème 3 · New York — 5e · QCM — L'indicateur de rangement du hall</h1>
+<p class="subtitle">Imaginer, valider par des tests, écrire la règle SI — 10 + 10 + 10 questions du hall de Brooklyn</p>
+<div class="badges">
+  <span class="badge niveau">5e</span>
+  <span class="badge code">5e_C7.1 · C8.3 · C9.3</span>
+  <span class="badge theme">30 questions · chaque proposition fausse est réfutée</span>
+</div>
+<p style="text-align:center"><a href="sequence_5e_C7_mini-projet-objet.html">⬅ Revenir à la séquence</a></p>
 
-<div class="container">
-<h1>🧠 QCM — Mini-projet objet scolaire (5e)</h1>
-<p style="text-align:center;color:#9bbefc">C7 · C8 · C9 · New York · 24 questions</p>
-<div class="card"> <span id="answered">0</span>/24 · Score <span id="score">0</span> · /20 <span id="note">—</span>
-<div class="progress"><div class="bar" id="bar"></div></div></div>
-<div id="questions"></div>
-<div class="card">
-<button class="btn" onclick="prevQ()">←</button>
-<button class="btn" onclick="nextUnanswered()">Non répondue</button>
-<button class="btn" onclick="nextQ()">→</button>
-<button class="btn" onclick="showResult()">Bilan</button>
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
 </div>
-<div class="card" id="result" style="display:none">
-<div id="finalScore" style="text-align:center;font-size:1.15em"></div>
-<p id="bilan"></p>
-<button class="btn" onclick="retryErrors()">Erreurs</button>
-<a class="btn" href="sequence_5e_C7_mini-projet-objet.html">← Séquence</a>
-</div>
-</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="BOI">📦 La boîte étiquetée</option>
+      <option value="LIR">🔎 Lire et tester un programme</option>
+      <option value="MOD">🔧 Modifier et régler</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 5e_C7.1 · C8.3 · C9.3 · Thème 3 · New York · Technologie cycle 4 (2024) · <a href="sequence_5e_C7_mini-projet-objet.html">atelier associé</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
 <script>
-const questions=[
-{q:"Par quoi commence un mini-projet ?",opts:["Ignorer les utilisateurs","Fabriquer tout de suite","Comprendre le besoin","Choisir la couleur"],ok:2,exp:"Le besoin guide tout."},
-{q:"Pourquoi deux solutions ?",opts:["Mieux choisir ensuite","Interdit d'en faire une","Décorer","Perdre du temps"],ok:0,exp:"Plusieurs idées = meilleur choix."},
-{q:"Un planning sert à :",opts:["Remplacer les tests","Éviter de réfléchir","Rien","Organiser les tâches"],ok:3,exp:"Moins d'oublis."},
-{q:"Valider, c'est :",opts:["Dire que c'est joli","Tester avec un protocole","Jeter","Ne rien faire"],ok:1,exp:"Test = preuve."},
-{q:"Résultat attendu =",opts:["Ce qui doit se passer","Le prix","Rien","Une opinion"],ok:0,exp:"Sans attendu, on ne juge pas."},
-{q:"LED qui ne s'allume pas →",opts:["Ignorer","Changer d'école","Valider quand même","Non conforme + améliorer"],ok:3,exp:"Écart → amélioration."},
-{q:"Programme simple :",opts:["Que des dessins","SI … ALORS …","Le 230 V","Aucune règle"],ok:1,exp:"Condition + action."},
-{q:"SI occupée → LED rouge ; place libre →",opts:["Obligé sans SINON","Toujours rouge","Pas rouge (autre règle)","Court-circuit"],ok:2,exp:"Définir aussi le cas libre."},
-{q:"Indicateur dans un hall NY utile car :",opts:["Pas de sacs","Pas besoin d'objets","Jamais d'élèves","Hall fréquenté : info visible vite"],ok:3,exp:"Contexte urbain dense."},
-{q:"Mettre au point =",opts:["Abandonner","Corriger après test raté puis retester","Ne jamais tester","Coder sans SI"],ok:1,exp:"Boucle correction."},
-{q:"Choisir un matériau :",opts:["Résistance, facilité, contexte","Le hasard","La pub","La mode seule"],ok:0,exp:"Critères objectifs."},
-{q:"A / B / C =",opts:["Trois profs","Trois notes","Matériel / simulation / papier","Trois langues"],ok:2,exp:"Personne bloqué."},
-{q:"Sécurité :",opts:["Secteur 230 V","TBT ou simulation","Rien","Outils sans règle"],ok:1,exp:"TBT uniquement."},
-{q:"C7 → C8 → C9 :",opts:["Valider sans idée","Aucun lien","Imaginer → valider → programmer","Programmer d'abord"],ok:2,exp:"Chaîne mini-projet."},
-{q:"Production C7 :",opts:["Planning + 2 solutions + choix","Écouter seulement","Note orale seule","Rien"],ok:0,exp:"Preuve écrite."},
-{q:"Protocole vague =",opts:["Meilleur","OK sans détail","Parfait","Incomplet"],ok:3,exp:"Étapes + attendus."},
-{q:"Réinvestir sur un casier =",opts:["Abandonner","Copier sans comprendre","Même logique SI sur un autre objet","Changer de matière"],ok:2,exp:"Transfert."},
-{q:"Sans test =",opts:["Validation","Série industrielle","Preuve","Hypothèse"],ok:3,exp:"Sans test = hypothèse."},
-{q:"Bilan personnel =",opts:["Rien","Appris / sais faire / à revoir","Seule la note","Photo"],ok:1,exp:"Métacognition."},
-{q:"Bouton QCM dans la séquence :",opts:["Une seule fois","Jamais","À chaque activité","Dix fois"],ok:0,exp:"Règle d'or n°4."},
-{q:"Améliorer un objet part de :",opts:["Besoin réel de l'école","Publicité","Rien","Idée au hasard"],ok:0,exp:"Situation ancrée."},
-{q:"LED visible à 2 m teste :",opts:["Le poids","Le prix","L'usage réel","La marque"],ok:2,exp:"Critère d'usage."},
-{q:"CRCN :",opts:["Sport seulement","Rien de numérique","Aucun","Résoudre un problème / créer un contenu simple"],ok:3,exp:"Compétence numérique légère."},
-{q:"Objectif du mini-projet :",opts:["Décorer seulement","Imaginer → tester → règle SI sur un objet réel","Ignorer C8","Remplacer le prof"],ok:1,exp:"Couverture C7-C8-C9."}
+"use strict";
+/* Banque : 30 questions (10 5e_C7.1 + 10 5e_C8.3 + 10 5e_C9.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ CON ═══ */
+{c:"CON",n:"Le besoin de M. Alvarez",q:"M. Alvarez ne veut ni porte ni serrure. Que demande-t-il exactement ?",
+ o:["qu'on VOIE depuis l'entrée si une case est libre ou prise","que les casiers ferment à clé","qu'on interdise les sacs dans le hall","qu'on installe davantage de casiers"],r:0,
+ expl:"Son besoin porte sur une INFORMATION à rendre visible de loin, pas sur une fermeture. C'est ce besoin-là, et lui seul, que l'objet doit satisfaire.",
+ ex:"« Vert, elle est libre ; rouge, elle est prise. Qu'on le voie depuis l'entrée. »",
+ err:"Confondre le problème (on ne voit pas) avec une solution qu'on a en tête (mettre des portes).",
+ d:["","Il a justement demandé des casiers fermés : c'était trop cher, et ce n'est plus la demande.","Le hall doit rester utilisable : on ne supprime pas l'usage, on l'améliore.","Le problème n'est pas le manque de places — il y en a vingt — mais le fait de ne pas voir lesquelles sont libres."],
+ ret:"Un objet technique répond à un BESOIN exprimé, pas à l'idée qu'on se fait de la solution."},
+{c:"CON",n:"La preuve du problème",q:"Qu'est-ce qui, dans la situation, PROUVE que le problème mérite qu'on s'en occupe ?",
+ o:["M. Alvarez a compté trois chutes en un mois","le hall est grand","il y a vingt casiers","deux cents élèves entrent en huit minutes"],r:0,
+ expl:"Un besoin se défend avec un CONSTAT MESURÉ. Trois chutes en un mois est un fait vérifiable, que personne ne peut discuter.",
+ ex:"« M. Alvarez, qui s'occupe du bâtiment, a compté : trois chutes en un mois. »",
+ err:undefined,
+ d:["","La taille du hall décrit le lieu, elle ne mesure aucun problème.","Le nombre de casiers dit ce qui existe, pas ce qui va mal.","C'est une cause possible de l'encombrement, mais ce n'est pas la mesure du dommage."],
+ ret:"Un problème se prouve par un fait compté, pas par une impression."},
+{c:"CON",n:"Le nom du métier",q:"Comment appelle-t-on, dans le métier, un objet qui dit « libre » ou « occupé » sans qu'on s'approche ?",
+ o:["un détecteur de mouvement","un indicateur d'occupation","un compteur de passage","un afficheur de température"],r:1,
+ expl:"C'est le nom exact de la famille d'objets à laquelle appartient le voyant du hall. On le retrouve dans les gares, les parkings, les toilettes d'avion.",
+ ex:"Le petit voyant rouge « OCCUPÉ » au-dessus de la porte des toilettes d'un avion.",
+ err:undefined,
+ d:["Un détecteur de mouvement réagit au déplacement, pas à la présence durable d'un objet posé.","","Un compteur additionne des passages ; ici on ne compte rien, on affiche un état.","La grandeur affichée serait une température, alors qu'ici c'est un état : libre ou occupé."],
+ ret:"Nommer la famille d'un objet, c'est hériter de tout ce qu'on sait déjà d'elle."},
+{c:"CON",n:"Pourquoi deux solutions",q:"Pourquoi imaginer DEUX solutions différentes avant de choisir ?",
+ o:["parce que le professeur l'exige","parce qu'on ne peut comparer, donc choisir, que s'il y a au moins deux propositions","parce qu'il faut occuper le temps de la séance","parce qu'on doit toujours réaliser les deux"],r:1,
+ expl:"Une seule idée n'est pas une conception : c'est une idée. Choisir suppose de mettre en balance, avec des critères.",
+ ex:"Bouton-poussoir sous la tablette, OU capteur de distance qui « voit » le sac — deux principes vraiment différents.",
+ err:"Proposer deux variantes de la même idée (un bouton rouge et un bouton bleu) : ce n'est pas deux solutions.",
+ d:["La règle vient du métier, pas de la classe : les concepteurs travaillent ainsi.","","Le temps n'est pas un argument de conception.","On n'en réalise qu'une : la seconde sert de point de comparaison."],
+ ret:"Organiser → plusieurs idées → choix avec critères."},
+{c:"CON",n:"Un critère qui tient",q:"Parmi ces justifications de choix, laquelle repose sur un vrai critère technique ?",
+ o:["« je choisis le bouton parce qu'il résiste mieux aux chocs dans un hall très fréquenté »","« je choisis le bouton parce que je l'aime bien »","« je choisis le bouton parce que c'est le premier auquel j'ai pensé »","« je choisis le bouton parce que mon voisin a pris le même »"],r:0,
+ expl:"Un critère se rattache à une contrainte de la situation — ici, un hall où deux cents élèves passent en huit minutes.",
+ ex:"Autres critères recevables ici : le prix, la simplicité de montage, la lisibilité à trois mètres.",
+ err:undefined,
+ d:["","Le goût n'est pas discutable, donc il ne se compare pas. Un critère doit pouvoir être contesté.","L'ordre d'apparition d'une idée ne dit rien de sa qualité.","Le choix d'un autre élève n'est pas une propriété de la solution."],
+ ret:"Un critère est une propriété de la solution, confrontée à une contrainte du problème."},
+{c:"CON",n:"Le planning en 5e",q:"En 5e, que fais-tu du diagramme de planification des tâches ?",
+ o:["tu le construis entièrement toi-même avant de commencer","tu le reçois déjà fait et tu le SUIS, séance après séance","tu le remplis seulement à la fin, pour raconter ce qui s'est passé","tu t'en passes : il ne sert qu'aux professeurs"],r:1,
+ expl:"La compétence 5e_C7.1 dit « SUIVRE un processus … avec des tâches identifiées ». Construire le planning viendra plus tard dans le cycle.",
+ ex:"À chaque séance, tu sais ce qui est fini, ce qui est en retard, et ce que ce retard décale.",
+ err:undefined,
+ d:["Concevoir un planning complet n'est pas attendu à ce niveau : on apprend d'abord à le lire et à s'y tenir.","","Un planning rempli après coup est un compte rendu, pas un outil de conduite.","Il sert d'abord à celui qui fabrique : c'est lui qui doit savoir où il en est."],
+ ret:"Suivre un planning, c'est savoir à tout moment où l'on en est par rapport à ce qui était prévu."},
+{c:"CON",n:"Un retard, et après",q:"Une tâche prend une séance de plus que prévu. Que fait un planning bien tenu ?",
+ o:["il ne change rien : les dates de départ font foi","il supprime la tâche en retard","il annule le projet","il montre quelles tâches suivantes se trouvent décalées"],r:3,
+ expl:"L'intérêt d'un planning n'est pas d'avoir raison, c'est de rendre visibles les conséquences d'un imprévu.",
+ ex:"Si le câblage glisse d'une séance, l'essai et la mise au point glissent aussi.",
+ err:"Croire qu'un planning sert à prévoir juste. Il sert à voir vite ce que le retard entraîne.",
+ d:["Des dates que la réalité a démenties n'aident plus personne.","Une tâche nécessaire ne disparaît pas parce qu'elle est en retard.","Un retard d'une séance n'est pas un échec : c'est une information.",""],
+ ret:"Un planning ne prédit pas l'avenir : il rend le retard lisible."},
+{c:"CON",n:"L'ordre du mini-projet",q:"Quel est l'ordre des trois grandes étapes de ce mini-projet ?",
+ o:["valider (C8) → programmer (C9) → imaginer (C7)","programmer (C9) → imaginer (C7) → valider (C8)","imaginer (C7) → valider par des tests (C8) → écrire la règle du programme (C9)","les trois se font en même temps, sans ordre"],r:2,
+ expl:"On imagine une solution, on vérifie qu'elle se comporte comme prévu, puis on écrit la règle qui la fait fonctionner. Chaque étape a besoin du résultat de la précédente.",
+ ex:"Impossible de tester un voyant qu'on n'a pas encore imaginé.",
+ err:undefined,
+ d:["On ne valide que ce qui a été conçu : il n'y a rien à mettre à l'épreuve au départ.","Programmer d'abord reviendrait à écrire la règle d'un objet qui n'existe pas encore.","","Elles se recoupent parfois, mais chacune s'appuie sur le résultat de la précédente."],
+ ret:"Imaginer, valider, programmer : trois moments, dans cet ordre."},
+{c:"CON",n:"Le document Onshape",q:"Dans Onshape, comment ton travail est-il enregistré ?",
+ o:["une fois par séance, par le professeur","seulement quand tu cliques sur Enregistrer","seulement à la fermeture du navigateur","à chaque geste, automatiquement : il n'y a pas de bouton Enregistrer"],r:3,
+ expl:"Onshape écrit chaque modification au moment où tu la fais. C'est pour cela qu'il est indispensable de NOMMER son document : c'est le nom qui te permettra de le retrouver.",
+ ex:"Nomme-le NIVEAU-SUJET-TON NOM, sans accent. « Document sans titre » en gris pâle n'est pas un nom.",
+ err:"Chercher un bouton Enregistrer, ne pas le trouver, et croire qu'on a tout perdu.",
+ d:["Personne d'autre n'enregistre à ta place.","Ce bouton n'existe pas dans Onshape.","Fermer le navigateur n'enregistre rien de plus : tout l'est déjà.",""],
+ ret:"Pas de bouton Enregistrer : le nom du document remplace la sauvegarde."},
+{c:"CON",n:"Sortir la pièce",q:"Pour faire imprimer ta pièce en 3D, tu l'exportes au format…",
+ o:["JPEG, en pixels","STL, en millimètres","PDF, en centimètres","MP4, en secondes"],r:1,
+ expl:"Le STL décrit la surface de la pièce en trois dimensions : c'est ce que l'imprimante sait lire. L'unité doit être le millimètre, sinon la pièce sort à la mauvaise taille.",
+ ex:"Clic droit sur la pièce → Exportateur… → format STL, unités Millimètre.",
+ err:"Oublier de vérifier l'unité et récupérer un dé de 5 cm au lieu de 50 mm — ou l'inverse.",
+ d:["Le JPEG est une image plate : il n'y a aucune épaisseur à imprimer.","","Le PDF est fait pour être lu ou imprimé sur papier, pas pour décrire un volume.","Le MP4 est une vidéo : elle se déroule dans le temps, pas dans l'espace."],
+ ret:"STL + millimètre : le format et l'unité de l'impression 3D."},
+/* ═══ VAL ═══ */
+{c:"VAL",n:"L'attendu d'abord",q:"Dans un tableau de tests, à quel moment écrit-on le résultat attendu ?",
+ o:["après l'essai, une fois qu'on a vu le résultat","pendant l'essai, au fur et à mesure","AVANT d'essayer","on ne l'écrit pas : on note seulement ce qu'on observe"],r:2,
+ expl:"Sans attendu écrit à l'avance, on ne peut pas juger : on se contente de constater ce qui arrive, et on le trouve normal.",
+ ex:"« Poser le sac → j'attends LED rouge. » Puis on essaie, et on compare.",
+ err:"Écrire l'attendu après coup — il tombe alors toujours juste, et le test ne prouve plus rien.",
+ d:["L'attendu perd tout son sens s'il est écrit après : il ne peut plus être démenti.","Écrire en même temps qu'on observe revient à recopier ce qu'on voit.","","Sans point de comparaison, une observation ne dit ni réussite ni échec."],
+ ret:"Attendu d'abord, observé ensuite. C'est l'écart entre les deux qui enseigne."},
+{c:"VAL",n:"Un protocole fourni",q:"La compétence 5e_C8.3 demande de vérifier « en suivant un protocole FOURNI ». Cela veut dire que…",
+ o:["le mode opératoire des tests t'est donné, et tu l'appliques fidèlement","tu inventes librement tes propres tests","tu choisis seulement les tests qui vont réussir","tu n'as aucun test à faire"],r:0,
+ expl:"En 5e, on apprend d'abord à appliquer un protocole avec rigueur. Concevoir soi-même le protocole est une compétence des années suivantes.",
+ ex:"Le tableau donne les trois tests : poser le sac, enlever le sac, vérifier la visibilité à 2 m.",
+ err:undefined,
+ d:["","Concevoir le protocole viendra plus tard : ce n'est pas ce qui est évalué ici.","Ne garder que les tests favorables, c'est truquer la validation.","Le protocole est justement le cœur de l'activité."],
+ ret:"Suivre un protocole fidèlement est une compétence à part entière."},
+{c:"VAL",n:"Le test qui échoue",q:"Sur ce tableau, le test « visible à 2 m » n'est pas conforme. Quelle décision est juste ?",
+ img:{src:"Images/tableau_tests_indicateur.svg",alt:"Tableau de tests : poser le sac et enlever le sac sont conformes ; le test « visible à 2 m » attendait oui et a observé non, la LED étant trop pâle en plein jour."},
+ o:["non conforme : on note l'écart et on améliore, puis on reteste","on valide quand même, l'objet marche à peu près","on abandonne le projet","on refait le même test jusqu'à ce qu'il réussisse par hasard"],r:0,
+ expl:"Un test raté n'est pas une punition, c'est une information : il désigne précisément ce qu'il faut corriger.",
+ ex:"La LED ne s'allume pas → vérifier le branchement, corriger, refaire le test.",
+ err:"Valider « à peu près ». Le protocole ne connaît pas l'à-peu-près.",
+ d:["","Valider un objet qui a échoué rend la validation sans valeur.","Un échec ponctuel se corrige ; il n'annule pas la conception.","Répéter sans rien changer ne corrige rien et fausse le résultat."],
+ ret:"Écart constaté → amélioration → nouveau test."},
+{c:"VAL",n:"Les trois décisions",q:"À la fin du tableau de tests, la décision peut être…",
+ o:["Notée sur 20","Réussie · Ratée","Bien · Moyen · Nul","Validée · À améliorer · Rejetée"],r:3,
+ expl:"Trois issues, parce qu'un objet peut fonctionner tout en demandant une reprise. La nuance du milieu est justement celle qui fait progresser.",
+ ex:"Le voyant s'allume mais se voit mal à trois mètres → « À améliorer ».",
+ err:undefined,
+ d:["Valider n'est pas noter : on juge l'objet, pas l'élève.","Deux issues seulement écrasent le cas le plus fréquent : ça marche, mais pas assez bien.","Ce sont des appréciations, pas des décisions techniques : elles ne disent pas quoi faire ensuite.",""],
+ ret:"Validée, à améliorer, rejetée : trois décisions, pas deux."},
+{c:"VAL",n:"Comportement ou performance",q:"Le test « le voyant se voit-il à 2 mètres ? » vérifie…",
+ o:["la solidité du support","un comportement : ce que fait l'objet quand on agit dessus","le prix de l'objet","une performance : jusqu'où l'objet remplit correctement sa fonction"],r:3,
+ expl:"Le comportement répond à « que fait-il ? », la performance à « jusqu'à quel point ? ». La compétence C8.3 demande les deux.",
+ ex:"Comportement : sac posé → rouge. Performance : lisible à trois mètres, comme demandé.",
+ err:undefined,
+ d:["La solidité serait un autre test, avec un autre protocole.","Le comportement, ce serait « poser le sac fait passer la LED au rouge ». Ici on mesure une portée.","Le prix ne se teste pas sur l'objet : il se lit sur une facture.",""],
+ ret:"Comportement = ce qu'il fait. Performance = jusqu'où il le fait bien."},
+{c:"VAL",n:"Prédire puis vérifier",q:"Pourquoi PRÉDIRE le résultat avant de manipuler le simulateur ?",
+ o:["parce que la prédiction est notée","parce que cela fait gagner du temps","parce que le simulateur refuse de démarrer sans prédiction","parce que se tromper dans sa prédiction est le moment où l'on apprend le plus"],r:3,
+ expl:"Une prédiction fausse crée une surprise, et la surprise fixe le souvenir. Une manipulation sans prédiction glisse sans laisser de trace.",
+ ex:"Tu prédis « LED verte », tu obtiens rouge : tu n'oublieras plus le sens de la règle.",
+ err:undefined,
+ d:["Elle n'est pas notée : elle n'aurait aucun intérêt si l'on craignait de se tromper.","Cela prend au contraire quelques secondes de plus — qui sont bien employées.","Le simulateur fonctionne sans rien te demander.",""],
+ ret:"On retient ce qui nous a surpris."},
+{c:"VAL",n:"Qui joue le capteur",q:"D'après le schéma de la chaîne, qu'est-ce qui joue le rôle du CAPTEUR ?",
+ img:{src:"Images/chaine_indicateur_hall.svg",alt:"La chaîne de l'indicateur : le bouton sous la tablette détecte, la carte décide selon la règle SI, la LED affiche en rouge ou en vert, et tout recommence."},
+ o:["la LED qui s'allume","le bouton qu'on presse pour poser ou enlever le sac","l'écran de l'ordinateur","le clavier"],r:1,
+ expl:"Le capteur DÉTECTE un état du monde. Ici, l'état est « un sac est posé, ou non », et c'est le bouton qui le fournit au programme.",
+ ex:"Sur la maquette réelle, ce serait un bouton-poussoir sous la tablette de la case.",
+ err:"Prendre la LED pour le capteur parce qu'elle est ce que l'on regarde.",
+ d:["La LED est l'ACTIONNEUR : elle montre la décision, elle ne détecte rien.","","L'écran affiche l'ensemble ; il ne mesure aucun état du monde.","Le clavier sert à écrire le programme, pas à détecter le sac."],
+ ret:"Capteur : il détecte. Actionneur : il agit."},
+{c:"VAL",n:"Qui joue l'actionneur",q:"Et l'ACTIONNEUR, dans cet objet, c'est…",
+ o:["le bouton","la LED, qui affiche la décision en vert ou en rouge","la carte programmable","le sac posé dans la case"],r:1,
+ expl:"L'actionneur est la partie qui AGIT sur le monde à la suite de la décision. Ici, l'action consiste à émettre une lumière visible de loin.",
+ ex:"Ailleurs, un actionneur peut être un moteur, une sonnerie, un vérin.",
+ err:undefined,
+ d:["Le bouton est en entrée de chaîne : il informe, il n'agit pas.","","La carte DÉCIDE ; elle est entre le capteur et l'actionneur, elle n'agit pas sur le monde.","Le sac est l'objet détecté, il ne fait pas partie du système."],
+ ret:"La chaîne : capteur → décision → actionneur."},
+{c:"VAL",n:"L'ordre de la chaîne",q:"Remets la chaîne dans l'ordre.",
+ o:["détecter l'état → décider selon la règle → afficher le résultat","décider → détecter → afficher","afficher → détecter → décider","détecter → afficher → décider"],r:0,
+ expl:"On ne peut décider qu'à partir d'une information, et on n'affiche qu'une décision déjà prise. L'ordre n'est pas une convention : c'est une nécessité.",
+ ex:"Bouton pressé → la règle SI tranche → la LED devient rouge.",
+ err:undefined,
+ d:["","Décider avant de détecter, c'est décider sans savoir.","Afficher d'abord reviendrait à annoncer un résultat qu'on n'a pas encore calculé.","Afficher avant de décider : il n'y aurait rien à montrer."],
+ ret:"L'information entre, la décision se prend, l'action sort."},
+{c:"VAL",n:"La règle de sécurité",q:"Sur la maquette du hall, l'alimentation autorisée est…",
+ o:["n'importe quelle source, du moment que ça marche","le secteur 230 V, s'il y a un adulte à côté","le secteur 230 V, si le montage est bien isolé","la très basse tension (pile, bloc TBT) — le secteur 230 V est interdit"],r:3,
+ expl:"En technologie au collège, on ne câble jamais sur le secteur. Toutes les activités se font en très basse tension, ou en simulation.",
+ ex:"Le parcours 🅱 « en simulation » permet de tout faire sans aucune alimentation.",
+ err:undefined,
+ d:["« Du moment que ça marche » n'est jamais un critère de sécurité.","La présence d'un adulte ne change pas le danger électrique.","Un montage d'élève n'apporte aucune garantie d'isolation.",""],
+ ret:"Très basse tension uniquement. Le 230 V ne se manipule pas."},
+/* ═══ PRG ═══ */
+{c:"PRG",n:"Ce qu'est une règle SI",q:"Une règle « SI … ALORS … SINON … », c'est…",
+ o:["une façon d'afficher du texte","un calcul","le nom d'un composant","une question à laquelle on répond par oui ou non, et deux chemins selon la réponse"],r:3,
+ expl:"La condition partage l'exécution en deux chemins. C'est le seul outil dont tu as besoin pour cet indicateur.",
+ ex:"SI la case est occupée ALORS voyant rouge SINON voyant vert.",
+ err:undefined,
+ d:["Afficher est une ACTION possible dans un des deux chemins, pas la condition elle-même.","Un calcul produit un nombre ; une condition produit un choix.","Aucun composant ne porte ce nom : SI est une instruction, pas une pièce.",""],
+ ret:"Une condition : une question, deux chemins."},
+{c:"PRG",n:"Le losange",q:"Sur cet algorigramme, le LOSANGE « Place occupée ? » représente…",
+ img:{src:"Images/algorigramme_indicateur.svg",alt:"L'algorigramme de l'indicateur : terminal DÉBUT, rectangle « lire le capteur », losange « place occupée ? » avec deux sorties OUI et NON vers LED rouge et LED verte, puis une flèche qui remonte. À droite, la légende des symboles et la même règle en Python."},
+ o:["le début du programme","une décision — il a toujours deux sorties","une action à exécuter","la fin du programme"],r:1,
+ expl:"La forme dit la fonction : le losange est le seul symbole d'où partent deux flèches, une pour OUI et une pour NON.",
+ ex:"« Place occupée ? » → OUI vers la LED rouge, NON vers la LED verte.",
+ err:"Dessiner un losange avec une seule sortie : c'est alors un rectangle déguisé.",
+ d:["Le début se dessine par un terminal, une forme arrondie.","","Une action se dessine par un rectangle ; elle n'a qu'une sortie.","La fin se dessine elle aussi par un terminal arrondi."],
+ ret:"Losange = décision = deux sorties."},
+{c:"PRG",n:"Par quoi ça commence",q:"Un algorigramme commence toujours par…",
+ o:["un rectangle","un losange","un terminal « DÉBUT », de forme arrondie","une flèche seule"],r:2,
+ expl:"Le terminal marque l'entrée dans le raisonnement. Sans lui, on ne sait pas par où lire le schéma.",
+ ex:"« DÉBUT (au démarrage de l'indicateur) », puis la lecture du capteur.",
+ err:undefined,
+ d:["Un rectangle est une action ; il faut d'abord être entré dans le programme.","Une décision suppose une information déjà lue : elle ne peut pas être la première.","","Une flèche relie deux symboles, elle n'en remplace aucun."],
+ ret:"Terminal au départ, terminal à l'arrivée."},
+{c:"PRG",n:"Lire le capteur",q:"« Lire le capteur (sac posé ou non) » se dessine par…",
+ o:["un triangle","un losange","un terminal","un rectangle : c'est un traitement, l'entrée de l'information"],r:3,
+ expl:"Lire, c'est faire quelque chose — pas trancher. Cette étape n'a qu'une suite possible, donc une seule sortie : un rectangle.",
+ ex:"Après la lecture, on ne sait toujours pas quoi afficher : c'est le losange suivant qui décidera.",
+ err:undefined,
+ d:["Le triangle n'appartient pas au vocabulaire de l'algorigramme.","On ne pose pas encore de question : on récupère seulement l'information.","Le terminal est réservé au début et à la fin.",""],
+ ret:"Rectangle = action ou traitement, une seule sortie."},
+{c:"PRG",n:"La flèche qui remonte",q:"À la fin de l'algorigramme, une flèche remonte vers la lecture du capteur. Que signifie-t-elle ?",
+ o:["il y a une erreur dans le schéma","le programme est terminé","l'indicateur recommence sans cesse : il surveille en continu","on revient en arrière pour corriger une faute"],r:2,
+ expl:"Cette boucle est ce qui distingue un objet vivant d'un objet qui n'agit qu'une fois. Le voyant doit changer dès qu'on retire le sac.",
+ ex:"C'est exactement ce que tu as fait à la main dans le simulateur : poser, enlever, poser, enlever.",
+ err:undefined,
+ d:["La boucle est au contraire indispensable ici.","Une fin se marque par un terminal, pas par une flèche de retour.","","Corriger est le travail du programmeur ; la flèche décrit le fonctionnement de l'objet."],
+ ret:"La boucle fait la surveillance continue."},
+{c:"PRG",n:"Le cas oublié",q:"Un élève écrit seulement « SI occupée ALORS rouge ». Que se passe-t-il quand la place est libre ?",
+ o:["rien n'est prévu : la LED garde son état précédent, et l'objet ment","la LED s'éteint automatiquement","la LED passe au vert d'elle-même","le programme s'arrête avec une erreur"],r:0,
+ expl:"Un programme ne devine pas. Tout cas non traité laisse le système dans l'état où il était — ici, rouge alors que la place est libre.",
+ ex:"Le sac est retiré, le voyant reste rouge : personne ne vient poser son sac dans une case pourtant libre.",
+ err:"Croire que « SINON » est facultatif parce que le cas paraît évident.",
+ d:["","Rien n'éteint la LED : aucune instruction ne le demande.","Le vert n'apparaît que si une instruction l'ordonne.","Le programme est valide : il est simplement incomplet, ce qui est plus dangereux qu'une erreur."],
+ ret:"Un cas non écrit est un cas non traité."},
+{c:"PRG",n:"La règle en Python",q:"Quelle écriture correspond à la règle du voyant ?",
+ o:["<code>if occupee:<br>&nbsp;&nbsp;print(\"ROUGE\")<br>else:<br>&nbsp;&nbsp;print(\"VERT\")</code>","<code>if occupee = True:<br>&nbsp;&nbsp;print(\"ROUGE\")</code>","<code>print(\"ROUGE\") if else print(\"VERT\")</code>","<code>occupee → ROUGE</code>"],r:0,
+ expl:"Deux points à la fin de chaque en-tête, et une indentation qui montre ce qui appartient à chaque chemin. C'est la forme exacte du losange, écrite en texte.",
+ ex:"Change <code>occupee = True</code> en <code>False</code> : l'affichage bascule.",
+ err:"Oublier les deux points, ou coller les deux <code>print</code> à la même colonne que le <code>if</code>.",
+ d:["","Un seul signe = range une valeur ; pour comparer, il faudrait ==. Et le cas « libre » manque.","<code>else</code> ne peut pas suivre <code>if</code> sans condition ni bloc.","La flèche n'existe pas en Python : c'est une notation de brouillon."],
+ ret:"if … : / else … : avec les deux points et l'indentation."},
+{c:"PRG",n:"Sans LED",q:"L'éditeur n'a pas de LED. Comment vérifier quand même que la règle est juste ?",
+ o:["en dessinant la LED sur le cahier","en attendant d'avoir le matériel","en affichant le mot attendu à l'écran, avec <code>print(\"ROUGE\")</code> et <code>print(\"VERT\")</code>","en supposant que ça marche"],r:2,
+ expl:"Remplacer l'actionneur par un affichage est une technique de mise au point ordinaire : on rend visible une décision qu'on ne peut pas encore montrer autrement.",
+ ex:"Si le programme écrit ROUGE quand <code>occupee = True</code>, la logique est bonne.",
+ err:undefined,
+ d:["Un dessin ne s'exécute pas : il ne peut rien confirmer.","On peut vérifier la LOGIQUE tout de suite ; seul le câblage attend le matériel.","","Supposer, c'est justement ce que la mise au point sert à éviter."],
+ ret:"Quand l'actionneur manque, on affiche la décision."},
+{c:"PRG",n:"Mettre au point",q:"« Mettre au point » un programme, c'est…",
+ o:["supprimer les parties qui ne marchent pas","écrire le programme du premier coup sans erreur","corriger après un test raté, puis RETESTER — et recommencer tant que c'est nécessaire","changer de projet quand ça résiste"],r:2,
+ expl:"La mise au point est une boucle : test → écart → correction → nouveau test. Un programme qu'on n'a pas retesté après correction n'est pas mis au point.",
+ ex:"Le voyant reste rouge : on ajoute le SINON, on relance, on vérifie que le vert apparaît.",
+ err:"Corriger puis passer à la suite sans refaire le test. La correction n'est prouvée que par le test qui suit.",
+ d:["Supprimer ce qui résiste enlève une fonction au lieu de la réparer.","Personne n'écrit juste du premier coup, et ce n'est pas ce qui est attendu.","","Abandonner ne met rien au point."],
+ ret:"Mise au point = corriger PUIS retester."},
+{c:"PRG",n:"Le casier de la bibliothèque",q:"Tu appliques la même règle au casier de la bibliothèque (livre présent ou absent). Qu'est-ce qui change ?",
+ o:["rien du tout, capteur compris","tout : il faut réapprendre une nouvelle logique","seulement ce que détecte le capteur : la règle SI, elle, ne change pas","la règle SI devient inutile"],r:2,
+ expl:"C'est la preuve que le concept a été compris : le même squelette, un autre habit. On change l'entrée, on garde la structure.",
+ ex:"SI livre présent ALORS LED verte (disponible) SINON LED rouge (emprunté).",
+ err:undefined,
+ d:["Le capteur change : il détecte un livre, plus un sac.","La logique est identique ; c'est justement ce que le réinvestissement démontre.","","Elle reste le cœur du programme : c'est elle qui décide."],
+ ret:"Réinvestir la même règle sur un autre objet prouve qu'on l'a comprise."}
 ];
-let current=0,answers={};
-try{answers=JSON.parse(localStorage.getItem('t5empq')||'{}')}catch(e){}
-function render(){
- const c=document.getElementById('questions');c.innerHTML='';
- questions.forEach((qu,i)=>{const d=document.createElement('div');d.className='card q'+(i===current?' active':'');
- d.innerHTML='<h3>Q'+(i+1)+'/24</h3><p>'+qu.q+'</p><div class="options">'+qu.opts.map(function(o,j){return '<label><input type="radio" name="q'+i+'" value="'+j+'" '+(answers[i]===j?'checked':'')+' onchange="answer('+i+','+j+')"> '+o+'</label>'}).join('')+'</div><div class="feedback" id="fb'+i+'"></div><button class="btn" onclick="showCorr('+i+')">Correction</button>';
- c.appendChild(d)});
- updateStats();
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_5e_C7.1-C8.3-C9.3_indicateur_rangement";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={ "CON":"5e_C7.1 — 🔧 Imaginer et suivre le processus", "VAL":"5e_C8.3 — 🧪 Vérifier avec un protocole", "PRG":"5e_C9.3 — 💻 La règle SI, du schéma au programme" };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
 }
-function answer(i,j){answers[i]=j;localStorage.setItem('t5empq',JSON.stringify(answers));updateStats()}
-function showCorr(i){var fb=document.getElementById('fb'+i),ok=answers[i]===questions[i].ok;fb.className='feedback show '+(ok?'ok':'err');fb.innerHTML=(ok?'✅ ':'❌ <strong>'+questions[i].opts[questions[i].ok]+'</strong><br>')+questions[i].exp}
-function updateStats(){var a=Object.keys(answers).length,c=Object.entries(answers).filter(function(e){return +e[1]===questions[e[0]].ok}).length;answered.textContent=a;score.textContent=c;note.textContent=a?((c/24*20).toFixed(1)):'—';bar.style.width=(a/24*100)+'%'}
-function nextQ(){if(current<23){current++;render()}}function prevQ(){if(current>0){current--;render()}}
-function nextUnanswered(){for(var i=0;i<24;i++)if(answers[i]===undefined){current=i;render();return}showResult()}
-function showResult(){result.style.display='block';var c=Object.entries(answers).filter(function(e){return +e[1]===questions[e[0]].ok}).length;finalScore.textContent=c+'/24 — '+(c/24*20).toFixed(1)+'/20';bilan.textContent=c>=18?'Très bien !':c>=12?'Revois validation et SI.':'Relis la séquence.'}
-function retryErrors(){var e=Object.entries(answers).filter(function(x){return +x[1]!==questions[x[0]].ok}).map(function(x){return +x[0]});if(!e.length){alert('Aucune erreur');return}current=e[0];render();result.style.display='none'}
-render();
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Variables, types, mise au point : les programmes n\'ont plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
 </script>
 </body>
 </html>
