@@ -6890,3 +6890,83 @@ toutes leurs questions possèdent une erreur fréquente, et la garde manquante y
 reste donc latente. Elle se réveillerait à la première question écrite sans
 `err`. La retouche est à faire, elle n'est pas urgente — et elle appartient à
 une branche de Thème 1 ou 2.
+
+---
+
+## Règle d'or n°144 — la bonne réponse ne doit pas être la plus longue
+
+*Née le 27 août 2026 d'une mesure que personne n'avait demandée. Pascal
+venait de me transmettre le rapport de relecture original ; je l'ai lu, j'ai
+traité ce qu'il disait, puis j'ai cherché ce qu'il ne disait pas.*
+
+Le résultat était sans appel. Sur les 120 questions des quatre QCM de C7 et
+C8, la bonne réponse était **107 fois la proposition la plus longue**. Un
+élève qui n'ouvre aucun cours, ne lit aucune question, et coche
+systématiquement la ligne la plus longue obtenait **89 %**.
+
+Le QCM ne mesurait plus une connaissance. Il mesurait une habileté de
+candidat — et il récompensait exactement l'élève qui n'avait rien appris,
+tout en pénalisant celui qui lisait vraiment les quatre propositions.
+
+**La cause est mécanique, et elle vient d'une bonne intention.** La bonne
+réponse portait sa justification :
+
+> « un rectangle : c'est un traitement, l'entrée de l'information »
+
+Les distracteurs, eux, n'avaient rien à justifier : ils tenaient en quatre
+mots. On croit écrire une réponse claire ; on écrit une réponse repérable.
+
+**La règle.** Une proposition porte une AFFIRMATION, jamais sa
+démonstration. La justification vit dans `expl`, qui est fait pour cela et
+qui s'affiche de toute façon. Les quatre propositions d'une question doivent
+avoir une densité comparable — sans quoi la plus dense se signale d'elle-même.
+
+**Ce que le lot fait.** Les 120 questions sont repassées une par une : la
+bonne réponse est ramenée à son affirmation, les distracteurs trop brefs
+reçoivent la même densité — sans changer d'un mot ce qu'ils affirment, pour
+que les réfutations `d` restent exactes. Résultat mesuré : « cocher la plus
+longue » tombe de **89 % à 52 %**, et la bonne réponse n'est plus
+**visiblement** la plus longue (plus de 20 % d'écart avec la deuxième) que
+dans deux questions sur 120 — deux questions dont les propositions sont du
+code, où l'écart est inhérent et se trouve déclaré.
+
+**Deux contrôles nouveaux**, dans la suite de tests : aucune bonne réponse
+visiblement la plus longue hors exceptions nommées, et « cocher la plus
+longue » plafonné à 60 % par QCM. Ils s'ajoutent au cliquet des absolus de la
+règle n°143 : même principe — la machine ne juge pas, elle empêche de dériver.
+
+**Ce qu'il faut en retenir au-delà de ce lot.** Les 26 QCM des Thèmes 1 et 2
+n'ont jamais été mesurés sur ce critère. Rien ne dit qu'ils y échappent, et
+le contraire est probable : ils ont été écrits avec le même réflexe. La
+mesure prend quelques secondes — `linter_absolus.mjs` montre comment lire
+une banque depuis la page. C'est un chantier à ouvrir.
+
+---
+
+## Ce que la relecture originale m'a appris sur ma propre re-dérivation
+
+*Le lot précédent avait été produit sans le rapport de relecture : la
+conversation avait été compactée, et le fichier n'était plus dans mon
+contexte. J'avais rouvert les 63 questions signalées et re-dérivé les
+objections à partir du texte réel. Pascal m'a transmis le rapport ensuite.*
+
+Le résultat de la confrontation vaut d'être noté, parce qu'il dit quelque
+chose sur ce que vaut une reconstruction.
+
+**Sur 28 rouges : 18 exactement retrouvés, 10 manqués ou traités trop court.**
+Les manques ne sont pas aléatoires, et ils ont tous la même forme : j'avais
+corrigé l'excès logé dans la RÉFUTATION, sans voir que la BONNE RÉPONSE
+elle-même était fausse.
+
+| Question | Ce que j'avais fait | Ce qui restait faux |
+|---|---|---|
+| 5e Q30 | corrigé « prouve qu'on l'a comprise » | la réponse disait « seul le capteur change » — le sens des couleurs change aussi |
+| 4e C8 Q24 | ajouté une nuance sur la maîtrise | la réponse disait « rien ne change » — le montage et les conditions changent |
+| 4e C8 Q8 | ajouté l'incertitude de mesure | la réponse disait encore « observé = attendu », au lieu du critère d'acceptation et de sa tolérance |
+| 4e C7 Q4 | corrigé l'exemple | les trois distracteurs restaient des plaisanteries |
+
+**La leçon.** Une reconstruction de bonne foi retrouve les erreurs de
+raisonnement — celles qui se voient en relisant. Elle ne retrouve pas les
+erreurs de FAIT logées dans la réponse qu'on croit juste : pour les voir, il
+faut quelqu'un qui ne les a pas écrites. Le rapport valait donc bien plus que
+sa liste de numéros, et il fallait le demander plutôt que de s'en passer.
