@@ -84,6 +84,8 @@
   .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
   .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
   .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
   .bloc-detail.retenir{border:1px solid #2f6b40}
   .bloc-detail.retenir b{color:var(--ok)}
   .bloc-detail.encoura{border:1px solid #6a5a1f}
@@ -260,28 +262,28 @@ const QUESTIONS = [
  o:["un nombre magique qui change tout seul","une boîte de la mémoire, avec une étiquette (son nom) et UNE valeur dedans","un bouton du clavier","une ligne du programme"],r:1,
  expl:"La variable associe un NOM (l'étiquette) et un CONTENU (la valeur), rangés dans la mémoire de l'ordinateur.",
  ex:"La boîte « places » du Cyclone : étiquette places, contenu 24.",
- err:undefined,
+ 
  d:["Rien ne change tout seul : seule une instruction du programme modifie une boîte.","","Le clavier sert à écrire le programme, pas à ranger les valeurs.","La ligne UTILISE des variables, elle n'en est pas une."],
  ret:"Variable = étiquette + contenu, dans la mémoire."},
 {c:"BOI",n:"Le vrai sens du =",q:"Que fait l'instruction <code>places = 24</code> ?",
  o:["elle affiche 24 à l'écran","elle vérifie que places vaut 24","elle RANGE la valeur 24 dans la boîte places","elle résout une équation"],r:2,
  expl:"En Python, = est un ORDRE : « mets ça dans la boîte ». Ce n'est ni une question, ni le égal des maths.",
  ex:"Après cette ligne, la boîte places contient 24 — quoi qu'elle ait contenu avant.",
- err:undefined,
+ 
  d:["Afficher, c'est print().","Vérifier, c'est le métier de == (deux signes égal).","","Il n'y a rien à résoudre : on exécute."],
  ret:"= range dans la boîte. == compare."},
 {c:"BOI",n:"L'ancienne valeur",q:"La boîte <code>places</code> contient 24. On exécute <code>places = 21</code>. Que devient le 24 ?",
  o:["il est remplacé : perdu — une boîte ne garde qu'UNE valeur","il reste caché derrière le 21","il va tout seul dans une autre boîte","il s'imprime sur le ticket"],r:0,
  expl:"Ranger une nouvelle valeur REMPLACE l'ancienne. L'ordinateur ne garde pas d'historique tout seul.",
  ex:"Pour garder l'ancien nombre, il faudrait le recopier AVANT : memoire = places.",
- err:undefined,
+ 
  d:["","Une boîte n'empile jamais deux valeurs.","Rien ne se recopie sans instruction.","Aucune imprimante là-dedans !"],
  ret:"Affecter = remplacer. Pour garder : recopier avant."},
 {c:"BOI",n:"Lire à l'envers",q:"Comment se lit <code>places = places - montes</code> ?",
  o:["je CALCULE d'abord la partie droite, puis je RANGE le résultat dans la boîte de gauche","de gauche à droite, comme une phrase","c'est une équation impossible","ça efface les deux boîtes"],r:0,
  expl:"L'affectation se lit de DROITE à GAUCHE : calcule (24 − 3 = 21), puis range 21 dans places.",
  ex:"C'est pour ça que la même boîte peut être des deux côtés sans problème.",
- err:undefined,
+ 
  d:["","Le = n'est pas un mot de phrase : c'est un ordre en deux temps (calcule, range).","Ce n'est pas une équation : on ne cherche rien, on exécute.","Rien ne s'efface : places est REMPLIE, montes est juste LUE."],
  ret:"Calcule à droite, range à gauche."},
 {c:"BOI",n:"Suivre avec le doigt",q:"Après <code>places = 24</code> puis <code>places = places - 5</code>, la boîte contient :",
@@ -289,42 +291,42 @@ const QUESTIONS = [
  o:["19","24","5","29"],r:0,
  expl:"24 − 5 = 19, rangé dans places. La table de suivi (le doigt qui suit ligne par ligne) donne toujours la bonne réponse.",
  ex:"C'est l'activité 2 de l'atelier, en plus court.",
- err:undefined,
+ 
  d:["","24 était l'ANCIENNE valeur — remplacée.","5 est ce qu'on enlève, pas le résultat.","29 serait 24 + 5 : le signe compte !"],
  ret:"Suivre les boîtes ligne par ligne : la méthode qui ne trompe pas."},
 {c:"BOI",n:"Le compteur qui monte",q:"Que vaut <code>total</code> après : <code>total = 0</code> · <code>total = total + 2</code> · <code>total = total + 2</code> ?",
  o:["0 : rien ne change","2 : seule la dernière ligne compte","4 : la boîte ACCUMULE, +2 puis encore +2","22 : les chiffres se collent"],r:2,
  expl:"0 → 2 → 4 : chaque ligne repart du contenu COURANT. C'est le motif « compteur », le plus utile de la programmation.",
  ex:"Compteur de passages au tourniquet, de points au jeu, de visiteurs au manège.",
- err:undefined,
+ 
  d:["Deux instructions ont bel et bien modifié la boîte.","La 2e addition repart de 2, pas de 0.","","Le collage n'arrive qu'avec des TEXTES entre guillemets."],
  ret:"total = total + x : le motif compteur — apprends à le reconnaître."},
 {c:"BOI",n:"Bien nommer",q:"Quel est le MEILLEUR nom de variable pour compter les places libres du manège ?",
  o:["a1","x","places_libres","le nombre de places libres du manège"],r:2,
  expl:"Un bon nom se comprend tout seul, sans espace (interdit en Python) : places_libres se relit dans six mois.",
  ex:"Le programme du Cyclone se lit d'un coup d'œil : places, montes, descendus.",
- err:undefined,
+ 
  d:["a1 non plus — on dirait une case de bataille navale.","x ne dit rien : x comme quoi ?","","Les ESPACES sont interdits dans un nom de variable."],
  ret:"Un nom de variable raconte son contenu (avec des _, sans espaces)."},
 {c:"BOI",n:"Deux boîtes, deux vies",q:"Après <code>a = 10</code> puis <code>b = a</code> puis <code>a = 99</code>, que contient <code>b</code> ?",
  o:["10 : b a reçu une COPIE de la valeur, pas un lien avec a","99 : b suit toujours a","0 : b est vidée","109 : les valeurs s'additionnent"],r:0,
  expl:"b = a recopie la VALEUR du moment (10). Ensuite, chaque boîte vit sa vie : changer a ne touche pas b.",
  ex:"Comme photocopier une fiche : si l'original change après, la photocopie, elle, ne bouge pas.",
- err:undefined,
+ 
  d:["","Aucun « lien magique » entre boîtes : juste une copie à l'instant t.","Rien n'a vidé b.","Personne n'a demandé d'addition."],
  ret:"b = a copie la valeur du moment — ensuite chacune sa vie."},
 {c:"BOI",n:"L'étiquette ou le contenu",q:"Dans la boîte, qu'est-ce qui ne change JAMAIS pendant le programme ?",
  o:["les deux changent tout le temps","le contenu (la valeur)","l'étiquette (le nom de la variable)","rien ne peut changer"],r:2,
  expl:"Le NOM est fixé par le programmeur ; c'est le CONTENU qui varie (c'est même pour ça qu'on dit « variable »).",
  ex:"places s'appelle places du début à la fin — mais contient 24, puis 21, puis 23…",
- err:undefined,
+ 
  d:["Le nom, lui, reste.","Le contenu, c'est justement ce qui VARIE.","","Si rien ne changeait, le programme ne servirait à rien."],
  ret:"Nom fixe, contenu variable."},
 {c:"BOI",n:"Afficher n'est pas ranger",q:"Quelle est la différence entre <code>places = 21</code> et <code>print(places)</code> ?",
  o:["le premier RANGE 21 dans la boîte ; le second AFFICHE le contenu à l'écran","aucun : les deux affichent","le premier affiche, le second range","les deux vident la boîte"],r:0,
  expl:"= agit sur la MÉMOIRE (invisible) ; print() agit sur l'ÉCRAN (visible). Deux mondes différents.",
  ex:"Le panneau du Cyclone affiche ce que print() lui envoie — la boîte, elle, reste en mémoire.",
- err:undefined,
+ 
  d:["","= n'affiche rien du tout : la mémoire est silencieuse.","C'est l'inverse.","print() LIT la boîte sans la toucher."],
  ret:"= remplit la mémoire ; print() montre à l'écran."},
 /* ═══ LIR ═══ */
@@ -332,28 +334,28 @@ const QUESTIONS = [
  o:["parce que c'est l'écart entre ma prédiction et la console qui m'apprend le plus","pour perdre du temps","parce que l'éditeur est en panne","pour éviter de réfléchir"],r:0,
  expl:"Prédire force à réfléchir AVANT. Si la console dit autre chose, la surprise montre exactement ce que je croyais à tort.",
  ex:"Prédire 24 pour « 20 » + « 4 »… et voir 204 : inoubliable.",
- err:undefined,
+ 
  d:["","Réfléchir n'est jamais du temps perdu — c'est l'inverse du hasard.","L'éditeur marche très bien.","C'est tout le contraire : prédire, C'EST réfléchir."],
  ret:"Prédire → tester → reporter : l'écart est ton meilleur professeur."},
 {c:"LIR",n:"Le piège des guillemets",q:"Que donne <code>print(\"20\" + \"4\")</code> ?",
  o:["rien du tout","24 : une addition normale","une erreur","204 : deux TEXTES se collent bout à bout"],r:3,
  expl:"Entre guillemets, « 20 » et « 4 » sont du TEXTE. Le + colle les textes : « 20 » puis « 4 » → « 204 ».",
  ex:"Le compteur fou qui affichait 87 : du texte collé au lieu de nombres calculés.",
- err:undefined,
+ 
  d:["Si, ça affiche — mais pas ce qu'on espérait !","L'addition, c'est SANS guillemets : 20 + 4.","Coller deux textes est parfaitement légal.",""],
  ret:"Guillemets = texte. Le + colle les textes, additionne les nombres."},
 {c:"LIR",n:"Tester, c'est comparer",q:"Tester un programme, c'est avant tout :",
  o:["le regarder très fort","comparer ce qu'on ATTEND (le besoin) et ce qu'on OBTIENT (la console), sur plusieurs cas","le recopier trois fois","compter ses lignes"],r:1,
  expl:"Un test = un cas choisi + la réponse attendue + la comparaison avec ce que le programme fait vraiment.",
  ex:"T3 du Cyclone : attendu 23, obtenu 19 → bug démasqué.",
- err:undefined,
+ 
  d:["Regarder ne prouve rien : il faut EXÉCUTER.","","Recopier ne teste rien.","Un programme court peut être faux, un long peut être juste."],
  ret:"Tester = comparer attendu et obtenu."},
 {c:"LIR",n:"Un seul écart suffit",q:"Le programme réussit les tests T1 et T2, mais rate T3. Conclusion :",
  o:["on relance T3 jusqu'à ce qu'il passe","il répond au besoin aux deux tiers, ça passe","T3 est un mauvais test","il NE répond PAS au besoin : un seul test raté suffit à le prouver"],r:3,
  expl:"Le besoin doit être respecté dans TOUS les cas. Un seul écart signifie qu'un jour réel, le compteur affichera faux.",
  ex:"Le bug du Cyclone dormait tranquillement… jusqu'au premier visiteur qui descend.",
- err:undefined,
+ 
  d:["Relancer le même test donne le même résultat : un programme n'a pas de chance.","Il n'y a pas de « moyenne » : un manège avec un compteur faux un jour sur trois reste dangereux.","T3 teste un cas RÉEL (des gens descendent !) : c'est un excellent test.",""],
  ret:"Un test raté = le programme ne répond pas au besoin. Point."},
 {c:"LIR",n:"Pourquoi plusieurs cas",q:"Pourquoi tester avec PLUSIEURS cas différents, et pas un seul ?",
@@ -361,42 +363,42 @@ const QUESTIONS = [
  o:["pour user les boutons","parce qu'un bug peut se cacher dans un cas précis et dormir dans les autres","parce qu'un seul test est interdit","pour faire joli dans le rapport"],r:1,
  expl:"Chaque cas réveille une partie différente du programme. Le bug des « descendus » ne se voyait QUE si quelqu'un descendait.",
  ex:"T1 et T2 passaient — T3 a tout révélé.",
- err:undefined,
+ 
  d:["Les boutons vont bien, merci.","","Rien n'interdit un test unique — il est juste insuffisant.","Le rapport veut la VÉRITÉ, pas la déco."],
  ret:"Un cas par situation réelle différente — c'est ça, un banc de tests."},
 {c:"LIR",n:"Lire avant de toucher",q:"Le responsable t'envoie son programme. Ton PREMIER geste de technicien :",
  o:["changer des lignes au hasard","le supprimer et tout refaire","le LIRE en suivant les boîtes (table de suivi), avant de rien modifier","l'imprimer en grand"],r:2,
  expl:"Comprendre AVANT d'agir : la table de suivi te dit ce que fait chaque ligne. On ne modifie que ce qu'on a compris.",
  ex:"C'est en LISANT la ligne 5 qu'on a vu le − à la place du +.",
- err:undefined,
+ 
  d:["Le hasard casse plus qu'il ne répare.","Refaire, c'est perdre le travail (souvent bon) des autres.","","L'imprimer n'aide que si on le LIT ensuite avec méthode."],
  ret:"Lire (table de suivi) → comprendre → seulement ensuite, toucher."},
 {c:"LIR",n:"L'écran te parle",q:"La console affiche <code>Places libres : 19</code> alors que tu attendais 23. Que t'apprend cet écart ?",
  o:["que l'ordinateur est fatigué","que le programme fait un calcul différent de celui du besoin — il faut chercher QUELLE ligne","que 19 est la bonne réponse puisque c'est l'ordinateur qui le dit","rien d'important"],r:1,
  expl:"L'ordinateur exécute EXACTEMENT ce qui est écrit. Si le résultat diffère de l'attendu, c'est le programme (écrit par un humain) qui porte l'erreur.",
  ex:"19 = 24 − 3 − 2 : la trace du − de trop, ligne 5.",
- err:undefined,
+ 
  d:["Les ordinateurs ne fatiguent pas : ils obéissent.","","L'ordinateur dit ce que LE PROGRAMME calcule — pas ce que le BESOIN demande.","Un écart attendu/obtenu est l'information la plus importante du métier !"],
  ret:"L'ordinateur obéit au programme, pas au besoin : l'écart accuse une ligne."},
 {c:"LIR",n:"La ligne du crime",q:"Dans le programme du compteur, quelle ligne trahissait le besoin ?",
  o:["montes = 3 : trois est un mauvais nombre","places = 24 : le manège n'a pas 24 places","print(...) : il ne faut jamais afficher","places = places - descendus : elle SOUSTRAIT des gens qui LIBÈRENT des places"],r:3,
  expl:"Ceux qui descendent libèrent des sièges : il faut AJOUTER. Le − était une erreur de raisonnement, pas de frappe.",
  ex:"La correction : places = places + descendus.",
- err:undefined,
+ 
  d:["3 n'était qu'un exemple de test.","Le Cyclone a bien 24 places : la ligne 1 était juste.","Afficher est nécessaire — c'est le métier du panneau.",""],
  ret:"Traduire le monde réel en + ou en − : c'est là que se cachent les vrais bugs."},
 {c:"LIR",n:"Répond au besoin ?",q:"« Le programme répond au besoin » signifie :",
  o:["qu'il est très court","qu'il s'exécute sans message d'erreur","qu'il est écrit joliment","qu'il donne le résultat attendu dans TOUS les cas du besoin, prouvé par des tests"],r:3,
  expl:"Pas d'erreur ≠ bon résultat ! Le compteur du Cyclone s'exécutait parfaitement… en affichant faux.",
  ex:"T3 s'exécutait sans erreur — et donnait 19 au lieu de 23.",
- err:undefined,
+ 
  d:["Court ou long, seul le comportement compte.","Un programme peut tourner sans erreur ET répondre faux.","La beauté du code ne compte pas les places du manège.",""],
  ret:"Répondre au besoin = résultats justes prouvés par les tests — pas juste « ça tourne »."},
 {c:"LIR",n:"Le message du responsable",q:"Après tes tests, que réponds-tu au responsable du parc ?",
  o:["« C'est cassé »","« Le programme ne répond pas au besoin : la ligne des descendus soustrait au lieu d'ajouter — voici le test qui le prouve »","« Achetez un nouveau manège »","« Tout va bien » (pour ne pas l'inquiéter)"],r:1,
  expl:"Un technicien répond avec un DIAGNOSTIC : quel comportement, quelle ligne, quelle preuve. C'est utile et vérifiable.",
  ex:"Le test T3 (3 montent, 2 descendent → 19 au lieu de 23) EST la preuve.",
- err:undefined,
+ 
  d:["« C'est cassé » n'aide personne à réparer.","","Le manège va très bien — c'est une ligne de programme qui boite.","Cacher un bug, c'est laisser entrer le visiteur de trop."],
  ret:"Un diagnostic = comportement + ligne + preuve par le test."},
 /* ═══ MOD ═══ */
@@ -404,70 +406,70 @@ const QUESTIONS = [
  o:["changer toutes les lignes où on voit un nombre","réécrire tout le programme","changer UNIQUEMENT la ligne places = 24 en places = 32","ajouter 8 lignes de +1"],r:2,
  expl:"Le nombre de sièges n'est écrit qu'à UN endroit : le remplissage initial de la boîte. C'est la force des variables.",
  ex:"Une seule ligne à changer chaque fois que le train change : c'est du programme bien conçu.",
- err:undefined,
+ 
  d:["Les autres nombres (montes, descendus) ne parlent pas des sièges.","Réécrire, c'est risquer de casser ce qui marchait.","","Huit +1, c'est huit occasions de se tromper."],
  ret:"Modifier = changer LA bonne ligne, pas toutes les lignes."},
 {c:"MOD",n:"Après la modification",q:"Tu as corrigé la ligne des descendus. Que fais-tu JUSTE après ?",
  o:["je rends le programme immédiatement","je REJOUE TOUS les tests, pas seulement celui qui échouait","je supprime les tests devenus inutiles","je change une autre ligne au cas où"],r:1,
  expl:"Une correction peut casser ailleurs : on rejoue tout le banc (c'est la « non-régression »). T1 et T2 doivent TOUJOURS passer.",
  ex:"Même geste qu'en 3e, même geste que les vrais développeurs.",
- err:undefined,
+ 
  d:["Rendre sans re-tester, c'est rendre un pari.","","Les tests resservent à CHAQUE modification future : on les garde précieusement.","Toucher « au cas où » crée des bugs — on ne modifie que ce qu'on a diagnostiqué."],
  ret:"Toute modification → rejouer TOUS les tests."},
 {c:"MOD",n:"La condition",q:"Que fait l'instruction <code>SI places &gt; 0 → OUVRIR sinon FERMER</code> ?",
  o:["elle compte les visiteurs","elle ouvre toujours la barrière","elle choisit entre deux actions selon la valeur de la boîte places","elle vide la boîte places"],r:2,
  expl:"Une CONDITION teste une variable et choisit un chemin : c'est ainsi qu'un programme DÉCIDE.",
  ex:"places = 10 → la condition est vraie → OUVRIR. places = 0 → fausse → FERMER.",
- err:undefined,
+ 
  d:["Compter, c'est le travail du compteur — la condition, elle, DÉCIDE.","« Toujours », ce serait sans condition.","","La condition LIT la boîte sans la modifier."],
  ret:"SI… SINON : le programme lit une boîte et choisit une action."},
 {c:"MOD",n:"Zéro pile",q:"À <code>places = 0</code>, que vaut la condition <code>places &gt; 0</code> — et que fait la barrière ?",
  o:["le programme plante","vraie → la barrière s'ouvre","impossible à dire","FAUSSE → la barrière se FERME : le manège est complet, c'est ce qu'on veut"],r:3,
  expl:"0 > 0 est FAUX (zéro n'est pas plus grand que lui-même) → chemin SINON → FERMER. Exactement le besoin.",
  ex:"Le test B3, le plus important du banc.",
- err:undefined,
+ 
  d:["Aucun plantage : juste une réponse fausse ou vraie.","0 n'est PAS supérieur à 0 : compte sur tes doigts !","Si : la règle est écrite, on peut toujours la dérouler.",""],
  ret:"Aux frontières (zéro pile), on déroule la condition À LA MAIN pour vérifier."},
 {c:"MOD",n:"Le test frontière",q:"Pourquoi le test <code>places = 0</code> est-il LE plus important pour la barrière ?",
  o:["parce que zéro est facile à taper","c'est la FRONTIÈRE entre ouvrir et fermer : c'est là que le visiteur de trop passerait","il ne l'est pas : 10 et 32 suffisent","parce qu'il est en dernier dans le tableau"],r:1,
  expl:"Les bugs adorent les frontières : un signe mal choisi (> ou >=) ne se voit QUE là. Tester la frontière, c'est tester le danger.",
  ex:"Avec >= 0, la barrière resterait ouverte manège COMPLET — et B3 l'aurait montré.",
- err:undefined,
+ 
  d:["La facilité de frappe n'a jamais protégé un manège.","","10 et 32 sont loin de la frontière : ils ne réveillent pas le bug.","L'ordre dans le tableau ne change rien à son importance."],
  ret:"Toujours UN test sur la frontière : c'est là que vivent les bugs."},
 {c:"MOD",n:"> ou >= ?",q:"Un camarade écrit <code>SI places &gt;= 0 → OUVRIR</code> « pour être sûr ». Quel est le problème ?",
  o:["à zéro place, la barrière resterait OUVERTE : le visiteur de trop entrerait","aucun, c'est plus sûr","Python interdit le >=","la barrière s'ouvrirait trop lentement"],r:0,
  expl:">= inclut le zéro : la condition serait VRAIE à 0 place → OUVERTE manège complet. Un seul signe, et le besoin est trahi.",
  ex:"C'est le miroir du cas limite de 3e (air >= 100) : la frontière se décide avec le BESOIN, pas « pour être sûr ».",
- err:undefined,
+ 
  d:["","« Plus sûr » qui laisse entrer du monde en trop… ne l'est pas.","Le >= est parfaitement légal — juste FAUX ici.","La vitesse n'a rien à voir."],
  ret:"> ou >= : c'est le besoin qui tranche, et le test frontière qui vérifie."},
 {c:"MOD",n:"Commander le réel",q:"Dans la barrière du Cyclone, que devient la valeur de ta variable <code>places</code> ?",
  o:["une image sur Internet","rien : un programme ne touche pas au monde réel","un son de klaxon","un ORDRE envoyé au moteur : l'information commande l'énergie"],r:3,
  expl:"C'est la compétence C9.3 : le programme COMMANDE un objet. La chaîne : compteur → variable → condition → moteur de la barrière.",
  ex:"Version 🅰 de l'atelier : ta LED s'allume quand la barrière « s'ouvre » — très basse tension, ordre bien réel.",
- err:undefined,
+ 
  d:["Aucune image : un moteur qui bouge.","Les objets programmés qui t'entourent prouvent le contraire chaque jour.","Pas de klaxon ici — mais c'est aussi un actionneur possible !",""],
  ret:"La variable devient commande : l'information en haut, l'énergie en bas, l'ordre qui descend."},
 {c:"MOD",n:"Réglé, vraiment ?",q:"Quand peux-tu dire que la barrière est RÉGLÉE ?",
  o:["quand la sonnerie sonne","dès qu'elle s'ouvre une fois","quand le programme est joli","quand les 3 tests du banc passent — le cas frontière compris"],r:3,
  expl:"« Marcher une fois » ne prouve qu'une exécution. Le banc complet prouve le COMPORTEMENT — c'est ça, la mise au point.",
  ex:"B1 ✔, B2 ✔, B3 ✔ → réglée. Un seul ✘ → retour au programme.",
- err:undefined,
+ 
  d:["La sonnerie ne teste rien du tout !","Une fois n'est pas coutume — surtout pas en technique.","La beauté ne ferme pas la barrière à zéro place.",""],
  ret:"Réglé = tous les tests verts, frontière comprise."},
 {c:"MOD",n:"Une ligne = un réglage",q:"Pour que le professeur n'ait qu'UNE ligne à changer chaque année dans le compteur de classe, il faut :",
  o:["interdire les nouveaux élèves","écrire le nombre d'élèves dans chaque ligne","refaire le programme chaque année","mettre le nombre d'élèves dans UNE variable au début, utilisée partout ensuite"],r:3,
  expl:"C'est le grand principe : une valeur qui peut changer se range dans UNE variable, définie à UN endroit. Tout le reste l'utilise.",
  ex:"eleves = 28 en ligne 1 — et l'an prochain, une seule retouche.",
- err:undefined,
+ 
  d:["Les nouveaux élèves sont les bienvenus !","Répéter le nombre partout = le changer partout = l'oublier quelque part.","Refaire, c'est risquer de nouveaux bugs chaque année.",""],
  ret:"Une valeur changeante = UNE variable définie à UN endroit."},
 {c:"MOD",n:"L'esprit de l'atelier",q:"Résume la démarche complète du technicien du Cyclone :",
  o:["lire (table de suivi) → tester (attendu/obtenu) → modifier LA bonne ligne → re-tester tout","deviner → espérer → rendre","tout effacer → tout réécrire → croiser les doigts","imprimer → encadrer → accrocher au mur"],r:0,
  expl:"Quatre gestes, dans l'ordre — les mêmes qu'en 4e et en 3e, sur des programmes de plus en plus riches. C'est la spirale du cycle.",
  ex:"Tu viens de faire les quatre sur un vrai cas : le compteur du plus vieux grand-huit de New York.",
- err:undefined,
+ 
  d:["","L'espoir n'est pas une méthode.","Effacer détruit le travail des autres — et les doigts croisés ne testent rien.","Joli au mur… mais le manège attend."],
  ret:"Lire → tester → modifier → re-tester : la boucle du technicien."}
 ];
@@ -659,8 +661,9 @@ function rendreCorrection(){
     <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
     <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
     <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
-    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
     <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
     <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
     <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
     <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;

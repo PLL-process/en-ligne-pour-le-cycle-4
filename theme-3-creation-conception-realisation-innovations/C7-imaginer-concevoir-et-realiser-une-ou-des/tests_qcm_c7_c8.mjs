@@ -14,7 +14,13 @@
  *      proposition choisie — et pas celle d'une autre ;
  *   8. la progression se restaure après rechargement ;
  *   9. à 390 px, la page ne déborde pas horizontalement ;
- *  10. tous les liens relatifs pointent vers un fichier qui existe.
+ *  10. tous les liens relatifs pointent vers un fichier qui existe ;
+ *  11. AUCUNE correction affichée ne contient le mot « undefined » — le moteur
+ *      écrivait « Erreur fréquente : undefined » sur les questions sans `err` ;
+ *  12. chaque `nuance` écrite dans la banque est bien AFFICHÉE dans la
+ *      correction — un champ qu'on ajoute sans le rendre ne sert à personne ;
+ *  13. les absolus des réfutations et des « à retenir » correspondent
+ *      exactement à `absolus_declares.json` (cliquet : voir linter_absolus.mjs).
  *
  * Usage : NODE_PATH=<node_modules> node tests_qcm_c7_c8.mjs
  */
@@ -22,6 +28,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { chromium } from "playwright";
+import { inventorier, clef } from "./linter_absolus.mjs";
 
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const THEME = path.resolve(ICI, "..");
@@ -141,6 +148,45 @@ for (const q of QCM) {
   const bons = await page.evaluate(() => document.getElementById("dOk").textContent);
   ok("une réponse juste est comptée juste", bons === "1", "dOk=" + bons);
 
+  /* ── la correction rendue : ni « undefined », ni nuance oubliée ──
+     On valide CHAQUE question et on lit le bloc de correction produit.
+     Le défaut visé est invisible autrement : `${Q.err}` sans garde écrit
+     « Erreur fréquente : undefined » à l'écran sans lever la moindre erreur. */
+  const rendu = await page.evaluate(async () => {
+    const sales = [], nuancesManquantes = [];
+    let nuances = 0;
+    for (let i = 0; i < QUESTIONS.length; i++) {
+      etat.courante = i; etat.reponses[i] = QUESTIONS[i].r; etat.validees[i] = true;
+      montrerEcran("q"); rendreTout();
+      const t = document.getElementById("corrBloc").textContent;
+      if (/undefined|\[object Object\]|\bnull\b/.test(t)) sales.push(i + 1);
+      if (QUESTIONS[i].nuance) {
+        nuances++;
+        if (!t.includes(QUESTIONS[i].nuance.slice(0, 40))) nuancesManquantes.push(i + 1);
+      }
+    }
+    return { sales, nuances, nuancesManquantes };
+  });
+  ok("aucune correction n'affiche « undefined »", rendu.sales.length === 0,
+     "questions " + rendu.sales.join(", "));
+  ok("chaque nuance écrite est affichée dans la correction",
+     rendu.nuancesManquantes.length === 0, "questions " + rendu.nuancesManquantes.join(", "));
+  console.log("     (" + rendu.nuances + " questions portent une nuance)");
+
+  /* on efface les réponses posées par le contrôle ci-dessus */
+  await page.evaluate(() => { try { localStorage.clear(); } catch {} });
+  await page.reload();
+  await page.waitForTimeout(250);
+  await page.evaluate(() => { etat.courante = 0; montrerEcran("q"); rendreTout(); });
+  const bonneR = await page.evaluate(() => QUESTIONS[0].r);
+  await page.evaluate(k => { document.querySelectorAll("#qOptions .option")[(k + 1) % 4].click(); }, bonneR);
+  await page.click("#btnValider");
+  await page.evaluate(() => { etat.courante = 1; montrerEcran("q"); rendreTout(); });
+  const bonne1b = await page.evaluate(() => QUESTIONS[1].r);
+  await page.evaluate(k => { document.querySelectorAll("#qOptions .option")[k].click(); }, bonne1b);
+  await page.click("#btnValider");
+  await page.waitForTimeout(220);
+
   /* ── restauration ── */
   await page.reload();
   await page.waitForTimeout(300);
@@ -172,6 +218,25 @@ for (const q of QCM) {
     Math.max(0, document.documentElement.scrollWidth - document.documentElement.clientWidth));
   ok("aucun débordement horizontal à 390 px", debord === 0, debord + " px");
   await ctxM.close();
+}
+
+/* ── le cliquet des absolus, sur les quatre banques à la fois ── */
+console.log("\n── Le cliquet des absolus");
+{
+  const trouves = (await inventorier(nav)).map(clef).sort();
+  const declares = JSON.parse(
+    fs.readFileSync(path.join(ICI, "absolus_declares.json"), "utf-8")
+  ).absolus.map(a => a.ou).sort();
+  const nouveaux = trouves.filter(t => !declares.includes(t));
+  const disparus = declares.filter(d => !trouves.includes(d));
+  ok("aucun absolu non déclaré dans les réfutations et les « à retenir »",
+     nouveaux.length === 0, nouveaux.join(" | "));
+  ok("l'inventaire ne cite aucun absolu qui n'existe plus",
+     disparus.length === 0, disparus.join(" | "));
+  ok("chaque absolu déclaré porte une raison écrite",
+     JSON.parse(fs.readFileSync(path.join(ICI, "absolus_declares.json"), "utf-8"))
+       .absolus.every(a => a.raison && a.raison.length > 30 && a.raison !== "À JUSTIFIER"));
+  console.log("     (" + trouves.length + " absolus assumés, tous justifiés)");
 }
 
 await nav.close();

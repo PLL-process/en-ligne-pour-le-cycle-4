@@ -84,6 +84,8 @@
   .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
   .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
   .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
   .bloc-detail.retenir{border:1px solid #2f6b40}
   .bloc-detail.retenir b{color:var(--ok)}
   .bloc-detail.encoura{border:1px solid #6a5a1f}
@@ -261,56 +263,56 @@ const QUESTIONS = [
  o:["une boîte étiquetée de la mémoire : un NOM et UNE valeur, remplaçable","un nombre qui change tout seul au hasard","une ligne de programme","un mot réservé du langage Python"],r:0,
  expl:"La variable, c'est l'association d'une étiquette (son nom) et d'un contenu (sa valeur) rangés dans la mémoire. Le programme lit et remplace ce contenu.",
  ex:"Dans l'atelier, la boîte « minutes » contient 4, puis 3 : même étiquette, contenu remplacé.",
- err:undefined,
+ 
  d:["","Rien n'est aléatoire : la valeur ne change QUE quand une affectation l'ordonne.","La ligne UTILISE des variables ; elle n'en est pas une.","Les mots réservés (if, def…) sont justement INTERDITS comme noms de variables."],
  ret:"Variable = étiquette + contenu, dans la mémoire."},
 {c:"VAR",n:"Le vrai sens du signe =",q:"En Python, que signifie l'instruction <code>score = 12</code> ?",
  o:["« affiche 12 à l'écran »","« score est mathématiquement égal à 12 » — une équation","« compare score et 12 » — un test","« range la valeur 12 dans la boîte score » — une affectation"],r:3,
  expl:"Le = de Python est un ORDRE donné à la mémoire : mets ce contenu dans cette boîte. Ce n'est pas le égal des mathématiques.",
  ex:"C'est pour ça que x = x + 1 est parfaitement légal : calcule x+1, range le résultat dans x.",
- err:undefined,
+ 
  d:["Afficher, c'est print() — le = ne montre rien à l'écran.","Une équation se résout ; une affectation s'EXÉCUTE. Python ne résout rien ici.","Le test d'égalité s'écrit == (deux signes égal).",""],
  ret:"= affecte (range) ; == compare."},
 {c:"VAR",n:"Lire de droite à gauche",q:"Après <code>n = 5</code> puis <code>n = n * 2</code>, que contient la boîte <code>n</code> ?",
  o:["une erreur : n ne peut pas être des deux côtés","5 : une variable ne peut pas changer","n × 2 : l'expression reste écrite dans la boîte","10 : Python calcule d'abord n × 2 (à droite), puis range le résultat"],r:3,
  expl:"Une affectation se lit de DROITE à GAUCHE : je calcule toute la partie droite (5 × 2 = 10), puis je range 10 dans n — en remplaçant le 5.",
  ex:"Le compteur du tourniquet fait pareil : passages = passages + groupe.",
- err:undefined,
+ 
  d:["C'est légal et très courant : la même variable à droite (ancienne valeur) et à gauche (nouvelle).","Changer, c'est exactement le métier d'une variable (varier !).","La boîte ne stocke jamais une expression : elle stocke le RÉSULTAT du calcul.",""],
  ret:"Affectation : calcule à droite, range à gauche."},
 {c:"VAR",n:"Où va l'ancienne valeur ?",q:"La boîte <code>minutes</code> contient 4. Le programme exécute <code>minutes = 3</code>. Que devient le 4 ?",
  o:["il reste dans la boîte, derrière le 3","il se range automatiquement dans une boîte « archives »","il est perdu : affecter, c'est REMPLACER le contenu","il retourne dans le programme source"],r:2,
  expl:"Une boîte n'a qu'UN contenu. La nouvelle valeur écrase l'ancienne, définitivement — sauf si le programmeur l'a recopiée AVANT dans une autre variable.",
  ex:"Pour garder l'ancien : ancienne_minutes = minutes AVANT d'écrire la nouvelle valeur.",
- err:undefined,
+ 
  d:["Une boîte ne superpose jamais deux valeurs.","Aucune archive automatique n'existe : la sauvegarde est une DÉCISION du programmeur.","","Le programme source ne change pas pendant l'exécution."],
  ret:"Affecter écrase : pour garder, recopier AVANT."},
 {c:"VAR",n:"Nommer, c'est déjà programmer",q:"Quel est le MEILLEUR nom de variable pour la température mesurée sur le quai ?",
  o:["t","temperature_quai","x","la temperature du quai"],r:1,
  expl:"Un bon nom se lit comme une étiquette de boîte : précis, prononçable, sans espaces (interdits). Six mois plus tard, temperature_quai se comprend seul.",
  ex:"Le programme du panneau se relit d'un coup d'œil : train, quai, minutes — pas t, q, m.",
- err:undefined,
+ 
  d:["t est légal mais muet : t comme temps ? température ? taille ?","","x convient aux maths, pas à un programme qu'on doit relire.","Les ESPACES sont interdits dans un nom : Python y voit trois mots."],
  ret:"Un nom de variable dit ce qu'il contient (underscore, pas d'espace)."},
 {c:"VAR",n:"Le compteur",q:"Que vaut <code>total</code> après : <code>total = 0</code> · <code>total = total + 5</code> · <code>total = total + 3</code> ?",
  o:["5 : seule la première addition compte","8 : la variable ACCUMULE, c'est le motif du compteur","3 : seule la dernière compte","53 : les valeurs se collent"],r:1,
  expl:"Table de suivi : 0 → 0+5=5 → 5+3=8. Chaque ligne repart du contenu COURANT : c'est l'accumulation.",
  ex:"Points d'un jeu, voyageurs d'une station, pluie d'un mois : le motif compteur est partout.",
- err:undefined,
+ 
  d:["La 2e addition repart de 5, pas de 0.","","Idem : la dernière ligne AJOUTE à 5, elle ne remplace pas par 3.","Le collage (53) n'arrive qu'entre TEXTES — ici ce sont des int."],
  ret:"total = total + x : le motif « compteur », à reconnaître au premier regard."},
 {c:"VAR",n:"L'échange de contenus",q:"Pour échanger le contenu de <code>a</code> et <code>b</code>, pourquoi <code>a = b</code> puis <code>b = a</code> échoue-t-il ?",
  o:["les noms a et b sont trop courts","Python interdit deux affectations de suite","après a = b, l'ancien contenu de a est écrasé : b récupère sa PROPRE valeur","ça marche très bien"],r:2,
  expl:"a = b écrase a (perdu !). Puis b = a recopie… la valeur de b qu'a contient désormais. Il faut une boîte de secours : temp = a ; a = b ; b = temp.",
  ex:"Comme échanger deux verres pleins : il faut un troisième verre.",
- err:undefined,
+ 
  d:["La longueur du nom n'a aucun effet sur l'exécution.","On peut enchaîner autant d'affectations qu'on veut.","","Teste-le dans l'éditeur : les deux boîtes finissent avec la MÊME valeur."],
  ret:"Échanger deux variables exige une troisième (temp)."},
 {c:"VAR",n:"Suivre à la trace",q:"Quel outil FIABLE permet de connaître la valeur de chaque variable après chaque ligne, sans ordinateur ?",
  o:["la table de suivi : une colonne par variable, une ligne par instruction","relire le programme très vite plusieurs fois","compter les signes = du programme","demander à un camarade sa réponse"],r:0,
  expl:"La table de suivi transforme la lecture en méthode : on remplit case par case, et l'erreur d'inattention n'a plus de place.",
  ex:"L'activité 2 de l'atelier : passages 0→3→5, groupe 3→2 — la table ne ment pas.",
- err:undefined,
+ 
  d:["","Relire vite, c'est répéter la même erreur plus vite.","Le NOMBRE d'affectations ne dit pas les VALEURS.","La réponse d'autrui ne se vérifie qu'avec… une table de suivi."],
  ret:"La table de suivi est le multimètre du programmeur."},
 /* ═══ TYP ═══ */
@@ -319,56 +321,56 @@ const QUESTIONS = [
  o:["str : un texte","int : un nombre entier","float : un nombre à virgule (écrite avec un point)","bool : un vrai/faux"],r:2,
  expl:"3.5 porte une partie décimale : c'est un float. En Python, la décimale s'écrit avec un POINT — jamais une virgule.",
  ex:"1.8 dans la conversion Fahrenheit→Celsius ; 2.90 le prix du trajet de métro.",
- err:undefined,
+ 
  d:["Sans guillemets, ce n'est pas un texte.","Un int n'a pas de partie décimale (3, 96, -2).","","True et False sont les deux seules valeurs bool."],
  ret:"int entier · float à virgule-point · str entre guillemets · bool True/False."},
 {c:"TYP",n:"Le piège des guillemets",q:"Que vaut <code>\"3\" + \"4\"</code> ?",
  o:["7 : les chiffres s'additionnent toujours","\"34\" : deux TEXTES se collent bout à bout (concaténation)","une erreur : on ne peut pas utiliser + sur du texte","\"7\" : l'addition, mais en texte"],r:1,
  expl:"Entre guillemets, « 3 » et « 4 » sont des TEXTES. Le + entre deux str COLLE : « 3 » puis « 4 » → « 34 ». C'est la concaténation.",
  ex:"Le panneau de 96 St affichait « 41 min » : le stagiaire avait collé \"4\" + \"1\".",
- err:undefined,
+ 
  d:["Les chiffres ENTRE GUILLEMETS ne sont plus des nombres.","","Le + est parfaitement légal entre textes — il change juste de métier.","Python ne calcule pas « en texte » : il colle, ou il calcule."],
  ret:"str + str = collage. Le type décide du métier du +."},
 {c:"TYP",n:"La virgule qui fâche",q:"Pourquoi <code>prix = 2,90</code> ne donne-t-il PAS le nombre attendu en Python ?",
  o:["il manque des guillemets","Python n'accepte pas les centimes","prix est un mot réservé","la décimale s'écrit avec un POINT : 2.90 — la virgule fabrique autre chose (un couple de valeurs)"],r:3,
  expl:"En Python la virgule SÉPARE des éléments : 2,90 crée le couple (2, 90), pas un prix. La décimale, c'est le point : 2.90.",
  ex:"Le bug n°2 du panneau : (77-32)/1,8 plantait — corrigé en 1.8.",
- err:undefined,
+ 
  d:["Avec des guillemets ce serait un TEXTE, donc incalculable.","Les centimes vont très bien… avec un point.","prix est un nom libre et excellent.",""],
  ret:"Décimale = point. La virgule sépare, elle ne « décimale » pas."},
 {c:"TYP",n:"Le décodeur",q:"L'utilisateur tape « 15 » au clavier (un TEXTE). Comment obtenir le NOMBRE 15 pour calculer ?",
  o:["enlever les guillemets à la main dans la mémoire","ajouter 0 : \"15\" + 0","int(\"15\") : convertir le texte en entier","print(\"15\")"],r:2,
  expl:"int() est le décodeur texte→entier (float() pour les décimaux). Tout ce qui vient du clavier arrive en str : convertir avant de calculer.",
  ex:"age = int(input(\"Ton âge ? \")) — le grand classique.",
- err:undefined,
+ 
  d:["La mémoire n'est pas éditable « à la main » : on la transforme par instructions.","\"15\" + 0 plante : str + int est une opération impossible.","","print AFFICHE, il ne convertit rien."],
  ret:"int() et float() convertissent le texte en nombre."},
 {c:"TYP",n:"Vrai ou faux",q:"Quel est le type et la valeur de <code>retard > 5</code> quand <code>retard</code> contient 12 ?",
  o:["float, 2.4 : la division 12/5","int, 7 : la soustraction 12 − 5","str, \"vrai\" : un texte","bool, True : la comparaison répond vrai ou faux"],r:3,
  expl:"Une comparaison (>, <, ==, >=…) produit toujours un BOOLÉEN : True ou False. Ici 12 > 5 → True.",
  ex:"C'est ce True qui fait basculer le if : if retard > 5: prévenir_les_voyageurs().",
- err:undefined,
+ 
  d:["Aucune division ici — juste une question fermée posée aux valeurs.","> compare, il ne soustrait pas.","True n'est pas un texte : pas de guillemets, majuscule obligatoire.",""],
  ret:"Comparer produit un bool : le carburant des if."},
 {c:"TYP",n:"L'affichage mixte",q:"Que produit <code>print(\"Quai\", 96, \"—\", 3 + 1, \"min\")</code> ?",
  o:["une erreur : on ne mélange pas textes et nombres dans print","Quai96—3+1min : tout collé, sans calcul","Quai 96 — 4 min : print affiche chaque élément, séparé par des espaces, en calculant les nombres","Quai 96 — 3 + 1 min : sans calculer"],r:2,
  expl:"Les VIRGULES de print séparent des éléments : chacun est évalué (3 + 1 → 4) puis affiché avec un espace entre eux. Textes et nombres cohabitent sans conversion.",
  ex:"L'expérience C de l'atelier : print(\"Train \" + \"Q\", 2 + 1, \"min\") → Train Q 3 min.",
- err:undefined,
+ 
  d:["print accepte le mélange — c'est le + qui l'interdit entre str et int.","Le collage sans espaces, c'est la CONCATÉNATION (+), pas la virgule de print.","","Les expressions sont toujours CALCULÉES avant affichage."],
  ret:"Dans print, la virgule sépare et évalue ; le + colle (et exige le même type)."},
 {c:"TYP",n:"L'opération impossible",q:"Que se passe-t-il à l'exécution de <code>\"21\" - 1</code> ?",
  o:["une erreur de type (TypeError) : on ne soustrait pas un nombre d'un TEXTE","20 : Python convertit tout seul","\"20\" : la soustraction en texte","\"211\" : le collage continue"],r:0,
  expl:"Le - n'a AUCUN sens entre str et int : Python s'arrête avec TypeError. Contrairement au +, il n'a pas de « deuxième métier » textuel.",
  ex:"Le bug n°3 du panneau : minutes valait \"21\" (texte), et minutes - 1 plantait la ligne 7.",
- err:undefined,
+ 
  d:["","Python ne convertit JAMAIS silencieusement str↔int : il préfère t'arrêter.","Il n'existe pas de « soustraction de textes ».","Le collage, c'est le + ; le - ne colle rien."],
  ret:"str − int → TypeError. L'erreur de type est une ALLIÉE : elle montre le bug."},
 {c:"TYP",n:"Le doute méthodique",q:"Tu doutes du type de la variable <code>mesure</code>. Quel réflexe de technicien ?",
  o:["deviner d'après le nom de la variable","afficher type(mesure) : la réponse vient de l'ordinateur, pas de l'intuition","supposer que c'est un int, c'est le plus courant","réécrire tout le programme"],r:1,
  expl:"type() répond factuellement : <class 'str'>, <class 'int'>… Une mesure de capteur arrive souvent en TEXTE — l'intuition se trompe précisément là.",
  ex:"print(type(mesure)) avant un calcul qui plante : 10 secondes, diagnostic fait.",
- err:undefined,
+ 
  d:["Le nom reflète l'INTENTION du programmeur, pas la réalité du contenu.","","Supposer, c'est parier ; type(), c'est mesurer.","On ne reconstruit pas la maison pour trouver une fuite."],
  ret:"En cas de doute : type(x). Mesurer plutôt que supposer."},
 /* ═══ PRG ═══ */
@@ -376,49 +378,49 @@ const QUESTIONS = [
  o:["parce que la prédiction confronte TON modèle mental au vrai comportement : c'est là qu'on apprend","pour faire durer l'exercice plus longtemps","parce que l'éditeur est trop lent","pour éviter d'utiliser l'ordinateur"],r:0,
  expl:"Si tu exécutes d'abord, tu regardes le résultat sans avoir pensé. Si tu prédis d'abord, chaque écart entre ta prédiction et la console est une leçon ciblée sur TA représentation.",
  ex:"Prédire 7 pour \"3\" + \"4\" et voir 34 : cette surprise-là ne s'oublie plus.",
- err:undefined,
+ 
  d:["","La durée n'est pas un but pédagogique.","L'éditeur exécute en une seconde.","On utilise l'ordinateur — mais APRÈS avoir réfléchi."],
  ret:"Prédire → tester → reporter : l'écart prédiction/réalité est le meilleur professeur."},
 {c:"PRG",n:"Une chose à la fois",q:"Tu as trouvé 3 bugs. Comment appliquer les corrections ?",
  o:["UNE correction à la fois, en réexécutant après chacune","les trois d'un coup pour gagner du temps","seulement la plus facile","dans l'ordre alphabétique des variables"],r:0,
  expl:"Corriger une chose à la fois permet de savoir QUELLE correction a quel effet — et de repérer une correction qui casse autre chose. Trois corrections d'un coup = trois suspects si ça échoue encore.",
  ex:"Le panneau : guillemets d'abord (réexécuter), virgule ensuite (réexécuter), et la ligne 7 se met à marcher.",
- err:undefined,
+ 
  d:["","Le « temps gagné » se paie au décuple quand il faut démêler quel changement a tout cassé.","La facilité n'est pas un critère : l'ORDRE de plantage, oui.","L'alphabet n'a jamais réparé un programme."],
  ret:"Une correction → une réexécution. Toujours."},
 {c:"PRG",n:"Le message d'erreur, un allié",q:"Python affiche <code>TypeError: unsupported operand type(s) for -: 'str' and 'int'</code>. Que t'apprend-il ?",
  o:["l'opération - a reçu un TEXTE et un NOMBRE : une des deux variables n'a pas le type attendu","l'ordinateur est en panne","le programme est trop long","il faut réinstaller Python"],r:0,
  expl:"Le message dit tout : quelle opération (-), quels types en présence (str et int). Il te reste à trouver QUELLE variable est un texte déguisé — table de suivi avec types.",
  ex:"Dans l'atelier : minutes venait de \"2\" + \"1\" → str. Le message pointait droit sur elle.",
- err:undefined,
+ 
  d:["","La machine va très bien : c'est elle qui te renseigne.","La longueur n'a rien à voir.","Réinstaller ne change pas une ligne du programme."],
  ret:"Lire le message d'erreur EN ENTIER : il donne l'opération et les types coupables."},
 {c:"PRG",n:"L'ordre des lignes",q:"Le stagiaire écrit : <code>print(message)</code> PUIS <code>message = \"Q - 96 St\"</code>. Résultat ?",
  o:["message : le nom s'affiche","Q - 96 St : Python lit tout le programme d'abord","un affichage vide","une erreur : à la ligne du print, la boîte message n'existe pas encore"],r:3,
  expl:"Python exécute DANS L'ORDRE, ligne après ligne. Au moment du print, aucune boîte message n'a été créée → NameError. Créer avant d'utiliser.",
  ex:"Comme servir le café avant de l'avoir fait : l'ordre des gestes est le programme.",
- err:undefined,
+ 
  d:["Sans guillemets, message est un NOM à chercher en mémoire — introuvable ici.","Python n'anticipe pas : il découvre les lignes une à une.","Pas d'affichage vide : une erreur franche, qui nomme la variable.",""],
  ret:"Une variable se crée AVANT de s'utiliser : l'ordre des lignes est un choix de conception."},
 {c:"PRG",n:"= ou == ?",q:"Dans un test, quelle est la différence entre <code>if niveau == 3:</code> et <code>if niveau = 3:</code> ?",
  o:["aucune : les deux écritures se valent","== COMPARE (correct ici) ; = AFFECTE, et Python refuse une affectation dans un if","== est plus rapide","= compare deux fois plus fort"],r:1,
  expl:"== pose la question « niveau vaut-il 3 ? » ; = donnerait l'ORDRE de mettre 3 dans niveau. Python détecte la confusion dans un if et refuse (SyntaxError).",
  ex:"L'erreur classique de l'activité 5 : écrire air = 100 au lieu de air >= 100.",
- err:undefined,
+ 
  d:["La différence est fondamentale : question ≠ ordre.","","La vitesse n'a rien à voir.","« Comparer plus fort » n'existe pas."],
  ret:"= range, == demande. Le if n'accepte que des questions."},
 {c:"PRG",n:"La trace du technicien",q:"Ton programme donne un résultat faux SANS message d'erreur. Premier geste efficace ?",
  o:["insérer des print() des variables aux étapes clés pour VOIR où les valeurs déraillent","tout effacer et recommencer","changer des lignes au hasard jusqu'à ce que ça marche","attendre et réessayer plus tard"],r:0,
  expl:"Le bug silencieux se traque en rendant les valeurs VISIBLES : un print(nom_variable) après chaque étape clé, et la table de suivi s'affiche toute seule. On repère la ligne où la valeur cesse d'être celle prévue.",
  ex:"print(\"minutes =\", minutes) juste après la ligne 3 aurait montré \"21\" au lieu de 3 — bug localisé.",
- err:undefined,
+ 
  d:["","Effacer, c'est perdre l'information que contient le bug.","Le hasard peut « marcher » sans que tu saches pourquoi — le bug reviendra.","Un programme déterministe donnera exactement la même erreur demain."],
  ret:"Bug silencieux → print() aux étapes clés : rendre visible, puis raisonner."},
 {c:"PRG",n:"Relire un programme d'un coup d'œil",q:"Que fait ce programme ? <code>c = 0</code> puis, pour chaque train qui passe : <code>c = c + 1</code> et <code>print(c)</code>",
  o:["il efface le compteur à chaque train","il affiche toujours 1","il additionne les numéros des trains","il compte les trains et affiche le total courant à chaque passage"],r:3,
  expl:"Initialisation à 0 + accumulation +1 : le motif COMPTEUR, reconnu d'un coup d'œil. Le print à chaque tour affiche la valeur courante : 1, 2, 3…",
  ex:"Compteur de passagers, de mesures, de points : même squelette partout.",
- err:undefined,
+ 
  d:["Rien ne remet c à zéro dans la boucle.","c grandit à chaque passage : 1, puis 2, puis 3…","Il ajoute toujours 1, pas le NUMÉRO du train.",""],
  ret:"init à 0 + « c = c + 1 » = compteur. Apprendre à reconnaître les MOTIFS."},
 /* ═══ MAP ═══ */
@@ -427,49 +429,49 @@ const QUESTIONS = [
  o:["les fonctions s'exécutent plus vite","le programme devient plus court à écrire la première fois","Python exige une fonction par fichier","la fonction se REJOUE à volonté avec d'autres valeurs, et se teste séparément du reste"],r:3,
  expl:"Une fonction est une machine : elle REÇOIT des variables (paramètres), RENVOIE un résultat (return) — appelable mille fois, testable au banc indépendamment du reste du système.",
  ex:"vitesse_ventilation(150, False), (60, True), (40, False), (100, False) : quatre appels, quatre tests.",
- err:undefined,
+ 
  d:["La vitesse d'exécution n'est pas l'enjeu au collège.","La première écriture est parfois plus LONGUE — c'est la réutilisation qui paie.","Python n'exige rien de tel.",""],
  ret:"Fonction = machine réutilisable et testable : reçoit des paramètres, renvoie un résultat."},
 {c:"MAP",n:"Élaborer avant de taper",q:"Dans la démarche de 3e_C9.1, que fait-on AVANT d'écrire la moindre ligne de Python ?",
  o:["chercher un programme tout fait à recopier","ouvrir l'éditeur et taper au fil de l'eau","élaborer l'ALGORITHME en français : les variables nécessaires, les conditions, dans le bon ordre","choisir la couleur de l'interface"],r:2,
  expl:"L'algorithme est le plan de l'architecte : SI air > 100 ventiler à fond, SINON SI train arrive… Une fois le plan juste, la traduction en Python est presque mécanique.",
  ex:"Le document 3 de l'atelier : algorithme en français → fonction Python → banc de tests.",
- err:undefined,
+ 
  d:["Recopier sans comprendre interdit la mise au point.","Taper sans plan produit du code qu'on ne sait plus relire — ni corriger.","","L'interface n'est pas l'algorithme."],
  ret:"Élaborer (français) → traduire (Python) → tester. Le plan d'abord."},
 {c:"MAP",n:"Le banc de tests",q:"Qu'est-ce qu'un BON banc de tests pour <code>vitesse_ventilation</code> ?",
  o:["aucun test si le code a l'air correct","un seul test avec des valeurs au hasard","dix fois le même test pour être sûr","un test par cas du besoin + un test par FRONTIÈRE (air = 100 exactement)"],r:3,
  expl:"Chaque règle du besoin mérite son test (pollué / train / calme), et chaque FRONTIÈRE son test dédié : c'est là que les bugs se cachent (> ou >= ?).",
  ex:"T1 150, T2 60+train, T3 40, T4 100 pile — le T4 a démasqué le bug de l'atelier.",
- err:undefined,
+ 
  d:["« Avoir l'air correct » n'est pas une preuve — le banc, si.","Le hasard rate justement les frontières.","Répéter le même test ne teste rien de nouveau : un programme est déterministe.",""],
  ret:"Un test par cas + un test par frontière. Les bugs vivent aux frontières."},
 {c:"MAP",n:"Le cas limite",q:"Le besoin dit « à partir de 100, ventiler à fond ». La fonction teste <code>air > 100</code>. Quel est le problème ?",
  o:["aucun : 100 est un cas trop rare pour compter","à 100 exactement, air > 100 est FAUX : la station ventile doucement dans un air déjà pollué","le problème est dans le capteur, pas le programme","Python ne sait pas comparer à 100"],r:1,
  expl:"« À partir de 100 » inclut 100 : la condition juste est >= 100. L'écart entre > et >= est invisible à l'œil… et flagrant au banc de tests.",
  ex:"Le test T4 (air=100) renvoyait 1 au lieu de 3 : bug prouvé, corrigé, retesté.",
- err:undefined,
+ 
  d:["La rareté n'excuse rien : un jour de pic à 100 pile, la ventilation dort.","","Le capteur mesure juste ; c'est la RÈGLE qui est fausse.","Python compare parfaitement — il exécute la règle qu'on lui a donnée."],
  ret:"> ou >= : c'est le CAHIER DES CHARGES qui tranche, et un test frontière qui vérifie."},
 {c:"MAP",n:"La non-régression",q:"Tu corriges la condition en <code>>=</code>. Le test T4 passe. As-tu fini ?",
  o:["oui : le bug visé est corrigé","non : on REJOUE aussi T1, T2, T3 — une correction peut casser ce qui marchait","oui, si le code est plus court qu'avant","non : il faut réécrire toute la fonction"],r:1,
  expl:"C'est la NON-RÉGRESSION : après toute modification, on rejoue TOUT le banc. Ici T1-T3 repassent (ouf) — mais on ne le SAIT qu'après les avoir rejoués.",
  ex:"Le même principe que la méthode de validation du jardin connecté en 4e : sauvegarde, test, non-régression.",
- err:undefined,
+ 
  d:["« Le bug visé est corrigé » ne dit rien des dégâts collatéraux.","","La longueur du code n'est pas un critère de validité.","On ne réécrit pas ce qui est prouvé : on RETESTE."],
  ret:"Toute correction → rejouer TOUS les tests. C'est la non-régression."},
 {c:"MAP",n:"Fini, vraiment fini ?",q:"Quand peut-on déclarer le programme de ventilation « au point » ?",
  o:["quand il passe TOUS les tests du banc, cas limites compris — pas quand il « a marché une fois »","dès qu'il s'exécute sans message d'erreur","quand il est joliment indenté","quand le professeur a le dos tourné"],r:0,
  expl:"« Marcher une fois » prouve UNE exécution ; le banc prouve le COMPORTEMENT. La mise au point s'achève quand le banc est vert en entier — et le banc reste là pour la prochaine modification.",
  ex:"L'affiche du document 3 : un programme n'est pas fini quand il marche une fois, mais quand il passe tous les tests.",
- err:undefined,
+ 
  d:["","Pas d'erreur ≠ bon résultat : le T4 s'exécutait sans erreur… en ventilant doucement.","L'indentation aide à LIRE ; elle ne prouve rien.","La rigueur ne dépend d'aucun regard : c'est elle qui fait le technicien."],
  ret:"Au point = tous les tests verts. Le banc reste, prêt pour la prochaine modification."},
 {c:"MAP",n:"Du programme au système",q:"La fonction validée pilote maintenant le VRAI ventilateur (version 🅰, carte + moteur en très basse tension). Que devient <code>return 3</code> ?",
  o:["un affichage à l'écran seulement","rien : un programme ne peut pas agir sur le monde réel","une COMMANDE envoyée à l'actionneur : la variable devient un ordre physique via la chaîne d'information","un son émis par la carte"],r:2,
  expl:"C'est tout le sens de C9.1 « commander un système réel » : la valeur renvoyée règle la puissance du moteur (PWM). La chaîne : capteur → variable air → fonction → variable vitesse → actionneur.",
  ex:"Sur mBot2 comme sur le jardin de 4e : la variable est le maillon entre l'information et l'énergie — l'ordre qui descend.",
- err:undefined,
+ 
  d:["L'écran est UNE sortie possible ; le moteur en est une autre.","Les objets programmables autour de toi prouvent le contraire chaque jour.","","Un son exigerait… une autre instruction vers un autre actionneur."],
  ret:"Dans un système réel, la variable devient commande : l'information pilote l'énergie (règle n°6 !)."}
 ];
@@ -661,8 +663,9 @@ function rendreCorrection(){
     <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
     <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
     <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
-    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
     <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
     <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
     <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
     <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
