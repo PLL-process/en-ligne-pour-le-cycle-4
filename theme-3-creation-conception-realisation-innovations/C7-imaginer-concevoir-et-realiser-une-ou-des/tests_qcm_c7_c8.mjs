@@ -187,6 +187,38 @@ for (const q of QCM) {
   await page.click("#btnValider");
   await page.waitForTimeout(220);
 
+  /* ── l'équilibre des longueurs ──
+     Défaut mesuré le 27 août 2026 : dans 107 des 120 questions, la bonne
+     réponse était la proposition la PLUS LONGUE. Cocher systématiquement la
+     plus longue, sans rien lire, donnait 89 %. Le QCM mesurait une habileté
+     de candidat, pas une connaissance.
+     Le contrôle porte sur ce qu'un élève peut VOIR : une bonne réponse plus
+     longue de plus de 20 % que la deuxième. Les exceptions sont nommées une
+     par une, avec leur raison. */
+  const EXCEPTIONS_LONGUEUR = {
+    "qcm_5e_C7_mini-projet.html": {
+      27: "propositions en Python : un if/else est nécessairement plus long qu'un if seul, et allonger le distracteur lui ajouterait le cas « libre » — précisément ce que sa réfutation lui reproche d'omettre.",
+    },
+    "qcm_3e_C7_capteur-confort-ny.html": {
+      24: "propositions en Python : la bonne réponse déclare une variable puis teste, les distracteurs sont des fragments fautifs plus courts par nature.",
+    },
+  };
+  const exc = EXCEPTIONS_LONGUEUR[path.basename(abs)] || {};
+  const longueurs = await page.evaluate(() => QUESTIONS.map(x =>
+    x.o.map(t => String(t).replace(/<[^>]+>/g, "").length)));
+  const QUESTIONSr = await page.evaluate(() => QUESTIONS.map(x => x.r));
+  const visibles = [];
+  longueurs.forEach((L, i) => {
+    const bonne = L[QUESTIONSr[i]];
+    const autres = L.filter((_, k) => k !== QUESTIONSr[i]);
+    if (bonne > 1.2 * Math.max(...autres) && !exc[i + 1]) visibles.push(i + 1);
+  });
+  ok("la bonne réponse n'est pas visiblement la plus longue",
+     visibles.length === 0, "questions " + visibles.join(", "));
+  const gagnantes = longueurs.filter((L, i) => L[QUESTIONSr[i]] === Math.max(...L)).length;
+  ok("« cocher la plus longue » ne dépasse pas 60 % de réussite",
+     gagnantes <= 18, gagnantes + "/30");
+
   /* ── restauration ── */
   await page.reload();
   await page.waitForTimeout(300);
