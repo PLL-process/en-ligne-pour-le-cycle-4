@@ -120,6 +120,49 @@ def titre_pedagogique(nom, libelle):
     return f"{libelle} — {base[0].upper() + base[1:]}"
 
 
+# ── Règle d'or n°37, appliquée aux TP : la ressource porte son propre nom ────
+#
+# Constat de Pascal, le 27/08/2026, en regardant l'index : « 4e_C7.2 » et
+# « 4e_C7.6 » affichaient tous deux « Travaux pratiques — Socle assemblage ».
+# Impossible de les distinguer, et impossible de voir qu'il existe une SÉRIE de
+# quatre TP qui va de la 5e à la 3e. Le libellé venait du nom de fichier — or le
+# nom de fichier ne connaît ni le rang du TP, ni le niveau.
+#
+# Un TP, lui, se nomme dans son <h1> : « TP n°2 — Le dé sur son socle ». On lit
+# donc ce titre-là, et on lui adjoint le niveau tiré du chemin. Le lecteur voit
+# alors la série entière, et sa chronologie.
+TITRE_H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.S | re.I)
+RANG_TP = re.compile(r"TP\s*n[°º]\s*(\d+)\s*[—-]\s*(.+)$")
+
+
+def titre_depuis_h1(chemin_relatif, nom, racine):
+    """Le titre que le fichier se donne, ou None. Jamais deviné : lu."""
+    if not nom.lower().endswith(".html"):
+        return None
+    try:
+        with open(os.path.join(racine, chemin_relatif, nom), encoding="utf-8") as f:
+            src = f.read(20000)
+    except OSError:
+        return None
+    m = TITRE_H1.search(src)
+    if not m:
+        return None
+    brut = html.unescape(re.sub(r"<[^>]+>", "", m.group(1)))
+    # on retire l'emoji de tête et les espaces insécables
+    brut = brut.replace("\u00a0", " ").strip()
+    brut = re.sub(r"^[^\w]+", "", brut).strip()
+    r = RANG_TP.match(brut)
+    if not r:
+        return None
+    niveau = ""
+    for seg in chemin_relatif.replace("\\", "/").split("/"):
+        if re.fullmatch(r"[3-6]e", seg):
+            niveau = seg
+            break
+    rang, titre = r.group(1), r.group(2).strip()
+    return "TP n°%s%s — %s" % (rang, (" · " + niveau) if niveau else "", titre)
+
+
 # ── Statuts d'audit (règle n°35 : l'information est là où on la lit) ──────────
 STATUTS_PATH = os.path.join(os.path.dirname(__file__), "..", "audit_couverture.csv")
 STATUT_PAR_CODE, STATUT_PUCE = {}, {
@@ -323,7 +366,11 @@ for theme_n in [1, 2, 3]:
                              if f"{r}/{fn}" in HERITEES else "")
                     if genre:
                         emoji, libelle = genre
-                        peda.append(f'<li>{emoji} <a href="{lien}">{html.escape(titre_pedagogique(fn, libelle))}</a>{herit}</li>')
+                        # Un TP porte son rang et son nom dans son <h1> : on les
+                        # lit plutôt que de les deviner d'après le nom de fichier.
+                        titre = (titre_depuis_h1(r, fn, DST) if libelle == "Travaux pratiques" else None) \
+                                or titre_pedagogique(fn, libelle)
+                        peda.append(f'<li>{emoji} <a href="{lien}">{html.escape(titre)}</a>{herit}</li>')
                     else:
                         maint.append(f'<a href="{lien}">{html.escape(fn)}</a>')
                 n_peda += len(peda)
