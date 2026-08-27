@@ -84,6 +84,8 @@
   .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
   .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
   .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
   .bloc-detail.retenir{border:1px solid #2f6b40}
   .bloc-detail.retenir b{color:var(--ok)}
   .bloc-detail.encoura{border:1px solid #6a5a1f}
@@ -262,39 +264,41 @@ const QUESTIONS = [
  err:"Confondre le problème (on ne voit pas) avec une solution qu'on a en tête (mettre des portes).",
  d:["","Il a justement demandé des casiers fermés : c'était trop cher, et ce n'est plus la demande.","Le hall doit rester utilisable : on ne supprime pas l'usage, on l'améliore.","Le problème n'est pas le manque de places — il y en a vingt — mais le fait de ne pas voir lesquelles sont libres."],
  ret:"Un objet technique répond à un BESOIN exprimé, pas à l'idée qu'on se fait de la solution."},
-{c:"CON",n:"La preuve du problème",q:"Qu'est-ce qui, dans la situation, PROUVE que le problème mérite qu'on s'en occupe ?",
+{c:"CON",n:"La preuve du problème",q:"Deux nombres ont été comptés dans le hall. Lequel MESURE LE DÉGÂT que le problème provoque ?",
+ nuance:"« Deux cents élèves en huit minutes, c'est aussi un nombre : pourquoi ce n'est pas la bonne réponse ? » Tu as raison sur un point, et c'est important : c'est bien un fait compté, pas une impression. Les deux propositions sont des mesures sérieuses. Simplement, elles ne mesurent pas la même chose. L'affluence est la CAUSE : beaucoup de monde en peu de temps. Les chutes sont la CONSÉQUENCE : quelqu'un s'est fait mal. Quand on défend un projet devant le principal, c'est la conséquence qui décide, parce que c'est elle qui coûte. La cause vient ensuite, pour expliquer.",
  o:["M. Alvarez a compté trois chutes en un mois","le hall est grand","il y a vingt casiers","deux cents élèves entrent en huit minutes"],r:0,
- expl:"Un besoin se défend avec un CONSTAT MESURÉ. Trois chutes en un mois est un fait vérifiable, que personne ne peut discuter.",
+ expl:"Un besoin se défend avec un fait compté. Mais tous les faits comptés ne disent pas la même chose : « trois chutes en un mois » mesure le dégât — ce qui va mal. « Deux cents élèves en huit minutes » mesure l'affluence — ce qui explique pourquoi ça va mal. Les deux sont vrais ; la question demande le dégât.",
  ex:"« M. Alvarez, qui s'occupe du bâtiment, a compté : trois chutes en un mois. »",
- err:undefined,
- d:["","La taille du hall décrit le lieu, elle ne mesure aucun problème.","Le nombre de casiers dit ce qui existe, pas ce qui va mal.","C'est une cause possible de l'encombrement, mais ce n'est pas la mesure du dommage."],
- ret:"Un problème se prouve par un fait compté, pas par une impression."},
+ 
+ d:["","La taille du hall décrit le lieu. Elle ne compte rien du tout.","Le nombre de casiers dit ce qui existe, pas ce qui va mal.","Ce nombre est bien un fait compté, et il est utile : il explique la cause de l'encombrement. Mais il ne mesure aucun dégât — deux cents élèves peuvent entrer en huit minutes sans que personne ne tombe."],
+ ret:"Un problème se prouve par un fait compté — et, parmi les faits comptés, c'est celui qui mesure le dégât qui emporte la décision."},
 {c:"CON",n:"Le nom du métier",q:"Comment appelle-t-on, dans le métier, un objet qui dit « libre » ou « occupé » sans qu'on s'approche ?",
  o:["un détecteur de mouvement","un indicateur d'occupation","un compteur de passage","un afficheur de température"],r:1,
  expl:"C'est le nom exact de la famille d'objets à laquelle appartient le voyant du hall. On le retrouve dans les gares, les parkings, les toilettes d'avion.",
  ex:"Le petit voyant rouge « OCCUPÉ » au-dessus de la porte des toilettes d'un avion.",
- err:undefined,
+ 
  d:["Un détecteur de mouvement réagit au déplacement, pas à la présence durable d'un objet posé.","","Un compteur additionne des passages ; ici on ne compte rien, on affiche un état.","La grandeur affichée serait une température, alors qu'ici c'est un état : libre ou occupé."],
  ret:"Nommer la famille d'un objet, c'est hériter de tout ce qu'on sait déjà d'elle."},
 {c:"CON",n:"Pourquoi deux solutions",q:"Pourquoi imaginer DEUX solutions différentes avant de choisir ?",
+ nuance:"« Mais c'est vrai que le professeur l'exige ! » Oui, complètement. La proposition n'est pas fausse : elle est incomplète. C'est le piège de cette question. On te demande POURQUOI la règle existe, pas QUI la fait appliquer. Une consigne peut être vraie et n'expliquer rien du tout. Chaque fois qu'une réponse te dit « parce qu'on nous l'a demandé », cherche derrière : il y a presque toujours une raison de métier, et c'est elle qu'on attend de toi.",
  o:["parce que le professeur l'exige","parce qu'on ne peut comparer, donc choisir, que s'il y a au moins deux propositions","parce qu'il faut occuper le temps de la séance","parce qu'on doit toujours réaliser les deux"],r:1,
- expl:"Une seule idée n'est pas une conception : c'est une idée. Choisir suppose de mettre en balance, avec des critères.",
+ expl:"Une seule idée n'est pas une conception : c'est une idée. Choisir suppose de mettre deux propositions en balance, avec des critères annoncés d'avance.",
  ex:"Bouton-poussoir sous la tablette, OU capteur de distance qui « voit » le sac — deux principes vraiment différents.",
  err:"Proposer deux variantes de la même idée (un bouton rouge et un bouton bleu) : ce n'est pas deux solutions.",
- d:["La règle vient du métier, pas de la classe : les concepteurs travaillent ainsi.","","Le temps n'est pas un argument de conception.","On n'en réalise qu'une : la seconde sert de point de comparaison."],
- ret:"Organiser → plusieurs idées → choix avec critères."},
+ d:["Il l'exige, c'est vrai — mais il l'exige pour une raison, et c'est la raison qu'on te demande. Les concepteurs, dans les entreprises, travaillent ainsi sans que personne ne les y oblige.","","Le temps n'est pas un argument de conception : on n'invente pas une deuxième idée pour remplir l'heure.","Le plus souvent on n'en réalise qu'une, et la seconde sert de point de comparaison. Réaliser les deux n'est pas interdit, mais ce n'est pas ce qu'on demande."],
+ ret:"Organiser, puis plusieurs idées, puis un choix avec des critères annoncés."},
 {c:"CON",n:"Un critère qui tient",q:"Parmi ces justifications de choix, laquelle repose sur un vrai critère technique ?",
  o:["« je choisis le bouton parce qu'il résiste mieux aux chocs dans un hall très fréquenté »","« je choisis le bouton parce que je l'aime bien »","« je choisis le bouton parce que c'est le premier auquel j'ai pensé »","« je choisis le bouton parce que mon voisin a pris le même »"],r:0,
  expl:"Un critère se rattache à une contrainte de la situation — ici, un hall où deux cents élèves passent en huit minutes.",
  ex:"Autres critères recevables ici : le prix, la simplicité de montage, la lisibilité à trois mètres.",
- err:undefined,
+ 
  d:["","Le goût n'est pas discutable, donc il ne se compare pas. Un critère doit pouvoir être contesté.","L'ordre d'apparition d'une idée ne dit rien de sa qualité.","Le choix d'un autre élève n'est pas une propriété de la solution."],
  ret:"Un critère est une propriété de la solution, confrontée à une contrainte du problème."},
 {c:"CON",n:"Le planning en 5e",q:"En 5e, que fais-tu du diagramme de planification des tâches ?",
  o:["tu le construis entièrement toi-même avant de commencer","tu le reçois déjà fait et tu le SUIS, séance après séance","tu le remplis seulement à la fin, pour raconter ce qui s'est passé","tu t'en passes : il ne sert qu'aux professeurs"],r:1,
  expl:"La compétence 5e_C7.1 dit « SUIVRE un processus … avec des tâches identifiées ». Construire le planning viendra plus tard dans le cycle.",
  ex:"À chaque séance, tu sais ce qui est fini, ce qui est en retard, et ce que ce retard décale.",
- err:undefined,
+ 
  d:["Concevoir un planning complet n'est pas attendu à ce niveau : on apprend d'abord à le lire et à s'y tenir.","","Un planning rempli après coup est un compte rendu, pas un outil de conduite.","Il sert d'abord à celui qui fabrique : c'est lui qui doit savoir où il en est."],
  ret:"Suivre un planning, c'est savoir à tout moment où l'on en est par rapport à ce qui était prévu."},
 {c:"CON",n:"Un retard, et après",q:"Une tâche prend une séance de plus que prévu. Que fait un planning bien tenu ?",
@@ -305,19 +309,21 @@ const QUESTIONS = [
  d:["Des dates que la réalité a démenties n'aident plus personne.","Une tâche nécessaire ne disparaît pas parce qu'elle est en retard.","Un retard d'une séance n'est pas un échec : c'est une information.",""],
  ret:"Un planning ne prédit pas l'avenir : il rend le retard lisible."},
 {c:"CON",n:"L'ordre du mini-projet",q:"Quel est l'ordre des trois grandes étapes de ce mini-projet ?",
+ nuance:"« En vrai, on fait tout en même temps, non ? » Tu as raison, et c'est même le cœur du métier. Un vrai projet ne va pas tout droit : on imagine, on teste, le test rate, on revient imaginer autrement, on reteste. On appelle ça une BOUCLE, et tu la verras dessinée en 4e. Ce que la question fixe, c'est l'ordre du premier tour : il faut bien une première idée avant d'avoir quelque chose à tester, et un objet qui marche avant d'écrire la règle définitive. Une fois ce premier tour bouclé, l'ordre devient beaucoup plus souple — mais on ne peut pas commencer par la fin.",
  o:["valider (C8) → programmer (C9) → imaginer (C7)","programmer (C9) → imaginer (C7) → valider (C8)","imaginer (C7) → valider par des tests (C8) → écrire la règle du programme (C9)","les trois se font en même temps, sans ordre"],r:2,
- expl:"On imagine une solution, on vérifie qu'elle se comporte comme prévu, puis on écrit la règle qui la fait fonctionner. Chaque étape a besoin du résultat de la précédente.",
+ expl:"On imagine une solution, on vérifie qu'elle se comporte comme prévu, puis on écrit la règle qui la fait fonctionner. Chaque étape a besoin du résultat de la précédente : c'est l'ordre du PREMIER passage.",
  ex:"Impossible de tester un voyant qu'on n'a pas encore imaginé.",
- err:undefined,
- d:["On ne valide que ce qui a été conçu : il n'y a rien à mettre à l'épreuve au départ.","Programmer d'abord reviendrait à écrire la règle d'un objet qui n'existe pas encore.","","Elles se recoupent parfois, mais chacune s'appuie sur le résultat de la précédente."],
- ret:"Imaginer, valider, programmer : trois moments, dans cet ordre."},
+ 
+ d:["On ne valide que ce qui a été conçu : au départ, il n'y a rien à mettre à l'épreuve.","Programmer d'abord reviendrait à écrire la règle d'un objet qui n'existe pas encore.","","Elles finissent par se mélanger, c'est vrai — mais au démarrage, chacune a besoin du résultat de la précédente. Sans premier passage dans l'ordre, il n'y a rien à faire tourner en boucle."],
+ ret:"Imaginer, valider, programmer : l'ordre du premier tour. Ensuite, on y revient autant de fois qu'il le faut."},
 {c:"CON",n:"Le document Onshape",q:"Dans Onshape, comment ton travail est-il enregistré ?",
+ nuance:"« Alors nommer le document, c'est la même chose que l'enregistrer ? » Non, et il ne faut pas les confondre. Enregistrer, c'est mettre le travail à l'abri : Onshape le fait tout seul, en permanence. Nommer, c'est mettre une étiquette dessus pour le RETROUVER. Ce sont deux choses différentes, et il te faut les deux. Autre chose à savoir : Onshape possède aussi des VERSIONS. Une version, c'est une photo de ton document à un instant précis, que tu crées volontairement et que tu peux rouvrir plus tard, même si tu as tout cassé depuis. L'enregistrement continu te protège de l'oubli ; la version te protège de l'erreur.",
  o:["une fois par séance, par le professeur","seulement quand tu cliques sur Enregistrer","seulement à la fermeture du navigateur","à chaque geste, automatiquement : il n'y a pas de bouton Enregistrer"],r:3,
- expl:"Onshape écrit chaque modification au moment où tu la fais. C'est pour cela qu'il est indispensable de NOMMER son document : c'est le nom qui te permettra de le retrouver.",
+ expl:"Onshape écrit chaque modification au moment où tu la fais : tu ne peux pas perdre ton travail en oubliant de cliquer quelque part. En revanche, c'est le NOM du document qui te permettra de le retrouver la fois suivante, au milieu de ceux de toute la classe.",
  ex:"Nomme-le NIVEAU-SUJET-TON NOM, sans accent. « Document sans titre » en gris pâle n'est pas un nom.",
  err:"Chercher un bouton Enregistrer, ne pas le trouver, et croire qu'on a tout perdu.",
- d:["Personne d'autre n'enregistre à ta place.","Ce bouton n'existe pas dans Onshape.","Fermer le navigateur n'enregistre rien de plus : tout l'est déjà.",""],
- ret:"Pas de bouton Enregistrer : le nom du document remplace la sauvegarde."},
+ d:["Personne d'autre n'enregistre à ta place.","Ce bouton n'existe pas dans Onshape : l'enregistrement se fait tout seul, en continu.","Fermer le navigateur n'enregistre rien de plus : tout l'est déjà.",""],
+ ret:"Onshape enregistre tout seul. Le nom sert à retrouver, la version sert à revenir en arrière : trois choses différentes."},
 {c:"CON",n:"Sortir la pièce",q:"Pour faire imprimer ta pièce en 3D, tu l'exportes au format…",
  o:["JPEG, en pixels","STL, en millimètres","PDF, en centimètres","MP4, en secondes"],r:1,
  expl:"Le STL décrit la surface de la pièce en trois dimensions : c'est ce que l'imprimante sait lire. L'unité doit être le millimètre, sinon la pièce sort à la mauvaise taille.",
@@ -337,7 +343,7 @@ const QUESTIONS = [
  o:["le mode opératoire des tests t'est donné, et tu l'appliques fidèlement","tu inventes librement tes propres tests","tu choisis seulement les tests qui vont réussir","tu n'as aucun test à faire"],r:0,
  expl:"En 5e, on apprend d'abord à appliquer un protocole avec rigueur. Concevoir soi-même le protocole est une compétence des années suivantes.",
  ex:"Le tableau donne les trois tests : poser le sac, enlever le sac, vérifier la visibilité à 2 m.",
- err:undefined,
+ 
  d:["","Concevoir le protocole viendra plus tard : ce n'est pas ce qui est évalué ici.","Ne garder que les tests favorables, c'est truquer la validation.","Le protocole est justement le cœur de l'activité."],
  ret:"Suivre un protocole fidèlement est une compétence à part entière."},
 {c:"VAL",n:"Le test qui échoue",q:"Sur ce tableau, le test « visible à 2 m » n'est pas conforme. Quelle décision est juste ?",
@@ -349,53 +355,56 @@ const QUESTIONS = [
  d:["","Valider un objet qui a échoué rend la validation sans valeur.","Un échec ponctuel se corrige ; il n'annule pas la conception.","Répéter sans rien changer ne corrige rien et fausse le résultat."],
  ret:"Écart constaté → amélioration → nouveau test."},
 {c:"VAL",n:"Les trois décisions",q:"À la fin du tableau de tests, la décision peut être…",
+ nuance:"« Est-ce que ces trois mots-là sont les mots officiels ? » Non, et c'est utile de le savoir. Selon l'entreprise ou le laboratoire, on écrira « conforme / non conforme », ou « accepté / réserve / refusé », ou encore d'autres mots. Ce qui ne change pas d'un endroit à l'autre, c'est le BESOIN d'une case du milieu : quelque chose qui fonctionne mais qu'il faut reprendre. Nos trois mots — Validée, À améliorer, Rejetée — sont la convention de la classe. Retiens surtout l'idée : une décision de test doit dire ce qu'on fait ensuite.",
  o:["Notée sur 20","Réussie · Ratée","Bien · Moyen · Nul","Validée · À améliorer · Rejetée"],r:3,
- expl:"Trois issues, parce qu'un objet peut fonctionner tout en demandant une reprise. La nuance du milieu est justement celle qui fait progresser.",
+ expl:"Trois issues, parce qu'un objet peut fonctionner tout en demandant une reprise. C'est la case du milieu qui fait progresser : elle dit « ça marche, mais pas encore assez bien », et elle appelle une action précise.",
  ex:"Le voyant s'allume mais se voit mal à trois mètres → « À améliorer ».",
- err:undefined,
- d:["Valider n'est pas noter : on juge l'objet, pas l'élève.","Deux issues seulement écrasent le cas le plus fréquent : ça marche, mais pas assez bien.","Ce sont des appréciations, pas des décisions techniques : elles ne disent pas quoi faire ensuite.",""],
- ret:"Validée, à améliorer, rejetée : trois décisions, pas deux."},
+ 
+ d:["Valider n'est pas noter : on juge l'objet, pas l'élève. Une note ne dit pas non plus quoi corriger.","Deux issues seulement écrasent le cas le plus fréquent : ça marche, mais pas assez bien. Où ranges-tu le voyant qui s'allume et qu'on voit mal ?","Ce sont des appréciations, pas des décisions techniques : « moyen » ne dit pas quoi faire ensuite.",""],
+ ret:"Une décision de test dit ce qu'on fait après. Chez nous : Validée, À améliorer, Rejetée."},
 {c:"VAL",n:"Comportement ou performance",q:"Le test « le voyant se voit-il à 2 mètres ? » vérifie…",
  o:["la solidité du support","un comportement : ce que fait l'objet quand on agit dessus","le prix de l'objet","une performance : jusqu'où l'objet remplit correctement sa fonction"],r:3,
  expl:"Le comportement répond à « que fait-il ? », la performance à « jusqu'à quel point ? ». La compétence C8.3 demande les deux.",
  ex:"Comportement : sac posé → rouge. Performance : lisible à trois mètres, comme demandé.",
- err:undefined,
+ 
  d:["La solidité serait un autre test, avec un autre protocole.","Le comportement, ce serait « poser le sac fait passer la LED au rouge ». Ici on mesure une portée.","Le prix ne se teste pas sur l'objet : il se lit sur une facture.",""],
  ret:"Comportement = ce qu'il fait. Performance = jusqu'où il le fait bien."},
 {c:"VAL",n:"Prédire puis vérifier",q:"Pourquoi PRÉDIRE le résultat avant de manipuler le simulateur ?",
+ nuance:"« Je me souviens très bien de choses qui ne m'ont pas surpris du tout. » Bien sûr, et heureusement — on retient aussi par la répétition, par l'usage, parce que ça nous intéresse. La surprise n'est pas la seule façon d'apprendre. Ce qu'on peut dire sans exagérer, c'est qu'un écart entre ce que tu attendais et ce que tu obtiens attire ton attention exactement là où ton raisonnement était faux. Sans prédiction écrite, cet écart n'existe pas : le résultat arrive, tu le lis, et rien ne t'indique où tu te trompais.",
  o:["parce que la prédiction est notée","parce que cela fait gagner du temps","parce que le simulateur refuse de démarrer sans prédiction","parce que se tromper dans sa prédiction est le moment où l'on apprend le plus"],r:3,
- expl:"Une prédiction fausse crée une surprise, et la surprise fixe le souvenir. Une manipulation sans prédiction glisse sans laisser de trace.",
+ expl:"Écrire ce qu'on attend AVANT de lancer l'essai t'oblige à réfléchir. Ensuite, quand le résultat ne colle pas, tu sais exactement à quel endroit ton raisonnement s'est trompé — et c'est cet endroit-là qui reste en mémoire.",
  ex:"Tu prédis « LED verte », tu obtiens rouge : tu n'oublieras plus le sens de la règle.",
- err:undefined,
- d:["Elle n'est pas notée : elle n'aurait aucun intérêt si l'on craignait de se tromper.","Cela prend au contraire quelques secondes de plus — qui sont bien employées.","Le simulateur fonctionne sans rien te demander.",""],
- ret:"On retient ce qui nous a surpris."},
+ 
+ d:["Dans ce mini-projet, elle n'est pas notée : une prédiction qu'on aurait peur de rater ne servirait plus à rien.","Ce n'est pas la raison. Prédire fait souvent gagner du temps, parce qu'on cherche moins au hasard ensuite — mais on ne prédit pas POUR gagner du temps.","Le simulateur fonctionne sans rien te demander : c'est toi que la prédiction sert, pas lui.",""],
+ ret:"Prédire d'abord : c'est ce qui rend visible l'endroit où l'on se trompait."},
 {c:"VAL",n:"Qui joue le capteur",q:"D'après le schéma de la chaîne, qu'est-ce qui joue le rôle du CAPTEUR ?",
+ nuance:"« Si c'est moi qui appuie sur le bouton, alors c'est moi le capteur ? » Excellente objection, et elle est juste. Un bouton sur lequel un humain appuie exprès n'est pas un capteur de sac : c'est un bouton de commande, et c'est l'humain qui a fait la détection dans sa tête. Le capteur, c'est l'objet qui constate SANS QU'ON LUI DEMANDE. D'où le montage : le bouton est placé sous la tablette, et c'est le poids du sac qui l'enfonce. Personne n'appuie. Le même composant est donc un capteur ou une commande selon l'endroit où on le monte — c'est la place dans la chaîne qui décide, pas la pièce.",
  img:{src:"Images/chaine_indicateur_hall.svg",alt:"La chaîne de l'indicateur : le bouton sous la tablette détecte, la carte décide selon la règle SI, la LED affiche en rouge ou en vert, et tout recommence."},
- o:["la LED qui s'allume","le bouton qu'on presse pour poser ou enlever le sac","l'écran de l'ordinateur","le clavier"],r:1,
- expl:"Le capteur DÉTECTE un état du monde. Ici, l'état est « un sac est posé, ou non », et c'est le bouton qui le fournit au programme.",
- ex:"Sur la maquette réelle, ce serait un bouton-poussoir sous la tablette de la case.",
+ o:["la LED qui s'allume","le bouton placé sous la tablette, que le poids du sac enfonce","l'écran de l'ordinateur","le clavier"],r:1,
+ expl:"Le capteur DÉTECTE tout seul un état du monde. Ici l'état est « un sac est posé, ou non », et c'est le bouton sous la tablette qui le transmet au programme : c'est le sac lui-même qui l'enfonce, personne n'a besoin d'appuyer.",
+ ex:"Sur la maquette réelle, un bouton-poussoir est vissé sous la tablette de la case : poser le sac l'enfonce, le retirer le relâche.",
  err:"Prendre la LED pour le capteur parce qu'elle est ce que l'on regarde.",
  d:["La LED est l'ACTIONNEUR : elle montre la décision, elle ne détecte rien.","","L'écran affiche l'ensemble ; il ne mesure aucun état du monde.","Le clavier sert à écrire le programme, pas à détecter le sac."],
- ret:"Capteur : il détecte. Actionneur : il agit."},
+ ret:"Capteur : il constate tout seul. Actionneur : il agit. Et c'est la place dans la chaîne qui décide, pas la pièce elle-même."},
 {c:"VAL",n:"Qui joue l'actionneur",q:"Et l'ACTIONNEUR, dans cet objet, c'est…",
  o:["le bouton","la LED, qui affiche la décision en vert ou en rouge","la carte programmable","le sac posé dans la case"],r:1,
  expl:"L'actionneur est la partie qui AGIT sur le monde à la suite de la décision. Ici, l'action consiste à émettre une lumière visible de loin.",
  ex:"Ailleurs, un actionneur peut être un moteur, une sonnerie, un vérin.",
- err:undefined,
+ 
  d:["Le bouton est en entrée de chaîne : il informe, il n'agit pas.","","La carte DÉCIDE ; elle est entre le capteur et l'actionneur, elle n'agit pas sur le monde.","Le sac est l'objet détecté, il ne fait pas partie du système."],
  ret:"La chaîne : capteur → décision → actionneur."},
 {c:"VAL",n:"L'ordre de la chaîne",q:"Remets la chaîne dans l'ordre.",
  o:["détecter l'état → décider selon la règle → afficher le résultat","décider → détecter → afficher","afficher → détecter → décider","détecter → afficher → décider"],r:0,
  expl:"On ne peut décider qu'à partir d'une information, et on n'affiche qu'une décision déjà prise. L'ordre n'est pas une convention : c'est une nécessité.",
  ex:"Bouton pressé → la règle SI tranche → la LED devient rouge.",
- err:undefined,
+ 
  d:["","Décider avant de détecter, c'est décider sans savoir.","Afficher d'abord reviendrait à annoncer un résultat qu'on n'a pas encore calculé.","Afficher avant de décider : il n'y aurait rien à montrer."],
  ret:"L'information entre, la décision se prend, l'action sort."},
 {c:"VAL",n:"La règle de sécurité",q:"Sur la maquette du hall, l'alimentation autorisée est…",
  o:["n'importe quelle source, du moment que ça marche","le secteur 230 V, s'il y a un adulte à côté","le secteur 230 V, si le montage est bien isolé","la très basse tension (pile, bloc TBT) — le secteur 230 V est interdit"],r:3,
  expl:"En technologie au collège, on ne câble jamais sur le secteur. Toutes les activités se font en très basse tension, ou en simulation.",
  ex:"Le parcours 🅱 « en simulation » permet de tout faire sans aucune alimentation.",
- err:undefined,
+ 
  d:["« Du moment que ça marche » n'est jamais un critère de sécurité.","La présence d'un adulte ne change pas le danger électrique.","Un montage d'élève n'apporte aucune garantie d'isolation.",""],
  ret:"Très basse tension uniquement. Le 230 V ne se manipule pas."},
 /* ═══ PRG ═══ */
@@ -403,7 +412,7 @@ const QUESTIONS = [
  o:["une façon d'afficher du texte","un calcul","le nom d'un composant","une question à laquelle on répond par oui ou non, et deux chemins selon la réponse"],r:3,
  expl:"La condition partage l'exécution en deux chemins. C'est le seul outil dont tu as besoin pour cet indicateur.",
  ex:"SI la case est occupée ALORS voyant rouge SINON voyant vert.",
- err:undefined,
+ 
  d:["Afficher est une ACTION possible dans un des deux chemins, pas la condition elle-même.","Un calcul produit un nombre ; une condition produit un choix.","Aucun composant ne porte ce nom : SI est une instruction, pas une pièce.",""],
  ret:"Une condition : une question, deux chemins."},
 {c:"PRG",n:"Le losange",q:"Sur cet algorigramme, le LOSANGE « Place occupée ? » représente…",
@@ -418,21 +427,22 @@ const QUESTIONS = [
  o:["un rectangle","un losange","un terminal « DÉBUT », de forme arrondie","une flèche seule"],r:2,
  expl:"Le terminal marque l'entrée dans le raisonnement. Sans lui, on ne sait pas par où lire le schéma.",
  ex:"« DÉBUT (au démarrage de l'indicateur) », puis la lecture du capteur.",
- err:undefined,
+ 
  d:["Un rectangle est une action ; il faut d'abord être entré dans le programme.","Une décision suppose une information déjà lue : elle ne peut pas être la première.","","Une flèche relie deux symboles, elle n'en remplace aucun."],
  ret:"Terminal au départ, terminal à l'arrivée."},
 {c:"PRG",n:"Lire le capteur",q:"« Lire le capteur (sac posé ou non) » se dessine par…",
- o:["un triangle","un losange","un terminal","un rectangle : c'est un traitement, l'entrée de l'information"],r:3,
- expl:"Lire, c'est faire quelque chose — pas trancher. Cette étape n'a qu'une suite possible, donc une seule sortie : un rectangle.",
+ nuance:"« Dans un livre, j'ai vu que LIRE un capteur se dessinait par un parallélogramme penché. » C'est exact, et ce n'est pas une erreur de ta part. Le vocabulaire complet des algorigrammes possède un symbole spécial pour les entrées et les sorties : le parallélogramme. Nous ne l'utilisons pas ici, volontairement. Nous travaillons avec trois symboles seulement — terminal, rectangle, losange — parce que trois symboles suffisent à écrire tous les algorigrammes de cette séquence, et parce qu'un vocabulaire réduit s'apprend et se relit sans hésiter. Si tu croises un parallélogramme ailleurs, tu sauras le lire : c'est une lecture ou un affichage. Dans nos algorigrammes, il est rangé dans le rectangle.",
+ o:["un triangle","un losange","un terminal","un rectangle"],r:3,
+ expl:"Lire le capteur, c'est FAIRE quelque chose : on va chercher l'information. Ce n'est pas trancher. Cette étape n'a qu'une suite possible, donc une seule flèche en sortie — et dans notre vocabulaire à trois symboles, une action à une seule sortie se dessine par un rectangle.",
  ex:"Après la lecture, on ne sait toujours pas quoi afficher : c'est le losange suivant qui décidera.",
- err:undefined,
- d:["Le triangle n'appartient pas au vocabulaire de l'algorigramme.","On ne pose pas encore de question : on récupère seulement l'information.","Le terminal est réservé au début et à la fin.",""],
- ret:"Rectangle = action ou traitement, une seule sortie."},
+ 
+ d:["Le triangle n'appartient pas au vocabulaire que nous utilisons dans cette séquence.","Le losange pose une question et ouvre deux chemins. Ici on ne pose encore aucune question : on récupère seulement l'information.","Le terminal marque le début et la fin de l'algorigramme, rien d'autre.",""],
+ ret:"Dans notre vocabulaire à trois symboles : rectangle = une action, une seule sortie."},
 {c:"PRG",n:"La flèche qui remonte",q:"À la fin de l'algorigramme, une flèche remonte vers la lecture du capteur. Que signifie-t-elle ?",
  o:["il y a une erreur dans le schéma","le programme est terminé","l'indicateur recommence sans cesse : il surveille en continu","on revient en arrière pour corriger une faute"],r:2,
  expl:"Cette boucle est ce qui distingue un objet vivant d'un objet qui n'agit qu'une fois. Le voyant doit changer dès qu'on retire le sac.",
  ex:"C'est exactement ce que tu as fait à la main dans le simulateur : poser, enlever, poser, enlever.",
- err:undefined,
+ 
  d:["La boucle est au contraire indispensable ici.","Une fin se marque par un terminal, pas par une flèche de retour.","","Corriger est le travail du programmeur ; la flèche décrit le fonctionnement de l'objet."],
  ret:"La boucle fait la surveillance continue."},
 {c:"PRG",n:"Le cas oublié",q:"Un élève écrit seulement « SI occupée ALORS rouge ». Que se passe-t-il quand la place est libre ?",
@@ -453,7 +463,7 @@ const QUESTIONS = [
  o:["en dessinant la LED sur le cahier","en attendant d'avoir le matériel","en affichant le mot attendu à l'écran, avec <code>print(\"ROUGE\")</code> et <code>print(\"VERT\")</code>","en supposant que ça marche"],r:2,
  expl:"Remplacer l'actionneur par un affichage est une technique de mise au point ordinaire : on rend visible une décision qu'on ne peut pas encore montrer autrement.",
  ex:"Si le programme écrit ROUGE quand <code>occupee = True</code>, la logique est bonne.",
- err:undefined,
+ 
  d:["Un dessin ne s'exécute pas : il ne peut rien confirmer.","On peut vérifier la LOGIQUE tout de suite ; seul le câblage attend le matériel.","","Supposer, c'est justement ce que la mise au point sert à éviter."],
  ret:"Quand l'actionneur manque, on affiche la décision."},
 {c:"PRG",n:"Mettre au point",q:"« Mettre au point » un programme, c'est…",
@@ -464,12 +474,13 @@ const QUESTIONS = [
  d:["Supprimer ce qui résiste enlève une fonction au lieu de la réparer.","Personne n'écrit juste du premier coup, et ce n'est pas ce qui est attendu.","","Abandonner ne met rien au point."],
  ret:"Mise au point = corriger PUIS retester."},
 {c:"PRG",n:"Le casier de la bibliothèque",q:"Tu appliques la même règle au casier de la bibliothèque (livre présent ou absent). Qu'est-ce qui change ?",
+ nuance:"« Est-ce que réussir cette question prouve que j'ai compris ? » Pas tout à fait, et c'est honnête de le dire. Refaire le même raisonnement sur un autre objet est un très bon SIGNE : ça montre que tu n'as pas seulement appris la phrase par cœur. Mais on peut aussi recopier un modèle sans l'avoir compris, en changeant juste les mots. La vraie preuve viendra le jour où tu écriras la règle tout seul, sur un objet dont personne ne t'a montré l'exemple — et où tu sauras dire POURQUOI elle fonctionne. Une seule réussite est un indice ; plusieurs réussites sur des objets différents deviennent une preuve.",
  o:["rien du tout, capteur compris","tout : il faut réapprendre une nouvelle logique","seulement ce que détecte le capteur : la règle SI, elle, ne change pas","la règle SI devient inutile"],r:2,
- expl:"C'est la preuve que le concept a été compris : le même squelette, un autre habit. On change l'entrée, on garde la structure.",
+ expl:"Le squelette reste le même, l'habit change. Ce qui change vraiment, c'est ce que détecte le capteur : un livre au lieu d'un sac. La structure SI … ALORS … SINON, elle, est identique — et le sens des deux couleurs se transpose : vert = disponible, rouge = pris.",
  ex:"SI livre présent ALORS LED verte (disponible) SINON LED rouge (emprunté).",
- err:undefined,
- d:["Le capteur change : il détecte un livre, plus un sac.","La logique est identique ; c'est justement ce que le réinvestissement démontre.","","Elle reste le cœur du programme : c'est elle qui décide."],
- ret:"Réinvestir la même règle sur un autre objet prouve qu'on l'a comprise."}
+ 
+ d:["Le capteur change : il détecte un livre, plus un sac. Dire que rien ne change serait faux.","La logique est identique : c'est justement ce qu'on veut te faire remarquer.","","Elle reste le cœur du programme : c'est elle qui décide de la couleur."],
+ ret:"Le même raisonnement transporté sur un autre objet : c'est le signe le plus fiable qu'on l'a compris."}
 ];
 
 </script>
@@ -660,8 +671,9 @@ function rendreCorrection(){
     <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
     <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
     <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
-    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
     <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
     <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
     <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
     <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;

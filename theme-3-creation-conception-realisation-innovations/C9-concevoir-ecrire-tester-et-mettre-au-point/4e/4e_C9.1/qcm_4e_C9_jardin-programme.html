@@ -84,6 +84,8 @@
   .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
   .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
   .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
   .bloc-detail.retenir{border:1px solid #2f6b40}
   .bloc-detail.retenir b{color:var(--ok)}
   .bloc-detail.encoura{border:1px solid #6a5a1f}
@@ -692,8 +694,9 @@ function rendreCorrection(){
     <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
     <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
     <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
-    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
     <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
     <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
     <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
     <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;

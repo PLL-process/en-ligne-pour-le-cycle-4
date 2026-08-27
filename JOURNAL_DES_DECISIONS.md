@@ -6709,3 +6709,184 @@ travers, sans que rien ne le signale.
 120 questions. Aucun test ne dira qu'un distracteur est plausible ni qu'une
 réfutation enseigne. C'est écrit en toutes lettres dans le rapport.
 
+
+---
+
+## Règle d'or n°139 — une réfutation écarte une proposition DANS LE CAS ÉTUDIÉ ; elle n'énonce pas une loi
+
+*Née le 27 août 2026, de la relecture des quatre banques de C7 et C8 par
+ChatGPT à la demande de Pascal. Vingt-huit questions en rouge, trente-cinq en
+orange — et, une fois les objections examinées une par une, presque toujours le
+même geste fautif.*
+
+Le défaut n'est pas dans les questions. Il est dans les phrases qui les
+entourent : la réfutation qui, pour écarter une mauvaise proposition, se donne
+de l'élan et énonce une règle générale. Trois exemples authentiques, tous
+retirés dans ce lot :
+
+| Ce qui était écrit | Pourquoi c'est faux |
+|---|---|
+| « L'épaisseur ne change rien à l'absorption. » | Elle retarde, et sur un carton enduit elle change tout. |
+| « Une découpe bien faite n'abîme rien. » | Toute découpe modifie la tranche — c'est même pour cela que la tranche est le point faible d'une pièce. |
+| « La règle vient du métier, pas de la classe. » | Le professeur l'exige bel et bien. La réfutation niait un fait vrai. |
+
+Le mécanisme est toujours le même : pour être convaincante, la réfutation
+monte d'un cran en généralité — et à ce cran-là, elle devient fausse. Elle est
+lue par **tous** les élèves, y compris ceux qui ont répondu juste. Une banque
+de trente questions et quatre-vingt-dix réfutations peut ainsi enseigner
+tranquillement une dizaine de contre-vérités que personne ne relit jamais,
+parce qu'on relit les questions et pas leurs marges.
+
+**La règle.** Une réfutation dit pourquoi CETTE proposition ne convient pas
+POUR CE CAS. Elle ne dit pas ce qui est vrai en général. Quand la
+généralisation est utile à l'élève, elle a un autre endroit : l'explication,
+le « à retenir », ou la nuance.
+
+---
+
+## Règle d'or n°140 — ce qu'on refuse de changer doit être expliqué à l'élève, pas défendu au relecteur
+
+*Née de la consigne de Pascal, le 27 août 2026 : « tout ce qui est en orange
+ou en rouge doit être soit changé, soit justifié, exhaustivement dans les
+corrections » — puis, aussitôt après : « de façon vulgarisée, abordable à un
+élève, même en difficulté ».*
+
+Une relecture produit deux sortes de remarques : celles qu'on accepte, et
+celles qu'on écarte. Le réflexe ordinaire consiste à répondre au relecteur —
+dans un fil de discussion, dans un compte rendu — et à laisser la ressource en
+l'état. Or si un relecteur adulte a buté sur un point, un élève y butera aussi.
+La réponse existe, elle est bonne, et elle est rangée là où l'élève ne la
+lira jamais.
+
+**La règle.** Une objection écartée se traite DANS la ressource, à l'endroit
+exact où elle naît, et dans la langue de celui qui apprend. Le compte rendu au
+relecteur dit ce qui a été fait ; il ne remplace jamais ce qui a été fait.
+
+**La mise en œuvre.** Un champ facultatif `nuance` entre dans le schéma des
+questions, rendu dans le bloc de correction sous le titre **« 🤔 Et si tu te
+disais… »**. Il est écrit pour l'élève qui a hésité, pas pour le relecteur :
+il commence par l'objection, entre guillemets, dans les mots que l'élève
+emploierait — puis il y répond sans esquiver.
+
+Soixante-trois questions en portent une aujourd'hui. Quelques-unes disent
+franchement « tu as raison » : le bouton pressé par un humain n'est pas un
+capteur, le parallélogramme des entrées existe bel et bien, « deux cents élèves
+en huit minutes » est bien un fait compté. Une objection recevable rend la
+correction meilleure ; il n'y a aucune raison de la cacher.
+
+---
+
+## Règle d'or n°141 — une validation ne vaut que pour le protocole exécuté, et le dire fait partie de la leçon
+
+*Née d'une contradiction interne, trouvée en relisant la banque de 3e : la
+question 16 faisait valider l'objet sur quatre scénarios, et la question 17 —
+la suivante — montrait que ces quatre scénarios avaient laissé passer le
+clignotement au seuil.*
+
+La tentation était d'ajouter un cinquième scénario et de faire disparaître la
+gêne. C'est l'inverse qui a été fait : **les deux questions restent, dans cet
+ordre**, et la nuance de la question 16 annonce que la suivante va la
+contredire. « Validé » ne veut pas dire « parfait » : cela veut dire
+« conforme à tout ce qui a été testé » — une phrase qui contient sa propre
+limite, et qu'il faut apprendre à lire en entier.
+
+Deux autres énoncés ont été corrigés au même titre, parce qu'ils promettaient
+plus qu'un essai ne peut donner : « un prototype qui passe tous les tests du
+premier coup a surtout mal été testé » (faux, et décourageant — remplacé par la
+lecture des marges), et « réinvestir la même règle sur un autre objet prouve
+qu'on l'a comprise » (c'est un signe, pas une preuve).
+
+**La règle.** Toute affirmation de validité s'écrit avec son domaine :
+pour quels cas, avec quel instrument, dans quel modèle. Un résultat sans
+domaine est un résultat qu'on ne peut ni contester ni réutiliser.
+
+---
+
+## Règle d'or n°142 — un test discriminant ne fait varier qu'une seule chose
+
+*Née de l'erreur la plus grave du lot, et elle était de moi.*
+
+La banque de 4e proposait, pour départager « l'attache a cassé à cause du
+froid » d'une autre cause, de la remplacer par une attache en inox : si elle
+tient, c'était bien le matériau. Vingt questions plus loin, la même banque
+expliquait que **l'attache inox est plus lourde** et fait tomber la stabilité de
+0,5 à 1,2 cm. Le test proposé changeait donc deux choses à la fois, et ne
+départageait rien du tout — et le lot contenait lui-même la démonstration de
+son erreur.
+
+Le bon test ne remplace rien : il reprend l'attache d'origine et la sollicite
+deux fois, une fois à −8 °C et une fois à température ambiante. Une seule
+grandeur change. C'est le même principe qu'à la question 19 de la 3e, où
+l'on affiche la valeur mesurée plutôt que de rebrancher le capteur au hasard.
+
+**La règle.** Entre les deux essais d'un test discriminant, une seule chose
+change. Un essai qui en change deux ne prouve rien, quel que soit son résultat
+— et il est d'autant plus dangereux qu'il donne l'impression d'avoir conclu.
+
+---
+
+## Règle d'or n°143 — un outil qui ne sait pas juger doit au moins empêcher de dériver
+
+*Née de la question : comment empêcher la règle n°139 de se défaire au lot
+suivant ?*
+
+Aucun programme ne peut décider si « on ne câble jamais sur le secteur » est
+une exagération — ce n'en est pas une, c'est une règle de sécurité — ni si
+« l'épaisseur ne change jamais rien » en est une. Un correcteur automatique
+d'absolus produirait du bruit, on l'ignorerait, et la règle mourrait là.
+
+**La règle.** Quand une exigence ne peut pas être vérifiée par une machine, on
+n'écrit pas un juge : on écrit un **cliquet**. L'outil inventorie, un humain
+justifie une fois pour toutes, et l'outil échoue dès qu'apparaît quelque chose
+qui n'a pas été justifié.
+
+`linter_absolus.mjs` relève les tournures de loi — *toujours, jamais,
+systématiquement, il suffit de, tous les* — dans les réfutations et les
+« à retenir » des quatre QCM. `absolus_declares.json` en contient treize, chacun
+avec la raison écrite de sa présence. Le quatorzième fera échouer les tests,
+et il faudra décider : est-ce une règle, ou une exagération ? C'est exactement
+la question qu'on veut se voir poser.
+
+Le champ `nuance` est volontairement hors périmètre : c'est le champ dont le
+rôle est de discuter les absolus, et il en contient donc beaucoup, à dessein.
+
+---
+
+## Ce que fix_r.js effaçait, et qui n'est toujours pas réparé à la source
+
+*Trouvé en ajoutant le champ `nuance` : il disparaissait des fichiers produits.*
+
+`_outils/fix_r.js` ne permute pas les questions, il les **réécrit**, champ par
+champ, à partir d'une liste fixe. Deux conséquences, l'une gênante, l'autre
+visible par les élèves :
+
+1. **tout champ inconnu de la liste disparaît** — c'est ce qui arrivait à
+   `nuance` ;
+2. **il écrit `err:undefined`** sur les questions dépourvues d'erreur fréquente.
+   Le moteur affichait alors, dans la correction, **« Erreur fréquente :
+   undefined »**.
+
+Le second défaut était en production. Il touchait **140 questions du Thème 3** :
+80 dans les quatre QCM de ce lot, et **60 dans les deux gabarits déjà fusionnés**
+— `qcm_5e_C9.1-C9.3_boite_etiquetee.html` et
+`qcm_3e_C9.1_variables_types_systemes.html`, qui portaient chacun `err:undefined`
+trente fois. Il n'était signalé par aucun test, parce qu'un `undefined` affiché
+ne lève aucune erreur JavaScript.
+
+**Ce que ce lot fait.** Le rendu est mis derrière une garde dans les neuf QCM du
+Thème 3 : plus aucun « undefined » à l'écran. Les littéraux sont retirés des
+banques. Un test nouveau valide les trente questions d'un QCM et relit chaque
+bloc de correction produit — c'était le seul moyen de voir le défaut.
+
+**Ce que ce lot ne fait pas.** `_outils/` est hors du périmètre d'une branche
+Thème 3 : `fix_r.js` n'est pas corrigé à la source. La chaîne de construction
+répare sa sortie et le dit. Deux corrections restent à faire par Pascal, sur une
+branche qui en a le droit : écrire les champs optionnels seulement s'ils
+existent, et recopier les champs inconnus au lieu de les perdre.
+
+**Et une vérification qui rassure.** Les **vingt-six** QCM des Thèmes 1 et 2
+portent le même rendu sans garde. Aucun n'affiche « undefined » aujourd'hui :
+toutes leurs questions possèdent une erreur fréquente, et la garde manquante y
+reste donc latente. Elle se réveillerait à la première question écrite sans
+`err`. La retouche est à faire, elle n'est pas urgente — et elle appartient à
+une branche de Thème 1 ou 2.
