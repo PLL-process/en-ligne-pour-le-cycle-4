@@ -2579,12 +2579,35 @@ function checkDragDrop(section) {
 }
 
 // (Tu peux laisser ce petit contrôle pour 5.b, il est indépendant)
+
+// ── Message d'état, à la place des boîtes modales (règle d'or n°188) ──────
+// La boîte modale du navigateur bloque la page et vole le focus. Sur cette séquence, l'enregistrement
+// se déclenche aussi à chaque saisie : une modale en pleine frappe coûte une phrase.
+function msgStatut(texte, couleur) {
+  var m = document.getElementById('msgStatutC14');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'msgStatutC14';
+    m.setAttribute('role', 'status');
+    m.setAttribute('aria-live', 'polite');
+    m.style.cssText = 'position:fixed;bottom:14px;left:50%;transform:translateX(-50%);' +
+      'z-index:2000;padding:9px 16px;border-radius:10px;font-size:.95em;font-weight:600;' +
+      'color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35);max-width:90vw;text-align:center';
+    document.body.appendChild(m);
+  }
+  m.style.background = couleur || '#1d6b3a';
+  m.textContent = texte;
+  m.hidden = false;
+  clearTimeout(msgStatut._t);
+  msgStatut._t = setTimeout(function () { m.hidden = true; }, 4000);
+}
+
 document.getElementById('chk5')?.addEventListener('click', () => {
   // Lisait `q5b`, qui n'existe pas : la zone de saisie s'appelle `q5b-response`.
   // Résultat : quoi que l'élève écrive, on lui répondait que c'était trop court.
   const v = (document.getElementById('q5b-response')?.value || '').trim();
   if (v.length < 120) {
-    alert("Ta stratégie 5.b est un peu courte. Vise 3–4 phrases concrètes 👍");
+    msgStatut("Ta stratégie 5.b est un peu courte. Vise 3–4 phrases concrètes 👍", "#8a5a13");
   }
 });
 
@@ -2710,9 +2733,9 @@ function score6(){
       });
       try {
         localStorage.setItem('cyber4e', JSON.stringify({ reponses, scores, chrono, date: new Date().toISOString() }));
-        if (!silencieux) alert('💾 Enregistré sur cet ordinateur. Tu peux fermer la page et reprendre plus tard.');
+        if (!silencieux) msgStatut('💾 Enregistré sur cet ordinateur. Tu peux fermer la page et reprendre plus tard.');
       } catch (e) {
-        if (!silencieux) alert("Impossible d'enregistrer sur cet ordinateur (navigation privée ?). Utilise le bouton PDF.");
+        if (!silencieux) msgStatut("Impossible d'enregistrer sur cet ordinateur (navigation privée ?). Utilise le bouton PDF.", "#8f2020");
       }
     }
 
