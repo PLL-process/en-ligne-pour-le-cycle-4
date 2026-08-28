@@ -218,7 +218,20 @@ def poser(page, r, html_bloc):
         m = re.search(r'^.*id="%s".*$' % re.escape(ancre), texte, re.M)
         if not m:
             return None, "l'ancre id=\"%s\" est introuvable dans la page" % ancre
-        texte = texte[:m.end()] + "\n" + html_bloc + texte[m.end():]
+        # Plusieurs ressources peuvent partager une ancre. On se place APRÈS celles qui
+        # y sont déjà, sinon l'ordre du registre se retrouve inversé dans la page — et
+        # la consigne qui dit « range maintenant les trois » arrive en premier.
+        ou = m.end()
+        while True:
+            suite = re.match(r"\s*<!-- ressource: ([\w-]+) -->", texte[ou:])
+            if not suite:
+                break
+            marqueur = "<!-- /ressource: %s -->" % suite.group(1)
+            fin = texte.find(marqueur, ou)
+            if fin == -1:
+                break
+            ou = fin + len(marqueur)
+        texte = texte[:ou] + "\n" + html_bloc + texte[ou:]
 
     if texte == avant:
         return False, "aucun changement"
