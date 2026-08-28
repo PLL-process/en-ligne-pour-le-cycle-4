@@ -518,7 +518,7 @@
   <div class="section panel" id="sec1">
 
   <div class="qcm-question">
-    <h2>🛡️ 1. Risques et bonnes pratiques <span class="badge">Score : <span id="s1">0</span>/14</span></h2>
+    <h2 id="bloc1-risques">🛡️ 1. Risques et bonnes pratiques <span class="badge">Score : <span id="s1">0</span>/14</span></h2>
     <h3>📰 Mise en situation : Un incident au collège inspiré de faits réels</h3>
     <p>Imagine que tu es un élève de 4e au collège. Un matin, tu reçois un e-mail qui semble provenir de la direction de ton établissement. Il te demande de cliquer sur un lien pour "mettre à jour tes informations personnelles" afin d'accéder à une nouvelle plateforme éducative. Le message est urgent et menace de bloquer ton compte Pronote si tu ne le fais pas immédiatement. Intrigué, tu cliques... et sans le savoir, tu viens d'installer un malware sur ton ordinateur familial.</p>
     <p>Cette situation est inspirée de faits réels récents. Par exemple, en juillet 2025, la ville de St. Paul aux États-Unis a été victime d'une attaque ransomware par le groupe Interlock, qui a volé 43 Go de données internes, y compris des informations sensibles sur les citoyens. De même, en septembre 2025, un cyberincident majeur a perturbé les aéroports européens comme Heathrow, causé par une surcharge DDoS qui a paralysé les systèmes. Au collège, un tel risque pourrait survenir via un phishing ciblant les élèves, comme dans l'attaque algérienne contre le fonds social marocain en avril 2025, où des hackers ont fuité des données sensibles.</p>
@@ -886,7 +886,7 @@ lui-même.</p>
 
   <!-- 2. Python + Tab & indentation -->
   <div class="section panel" id="sec2">
-    <h2>🧠 2. Programme Python — Touche Tab & Indentation <span class="badge">Score : <span id="s2">0</span>/8</span></h2>
+    <h2 id="bloc2-python">🧠 2. Programme Python — Touche Tab & Indentation <span class="badge">Score : <span id="s2">0</span>/8</span></h2>
 
     <h3>📰 Mise en situation : L'importance de Python dans un monde connecté</h3><div>
      <div class="qcm-question">
@@ -1087,7 +1087,7 @@ Fin du programme.</code></pre>
 
   <!-- 3. Données personnelles -->
   <div class="section panel" id="sec3">
-    <h2>🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="s3">0</span>/11</span></h2>
+    <h2 id="bloc3-donnee-personnelle">🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="s3">0</span>/11</span></h2>
 
     <h3>📰 Mise en situation : Le vol de données au collège</h3>
      <div class="qcm-question">
@@ -1315,7 +1315,7 @@ Fin du programme.</code></pre>
 
   <!-- 4. Protéger ses données personnelles -->
   <div class="section panel" id="sec4">
-    <h2>🔒 4. Protéger ses données personnelles <span class="badge">Score : <span id="s4">0</span>/11</span></h2>
+    <h2 id="bloc4-proteger">🔒 4. Protéger ses données personnelles <span class="badge">Score : <span id="s4">0</span>/11</span></h2>
 
     <h3>📰 Mise en situation : L'attaque sur ton compte scolaire</h3>
      <div class="qcm-question">
@@ -1543,7 +1543,7 @@ Fin du programme.</code></pre>
 
   <!-- 5. Limiter ses traces en ligne -->
   <div class="section panel" id="sec5">
-    <h2>🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="s5">0</span>/10</span></h2>
+    <h2 id="bloc5-traces">🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="s5">0</span>/10</span></h2>
 
     <h3>📰 Mise en situation : Le suivi invisible sur les réseaux</h3>
      <div class="qcm-question">
@@ -1732,7 +1732,7 @@ Fin du programme.</code></pre>
 
    <!-- 6. Propriété intellectuelle & e-réputation -->
   <div class="section panel">
-    <h2>⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="s6">0</span>/15</span></h2>
+    <h2 id="bloc6-propriete">⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="s6">0</span>/15</span></h2>
     <h3>📰 Mise en situation : La photo virale au collège</h3>
      <div class="qcm-question">
     <p>Imagine que tu partages une photo drôle d'un camarade sur Snapchat sans son accord. Elle devient virale, et il subit du harcèlement. Ton compte est signalé, affectant ta réputation scolaire.</p>
@@ -2628,12 +2628,13 @@ function score6(){
     // PDF
     document.getElementById('btnPDF').onclick = () => window.print();
 
-    // ACCESSIBILITY TEST
-    document.getElementById('accessibility-test')?.addEventListener('click', () => {
-      // Simple axe-core simulation
-      const errors = document.querySelectorAll('[required]:not([aria-label]), input:not([id])');
-      alert(`Accessibilité: ${errors.length} erreurs trouvées`);
-    });
+    // Il y avait ici un « test d'accessibilité » branché sur un bouton
+    // #accessibility-test que la page n'a jamais contenu. Il comptait les champs
+    // sans aria-label et annonçait un nombre d'« erreurs » — ce qui n'est pas un
+    // test d'accessibilité, seulement un décompte. Un contrôle qui ne contrôle
+    // pas ce qu'il annonce vaut moins que pas de contrôle : il rassure.
+    // L'accessibilité de cette page se vérifie avec un vrai outil (NVDA, le
+    // Colour Contrast Analyser), pas avec un bouton dans la page elle-même.
 
     // PERF REPORT
     window.onload = () => {
