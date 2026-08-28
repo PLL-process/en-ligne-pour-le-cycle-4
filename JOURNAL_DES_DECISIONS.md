@@ -8080,3 +8080,56 @@ Les deux sont dans le Thème 1 : ils seront corrigés sur une branche `theme-1`,
   visible, pas le rang.
 - **n°200** — un contrôle qui n'existe pas laisse passer un défaut dans tout ce qu'on a produit
   entre-temps. Celui-ci a été écrit trois jours trop tard, et deux lots déjà fusionnés le paient.
+
+---
+
+## 2026-08-28 — Les deux QCM de la PR #261 réparés : la bonne réponse ne se voit plus
+
+Le contrôle écrit hier (`_outils/controle_longueurs.py`) désignait trois banques sur 43 où la
+longueur trahit la bonne réponse. Les deux pires étaient les deux QCM que j'ai écrits le 25, et
+que Pascal a fusionnés sur ma parole qu'ils étaient « au gabarit ».
+
+| Banque | avant | après |
+|---|---|---|
+| `qcm_numerique_societe` (3e_C1.5) | 28/30 détachées, **+34,9 car.** | **0/30**, −1,0 car. |
+| `qcm_cybersecurite_usage_raisonne` (4e_C1.4) | 20/30 détachées, **+21,6 car.** | **0/30**, +1,5 car. |
+
+Dans le premier, **les 30 bonnes réponses sur 30 étaient les plus longues**. Un élève qui ne
+lisait rien et cochait la plus longue obtenait 30/30. Pendant trois jours, ces deux QCM ont été
+en ligne dans cet état.
+
+### Le remède n'est pas le même que la veille
+
+Sur `4e_C6.2`, la veille, j'avais corrigé le même défaut en **allongeant les distracteurs**. Ici
+c'est l'inverse : j'ai **raccourci 48 bonnes réponses**. La différence tient à ce qu'étaient les
+options. Dans le C6.2, les distracteurs étaient bâclés — les étoffer les rendait plus
+dangereux, donc meilleurs. Dans ces deux-là, les distracteurs sont bons et nets ; ce sont les
+bonnes réponses qui étaient des **phrases d'explication** :
+
+> « les réseaux, **qui permettent de partager fichiers et réunions à distance** » → « les réseaux à haut débit »
+
+L'explication a déjà sa place dans le champ `expl`, qui s'affiche à la correction. La garder
+aussi dans l'option, c'était la donner deux fois — et la donner d'avance.
+
+Une option a été **allongée** au contraire : « un délit, puni par la loi » (25 caractères) au
+milieu de distracteurs de 43 à 57. Le biais joue dans les deux sens.
+
+Rien d'autre n'a bougé : ni le sens des réponses, ni l'ordre des options, ni l'index de la bonne
+réponse, ni les 90 réfutations de chaque banque, ni `expl`/`ex`/`err`/`ret`. Répartition
+A/B/C/D toujours 8/7/7/8. Tests réels : **17/17 sur les deux banques.**
+
+### Ce que la suite de tests a appris en se généralisant
+
+En rendant la suite réutilisable d'un lot à l'autre, un test s'est ajouté : *aucun code n'a moins
+de 5 questions*. Les deux banques réparées le passent (10 questions par code). **`qcm_4e_C6.2`,
+livré hier, ne le passe pas** : C4.1 n'a que 3 questions, C4.5 en a 4, C1.4 en a 2. Ces codes-là
+sont **mobilisés** par le QCM, ils ne sont pas **évalués** par lui — c'est exactement la réserve
+que l'audit ChatGPT formulait sur les QCM à quatre questions par compétence. À écrire dans la
+fiche du lot, sur une branche Thème 2.
+
+Reste `qcm_book-train.html` (5/30 détachées, Thème 2, hérité) : hors périmètre de cette branche.
+
+- **n°201** — le même défaut n'appelle pas le même geste. Étoffer un distracteur bâclé, raccourcir
+  une bonne réponse bavarde : c'est le diagnostic qui choisit, pas la recette.
+- **n°202** — un QCM peut mobiliser une compétence sans l'évaluer. En dessous de cinq questions,
+  un code se cite en appui, il ne se reporte pas seul au LSU.
