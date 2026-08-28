@@ -7780,3 +7780,88 @@ d'attention. On ne la fait payer à l'élève que pour ce qui change dans le tem
   preuve ; ce qui est resté dans la conversation est perdu à la session suivante. *(Corollaire
   opératoire : la numérotation se vérifie — un trou dans la suite est une règle tombée, pas un
   numéro sauté.)*
+
+---
+
+## 2026-08-28 — Trois audits du Thème 2, vérifiés affirmation par affirmation
+
+Pascal a déposé trois audits externes de C4–C6 : une matrice de remplacements (25 défauts,
+24 activités rédigées), un audit ChatGPT et un audit Grok. Trois documents sérieux, longs,
+ancrés sur des noms de fichiers. La tentation était d'ouvrir un chantier de 25 correctifs.
+
+**Un audit est une production, pas un verdict.** Chaque affirmation vérifiable a donc été
+transformée en mesure sur le dépôt avant d'être retenue. Sur **24 affirmations vérifiables :
+17 exactes, 4 fausses, 3 exactes sur le fond et fausses sur le chiffre.**
+
+Lecture complète : `theme-2-…/_gouvernance/LECTURE_DES_TROIS_AUDITS_C4-C6.md`.
+
+### La plus grave était fausse
+
+ChatGPT annonçait une erreur technique dans du matériel élève : dans SOS serre,
+`192.168.20.1` serait posée en passerelle par défaut sans routeur pour la porter. Il proposait
+trois correctifs, dont « laisser la passerelle vide et expliquer » et « préciser que le `.1`
+est une convention ». **La page fait déjà les deux**, en toutes lettres — « la passerelle est
+prévue au plan mais non installée dans notre montage d'entraînement », « le `.1` n'est pas une
+loi d'Internet, c'est le choix du gestionnaire ». L'objection avait été anticipée et traitée
+avant d'être formulée. Appliquer le correctif aurait **retiré** l'explication qui répondait à
+l'objection.
+
+### « Le corpus déborde » : deux lots sur douze
+
+Les trois audits s'accordent sur le débordement horaire. Mesuré en lisant tous les marqueurs
+`⏱` des 17 séquences : **deux séquences sur douze sont sans marge** (`3e_C4.1–C4.2` à
+115 min pour 110 ; `4e_C6.1–C6.3` à 110 pour 110 — les deux chiffres annoncés par ChatGPT sont
+exacts au chiffre près). **Les dix autres ont entre 5 et 40 minutes de marge.**
+
+Le vrai décalage est ailleurs, et les trois l'ont manqué : douze séquences écrivent « séances
+de **55 min** », le créneau réel est de **90**. Une page qui tient dans 2 × 55 tient à l'aise
+dans 2 × 90. Le problème n'est pas qu'elle déborde, c'est qu'elle annonce un **nombre de
+séances** qui ne se pose pas sur les semaines. Bon remède (le calage Pronote), mauvais
+diagnostic.
+
+Et **cinq séquences n'annoncent aucune durée du tout**. Les trois audits ont calculé ces
+pages activité par activité ; aucun n'a vu que l'enseignant qui les ouvre n'a aucun chiffre
+sous les yeux. Chercher un défaut empêche de voir une absence.
+
+### Le statut cesse d'être une déclaration
+
+Les trois disent « la gouvernance de validation est trop généreuse ». Aucun ne dit de combien,
+parce qu'aucun ne comptait. `build_audit.py` déclarait « COMPLET ET VALIDABLE » code par code,
+à la main, dans son OVERLAY — et une déclaration ne se trompe jamais : elle se contente d'être
+fausse en silence.
+
+`_outils/controle_statut.py` mesure désormais, pour chaque code qui revendique ce statut, la
+présence effective des six pièces que le label implique : séquence, QCM **portant une vraie
+banque de questions**, fiche, matrice, synthèses, rapport de tests. Le contrôle ne promeut
+rien ; il refuse une revendication non tenue.
+
+Sur 31 codes qui le revendiquaient, **27 tiennent**. Quatre sont recalés :
+
+| Code | Manque | Devient |
+|---|---|---|
+| `4e_C4.1` jardin connecté | fiche pédagogique | À vérifier |
+| `4e_C4.2` Book Train | dossier vide | Mutualisé (ce qu'il est) |
+| `4e_C4.4` Book Train | dossier vide | Mutualisé |
+| `4e_C6.2` arrosage automatique | fiche, matrice, synthèses | À vérifier |
+
+Deux dossiers **vides** portaient l'étiquette « complet et validable ». Aucun des trois audits
+ne l'a vu — ils lisaient les pages, pas les dossiers.
+
+Le contrôle lit la **banque de questions**, jamais le nom du fichier : trois fichiers du dépôt
+s'appellent `qcm_*.html` sans porter la moindre question (`qcm_algorigrammes_domotique`, qui
+est un TP, `qcm_jardin_connecte`, `qcm_ecall_chaine_information`). Compter les noms les aurait
+validés tous les trois. C'est la règle n°184, appliquée à l'outil qui applique les règles.
+
+### Les règles
+
+- **n°190** — un statut qu'aucun contrôle ne peut retirer n'est pas un statut, c'est une
+  décoration. « Complet et validable » doit pouvoir être **perdu** par une mesure, sinon il ne
+  dit rien de plus que « quelqu'un l'a écrit un jour ».
+- **n°191** — un audit est une production, pas un verdict. Chaque affirmation vérifiable se
+  mesure avant d'être appliquée. Un audit qui se trompe une fois sur quatre reste un très bon
+  audit — à condition qu'on sache laquelle.
+- **n°192** — un correctif posé contre un défaut que la page a déjà traité coûte plus cher que
+  le défaut : il retire l'explication qui répondait à l'objection. Avant de corriger, lire ce
+  que la page dit déjà.
+- **n°193** — chercher un défaut empêche de voir une absence. Trois lecteurs ont calculé les
+  durées de cinq pages sans remarquer qu'aucune ne les affichait.
