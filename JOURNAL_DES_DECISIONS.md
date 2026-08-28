@@ -7118,3 +7118,124 @@ n'est pas la question » — et c'est cette phrase-là qui fait comprendre.
 longueur que la bonne réponse, puisqu'ils portent une idée complète. La règle
 n°148 sert donc aussi la n°144 : chercher des vérités hors sujet équilibre les
 propositions sans y penser.
+
+---
+
+## Règle d'or n°149 — un outil qui réécrit prouve d'abord qu'il sait ne rien changer
+
+*Née de deux outils : un qui perdait des données depuis des mois, et trois qui
+n'en ont perdu aucune — pour une seule raison de conception.*
+
+**Le contre-exemple.** `_outils/fix_r.js` répartit les bonnes réponses d'un QCM
+sur A / B / C / D. Il ne PERMUTE pas les questions : il les **réécrit**, champ
+par champ, à partir d'une liste fixe de noms connus. Deux conséquences,
+invisibles dans un diff parce qu'elles ressemblent à une mise en forme :
+
+1. **tout champ absent de sa liste disparaît.** C'est ce qui est arrivé au
+   champ `nuance` : ajouté à la banque, il s'évaporait à la construction, et
+   rien ne le signalait ;
+2. **il écrit les champs manquants avec la valeur « indéfini ».** Le moteur
+   affichait alors, à l'élève, « **Erreur fréquente : undefined** ». Cent
+   quarante questions du Thème 3 étaient dans ce cas, dont soixante déjà en
+   production depuis des semaines.
+
+**Les trois outils sains.** `appliquer_corrections.py`, `patch_html.py` et
+leurs dérivés font l'inverse : ils découpent, remplacent le champ demandé, et
+recomposent. Avant la première écriture, chacun a été passé au **round-trip à
+vide** — appliquer zéro correction, et vérifier que le fichier ressort
+identique à l'octet près. Les quatre banques et les cinq QCM HTML ont tous
+passé ce contrôle avant qu'une seule ligne ne soit modifiée.
+
+**La règle.** Un outil qui modifie un fichier ne le reconstruit pas : il le
+recopie et n'y touche qu'aux endroits nommés. Et avant de servir, il prouve
+qu'appliquer AUCUNE modification laisse le fichier rigoureusement intact.
+
+Le round-trip à vide coûte trois lignes. Il aurait fait tomber le défaut de
+`fix_r.js` le premier jour.
+
+---
+
+## Règle d'or n°150 — tout chiffre d'un attendu dit d'où il vient
+
+*Née d'une objection d'élève imaginée, puis retrouvée partout : « d'où sortent
+ce 10 secondes et ce 1 centimètre ? »*
+
+Un protocole se remplit de nombres : secouer 10 s, bouger de moins de 1 cm,
+alerter au-dessus de 28 °C, ventiler à partir de 100. Ces nombres ont l'air
+solides parce qu'ils sont précis. Mais un seuil que personne ne sait justifier
+ne vaut pas mieux qu'une impression — il en a seulement l'apparence.
+
+Il y a exactement **trois provenances honnêtes**, et il faut savoir dire
+laquelle :
+
+| Provenance | Exemple |
+|---|---|
+| un **texte** qui fait autorité | le cahier des charges de la mairie fixe 63, 118 et 178 km/h |
+| une **mesure** | au-delà d'un centimètre, la sonde sort de la terre et fausse tout |
+| une **décision assumée**, écrite comme telle | « nous choisissons 28 °C parce que c'est là que trois salles basculent » |
+
+La quatrième provenance — un nombre rond dont personne ne sait rien — est la
+seule à refuser. Elle se reconnaît à ce qu'aucune des trois questions ne trouve
+de réponse : quel texte ? quelle mesure ? quelle décision, prise par qui ?
+
+**La règle.** Un attendu chiffré s'accompagne de sa provenance, et l'élève
+apprend à la réclamer. C'est le prolongement naturel de la règle n°129 : on ne
+peut pas mesurer ce qu'on casse en changeant un seuil si l'on n'a jamais su
+pourquoi il valait ça.
+
+---
+
+## Règle d'or n°151 — la correction est lue par ceux qui ont juste
+
+*Née en mesurant le coût réel des erreurs trouvées dans les réfutations.*
+
+C'est l'observation qui donne à la règle n°139 toute sa portée, et elle mérite
+d'être dite séparément parce qu'elle change les priorités de relecture.
+
+Une erreur dans une **question** est vue par ceux qui la lisent, et elle se
+corrige dans la tête de l'élève au moment où il découvre la bonne réponse.
+Une erreur dans la **correction** — dans une explication, une réfutation, un
+« à retenir » — est lue par **toute la classe**, y compris par les élèves qui
+ont répondu juste et qui n'ont, eux, aucune raison de se méfier. Elle arrive
+au moment exact où l'élève a baissé sa garde : celui où on lui dit la vérité.
+
+Une banque de 30 questions porte 30 questions et **120 phrases de correction**.
+Le déséquilibre est écrasant, et l'attention le suit rarement : on relit les
+questions, on parcourt les corrections.
+
+**La règle.** Le temps de relecture se répartit à l'inverse de l'intuition :
+d'abord les réfutations et les « à retenir », ensuite les questions. Et une
+erreur trouvée dans une correction est traitée avec la gravité d'une erreur de
+cours — parce que c'en est une.
+
+---
+
+## Règle d'or n°152 — deux questions voisines qui se contredisent : défaut, ou leçon, jamais hasard
+
+*Née de deux contradictions internes trouvées le même jour, et traitées de deux
+manières opposées — délibérément.*
+
+**Le défaut.** En 4e_C8, la question 16 proposait, comme test discriminant, de
+remplacer l'attache par de l'inox. La question 20 de la même banque explique
+que l'inox est plus lourd et fait tomber la stabilité. Le test changeait donc
+deux choses à la fois : il ne départageait rien. La banque contenait la
+démonstration de sa propre erreur, à vingt questions d'écart. **Corrigé.**
+
+**La leçon.** En 3e, la question 16 fait valider l'objet sur quatre scénarios ;
+la question 17 montre que ces quatre scénarios ont laissé passer le
+clignotement au seuil. La tentation était d'ajouter un cinquième scénario et de
+faire disparaître la gêne. **Gardé** — et la nuance de la 16 annonce désormais
+que la suivante va la contredire. « Validé » ne veut pas dire « parfait » : cela
+veut dire « conforme à tout ce qui a été testé ». Cet enchaînement enseigne plus
+qu'une validation propre.
+
+**La règle.** Une banque de questions se relit comme un texte, pas comme une
+liste. Quand deux questions se contredisent, il n'y a que deux issues : c'est
+un défaut, et on corrige ; ou c'est une leçon, et on l'assume en l'écrivant
+noir sur blanc dans la correction. Laisser la contradiction sans trancher est
+la seule chose interdite — l'élève attentif la verra, et il en conclura que
+personne ne relit.
+
+**Conséquence pratique.** Aucun outil ne détecte cela. C'est le seul défaut de
+cette campagne qui ait exigé de lire une banque entière d'un bout à l'autre,
+et il faudra le refaire à chaque thème.
