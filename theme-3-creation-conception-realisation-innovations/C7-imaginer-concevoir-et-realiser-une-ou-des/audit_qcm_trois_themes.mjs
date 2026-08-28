@@ -100,7 +100,13 @@ for (const theme of THEMES) {
         pos[q.r]++;
         const autres = L.filter((_, k) => k !== q.r);
         if (L[q.r] === Math.max(...L)) plusLongue++;
-        if (L[q.r] > 1.2 * Math.max(...autres)) visible++;
+        // « Visiblement » plus longue : il faut un écart RELATIF (+20 %) ET un
+        // écart ABSOLU d'au moins 8 caractères. Sans ce plancher, l'indicateur
+        // se déclenche sur du bruit : « float » (5) contre « bool » (4) dépasse
+        // les 20 %, alors que rien ne se voit à l'œil. Un indicateur qui crie
+        // pour un caractère apprend à ne plus l'écouter (règle n°154).
+        const plusLong = Math.max(...autres);
+        if (L[q.r] > 1.2 * plusLong && L[q.r] - plusLong >= 8) visible++;
       }
     }
     const sansRefut = b.filter(q => !Array.isArray(q.d) || q.d.length !== q.o.length).length;
