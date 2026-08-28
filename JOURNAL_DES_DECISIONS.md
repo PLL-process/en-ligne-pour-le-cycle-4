@@ -7865,3 +7865,54 @@ validés tous les trois. C'est la règle n°184, appliquée à l'outil qui appli
   que la page dit déjà.
 - **n°193** — chercher un défaut empêche de voir une absence. Trois lecteurs ont calculé les
   durées de cinq pages sans remarquer qu'aucune ne les affichait.
+
+---
+
+## 2026-08-28 (correction) — Je comptais l'emoji, les espaces, et le signe
+
+La PR #263 publiait une lecture vérifiée de trois audits du Thème 2, et reprochait à leurs
+auteurs de mesurer des conventions d'écriture au lieu de mesurer des choses. **Trois de ses
+propres verdicts étaient faux, et pour exactement cette raison.**
+
+| Ce que j'avais écrit | Ce qui est vrai | Ce que je comptais |
+|---|---|---|
+| « le critère *9/9* n'existe pas » | la page écrit « **9 / 9** » | les espaces |
+| « cinq séquences n'annoncent aucune durée » | **une** seule ; les quatre autres écrivent la phrase sans ⏱ devant | l'emoji |
+| « `5e_C4.7` : 4 min d'activités pour 3 séances » | 144 min ; la page écrit « ⏱ **≈** 20 min » | le signe `≈` |
+
+Le compte du document passe de « 17 exactes, 4 fausses » à **18 exactes, 3 fausses** : la
+matrice D22 avait raison sur le critère de recopie. Et ma « découverte » — cinq pages sans
+durée annoncée, qu'aucun des trois audits n'aurait vue — se réduit à une page, `4e_C6.2`,
+c'est-à-dire au lot qui cumulait déjà tous les autres défauts. Elle n'apprenait rien.
+
+C'est la règle n°184, pour la sixième fois cette semaine, et la première fois dans un document
+qui la citait. Écrire la règle ne protège pas de la règle.
+
+### Ce qui change, cette fois
+
+Pas « faire attention ». `_outils/mesurer_temps_seances.py` **refuse de rendre son tableau**
+si une seule séquence ressort sans aucune durée d'activité lue, et dit pourquoi : zéro n'est
+presque jamais un résultat, c'est une panne de lecture. Les trois erreurs ci-dessus se seraient
+signalées seules.
+
+Passé immédiatement sur les trois thèmes, le contrôle a trouvé autre chose : **quatre pages du
+Thème 1 sans aucune durée d'activité** — deux pointeurs de mutualisation (normal, ils ne
+portent pas de séance) et **`4e_C1.4` et `3e_C1.5`**. Sixième indicateur indépendant à
+désigner les deux lots héritage, après le budget de lecture, les aides repliées, le mode
+essentiel, les QCM sans réfutation et l'absence de section « Activité ». Aucun des six n'a été
+construit pour les trouver.
+
+### Une question tranchée par le dépôt lui-même
+
+Je demandais à Pascal s'il fallait réécrire les bandeaux « 55 min » en créneaux de 90.
+La réponse était déjà dans le dépôt : les cinq pages du lot `3e_C9.2` (Thème 3, les plus
+récentes) écrivent **« 4 séances de 90 min (1 h 30) »**. Le gabarit existe ; ce sont les seize
+bandeaux du Thème 2 qui sont restés à l'ancienne convention. Reste la seule vraie décision
+d'enseignant : un lot en 4 × 55 devient 3 × 90 ou 2 × 90 selon ce qu'on garde — et ça, ça se
+décide devant une classe, pas devant un dépôt.
+
+### La règle
+
+- **n°194** — un outil de mesure se teste d'abord sur un cas dont on connaît déjà la réponse.
+  Un résultat nul n'est pas une découverte, c'est la première chose à vérifier. *(Corollaire de
+  la n°184 : la n°184 dit quelle erreur on commet ; la n°194 dit comment on l'attrape.)*

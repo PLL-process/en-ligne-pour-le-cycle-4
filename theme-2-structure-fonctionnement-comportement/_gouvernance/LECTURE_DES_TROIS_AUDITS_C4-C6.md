@@ -9,8 +9,14 @@ affirmations vérifiables ci-dessous a été transformée en mesure sur le dép�
 retenue ou écartée. Les scripts qui les mesurent sont dans `_outils/controle_statut.py` et
 dans le corps de ce document ; aucune n'est reprise sur parole.
 
-Bilan : **sur 24 affirmations vérifiables, 17 sont exactes, 4 sont fausses, 3 sont exactes
+Bilan : **sur 24 affirmations vérifiables, 18 sont exactes, 3 sont fausses, 3 sont exactes
 sur le fond et fausses sur le chiffre.** Et une chose qu'aucun des trois n'a vue.
+
+> **Corrigé le 28/08/2026 — trois verdicts de ce document étaient faux, et pour la même raison.**
+> Cf. §6. La première version annonçait « 17 exactes, 4 fausses », affirmait que cinq séquences
+> n'annonçaient aucune durée, et déclarait introuvable un critère qui est écrit dans la page.
+> Trois fois, je mesurais une convention d'écriture au lieu de la chose. Les chiffres ci-dessous
+> sont ceux de la mesure corrigée, produite par `_outils/mesurer_temps_seances.py`.
 
 ---
 
@@ -35,6 +41,7 @@ sur le fond et fausses sur le chiffre.** Et une chose qu'aucun des trois n'a vue
 | H2 « les quatre gestes de Packet Tracer » | matrice D05 | présent |
 | « M. Firmin, le gestionnaire » | matrice D21 | présent |
 | « La loi d'Ohm au chevet de la station » | matrice D09 | présent |
+| Critère « **9 / 9** et la chaîne recopiée au cahier » | matrice D22 | présent — *j'avais dit le contraire, voir §6* |
 
 ---
 
@@ -61,7 +68,7 @@ L'objection avait été anticipée et traitée avant d'être formulée. **Rien �
 ### 2.2 « Le corpus déborde de partout »
 
 Les trois documents s'accordent : les durées écrites sont incompatibles avec le volume
-d'activités. Mesuré sur les 17 séquences, en lisant tous les marqueurs `⏱` :
+d'activités. Mesuré sur les 17 séquences (`_outils/mesurer_temps_seances.py`) :
 
 | Séquence | annoncé | demandé | marge |
 |---|---:|---:|---|
@@ -70,21 +77,32 @@ d'activités. Mesuré sur les 17 séquences, en lisant tous les marqueurs `⏱` 
 | `3e_C4.3–C4.6` station alerte | 220 | 215 | +5 |
 | `3e_C4.7–C4.8` Internet Sainte-Luce | 165 | 160 | +5 |
 | `3e_C6.1–C6.3` programmer alerte | 165 | 160 | +5 |
+| `4e_C4.1–C4.2–C4.4` Book Train | 165 | 154 | +11 |
+| `4e_C4.7–C4.9` SOS serre | 220 | 205 | +15 |
+| `5e_C4.7–C4.8` réseau local | 165 | 144 | +21 |
+| `3e_C6.2` auto-test station | 165 | 144 | +21 |
 | `3e_C5.1–C5.4` SOS station | 220 | 195 | +25 |
+| `3e_C4.7–C4.8` pont numérique | 165 | 139 | +26 |
 | `4e_C5.1–C5.3` dépanner jardin | 165 | 135 | +30 |
 | `5e_C5.1–C5.3` dépanner lampadaire | 165 | 135 | +30 |
-| `4e_C4.1–C4.9` jardin | 220 | 185 | +35 |
+| `4e_C4.1–C4.9` jardin | 220 | 189 | +31 |
 | `5e_C6.1–C6.3` programmer lampadaire | 165 | 130 | +35 |
 | `5e_C4.1–C4.8` lampadaire | 275 | 235 | +40 |
+| `4e_C6.2` arrosage automatique | *aucun bandeau* | 145 | — |
 
-**Deux séquences sur douze sont sans marge. Les dix autres en ont de 5 à 40 minutes.**
-Le débordement existe : il fait exactement deux lots de large, pas dix-sept.
+**Deux séquences sur seize sont sans marge. Les quatorze autres en ont de 5 à 40 minutes.**
+Le débordement existe : il fait exactement deux lots de large, pas dix-sept. Les deux chiffres
+annoncés par ChatGPT (115/110 et 110/110) sont exacts au chiffre près.
 
-Et le vrai décalage n'est pas celui-là. **Douze séquences écrivent « séances de 55 min ».
-Le créneau réel est de 90.** Une séquence qui tient dans 2 × 55 tient à l'aise dans
-2 × 90 : le problème n'est pas qu'elle déborde, c'est qu'elle annonce un **nombre de
-séances** qui ne se pose pas sur les semaines de Pascal. Le calage Pronote proposé par la
-matrice (§3) est donc le bon remède — appliqué au bon diagnostic.
+Le vrai décalage est ailleurs. **Seize séquences écrivent « séances de 55 min ». Le créneau
+réel est de 90.** Une séquence qui tient dans 2 × 55 tient à l'aise dans 2 × 90 : le problème
+n'est pas qu'elle déborde, c'est qu'elle annonce un **nombre de séances** qui ne se pose pas
+sur les semaines. Le calage Pronote proposé par la matrice (§3) est donc le bon remède —
+appliqué au bon diagnostic.
+
+Et la maison a déjà tranché ailleurs : les cinq pages du lot `3e_C9.2` (Thème 3, les plus
+récentes du dépôt) écrivent **« 4 séances de 90 min (1 h 30) »**. Le gabarit existe ; ce sont
+les seize bandeaux du Thème 2 qui sont restés à l'ancienne convention.
 
 ### 2.3 « 16 séquences »
 
@@ -93,10 +111,8 @@ compte : la dix-septième est `sequence-jardin-connecte-arrosage-automatique.htm
 c'est-à-dire précisément celle qui pose le plus de problèmes. Deux audits sur trois ont bâti
 leur périmètre sans elle.
 
-### 2.4 Le critère « 9/9 et la chaîne recopiée »
-
-La matrice cite ce critère (D22) comme preuve de l'exigence de recopie. Il n'existe pas dans
-la page. La consigne de recopie, elle, existe bien : c'est le chiffre qui est inventé.
+*(La section 2.4 de la première version — « le critère 9/9 n'existe pas » — était fausse.
+Elle est retirée : voir §6.)*
 
 ---
 
@@ -112,15 +128,17 @@ la page. La consigne de recopie, elle, existe bien : c'est le chiffre qui est in
 
 ## 4. Ce qu'aucun des trois n'a vu
 
-**Cinq séquences n'annoncent aucune durée.** `pont_numerique`, `sos_serre`,
-`reseau_local_packet_tracer`, `auto_test_station` et `jardin-connecte-arrosage-automatique`
-n'ont pas de bandeau `⏱` du tout. Les trois audits ont *calculé* les durées de ces pages
-activité par activité ; aucun n'a remarqué que l'enseignant qui les ouvre, lui, n'a aucun
-chiffre sous les yeux. C'est le trou le plus simple à combler du lot.
+**Une séquence n'annonce aucune durée** : `4e_C6.2` (`sequence-jardin-connecte-arrosage-automatique`),
+seule des dix-sept à n'avoir ni bandeau, ni nombre de séances. L'enseignant qui l'ouvre n'a
+aucun chiffre sous les yeux. C'est le lot qui cumule déjà tout le reste.
+
+*(La première version de ce document annonçait **cinq** séquences muettes. C'était faux : les
+quatre autres écrivent bien « N séances de 55 min », simplement sans l'emoji ⏱ juste devant,
+et c'est l'emoji que je comptais. Voir §6.)*
 
 **Le statut public de quatre codes n'est pas soutenable.** Les trois audits disent, chacun à
 sa manière, que la gouvernance de validation est trop généreuse. Aucun ne dit de combien.
-Le contrôle posé par cette PR (`_outils/controle_statut.py`) mesure, pour chaque code
+Le contrôle posé par la PR #263 (`_outils/controle_statut.py`) mesure, pour chaque code
 revendiquant « ✅ complet et validable », la présence effective des six pièces que ce label
 implique — séquence, QCM avec une vraie banque, fiche, matrice, synthèses, rapport de tests.
 
@@ -136,8 +154,6 @@ Sur les 31 codes qui le revendiquaient :
 **27 sur 31 tiennent leur promesse.** Le défaut est réel et il fait quatre codes de large.
 Les deux codes du Book Train ne perdent rien : leur travail existe, dans
 `4e_C4.1_book-train/` — c'est leur étiquette qui était fausse, pas leur contenu.
-
----
 
 ## 5. Ce qui reste à faire, dans l'ordre
 
@@ -158,3 +174,30 @@ Le reste — kits TBT, quiz sécurité en quatre images, carrousel des défauts,
 algorigramme magnétique, captures Packet Tracer — sont de **bonnes propositions de classe**
 qui ne se rangent pas dans un dépôt HTML. Elles valent d'être faites ; elles ne valent pas
 d'être commitées.
+
+---
+
+## 6. Correction — trois verdicts de ce document étaient faux
+
+Publiés le 28/08/2026 dans la PR #263, corrigés le même jour. Les trois erreurs sont la même.
+
+| Ce que j'avais écrit | Ce qui est vrai | Ce que je mesurais |
+|---|---|---|
+| « Le critère *9/9* n'existe pas dans la page » | La page écrit « Critère de réussite : **9 / 9** et la chaîne recopiée au cahier avec les natures d'énergie ». La matrice D22 avait raison. | les espaces |
+| « Cinq séquences n'annoncent aucune durée » | **Une** seule. Les quatre autres écrivent « N séances de 55 min » sans ⏱ devant. | l'emoji |
+| `5e_C4.7–C4.8` : 4 min d'activités pour 3 séances | 144 min. La page écrit « ⏱ **≈** 20 min » ; mon lecteur n'admettait pas le `≈`. | le signe |
+
+Trois fois la règle d'or n°184 — *un indicateur bâti sur une convention d'écriture mesure la
+convention, pas la chose* — commise dans le document qui la reprochait à trois audits externes.
+Un audit qui se trompe une fois sur quatre reste un bon audit ; le mien se trompait une fois
+sur huit, ce qui ne vaut pas mieux tant qu'on ne sait pas laquelle.
+
+Le remède n'est pas la vigilance, c'est le contrôle : `_outils/mesurer_temps_seances.py`
+**refuse de rendre son tableau** si une seule séquence ressort sans aucune durée d'activité —
+parce que zéro n'est presque jamais un résultat, c'est une panne de lecture. Passé sur les
+trois thèmes, ce contrôle a immédiatement signalé quatre pages du Thème 1 : deux pointeurs de
+mutualisation (normal) et **les deux lots héritage `4e_C1.4` et `3e_C1.5`, qui n'écrivent
+aucune durée d'activité**. Sixième indicateur indépendant à désigner ces deux-là.
+
+**Règle d'or n°194** — un outil de mesure se teste d'abord sur un cas dont on connaît la
+réponse. Un résultat nul n'est pas une découverte : c'est la première chose à vérifier.
