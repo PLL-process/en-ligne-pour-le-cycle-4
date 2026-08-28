@@ -427,7 +427,7 @@
       </span>
 
       <span class="score-pill">⏱️ <span id="chrono">00:00</span></span>
-      <span class="score-pill">🏁 <strong id="scoreTotal">0</strong>/65</span>
+      <span class="score-pill">🏁 <strong id="scoreTotal">0</strong>/<strong id="scoreMax">69</strong></span>
       <button class="btn" id="btnRecalc">🔄 Recalculer</button>
       <button class="btn" id="btnPDF">📄 PDF</button>
     </div>
@@ -518,7 +518,7 @@
     <p>Cette situation est inspirée de faits réels récents. Par exemple, en juillet 2025, la ville de St. Paul aux États-Unis a été victime d'une attaque ransomware par le groupe Interlock, qui a volé 43 Go de données internes, y compris des informations sensibles sur les citoyens. De même, en septembre 2025, un cyberincident majeur a perturbé les aéroports européens comme Heathrow, causé par une surcharge DDoS qui a paralysé les systèmes. Au collège, un tel risque pourrait survenir via un phishing ciblant les élèves, comme dans l'attaque algérienne contre le fonds social marocain en avril 2025, où des hackers ont fuité des données sensibles.</p>
     <p><strong>Risques impliqués :</strong> Le phishing peut mener à l'installation d'un keylogger (enregistreur de frappes) ou d'un trojan, exposant tes mots de passe et données personnelles. Un ransomware pourrait chiffrer tes fichiers scolaires, exigeant une rançon. Une attaque DDoS pourrait bloquer l'accès au site du collège, perturbant les cours en ligne.</p>
     <p><strong>Bonne attitude à avoir :</strong> Vérifie toujours l'expéditeur (hover sur l'e-mail pour voir l'adresse réelle). Ne clique pas sur des liens suspects ; contacte directement la direction par un canal officiel (comme l'ENT du collège). Active la 2FA sur tous tes comptes, utilise un antivirus à jour, et fais des sauvegardes régulières de tes devoirs sur un cloud sécurisé comme OneDrive scolaire. Si tu suspects quelque chose, alerte un adulte ou le professeur de technologie immédiatement.</p>
-    <p>En adoptant ces habitudes, tu évites de devenir le "maillon faible" et protèges non seulement tes données, mais aussi celles de ton entourage. Souviens-toi : la vigilance est la première ligne de défense !</p>
+    <p>En adoptant ces habitudes, tu te donnes les moyens de repérer une attaque, et tu protèges non seulement tes données mais aussi celles de ton entourage. Souviens-toi : la vigilance est la première ligne de défense !</p>
   </div>
     
   <!-- 0. UTILISER CHATGPT -->
@@ -563,7 +563,7 @@ lui-même.</p>
        <span class="tag tooltip" data-tip="Antivirus/MAJ : réduit le risque de compromission.">MAJ & Antivirus</span>
        <span class="tag tooltip" data-tip="Malware : logiciel malveillant qui infecte l'ordinateur.">Malware</span>
        <span class="tag tooltip" data-tip="DDoS : surcharge un site avec trop de connexions.">DDoS</span>
-       <span class="tag tooltip" data-tip="VPN : masque ton IP et chiffre ta connexion.">VPN</span>
+       <span class="tag tooltip" data-tip="VPN : chiffre ta connexion jusqu'à son fournisseur, à qui tu accordes alors ta confiance.">VPN</span>
        <span class="tag tooltip" data-tip="HTTPS : protocole sécurisé qui chiffre les données.">HTTPS</span>
        <span class="tag tooltip" data-tip="Cookie : fichier qui suit tes actions sur un site.">Cookie</span></p>
 
@@ -693,7 +693,7 @@ lui-même.</p>
   </div>
 </div>
 
-    <h3>💬  1.d&nbsp;—&nbsp;Pourquoi dit‑on que les humains sont le maillon faible ? (non noté)</h3>
+    <h3>💬  1.d&nbsp;—&nbsp;Pourquoi les attaques visent-elles d'abord les personnes, plutôt que les machines ? (non noté)</h3>
     <div class="response-label">Ta réponse ici 👇</div><textarea id="q1why" aria-label="1.d — Pourquoi dit-on que les humains sont le maillon faible ?"></textarea><details class="etayage"><summary>🪜 Version étayée — des phrases à compléter</summary><p>Le niveau attendu est <b>exactement le même</b> qu'avec la consigne libre : ces débuts de phrases retirent l'obstacle de la rédaction, pas l'exigence.</p><ul><li>On dit que l'humain est le maillon faible parce que ____ .</li><li>Un exemple concret : ____ .</li><li>Pourtant, l'humain est aussi le maillon FORT quand ____ .</li></ul></details>
 
     <h3>✏️ 1.e&nbsp;—&nbsp;Micro‑questions — Mots de passe (1 point)</h3>
@@ -2495,7 +2495,10 @@ function speak(text) {
 
 
 
-// ---- Scoring weights (Total /65) ----
+// ---- Poids des six blocs ----
+// Le total affiché était figé à 65 alors que la somme des poids fait 69 :
+// un élève parfait obtenait « 69/65 ». Le dénominateur se LIT désormais sur
+// les poids, il ne se recopie plus à la main (règle n°155).
 const scores = { s1:0, s2:0, s3:0, s4:0, s5:0, s6:0 };
 const W = { s1:14, s2:8, s3:11, s4:11, s5:10, s6:15 }; // tu l’as déjà plus bas
 
@@ -2504,8 +2507,7 @@ function recalc(){
   const max = W.s1 + W.s2 + W.s3 + W.s4 + W.s5 + W.s6;
   const pct = Math.max(0, Math.min(100, Math.round(100*total/max)));
   document.getElementById('scoreTotal').textContent = total;
-  { const _t = document.getElementById('scoreTotal2'); if (_t) _t.textContent = total; }
-  /* FIXME : aucun élément #scoreTotal2 dans la page — le total ne s'affiche nulle part. */
+  { const _m = document.getElementById('scoreMax'); if (_m) _m.textContent = max; }
   const bar = document.getElementById('prog');
   if (bar) bar.style.width = pct + '%';
 }
