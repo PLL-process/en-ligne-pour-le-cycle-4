@@ -8014,3 +8014,69 @@ condamne. Les synthèses seront écrites parce qu'un élève absent en a besoin,
 - **n°197** — l'auteur d'un contrôle est le premier à devoir le respecter. Créer la pièce qui
   fait passer sa propre mesure au vert, sans que la pièce serve à quelqu'un, c'est truquer les
   deux.
+
+---
+
+## 2026-08-28 — Le QCM du lot 4e_C6.2, et un défaut que je répétais depuis trois jours
+
+`4e_C6.2` avait trois fichiers `qcm_` dans son dossier et aucun bouton de QCM dans sa page :
+l'élève n'y arrivait jamais. Des trois, l'un porte sur l'**éclairage** et code en vocabulaire
+privé (CAP/PRG/SYS), l'autre est un **TP** dont le nom de fichier ment, et le troisième — 24
+questions sur le bon sujet — était écrit à l'ancienne, avec **la bonne réponse en clair dans le
+code de la page** (`value="v0"`).
+
+Ces 24 questions sont devenues la matière première du QCM du lot : 20 reprises, 3 réécrites
+(deux « coche les éléments » et une réponse libre, que le gabarit ne porte pas), 1 abandonnée
+(elle demandait quel code du dépôt correspond à l'activité — une question sur notre
+nomenclature, pas sur la technologie), et 10 nouvelles sur ce que la séquence enseigne et que
+l'ancien QCM ne visitait pas : la conversion 0–1023, le cas frontière, la portée d'une preuve,
+et ce que devient ce qu'on tape dans un éditeur en ligne.
+
+Résultat : 30 questions, 90 réfutations, 30 notions nommées, cinq codes du programme, 8/7/7/8.
+Un seul bouton dans la séquence — la règle n°4 est tenue.
+
+### Le test qui a échoué est le plus utile de la série
+
+Au premier passage, **24 questions sur 30 avaient la bonne réponse la plus longue**, avec 12,5
+caractères d'avance en moyenne. C'est le défaut classique du QCM écrit à la main : on soigne la
+bonne réponse et on expédie les distracteurs. Un élève qui coche la plus longue s'en tire sans
+rien savoir.
+
+Première correction : la bonne réponse n'était plus la plus longue que 3 fois sur 30 — mais la
+plus **courte** 24 fois sur 30. **J'avais échangé le biais contre son miroir.** Le rang n'est
+donc pas le bon critère : ce qui compte est l'écart **visible**. Après la deuxième passe, l'écart
+moyen est de −1,6 caractère, et aucune bonne réponse ne se détache de plus de 8 caractères.
+
+La correction a consisté à **allonger les distracteurs**, pas à raccourcir les bonnes réponses :
+un distracteur détaillé et plausible est un meilleur piège qu'un distracteur bâclé — et il
+correspond à une vraie erreur d'élève.
+
+### Puis j'ai passé la mesure sur les 43 banques du dépôt
+
+`_outils/controle_longueurs.py` mesure, pour chaque banque, la part de questions où la bonne
+réponse se détache de plus de 8 caractères du peloton. Les QCM anciens de la maison sont entre
+0 et 10 %. Trois dépassent le seuil de 15 % :
+
+| QCM | détachées | écart moyen | auteur |
+|---|---|---|---|
+| `qcm_numerique_societe.html` (3e_C1.5) | **28 / 30** | **+34,9 car.** | moi, PR #261 |
+| `qcm_cybersecurite_usage_raisonne.html` (4e_C1.4) | **20 / 30** | **+21,6 car.** | moi, PR #261 |
+| `qcm_book-train.html` (4e_C4.1·C4.2·C4.4) | 5 / 30 | +7,9 car. | hérité |
+
+Dans `qcm_numerique_societe`, **les 30 bonnes réponses sur 30 sont les plus longues.** Un élève
+qui ne lit aucune question et coche systématiquement la réponse la plus longue obtient 30/30.
+Ces deux QCM sont fusionnés depuis trois jours et je les ai annoncés « au gabarit ». Ils le
+sont : le gabarit ne dit rien de la longueur des options. C'est un contrôle qui manquait.
+
+Les deux sont dans le Thème 1 : ils seront corrigés sur une branche `theme-1`, pas ici.
+
+### Les règles
+
+- **n°198** — dans un QCM, la bonne réponse ne doit pas se reconnaître sans lire la question.
+  Un distracteur bâclé est une réponse offerte. On corrige en étoffant les distracteurs, jamais
+  en tronquant la bonne réponse.
+- **n°199** — corriger un biais en l'inversant, ce n'est pas le corriger. Après « la plus
+  longue », « la plus courte » se devine aussi bien. Ce qui doit disparaître, c'est l'écart
+  visible, pas le rang.
+- **n°200** — un contrôle qui n'existe pas laisse passer un défaut dans tout ce qu'on a produit
+  entre-temps. Celui-ci a été écrit trois jours trop tard, et deux lots déjà fusionnés le paient.

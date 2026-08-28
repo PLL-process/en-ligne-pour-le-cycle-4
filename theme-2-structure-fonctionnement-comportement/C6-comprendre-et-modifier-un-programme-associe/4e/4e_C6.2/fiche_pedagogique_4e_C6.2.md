@@ -83,6 +83,12 @@ la 3ᵉ explicitement nommé : la version multi-conditions attend dans `3e_C9.1`
 Grille LSU à quatre niveaux, appliquée à 4e_C6.2 en séance 3, sur la capacité observable :
 insuffisante (condition non complétée même aidée) · fragile (complétée avec les deux aides) ·
 satisfaisante (complétée et exécutée seul·e) · très bonne (banc au vert, frontière justifiée).
+QCM d'entraînement : `qcm_4e_C6.2_arrosage_automatique.html` — **30 questions, 90 réfutations**
+(une par distracteur), 30 notions nommées, codes 4e_C6.2 (16) · C4.4 (5) · C4.5 (4) · C4.1 (3) ·
+C1.4 (2), répartition A/B/C/D 8/7/7/8. Écrit le 28/08/2026 à partir des 24 questions du QCM
+hérité du lot, qui portaient sur le bon sujet mais exposaient la bonne réponse dans le code de
+la page (`value="v0"`). Correspondance notion → numéro de question dans
+`matrice_couverture_4e_C6.2.csv`.
 **Sommative** : à construire par l'enseignant. Aucun corrigé sommatif publié.
 
 ## Dépendances — à lire avant de réserver la salle
@@ -111,11 +117,11 @@ Rapport de tests : **27 / 27**, suite Playwright réelle sous Chromium en 390×8
 
 1. **Le mode essentiel** — absent, seul cas du Thème 2.
 2. **Les séances ne sont pas navigables** : trois séances annoncées dans le texte, aucun onglet.
-3. **Aucun bouton de QCM dans la page** — alors que trois fichiers `qcm_` sont posés à côté. Le
-   Thème 2 compte une séquence avec deux boutons (le jardin C4) et celle-ci avec zéro. Détail des
-   trois fichiers dans la note en pied de `matrice_couverture_4e_C6.2.csv` : un QCM au gabarit
-   mais sur l'**éclairage** et codé en vocabulaire privé (CAP/PRG/SYS) ; un QCM de 24 questions
-   sur le bon sujet mais écrit à l'ancienne ; et un TP dont le nom de fichier ment.
+3. ~~Aucun bouton de QCM dans la page~~ — **corrigé le 28/08/2026** : le lot a désormais son QCM
+   au gabarit, et un seul bouton (règle n°4). Les trois fichiers `qcm_` historiques restent dans
+   le dossier sans être boutonnés : un QCM au gabarit mais sur l'**éclairage**, codé en
+   vocabulaire privé (CAP/PRG/SYS) ; le QCM hérité de 24 questions, devenu matière première du
+   nouveau ; et un TP dont le nom de fichier ment (`qcm_algorigrammes_domotique.html`).
 4. **Les synthèses élève et professeur ne sont pas des fichiers.** La page porte une section
    « Synthèse — à retenir » et une « Fiche professeur » repliée ; le dossier `Synthèses/` ne
    contient qu'un `.gitkeep`. Le contenu existe, le fichier non — ce qui est exactement ce que le
@@ -125,9 +131,9 @@ Rapport de tests : **27 / 27**, suite Playwright réelle sous Chromium en 390×8
 
 ## Ce qui reste à faire, dans l'ordre
 
-1. Un QCM du lot au gabarit maison, sur l'**arrosage** — les 24 questions de
-   `qcm_jardin_connecte.html` sont la matière première, il leur manque la banque, les codes du
-   programme, les réfutations par distracteur et les notions nommées.
+1. ~~Un QCM du lot au gabarit maison~~ — **fait le 28/08/2026.**
 2. Le mode essentiel, aligné sur les seize autres séquences.
 3. Les onglets de séances, sur les trois que la page nomme déjà.
 4. Exporter les deux synthèses en fichiers, depuis le contenu qui est déjà dans la page.
+   *C'est la dernière pièce qui manque au contrôle de statut — elle sera écrite parce qu'un élève
+   absent en a besoin, pas pour faire passer une mesure au vert (règle n°197).*

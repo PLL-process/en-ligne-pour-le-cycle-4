@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 2 · Martinique — 4e · QCM — Le jardin connecté : arrosage automatique (4e_C6.2)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence-jardin-connecte-arrosage-automatique.html">← Séquence</a></nav>
+<h1>🌱 QCM — Le jardin connecté : arrosage automatique</h1>
+<p class="subtitle">Analyser les relevés, l'hystérésis et la plage horaire, la méthode de test et de validation</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C6.2</span>
+  <span class="badge theme">30 questions · chaque distracteur réfuté</span>
+</div>
+<p style="text-align:center"><a href="sequence-jardin-connecte-arrosage-automatique.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C6.1">4e_C6.1 — Analyser les données, déduire les modifications</option>
+      <option value="C6.3">4e_C6.3 — Tester et valider une modification</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C6.1 · C6.3 · Thème 2 · Technologie cycle 4 (2024) · <a href="sequence-jardin-connecte-arrosage-automatique.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ C4.4 ═══ */
+{c:"C4.4",n:"L'organe qui acquiert",q:"Dans le jardin connecté, quel élément ACQUIERT l'information ?",
+ o:["La pompe à eau du réservoir","Le capteur d'humidité du sol","Le relais de commande du circuit","La pile 9 V qui alimente le boîtier"],r:1,
+ expl:"Acquérir, c'est transformer une grandeur du monde réel — ici l'humidité de la terre — en un signal que la carte pourra lire. C'est le métier du capteur, et de lui seul.",
+ ex:"Le même geste qu'en 5e avec la LDR du lampadaire : la lumière devenait un signal ; ici c'est l'eau contenue dans la terre.",
+ err:"Confondre l'organe qui MESURE et l'organe qui AGIT.",
+ d:["La pompe agit sur le monde : elle est en bout de chaîne, pas au début.","","Le relais laisse passer le courant vers la pompe : il appartient à la chaîne d'énergie.","La pile fournit l'énergie ; elle ne mesure rien du tout."],
+ ret:"Acquérir = transformer une grandeur physique en signal. C'est le capteur."},
+{c:"C4.4",n:"L'organe qui traite",q:"Quel élément TRAITE l'information ?",
+ o:["Le pot qui contient la terre","Le tuyau d'arrosage souple","La carte programmable","L'écran LCD du boîtier"],r:2,
+ expl:"Traiter, c'est comparer la mesure au seuil et en tirer une décision. Seule la carte exécute un programme : elle seule peut décider.",
+ ex:"Le programme que tu complètes à l'activité 5 s'exécute exactement là.",
+ err:"Prendre l'organe qui AFFICHE pour l'organe qui DÉCIDE.",
+ d:["Le pot contient la terre. Il ne participe à aucune des deux chaînes.","Le tuyau conduit l'eau : c'est de la matière qui circule, pas de l'information.","","L'écran RESTITUE une information déjà traitée ; il ne la traite pas."],
+ ret:"Traiter = comparer et décider. C'est la carte programmable."},
+{c:"C4.4",n:"L'organe qui restitue",q:"Quel élément COMMUNIQUE l'état du sol à l'utilisateur ?",
+ o:["La batterie","La pompe","Le capteur","L'écran LCD"],r:3,
+ expl:"Communiquer/restituer, c'est rendre l'information lisible par un humain. L'écran est le seul organe du prototype tourné vers la personne, pas vers la plante.",
+ ex:"Sans écran, le système marcherait toujours — mais personne ne saurait pourquoi.",
+ err:"Croire que l'action visible (l'eau qui coule) est la restitution de l'information.",
+ d:["La batterie alimente : elle n'appartient pas à la chaîne d'information.","La pompe agit sur la plante ; elle ne dit rien à l'utilisateur.","Le capteur est à l'entrée de la chaîne : il fournit l'information, il ne la rend pas lisible.",""],
+ ret:"Restituer = rendre l'information lisible par un humain. C'est l'écran."},
+{c:"C4.4",n:"La couture entre les deux chaînes",q:"Le lien entre la chaîne d'information et la chaîne d'énergie se fait par…",
+ o:["le soleil, qui sèche la terre du matin","le tuyau qui relie la pompe au pot","le pot, qui reçoit l'eau et la terre","l'ordre envoyé par la carte au relais"],r:3,
+ expl:"C'est le point le plus important du schéma : un ordre — un signal minuscule — commande un relais qui, lui, laisse passer la puissance. L'information COMMANDE l'énergie.",
+ ex:"C'est la flèche verticale du schéma : information en haut, énergie en bas, et l'ordre qui descend de l'une vers l'autre.",
+ err:"Chercher le lien dans un objet matériel (tuyau, pot) au lieu de le chercher dans un signal.",
+ d:["Le soleil n'intervient pas : ce prototype est alimenté par une pile.","Le tuyau transporte l'eau, en aval de la pompe : il ne commande rien.","Le pot n'est ni dans la chaîne d'information ni dans celle d'énergie.",""],
+ ret:"L'information commande l'énergie. Le point de couture est l'ordre carte → relais."},
+{c:"C4.4",n:"Capteur ou actionneur",q:"Le capteur d'humidité et la pompe : lequel est un ACTIONNEUR ?",
+ o:["La pompe : elle transforme un ordre en action","Le capteur : il agit sur le programme de la carte","Les deux, puisqu'ils sont branchés sur la même carte","Aucun des deux : c'est le relais qui agit sur le circuit"],r:0,
+ expl:"Un actionneur transforme un ordre en action sur le monde. La pompe déplace de l'eau : c'est une action. Le capteur, lui, ne fait qu'informer.",
+ ex:"Capteur = l'organe des sens. Actionneur = le muscle.",
+ err:"Appeler « actionneur » tout ce qui est branché et qui bouge.",
+ d:["","Le capteur informe le programme ; informer n'est pas agir sur le monde.","Être branché ne définit rien : la pile aussi est branchée et n'est ni l'un ni l'autre.","Le relais distribue l'énergie ; c'est la pompe qui produit l'action."],
+ ret:"Actionneur = transforme un ordre en action. Capteur = transforme une grandeur en signal."},
+/* ═══ C4.1 ═══ */
+{c:"C4.1",n:"Le rôle du relais",q:"Dans la chaîne d'ÉNERGIE, le relais a pour fonction de…",
+ o:["ACQUÉRIR l'humidité contenue dans le sol","CONVERTIR l'énergie électrique en lumière","DISTRIBUER l'énergie vers la pompe","STOCKER l'eau en attendant l'arrosage"],r:2,
+ expl:"Distribuer, c'est laisser passer ou couper, SANS changer la nature de l'énergie. Avant le relais : de l'électricité. Après : la même électricité, ou rien.",
+ ex:"Un interrupteur mural distribue de la même façon : il n'invente aucune énergie.",
+ err:"Confondre distribuer (le passage) et convertir (le changement de nature).",
+ d:["Acquérir appartient à la chaîne d'information, et c'est le métier du capteur.","Rien ne s'allume dans ce prototype : aucune énergie n'est convertie en lumière ici.","","Stocker de l'eau, ce serait le réservoir — et l'eau n'est pas de l'énergie électrique."],
+ ret:"Distribuer = laisser passer sans changer la nature de l'énergie."},
+{c:"C4.1",n:"Ce que fait la pompe à l'énergie",q:"La pompe CONVERTIT l'énergie électrique en énergie…",
+ o:["sonore : le moteur émet un bourdonnement","lumineuse : une LED signale l'arrosage","chimique : la pile se recharge un peu","mécanique : l'eau se met en mouvement"],r:3,
+ expl:"Convertir, c'est CHANGER la nature de l'énergie. La pompe reçoit de l'électricité et produit un mouvement : c'est bien une conversion.",
+ ex:"Même verbe que la pompe du jardin de la séquence C4 : électrique → mécanique.",
+ err:"Prendre un effet secondaire (le bruit, la chaleur) pour la conversion utile.",
+ d:["Le bruit est une perte, pas la fonction : une pompe silencieuse remplirait mieux sa mission.","Aucune LED n'est commandée par la pompe.","La pile RESTITUE de l'énergie chimique ; la pompe ne la recharge pas.",""],
+ ret:"Convertir = changer la nature de l'énergie. La pompe : électrique → mécanique."},
+{c:"C4.1",n:"Qui appartient à la chaîne d'énergie",q:"Parmi ces quatre organes, lequel appartient à la chaîne d'ÉNERGIE ?",
+ o:["La pile 9 V","Le capteur d'humidité","L'écran LCD","Le programme de la carte"],r:0,
+ expl:"La chaîne d'énergie alimente, stocke, distribue et convertit la PUISSANCE. La pile est la source : elle en est le premier maillon.",
+ ex:"Question réécrite : l'ancienne demandait de cocher plusieurs cases, ce qui punit deux fois la même hésitation.",
+ err:"Ranger dans la chaîne d'énergie tout ce qui consomme du courant — l'écran en consomme, mais son rôle est d'informer.",
+ d:["","Le capteur mesure : il est le premier maillon de l'AUTRE chaîne.","L'écran consomme du courant, mais sa fonction est de restituer une information.","Un programme n'est pas un organe : il ne fait passer aucune énergie."],
+ ret:"Chaîne d'énergie : alimenter, stocker, distribuer, convertir."},
+/* ═══ C4.5 ═══ */
+{c:"C4.5",n:"Ce que renvoie un capteur analogique",q:"Un capteur d'humidité ANALOGIQUE renvoie…",
+ o:["uniquement 0 ou 1, sans valeur entre les deux","une valeur qui varie continûment, sans crans","du texte déjà mis en forme pour l'écran","une photographie du sol prise régulièrement"],r:1,
+ expl:"Analogique = sans crans. La grandeur physique varie sans à-coups, et le signal la suit. C'est pour cela qu'il faudra ensuite la convertir en nombre.",
+ ex:"À l'activité 2, ce signal continu devient un nombre entre 0 et 1023.",
+ err:"Croire qu'un capteur « parle » déjà la langue du programme.",
+ d:["0 ou 1, ce serait un capteur TOUT OU RIEN — un contact, pas une mesure.","","Aucun capteur ne produit du texte : c'est le programme qui met en forme.","Une image demanderait une caméra, et bien plus qu'une entrée analogique."],
+ ret:"Analogique = varie sans crans. Numérique = compte par crans."},
+{c:"C4.5",n:"Les bornes de la mesure brute",q:"Le capteur renvoie un nombre entre 0 et 1023. Que vaut 0 ?",
+ o:["un seuil que l'on a réglé à zéro","un sol entièrement saturé d'eau","un capteur débranché de la carte","un sol complètement sec, sans eau"],r:3,
+ expl:"L'échelle est donnée par le document 1 de l'activité 2 : 0 = sol complètement sec, 1023 = sol saturé. Lire l'échelle AVANT de calculer, c'est la moitié du travail.",
+ ex:"Un capteur qui renverrait toujours 0 en terre humide serait en panne — c'est une piste de diagnostic, pas une lecture.",
+ err:"Deviner le sens de l'échelle au lieu de le lire dans le document.",
+ d:["Le seuil est une valeur du PROGRAMME, pas une lecture du capteur.","1023 est la borne haute : c'est elle qui correspond au sol saturé.","Un capteur débranché ne donne pas une mesure valide : il donne une valeur qui ne veut rien dire.",""],
+ ret:"0 = sec, 1023 = saturé. On lit l'échelle avant de calculer."},
+{c:"C4.5",n:"De la mesure brute au pourcentage",q:"Le capteur renvoie 512 sur une échelle de 0 à 1023. Le programme affiche environ…",
+ o:["50 %","5 %","512 %","1023 %"],r:0,
+ expl:"512 est à peu près la moitié de 1023 : la moitié de l'échelle, donc environ 50 %. Convertir, ici, c'est ramener une échelle inconnue de l'élève à une échelle qu'il connaît.",
+ ex:"C'est exactement le calcul de l'activité 2 : valeur ÷ 1023 × 100.",
+ err:"Recopier le nombre brut en croyant que c'est déjà un pourcentage.",
+ d:["","5 %, ce serait une valeur brute d'environ 51, pas 512.","512 % n'a aucun sens : un pourcentage d'humidité ne dépasse pas 100.","1023 % encore moins : c'est la borne de l'échelle brute, pas un pourcentage."],
+ ret:"Mesure brute ≠ donnée utile. On convertit pour comparer à ce qu'on connaît."},
+{c:"C4.5",n:"Garder la trace des mesures",q:"Pour suivre l'humidité sur plusieurs jours, on enregistre les mesures dans…",
+ o:["la mémoire interne du tuyau d'arrosage","un dessin fait à la main sur le cahier","un fichier de données lisible par un tableur","une note écrite et collée sur le pot"],r:2,
+ expl:"Une donnée qu'on veut relire, trier et tracer doit être RANGÉE : une ligne par mesure, une colonne par information, et un horodatage pour savoir quand.",
+ ex:"C'est la table du jardin connecté, déjà rencontrée dans la séquence C4.",
+ err:"Croire qu'une mesure notée quelque part est une donnée exploitable.",
+ d:["Un tuyau n'a pas de mémoire : seul un support numérique conserve une valeur.","Un dessin ne se trie pas et ne se calcule pas ; il illustre, il n'enregistre pas.","","Une note sur le pot se perd, ne s'horodate pas et ne produit aucune courbe."],
+ ret:"Une donnée exploitable est rangée : 1 ligne = 1 mesure, avec son horodatage."},
+/* ═══ C6.2 ═══ */
+{c:"C6.2",n:"Le sens de la comparaison",q:"Complète la règle : SI humidité ___ seuil ALORS pompe = MARCHE.",
+ o:["> (supérieure au)","< (inférieure au)","= (égale au)","≠ (différente du)"],r:1,
+ expl:"On arrose quand la terre MANQUE d'eau, donc quand l'humidité est SOUS le seuil. Écrire la règle en français avant de la coder évite d'inverser le signe.",
+ ex:"C'est l'activité 4 : la décision se dit d'abord en français, le pseudo-code suit.",
+ err:"Inverser le sens de la comparaison — l'erreur la plus fréquente, et la plus coûteuse : le système arrose exactement quand il ne faut pas.",
+ d:["Avec >, la pompe démarrerait quand la terre est DÉJÀ humide : on noierait la plante.","","Avec =, la pompe ne démarrerait qu'à la valeur exacte du seuil, soit presque jamais.","Avec ≠, la pompe tournerait tout le temps sauf à une seule valeur."],
+ ret:"On arrose quand l'humidité est INFÉRIEURE au seuil."},
+{c:"C6.2",n:"Le comportement au-dessus du seuil",q:"Si l'humidité mesurée est AU-DESSUS du seuil, le programme…",
+ o:["active la pompe","coupe la pompe","redémarre la carte","efface la valeur du seuil"],r:1,
+ expl:"C'est l'autre branche de la condition. Un programme complet dit ce qu'il fait dans les DEUX cas ; sans le SINON, la pompe resterait dans son dernier état.",
+ ex:"Au banc de tests de l'activité 6, c'est précisément ce cas qu'on vérifie en deuxième.",
+ err:"N'écrire que le cas « il faut arroser » et oublier le cas « il ne faut pas ».",
+ d:["Activer la pompe sur un sol déjà humide, c'est le contraire de la fonction demandée.","","Redémarrer la carte n'est pas une décision d'arrosage : c'est une panne.","Effacer le seuil détruirait la règle elle-même."],
+ ret:"Une condition dit ce qu'elle fait dans les deux cas : ALORS et SINON."},
+{c:"C6.2",n:"Le nom de la structure",q:"La structure « SI … ALORS … SINON … » s'appelle…",
+ o:["une boucle qui tourne indéfiniment","une instruction conditionnelle","une variable qui retient une valeur","un commentaire ignoré par la machine"],r:1,
+ expl:"Elle fait dépendre l'exécution d'une CONDITION vraie ou fausse. C'est la brique qui permet à une machine de se comporter différemment selon la situation.",
+ ex:"La même brique fait s'allumer le lampadaire de 5e quand il fait sombre.",
+ err:"Appeler « boucle » tout ce qui se répète — la boucle répète, la condition choisit.",
+ d:["Une boucle RÉPÈTE ; ici on ne répète pas, on choisit entre deux chemins.","","Une variable STOCKE une valeur ; elle ne décide de rien.","Un commentaire est ignoré par la machine : il s'adresse aux humains."],
+ ret:"Instruction conditionnelle : la machine choisit selon que la condition est vraie ou fausse."},
+{c:"C6.2",n:"Ce qu'est un seuil",q:"Dans le programme, « seuil » est…",
+ o:["l'actionneur qui déclenche la pompe","le capteur qui mesure l'humidité","une variable qu'on peut régler","une marque de pompe pour le jardinage"],r:2,
+ expl:"C'est le bouton dans le code : une valeur qu'on change SANS réécrire le programme. Régler un paramètre, c'est adapter le comportement sans toucher à la logique.",
+ ex:"Au banc de tests, tu règles ce seuil et tu observes ce que ça change — la logique, elle, ne bouge pas.",
+ err:"Confondre le paramètre (une valeur) et l'organe (une pièce).",
+ d:["Un actionneur agit sur le monde ; un seuil n'est qu'un nombre.","Le capteur MESURE ; le seuil est ce à quoi on compare la mesure.","","Ce n'est pas un objet du commerce : c'est une valeur choisie par celui qui règle."],
+ ret:"Un paramètre = une valeur réglable sans réécrire le programme."},
+{c:"C6.2",n:"Le seuil réglé trop bas",q:"Régler un seuil TROP BAS risque de…",
+ o:["laisser la plante manquer d'eau","noyer la plante en arrosant sans arrêt","abîmer l'écran à force d'affichages","vider la pile en quelques heures"],r:0,
+ expl:"Un seuil bas veut dire : « n'arrose que si la terre est vraiment très sèche ». La pompe se déclenche donc trop tard, et trop rarement.",
+ ex:"C'est le réglage qu'on teste en premier à l'activité 6 — et l'erreur se voit tout de suite.",
+ err:"Raisonner sur le mot « bas » sans le rapporter à ce que la condition compare.",
+ d:["","Noyer la plante est le risque du seuil trop HAUT, qui arrose une terre déjà humide.","Le réglage d'un seuil n'a aucun effet mécanique sur l'écran.","Un seuil bas fait tourner la pompe MOINS souvent : la pile durerait plutôt plus longtemps."],
+ ret:"Seuil trop bas → on arrose trop tard. Seuil trop haut → on gaspille."},
+{c:"C6.2",n:"Le seuil réglé trop haut",q:"Régler un seuil TROP HAUT risque de…",
+ o:["effacer le programme","assécher la plante","éteindre l'écran","gaspiller l'eau"],r:3,
+ expl:"Un seuil haut veut dire : « arrose dès que la terre n'est pas parfaitement trempée ». La pompe se déclenche presque tout le temps.",
+ ex:"C'est le cas symétrique du précédent : les deux se testent au banc, l'un après l'autre.",
+ err:"Croire qu'un mauvais réglage casse la machine — il fait surtout mal son travail.",
+ d:["Un réglage ne modifie pas le programme : c'est précisément l'intérêt d'un paramètre.","Assécher est le risque du seuil trop BAS : on arrose trop tard.","L'écran affiche ce qu'on lui donne, quel que soit le seuil.",""],
+ ret:"Un mauvais seuil ne casse rien : il fait mal le travail. C'est plus difficile à voir."},
+{c:"C6.2",n:"Relire la mesure sans arrêt",q:"Le programme relit la mesure du capteur régulièrement grâce à…",
+ o:["une deuxième carte programmable","un fichier de mesures déjà prises","une boucle qui répète la lecture","un second capteur d'humidité"],r:2,
+ expl:"Sans boucle, le programme mesurerait une fois, déciderait une fois, puis s'arrêterait. La boucle est ce qui rend un objet technique SURVEILLANT.",
+ ex:"C'est ce qui distingue un système automatique d'un simple bouton.",
+ err:"Confondre boucle (répéter) et condition (choisir) — les deux briques du programme.",
+ d:["Une seule carte suffit : elle répète, elle ne se dédouble pas.","Un fichier conserve des mesures déjà prises ; il n'en déclenche aucune.","","Un second capteur donnerait une autre mesure, pas une répétition de la même."],
+ ret:"La boucle répète. La condition choisit. Un système qui surveille a besoin des deux."},
+{c:"C6.2",n:"Prédire avant d'exécuter",q:"Aux activités 5 et 6, on te demande d'écrire ta prédiction AVANT de cliquer sur ▶. Pourquoi ?",
+ o:["Parce que le programme refuse de démarrer sans prédiction saisie","Parce qu'un écart n'existe que si on attendait autre chose","Pour occuper les élèves rapides pendant que les autres terminent","Parce que c'est la prédiction, et non le résultat, qui est notée"],r:1,
+ expl:"Sans prédiction écrite, on regarde le résultat et on se dit « c'est ce que je pensais ». Écrire d'abord rend l'écart VISIBLE — et c'est l'écart qui enseigne.",
+ ex:"C'est la démarche d'investigation : prédire, essayer, observer, expliquer l'écart.",
+ err:"Prendre la prédiction pour une formalité et l'écrire après avoir vu le résultat.",
+ d:["Techniquement, le programme s'exécute très bien sans prédiction : c'est un choix pédagogique, pas une contrainte de la machine.","","Elle est demandée à tous, précisément parce qu'elle est le cœur de l'activité.","C'est bien la comparaison prédit/observé qui compte, pas la prédiction seule."],
+ ret:"Prédire → exécuter → comparer. C'est l'écart qui enseigne, pas le résultat."},
+{c:"C6.2",n:"Le cas frontière",q:"Le seuil est fixé à 40 %. Le banc de tests demande d'essayer une humidité de 40 % exactement. Pourquoi ce cas-là ?",
+ o:["Parce que la pompe consomme moins de courant à cette humidité-là","Parce que 40 est un nombre rond, plus rapide à saisir au clavier","Parce que le capteur d'humidité est plus précis autour de cette valeur","Parce que c'est là que « < » et « ≤ » cessent de donner le même résultat"],r:3,
+ expl:"La valeur limite est le seul endroit où deux écritures presque identiques se séparent. Un programme peut réussir tous les autres tests et se tromper exactement là.",
+ ex:"Même logique qu'une limite de vitesse : rouler à 50 exactement, est-ce dépasser ?",
+ err:"Ne tester que des cas confortables, loin de la frontière — et croire le programme validé.",
+ d:["La consommation de la pompe ne dépend pas de la valeur mesurée, mais de son état.","La commodité de saisie n'a rien à voir : c'est la LIMITE qui est intéressante.","La précision du capteur ne dépend pas du seuil qu'on a choisi dans le programme.",""],
+ ret:"Un banc de tests sans cas frontière ne prouve pas grand-chose."},
+{c:"C6.2",n:"Ce que prouve un test au vert",q:"Tes trois tests passent au vert. Qu'as-tu prouvé ?",
+ o:["Que le capteur d'humidité est en bon état de marche","Que le programme est correct dans toutes les situations","Que le programme se comporte comme prévu dans ces trois cas","Que le seuil choisi est le meilleur pour cette plante"],r:2,
+ expl:"Un test montre la présence d'un comportement, jamais l'absence de tous les défauts. Trois cas au vert, c'est trois cas au vert — précieux, et limité.",
+ ex:"C'est pour cela qu'on choisit les cas : un sec, un humide, un à la frontière.",
+ err:"Passer de « mes tests passent » à « mon programme est juste ».",
+ d:["Le banc simule les valeurs : il ne dit rien de l'état physique du capteur.","Aucun jeu de tests fini ne couvre toutes les situations possibles.","","Le banc vérifie le comportement, pas la pertinence agronomique du seuil."],
+ ret:"Un test prouve un comportement dans un cas. Il ne prouve jamais l'absence de défaut."},
+{c:"C6.2",n:"Compléter n'est pas programmer",q:"Dans cet atelier, le verbe du programme officiel est « COMPLÉTER un programme ». Cela veut dire que…",
+ o:["tu décris le programme en français sans jamais l'exécuter","tu écris le programme entier en partant d'une page blanche","tu recopies le programme fourni sans y changer une ligne","le programme est fourni, et tu écris la partie qui manque"],r:3,
+ expl:"Compléter, c'est comprendre un programme existant assez bien pour y ajouter la pièce manquante — puis vérifier que l'ensemble fonctionne. Écrire tout, c'est le travail de 3e.",
+ ex:"À l'activité 5, trois trous seulement : mais il faut avoir compris tout le reste pour les remplir.",
+ err:"Croire que « compléter » est une version au rabais de « programmer » : c'est une autre compétence, et elle se vérifie à l'exécution.",
+ d:["Décrire sans exécuter, ce serait s'arrêter à l'activité 4 : le programme ne serait jamais prouvé.","Écrire entièrement un programme est l'attendu de 3e, pas de 4e.","Recopier sans changer ne remplit aucune fonctionnalité nouvelle.",""],
+ ret:"Compléter = ajouter la pièce manquante à un programme fourni, et le prouver à l'exécution."},
+{c:"C6.2",n:"La preuve au cahier des charges",q:"À l'activité 7, chaque verdict doit s'appuyer sur une PREUVE. Qu'est-ce qui compte comme preuve ?",
+ o:["L'avis du binôme voisin, qui a fait la même manipulation","L'impression, en fin de séance, que ça a bien marché","Un résultat de test ou une activité qu'on peut citer","Le fait que le programme n'affiche aucun message d'erreur"],r:2,
+ expl:"Une preuve, c'est quelque chose qu'un autre peut aller revérifier. « Test 2 : sol sec, pompe en marche » se vérifie ; « ça marchait » ne se vérifie pas.",
+ ex:"C'est ce qui distingue un compte rendu technique d'une impression.",
+ err:"Rendre un verdict juste sans pouvoir dire d'où il vient.",
+ d:["L'avis d'un camarade n'est pas une mesure ; il peut se tromper de la même façon.","Une impression ne se vérifie pas : elle ne prouve rien à personne d'autre qu'à soi.","","Un programme sans message d'erreur peut parfaitement faire le contraire de ce qu'on veut."],
+ ret:"Une preuve est quelque chose qu'un autre peut aller revérifier."},
+{c:"C6.2",n:"La représentation normalisée",q:"Comment appelle-t-on la représentation du programme avec des losanges pour les tests et des rectangles pour les actions ?",
+ o:["un algorigramme, aux formes normalisées","un organigramme des personnels du collège","un tableau de données à double entrée","un schéma de câblage des composants"],r:0,
+ expl:"L'algorigramme est le dessin normalisé d'un algorithme : chaque forme a un sens fixé, et un losange a toujours deux sorties, OUI et NON.",
+ ex:"Question réécrite : l'ancienne attendait un mot tapé au clavier, ce qui sanctionnait l'orthographe autant que la notion.",
+ err:"Dessiner un algorigramme « à sa façon » : les formes ne sont pas décoratives, elles portent le sens.",
+ d:["","Un organigramme d'établissement représente qui dirige qui, pas un traitement.","Un tableau range des données ; il ne montre aucun enchaînement de décisions.","Un schéma de câblage montre des liaisons physiques, pas la logique du programme."],
+ ret:"Algorigramme : losange = test à deux sorties, rectangle = action."},
+{c:"C6.2",n:"Où s'exécute le programme",q:"Tu complètes le programme dans l'éditeur en ligne et tu cliques sur ▶. Que se passe-t-il ?",
+ o:["Il s'exécute et affiche son résultat, sans toucher la pompe","La pompe du jardin démarre aussitôt, puisque le code est envoyé","Le programme part chez le professeur, qui le corrigera plus tard","Rien ne se passe : l'éditeur se contente de colorer le texte tapé"],r:0,
+ expl:"L'éditeur exécute le code et te montre ce qu'il produit. C'est une simulation : elle prouve la LOGIQUE, pas le branchement.",
+ ex:"C'est pourquoi le verdict de l'activité 7 distingue ce qui est prouvé de ce qui reste à voir sur le prototype réel.",
+ err:"Croire qu'un programme qui tourne à l'écran prouve que le montage physique fonctionne.",
+ d:["","Aucune pompe n'est reliée à l'éditeur : rien ne bouge dans le jardin.","L'éditeur n'envoie rien à personne ; c'est toi qui rends ton travail.","L'éditeur exécute réellement : c'est même tout son intérêt ici."],
+ ret:"Une exécution simulée prouve la logique. Elle ne prouve pas le montage."},
+{c:"C6.2",n:"Lire l'ordre des instructions",q:"Dans le programme de mesure, pourquoi la lecture du capteur doit-elle venir AVANT la comparaison au seuil ?",
+ o:["Parce que le capteur est câblé avant le relais dans le boîtier","Parce qu'on ne peut pas comparer une valeur pas encore lue","Parce que les instructions se rangent par ordre alphabétique","Parce que la comparaison s'exécute plus lentement que la lecture"],r:1,
+ expl:"Un programme s'exécute dans l'ordre. Comparer avant de lire, c'est décider sur une valeur vide — l'erreur classique quand on remet des blocs en ordre au hasard.",
+ ex:"C'est l'activité 3 : les cinq lignes ne sont pas interchangeables.",
+ err:"Ranger les instructions par habitude visuelle plutôt que par dépendance logique.",
+ d:["L'ordre des fils dans le boîtier n'impose rien à l'ordre des instructions.","","L'ordre alphabétique n'a aucun rôle dans un programme.","La vitesse d'exécution ne dicte pas l'ordre : c'est la dépendance des données qui le dicte."],
+ ret:"Une instruction qui utilise une valeur vient après celle qui la produit."},
+{c:"C6.2",n:"Ce que change une deuxième condition",q:"Défi bonus : « la pompe ne démarre que si le sol est sec ET s'il fait jour ». Que devient la règle ?",
+ o:["Les deux conditions doivent être vraies en même temps","Il suffit que l'une des deux conditions soit vraie","La pompe arrose deux fois plus longtemps à chaque fois","Le seuil d'humidité ne sert plus dans la nouvelle règle"],r:0,
+ expl:"ET exige les deux. La pompe qui démarrait sur une seule raison en demande désormais deux — ce qui la fait démarrer MOINS souvent, jamais plus.",
+ ex:"C'est le défi nuit du bloc bonus : on ne veut pas arroser quand l'eau s'évapore moins.",
+ err:"Confondre ET et OU — l'un restreint, l'autre élargit.",
+ d:["","Cela, c'est OU. Avec OU, la pompe arroserait même en pleine nuit sur un sol humide.","Une condition décide SI on arrose, pas combien de temps.","Le seuil reste indispensable : c'est lui qui définit « le sol est sec »."],
+ ret:"ET restreint : les deux conditions doivent être vraies. OU élargit."},
+/* ═══ C1.4 ═══ */
+{c:"C1.4",n:"L'intérêt environnemental",q:"Quel est l'intérêt environnemental principal d'un arrosage déclenché sur seuil ?",
+ o:["N'arroser que si la terre en manque","Faire moins de bruit dans la cour du collège","Consommer plus d'électricité qu'un robinet","Réchauffer le sol pour accélérer la pousse"],r:0,
+ expl:"Arroser à heure fixe, c'est arroser aussi les jours de pluie. Le seuil fait dépendre l'arrosage de l'état réel du sol : c'est là qu'est l'économie.",
+ ex:"C'est l'argument central du débat de l'activité 8.",
+ err:"Justifier l'automatisation par le confort alors que la question porte sur la ressource.",
+ d:["","Le bruit n'est pas un enjeu environnemental ici, et la pompe est la même.","Consommer plus d'électricité serait un inconvénient, pas un intérêt.","Ce système ne chauffe rien : il ouvre et ferme une arrivée d'eau."],
+ ret:"Le seuil fait dépendre l'arrosage de l'état réel du sol, pas de l'heure."},
+{c:"C1.4",n:"Ce qu'on tape dans un éditeur en ligne",q:"Ton programme est écrit dans un éditeur hébergé sur un site extérieur au collège. Qu'est-ce que cela implique ?",
+ o:["Rien de particulier : c'est comme un logiciel installé","Ton travail reste sur l'ordinateur du collège seulement","Le site devient propriétaire de ce que tu écris","Ton code part chez un tiers, et il faut une connexion"],r:3,
+ expl:"Le reste de la page enregistre tes réponses dans TON navigateur. L'éditeur, lui, est un service extérieur : le code voyage. Savoir où vont ses données fait partie du métier.",
+ ex:"Le rapport de tests du lot le dit lui-même : ce qui se passe dans l'éditeur n'est pas vérifié depuis la page.",
+ err:"Supposer que tout ce qui s'affiche dans une page reste dans l'ordinateur qui l'affiche.",
+ d:["Un logiciel installé fonctionne sans réseau ; ici, sans réseau, il n'y a pas d'éditeur.","Le contenu de l'éditeur part sur le réseau : c'est justement pourquoi il faut une connexion.","Écrire sur un service en ligne ne cède aucun droit sur ce qu'on invente.",""],
+ ret:"Une page qui enregistre en local et un service en ligne, ce sont deux endroits différents."}
+];
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C6.2_arrosage_automatique";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C6.2":"4e_C6.2 — Compléter un programme pour répondre à une fonctionnalité d’un OST.",
+  "C4.4":"4e_C4.4 — Identifier les constituants de la chaîne d’information d’un objet réel et les associer à leur fonction.",
+  "C4.5":"4e_C4.5 — Décrire et analyser la transformation des données téléversées ou issues d’un OST.",
+  "C4.1":"4e_C4.1 — Identifier les constituants d’une chaîne d’énergie et les associer à leurs fonctions.",
+  "C1.4":"4e_C1.4 — Identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Analyser, corriger, valider : le programme du jardin n\'a plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>
