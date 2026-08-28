@@ -7562,6 +7562,20 @@ le Thème 1.
 qui trouve toutes ses sœurs, et on la garde. Corriger un cas signalé, c'est traiter le symptôme
 que quelqu'un a eu la chance de voir.
 
+**Le contrôle a été écrit, et il a immédiatement rendu deux défauts de plus dans la même
+séquence :**
+
+- l'activité 5.b lisait `q5b` ; la zone de saisie s'appelle `q5b-response`. Quoi que l'élève
+  écrive, on lui répondait que sa réponse était trop courte. Le seul élève épargné était celui qui
+  n'écrivait rien ;
+- la barre de progression cherchait un élément `prog` qui n'a jamais existé. La séquence affichait
+  une barre — vide, et immobile du début à la fin.
+
+Trois boutons ou repères commandés par le code et absents de la page, dans un seul fichier. Aucun
+ne produit d'erreur JavaScript : le code est prudent, il teste avant d'agir. **La prudence du code
+a rendu le défaut silencieux** — et c'est encore la clef de voûte : ce qui ne produit aucun signal
+se lit comme une réussite.
+
 *(Deux vérifications sont désormais mécanisables et devraient rejoindre les outils versionnés :
 « aucun lien relatif ne pointe vers un fichier absent » et « aucun `getElementById` ne cherche un
 élément que la page ne contient pas ». La seconde aurait à elle seule trouvé les deux boutons.)*

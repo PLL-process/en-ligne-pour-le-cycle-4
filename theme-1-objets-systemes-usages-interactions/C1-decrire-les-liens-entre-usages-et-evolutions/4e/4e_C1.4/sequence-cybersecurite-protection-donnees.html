@@ -76,6 +76,9 @@
       background: #11407a; border: 1px solid var(--line); border-radius: 999px; 
       padding: 4px 8px; font-size: 0.85rem; display: inline-block; 
     }
+    .prog-piste { height:6px; background:rgba(255,255,255,.18); border-radius:0 3px 3px 0; overflow:hidden; }
+    .prog-jauge { height:100%; width:0; background:linear-gradient(90deg,#38b2ac,#4fd1c5); transition:width .35s ease; }
+    @media (prefers-reduced-motion: reduce){ .prog-jauge{ transition:none; } }
     .scorebar {
       position: sticky; top: 0; background: rgba(9, 29, 52, .98); backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--line); z-index: 1000; padding: 6px 0;
@@ -408,6 +411,8 @@
 </nav>
 
 <div class="scorebar">
+  <div id="progPiste" class="prog-piste" role="progressbar" aria-label="Progression dans la séquence"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="prog" class="prog-jauge"></div></div>
   <div class="scorebar-inner">
     <div>💻 <strong>Séquence 4e — Cybersécurité</strong></div>
    
@@ -2464,7 +2469,9 @@ function checkDragDrop(section) {
 
 // (Tu peux laisser ce petit contrôle pour 5.b, il est indépendant)
 document.getElementById('chk5')?.addEventListener('click', () => {
-  const v = (document.getElementById('q5b')?.value || '').trim();
+  // Lisait `q5b`, qui n'existe pas : la zone de saisie s'appelle `q5b-response`.
+  // Résultat : quoi que l'élève écrive, on lui répondait que c'était trop court.
+  const v = (document.getElementById('q5b-response')?.value || '').trim();
   if (v.length < 120) {
     alert("Ta stratégie 5.b est un peu courte. Vise 3–4 phrases concrètes 👍");
   }
@@ -2511,6 +2518,8 @@ function recalc(){
   { const _m = document.getElementById('scoreMax'); if (_m) _m.textContent = max; }
   const bar = document.getElementById('prog');
   if (bar) bar.style.width = pct + '%';
+  const piste = document.getElementById('progPiste');
+  if (piste) piste.setAttribute('aria-valuenow', pct);
 }
 
 
