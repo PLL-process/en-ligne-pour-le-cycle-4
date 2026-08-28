@@ -7239,3 +7239,78 @@ personne ne relit.
 **Conséquence pratique.** Aucun outil ne détecte cela. C'est le seul défaut de
 cette campagne qui ait exigé de lire une banque entière d'un bout à l'autre,
 et il faudra le refaire à chaque thème.
+
+---
+
+## Règle d'or n°153 — une branche préparée hier se rebase sur le `main` d'aujourd'hui, ou elle efface le travail d'hier
+
+**Le fait.** La branche du Thème 1 avait été préparée sur un `main` antérieur à
+la fusion du Thème 3. Fusionnée telle quelle, elle aurait **supprimé** l'outil
+d'audit des 46 QCM, son CSV, l'état des lieux, et 269 lignes de ce journal.
+Elle touchait par-dessus le marché des fichiers du Thème 3, que la
+garde-périmètre aurait refusés.
+
+**Ce qui trompe.** L'intuition dit qu'une branche ancienne « n'a pas » les
+changements récents. C'est faux : au moment de la fusion, elle les **défait**.
+Un fichier qu'elle ne connaît pas est un fichier qu'elle propose de supprimer.
+
+**La règle.** Le diff d'une branche ne se lit jamais contre l'état où on l'a
+créée, mais contre l'état où elle va atterrir. `git diff --stat origin/main
+<branche>` avant chaque livraison, et une lecture simple : **des suppressions
+dans des fichiers qu'on n'a pas touchés = base périmée, on refait la branche.**
+
+**Ce que ça dit de la garde-périmètre.** Elle aurait arrêté celle-ci — par
+accident, parce que la branche débordait aussi de son thème. Une branche
+périmée qui reste dans son périmètre passerait sans bruit. Le contrôle
+appartient à celui qui prépare, pas au filet.
+
+---
+
+## Règle d'or n°154 — un indicateur qui crie pour un caractère apprend à ne plus l'écouter
+
+**Le fait.** L'indicateur « bonne réponse visiblement la plus longue » se
+déclenchait dès +20 %. Sur une question dont les propositions sont `int`,
+`str`, `float`, `bool`, il signalait un défaut : `float` (5 lettres) dépasse
+`bool` (4) de 25 %. Rien ne se voit à l'œil. Rien ne se voyait non plus dans
+`Un dessin` contre `Une carte`.
+
+**La règle.** Un seuil relatif seul est faux aux petites valeurs. Il faut un
+écart **relatif** (+20 %) ET un écart **absolu** (au moins 8 caractères). Les
+deux outils de mesure ont été corrigés ensemble ; les chiffres des lots
+précédents n'ont pas bougé, ce qui confirme que le plancher ne cachait rien de
+réel — il ne supprime que du bruit.
+
+**Pourquoi ça compte plus qu'il n'y paraît.** Un indicateur qui signale du
+bruit se fait ignorer, puis désactiver, puis oublier. Le jour où il a raison,
+plus personne ne le regarde. Le régler n'est pas du confort : c'est ce qui le
+garde utilisable.
+
+---
+
+## Règle d'or n°155 — compléter une banque par une boucle, c'est mentir sur le dénominateur
+
+**Le fait.** `qcm_automatisation_premium.html` annonçait « 40 questions
+uniques ». Il en contenait onze. Une boucle
+`while(questions.length < 40) questions.push({…})` répétait la **même**
+question — même énoncé, même bonne réponse — vingt-neuf fois, et la note était
+calculée sur 40.
+
+**Ce que vivait l'élève.** Onze questions, puis la même vingt-neuf fois. Et une
+note où 29 points sur 40 s'obtenaient en répondant une fois juste, puis en
+recopiant. Le score ne mesurait plus rien — ni la connaissance, ni même
+l'attention.
+
+**La règle.** Le dénominateur d'une note dit ce qui a été demandé. Il se lit sur
+la banque (`questions.length`), jamais sur un nombre écrit à la main, et
+surtout jamais sur un nombre atteint par duplication. Un QCM porte le nombre de
+questions qu'il a réellement ; s'il en faut davantage, on les **écrit**.
+
+**Ce qui a été fait.** La boucle est retirée, la onzième question réintégrée
+comme une entrée normale, et les trois dénominateurs figés (`/40`) remplacés
+par `questions.length`. Le QCM annonce désormais onze questions et note sur
+onze. Les vingt-neuf qui manquent restent à écrire : c'est un travail
+d'auteur, pas de correcteur, et il n'a pas été fait à la sauvette.
+
+**Le rapport avec la n°146.** Un outil déclare ce qu'il n'a pas su lire ; un
+QCM déclare ce qu'il n'a pas. Dans les deux cas, le mensonge n'est pas dans le
+chiffre affiché, il est dans le silence sur ce qui manque.
