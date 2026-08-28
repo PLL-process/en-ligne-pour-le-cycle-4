@@ -401,7 +401,29 @@
   .etayage>summary{cursor:pointer;padding:9px 13px;font-weight:600}
   .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
   #billet-entree ol{margin:.4em 0 .4em 1.2em}
-  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}</style>
+  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}.ico{font-style:normal;margin-right:.35em}.encadre-ia{border-left:5px solid #c2410c}
+/* ── Séances — posé par decouper.py ─────────────────────────────────────── */
+.seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px auto 14px;max-width:1000px;padding:0 16px}
+.seance-tab{flex:1;min-width:160px;padding:10px 8px;border-radius:10px;background:#0b1b39;
+  border:1px solid #2f5695;cursor:pointer;text-align:center;font-size:.86em;font-weight:600;
+  color:#e4eaf5;font-family:inherit;line-height:1.35}
+.seance-tab .quoi{display:block;font-weight:400;font-size:.9em;color:#9bbefc}
+.seance-tab:hover{border-color:#61dafb}
+.seance-tab.active{background:#173666;border-color:#61dafb;color:#fff}
+.seance-tab.hors{flex:0 1 220px;border-style:dashed;border-color:#6b7788}
+.seance-tab.hors.active{background:#3a2a0d;border-color:#ffd66b;color:#ffd66b}
+.seance-tab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.seance-panel{display:none}
+.seance-panel.active{display:block}
+.seance-avis{max-width:1000px;margin:0 auto 10px;padding:0 16px;color:#ffd66b;font-size:.92em}
+@media print{
+  .seance-tabs{display:none}
+  .seance-panel{display:block!important}
+  .seance-panel::before{content:attr(data-titre);display:block;font-weight:700;font-size:1.05em;
+    margin:18px 0 6px;padding-top:10px;border-top:2px solid #111;break-before:page}
+  .seance-avis{color:#111}
+}
+</style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
 .ressource{background:#0a1b3d;border:1px solid #274a8a;border-left:4px solid #ffd66b;
@@ -554,7 +576,23 @@
     </table>
   </div>
 
-  <!-- 1. Risques et bonnes pratiques -->
+  
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" aria-controls="s1"
+          data-panel="s1" id="tab-s1">Séance 1<span class="quoi">Reconnaître</span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" aria-controls="s2"
+          data-panel="s2" id="tab-s2">Séance 2<span class="quoi">Mes données</span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" aria-controls="s3"
+          data-panel="s3" id="tab-s3">Séance 3<span class="quoi">Mes traces</span></button>
+  <button class="seance-tab hors" role="tab" aria-selected="false" aria-controls="shors"
+          data-panel="shors" id="tab-shors">Hors parcours<span class="quoi">Python — relève de C9</span></button>
+</div>
+<p class="seance-avis" id="avis-hors" hidden>⚠️ Ce bloc ne fait pas partie des trois séances de
+cette séquence&nbsp;: la programmation relève de la compétence C9, pas de C1. Il est conservé ici
+parce que des classes l'utilisent déjà. <strong>Ses points ne comptent pas</strong> dans le score de la séquence — c'est un bonus, pas une séance.</p>
+
+<section class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1" data-titre="Séance 1 — Reconnaître">
+<!-- 1. Risques et bonnes pratiques -->
   <div class="section panel" id="sec1">
 
   <div class="qcm-question">
@@ -593,7 +631,8 @@
     <p>En adoptant ces habitudes, tu te donnes les moyens de repérer une attaque, et tu protèges non seulement tes données mais aussi celles de ton entourage. Souviens-toi : la vigilance est la première ligne de défense !</p>
   </div>
     
-  <!-- 0. UTILISER CHATGPT -->
+  </section>
+<!-- 0. UTILISER CHATGPT -->
   <div class="saved-note encadre-ia">
 <b>🧭 Approfondir une notion avec une IA — ce qu'il faut savoir d'abord</b>
 <p>Les assistants conversationnels (ChatGPT et les autres) savent expliquer une notion comme
@@ -950,7 +989,8 @@ lui-même.</p>
     </div>
   </div>
 
-  <!-- 2. Python + Tab & indentation -->
+  <section class="seance-panel" id="shors" role="tabpanel" aria-labelledby="tab-shors" data-titre="Hors parcours — Python (relève de C9)">
+<!-- 2. Python + Tab & indentation -->
   <div class="section panel" id="sec2">
     <h2 id="bloc2-python">🧠 2. Programme Python — Touche Tab & Indentation <span class="badge">Score : <span id="s2">0</span>/8</span></h2>
 
@@ -1151,7 +1191,9 @@ Fin du programme.</code></pre>
 </div>
     
 
-  <!-- 3. Données personnelles -->
+  </section>
+<section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" data-titre="Séance 2 — Mes données">
+<!-- 3. Données personnelles -->
   <div class="section panel" id="sec3">
     <h2 id="bloc3-donnee-personnelle">🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="s3">0</span>/11</span></h2>
 
@@ -1607,7 +1649,9 @@ Fin du programme.</code></pre>
     </div>
   </div>
 
-  <!-- 5. Limiter ses traces en ligne -->
+  </section>
+<section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Mes traces">
+<!-- 5. Limiter ses traces en ligne -->
   <div class="section panel" id="sec5">
     <h2 id="bloc5-traces">🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="s5">0</span>/10</span></h2>
 
@@ -2085,7 +2129,8 @@ Fin du programme.</code></pre>
     </div>
   </div>
 
-  <!-- Métacognition & Synthèse -->
+  </section>
+<!-- Métacognition & Synthèse -->
   <div class="section panel">
     <h2>🧠 Métacognition (non notée)</h2>
     <div class="response-label">Ce que j’ai appris</div><textarea id="meta1" aria-label="Ce que j'ai appris"></textarea>
@@ -2577,8 +2622,13 @@ const scores = { s1:0, s2:0, s3:0, s4:0, s5:0, s6:0 };
 const W = { s1:14, s2:8, s3:11, s4:11, s5:10, s6:15 }; // tu l’as déjà plus bas
 
 function recalc(){
-  const total = scores.s1 + scores.s2 + scores.s3 + scores.s4 + scores.s5 + scores.s6;
-  const max = W.s1 + W.s2 + W.s3 + W.s4 + W.s5 + W.s6;
+  // Le bloc s2 (Python) est SORTI du parcours : il relève de C9, pas de C1.
+  // Il ne compte donc plus dans le score de la séquence — sinon un élève qui
+  // suit les trois séances plafonnerait à 61/69 sans jamais savoir pourquoi.
+  // Le dénominateur se lit toujours sur les poids, jamais recopié (règle n°170).
+  const DANS_LE_PARCOURS = ["s1", "s3", "s4", "s5", "s6"];
+  const total = DANS_LE_PARCOURS.reduce((s, k) => s + scores[k], 0);
+  const max   = DANS_LE_PARCOURS.reduce((s, k) => s + W[k], 0);
   const pct = Math.max(0, Math.min(100, Math.round(100*total/max)));
   document.getElementById('scoreTotal').textContent = total;
   { const _m = document.getElementById('scoreMax'); if (_m) _m.textContent = max; }
@@ -2882,6 +2932,44 @@ function score6(){
     else             m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
     document.getElementById("fbBillet").textContent = m + " Ce billet ne compte pas dans ta progression.";
   });
+})();
+</script>
+
+<script>
+/* ── Séances — posé par decouper.py. Onglets, sans dépendance. ─────────── */
+(function(){
+  "use strict";
+  var onglets = document.querySelectorAll(".seance-tab");
+  var avis = document.getElementById("avis-hors");
+  function montrer(cle){
+    onglets.forEach(function(o){
+      var actif = o.dataset.panel === cle;
+      o.classList.toggle("active", actif);
+      o.setAttribute("aria-selected", actif ? "true" : "false");
+    });
+    document.querySelectorAll(".seance-panel").forEach(function(p){
+      p.classList.toggle("active", p.id === cle);
+    });
+    if (avis) avis.hidden = (cle !== "shors");
+    try { localStorage.setItem("seance_4e_C1.4", cle); } catch(e){}
+  }
+  onglets.forEach(function(o){
+    o.addEventListener("click", function(){
+      montrer(o.dataset.panel);
+      var b = document.getElementById("seances");
+      if (b) window.scrollTo({ top: b.offsetTop - 8,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
+  });
+  try {
+    var garde = localStorage.getItem("seance_4e_C1.4");
+    if (garde && document.getElementById(garde)) montrer(garde);
+  } catch(e){}
+
+  // Le dénominateur est écrit « 69 » en dur dans le HTML, et recalc() ne le
+  // corrigeait qu'à la première action de l'élève : celui qui ouvrait la page
+  // sans rien faire lisait donc un total faux. On le calcule au chargement.
+  if (typeof recalc === "function") { try { recalc(); } catch(e){} }
 })();
 </script>
 </body>
