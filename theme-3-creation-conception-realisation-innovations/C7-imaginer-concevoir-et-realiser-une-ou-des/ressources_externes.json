@@ -1,0 +1,131 @@
+{
+  "_lisez_moi": {
+    "role": "Registre des ressources vidéo externes du dépôt. Une entrée par bloc posé dans une séquence.",
+    "pourquoi": "Une vidéo n'est pas un fichier du dépôt : elle vit ailleurs, elle peut disparaître, et le réseau du collège peut la bloquer. Ce registre est ce qui rend ce risque VISIBLE plutôt que silencieux.",
+    "regles": [
+      "Aucune URL n'entre ici sans avoir été OUVERTE. Une URL plausible n'est pas une URL.",
+      "« repli » est obligatoire : une séance qui ne peut pas se faire sans la vidéo est une séance qui ne se fera pas (règle n°169).",
+      "« verifie_le » est la date de la dernière vérification réussie. Elle s'affiche dans la page : un lien vieux se voit.",
+      "Pour une vidéo YouTube, passer par Digiview (La Digitale) : le segment utile est découpé, la publicité, les suggestions et le pistage disparaissent. L'URL enregistrée ici est alors l'URL Digiview, pas l'URL YouTube.",
+      "Préférer, quand elle existe, une ressource Lumni Enseignement : gratuite, française, droits déjà réglés pour la classe, et pas de traceur sur des mineurs."
+    ],
+    "champs": {
+      "id": "identifiant du bloc, unique dans le dépôt ; sert aussi d'ancre HTML",
+      "page": "chemin de la page où le bloc est posé, depuis la racine du dépôt",
+      "apres": "identifiant de l'élément HTML après lequel le bloc est inséré",
+      "doit_montrer": "LA SPÉCIFICATION — ce que la vidéo doit faire voir. Écrite avant de chercher, elle empêche de se contenter de la première vidéo trouvée.",
+      "titre, source, url, duree, licence": "renseignés une fois la vidéo choisie ET ouverte",
+      "a_regarder": "la consigne à l'élève, avec les minutages. Ne peut s'écrire qu'après avoir regardé la vidéo.",
+      "repli": "ce que l'élève fait si la vidéo ne s'ouvre pas. S'imprime toujours."
+    },
+    "outils": {
+      "poser": "python3 poser_ressource.py            (pose ou remet à jour les blocs complets)",
+      "verifier": "node verificateur_ressources.mjs   (à lancer depuis TA machine : le conteneur n'atteint ni YouTube ni Lumni)"
+    }
+  },
+
+  "ressources": [
+    {
+      "id": "res-5e-C1-2-freins",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/sequence_5e_C1.2_sainte_luce_freinage.html",
+      "apres": "",
+      "doit_montrer": "Un frein de vélo en fonctionnement, vu d'assez près pour que les DEUX SURFACES qui viennent se toucher soient identifiables. Idéalement les trois familles (jante, disque, tambour) ; à défaut, une par vidéo. Ce qui disqualifie une vidéo : un plan large où l'on ne voit que le cycliste ralentir, un montage musical sans mécanisme visible, un commentaire en anglais non sous-titré.",
+      "titre": "",
+      "source": "",
+      "url": "",
+      "duree": "",
+      "licence": "",
+      "verifie_le": "",
+      "a_regarder": "",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Tu peux faire l'activité entière sans elle. Va voir un vélo — le tien, celui d'un camarade, celui de l'atelier — et <strong>fais tourner la roue à la main, puis serre le frein</strong>.</p><ol><li>Nomme la surface qui <em>ne bouge pas</em> avec la roue (celle que le frein pousse).</li><li>Nomme la surface qui <em>tourne</em> avec la roue.</li><li>Mesure, à la règle, à quelle distance du centre de la roue ces deux surfaces se touchent.</li></ol><p>Ces trois réponses sont exactement ce que la vidéo t'aurait montré. Reporte-les dans le tableau de comparaison.</p>"
+      }
+    },
+    {
+      "id": "res-4e-C1-1-detection",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html",
+      "apres": "",
+      "doit_montrer": "Un système de détection réel (incendie, fumée, ou surveillance environnementale) au moment où il DÉCIDE. La vidéo doit laisser voir qu'un seul capteur ne suffit pas — croisement d'indices, confirmation, délai. Ce qui disqualifie une vidéo : une publicité de fabricant, ou une démonstration où le déclenchement est présenté comme évident.",
+      "titre": "",
+      "source": "",
+      "url": "",
+      "duree": "",
+      "licence": "",
+      "verifie_le": "",
+      "a_regarder": "",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>La séance repose sur <strong>ta</strong> mesure, pas sur la vidéo. Reprends les deux températures relevées dans la cour — celle à l'ombre, celle au soleil — et leur écart.</p><ol><li>Un système déclencherait l'alerte au-dessus de 40 °C. Combien de fois se déclencherait-il dans ta cour, en une semaine de juillet, sans le moindre feu ?</li><li>Écris <strong>une</strong> information que le système devrait regarder EN PLUS de la température pour ne plus se tromper.</li><li>Écris la question qu'il faut poser à celui qui te vend ce système.</li></ol>"
+      }
+    },
+    {
+      "id": "res-5e-C1-1-capteur",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.1/sequence_5e_C1.1-C1.6_chengdu_air.html",
+      "apres": "",
+      "doit_montrer": "Un capteur réel en train de mesurer, et le nombre qui apparaît à l'autre bout. Le passage du phénomène au chiffre doit être visible dans la même image, ou dans deux plans qui se suivent. Ce qui disqualifie une vidéo : une animation de synthèse — l'élève en a déjà une dans la page ; ici on veut du réel.",
+      "titre": "",
+      "source": "",
+      "url": "",
+      "duree": "",
+      "licence": "",
+      "verifie_le": "",
+      "a_regarder": "",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Ouvre <code>releves_air_chengdu_simules.csv</code> — c'est le vrai matériau de la séance.</p><ol><li>Compte les relevés du lundi. Le capteur enregistre une valeur par heure, de 6 h à 18 h : combien devrait-il y en avoir ? Combien y en a-t-il ?</li><li>Entre 13 h (16,4) et 15 h (21,1), écris <strong>deux</strong> choses différentes qui ont pu se passer et qui donneraient exactement ces deux mêmes nombres.</li><li>Conclus en une phrase : que sait-on, et que ne sait-on pas, à 14 h ?</li></ol>"
+      }
+    },
+    {
+      "id": "res-4e-C1-4-hameconnage",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/sequence-cybersecurite-protection-donnees.html",
+      "apres": "",
+      "doit_montrer": "Un message d'hameçonnage RÉEL, montré à l'écran, avec l'adresse de l'expéditeur et l'adresse du lien visibles. Ce qui disqualifie une vidéo : une reconstitution jouée par des acteurs, ou tout contenu qui fait porter la faute à la victime.",
+      "titre": "",
+      "source": "",
+      "url": "",
+      "duree": "",
+      "licence": "",
+      "verifie_le": "",
+      "a_regarder": "",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Le professeur projette ou distribue trois messages imprimés. Sur chacun, entoure au crayon :</p><ol><li>l'adresse réelle de l'expéditeur (pas le nom affiché) ;</li><li>le <strong>nom de domaine</strong> du lien — la seule partie qui dit à qui tu parles ;</li><li>ce qui presse : un délai, une menace, une récompense.</li></ol><p>Puis écris à qui tu signales, et en combien de temps. Signaler vite n'est jamais une faute.</p>"
+      }
+    },
+    {
+      "id": "res-3e-C1-5-empreinte",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
+      "apres": "",
+      "doit_montrer": "Une donnée chiffrée sur l'impact environnemental du numérique, AVEC sa source et sa date affichées à l'écran. C'est le sujet même de la séance : un ordre de grandeur sans source ne vaut rien. Ce qui disqualifie une vidéo : un chiffre asséné sans référence, aussi juste soit-il.",
+      "titre": "",
+      "source": "",
+      "url": "",
+      "duree": "",
+      "licence": "",
+      "verifie_le": "",
+      "a_regarder": "",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Prends deux chiffres du dossier fourni. Pour chacun, remplis les quatre cases : <strong>la valeur</strong>, <strong>l'unité</strong>, <strong>qui l'a produit</strong>, <strong>en quelle année</strong>.</p><ol><li>Lequel des deux peux-tu défendre devant la classe ? Pourquoi ?</li><li>Un chiffre de 2019 sur le numérique est-il encore vrai aujourd'hui ? Dis ce qui a pu changer.</li></ol><p>Un chiffre sans source ne se discute pas : il se croit ou il se rejette. C'est précisément ce qu'on ne veut pas.</p>"
+      }
+    },
+    {
+      "id": "res-4e-C6-2-montage",
+      "page": "theme-2-structure-fonctionnement-comportement/C6-comprendre-et-modifier-un-programme-associe/4e/4e_C6.2/sequence-jardin-connecte-arrosage-automatique.html",
+      "apres": "",
+      "doit_montrer": "Un montage réel capteur + carte + actionneur, filmé d'assez près pour que l'on voie OÙ chaque fil est branché. Ce qui disqualifie une vidéo : un schéma animé — le lot en a déjà un ; ici l'élève doit voir des composants qu'il pourra retrouver dans la boîte de l'atelier.",
+      "titre": "",
+      "source": "",
+      "url": "",
+      "duree": "",
+      "licence": "",
+      "verifie_le": "",
+      "a_regarder": "",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Prends la boîte de l'atelier et sors les trois pièces : le capteur, la carte, l'actionneur.</p><ol><li>Pose-les dans l'ordre où l'information circule, de gauche à droite, et photographie.</li><li>Sur ta photo, écris ce qui passe dans chaque fil : une <em>mesure</em>, un <em>ordre</em>, ou de l'<em>énergie</em>.</li><li>Une seule de ces trois choses peut être fausse sans que rien ne casse. Laquelle, et pourquoi est-ce plus grave ?</li></ol>"
+      }
+    }
+  ]
+}
