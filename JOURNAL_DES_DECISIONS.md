@@ -7314,3 +7314,268 @@ d'auteur, pas de correcteur, et il n'a pas été fait à la sauvette.
 **Le rapport avec la n°146.** Un outil déclare ce qu'il n'a pas su lire ; un
 QCM déclare ce qu'il n'a pas. Dans les deux cas, le mensonge n'est pas dans le
 chiffre affiché, il est dans le silence sur ce qui manque.
+
+---
+
+# Deux audits externes, vérifiés puis appliqués — six règles et deux clefs de voûte
+
+*À coller à la suite du `JOURNAL_DES_DECISIONS.md`.*
+
+Deux audits du Thème 1 (C1 à C3) ont été remis le même jour, produits par deux systèmes
+différents à partir du même prompt maître. Ils sont l'un et l'autre sérieux, documentés,
+hiérarchisés. Ils ne disent pas la même chose, et **aucun des deux n'a été appliqué tel quel** :
+chaque affirmation vérifiable a d'abord été confrontée aux fichiers.
+
+C'est de cette confrontation que sortent les règles ci-dessous.
+
+---
+
+## 1. Ce que la vérification a donné
+
+| Affirmation | Auteur | Verdict | Preuve |
+|---|---|---|---|
+| `4e_C1.4` : la barre affiche `/65` alors que les blocs totalisent 69 | ChatGPT | **CONFIRMÉ** | `W = {14,8,11,11,10,15}` → 69 ; pastille figée à `/65` |
+| `3e_C1.5` : le titre annonce une séquence de 5ᵉ | les deux | **CONFIRMÉ** | `<title>Séquence 5ᵉ …</title>` dans une page 3ᵉ |
+| `5e_C1.3` : « six fichiers » annoncés, jamais fournis | ChatGPT | **CONFIRMÉ** | consigne « indiqués par le professeur », aucun fichier dans le lot ni en lien |
+| `5e_C3` : la masse « explique » la distance de freinage | ChatGPT | **CONFIRMÉ, et pire que dit** | la phrase est dans **cinq** fichiers, dont le QCM et la matrice de couverture |
+| `4e_C1.4` : « l'humain est le maillon faible » | ChatGPT | **CONFIRMÉ** | deux occurrences, dont une question posée aux élèves |
+| `3e_C1.5` : `.slice()` donné comme exemple Python | ChatGPT | **RÉFUTÉ** | zéro occurrence dans le lot |
+| `5e_C2` : « quatre familles » puis « trois natures » d'interacteurs | ChatGPT | **RÉFUTÉ** | dix occurrences de « quatre familles », aucune de « natures » |
+| `4e_C1.4` : « changer de mot de passe tous les 3 mois », « 15 ans », « cadenas = confiance » | ChatGPT | **NON TROUVÉ** | aucune de ces formulations dans le fichier |
+| `3e_C3` : additivité des baisses de température non signalée | ChatGPT | **DÉJÀ TRAITÉ** | la correction dit déjà « les effets ne se cumulent pas parfaitement » |
+
+Soit, sur neuf affirmations vérifiables : **cinq confirmées, deux réfutées, une introuvable, une
+déjà corrigée**. Un audit sur trois portait à faux.
+
+Cela ne disqualifie ni l'un ni l'autre : les cinq confirmées valaient largement la lecture, et la
+quatrième — la masse — est le défaut le plus grave trouvé sur le dépôt depuis le début de l'année.
+Mais cela règle une question de méthode.
+
+---
+
+## CLEF DE VOÛTE — un audit est une production, pas un verdict
+
+Un audit arrive avec tous les signes de l'autorité : structure, priorités P0 à P3, références au
+BO, tableaux à onze colonnes. Rien dans sa forme ne distingue l'affirmation vérifiée de
+l'affirmation plausible. Et une affirmation plausible et fausse, appliquée telle quelle, **remplace
+un défaut par un autre** — avec, cette fois, la bonne conscience d'avoir suivi une recommandation.
+
+Un audit se lit donc comme on lit une mesure : en demandant d'où elle sort. Trois classes, et
+trois traitements :
+
+| Ce que l'audit avance | Traitement |
+|---|---|
+| un fait **vérifiable dans les fichiers** (un compteur, un titre, une phrase) | on vérifie, puis on corrige — jamais l'inverse |
+| un fait **du monde** (un chiffre ADEME, une recommandation CNIL) | on remonte à la source, on la date, on la fige |
+| un **jugement pédagogique** (« trop dense », « objet trop lointain ») | il ne se vérifie pas : il se discute, et il se décide |
+
+Le troisième cas est le plus intéressant, parce qu'il n'a pas de valeur de vérité et garde toute sa
+valeur d'alerte. Les deux audits disent, chacun à sa façon, que le geste technique manque. Aucune
+mesure ne peut trancher cela. C'est un jugement — et il se trouve qu'il est juste.
+
+---
+
+## CLEF DE VOÛTE — une erreur ne vit pas dans un fichier, elle vit dans un lot
+
+L'audit signalait une phrase dans une séquence. Elle était dans **cinq fichiers** :
+
+| Fichier | Ce qu'il en faisait |
+|---|---|
+| la séquence | « La masse explique l'ordre des distances… un bon signe qu'on tient quelque chose de solide » |
+| la synthèse élève | « La masse explique la distance de freinage comme elle expliquait la consommation » |
+| la synthèse professeur | « séance 3 — elle explique la distance de freinage » |
+| la fiche pédagogique | idem, dans les intentions du lot |
+| **le QCM** | une question entière, dont la bonne réponse était « la masse lancée », et dont la réfutation écartait l'hypothèse « des freins de mauvaise qualité » par « l'écart suit exactement les masses » |
+| **la matrice de couverture** | l'énoncé figurait comme **objectif d'apprentissage couvert** |
+
+Corriger la seule séquence aurait laissé le QCM enseigner l'erreur, la synthèse la répéter, et la
+matrice attester qu'elle était acquise.
+
+**La règle :** une correction de fond se cherche par `grep` dans tout le lot avant d'être écrite
+quelque part. Un lot est un organisme ; une idée fausse y circule. Et le dernier endroit où l'on
+pense à regarder — la matrice de couverture — est précisément celui qui transforme l'erreur en
+compétence validée.
+
+---
+
+## Règle d'or n°167 — vérifier avant de corriger, y compris quand l'auditeur a raison neuf fois sur dix
+
+Une recommandation appliquée sans vérification n'est pas une correction : c'est un pari. Deux des
+neuf points vérifiables de l'audit le plus détaillé ne correspondaient à rien dans les fichiers.
+S'ils avaient été « corrigés », on aurait réécrit du texte juste, et le diff aurait porté la
+mention rassurante « suite à l'audit ».
+
+Le coût de la vérification est dérisoire : `grep`, dix secondes. Le coût de son absence est une
+régression silencieuse, justifiée par une autorité extérieure.
+
+---
+
+## Règle d'or n°168 — une corrélation présentée comme une explication est l'erreur la plus coûteuse qu'un cours puisse contenir
+
+Le lot 5e_C3 faisait tout bien : protocole fourni, charge identique, revêtement identique, vitesse
+identique, trois essais et une moyenne, et cette phrase excellente — « sans cela, on ne compare
+plus des véhicules, on compare des essais ».
+
+Puis, à la synthèse, il attribuait l'ordre des distances de freinage à la masse — alors que les
+trois véhicules diffèrent aussi par leurs freins, leurs pneus et leur empattement. Et il ajoutait :
+« un bon signe qu'on tient quelque chose de solide ».
+
+C'est le pire des deux mondes : la démarche rigoureuse **installe la confiance**, et la conclusion
+hâtive **en profite**. L'élève n'apprend pas seulement un fait faux ; il apprend une **méthode**
+fausse — que deux colonnes qui varient ensemble se valident l'une l'autre.
+
+**La règle.** Dans tout lot où l'on fait mesurer, la question « qu'est-ce qui varie encore, à part
+ce que je crois observer ? » doit être posée **dans le lot lui-même**, pas seulement dans la tête
+de l'auteur. Une leçon sur le contrôle des variables qui se termine par une conclusion non
+contrôlée détruit ce qu'elle vient de construire.
+
+*(La question du QCM a été réécrite : sa bonne réponse est désormais « les deux colonnes varient
+dans le même sens », et sa nuance répond à l'objection de l'élève qui sait, par ailleurs, qu'un
+camion s'arrête moins vite.)*
+
+---
+
+## Règle d'or n°169 — une activité qui repose sur un fichier absent n'est pas une activité
+
+L'activité 2 du lot 5e_C1.3 demandait de renommer et ranger « les six fichiers indiqués par le
+professeur ». Ces six fichiers n'existaient nulle part. La séquence était donc, sur ce point, une
+**intention**, pas une ressource : chaque enseignant devait les inventer, et chaque classe aurait
+travaillé sur un jeu différent.
+
+Le défaut est invisible à la lecture — la consigne est claire, la correction est écrite, l'aide
+graduée est là. Il n'apparaît qu'au moment où quelqu'un essaie de faire l'activité. C'est encore
+la clef de voûte des séquences : le manque ne produit aucun signal.
+
+**La règle.** Toute consigne qui désigne une ressource — un fichier, un objet, un jeu de données,
+une photo — la **fournit** ou dit explicitement où la prendre. Un lot se vérifie en suivant ses
+propres consignes, une par une, comme un élève les suivrait.
+
+*(Le paquet est créé : six fichiers volontairement mal nommés, deux pièges assumés — une case vide
+qui n'est pas un zéro, deux extractions de dates différentes — et une fiche de correction. Plus
+une variante papier pour le jour où la salle informatique tombe.)*
+
+---
+
+## Règle d'or n°170 — un dénominateur figé finit toujours par mentir
+
+`4e_C1.4` affichait `0/65`. Les six blocs pèsent 14 + 8 + 11 + 11 + 10 + 15 = **69**. Un élève
+parfait obtenait 69/65.
+
+C'est la règle n°155 — compléter une banque par une boucle, c'est mentir sur le dénominateur —
+rencontrée par l'autre bout : ici, rien n'a été gonflé ; c'est le total qui a été **recopié à la
+main**, puis les poids ont bougé.
+
+**La règle, dans sa forme générale :** un total ne se recopie jamais. Il se **calcule** à partir de
+ce qu'il totalise, et il s'affiche depuis ce calcul. Tout nombre écrit deux fois dans un fichier
+finira par exister en deux versions.
+
+*(Corrigé : la pastille lit désormais `scoreMax`, alimenté par la somme des poids. Au passage, un
+`FIXME` signalait depuis longtemps un élément `scoreTotal2` inexistant — il a été retiré.)*
+
+---
+
+## Règle d'or n°171 — on n'enseigne pas à un élève qu'il est le maillon faible
+
+Le lot cybersécurité disait à l'élève qu'en adoptant de bonnes habitudes, il éviterait « de devenir
+le maillon faible ». Et il lui demandait : « Pourquoi dit-on que les humains sont le maillon
+faible ? »
+
+La formule est répandue chez les professionnels. Adressée à un élève de 4ᵉ, elle enseigne trois
+choses fausses ou nuisibles : que la sécurité est d'abord une affaire de mérite individuel ; que
+celui qui se fait piéger a failli ; et donc qu'il vaut mieux ne rien dire. Or ce qui protège
+réellement un adolescent, c'est de **signaler vite**, sans honte.
+
+**La règle.** Aucune formulation ne doit désigner l'élève comme la cause du risque. On décrit ce
+que l'attaque exploite, jamais ce que la victime aurait dû être. La question est devenue :
+« Pourquoi les attaques visent-elles d'abord les personnes, plutôt que les machines ? » — même
+contenu technique, et l'élève n'est plus l'accusé.
+
+*(La même passe a nuancé le VPN : « masque ton IP et chiffre ta connexion » est devenu « chiffre ta
+connexion jusqu'à son fournisseur, à qui tu accordes alors ta confiance ». Et `3e_C1.5` ne dit plus
+« HTTPS (sécurisé), HTTP (non sécurisé) » mais « échange chiffré / échange en clair » : HTTPS
+protège le transport, il ne certifie pas le destinataire.)*
+
+---
+
+## Règle d'or n°172 — deux audits qui divergent désignent la frontière entre le vérifiable et le discutable
+
+Les deux audits ont lu le même corpus avec le même prompt. Là où ils portent sur des faits, ils
+**convergent** — les deux ont vu le titre « 5ᵉ », les deux ont vu les deux lots hors gabarit. Là où
+ils portent sur des jugements, ils **divergent**, et proprement :
+
+| Question | Audit A | Audit B |
+|---|---|---|
+| Ce qui manque le plus | la manipulation d'objets réels et la mesure | le geste technique **et** l'ancrage territorial martiniquais |
+| Le contexte chinois | non discuté | « puissant intellectuellement, mais lointain » — à faire précéder de trois minutes d'objet local |
+| Le matériel | « aucun équipement spécialisé garanti » | « l'atelier a Grove, Arduino, imprimante 3D : le Thème 1 ne s'en sert pas » |
+
+La divergence n'est pas un désaccord sur les faits : elle vient de ce que chacun a supposé de la
+salle. L'un a posé « aucun équipement garanti », l'autre « Grove et Arduino disponibles ». Les deux
+conclusions sont justes **sous leur hypothèse**.
+
+**La règle.** Quand deux lectures divergent, on cherche d'abord l'hypothèse qui les sépare, avant
+de chercher qui a raison. Et l'on en tire la conséquence pratique : un lot doit dire de quel
+matériel il a besoin, et prévoir le chemin sans ce matériel — nos parcours A réel / B simulé /
+C sans matériel existent pour cela, et le Thème 1 ne les tient pas partout.
+
+---
+
+## Ce qui a été corrigé, et ce qui ne l'a pas été
+
+**Corrigé** (branche `fable/theme-1/corrections-audits-externes`) : les cinq points confirmés, dans
+les onze fichiers concernés.
+
+**Non corrigé, et assumé :** les deux audits demandent d'ajouter un geste technique réel à chaque
+lot, d'ouvrir sur un objet local, et de recaler deux lots hors gabarit. Ce sont des **jugements
+pédagogiques**, ils portent sur le fond, et ils engagent des heures de classe. Ils appartiennent à
+l'enseignant, pas à l'auditeur — et pas davantage à moi.
+
+Ils rejoignent exactement ce que la mesure des 41 séquences avait montré de son côté : 18 séquences
+sans un seul visuel, un « mode essentiel » qui allège de 9 %, et un budget de lecture qui dépasse
+le tiers de la séance. Deux audits externes et une mesure interne, partis de trois endroits
+différents, désignent le même manque.
+
+---
+
+## Règle d'or n°173 — un défaut trouvé une fois se cherche partout, tout de suite
+
+Les cinq points confirmés par les audits externes ont tous une **forme**. Une fois la forme
+connue, elle se cherche par script sur l'ensemble du dépôt — c'est vingt minutes, et c'est le seul
+moment où on le fera.
+
+Ce balayage, mené juste après les corrections, a trouvé quatre défauts que **ni l'un ni l'autre
+des deux audits n'avait vus** :
+
+| Trouvé par balayage | Forme cherchée | Gravité |
+|---|---|---|
+| **Le bouton « QCM » de la séquence 5e Chengdu ne mène nulle part** — il pointe vers `qcm_5e_C1_chengdu_air.html`, renommé depuis en `qcm_5e_C1.1-C1.6_chengdu.html` | lien relatif dont la cible n'existe pas | l'élève ne peut pas atteindre le QCM de la séquence phare du niveau |
+| **Le bouton « Enregistrer » de la séquence cybersécurité n'existe pas** — le code le cherchait, un `FIXME` le disait, personne ne l'avait lu | élément commandé par le script mais absent du HTML | plus de cent champs à remplir sur trois séances, et rien ne se garde |
+| `activite_crcn_donnees_freinage_5e_C1.2` pointait vers la séquence d'avant la réécriture Sainte-Luce, et vers un jeu de données resté dans l'archive | liens survivant à un renommage | activité injouable |
+| Le programme Python de `3e_C1.5` affichait « Connexion sécurisée » dès qu'une URL commence par `https://` | la confusion HTTPS / fiabilité, cherchée partout | enseigne exactement ce que la séquence corrige par ailleurs |
+
+**Le lien mort de Chengdu mérite qu'on s'y arrête.** Il date d'un renommage de fichier. Aucun
+test ne l'a vu, aucune relecture non plus — parce qu'on relit le contenu d'une page, pas ses
+liens. Il a fallu six lignes de script pour le trouver, et il n'y a **plus aucun lien mort** dans
+le Thème 1.
+
+**La règle.** Quand un défaut est confirmé, on ne corrige pas l'occurrence : on écrit la requête
+qui trouve toutes ses sœurs, et on la garde. Corriger un cas signalé, c'est traiter le symptôme
+que quelqu'un a eu la chance de voir.
+
+**Le contrôle a été écrit, et il a immédiatement rendu deux défauts de plus dans la même
+séquence :**
+
+- l'activité 5.b lisait `q5b` ; la zone de saisie s'appelle `q5b-response`. Quoi que l'élève
+  écrive, on lui répondait que sa réponse était trop courte. Le seul élève épargné était celui qui
+  n'écrivait rien ;
+- la barre de progression cherchait un élément `prog` qui n'a jamais existé. La séquence affichait
+  une barre — vide, et immobile du début à la fin.
+
+Trois boutons ou repères commandés par le code et absents de la page, dans un seul fichier. Aucun
+ne produit d'erreur JavaScript : le code est prudent, il teste avant d'agir. **La prudence du code
+a rendu le défaut silencieux** — et c'est encore la clef de voûte : ce qui ne produit aucun signal
+se lit comme une réussite.
+
+*(Deux vérifications sont désormais mécanisables et devraient rejoindre les outils versionnés :
+« aucun lien relatif ne pointe vers un fichier absent » et « aucun `getElementById` ne cherche un
+élément que la page ne contient pas ». La seconde aurait à elle seule trouvé les deux boutons.)*

@@ -35,8 +35,8 @@ pas écrit.
 
 C'est le point qu'il faut faire remarquer aux élèves, et il vaut la peine d'y revenir :
 
-- en **séance 1**, la masse explique la consommation (18 contre 165 Wh/km) ;
-- en **séance 3**, elle explique la distance de freinage (1,6 contre 5,8 m) ;
+- en **séance 1**, la consommation croît avec la masse (18 contre 165 Wh/km) ;
+- en **séance 3**, la distance de freinage croît elle aussi — sans qu'on puisse l'attribuer à la seule masse (1,6 contre 5,8 m) ;
 - en **séance 2**, elle pèse sur trois étapes du cycle de vie à la fois.
 
 Quand une même grandeur explique plusieurs phénomènes, l'élève cesse d'apprendre des faits séparés :
