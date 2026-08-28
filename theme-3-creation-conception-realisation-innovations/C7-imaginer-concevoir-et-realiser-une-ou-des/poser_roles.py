@@ -113,27 +113,36 @@ def sans_script(texte):
     return re.sub(r"<script.*?</script>", " ", texte, flags=re.S)
 
 
-def premier_groupe(texte):
-    """Position de la première mention réelle de travail de groupe (hors script)."""
-    m = GROUPE.search(html.unescape(sans_script(texte)))
-    if not m:
-        return None
-    # on retrouve la position dans le texte d'origine par une seconde recherche
-    m2 = GROUPE.search(sans_script(texte))
-    return m2.start() if m2 else None
+def sections(texte):
+    """Découpe la page en sections : (titre, début du contenu, fin du contenu)."""
+    titres = list(re.finditer(r"<h([23])[^>]*>(.*?)</h\1>", texte, re.S))
+    for k, m in enumerate(titres):
+        fin = titres[k + 1].start() if k + 1 < len(titres) else len(texte)
+        libelle = html.unescape(re.sub(r"<[^>]+>", " ", m.group(2)))
+        yield libelle.strip(), m.end(), fin
 
 
-def point_d_insertion(texte, ou):
-    """Après le titre de la section qui contient la première mention de groupe.
+#: un titre d'activité, tel que le dépôt les écrit
+ACTIVITE = re.compile(r"activit[ée]|séance|seance|atelier|étape|etape|manip", re.I)
 
-    On remonte au dernier <h2> ou <h3> ouvert avant la mention : le bloc doit se lire
-    AVANT que l'élève ne commence l'activité, pas après.
+
+def emplacement(texte):
+    """Où poser le bloc : après le titre de la PREMIÈRE ACTIVITÉ qui se fait à plusieurs.
+
+    Première version de cet outil : je cherchais la première occurrence de « à deux » ou
+    « en groupe » n'importe où dans la page, et je remontais au titre précédent. Résultat :
+    le bloc atterrissait sous « Le référentiel de la séquence » ou sous « Billet d'entrée »,
+    parce que ces sections CITENT le travail de groupe sans en être un.
+
+    J'avais cherché un mot, pas une situation — la même erreur que compter les 🪞 pour
+    savoir si une séquence a un bilan. Il faut donc les deux conditions : un titre qui
+    annonce une activité, ET du vocabulaire de groupe dans cette activité-là.
     """
-    titres = list(re.finditer(r"<h[23][^>]*>.*?</h[23]>", texte[:ou], re.S))
-    if titres:
-        return titres[-1].end()
-    corps = re.search(r"<body[^>]*>", texte)
-    return corps.end() if corps else 0
+    propre = sans_script(texte)
+    for libelle, debut, fin in sections(propre):
+        if ACTIVITE.search(libelle) and GROUPE.search(html.unescape(propre[debut:fin])):
+            return debut, libelle
+    return None, None
 
 
 def poser(page, forcer=False):
@@ -149,10 +158,9 @@ def poser(page, forcer=False):
             return False, "déjà à jour"
         texte = neuf
     else:
-        ou = premier_groupe(texte)
-        if ou is None and not forcer:
-            return None, "aucun travail de groupe nommé — rien à poser"
-        i = point_d_insertion(texte, ou if ou is not None else len(texte))
+        i, libelle = emplacement(texte)
+        if i is None:
+            return None, "aucune activité à plusieurs — rien à poser"
         texte = texte[:i] + "\n" + bloc + texte[i:]
 
     if 'id="roles-css"' not in texte:
@@ -181,7 +189,7 @@ def main():
         cle = cle_du_lot(s)
         if "<!-- roles: %s -->" % cle in t:
             deja.append(s)
-        elif premier_groupe(t) is not None:
+        elif emplacement(t)[0] is not None:
             avec.append(s)
         else:
             sans.append(s)
@@ -195,10 +203,13 @@ def main():
 
     for s in avec:
         if a.etat:
-            print("  ⏳ %s" % cle_du_lot(s))
+            print("  ⏳ %-10s sous « %s »" % (cle_du_lot(s),
+                  (emplacement(s.read_text(encoding="utf-8"))[1] or "?")[:46]))
             continue
+        _, libelle = emplacement(s.read_text(encoding="utf-8"))
         ok, mot = poser(s)
-        print("  %s %-10s %s" % ("✅" if ok else "⚠️ ", cle_du_lot(s), mot))
+        print("  %s %-10s %s — sous « %s »" % ("✅" if ok else "⚠️ ", cle_du_lot(s), mot,
+                                               (libelle or "?")[:46]))
     for s in deja:
         print("  ✔️  %-10s déjà posé" % cle_du_lot(s))
     return 0

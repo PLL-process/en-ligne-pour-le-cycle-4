@@ -36,11 +36,14 @@ OBLIGATOIRES = ("titre", "source", "url", "a_regarder")
 #: montrer à l'élève. C'est une note de tournage pour le professeur, et elle reste dans
 #: le registre — une page qui annonce une vidéo à venir est une promesse, pas un support.
 NATURES = {
-    "video":    {"etiquette": "🎬 Ressource vidéo",   "verbe": "▶ Ouvrir la vidéo",
+    "video":    {"etiquette": "🎬 Ressource vidéo",   "nom": "Ressource vidéo",
+                 "verbe": "▶ Ouvrir la vidéo",
                  "sujet": "vidéo", "pose": True},
-    "document": {"etiquette": "📄 Document de référence", "verbe": "📄 Ouvrir le document",
+    "document": {"etiquette": "📄 Document de référence", "nom": "Document de référence",
+                 "verbe": "📄 Ouvrir le document",
                  "sujet": "document", "pose": True},
-    "a_filmer": {"etiquette": "🎥 À filmer dans l'atelier", "verbe": "",
+    "a_filmer": {"etiquette": "🎥 À filmer dans l'atelier", "nom": "À filmer",
+                 "verbe": "",
                  "sujet": "film", "pose": False},
 }
 
@@ -92,7 +95,7 @@ CSS = """<style id="ressource-css">
 """
 
 GABARIT = """<!-- ressource: {id} -->
-<section class="ressource" id="{id}" aria-label="{etiquette} : {titre_attr}">
+<section class="ressource" id="{id}" aria-label="{nom} : {titre_attr}">
   <header class="ressource-tete">
     <span class="ressource-genre">{etiquette}</span>
 {chips}    <span class="ressource-verif{classe_verif}">lien vérifié le {verifie_le}</span>
@@ -207,7 +210,7 @@ def bloc(r, verifie_le):
     repli = r.get("repli") or {}
     nat = nature(r)
     return GABARIT.format(
-        id=r["id"], chips=chips, etiquette=nat["etiquette"],
+        id=r["id"], chips=chips, etiquette=nat["etiquette"], nom=nat["nom"],
         titre=r["titre"], titre_attr=r["titre"].replace('"', "&quot;"),
         source=r["source"], url=r["url"],
         verifie_le=verifie_le or "jamais", classe_verif=vieux,
