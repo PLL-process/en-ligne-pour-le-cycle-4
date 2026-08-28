@@ -6,16 +6,18 @@
  *     node verificateur_ressources.mjs --maj     idem, et inscrit la date du jour
  *                                                dans « verifie_le » pour ce qui répond
  *
- * À LANCER DEPUIS TA MACHINE. Le conteneur où je travaille n'atteint ni YouTube (429),
- * ni Wikimedia Commons (cache seul), ni Lumni (403) : je ne peux donc PAS vérifier une
- * URL de vidéo à ta place. Ce contrôle existe précisément parce que je ne le peux pas.
+ * À LANCER DEPUIS TA MACHINE. Le réseau sortant du conteneur où je travaille est fermé —
+ * même example.com y répond 403. Ce contrôle existe précisément parce que je ne peux pas
+ * l'exécuter moi-même.
  *
- * Trois contrôles, pas un :
+ * Quatre contrôles, pas un :
  *   1. le lien répond-il ?
  *   2. pour YouTube, la vidéo existe-t-elle encore ? (une vidéo supprimée répond 200 :
  *      la page d'erreur est une page. On interroge donc oEmbed, qui, lui, répond 404.)
  *   3. chaque ressource a-t-elle son repli imprimé, et son bloc est-il encore dans sa page ?
  *      Une ressource sans repli est un défaut même quand le lien marche (règle n°169).
+ *   4. la licence a-t-elle été lue à la source ? Non bloquant — un lien ne reproduit rien —
+ *      mais on le rappelle tant qu'il est tôt.
  *
  * Aucune dépendance : Node 18 ou plus suffit.
  */
@@ -63,6 +65,7 @@ async function main() {
   const registre = JSON.parse(await readFile(REGISTRE, "utf8"));
   const pages = new Map();
   let morts = 0, sansRepli = 0, blocsAbsents = 0, verifies = 0, attente = 0;
+  let licencesAVoir = 0;
 
   console.log(`\nRegistre : ${registre.ressources.length} ressource(s).\n`);
 
@@ -115,6 +118,16 @@ async function main() {
     console.log(`  ${ligne.padEnd(30)} ${r.id.padEnd(24)} ${safeHost(url)}`);
     if (vivant) { verifies++; if (MAJ) r.verifie_le = new Date().toISOString().slice(0, 10); }
     else morts++;
+
+    // ── contrôle 4 : la licence a-t-elle été lue à la source ? ────────────
+    // Un lien ne reproduit rien, donc rien n'est bloquant ici. Mais le jour où l'on
+    // découpe, réhéberge ou intègre, la licence redevient la question — et personne
+    // ne s'en souvient à ce moment-là. On le rappelle donc pendant qu'il est tôt.
+    if (r.licence_verifiee !== true) {
+      console.log(`     ${jaune("licence non lue à la source")}`
+                + (r.verifie_comment ? ` — ${r.verifie_comment}` : ""));
+      licencesAVoir++;
+    }
   }
 
   if (MAJ) {
@@ -123,7 +136,8 @@ async function main() {
   }
 
   console.log(`\n${verifies} lien(s) vivant(s) · ${morts} mort(s) · ${attente} en attente`
-            + ` · ${sansRepli} sans repli · ${blocsAbsents} bloc(s) à reposer\n`);
+            + ` · ${sansRepli} sans repli · ${blocsAbsents} bloc(s) à reposer`
+            + ` · ${licencesAVoir} licence(s) à lire\n`);
   if (morts || sansRepli) {
     console.log(rouge("Un lien mort ou une ressource sans repli, c'est une séance qui tombe.\n"));
     process.exit(1);

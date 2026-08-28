@@ -7,7 +7,8 @@
       "« repli » est obligatoire : une séance qui ne peut pas se faire sans la vidéo est une séance qui ne se fera pas (règle n°169).",
       "« verifie_le » est la date de la dernière vérification réussie. Elle s'affiche dans la page : un lien vieux se voit.",
       "Pour une vidéo YouTube, passer par Digiview (La Digitale) : le segment utile est découpé, la publicité, les suggestions et le pistage disparaissent. L'URL enregistrée ici est alors l'URL Digiview, pas l'URL YouTube.",
-      "Préférer, quand elle existe, une ressource Lumni Enseignement : gratuite, française, droits déjà réglés pour la classe, et pas de traceur sur des mineurs."
+      "Préférer, quand elle existe, une ressource Lumni Enseignement : gratuite, française, droits déjà réglés pour la classe, et pas de traceur sur des mineurs.",
+      "« licence_verifiee » reste à false tant que TU n'as pas lu la licence sous la vidéo. Le vérificateur le rappelle. Un lien ne reproduit rien, mais le jour où l'on découpe, réhéberge ou intègre, la licence redevient la question."
     ],
     "champs": {
       "id": "identifiant du bloc, unique dans le dépôt ; sert aussi d'ancre HTML",
@@ -16,27 +17,67 @@
       "doit_montrer": "LA SPÉCIFICATION — ce que la vidéo doit faire voir. Écrite avant de chercher, elle empêche de se contenter de la première vidéo trouvée.",
       "titre, source, url, duree, licence": "renseignés une fois la vidéo choisie ET ouverte",
       "a_regarder": "la consigne à l'élève, avec les minutages. Ne peut s'écrire qu'après avoir regardé la vidéo.",
-      "repli": "ce que l'élève fait si la vidéo ne s'ouvre pas. S'imprime toujours."
+      "repli": "ce que l'élève fait si la vidéo ne s'ouvre pas. S'imprime toujours.",
+      "licence_verifiee": "false tant que la licence n'a pas été lue à la source. N'apparaît jamais dans la page élève : c'est une réserve professionnelle, pas une information pour la classe."
     },
     "outils": {
       "poser": "python3 poser_ressource.py            (pose ou remet à jour les blocs complets)",
       "verifier": "node verificateur_ressources.mjs   (à lancer depuis TA machine : le conteneur n'atteint ni YouTube ni Lumni)"
     }
   },
-
   "ressources": [
     {
-      "id": "res-5e-C1-2-freins",
+      "id": "res-5e-C1-2-jante",
       "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/sequence_5e_C1.2_sainte_luce_freinage.html",
-      "apres": "",
-      "doit_montrer": "Un frein de vélo en fonctionnement, vu d'assez près pour que les DEUX SURFACES qui viennent se toucher soient identifiables. Idéalement les trois familles (jante, disque, tambour) ; à défaut, une par vidéo. Ce qui disqualifie une vidéo : un plan large où l'on ne voit que le cycliste ralentir, un montage musical sans mécanisme visible, un commentaire en anglais non sous-titré.",
-      "titre": "",
-      "source": "",
-      "url": "",
+      "apres": "activite1-trois-principes",
+      "doit_montrer": "Le mécanisme du frein sur jante (V-brake) en fonctionnement, vu d'assez près pour que les DEUX SURFACES qui viennent se toucher soient identifiables, et pour qu'on voie à quelle distance de l'axe de la roue elles se touchent. Ce qui disqualifierait une vidéo : un plan large où l'on ne voit que le cycliste ralentir, un montage musical sans mécanisme visible, un commentaire en anglais non sous-titré.",
+      "titre": "Comment freiner un vélo ? 4ème partie : le frein V-brake",
+      "source": "Alain Le Berre — série « Comment freiner un vélo ? »",
+      "url": "https://www.youtube.com/watch?v=ufMFF9HlxvQ",
       "duree": "",
       "licence": "",
-      "verifie_le": "",
-      "a_regarder": "",
+      "licence_verifiee": false,
+      "verifie_le": "2026-08-28",
+      "verifie_comment": "existence, titre et auteur confirmés par l'API oEmbed de YouTube le 2026-08-28. La DURÉE, la LICENCE et le contenu exact restent à confirmer en regardant la vidéo.",
+      "a_regarder": "<p>Ne regarde pas le vélo entier. Cherche <strong>les deux surfaces qui viennent se toucher</strong> : ici, les patins et la jante.</p><p>Puis réponds à la seule question qui sépare les trois freins de cette activité : <strong>à quelle distance de l'axe de la roue le frottement a-t-il lieu ?</strong> Note ta réponse avant de passer à la vidéo suivante.</p>",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Tu peux faire l'activité entière sans elle. Va voir un vélo — le tien, celui d'un camarade, celui de l'atelier — et <strong>fais tourner la roue à la main, puis serre le frein</strong>.</p><ol><li>Nomme la surface qui <em>ne bouge pas</em> avec la roue (celle que le frein pousse).</li><li>Nomme la surface qui <em>tourne</em> avec la roue.</li><li>Mesure, à la règle, à quelle distance du centre de la roue ces deux surfaces se touchent.</li></ol><p>Ces trois réponses sont exactement ce que la vidéo t'aurait montré. Reporte-les dans le tableau de comparaison.</p>"
+      }
+    },
+    {
+      "id": "res-5e-C1-2-disque",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/sequence_5e_C1.2_sainte_luce_freinage.html",
+      "apres": "activite1-trois-principes",
+      "doit_montrer": "Le mécanisme du frein à disque en fonctionnement, vu d'assez près pour que les DEUX SURFACES qui viennent se toucher soient identifiables, et pour qu'on voie à quelle distance de l'axe de la roue elles se touchent. Ce qui disqualifierait une vidéo : un plan large où l'on ne voit que le cycliste ralentir, un montage musical sans mécanisme visible, un commentaire en anglais non sous-titré.",
+      "titre": "Comment freiner un vélo ? 7ème partie : le frein à disque hydraulique — Techno collège",
+      "source": "Alain Le Berre — série « Comment freiner un vélo ? »",
+      "url": "https://www.youtube.com/watch?v=H3XpGG21RQM",
+      "duree": "",
+      "licence": "",
+      "licence_verifiee": false,
+      "verifie_le": "2026-08-28",
+      "verifie_comment": "existence, titre et auteur confirmés par l'API oEmbed de YouTube le 2026-08-28. La DURÉE, la LICENCE et le contenu exact restent à confirmer en regardant la vidéo.",
+      "a_regarder": "<p>Ne regarde pas le vélo entier. Cherche <strong>les deux surfaces qui viennent se toucher</strong> : ici, les plaquettes et le disque.</p><p>Puis réponds à la seule question qui sépare les trois freins de cette activité : <strong>à quelle distance de l'axe de la roue le frottement a-t-il lieu ?</strong> Compare avec ce que tu as noté pour le V-brake.</p>",
+      "repli": {
+        "titre": "Si la vidéo ne s'ouvre pas",
+        "html": "<p>Tu peux faire l'activité entière sans elle. Va voir un vélo — le tien, celui d'un camarade, celui de l'atelier — et <strong>fais tourner la roue à la main, puis serre le frein</strong>.</p><ol><li>Nomme la surface qui <em>ne bouge pas</em> avec la roue (celle que le frein pousse).</li><li>Nomme la surface qui <em>tourne</em> avec la roue.</li><li>Mesure, à la règle, à quelle distance du centre de la roue ces deux surfaces se touchent.</li></ol><p>Ces trois réponses sont exactement ce que la vidéo t'aurait montré. Reporte-les dans le tableau de comparaison.</p>"
+      }
+    },
+    {
+      "id": "res-5e-C1-2-tambour",
+      "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/5e/5e_C1.2/sequence_5e_C1.2_sainte_luce_freinage.html",
+      "apres": "activite1-trois-principes",
+      "doit_montrer": "Le mécanisme du frein à tambour en fonctionnement, vu d'assez près pour que les DEUX SURFACES qui viennent se toucher soient identifiables, et pour qu'on voie à quelle distance de l'axe de la roue elles se touchent. Ce qui disqualifierait une vidéo : un plan large où l'on ne voit que le cycliste ralentir, un montage musical sans mécanisme visible, un commentaire en anglais non sous-titré.",
+      "titre": "Comment freiner un vélo ? 6ème partie : le frein à tambour",
+      "source": "Alain Le Berre — série « Comment freiner un vélo ? »",
+      "url": "https://www.youtube.com/watch?v=i2rpSmTiu30",
+      "duree": "",
+      "licence": "",
+      "licence_verifiee": false,
+      "verifie_le": "2026-08-28",
+      "verifie_comment": "existence, titre et auteur confirmés par l'API oEmbed de YouTube le 2026-08-28. La DURÉE, la LICENCE et le contenu exact restent à confirmer en regardant la vidéo.",
+      "a_regarder": "<p>Ne regarde pas le vélo entier. Cherche <strong>les deux surfaces qui viennent se toucher</strong> : ici, les mâchoires et le tambour — et cette fois elles poussent vers l'extérieur.</p><p>Puis réponds à la seule question qui sépare les trois freins de cette activité : <strong>à quelle distance de l'axe de la roue le frottement a-t-il lieu ?</strong> Range maintenant les trois freins du plus loin de l'axe au plus près.</p>",
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Tu peux faire l'activité entière sans elle. Va voir un vélo — le tien, celui d'un camarade, celui de l'atelier — et <strong>fais tourner la roue à la main, puis serre le frein</strong>.</p><ol><li>Nomme la surface qui <em>ne bouge pas</em> avec la roue (celle que le frein pousse).</li><li>Nomme la surface qui <em>tourne</em> avec la roue.</li><li>Mesure, à la règle, à quelle distance du centre de la roue ces deux surfaces se touchent.</li></ol><p>Ces trois réponses sont exactement ce que la vidéo t'aurait montré. Reporte-les dans le tableau de comparaison.</p>"
@@ -57,7 +98,8 @@
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>La séance repose sur <strong>ta</strong> mesure, pas sur la vidéo. Reprends les deux températures relevées dans la cour — celle à l'ombre, celle au soleil — et leur écart.</p><ol><li>Un système déclencherait l'alerte au-dessus de 40 °C. Combien de fois se déclencherait-il dans ta cour, en une semaine de juillet, sans le moindre feu ?</li><li>Écris <strong>une</strong> information que le système devrait regarder EN PLUS de la température pour ne plus se tromper.</li><li>Écris la question qu'il faut poser à celui qui te vend ce système.</li></ol>"
-      }
+      },
+      "licence_verifiee": false
     },
     {
       "id": "res-5e-C1-1-capteur",
@@ -74,7 +116,8 @@
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Ouvre <code>releves_air_chengdu_simules.csv</code> — c'est le vrai matériau de la séance.</p><ol><li>Compte les relevés du lundi. Le capteur enregistre une valeur par heure, de 6 h à 18 h : combien devrait-il y en avoir ? Combien y en a-t-il ?</li><li>Entre 13 h (16,4) et 15 h (21,1), écris <strong>deux</strong> choses différentes qui ont pu se passer et qui donneraient exactement ces deux mêmes nombres.</li><li>Conclus en une phrase : que sait-on, et que ne sait-on pas, à 14 h ?</li></ol>"
-      }
+      },
+      "licence_verifiee": false
     },
     {
       "id": "res-4e-C1-4-hameconnage",
@@ -91,7 +134,8 @@
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Le professeur projette ou distribue trois messages imprimés. Sur chacun, entoure au crayon :</p><ol><li>l'adresse réelle de l'expéditeur (pas le nom affiché) ;</li><li>le <strong>nom de domaine</strong> du lien — la seule partie qui dit à qui tu parles ;</li><li>ce qui presse : un délai, une menace, une récompense.</li></ol><p>Puis écris à qui tu signales, et en combien de temps. Signaler vite n'est jamais une faute.</p>"
-      }
+      },
+      "licence_verifiee": false
     },
     {
       "id": "res-3e-C1-5-empreinte",
@@ -108,7 +152,8 @@
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Prends deux chiffres du dossier fourni. Pour chacun, remplis les quatre cases : <strong>la valeur</strong>, <strong>l'unité</strong>, <strong>qui l'a produit</strong>, <strong>en quelle année</strong>.</p><ol><li>Lequel des deux peux-tu défendre devant la classe ? Pourquoi ?</li><li>Un chiffre de 2019 sur le numérique est-il encore vrai aujourd'hui ? Dis ce qui a pu changer.</li></ol><p>Un chiffre sans source ne se discute pas : il se croit ou il se rejette. C'est précisément ce qu'on ne veut pas.</p>"
-      }
+      },
+      "licence_verifiee": false
     },
     {
       "id": "res-4e-C6-2-montage",
@@ -125,7 +170,8 @@
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Prends la boîte de l'atelier et sors les trois pièces : le capteur, la carte, l'actionneur.</p><ol><li>Pose-les dans l'ordre où l'information circule, de gauche à droite, et photographie.</li><li>Sur ta photo, écris ce qui passe dans chaque fil : une <em>mesure</em>, un <em>ordre</em>, ou de l'<em>énergie</em>.</li><li>Une seule de ces trois choses peut être fausse sans que rien ne casse. Laquelle, et pourquoi est-ce plus grave ?</li></ol>"
-      }
+      },
+      "licence_verifiee": false
     }
   ]
 }

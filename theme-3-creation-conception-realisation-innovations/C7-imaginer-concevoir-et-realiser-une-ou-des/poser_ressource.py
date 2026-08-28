@@ -51,6 +51,9 @@ CSS = """<style id="ressource-css">
   padding:9px 16px;font-weight:600;text-decoration:none;margin-top:8px}
 .ressource-lien:hover{background:#2a63a8}
 .ressource-lien:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+/* Sans URL réelle : un repère inerte, qui a l'air inerte. Jamais un faux bouton. */
+.ressource-lien--inerte{background:transparent;border:1px dashed #6b87ac;color:#9bbefc;
+  font-weight:400;cursor:default}
 .ressource-qr{flex:0 0 132px;margin:0;text-align:center}
 .ressource-qr svg{width:120px;height:120px;background:#fff;border-radius:6px;padding:6px;display:block}
 .ressource-qr figcaption{font-size:.7em;color:#6b87ac;margin-top:5px;line-height:1.35}
@@ -83,7 +86,7 @@ GABARIT = """<!-- ressource: {id} -->
     <div class="ressource-consigne">
       <p class="ressource-etiq">Ce qu'il faut regarder</p>
       {a_regarder}
-      <a class="ressource-lien" href="{url}" target="_blank" rel="noopener noreferrer">▶ Ouvrir la vidéo</a>
+      {commande}
     </div>
     <figure class="ressource-qr">
       {qr}
@@ -100,6 +103,13 @@ GABARIT = """<!-- ressource: {id} -->
 
 def qr_svg(url, etiquette):
     """QR en SVG, produit localement. Aucun appel réseau, ni à la génération ni à l'affichage."""
+    if factice(url):
+        # Un QR qui mène à une adresse d'exemple est un mensonge de plus : on montre
+        # une case barrée, qui se lit comme une case barrée.
+        return ('<svg role="img" viewBox="0 0 40 40" aria-label="Aucun QR : aperçu sans vidéo">'
+                '<rect x="1" y="1" width="38" height="38" fill="none" stroke="#999" '
+                'stroke-width="1.5" stroke-dasharray="4 3"/>'
+                '<path d="M8 8 L32 32 M32 8 L8 32" stroke="#bbb" stroke-width="1.5"/></svg>')
     try:
         import segno
     except ImportError:
@@ -121,6 +131,30 @@ def qr_svg(url, etiquette):
         "<svg ",
         '<svg role="img" viewBox="0 0 %d %d" preserveAspectRatio="xMidYMid meet" '
         'aria-label="QR code vers : %s" ' % (largeur, hauteur, etiquette), 1)
+
+
+#: hôtes réservés aux exemples — RFC 2606. Rien derrière, par construction.
+FACTICES = ("exemple.invalid", "example.invalid", "example.com", "example.org")
+
+
+def factice(url):
+    return (not (url or "").strip()) or any(h in url for h in FACTICES)
+
+
+def commande(url):
+    """Le bouton n'existe QUE s'il mène quelque part.
+
+    Un contrôle qui annonce « Ouvrir la vidéo » et n'ouvre rien est exactement le défaut
+    que la PR #255 a passé une session à retirer du dépôt : le bouton QCM qui ne menait
+    nulle part, le bouton Enregistrer qui n'existait pas. On ne le réintroduit pas ici,
+    fût-ce dans un aperçu. Sans URL réelle, on affiche un repère inerte, qui a l'air
+    inerte, et qui dit pourquoi.
+    """
+    if factice(url):
+        return ('<span class="ressource-lien ressource-lien--inerte" role="note">'
+                "✖ Aucune vidéo — c'est un aperçu de la forme</span>")
+    return ('<a class="ressource-lien" href="%s" target="_blank" rel="noopener noreferrer">'
+            "▶ Ouvrir la vidéo</a>" % url)
 
 
 def paragraphes(texte):
@@ -157,6 +191,7 @@ def bloc(r, verifie_le):
         source=r["source"], url=r["url"],
         verifie_le=verifie_le or "jamais", classe_verif=vieux,
         a_regarder=paragraphes(r["a_regarder"]),
+        commande=commande(r["url"]),
         qr=qr_svg(r["url"], r["titre"]),
         repli_titre=(repli.get("titre") or "Si la vidéo ne s'ouvre pas"),
         repli_html=repli.get("html", ""),
@@ -197,7 +232,12 @@ def main():
     ap.add_argument("--etat", action="store_true", help="ne touche à rien, dit ce qui manque")
     ap.add_argument("--apercu", metavar="FICHIER", nargs="?", const="apercu_ressource.html",
                     help="écrit un aperçu autonome au lieu de modifier le dépôt")
+    ap.add_argument("--racine", metavar="CHEMIN", default=None,
+                    help="racine du dépôt, si l'outil n'est pas à sa place habituelle")
     a = ap.parse_args()
+    global RACINE
+    if a.racine:
+        RACINE = pathlib.Path(a.racine).resolve()
 
     registre = json.loads(REGISTRE.read_text(encoding="utf-8"))
     ressources = registre["ressources"]
@@ -216,32 +256,39 @@ def main():
         print()
 
     if a.apercu:
-        exemple = dict(prets[0]) if prets else dict(ressources[0])
-        if manques(exemple):
-            exemple.update({
-                "titre": "TITRE DE LA VIDÉO — exemple, aucune vidéo réelle",
-                "source": "SOURCE · exemple non vérifié",
-                "url": "https://exemple.invalid/aucune-video-reelle",
-                "duree": "3 min 20", "licence": "licence à vérifier",
-                "a_regarder": "<p>De <strong>0:12 à 0:40</strong> : repère les deux surfaces qui "
-                              "viennent se toucher. Note à quelle distance du centre de la roue "
-                              "elles se touchent.</p>",
-            })
-        corps = bloc(exemple, "—  ceci est un aperçu")
+        # L'aperçu montre les ressources RÉELLES quand il y en a : un aperçu dont les
+        # boutons ne mènent nulle part n'apprend rien sur des boutons qui mènent quelque part.
+        montres = prets if prets else [dict(ressources[0], **{
+            "titre": "TITRE DE LA VIDÉO — emplacement encore vide",
+            "source": "SOURCE — à renseigner", "url": "",
+            "a_regarder": "<p>La consigne minutée s'écrit après avoir regardé la vidéo.</p>",
+        })]
+        corps = "\n".join(bloc(r, r.get("verifie_le") or "") for r in montres)
+        vivants = sum(1 for r in montres if not factice(r.get("url", "")))
+        intro = ("<p class=\"avis\">%d bloc(s) affiché(s). <strong>%d bouton(s) mènent à une "
+                 "vidéo réelle</strong> — existence, titre et auteur confirmés par l'API oEmbed "
+                 "de YouTube. Là où l'emplacement est encore vide, il n'y a pas de bouton du "
+                 "tout&nbsp;: un repère barré, qui a l'air barré.</p>"
+                 "<p class=\"avis\">Ce qui reste à confirmer en regardant : la <strong>durée</strong>, "
+                 "la <strong>licence</strong>, et les <strong>minutages</strong> de la consigne. "
+                 "<kbd>Ctrl+P</kbd> pour voir ce qui part à la photocopieuse.</p>"
+                 % (len(montres), vivants))
         page = ("<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\">"
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
                 "<title>Aperçu — bloc ressource</title>" + CSS +
                 "<style>body{background:#050f24;color:#e4eaf5;font-family:'Segoe UI',system-ui,"
                 "sans-serif;line-height:1.6;margin:0;padding:28px}"
                 ".page{max-width:940px;margin:0 auto}"
-                "h1{color:#81aaff;font-size:1.35em}"
-                "@media print{body{background:#fff;color:#111}h1{color:#111}}</style>"
-                "</head><body><div class=\"page\"><h1>Aperçu du bloc « ressource vidéo »</h1>"
-                "<p style=\"color:#9bbefc\">Aucune URL réelle : c'est la forme, pas le contenu. "
-                "Ctrl+P pour voir ce qui part à la photocopieuse.</p>"
+                "h1{color:#81aaff;font-size:1.35em;margin-bottom:.2em}"
+                ".avis{color:#9bbefc;font-size:.94em;max-width:70ch}"
+                "kbd{background:#0b1b39;border:1px solid #2f5695;border-radius:4px;padding:1px 5px}"
+                "@media print{body{background:#fff;color:#111}h1{color:#111}.avis{color:#333}}"
+                "</style></head><body><div class=\"page\">"
+                "<h1>Aperçu du bloc « ressource vidéo »</h1>" + intro
                 + corps + "</div></body></html>")
         pathlib.Path(a.apercu).write_text(page, encoding="utf-8")
-        print("Aperçu écrit : %s" % a.apercu)
+        print("Aperçu écrit : %s  (%d bloc(s), %d lien(s) réel(s))"
+              % (a.apercu, len(montres), vivants))
         return 0
 
     if a.etat:
