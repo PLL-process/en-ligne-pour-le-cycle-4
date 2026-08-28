@@ -1,611 +1,922 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QCM (24 questions) — Cybersécurité &amp; usage raisonné du numérique — 4e (2024)</title>
-  <style>
-    /* Définition des variables CSS pour les couleurs (thème bleu foncé) */
-    :root { --bg:#0e1630; --card:#151e3a; --ink:#e8ecff; --muted:#a9b6df; --accent:#7dd3fc; --ok:#16a34a; --ko:#ef4444; --warn:#f59e0b; }
-    /* Styles généraux pour tous les éléments (box-sizing pour une meilleure gestion des paddings) */
-    * { box-sizing: border-box; }
-    /* Styles pour le body (fond, police, couleur texte) */
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--ink); line-height: 1.5; }
-    /* Styles pour l'en-tête (padding et gradient de fond) */
-    header { padding: 18px 20px; background: linear-gradient(90deg, #0e1630, #1f2a57); }
-    /* Styles pour h1 (marge zéro, taille police) */
-    h1 { margin: 0; font-size: 1.35rem; }
-    /* Styles pour le wrapper principal (largeur max, marges, padding, reset du compteur q) */
-    .wrap { max-width: 980px; margin: 18px auto; padding: 0 14px; counter-reset: q; }
-    /* Styles pour les cartes (fond, bordure, arrondi, padding, marge, ombre) */
-    .card { background: var(--card); border: 1px solid #223060; border-radius: 18px; padding: 14px 16px; margin: 14px 0; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-    /* Ajout du numéro de question avant le titre (incrément du compteur) */
-    .card .q-title::before { counter-increment: q; content: "Q" counter(q) " — "; color: #a9b6df; font-weight: 700; }
-    /* Styles pour les lignes flex (display flex, wrap, gap, align) */
-    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    /* Styles pour les badges (display inline, padding, arrondi, taille police, couleurs) */
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .8rem; color: #0e1630; background: #c7d2fe; font-weight: 700; }
-    /* Styles pour les points (gras, couleur verte) */
-    .pts { font-weight: 700; color: #d1fae5; }
-    /* Styles pour les boutons (bordure, padding, arrondi, curseur, fond, couleur, gras) */
-    .btn { border: 1px solid #344a8a; padding: 8px 12px; border-radius: 12px; cursor: pointer; background: #1b254a; color: var(--ink); font-weight: 600; }
-    /* Styles pour les petits boutons (padding et taille police réduits) */
-    .btn.small { padding: 5px 8px; font-size: .9rem; }
-    /* Effet hover sur boutons (augmente la luminosité) */
-    .btn:hover { filter: brightness(1.15); }
-    /* Styles pour les aides (cachées par défaut, marge, couleur muted, padding amélioré, bordure latérale pour visibilité) */
-    .help { display: none; margin-top: 8px; color: var(--muted); padding: 10px; border-left: 4px solid var(--accent); background: var(--bg); border-radius: 4px; font-size: 0.95rem; line-height: 1.6; }
-    /* Styles pour les réponses (marge, gras, padding, arrondi, fond, ombre pour un look boxed) */
-    .answer { margin-top: 8px; font-weight: 700; padding: 10px; border-radius: 8px; background: var(--bg); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    /* Couleur et bordure pour réponses correctes (vert) */
-    .ok { color: var(--ok); border: 1px solid var(--ok); }
-    /* Couleur et bordure pour réponses incorrectes (rouge) */
-    .ko { color: var(--ko); border: 1px solid var(--ko); }
-    /* Couleur pour texte muted (gris) */
-    .muted { color: var(--muted); }
-    /* Styles pour les titres de questions (marge, taille police) */
-    .q-title { margin: 0 0 6px 0; font-size: 1.05rem; }
-    /* Styles pour le footer (marge, padding, arrondi, fond, bordure) */
-    .footer { margin: 16px 0; padding: 12px; border-radius: 14px; background: #0f1a3d; border: 1px solid #23316b; }
-    /* Styles pour le score (taille police, gras) */
-    .score { font-size: 1.1rem; font-weight: 800; }
-    /* Styles pour inputs numériques, text et select (fond, bordure, couleur, padding, arrondi) */
-    input[type="number"], input[type="text"], select { background: #0f1836; border: 1px solid #2b3c75; color: var(--ink); padding: 8px 10px; border-radius: 10px; }
-    /* Styles pour labels (display block, marge) */
-    label { display: block; margin: .25rem 0; }
-    /* Styles pour grille à 3 colonnes (grid, columns, gap) */
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    /* Styles pour notes (taille police, couleur claire) */
-    .note { font-size: .9rem; color: #cbd5e1; }
-    /* Styles pour inputs dans idbox (largeur 100%) */
-    .idbox input { width: 100%; }
-    /* Styles pour images schema (largeur max, arrondi, bordure, fond) */
-    img.schema { max-width: 100%; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
-    /* Commentaire : Illustrations */
-    /* Styles pour figures questions (marge, align center) */
-    .q-fig { margin: 10px 0; text-align: center; }
-    /* Styles pour images dans figures (largeur max, hauteur auto, arrondi, bordure, fond) */
-    .q-fig img.q-img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #29417d; background: #0b1330; }
-    /* Styles pour figcaption (taille police, couleur, marge) */
-    .q-fig figcaption { font-size: .9rem; color: #a9b6df; margin-top: 6px; }
-    /* Styles pour help (caché, marge, couleur) */
-    .help { display: none; margin-top: 8px; color: var(--muted); }
-    /* Classe pour afficher l'aide (display block) */
-    .help.show-help { display: block; }
-    /* Amélioration : Styles pour les tableaux (bordure collapse, largeur, marge) */
-    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
-    /* Styles pour th et td (bordure, padding, align) */
-    th, td { border: 1px solid #2b3c75; padding: 8px; text-align: left; }
-    /* Styles pour th (fond bleu foncé) */
-    th { background: #1b254a; }
-  #navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 1 · 4e — QCM : cybersécurité et usage raisonné (4e_C1.4, avec 5e_C1.5 et 5e_C1.6)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Consolas',monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .portee-ciblee{max-width:880px;margin:0 auto 12px;padding:9px 14px;border:1px solid var(--head);border-radius:10px;background:#2b1a3f;font-size:.85em;color:var(--text)}
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
 </head>
 <body>
-<nav id="navharm" aria-label="Navigation du site">
-  <a href="../../../../index.html">&#8962; Accueil</a>
-  <a href="sequence-cybersecurite-protection-donnees.html">&#8592; La séquence</a>
-</nav>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence-cybersecurite-protection-donnees.html">← Séquence</a></nav>
+<h1>🔐 QCM — Cybersécurité et usage raisonné</h1>
+<p class="subtitle">Comparer des principes techniques pour une même fonction technique (5e_C1.2) — une fonction, trois freins, six critères, et un contexte qui décide</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C1.4 · 5e_C1.5 · 5e_C1.6</span>
+  <span class="badge theme">30 questions · chaque distracteur réfuté</span>
+</div>
+<p class="portee-ciblee" id="porteeCiblee" hidden role="status"></p>
+<p style="text-align:center"><a href="sequence-cybersecurite-protection-donnees.html">⬅ Revenir à la séquence</a></p>
 
-  <header><h1>QCM (24 questions) — Cybersécurité &amp; usage raisonné du numérique — 4e (2024)</h1></header>
-  <div class="wrap">
-    <!-- Section d'identification (sans q-title pour ne pas compter comme question) -->
-    <div class="card">
-      <!-- Titre de l'identité, avec nouvelle classe id-title sans compteur -->
-      <p class="id-title">Identité de l’élève</p>
-      <!-- Grille pour inputs nom, prénom, classe -->
-      <div class="grid2">
-        <!-- Input pour nom -->
-        <input id="nom" placeholder="Nom">
-        <!-- Input pour prénom -->
-        <input id="prenom" placeholder="Prénom">
-        <!-- Input pour classe -->
-        <input id="classe" placeholder="Classe (ex. 4eB)">
-      </div>
-      <!-- Note pour l'utilisateur -->
-      <p class="note">💡 Renseigne ton identité avant de cliquer sur « Corriger tout ».</p>
-    </div>
-    <!-- Bandeau score et boutons globaux -->
-    <div class="footer row">
-      <!-- Affichage du score -->
-      <div class="score" id="score"> Score : 0 / <span id="max">0</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">0</strong> </div>
-      <!-- Bouton pour corriger tout -->
-      <button class="btn" onclick="corrigerTout()">Corriger tout</button>
-      <!-- Bouton pour réinitialiser -->
-      <button class="btn" onclick="reinitialiser()">Réinitialiser</button>
-      <!-- Amélioration : Bouton pour afficher toutes les aides -->
-      <button class="btn" onclick="showAllHelps()">Afficher toutes les aides</button>
-      <!-- Note sur les compétences -->
-      <div class="note">Les questions ciblent 4e_C1.4 (usage raisonné, identité numérique), en croisement avec 5e_C1.5 et 5e_C1.6.</div>
-    </div>
-    <!-- Q1 : Question sur le routeur -->
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="C1.2">5e_C1.2 — Comparer des principes pour une même fonction</option>
     
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Un mot de passe robuste contient…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q1" value="v0"> une douzaine de caractères variés</label>
-  <label><input type="radio" name="q1" value="v1"> ton prénom et ton année de naissance</label>
-  <label><input type="radio" name="q1" value="v2"> le mot « azerty »</label>
-  <label><input type="radio" name="q1" value="v3"> 4 chiffres</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a1')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q1','v0','fb1',1)">Corriger</button>
+      </select>
   </div>
-  <div id="a1" class="help">Longueur + variété = robustesse. Prénoms et dates de naissance se devinent en quelques secondes.</div>
-  <div id="fb1" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Utiliser le même mot de passe partout, c'est risqué car…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q2" value="v0"> si un site fuit, tout tombe</label>
-  <label><input type="radio" name="q2" value="v1"> c'est plus dur à retenir par cœur</label>
-  <label><input type="radio" name="q2" value="v2"> les sites l'interdisent toujours</label>
-  <label><input type="radio" name="q2" value="v3"> ça use le clavier</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a2')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q2','v0','fb2',1)">Corriger</button>
-  </div>
-  <div id="a2" class="help">Une seule fuite de données suffit alors pour ouvrir ta messagerie, tes jeux, ton ENT…</div>
-  <div id="fb2" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">La double authentification (2FA) consiste à…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q3" value="v1"> taper son mot de passe deux fois</label>
-  <label><input type="radio" name="q3" value="v2"> avoir deux comptes</label>
-  <label><input type="radio" name="q3" value="v0"> ajouter une 2e preuve d'identité</label>
-  <label><input type="radio" name="q3" value="v3"> changer de navigateur</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a3')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q3','v0','fb3',1)">Corriger</button>
-  </div>
-  <div id="a3" class="help">Même si ton mot de passe est volé, le pirate bute sur la 2e vérification envoyée sur TON appareil.</div>
-  <div id="fb3" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Un message « Vous avez gagné ! Cliquez vite ici » est probablement…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q4" value="v1"> une vraie loterie</label>
-  <label><input type="radio" name="q4" value="v2"> un message de ton collège</label>
-  <label><input type="radio" name="q4" value="v3"> une mise à jour</label>
-  <label><input type="radio" name="q4" value="v0"> du hameçonnage (phishing)</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a4')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q4','v0','fb4',1)">Corriger</button>
-  </div>
-  <div id="a4" class="help">Urgence + gain trop beau + lien à cliquer = les 3 signes classiques du hameçonnage.</div>
-  <div id="fb4" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Coche les indices d'un courriel de hameçonnage.</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="checkbox" name="q5" value="v0"> Adresse d'expéditeur bizarre</label>
-  <label><input type="checkbox" name="q5" value="v1"> Fautes d'orthographe inhabituelles</label>
-  <label><input type="checkbox" name="q5" value="v2"> Demande urgente d'identifiants</label>
-  <label><input type="checkbox" name="q5" value="v3"> Lien qui ne correspond pas au site officiel</label>
-  <label><input type="checkbox" name="q5" value="v4"> Signature de ton professeur principal</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a5')">Aide</button>
-    <button class="btn small" onclick="checkMulti('q5',['v0', 'v1', 'v2', 'v3'],'fb5',1)">Corriger</button>
-  </div>
-  <div id="a5" class="help">Vérifie toujours l'expéditeur réel et survole le lien sans cliquer pour voir sa vraie destination.</div>
-  <div id="fb5" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Le cadenas et « https:// » dans la barre d'adresse signifient…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q6" value="v1"> que le site dit forcément la vérité</label>
-  <label><input type="radio" name="q6" value="v2"> que le site est gratuit</label>
-  <label><input type="radio" name="q6" value="v0"> que la connexion est chiffrée</label>
-  <label><input type="radio" name="q6" value="v3"> que le wifi est rapide</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a6')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q6','v0','fb6',1)">Corriger</button>
-  </div>
-  <div id="a6" class="help">HTTPS chiffre les échanges : personne ne peut les lire en route. Mais un site malveillant peut aussi avoir un cadenas !</div>
-  <div id="fb6" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Un cookie est…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q7" value="v1"> un virus caché dans la page</label>
-  <label><input type="radio" name="q7" value="v2"> un mot de passe volé</label>
-  <label><input type="radio" name="q7" value="v0"> un fichier déposé par un site</label>
-  <label><input type="radio" name="q7" value="v3"> une pièce jointe piégée</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a7')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q7','v0','fb7',1)">Corriger</button>
-  </div>
-  <div id="a7" class="help">Les cookies mémorisent tes préférences… et parfois ton parcours de navigation à des fins publicitaires.</div>
-  <div id="fb7" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Refuser les cookies « non essentiels » sert à…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q8" value="v1"> accélérer le wifi de la maison</label>
-  <label><input type="radio" name="q8" value="v0"> limiter le pistage publicitaire</label>
-  <label><input type="radio" name="q8" value="v2"> supprimer les virus du disque</label>
-  <label><input type="radio" name="q8" value="v3"> payer moins cher ses achats</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a8')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q8','v0','fb8',1)">Corriger</button>
-  </div>
-  <div id="a8" class="help">Les cookies essentiels font fonctionner le site ; les autres servent surtout à te suivre pour la publicité ciblée.</div>
-  <div id="fb8" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Le RGPD est…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q9" value="v1"> un antivirus gratuit</label>
-  <label><input type="radio" name="q9" value="v2"> un réseau social européen</label>
-  <label><input type="radio" name="q9" value="v0"> le règlement européen des données</label>
-  <label><input type="radio" name="q9" value="v3"> un format d'image compressé</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a9')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q9','v0','fb9',1)">Corriger</button>
-  </div>
-  <div id="a9" class="help">Le RGPD impose le consentement, le droit d'accès et le droit à l'effacement de tes données en Europe.</div>
-  <div id="fb9" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Une donnée personnelle, c'est par exemple…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q10" value="v0"> ton nom, ta photo, ta position</label>
-  <label><input type="radio" name="q10" value="v1"> la météo de demain</label>
-  <label><input type="radio" name="q10" value="v2"> le score d'un match</label>
-  <label><input type="radio" name="q10" value="v3"> la capitale de la France</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a10')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q10','v0','fb10',1)">Corriger</button>
-  </div>
-  <div id="a10" class="help">Toute information qui permet de t'identifier directement ou indirectement est une donnée personnelle.</div>
-  <div id="fb10" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Une trace numérique INVOLONTAIRE, c'est…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q11" value="v1"> une photo que tu publies</label>
-  <label><input type="radio" name="q11" value="v2"> un commentaire que tu écris</label>
-  <label><input type="radio" name="q11" value="v3"> un like que tu donnes</label>
-  <label><input type="radio" name="q11" value="v0"> ton adresse IP notée par les sites</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a11')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q11','v0','fb11',1)">Corriger</button>
-  </div>
-  <div id="a11" class="help">Publier = trace volontaire. Ton IP, tes cookies, ta localisation = traces laissées sans action visible de ta part.</div>
-  <div id="fb11" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">L'identité numérique, c'est…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q12" value="v0"> l'image de toi construite en ligne</label>
-  <label><input type="radio" name="q12" value="v1"> ta carte d'identité plastifiée</label>
-  <label><input type="radio" name="q12" value="v2"> ton pseudo uniquement</label>
-  <label><input type="radio" name="q12" value="v3"> ton adresse postale</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a12')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q12','v0','fb12',1)">Corriger</button>
-  </div>
-  <div id="a12" class="help">Photos, commentaires, comptes, traces : tout cela compose l'image de toi que les autres (et les recruteurs !) peuvent voir.</div>
-  <div id="fb12" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Avant de publier une photo d'un ami, tu dois…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q13" value="v1"> choisir un joli filtre</label>
-  <label><input type="radio" name="q13" value="v0"> lui demander son autorisation</label>
-  <label><input type="radio" name="q13" value="v2"> le taguer sans prévenir</label>
-  <label><input type="radio" name="q13" value="v3"> la publier vite avant qu'il change d'avis</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a13')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q13','v0','fb13',1)">Corriger</button>
-  </div>
-  <div id="a13" class="help">Le droit à l'image : chacun décide de la diffusion de sa propre image. Publier sans accord peut être puni.</div>
-  <div id="fb13" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">La géolocalisation activée en permanence…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q14" value="v1"> améliore la batterie</label>
-  <label><input type="radio" name="q14" value="v2"> protège ton téléphone</label>
-  <label><input type="radio" name="q14" value="v3"> rend les photos plus belles</label>
-  <label><input type="radio" name="q14" value="v0"> révèle tes habitudes et tes lieux</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a14')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q14','v0','fb14',1)">Corriger</button>
-  </div>
-  <div id="a14" class="help">Tes trajets quotidiens sont des données sensibles : active la localisation seulement quand c'est utile.</div>
-  <div id="fb14" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Quel numéro gratuit appeler en France en cas de cyberharcèlement ?</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <input type="number" id="q15" placeholder="Nombre">
-  <div class="row">
-    <button class="btn small" onclick="aide('a15')">Aide</button>
-    <button class="btn small" onclick="checkNumber('q15',3018,'fb15',1)">Corriger</button>
-  </div>
-  <div id="a15" class="help">Le 3018 est le numéro national contre les violences numériques faites aux jeunes (7j/7).</div>
-  <div id="fb15" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Si tu es victime de cyberviolence, la première bonne réaction est…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q16" value="v1"> répondre par des insultes</label>
-  <label><input type="radio" name="q16" value="v2"> supprimer tout et te taire</label>
-  <label><input type="radio" name="q16" value="v3"> changer de collège</label>
-  <label><input type="radio" name="q16" value="v0"> le dire à un adulte de confiance</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a16')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q16','v0','fb16',1)">Corriger</button>
-  </div>
-  <div id="a16" class="help">Ne reste jamais seul : captures d'écran + adulte de confiance + signalement. Répondre aggrave souvent la situation.</div>
-  <div id="fb16" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">L'usurpation d'identité, c'est…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q17" value="v1"> oublier son mot de passe</label>
-  <label><input type="radio" name="q17" value="v0"> se faire passer pour un autre</label>
-  <label><input type="radio" name="q17" value="v2"> changer de pseudo</label>
-  <label><input type="radio" name="q17" value="v3"> avoir deux adresses mail</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a17')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q17','v0','fb17',1)">Corriger</button>
-  </div>
-  <div id="a17" class="help">Créer un faux compte au nom d'une autre personne est un délit puni par la loi.</div>
-  <div id="fb17" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Sur un wifi public (gare, fast-food), il vaut mieux…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q18" value="v1"> faire ses achats en ligne tranquillement</label>
-  <label><input type="radio" name="q18" value="v2"> désactiver le HTTPS</label>
-  <label><input type="radio" name="q18" value="v3"> partager la connexion à tous</label>
-  <label><input type="radio" name="q18" value="v0"> éviter mots de passe et données bancaires</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a18')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q18','v0','fb18',1)">Corriger</button>
-  </div>
-  <div id="a18" class="help">Un wifi ouvert peut être espionné ou piégé : réserve les opérations sensibles à un réseau de confiance.</div>
-  <div id="fb18" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Un gestionnaire de mots de passe sert à…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q19" value="v0"> stocker des mots de passe uniques</label>
-  <label><input type="radio" name="q19" value="v1"> envoyer tes mots de passe à tes amis</label>
-  <label><input type="radio" name="q19" value="v2"> retenir un seul mot de passe pour tout</label>
-  <label><input type="radio" name="q19" value="v3"> créer des virus</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a19')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q19','v0','fb19',1)">Corriger</button>
-  </div>
-  <div id="a19" class="help">Il génère et retient un mot de passe différent par site : toi, tu ne retiens que le mot de passe maître.</div>
-  <div id="fb19" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Les mises à jour des appareils et applications…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q20" value="v1"> servent uniquement à changer les couleurs</label>
-  <label><input type="radio" name="q20" value="v2"> ralentissent toujours tout</label>
-  <label><input type="radio" name="q20" value="v0"> corrigent des failles de sécurité</label>
-  <label><input type="radio" name="q20" value="v3"> sont facultatives pour la sécurité</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a20')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q20','v0','fb20',1)">Corriger</button>
-  </div>
-  <div id="a20" class="help">Chaque mise à jour bouche des failles connues des pirates : repousser les mises à jour, c'est laisser la porte ouverte.</div>
-  <div id="fb20" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Le pare-feu (firewall) sert à…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q21" value="v1"> refroidir l'ordinateur</label>
-  <label><input type="radio" name="q21" value="v0"> filtrer les connexions du réseau</label>
-  <label><input type="radio" name="q21" value="v2"> bloquer les fautes d'orthographe</label>
-  <label><input type="radio" name="q21" value="v3"> accélérer les jeux</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a21')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q21','v0','fb21',1)">Corriger</button>
-  </div>
-  <div id="a21" class="help">Le pare-feu contrôle qui peut dialoguer avec ta machine sur le réseau ; l'antivirus, lui, traque les logiciels malveillants.</div>
-  <div id="fb21" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Coche les bonnes pratiques de sécurité numérique.</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="checkbox" name="q22" value="v0"> Verrouiller son écran</label>
-  <label><input type="checkbox" name="q22" value="v1"> Sauvegarder ses données importantes</label>
-  <label><input type="checkbox" name="q22" value="v2"> Vérifier les permissions des applications</label>
-  <label><input type="checkbox" name="q22" value="v3"> Cliquer sur tous les liens reçus</label>
-  <label><input type="checkbox" name="q22" value="v4"> Prêter ses identifiants à un ami</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a22')">Aide</button>
-    <button class="btn small" onclick="checkMulti('q22',['v0', 'v1', 'v2'],'fb22',1)">Corriger</button>
-  </div>
-  <div id="a22" class="help">Écran verrouillé, sauvegardes régulières et permissions vérifiées : trois réflexes simples qui évitent la plupart des ennuis.</div>
-  <div id="fb22" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Avant d'installer une application, il est raisonnable de…</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <label><input type="radio" name="q23" value="v1"> accepter tout sans lire</label>
-  <label><input type="radio" name="q23" value="v0"> vérifier les permissions demandées</label>
-  <label><input type="radio" name="q23" value="v2"> donner accès aux contacts par défaut</label>
-  <label><input type="radio" name="q23" value="v3"> désactiver l'antivirus</label>
-  <div class="row">
-    <button class="btn small" onclick="aide('a23')">Aide</button>
-    <button class="btn small" onclick="checkMCQ('q23','v0','fb23',1)">Corriger</button>
-  </div>
-  <div id="a23" class="help">Une appli lampe-torche qui exige tes contacts et ta position doit éveiller les soupçons.</div>
-  <div id="fb23" class="answer"></div>
-</section>
-<section class="card" data-competence="4e_C1.4" data-points="1">
-  <p class="q-title">Comment appelle-t-on la technique qui consiste à « pêcher » des identifiants par de faux messages ? (mot-clé)</p>
-  <span class="badge">Compétence visée : 4e_C1.4</span>
-  <span class="pts">(1 pt)</span>
-  <input type="text" id="q24" placeholder="Nom de la technique">
-  <div class="row">
-    <button class="btn small" onclick="aide('a24')">Aide</button>
-    <button class="btn small" onclick="checkTextIncludes('q24',['hameçonnage', 'phishing'],'fb24',1)">Corriger</button>
-  </div>
-  <div id="a24" class="help">Hameçonnage (phishing) : de faux messages imitent des organismes connus pour te faire saisir tes identifiants.</div>
-  <div id="fb24" class="answer"></div>
 </section>
 
-    <div class="footer">
-      <!-- Texte de résumé -->
-      <div id="resume" class="muted">Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.</div>
-    </div>
-  </div> <!-- Fin du wrap -->
-  <script>
-    // Initialisation de la variable total pour le score
-    let total = 0;
-    // Calcul du maximum de points en sommants les data-points des sections
-    const max = (() => {
-      let s = 0;
-      document.querySelectorAll('section.card').forEach(sec => {
-        s += Number(sec.dataset.points || 0);
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 5e_C1.2 · Thème 1 · Technologie cycle 4 (2024) · <a href="sequence-cybersecurite-protection-donnees.html">séquence associée</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque de questions — Sainte-Luce 5e : 30 questions sur le seul code 5e_C1.2, réparties par thème (fonction, principe, solution : 8 · la manipulation : 7 · lire et comparer : 8 · choisir selon un contexte : 7), dont 8 illustrées */
+const QUESTIONS = [
+/* ═══ C1.5 ═══ */
+{c:"C1.5",n:"Ce qui rend un mot de passe solide",q:"Qu'est-ce qui rend un mot de passe difficile à deviner ?",
+ o:["le fait de contenir ton prénom et ton année de naissance","sa longueur et la variété de ses caractères","le fait d'être court, pour le retenir vite","le fait de commencer par une majuscule"],r:1,
+ expl:"Un mot de passe se casse par essais automatiques : une machine en teste des milliards. Ce qui la ralentit, c'est le NOMBRE de combinaisons possibles — donc la longueur d'abord, la variété ensuite. Une phrase de passe longue bat un mot court compliqué.",
+ ex:"« cheval-tortue-42-lampadaire » est plus solide, et plus facile à retenir, que « P@ss1! ».",
+ err:"Croire qu'un mot de passe court mais tordu suffit. Ce qui compte, c'est le nombre d'essais nécessaires — et il dépend surtout de la longueur.",
+ d:["Un prénom et une date se trouvent sur les réseaux en quelques minutes. Ce n'est pas un secret, c'est un renseignement public.","","Un mot de passe court se teste en entier. La facilité à le retenir se gagne par une phrase longue, pas par un mot bref.","Une majuscule ajoute une possibilité, une seule. Ce n'est pas une règle de sécurité, c'est une habitude d'affichage."],
+ ret:"Longueur d'abord, variété ensuite. Une phrase longue vaut mieux qu'un mot court compliqué."},
+{c:"C1.5",n:"Réutiliser un mot de passe",q:"Pourquoi est-il risqué d'utiliser le même mot de passe sur plusieurs sites ?",
+ o:["parce que c'est plus difficile à retenir","parce que les sites l'interdisent tous","parce que cela use la mémoire du téléphone","parce qu'une seule fuite ouvre alors tous les autres comptes"],r:3,
+ expl:"Les fuites de bases de données sont fréquentes, et elles ne dépendent pas de toi : c'est le site qui se fait voler. Si le mot de passe est unique, la fuite ne coûte qu'un compte. S'il est partagé, elle les ouvre tous.",
+ ex:"Un forum de jeu se fait pirater ; le même mot de passe donne accès à ta messagerie, donc à toutes les réinitialisations de mot de passe.",
+ err:"Penser qu'on est protégé parce qu'on n'a « rien à cacher » sur le petit site. Ce n'est pas le petit site qui intéresse : c'est la clé qu'il livre.",
+ d:["C'est vrai, et c'est justement pour ça que le gestionnaire de mots de passe existe. La difficulté à retenir n'est pas le risque.","Aucun site ne peut savoir quel mot de passe tu utilises ailleurs. L'interdiction n'existe pas ; le risque, si.","Un mot de passe n'occupe pas d'espace mesurable. La mémoire n'a rien à voir ici.",""],
+ ret:"Un mot de passe par compte. Une fuite ne doit jamais ouvrir plus d'une porte."},
+{c:"C1.5",n:"La double authentification",q:"En quoi consiste la double authentification (2FA) ?",
+ o:["ajouter une seconde preuve, apportée par un appareil que tu possèdes","posséder deux comptes différents sur le même site","taper son mot de passe deux fois de suite","changer de navigateur avant de se connecter"],r:0,
+ expl:"Le mot de passe est une chose que tu SAIS. La seconde preuve est une chose que tu AS — ton téléphone, une clé physique. Celui qui vole le mot de passe n'a toujours pas l'appareil, et il est arrêté là.",
+ ex:"Après le mot de passe, l'application demande le code affiché sur ton téléphone.",
+ err:"Recopier un code reçu par message quand ce n'est pas TOI qui viens de te connecter. Un code que tu n'as pas demandé signale que quelqu'un essaie déjà.",
+ d:["","Deux comptes, c'est deux fois la même serrure. Rien n'est ajouté.","Retaper le même secret ne prouve rien de plus : c'est toujours la même chose que tu sais.","Le navigateur ne prouve pas ton identité. Il ne fait qu'afficher la page."],
+ ret:"Une chose que tu SAIS, plus une chose que tu AS. Le vol du premier ne suffit plus."},
+{c:"C1.5",n:"Reconnaître un hameçonnage",q:"Dans un message, quel élément trahit le plus sûrement une tentative d'hameçonnage ?",
+ o:["le nom de domaine du lien, qui n'est pas celui de l'organisme","une faute d'orthographe dans le texte","la présence d'une image dans le message","le fait que le message arrive un dimanche"],r:0,
+ expl:"Le nom de domaine est la seule partie de l'adresse qui dise à QUI tu parles. Tout le reste — le logo, le ton, l'expéditeur affiché — s'imite en quelques minutes. Le domaine, lui, s'achète, et un faux se voit.",
+ ex:"Le lien affiche « votre-banque.fr » mais mène à « votre-banque.securite-client.net » : le vrai domaine est « securite-client.net ».",
+ err:"Se fier au nom affiché de l'expéditeur. Il se change librement, comme le nom sur une enveloppe.",
+ d:["","Les fautes sont un indice, pas une preuve : beaucoup de faux messages sont impeccables, et de vrais messages contiennent des fautes.","Une image ne dit rien de l'intention. Les messages légitimes en contiennent aussi.","L'heure d'envoi ne prouve rien : les envois sont automatiques, de jour comme de nuit."],
+ ret:"Le nom de domaine du lien est la seule partie qui dise à qui tu parles."},
+{c:"C1.5",n:"Ce que dit le cadenas",q:"Que garantit exactement le cadenas et le « https:// » d'une adresse ?",
+ o:["que le site est honnête et digne de confiance","que le site est gratuit","que l'échange entre ton appareil et le site est chiffré","que le site a été vérifié par l'État"],r:2,
+ expl:"Le « s » de https dit que personne ne peut LIRE l'échange en route. Il ne dit rien de la personne au bout du fil. Un site malveillant obtient un cadenas aussi facilement qu'un autre : c'est gratuit et automatique.",
+ ex:"Un faux site de banque affiche un cadenas parfaitement valide — et vole quand même tes identifiants.",
+ err:"Apprendre à regarder le cadenas plutôt que le nom de domaine. C'est la confusion la plus coûteuse : elle rassure au mauvais endroit.",
+ d:["Le chiffrement protège le transport, pas l'intention. Un escroc chiffre lui aussi.","Le prix n'a aucun rapport avec le protocole.","","Aucune administration ne contrôle les certificats un par un : ils sont délivrés automatiquement, en quelques secondes."],
+ ret:"Le cadenas dit que l'échange est chiffré. Il ne dit rien de l'honnêteté du site."},
+{c:"C1.5",n:"Le wifi public",q:"Sur le wifi ouvert d'une gare, quelle précaution est la plus utile ?",
+ o:["remettre à plus tard tout ce qui demande un mot de passe ou un paiement","désactiver le https pour aller plus vite","partager la connexion avec les autres voyageurs","changer le nom de son appareil"],r:0,
+ expl:"Un réseau ouvert peut être écouté, et un faux réseau peut porter le nom du vrai. Le chiffrement des sites protège beaucoup, mais la règle simple reste : ce qui est sensible attend un réseau de confiance.",
+ ex:"Consulter les horaires : sans souci. Commander avec sa carte : à faire à la maison.",
+ err:"Se connecter au réseau qui porte le nom du lieu sans vérifier qu'il est bien celui du lieu.",
+ d:["","Désactiver le chiffrement retirerait la seule protection qui reste. C'est exactement l'inverse de ce qu'il faut faire.","Partager sa connexion n'ajoute aucune sécurité et expose son propre appareil.","Le nom de l'appareil est une étiquette d'affichage. Il ne protège rien."],
+ ret:"Sur un réseau ouvert, on remet à plus tard ce qui demande un mot de passe ou un paiement."},
+{c:"C1.5",n:"À quoi sert une mise à jour",q:"À quoi servent principalement les mises à jour d'un téléphone ou d'une application ?",
+ o:["à ralentir volontairement les anciens appareils","à corriger des failles déjà connues des attaquants","à ajouter de la publicité","à changer l'apparence des icônes"],r:1,
+ expl:"Une faille corrigée est une faille PUBLIÉE : à partir du jour de la correction, tout le monde sait par où entrer. Repousser la mise à jour, c'est laisser ouverte une porte dont l'adresse vient d'être diffusée.",
+ ex:"Une mise à jour de navigateur corrige une faille qui permettait à une page piégée de lire d'autres onglets.",
+ err:"Repousser indéfiniment parce que « ça marche très bien comme ça ». Cela marche, en effet — pour l'attaquant aussi.",
+ d:["C'est une rumeur tenace. Les correctifs de sécurité sont au contraire les plus légers.","","La publicité ne se distribue pas par correctif de sécurité.","Certaines mises à jour changent l'apparence, mais ce n'est pas leur raison d'être."],
+ ret:"Une faille corrigée est une faille rendue publique : la mise à jour est une course."},
+{c:"C1.5",n:"Pare-feu ou antivirus",q:"Quelle est la différence entre un pare-feu et un antivirus ?",
+ o:["le pare-feu corrige les fautes, l'antivirus accélère les jeux","le pare-feu refroidit l'appareil, l'antivirus le nettoie","ce sont deux noms du même logiciel","le pare-feu filtre les connexions du réseau, l'antivirus cherche les logiciels malveillants"],r:3,
+ expl:"Deux fonctions différentes, et complémentaires : l'un surveille la PORTE (qui a le droit de dialoguer avec la machine), l'autre surveille l'INTÉRIEUR (ce qui s'exécute). Aucun ne remplace l'autre.",
+ ex:"Le pare-feu bloque une connexion entrante inattendue ; l'antivirus repère un fichier téléchargé qui se comporte mal.",
+ err:"Croire qu'un seul des deux suffit — ou qu'un antivirus rend prudent. Aucun logiciel ne remplace le fait de réfléchir avant de cliquer.",
+ d:["Ni l'un ni l'autre ne touche à l'orthographe ou aux performances de jeu.","Le « feu » du pare-feu est une image : rien ne chauffe et rien ne refroidit.","Ce sont deux logiciels distincts, aux rôles différents.",""],
+ ret:"Le pare-feu surveille la porte, l'antivirus surveille l'intérieur. Les deux, ou rien."},
+{c:"C1.5",n:"Le gestionnaire de mots de passe",q:"Que fait un gestionnaire de mots de passe ?",
+ o:["il retient un mot de passe différent par site, protégé par un seul mot de passe maître","il impose le même mot de passe partout","il envoie tes mots de passe à tes contacts","il supprime les mots de passe trop longs"],r:0,
+ expl:"Il résout la contradiction : on ne peut ni réutiliser un mot de passe, ni en retenir cinquante différents. Il en retient cinquante à ta place, et tu n'en retiens qu'un — celui-là devant être long et jamais réutilisé.",
+ ex:"Le gestionnaire propose « 7f2K-vrai-lampe-93 » pour un site, et le remplit tout seul.",
+ err:"Choisir un mot de passe maître faible. C'est la seule clé de toute la maison : elle doit être la plus longue de toutes.",
+ d:["","C'est l'inverse de sa raison d'être.","Un gestionnaire ne partage rien : c'est même exactement ce qu'il empêche.","Il n'existe pas de mot de passe « trop long » pour un gestionnaire : c'est lui qui les tape."],
+ ret:"Un mot de passe unique par site, et un seul à retenir : le maître, qui doit être le plus long."},
+{c:"C1.5",n:"Les permissions d'une application",q:"Avant d'installer une application, que faut-il regarder en premier ?",
+ o:["les autorisations qu'elle demande, et si elles sont nécessaires à sa fonction","le nombre d'étoiles affichées","la taille du fichier à télécharger","la couleur de son icône"],r:0,
+ expl:"Une autorisation accordée l'est durablement, et l'application n'a aucun besoin de justifier ce qu'elle en fait. La question à se poser est simple : cette permission est-elle INDISPENSABLE à ce que l'application prétend faire ?",
+ ex:"Une application de lampe-torche qui demande l'accès aux contacts et à la position : la fonction n'en a besoin ni de l'un ni de l'autre.",
+ err:"Tout accepter au premier écran pour arriver plus vite à l'application.",
+ d:["","Les notes se fabriquent, et une bonne note ne dit rien des permissions demandées.","La taille n'indique ni la qualité ni l'intention.","L'apparence est du décor, et elle s'imite."],
+ ret:"Une permission ne se justifie que par la fonction. Sinon, elle se refuse."},
+/* ═══ C1.4 ═══ */
+{c:"C1.4",n:"Ce qu'est un cookie",q:"Qu'est-ce qu'un cookie, sur un site web ?",
+ o:["un virus caché dans la page","un petit fichier déposé sur ton appareil par le site que tu visites","un mot de passe volé","une pièce jointe piégée"],r:1,
+ expl:"C'est un fichier de quelques lignes, déposé par le site et renvoyé à chaque visite. Il permet de te reconnaître — pour garder ton panier, ou pour suivre ton parcours d'un site à l'autre. Le fichier n'est ni bon ni mauvais : c'est son usage qui l'est.",
+ ex:"Le cookie qui garde ta langue préférée ; et celui qui note que tu as regardé des chaussures.",
+ err:"Confondre cookie et virus. Un cookie ne s'exécute pas : c'est du texte, pas un programme.",
+ d:["Un cookie ne s'exécute pas. Ce n'est pas un programme, c'est un fichier de texte.","","Il ne contient pas de mot de passe : au mieux un identifiant de session, qui expire.","Il n'est pas joint à un message : il est déposé par le site pendant la navigation."],
+ ret:"Un cookie est un fichier déposé pour te reconnaître. Ce n'est pas un programme."},
+{c:"C1.4",n:"Refuser les cookies non essentiels",q:"Que change concrètement le fait de refuser les cookies « non essentiels » ?",
+ o:["la connexion devient plus rapide","les virus sont supprimés du disque","le site devient gratuit","le suivi de ta navigation à des fins publicitaires est limité"],r:3,
+ expl:"Les cookies essentiels font fonctionner le site — le panier, la connexion. Les autres servent surtout à construire un profil de ce que tu regardes, souvent revendu. Les refuser n'empêche pas le site de marcher : c'est bien pour ça qu'ils sont dits « non essentiels ».",
+ ex:"Tu refuses le suivi, le site fonctionne pareil — mais la publicité cesse de te suivre de page en page.",
+ err:"Accepter tout par réflexe pour faire disparaître le bandeau. Le bandeau disparaît aussi si l'on refuse.",
+ d:["Le gain de vitesse existe parfois, mais c'est un effet secondaire, pas le but.","Un cookie n'est pas un virus, et le refuser n'en supprime aucun.","Le prix du service ne dépend pas de ton choix de cookies.",""],
+ ret:"Refuser le non essentiel limite le pistage — et le site fonctionne toujours."},
+{c:"C1.4",n:"Ce que protège le RGPD",q:"Que garantit le RGPD aux personnes en Europe ?",
+ o:["un antivirus fourni gratuitement par l'État","un droit de regard sur ses données : savoir, accéder, faire rectifier, faire effacer","un accès illimité à tous les sites","la suppression automatique de toute publicité"],r:1,
+ expl:"Le RGPD ne protège pas les ordinateurs : il protège les PERSONNES. Il impose au responsable d'un traitement de dire ce qu'il collecte, pourquoi, et pour combien de temps — et donne à chacun le droit de demander, de corriger et d'effacer.",
+ ex:"Tu peux écrire à un service pour demander la copie de toutes les données qu'il détient sur toi.",
+ err:"Croire que le RGPD interdit de collecter des données. Il encadre la collecte, il ne l'interdit pas.",
+ d:["Le RGPD est un texte de droit, pas un logiciel.","","Il ne dit rien de l'accès aux sites : il porte sur le traitement des données personnelles.","Il encadre le ciblage publicitaire, mais ne fait disparaître aucune publicité."],
+ ret:"Le RGPD protège les personnes, pas les machines : savoir, accéder, rectifier, effacer."},
+{c:"C1.4",n:"Reconnaître une donnée personnelle",q:"Laquelle de ces informations est une donnée personnelle ?",
+ o:["la météo de demain à Fort-de-France","le score du dernier match","l'adresse IP de ta connexion","la capitale de la France"],r:2,
+ expl:"Est personnelle toute information qui permet d'identifier quelqu'un, directement ou INDIRECTEMENT. L'adresse IP ne porte pas ton nom, mais elle permet de remonter à ton abonnement : c'est le mot « indirectement » qui fait tout.",
+ ex:"Ton nom, bien sûr — mais aussi ta photo, ta position, ton identifiant d'appareil.",
+ err:"Ne retenir que les données évidentes (nom, adresse) et oublier les identifiants techniques, qui sont pourtant les plus collectés.",
+ d:["Une prévision météo ne désigne personne.","Un score concerne une équipe, pas une personne identifiable.","","Une capitale est une connaissance générale."],
+ ret:"Est personnelle toute information qui identifie, même indirectement. L'IP en fait partie."},
+{c:"C1.4",n:"Trace volontaire ou involontaire",q:"Parmi ces traces, laquelle laisses-tu SANS action visible de ta part ?",
+ o:["l'adresse IP enregistrée par les sites que tu visites","une photo que tu publies","un commentaire que tu écris","un like que tu donnes"],r:0,
+ expl:"Les traces volontaires, tu les choisis : tu publies, tu commentes, tu aimes. Les traces involontaires se déposent pendant que tu fais autre chose : adresse IP, cookies, identifiant d'appareil, heures de connexion. Ce sont les plus nombreuses, et les moins vues.",
+ ex:"Tu lis un article sans rien faire : l'heure, la durée et ton IP sont pourtant enregistrées.",
+ err:"Croire qu'on ne laisse de traces qu'en publiant. La navigation seule en produit davantage.",
+ d:["","Publier une photo est un geste choisi : c'est une trace volontaire.","Écrire un commentaire est une action délibérée.","Un like est un clic : tu l'as décidé."],
+ ret:"Les traces involontaires — IP, cookies, heures — sont les plus nombreuses et les moins vues."},
+{c:"C1.4",n:"L'identité numérique",q:"Qu'appelle-t-on « identité numérique » ?",
+ o:["ton adresse postale enregistrée chez un marchand","ton pseudo, et lui seul","ta carte d'identité scannée","l'image de toi que composent tes publications, tes comptes et tes traces"],r:3,
+ expl:"Elle n'est pas un document : c'est une IMAGE, construite par ce que tu publies, par ce que d'autres publient sur toi, et par les traces que tu laisses. Elle existe même sans que tu la gères — et c'est justement pour cela qu'elle se gère.",
+ ex:"Un employeur qui cherche ton nom trouve tes comptes publics, les photos où l'on t'a identifié, et les commentaires que tu as laissés il y a trois ans.",
+ err:"Croire qu'un pseudo suffit à séparer les deux. Un pseudo se relie vite au nom réel, par une photo ou un ami commun.",
+ d:["Une adresse enregistrée est une donnée parmi d'autres, pas l'image d'ensemble.","Le pseudo n'en est qu'une partie. Les traces et ce que d'autres publient en font aussi partie.","Une carte d'identité est un document officiel. L'identité numérique n'a rien d'officiel.",""],
+ ret:"L'identité numérique est une image construite — par toi, par les autres, et par tes traces."},
+{c:"C1.4",n:"La géolocalisation permanente",q:"Que révèle une géolocalisation laissée active en permanence ?",
+ o:["l'état de la batterie de l'appareil","rien de particulier, puisque personne ne la regarde","tes trajets, tes horaires et donc tes habitudes","la qualité du réseau autour de toi"],r:2,
+ expl:"Une position isolée dit peu de chose. Répétée chaque jour, elle dessine où tu dors, où tu étudies, à quelle heure tu rentres et avec qui. C'est l'ACCUMULATION qui transforme une donnée banale en portrait.",
+ ex:"Trente jours de positions suffisent à repérer l'adresse du domicile sans qu'elle ait jamais été saisie.",
+ err:"Autoriser la position « toujours » alors que « pendant l'utilisation » suffit à presque toutes les applications.",
+ d:["La position ne dit rien de la batterie.","Ces données sont conservées et souvent revendues. Le fait que personne ne les lise en direct ne change rien.","","La qualité du réseau se mesure autrement, et ne demande pas ta position exacte."],
+ ret:"Une position isolée dit peu ; répétée, elle dessine tes habitudes. C'est l'accumulation qui parle."},
+{c:"C1.4",n:"Réutiliser une image trouvée en ligne",q:"Tu trouves une photo sur Internet pour ton exposé. Que peux-tu faire ?",
+ o:["l'utiliser librement, puisqu'elle est visible par tous","l'utiliser en changeant sa taille, ce qui la rend différente","vérifier sa licence, et choisir une image libre de droits en citant sa source","l'utiliser en retirant la signature de l'auteur"],r:2,
+ expl:"Être visible n'est pas être libre. Une image est protégée dès sa création, sans démarche de son auteur. Les banques d'images libres existent précisément pour éviter d'avoir à demander : on y prend, et on cite.",
+ ex:"Wikimedia Commons indique pour chaque fichier sa licence et la mention à porter.",
+ err:"Prendre une image trouvée par un moteur de recherche en croyant que le moteur donne le droit de l'utiliser. Il indique où elle est, pas ce qu'on peut en faire.",
+ d:["La visibilité n'est pas une autorisation. Un livre en vitrine ne se prend pas non plus.","Modifier une œuvre ne fait pas disparaître les droits de son auteur — c'est même un droit supplémentaire qu'il faut demander.","","Retirer une signature aggrave le cas : c'est le droit de paternité de l'auteur qu'on efface."],
+ ret:"Visible ne veut pas dire libre. On vérifie la licence, et on cite la source."},
+{c:"C1.4",n:"Les paramètres de confidentialité",q:"À quoi servent les paramètres de confidentialité d'un compte ?",
+ o:["à choisir qui peut voir ce que tu publies","à supprimer les publicités","à rendre le compte impossible à pirater","à effacer automatiquement les anciennes publications"],r:0,
+ expl:"Ils règlent la PORTÉE de ce que tu publies : tout le monde, tes contacts, ou toi seul. Ils ne protègent pas contre le piratage, et ils ne retirent rien de ce qui est déjà sorti — mais ils décident de qui verra la suite.",
+ ex:"Passer un compte de « public » à « contacts uniquement » avant de partir en stage.",
+ err:"Régler la confidentialité une fois et ne plus y revenir. Une mise à jour de l'application peut réinitialiser les choix.",
+ d:["","La publicité dépend du modèle du service, pas de ces réglages.","Aucun réglage ne rend un compte impiratable. C'est le mot de passe et la 2FA qui protègent l'accès.","Ils ne suppriment rien : les anciennes publications restent, avec leur portée d'origine."],
+ ret:"La confidentialité règle QUI voit. Elle ne protège pas l'accès, et n'efface pas le passé."},
+{c:"C1.4",n:"Ce qu'on partage sur les autres",q:"Tu veux publier une photo de groupe prise à la sortie scolaire. Que fais-tu d'abord ?",
+ o:["tu identifies tout le monde pour que la photo circule mieux","tu publies, puis tu retires si quelqu'un se plaint","tu demandes leur accord aux personnes reconnaissables","tu ajoutes un filtre, ce qui règle la question"],r:2,
+ expl:"Chacun décide de la diffusion de son image : c'est le droit à l'image, et il ne dépend pas de l'intention de celui qui publie. Demander avant coûte trente secondes ; retirer après ne rattrape jamais ce qui a été copié entre-temps.",
+ ex:"Une photo publiée puis retirée reste dans les captures d'écran de ceux qui l'ont vue.",
+ err:"Penser qu'un accord oral vague vaut pour toutes les publications futures et tous les réseaux.",
+ d:["Identifier quelqu'un sans son accord étend la diffusion sans le lui demander.","Retirer n'annule rien : une publication se copie plus vite qu'elle ne se supprime.","","Un filtre change l'apparence, pas le fait que la personne est reconnaissable."],
+ ret:"Chacun décide de la diffusion de son image. On demande avant, jamais après."},
+/* ═══ C1.6 ═══ */
+{c:"C1.6",n:"La première chose à faire",q:"Une personne subit des messages humiliants répétés. Quelle est la première chose à faire ?",
+ o:["changer d'établissement","tout supprimer et n'en parler à personne","répondre pour se défendre","en parler à un adulte de confiance, et conserver les preuves"],r:3,
+ expl:"Deux gestes, dans cet ordre : garder ce qui prouve (captures d'écran datées) et en parler. Le silence laisse la situation grandir, et supprimer les messages fait disparaître ce qui aurait permis d'agir.",
+ ex:"Capture d'écran de chaque message, puis on en parle au CPE, à un professeur ou à un parent.",
+ err:"Supprimer pour ne plus voir. C'est compréhensible, et c'est ce qui coûte le plus cher ensuite.",
+ d:["Partir ne fait pas cesser ce qui se passe en ligne, et ne règle rien pour les suivants.","Supprimer efface les preuves, et se taire laisse le temps aux choses de s'installer.","Répondre nourrit l'échange et donne prise. Cela aggrave la situation dans la grande majorité des cas.",""],
+ ret:"Conserver les preuves, puis en parler à un adulte. Signaler vite n'est jamais une faute."},
+{c:"C1.6",n:"Le numéro à connaître",q:"Quel numéro national, gratuit et confidentiel, répond aux jeunes victimes de violences numériques ?",
+ o:["le 3018","le 15","le 112","le 3939"],r:0,
+ expl:"Le 3018 est le numéro national contre les violences numériques faites aux jeunes. Gratuit, confidentiel, sept jours sur sept, par téléphone, par tchat ou par application — et il peut obtenir le retrait rapide d'un contenu.",
+ ex:"Une photo diffusée sans accord : le 3018 peut demander son retrait aux plateformes.",
+ err:"Attendre que « ça passe tout seul ». Plus le signalement est rapide, plus le retrait est facile.",
+ d:["","Le 15 est le SAMU : il répond aux urgences médicales.","Le 112 est le numéro d'urgence européen, pour un danger immédiat.","Le 3939 renseigne sur les démarches administratives."],
+ ret:"3018 — violences numériques, gratuit et confidentiel, 7 j/7."},
+{c:"C1.6",n:"L'usurpation d'identité",q:"Créer un faux compte au nom d'un camarade, c'est…",
+ o:["autorisé tant qu'on ne publie rien de méchant","un délit, puni par la loi","une plaisanterie sans conséquence si on le supprime après","un problème réglé par un simple signalement"],r:1,
+ expl:"Usurper l'identité d'autrui en ligne est un délit, indépendamment de ce qui est publié ensuite. Ce n'est pas le contenu qui est en cause : c'est le fait de parler à la place de quelqu'un, sans qu'il puisse s'en défendre.",
+ ex:"Un faux compte au nom d'un élève, même sans publication, engage la responsabilité de celui qui l'a créé.",
+ err:"Croire que l'anonymat protège. Une adresse IP et un numéro de téléphone suffisent le plus souvent à remonter.",
+ d:["Le délit ne dépend pas du contenu publié : il tient à l'usurpation elle-même.","","La suppression n'efface pas l'infraction, et n'efface pas ce qui a déjà été vu.","Le signalement fait retirer le compte ; il ne met pas fin à la responsabilité."],
+ ret:"Se faire passer pour quelqu'un d'autre en ligne est un délit, quel que soit le contenu."},
+{c:"C1.6",n:"Le rôle du témoin",q:"Tu vois passer des messages humiliants visant un camarade. Quelle attitude aide le plus ?",
+ o:["répondre à la place de la personne visée","ne rien faire, ce ne sont pas tes affaires","ne pas relayer, garder une trace et prévenir un adulte","liker pour montrer que tu as vu"],r:2,
+ expl:"Le témoin n'est pas neutre : chaque partage augmente l'audience, et le silence général donne l'impression que c'est accepté. Ne pas relayer, garder une preuve et prévenir suffit — il n'est pas demandé d'affronter qui que ce soit.",
+ ex:"Une capture d'écran transmise à un adulte vaut mieux qu'un commentaire public.",
+ err:"Penser qu'intervenir publiquement est la seule façon d'aider. C'est souvent celle qui envenime.",
+ d:["Répondre à la place de quelqu'un lui retire la main sur sa propre situation.","L'inaction collective est ce qui permet à la situation de durer.","","Un like est un relais : il augmente la diffusion, quelle que soit l'intention."],
+ ret:"Un témoin qui ne relaie pas, garde une trace et prévient a déjà fait l'essentiel."},
+{c:"C1.6",n:"La capture d'écran comme preuve",q:"Pourquoi faire une capture d'écran avant de signaler un message ?",
+ o:["pour pouvoir le republier ailleurs","parce que le message peut être effacé par son auteur","pour le montrer à toute la classe","parce que c'est obligatoire avant de bloquer quelqu'un"],r:1,
+ expl:"Un message se supprime en un geste, et avec lui la possibilité de montrer ce qui s'est passé. La capture — avec la date, l'heure et le nom du compte visibles — est ce qui permet à un adulte, à l'établissement ou à la police d'agir.",
+ ex:"On photographie l'écran entier, pas seulement le texte : l'expéditeur et la date comptent autant.",
+ err:"Recadrer sur le seul message. Sans l'expéditeur ni la date, la preuve perd l'essentiel.",
+ d:["Republier diffuse le contenu davantage — exactement ce qu'il faut éviter.","","Montrer largement expose la personne visée une seconde fois.","Bloquer ne demande aucune formalité. La capture sert à prouver, pas à autoriser."],
+ ret:"Une capture datée, avec l'expéditeur visible : c'est ce qui reste quand le message disparaît."},
+{c:"C1.6",n:"La e-réputation",q:"Qu'est-ce que la « e-réputation » ?",
+ o:["un score calculé par les moteurs de recherche","le nombre d'abonnés d'un compte","une note attribuée par les réseaux sociaux","l'opinion que se font les autres à partir de ce qu'ils trouvent sur toi en ligne"],r:3,
+ expl:"Ce n'est pas un chiffre : c'est une impression, construite par ce qui est trouvable — tes publications, celles où l'on t'a identifié, les commentaires que tu as laissés. Elle se construit lentement et se consulte en trente secondes.",
+ ex:"Un recruteur, un entraîneur, un futur camarade : chacun peut chercher ton nom.",
+ err:"Croire que ce qui est ancien a disparu. Les moteurs et les archives gardent longtemps.",
+ d:["Les moteurs classent des pages, ils ne notent pas les personnes.","Le nombre d'abonnés mesure une audience, pas une opinion.","Aucun réseau n'attribue de note de réputation aux personnes.",""],
+ ret:"La e-réputation est une impression construite par ce qui est trouvable — pas un chiffre."},
+{c:"C1.6",n:"Signaler un contenu",q:"À quoi sert le bouton « Signaler » d'un réseau social ?",
+ o:["à prévenir tous les autres utilisateurs","à supprimer immédiatement le compte de l'auteur","à envoyer une plainte à la police","à prévenir la plateforme, qui doit examiner le contenu"],r:3,
+ expl:"Le signalement saisit la plateforme, qui a l'obligation d'examiner et de retirer les contenus manifestement illicites. Il ne remplace pas un dépôt de plainte, et il ne supprime rien automatiquement — mais c'est le geste le plus rapide.",
+ ex:"Plusieurs signalements sur un même contenu accélèrent son examen.",
+ err:"Attendre que quelqu'un d'autre signale. Chacun suppose que d'autres l'ont fait, et personne ne le fait.",
+ d:["Le signalement n'est pas public : les autres utilisateurs n'en sont pas informés.","La plateforme examine avant d'agir ; la suppression n'est ni immédiate ni automatique.","Un signalement n'est pas une plainte. Pour cela, il faut se déplacer ou passer par un service en ligne dédié.",""],
+ ret:"Signaler saisit la plateforme. Ce n'est ni une suppression automatique, ni une plainte."},
+{c:"C1.6",n:"Ce qu'on ne peut pas reprendre",q:"Pourquoi dit-on qu'une publication est difficile à effacer ?",
+ o:["parce qu'il faut payer pour supprimer","parce que les réseaux sociaux l'interdisent","parce qu'elle a pu être copiée, captée ou archivée avant sa suppression","parce qu'un fichier ne se supprime jamais d'un disque"],r:2,
+ expl:"Supprimer retire l'original de la plateforme. Cela ne retire rien des copies déjà faites : capture d'écran, partage, archive automatique. Entre la publication et le regret, il s'écoule parfois quelques secondes — elles suffisent.",
+ ex:"Une story de vingt-quatre heures capturée à la dixième seconde existe toujours.",
+ err:"Compter sur l'éphémère. Un contenu « qui disparaît » disparaît de l'écran, pas du monde.",
+ d:["La suppression est gratuite partout.","Les réseaux permettent au contraire de supprimer ses propres publications.","","Un fichier se supprime très bien. Le problème n'est pas technique, il est de diffusion."],
+ ret:"Supprimer retire l'original, jamais les copies. Le délai de regret est très court."},
+{c:"C1.6",n:"Le droit à l'oubli",q:"Le « droit à l'effacement » (droit à l'oubli) permet de…",
+ o:["faire disparaître un fait qui s'est réellement produit","demander la suppression de données personnelles te concernant, sous certaines conditions","obliger un journal à retirer un article","effacer les messages envoyés à tes contacts"],r:1,
+ expl:"Il permet de demander à un organisme d'effacer les données qu'il détient sur toi, et à un moteur de déréférencer un résultat. Il n'efface pas les faits, et il se met en balance avec d'autres droits — l'information du public, notamment.",
+ ex:"Demander le déréférencement d'un ancien résultat de recherche associé à ton nom.",
+ err:"Croire que c'est automatique. Il faut le demander, motiver, et parfois insister.",
+ d:["Aucun droit ne fait disparaître un fait : il porte sur les DONNÉES, pas sur la réalité.","","La liberté de la presse limite ce droit : un article d'actualité ne se retire pas sur simple demande.","Les messages déjà reçus appartiennent à la conversation ; ce droit ne les concerne pas."],
+ ret:"Le droit à l'effacement porte sur des données, se demande, et se met en balance."},
+{c:"C1.6",n:"La responsabilité de celui qui partage",q:"Tu transfères à un ami une photo gênante d'un camarade, sans l'avoir prise. Quelle est ta part ?",
+ o:["cela dépend uniquement du nombre de personnes qui la reçoivent","aucune : tu ne l'as envoyée qu'à une seule personne","aucune : tu n'es pas l'auteur de la photo","tu participes à la diffusion, et tu en es responsable"],r:3,
+ expl:"Diffuser est un acte à part entière. La loi ne distingue pas celui qui crée de celui qui relaie quand il s'agit d'atteinte à la vie privée ou au droit à l'image — et une chaîne commence toujours par un envoi à une seule personne.",
+ ex:"Un partage « juste à un ami » qui se retrouve dans toute la classe en une soirée.",
+ err:"Se croire simple spectateur parce qu'on n'a pas pris la photo. Le relais fait partie de la diffusion.",
+ d:["L'ampleur peut peser dans la sanction, mais elle ne crée pas la responsabilité : le geste la crée.","Une chaîne commence par un envoi. Le nombre initial ne change pas la nature de l'acte.","La responsabilité de celui qui diffuse existe indépendamment de celle de l'auteur.",""],
+ ret:"Relayer, c'est diffuser. Une chaîne commence toujours par un envoi à une seule personne."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C1.4_cybersecurite";
+const $=id=>document.getElementById(id);
+const COMP_LABELS={
+  "C1.4":"4e_C1.4 — Identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation).",
+  "C1.5":"5e_C1.5 — Identifier des règles permettant de sécuriser un environnement numérique (bases de la cybersécurité) et des règles de respect de la propriété intellectuelle.",
+  "C1.6":"5e_C1.6 — Appréhender la responsabilité de chacun dans les dérives (cyberviolence, atteinte à la vie privée, aux données personnelles, usurpation d'identité)." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    <div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Fonctions, chaînes d’énergie et d’information, matériaux et réseau n’ont plus de secret pour toi — tu es prêt·e pour l’évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+
+/* ══════ Règle d'or n°45 — ouvrir sur ce que l'élève a déjà travaillé ══════ */
+/* Cette séquence ne porte qu'UN code : on ne peut pas filtrer par compétence.
+   Ce qui varie ici est le MOMENT. Tant que la séquence n'est pas terminée, elle
+   appelle ce QCM avec #depart=court, et l'on ouvre sur le parcours de dix
+   questions — déjà présent dans le gabarit. Le parcours complet reste à un clic :
+   on choisit ce qu'on propose EN PREMIER, on n'interdit rien. */
+(function ouvrirSurLeParcoursCourt(){
+  if(!/depart=court/.test(location.hash||"")) return;
+  setMode("dix");
+  const hote = document.getElementById("porteeCiblee");
+  if(hote){
+    hote.hidden = false;
+    hote.innerHTML = "🎯 Tu arrives depuis la séquence, qui n'est pas encore terminée&nbsp;: " +
+      "ce QCM s'ouvre sur un <b>parcours court de 10 questions</b>, pour te tester sans être " +
+      "submergé·e. Pour les 30, choisis <b>« Parcours complet »</b> ci-dessus.";
+  }
+})();
+
+
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
       });
-      return s;
-    })();
-    // Affichage du max dans le span
-    document.getElementById('max').textContent = max;
-    // Calcul du nombre de questions (sections card)
-    const nbq = document.querySelectorAll('section.card').length;
-    // Affichage du nombre de questions
-    document.getElementById('nbq').textContent = nbq;
-    // Fonction pour toggle l'aide
-    function aide(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle("show-help");
     }
-    // Fonction pour afficher le feedback
-    function feedback(id, ok, msg) {
-      const fb = document.getElementById(id);
-      fb.className = 'answer ' + (ok ? 'ok' : 'ko');
-      fb.innerHTML = msg; // Use innerHTML to allow <br> or other HTML if needed
-    }
-    // Set pour les points déjà attribués (éviter doublons)
-    const awarded = new Set();
-    // Fonction pour attribuer des points
-    function givePoints(key, pts) {
-      if (awarded.has(key)) return;
-      total += pts;
-      awarded.add(key);
-      const sur20 = (total / max) * 20;
-      document.getElementById('score').innerHTML = 'Score : ' + total + ' / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">' + sur20.toFixed(2) + '</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
-    }
-    // Fonction pour vérifier MCQ (radio), optimisée avec label correct
-    function checkMCQ(name, correct, fbId, pts) {
-      const sel = document.querySelector('input[name="' + name + '"]:checked');
-      if (!sel) {
-        feedback(fbId, false, '⛳ Veuillez choisir une réponse avant de corriger.');
-        return;
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
       }
-      const ok = sel.value === correct;
-      const helpId = 'a' + name.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let correctLabel = document.querySelector('label input[name="' + name + '"][value="' + correct + '"]').parentNode.textContent.trim();
-      let msg = ok ? '✅ Bonne réponse ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise réponse. La bonne réponse est : ' + correctLabel + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId); // Show help if wrong
-      if (ok) givePoints(name, pts);
-    }
-    // Fonction pour vérifier select, optimisée
-    function checkSelect(id, correct, fbId, pts) {
-      const val = document.getElementById(id).value;
-      const ok = (val === correct);
-      const helpId = 'a' + id.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      const correctText = document.querySelector('#' + id + ' option[value="' + correct + '"]').textContent;
-      let msg = ok ? '✅ Exact ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise sélection. La bonne option est : ' + correctText + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(id, pts);
-    }
-    // Fonction pour vérifier nombre, optimisée
-    function checkNumber(id, correctNumber, fbId, pts) {
-      const val = Number(document.getElementById(id).value);
-      const ok = (val === Number(correctNumber));
-      const helpId = 'a' + id.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let msg = ok ? '✅ Juste ! <br>Explication détaillée : ' + helpText : '❌ Mauvaise valeur. La bonne valeur est : ' + correctNumber + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(id, pts);
-    }
-    // Fonction pour vérifier texte avec mots-clés, optimisée
-    function checkTextIncludes(id, keywords, fbId, pts) {
-      const val = (document.getElementById(id).value || '').toLowerCase();
-      const ok = keywords.some(k => val.includes(k.toLowerCase()));
-      const helpId = 'a' + id.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let msg = ok ? '✅ Idée principale correcte ! <br>Explication détaillée : ' + helpText : '❌ Mot-clé manquant. Mots-clés attendus : ' + keywords.join(', ') + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(id, pts);
-    }
-    // Fonction pour vérifier multi checkboxes, optimisée avec labels corrects
-    function checkMulti(name, correctValues, fbId, pts) {
-      const all = Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(i => i.value);
-      const ok = correctValues.length === all.length && correctValues.every(v => all.includes(v));
-      const helpId = 'a' + name.substring(1);
-      const helpText = document.getElementById(helpId).textContent;
-      let correctLabels = correctValues.map(v => document.querySelector('label input[name="' + name + '"][value="' + v + '"]').parentNode.textContent.trim()).join(', ');
-      let msg = ok ? '✅ Parfait ! <br>Explication détaillée : ' + helpText : '❌ Sélection incorrecte (trop, pas assez ou mauvais choix). Choix corrects : ' + correctLabels + '. <br>Explication détaillée : ' + helpText;
-      feedback(fbId, ok, msg);
-      if (!ok) aide(helpId);
-      if (ok) givePoints(name, pts);
-    }
-    // Fonction pour corriger tout
-    function corrigerTout() {
-      document.querySelectorAll('.card .btn.small').forEach(btn => {
-        if (btn.textContent.trim().toLowerCase().includes('corriger')) btn.click();
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
       });
-      const sur20 = (total / max) * 20;
-      const id = 'Nom: ' + (document.getElementById('nom').value || '-') + ' | Prénom: ' + (document.getElementById('prenom').value || '-') + ' | Classe: ' + (document.getElementById('classe').value || '-');
-      document.getElementById('resume').textContent = id + ' — Résultat final : ' + total + ' / ' + max + ' pts (Note /20 : ' + sur20.toFixed(2) + ')';
     }
-    // Fonction pour réinitialiser
-    function reinitialiser() {
-      total = 0;
-      awarded.clear();
-      document.getElementById('score').innerHTML = 'Score : 0 / <span id="max">' + max + '</span> pts — Barème ramené à <strong id="sur20">0.00</strong> / 20 — Questions : <strong id="nbq">' + nbq + '</strong>';
-      document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
-      document.querySelectorAll('input[type=text],input[type=number]').forEach(i => i.value = '');
-      document.querySelectorAll('select').forEach(s => s.value = '');
-      document.querySelectorAll('.answer').forEach(a => { a.textContent = ''; a.className = 'answer'; });
-      document.querySelectorAll('.help').forEach(h => h.classList.remove('show-help'));
-      document.getElementById('resume').textContent = 'Clique sur « Corriger tout » pour calculer ton total et la note ramenée à 20.';
-    }
-    // Amélioration : Fonction pour afficher toutes les aides
-    function showAllHelps() {
-      document.querySelectorAll('.help').forEach(h => h.classList.add('show-help'));
-    }
-  </script>
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
 </body>
 </html>
