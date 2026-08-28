@@ -109,7 +109,29 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     background:rgba(127,127,127,.08)}
   .etayage>summary{cursor:pointer;padding:9px 13px;font-weight:600}
   .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
-  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}</style>
+  @media print{.toolbar{display:none}}.rappel-spiralaire{border-left:5px solid #61dafb;background:rgba(97,218,251,.06);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}.rappel-spiralaire h2{margin:.1em 0 .5em}.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;background:rgba(127,127,127,.10);border:1px dashed rgba(127,127,127,.45)}.rappel-spiralaire .filet{font-size:.93em;opacity:.85;margin:.5em 0 0}
+/* ── Séances — posé par decouper.py ─────────────────────────────────────── */
+.seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px auto 14px;max-width:1000px;padding:0 16px}
+.seance-tab{flex:1;min-width:160px;padding:10px 8px;border-radius:10px;background:#0b1b39;
+  border:1px solid #2f5695;cursor:pointer;text-align:center;font-size:.86em;font-weight:600;
+  color:#e4eaf5;font-family:inherit;line-height:1.35}
+.seance-tab .quoi{display:block;font-weight:400;font-size:.9em;color:#9bbefc}
+.seance-tab:hover{border-color:#61dafb}
+.seance-tab.active{background:#173666;border-color:#61dafb;color:#fff}
+.seance-tab.hors{flex:0 1 220px;border-style:dashed;border-color:#6b7788}
+.seance-tab.hors.active{background:#3a2a0d;border-color:#ffd66b;color:#ffd66b}
+.seance-tab:focus-visible{outline:3px solid #61dafb;outline-offset:2px}
+.seance-panel{display:none}
+.seance-panel.active{display:block}
+.seance-avis{max-width:1000px;margin:0 auto 10px;padding:0 16px;color:#ffd66b;font-size:.92em}
+@media print{
+  .seance-tabs{display:none}
+  .seance-panel{display:block!important}
+  .seance-panel::before{content:attr(data-titre);display:block;font-weight:700;font-size:1.05em;
+    margin:18px 0 6px;padding-top:10px;border-top:2px solid #111;break-before:page}
+  .seance-avis{color:#111}
+}
+</style>
 <style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
 .ressource{background:#0a1b3d;border:1px solid #274a8a;border-left:4px solid #ffd66b;
@@ -245,7 +267,23 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
     </div>
   </div>
 
-  <!-- Section 1: Observation et e‑réputation -->
+  
+<div class="seance-tabs" role="tablist" id="seances" aria-label="Séances de la séquence">
+  <button class="seance-tab active" role="tab" aria-selected="true" aria-controls="s1"
+          data-panel="s1" id="tab-s1">Séance 1<span class="quoi">Être observé</span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" aria-controls="s2"
+          data-panel="s2" id="tab-s2">Séance 2<span class="quoi">Métiers et économie</span></button>
+  <button class="seance-tab" role="tab" aria-selected="false" aria-controls="s3"
+          data-panel="s3" id="tab-s3">Séance 3<span class="quoi">Ce que ça coûte</span></button>
+  <button class="seance-tab hors" role="tab" aria-selected="false" aria-controls="shors"
+          data-panel="shors" id="tab-shors">Hors parcours<span class="quoi">Python — relève de C9</span></button>
+</div>
+<p class="seance-avis" id="avis-hors" hidden>⚠️ Ce bloc ne fait pas partie des trois séances de
+cette séquence&nbsp;: la programmation relève de la compétence C9, pas de C1. Il est conservé ici
+parce que des classes l'utilisent déjà.</p>
+
+<section class="seance-panel active" id="s1" role="tabpanel" aria-labelledby="tab-s1" data-titre="Séance 1 — Être observé">
+<!-- Section 1: Observation et e‑réputation -->
   <div class='section'>
     <h2>1. Être observé sur Internet</h2>
     <div class='callout'><p>Chaque action que vous effectuez en ligne (likes, commentaires, photos publiées) laisse une trace. Ces traces constituent votre <strong>e‑réputation</strong>, qui peut être consultée par d’autres (camarades, employeurs, écoles…). Respecter les règles de confidentialité et réfléchir avant de publier protège votre image et votre vie privée.</p></div>
@@ -282,7 +320,9 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
        </ol>
   </div>
 </div>
-  <!-- Section 2: Activité professionnelle -->
+  </section>
+<section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" data-titre="Séance 2 — Métiers et économie">
+<!-- Section 2: Activité professionnelle -->
   
    
     
@@ -403,7 +443,9 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
 
   
 
-  <!-- Section 3: Impact environnemental -->
+  </section>
+<section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Ce que ça coûte">
+<!-- Section 3: Impact environnemental -->
   <div class='section'>
     <h2>3. Impact environnemental des technologies</h2>
     <div class='callout'><p>Les centres de données consomment beaucoup d’énergie pour faire fonctionner et refroidir des milliers de serveurs. Les appareils numériques nécessitent des métaux rares dont l’extraction pollue. Le numérique représente environ 3 % de la consommation électrique mondiale et émet des gaz à effet de serre. Réduire l’empreinte numérique passe par la sobriété : éteindre les appareils inutilisés, limiter la vidéo en streaming haute définition, prolonger la durée de vie des équipements.</p></div>
@@ -440,25 +482,28 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   </div>
 </section>
 <!-- /ressource: res-3e-C1-5-empreinte -->
-  <h2>3. Impact environnemental des technologies</h2>
+  <h2 id="impact-env-document">3 bis. Lire un document, et en tirer un chiffre défendable</h2>
 
-  <!-- Intégration de la ressource PDF (placer DELAGR~1.PDF à côté du fichier HTML) -->
   <div class="callout">
-    <p><strong>Ressource :</strong> <em>L’écologie du numérique</em> (Delagrave / Geek Junior).</p>
-    <embed src="DELAGR~1.PDF#view=FitH" type="application/pdf" width="100%" height="420px"
-           style="border:1px solid var(--border); border-radius:6px;"
-           onerror="this.outerHTML='<p>📄 <a href=&quot;DELAGR~1.PDF&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Ouvrir le PDF dans un nouvel onglet</a></p>';">
-  </div>
-
-  <h3>3.a – Questions à partir du document</h3>
-  <p class="consigne"><strong>Consigne :</strong> Répondez aux questions ci-dessous en vous appuyant sur le PDF. Justifiez en une à deux phrases.</p>
+  <p><strong>Le document de travail est la page de l'Arcep, plus haut dans cette section.</strong>
+  Elle est publique, datée, et signée par le régulateur français des télécommunications —
+  exactement ce qu'on te demande de savoir reconnaître.</p>
+  <p class="tiny">Cette activité renvoyait auparavant à un PDF d'éditeur
+  (<em>L'écologie du numérique</em>, Delagrave / Geek&nbsp;Junior) qui n'a jamais été joint au
+  dépôt&nbsp;: le cadre invitait à «&nbsp;placer le fichier à côté de la page&nbsp;». Sans lui,
+  l'activité ne pouvait pas se faire&nbsp;; et l'y placer aurait posé une question de droits que
+  personne n'avait tranchée. Le professeur qui possède ce document peut évidemment continuer à
+  le distribuer en classe.</p>
+</div>
+<h3>3.a – Questions à partir du document</h3>
+  <p class="consigne"><strong>Consigne :</strong> Répondez aux questions ci-dessous en vous appuyant sur la page de l'Arcep. Pour chaque chiffre, note aussi QUI le publie et de QUELLE ANNÉE il date. Justifiez en une à deux phrases.</p>
 
   <!-- Q1 -->
   <p>1) Qu’appelle-t-on <strong>écologie du numérique</strong> ?</p>
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe1')">Voir la correction</button>
   <div class="answer" id="corr_qe1">
-    Utilisation <em>durable, responsable et raisonnée</em> des appareils et services numériques pour réduire leur pollution et leur empreinte environnementale. :contentReference[oaicite:0]{index=0}
+    Utilisation <em>durable, responsable et raisonnée</em> des appareils et services numériques pour réduire leur pollution et leur empreinte environnementale.
   </div>
 
   <!-- Q2 -->
@@ -466,7 +511,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe2')">Voir la correction</button>
   <div class="answer" id="corr_qe2">
-    Environ <strong>4,4&nbsp;%</strong> de l’empreinte carbone. :contentReference[oaicite:1]{index=1}
+    Environ <strong>4,4&nbsp;%</strong> de l’empreinte carbone.
   </div>
 
   <!-- Q3 -->
@@ -474,7 +519,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe3')">Voir la correction</button>
   <div class="answer" id="corr_qe3">
-    Environ <strong>50&nbsp;%</strong>. :contentReference[oaicite:2]{index=2}
+    Environ <strong>50&nbsp;%</strong>.
   </div>
 
   <!-- Q4 -->
@@ -482,7 +527,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe4')">Voir la correction</button>
   <div class="answer" id="corr_qe4">
-    Environ <strong>46&nbsp;%</strong> (ordre de grandeur donné dans le document). :contentReference[oaicite:3]{index=3}
+    Environ <strong>46&nbsp;%</strong> (ordre de grandeur donné dans le document).
   </div>
 
   <!-- Q5 -->
@@ -490,7 +535,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe5')">Voir la correction</button>
   <div class="answer" id="corr_qe5">
-    L’extraction des ressources, la transformation des matériaux, l’assemblage et le transport sont très énergivores et émetteurs de GES, bien plus que l’usage unitaire. :contentReference[oaicite:4]{index=4}
+    L’extraction des ressources, la transformation des matériaux, l’assemblage et le transport sont très énergivores et émetteurs de GES, bien plus que l’usage unitaire.
   </div>
 
   <!-- Q6 -->
@@ -498,7 +543,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe6')">Voir la correction</button>
   <div class="answer" id="corr_qe6">
-    ≈ <strong>240&nbsp;kg</strong> de combustibles fossiles, <strong>22&nbsp;kg</strong> de produits chimiques et <strong>1,5&nbsp;tonne</strong> d’eau. :contentReference[oaicite:5]{index=5}
+    ≈ <strong>240&nbsp;kg</strong> de combustibles fossiles, <strong>22&nbsp;kg</strong> de produits chimiques et <strong>1,5&nbsp;tonne</strong> d’eau.
   </div>
 
   <!-- Q7 -->
@@ -506,7 +551,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse… (ex. éteindre les appareils, Wi-Fi plutôt que 4G/5G, limiter le streaming HD, trier sa boîte mail, etc.)"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe7')">Voir la correction</button>
   <div class="answer" id="corr_qe7">
-    Exemples : éteindre/mettre en veille les appareils, fermer les applis inutilisées, limiter la vidéo en streaming HD, préférer le Wi-Fi à la 4G/5G, compresser les pièces jointes, trier/supprimer les mails, n’imprimer que si nécessaire. :contentReference[oaicite:6]{index=6}
+    Exemples : éteindre/mettre en veille les appareils, fermer les applis inutilisées, limiter la vidéo en streaming HD, préférer le Wi-Fi à la 4G/5G, compresser les pièces jointes, trier/supprimer les mails, n’imprimer que si nécessaire.
   </div>
 
   <!-- Q8 -->
@@ -514,7 +559,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe8')">Voir la correction</button>
   <div class="answer" id="corr_qe8">
-    Groupe d’environ 17 éléments (ex. yttrium, cérium) aux propriétés électromagnétiques utiles : batteries, écrans, LED, etc. Leur extraction a un impact environnemental. :contentReference[oaicite:7]{index=7}
+    Groupe d’environ 17 éléments (ex. yttrium, cérium) aux propriétés électromagnétiques utiles : batteries, écrans, LED, etc. Leur extraction a un impact environnemental.
   </div>
 
   <!-- Q9 -->
@@ -522,7 +567,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe9')">Voir la correction</button>
   <div class="answer" id="corr_qe9">
-    Pour <strong>prolonger la durée de vie</strong>, éviter de nouvelles fabrications (très émettrices), limiter l’extraction de ressources et le volume de déchets. :contentReference[oaicite:8]{index=8}
+    Pour <strong>prolonger la durée de vie</strong>, éviter de nouvelles fabrications (très émettrices), limiter l’extraction de ressources et le volume de déchets.
   </div>
 
   <!-- Q10 -->
@@ -530,7 +575,7 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   <textarea placeholder="Votre réponse…"></textarea>
   <button class="bouton-correction" onclick="toggleAnswer('corr_qe10')">Voir la correction</button>
   <div class="answer" id="corr_qe10">
-    Ces services sollicitent fortement les data centers et les réseaux : ils consomment énergie et eau ; réduire ces usages diminue l’empreinte environnementale. :contentReference[oaicite:9]{index=9}
+    Ces services sollicitent fortement les data centers et les réseaux : ils consomment énergie et eau ; réduire ces usages diminue l’empreinte environnementale.
   </div>
 
   <h3>3.b – Imprimer de manière raisonnée</h3>
@@ -650,7 +695,9 @@ a:hover, a:focus { color: #cfe6ff; text-decoration: underline; }
   
   
   
-  <!-- Partie 4.a — Programme Python -->
+  </section>
+<section class="seance-panel" id="shors" role="tabpanel" aria-labelledby="tab-shors" data-titre="Hors parcours — Python (relève de C9)">
+<!-- Partie 4.a — Programme Python -->
   <div class="section" id="sec2">
     <h2>4. Données, sécurité et Python</h2>
     <h3>4.a – Programme Python</h3>
@@ -1130,6 +1177,7 @@ for u in urls:
   
   
 <!-- ===================================== -->
+</section>
 <!-- 4. SYNTHÈSE & MÉTACOGNITION (alignée) -->
 <!-- ===================================== -->
 <div class="section" id="synthese-meta">
@@ -1312,6 +1360,39 @@ for u in urls:
     else             m += "rien de tout cela n'est encore installé — et ce n'est pas grave : c'est exactement ce que la séquence enseigne. Dis-le au professeur.";
     document.getElementById("fbBillet").textContent = m + " Ce billet ne compte pas dans ta progression.";
   });
+})();
+</script>
+
+<script>
+/* ── Séances — posé par decouper.py. Onglets, sans dépendance. ─────────── */
+(function(){
+  "use strict";
+  var onglets = document.querySelectorAll(".seance-tab");
+  var avis = document.getElementById("avis-hors");
+  function montrer(cle){
+    onglets.forEach(function(o){
+      var actif = o.dataset.panel === cle;
+      o.classList.toggle("active", actif);
+      o.setAttribute("aria-selected", actif ? "true" : "false");
+    });
+    document.querySelectorAll(".seance-panel").forEach(function(p){
+      p.classList.toggle("active", p.id === cle);
+    });
+    if (avis) avis.hidden = (cle !== "shors");
+    try { localStorage.setItem("seance_3e_C1.5", cle); } catch(e){}
+  }
+  onglets.forEach(function(o){
+    o.addEventListener("click", function(){
+      montrer(o.dataset.panel);
+      var b = document.getElementById("seances");
+      if (b) window.scrollTo({ top: b.offsetTop - 8,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
+  });
+  try {
+    var garde = localStorage.getItem("seance_3e_C1.5");
+    if (garde && document.getElementById(garde)) montrer(garde);
+  } catch(e){}
 })();
 </script>
 </body>
