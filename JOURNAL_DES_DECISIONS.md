@@ -7576,6 +7576,19 @@ ne produit d'erreur JavaScript : le code est prudent, il teste avant d'agir. **L
 a rendu le défaut silencieux** — et c'est encore la clef de voûte : ce qui ne produit aucun signal
 se lit comme une réussite.
 
-*(Deux vérifications sont désormais mécanisables et devraient rejoindre les outils versionnés :
-« aucun lien relatif ne pointe vers un fichier absent » et « aucun `getElementById` ne cherche un
-élément que la page ne contient pas ». La seconde aurait à elle seule trouvé les deux boutons.)*
+*(Les deux vérifications sont désormais **versionnées** : `verificateur_lots.mjs`, à côté de
+l'audit des QCM. Elles ont trouvé, dès leur première exécution, tout ce que ce lot corrige — et
+rien d'autre : le dépôt vivant est à zéro lien mort.)*
+
+**Une décision de conception mérite d'être notée.** Le second contrôle signalait `parcoursNote`
+dans deux séquences du Thème 3. Vérification faite, l'absence y est **voulue** : le moteur des
+parcours 🅰/🅱/🅲 est partagé par les quatre pages d'une station, et ces deux-là n'ont aucun bloc
+propre à un parcours — elles l'écrivent à l'élève. On aurait pu apprendre à l'outil à tolérer les
+recherches gardées par un `if`. C'eût été une erreur : le bouton « Enregistrer » était gardé lui
+aussi, et c'était un vrai défaut. Ce qui les sépare n'est pas la forme du code, c'est l'INTENTION —
+qu'aucun outil ne lit.
+
+Les exceptions sont donc **déclarées**, dans `elements_optionnels.json`, sur le modèle de
+l'inventaire des absolus : chacune porte sa raison et la réponse à une question unique — *qu'est-ce
+que l'élève perd si cet élément n'existe pas ?* Si la réponse est « rien », c'est une exception ; si
+elle est « quelque chose », c'est un défaut, et sa place n'est pas dans l'inventaire.
