@@ -7698,3 +7698,85 @@ trouver.
 - **n°187** — une note qui compte quelque chose se calcule. « Les trois zones de réponse sont
   enregistrées » est devenue fausse en ajoutant un bilan ; elle compte désormais les zones
   elle-même.
+
+---
+
+## 2026-08-28 (fin) — Pascal soupçonnait des fusions manquées. Il en manquait, mais pas là où on regardait
+
+Question posée : « j'ai l'impression que j'ai gratté quelques fusions ». Vérification faite,
+d'abord par la mauvaise méthode, puis par la bonne.
+
+**La mauvaise méthode** — comparer les SHA (`git log main..branche`) désignait trois branches du
+Thème 1 comme non fusionnées. C'est faux : leurs commits ont été *cherry-pickés* dans
+`lots-heritage`, et un cherry-pick fabrique un nouveau SHA. Une branche reprise par cherry-pick
+paraîtra non fusionnée pour toujours. Le SHA mesure le chemin, pas le contenu.
+
+**La bonne méthode** — vérifier que **l'artefact est là**. Sur `origin/main`, à ce jour :
+
+| Ce qu'on cherche | Attendu | Trouvé |
+|---|---|---|
+| Outils de la méthode (`verificateur_lots`, `generer_lexique`, `poser_ressource`, `poser_roles`, `verificateur_ressources`, `elements_optionnels`, `ressources_externes`) | 7 | **7** |
+| Lexiques du Thème 1 | 13 | **13** |
+| QCM du Thème 1 au gabarit (30 questions, 30 blocs `d:[]`) | 13 | **13** |
+| Blocs de rôles de groupe posés | 5 | **5** |
+| Séquences portant un bloc ressource externe | 3 | **3** |
+| Séquences du Thème 1 avec navigation de retour | 15 | **15** |
+
+Rien de ce qui a été livré ces derniers jours ne manque. Les 21 branches encore non fusionnées
+datent toutes de juillet ou du 1ᵉʳ août, et pour deux d'entre elles — `atelier-trois-pages`,
+`lot-02-4e-C8-validation-jardin` — **le contenu est bien sur `main`**, arrivé par une autre PR.
+
+### Ce qui manquait vraiment
+
+**1. Une branche jamais fusionnée, devenue inapplicable.**
+`fable/theme-1/vague-3-conformite-socle` (1ᵉʳ août) portait la navigation de retour, la
+suppression des boîtes modales et un « contrat de séquence ». La navigation est arrivée depuis
+par un autre chemin ; le contrat n'est nulle part ; et **quatre des huit fichiers qu'elle
+modifiait ont été renommés depuis**. La reprendre telle quelle est impossible. On en reprend donc
+l'intention, pas le patch : les trois `alert()` de `4e_C1.4` partent aujourd'hui.
+
+Test réel, avant et après, sur la page ouverte dans un navigateur :
+
+| | boîtes modales ouvertes | erreurs JS | panneaux de séance |
+|---|---|---|---|
+| avant | **1** (à la première saisie) | 0 | 4 |
+| après | **0** | 0 | 4 |
+
+La modale n'était pas seulement inélégante : l'enregistrement de cette page se déclenche **aussi
+tout seul à chaque frappe**. Une modale qui s'ouvre en pleine phrase coûte la phrase.
+
+**2. Onze règles d'or citées mais jamais écrites.**
+Le journal cite les numéros jusqu'à n°187. En les comptant un par un, **dix-huit numéros n'ont de
+texte nulle part dans le dépôt : n°17, n°19, n°156 à n°165, n°174 à n°178 et n°183** — annoncés en
+séance de travail, jamais déposés. Deux autres, n°15 et n°16, ne vivent que dans des pages du
+Thème 3 et dans `_outils/METHODE.md` ; la n°166 n'existe que dans un commentaire de
+`poser_roles.py`. Une règle qui n'existe que dans une conversation ne protège rien : le lendemain,
+personne ne peut la citer. Les six que je peux restituer mot pour mot sont rétablies ci-dessous.
+Les autres restent un trou **déclaré** : je ne les invente pas.
+
+### Les règles rétablies
+
+- **n°174** — une animation ne se justifie que si son sujet **change dans le temps**. Un schéma
+  qui ne bouge pas se lit mieux fixe.
+- **n°175** — une animation qui tourne toute seule est un spectacle. Celle que l'élève déclenche
+  est un instrument.
+- **n°176** — l'état final d'une animation doit être **l'image complète**. Un élève qui arrive en
+  retard, ou qui imprime, doit voir la même chose que les autres.
+- **n°177** — une animation qui montre la réponse **remplace le travail** au lieu de le préparer.
+- **n°178** — rien d'essentiel ne repose sur le mouvement seul : ni la consigne, ni la donnée, ni
+  la correction.
+- **n°183** — un aperçu ne fabrique pas de faux contrôle. Un bouton qui ne mène nulle part apprend
+  à ne plus cliquer sur les boutons.
+
+**Clef de voûte des six** : *le mouvement n'est pas une information, c'est une dépense
+d'attention. On ne la fait payer à l'élève que pour ce qui change dans le temps.*
+
+### Les règles nouvelles
+
+- **n°188** — une page d'élève ne s'arrête pas pour parler. Pas de boîte modale : un message
+  d'état dans la page, annoncé aux lecteurs d'écran, qui n'attrape pas le focus et s'efface seul.
+  Sur une page qui enregistre à chaque frappe, une modale coûte une phrase à celui qui écrit.
+- **n°189** — une règle qui n'est pas écrite dans le dépôt n'existe pas. Le journal est la seule
+  preuve ; ce qui est resté dans la conversation est perdu à la session suivante. *(Corollaire
+  opératoire : la numérotation se vérifie — un trou dans la suite est une règle tombée, pas un
+  numéro sauté.)*
