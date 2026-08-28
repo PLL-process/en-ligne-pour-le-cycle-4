@@ -7648,3 +7648,53 @@ La forme d'une liste bien tenue n'est pas une preuve : c'est du rendu.
 - **n°182** — on ne code pas ce qui se filme, et on ne filme pas ce qui se compare. La vidéo
   montre un fonctionnement ; le schéma met des solutions côte à côte. Chacun sur ce qu'il sait
   faire.
+
+---
+
+## 2026-08-28 (suite) — Deux chiffres de l'état des lieux étaient faux, et pour la même raison
+
+L'état des lieux du Thème 1 annonçait **« rôles de groupe : 15 séquences sur 15 »** et
+**« bilan personnel : 6 sur 15 »**. Les deux sont à corriger, et l'erreur est la même dans les
+deux cas : **j'avais compté une convention de nommage, pas une chose.**
+
+| Annoncé | Réel | Ce que je comptais |
+|---|---|---|
+| bilan personnel manquant : **6 sur 15** | **1 sur 15** — `5e_C1.3` | l'emoji 🪞 |
+| rôles à poser : **15 sur 15** | **5 sur 15** | le mot « à deux », n'importe où dans la page |
+
+Trois séquences portent le dispositif complet de bilan — rappel de l'hypothèse, `bilan1`,
+`bilan2`, versions étayées — sous un titre « 🏁 Bilan » ou « 🧩 Bilan ». Une quatrième l'a sous
+« 🧠 Synthèse et métacognition », une cinquième sous « 🧠 Métacognition » avec `meta1` à `meta3`.
+Aucune n'écrit 🪞. Mon indicateur ne mesurait pas la présence du bilan : il mesurait la
+**conformité au gabarit le plus récent**.
+
+Même mécanique pour les rôles. La première version de `poser_roles.py` cherchait « à deux » ou
+« en groupe » n'importe où et remontait au titre précédent. Le bloc atterrissait sous « 📚 Le
+référentiel de la séquence » et sous « 🎫 Billet d'entrée » — des sections qui **citent** le
+travail de groupe sans en être un. Il fallait deux conditions, pas une : un titre qui annonce
+une **activité**, et du vocabulaire de groupe **dans cette activité-là**.
+
+### Ce que ça change, au-delà des deux chiffres
+
+Une fois l'outil rendu exigeant, **deux lots refusent la pose faute d'avoir la moindre section
+« Activité » : `4e_C1.4` et `3e_C1.5`.** Ce sont les deux lots héritage. C'est le **cinquième
+indicateur indépendant** à les désigner, après le budget de lecture, le nombre d'aides repliées,
+le mode essentiel et les QCM sans réfutation. Aucun de ces cinq n'a été construit pour les
+trouver.
+
+### Les règles
+
+- **n°184** — un indicateur bâti sur une convention de nommage mesure la conformité à la
+  convention, jamais la présence de la chose. Quand la maison a changé de gabarit en cours de
+  route, il compte les lots récents et déclare les anciens vides. *(Précision de la n°146 : ici
+  ce n'est pas le mot qui manque, c'est le mot qui a changé.)*
+- **n°185** — chercher un mot, ce n'est pas trouver une situation. « À deux » dans un référentiel
+  décrit une compétence ; « à deux » dans une activité décrit ce que font deux élèves à cet
+  instant. Un outil qui ne distingue pas les deux pose ses dispositifs au mauvais endroit — et
+  un dispositif au mauvais endroit apprend à ne plus lire les dispositifs.
+- **n°186** — on ne pose pas un dispositif là où il ne sert pas. Dix séquences du Thème 1 se font
+  seul : leur ajouter des rôles de groupe aurait fait du bruit, et le bruit se paie sur tous les
+  autres blocs de la page.
+- **n°187** — une note qui compte quelque chose se calcule. « Les trois zones de réponse sont
+  enregistrées » est devenue fausse en ajoutant un bilan ; elle compte désormais les zones
+  elle-même.

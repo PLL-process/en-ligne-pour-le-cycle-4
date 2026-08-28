@@ -31,6 +31,26 @@ REGISTRE = ICI / "ressources_externes.json"
 
 OBLIGATOIRES = ("titre", "source", "url", "a_regarder")
 
+#: Trois natures, parce que trois emplacements sur huit n'appellent pas une vidéo.
+#: « a_filmer » ne produit AUCUN bloc : tant que le film n'existe pas, il n'y a rien à
+#: montrer à l'élève. C'est une note de tournage pour le professeur, et elle reste dans
+#: le registre — une page qui annonce une vidéo à venir est une promesse, pas un support.
+NATURES = {
+    "video":    {"etiquette": "🎬 Ressource vidéo",   "nom": "Ressource vidéo",
+                 "verbe": "▶ Ouvrir la vidéo",
+                 "sujet": "vidéo", "pose": True},
+    "document": {"etiquette": "📄 Document de référence", "nom": "Document de référence",
+                 "verbe": "📄 Ouvrir le document",
+                 "sujet": "document", "pose": True},
+    "a_filmer": {"etiquette": "🎥 À filmer dans l'atelier", "nom": "À filmer",
+                 "verbe": "",
+                 "sujet": "film", "pose": False},
+}
+
+
+def nature(r):
+    return NATURES.get(r.get("type", "video"), NATURES["video"])
+
 # ── le style, injecté une seule fois par page ────────────────────────────────
 CSS = """<style id="ressource-css">
 /* Bloc « ressource externe » — posé par _outils poser_ressource.py. Ne pas éditer à la main. */
@@ -75,9 +95,9 @@ CSS = """<style id="ressource-css">
 """
 
 GABARIT = """<!-- ressource: {id} -->
-<section class="ressource" id="{id}" aria-label="Ressource vidéo : {titre_attr}">
+<section class="ressource" id="{id}" aria-label="{nom} : {titre_attr}">
   <header class="ressource-tete">
-    <span class="ressource-genre">🎬 Ressource vidéo</span>
+    <span class="ressource-genre">{etiquette}</span>
 {chips}    <span class="ressource-verif{classe_verif}">lien vérifié le {verifie_le}</span>
   </header>
   <h4 class="ressource-titre">{titre}</h4>
@@ -141,7 +161,7 @@ def factice(url):
     return (not (url or "").strip()) or any(h in url for h in FACTICES)
 
 
-def commande(url):
+def commande(url, verbe="▶ Ouvrir la vidéo", sujet="vidéo"):
     """Le bouton n'existe QUE s'il mène quelque part.
 
     Un contrôle qui annonce « Ouvrir la vidéo » et n'ouvre rien est exactement le défaut
@@ -152,9 +172,10 @@ def commande(url):
     """
     if factice(url):
         return ('<span class="ressource-lien ressource-lien--inerte" role="note">'
-                "✖ Aucune vidéo — c'est un aperçu de la forme</span>")
+                "✖ Aucun%s %s — c'est un aperçu de la forme</span>"
+                % ("e" if sujet == "vidéo" else "", sujet))
     return ('<a class="ressource-lien" href="%s" target="_blank" rel="noopener noreferrer">'
-            "▶ Ouvrir la vidéo</a>" % url)
+            "%s</a>" % (url, verbe))
 
 
 def paragraphes(texte):
@@ -164,6 +185,8 @@ def paragraphes(texte):
 
 
 def manques(r):
+    if not nature(r)["pose"]:
+        return [] if (r.get("brief") or "").strip() else ["brief"]
     absents = [c for c in OBLIGATOIRES if not (r.get(c) or "").strip()]
     repli = r.get("repli") or {}
     if not (repli.get("html") or "").strip():
@@ -185,13 +208,14 @@ def bloc(r, verifie_le):
         except ValueError:
             pass
     repli = r.get("repli") or {}
+    nat = nature(r)
     return GABARIT.format(
-        id=r["id"], chips=chips,
+        id=r["id"], chips=chips, etiquette=nat["etiquette"], nom=nat["nom"],
         titre=r["titre"], titre_attr=r["titre"].replace('"', "&quot;"),
         source=r["source"], url=r["url"],
         verifie_le=verifie_le or "jamais", classe_verif=vieux,
         a_regarder=paragraphes(r["a_regarder"]),
-        commande=commande(r["url"]),
+        commande=commande(r["url"], nat["verbe"], nat["sujet"]),
         qr=qr_svg(r["url"], r["titre"]),
         repli_titre=(repli.get("titre") or "Si la vidéo ne s'ouvre pas"),
         repli_html=repli.get("html", ""),
@@ -254,18 +278,30 @@ def main():
 
     registre = json.loads(REGISTRE.read_text(encoding="utf-8"))
     ressources = registre["ressources"]
-    prets, incomplets = [], []
+    prets, incomplets, tournages = [], [], []
     for r in ressources:
-        (incomplets if manques(r) else prets).append(r)
+        if manques(r):
+            incomplets.append(r)
+        elif nature(r)["pose"]:
+            prets.append(r)
+        else:
+            tournages.append(r)
 
-    print("Registre : %d ressource(s) — %d prête(s), %d en attente.\n"
-          % (len(ressources), len(prets), len(incomplets)))
+    print("Registre : %d ressource(s) — %d posable(s), %d à filmer, %d en attente.\n"
+          % (len(ressources), len(prets), len(tournages), len(incomplets)))
 
     for r in incomplets:
         print("  ⏳ %-24s il manque : %s" % (r["id"], ", ".join(manques(r))))
         if not (r.get("url") or "").strip():
             print("     ce que la vidéo doit montrer : %s" % r["doit_montrer"][:150].strip())
     if incomplets:
+        print()
+
+    for r in tournages:
+        print("  🎥 %-24s à filmer — %s" % (r["id"], r.get("lieu", "atelier")))
+        for ligne in (r.get("brief") or "").strip().split("\n"):
+            if ligne.strip():
+                print("     %s" % ligne.strip())
         print()
 
     if a.apercu:
@@ -306,7 +342,7 @@ def main():
 
     if a.etat:
         for r in prets:
-            print("  ✅ %-24s %s" % (r["id"], r["titre"]))
+            print("  ✅ %-24s [%s] %s" % (r["id"], r.get("type", "video"), r["titre"]))
         return 0
 
     aujourdhui = date.today().isoformat()
