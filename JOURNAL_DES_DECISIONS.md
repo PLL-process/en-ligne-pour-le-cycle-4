@@ -7916,3 +7916,49 @@ décide devant une classe, pas devant un dépôt.
 - **n°194** — un outil de mesure se teste d'abord sur un cas dont on connaît déjà la réponse.
   Un résultat nul n'est pas une découverte, c'est la première chose à vérifier. *(Corollaire de
   la n°184 : la n°184 dit quelle erreur on commet ; la n°194 dit comment on l'attrape.)*
+
+---
+
+## 2026-08-28 — La fiche du jardin, et un statut regagné par la mesure
+
+Le contrôle de la PR #263 avait retiré à `4e_C4.1` — le lot phare de la 4ᵉ, neuf codes en une
+séquence — son statut « complet et validable », pour une seule pièce manquante : la fiche
+pédagogique. Le lot portait tout le reste (séquence, QCM de 30 questions, matrice de 28 lignes,
+deux synthèses, dix SVG originaux, rapport de tests 21/21). Il lui manquait le document qui dit
+à un remplaçant ce qu'il tient entre les mains.
+
+Elle est écrite, **d'après la séquence et non d'après une intention** : chaque durée, chaque
+production, chaque critère y est recopié de la page. Le contrôle la voit, le statut revient. Il
+n'a pas été rendu : il a été regagné. C'est exactement ce qu'on attend d'un statut qui se mesure
+(n°190).
+
+### Ce que la fiche dit et que la séquence ne disait pas
+
+Une fiche honnête dit aussi ce que le lot ne porte pas. Cinq points, tous vérifiés :
+
+1. **La version 🅰 est déclarée, pas outillée** — « le vrai jardin, ou une maquette capteur +
+   pompe », sans liste de matériel, ni protocole, ni fiche de sécurité. Sans préparation
+   d'atelier, la classe bascule en 🅱. *(C'est le défaut D02 des trois audits : celui-là tient.)*
+2. **Deux boutons de QCM dans la page** au lieu d'un (règle n°4) : celui du lot, et
+   `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee`, une ressource héritée. **Seule séquence des 17 du
+   Thème 2 à enfreindre la règle.**
+3. Aucun rôle de groupe, aucun lexique — comme les seize autres.
+4. Neuf codes en quatre séances : la couverture est réelle, la maîtrise individuelle ne s'en
+   déduit pas. Le lot gagne à être joué comme **vue système**.
+5. **La séquence annonce « 30 questions dont 3 avec schémas ». Son QCM en porte quatre.** Elle a
+   une image de retard sur son propre QCM.
+
+### Une question tranchée par Pascal, contre mon avis
+
+Je proposais d'aligner les seize bandeaux « 55 min » du Thème 2 sur le gabarit 90 min du lot
+`3e_C9.2`, avec le calcul tout prêt : 52 séances de 55 min devenaient 41 créneaux de 90, chacun
+avec 18 à 38 minutes de respiration. **Pascal garde les 55 min.** Le calage 1 h 30 restera un
+document d'accompagnement, à côté des pages, sans toucher au HTML.
+
+J'ai bien fait de demander : je m'apprêtais à réécrire seize bandeaux dans le mauvais sens sur
+la foi d'un « ok on garde » que je lisais à l'envers. La formule était ambiguë, l'action ne
+l'était pas — seize fichiers, et le découpage de son année.
+
+- **n°195** — quand une consigne courte peut se lire dans les deux sens et que l'action, elle,
+  n'est pas réversible à bon marché, on demande. Une question coûte une minute ; seize pages
+  réécrites à l'envers coûtent une confiance.
