@@ -86,7 +86,7 @@ setInterval(()=>{
     document.getElementById("timer").innerText = time;
 },1000);
 
-// QUESTIONS (40 uniques)
+// QUESTIONS — onze, et onze annoncées
 const questions = [
 
 {
@@ -101,8 +101,8 @@ comp:"C4.4 | CRCN D1.3"
 {
 q:"Quel composant détecte un mouvement ?",
 img:"Images/capteur_mouvement.svg",
-options:["Détecteur PIR","Résistance","Capteur analogique"],
-answer:0,
+options:["Résistance","Détecteur PIR","Capteur analogique"],
+answer:1,
 exp:"Le capteur PIR détecte une présence.",
 comp:"C4.4"
 },
@@ -110,7 +110,7 @@ comp:"C4.4"
 {
 q:"Quel objet traite les informations ?",
 img:"Images/carte_programmable.svg",
-options:["Microcontrôleur","LED","Fil"],
+options:["Microcontrôleur","LED de signalisation","Fil de cuivre"],
 answer:0,
 exp:"Le microcontrôleur traite les données.",
 comp:"C6.2"
@@ -119,8 +119,8 @@ comp:"C6.2"
 {
 q:"Quel composant agit sur le système ?",
 img:"Images/moteur_cc.svg",
-options:["Capteur","Actionneur","Programme"],
-answer:1,
+options:["Actionneur","Capteur","Programme"],
+answer:0,
 exp:"Un actionneur agit (moteur, LED…).",
 comp:"C4.4"
 },
@@ -128,8 +128,8 @@ comp:"C4.4"
 {
 q:"Un programme sert à :",
 img:"Images/carte_programmable.svg",
-options:["Commander","Charger","Décorer"],
-answer:0,
+options:["Charger","Commander","Décorer"],
+answer:1,
 exp:"Il donne les instructions.",
 comp:"C6.2"
 },
@@ -139,8 +139,8 @@ comp:"C6.2"
 {
 q:"Un chronogramme représente :",
 img:"Images/signal_carre.svg",
-options:["Un signal dans le temps","Un dessin","Une carte"],
-answer:0,
+options:["Un dessin technique","Une carte du réseau","Un signal dans le temps"],
+answer:2,
 exp:"Il montre l’évolution d’un signal.",
 comp:"C6.1"
 },
@@ -157,8 +157,8 @@ comp:"C6.3"
 {
 q:"Un bug est :",
 img:"Images/carte_programmable.svg",
-options:["Un capteur","Un moteur","Une erreur"],
-answer:2,
+options:["Une erreur","Un capteur","Un moteur"],
+answer:0,
 exp:"C’est une erreur de programme.",
 comp:"C6.3"
 },
@@ -166,8 +166,8 @@ comp:"C6.3"
 {
 q:"La LED est :",
 img:"Images/diode_led.svg",
-options:["Actionneur","Programme","Capteur"],
-answer:0,
+options:["Programme","Capteur","Actionneur"],
+answer:2,
 exp:"Elle agit en produisant de la lumière.",
 comp:"C4.4"
 },
@@ -175,25 +175,30 @@ comp:"C4.4"
 {
 q:"Une boucle permet :",
 img:"Images/carte_programmable.svg",
-options:["Arrêter","Répéter","Supprimer"],
-answer:1,
+options:["Répéter","Arrêter","Supprimer"],
+answer:0,
 exp:"Elle répète une action.",
 comp:"C6.2"
 },
 
-];
 
-// compléter jusqu'à 40 uniques
-while(questions.length < 40){
-questions.push({
+{
 q:"Dans un système automatisé, que fait le programme ?",
 img:"Images/carte_programmable.svg",
 options:["Il décide","Il casse","Il coupe"],
 answer:0,
 exp:"Il pilote le système.",
 comp:"C6.2 | CRCN D3.4"
-});
 }
+
+];
+
+// Il y avait ici une boucle « compléter jusqu'à 40 uniques » qui poussait 29
+// fois LA MÊME question dans la banque, avec la même bonne réponse. Le titre
+// annonçait 40 questions uniques ; l'élève en voyait onze, dont une répétée
+// vingt-neuf fois, et sa note était calculée sur 40. Elle est retirée : le QCM
+// porte le nombre de questions qu'il a réellement, et la note se calcule
+// dessus (règle n°155).
 
 // AFFICHAGE
 let quizDiv = document.getElementById("quiz");
@@ -223,7 +228,7 @@ quizDiv.appendChild(div);
 // PROGRESSION
 function updateBar(){
 let total = document.querySelectorAll("input[type=radio]:checked").length;
-let percent = total/40*100;
+let percent = total/questions.length*100;
 document.getElementById("bar").style.width = percent+"%";
 }
 
@@ -249,10 +254,10 @@ bipFaux();
 }
 });
 
-let note=(score/40*20).toFixed(1);
+let note=(score/questions.length*20).toFixed(1);
 
 document.getElementById("score").innerHTML =
-"Score : "+score+"/40 | Note : "+note+"/20";
+"Score : "+score+"/"+questions.length+" | Note : "+note+"/20";
 }
 
 // RESET
