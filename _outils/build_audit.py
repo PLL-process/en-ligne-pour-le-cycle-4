@@ -24,6 +24,7 @@ import sys
 # Import du référentiel embarqué dans le dépôt
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from data_competences import COMP_BY_LEVEL, C_PARENT, THEME_TITLES  # noqa: E402
+from controle_statut import verdict as controle_verdict  # noqa: E402
 
 # NB : on NE réimporte PAS make_index (son import exécute la génération de
 # l'index — effet de bord indésirable pendant un simple audit). Les fonctions
@@ -1159,6 +1160,13 @@ def construire():
                 fichiers = fichiers_reels(rel)
                 o = OVERLAY.get(code_pref, {})
                 statut = o.get("statut", "À CRÉER" if not fichiers else "À VÉRIFIER PAR L’ENSEIGNANT")
+                # Un statut « complet et validable » ne se déclare pas : il se
+                # vérifie sur pièces (règle d'or n°190). Voir controle_statut.py.
+                statut, manquantes, motif = controle_verdict(
+                    statut, os.path.join(RACINE, rel), o.get("mutualise_avec", ""))
+                if motif:
+                    o = dict(o)
+                    o["anomalies"] = (motif + " " + o.get("anomalies", "")).strip()
                 ligne = {
                     "code": code_pref,
                     "niveau": niveau,
@@ -1185,6 +1193,7 @@ def construire():
                     "medias_licences": o.get("medias", ""),
                     "croisement": CROISEMENTS.get(code_pref, o.get("mutualise_avec", "")),
                     "statut": statut,
+                    "preuves_manquantes": ", ".join(manquantes),
                 }
                 lignes.append(ligne)
     return lignes
@@ -1198,7 +1207,7 @@ def main():
               "chemin", "nb_fichiers", "sequence", "qcm", "projet", "synthese",
               "evaluation", "correction", "situation_declenchante", "problematique",
               "qualite", "anomalies", "accessibilite", "medias_licences",
-              "croisement", "statut"]
+              "croisement", "statut", "preuves_manquantes"]
 
     csv_path = os.path.join(RACINE, "audit_couverture.csv")
     with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
@@ -1224,6 +1233,12 @@ def main():
     print(f"{len(lignes)} codes écrits dans audit_couverture.csv / .json")
     for s, n in stats.most_common():
         print(f"  {n:3d}  {s}")
+
+    recales = [l for l in lignes if l["preuves_manquantes"]]
+    if recales:
+        print(f"\n  Contrôle de statut — {len(recales)} code(s) recalé(s) faute de pièces :")
+        for l in recales:
+            print(f"    {l['code']:<10} → {l['statut']}  (manque : {l['preuves_manquantes']})")
 
 
 if __name__ == "__main__":
