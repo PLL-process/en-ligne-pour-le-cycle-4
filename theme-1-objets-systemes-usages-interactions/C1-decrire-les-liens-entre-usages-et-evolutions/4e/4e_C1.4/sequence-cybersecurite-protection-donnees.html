@@ -429,6 +429,7 @@
       <span class="score-pill">⏱️ <span id="chrono">00:00</span></span>
       <span class="score-pill">🏁 <strong id="scoreTotal">0</strong>/<strong id="scoreMax">69</strong></span>
       <button class="btn" id="btnRecalc">🔄 Recalculer</button>
+      <button class="btn" id="btnSave">💾 Enregistrer</button>
       <button class="btn" id="btnPDF">📄 PDF</button>
     </div>
   </div>
@@ -2567,26 +2568,53 @@ function score6(){
     document.getElementById('chk6').onclick = () => checkSection('chk6');
     document.getElementById('btnRecalc').onclick = recalc;
 
-        // SAVE/LOAD
-    /* FIXME : aucun élément #saveBtn dans la page — le bouton d'enregistrement n'existe pas. */
-  const _sb = document.getElementById('saveBtn');
-  if (_sb) _sb.onclick = () => {
-      localStorage.setItem('cyber4e', JSON.stringify({
-        student: document.getElementById('studentName').value,
-        scores, chrono
-      }));
-      alert('💾 Sauvegardé !');
-    };
+    // ═══ Enregistrer et reprendre ═══
+    // Le bouton n'existait pas : la séquence proposait plus de cent champs à
+    // remplir sur trois séances, et rien ne se gardait. Il existe maintenant,
+    // et il enregistre AUSSI les réponses, pas seulement le score — un élève
+    // qui reprend veut retrouver ce qu'il a écrit (règle n°169 : une consigne
+    // qui promet une ressource la fournit).
+    const champsSauvegardables = () =>
+      [...document.querySelectorAll('input[id], select[id], textarea[id]')]
+        .filter(e => e.type !== 'button' && e.type !== 'submit');
 
-
-
-    // LOAD
-    if (localStorage.getItem('cyber4e')) {
-      const data = JSON.parse(localStorage.getItem('cyber4e'));
-      document.getElementById('studentName').value = data.student;
-      Object.assign(scores, data.scores);
-      recalc();
+    function enregistrer(silencieux) {
+      const reponses = {};
+      champsSauvegardables().forEach(e => {
+        reponses[e.id] = (e.type === 'checkbox' || e.type === 'radio') ? e.checked : e.value;
+      });
+      try {
+        localStorage.setItem('cyber4e', JSON.stringify({ reponses, scores, chrono, date: new Date().toISOString() }));
+        if (!silencieux) alert('💾 Enregistré sur cet ordinateur. Tu peux fermer la page et reprendre plus tard.');
+      } catch (e) {
+        if (!silencieux) alert("Impossible d'enregistrer sur cet ordinateur (navigation privée ?). Utilise le bouton PDF.");
+      }
     }
+
+    const _sb = document.getElementById('btnSave');
+    if (_sb) _sb.onclick = () => enregistrer(false);
+    // filet : on enregistre aussi tout seul, à chaque saisie, sans rien dire
+    document.addEventListener('input', () => enregistrer(true));
+
+    // ═══ Reprendre ═══
+    try {
+      const brut = localStorage.getItem('cyber4e');
+      if (brut) {
+        const data = JSON.parse(brut);
+        if (data.reponses) {
+          champsSauvegardables().forEach(e => {
+            if (!(e.id in data.reponses)) return;
+            if (e.type === 'checkbox' || e.type === 'radio') e.checked = data.reponses[e.id];
+            else e.value = data.reponses[e.id];
+          });
+        } else if (data.student) {                 // ancien format : nom seul
+          const n = document.getElementById('studentName');
+          if (n) n.value = data.student;
+        }
+        if (data.scores) Object.assign(scores, data.scores);
+        recalc();
+      }
+    } catch (e) { /* rien de sauvegardé, ou stockage refusé : on démarre à vide */ }
 
     // PDF
     document.getElementById('btnPDF').onclick = () => window.print();

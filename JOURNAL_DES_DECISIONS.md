@@ -7534,3 +7534,34 @@ Ils rejoignent exactement ce que la mesure des 41 séquences avait montré de so
 sans un seul visuel, un « mode essentiel » qui allège de 9 %, et un budget de lecture qui dépasse
 le tiers de la séance. Deux audits externes et une mesure interne, partis de trois endroits
 différents, désignent le même manque.
+
+---
+
+## Règle d'or n°173 — un défaut trouvé une fois se cherche partout, tout de suite
+
+Les cinq points confirmés par les audits externes ont tous une **forme**. Une fois la forme
+connue, elle se cherche par script sur l'ensemble du dépôt — c'est vingt minutes, et c'est le seul
+moment où on le fera.
+
+Ce balayage, mené juste après les corrections, a trouvé quatre défauts que **ni l'un ni l'autre
+des deux audits n'avait vus** :
+
+| Trouvé par balayage | Forme cherchée | Gravité |
+|---|---|---|
+| **Le bouton « QCM » de la séquence 5e Chengdu ne mène nulle part** — il pointe vers `qcm_5e_C1_chengdu_air.html`, renommé depuis en `qcm_5e_C1.1-C1.6_chengdu.html` | lien relatif dont la cible n'existe pas | l'élève ne peut pas atteindre le QCM de la séquence phare du niveau |
+| **Le bouton « Enregistrer » de la séquence cybersécurité n'existe pas** — le code le cherchait, un `FIXME` le disait, personne ne l'avait lu | élément commandé par le script mais absent du HTML | plus de cent champs à remplir sur trois séances, et rien ne se garde |
+| `activite_crcn_donnees_freinage_5e_C1.2` pointait vers la séquence d'avant la réécriture Sainte-Luce, et vers un jeu de données resté dans l'archive | liens survivant à un renommage | activité injouable |
+| Le programme Python de `3e_C1.5` affichait « Connexion sécurisée » dès qu'une URL commence par `https://` | la confusion HTTPS / fiabilité, cherchée partout | enseigne exactement ce que la séquence corrige par ailleurs |
+
+**Le lien mort de Chengdu mérite qu'on s'y arrête.** Il date d'un renommage de fichier. Aucun
+test ne l'a vu, aucune relecture non plus — parce qu'on relit le contenu d'une page, pas ses
+liens. Il a fallu six lignes de script pour le trouver, et il n'y a **plus aucun lien mort** dans
+le Thème 1.
+
+**La règle.** Quand un défaut est confirmé, on ne corrige pas l'occurrence : on écrit la requête
+qui trouve toutes ses sœurs, et on la garde. Corriger un cas signalé, c'est traiter le symptôme
+que quelqu'un a eu la chance de voir.
+
+*(Deux vérifications sont désormais mécanisables et devraient rejoindre les outils versionnés :
+« aucun lien relatif ne pointe vers un fichier absent » et « aucun `getElementById` ne cherche un
+élément que la page ne contient pas ». La seconde aurait à elle seule trouvé les deux boutons.)*
