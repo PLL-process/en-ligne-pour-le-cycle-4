@@ -18,7 +18,9 @@
       "titre, source, url, duree, licence": "renseignés une fois la vidéo choisie ET ouverte",
       "a_regarder": "la consigne à l'élève, avec les minutages. Ne peut s'écrire qu'après avoir regardé la vidéo.",
       "repli": "ce que l'élève fait si la vidéo ne s'ouvre pas. S'imprime toujours.",
-      "licence_verifiee": "false tant que la licence n'a pas été lue à la source. N'apparaît jamais dans la page élève : c'est une réserve professionnelle, pas une information pour la classe."
+      "licence_verifiee": "false tant que la licence n'a pas été lue à la source. N'apparaît jamais dans la page élève : c'est une réserve professionnelle, pas une information pour la classe.",
+      "type": "« video » (défaut), « document » ou « a_filmer ». Une note de tournage ne produit AUCUN bloc : tant que le film n'existe pas, il n'y a rien à montrer à l'élève. Une page qui annonce une vidéo à venir est une promesse, pas un support.",
+      "brief": "pour « a_filmer » : ce qu'il faut filmer, comment, et combien de temps."
     },
     "outils": {
       "poser": "python3 poser_ressource.py            (pose ou remet à jour les blocs complets)",
@@ -117,43 +119,50 @@
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Ouvre <code>releves_air_chengdu_simules.csv</code> — c'est le vrai matériau de la séance.</p><ol><li>Compte les relevés du lundi. Le capteur enregistre une valeur par heure, de 6 h à 18 h : combien devrait-il y en avoir ? Combien y en a-t-il ?</li><li>Entre 13 h (16,4) et 15 h (21,1), écris <strong>deux</strong> choses différentes qui ont pu se passer et qui donneraient exactement ces deux mêmes nombres.</li><li>Conclus en une phrase : que sait-on, et que ne sait-on pas, à 14 h ?</li></ol>"
       },
-      "licence_verifiee": false
+      "licence_verifiee": false,
+      "type": "a_filmer",
+      "lieu": "cour et salle de techno",
+      "brief": "30 secondes, téléphone à l'horizontale, sur pied ou posé.\nDans le cadre en même temps : le capteur (Grove poussière ou thermomètre) ET l'écran où le\nnombre apparaît. C'est la simultanéité qui fait la leçon — le phénomène et le chiffre au\nmême instant, sans coupure.\nFilme deux fois : une fois à l'ombre, une fois au soleil, sans rien changer d'autre.\nNe commente pas : c'est l'élève qui doit dire ce qu'il voit.\nPourquoi pas une vidéo trouvée : toutes celles que j'ai vues sont des diaporamas de cours,\nque la spécification de cet emplacement écarte — l'élève a déjà une animation dans la page."
     },
     {
       "id": "res-4e-C1-4-hameconnage",
       "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.4/sequence-cybersecurite-protection-donnees.html",
-      "apres": "",
+      "apres": "bloc1-risques",
       "doit_montrer": "Un message d'hameçonnage RÉEL, montré à l'écran, avec l'adresse de l'expéditeur et l'adresse du lien visibles. Ce qui disqualifie une vidéo : une reconstitution jouée par des acteurs, ou tout contenu qui fait porter la faute à la victime.",
-      "titre": "",
-      "source": "",
-      "url": "",
+      "titre": "Cybermalveillance.gouv.fr — Comment reconnaître un message de phishing ?",
+      "source": "Cybermalveillance.gouv.fr — dispositif national d'assistance aux victimes",
+      "url": "https://www.youtube.com/watch?v=VT-7aAid1iA",
       "duree": "",
       "licence": "",
-      "verifie_le": "",
-      "a_regarder": "",
+      "verifie_le": "2026-08-28",
+      "a_regarder": "<p>Pour chaque message montré, cherche <strong>trois choses</strong>, dans cet ordre :</p><ol><li>l'<strong>adresse réelle de l'expéditeur</strong> — pas le nom affiché ;</li><li>le <strong>nom de domaine</strong> du lien : c'est la seule partie qui dit à qui tu parles ;</li><li>ce qui <strong>presse</strong> : un délai, une menace, une récompense.</li></ol><p>Si l'une des trois n'apparaît pas à l'écran, note-le. Un message qu'on ne peut pas vérifier n'est pas pour autant un message sûr — c'est un message qu'on ne peut pas vérifier.</p>",
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Le professeur projette ou distribue trois messages imprimés. Sur chacun, entoure au crayon :</p><ol><li>l'adresse réelle de l'expéditeur (pas le nom affiché) ;</li><li>le <strong>nom de domaine</strong> du lien — la seule partie qui dit à qui tu parles ;</li><li>ce qui presse : un délai, une menace, une récompense.</li></ol><p>Puis écris à qui tu signales, et en combien de temps. Signaler vite n'est jamais une faute.</p>"
       },
-      "licence_verifiee": false
+      "licence_verifiee": false,
+      "type": "video",
+      "verifie_comment": "existence, titre et chaîne confirmés par l'API oEmbed de YouTube le 2026-08-28. La chaîne est celle du dispositif gouvernemental. La DURÉE, la LICENCE et le contenu exact restent à confirmer en regardant."
     },
     {
       "id": "res-3e-C1-5-empreinte",
       "page": "theme-1-objets-systemes-usages-interactions/C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
-      "apres": "",
-      "doit_montrer": "Une donnée chiffrée sur l'impact environnemental du numérique, AVEC sa source et sa date affichées à l'écran. C'est le sujet même de la séance : un ordre de grandeur sans source ne vaut rien. Ce qui disqualifie une vidéo : un chiffre asséné sans référence, aussi juste soit-il.",
-      "titre": "",
-      "source": "",
-      "url": "",
+      "apres": "impact-env",
+      "doit_montrer": "Une donnée chiffrée sur l'impact environnemental du numérique, AVEC sa source et sa date. C'est le sujet même de la séance : un ordre de grandeur sans source ne vaut rien. Aucune vidéo trouvée ne le garantissait ; un document institutionnel, si.",
+      "titre": "L'empreinte environnementale du numérique",
+      "source": "Arcep — Autorité de régulation des communications électroniques, des postes et de la distribution de la presse",
+      "url": "https://www.arcep.fr/la-regulation/grands-dossiers-thematiques-transverses/lempreinte-environnementale-du-numerique.html",
       "duree": "",
       "licence": "",
-      "verifie_le": "",
-      "a_regarder": "",
+      "verifie_le": "2026-08-28",
+      "a_regarder": "<p>Ce n'est pas une vidéo : c'est la page d'un régulateur, et c'est exactement ce qu'on te demande de savoir lire.</p><p>Relève <strong>un seul chiffre</strong>, et écris à côté les quatre choses sans lesquelles il ne vaut rien : sa <strong>valeur</strong>, son <strong>unité ou son pourcentage de quoi</strong>, <strong>qui l'a produit</strong>, et <strong>de quelle année</strong> il date.</p><p>Puis une question, qui n'a pas de réponse toute faite : ce chiffre sera-t-il encore vrai dans cinq ans ? Dis ce qui pourrait le faire changer.</p>",
       "repli": {
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Prends deux chiffres du dossier fourni. Pour chacun, remplis les quatre cases : <strong>la valeur</strong>, <strong>l'unité</strong>, <strong>qui l'a produit</strong>, <strong>en quelle année</strong>.</p><ol><li>Lequel des deux peux-tu défendre devant la classe ? Pourquoi ?</li><li>Un chiffre de 2019 sur le numérique est-il encore vrai aujourd'hui ? Dis ce qui a pu changer.</li></ol><p>Un chiffre sans source ne se discute pas : il se croit ou il se rejette. C'est précisément ce qu'on ne veut pas.</p>"
       },
-      "licence_verifiee": false
+      "licence_verifiee": false,
+      "type": "document",
+      "verifie_comment": "page ouverte et lue le 2026-08-28. Titre confirmé. Chiffres relevés tels qu'écrits : « 3 à 4 % des émissions de gaz à effet de serre dans le monde » et « environ 4 % de l'empreinte carbone nationale en 2022 »."
     },
     {
       "id": "res-4e-C6-2-montage",
@@ -171,7 +180,10 @@
         "titre": "Si la vidéo ne s'ouvre pas",
         "html": "<p>Prends la boîte de l'atelier et sors les trois pièces : le capteur, la carte, l'actionneur.</p><ol><li>Pose-les dans l'ordre où l'information circule, de gauche à droite, et photographie.</li><li>Sur ta photo, écris ce qui passe dans chaque fil : une <em>mesure</em>, un <em>ordre</em>, ou de l'<em>énergie</em>.</li><li>Une seule de ces trois choses peut être fausse sans que rien ne casse. Laquelle, et pourquoi est-ce plus grave ?</li></ol>"
       },
-      "licence_verifiee": false
+      "licence_verifiee": false,
+      "type": "a_filmer",
+      "lieu": "atelier",
+      "brief": "40 secondes, plan fixe rapproché, lumière du plafond suffit.\nMontre le montage réel capteur + carte + actionneur, et suis chaque fil du doigt, lentement,\nde son départ à son arrivée. On doit voir OÙ ça se branche, pas un schéma.\nTermine en déclenchant le système une fois, en entier.\nCe film règle deux choses d'un coup : l'emplacement vide de ce lot, et le « geste technique\nréel » que les deux audits externes réclamaient — c'est le seul point sur lequel ils étaient\nunanimes."
     }
   ]
 }
