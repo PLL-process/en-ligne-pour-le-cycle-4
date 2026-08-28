@@ -52,12 +52,27 @@ def _texte(chemin):
 
 
 def banque_de_questions(chemin):
-    """Nombre de questions réellement portées par un fichier de QCM."""
+    """Nombre de questions portées par un QCM AU GABARIT MAISON (banque JS)."""
     t = _texte(chemin)
     m = re.search(r"const QUESTIONS\s*=\s*\[", t)
     if not m:
         return 0
     return len(re.findall(r"\bq:\s*\"", t[m.end():]))
+
+
+def questions_heritees(chemin):
+    """Nombre approximatif de questions d'un QCM écrit à l'ancienne, sans banque.
+
+    Un QCM codé en dur — un `<input type="radio">` par option — est un vrai QCM :
+    il n'est simplement pas au gabarit. Le confondre avec « pas de QCM » a produit
+    une phrase fausse dans la matrice : `4e_C6.2` était annoncé sans QCM alors
+    qu'il en porte un de 24 questions. On compte donc les deux, séparément.
+    """
+    if banque_de_questions(chemin):
+        return 0
+    t = _texte(chemin)
+    radios = len(re.findall(r'type="radio"', t))
+    return radios // 4 if radios >= 8 else 0
 
 
 def _liste(dossier):
@@ -74,9 +89,11 @@ def pieces_du_lot(dossier_absolu):
 
     trouve["sequence"] = [n for n in noms
                           if re.match(r"s[ée]quence", n, re.I) and n.lower().endswith(".html")]
-    trouve["qcm"] = [n for n in noms
-                     if re.match(r"qcm", n, re.I) and n.lower().endswith(".html")
-                     and banque_de_questions(os.path.join(dossier_absolu, n)) >= QUESTIONS_MINIMUM]
+    candidats = [n for n in noms if re.match(r"qcm", n, re.I) and n.lower().endswith(".html")]
+    trouve["qcm"] = [n for n in candidats
+                     if banque_de_questions(os.path.join(dossier_absolu, n)) >= QUESTIONS_MINIMUM]
+    trouve["qcm_herite"] = [n for n in candidats
+                           if questions_heritees(os.path.join(dossier_absolu, n)) >= QUESTIONS_MINIMUM]
     trouve["fiche"] = [n for n in noms if re.match(r"fiche_pedagogique", n, re.I)]
     trouve["matrice"] = [n for n in noms if re.match(r"matrice", n, re.I)]
     trouve["tests"] = [n for n in noms if re.search(r"rapport.*test|^tests?_", n, re.I)]
@@ -92,7 +109,7 @@ def pieces_du_lot(dossier_absolu):
 #: ordre d'affichage, et libellé lisible dans la matrice
 LIBELLES = [
     ("sequence", "séquence"),
-    ("qcm", "QCM"),
+    ("qcm", "QCM au gabarit maison"),
     ("fiche", "fiche pédagogique"),
     ("matrice", "matrice de couverture"),
     ("synthese", "synthèses"),
@@ -113,6 +130,13 @@ def verdict(statut_declare, dossier_absolu, mutualise_avec=""):
     absents = [libelle for cle, libelle in LIBELLES if not pieces[cle]]
     if not absents:
         return VALIDABLE, [], ""
+
+    # Un QCM hérité n'ouvre pas le statut, mais il change ce qu'on a le droit
+    # d'écrire : « pas de QCM au gabarit » n'est pas « pas de QCM ».
+    if "QCM au gabarit maison" in absents and pieces.get("qcm_herite"):
+        i = absents.index("QCM au gabarit maison")
+        absents[i] = "QCM au gabarit maison (un QCM hérité est présent : %s)" % (
+            ", ".join(pieces["qcm_herite"]))
 
     if mutualise_avec:
         phrase = ("Reclassé par contrôle : le dossier ne porte pas %s. "

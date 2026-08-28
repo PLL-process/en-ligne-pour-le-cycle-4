@@ -7962,3 +7962,55 @@ l'était pas — seize fichiers, et le découpage de son année.
 - **n°195** — quand une consigne courte peut se lire dans les deux sens et que l'action, elle,
   n'est pas réversible à bon marché, on demande. Une question coûte une minute ; seize pages
   réécrites à l'envers coûtent une confiance.
+
+---
+
+## 2026-08-28 — « Il se refait » : j'avais jugé un lot sur son dossier, sans lire sa page
+
+En annonçant la PR #265, j'ai écrit à Pascal que `4e_C6.2` « ne se répare pas avec une fiche :
+il se refait ». **C'était faux.** Le lot manquait trois pièces dans son dossier — fiche, matrice,
+synthèses — et j'en ai conclu à l'état de la séquence sans l'ouvrir.
+
+Ouverte, elle porte : un **contrat de séquence** (règle n°18 — que je déclarais absent partout
+dans le Thème 1), un référentiel avec **capacité observable** rédigée, huit activités minutées,
+**deux verrous expérientiels** (éditeur exigé aux act. 3 et 5, banc 3/3 à l'act. 6), une grille
+LSU à quatre niveaux, un bloc de différenciation avec pont explicite vers la 3ᵉ, un bonus à trois
+défis, une fiche professeur intégrée, et un rapport de tests réels à **27/27**.
+
+Elle porte même la démarche **prédire → exécuter → comparer** aux activités 5 et 6 — exactement
+ce que l'audit ChatGPT réclamait pour la 3ᵉ, et qui est déjà là en 4ᵉ.
+
+C'est la troisième fois cette semaine, et toujours la même faute : **mesurer l'enveloppe et
+conclure sur le contenu.** L'emoji au lieu de la durée, les espaces au lieu du critère, et
+maintenant le dossier au lieu de la page.
+
+### Ce qui a été fait, à la bonne échelle
+
+- **Bandeau posé** : `⏱ 3 séances de 55 min`, sur les trois « problèmes intermédiaires, un par
+  séance » que la page énonce elle-même. Le Thème 2 passe de 16 à **17 séquences sur 17** qui
+  annoncent leur durée. Test navigateur : zéro erreur JS, badge rendu.
+- **Fiche pédagogique et matrice de couverture écrites**, d'après la page.
+- **Le contrôle de statut corrigé** — il disait « manque : QCM » pour un lot qui porte un QCM de
+  24 questions, simplement écrit à l'ancienne, sans banque. Il dit désormais « QCM **au gabarit
+  maison** », et signale entre parenthèses le QCM hérité quand il y en a un. Il a immédiatement
+  révélé le même cas en `4e_C4.4` (`qcm_ecall_chaine_information`).
+
+### Ce que je n'ai pas fait, et pourquoi
+
+`4e_C6.2` reste **« à vérifier »**, pour un seul motif : les synthèses ne sont pas des fichiers.
+Le contenu existe — la page porte « Synthèse — à retenir » et une fiche professeur repliée — et
+j'aurais pu l'extraire en deux fichiers ce soir pour faire repasser le statut au vert.
+
+Je ne l'ai pas fait. Fabriquer un fichier dans le seul but de satisfaire un contrôle que j'ai
+écrit moi-même, c'est transformer la mesure en décoration — exactement ce que la règle n°190
+condamne. Les synthèses seront écrites parce qu'un élève absent en a besoin, ou ne le seront pas.
+
+### La règle
+
+- **n°196** — on ne juge pas un lot sur ce que son dossier ne contient pas : le dossier dit ce
+  qui est rangé, la page dit ce qui est enseigné. Trois pièces manquantes ne font pas une
+  séquence à refaire. *(Corollaire de la n°184 : ici l'enveloppe, ce n'est pas un mot ni un
+  emoji, c'est une liste de fichiers.)*
+- **n°197** — l'auteur d'un contrôle est le premier à devoir le respecter. Créer la pièce qui
+  fait passer sa propre mesure au vert, sans que la pièce serve à quelqu'un, c'est truquer les
+  deux.
