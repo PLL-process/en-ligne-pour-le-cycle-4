@@ -32,6 +32,21 @@ adresse IP fixe de la carte du jardin · [QCM îlot](../4e_C4.1/qcm_4e_C4.1-C4.9
 
 ## 🧰 Ressource complémentaire déjà présente dans ce dossier
 
-➡ `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html` (entraînement intensif réseaux, hérité).
+### 🧠 Les trois QCM « réseaux » (ex-« XXL 40 »)
+
+Le fichier hérité posait 51 questions d'un seul tenant, sur trois sujets sans
+rapport entre eux, et onze d'entre elles n'avaient que **deux** propositions —
+autant dire pile ou face. Il est scindé en **trois QCM de trente questions**,
+chacun à quatre propositions, avec une réfutation par distracteur :
+
+| QCM | Ce qu'il travaille |
+|---|---|
+| [Réseau local et matériels](qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html) | LAN et WLAN · hub, switch, routeur : qui fait quoi · choisir et raisonner |
+| [Adresser et identifier](qcm_4e_C4.7_adressage_ip.html) | l'adresse IP · DHCP, MAC, DNS · conflits et diagnostic |
+| [Zigbee et les liaisons sans fil](qcm_4e_C4.7_zigbee_domotique.html) | Zigbee · les trois rôles du maillage · comparer NFC, RFID, Bluetooth, Wi-Fi |
+
+Le premier **garde le chemin du fichier d'origine** : tous les liens du site
+continuent de fonctionner, et mènent désormais à un vrai QCM plutôt qu'à un
+fourre-tout.
 
 *Atelier réseau 4e — Thème 2 · objet-fil « Le jardin connecté » (la serre du jardin).*
