@@ -7576,6 +7576,75 @@ ne produit d'erreur JavaScript : le code est prudent, il teste avant d'agir. **L
 a rendu le défaut silencieux** — et c'est encore la clef de voûte : ce qui ne produit aucun signal
 se lit comme une réussite.
 
-*(Deux vérifications sont désormais mécanisables et devraient rejoindre les outils versionnés :
-« aucun lien relatif ne pointe vers un fichier absent » et « aucun `getElementById` ne cherche un
-élément que la page ne contient pas ». La seconde aurait à elle seule trouvé les deux boutons.)*
+*(Les deux vérifications sont désormais **versionnées** : `verificateur_lots.mjs`, à côté de
+l'audit des QCM. Elles ont trouvé, dès leur première exécution, tout ce que ce lot corrige — et
+rien d'autre : le dépôt vivant est à zéro lien mort.)*
+
+**Une décision de conception mérite d'être notée.** Le second contrôle signalait `parcoursNote`
+dans deux séquences du Thème 3. Vérification faite, l'absence y est **voulue** : le moteur des
+parcours 🅰/🅱/🅲 est partagé par les quatre pages d'une station, et ces deux-là n'ont aucun bloc
+propre à un parcours — elles l'écrivent à l'élève. On aurait pu apprendre à l'outil à tolérer les
+recherches gardées par un `if`. C'eût été une erreur : le bouton « Enregistrer » était gardé lui
+aussi, et c'était un vrai défaut. Ce qui les sépare n'est pas la forme du code, c'est l'INTENTION —
+qu'aucun outil ne lit.
+
+Les exceptions sont donc **déclarées**, dans `elements_optionnels.json`, sur le modèle de
+l'inventaire des absolus : chacune porte sa raison et la réponse à une question unique — *qu'est-ce
+que l'élève perd si cet élément n'existe pas ?* Si la réponse est « rien », c'est une exception ; si
+elle est « quelque chose », c'est un défaut, et sa place n'est pas dans l'inventaire.
+
+---
+
+## 2026-08-28 — On renonce à dessiner les mécanismes, et on encadre la vidéo
+
+Pascal a tranché, et il a raison : **pour un mécanisme, un schéma que j'écris en code ne remplace
+pas le réel.** Un frein à tambour se comprend en le voyant tourner, pas en lisant un dessin. Le
+prompt maître des images reste bon pour ce qui est *comparaison* — trois roues au même diamètre
+n'existent dans aucune vidéo — mais pour le *fonctionnement*, on passe à la vidéo.
+
+**Ce que ce choix coûte, et qu'il faut payer plutôt que masquer.** Une vidéo ne vit pas dans le
+dépôt. Quatre risques, tous réels en collège :
+
+| | |
+|---|---|
+| le filtre réseau | YouTube est bloqué sur beaucoup de réseaux d'établissement |
+| le RGPD | une vidéo intégrée dépose des traceurs sur des mineurs ; `youtube-nocookie` n'est pas le laissez-passer qu'on croit |
+| la pourriture des liens | une vidéo supprimée dans dix-huit mois, c'est une séance morte |
+| la publicité et les suggestions | un élève de treize ans envoyé sur YouTube arrive avec les recommandations |
+
+Trois des quatre se règlent avec **Digiview** (La Digitale) : segment découpé, ni publicité, ni
+suggestions, ni pistage, lien stable. Le quatrième se règle en changeant de source : **Lumni
+Enseignement**, gratuit, français, droits déjà réglés pour la classe.
+
+**Le reste se règle par un outil, parce qu'une règle qu'aucun outil n'applique revient toujours.**
+`ressources_externes.json` tient le registre ; `poser_ressource.py` pose le bloc et **refuse** une
+ressource sans URL, sans consigne minutée ou sans repli imprimé ;
+`verificateur_ressources.mjs` vérifie que le lien répond, que la vidéo existe encore, que le bloc
+est toujours dans sa page.
+
+### Une limite que je dois écrire noir sur blanc
+
+**Je ne peux vérifier aucune URL de vidéo depuis le conteneur où je travaille** : YouTube répond
+429, Wikimedia Commons est en cache seul, Lumni répond 403, et même `example.com` est refusé par
+le mandataire. Le contrôle des liens externes ne peut donc s'exécuter que **depuis la machine de
+Pascal**. C'est la raison d'être de `verificateur_ressources.mjs`, et la raison pour laquelle le
+registre est livré **sans une seule URL** : six emplacements, chacun avec sa spécification et son
+repli déjà écrits, et le champ `url` vide.
+
+Ce n'est pas de la prudence de façade. Le jour même, une liste de douze « animations libres de
+droits » nous est arrivée, parfaitement présentée — sections, licences annoncées, sources entre
+parenthèses. **Les six fichiers Wikimedia annoncés n'existent pas.** Deux fichiers réels existent
+bien (`File:Bicycle brakes - animated.gif` et sa variante), mais aucun de ceux qui étaient cités.
+La forme d'une liste bien tenue n'est pas une preuve : c'est du rendu.
+
+### Les règles
+
+- **n°179** — une ressource qui vit hors du dépôt porte toujours son repli imprimé. Sans lui,
+  ce n'est pas une ressource, c'est un pari sur le réseau.
+- **n°180** — un lien externe porte la date de sa dernière vérification, et cette date s'affiche
+  dans la page. Un lien sans date se croit éternel.
+- **n°181** — ce que je ne peux pas vérifier moi-même, je ne le livre pas rempli : je livre
+  l'emplacement, la spécification et le contrôle qui le vérifiera ailleurs.
+- **n°182** — on ne code pas ce qui se filme, et on ne filme pas ce qui se compare. La vidéo
+  montre un fonctionnement ; le schéma met des solutions côte à côte. Chacun sur ce qu'il sait
+  faire.
