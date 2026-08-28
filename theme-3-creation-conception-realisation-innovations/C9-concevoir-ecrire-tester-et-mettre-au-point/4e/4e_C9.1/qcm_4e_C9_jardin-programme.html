@@ -261,7 +261,7 @@
 const QUESTIONS = [
 /* ═══════════════ 4e_C9.1 — Modifier un algorithme ═══════════════ */
 {c:"C9.1",n:"Ce que veut dire « modifier »",q:"Le programme officiel de 4e demande de <b>modifier</b> un algorithme, pas de l'écrire de zéro. Qu'est-ce que cela change concrètement pour toi ?",
- o:["Tu pars d'un algorithme qui fonctionne déjà et tu le complètes, sans le réécrire","Tu recopies l'algorithme du professeur sans rien y changer","Tu inventes tout, mais en moins de temps","Tu ne travailles que sur papier, jamais sur machine"],r:0,
+ o:["tu pars d'un algorithme qui marche et tu le complètes","tu recopies l'algorithme du professeur sans y toucher","tu inventes tout, mais en beaucoup moins de temps","tu ne travailles que sur papier, jamais sur machine"],r:0,
  expl:"En 4e, on ne part pas de la page blanche : un algorithme existe, il répond déjà à une partie du besoin, et une exigence nouvelle arrive. Modifier, c'est trouver le bon endroit où intervenir — et n'intervenir que là.",
  ex:"L'algorithme d'arrosage décidait sur la seule humidité. La mairie ajoute une plage horaire : on ajoute deux conditions dans le SI existant. Le reste ne bouge pas.",
  err:"Tout réécrire « pour être sûr ». C'est le signe qu'on n'a pas cherché où était le bon endroit — et cela fait perdre les corrections déjà faites.",
@@ -269,7 +269,7 @@ const QUESTIONS = [
  ret:"En 4e : partir d'un algorithme existant, trouver le bon endroit, n'y toucher que là."},
 
 {c:"C9.1",n:"Où ajouter une exigence",q:"On veut ajouter « et seulement entre 6 h et 10 h » à un algorithme qui teste déjà l'humidité. Où intervient-on ?",
- o:["On crée un second algorithme, exécuté après le premier","Dans la condition du SI existant, en ajoutant deux comparaisons reliées par ET","Dans le bloc DÉBUT, avant toute mesure","Dans le bloc « allumer la pompe », en fin de programme"],r:1,
+ o:["on crée un second algorithme, exécuté après le premier","dans la condition du SI existant, avec un ET","dans le bloc DÉBUT, avant toute mesure d'humidité","dans le bloc « allumer la pompe », en fin de programme"],r:1,
  expl:"L'exigence porte sur la DÉCISION : elle doit donc rejoindre la décision. Une condition supplémentaire s'ajoute là où la question est posée, c'est-à-dire dans le losange.",
  ex:"SI H &lt; SEUIL <b>ET heure ≥ 6 ET heure ≤ 10</b> ALORS allumer pompe.",
  err:"Ajouter un second SI après le premier : cela fonctionne parfois, mais cela raconte une autre histoire — comme si l'heure était examinée après coup, alors qu'elle compte autant.",
@@ -277,7 +277,7 @@ const QUESTIONS = [
  ret:"Une exigence sur la décision s'ajoute DANS la décision, pas à côté."},
 
 {c:"C9.1",n:"« Entre 6 et 10 »",q:"Comment s'écrit « l'heure est entre 6 et 10 » dans un algorithme ?",
- o:["6 &lt; heure &lt; 10, comme en mathématiques","heure = 6 OU heure = 10","heure ≥ 6 ET heure ≤ 10 — deux comparaisons","heure ENTRE 6 ET 10"],r:2,
+ o:["6 &lt; heure &lt; 10, comme on l'écrit en maths","heure = 6 OU heure = 10, les deux bornes","heure ≥ 6 ET heure ≤ 10 — deux comparaisons","heure ENTRE 6 ET 10, en toutes lettres"],r:2,
  expl:"Un test compare deux valeurs à la fois, pas trois. « Entre » n'existe pas comme opérateur : il faut le traduire par deux comparaisons, reliées par ET.",
  ex:"À 8 h : 8 ≥ 6 est vrai ET 8 ≤ 10 est vrai → la condition est vraie. À 23 h : 23 ≥ 6 est vrai, mais 23 ≤ 10 est faux → la condition est fausse.",
  err:"Écrire l'encadrement mathématique d'un seul trait. Certains langages l'acceptent, la plupart non — et en algorithmique on écrit les deux comparaisons.",
@@ -285,7 +285,7 @@ const QUESTIONS = [
  ret:"Un intervalle, c'est DEUX comparaisons reliées par ET."},
 
 {c:"C9.1",n:"ET contre OU",q:"On remplace le ET par un OU dans « H &lt; 40 ET heure ≥ 6 ». Que se passe-t-il ?",
- o:["Le programme refuse de démarrer","La pompe ne s'allume plus jamais","Rien : ET et OU font la même chose","La pompe s'allume dès qu'une seule condition est vraie : elle arroserait un sol trempé, simplement parce qu'il est 8 h"],r:3,
+ o:["le programme refuse de démarrer, l'écriture est fautive","la pompe ne s'allume plus jamais, quelle que soit l'heure","rien du tout : ET et OU font exactement la même chose","la pompe s'allume dès qu'UNE des deux conditions est vraie"],r:3,
  expl:"ET exige que TOUT soit vrai ; OU se contente d'UNE condition vraie. Le programme ne plante pas : il continue de tourner, et se trompe.",
  ex:"H = 90 (sol détrempé) et heure = 8 : avec OU, la première condition est fausse mais la seconde est vraie — la pompe s'allume et noie la plante.",
  err:"Croire qu'une erreur de logique se voit tout de suite. C'est le contraire : un programme faux tourne parfaitement, il donne simplement de mauvaises réponses.",
@@ -293,7 +293,7 @@ const QUESTIONS = [
  ret:"ET : tout doit être vrai. OU : une seule suffit. Se tromper ne fait pas planter — cela fait mentir."},
 
 {c:"C9.1",n:"Une entrée sans capteur",q:"Le programme d'arrosage utilise l'humidité et l'heure. L'heure est-elle une <b>entrée</b> du système ?",
- o:["Oui : tout ce qui entre dans la décision est une entrée, capteur ou pas","Non : sans capteur, ce n'est pas une entrée","Non : c'est une constante, comme le seuil","Oui, mais seulement si une horloge externe est branchée"],r:0,
+ o:["oui : tout ce qui entre dans la décision est une entrée","non : sans capteur physique, ce n'est pas une entrée","non : c'est une constante du programme, comme le seuil","oui, mais seulement si une horloge externe est branchée"],r:0,
  expl:"Une entrée se définit par son rôle — elle alimente la décision —, pas par son origine. L'heure vient de l'horloge de la carte et se compare exactement comme l'humidité.",
  ex:"heure ≥ 6 se teste comme H &lt; 40 : deux comparaisons, deux entrées.",
  err:"Réserver le mot « entrée » aux capteurs. On oublie alors les entrées humaines (un bouton) et les entrées temporelles (l'heure), qui déclenchent tout autant.",
@@ -318,7 +318,7 @@ const QUESTIONS = [
  ret:"Traitement = rectangle. Le losange demande, le terminal borne."},
 
 {c:"C9.1",n:"L'absence de FIN",q:"L'algorigramme de l'arrosage n'a aucun bloc FIN. Est-ce un oubli ?",
- o:["Non : la flèche qui remonte est la boucle de surveillance — le programme ne doit jamais s'arrêter","Oui, mais on peut le laisser tel quel","Non, parce qu'un algorigramme d'arrosage est un cas particulier sans règle","Oui : tout algorigramme doit se terminer par FIN"],r:0,
+ o:["non : la flèche qui remonte est la boucle de surveillance","oui, mais on peut le laisser tel quel sans conséquence","non : un algorigramme d'arrosage est un cas particulier","oui : tout algorigramme doit se terminer par un bloc FIN"],r:0,
  expl:"Un système de surveillance tourne en continu. La flèche de retour est un élément à part entière de l'algorigramme : elle dit « recommencer ».",
  ex:"Un jardin ne se surveille pas une fois. Si le programme s'arrêtait après une décision, la pompe garderait cet état pour toujours.",
  err:"Ajouter un FIN par habitude scolaire, et casser la boucle sans s'en apercevoir.",
@@ -326,7 +326,7 @@ const QUESTIONS = [
  ret:"Un système qui surveille boucle. La flèche de retour EST une instruction."},
 
 {c:"C9.1",n:"Suivre un chemin",q:"Humidité = 25 %, heure = 23 h. Quel chemin la mesure suit-elle dans l'algorigramme ?",
- o:["La sortie OUI : la terre est sèche, cela suffit","Aucune : le programme s'arrête faute de réponse","La sortie NON : le ET exige les DEUX conditions, et 23 h est hors plage","Les deux successivement"],r:2,
+ o:["la sortie OUI : la terre est sèche, cela suffit","aucune : le programme s'arrête faute de réponse","la sortie NON : le ET exige les DEUX conditions","les deux successivement, l'une après l'autre"],r:2,
  expl:"25 &lt; 40 est vrai, mais 23 ≤ 10 est faux. Avec un ET, il suffit d'une condition fausse pour que tout soit faux.",
  ex:"C'est exactement le scénario « sol sec, mais la nuit » du jeu d'essais — et c'est celui que les élèves prédisent le plus souvent à l'envers.",
  err:"Ne regarder que la condition qui saute aux yeux (le sol est sec) et oublier l'autre.",
@@ -334,7 +334,7 @@ const QUESTIONS = [
  ret:"Avec un ET, une seule condition fausse suffit à tout rendre faux."},
 
 {c:"C9.1",n:"Modifier sans casser",q:"Après avoir ajouté la plage horaire, faut-il retester les scénarios qui marchaient déjà ?",
- o:["Oui : une modification peut casser ce qui fonctionnait — on rejoue TOUT le jeu d'essais","Seulement si le programme a planté","Seulement le dernier scénario ajouté","Non : ils marchaient avant, ils marcheront encore"],r:0,
+ o:["oui : on rejoue TOUT le jeu d'essais après une modification","seulement si le programme a planté pendant la modification","seulement le dernier scénario, celui qu'on vient d'ajouter","non : ils marchaient avant, ils marcheront encore après"],r:0,
  expl:"C'est la <b>non-régression</b> : on vérifie qu'en corrigeant quelque chose, on n'a rien cassé ailleurs. Un jeu d'essais sert autant à surveiller les modifications qu'à valider la première version.",
  ex:"Le scénario « sol humide → pompe OFF » marchait avant l'ajout. Il doit encore marcher après — et si on avait écrit OU au lieu de ET, il ne marcherait plus.",
  err:"Ne retester que ce qu'on vient d'ajouter. C'est précisément ainsi qu'on introduit un défaut ailleurs sans le voir.",
@@ -343,7 +343,7 @@ const QUESTIONS = [
 
 /* ═══════════════ 4e_C9.2 — Traduire un algorithme en programme ═══════════════ */
 {c:"C9.2",n:"Traduire, pas réinventer",q:"« Traduire un algorithme en programme » signifie que…",
- o:["l'algorigramme est un brouillon qu'on abandonne une fois le code écrit","la structure dessinée se retrouve ligne par ligne dans le code : le losange devient un if, les rectangles des instructions","le programme sera forcément plus court que l'algorigramme","on peut changer la logique en cours de route si le code est plus simple ainsi"],r:1,
+ o:["l'algorigramme est un brouillon qu'on abandonne ensuite","la structure dessinée se retrouve ligne par ligne dans le code","le programme sera forcément plus court que l'algorigramme","on peut changer la logique si le code est plus simple ainsi"],r:1,
  expl:"Traduire, c'est changer de langue sans changer de sens. Chaque forme dessinée a son équivalent dans le code : c'est ce qui permet de vérifier qu'on n'a rien perdu en chemin.",
  ex:"Le losange « H &lt; 40 ET 6 ≤ heure ≤ 10 ? » devient <code>if H &lt; SEUIL and heure &gt;= 6 and heure &lt;= 10:</code>",
  err:"Coder d'abord, dessiner ensuite « pour la forme ». L'algorigramme sert alors à décorer un travail déjà fait, et ne détecte plus rien.",
@@ -351,7 +351,7 @@ const QUESTIONS = [
  ret:"Traduire = même sens, autre langue. Chaque forme a son équivalent en code."},
 
 {c:"C9.2",n:"À quoi sert une constante",q:"Pourquoi écrire <code>SEUIL = 40</code> tout en haut du programme, plutôt que 40 directement dans le test ?",
- o:["Parce que Python interdit les nombres dans un if","C'est une décoration, cela ne change rien","Parce que le programme s'exécute plus vite","Pour n'avoir qu'UN seul endroit à modifier le jour où le réglage change"],r:3,
+ o:["parce que Python interdit les nombres dans un if","c'est une décoration : cela ne change rien du tout","parce que le programme s'exécute alors plus vite","pour n'avoir qu'UN endroit à changer si le réglage bouge"],r:3,
  expl:"Une constante nommée est un <b>réglage</b>. Elle se change en un seul endroit, et elle rend le test lisible : <code>H &lt; SEUIL</code> se lit, <code>H &lt; 40</code> se déchiffre.",
  ex:"Si le professeur décide que 40 était trop bas, on modifie une ligne — pas cinq disséminées dans le programme.",
  err:"Écrire les nombres directement dans les tests. Le jour du changement, il faut tous les retrouver, et on en oublie toujours un.",
@@ -367,7 +367,7 @@ const QUESTIONS = [
  ret:"Losange ↔ if. Les deux branches du losange ↔ le bloc if et le bloc else."},
 
 {c:"C9.2",n:"L'indentation",q:"En Python, à quoi sert le décalage (l'indentation) des lignes sous un <code>if</code> ?",
- o:["À laisser de la place pour les commentaires","À rien : Python l'ignore","À rendre le code plus joli à lire","Il indique quelles instructions appartiennent au if : le décalage EST la structure"],r:3,
+ o:["à laisser de la place pour écrire des commentaires","à rien du tout : Python ignore complètement l'espace","à rendre le code plus joli et plus agréable à lire","à dire quelles instructions appartiennent au if"],r:3,
  expl:"Dans beaucoup de langages, des accolades délimitent les blocs. En Python, c'est l'indentation qui joue ce rôle : elle n'est pas un choix de présentation, c'est de la grammaire.",
  ex:"Une ligne <code>print</code> non indentée sous un if s'exécute TOUJOURS, quelle que soit la condition — et le programme n'affiche aucune erreur.",
  err:"Mélanger espaces et tabulations, ou décaler « à peu près ». Python compte les caractères, pas l'intention.",
@@ -375,7 +375,7 @@ const QUESTIONS = [
  ret:"En Python, l'indentation n'est pas de la mise en page : c'est la structure du programme."},
 
 {c:"C9.2",n:"= et ==",q:"Quelle différence entre <code>=</code> et <code>==</code> dans un programme ?",
- o:["= sert aux nombres, == aux textes","== range une valeur, = compare","Aucune, c'est une question de style","= range une valeur dans une variable ; == compare deux valeurs et répond vrai ou faux"],r:3,
+ o:["= sert pour les nombres, == pour les textes","== range une valeur, = compare deux valeurs","aucune : c'est une simple question de style","= range une valeur, == compare et répond vrai ou faux"],r:3,
  expl:"L'un <b>affecte</b>, l'autre <b>interroge</b>. Le premier change l'état du programme ; le second ne change rien, il produit une réponse.",
  ex:"<code>seuil = 40</code> range 40 dans seuil. <code>if H == 40:</code> demande si H vaut 40.",
  err:"Écrire <code>if H = 40:</code>. Selon le langage, cela déclenche une erreur ou — bien pire — écrase la valeur de H sans prévenir.",
@@ -383,7 +383,7 @@ const QUESTIONS = [
  ret:"= affecte (je range), == compare (je demande)."},
 
 {c:"C9.2",n:"Blocs et texte",q:"En mode mixte, on construit le programme en blocs et le Python s'écrit à côté. Quel est l'intérêt de faire les deux ?",
- o:["Les blocs empêchent les fautes de frappe, le texte montre ce que la machine reçoit vraiment : passer de l'un à l'autre vérifie qu'on a compris","Les blocs sont pour les débutants, le texte pour les autres","Le texte est plus rapide à exécuter","Cela permet de rendre deux travaux au lieu d'un"],r:0,
+ o:["les blocs évitent les fautes, le texte montre le vrai code","les blocs sont pour les débutants, le texte pour les autres","le texte s'exécute plus vite que les blocs assemblés","cela permet de rendre deux travaux au lieu d'un seul"],r:0,
  expl:"C'est la même pensée dans deux écritures. Les blocs rendent la structure visible et interdisent les fautes de syntaxe ; le texte est ce que la machine lit réellement.",
  ex:"Change le seuil dans le Python : les blocs bougent. Déplace un bloc : le Python change. Si l'un des deux te surprend, c'est là qu'il y a quelque chose à comprendre.",
  err:"Considérer les blocs comme une étape enfantine à dépasser. Des professionnels programment en blocs, notamment en automatisme.",
@@ -391,7 +391,7 @@ const QUESTIONS = [
  ret:"Blocs et texte disent la même chose. Passer de l'un à l'autre, c'est se vérifier."},
 
 {c:"C9.2",n:"Du programme au matériel",q:"Dans le programme d'essai, <code>H = 25</code> et <code>print(\"POMPE ON\")</code>. Que deviennent ces deux lignes sur le vrai jardin ?",
- o:["Elles restent identiques : le matériel les comprend telles quelles","Seul le print change, H = 25 reste","Elles disparaissent, le matériel n'en a pas besoin","H = 25 devient une lecture du capteur, et le print devient la commande du relais"],r:3,
+ o:["elles restent identiques : le matériel les comprend ainsi","seul le print change ; la ligne H = 25 reste telle quelle","elles disparaissent : le matériel n'en a aucun besoin","H devient une lecture du capteur, le print une commande"],r:3,
  expl:"Ces deux lignes sont les <b>points de contact</b> avec le monde. Tant qu'on teste le raisonnement, on les remplace par des valeurs écrites à la main et par un affichage. Sur le matériel, elles deviennent une entrée et une sortie réelles.",
  ex:"<code>H = lire_capteur(A0)</code> et <code>allumer(relais)</code>. La décision, elle, ne change pas d'une ligne.",
  err:"Croire que le programme d'essai est « faux » parce que les valeurs sont écrites à la main. Il teste autre chose : la logique.",
@@ -400,7 +400,7 @@ const QUESTIONS = [
 
 {c:"C9.2",n:"Les deux chaînes",q:"Sur ce schéma, la flèche d'ORDRE descend de TRAITER et s'arrête sur le relais, pas sur le moteur. Pourquoi ?",
  img:{src:"Images/chaines_jardin_connecte.svg",alt:"Les deux chaînes du jardin connecté : en haut ACQUÉRIR, TRAITER puis COMMUNIQUER ; en bas ALIMENTER par une alimentation 12 V séparée, DISTRIBUER par le relais, CONVERTIR par le moteur de la pompe et TRANSMETTRE par l'arbre qui entraîne la turbine ; la flèche d'ordre descend de TRAITER et vient se poser sur le relais"},
- o:["Parce que le relais est plus près de la carte sur le schéma","Parce que le moteur n'est pas commandé par le programme","Parce que le relais est le premier organe de la chaîne d'énergie que le programme commande : il reçoit le petit signal et laisse passer la grosse énergie","Parce que le moteur n'appartient pas à la chaîne d'énergie"],r:2,
+ o:["parce que le relais est plus près de la carte sur le schéma","parce que le moteur n'est pas commandé par le programme","parce que le relais est le premier organe que l'ordre atteint","parce que le moteur n'appartient pas à la chaîne d'énergie"],r:2,
  expl:"La flèche d'ordre atterrit sur le premier bloc commandé. Quand la puissance dépasse ce qu'une broche peut fournir, un <b>préactionneur</b> s'intercale — ici un relais.",
  ex:"Sur la station d'alerte de 3e, la sortie était un simple voyant : la même flèche allait droit sur CONVERTIR, sans relais.",
  err:"Dessiner la flèche vers l'actionneur « puisque c'est lui qui agit ». Le programme ne parle jamais directement au moteur.",
@@ -408,7 +408,7 @@ const QUESTIONS = [
  ret:"La flèche d'ORDRE s'arrête au premier organe commandé : le préactionneur s'il y en a un."},
 
 {c:"C9.2",n:"Ordre des instructions",q:"On place la ligne <code>H = 25</code> APRÈS le <code>if</code> qui teste H. Que se passe-t-il ?",
- o:["Le test utilise l'ancienne valeur de H — ou provoque une erreur si H n'existe pas encore","Rien : Python remet les lignes dans le bon ordre","Le programme teste les deux valeurs successivement","Le test est ignoré"],r:0,
+ o:["le test utilise l'ancienne valeur de H, ou déclenche une erreur","rien du tout : Python remet les lignes dans le bon ordre","le programme teste les deux valeurs l'une après l'autre","le test est purement et simplement ignoré à l'exécution"],r:0,
  expl:"Un programme s'exécute ligne après ligne, dans l'ordre écrit. Une valeur doit exister AVANT qu'on la teste.",
  ex:"C'est exactement pourquoi l'algorigramme place « mesurer H » AVANT le losange : l'ordre du dessin est l'ordre de l'exécution.",
  err:"Penser qu'un programme est une description d'ensemble, comme une recette qu'on lit en entier avant de cuisiner. Non : la machine exécute au fur et à mesure.",
@@ -416,7 +416,7 @@ const QUESTIONS = [
  ret:"L'ordre des lignes est l'ordre d'exécution. On mesure avant de décider."},
 
 {c:"C9.2",n:"Nommer pour comprendre",q:"Entre <code>if x &lt; y:</code> et <code>if humidite &lt; SEUIL_SEC:</code>, laquelle est préférable, et pourquoi ?",
- o:["La première : plus courte, donc plus rapide à écrire","La seconde : elle se lit comme une phrase, et une relecture suffit à repérer une erreur de logique","Les deux se valent, c'est une question de goût","La première, parce que les noms longs consomment de la mémoire"],r:1,
+ o:["la première : plus courte, donc plus rapide à écrire","la seconde : elle se lit comme une phrase","les deux se valent : c'est une question de goût","la première : les noms longs consomment de la mémoire"],r:1,
  expl:"Un nom bien choisi transporte l'intention. Il ne change rien pour la machine, mais il change tout pour celui qui relit — et celui qui relit, c'est souvent soi-même, trois semaines plus tard.",
  ex:"<code>if humidite &lt; SEUIL_SEC:</code> — si on avait inversé le test, l'erreur sauterait aux yeux. Avec x et y, non.",
  err:"Nommer ses variables a, b, c « pour aller plus vite ». On perd bien plus de temps ensuite qu'on n'en a gagné.",
@@ -425,7 +425,7 @@ const QUESTIONS = [
 
 /* ═══════════════ 4e_C9.3 — Réaliser et mettre au point ═══════════════ */
 {c:"C9.3",n:"Ce que prouve un essai",q:"Le programme d'arrosage donne le bon résultat pour H = 25 et H = 55. Qu'a-t-on prouvé ?",
- o:["Que le programme est correct : deux essais réussis suffisent","Qu'il se comporte bien LOIN du seuil — et rien du tout sur le seuil lui-même","Qu'il n'y a plus besoin de tester les autres valeurs","Que le capteur fonctionne"],r:1,
+ o:["que le programme est correct : deux essais réussis suffisent","qu'il se comporte bien LOIN du seuil, et rien de plus","qu'il n'y a plus besoin de tester d'autres valeurs","que le capteur d'humidité fonctionne correctement"],r:1,
  expl:"25 et 55 sont des <b>cas nominaux</b> : ils rassurent, mais ils ne testent pas l'endroit où les programmes se trompent. Le seuil reste entièrement non vérifié.",
  ex:"Un programme qui teste <code>H &lt; 30</code> au lieu de <code>H &lt; 40</code> passerait ces deux essais sans broncher.",
  err:"Conclure « ça marche » après deux essais bien choisis pour réussir.",
@@ -434,7 +434,7 @@ const QUESTIONS = [
 
 {c:"C9.3",n:"La valeur frontière",q:"Sur cette droite, deux essais sont serrés contre le seuil : 39 % et 40 %. Pourquoi le second est-il indispensable ?",
  img:{src:"Images/jeu_de_tests_anatomie.svg",alt:"Anatomie d'un jeu de tests : une droite graduée de l'humidité de 0 à 100 % avec le seuil à 40, deux cas nominaux à 25 et 55, et deux cas frontières serrés contre le seuil à 39 et 40 ; en dessous un tableau à quatre colonnes scénario, entrées, résultat attendu et résultat observé"},
- o:["Parce qu'il faut toujours un nombre rond dans un jeu d'essais","Parce que 39 est trop proche de 40 pour être fiable","Parce qu'il teste la même chose que 39, ce qui confirme","Parce que lui seul distingue « H &lt; 40 » de « H ≤ 40 » : c'est la seule valeur où les deux écritures diffèrent"],r:3,
+ o:["parce qu'un jeu d'essais veut toujours un nombre rond","parce que 39 est trop proche de 40 pour être fiable","parce qu'il teste la même chose que 39, ce qui confirme","parce que lui seul distingue « H &lt; 40 » de « H ≤ 40 »"],r:3,
  expl:"Partout ailleurs, <code>&lt;</code> et <code>&lt;=</code> donnent exactement le même résultat. À 40 pile, et à 40 pile seulement, ils divergent.",
  ex:"<code>40 &lt; 40</code> est faux → pompe OFF. <code>40 &lt;= 40</code> est vrai → pompe ON. Un caractère, deux comportements.",
  err:"Tester 39 et se croire quitte de la frontière. On n'a testé qu'un côté.",
@@ -442,7 +442,7 @@ const QUESTIONS = [
  ret:"La valeur du seuil elle-même est le seul essai qui sépare < de <=."},
 
 {c:"C9.3",n:"Le résultat attendu",q:"Dans un tableau d'essais, quand remplit-on la colonne « résultat attendu » ?",
- o:["AVANT de lancer le programme : sinon on écrit ce qu'on a vu, et l'essai ne prouve plus rien","Après l'exécution, en recopiant ce qui s'est passé","Peu importe, tant que la colonne est remplie","Seulement si le résultat observé est surprenant"],r:0,
+ o:["AVANT de lancer le programme, jamais après","après l'exécution, en recopiant ce qui s'est passé","peu importe le moment, tant que la colonne est remplie","seulement si le résultat observé est surprenant"],r:0,
  expl:"Un test compare une <b>prédiction</b> à une <b>observation</b>. Si la prédiction est écrite après coup, il n'y a plus de comparaison : il ne reste qu'un compte rendu.",
  ex:"Écrire « attendu : pompe ON » avant de lancer, puis constater OFF : voilà un écart, donc une information. Écrire « attendu : OFF » après avoir vu OFF : aucune information.",
  err:"Remplir les deux colonnes en même temps, en fin de séance, de mémoire.",
@@ -450,7 +450,7 @@ const QUESTIONS = [
  ret:"Attendu AVANT, observé PENDANT. L'ordre fait le test."},
 
 {c:"C9.3",n:"Le cas absurde",q:"Le capteur, débranché, renvoie 250 %. Le programme n'arrose pas. Se comporte-t-il bien ?",
- o:["Oui, parfaitement : il n'arrose pas, c'est ce qu'on veut","Oui, car 250 est supérieur au seuil","Non : il n'arrose pas, mais il ne SIGNALE pas que la mesure est impossible — il se tait au lieu d'alerter","Non : il devrait arroser, 250 étant une valeur extrême"],r:2,
+ o:["oui, parfaitement : il n'arrose pas, c'est ce qu'on veut","oui, car 250 est bien supérieur au seuil de 40","non : il ne signale pas que la mesure est impossible","non : il devrait arroser, 250 étant une valeur extrême"],r:2,
  expl:"Le programme fait la bonne chose pour la mauvaise raison : il croit la terre très humide. Or 250 % n'existe pas — cette valeur ne dit pas « il pleut », elle dit « le capteur est débranché ».",
  ex:"On ajoute une <b>garde</b> avant la décision : si H sort de 0-100, afficher « ALERTE CAPTEUR » et ne pas arroser.",
  err:"Croire qu'une valeur absurde fera planter le programme. Elle passe tranquillement dans le test et donne un résultat plausible.",
@@ -458,7 +458,7 @@ const QUESTIONS = [
  ret:"Un programme fiable vérifie ses entrées AVANT de leur faire confiance."},
 
 {c:"C9.3",n:"Juste et inutilisable",q:"La pompe s'allume et s'éteint six fois en une minute alors que l'humidité n'a bougé que de deux points. Où est le bug ?",
- o:["Dans la condition du if, mal écrite","Dans le capteur, qui est défectueux","Nulle part : le programme applique exactement sa règle — c'est la RÈGLE qui est mal choisie","Dans la boucle, qui tourne trop vite"],r:2,
+ o:["dans la condition du if, qui est mal écrite","dans le capteur d'humidité, qui est défectueux","nulle part : c'est la RÈGLE qui est mal choisie","dans la boucle de surveillance, qui tourne trop vite"],r:2,
  expl:"C'est la leçon centrale de la séquence : un programme peut être <b>parfaitement juste et parfaitement inutilisable</b>. Chaque décision prise est correcte ; c'est leur enchaînement qui est intenable.",
  ex:"Près d'un seuil unique, le moindre tremblement de la mesure fait changer la décision. Aucune ligne n'est fausse.",
  err:"Chercher un bug dans le code pendant des heures. Il n'y en a pas — et c'est précisément ce qui rend ce défaut difficile.",
@@ -467,7 +467,7 @@ const QUESTIONS = [
 
 {c:"C9.3",n:"L'hystérésis",q:"Ces deux chronogrammes montrent la MÊME mesure d'humidité, traitée de deux façons. En quoi consiste l'hystérésis, et que corrige-t-elle ?",
  img:{src:"Images/hysteresis_chronogramme.svg",alt:"Deux chronogrammes superposés : en haut, avec un seul seuil à 40 %, la courbe d'humidité oscille légèrement autour de la ligne et la pompe bascule six fois ; en bas, la même courbe avec deux seuils, 35 pour allumer et 45 pour éteindre, traverse une bande grisée appelée bande morte dans laquelle la pompe ne change pas d'état, et la pompe ne bascule plus qu'une seule fois"},
- o:["À mesurer plus souvent pour être plus précis","À utiliser DEUX seuils — un pour allumer, un pour éteindre — entre lesquels on ne change rien : cela supprime le clignotement","À ralentir le programme jusqu'à ce que le problème disparaisse","À arrondir la mesure au multiple de dix le plus proche"],r:1,
+ o:["à mesurer plus souvent, pour gagner en précision","à utiliser DEUX seuils, un pour allumer, un pour éteindre","à ralentir le programme jusqu'à ce que le défaut disparaisse","à arrondir la mesure au multiple de dix le plus proche"],r:1,
  expl:"La valeur qui fait ALLUMER n'est plus celle qui fait ÉTEINDRE. Entre les deux s'étend une <b>bande morte</b> : pour changer d'avis, le système doit la traverser entièrement.",
  ex:"Allumer si H &lt; 35, éteindre si H &gt; 45. Un tremblement de deux points autour de 40 ne traverse rien : la pompe garde son état.",
  err:"Écrire un SINON à la place du troisième cas. La bande morte disparaît, et le clignotement revient.",
@@ -483,7 +483,7 @@ const QUESTIONS = [
  ret:"Trois cas, dont un vide. Le cas vide est le plus important."},
 
 {c:"C9.3",n:"Ce que coûte une mémoire",q:"Pour « garder l'état précédent », de quoi le programme a-t-il besoin ?",
- o:["D'un capteur supplémentaire","D'une MÉMOIRE : une variable qui retient si la pompe est allumée","De rien : cela se fait tout seul","D'un troisième seuil"],r:1,
+ o:["d'un capteur supplémentaire, placé sur la pompe","d'une MÉMOIRE : une variable qui retient l'état","de rien du tout : cela se fait automatiquement","d'un troisième seuil, placé entre les deux autres"],r:1,
  expl:"Sans mémoire, le programme repart de zéro à chaque tour et ne sait pas quoi « garder ». La variable d'état est ce qui lui donne une continuité entre deux passages.",
  ex:"<code>pompe_allumee = True</code> — le programme relit cette variable au tour suivant pour savoir ce qu'il faisait.",
  err:"Croire que le matériel se souvient tout seul. La pompe, elle, reste dans son état ; mais le programme, lui, ne le SAIT pas s'il ne l'a pas noté.",
@@ -491,7 +491,7 @@ const QUESTIONS = [
  ret:"Se souvenir demande une variable. Sans mémoire, pas de bande morte."},
 
 {c:"C9.3",n:"Le prix de la stabilité",q:"Avec les seuils 35 et 45, la pompe ne s'allume plus à 39 % d'humidité alors qu'elle s'allumait avant. Est-ce un défaut ?",
- o:["Oui : la correction a cassé le programme","Non : c'est le prix de la stabilité — on gagne en calme ce qu'on perd en réactivité, et l'écart se choisit en connaissance de cause","Oui : il faut remonter le seuil bas à 39","Non, et cela ne coûte rien : le comportement est strictement meilleur"],r:1,
+ o:["oui : la correction a cassé ce qui fonctionnait avant","non : c'est le prix de la stabilité, et il se choisit","oui : il faut remonter le seuil bas de 35 à 39","non, et cela ne coûte rien : c'est meilleur en tout point"],r:1,
  expl:"L'hystérésis est un <b>échange</b>, pas un progrès gratuit. Élargir la bande calme le système et le rend plus lent à réagir. Choisir sa largeur, c'est arbitrer.",
  ex:"Bande trop étroite : le clignotement revient. Bande trop large : la plante attend trop longtemps. On la règle d'après la façon dont la mesure tremble réellement.",
  err:"Présenter l'hystérésis comme une solution sans contrepartie. Toute décision technique en a une.",
@@ -499,7 +499,7 @@ const QUESTIONS = [
  ret:"Stabilité contre réactivité : la largeur de la bande est un arbitrage, pas un réglage optimal."},
 
 {c:"C9.3",n:"Mettre au point, en quatre temps",q:"Quelle est la démarche complète de mise au point ?",
- o:["Observer l'écart, en trouver la cause, corriger, puis RE-TESTER dans les mêmes conditions","Corriger dès qu'on voit quelque chose d'anormal, puis passer à la suite","Demander la correction, la recopier, vérifier que ça compile","Changer une valeur au hasard jusqu'à ce que le comportement convienne"],r:0,
+ o:["observer l'écart, en trouver la cause, corriger, re-tester","corriger dès qu'on voit un comportement anormal, puis avancer","demander la correction, la recopier, vérifier que ça compile","changer une valeur au hasard jusqu'à ce que ça convienne"],r:0,
  expl:"Le dernier temps est celui qu'on saute le plus souvent — et sans lui, on ne sait pas si on a corrigé ou si on a eu de la chance.",
  ex:"Au banc : provoquer le clignotement, compter les basculements, corriger, puis rejouer <b>exactement le même</b> tremblement et recompter. La comparaison n'a de sens qu'à conditions identiques.",
  err:"Re-tester avec d'autres valeurs que celles qui avaient révélé le défaut. On ne prouve alors rien du tout.",
