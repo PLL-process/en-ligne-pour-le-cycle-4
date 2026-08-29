@@ -49,7 +49,16 @@ Aides ×2 par activité ; corrections exhaustives ; listes déroulantes (limite 
 
 ## Évaluation
 
-Formative : vérificateurs intégrés à chaque activité, verrou expérientiel au simulateur (les 3 situations doivent être réellement observées). QCM 32 q (4 par code, 6 illustrées) → bilan par code → LSU. Sommative à construire par l'enseignant, corrigé non publié.
+Formative : vérificateurs intégrés à chaque activité, verrou expérientiel au simulateur (les 3 situations doivent être réellement observées). QCM 32 q (4 par code, 6 illustrées). Sommative à construire par l'enseignant, corrigé non publié.
+
+> **Réserve sur le report au LSU — mesurée le 29/08/2026.** Le QCM porte **quatre questions par
+> code**, sur les huit codes du lot (`_outils/controle_echantillonnage.py`). Quatre questions ne
+> font pas une mesure : un élève qui maîtrise la moitié d'une notion obtient 2/4 ou 4/4 selon
+> lesquelles il connaît, et l'écart part au bulletin. Le **bilan par code de ce QCM se lit comme
+> un repérage** — ce qu'il faut revoir — et non comme une validation code par code. Ce que le lot
+> permet de valider solidement, ce sont les productions des activités et le verrou du simulateur.
+> *(L'audit externe ChatGPT du Thème 2 formulait exactement cette réserve ; vérification faite,
+> elle est fondée.)*
 
 ## Bilan et prolongements
 
