@@ -9024,3 +9024,99 @@ Il reste **6 codes « À CRÉER »** : `5e_C1.5`, `5e_C1.6`, `5e_C7.3`, `3e_C7.3
   « choisir »), ce sont **trois gestes différents**, pas trois niveaux de difficulté du même
   geste. Bâtir la même séquence en trois tailles, c'est passer à côté de deux d'entre eux.
 
+---
+
+## 2026-08-30 — Lot 5e_C1.5 + 5e_C1.6 « Le compte du club », et deux pointeurs qui couvraient sans couvrir
+*(Fable, branche `fable/theme-1/lot-5e-C1.5-C1.6`)*
+
+Pascal a demandé ces deux codes. Ils étaient marqués « À CRÉER » alors que **deux pages pointeur
+existaient**, renvoyant chacune vers la séquence de cybersécurité rangée en `4e_C1.4`. L'audit
+avait raison, et pour trois raisons qu'il ne disait pas.
+
+### Ce que les pointeurs faisaient, et pourquoi ils ne suffisaient pas
+
+1. **La 5<sup>e</sup> vient avant la 4<sup>e</sup>.** Renvoyer un élève de 5<sup>e</sup> vers une
+   séquence conçue pour l'année suivante inverse la progression. C'est d'ailleurs pour cela que
+   le pointeur devait écrire « trois blocs seulement te concernent, tu n'as pas à la lire en
+   entier ».
+2. **Le pointeur se contredisait lui-même.** Sa section « ciblage 5<sup>e</sup> » listait
+   « respecter la propriété intellectuelle et identifier les principales licences » — et le
+   paragraphe suivant écartait le bloc propriété intellectuelle comme « pas au programme de
+   5<sup>e</sup> ». Or l'intitulé officiel de `5e_C1.5` le nomme : *« …et des règles de respect
+   de la propriété intellectuelle »*. Vérification faite dans le QCM de `4e_C1.4` : ses dix
+   questions codées C1.5 portent **toutes** sur la sécurisation, **aucune** sur la propriété
+   intellectuelle. Le pointeur écartait donc quelque chose qui n'existait nulle part.
+3. **`5e_C1.6` n'était pas couvert.** La responsabilité de chacun dans les dérives demande une
+   situation où l'on puisse dire **qui a agi**. Le parcours réduit n'en proposait aucune.
+
+Les deux pointeurs sont archivés dans
+`_archive-anciennes-versions/theme-1/5e_C1.5-C1.6_pointeurs-vers-4e_avant-2026-08-30/`, avec ces
+trois raisons écrites (règle n°12). **La séquence `4e_C1.4` n'est pas modifiée** : elle reprend
+ces règles l'année suivante pour les objets connectés, et le README du nouveau lot dit ligne à
+ligne ce que chacune des deux travaille.
+
+*Noté au passage, pour ne pas le redécouvrir : le QCM du lot Chengdu (`5e_C1.1`) porte déjà
+5 questions codées C1.5 et 4 codées C1.6. Les deux ressources coexistent — celle-ci est la
+séance, celle-là un rappel croisé dans un autre parcours.*
+
+### Le lot
+
+**« Le compte du club »**, 3 × 55 min, 140 min d'activités. Une seule situation pour deux codes :
+le club robotique publie la photo du jardin connecté sur le compte du collège — six élèves, un
+compte, un mot de passe écrit au tableau.
+
+**Le banc de publication** affiche **deux compteurs qui bougent séparément** : les *indices* qui
+mènent encore à une personne réelle, et les *règles* enfreintes. C'est cette séparation qui fait
+le lot, parce qu'elle sépare deux questions que presque tout le monde confond :
+
+| geste | indices | règles |
+|---|---|---|
+| la publication du club, telle qu'elle est prête | 7 | 3 |
+| on retire le visage de Maël | **6** | 2 |
+| accord écrit de Maël **et** de ses responsables légaux | **6** | 1 |
+| image sous licence CC BY, auteur cité | 6 | **0** |
+| on ne garde que la photo du jardin | **0** | 0 |
+
+Deux lignes portent tout le reste. **Retirer le visage ne fait passer que de sept à six** — le
+nom, la classe, le collège, la rue, l'heure et la géolocalisation sont toujours là. Et
+**l'autorisation écrite ne bouge pas le compteur d'indices d'un seul** : elle rend *licite*, elle
+ne rend pas *anonyme*.
+
+**La charnière entre les deux codes** est à l'activité 3, et elle n'est pas dans la vie privée :
+un compte partagé ne rend pas seulement le compte moins sûr, il rend la **responsabilité
+indécidable**. L'activité 4 en donne l'autre face — quand une publication insultante paraît sous
+le nom du club, celui-ci ne peut pas même **s'en dédouaner**. Ce qui empêche d'attribuer une
+faute empêche aussi de s'en défendre.
+
+### Ce que le lot porte
+
+1 séquence · 1 QCM de 30 questions et 90 réfutations (**15 sur chaque code**, ce qui est nouveau :
+les lots précédents étaient à 20/10) · 1 lexique de 30 notions · 2 synthèses · 1 fiche · 1 matrice
+engendrée depuis la banque · **tests réels 38/38 et 32/32**, scripts livrés. Biais de longueur :
+0 bonne réponse détachée sur 30, écart moyen +1,5 caractère. Le pointeur de `5e_C1.6` est
+réécrit vers ce lot, et il dit ce que ce code y trouve — la moitié des activités, la moitié du QCM.
+
+**Il reste 4 codes « À CRÉER »** : `5e_C7.3`, `3e_C7.3`, `4e_C7.7`, `3e_C7.7`.
+
+### Une contrainte qui vaut d'être notée
+
+Cette séquence parle de mots de passe, de données personnelles et de cyberviolence. **Aucune
+donnée réelle n'entre dans la page** : les personnes sont inventées, aucun champ ne demande un
+nom, une photo ou un mot de passe, et rien n'est envoyé nulle part. Ce n'est pas une précaution
+d'affichage — c'est la seule façon d'enseigner ces règles sans les enfreindre en les enseignant.
+La page dit d'ailleurs à l'élève de **ne jamais taper un vrai mot de passe dans un exercice**,
+et donne le **3018**.
+
+### Les règles nouvelles
+
+- **n°223** — une mutualisation qui renvoie un niveau vers **le niveau au-dessus** inverse la
+  progression. Elle couvre le code sur le tableau de bord, pas dans l'année de l'élève. Une
+  mutualisation se fait vers le même niveau, ou vers un niveau déjà passé.
+- **n°224** — **deux compteurs qui bougent séparément séparent deux questions qu'on confond.**
+  Un seul indicateur « c'est bon / ce n'est pas bon » aurait laissé croire qu'une autorisation
+  règle le problème. Quand deux critères sont indépendants, l'instrument doit les afficher
+  indépendamment.
+- **n°225** — un test qui ne vérifie que **le départ et l'arrivée** ne prouve rien du chemin.
+  « Refusé, puis accepté » serait passé sans jamais montrer que retirer le visage ne gagne qu'un
+  indice. Ce sont les **valeurs intermédiaires** qui font la preuve du raisonnement enseigné.
+

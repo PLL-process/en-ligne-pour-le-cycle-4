@@ -129,19 +129,57 @@ OVERLAY = {
         medias="s.o.",
     ),
     "5e_C1.5": dict(
-        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
-        statut="À CRÉER",
-        qualite="Aucune ressource dans le dossier. La séquence cybersécurité V16 rangée "
-                "en 4e_C1.4 couvre ce code « en croisement » d'après son README, mais "
-                "aucun README pointeur n'existe côté 5e.",
-        anomalies="Créer au minimum un README pointeur vers 4e_C1.4 ou une déclinaison 5e.",
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le compte du club » (5e_C1.5 + 5e_C1.6) : 3 seances de 55 min pour "
+                "140 min d'activites, BANC DE PUBLICATION original integre a la page. On coche "
+                "les elements d'une publication, et le banc affiche DEUX compteurs qui bougent "
+                "separement : les indices qui menent encore a une personne reelle, et les regles "
+                "enfreintes. Il rend visibles deux choses qu'aucun cours ne rend evidentes — "
+                "une autorisation rend LICITE et ne rend pas ANONYME (le compteur d'indices ne "
+                "bouge pas d'un seul), et ce n'est pas un element qui identifie mais leur "
+                "COMBINAISON (retirer le visage fait passer de 7 indices a 6). La charniere "
+                "entre les deux codes est l'activite 3 : un compte partage ne rend pas seulement "
+                "le compte moins sur, il rend la responsabilite INDECIDABLE — et ce qui empeche "
+                "d'attribuer une faute empeche aussi de s'en defendre. Sept verrous "
+                "experientiels. QCM 30 q / 90 refutations (C1.5 x15, C1.6 x15), lexique 30 "
+                "notions, deux syntheses, fiche, matrice de 30 notions engendree depuis la "
+                "banque, tests reels 38/38 et 32/32, scripts livres.",
+        anomalies="Aucune publication reelle : le banc simule avec des personnes inventees, et "
+                  "la version A le fait avec le compte du college. Le droit est presente, pas "
+                  "enseigne : droit a l'image, donnees personnelles et licences sont donnes au "
+                  "niveau utile a une decision d'eleve. Le verificateur du reinvestissement "
+                  "compte des caracteres, et la page le dit. La cyberviolence est abordee par un "
+                  "cas, pas traitee : un eleve concerne a besoin d'un adulte, et la page donne "
+                  "le 3018. Les deux pointeurs qui renvoyaient ces codes vers 4e_C1.4 sont "
+                  "archives (la 5e vient avant la 4e ; le pointeur ecartait la propriete "
+                  "intellectuelle que l'intitule de C1.5 nomme ; C1.6 n'etait pas couvert). "
+                  "A noter : le QCM du lot Chengdu (5e_C1.1) porte deja 5 questions codees C1.5 "
+                  "et 4 codees C1.6 ; les deux ressources coexistent, ce lot-ci est la seance, "
+                  "celui-la un rappel dans un autre parcours.",
+        accessibilite="Cases a cocher, listes deroulantes, corrections depliables, version C "
+                      "entierement debranchee (affiche A3 et etiquettes qu'on decolle). AUCUNE "
+                      "donnee reelle n'entre dans la page : personnes inventees, aucun champ "
+                      "nom/photo/mot de passe, rien n'est envoye. Consigne explicite de ne "
+                      "jamais taper un vrai mot de passe dans un exercice, et numero 3018 "
+                      "indique. Aucune boite modale (regle n°188).",
+        medias="Banc de publication original (HTML + JS, CC0). Aucun media tiers.",
     ),
     "5e_C1.6": dict(
-        pointeur_second_parcours="Le lot Chengdu (5e_C1.1) couvre aussi ce code, par une autre entrée. Les deux ressources coexistent : voir le tableau comparatif du README de 5e_C1.1. La ressource décrite ci-dessus n'est pas modifiée.",
-        statut="À CRÉER",
-        qualite="Aucune ressource. Même situation que 5e_C1.5 (matériau réutilisable "
-                "dans la séquence cybersécurité 4e_C1.4 : cyberviolence, vie privée).",
-        anomalies="Créer au minimum un README pointeur vers 4e_C1.4 ou une déclinaison 5e.",
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="5e_C1.5",
+        qualite="README pointeur vers le lot « Le compte du club », range en 5e_C1.5. La "
+                "mutualisation n'est pas de politesse : la moitie des activites (0, 1, 4 et "
+                "REFAIRE) et 15 des 30 questions du QCM portent sur ce code. Les deux codes sont "
+                "ensemble parce que la responsabilite suppose qu'on puisse dire QUI a agi — ce "
+                "qu'un compte partage rend impossible.",
+        anomalies="Aucune. Le pointeur qui renvoyait ce code vers 4e_C1.4 est archive le "
+                  "30/08/2026.",
+        accessibilite="s.o. (README pointeur).",
+        medias="s.o.",
     ),
     "3e_C1.1": dict(
         statut="COMPLET ET VALIDABLE",

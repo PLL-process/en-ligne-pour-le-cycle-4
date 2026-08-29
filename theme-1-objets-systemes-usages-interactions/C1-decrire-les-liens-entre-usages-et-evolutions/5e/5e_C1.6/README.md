@@ -1,21 +1,33 @@
-# 5e_C1.6 — Responsabilité et dérives numériques
+# ⚖️ 5e_C1.6 — la responsabilité de chacun dans les dérives
 
-Cette compétence est travaillée dans une **séquence mutualisée avec la 4e_C1.4**, qui traite la cyberviolence, la vie privée, les données personnelles et l’usurpation d’identité.
+> Appréhender la responsabilité de chacun dans les dérives (cyberviolence, atteinte à la vie
+> privée, aux données personnelles, usurpation d'identité).
+
+Ce code est travaillé **à parts égales** avec `5e_C1.5` dans le lot **« Le compte du club »**,
+rangé en [`5e_C1.5`](../5e_C1.5/README.md). Ce n'est pas un renvoi de politesse : la moitié des
+activités et **15 des 30 questions** du QCM portent sur ce code.
+
+| Où c'est travaillé | Ce que l'élève produit |
+|---|---|
+| [Activité 0 — regarder ce que ça révèle](../5e_C1.5/sequence_5e_C1.5-C1.6_le-compte-du-club.html) | trois réponses après un essai au banc |
+| Activité 1 — retirer, et compter | trois relevés au banc, et deux réponses |
+| Activité 4 — le commentaire qui blesse | cinq associations, et deux réponses |
+| REFAIRE | un texte : ce qu'on retire, ce qu'on demande, ce qu'on change |
+
+## Pourquoi les deux codes sont ensemble
+
+La responsabilité suppose qu'on puisse **dire qui a agi**. Un compte partagé la rend
+indécidable — et ce qui empêche d'attribuer une faute empêche aussi de s'en défendre. Séparer
+les deux codes reviendrait à enseigner d'un côté des règles de sécurité, de l'autre des
+principes de responsabilité, sans jamais montrer que les premières conditionnent les seconds.
 
 ## Ressources
 
-- [Ouvrir la séquence élève « Cybersécurité, identité numérique et protection des données »](../../4e/4e_C1.4/sequence-cybersecurite-protection-donnees.html)
-- [Ouvrir le QCM d’entraînement](../../4e/4e_C1.4/qcm_cybersecurite_usage_raisonne.html)
-- [Consulter la synthèse élève](../../4e/4e_C1.4/synthese_eleve_4e_C1.4.html)
+- [La séquence](../5e_C1.5/sequence_5e_C1.5-C1.6_le-compte-du-club.html)
+- [Le QCM — 15 questions sur ce code](../5e_C1.5/qcm_5e_C1.5-C1.6_le-compte-du-club.html)
+- [La synthèse élève](../5e_C1.5/synthese_eleve_5e_C1.5-C1.6.html)
+- [Le README du lot](../5e_C1.5/README.md)
 
-## Ciblage 5e
-
-Pour les élèves de 5e, privilégier les situations concrètes suivantes :
-
-1. demander l’accord avant de publier une photo ou une information sur une autre personne ;
-2. identifier une situation de cyberviolence et savoir à quel adulte la signaler ;
-3. distinguer une plaisanterie d’une atteinte à la dignité ou à la vie privée ;
-4. réagir face à une tentative d’usurpation d’identité ;
-5. conserver des preuves et utiliser les fonctions de signalement et de blocage.
-
-Aucun élève ne doit être invité à raconter publiquement une expérience personnelle sensible.
+*Le pointeur qui renvoyait ce code vers la séquence 4e_C1.4 est archivé le 30/08/2026 :
+la 5<sup>e</sup> vient avant la 4<sup>e</sup>, et ce parcours-là n'offrait aucune situation où
+la responsabilité pouvait s'établir.*
