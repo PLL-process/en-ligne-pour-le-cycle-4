@@ -8621,3 +8621,110 @@ surveillé dès l'écriture : 0 bonne réponse détachée, écart moyen **+1,7 c
 - **n°212** — un dépôt local qu'on ne met jamais à jour finit par ne plus pouvoir recevoir ce
   qu'on lui envoie. Quand une livraison échoue trois fois de suite, l'erreur n'est plus dans la
   livraison : il faut aller lire l'état de la machine qui reçoit.
+
+---
+
+## 2026-08-29 — Le lot C7.4 aux trois niveaux : un banc d'énergie, et la charge avant la source
+
+Pascal a choisi la famille **C7.4** — la seule des cinq familles C7 restantes dont les trois
+marches étaient libres, et la seule entièrement faisable en page. Il a aussi précisé ce que son
+atelier contient réellement : **cartes programmables, Arduino et Grove**, pas de machine
+numérique. C'est une information qui vaut pour la suite : `C7.5` et `C7.7` devront en tenir
+compte, et on ne pourra pas y écrire « on imprime la pièce ».
+
+### La spirale, et ce que chaque marche donne à l'élève
+
+| Code | Objet | Ce qu'on lui donne | Ce qu'il doit produire |
+|---|---|---|---|
+| `5e_C7.4` | l'indicateur du hall | cinq sources, et un lieu | un choix, et la forme d'énergie |
+| `4e_C7.4` | le jardin connecté | des critères à identifier | une grille remplie, et une décision |
+| `3e_C7.4` | la station cyclonique | **rien** | une architecture, et un avis signé |
+
+### Le banc d'énergie, et pourquoi il a des cases à cocher
+
+L'instrument fait, en direct, les deux multiplications et la division qu'un technicien fait sur
+un coin de table : courant × tension × durée pour chaque consommateur, puis énergie utile ÷
+consommation quotidienne. Rien de mystérieux.
+
+Ce qui l'a rendu utile, c'est une case à cocher par ligne. **On peut éteindre un consommateur et
+voir le total bouger.** Sans cela, le banc afficherait un tableau de plus ; avec, il rend une
+intuition fausse mesurable en trois clics — la pompe du jardin pèse **0,4 %** et la carte, qui
+ne fait rien 99 % du temps, en pèse **92**.
+
+### Les chiffres sont calculés, et le rendement est de la physique
+
+`energie.py`, livré dans les trois dossiers, tient tout : courants constructeur usuels des
+modules Grove, capacités réelles du commerce, et surtout le rendement d'un **régulateur
+linéaire**, qui vaut exactement V<sub>sortie</sub> ÷ V<sub>entrée</sub>. Ce n'est pas un réglage
+ni une qualité de fabrication : le composant dissipe la différence de tension en chaleur, point.
+D'où 56 % pour une pile 9 V et 83 % pour quatre piles AA — et d'où le fait, contre-intuitif et
+vérifiable, que **la grosse pile 9 V délivre quatre fois moins que quatre piles bâton**.
+
+Pour le solaire : 5,3 heures équivalent plein soleil par jour en Martinique, moyenne annuelle,
+avec 30 % de pertes de chaîne prises volontairement hautes.
+
+### Ce que chaque séance fait découvrir
+
+**5<sup>e</sup>** — le panneau **suffit sur le papier** (3,7 Wh récoltés pour 2,85 consommés) et
+ne marche pas : il n'y a pas de soleil dans un hall. Le calcul est juste, le lieu dit non. Puis
+le REFAIRE déplace le même objet sur le portail à vélos, et le panneau redevient le bon choix —
+**sans qu'un seul chiffre change**. On ne choisit pas une source pour un objet : pour un objet
+dans un lieu.
+
+**4<sup>e</sup>** — après la pompe démasquée, un calcul qui ne laisse pas indifférent : la pile
+9 V tient 11 heures, l'été dure 60 jours, il faudrait **131 piles**, soit 459 €. Puis l'activité
+4, qui est le sommet du lot : en remplaçant la carte par une carte sobre, le besoin tombe de
+5,87 à **1,07 Wh** et le panneau qui perdait toutes les comparaisons devient le meilleur.
+**On croyait choisir une source ; on a changé le problème.**
+
+**3<sup>e</sup>** — la station est alimentée par le secteur, et le réseau tombe *au moment précis*
+où elle sert. La réponse n'est pas une source, c'est une **architecture** : secteur en source
+normale, trois accus (28,2 Wh pour 18,12 exigés, 112 heures) en réserve, panneau 2 W en recharge.
+Et la contre-intuition à faire vivre : « un panneau solaire, c'est autonome » est faux au moment
+qui compte — sous une couche de cyclone il récolte moins d'un dixième de sa production, et une
+plaque plate à 180 km/h s'arrache.
+
+### La spirale se referme sur une règle déjà écrite
+
+Deux accus donnent 18,8 Wh pour 18,12 exigés : **3,8 % de marge**. La page renvoie explicitement
+au bois qui cassait à 41 kg pour 40 en `5e_C8.2`, et au tube acier recalé pour 1,1 mm de flèche
+en `3e_C8.2` — écrit il y a deux heures. *Tout juste n'est pas assez*, trois fois, sur trois
+objets sans rapport entre eux. Ce n'est pas une règle nouvelle : c'est la même, et c'est
+exactement ce qu'on attend d'une spirale.
+
+### La skill de Pascal, et ce qui y est sans objet
+
+`arduino-grove-college` impose 20 éléments à toute séquence mettant une carte en jeu. Ces lots
+mettent une carte en jeu — et **rien n'y est programmé**. Plutôt que d'ignorer la skill en
+silence, chaque fiche pédagogique porte un tableau ligne par ligne : ce qui est tenu (rôle des
+composants, chaîne d'énergie, versions A/B/C, solution sans matériel, sécurité TBT, QCM, grille
+d'évaluation, approfondissement), ce qui est partiel (la figure du matériel), et ce qui est sans
+objet (brochage, niveaux logiques, algorigramme, C++ ligne par ligne, moniteur série, dépannage,
+chaîne d'information). C'est écrit **pour être contesté**, pas pour clore le sujet.
+
+La consigne de sécurité, elle, est tenue sans réserve : très basse tension 5 V partout, et le
+« secteur » de la liste est un adaptateur USB **fermé**, jamais la prise ni le câble. Un test
+vérifie dans les trois pages que la mention figure bien.
+
+### Ce que le lot porte
+
+3 séquences · 3 QCM de 30 questions et 90 réfutations (les six codes au-dessus du seuil de cinq) ·
+3 lexiques de 30 notions · 6 synthèses · 3 fiches · 3 matrices couvrant les 90 questions ·
+**tests réels 34/34, 35/35, 36/36 sur les séquences et 26/26 sur chaque QCM**, avec les scripts,
+les jeux de réponses et `energie.py` livrés dans chaque dossier — le rapport de tests est la
+sortie de la dernière exécution, recopiée telle quelle. Biais de longueur surveillé dès
+l'écriture : **0 bonne réponse détachée sur 90**, écarts moyens +1,0, +1,8 et +2,2 caractères.
+Les trois boîtes `alert()` du gabarit hérité sont remplacées, dans chacun des trois QCM, par le
+bandeau `aria-live` — neuf de moins sur les 224 mesurées ce matin.
+
+### Les règles nouvelles
+
+- **n°213** — un instrument qui se contente d'afficher n'apprend rien. Ce qui fait la découverte,
+  c'est de pouvoir **retirer** un élément et voir le résultat bouger. Une case à cocher par ligne
+  vaut mieux qu'un tableau de plus.
+- **n°214** — devant un manque de ressource, la première question n'est pas « comment en avoir
+  plus » mais **« pourquoi en consomme-t-on autant »**. Agrandir la source, c'est payer pour du
+  gaspillage — et plus l'accès au site est difficile, plus la sobriété est rentable.
+- **n°215** — quand une consigne interne impose des éléments sans objet pour le travail en cours,
+  on écrit **lesquels et pourquoi**, dans le dossier, plutôt que de les ignorer en silence. Une
+  exception écrite se conteste ; une exception tacite se répète.

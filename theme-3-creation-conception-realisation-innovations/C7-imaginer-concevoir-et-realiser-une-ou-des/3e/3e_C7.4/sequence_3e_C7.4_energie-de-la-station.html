@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e — La station doit tenir 72 heures sans secteur (3e_C7.4)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc d'énergie — original, CC0 ─────────────────────────────────────── */
+.banc{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+table.conso{width:100%;border-collapse:collapse;font-size:.88em}
+table.conso th,table.conso td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.conso th{background:#173666;color:var(--hl)}
+table.conso td.n{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap}
+table.conso td.ck{width:34px;text-align:center}
+table.conso td input[type=checkbox]{width:17px;height:17px;accent-color:#61dafb}
+table.conso tr.eteint td:not(.ck){opacity:.38;text-decoration:line-through}
+table.conso tr.tot td{background:#173666;font-weight:700;border-top:2px solid var(--hl)}
+.parts{display:flex;height:20px;border-radius:6px;overflow:hidden;border:1px solid var(--border);margin:10px 0 4px}
+.parts>span{transition:width .2s;min-width:0}
+.parts-leg{display:flex;flex-wrap:wrap;gap:10px;font-size:.78em;color:var(--sub);margin-bottom:10px}
+.parts-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.banc-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 8px}
+.banc-cmd label{font-size:.9em;color:var(--sub)}
+.banc-cmd select{width:auto;min-width:270px}
+table.srcd{width:100%;border-collapse:collapse;font-size:.88em;margin:6px 0}
+table.srcd th,table.srcd td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.srcd th{background:#173666;color:var(--hl);width:46%}
+table.srcd td{font-family:ui-monospace,Menlo,Consolas,monospace}
+.verdict{font-size:1.12em;font-weight:700;margin:10px 0 4px;padding:9px 13px;border-radius:9px;background:#173666}
+.verdict.ok{color:var(--ok);border-left:4px solid var(--ok)}
+.verdict.limite{color:var(--warn);border-left:4px solid var(--warn)}
+.verdict.non{color:var(--err);border-left:4px solid var(--err)}
+.detail-src{font-size:.86em;color:var(--sub);margin:4px 0 0}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.verdict-ok{color:var(--ok);font-weight:700}
+.verdict-non{color:var(--err);font-weight:700}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.4.html">📖 Lexique</a></nav>
+
+<h1>🌀 La station doit tenir 72 heures sans secteur</h1>
+<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C7.4</span>
+  <span class="badge code">3e_C3.2 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
+  <span class="badge duree">⏱ 2 séances de 90 min (1 h 30)</span>
+</div>
+
+<section class="card">
+  <h2>🔄 D'où tu viens — la spirale C7.4</h2>
+  <table class="refs">
+    <tr><th>Niveau</th><th>Ce qu'on te demandait</th><th>Ce qu'on te donnait</th></tr>
+    <tr><td>5<sup>e</sup> — 5e_C7.4</td>
+        <td>Choisir une source pour l'indicateur du hall.</td>
+        <td>Une liste de cinq sources, et le lieu.</td></tr>
+    <tr><td>4<sup>e</sup> — 4e_C7.4</td>
+        <td>Comparer les sources du jardin connecté.</td>
+        <td>Les critères à identifier, et une grille à remplir.</td></tr>
+    <tr><td><b>3<sup>e</sup> — 3e_C7.4 (aujourd'hui)</b></td>
+        <td>Choisir la source de la station d'alerte cyclonique.</td>
+        <td><b>Rien</b> — un objet réel, une contrainte réelle, et un avis à signer.</td></tr>
+  </table>
+  <p>Tu as programmé cette station (3e_C9.2), tu as signé sa recette (3e_C8.3) et tu as choisi
+  le mât qui la porte (3e_C8.2). Il ne lui manque plus qu'une chose : de l'énergie, le jour où
+  elle sert.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>3e_C7.4</b></td><td>Choisir une source d'énergie pour un OST.</td><td>Activités 0, 1, 2, 4 et REFAIRE</td></tr>
+    <tr><td>3e_C3.2 <span style="color:var(--sub)">(appui)</span></td><td>Choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable.</td><td>Activité 3</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>La station est en place, en tête de son mât, sur le toit de l'annexe. Elle est branchée
+    sur le secteur du bâtiment, par un adaptateur scellé. Tout va bien.</p>
+    <p>Puis vient le cyclone. Le vent passe 118 km/h, la station bascule en alerte rouge, le
+    buzzer sonne — et <b>le réseau électrique tombe</b>. Il tombe toujours : c'est même la
+    première chose qui tombe.</p>
+    <p>« Après un cyclone majeur, dit l'adjoint au maire, le courant revient chez nous en
+    <b>24 à 72 heures</b>. Votre station doit tenir <b>jusqu'au bout</b> — c'est précisément
+    pendant ces heures-là qu'elle sert à quelque chose. »</p>
+</div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment alimenter un objet dont le rôle est justement de fonctionner quand tout le reste s'arrête&nbsp;?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <p>Première idée, presque toujours : « on met un panneau solaire, c'est autonome ».
+    <b>Écris ce que tu en penses maintenant</b>, avant tout calcul — et garde-la : on la
+    relira au bilan, et elle vaudra peut-être plus que la bonne réponse.</p>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, pour tenir 72 h sans réseau, il faut… parce que…"></textarea>
+
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
+  <div class="declencheur">
+    <ul>
+      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V. Le « secteur », <b>c'est
+        l'adaptateur USB fermé</b>, jamais la prise, jamais le câble d'alimentation. On ne
+        l'ouvre pas, on ne le coupe pas. <b>Côté élève, il n'y a que du 5 V.</b></li>
+      <li><b>Les accus Li-ion ne sont pas des piles.</b> Court-circuités, percés, écrasés ou
+        chargés par un chargeur qui n'est pas le leur, ils s'emballent thermiquement. Un accu
+        qui gonfle, chauffe ou sent : on le pose au sol, loin de tout, et on prévient un adulte.
+        Jamais dans un sac, jamais dans une poche.</li>
+      <li>Un montage installé <b>dehors, en Martinique</b> : boîtier fermé, presse-étoupes vers
+        le bas, aucun accu accessible sans outil.</li>
+      <li>Piles et accus usagés vont au <b>bac de collecte</b>, jamais à la poubelle.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — le montage réel sur la paillasse, alimenté tour à tour par
+      chaque source, et un multimètre en série pour lire le courant. Les valeurs mesurées
+      remplacent alors celles du banc : ce sont elles qui font foi.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer.
+      C'est la voie par défaut, et la seule qui permette d'éteindre un consommateur pour voir
+      ce qu'il pesait.</li>
+    <li><b>🅲 Sans écran</b> — les tableaux s'impriment et toutes les valeurs figurent dans les
+      corrections. Le travail reste le même : lire, comparer, décider, justifier.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : quel jour faut-il dimensionner ⏱ ~20 min</h2>
+  <p>Avant toute explication. Le banc compte ce que la station consomme en une
+  journée <b>d'alerte</b> : buzzer et voyant allumés deux heures. Éteins-les, et tu obtiens
+  une journée calme. <b>Compare les deux, puis passe les cinq sources.</b></p>
+  <div class="banc">
+    <table class="conso">
+      <tr><th></th><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Anémomètre à impulsions</td><td class="n">1 mA</td><td class="n">24 h</td><td class="n" id="wh1">0,120 Wh</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>Girouette</td><td class="n">1 mA</td><td class="n">24 h</td><td class="n" id="wh2">0,120 Wh</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ck3" checked></td><td>Buzzer d'alerte</td><td class="n">30 mA</td><td class="n">2 h</td><td class="n" id="wh3">0,300 Wh</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ck4" checked></td><td>DEL indicatrice</td><td class="n">10 mA</td><td class="n">2 h</td><td class="n" id="wh4">0,100 Wh</td></tr>
+      <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
+          <td class="n" id="etot">—</td></tr>
+    </table>
+    <div class="parts">
+        <span id="pt0" style="background:#61dafb"></span>
+        <span id="pt1" style="background:#ffb454"></span>
+        <span id="pt2" style="background:#81fba1"></span>
+        <span id="pt3" style="background:#c68ef2"></span>
+        <span id="pt4" style="background:#ff7b88"></span>
+    </div>
+    <div class="parts-leg">
+        <span><i style="background:#61dafb"></i>Carte Arduino UNO</span>
+        <span><i style="background:#ffb454"></i>Anémomètre à impulsions</span>
+        <span><i style="background:#81fba1"></i>Girouette</span>
+        <span><i style="background:#c68ef2"></i>Buzzer d'alerte</span>
+        <span><i style="background:#ff7b88"></i>DEL indicatrice</span>
+    </div>
+
+    <div class="banc-cmd">
+      <label for="src">Source d'énergie :</label>
+      <select id="src">
+        <option>Pile 9 V alcaline</option>
+        <option>4 piles AA alcalines</option>
+        <option>Accu Li-ion 18650 rechargeable</option>
+        <option>Secteur — adaptateur USB scellé</option>
+        <option>Panneau solaire 1 W crête + accu</option>
+      </select>
+    </div>
+    <table class="srcd">
+      <tr><th>Énergie stockée dans la source</th><td id="sBrute">—</td></tr>
+      <tr><th id="sRendLbl">Rendement de la mise en 5 V</th><td id="sRend">—</td></tr>
+      <tr><th>Énergie réellement disponible</th><td id="sUtile">—</td></tr>
+    </table>
+    <p class="verdict" id="verdict">—</p>
+    <p class="detail-src" id="sDetail"></p>
+    <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+  </div>
+
+  <div class="exo">
+
+    <h4>Après avoir essayé</h4>
+    <p><b>1.</b> Entre un jour calme et un jour d'alerte, la consommation…</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>change peu : 5,64 Wh contre 6,04 Wh</option>
+      <option>double : le buzzer consomme autant que tout le reste</option>
+      <option>ne change pas du tout</option>
+      <option>est divisée par deux le jour d'alerte</option>
+    </select>
+    <p><b>2.</b> Pour dimensionner la réserve d'énergie, on prend…</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>le jour d'alerte : c'est le pire, et c'est celui qui compte</option>
+      <option>le jour calme : c'est le plus fréquent dans l'année</option>
+      <option>la moyenne des deux, c'est plus juste</option>
+      <option>le jour calme, et on éteindra le buzzer s'il manque de l'énergie</option>
+    </select>
+    <p><b>3.</b> Là encore, qu'est-ce qui pèse le plus lourd dans la journée&nbsp;?</p>
+    <select id="a0q3">
+      <option value="">— je choisis —</option>
+      <option>la carte, allumée 24 h sur 24</option>
+      <option>le buzzer, qui fait le plus de bruit</option>
+      <option>l'anémomètre, qui tourne sans arrêt</option>
+      <option>le voyant d'alerte, parce qu'il est très lumineux</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Passe d'abord les cinq sources au banc — on ne dimensionne pas de mémoire.</p>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — 5,64 contre 6,04 Wh</b>, soit 7 % d'écart. Le buzzer fait un bruit énorme et
+      consomme 0,30 Wh : c'est 5 % de la journée.</p>
+      <p><b>2 — le jour d'alerte.</b> Une réserve dimensionnée sur la moyenne est vide le jour
+      où elle sert. <b>On dimensionne sur le pire cas, jamais sur le cas courant</b> — c'est la
+      même règle que le coefficient de sécurité du mât : elle ne protège pas de l'ordinaire,
+      elle protège de l'exceptionnel.</p>
+      <p><b>3 — la carte,</b> encore : 5,40 Wh sur 6,04, soit <b>89 %</b>. Tu avais déjà vu ce
+      raisonnement sur le jardin en 4<sup>e</sup>. Un petit courant qui ne s'arrête jamais bat
+      un gros courant qui dure deux heures.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔢 Activité 1 — Le besoin sur 72 heures, et ce qu'il faut de réserve ⏱ ~25 min</h2>
+  <p><b>Objectif :</b> passer d'une consommation journalière à une réserve
+  dimensionnée. <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 calculs +
+  2 réponses.</p>
+  <p>Un accu Li-ion 18650 délivre <b>9,4 Wh</b> utiles sous 5 V — c'est le chiffre du banc.
+  On peut en mettre plusieurs côte à côte.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Énergie nécessaire pour tenir <b>72 heures</b> en alerte, en Wh :</p>
+    <input type="text" inputmode="decimal" id="a1besoin" placeholder="… Wh">
+    <p><b>2.</b> Énergie fournie par <b>deux</b> accus, en Wh :</p>
+    <input type="text" inputmode="decimal" id="a1deux" placeholder="… Wh">
+    <p><b>3.</b> Marge que cela laisse, en pourcentage (arrondi à l'unité) :</p>
+    <input type="text" inputmode="decimal" id="a1marge" placeholder="… %">
+    <p><b>4.</b> Que dis-tu de cette marge&nbsp;?</p>
+    <select id="a1q4">
+      <option value="">— je choisis —</option>
+      <option>elle est trop faible : un accu vieilli ou un froid inhabituel la mange</option>
+      <option>elle est confortable : 18,8 est plus grand que 18,12</option>
+      <option>elle est inutile : on n'a pas besoin de marge sur une batterie</option>
+      <option>elle est excessive : deux accus, c'est du gaspillage</option>
+    </select>
+    <p><b>5.</b> Avec <b>trois</b> accus (28,2 Wh), la station tiendrait…</p>
+    <select id="a1q5">
+      <option value="">— je choisis —</option>
+      <option>112 heures, soit 4,7 jours</option>
+      <option>72 heures tout juste</option>
+      <option>90 heures environ</option>
+      <option>plus de deux semaines</option>
+    </select>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — 18,12 Wh.</b> 6,04 Wh par jour × 3 jours. 72 heures, c'est trois jours pleins.</p>
+      <p><b>2 — 18,8 Wh.</b> 9,4 × 2.</p>
+      <p><b>3 — environ 4 %.</b> (18,8 − 18,12) ÷ 18,12 = 3,8 %.</p>
+      <p><b>4 — trop faible</b>, et tu as déjà rencontré exactement cette situation :</p>
+      <div class="declencheur"><p>En 5<sup>e</sup>, la patère du hall exigeait 40 kg et le bois
+      cassait à 41. En 3<sup>e</sup>, le mât exigeait 300 N et le tube acier galvanisé était
+      recalé pour 1,1 mm de flèche. <b>Tout juste n'est pas assez</b>, et pour la même raison
+      à chaque fois : l'éprouvette de l'essai n'a pas les défauts de la pièce réelle.</p></div>
+      <p>Ici les défauts sont connus et nommés : un accu perd environ <b>20 % de sa capacité</b>
+      après quelques centaines de cycles ; il en donne moins quand il fait froid ; et la
+      consommation réelle dépasse toujours un peu la consommation calculée. Trois raisons de
+      ne pas partir avec 3,8 %.</p>
+      <p><b>5 — 112 heures.</b> 28,2 ÷ 6,04 = 4,67 jours. On couvre les 72 heures demandées
+      <em>et</em> les 40 heures d'imprévu. C'est le dimensionnement qu'on retient.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>☀ Activité 2 — Pourquoi le panneau ne fait pas l'autonomie ⏱ ~25 min</h2>
+  <p><b>Objectif :</b> distinguer ce qui <em>recharge</em> de ce qui <em>tient</em>.
+  <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 réponses + une phrase.</p>
+  <p>« Un panneau solaire, c'est autonome. » C'est la phrase qui vient d'abord, et c'est celle
+  qu'il faut examiner. Le banc annonce <b>3,7 Wh par jour</b> pour un panneau de 1 W crête,
+  en moyenne annuelle, plein soleil compris.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Sous un cyclone, le ciel est couvert d'une couche épaisse et il pleut en
+    continu. Un panneau y récolte…</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>moins d'un dixième de sa récolte normale</option>
+      <option>à peu près la moitié de sa récolte normale</option>
+      <option>autant que d'habitude : la lumière traverse les nuages</option>
+      <option>plus que d'habitude : la pluie nettoie le panneau</option>
+    </select>
+    <p><b>2.</b> Il y a une seconde raison, purement mécanique, pour ne pas compter sur le
+    panneau pendant l'événement. Laquelle&nbsp;?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>une plaque plate exposée à 180 km/h peut être arrachée</option>
+      <option>le panneau ne fonctionne pas quand il est mouillé</option>
+      <option>le vent refroidit le panneau et l'empêche de produire</option>
+      <option>le panneau doit être débranché avant chaque cyclone</option>
+    </select>
+    <p><b>3.</b> Quel est donc le rôle du panneau dans cette station&nbsp;?</p>
+    <select id="a2q3">
+      <option value="">— je choisis —</option>
+      <option>recharger la réserve entre deux événements, et soulager le secteur</option>
+      <option>alimenter la station pendant le cyclone, à la place du réseau</option>
+      <option>aucun : il ne sert à rien sur cette station</option>
+      <option>remplacer complètement les accus, qui deviennent inutiles</option>
+    </select>
+    <p><b>En une phrase :</b> quelle est la différence entre une source qui <em>recharge</em> et
+    une réserve qui <em>tient</em>&nbsp;?</p>
+    <textarea id="a2ph" rows="2" placeholder="Une source qui recharge… tandis qu'une réserve…"></textarea>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — moins d'un dixième.</b> Sous une couche nuageuse épaisse, l'éclairement tombe à
+      quelques pour cent de sa valeur en plein soleil. Le panneau de 1 W, qui récolte 3,7 Wh un
+      jour normal, en donne alors quelques dixièmes — contre 6,04 Wh consommés. <b>Il ne couvre
+      pas 5 % du besoin au moment précis où le besoin existe.</b></p>
+      <p><b>2 — le vent.</b> Une plaque plate de plusieurs centaines de cm², exposée à
+      180 km/h, c'est exactement ce que tu as appris à calculer sur le mât : une surface offerte
+      au vent. Elle s'arrache, ou elle arrache ce qui la tient.</p>
+      <p><b>3 — recharger entre deux événements.</b> Le panneau est un <b>robinet</b> : il donne
+      un peu, tous les jours. La réserve est un <b>réservoir</b> : elle donne beaucoup, une fois.
+      Pendant le cyclone, c'est le réservoir qui travaille ; le reste de l'année, c'est le
+      robinet qui le remplit et qui soulage le secteur.</p>
+      <p class="retenir">📌 <b>« Autonome » ne veut rien dire tant qu'on n'a pas dit
+      « pendant combien de temps, et dans quelles conditions ».</b> Une installation solaire est
+      autonome les jours de soleil ; elle ne l'est pas les jours où il n'y en a pas — et ce sont
+      justement ceux-là qui dimensionnent.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>♻️ Activité 3 — Le cycle de vie, pas seulement l'autonomie ⏱ ~30 min</h2>
+  <p><b>Objectif :</b> argumenter un choix avec le cycle de vie. <b>Compétence :</b>
+  3e_C3.2. <b>Production attendue :</b> 5 associations + 1 calcul.</p>
+  <p>Une source ne commence pas quand on la branche et ne finit pas quand elle est vide.
+  Associe chaque élément à ce que son cycle de vie apporte au dossier.</p>
+  <div class="exo">
+    <p style="margin-top:12px"><b>Piles alcalines jetables</b></p>
+    <select id="a4c0">
+      <option value="">— je choisis —</option>
+      <option>Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</option>
+      <option>Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</option>
+      <option>Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</option>
+      <option>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</option>
+      <option>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</option>
+    </select>
+    <p style="margin-top:12px"><b>Accus Li-ion rechargeables</b></p>
+    <select id="a4c1">
+      <option value="">— je choisis —</option>
+      <option>Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</option>
+      <option>Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</option>
+      <option>Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</option>
+      <option>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</option>
+      <option>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</option>
+    </select>
+    <p style="margin-top:12px"><b>Panneau solaire</b></p>
+    <select id="a4c2">
+      <option value="">— je choisis —</option>
+      <option>Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</option>
+      <option>Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</option>
+      <option>Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</option>
+      <option>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</option>
+      <option>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</option>
+    </select>
+    <p style="margin-top:12px"><b>Électricité du réseau</b></p>
+    <select id="a4c3">
+      <option value="">— je choisis —</option>
+      <option>Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</option>
+      <option>Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</option>
+      <option>Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</option>
+      <option>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</option>
+      <option>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</option>
+    </select>
+    <p style="margin-top:12px"><b>Boîtier étanche et câbles</b></p>
+    <select id="a4c4">
+      <option value="">— je choisis —</option>
+      <option>Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</option>
+      <option>Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</option>
+      <option>Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</option>
+      <option>Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</option>
+      <option>Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</option>
+    </select>
+    <p style="margin-top:16px"><b>Le chiffre qui tranche.</b> La station consomme 6,04 Wh par
+    jour. Une pile 9 V en délivre 2,8 utiles. Combien de piles 9 V faudrait-il
+    <b>par an</b>&nbsp;?</p>
+    <input type="text" inputmode="numeric" id="a3piles" placeholder="… piles par an">
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Piles alcalines jetables</b> — Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine.</p>
+      <p><b>Accus Li-ion rechargeables</b> — Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500.</p>
+      <p><b>Panneau solaire</b> — Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide.</p>
+      <p><b>Électricité du réseau</b> — Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique.</p>
+      <p><b>Boîtier étanche et câbles</b> — Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi.</p>
+      <p style="margin-top:12px"><b>Le calcul :</b> 6,04 × 365 = 2 205 Wh par an ; 2 205 ÷ 2,8 =
+      <b>787 piles</b>. Chaque année, pour une seule station. Le débat sur l'écologie du
+      lithium se tient — mais il se tient <em>après</em> ce nombre-là, pas à sa place.</p>
+      <p class="retenir">📌 <b>Le cycle de vie ne se raisonne pas par matériau, il se raisonne
+      par usage.</b> Le lithium d'un accu est un vrai problème ; 787 piles jetées par an pour le
+      même service en est un autre, et il est plus grand. C'est ce que demande 3e_C3.2 : ne pas
+      argumenter sur ce qu'un objet <em>est</em>, mais sur ce qu'il <em>coûte tout au long de
+      sa vie</em>.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✍️ Activité 4 — L'avis à la mairie ⏱ ~30 min</h2>
+  <p><b>Objectif :</b> écrire une décision qu'on assume devant un commanditaire.
+  <b>Compétence :</b> 3e_C7.4. <b>Production attendue :</b> 3 réponses + un avis rédigé.</p>
+  <div class="exo">
+
+    <p><b>Question 1.</b> Quelle est la source <b>normale</b> de la station, les 360 jours par
+    an où il ne se passe rien&nbsp;?</p>
+    <select id="a4q1">
+      <option value="">— je choisis —</option>
+      <option>le secteur, complété par le panneau qui le soulage</option>
+      <option>les trois accus, qu'on recharge une fois par semaine</option>
+      <option>le panneau seul : il suffit un jour normal</option>
+      <option>les piles 9 V, qu'on remplace régulièrement</option>
+    </select>
+    <p><b>Question 2.</b> Et le rôle des trois accus&nbsp;?</p>
+    <select id="a4q2">
+      <option value="">— je choisis —</option>
+      <option>tenir 112 h quand le réseau tombe, et se recharger le reste du temps</option>
+      <option>alimenter la station en permanence, le secteur servant de secours</option>
+      <option>alimenter uniquement le buzzer et le voyant d'alerte</option>
+      <option>servir de réserve pour la nuit, quand le panneau ne produit pas</option>
+    </select>
+    <p><b>Question 3.</b> Ce choix a un coût, qu'il faut annoncer. Lequel est réel&nbsp;?</p>
+    <select id="a4q3">
+      <option value="">— je choisis —</option>
+      <option>les accus vieillissent : il faut les remplacer tous les trois à quatre ans</option>
+      <option>la station consommera beaucoup plus qu'avant</option>
+      <option>le panneau empêche de brancher le secteur</option>
+      <option>il faudra reprogrammer la station chaque année</option>
+    </select>
+    <p><b>Ton avis à la mairie, en quatre phrases.</b> Dis la source normale, la réserve et son
+    dimensionnement <b>chiffré</b>, le rôle du panneau, et <b>ce que ton choix coûte</b>.</p>
+    <textarea id="a4avis" rows="5" placeholder="Source normale : … Réserve : … accus, soit … Wh pour … Wh nécessaires. Le panneau … En revanche, ce choix oblige à …"></textarea>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>La réponse attendue n'est pas UNE source : c'est une architecture.</b></p>
+      <table class="refs">
+        <tr><th>Élément</th><th>Rôle</th><th>Dimensionnement</th></tr>
+        <tr><td>Secteur (adaptateur scellé)</td><td>source normale, 360 jours par an</td><td>illimitée tant qu'il y a du réseau</td></tr>
+        <tr><td><b>3 accus 18650</b></td><td><b>tenir quand le réseau tombe</b></td><td><b>28,2 Wh pour 18,12 exigés — 112 h</b></td></tr>
+        <tr><td>Panneau 2 W crête</td><td>recharger la réserve, soulager le secteur</td><td>7,4 Wh/jour pour 6,04 consommés</td></tr>
+      </table>
+      <p><b>Ce que le choix coûte, et qu'il faut écrire :</b> trois accus à remplacer tous les
+      trois à quatre ans (et à rapporter en collecte) ; un panneau à fixer, orienter et nettoyer ;
+      un boîtier étanche qui vieillit au sel ; et un circuit de bascule secteur/accu qu'il faut
+      tester — parce qu'un secours jamais testé n'est pas un secours.</p>
+      <p class="retenir">📌 <b>Choisir une source pour un OST, ce n'est presque jamais choisir
+      une seule source.</b> C'est répartir les rôles : qui alimente d'habitude, qui prend le
+      relais, qui recharge. Et c'est dire ce que l'ensemble demandera d'entretien, parce que
+      personne ne signe un devis sans cette phrase-là.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~20 min</h2>
+<p>La mairie veut la <b>même station</b> sur un îlet de la baie du Robert : une
+  réserve naturelle, un ponton, aucun bâtiment. <b>Pas de secteur du tout</b>, et personne n'y
+  va plus d'une fois par mois.</p>
+  <p><b>Que devient ton dimensionnement&nbsp;?</b> Dis ce qui change, ce qui ne change pas, et
+  quelle décision de la séance de 4<sup>e</sup> il faut ressortir ici.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+    <p><b>Ce qui ne change pas :</b> la consommation du pire jour (6,04 Wh), la règle du
+    dimensionnement sur le pire cas, et le fait que le panneau ne produit pas pendant
+    l'événement.</p>
+    <p><b>Ce qui change, et c'est énorme :</b> il n'y a plus de secteur pour rattraper les
+    mauvais jours. Le panneau ne soulage plus une source principale — <b>il EST la source
+    principale</b>, et il doit couvrir la consommation même en semaine grise. Avec 5,3 h
+    d'équivalent plein soleil en moyenne mais deux à trois fois moins en septembre, un panneau
+    de 2 W ne suffit plus : il en faut au moins <b>5 W</b>, et une réserve dimensionnée non plus
+    sur 72 heures mais sur <b>une semaine sans soleil</b>, soit environ 42 Wh — cinq accus.</p>
+    <p><b>La décision de 4<sup>e</sup> qu'il faut ressortir :</b> avant d'agrandir le panneau et
+    la batterie, <b>regarder la charge</b>. La carte pèse 89 %. Une carte à faible consommation
+    (5 mA en moyenne) ferait tomber le besoin de 6,04 à environ 1,2 Wh par jour — et alors un
+    panneau de 2 W et deux accus suffiraient largement, sur un îlet où personne ne vient
+    dépanner.</p>
+    <p class="retenir">📌 <b>Plus l'accès est difficile, plus il est rentable de consommer
+    moins.</b> Sur un site accessible, on ajoute une pile ; sur un îlet, on change la carte.
+    C'est le lieu, encore une fois, qui décide — exactement comme en 5<sup>e</sup>, avec
+    l'indicateur du hall et le portail à vélos.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Dimensionner sur le pire cas</b> — une réserve calculée sur la moyenne est vide le
+      jour où elle sert. Ici, le pire cas est le jour d'alerte : 6,04 Wh.</li>
+    <li><b>Le besoin sur une durée</b> — 6,04 Wh/jour × 3 jours = 18,12 Wh pour tenir 72 heures.
+      Une autonomie ne s'exprime pas sans la durée exigée.</li>
+    <li><b>Tout juste n'est pas assez</b> — deux accus donnent 18,8 Wh pour 18,12 exigés, soit
+      3,8 % de marge, quand un accu vieilli en perd 20 %. Même règle que la patère de 5<sup>e</sup>
+      et le mât de 3<sup>e</sup>.</li>
+    <li><b>Recharger n'est pas tenir</b> — un panneau est un robinet, une batterie un réservoir.
+      Sous un cyclone, le robinet est fermé et c'est le réservoir qui travaille.</li>
+    <li><b>« Autonome » ne veut rien dire seul</b> — il faut dire pendant combien de temps et
+      dans quelles conditions.</li>
+    <li><b>Le cycle de vie se raisonne par usage</b> — 787 piles par an pour une station, contre
+      trois accus tous les trois ans. Le débat sur le lithium se tient après ce nombre.</li>
+    <li><b>Une architecture, pas une source</b> — qui alimente d'habitude, qui prend le relais,
+      qui recharge. Et ce que l'ensemble coûtera en entretien.</li>
+    <li><b>Regarder la charge</b> — plus le site est difficile d'accès, plus il est rentable de
+      consommer moins plutôt que de produire plus.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+<p>Tu avais écrit ce que tu pensais de « on met un panneau solaire, c'est
+  autonome ». Relis-le. Ce n'était pas faux — c'était incomplet, et c'est presque toujours
+  ainsi que les idées reçues fonctionnent : elles sont vraies dans un cas et fausses au moment
+  où ça compte.</p>
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.4 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>🔴 Maîtrise insuffisante — je propose une source sans calculer le besoin</option>
+    <option>🟠 Maîtrise fragile — je calcule le besoin si on me rappelle qu'il faut le pire jour</option>
+    <option>🟢 Maîtrise satisfaisante — je dimensionne sur le pire cas, avec marge, et je répartis les rôles</option>
+    <option>⭐ Très bonne maîtrise — et j'argumente avec le cycle de vie et j'annonce ce que mon choix coûte</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur le dimensionnement au pire cas, la marge, la différence entre recharger et tenir, le cycle de vie et l'architecture d'alimentation.</p>
+  <a class="btn" href="qcm_3e_C7.4_energie-de-la-station.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>⚡ Défi bascule :</b> cherche comment on fait basculer automatiquement une alimentation
+  du secteur vers une batterie sans que l'appareil s'éteigne une seule milliseconde. Écris le
+  nom du composant et ce qu'il faudrait tester pour être sûr qu'il marche.</p>
+  <p><b>🌡 Défi température :</b> un accu Li-ion perd de la capacité au froid — mais en
+  Martinique, c'est la <b>chaleur</b> qui l'use. Cherche à partir de quelle température un accu
+  vieillit vite, et dis où tu ne placerais surtout pas le boîtier sur un toit-terrasse.</p>
+  <p><b>🔌 Défi Martinique :</b> l'électricité du réseau martiniquais vient encore largement de
+  centrales thermiques. Cherche la part des énergies renouvelables dans le mix de l'île, et dis
+  ce que ça change à l'argument « le secteur, c'est plus écologique que des accus ».</p>
+
+</section>
+
+<footer>Séquence 3e_C7.4 — <em>La station doit tenir 72 heures sans secteur</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_3e_C7_4";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── banc d'énergie ─────────────────────────────────────────────────────── */
+const CONSOS = [{"nom": "Carte Arduino UNO", "ma": 45, "h": 24.0}, {"nom": "Anémomètre à impulsions", "ma": 1, "h": 24.0}, {"nom": "Girouette", "ma": 1, "h": 24.0}, {"nom": "Buzzer d'alerte", "ma": 30, "h": 2.0}, {"nom": "DEL indicatrice", "ma": 10, "h": 2.0}];      /* [{nom, ma, h}] */
+const SOURCES = {"Pile 9 V alcaline": {"type": "stock", "brute": 4.95, "rend": 0.5555555555555556, "utile": 2.8, "jour": null, "detail": "Une pile plate à deux boutons-pression. Régulateur linéaire 9 → 5 V : il dissipe 4 V sur 9 en chaleur, soit 44 % de l'énergie perdue avant d'alimenter quoi que ce soit."}, "4 piles AA alcalines": {"type": "stock", "brute": 15.0, "rend": 0.8333333333333334, "utile": 12.5, "jour": null, "detail": "Quatre piles bâton en série. Régulateur linéaire 6 → 5 V : il ne dissipe qu'un volt sur six, donc il perd beaucoup moins."}, "Accu Li-ion 18650 rechargeable": {"type": "stock", "brute": 11.100000000000001, "rend": 0.85, "utile": 9.4, "jour": null, "detail": "Un accumulateur rechargeable et un convertisseur ÉLÉVATEUR 3,7 → 5 V, donné à 85 % par son constructeur. Il se recharge environ 500 fois."}, "Secteur — adaptateur USB scellé": {"type": "secteur", "brute": null, "rend": 1.0, "utile": null, "jour": null, "detail": "Un bloc secteur fermé, jamais ouvert ni modifié par un élève : côté élève, il n'y a que du 5 V. Illimité — tant qu'il y a du réseau."}, "Panneau solaire 1 W crête + accu": {"type": "solaire", "brute": null, "rend": 0.7, "utile": null, "jour": 3.7, "detail": "Un petit panneau et l'accu qu'il recharge. Ce n'est pas un réservoir : c'est un robinet, qui donne une certaine énergie CHAQUE JOUR."}};    /* {nom: {brute, rend, utile, jour, detail}} */
+const TENSION = 5;
+
+function fmt(v, dec){ return v.toFixed(dec).replace(".", ","); }
+function duree(h){
+  if(h >= 1) return fmt(h, 0) + " h";
+  const s = Math.round(h * 3600);
+  return s >= 60 ? (s / 60) + " min" : s + " s";
+}
+function actifs(){ return CONSOS.map((c, i) => document.getElementById("ck" + i).checked); }
+function whJour(){
+  const on = actifs();
+  return CONSOS.map((c, i) => on[i] ? c.ma / 1000 * TENSION * c.h : 0);
+}
+function majBanc(){
+  const w = whJour(), tot = w.reduce((s, x) => s + x, 0);
+  const on = actifs();
+  CONSOS.forEach((c, i) => {
+    document.getElementById("wh" + i).textContent = fmt(w[i], 3) + " Wh";
+    document.getElementById("tr" + i).classList.toggle("eteint", !on[i]);
+    const pc = tot > 0 ? (w[i] / tot * 100) : 0;
+    const b = document.getElementById("pt" + i);
+    b.style.width = pc + "%";
+    b.title = c.nom + " : " + fmt(pc, 1) + " %";
+  });
+  document.getElementById("etot").textContent = fmt(tot, 2) + " Wh";
+
+  const s = SOURCES[document.getElementById("src").value];
+  const $ = id => document.getElementById(id);
+  $("sBrute").textContent = s.brute === null ? "—  (elle n'en stocke pas)" : fmt(s.brute, 2) + " Wh";
+  $("sRend").textContent = s.rend === null ? "—" : fmt(s.rend * 100, 0) + " %";
+  $("sRendLbl").textContent =
+      s.type === "solaire" ? "Rendement de la chaîne solaire"
+    : s.type === "secteur" ? "Rendement (rien à convertir : c'est déjà du 5 V)"
+    : "Rendement de la mise en 5 V";
+  $("sDetail").textContent = s.detail;
+  const v = $("verdict");
+  if(s.type === "secteur"){
+    $("sUtile").textContent = "illimitée";
+    v.textContent = "⚡ Autonomie illimitée — tant qu'il y a du réseau.";
+    v.className = "verdict ok";
+  } else if(s.type === "solaire"){
+    $("sUtile").textContent = fmt(s.jour, 1) + " Wh PAR JOUR";
+    if(tot === 0){ v.textContent = "Rien n'est allumé : il n'y a rien à alimenter."; v.className = "verdict"; }
+    else if(s.jour >= tot){
+      v.textContent = "☀ Il récolte " + fmt(s.jour, 1) + " Wh par jour pour " + fmt(tot, 2)
+        + " consommés : il suffit, avec " + fmt((s.jour / tot - 1) * 100, 0) + " % de marge.";
+      v.className = "verdict ok";
+    } else {
+      v.textContent = "☁ Il récolte " + fmt(s.jour, 1) + " Wh par jour pour " + fmt(tot, 2)
+        + " consommés : il NE SUFFIT PAS. Il en manque " + fmt(tot - s.jour, 2) + " Wh chaque jour.";
+      v.className = "verdict non";
+    }
+  } else {
+    $("sUtile").textContent = fmt(s.utile, 1) + " Wh";
+    if(tot === 0){ v.textContent = "Rien n'est allumé : il n'y a rien à alimenter."; v.className = "verdict"; }
+    else {
+      const j = s.utile / tot;
+      const txt = j >= 2 ? fmt(j, 1) + " jours" : Math.round(j * 24) + " heures";
+      v.textContent = "🔋 Autonomie : " + txt + "  (" + fmt(s.utile, 1) + " Wh utiles ÷ "
+        + fmt(tot, 2) + " Wh par jour)";
+      v.className = "verdict " + (j >= 2 ? "ok" : j >= 1 ? "limite" : "non");
+    }
+    window.__exp.stock = true;
+  }
+  window.__exp.src = window.__exp.src || {};
+  window.__exp.src[document.getElementById("src").value] = true;
+  if(Object.keys(window.__exp.src).length >= 5) window.__exp.srcAll = true;
+  if(on.some(x => !x)) window.__exp.eteint = true;
+  
+  save();
+}
+CONSOS.forEach((c, i) => document.getElementById("ck" + i).addEventListener("change", majBanc));
+document.getElementById("src").addEventListener("change", majBanc);
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0q1", "change peu : 5,64 Wh contre 6,04 Wh")
+              + sv("a0q2", "le jour d'alerte : c'est le pire, et c'est celui qui compte")
+              + sv("a0q3", "la carte, allumée 24 h sur 24");
+       return {score: s, total: 3, exp: !!window.__exp.srcAll,
+               expMsg: "Passe d'abord les cinq sources au banc — on ne dimensionne pas de mémoire."}; },
+  1(){ let s = 0;
+       s += nb("a1besoin", 18.12, 0.1) + nb("a1deux", 18.8, 0.05)
+              + nb("a1marge", 4, 1)
+              + sv("a1q4", "elle est trop faible : un accu vieilli ou un froid inhabituel la mange")
+              + sv("a1q5", "112 heures, soit 4,7 jours");
+       return {score: s, total: 5, exp: true}; },
+  2(){ let s = 0;
+       s += sv("a2q1", "moins d'un dixième de sa récolte normale")
+              + sv("a2q2", "une plaque plate exposée à 180 km/h peut être arrachée")
+              + sv("a2q3", "recharger la réserve entre deux événements, et soulager le secteur")
+              + pres("a2ph", 50);
+       return {score: s, total: 4, exp: true}; },
+  3(){ let s = 0;
+       s += sv("a4c0", "Extraction de zinc et de manganèse pour un usage unique, et un déchet à collecter chaque semaine."); s += sv("a4c1", "Fabrication lourde (lithium, cobalt), mais 500 cycles d'usage : le coût de fabrication se divise par 500."); s += sv("a4c2", "Fabrication très énergivore, puis vingt ans de production sans rien consommer : c'est la durée qui décide."); s += sv("a4c3", "Rien à fabriquer côté station, mais l'énergie vient d'ailleurs — en Martinique, encore largement du thermique."); s += sv("a4c4", "Ce n'est pas une source, et pourtant ça se fabrique, ça vieillit au sel et ça se jette aussi."); s += nb("a3piles", 787, 6);
+       return {score: s, total: 6, exp: true}; },
+  4(){ let s = 0;
+       s += sv("a4q1", "le secteur, complété par le panneau qui le soulage")
+              + sv("a4q2", "tenir 112 h quand le réseau tombe, et se recharger le reste du temps")
+              + sv("a4q3", "les accus vieillissent : il faut les remplacer tous les trois à quatre ans")
+              + pres("a4avis", 150);
+       return {score: s, total: 4, exp: true}; },
+  5(){ return {score: pres("reinv", 120), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majBanc();
+})();
+</script>
+
+</body>
+</html>

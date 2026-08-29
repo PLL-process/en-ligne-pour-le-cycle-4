@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 4e — De quoi vit le jardin connecté? (4e_C7.4)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc d'énergie — original, CC0 ─────────────────────────────────────── */
+.banc{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+table.conso{width:100%;border-collapse:collapse;font-size:.88em}
+table.conso th,table.conso td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.conso th{background:#173666;color:var(--hl)}
+table.conso td.n{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap}
+table.conso td.ck{width:34px;text-align:center}
+table.conso td input[type=checkbox]{width:17px;height:17px;accent-color:#61dafb}
+table.conso tr.eteint td:not(.ck){opacity:.38;text-decoration:line-through}
+table.conso tr.tot td{background:#173666;font-weight:700;border-top:2px solid var(--hl)}
+.parts{display:flex;height:20px;border-radius:6px;overflow:hidden;border:1px solid var(--border);margin:10px 0 4px}
+.parts>span{transition:width .2s;min-width:0}
+.parts-leg{display:flex;flex-wrap:wrap;gap:10px;font-size:.78em;color:var(--sub);margin-bottom:10px}
+.parts-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.banc-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 8px}
+.banc-cmd label{font-size:.9em;color:var(--sub)}
+.banc-cmd select{width:auto;min-width:270px}
+table.srcd{width:100%;border-collapse:collapse;font-size:.88em;margin:6px 0}
+table.srcd th,table.srcd td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.srcd th{background:#173666;color:var(--hl);width:46%}
+table.srcd td{font-family:ui-monospace,Menlo,Consolas,monospace}
+.verdict{font-size:1.12em;font-weight:700;margin:10px 0 4px;padding:9px 13px;border-radius:9px;background:#173666}
+.verdict.ok{color:var(--ok);border-left:4px solid var(--ok)}
+.verdict.limite{color:var(--warn);border-left:4px solid var(--warn)}
+.verdict.non{color:var(--err);border-left:4px solid var(--err)}
+.detail-src{font-size:.86em;color:var(--sub);margin:4px 0 0}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.verdict-ok{color:var(--ok);font-weight:700}
+.verdict-non{color:var(--err);font-weight:700}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.4.html">📖 Lexique</a></nav>
+
+<h1>🌱 De quoi vit le jardin connecté&nbsp;?</h1>
+<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C7.4</span>
+  <span class="badge code">4e_C3.1 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D4 · D5</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu as déjà fait</h2>
+  <p>Tu as <b>conçu</b> le jardin connecté (4e_C7.1), tu l'as <b>programmé</b> (4e_C9.1), tu l'as
+  <b>validé par des tests</b> (4e_C8.1) et tu as appris, en <b>4e_C3.1</b>, à identifier les
+  caractéristiques qui comptent dans le choix d'un objet.</p>
+  <p><b>Ce qui change aujourd'hui :</b> en 5<sup>e</sup>, on te proposait des sources et tu en
+  choisissais une. Aujourd'hui, le verbe du programme est <b>comparer</b> — et comparer, ce n'est
+  pas regarder les cinq l'une après l'autre. C'est écrire des <em>critères</em> avant de
+  regarder, puis les appliquer à toutes de la même façon.</p>
+  <p class="retenir">📌 Sans grille, on ne compare pas : <b>on préfère</b>.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>4e_C7.4</b></td><td>Comparer différentes sources d'énergie pour choisir la plus adaptée.</td><td>Activités 0, 2, 3, 4 et REFAIRE</td></tr>
+    <tr><td>4e_C3.1 <span style="color:var(--sub)">(appui)</span></td><td>Identifier les caractéristiques à prendre en compte dans le choix d'un OST en vue de répondre à un besoin.</td><td>Activité 1</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>Le jardin connecté marche. Le capteur lit l'humidité, la carte décide, le relais claque,
+    la pompe arrose. Sur la paillasse, relié à l'ordinateur de la salle par son câble USB.</p>
+    <p>Le carré potager, lui, est <b>au fond de la cour</b>. Il faut que le jardin y vive seul —
+    y compris pendant les <b>vacances d'été</b>, quand plus personne ne passe pendant deux mois.</p>
+    <p>« Alors&nbsp;? demande le gestionnaire. Quelle source, et surtout : <b>pourquoi celle-là
+    plutôt qu'une autre&nbsp;?</b> »</p>
+</div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment comparer cinq sources d'énergie sans se contenter de celle qui nous plaît&nbsp;?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <p>Dans le jardin, qu'est-ce qui consomme le plus, d'après toi&nbsp;: la <b>pompe</b>, qui
+    déplace de l'eau, ou la <b>carte</b>, qui ne fait que réfléchir&nbsp;? Écris ton pari et
+    ta raison.</p>
+    <textarea id="hyp" rows="3" placeholder="Je pense que c'est … parce que …"></textarea>
+
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚠️ Sécurité — à lire avant de brancher quoi que ce soit</h2>
+  <div class="declencheur">
+    <ul>
+      <li>Tout le montage fonctionne en <b>très basse tension</b> : 5 V. Le « secteur » de la
+        liste, <b>c'est l'adaptateur USB fermé</b>, jamais la prise ni le câble d'alimentation.
+        On ne l'ouvre pas, on ne le coupe pas. <b>Côté élève, il n'y a que du 5 V.</b></li>
+      <li><b>De l'eau et de l'électricité au même endroit</b> : le boîtier de commande reste
+        hors du bac, en hauteur, et le passage des fils se fait par le dessous d'un couvercle.
+        Une source posée dans la terre humide est une source à déplacer.</li>
+      <li>Une pile ou un accu ne se met jamais en court-circuit, ne se perce pas, ne se chauffe
+        pas. Un accu qui gonfle se pose au sol, loin de tout, et on prévient.</li>
+      <li>Piles et accus usagés vont au <b>bac de collecte</b>, jamais à la poubelle.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — le montage réel sur la paillasse, alimenté tour à tour par
+      chaque source, et un multimètre en série pour lire le courant. Les valeurs mesurées
+      remplacent alors celles du banc : ce sont elles qui font foi.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer.
+      C'est la voie par défaut, et la seule qui permette d'éteindre un consommateur pour voir
+      ce qu'il pesait.</li>
+    <li><b>🅲 Sans écran</b> — les tableaux s'impriment et toutes les valeurs figurent dans les
+      corrections. Le travail reste le même : lire, comparer, décider, justifier.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : qui vide vraiment la source ⏱ ~15 min</h2>
+  <p>Avant toute explication. Le banc compte l'énergie que le jardin consomme en une
+  journée. Chaque ligne peut être <b>éteinte</b> : décoche-la, et regarde ce que devient le
+  total. <b>Éteins la pompe. Puis rallume-la et éteins la carte.</b></p>
+  <div class="banc">
+    <table class="conso">
+      <tr><th></th><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ck0" checked></td><td>Carte Arduino UNO</td><td class="n">45 mA</td><td class="n">24 h</td><td class="n" id="wh0">5,400 Wh</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ck1" checked></td><td>Capteur d'humidité du sol</td><td class="n">2 mA</td><td class="n">24 h</td><td class="n" id="wh1">0,240 Wh</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ck2" checked></td><td>Écran LCD RGB</td><td class="n">40 mA</td><td class="n">1 h</td><td class="n" id="wh2">0,200 Wh</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ck3" checked></td><td>Module relais</td><td class="n">70 mA</td><td class="n">1 min</td><td class="n" id="wh3">0,006 Wh</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ck4" checked></td><td>Pompe immergée 5 V</td><td class="n">300 mA</td><td class="n">1 min</td><td class="n" id="wh4">0,025 Wh</td></tr>
+      <tr class="tot"><td class="ck"></td><td colspan="3">Consommation du montage, par jour</td>
+          <td class="n" id="etot">—</td></tr>
+    </table>
+    <div class="parts">
+        <span id="pt0" style="background:#61dafb"></span>
+        <span id="pt1" style="background:#ffb454"></span>
+        <span id="pt2" style="background:#81fba1"></span>
+        <span id="pt3" style="background:#c68ef2"></span>
+        <span id="pt4" style="background:#ff7b88"></span>
+    </div>
+    <div class="parts-leg">
+        <span><i style="background:#61dafb"></i>Carte Arduino UNO</span>
+        <span><i style="background:#ffb454"></i>Capteur d'humidité du sol</span>
+        <span><i style="background:#81fba1"></i>Écran LCD RGB</span>
+        <span><i style="background:#c68ef2"></i>Module relais</span>
+        <span><i style="background:#ff7b88"></i>Pompe immergée 5 V</span>
+    </div>
+
+    <div class="banc-cmd">
+      <label for="src">Source d'énergie :</label>
+      <select id="src">
+        <option>Pile 9 V alcaline</option>
+        <option>4 piles AA alcalines</option>
+        <option>Accu Li-ion 18650 rechargeable</option>
+        <option>Secteur — adaptateur USB scellé</option>
+        <option>Panneau solaire 1 W crête + accu</option>
+      </select>
+    </div>
+    <table class="srcd">
+      <tr><th>Énergie stockée dans la source</th><td id="sBrute">—</td></tr>
+      <tr><th id="sRendLbl">Rendement de la mise en 5 V</th><td id="sRend">—</td></tr>
+      <tr><th>Énergie réellement disponible</th><td id="sUtile">—</td></tr>
+    </table>
+    <p class="verdict" id="verdict">—</p>
+    <p class="detail-src" id="sDetail"></p>
+    <p class="detail-src">Courants moyens sous 5 V, valeurs constructeur usuelles. Le rendement d'un régulateur linéaire vaut Vsortie ÷ Ventrée — ce n'est pas un réglage, c'est de la physique : il dissipe la différence en chaleur. Ensoleillement retenu pour la Martinique : 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+  </div>
+
+  <div class="exo">
+
+    <h4>Après avoir éteint l'une, puis l'autre</h4>
+    <p><b>1.</b> Éteindre la pompe fait passer le total de 5,87 Wh à…</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>5,85 Wh — presque rien ne change</option>
+      <option>2,90 Wh — la moitié disparaît</option>
+      <option>0,47 Wh — presque tout disparaît</option>
+      <option>0,00 Wh — il ne reste rien</option>
+    </select>
+    <p><b>2.</b> Éteindre la carte fait passer le total de 5,87 Wh à…</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>5,85 Wh — presque rien ne change</option>
+      <option>2,90 Wh — la moitié disparaît</option>
+      <option>0,47 Wh — presque tout disparaît</option>
+      <option>0,00 Wh — il ne reste rien</option>
+    </select>
+    <p><b>3.</b> Pourquoi la pompe, qui tire 300 mA, pèse-t-elle si peu&nbsp;?</p>
+    <select id="a0q3">
+      <option value="">— je choisis —</option>
+      <option>parce qu'elle ne tourne que 60 secondes par jour</option>
+      <option>parce que le banc oublie de la compter</option>
+      <option>parce qu'elle est alimentée par une autre source</option>
+      <option>parce que l'eau lui rend une partie de l'énergie</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Éteins d'abord la pompe, puis la carte, et regarde le total à chaque fois — c'est l'essai qui répond, pas l'intuition.</p>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 et 2 — la pompe ne pèse rien, la carte pèse tout.</b> La pompe tire 300 mA, six
+      fois plus que la carte… pendant <b>60 secondes par jour</b>. La carte tire 45 mA pendant
+      <b>24 heures</b>. Le produit courant × durée écrase l'intuition :</p>
+      <table class="refs">
+        <tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
+        <tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td><b>92,0 %</b></td></tr>
+        <tr><td>Capteur d'humidité</td><td>2 mA</td><td>24 h</td><td>0,240 Wh</td><td>4,1 %</td></tr>
+        <tr><td>Écran LCD RGB</td><td>40 mA</td><td>1 h</td><td>0,200 Wh</td><td>3,4 %</td></tr>
+        <tr><td>Pompe immergée</td><td>300 mA</td><td>60 s</td><td>0,025 Wh</td><td><b>0,4 %</b></td></tr>
+        <tr><td>Module relais</td><td>70 mA</td><td>60 s</td><td>0,006 Wh</td><td>0,1 %</td></tr>
+      </table>
+      <p><b>3 — la durée.</b> Un courant seul ne dit rien. Ce qui vide une source, c'est
+      <em>courant × tension × durée</em>. Un petit courant qui ne s'arrête jamais bat un gros
+      courant qui dure une minute.</p>
+      <p class="retenir">📌 <b>Le coupable n'est presque jamais celui qui fait du bruit.</b>
+      Retiens-le : tu vas retrouver exactement ce raisonnement à l'activité 4, et il va changer
+      la réponse de toute la séance.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Activité 1 — Écrire les critères AVANT de comparer ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> distinguer un critère d'une remarque. <b>Compétence :</b>
+  4e_C3.1. <b>Production attendue :</b> 8 décisions + une phrase.</p>
+  <p>Un <b>critère</b>, c'est une caractéristique qui <em>distingue</em> les candidats et qui
+  <em>compte</em> pour le besoin. Huit propositions sont faites au conseil de classe. Pour
+  chacune, dis si c'en est un — <b>ici, pour ce jardin-là</b>.</p>
+  <div class="exo">
+    <p style="margin-top:12px"><b>L'autonomie : combien de temps le jardin tient sans que personne n'intervienne</b></p>
+    <select id="a1c0">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>La couleur du boîtier de la source</b></p>
+    <select id="a1c1">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>La disponibilité d'une prise à l'endroit exact du jardin</b></p>
+    <select id="a1c2">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>Le coût sur une année entière, et pas seulement le prix d'achat</b></p>
+    <select id="a1c3">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>La marque du fabricant de la pile</b></p>
+    <select id="a1c4">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>Le déchet produit : ce qu'on jette, et à quelle fréquence</b></p>
+    <select id="a1c5">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>Le poids de la source, alors que le jardin ne bouge jamais</b></p>
+    <select id="a1c6">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:12px"><b>La sécurité : ce que l'élève manipule reste-t-il en très basse tension</b></p>
+    <select id="a1c7">
+      <option value="">— je choisis —</option>
+      <option>c'est un critère utile ici</option>
+      <option>ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</option>
+    </select>
+    <p style="margin-top:14px"><b>En une phrase :</b> qu'est-ce qui fait qu'une caractéristique
+    est un critère <em>ici</em> et pas ailleurs&nbsp;?</p>
+    <textarea id="a1ph" rows="2" placeholder="Une caractéristique est un critère quand…"></textarea>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>L'autonomie : combien de temps le jardin tient sans que personne n'intervienne</b> — c'est un critère utile ici</p>
+      <p><b>La couleur du boîtier de la source</b> — ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</p>
+      <p><b>La disponibilité d'une prise à l'endroit exact du jardin</b> — c'est un critère utile ici</p>
+      <p><b>Le coût sur une année entière, et pas seulement le prix d'achat</b> — c'est un critère utile ici</p>
+      <p><b>La marque du fabricant de la pile</b> — ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</p>
+      <p><b>Le déchet produit : ce qu'on jette, et à quelle fréquence</b> — c'est un critère utile ici</p>
+      <p><b>Le poids de la source, alors que le jardin ne bouge jamais</b> — ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici</p>
+      <p><b>La sécurité : ce que l'élève manipule reste-t-il en très basse tension</b> — c'est un critère utile ici</p>
+      <p class="retenir">📌 <b>Le poids est le cas intéressant.</b> C'est une vraie
+      caractéristique, elle est mesurable, elle distingue parfaitement les cinq sources — et
+      elle ne sert à rien : <em>le jardin ne bouge jamais</em>. Un critère n'est pas une
+      propriété de la source, c'est une propriété du <b>besoin</b>. Sur un objet porté à la
+      main, le poids redeviendrait le premier critère.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📊 Activité 2 — Remplir la grille de comparaison ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> appliquer les mêmes critères à toutes les sources.
+  <b>Compétence :</b> 4e_C7.4. <b>Production attendue :</b> 5 verdicts + 1 calcul.</p>
+  <p>Remonte au banc, <b>toutes les lignes rallumées</b>, et passe les cinq sources. Pour
+  chacune, dis ce que le banc conclut.</p>
+  <div class="exo">
+    <p style="margin-top:12px"><b>Pile 9 V alcaline</b></p>
+    <select id="a2g0">
+      <option value="">— je choisis —</option>
+      <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
+      <option>illimitée, tant qu'il y a du réseau</option>
+      <option>moins d'un jour</option>
+      <option>un jour et demi, puis il faut le recharger</option>
+      <option>un peu plus de deux jours</option>
+    </select>
+    <p style="margin-top:12px"><b>4 piles AA alcalines</b></p>
+    <select id="a2g1">
+      <option value="">— je choisis —</option>
+      <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
+      <option>illimitée, tant qu'il y a du réseau</option>
+      <option>moins d'un jour</option>
+      <option>un jour et demi, puis il faut le recharger</option>
+      <option>un peu plus de deux jours</option>
+    </select>
+    <p style="margin-top:12px"><b>Accu Li-ion 18650 rechargeable</b></p>
+    <select id="a2g2">
+      <option value="">— je choisis —</option>
+      <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
+      <option>illimitée, tant qu'il y a du réseau</option>
+      <option>moins d'un jour</option>
+      <option>un jour et demi, puis il faut le recharger</option>
+      <option>un peu plus de deux jours</option>
+    </select>
+    <p style="margin-top:12px"><b>Secteur — adaptateur USB scellé</b></p>
+    <select id="a2g3">
+      <option value="">— je choisis —</option>
+      <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
+      <option>illimitée, tant qu'il y a du réseau</option>
+      <option>moins d'un jour</option>
+      <option>un jour et demi, puis il faut le recharger</option>
+      <option>un peu plus de deux jours</option>
+    </select>
+    <p style="margin-top:12px"><b>Panneau solaire 1 W crête + accu</b></p>
+    <select id="a2g4">
+      <option value="">— je choisis —</option>
+      <option>elle ne suffit pas : il manque de l'énergie chaque jour</option>
+      <option>illimitée, tant qu'il y a du réseau</option>
+      <option>moins d'un jour</option>
+      <option>un jour et demi, puis il faut le recharger</option>
+      <option>un peu plus de deux jours</option>
+    </select>
+    <p style="margin-top:16px"><b>Le calcul qui fait mal.</b> La pile 9 V tient environ
+    <b>11 heures</b>. Le jardin doit vivre seul pendant les <b>60 jours</b> de l'été.
+    Combien faudrait-il de piles 9 V&nbsp;?</p>
+    <input type="text" inputmode="numeric" id="a2piles" placeholder="… piles">
+    <p style="font-size:.9em;color:var(--warn)">🔒 Passe les cinq sources au banc : une grille se remplit avec des relevés, pas avec des souvenirs.</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Pile 9 V alcaline</b> — moins d'un jour</p>
+      <p><b>4 piles AA alcalines</b> — un peu plus de deux jours</p>
+      <p><b>Accu Li-ion 18650 rechargeable</b> — un jour et demi, puis il faut le recharger</p>
+      <p><b>Secteur — adaptateur USB scellé</b> — illimitée, tant qu'il y a du réseau</p>
+      <p><b>Panneau solaire 1 W crête + accu</b> — elle ne suffit pas : il manque de l'énergie chaque jour</p>
+      <p style="margin-top:12px"><b>Le calcul :</b> 60 jours font 1 440 heures ; 1 440 ÷ 11 =
+      <b>131 piles</b>. À 3,50 € l'unité, cela fait <b>459 €</b> de piles pour arroser des
+      tomates pendant deux mois — et 131 piles à porter au bac de collecte.</p>
+      <p class="retenir">📌 Ce nombre ne sort pas d'une opinion sur les piles : il sort d'une
+      autonomie relevée et d'une durée donnée par le besoin. <b>C'est ça, comparer.</b></p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚖️ Activité 3 — Trancher, et assumer ce qu'on écarte ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> choisir avec une grille sous les yeux. <b>Compétence :</b>
+  4e_C7.4. <b>Production attendue :</b> 3 réponses + une justification.</p>
+  <div class="exo" style="background:#173666">
+    <h4>Ce que le gestionnaire ajoute</h4>
+    <ul>
+      <li>Le carré potager est <b>au fond de la cour</b>. La prise la plus proche est dans le
+        préau, à <b>25 mètres</b>. Tirer une ligne enterrée coûterait environ <b>400 €</b>.</li>
+      <li>Le jardin doit tenir <b>60 jours sans personne</b>.</li>
+      <li>Le collège s'est engagé dans une démarche <b>E3D</b> : le déchet compte.</li>
+    </ul>
+  </div>
+  <div class="exo">
+
+    <p><b>Question 1.</b> Sur le seul critère de l'autonomie, quelle source gagne&nbsp;?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>le secteur : illimitée</option>
+      <option>les quatre piles AA : 2,1 jours</option>
+      <option>l'accu 18650 : 38 heures</option>
+      <option>le panneau solaire : il donne tous les jours</option>
+    </select>
+    <p><b>Question 2.</b> Et pourtant le secteur pose un problème que la grille fait apparaître.
+    Lequel&nbsp;?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>il n'y a pas de prise au fond de la cour, et l'amener coûte 400 €</option>
+      <option>il n'est pas assez puissant pour la pompe</option>
+      <option>il produit trop de déchets chaque année</option>
+      <option>il est dangereux, même avec un adaptateur fermé</option>
+    </select>
+    <p><b>Question 3.</b> Le panneau 1 W récolte 3,7 Wh par jour et le jardin en consomme 5,87.
+    Il manque donc…</p>
+    <select id="a3q3">
+      <option value="">— je choisis —</option>
+      <option>2,17 Wh par jour</option>
+      <option>9,57 Wh par jour</option>
+      <option>1,59 Wh par jour</option>
+      <option>rien : le panneau suffit largement</option>
+    </select>
+    <p><b>Ta recommandation, en trois phrases.</b> Nomme la source, cite <b>deux chiffres</b> de
+    ta grille, et dis franchement <b>ce que ton choix coûte</b> — car aucune source n'est
+    bonne sur tous les critères.</p>
+    <textarea id="a3rec" rows="4" placeholder="Je recommande … parce que … et … En revanche, ce choix oblige à …"></textarea>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — le secteur.</b> Sur ce seul critère, la question ne se pose même pas : illimitée
+      bat n'importe quel nombre de jours.</p>
+      <p><b>2 — la prise n'existe pas là-bas.</b> Une source parfaite qu'on ne peut pas amener
+      n'est pas une source. 400 € de tranchée pour un jardin pédagogique, le gestionnaire dira
+      non — et il aura raison.</p>
+      <p><b>3 — il manque 2,17 Wh par jour.</b> 5,87 − 3,70. Ce n'est pas « un peu » : c'est
+      37 % du besoin, tous les jours, et un manque quotidien vide l'accu en quelques jours,
+      quelle que soit sa taille.</p>
+      <p class="retenir">📌 <b>Aucune source ne gagne sur tous les critères, et c'est normal :
+      si l'une gagnait partout, il n'y aurait rien à comparer.</b> Une bonne recommandation dit
+      donc toujours deux choses — ce qu'on choisit, et <em>ce que ce choix coûte</em>. Ici :
+      le panneau 2 W (7,4 Wh/jour) tient le besoin pour 15 € et zéro déchet annuel, mais il
+      faut le fixer, l'orienter et le nettoyer. Le secteur ne demande rien… sauf 400 € de
+      tranchée. Les deux réponses se défendent, <b>à condition de dire le prix de la sienne</b>.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>💡 Activité 4 — Et si on changeait la charge plutôt que la source ⏱ ~15 min</h2>
+  <p><b>Objectif :</b> découvrir que comparer les sources finit par obliger à
+  regarder la charge. <b>Compétence :</b> 4e_C7.4. <b>Production attendue :</b> 1 calcul +
+  1 réponse + 1 phrase.</p>
+  <p>Retour à l'activité 0 : la carte pèse <b>92 %</b>. Une carte de mesure moderne peut se
+  mettre en <b>veille profonde</b> entre deux lectures et ne consommer, en moyenne, que
+  <b>5 mA</b> au lieu de 45.</p>
+  <p><b>Fais le calcul au banc :</b> éteins la ligne de la carte, lis le total qui reste, puis
+  ajoute ce que consommerait la carte à faible consommation — 5 mA sous 5 V pendant 24 h, soit
+  0,60 Wh.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Le nouveau total de consommation, par jour&nbsp;:</p>
+    <input type="text" inputmode="decimal" id="a4tot" placeholder="… Wh">
+    <p><b>2.</b> Avec ce montage, le panneau solaire 1 W (3,7 Wh par jour)…</p>
+    <select id="a4q2">
+      <option value="">— je choisis —</option>
+      <option>suffit largement, avec plus du triple de marge</option>
+      <option>ne suffit toujours pas</option>
+      <option>suffit tout juste, sans aucune marge</option>
+      <option>devient inutile : il n'y a plus rien à alimenter</option>
+    </select>
+    <p><b>En une phrase :</b> qu'est-ce qui a changé dans le problème&nbsp;?</p>
+    <textarea id="a4ph" rows="2" placeholder="On cherchait … et en fait …"></textarea>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — 1,07 Wh par jour.</b> Sans la carte, le banc affiche 0,47 Wh ; la carte à faible
+      consommation en ajoute 0,60. Total : <b>1,07 Wh</b>, contre 5,87 avant. On a divisé la
+      consommation par <b>5,5</b> en changeant <em>une</em> pièce.</p>
+      <p><b>2 — le panneau suffit largement :</b> 3,7 Wh récoltés pour 1,07 consommés, soit
+      plus du triple. La source qui perdait toutes les comparaisons devient la meilleure, et
+      elle ne demande ni tranchée ni pile.</p>
+      <p class="retenir">📌 <b>On croyait choisir une source ; on a changé le problème.</b>
+      Agrandir le panneau, c'était payer pour du gaspillage. Devant un manque d'énergie, le
+      premier réflexe d'un technicien n'est pas « quelle source plus grosse » mais
+      <b>« pourquoi ça consomme autant »</b>.</p>
+      <p>Une précision honnête, parce que la carte de l'atelier est une UNO : <b>une UNO ne
+      descend pas à 5 mA</b>. Sa DEL d'alimentation, son composant USB et son régulateur tirent
+      près de 30 mA même quand le programme dort. Ce n'est pas le programme qu'il faut changer,
+      <b>c'est la carte</b> — et ça, c'est une décision de conception, pas de programmation.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
+<p>Le collège déplace le jardin <b>sur le toit-terrasse de l'annexe</b> : plein
+  soleil toute la journée, et une prise à deux mètres. Le montage ne change pas.</p>
+  <p><b>Ta grille de comparaison change-t-elle&nbsp;? Et ta conclusion&nbsp;?</b> Dis ce qui
+  bouge, ce qui ne bouge pas, et pourquoi.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+    <p><b>Les critères ne bougent pas</b> — autonomie, prise disponible, coût annuel, déchet,
+    sécurité. Ce sont les mêmes cinq, et c'est le signe qu'ils étaient bien choisis : une grille
+    qu'il faut refaire à chaque situation n'était pas une grille.</p>
+    <p><b>Deux cases changent</b>, et elles suffisent à retourner la conclusion : la prise est
+    à deux mètres, et le soleil est plein. Le secteur redevient possible <em>sans</em> 400 € de
+    tranchée, et le panneau devient franchement bon.</p>
+    <p><b>La meilleure réponse est celle qui combine :</b> panneau + accu pour l'autonomie, et
+    l'adaptateur secteur en secours quand il pleut trois jours. On n'est pas obligé de choisir
+    une seule source — encore faut-il l'avoir écrit dans la grille.</p>
+    <p>Un piège à ne pas manquer : sur un toit-terrasse en Martinique, il y a le <b>soleil</b>,
+    mais aussi le <b>sel</b>, la <b>pluie</b> et le <b>vent</b>. Le panneau tient ; le boîtier
+    de piles, lui, se corrode. Encore un critère que le banc ne compte pas.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Comparer</b> — écrire des critères AVANT de regarder, puis les appliquer à tous les
+      candidats de la même façon. Sans grille, on ne compare pas : on préfère.</li>
+    <li><b>Critère</b> — une caractéristique qui distingue les candidats <em>et</em> qui compte
+      pour le besoin. Le poids d'une source est une caractéristique ; ce n'est un critère que si
+      l'objet bouge.</li>
+    <li><b>Courant × tension × durée</b> — l'énergie. Un courant seul ne dit rien : la pompe
+      tire 300 mA et pèse 0,4 %, la carte tire 45 mA et pèse 92 %.</li>
+    <li><b>Réservoir ou robinet</b> — une pile stocke et s'épuise ; le secteur et le panneau ne
+      stockent rien et donnent. Un manque quotidien de 2,17 Wh vide n'importe quel accu.</li>
+    <li><b>Le coût sur une durée</b> — 131 piles pour deux mois d'été, soit 459 €, contre 15 €
+      de panneau. Le prix d'achat n'est pas le coût.</li>
+    <li><b>Aucun candidat ne gagne partout</b> — sinon il n'y aurait rien à comparer. Une bonne
+      recommandation dit ce qu'on choisit <em>et</em> ce que ce choix coûte.</li>
+    <li><b>Regarder la charge</b> — devant un manque d'énergie, la première question n'est pas
+      « quelle source plus grosse » mais « pourquoi ça consomme autant ».</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+<p>Tu avais parié sur la pompe ou sur la carte. Le banc a tranché en trois
+  clics. Ce qui compte n'est pas d'avoir eu raison : c'est de savoir <em>pourquoi</em> l'intuition
+  se trompait — et de pouvoir refaire le raisonnement sur un autre objet.</p>
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.4 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>🔴 Maîtrise insuffisante — je choisis une source sans grille de comparaison</option>
+    <option>🟠 Maîtrise fragile — je remplis la grille si les critères me sont donnés</option>
+    <option>🟢 Maîtrise satisfaisante — j'écris mes critères, je les applique à toutes les sources et je tranche</option>
+    <option>⭐ Très bonne maîtrise — et je dis ce que mon choix coûte, et quand il faut changer la charge plutôt que la source</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur les critères, le produit courant × durée, la grille de comparaison, le coût sur une durée et ce qu'aucune source ne gagne.</p>
+  <a class="btn" href="qcm_4e_C7.4_energie-du-jardin.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>💰 Défi coût réel :</b> compare, sur <b>quatre années scolaires</b>, le coût total des
+  quatre piles AA (4,00 € le jeu, 2,1 jours d'autonomie) et celui du panneau 2 W (15 €, plus un
+  accu à 8 € tous les trois ans). À partir de quel mois le panneau devient-il moins cher&nbsp;?</p>
+  <p><b>🔍 Défi mesure :</b> avec un multimètre en série, mesure le courant réel de ta carte au
+  repos. Est-il de 45 mA&nbsp;? Écris l'écart, et une raison possible.</p>
+  <p><b>🌧 Défi saison des pluies :</b> le banc compte 5,3 heures d'équivalent plein soleil en
+  moyenne annuelle. Cherche ce que devient ce chiffre en septembre en Martinique, et dis de
+  combien il faudrait grossir l'accu pour passer une semaine grise.</p>
+
+</section>
+
+<footer>Séquence 4e_C7.4 — <em>De quoi vit le jardin connecté</em> · Thème 3 · banc d'énergie original (CC0), valeurs calculées à partir des courants constructeur et des capacités réelles.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_4e_C7_4";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── banc d'énergie ─────────────────────────────────────────────────────── */
+const CONSOS = [{"nom": "Carte Arduino UNO", "ma": 45, "h": 24.0}, {"nom": "Capteur d'humidité du sol", "ma": 2, "h": 24.0}, {"nom": "Écran LCD RGB", "ma": 40, "h": 1.0}, {"nom": "Module relais", "ma": 70, "h": 0.016666666666666666}, {"nom": "Pompe immergée 5 V", "ma": 300, "h": 0.016666666666666666}];      /* [{nom, ma, h}] */
+const SOURCES = {"Pile 9 V alcaline": {"type": "stock", "brute": 4.95, "rend": 0.5555555555555556, "utile": 2.8, "jour": null, "detail": "Une pile plate à deux boutons-pression. Régulateur linéaire 9 → 5 V : il dissipe 4 V sur 9 en chaleur, soit 44 % de l'énergie perdue avant d'alimenter quoi que ce soit."}, "4 piles AA alcalines": {"type": "stock", "brute": 15.0, "rend": 0.8333333333333334, "utile": 12.5, "jour": null, "detail": "Quatre piles bâton en série. Régulateur linéaire 6 → 5 V : il ne dissipe qu'un volt sur six, donc il perd beaucoup moins."}, "Accu Li-ion 18650 rechargeable": {"type": "stock", "brute": 11.100000000000001, "rend": 0.85, "utile": 9.4, "jour": null, "detail": "Un accumulateur rechargeable et un convertisseur ÉLÉVATEUR 3,7 → 5 V, donné à 85 % par son constructeur. Il se recharge environ 500 fois."}, "Secteur — adaptateur USB scellé": {"type": "secteur", "brute": null, "rend": 1.0, "utile": null, "jour": null, "detail": "Un bloc secteur fermé, jamais ouvert ni modifié par un élève : côté élève, il n'y a que du 5 V. Illimité — tant qu'il y a du réseau."}, "Panneau solaire 1 W crête + accu": {"type": "solaire", "brute": null, "rend": 0.7, "utile": null, "jour": 3.7, "detail": "Un petit panneau et l'accu qu'il recharge. Ce n'est pas un réservoir : c'est un robinet, qui donne une certaine énergie CHAQUE JOUR."}};    /* {nom: {brute, rend, utile, jour, detail}} */
+const TENSION = 5;
+
+function fmt(v, dec){ return v.toFixed(dec).replace(".", ","); }
+function duree(h){
+  if(h >= 1) return fmt(h, 0) + " h";
+  const s = Math.round(h * 3600);
+  return s >= 60 ? (s / 60) + " min" : s + " s";
+}
+function actifs(){ return CONSOS.map((c, i) => document.getElementById("ck" + i).checked); }
+function whJour(){
+  const on = actifs();
+  return CONSOS.map((c, i) => on[i] ? c.ma / 1000 * TENSION * c.h : 0);
+}
+function majBanc(){
+  const w = whJour(), tot = w.reduce((s, x) => s + x, 0);
+  const on = actifs();
+  CONSOS.forEach((c, i) => {
+    document.getElementById("wh" + i).textContent = fmt(w[i], 3) + " Wh";
+    document.getElementById("tr" + i).classList.toggle("eteint", !on[i]);
+    const pc = tot > 0 ? (w[i] / tot * 100) : 0;
+    const b = document.getElementById("pt" + i);
+    b.style.width = pc + "%";
+    b.title = c.nom + " : " + fmt(pc, 1) + " %";
+  });
+  document.getElementById("etot").textContent = fmt(tot, 2) + " Wh";
+
+  const s = SOURCES[document.getElementById("src").value];
+  const $ = id => document.getElementById(id);
+  $("sBrute").textContent = s.brute === null ? "—  (elle n'en stocke pas)" : fmt(s.brute, 2) + " Wh";
+  $("sRend").textContent = s.rend === null ? "—" : fmt(s.rend * 100, 0) + " %";
+  $("sRendLbl").textContent =
+      s.type === "solaire" ? "Rendement de la chaîne solaire"
+    : s.type === "secteur" ? "Rendement (rien à convertir : c'est déjà du 5 V)"
+    : "Rendement de la mise en 5 V";
+  $("sDetail").textContent = s.detail;
+  const v = $("verdict");
+  if(s.type === "secteur"){
+    $("sUtile").textContent = "illimitée";
+    v.textContent = "⚡ Autonomie illimitée — tant qu'il y a du réseau.";
+    v.className = "verdict ok";
+  } else if(s.type === "solaire"){
+    $("sUtile").textContent = fmt(s.jour, 1) + " Wh PAR JOUR";
+    if(tot === 0){ v.textContent = "Rien n'est allumé : il n'y a rien à alimenter."; v.className = "verdict"; }
+    else if(s.jour >= tot){
+      v.textContent = "☀ Il récolte " + fmt(s.jour, 1) + " Wh par jour pour " + fmt(tot, 2)
+        + " consommés : il suffit, avec " + fmt((s.jour / tot - 1) * 100, 0) + " % de marge.";
+      v.className = "verdict ok";
+    } else {
+      v.textContent = "☁ Il récolte " + fmt(s.jour, 1) + " Wh par jour pour " + fmt(tot, 2)
+        + " consommés : il NE SUFFIT PAS. Il en manque " + fmt(tot - s.jour, 2) + " Wh chaque jour.";
+      v.className = "verdict non";
+    }
+  } else {
+    $("sUtile").textContent = fmt(s.utile, 1) + " Wh";
+    if(tot === 0){ v.textContent = "Rien n'est allumé : il n'y a rien à alimenter."; v.className = "verdict"; }
+    else {
+      const j = s.utile / tot;
+      const txt = j >= 2 ? fmt(j, 1) + " jours" : Math.round(j * 24) + " heures";
+      v.textContent = "🔋 Autonomie : " + txt + "  (" + fmt(s.utile, 1) + " Wh utiles ÷ "
+        + fmt(tot, 2) + " Wh par jour)";
+      v.className = "verdict " + (j >= 2 ? "ok" : j >= 1 ? "limite" : "non");
+    }
+    window.__exp.stock = true;
+  }
+  window.__exp.src = window.__exp.src || {};
+  window.__exp.src[document.getElementById("src").value] = true;
+  if(Object.keys(window.__exp.src).length >= 5) window.__exp.srcAll = true;
+  if(on.some(x => !x)) window.__exp.eteint = true;
+  
+  if(!document.getElementById("ck4").checked) window.__exp.sansPompe = true;
+  if(!document.getElementById("ck0").checked) window.__exp.sansCarte = true;
+  if(window.__exp.sansPompe && window.__exp.sansCarte) window.__exp.compare = true;
+
+  save();
+}
+CONSOS.forEach((c, i) => document.getElementById("ck" + i).addEventListener("change", majBanc));
+document.getElementById("src").addEventListener("change", majBanc);
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0q1", "5,85 Wh — presque rien ne change")
+              + sv("a0q2", "0,47 Wh — presque tout disparaît")
+              + sv("a0q3", "parce qu'elle ne tourne que 60 secondes par jour");
+       return {score: s, total: 3, exp: !!window.__exp.compare,
+               expMsg: "Éteins d'abord la pompe, puis la carte, et regarde le total à chaque fois — c'est l'essai qui répond, pas l'intuition."}; },
+  1(){ let s = 0;
+       s += sv("a1c0", "c'est un critère utile ici"); s += sv("a1c1", "ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici"); s += sv("a1c2", "c'est un critère utile ici"); s += sv("a1c3", "c'est un critère utile ici"); s += sv("a1c4", "ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici"); s += sv("a1c5", "c'est un critère utile ici"); s += sv("a1c6", "ce n'est pas un critère : il ne distingue pas ou il ne compte pas ici"); s += sv("a1c7", "c'est un critère utile ici"); s += pres("a1ph", 40);
+       return {score: s, total: 9, exp: true}; },
+  2(){ let s = 0;
+       s += sv("a2g0", "moins d'un jour"); s += sv("a2g1", "un peu plus de deux jours"); s += sv("a2g2", "un jour et demi, puis il faut le recharger"); s += sv("a2g3", "illimitée, tant qu'il y a du réseau"); s += sv("a2g4", "elle ne suffit pas : il manque de l'énergie chaque jour"); s += nb("a2piles", 131, 2);
+       return {score: s, total: 6, exp: !!window.__exp.srcAll,
+               expMsg: "Passe les cinq sources au banc : une grille se remplit avec des relevés, pas avec des souvenirs."}; },
+  3(){ let s = 0;
+       s += sv("a3q1", "le secteur : illimitée")
+              + sv("a3q2", "il n'y a pas de prise au fond de la cour, et l'amener coûte 400 €")
+              + sv("a3q3", "2,17 Wh par jour")
+              + pres("a3rec", 110);
+       return {score: s, total: 4, exp: true}; },
+  4(){ let s = 0;
+       s += nb("a4tot", 1.07, 0.02)
+              + sv("a4q2", "suffit largement, avec plus du triple de marge")
+              + pres("a4ph", 40);
+       return {score: s, total: 3, exp: true}; },
+  5(){ return {score: pres("reinv", 80), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majBanc();
+})();
+</script>
+
+</body>
+</html>
