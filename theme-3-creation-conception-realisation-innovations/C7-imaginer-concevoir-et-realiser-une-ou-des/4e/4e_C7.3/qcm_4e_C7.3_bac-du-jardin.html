@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 4e · QCM — Le bac du jardin (4e_C7.3)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.3_bac-du-jardin.html">← Séquence</a></nav>
+<h1>🪴 QCM — Le bac du jardin : comparer, et sur quelle durée</h1>
+<p class="subtitle">Prix d'achat et coût global, la durée qu'on choisit, le remplacement qui retourne un classement, ce qu'un prix ne compte pas — 20 questions sur 4e_C7.3, 10 sur 4e_C3.2</p>
+<div class="badges">
+  <span class="badge niveau">4e</span>
+  <span class="badge code">4e_C7.3 · 4e_C3.2</span>
+  <span class="badge theme">30 questions · 90 réfutations · chaque proposition fausse est réfutée une par une</span>
+</div>
+<p style="text-align:center"><a href="sequence_4e_C7.3_bac-du-jardin.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="BOI">📦 La boîte étiquetée</option>
+      <option value="LIR">🔎 Lire et tester un programme</option>
+      <option value="MOD">🔧 Modifier et régler</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C8.1 · C8.2 · C8.3 · Thème 3 · New York · Technologie cycle 4 (2024) · <a href="sequence_4e_C7.3_bac-du-jardin.html">atelier associé</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ 4e_C7.3 ═══ */
+{c:"4e_C7.3",n:"Comparer et préférer",q:"Que veut dire « comparer » deux matériaux, au sens du programme ?",
+ o:["désigner celui qui semble le plus solide après avoir manipulé les deux","mettre côte à côte des grandeurs de même nature, mesurées de la même façon","demander à deux fournisseurs différents lequel ils recommandent le plus","additionner les caractéristiques de chacun pour en tirer une note finale"],r:1,
+ expl:"Comparer suppose une même grandeur, une même unité et une même méthode de mesure. Sans cela, on ne compare pas : on préfère, et on habille sa préférence.",
+ ex:"Comparer 8 ans à 15 ans a un sens ; comparer 167 € à 15 ans n'en a aucun.",
+ err:"Croire qu'une préférence argumentée est une comparaison.",
+ d:["une impression à la main ne se mesure pas et ne se vérifie pas d'un élève à l'autre","","un fournisseur recommande ce qu'il vend : sa réponse n'est pas une mesure","des durées et des prix ne s'additionnent pas : leur somme n'a aucune signification"],
+ ret:"Comparer, c'est mesurer la même grandeur, dans la même unité, de la même façon."},
+{c:"4e_C7.3",n:"Le plus adapté à quoi",q:"Le programme demande de choisir « le plus adapté ». Que manque-t-il à cette expression ?",
+ o:["adapté à quelles exigences, et pour combien de temps : rien n'est adapté en soi","adapté à quel budget : c'est le prix qui décide toujours en dernier ressort","adapté à quel fournisseur : chacun a son catalogue et ses matériaux propres","rien : un matériau adapté à un objet l'est aussi pour tous les objets voisins"],r:0,
+ expl:"« Adapté » est un mot relatif. Il n'a de sens qu'accompagné des exigences auxquelles on l'adapte, et de la durée sur laquelle on juge.",
+ ex:"Le PVC est adapté sur quatre ans, et il ne l'est plus sur quinze.",
+ err:"Chercher le matériau adapté sans avoir écrit à quoi on veut l'adapter.",
+ d:["","le budget départage les candidats retenus, il n'écrit pas les exigences du cahier","le catalogue du fournisseur ne dit rien des contraintes du site où l'objet vivra","changer d'objet change les exigences, donc change le matériau qui leur convient"],
+ ret:"Rien n'est adapté en soi. Adapté suppose des exigences écrites et une durée choisie."},
+{c:"4e_C7.3",n:"Prix d'achat et coût",q:"Quelle est la différence entre le prix d'achat d'un bac et son coût ?",
+ o:["le coût suppose une durée : il compte les achats nécessaires pour la couvrir","le coût ajoute la taxe sur la valeur ajoutée au prix affiché par le vendeur","le coût est le prix négocié, obtenu après discussion avec le fournisseur","il n'y en a aucune : les deux mots désignent la somme versée au vendeur"],r:0,
+ expl:"Un prix est instantané. Un coût court sur une durée, et il compte les remplacements. Sans durée annoncée, une comparaison de prix ne veut rien dire.",
+ ex:"Le PVC coûte 167 € à l'achat et 333 € sur quinze ans : c'est le même bac.",
+ err:"Comparer des prix d'achat en croyant comparer des coûts.",
+ d:["","la taxe s'ajoute aux deux de la même façon : elle ne change aucun classement","une négociation modifie le prix, elle ne fait pas apparaître la durée de vie","le prix se paie une fois ; le coût compte tous les paiements sur la durée retenue"],
+ ret:"Un prix est un instant. Un coût a toujours une durée attachée."},
+{c:"4e_C7.3",n:"Nombre de remplacements",q:"Un bac dure 6 ans. Combien en faut-il pour couvrir 15 ans ?",
+ o:["trois : deux couvrent douze ans, il en manquerait trois","deux : douze ans suffisent, les trois dernières années sont négligeables","deux et demi : on répartit le coût du dernier bac au prorata du temps","quinze divisé par six, soit deux virgule cinq bacs à commander"],r:0,
+ expl:"On n'achète pas la moitié d'un bac. Le nombre d'exemplaires s'obtient par arrondi à l'entier supérieur : c'est ce que le banc écrit entre parenthèses, (3×).",
+ ex:"15 ÷ 6 = 2,5 → 3 bacs, soit 3 × 90,44 = 271,32 €.",
+ err:"Diviser sans arrondir vers le haut, et sous-estimer le coût réel.",
+ d:["","il manquerait trois années de service : le jardin resterait sans bac pendant ce temps","un demi-bac ne s'achète pas ; le troisième est acheté entier même s'il sert peu","le calcul est juste, mais un nombre de bacs est un entier : il faut arrondir au-dessus"],
+ ret:"Le nombre d'exemplaires s'arrondit toujours à l'entier supérieur."},
+{c:"4e_C7.3",n:"Inversion à quinze ans",q:"À l'achat, PVC 167 € et teck 309 €. Sur quinze ans, PVC 333 € et teck 309 €. Pourquoi ?",
+ o:["le teck bénéficie d'une remise dès lors qu'on l'achète pour une longue durée","le prix au kilogramme du PVC augmente régulièrement au fil des années","le PVC dure 8 ans : il faut deux bacs, là où un seul teck couvre les quinze","le banc ajoute au PVC un coût d'entretien annuel que le teck ne supporte pas"],r:2,
+ expl:"Rien n'a changé dans les matériaux : c'est la question posée qui a changé. « Combien coûte l'achat ? » et « combien coûte quinze ans ? » n'ont pas le même classement.",
+ ex:"2 × 166,60 = 333,20 € contre 1 × 309,40 € : vingt-quatre euros séparent les deux.",
+ err:"Croire qu'un classement obtenu à l'achat vaut pour toutes les durées.",
+ d:["aucune remise n'existe dans ce calcul : c'est la durée de vie qui fait tout l'écart","les prix employés sont les mêmes dans les deux calculs : seule la durée a changé","","le banc ne compte aucun entretien : il compte des achats, et rien d'autre"],
+ ret:"Un classement de coûts appartient à la durée pour laquelle il a été calculé."},
+{c:"4e_C7.3",n:"Second retournement",q:"Sur vingt ans, le teck redevient le plus cher des trois. Comment est-ce possible ?",
+ o:["au-delà de quinze ans, le banc cesse de compter les remplacements du teck","le teck se dégrade brutalement à partir de sa quinzième année dehors","le PVC devient moins cher que le teck grâce à l'usure de sa concurrence","il dure 15 ans : pour couvrir 20 ans, il en faut deux, soit 619 €"],r:3,
+ expl:"Le classement bouge deux fois entre quatre et vingt ans. Il n'appartient pas aux matériaux : il appartient à la durée qu'on a choisie — et qu'il faut écrire.",
+ ex:"À 20 ans : PP 362 €, PVC 500 € (3×), teck 619 € (2×).",
+ err:"Chercher « le vrai classement », comme s'il en existait un indépendant de la durée.",
+ d:["le banc compte les remplacements sur toute la durée choisie, sans aucune limite","le teck ne se dégrade pas brutalement : c'est le second achat qui pèse dans le calcul","le PVC ne change pas de prix : il passe devant parce que le teck double son achat",""],
+ ret:"Le classement des coûts appartient à la durée. Il n'existe pas de classement absolu."},
+{c:"4e_C7.3",n:"Durer trop longtemps",q:"Deux tecks pour couvrir vingt ans : que paie-t-on exactement ?",
+ o:["une pénalité imposée par le fournisseur pour toute commande fractionnée","un supplément lié au transport du second bac depuis la forêt d'origine","dix années de vie qu'on jettera avec le second bac sans les avoir utilisées","rien de particulier : deux bacs de quinze ans couvrent exactement vingt ans"],r:2,
+ expl:"Le défaut symétrique de « ne pas durer assez » est « durer trop » par rapport à l'usage. Le second teck part à la benne avec dix ans devant lui.",
+ ex:"2 × 15 = 30 années achetées pour 20 années utilisées.",
+ err:"Croire qu'une longue durée de vie est toujours un avantage, quel que soit l'usage.",
+ d:["aucune pénalité n'entre dans ce calcul : seuls comptent le prix et la durée de vie","le transport est déjà compris dans le prix employé : il n'apparaît pas à part","","elles les couvrent, et elles en couvrent dix de plus, qui sont payées et perdues"],
+ ret:"Durer trop longtemps par rapport à l'usage se paie, comme ne pas durer assez."},
+{c:"4e_C7.3",n:"La durée est une décision",q:"Qui décide de la durée sur laquelle on compare les matériaux ?",
+ o:["personne : la durée de comparaison est une donnée fixée par la réglementation","le fournisseur, à travers les durées de vie annoncées dans son catalogue","le matériau le plus durable des candidats, qui fixe l'horizon de comparaison","celui qui conçoit, avec le commanditaire — et il doit l'écrire au dossier"],r:3,
+ expl:"La durée n'est pas une donnée : c'est une décision. Quatre ans, quinze ans ou vingt ans ne donnent pas le même gagnant, et le lecteur du dossier doit savoir laquelle.",
+ ex:"« Nous comparons sur quinze ans, durée d'amortissement retenue par le collège. »",
+ err:"Comparer des coûts sans dire sur quelle durée — et croire le résultat objectif.",
+ d:["aucune réglementation ne la fixe : c'est un choix, et il doit être justifié","les durées de vie sont des données d'entrée du calcul, pas l'horizon de comparaison","prendre le plus durable comme horizon avantage mécaniquement ce candidat-là",""],
+ ret:"La durée de comparaison est une décision. Si elle n'est pas écrite, le résultat est douteux."},
+{c:"4e_C7.3",n:"Ramener à la même unité",q:"Comment compare-t-on un prix en euros et une durée de vie en années ?",
+ o:["en attribuant une note sur dix à chacun, puis en faisant la moyenne des deux","en les ramenant l'un à l'autre : combien d'achats faut-il sur la durée choisie","en classant les matériaux d'abord par prix, puis par durée, et en croisant","on ne les compare pas : on choisit celui des deux critères qui compte le plus"],r:1,
+ expl:"Deux grandeurs de natures différentes ne se comparent qu'en les ramenant à une troisième, commune. Ici : le coût sur une durée donnée, en euros.",
+ ex:"8 ans de vie et 15 ans à couvrir donnent 2 achats, soit 333,20 € : une seule unité.",
+ err:"Noter chaque critère pour pouvoir les additionner, ce qui invente une grandeur.",
+ d:["une note sur dix est arbitraire : elle fabrique une grandeur qui n'a pas été mesurée","","croiser deux classements ne dit rien quand ils se contredisent, ce qui est le cas ici","renoncer à comparer revient à décider d'avance, avant tout calcul"],
+ ret:"On compare deux grandeurs différentes en les ramenant à une même troisième."},
+{c:"4e_C7.3",n:"Recalé sur la recyclabilité",q:"Le pin traité autoclave tient l'eau, le sel et le soleil. Pourquoi est-il écarté ?",
+ o:["sa recyclabilité tombe à 20 %, quand le collège en exige au moins 40 %","sa résistance de 38 MPa reste inférieure aux 20 MPa demandés par le bac","sa masse de 18,7 kg dépasse les 60 kg admis pour un bac déplaçable","sa tenue à l'eau de 4 sur 5 est insuffisante pour une terre humide"],r:0,
+ expl:"Le traitement qui rend ce bois résistant à la terre humide est justement ce qui ferme sa filière de recyclage : on ne le broie plus avec les autres bois.",
+ ex:"90 % de recyclabilité pour le pin nu, 20 % une fois traité classe 4.",
+ err:"Croire qu'un matériau qui tient toutes les contraintes physiques est retenu.",
+ d:["","38 MPa dépassent largement les 20 exigés : ce critère-là, il le tient sans peine","18,7 kg sont très en dessous des 60 admis : la masse ne pose ici aucun problème","4 sur 5 correspond exactement au seuil exigé : il le tient, tout juste"],
+ ret:"Une qualité gagnée par traitement se paie souvent à la fin de vie."},
+{c:"4e_C7.3",n:"Engagement et contrainte physique",q:"La recyclabilité de 40 % est-elle une contrainte de même nature que la résistance ?",
+ o:["oui : la loi impose 40 % de recyclabilité à tout mobilier scolaire","oui : c'est une propriété physique du matériau, mesurée en laboratoire","non : c'est une préférence esthétique du conseil d'administration","non : rien ne casse si on l'ignore, c'est un engagement voté et écrit"],r:3,
+ expl:"Une exigence peut venir d'une contrainte physique ou d'une décision. Les deux s'écrivent au cahier des charges, et la seconde ne tient que si on la fait tenir.",
+ ex:"« Le collège n'installe pas ce qu'il ne saura pas jeter » : une phrase votée.",
+ err:"Croire qu'une exigence qui ne casse rien est une exigence secondaire.",
+ d:["aucune loi ne fixe ce seuil : c'est le conseil d'administration qui l'a écrit","la part recyclable dépend surtout des filières existantes, pas seulement du matériau","un engagement voté n'est pas une préférence : il oblige celui qui l'a pris",""],
+ ret:"Une exigence peut venir d'un engagement. Elle tient exactement tant qu'on la fait tenir."},
+{c:"4e_C7.3",n:"Deux motifs pour l'acier",q:"L'acier galvanisé est écarté du bac pour deux motifs. Lesquels ?",
+ o:["la résistance, insuffisante en flexion, et le prix, le plus élevé des six","la tenue à l'eau, à 3 sur 5, et la masse du bac, qui atteindrait 267 kg","la tenue au soleil, trop courte, et la recyclabilité, la plus faible des six","la tenue au sel, à 3 sur 5, et la température atteinte par le métal au soleil"],r:1,
+ expl:"La terre humide en permanence attaque l'acier galvanisé, et un bac de 267 kg ne se déplace pas à cinq. Deux seuils manqués, deux motifs différents.",
+ ex:"7 850 kg/m³ × 34 L de matière = 267 kg pour le même bac que 22 kg de teck.",
+ err:"Ne retenir qu'un motif d'élimination quand il y en a plusieurs.",
+ d:["l'acier est le plus résistant des six, à 235 MPa, et il n'est pas le plus cher à l'achat","","sa tenue au soleil est de 25 ans et sa recyclabilité de 95 % : deux de ses points forts","sa tenue au sel de 3 sur 5 atteint exactement le seuil, et la température n'est pas exigée ici"],
+ ret:"Un matériau peut manquer plusieurs seuils. On les nomme tous, pas seulement le premier."},
+{c:"4e_C7.3",n:"Exigence de l'objet, pas du site",q:"Le bac serait installé à 12 km de la mer, sous les arbres. Quelle exigence ne bouge pas ?",
+ o:["la recyclabilité : elle dépend de la commune où le bac sera mis au rebut","la tenue au sel : le sel voyage dans l'air bien au-delà de douze kilomètres","la tenue au soleil : les arbres perdent leurs feuilles une partie de l'année","la tenue à l'eau : la terre du bac reste humide, où qu'il soit installé"],r:3,
+ expl:"Certaines exigences viennent du site, d'autres de l'objet lui-même. Déplacer l'objet ne change que les premières — et il faut savoir les distinguer.",
+ ex:"Un jardin arrosé garde une terre humide à Morne-Rouge comme au bord de mer.",
+ err:"Croire qu'un site plus clément assouplit toutes les exigences à la fois.",
+ d:["la recyclabilité vient d'un engagement du collège, pas du lieu d'installation","à douze kilomètres et sous couvert, le brouillard salin ne se fait plus sentir","le soleil frappe moins sous les arbres : cette exigence-là s'assouplit vraiment",""],
+ ret:"Une exigence vient du site ou de l'objet. Déplacer l'objet ne change que les premières."},
+{c:"4e_C7.3",n:"Trois fabrications",q:"Le polypropylène recyclé est le moins cher sur toutes les durées. Que son prix ne dit-il pas ?",
+ o:["que sa résistance de 30 MPa atteint tout juste le seuil de 20 exigé","qu'il est fabriqué à partir de déchets plastiques déjà collectés et triés","qu'il faudra fabriquer et transporter trois bacs au lieu d'un seul en quinze ans","qu'il se travaille au collège par sciage, perçage, moulage et impression"],r:2,
+ expl:"Le prix ne compte que la matière achetée. Ni l'énergie de fabrication, ni les kilomètres, ni les trois mises au rebut n'y figurent.",
+ ex:"Trois bacs sur quinze ans, ce sont trois fabrications et trois transports.",
+ err:"Prendre le prix pour la mesure complète de ce que coûte un objet.",
+ d:["sa résistance est bien au-dessus du seuil : 30 MPa contre 20 exigés","c'est vrai, et c'est un atout : mais cela figure déjà dans sa recyclabilité de 95 %","","ses procédés sont un avantage, et ils sont déjà connus au moment de comparer"],
+ ret:"Un prix ne compte que la matière. L'énergie, les kilomètres et les rebuts n'y sont pas."},
+{c:"4e_C7.3",n:"Recyclable et impact",q:"Un matériau très recyclable qu'on remplace souvent est-il forcément le moins lourd pour l'environnement ?",
+ o:["oui : le recyclage compense entièrement l'énergie de la fabrication","oui : un matériau recyclable ne produit aucun déchet en fin de vie","non : c'est une comparaison à faire, pas une conclusion qui va de soi","non : un matériau recyclable est toujours plus lourd qu'un matériau durable"],r:2,
+ expl:"Recyclable dit ce qui se passe à la fin. Il ne dit rien du nombre de fabrications, de transports et de collectes qu'on aura enchaînés entre-temps.",
+ ex:"Trois bacs en polypropylène recyclé contre un seul bac en teck : le calcul reste à faire.",
+ err:"Prendre une bonne recyclabilité pour un bilan environnemental favorable.",
+ d:["le recyclage réduit l'impact de la fabrication, il ne l'annule jamais entièrement","recycler produit des pertes à chaque cycle et consomme de l'énergie de transformation","","cela dépend des cas : la conclusion inverse est également possible selon la durée"],
+ ret:"« Recyclable » décrit la fin de vie. Le bilan complet demande de compter les cycles."},
+{c:"4e_C7.3",n:"Ce que le banc ne mesure pas",q:"Le teck ne demande qu'un seul achat en quinze ans. Que le tableau ne dit-il pas de lui ?",
+ o:["combien d'années il tient dehors avant de se dégrader visiblement","d'où il vient, et les milliers de kilomètres qu'il a parcourus pour arriver","quelle charge ses parois supportent quand la terre humide les pousse","quelle part de sa matière rejoint une filière de recyclage existante"],r:1,
+ expl:"L'origine et la distance ne sont pas dans le tableau, et elles pèsent. Une comparaison honnête dit aussi ce qu'elle ne mesure pas.",
+ ex:"Un teck de forêt tropicale et un teck de plantation ont la même ligne dans le tableau.",
+ err:"Conclure sur un tableau sans jamais se demander quelles colonnes manquent.",
+ d:["sa tenue au soleil figure au tableau : quinze années, la meilleure des trois retenus","","sa résistance figure au tableau : 75 MPa, très au-dessus des 20 exigés","sa recyclabilité figure au tableau : 85 %, l'une des meilleures des six candidats"],
+ ret:"Une comparaison honnête déclare ce qu'elle ne mesure pas."},
+{c:"4e_C7.3",n:"Le prix n'est pas une exigence",q:"Pourquoi le prix ne figure-t-il pas parmi les six exigences du bac ?",
+ o:["parce que le conseil d'administration a voté un budget sans limite haute","parce que le prix change trop souvent pour figurer dans un cahier des charges","parce qu'il départage les candidats retenus, il ne les élimine pas","parce que le prix est déjà compris dans la recyclabilité de chaque matériau"],r:2,
+ expl:"Mettre le prix parmi les exigences, c'est laisser le budget écrire le cahier des charges. On tient d'abord les exigences, on compare ensuite les prix de ceux qui restent.",
+ ex:"Le pin nu, le moins cher des six, ne franchit même pas la première étape.",
+ err:"Partir du budget et chercher ce qui rentre dedans.",
+ d:["un budget a été voté : il existe, mais il intervient après le tri par exigences","un cahier des charges peut parfaitement porter un plafond de dépense, mis à jour","","la recyclabilité mesure une part de matière valorisable, elle ne contient aucun prix"],
+ ret:"Les exigences éliminent. Le prix départage ceux qui restent. Jamais l'inverse."},
+{c:"4e_C7.3",n:"Comparer sur quatre ans",q:"Le collège compare sur quatre ans, le temps d'une génération de collégiens. Que se passe-t-il ?",
+ o:["les trois coûts deviennent égaux, puisque aucun bac n'est remplacé sur la durée","le teck l'emporte, puisqu'il est le seul à tenir bien au-delà de quatre ans","chacun des trois retenus n'est acheté qu'une fois : le classement d'achat revient","le classement reste celui de quinze ans, car les durées de vie ne changent pas"],r:2,
+ expl:"Sur quatre ans, aucun des trois n'atteint sa fin de vie : chacun est acheté une fois, et l'ordre est celui des prix d'achat. C'est encore un choix de durée.",
+ ex:"4 ans : PP 90 €, PVC 167 €, teck 309 € — l'ordre de l'achat, tout simplement.",
+ err:"Croire que raccourcir la durée avantage les matériaux les plus durables.",
+ d:["les prix d'achat restent différents : ne pas remplacer ne les rend pas égaux","tenir plus longtemps que la durée comparée n'apporte rien : le surplus n'est pas compté","","le classement de quinze ans venait des remplacements, qui n'ont pas lieu sur quatre ans"],
+ ret:"Sur une durée courte, le classement des coûts redevient celui des prix d'achat."},
+{c:"4e_C7.3",n:"Comparer les mêmes bacs",q:"Peut-on comparer le coût d'un bac en teck de 22 kg et d'un bac en acier de 267 kg ?",
+ o:["non, sauf si l'on ajoute le coût du transport de chacun des deux bacs","non : deux objets de masses aussi différentes ne se comparent jamais","oui, en divisant chaque coût par la masse pour obtenir un prix au kilo","oui, à condition que les deux rendent exactement le même service au jardin"],r:3,
+ expl:"Une comparaison suppose un même service rendu : même volume de terre, même durée, même usage. La masse est alors une conséquence du matériau, pas un obstacle.",
+ ex:"Les six candidats sont comparés pour un même bac de 1,00 × 0,50 × 0,40 m.",
+ err:"Croire que des objets de tailles ou de masses différentes ne se comparent pas.",
+ d:["le transport peut s'ajouter aux deux, il ne conditionne pas la validité de la comparaison","les masses diffèrent justement parce que les matériaux diffèrent : c'est le résultat","un prix au kilo ne compare rien : c'est le service rendu qui doit être identique",""],
+ ret:"On compare des objets qui rendent le même service, pas des objets de même masse."},
+{c:"4e_C7.3",n:"Écrire la durée retenue",q:"Que doit contenir la note remise à l'intendance pour justifier le choix ?",
+ o:["l'avis du fournisseur, qui connaît le mieux les matériaux qu'il vend","le prix d'achat le plus bas et le nom du fournisseur qui le propose","la liste complète des six candidats avec toutes leurs caractéristiques","la durée retenue, le matériau qui gagne à cette durée, et pourquoi cette durée"],r:3,
+ expl:"Un dossier se juge à ce qu'il permet de vérifier. Sans la durée écrite, le lecteur ne peut ni refaire le calcul ni le contester.",
+ ex:"« Sur quinze ans, durée d'amortissement du collège : polypropylène recyclé, 271 €. »",
+ err:"Annoncer un gagnant sans donner l'hypothèse qui l'a fait gagner.",
+ d:["un fournisseur connaît son catalogue, pas les contraintes du jardin du collège","le prix d'achat le plus bas ne dit rien du coût, et le fournisseur ne justifie rien","la liste complète est utile en annexe, mais elle ne remplace pas la conclusion motivée",""],
+ ret:"Un choix se justifie par son hypothèse. Écrivez la durée, ou le résultat n'est pas vérifiable."},
+/* ═══ 4e_C3.2 ═══ */
+{c:"4e_C3.2",n:"Même besoin, objets différents",q:"Que faut-il vérifier avant de comparer deux objets techniques ?",
+ o:["qu'ils soient vendus par le même fournisseur, pour un prix cohérent","qu'ils répondent bien au même besoin, avec le même service rendu","qu'ils soient faits du même matériau, pour que la mesure soit valable","qu'ils aient été fabriqués la même année, pour que les prix se comparent"],r:1,
+ expl:"Comparer suppose une base commune : le même service, pendant la même durée. C'est ce qu'on appelle l'unité fonctionnelle, et c'est la première ligne d'une comparaison.",
+ ex:"Deux bacs de 200 litres pendant quinze ans : voilà une base commune.",
+ err:"Comparer deux objets qui ne rendent pas exactement le même service.",
+ d:["deux fournisseurs différents se comparent très bien si le service rendu est le même","","comparer des matériaux différents est justement l'objet de la démarche","les prix s'actualisent : l'année de fabrication n'empêche pas la comparaison"],
+ ret:"Une comparaison commence par définir le même service rendu, pendant la même durée."},
+{c:"4e_C3.2",n:"Les étapes du cycle de vie",q:"Quelles sont les grandes étapes du cycle de vie d'un objet technique ?",
+ o:["extraction, fabrication, distribution, utilisation, fin de vie","conception, fabrication, vente, garantie, service après-vente","achat, installation, entretien, réparation, revente d'occasion","prototype, série, stockage, livraison, mise en service au client"],r:0,
+ expl:"Chaque étape consomme de l'énergie et des ressources. Le choix d'un matériau agit sur toutes : celle de l'extraction, celle du transport, et celle de la fin de vie.",
+ ex:"Le teck agit surtout sur l'extraction et la distribution ; le PVC, sur la fin de vie.",
+ err:"Ne juger un objet que sur son étape d'utilisation, la plus visible des cinq.",
+ d:["","cette liste décrit une relation commerciale, pas le parcours de la matière","cette liste décrit la vie d'un objet chez son propriétaire, pas son cycle complet","cette liste décrit une chaîne de production, sans l'extraction ni la fin de vie"],
+ ret:"Cinq étapes : extraction, fabrication, distribution, utilisation, fin de vie."},
+{c:"4e_C3.2",n:"Comparaison quantitative",q:"Qu'est-ce qui distingue une comparaison quantitative d'une comparaison qualitative ?",
+ o:["la première s'appuie sur des nombres mesurés, la seconde sur des constats décrits","la première est toujours plus fiable, la seconde sert seulement à illustrer","la première concerne les prix, la seconde concerne l'aspect et le confort","la première se fait en classe, la seconde se fait chez le fournisseur"],r:0,
+ expl:"Les deux sont légitimes. La comparaison qualitative sert quand on ne dispose pas de mesure — et il faut alors dire que c'est un constat, pas un chiffre.",
+ ex:"« 271 € contre 309 € » est quantitatif ; « le teck vieillit plus joliment » ne l'est pas.",
+ err:"Présenter un jugement qualitatif avec l'autorité d'un résultat chiffré.",
+ d:["","un chiffre mal fondé est moins fiable qu'un constat honnête et clairement annoncé","un prix peut se décrire et un confort se mesurer : la frontière n'est pas là","le lieu ne change rien : c'est la nature de l'information qui distingue les deux"],
+ ret:"Quantitatif : des nombres mesurés. Qualitatif : des constats décrits. Les deux se disent."},
+{c:"4e_C3.2",n:"Bilan carbone",q:"Que compte un bilan carbone d'objet technique ?",
+ o:["le nombre de kilomètres parcourus par l'objet avant sa vente","la masse de carbone contenue dans les matériaux de l'objet","les gaz à effet de serre émis à chacune des étapes de sa vie","la quantité d'électricité que l'objet consomme pendant son usage"],r:2,
+ expl:"Le bilan carbone additionne les émissions de toutes les étapes, de l'extraction à la fin de vie. L'usage n'en est qu'une, et souvent pas la plus lourde pour un bac.",
+ ex:"Pour un bac de jardin, fabrication et transport pèsent bien plus que l'usage.",
+ err:"Réduire le bilan carbone à la consommation d'énergie pendant l'utilisation.",
+ d:["les kilomètres comptent, mais ils ne sont qu'un des postes du bilan complet","le carbone contenu dans la matière n'est qu'une petite part de ce qui est compté","","un bac ne consomme rien : son bilan vient entièrement des autres étapes"],
+ ret:"Un bilan carbone couvre toutes les étapes, pas seulement l'usage."},
+{c:"4e_C3.2",n:"Objet réparable",q:"En quoi la réparabilité change-t-elle la comparaison de deux objets ?",
+ o:["elle allonge la durée de service sans nouvelle fabrication complète","elle diminue le prix d'achat annoncé par le fournisseur au client","elle supprime la nécessité de comparer les durées de vie annoncées","elle rend l'objet plus lourd, donc plus coûteux à transporter"],r:0,
+ expl:"Réparer remplace une pièce au lieu de l'objet. Le service continue, et la fabrication évitée est ce qui pèse le plus dans le bilan.",
+ ex:"Remplacer une paroi de bac coûte bien moins qu'un bac entier, en euros et en matière.",
+ err:"Comparer des durées de vie sans regarder si l'objet se répare.",
+ d:["","un objet réparable coûte souvent un peu plus cher à l'achat, pas moins","les durées restent nécessaires : la réparation les prolonge, elle ne les remplace pas","la réparabilité tient à la conception et au démontage, pas à la masse de l'objet"],
+ ret:"Un objet réparable prolonge le service sans refabriquer : c'est le poste le plus lourd évité."},
+{c:"4e_C3.2",n:"Arrêter un choix",q:"Que veut dire « arrêter un choix », dans la formulation du programme ?",
+ o:["cesser la comparaison dès que l'un des objets prend l'avantage sur l'autre","trancher et écrire le critère qui a tranché, pour qu'on puisse le discuter","prendre l'objet le mieux classé sur le plus grand nombre de critères","laisser le commanditaire décider, une fois la comparaison présentée"],r:1,
+ expl:"Une comparaison qui ne conclut pas ne sert à rien, et une conclusion sans critère annoncé ne se discute pas. Arrêter un choix, c'est les deux à la fois.",
+ ex:"« Nous retenons le polypropylène recyclé, sur le critère du coût à quinze ans. »",
+ err:"Rendre un tableau comparatif en guise de conclusion.",
+ d:["un avantage sur un critère ne conclut rien : les autres critères restent à examiner","","compter les critères gagnés revient à faire une moyenne de grandeurs incomparables","présenter sans conclure laisse au commanditaire un travail qui revenait au concepteur"],
+ ret:"Arrêter un choix, c'est trancher ET dire sur quel critère on a tranché."},
+{c:"4e_C3.2",n:"Ce qu'une comparaison ne mesure pas",q:"Une comparaison chiffrée laisse toujours des choses de côté. Que faut-il en faire ?",
+ o:["les nommer dans le dossier, pour que le lecteur sache ce qui n'est pas compté","les ignorer : ce qui n'est pas mesurable n'a pas sa place dans un dossier","les estimer au jugé et les intégrer au calcul pour que rien ne manque","les mentionner oralement, sans les écrire, pour ne pas alourdir le dossier"],r:0,
+ expl:"Un dossier honnête déclare son périmètre. Ce qui n'est pas mesuré ne disparaît pas : il devient invisible, ce qui est bien plus dangereux.",
+ ex:"« Ce calcul ne compte ni le transport, ni l'énergie de fabrication, ni l'origine du bois. »",
+ err:"Laisser croire qu'un chiffre couvre tout ce qui compte.",
+ d:["","l'absence de mesure n'est pas une absence d'importance : l'origine du bois compte","estimer au jugé et mêler cette estimation aux mesures rend l'ensemble invérifiable","ce qui n'est pas écrit disparaît du dossier, donc de la décision"],
+ ret:"Un dossier honnête écrit ce qu'il ne mesure pas."},
+{c:"4e_C3.2",n:"Trois piliers",q:"Les trois piliers du développement durable sont-ils tous représentés dans ce cahier des charges ?",
+ o:["oui : les six exigences couvrent également les trois piliers du développement","en partie : l'environnement et l'économie y sont, le social n'y figure pas","non : aucun des trois n'apparaît, le cahier ne parle que de technique pure","oui, mais seul le pilier environnemental est réellement chiffré et vérifiable"],r:1,
+ expl:"La recyclabilité porte l'environnement, le coût porte l'économie. Qui fabrique, dans quelles conditions, et qui portera l'entretien : rien de tout cela n'est écrit.",
+ ex:"Personne ne demande dans quelles conditions le teck a été coupé et transporté.",
+ err:"Croire qu'un cahier des charges qui parle de recyclage couvre le développement durable.",
+ d:["aucune des six exigences ne porte sur les conditions de travail ou l'accès à l'objet","","la recyclabilité et le coût sont bien deux piliers, présents et chiffrés","le coût sur quinze ans est chiffré lui aussi : le pilier économique est vérifiable"],
+ ret:"Environnement, économie, social. Le troisième est le plus souvent absent des tableaux."},
+{c:"4e_C3.2",n:"Remplacer souvent",q:"Un objet moins cher qu'on remplace trois fois plus souvent : que faut-il examiner ?",
+ o:["rien de plus : trois objets bon marché valent mieux qu'un objet coûteux","uniquement le prix cumulé, qui résume à lui seul l'effet des remplacements","uniquement la recyclabilité, puisque tous les exemplaires seront recyclés","le total des fabrications, des transports et des mises au rebut sur la durée"],r:3,
+ expl:"Chaque remplacement rejoue toutes les étapes du cycle de vie. Le prix n'en compte qu'une, et la recyclabilité n'en couvre qu'une autre.",
+ ex:"Trois bacs sur quinze ans : trois extractions, trois fabrications, trois transports.",
+ err:"Croire que le coût cumulé résume l'impact cumulé.",
+ d:["cela dépend entièrement du calcul : parfois oui, parfois non, et il faut le faire","le prix ne compte que la matière achetée : ni l'énergie ni les kilomètres n'y sont","la recyclabilité concerne la fin de vie, pas les fabrications ni les transports répétés",""],
+ ret:"Chaque remplacement rejoue toutes les étapes du cycle de vie, pas seulement l'achat."},
+{c:"4e_C3.2",n:"Comparer avec des sources",q:"D'où viennent les durées de vie utilisées dans une comparaison ?",
+ o:["de la réglementation, qui fixe une durée de vie minimale pour chaque matériau","de l'expérience du concepteur, qui les estime d'après les objets qu'il connaît","de la moyenne des durées annoncées par l'ensemble des fournisseurs du marché","d'essais ou de fiches techniques, qu'il faut citer et dont il faut lire les conditions"],r:3,
+ expl:"Toute la comparaison repose sur ces nombres. S'ils viennent d'essais faits sous un autre climat, le classement obtenu vaut pour cet autre climat.",
+ ex:"« 8 ans pour le PVC » : mesuré où, sur quel échantillon, exposé combien d'heures ?",
+ err:"Utiliser des durées de vie sans jamais demander d'où elles viennent.",
+ d:["aucune réglementation ne fixe de durée de vie minimale par matériau","une estimation d'expérience est utile, mais elle doit être annoncée comme telle","faire la moyenne d'annonces commerciales ne les rend pas plus fiables",""],
+ ret:"Une comparaison ne vaut que ce que valent ses données d'entrée. Citez-les."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_4e_C7.3_bac_du_jardin";
+const $=id=>document.getElementById(id);
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
+const COMP_LABELS={
+  "4e_C7.3":"4e_C7.3 — 🪴 Comparer différents matériaux pour choisir le plus adapté.",
+  "4e_C3.2":"4e_C3.2 — ♻️ Comparer qualitativement et/ou quantitativement plusieurs OST répondant au même besoin et arrêter un choix." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Variables, types, mise au point : les programmes n\'ont plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>

@@ -9120,3 +9120,153 @@ et donne le **3018**.
   « Refusé, puis accepté » serait passé sans jamais montrer que retirer le visage ne gagne qu'un
   indice. Ce sont les **valeurs intermédiaires** qui font la preuve du raisonnement enseigné.
 
+
+---
+
+## 2026-08-31 — Lots C7.3 aux trois niveaux : écarter, classer, rouvrir
+
+`5e_C7.3` était **À CRÉER**. `4e_C7.3` portait un README de deux lignes renvoyant à un lot qui
+n'existe pas. `3e_C7.3` n'avait rien. Les trois sont livrés ensemble, parce que le programme 2024
+ne demande pas la même chose à trois niveaux — il demande **trois gestes différents**, et c'est
+en les mettant côte à côte qu'on voit lequel manque.
+
+| niveau | formulation officielle | le geste |
+|---|---|---|
+| 5<sup>e</sup> | Choisir un matériau **parmi plusieurs proposés** en fonction de leurs caractéristiques | **écarter** |
+| 4<sup>e</sup> | **Comparer** différents matériaux pour choisir le plus adapté | **classer** |
+| 3<sup>e</sup> | Choisir un matériau **constitutif** d'un objet et/ou système technique | **rouvrir** |
+
+### L'instrument, et ce qu'il refuse de faire
+
+`banc_mat.py` engendre un **banc des matériaux**. Il ne note pas, ne pondère pas, ne conseille
+pas et ne classe pas les recalés : **il élimine, et il dit sur quel critère**. Ce refus n'est pas
+une limite technique, c'est le contenu du lot — une aide au choix qui donne des notes réapprend à
+faire des moyennes de critères, et c'est exactement l'erreur qu'on veut défaire.
+
+Trois choses y sont manipulables, et chacune correspond à une erreur qu'on fait vraiment : le
+**seuil** (qui n'est pas une propriété du matériau, mais une décision), le **critère lui-même**
+(qu'on peut retirer — règle n°213), et la **durée** de comparaison.
+
+`materiaux.py` calcule tout : masses, coûts, épaisseurs, verdicts. **Aucun nombre n'est recopié à
+la main dans une page**, et `python3 materiaux.py` rejoue les trois tables. Onze matériaux, trois
+objets, et deux colonnes que ni les catalogues ni les manuels ne portent : la **tenue au
+rayonnement solaire tropical** et la **tenue au brouillard salin**. Elles sont le cœur du lot.
+Un tableau générique retiendrait ici des matériaux qu'elles éliminent.
+
+### 5e — le banc de la cour : retirer une exigence fait entrer quelqu'un
+
+Six candidats, cinq exigences, **deux retenus** (pin autoclave 46,82 € ; teck 203,84 €). Le geste
+qui porte la séance est un retrait :
+
+| ce qu'on retire | retenus | le moins cher des retenus |
+|---|---|---|
+| rien | **2** | 47 € (pin traité autoclave) |
+| « température au soleil » | **3** | **47 €** — le PVC entre à 109,76 €, et ne change rien |
+| « tenue au soleil » **et** « tenue au sel » | **3** | **26 €** — le pin nu entre à 25,63 € |
+
+**Deux compteurs, et ils ne répondent pas ensemble.** Le premier retrait fait entrer quelqu'un et
+ne rapporte *rien* : le PVC coûte 109,76 € quand le pin traité, déjà retenu, en coûte 46,82. Celui
+qui compare le PVC au *teck* (203,84 €) croit économiser cent euros — il compare au mauvais
+candidat. **On compare toujours au moins cher de ceux qui passent déjà.** Le second retrait, lui,
+rapporte vraiment — 21 € par banc — et c'est celui-là qui coûte le plus cher, parce que le pin nu
+sera pourri en trois ans.
+
+La différence entre les deux lignes est le cœur de l'activité 2, et **c'est en vérifiant les
+chiffres pour ce journal qu'elle a été trouvée** : la première rédaction demandait à l'élève si
+l'économie de cent euros valait un banc brûlant. Il n'y avait pas d'économie du tout.
+
+### 4e — le bac du jardin : le classement appartient à la durée
+
+Trois matériaux tiennent. Le banc reçoit un **sélecteur de durée**, et le classement se retourne
+**deux fois** :
+
+| durée | classement des trois retenus |
+|---|---|
+| à l'achat, et sur 4 ans | PP recyclé 90 € · PVC 167 € · teck 309 € |
+| sur 10 et 15 ans | PP 271 € (3×) · **teck 309 € (1×)** · **PVC 333 € (2×)** |
+| sur 20 ans | PP 362 € (4×) · **PVC 500 € (3×)** · **teck 619 € (2×)** |
+
+Rien n'a changé dans les matériaux : c'est la **question** qui a changé. Et le second
+retournement dit ce que le premier ne disait pas — **durer trop longtemps coûte aussi** : deux
+tecks pour couvrir vingt ans, ce sont trente années achetées pour vingt utilisées, et le second
+part à la benne avec dix ans devant lui.
+
+Le lot remplace aussi un README de deux lignes qui renvoyait à un lot inexistant. Il pointait
+vers « le lot 01 dans 4e_C7.1 » : ce lot ne contient rien sur le choix d'un matériau.
+
+### 3e — le boîtier de la station : personne ne passe
+
+Deux choses ne sont plus données. **L'épaisseur** d'abord : elle se déduit du matériau, parce que
+la rigidité d'une paroi varie comme le carré de son épaisseur — `e = e₀ × √(σ₀ ÷ σ)`. Le résultat
+retourne une intuition solide : l'aluminium, presque deux fois plus dense que le PVC, donne un
+boîtier de **0,557 kg contre 0,545**. Douze grammes.
+
+**La réponse ensuite** : aucun des six candidats ne passe le cahier des charges tel qu'il est
+écrit. Ce n'est pas une panne, c'est la situation ordinaire d'un bureau d'études, et c'est la
+seule que l'école n'apprend jamais à traiter. Il y a trois sorties, une par exigence relâchée :
+
+| le seul seuil déplacé | retenus | qui entre | **qui paie** |
+|---|---|---|---|
+| tenue au sel 5 → 4 | 1 | aluminium anodisé, 0,557 kg | l'**entretien** : l'anodisation devra être reprise |
+| masse 1,2 → 1,4 kg | 1 | inox 316, 1,320 kg | celui qui **pose**, en haut d'une échelle |
+| tenue au soleil 10 → 5 ans | 3 | PETG, PVC, PP recyclé | celui qui **remontera dans cinq ans** |
+
+La leçon tient en une phrase : **une contrainte relâchée ne disparaît pas, elle change de
+porteur.** Le travail du concepteur n'est pas de la faire disparaître, il est de dire à qui il
+l'envoie, pendant que tout le monde regarde. Et le REFAIRE ajoute la contrainte de **procédé** —
+« le boîtier doit être imprimé au collège » — qui élimine trois candidats sans qu'un seul chiffre
+ne bouge, puis rend acceptable le remplacement à cinq ans qu'elle vient d'imposer.
+
+### Ce que les lots portent
+
+3 séquences · 3 QCM de 30 questions et 90 réfutations · 3 lexiques de 30 notions · 6 synthèses ·
+3 fiches · 3 matrices engendrées depuis les banques · **tests réels 41/41, 44/44, 43/43 sur les
+séquences et 32/32 sur chacun des trois QCM**, scripts et modules de calcul livrés dans les
+dossiers. Biais de longueur : **0 bonne réponse détachée sur 90**, écarts moyens +0,8, +1,5, +1,7
+caractère.
+
+**Il ne reste que 2 codes « À CRÉER »** : `4e_C7.7` et `3e_C7.7`.
+
+### Quatre défauts, dont un que les tests ne pouvaient pas voir
+
+- **le tableau affichait deux fois la masse.** « Masse de la pièce » est une exigence, donc une
+  colonne — et le banc en ajoutait une seconde, générique. Deux en-têtes différents pour la même
+  mesure : l'élève cherche ce qui les distingue, et il n'y a rien à trouver ;
+- **les masses s'affichaient au dixième de kilo.** 0,545 et 0,557 kg devenaient « 0,5 » et
+  « 0,6 » : la page de 3<sup>e</sup> affichait exactement le contraire de ce qu'elle démontre ;
+- **un verrou expérientiel s'ouvrait tout seul.** Le boîtier ne retient personne tel qu'il est
+  écrit ; le drapeau « l'élève a vu zéro candidat » se posait donc **au chargement de la page**,
+  avant tout geste.
+
+Le quatrième n'a été trouvé ni par les tests ni par relecture, mais **en recalculant les chiffres
+pour écrire ce journal** : l'activité 2 de 5<sup>e</sup> demandait si l'économie de cent euros
+apportée par le PVC valait un banc brûlant. **Il n'y avait pas d'économie** — le pin traité, déjà
+retenu, coûtait deux fois moins cher que le PVC. Une page peut être verte partout et enseigner
+une comparaison fausse : aucun test ne vérifie qu'on compare au bon candidat.
+
+### Les règles nouvelles
+
+- **n°226** — **un verrou qu'ouvre l'état initial n'est pas un verrou.** Un drapeau expérientiel
+  ne doit être posé que par une mise à jour venue d'un **geste**, jamais par celle qui suit le
+  chargement. Le défaut est invisible quand l'état initial n'ouvre rien — il ne se voit que le
+  jour où l'état initial *est* le résultat qu'on voulait faire découvrir.
+- **n°227** — **le nombre de décimales n'est pas une préférence d'écriture.** C'est ce qui décide
+  si l'élève *voit* la différence que la page démontre. Une précision se règle sur l'ordre de
+  grandeur de l'objet mesuré, pas sur une habitude de gabarit.
+- **n°228** — **une même mesure sous deux en-têtes différents est pire qu'une mesure absente.**
+  L'élève cherche ce qui les distingue, et il n'y a rien à trouver ; il conclut qu'il n'a pas
+  compris.
+- **n°229** — **une matrice s'associe par nom, jamais par position.** Une liste positionnelle
+  reliant une question à l'endroit où elle se travaille se décale en silence dès qu'on insère une
+  question. Le dictionnaire, lui, signale la notion qu'il ne connaît pas — et refuse de livrer.
+- **n°230** — **le chiffre juste et la comparaison juste sont deux choses.** Tous les nombres
+  de l'activité fautive étaient exacts, calculés, et vérifiés par un test. Ce qui était faux était
+  le **candidat auquel on les comparait**. Une valeur se contrôle par le calcul ; un point de
+  comparaison ne se contrôle que par la question « et par rapport à quoi, déjà ? ».
+- **n°231** — **ne jamais lancer une commande git qui écrit à travers le pont Linux.** La règle
+  existait déjà, pour une raison (les fins de ligne Windows) ; la vraie raison est plus dure. Le
+  pont **ne peut pas supprimer de fichier**. Or git pose des verrous — `index.lock`,
+  `objects/maintenance.lock` — et les retire à la fin. Un `git fetch` lancé là laisse donc ses
+  verrous en place, et le dépôt refuse ensuite toute commande qui écrit l'index. Vérifié sur ce
+  lot : `warning: unable to unlink '.git/objects/maintenance.lock'`. Les commandes git qui
+  écrivent se lancent **nativement** sur la machine, jamais depuis le montage.
