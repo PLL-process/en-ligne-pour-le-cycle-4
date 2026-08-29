@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e — Deux stations qui se parlent (3e_C7.8)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc de liaison — original, CC0 ────────────────────────────────────── */
+.lien{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+.lien-schema{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:12px}
+@media(max-width:620px){.lien-schema{grid-template-columns:1fr}}
+.boite{background:#173666;border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+.boite b{display:block;color:var(--hl);font-size:.95em}
+.boite span{font-size:.82em;color:var(--sub)}
+.canal{text-align:center;font-size:1.5em;color:var(--ok);transition:color .2s}
+.canal.coupe{color:var(--err)}
+.canal small{display:block;font-size:.42em;color:var(--sub)}
+table.champs{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.champs th,table.champs td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.champs th{background:#173666;color:var(--hl)}
+table.champs td.ck{width:34px;text-align:center}
+table.champs td input[type=checkbox]{width:17px;height:17px;accent-color:#61dafb}
+table.champs tr.pris td:not(.ck){color:#fff}
+.trame{font-family:ui-monospace,Menlo,Consolas,monospace;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:.9em;color:var(--hl);overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.taille{font-size:.8em;color:var(--sub);margin:4px 0 10px}
+ul.recu{list-style:none;padding:0;margin:8px 0}
+ul.recu li{padding:4px 0 4px 24px;position:relative;font-size:.92em}
+ul.recu li::before{position:absolute;left:0;font-weight:700}
+ul.recu li.oui::before{content:"✔";color:var(--ok)}
+ul.recu li.non::before{content:"✘";color:var(--err)}
+ul.recu li.alerte::before{content:"⚠";color:var(--warn)}
+ul.recu li.non,ul.recu li.alerte{color:var(--sub)}
+.lien-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.lien-cmd label{font-size:.9em;color:var(--sub)}
+.lien-cmd select{width:auto;min-width:230px}
+.journal{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.84em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:150px;overflow-y:auto}
+.journal div{padding:1px 0}
+.journal .ok{color:var(--ok)}.journal .ko{color:var(--err)}.journal .wa{color:var(--warn)}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.8.html">📖 Lexique</a></nav>
+
+<h1>🛰️ Deux stations qui se parlent</h1>
+<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C7.8</span>
+  <span class="badge code">3e_C8.3 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D3 · D4 · D5</span>
+  <span class="badge duree">⏱ 2 séances de 90 min (1 h 30)</span>
+</div>
+
+<section class="card">
+  <h2>🔄 D'où tu viens — la spirale C7.8</h2>
+  <table class="refs">
+    <tr><th>Niveau</th><th>Ce qu'on demande</th><th>Qui écoute à l'autre bout</th></tr>
+    <tr><td>4<sup>e</sup> — 4e_C7.8</td>
+        <td>Faire publier sa mesure par le jardin connecté.</td>
+        <td>Un <b>humain</b>, devant un écran, qui interprète.</td></tr>
+    <tr><td><b>3<sup>e</sup> — 3e_C7.8 (aujourd'hui)</b></td>
+        <td>Faire se parler deux stations d'alerte.</td>
+        <td><b>Une machine</b> — personne n'interprète, personne n'arbitre.</td></tr>
+  </table>
+  <p>Tu as programmé cette station (3e_C9.2), signé sa recette (3e_C8.3), choisi son mât
+  (3e_C8.2) et son alimentation (3e_C7.4). Elle sait tout faire — sauf parler à sa jumelle.</p>
+  <p class="retenir">📌 <b>Ce qui change quand le destinataire est une machine :</b> elle ne
+  devine rien, elle ne s'étonne de rien, et elle ne remarque pas qu'un message manque. Tout ce
+  qu'un humain compensait sans y penser doit devenir un champ, une règle ou un délai.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>3e_C7.8</b></td><td>Interfacer deux objets techniques communicants.</td><td>Activités 0 à 3 et REFAIRE</td></tr>
+    <tr><td>3e_C8.3 <span style="color:var(--sub)">(appui)</span></td><td>Proposer un protocole de test pour valider le comportement et les performances d'un objet technique.</td><td>Activité 4</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>La station du Robert a déclenché trois fois cet hiver. Trois fois pour rien : une rafale
+    dans un couloir de vent, une branche contre l'anémomètre, et un capteur qui a déraillé
+    pendant deux minutes.</p>
+    <p>La quatrième fois, personne n'est descendu à l'abri. C'était un vrai grain.</p>
+    <p>La mairie installe une seconde station à <b>Sainte-Anne</b>, à trente kilomètres, et pose
+    sa règle : « <b>La sirène ne part que si les deux stations sont d'accord.</b> »</p>
+    <p>Elle a raison. Et elle vient de créer un problème pire que celui qu'elle corrige.</p>
+</div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment deux machines se mettent-elles d'accord — et que fait chacune quand l'autre se tait&nbsp;?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <p>« La sirène ne part que si les deux stations sont d'accord. » <b>Quel problème cette règle
+    crée-t-elle&nbsp;?</b> Écris ta réponse avant tout essai : c'est la question de toute la
+    séance, et on la relira au bilan.</p>
+    <textarea id="hyp" rows="3" placeholder="Si les deux doivent être d'accord, alors le jour où…"></textarea>
+
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚠️ Deux objets qui communiquent — ce qui ne sort jamais</h2>
+  <div class="declencheur">
+    <ul>
+      <li><b>Aucun secret dans un message.</b> Ni clé de réseau, ni mot de passe, ni jeton —
+        même « pour que l'autre puisse se connecter ». Ce qui circule est lisible par qui se
+        trouve sur le chemin.</li>
+      <li><b>Aucune donnée personnelle.</b> Une vitesse de vent n'a besoin de nommer personne :
+        ni le technicien, ni l'élève, ni un habitant.</li>
+      <li><b>Un système d'alerte se teste, il ne se croit pas.</b> Une chaîne à deux stations
+        qui n'a jamais été essayée avec une station éteinte n'est pas une chaîne d'alerte :
+        c'est une hypothèse.</li>
+      <li>Le montage reste en <b>très basse tension</b> (5 V) et l'installation extérieure suit
+        les règles du lot 3e_C7.4 : boîtier fermé, accus inaccessibles sans outil.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — deux cartes réelles, un vrai réseau, et le moniteur série
+      pour lire ce qui passe. Les trames observées remplacent alors celles du banc : ce sont
+      elles qui font foi.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer.
+      C'est la voie par défaut, et la seule qui permette de COUPER le lien pour voir ce que
+      l'objet devient.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — deux élèves jouent les deux objets, une feuille pliée
+      fait le message, et le professeur intercepte. Le travail reste le même : décider ce qu'on
+      envoie, et ce qu'on fait quand plus rien n'arrive.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : faire parler les deux stations ⏱ ~20 min</h2>
+  <p>Avant toute explication. Le banc met les deux stations face à face. À gauche,
+  celle du Robert compose son message ; à droite, celle de Sainte-Anne le reçoit — et
+  <b>c'est une machine</b>, pas quelqu'un. <b>Coche des champs et lis ce qu'elle peut en
+  faire.</b></p>
+  <div class="lien">
+    <div class="lien-schema">
+      <div class="boite"><b>Station du Robert</b><span>il mesure et il envoie</span></div>
+      <div class="canal" id="canal">──▶<small id="canalTxt">lien établi</small></div>
+      <div class="boite"><b>Station de Sainte-Anne</b><span>il reçoit et il affiche</span></div>
+    </div>
+
+    <table class="champs">
+      <tr><th></th><th>Champ</th><th>Ce que c'est</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ch0"></td><td><code>id</code></td><td>l'identifiant de la station qui parle</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ch1"></td><td><code>v</code></td><td>la vitesse du vent mesurée</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ch2"></td><td><code>u</code></td><td>l'unité de cette vitesse</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ch3"></td><td><code>t</code></td><td>l'heure de la mesure</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ch4"></td><td><code>niv</code></td><td>le niveau d'alerte que CETTE station a calculé</td></tr>
+      <tr id="tr5"><td class="ck"><input type="checkbox" id="ch5"></td><td><code>seq</code></td><td>le numéro d'ordre du message</td></tr>
+      <tr id="tr6"><td class="ck"><input type="checkbox" id="ch6"></td><td><code>hist</code></td><td>les 2 000 mesures des dernières 24 heures</td></tr>
+      <tr id="tr7"><td class="ck"><input type="checkbox" id="ch7"></td><td><code>cle</code></td><td>la clé du réseau, « pour que l'autre se connecte »</td></tr>
+    </table>
+
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 4px">Le message que l'objet envoie :</p>
+    <div class="trame" id="trame">{}</div>
+    <p class="taille" id="taille">—</p>
+
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 0">Ce que le récepteur peut en faire :</p>
+    <ul class="recu" id="recu"></ul>
+
+    <div class="lien-cmd">
+      <label for="hors">Quand le lien est coupé, l'objet…</label>
+      <select id="hors">
+        <option value="">— je choisis —</option>
+        <option>déclenche seule, sans rien signaler</option>
+        <option>ne déclenche jamais sans l'accord de l'autre</option>
+        <option>déclenche seule, et signale qu'elle est seule</option>
+      </select>
+    </div>
+    <div class="lien-cmd">
+      <button class="btn" id="envoyer" type="button">📨 Envoyer une mesure</button>
+      <button class="btn" id="couper" type="button">✂ Couper le lien</button>
+      <button class="btn" id="vider" type="button">↺ Vider le journal</button>
+    </div>
+    <div class="journal" id="journal"><div>Journal vide — compose un message, puis envoie.</div></div>
+
+  </div>
+
+  <div class="exo">
+
+    <h4>Après avoir essayé</h4>
+    <p><b>1.</b> Le Robert envoie <code>{"v":124,"u":"km/h"}</code>. Sainte-Anne peut…</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>lire une vitesse, sans savoir qui l'a mesurée ni quand</option>
+      <option>décider seule si l'alerte doit partir</option>
+      <option>vérifier que le niveau annoncé est cohérent</option>
+      <option>tout faire : le message est complet</option>
+    </select>
+    <p><b>2.</b> Quel champ permet à Sainte-Anne de <b>repérer un message perdu</b>&nbsp;?</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>le numéro d'ordre du message</option>
+      <option>l'identifiant de la station</option>
+      <option>l'unité de la mesure</option>
+      <option>aucun : un message perdu ne se repère pas</option>
+    </select>
+    <p><b>3.</b> Coupe le lien, puis envoie. Sans comportement choisi, le banc dit…</p>
+    <select id="a0q3">
+      <option value="">— je choisis —</option>
+      <option>que l'objet ne sait pas quoi faire</option>
+      <option>que le message est parti quand même</option>
+      <option>que l'autre station a répondu</option>
+      <option>que l'alerte est déclenchée automatiquement</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Coche d'abord quelques champs dans le banc et regarde ce que la station d'en face peut en faire — l'essai d'abord.</p>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — une vitesse, et rien de plus.</b> Sans identifiant, Sainte-Anne ne sait pas si
+      le message vient du Robert ou d'une troisième station installée l'an prochain. Sans heure,
+      elle ne sait pas si ces 124 km/h datent d'une minute ou d'hier soir. Et une machine ne
+      s'en étonnera pas : elle décidera avec ce qu'elle a.</p>
+      <p><b>2 — le numéro d'ordre.</b> Si Sainte-Anne reçoit les messages 415, 416 puis 418,
+      elle sait qu'il en manque un. Sans numérotation, un message perdu ne laisse aucune trace :
+      <b>l'absence ne se remarque pas toute seule.</b></p>
+      <p><b>3 — l'objet ne sait pas quoi faire.</b> Et c'est exactement le trou de conception
+      que la séance va combler. Un comportement non décidé n'est pas un comportement neutre :
+      c'est un comportement subi.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Activité 1 — Le message entre deux machines ⏱ ~25 min</h2>
+  <p><b>Objectif :</b> décider ce que deux machines s'échangent. <b>Compétence :</b>
+  3e_C7.8. <b>Production attendue :</b> un message valide + 5 réponses.</p>
+  <p>En 4<sup>e</sup>, le destinataire était un humain devant un écran : il pouvait deviner,
+  s'étonner, appeler. Ici, personne. Remonte au banc et compose le message — <b>six champs
+  utiles, aucun des deux champs de trop</b>.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Pourquoi envoyer le <b>niveau d'alerte calculé</b> (<code>niv</code>) et pas
+    seulement la vitesse mesurée&nbsp;?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>sinon chaque station doit refaire les seuils de l'autre, et un réglage différent passe inaperçu</option>
+      <option>parce que la vitesse est trop longue à transmettre</option>
+      <option>parce que le niveau est plus précis que la vitesse</option>
+      <option>ce n'est pas utile : la vitesse suffit toujours</option>
+    </select>
+    <p><b>2.</b> Alors pourquoi envoyer <b>aussi</b> la vitesse&nbsp;?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>pour pouvoir vérifier que le niveau annoncé correspond à la mesure</option>
+      <option>parce que le niveau seul ne passe pas sur le réseau</option>
+      <option>pour que la station la plus rapide gagne</option>
+      <option>ce n'est pas utile : le niveau suffit toujours</option>
+    </select>
+    <p><b>3.</b> À quoi sert le <b>numéro d'ordre</b> (<code>seq</code>)&nbsp;?</p>
+    <select id="a1q3">
+      <option value="">— je choisis —</option>
+      <option>à repérer un message perdu ou reçu deux fois</option>
+      <option>à savoir quelle station a émis le message</option>
+      <option>à trier les messages par importance</option>
+      <option>à compter combien de messages restent à envoyer</option>
+    </select>
+    <p><b>4.</b> Les <b>2 000 dernières mesures</b> jointes à chaque message&nbsp;?</p>
+    <select id="a1q4">
+      <option value="">— je choisis —</option>
+      <option>inutile et coûteux : l'autre décide sur la mesure du moment</option>
+      <option>indispensable : sans historique, aucune décision n'est possible</option>
+      <option>utile une fois par jour, pas à chaque message</option>
+      <option>obligatoire pour prouver la décision après coup</option>
+    </select>
+    <p><b>5.</b> Et la <b>clé du réseau</b>, « pour que l'autre puisse se connecter »&nbsp;?</p>
+    <select id="a1q5">
+      <option value="">— je choisis —</option>
+      <option>jamais : un secret ne circule pas dans un message</option>
+      <option>seulement au premier message, pour établir la liaison</option>
+      <option>seulement si le réseau est celui du collège</option>
+      <option>c'est la façon normale d'appairer deux objets</option>
+    </select>
+    <p><b>6.</b> Recopie le message complet que le banc affiche :</p>
+    <textarea id="a1msg" rows="2" placeholder='{"id":"robert", …}'></textarea>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Compose d'abord, dans le banc, un message qui coche les six champs utiles et aucun des deux champs de trop.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p>Le message attendu tient en six champs :</p>
+      <div class="codebox">{"id":"robert","v":124,"u":"km/h","t":"14:07","niv":2,"seq":417}</div>
+      <p style="margin-top:10px"><b>1 et 2 — les deux, et pas l'un ou l'autre.</b> Le niveau dit
+      ce que l'émetteur a <em>conclu</em> ; la vitesse permet de <em>vérifier</em> cette
+      conclusion. Envoyer le niveau seul, c'est croire l'autre sur parole ; envoyer la vitesse
+      seule, c'est obliger chaque station à refaire les seuils de l'autre — et le jour où
+      quelqu'un règle un seuil d'un seul côté, les deux ne parlent plus de la même chose
+      <b>sans que rien ne le signale</b>.</p>
+      <p><b>3 — le numéro d'ordre.</b> 415, 416, 418 : il en manque un. C'est aussi ce qui
+      permet d'ignorer un doublon, quand un message arrive deux fois par deux chemins. Une
+      machine ne remarque une absence que si on lui donne de quoi la voir.</p>
+      <p><b>4 — inutile et coûteux.</b> La décision se prend sur la mesure du moment. L'historique
+      a sa place — dans un enregistrement, envoyé une fois par jour, pas collé à chaque message
+      d'alerte qui doit partir vite.</p>
+      <p><b>5 — jamais.</b> Un secret transmis dans un message est un secret perdu. L'appairage
+      de deux objets se fait à l'installation, par le technicien, pas dans le flux de données.</p>
+      <p class="retenir">📌 <b>Quand le destinataire est une machine, tout ce qu'un humain
+      compensait sans y penser doit devenir un champ.</b> L'identité, la date, la version du
+      calcul, l'ordre des messages : un humain s'en passe, une machine non.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🤝 Activité 2 — Écrire la règle d'accord ⏱ ~25 min</h2>
+  <p><b>Objectif :</b> transformer « les deux sont d'accord » en une règle qu'une
+  machine peut appliquer. <b>Compétence :</b> 3e_C7.8. <b>Production attendue :</b> 3 réponses
+  + une règle rédigée.</p>
+  <p>« Les deux stations sont d'accord » n'est pas une règle : c'est une intention. Une machine
+  a besoin de savoir <em>d'accord sur quoi</em>, <em>à quelle tolérance</em> et
+  <em>dans quel délai</em>.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Le Robert annonce <code>niv:2</code>, Sainte-Anne <code>niv:2</code>. Elles sont
+    d'accord. Mais le message du Robert date de <b>trois heures</b>. Que faut-il en faire&nbsp;?</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>l'ignorer : un accord sur une information périmée n'est pas un accord</option>
+      <option>l'accepter : les deux niveaux sont identiques</option>
+      <option>l'accepter, mais baisser le niveau d'un cran</option>
+      <option>attendre un troisième message avant de décider</option>
+    </select>
+    <p><b>2.</b> Le Robert annonce <code>niv:2</code> et Sainte-Anne <code>niv:1</code>, toutes
+    deux à l'instant. Le vent est-il dangereux&nbsp;?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>peut-être : trente kilomètres séparent les deux, le vent n'y est pas le même</option>
+      <option>non : puisqu'elles ne sont pas d'accord, il ne se passe rien</option>
+      <option>oui : dès qu'une station annonce 2, l'alerte est justifiée</option>
+      <option>impossible à dire : il faut une troisième station</option>
+    </select>
+    <p><b>3.</b> Quelle règle d'accord retiens-tu&nbsp;?</p>
+    <select id="a2q3">
+      <option value="">— je choisis —</option>
+      <option>alerte si les deux annoncent au moins le niveau 2, sur des messages de moins de 15 minutes</option>
+      <option>alerte si l'une des deux annonce au moins le niveau 2</option>
+      <option>alerte si les deux annoncent exactement le même niveau, quel qu'il soit</option>
+      <option>alerte si la moyenne des deux vitesses dépasse le seuil</option>
+    </select>
+    <p><b>Écris ta règle en une phrase complète</b>, telle qu'un programme pourrait l'appliquer :
+    dis <em>sur quoi</em> l'accord porte, <em>quelle fraîcheur</em> tu exiges, et <em>ce qui se
+    passe</em> quand la règle est vérifiée.</p>
+    <textarea id="a2regle" rows="3" placeholder="La sirène part si …, à condition que …, et alors …"></textarea>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — un accord périmé n'est pas un accord.</b> C'est pour cela que le champ
+      <code>t</code> existe, et c'est pour cela qu'une règle d'accord contient toujours un
+      <b>délai de fraîcheur</b>. Sans lui, deux stations peuvent « être d'accord » sur un vent
+      tombé depuis longtemps.</p>
+      <p><b>2 — peut-être, et c'est bien le problème.</b> Trente kilomètres, ce n'est pas le même
+      vent. Le désaccord peut vouloir dire « fausse alerte au Robert » <em>ou</em> « le grain
+      n'est pas encore arrivé à Sainte-Anne ». La règle d'accord ne supprime pas cette
+      incertitude : elle décide comment vivre avec.</p>
+      <p><b>3 — au moins le niveau 2, des deux côtés, sur des messages frais.</b> Trois morceaux,
+      et chacun sert :</p>
+      <ul>
+        <li><b>« au moins »</b> — sinon un niveau 2 face à un niveau 3 ne déclencherait pas,
+          alors que la situation est pire ;</li>
+        <li><b>« des deux côtés »</b> — c'est l'exigence de la mairie, celle qui tue les fausses
+          alertes ;</li>
+        <li><b>« de moins de 15 minutes »</b> — la fraîcheur, sans laquelle l'accord ne vaut rien.</li>
+      </ul>
+      <p class="retenir">📌 <b>Une règle d'accord entre machines a toujours trois morceaux :
+      sur quoi, avec quelle tolérance, et dans quel délai.</b> Il en manque un, et la règle est
+      inapplicable ou dangereuse.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔇 Activité 3 — Et quand l'autre se tait ⏱ ~30 min</h2>
+  <p><b>Objectif :</b> décider du comportement en cas de silence. <b>Compétence :</b>
+  3e_C7.8. <b>Production attendue :</b> 4 réponses + une phrase.</p>
+  <p>C'est la question de la séance. Remonte au banc, <b>coupe le lien</b>, essaie les trois
+  comportements, et lis le journal à chaque fois. Souviens-toi du contexte : le lien tombe
+  précisément quand il y a un cyclone.</p>
+  <div class="exo">
+
+    <p><b>1.</b> « <b>Ne déclenche jamais sans l'accord de l'autre</b> » — que se passe-t-il si
+    Sainte-Anne est détruite par le grain qui arrive sur Le Robert&nbsp;?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>aucune alerte, alors que le danger est mesuré : c'est le pire des trois</option>
+      <option>l'alerte part quand même, par sécurité</option>
+      <option>la station du Robert prend le relais de Sainte-Anne</option>
+      <option>rien de grave : une station suffit rarement</option>
+    </select>
+    <p><b>2.</b> « <b>Déclenche seule, sans rien signaler</b> » — quel défaut cela réintroduit-il&nbsp;?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>les fausses alertes reviennent, et personne ne sait que l'alerte n'était pas corroborée</option>
+      <option>la sirène ne part jamais</option>
+      <option>l'autre station est effacée du système</option>
+      <option>aucun : c'est la solution la plus simple</option>
+    </select>
+    <p><b>3.</b> Quel comportement retiens-tu&nbsp;?</p>
+    <select id="a3q3">
+      <option value="">— je choisis —</option>
+      <option>déclencher seule, et signaler que l'alerte n'est pas corroborée</option>
+      <option>ne jamais déclencher seule</option>
+      <option>déclencher seule sans rien dire</option>
+      <option>attendre le retour du lien avant de décider</option>
+    </select>
+    <p><b>4.</b> À partir de combien de temps sans nouvelles considère-t-on l'autre
+    muette&nbsp;? La station envoie un message toutes les 5 minutes.</p>
+    <select id="a3q4">
+      <option value="">— je choisis —</option>
+      <option>après 15 minutes, soit trois messages manqués</option>
+      <option>dès le premier message manqué</option>
+      <option>après deux heures, pour être bien sûr</option>
+      <option>jamais : on attend indéfiniment</option>
+    </select>
+    <p><b>En une phrase :</b> qu'est-ce que « dégradé, pas éteint » veut dire ici&nbsp;?</p>
+    <textarea id="a3ph" rows="2" placeholder="Quand l'autre se tait, la station…"></textarea>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Coupe le lien au banc et essaie les trois comportements avant de répondre — c'est l'essai qui tranche, pas l'intuition.</p>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — c'est le pire des trois, et de loin.</b> La règle qui devait supprimer les
+      fausses alertes supprime aussi les vraies. Un système de sécurité dont une panne éteint
+      l'alarme s'appelle une <em>défaillance dangereuse</em> : il tombe du mauvais côté.</p>
+      <p><b>2 — les fausses alertes reviennent.</b> Et pire : personne ne peut faire la
+      différence entre une alerte corroborée et une alerte solitaire. On perd l'information la
+      plus utile, celle qui aurait permis à l'agent de garde de décider.</p>
+      <p><b>3 — déclencher, et le dire.</b> La sirène part, et l'écran de la mairie affiche
+      « alerte NON CORROBORÉE — Sainte-Anne muette depuis 15 min ». La décision de sécurité est
+      prise <em>et</em> l'incertitude est transmise à l'humain, qui en fait ce qu'il veut.</p>
+      <p><b>4 — après trois messages manqués.</b> Un message perdu arrive tout le temps : le
+      réseau hoquette. Déclarer l'autre morte au premier silence, c'est passer son temps en
+      « non corroboré ». Attendre deux heures, c'est ne rien détecter du tout. <b>Trois fois la
+      période</b> est la règle courante, et elle se justifie : elle tolère les incidents isolés
+      sans rien laisser passer de durable.</p>
+      <p class="retenir">📌 <b>Dégradé, pas éteint.</b> C'est la même règle qu'en 4<sup>e</sup>
+      avec le jardin qui continuait d'arroser hors ligne — mais ici elle porte sur une sirène,
+      et le mauvais choix ne coûte plus des tomates. <b>Un système dégradé qui annonce sa
+      dégradation vaut mieux qu'un système parfait qui se tait.</b></p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧪 Activité 4 — Écrire les essais qui le prouvent ⏱ ~30 min</h2>
+  <p><b>Objectif :</b> proposer les essais qui valident la liaison. <b>Compétence :</b>
+  3e_C8.3. <b>Production attendue :</b> 6 associations.</p>
+  <p>Tu as écrit une règle d'accord et un comportement de secours. Rien de tout cela n'est
+  validé tant qu'on ne l'a pas essayé. Associe chaque essai à <b>ce qu'il prouve</b> — et
+  remarque qu'aucun ne se contente de « ça marche ».</p>
+  <div class="exo">
+    <p style="margin-top:12px"><b>Les deux stations annoncent le niveau 2, à l'instant</b></p>
+    <select id="a4c0">
+      <option value="">— je choisis —</option>
+      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
+      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
+      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
+      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
+      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
+      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
+    </select>
+    <p style="margin-top:12px"><b>Le Robert annonce 2, Sainte-Anne annonce 1</b></p>
+    <select id="a4c1">
+      <option value="">— je choisis —</option>
+      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
+      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
+      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
+      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
+      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
+      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
+    </select>
+    <p style="margin-top:12px"><b>Les deux annoncent 2, mais le message du Robert a trois heures</b></p>
+    <select id="a4c2">
+      <option value="">— je choisis —</option>
+      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
+      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
+      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
+      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
+      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
+      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
+    </select>
+    <p style="margin-top:12px"><b>Sainte-Anne cesse d'émettre pendant vingt minutes</b></p>
+    <select id="a4c3">
+      <option value="">— je choisis —</option>
+      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
+      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
+      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
+      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
+      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
+      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
+    </select>
+    <p style="margin-top:12px"><b>Sainte-Anne se tait ET Le Robert mesure 124 km/h</b></p>
+    <select id="a4c4">
+      <option value="">— je choisis —</option>
+      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
+      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
+      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
+      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
+      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
+      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
+    </select>
+    <p style="margin-top:12px"><b>Le message 417 arrive deux fois, puis le 419 arrive sans le 418</b></p>
+    <select id="a4c5">
+      <option value="">— je choisis —</option>
+      <option>Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</option>
+      <option>Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</option>
+      <option>Le délai de fraîcheur : un accord périmé ne déclenche rien.</option>
+      <option>Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</option>
+      <option>Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</option>
+      <option>Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</option>
+    </select>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Les deux stations annoncent le niveau 2, à l'instant</b> — Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.</p>
+      <p><b>Le Robert annonce 2, Sainte-Anne annonce 1</b> — Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.</p>
+      <p><b>Les deux annoncent 2, mais le message du Robert a trois heures</b> — Le délai de fraîcheur : un accord périmé ne déclenche rien.</p>
+      <p><b>Sainte-Anne cesse d'émettre pendant vingt minutes</b> — Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.</p>
+      <p><b>Sainte-Anne se tait ET Le Robert mesure 124 km/h</b> — Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.</p>
+      <p><b>Le message 417 arrive deux fois, puis le 419 arrive sans le 418</b> — Le numéro d'ordre : le doublon est ignoré et le manque est repéré.</p>
+      <p class="retenir">📌 <b>Six essais, et la moitié portent sur des pannes.</b> C'est normal :
+      une liaison entre deux objets marche presque toujours, et c'est le presque qui la définit.
+      Un protocole de recette qui n'essaie que le cas nominal ne valide rien — tu l'avais déjà
+      établi en 3e_C8.3, sur les frontières des seuils.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~20 min</h2>
+<p>La mairie ajoute une <b>troisième station</b>, au Marin. Trois objets, chacun
+  parlant aux deux autres.</p>
+  <p><b>Qu'est-ce qui change dans le message&nbsp;? Dans la règle d'accord&nbsp;? Dans le
+  comportement quand l'une se tait&nbsp;?</b> Et une question de plus, qui n'existait pas à
+  deux : que fait-on si <b>deux stations disent 2 et la troisième dit 0</b>&nbsp;?</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+    <p><b>Le message ne change pas.</b> Les six champs suffisent, parce que l'identifiant y était
+    dès la première station — exactement comme en 4<sup>e</sup> avec les trois jardins. C'est le
+    signe qu'il était bien conçu.</p>
+    <p><b>La règle d'accord change, et elle s'améliore :</b> à deux, « les deux d'accord » était
+    la seule règle possible, et elle tombait dès qu'une station se taisait. À trois, on peut
+    écrire <b>« deux stations sur trois »</b> — la panne d'une seule ne dégrade plus rien, et
+    une fausse alerte isolée ne déclenche toujours pas.</p>
+    <p><b>Le comportement de secours devient plus rare</b>, donc plus fiable : il ne sert que si
+    <em>deux</em> stations se taisent en même temps.</p>
+    <p><b>Et deux contre une&nbsp;?</b> L'alerte part : la règle « deux sur trois » est vérifiée.
+    Mais la station discordante ne doit pas être oubliée pour autant — soit le grain n'est pas
+    encore arrivé chez elle, soit son capteur est en panne. Dans les deux cas, <b>l'information
+    vaut la peine d'être affichée</b> à côté de l'alerte, et non écrasée par le vote.</p>
+    <p class="retenir">📌 <b>Passer de deux à trois objets change la nature du problème :</b> à
+    deux, un désaccord est indécidable ; à trois, il devient une information. C'est la raison
+    pour laquelle presque tous les systèmes critiques réels comptent trois capteurs et non deux.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Interfacer deux objets</b> — décider ce qu'ils s'échangent, à quelle règle ils
+      obéissent, et ce que chacun fait quand l'autre se tait. Personne n'arbitre.</li>
+    <li><b>Une machine ne devine rien</b> — tout ce qu'un humain compensait sans y penser doit
+      devenir un champ : l'identité, la date, le niveau calculé, l'ordre des messages.</li>
+    <li><b>Le niveau ET la mesure</b> — le niveau dit ce que l'autre a conclu, la mesure permet
+      de le vérifier. L'un sans l'autre laisse passer un réglage divergent sans le signaler.</li>
+    <li><b>Numéro d'ordre</b> — sans lui, un message perdu ne laisse aucune trace. Une absence
+      ne se remarque pas toute seule.</li>
+    <li><b>Une règle d'accord a trois morceaux</b> — sur quoi, avec quelle tolérance, dans quel
+      délai. Il en manque un, et la règle est inapplicable ou dangereuse.</li>
+    <li><b>Un accord périmé n'est pas un accord</b> — la fraîcheur fait partie de la règle.</li>
+    <li><b>Délai de silence</b> — trois fois la période d'émission : assez pour tolérer un
+      incident, assez court pour détecter une panne.</li>
+    <li><b>Dégradé, pas éteint</b> — quand l'autre se tait, on décide seul <em>et on le dit</em>.
+      Un système dégradé qui annonce sa dégradation vaut mieux qu'un système parfait qui se tait.</li>
+    <li><b>Trois valent mieux que deux</b> — à deux, un désaccord est indécidable ; à trois, il
+      devient une information.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+<p>Tu avais écrit, avant tout essai, quel problème la règle « les deux
+  d'accord » créait. Relis-toi. C'était probablement la bonne intuition — et ce que la séance
+  ajoute, c'est qu'on ne choisit pas entre supprimer les fausses alertes et garder les vraies :
+  <em>on déclenche, et on dit qu'on était seul</em>.</p>
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.8 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>🔴 Maîtrise insuffisante — je fais échanger deux objets sans décider ce qu'ils s'envoient</option>
+    <option>🟠 Maîtrise fragile — je compose le message si on me rappelle les champs</option>
+    <option>🟢 Maîtrise satisfaisante — j'écris le message, la règle d'accord et son délai de fraîcheur</option>
+    <option>⭐ Très bonne maîtrise — et je décide du comportement en cas de silence, et je l'assortis d'essais</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur le message entre machines, le numéro d'ordre, la règle d'accord, le délai de fraîcheur, le silence de l'autre et les essais qui prouvent tout cela.</p>
+  <a class="btn" href="qcm_3e_C7.8_deux-stations.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>⏱ Défi horloges :</b> les deux stations comparent des heures. Que se passe-t-il si
+  l'horloge de Sainte-Anne retarde de dix minutes&nbsp;? Cherche comment deux machines
+  synchronisent leurs horloges, et dis ce que ça change à ta règle de fraîcheur.</p>
+  <p><b>🔁 Défi accusé de réception :</b> le Robert envoie et ne sait pas si Sainte-Anne a reçu.
+  Propose un mécanisme pour qu'il le sache — et dis ce qu'il faut faire quand l'accusé de
+  réception, lui, se perd.</p>
+  <p><b>🗳 Défi trois capteurs :</b> cherche pourquoi les avions de ligne embarquent
+  <b>trois</b> sondes de vitesse et non deux. Écris en trois lignes ce que ça a à voir avec la
+  station du Marin.</p>
+
+</section>
+
+<footer>Séquence 3e_C7.8 — <em>Deux stations qui se parlent</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_3e_C7_4";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── banc de liaison ────────────────────────────────────────────────────── */
+const CHAMPS = [{"cle": "id", "lib": "l'identifiant de la station qui parle", "val": "robert", "requis": true, "piege": false, "pourquoi": ""}, {"cle": "v", "lib": "la vitesse du vent mesurée", "val": 124, "requis": true, "piege": false, "pourquoi": ""}, {"cle": "u", "lib": "l'unité de cette vitesse", "val": "km/h", "requis": true, "piege": false, "pourquoi": ""}, {"cle": "t", "lib": "l'heure de la mesure", "val": "14:07", "requis": true, "piege": false, "pourquoi": ""}, {"cle": "niv", "lib": "le niveau d'alerte que CETTE station a calculé", "val": 2, "requis": true, "piege": false, "pourquoi": ""}, {"cle": "seq", "lib": "le numéro d'ordre du message", "val": 417, "requis": true, "piege": false, "pourquoi": ""}, {"cle": "hist", "lib": "les 2 000 mesures des dernières 24 heures", "val": "…2 000 valeurs…", "requis": false, "piege": true, "pourquoi": "⚠ 2 000 mesures de trop : la décision se prend sur l'instant, et un message d'alerte doit partir vite."}, {"cle": "cle", "lib": "la clé du réseau, « pour que l'autre se connecte »", "val": "Cle-Wifi-Mairie", "requis": false, "piege": true, "pourquoi": "⚠ un secret ne circule JAMAIS dans un message : tout ce qui passe est lisible sur le chemin."}];      /* [{cle, lib, val, requis, piege, pourquoi}] */
+const LECTURES = [{"cles": ["id"], "oui": "savoir LAQUELLE des stations parle", "non": "impossible de savoir laquelle des deux a mesuré"}, {"cles": ["v", "u"], "oui": "lire la vitesse mesurée, avec son unité", "non": "la vitesse manque, ou son unité : le nombre ne veut rien dire"}, {"cles": ["niv"], "oui": "savoir quel niveau l'autre a calculé, sans refaire ses seuils", "non": "il faudrait refaire le calcul de l'autre — et deux réglages différents divergeraient sans le dire"}, {"cles": ["v", "niv"], "oui": "vérifier que le niveau annoncé correspond bien à la mesure", "non": "impossible de contrôler l'autre : on la croit sur parole"}, {"cles": ["t"], "oui": "savoir de quand date l'information", "non": "impossible de savoir si l'information est fraîche"}, {"cles": ["seq"], "oui": "repérer un message perdu, ou reçu deux fois", "non": "un message perdu passe inaperçu, et un doublon compte deux fois"}, {"cles": ["id", "v", "u", "t", "niv", "seq"], "oui": "décider ensemble, et justifier la décision après l'événement", "non": "la décision ne pourra pas être justifiée après coup"}];  /* [{cles:[…], oui, non}] */
+const COMPORTEMENTS = {"déclenche seule, sans rien signaler": {"cls": "wa", "msg": "⚠ ALERTE déclenchée seule — et personne ne sait qu'elle n'était pas corroborée"}, "ne déclenche jamais sans l'accord de l'autre": {"cls": "ko", "msg": "✘ AUCUNE alerte — 124 km/h mesurés, et la sirène reste muette"}, "déclenche seule, et signale qu'elle est seule": {"cls": "ok", "exp": "degrade", "msg": "✔ ALERTE déclenchée, marquée « NON CORROBORÉE — Sainte-Anne muette depuis 15 min »"}}; /* texte → {cls, msg, exp?, file?} */
+let coupe = false, tic = 0, mesures = 0;
+
+function prisEnCompte(){ return CHAMPS.map((c, i) => document.getElementById("ch" + i).checked); }
+function message(){
+  const on = prisEnCompte(), o = {};
+  CHAMPS.forEach((c, i) => { if(on[i]) o[c.cle] = c.val; });
+  return o;
+}
+function majLien(){
+  const on = prisEnCompte(), msg = message();
+  CHAMPS.forEach((c, i) =>
+    document.getElementById("tr" + i).classList.toggle("pris", on[i]));
+  const txt = JSON.stringify(msg, null, 0);
+  document.getElementById("trame").textContent = txt;
+  document.getElementById("taille").textContent =
+    txt.length + " caractères — un message court coûte moins d'énergie et passe mieux.";
+
+  const u = document.getElementById("recu");
+  u.innerHTML = "";
+  LECTURES.forEach(l => {
+    const ok = l.cles.every(k => k in msg);
+    const li = document.createElement("li");
+    li.className = ok ? "oui" : "non";
+    li.textContent = ok ? l.oui : l.non;
+    u.appendChild(li);
+  });
+  CHAMPS.forEach((c, i) => { if(on[i] && c.piege){
+    const li = document.createElement("li");
+    li.className = "alerte"; li.textContent = c.pourquoi;
+    u.appendChild(li);
+  }});
+
+  const complet = CHAMPS.every((c, i) => c.requis ? on[i] : true)
+               && CHAMPS.every((c, i) => c.piege ? !on[i] : true);
+  if(complet) window.__exp.msgOk = true;
+  if(on.some(x => x)) window.__exp.msgEssaye = true;
+  save();
+}
+function ligne(cls, txt){
+  const j = document.getElementById("journal");
+  if(j.dataset.vide !== "non"){ j.innerHTML = ""; j.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls; d.textContent = txt;
+  j.appendChild(d); j.scrollTop = j.scrollHeight;
+}
+function horloge(){ tic += 5; const h = 14 + Math.floor(tic / 60), m = tic % 60;
+  return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0"); }
+function envoyer(){
+  const t = horloge(), msg = JSON.stringify(message());
+  if(!coupe){ ligne("ok", t + "  ✔ reçu   " + msg); mesures = 0; save(); return; }
+  window.__exp.horsLigne = true;
+  const c = COMPORTEMENTS[document.getElementById("hors").value];
+  if(!c){
+    ligne("wa", t + "  ⚠ lien coupé, et l'objet ne sait pas quoi faire : choisis un comportement");
+    save(); return;
+  }
+  if(c.file){ mesures += 1; }
+  ligne(c.cls, t + "  " + c.msg.replace("{n}", mesures));
+  if(c.exp) window.__exp[c.exp] = true;
+  save();
+}
+document.getElementById("envoyer").addEventListener("click", envoyer);
+document.getElementById("couper").addEventListener("click", () => {
+  coupe = !coupe;
+  const c = document.getElementById("canal");
+  c.classList.toggle("coupe", coupe);
+  c.firstChild.textContent = coupe ? "──✂──" : "──▶";
+  document.getElementById("canalTxt").textContent = coupe ? "lien coupé" : "lien établi";
+  document.getElementById("couper").textContent = coupe ? "🔌 Rétablir le lien" : "✂ Couper le lien";
+  ligne(coupe ? "ko" : "ok", horloge() + (coupe ? "  ✂ lien coupé" : "  🔌 lien rétabli"));
+  if(coupe) window.__exp.coupe = true;
+  if(!coupe && mesures > 0){
+    ligne("ok", horloge() + "  ✔ " + mesures + " message(s) en attente envoyé(s) d'un coup");
+    mesures = 0;
+  }
+  save();
+});
+document.getElementById("vider").addEventListener("click", () => {
+  const j = document.getElementById("journal");
+  j.innerHTML = "<div>Journal vidé.</div>"; j.dataset.vide = ""; tic = 0; save();
+});
+CHAMPS.forEach((c, i) =>
+  document.getElementById("ch" + i).addEventListener("change", majLien));
+document.getElementById("hors").addEventListener("change", save);
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0q1", "lire une vitesse, sans savoir qui l'a mesurée ni quand")
+              + sv("a0q2", "le numéro d'ordre du message")
+              + sv("a0q3", "que l'objet ne sait pas quoi faire");
+       return {score: s, total: 3, exp: !!window.__exp.msgEssaye,
+               expMsg: "Coche d'abord quelques champs dans le banc et regarde ce que la station d'en face peut en faire — l'essai d'abord."}; },
+  1(){ let s = 0;
+       s += sv("a1q1", "sinon chaque station doit refaire les seuils de l'autre, et un réglage différent passe inaperçu")
+              + sv("a1q2", "pour pouvoir vérifier que le niveau annoncé correspond à la mesure")
+              + sv("a1q3", "à repérer un message perdu ou reçu deux fois")
+              + sv("a1q4", "inutile et coûteux : l'autre décide sur la mesure du moment")
+              + sv("a1q5", "jamais : un secret ne circule pas dans un message")
+              + pres("a1msg", 45);
+       return {score: s, total: 6, exp: !!window.__exp.msgOk,
+               expMsg: "Compose d'abord, dans le banc, un message qui coche les six champs utiles et aucun des deux champs de trop."}; },
+  2(){ let s = 0;
+       s += sv("a2q1", "l'ignorer : un accord sur une information périmée n'est pas un accord")
+              + sv("a2q2", "peut-être : trente kilomètres séparent les deux, le vent n'y est pas le même")
+              + sv("a2q3", "alerte si les deux annoncent au moins le niveau 2, sur des messages de moins de 15 minutes")
+              + pres("a2regle", 90);
+       return {score: s, total: 4, exp: true}; },
+  3(){ let s = 0;
+       s += sv("a3q1", "aucune alerte, alors que le danger est mesuré : c'est le pire des trois")
+              + sv("a3q2", "les fausses alertes reviennent, et personne ne sait que l'alerte n'était pas corroborée")
+              + sv("a3q3", "déclencher seule, et signaler que l'alerte n'est pas corroborée")
+              + sv("a3q4", "après 15 minutes, soit trois messages manqués")
+              + pres("a3ph", 60);
+       return {score: s, total: 5, exp: !!window.__exp.coupe,
+               expMsg: "Coupe le lien au banc et essaie les trois comportements avant de répondre — c'est l'essai qui tranche, pas l'intuition."}; },
+  4(){ let s = 0;
+       s += sv("a4c0", "Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire."); s += sv("a4c1", "Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé."); s += sv("a4c2", "Le délai de fraîcheur : un accord périmé ne déclenche rien."); s += sv("a4c3", "Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche."); s += sv("a4c4", "Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée."); s += sv("a4c5", "Le numéro d'ordre : le doublon est ignoré et le manque est repéré.");
+       return {score: s, total: 6, exp: true}; },
+  5(){ return {score: pres("reinv", 120), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majLien();
+})();
+</script>
+
+</body>
+</html>

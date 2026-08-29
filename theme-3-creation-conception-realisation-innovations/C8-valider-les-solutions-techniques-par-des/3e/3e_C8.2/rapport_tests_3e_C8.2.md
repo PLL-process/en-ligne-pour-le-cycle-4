@@ -80,7 +80,7 @@ retrouver un ordre de grandeur.
 
 ---
 
-## 2. QCM — **26 / 26**
+## 2. QCM — **32 / 32**
 
 ### La banque
 | # | Test | Mesuré |
@@ -118,21 +118,46 @@ caractères), et le contrôle du script a refusé de livrer tant qu'elle ne l'é
 | 17 | la correction déplie les trois réfutations | `3` |
 | 18 | la correction porte un « À retenir » | ✅ |
 | 19 | une mauvaise réponse est déclarée incorrecte | `✘ Incorrect` |
-| 22 | 30 bonnes réponses donnent 100 % | `100 %` |
-| 23 | la note affichée est 20/20 | `20,0 /20` |
-| 24 | le lien vers la séquence pointe le bon fichier | ✅ |
-| 25 | la progression survit au rechargement | `30` répondues |
+| 28 | 30 bonnes réponses donnent 100 % | `100 %` |
+| 29 | la note affichée est 20/20 | `20,0 /20` |
+| 30 | le lien vers la séquence pointe le bon fichier | ✅ |
+| 31 | la progression survit au rechargement | `30` répondues |
 
 ### Règle d'or n°188 — une page d'élève ne s'arrête pas pour parler
 | # | Test | Mesuré |
 |---|---|---|
-| 20 | le mode « marquées » vide n'ouvre **aucune** boîte modale | `0` |
-| 21 | il affiche un bandeau `aria-live` à la place | texte lu dans `#savedNote` |
-| 26 | aucune boîte modale sur tout le parcours | `0` |
+| 26 | le mode « marquées » vide n'ouvre **aucune** boîte modale | `0` |
+| 27 | il affiche un bandeau `aria-live` à la place | texte lu dans `#savedNote` |
+| 32 | aucune boîte modale sur tout le parcours | `0` |
 
 Le gabarit hérité du lot 4e_C8.1 ouvrait **trois** `alert()`. Le script de génération les
 compte, refuse de continuer s'il n'en trouve pas exactement trois, et les remplace par le
 bandeau `#savedNote`, qui portait déjà `role="status"` et `aria-live="polite"`.
+
+#### Ce que cette section affirmait à tort — corrigé le 29/08/2026
+
+Le même gabarit ouvre aussi **deux boîtes de confirmation** : valider une question sans avoir
+choisi de réponse, et « Recommencer ». Elles n'avaient jamais été comptées, parce que la règle
+n°188 avait été appliquée au seul mot `alert`. Le test n°26 ci-dessus — « aucune boîte modale sur
+tout le parcours » — était donc **vert sans rien prouver** : il ne passait par aucun de ces deux
+chemins. Six tests l'ont remplacé, qui les empruntent :
+
+| # | Test | Mesuré |
+|---|---|---|
+| 20 | valider sans réponse n'ouvre aucune boîte modale | `0` |
+| 21 | valider sans réponse annonce et **ne valide pas encore** | texte lu dans `#savedNote` |
+| 22 | le second clic valide bien | `true` |
+| 23 | « recommencer » n'ouvre aucune boîte modale | `0` |
+| 24 | « recommencer » demande confirmation **sans rien effacer** | `30` validées intactes |
+| 25 | le second clic remet bien à zéro | `0` |
+
+Une confirmation ne se supprime pas : elle pose une question dont la réponse change ce qui
+arrive. Elle est remplacée par une confirmation **en deux temps** — premier clic : le bandeau
+annonce ; second clic dans les six secondes : l'action s'exécute. Le remplacement est fait par
+`_outils/sans_modale.py`, qui refuse tout motif qu'il ne reconnaît pas plutôt que de deviner.
+
+*Règle d'or n°216 : un test qui affirme qu'il ne se passe rien doit passer par les chemins où
+quelque chose pourrait se passer. Sinon il mesure son propre silence.*
 
 > **Mesure à porter au journal.** Comptage fait hors `_archive-anciennes-versions/`, sur les
 > seuls appels situés dans un `<script>` : **46 QCM sur 51** en ouvrent au moins une (224 appels

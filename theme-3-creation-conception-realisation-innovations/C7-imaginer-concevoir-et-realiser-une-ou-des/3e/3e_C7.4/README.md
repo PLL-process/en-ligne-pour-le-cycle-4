@@ -54,7 +54,7 @@ sont tenus ici et lesquels sont **sans objet**, puisque rien n'est programmé da
 
 ## Tests
 
-**36 / 36** sur la séquence, **26 / 26** sur le QCM, rejouables : les deux scripts et le jeu de
+**36 / 36** sur la séquence, **32 / 32** sur le QCM, rejouables : les deux scripts et le jeu de
 réponses sont livrés dans le dossier. Voir [`rapport_tests_3e_C7.4.md`](rapport_tests_3e_C7.4.md).
 
 ## Fichiers

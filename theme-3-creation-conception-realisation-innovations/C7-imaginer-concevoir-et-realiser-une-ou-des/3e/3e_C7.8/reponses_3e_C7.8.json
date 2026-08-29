@@ -1,0 +1,92 @@
+{
+  "banc": {
+    "partiel": [
+      0,
+      1,
+      2
+    ],
+    "tramePartielle": "{\"id\":\"robert\",\"v\":124,\"u\":\"km/h\"}",
+    "nonPartiel": 5,
+    "reste": [
+      3,
+      4,
+      5
+    ],
+    "trameComplete": "{\"id\":\"robert\",\"v\":124,\"u\":\"km/h\",\"t\":\"14:07\",\"niv\":2,\"seq\":417}",
+    "piege": 7,
+    "coupures": [
+      {
+        "choix": "ne déclenche jamais sans l'accord de l'autre",
+        "attendu": "AUCUNE alerte"
+      },
+      {
+        "choix": "déclenche seule, sans rien signaler",
+        "attendu": "déclenchée seule"
+      },
+      {
+        "choix": "déclenche seule, et signale qu'elle est seule",
+        "attendu": "NON CORROBORÉE"
+      }
+    ],
+    "verrous": [
+      "coupe",
+      "degrade"
+    ]
+  },
+  "activites": {
+    "0": {
+      "a0q1": "lire une vitesse, sans savoir qui l'a mesurée ni quand",
+      "a0q2": "le numéro d'ordre du message",
+      "a0q3": "que l'objet ne sait pas quoi faire"
+    },
+    "1": {
+      "a1q1": "sinon chaque station doit refaire les seuils de l'autre, et un réglage différent passe inaperçu",
+      "a1q2": "pour pouvoir vérifier que le niveau annoncé correspond à la mesure",
+      "a1q3": "à repérer un message perdu ou reçu deux fois",
+      "a1q4": "inutile et coûteux : l'autre décide sur la mesure du moment",
+      "a1q5": "jamais : un secret ne circule pas dans un message",
+      "a1msg": "{\"id\":\"robert\",\"v\":124,\"u\":\"km/h\",\"t\":\"14:07\",\"niv\":2,\"seq\":417}"
+    },
+    "2": {
+      "a2q1": "l'ignorer : un accord sur une information périmée n'est pas un accord",
+      "a2q2": "peut-être : trente kilomètres séparent les deux, le vent n'y est pas le même",
+      "a2q3": "alerte si les deux annoncent au moins le niveau 2, sur des messages de moins de 15 minutes",
+      "a2regle": "La sirene part si les deux stations annoncent au moins le niveau 2, a condition que leurs deux messages aient moins de quinze minutes, et alors la mairie recoit l alerte avec les deux mesures."
+    },
+    "3": {
+      "a3q1": "aucune alerte, alors que le danger est mesuré : c'est le pire des trois",
+      "a3q2": "les fausses alertes reviennent, et personne ne sait que l'alerte n'était pas corroborée",
+      "a3q3": "déclencher seule, et signaler que l'alerte n'est pas corroborée",
+      "a3q4": "après 15 minutes, soit trois messages manqués",
+      "a3ph": "Quand l autre se tait, la station continue de decider seule mais elle annonce qu elle est seule, au lieu de se taire ou de faire comme si de rien n etait."
+    },
+    "4": {
+      "a4c0": "Le cas nominal : la sirène part. C'est le seul essai que tout le monde pense à faire.",
+      "a4c1": "Le désaccord : la sirène ne part pas, et l'écart est affiché plutôt qu'effacé.",
+      "a4c2": "Le délai de fraîcheur : un accord périmé ne déclenche rien.",
+      "a4c3": "Le silence : au bout de 15 min, l'autre est déclarée muette et le mode dégradé s'enclenche.",
+      "a4c4": "Le cas qui décide de tout : l'alerte part quand même, marquée non corroborée.",
+      "a4c5": "Le numéro d'ordre : le doublon est ignoré et le manque est repéré."
+    },
+    "5": {
+      "reinv": "Le message ne change pas, les six champs suffisent parce que l identifiant etait la des le debut. La regle devient deux stations sur trois, donc la panne d une seule ne degrade plus rien. Le mode degrade ne sert que si deux se taisent. Et si deux disent 2 et la troisieme 0, l alerte part mais on affiche quand meme la discordance."
+    }
+  },
+  "totaux": {
+    "0": "3/3",
+    "1": "6/6",
+    "2": "4/4",
+    "3": "5/5",
+    "4": "6/6",
+    "5": "1/1"
+  },
+  "refus": {
+    "act": "3",
+    "id": "a3q3",
+    "faux": "ne jamais déclencher seule",
+    "attendu": "4/5"
+  },
+  "persistance": {
+    "a1msg": "{\"id\":\"robert\",\"v\":124,\"u\":\"km/h\",\"t\":\"14:07\",\"niv\":2,\"seq\":417}"
+  }
+}

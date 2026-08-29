@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — 3e_C7.8 Deux stations qui se parlent</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.8_deux-stations.html">📘 La séquence</a><a href="lexique_3e_C7.8.html">📖 Lexique</a></nav>
+<h1>🛰️ Synthèse élève — Deux stations qui se parlent</h1>
+<p><em>3e_C7.8 — Interfacer deux objets techniques communicants.</em></p>
+<h2>Les neuf points</h2>
+<div class="box">
+  <ul>
+    <li><b>Interfacer deux objets</b> — décider ce qu'ils s'échangent, à quelle règle ils
+      obéissent, et ce que chacun fait quand l'autre se tait. Personne n'arbitre.</li>
+    <li><b>Une machine ne devine rien</b> — tout ce qu'un humain compensait sans y penser doit
+      devenir un champ : l'identité, la date, le niveau calculé, l'ordre des messages.</li>
+    <li><b>Le niveau ET la mesure</b> — le niveau dit ce que l'autre a conclu, la mesure permet
+      de le vérifier. L'un sans l'autre laisse passer un réglage divergent sans le signaler.</li>
+    <li><b>Numéro d'ordre</b> — sans lui, un message perdu ne laisse aucune trace. Une absence
+      ne se remarque pas toute seule.</li>
+    <li><b>Une règle d'accord a trois morceaux</b> — sur quoi, avec quelle tolérance, dans quel
+      délai. Il en manque un, et la règle est inapplicable ou dangereuse.</li>
+    <li><b>Un accord périmé n'est pas un accord</b> — la fraîcheur fait partie de la règle.</li>
+    <li><b>Délai de silence</b> — trois fois la période d'émission : assez pour tolérer un
+      incident, assez court pour détecter une panne.</li>
+    <li><b>Dégradé, pas éteint</b> — quand l'autre se tait, on décide seul <em>et on le dit</em>.
+      Un système dégradé qui annonce sa dégradation vaut mieux qu'un système parfait qui se tait.</li>
+    <li><b>Trois valent mieux que deux</b> — à deux, un désaccord est indécidable ; à trois, il
+      devient une information.</li>
+  </ul>
+</div>
+<h2>Le message retenu</h2>
+<table>
+<tr><th>Champ</th><th>Ce que c'est</th><th></th></tr>
+<tr><td><code>id</code></td><td>l'identifiant de la station qui parle</td><td>✅ à envoyer</td></tr>
+<tr><td><code>v</code></td><td>la vitesse du vent mesurée</td><td>✅ à envoyer</td></tr>
+<tr><td><code>u</code></td><td>l'unité de cette vitesse</td><td>✅ à envoyer</td></tr>
+<tr><td><code>t</code></td><td>l'heure de la mesure</td><td>✅ à envoyer</td></tr>
+<tr><td><code>niv</code></td><td>le niveau d'alerte que CETTE station a calculé</td><td>✅ à envoyer</td></tr>
+<tr><td><code>seq</code></td><td>le numéro d'ordre du message</td><td>✅ à envoyer</td></tr>
+<tr><td><code>hist</code></td><td>les 2 000 mesures des dernières 24 heures</td><td>❌ à ne pas envoyer</td></tr>
+<tr><td><code>cle</code></td><td>la clé du réseau, « pour que l'autre se connecte »</td><td>❌ à ne pas envoyer</td></tr>
+</table>
+<h2>Ce que le destinataire peut faire, champ par champ</h2>
+<table>
+<tr><th>Champs présents</th><th>Ce que le destinataire peut alors faire</th></tr>
+<tr><td><code>id</code></td><td>savoir LAQUELLE des stations parle</td></tr>
+<tr><td><code>v + u</code></td><td>lire la vitesse mesurée, avec son unité</td></tr>
+<tr><td><code>niv</code></td><td>savoir quel niveau l'autre a calculé, sans refaire ses seuils</td></tr>
+<tr><td><code>v + niv</code></td><td>vérifier que le niveau annoncé correspond bien à la mesure</td></tr>
+<tr><td><code>t</code></td><td>savoir de quand date l'information</td></tr>
+<tr><td><code>seq</code></td><td>repérer un message perdu, ou reçu deux fois</td></tr>
+<tr><td><code>id + v + u + t + niv + seq</code></td><td>décider ensemble, et justifier la décision après l'événement</td></tr>
+</table>
+<h2>Ce qu'on n'envoie pas</h2>
+<div class="box attention"><ul><li><code>hist</code> — 2 000 mesures de trop : la décision se prend sur l'instant, et un message d'alerte doit partir vite.</li><li><code>cle</code> — un secret ne circule JAMAIS dans un message : tout ce qui passe est lisible sur le chemin.</li></ul></div>
+<h2>Dégradé, pas éteint</h2>
+<table>
+<tr><th>Comportement</th><th>Ce que le banc en dit</th></tr>
+<tr><td>déclenche seule, sans rien signaler</td><td>⚠ ALERTE déclenchée seule — et personne ne sait qu'elle n'était pas corroborée</td></tr>
+<tr><td>ne déclenche jamais sans l'accord de l'autre</td><td>✘ AUCUNE alerte — 124 km/h mesurés, et la sirène reste muette</td></tr>
+<tr><td>déclenche seule, et signale qu'elle est seule</td><td>✔ ALERTE déclenchée, marquée « NON CORROBORÉE — Sainte-Anne muette depuis 15 min »</td></tr>
+</table>
+<h2>Je dois être capable de…</h2>
+<ul><li>expliquer ce qui change quand le destinataire est une machine</li><li>composer un message entre pairs, et justifier chaque champ</li><li>expliquer pourquoi on envoie la conclusion ET la mesure</li><li>écrire une règle d'accord avec ses trois morceaux</li><li>justifier un délai de silence à partir de la période d'émission</li><li>choisir un comportement en cas de silence, et l'assumer</li><li>proposer les essais qui valident tout cela, pannes comprises</li></ul>
+<footer>Synthèse élève — 3e_C7.8 « Deux stations qui se parlent » · Thème 3 · banc de liaison original (CC0), à imprimer en noir et blanc sans rien perdre.</footer>
+</body>
+</html>

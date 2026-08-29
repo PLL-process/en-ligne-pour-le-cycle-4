@@ -77,6 +77,36 @@ ok('une mauvaise réponse est déclarée incorrecte',
    (await p.textContent('#corrBloc')).includes('Incorrect'),
    (await p.textContent('#corrBloc')).slice(0, 40));
 
+// ── règle n°188 : les deux confirmations en deux temps ────────────────────
+// Ajoutés le 29/08. Le test précédent affirmait « aucune boîte modale » sans
+// jamais emprunter les deux chemins qui en ouvraient une.
+await p.evaluate(() => { etat.reponses = QUESTIONS.map(() => null);
+  etat.validees = QUESTIONS.map(() => false); etat.courante = 0; rendreTout(); });
+await p.click('#btnValider'); await p.waitForTimeout(120);
+ok('valider sans réponse n’ouvre aucune boîte modale', dlg.length === 0, dlg.join(' | '));
+ok('valider sans réponse annonce et ne valide pas encore',
+   (await p.textContent('#savedNote')).includes('non répondue')
+   && !(await p.evaluate(() => etat.validees[0])),
+   await p.textContent('#savedNote'));
+await p.click('#btnValider'); await p.waitForTimeout(120);
+ok('le second clic valide bien', await p.evaluate(() => etat.validees[0]));
+
+await p.evaluate(() => { etat.reponses = QUESTIONS.map(q => q.r);
+  etat.validees = QUESTIONS.map(() => true); rendreTout(); save(); });
+await p.evaluate(() => document.getElementById('btnTerminer').click());
+await p.waitForTimeout(150);
+await p.evaluate(() => document.getElementById('btnRecommencer').click());
+await p.waitForTimeout(120);
+ok('« recommencer » n’ouvre aucune boîte modale', dlg.length === 0, dlg.join(' | '));
+ok('« recommencer » demande confirmation sans rien effacer',
+   (await p.evaluate(() => etat.validees.filter(Boolean).length)) === 30,
+   String(await p.evaluate(() => etat.validees.filter(Boolean).length)));
+await p.evaluate(() => document.getElementById('btnRecommencer').click());
+await p.waitForTimeout(150);
+ok('le second clic remet bien à zéro',
+   (await p.evaluate(() => etat.validees.filter(Boolean).length)) === 0,
+   String(await p.evaluate(() => etat.validees.filter(Boolean).length)));
+
 // ── les modes du moteur ne bloquent plus la page ───────────────────────────
 await p.evaluate(() => document.querySelector('[data-mode="marquees"]').click());
 await p.waitForTimeout(150);

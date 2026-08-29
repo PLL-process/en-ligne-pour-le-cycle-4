@@ -477,6 +477,17 @@ const QUESTIONS = [
 /* ═══════════ Moteur du QCM ═══════════ */
 const KEY="qcm_3e_C8.2_mat_de_la_station";
 const $=id=>document.getElementById(id);
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
 /* Règle d'or n°188 : on informe sans bloquer. Les trois boîtes modales du
    gabarit hérité sont devenues ce bandeau, déjà annoncé aux lecteurs d'écran. */
 let _signalTimer=null;
@@ -683,7 +694,7 @@ $("btnValider").addEventListener("click",()=>{
   const i=etat.courante;
   if(etat.validees[i]) return;
   if(choixTemp===null&&etat.reponses[i]===null){
-    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
   etat.validees[i]=true; choixTemp=null;
@@ -717,7 +728,7 @@ $("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
 $("btnImprimer").addEventListener("click",()=>window.print());
 $("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
 $("btnRecommencer").addEventListener("click",()=>{
-  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
     const idt=etat.identite;
     etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
     clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;

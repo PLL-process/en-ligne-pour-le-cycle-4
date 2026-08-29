@@ -1,0 +1,88 @@
+{
+  "banc": {
+    "partiel": [
+      0,
+      1,
+      2
+    ],
+    "tramePartielle": "{\"id\":\"jardin-cour\",\"h\":38,\"u\":\"%\"}",
+    "nonPartiel": 3,
+    "reste": [
+      3,
+      4
+    ],
+    "trameComplete": "{\"id\":\"jardin-cour\",\"h\":38,\"u\":\"%\",\"t\":\"14:07\",\"pompe\":false}",
+    "piege": 6,
+    "coupures": [
+      {
+        "choix": "perd la mesure et passe à la suivante",
+        "attendu": "PERDUE"
+      },
+      {
+        "choix": "garde les mesures en file et les envoie au retour du lien",
+        "attendu": "2 en attente",
+        "repete": 2
+      },
+      {
+        "choix": "cesse d'arroser jusqu'au retour du lien",
+        "attendu": "s'est ARRÊTÉ"
+      }
+    ],
+    "apresRetablissement": "envoyé(s) d'un coup",
+    "verrous": [
+      "coupe",
+      "file"
+    ]
+  },
+  "activites": {
+    "0": {
+      "a0q1": "affiche un nombre, et ne sait rien en faire d'autre",
+      "a0q2": "plusieurs objets envoient sur le même réseau, et on ne sait plus qui parle",
+      "a0q3": "ne veut rien dire : 38 %, 38 °C ou 38 mL ?"
+    },
+    "1": {
+      "a1q1": "parce qu'une mesure gardée en file arrive plus tard qu'elle n'a été prise",
+      "a1q2": "parce qu'il y aura trois jardins qui enverront la même sorte de message",
+      "a1q3": "ça coûte de l'énergie et de la place, et personne n'en a l'usage",
+      "a1q4": "c'est une donnée personnelle : elle n'a rien à faire dans une mesure",
+      "a1msg": "{\"id\":\"jardin-cour\",\"h\":38,\"u\":\"%\",\"t\":\"14:07\",\"pompe\":false}"
+    },
+    "2": {
+      "a2q1": "aucune mesure n'est enregistrée : l'historique a un trou",
+      "a2q2": "on envoie 288 fois la même valeur, pour rien",
+      "a2q3": "envoyer si la valeur a changé, et au moins une fois par heure"
+    },
+    "3": {
+      "a3q1": "rien : les mesures de la coupure n'existent plus nulle part",
+      "a3q2": "toutes les mesures en attente partent d'un coup, avec leur heure d'origine",
+      "a3q3": "c'est un défaut grave : le réseau n'a rien à voir avec l'arrosage",
+      "a3ph": "Un objet branche est joignable mais ne dit rien, tandis qu un objet interface envoie ce qu il faut, quand il faut, et sait quoi faire quand le lien tombe."
+    },
+    "4": {
+      "a4a0": "Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.",
+      "a4a1": "Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.",
+      "a4a2": "De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.",
+      "a4a3": "Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin."
+    },
+    "5": {
+      "reinv": "Le message ne change pas : les cinq champs suffisent aux trois jardins parce que l identifiant etait la des le premier. Ce qui change est du cote du recepteur, qui range par identifiant. La panne se detecte par le silence, grace a la regle au moins un message par heure."
+    }
+  },
+  "totaux": {
+    "0": "3/3",
+    "1": "5/5",
+    "2": "3/3",
+    "3": "4/4",
+    "4": "4/4",
+    "5": "1/1"
+  },
+  "refus": {
+    "act": "2",
+    "id": "a2q3",
+    "faux": "envoyer toutes les cinq minutes, quoi qu'il arrive",
+    "attendu": "2/3"
+  },
+  "persistance": {
+    "a1msg": "{\"id\":\"jardin-cour\",\"h\":38,\"u\":\"%\",\"t\":\"14:07\",\"pompe\":false}"
+  }
+}

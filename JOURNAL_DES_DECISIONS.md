@@ -8728,3 +8728,107 @@ bandeau `aria-live` — neuf de moins sur les 224 mesurées ce matin.
 - **n°215** — quand une consigne interne impose des éléments sans objet pour le travail en cours,
   on écrit **lesquels et pourquoi**, dans le dossier, plutôt que de les ignorer en silence. Une
   exception écrite se conteste ; une exception tacite se répète.
+
+---
+
+## 2026-08-29 — Lots 4e_C7.8 et 3e_C7.8, et la moitié de la règle n°188 qui n'avait pas été appliquée
+*(Fable, branches `fable/theme-3/lots-c7-8` et `fable/theme-2/outil-sans-modale`)*
+
+### Ce qui a été livré
+
+Deux lots « interfacer un objet avec un réseau », côté **objet** uniquement — le côté réseau
+(adresses, passerelle, routage) est déjà traité par `5e_C4.7`, `4e_C4.7`, `3e_C4.7` et `3e_C4.8`,
+et chaque README le dit pour qu'on ne le refasse pas une cinquième fois. Ce qui reste à travailler,
+et qui n'était nulle part : **ce qu'un objet envoie, à quel rythme, de sa propre initiative, et ce
+qu'il fait quand le lien tombe.**
+
+* **4e_C7.8 « Le jardin publie sa mesure »** — appui `4e_C1.4`, 2 × 55 min, 95 min d'activités.
+  Sept champs proposés, cinq à retenir ; deux pièges : l'état de 127 variables internes (des
+  milliers de fois le poids d'une mesure, pour rien) et le prénom de l'élève (une donnée
+  personnelle n'a rien à faire dans une mesure). Message complet :
+  `{"id":"jardin-cour","h":38,"u":"%","t":"14:07","pompe":false}`.
+* **3e_C7.8 « Deux stations qui se parlent »** — appui `3e_C8.3`, 2 × 90 min, 150 min. Huit champs,
+  six à retenir. Le cas intéressant est le troisième comportement hors ligne : une station qui
+  **déclenche seule et signale qu'elle est seule** — un mode dégradé, ni la panne, ni le
+  fonctionnement normal.
+
+Le banc de liaison est un instrument, pas une illustration : on coche les champs, on coupe le lien,
+on choisit le comportement, on rétablit — et les mesures gardées en file repartent d'un coup, avec
+leur heure d'origine. Les verrous expérientiels ne s'ouvrent qu'après la manipulation réelle
+(règle n°213).
+
+**Tests réels : 35/35 et 34/34 sur les séquences, 32/32 sur chacun des deux QCM.** Biais de
+longueur surveillé dès l'écriture : 0 bonne réponse détachée sur 60, écarts moyens +3,7 et +3,8
+caractères. 2 lexiques de 30 notions, 4 synthèses, 2 fiches, 2 matrices citant les 60 questions.
+
+### Ce qui n'allait pas, et qui est plus important que le lot
+
+La règle n°188 — *une page d'élève ne s'arrête pas pour parler* — a été écrite le 26/08. Elle a
+été appliquée aux `alert()`. **Et on s'est arrêté là, en déclarant le sujet traité.** Le gabarit de
+QCM maison ouvre aussi **deux boîtes de confirmation** : valider une question sans réponse, et
+« Recommencer ». Personne ne les avait comptées. Sept QCM livrés « sans boîte modale » en portaient
+toujours deux chacun.
+
+Pire que l'oubli : **le test qui l'affirmait était vert sans rien prouver.** « Aucune boîte modale
+sur tout le parcours » ne passait par aucun de ces deux chemins. C'est la même famille d'erreur que
+n°211 (appliquer une règle à une seule page, c'est l'avoir écrite, pas l'avoir appliquée), mais un
+cran plus grave, parce qu'ici un contrôle automatique la couvrait.
+
+Puis l'outil de réparation a lui-même produit deux défauts, gardés dans son en-tête :
+
+1. il posait ses deux fonctions **d'un bloc**, sous la garde d'une seule. Cinq pages qui portaient
+   déjà `signale` ont reçu des appels à `demande` **sans la fonction** — une erreur JavaScript au
+   premier clic. Un test l'a rattrapé (29/32 sur `3e_C7.8`) ; il ne devait pas avoir à le faire ;
+2. il comptait les mots `alert(`, `confirm(`, `prompt(` **dans les commentaires et les chaînes**,
+   et refusait donc les pages où sa propre documentation citait le mot. Il découpe désormais le
+   JavaScript en code / chaînes / commentaires, et ne mesure que du code.
+
+### Ce qui est corrigé, et ce qui ne l'est pas
+
+**Corrigé** — les sept QCM du Thème 3 que j'ai écrits (`5e_C8.2`, `3e_C8.2`, les trois `C7.4`, les
+deux `C7.8`). Une confirmation ne se supprime pas : elle pose une question dont la réponse change
+ce qui arrive. Elle est remplacée par une confirmation **en deux temps** — premier clic : le
+bandeau `#savedNote` (`role="status"`, `aria-live="polite"`) annonce ; second clic dans les six
+secondes : l'action s'exécute.
+
+**Six tests** empruntent maintenant ces chemins dans chaque QCM, dont `« recommencer » demande
+confirmation sans rien effacer`, qui vérifie que les 30 réponses sont **toujours là** après le
+premier clic. Le lot `5e_C8.2`, qui ne livrait **aucun script de test pour son QCM** — son tableau
+de 17 tests était une liste écrite à la main —, en reçoit un : 32/32.
+
+**Pas corrigé, et mesuré** — le comptage refait avec le compteur qui ne lit que du code :
+
+| | fichiers | en ouvrent | `alert` | `confirm` |
+|---|---|---|---|---|
+| QCM | 56 | 44 | 130 | 87 |
+| séquences | 51 | 34 | 0 | 36 |
+
+**253 appels dans 78 fichiers**, dont **123 confirmations que la règle n°188 n'avait jamais
+regardées.** Par thème : Thème 1, 23 fichiers / 75 appels · Thème 2, 38 / 125 · Thème 3, 17 / 53.
+La passe reste à faire, thème par thème, avec `_outils/sans_modale.py --controle` comme critère
+d'arrêt. Elle n'est pas dans ce lot : elle traverse les trois thèmes, et la garde-périmètre a
+raison de l'interdire depuis une branche de thème.
+
+*(Le chiffre publié ce matin — « 46 QCM sur 51, 224 appels » — comptait aussi les mots écrits dans
+les commentaires, et le corpus a grossi depuis. Celui-ci le remplace.)*
+
+### L'outil, et pourquoi il part dans une PR séparée
+
+`_outils/sans_modale.py` sert les trois thèmes. La garde-périmètre n'autorise `_outils/` que depuis
+une branche `theme-2` : l'outil part donc dans `fable/theme-2/outil-sans-modale`, et le lot du
+Thème 3 dans sa propre branche. Ce n'est pas un contournement, c'est la règle telle qu'elle est
+écrite — mais elle mérite d'être notée : **la boîte à outils du dépôt est administrativement une
+annexe du Thème 2**, alors qu'elle sert tout le monde. À rediscuter avec Pascal.
+
+L'outil a trois modes : réparer (liste **fermée** de motifs, refus devant tout ce qu'il n'a pas
+lu), `--etat` (compter sans modifier), `--controle` (l'invariant : aucune boîte ouverte, et aucune
+fonction appelée sans être définie).
+
+### Les règles nouvelles
+
+- **n°216** — un test qui affirme **qu'il ne se passe rien** doit passer par les chemins où quelque
+  chose pourrait se passer. Sinon il mesure son propre silence, et il le mesure en vert.
+- **n°217** — un outil qui pose une fonction dans une page doit vérifier qu'elle **existe partout où
+  elle est appelée**. Réparer sans contrôler ce qu'on a réparé, ce n'est pas réparer : c'est
+  déplacer la panne, et la déplacer sous une étiquette « corrigé ».
+
