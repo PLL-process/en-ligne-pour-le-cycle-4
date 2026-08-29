@@ -8265,3 +8265,25 @@ Les copies du Thème 3 sont **périmées** et doivent être supprimées sur une 
   l'outil sur le thème d'origine avant de le croire sur le nouveau.
 - **n°205** — une ressource que rien ne désigne n'existe pas pour l'élève. Produire le fichier
   est la moitié du travail ; le chemin pour y aller est l'autre moitié.
+
+---
+
+## 2026-08-29 — Deux lexiques que rien ne désignait, et la dernière réserve LSU
+
+Deux dettes nommées hier, soldées. Petite PR, sans découverte.
+
+**Les deux lexiques orphelins du Thème 1.** `lexique_3e_C1.5.html` et `lexique_4e_C1.4.html`
+existaient depuis leur génération et aucune séquence ne les désignait : produits, jamais
+atteignables. `_outils/poser_lien_lexique.py` a posé les deux liens dans la barre de navigation.
+**Contrôle : zéro lexique orphelin sur les 30 du dépôt** (13 au Thème 1, 17 au Thème 2).
+
+Ce sont — encore — les deux lots héritage. Septième indicateur indépendant à les désigner.
+
+**La dernière réserve d'échantillonnage.** `qcm_5e_C1.1-C1.6_chengdu` répartit 30 questions sur
+six codes : C1.1 en a 6, C1.2 à C1.5 en ont 5, **C1.6 en a 4**. C'est la plus légère des quatre
+réserves du dépôt — un écart d'une question au seuil — et la fiche le dit comme tel, sans
+dramatiser : le bilan du QCM sert à repérer ce qu'il faut revoir, ce qui se valide sont les
+productions des cinq séances.
+
+Les quatre lots concernés portent désormais tous leur réserve. Aucune banque n'a été retouchée
+pour ça : le défaut n'était pas dans les questions, il était dans ce qu'on prétendait en tirer.
