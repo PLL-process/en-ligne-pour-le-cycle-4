@@ -110,3 +110,10 @@ Si la classe conclut « il ne faut rien publier », la publication B a gagné et
   un thermomètre, et confronter le réel au fichier simulé.
 - **La donnée est traitée, jamais produite** — l'élève nettoie un fichier rempli par quelqu'un
   d'autre. Cohérent avec C1.1, et une marche de moins que ce que la discipline vaut.
+- **Le bilan du QCM ne se reporte pas au LSU code par code.** Six codes se partagent 30 questions :
+  C1.1 en a 6, C1.2 à C1.5 en ont 5 chacun, **C1.6 en a 4** (`_outils/controle_echantillonnage.py`).
+  À ce grain, un score par code départage mal : sur cinq questions, une seule erreur fait perdre
+  un cinquième de la note, et sur quatre, un quart. Le bilan sert à **repérer ce qu'il faut
+  revoir** ; ce qui se valide, ce sont les productions des cinq séances et le nettoyage du fichier.
+  *(Règle n°202. Réserve la plus légère des quatre lots concernés du dépôt : ici l'écart au seuil
+  est d'une question.)*
