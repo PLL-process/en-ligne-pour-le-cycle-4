@@ -8832,3 +8832,91 @@ fonction appelée sans être définie).
   elle est appelée**. Réparer sans contrôler ce qu'on a réparé, ce n'est pas réparer : c'est
   déplacer la panne, et la déplacer sous une étiquette « corrigé ».
 
+---
+
+## 2026-08-30 — La passe « boîtes modales » : 255 appels dans 79 pages, zéro à l'arrivée
+*(Fable, branches `fable/theme-2/sans-modale-formes`, `fable/theme-1/sans-modale-passe`, `fable/theme-3/sans-modale-passe`)*
+
+La règle d'or n°188 — *une page d'élève ne s'arrête pas pour parler* — a été écrite le 26/08 et
+appliquée à une page. Le 29/08 on a découvert qu'elle n'avait jamais regardé les **confirmations**
+et on a corrigé sept QCM. Restait la dette : le reste du corpus. Elle est soldée.
+
+**Aucune des 107 pages d'élève du dépôt (56 QCM, 51 séquences) n'ouvre plus une seule boîte
+modale.** 79 pages modifiées, vérifiées deux fois : par lecture du code (`sans_modale.py
+--controle`, 0 refus sur 107) et **dans un navigateur réel** (`_outils/tests_sans_modale.mjs`,
+**715 contrôles, 0 échec**) — la page charge, `demande` se comporte en deux temps, le bandeau
+parle, et un clic sur un bouton destructeur gardé ne détruit rien.
+
+### Ce que l'outil a dû apprendre
+
+**Des formes, pas des chaînes.** Le premier jet ne connaissait que deux motifs écrits en toutes
+lettres. Les 124 confirmations du corpus se rangeaient en quatre familles, toutes de la même
+forme : la condition d'un `if`, avec un littéral de chaîne pour seul argument. L'outil reconnaît
+donc une liste fermée de **formes**. Le message est repris **mot pour mot** — on ne réécrit pas à
+la place de l'auteur. Un `confirm` affecté à une variable, glissé dans un ternaire ou combiné par
+`&&` reste refusé.
+
+**Un message qu'on ne voit pas est pire qu'une boîte.** Douze pages n'avaient aucun bandeau
+`aria-live`. Y poser une confirmation en deux temps sans bandeau aurait produit un effacement
+**silencieux** : premier clic, rien ; second clic, tout est perdu. `signale` crée donc son bandeau
+(`role="status"`, `aria-live="polite"`) quand la page n'en a pas.
+
+**Une fonction posée peut en appeler une autre.** `demande` appelle `signale`. Les séquences, qui
+n'ouvraient qu'une seule confirmation, ont reçu `demande` **sans** `signale` : une erreur
+JavaScript au premier clic. C'est la **troisième** occurrence de la même famille d'erreur en deux
+jours, et cette fois le contrôle de l'outil (`--controle`) l'a attrapée avant moi — c'est
+exactement ce pour quoi la règle n°217 a été écrite la veille. L'outil boucle désormais jusqu'au
+point fixe.
+
+### Le défaut le plus grave n'était pas dans les pages, il était dans la mesure
+
+Le chiffre publié hier — « 253 appels dans 78 fichiers » — était **faux, et faux en moins**. Le
+découpeur qui sépare code, chaînes et commentaires ne connaissait pas les **littéraux
+d'expression régulière**. Devant `const re = /"[^"]*"|#.*$/g;`, il prenait le `"` du motif pour
+l'ouverture d'une chaîne et avalait tout ce qui suivait. Dans
+`sequence-jardin-connecte-arrosage-automatique.html`, 986 caractères de code ont ainsi disparu de
+la mesure — dont un `confirm()` **et un `prompt()` bien réels**.
+
+Le compte exact, recalculé fichier par fichier après correction du découpeur :
+
+| | fichiers | `alert` | `confirm` | `prompt` |
+|---|---|---|---|---|
+| QCM | 44 | 130 | 87 | 0 |
+| séquences | 35 | 0 | 37 | 1 |
+| **total** | **79** | **130** | **124** | **1** |
+
+Soit **255 appels dans 79 fichiers**. Par thème : Thème 1, 23 fichiers / 75 appels · Thème 2,
+39 / 127 · Thème 3, 17 / 53.
+
+Ce n'est pas une erreur de deux unités sur 253. C'est un instrument qui se trompait **dans le sens
+qui rassure** : il annonçait un corpus plus propre qu'il n'était, et si la passe s'était arrêtée
+au chiffre, ce fichier serait resté avec son `prompt()`, déclaré conforme.
+
+### `prompt()` ne se remplace pas — il se réécrit
+
+Un seul `prompt()` dans le dépôt : le loquet « mode enseignant » de
+`sequence-jardin-connecte-arrosage-automatique.html`. L'outil l'a **refusé**, et il a eu raison :
+un `prompt` ne rend pas un oui/non mais **du texte**, qu'aucune confirmation en deux temps ne peut
+produire. Il fallait un champ dans la page. Écrit à la main : un `<label>` réel, un champ, un
+bouton, et le message d'erreur au même endroit qu'avant, dans une zone `aria-live`. Le code reste
+ce qu'il était — un loquet de confort visible dans la source, pas un secret.
+
+### Deux constats qui ne changent pas de statut ici
+
+* `qcm_python_variables.html` (3e_C9.1) porte un bouton « Réinitialiser » qui efface le
+  formulaire **sans rien demander**. Ce n'est pas un manquement à la règle n°188 : cette page
+  n'enregistre rien, il n'y a rien à perdre. C'est le symptôme d'autre chose — un QCM hérité sans
+  persistance — déjà connu de l'audit.
+* `sequence_4e_C5.1-C5.3_depanner_jardin.html` a un bouton « ↺ Recommencer le diagnostic » qui
+  réinitialise une seule activité, sans confirmation, et c'est très bien ainsi. Mon premier
+  contrôle le déclarait fautif : il exigeait de **toute** page ce qu'il venait de réparer.
+
+### Les règles nouvelles
+
+- **n°218** — un instrument de mesure qui se trompe **en moins** est plus dangereux qu'un qui se
+  trompe en plus : il annonce une victoire. Avant de publier un chiffre tiré d'un analyseur maison,
+  vérifier ce que l'analyseur **ne sait pas lire** — ici, une expression régulière.
+- **n°219** — un contrôle doit distinguer ce qu'il a réparé de ce qu'il n'a **jamais touché**.
+  Exiger la garde d'un bouton qui n'a jamais rien eu à garder fabrique des faux coupables, et on
+  apprend vite à ignorer un contrôle qui crie pour rien.
+

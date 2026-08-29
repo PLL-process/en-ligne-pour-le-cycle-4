@@ -47,6 +47,32 @@ D'où quatre principes, tenus ici :
    indépendamment, et il répare aussi une page qui n'ouvre plus aucune boîte
    mais appelle un helper qu'elle ne définit pas.
 
+5. **Le message doit être vu.** `signale` écrit dans `#savedNote` quand la page
+   en a un — et **le crée** (avec `role="status"` et `aria-live="polite"`) quand
+   la page n'en a pas. Sans cela, remplacer une confirmation destructive par une
+   confirmation en deux temps produirait un effacement **silencieux** : le
+   premier clic ne dirait rien, le second effacerait. Pire que la boîte modale.
+
+CE QUE L'OUTIL RECONNAÎT (30/08/2026)
+-------------------------------------
+Le premier jet ne connaissait que deux motifs, écrits en toutes lettres — ceux du
+gabarit de QCM maison. La mesure du corpus a montré 123 confirmations réparties
+sur quatre familles, toutes de la même **forme** :
+
+    if(confirm("…"))            → if(demande("clé","…"))
+    if(!confirm("…")) return;   → if(!demande("clé","…")) return;
+
+L'outil reconnaît donc désormais une liste fermée de **formes**, pas seulement de
+chaînes : la condition d'un `if`, avec un littéral de chaîne pour seul argument.
+Le message est repris **mot pour mot** ; rien n'est réécrit à la place de
+l'auteur. Tout le reste est refusé : un `confirm` affecté à une variable, glissé
+dans un ternaire ou combiné par `&&` ne se remplace pas sans lire ce qu'il
+commande.
+
+`prompt()` n'est jamais transformé. Il ne rend pas un oui/non mais **du texte** :
+aucune confirmation en deux temps ne peut le remplacer. Il faut un champ dans la
+page, donc une décision d'auteur. L'outil refuse le fichier et le dit.
+
 USAGE
     python3 _outils/sans_modale.py <fichier.html> [autres…]
     python3 _outils/sans_modale.py --etat <dossier>       # compter sans modifier
@@ -56,12 +82,23 @@ USAGE
 import pathlib
 import re
 import sys
+import unicodedata
 
 #: appels bloquants, hors `.alert(`, `$prompt(`, etc.
 MODALE = re.compile(r"(?<![\w.$])(alert|confirm|prompt)\s*\(")
 ALERTE = re.compile(r"(?<![\w.$])alert\s*\(")
 
-#: les helpers, posés une seule fois, juste après la définition de `$`
+#: un littéral de chaîne JavaScript, guillemets simples ou doubles
+CHAINE = r"""(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')"""
+
+#: les FORMES reconnues : la condition d'un `if`, un littéral pour seul argument.
+#: Le groupe 1 porte la négation éventuelle, le groupe 2 le message.
+FORME = re.compile(r"if\s*\(\s*(!?)\s*confirm\s*\(\s*(%s)\s*\)\s*\)" % CHAINE)
+
+#: point d'insertion préféré des helpers (moteur des QCM maison) ; à défaut,
+#: ils sont posés à la fin du dernier bloc <script> — les déclarations de
+#: fonction sont hissées, et tous les <script> classiques partagent la portée
+#: globale, donc l'endroit ne change rien à ce qui est appelé.
 ANCRE = "const $=id=>document.getElementById(id);"
 
 #: (marqueur de définition, marqueur d'appel, code à poser). Chacun est posé
@@ -69,13 +106,30 @@ ANCRE = "const $=id=>document.getElementById(id);"
 HELPERS = [
     ("function signale(", "signale(", """
 /* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
-   #savedNote, qui porte déjà role="status" et aria-live="polite". */
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
 let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
 function signale(msg){
-  const z=$("savedNote"); if(!z){ return; }
+  const z=_zoneSignal();
   z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
   clearTimeout(_signalTimer);
-  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show"); }, 6000);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
 }"""),
     ("function demande(", "demande(", """
 /* `demande` remplace une boîte de confirmation : le premier clic annonce, le
@@ -102,6 +156,21 @@ CONNUS = [
      'if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton '
      'temps seront effacés."))'),
 ]
+
+
+def cle_de(litteral):
+    """Une clé stable, lisible, tirée du message lui-même.
+
+    Deux appels portant le même message partagent la clé : c'est voulu, ils
+    commandent la même action. Deux messages différents ne peuvent pas se
+    confondre, ce qui compte : la clé est ce qui distingue « effacer » de
+    « recommencer » dans le compte à rebours de six secondes.
+    """
+    texte = litteral[1:-1]
+    plat = unicodedata.normalize("NFD", texte)
+    plat = "".join(c for c in plat if unicodedata.category(c) != "Mn").lower()
+    mots = re.findall(r"[a-z0-9]+", plat)
+    return "-".join(mots[:4])[:36] or "confirmer"
 
 
 # --------------------------------------------------------------------------
@@ -146,10 +215,65 @@ def segments(js):
             j = n if j < 0 else j
             out.append(("commentaire", js[i:j]))
             i = debut = j
+        elif c == "/" and litteral_regexp(js, i):
+            # Un littéral d'expression régulière. Sans ce cas, un motif comme
+            # /"[^"]*"|#.*$/g fait croire au découpeur qu'une chaîne s'ouvre :
+            # tout ce qui suit disparaît dans une fausse chaîne, et les appels
+            # bloquants qui s'y trouvent ne sont plus comptés. C'est ce qui est
+            # arrivé le 30/08 — un `prompt()` réel invisible à la mesure.
+            out.append(("code", js[debut:i]))
+            j, ferme, classe = i + 1, False, False
+            while j < n:
+                d = js[j]
+                if d == "\\":
+                    j += 2
+                    continue
+                if d == "\n":
+                    break
+                if classe:
+                    if d == "]":
+                        classe = False
+                elif d == "[":
+                    classe = True
+                elif d == "/":
+                    j += 1
+                    ferme = True
+                    break
+                j += 1
+            if not ferme:
+                raise Illisible("expression régulière non fermée")
+            while j < n and js[j] in "dgimsuvy":
+                j += 1
+            out.append(("chaine", js[i:j]))
+            i = debut = j
         else:
             i += 1
     out.append(("code", js[debut:]))
     return out
+
+
+#: ce qui, juste avant un `/`, annonce une expression régulière et non une
+#: division : un opérateur, une ouverture, ou un mot-clé qui attend une valeur.
+AVANT_REGEXP = set("(,=:[!&|?{};+-*%^~<>")
+MOTS_REGEXP = ("return", "typeof", "instanceof", "in", "of", "new", "delete",
+               "void", "throw", "case", "do", "else", "yield", "await")
+
+
+def litteral_regexp(js, i):
+    """Le `/` en position i ouvre-t-il une expression régulière ?"""
+    j = i - 1
+    while j >= 0 and js[j] in " \t\r\n":
+        j -= 1
+    if j < 0:
+        return True
+    if js[j] in AVANT_REGEXP:
+        return True
+    if js[j].isalnum() or js[j] == "_":
+        k = j
+        while k >= 0 and (js[k].isalnum() or js[k] == "_"):
+            k -= 1
+        return js[k + 1:j + 1] in MOTS_REGEXP
+    return False
 
 
 def code_seul(texte):
@@ -173,6 +297,18 @@ def compter(chemin):
         pathlib.Path(chemin).read_text(encoding="utf-8", errors="replace"))))
 
 
+def poser(texte, corps):
+    """Insère un helper : après l'ancre du moteur si elle existe, sinon à la fin
+    du dernier bloc <script>. Rend None si la page n'a aucun script."""
+    if ANCRE in texte:
+        return texte.replace(ANCRE, ANCRE + corps, 1)
+    fins = [m for m in re.finditer(r"</script>", texte)]
+    if not fins:
+        return None
+    i = fins[-1].start()
+    return texte[:i] + corps + "\n" + texte[i:]
+
+
 def traiter(chemin):
     p = pathlib.Path(chemin)
     origine = t = p.read_text(encoding="utf-8")
@@ -186,6 +322,15 @@ def traiter(chemin):
         if motif in t:
             faits += t.count(motif)
             t = t.replace(motif, remplacement)
+
+    # les FORMES : la condition d'un `if`, un littéral pour seul argument.
+    # Le message est repris mot pour mot — on ne réécrit pas à la place de
+    # l'auteur ; on retire seulement ce qui fige le navigateur.
+    def par_forme(m):
+        return 'if(%sdemande("%s",%s))' % (m.group(1), cle_de(m.group(2)), m.group(2))
+
+    t, n_forme = FORME.subn(par_forme, t)
+    faits += n_forme
 
     # ce qui reste : les alert() simples, transformables sans risque
     n_alert = len(ALERTE.findall(code_seul(t)))
@@ -205,13 +350,26 @@ def traiter(chemin):
     # Les poser ensemble a déjà produit le défaut suivant : une page qui portait
     # déjà `signale` (posée par un générateur précédent) recevait des appels à
     # `demande` sans la fonction — donc une erreur JS au premier clic.
+    # …et on boucle jusqu'au point fixe : `demande` appelle `signale`, donc poser
+    # l'une peut créer le besoin de l'autre. Sans cette boucle, une page qui
+    # n'ouvrait qu'une confirmation (les séquences : une seule, « effacer ta
+    # sauvegarde ») recevait `demande` sans `signale` — la panne exacte que la
+    # règle n°217 décrit. Troisième occurrence de la même famille d'erreur.
     poses = []
-    for cle, appel, corps in HELPERS:
-        if appel in reste and cle not in t:
-            if ANCRE not in t:
-                return avant, 0, "REFUSÉ — ancre du moteur introuvable"
-            t = t.replace(ANCRE, ANCRE + corps, 1)
-            poses.append(cle[9:-1])
+    while True:
+        besoin = None
+        vue = code_seul(t)
+        for cle, appel, code in HELPERS:
+            if appel in vue and cle not in t:
+                besoin = (cle, code)
+                break
+        if besoin is None:
+            break
+        pose = poser(t, besoin[1])
+        if pose is None:
+            return avant, 0, "REFUSÉ — aucun bloc <script> où poser la fonction"
+        t = pose
+        poses.append(besoin[0][9:-1])
 
     if t == origine:
         return avant, 0, "rien à faire" + (" (aucune boîte modale)" if not avant else "")
