@@ -8193,3 +8193,75 @@ La réserve pour `5e_C1.1-C1.6` (Thème 1) attend une branche Thème 1.
   un code se cite en appui ; il ne se reporte pas seul au LSU. *(Posée hier, mesurée aujourd'hui.)*
 - **n°203** — avant d'écrire qu'un indicateur est faux, lire ce que le fichier dit de lui-même.
   Douze banques semblaient inventer leurs compétences ; leurs libellés nommaient les codes.
+
+---
+
+## 2026-08-29 — Le Thème 2 reçoit ses lexiques et ses rôles. Les outils ont dû être réparés d'abord
+
+La lecture des trois audits avait établi deux manques mesurés : **0 bloc de rôles et 0 lexique
+sur les 17 séquences du Thème 2**, alors que les outils existaient depuis le Thème 1. Il ne
+restait « qu'à » les lancer. Les deux ont produit des résultats faux au premier essai.
+
+### `poser_roles.py` posait le bloc au mauvais endroit — sur quatre lots
+
+L'outil cherchait un titre contenant « activité », « séance » **ou « atelier »**. Sur le Thème 1
+cela passait. Sur le Thème 2, où les lots s'appellent *ateliers*, quatre séquences sur six
+recevaient le bloc sous **« 📚 Le référentiel de l'atelier »** — une section qui décrit la
+séquence, et où personne ne travaille.
+
+C'est exactement le défaut que la docstring de l'outil raconte avoir corrigé le 28 août, dans
+une autre section (« Le référentiel de la séquence », « Billet d'entrée ») : je l'avais corrigé
+pour les cas connus, pas pour la cause. La cause, c'est de **reconnaître un mot n'importe où
+dans un titre**. Le test est désormais ancré : un titre d'activité *commence* par « Activité 3 »,
+« Séance 2 », « Étape 1 » — et une liste de sections méta (référentiel, mission, bilan, synthèse,
+contrat, différenciation…) n'est jamais une activité, quoi qu'elle contienne.
+
+Second correctif : plusieurs lots écrivent le numéro **à côté** du titre —
+`<header><span class="num">Activité 1</span><h3>Le facteur du réseau</h3></header>`. Lire le seul
+`<h3>` faisait manquer six séquences. Vérification de non-régression : le Thème 1 donne
+exactement les **cinq** mêmes emplacements qu'avant.
+
+**Six blocs posés** dans le Thème 2, tous sous une vraie activité à plusieurs. Onze séquences
+n'en reçoivent aucun : elles se font seul, et un dispositif inutile apprend à ne plus lire les
+dispositifs (n°186).
+
+### `generer_lexique.py` produisait un annuaire de 120 entrées
+
+L'outil prenait **tous** les `qcm_*.html` du dossier. Le lot `4e_C4.7` en porte quatre — le sien
+plus trois ressources d'entraînement : lexique de **120 notions**. Ce n'est plus un outil de
+révision, c'est un annuaire.
+
+Le lexique suit désormais **le bouton QCM de la séquence** — un fait écrit dans la page, pas une
+convention de nommage à deviner. Résultat : **17 lexiques de 30 à 32 notions**, un par lot.
+
+### Un lexique que rien ne désigne n'existe pas
+
+En vérifiant, une deuxième chose : le Thème 1 porte **13 lexiques mais 11 séquences qui les
+désignent**. Les deux lots héritage `3e_C1.5` et `4e_C1.4` ont un lexique que personne n'ouvrira,
+faute d'un chemin pour y aller. `_outils/poser_lien_lexique.py` pose le lien dans la barre de
+navigation — et seulement si le fichier existe vraiment (n°183). **17 liens posés** dans le
+Thème 2 ; les deux orphelins du Thème 1 attendent une branche Thème 1.
+
+### Une affirmation de ma fiche du jardin était fausse
+
+J'avais écrit que `4e_C4.1-C4.9` porte « deux boutons de QCM, seule séquence des 17 à enfreindre
+la règle n°4 ». **Faux.** Je comptais les `href` vers un fichier `qcm_`, pas les boutons. La page
+porte un bouton, plus un renvoi « pour aller plus loin » dans le bilan — ce que la règle autorise.
+Mesure refaite : **17 boutons pour 17 séquences.** La règle est tenue partout. La fiche est
+corrigée.
+
+C'est la même faute que les précédentes, et elle a maintenant un nom précis : je compte le
+**support** — un `href`, un emoji, un nom de fichier, un dossier — au lieu de la **chose** : un
+bouton, une durée, un QCM, une séquence.
+
+### Les outils changent de maison
+
+`poser_roles.py` et `generer_lexique.py` vivaient dans `theme-3-…/C7-…/`, où ils avaient été
+écrits. Ils servent les trois thèmes : ils sont désormais dans `_outils/`, avec les correctifs.
+Les copies du Thème 3 sont **périmées** et doivent être supprimées sur une branche Thème 3.
+
+- **n°204** — un outil validé sur un thème n'est pas validé. Le vocabulaire change d'un thème à
+  l'autre : « atelier » nomme une activité ici et une séquence entière là. On relance toujours
+  l'outil sur le thème d'origine avant de le croire sur le nouveau.
+- **n°205** — une ressource que rien ne désigne n'existe pas pour l'élève. Produire le fichier
+  est la moitié du travail ; le chemin pour y aller est l'autre moitié.

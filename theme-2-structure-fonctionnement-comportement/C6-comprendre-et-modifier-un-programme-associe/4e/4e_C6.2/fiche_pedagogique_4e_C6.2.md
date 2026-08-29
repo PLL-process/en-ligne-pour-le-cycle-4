@@ -128,6 +128,7 @@ Rapport de tests : **27 / 27**, suite Playwright réelle sous Chromium en 390×8
    le dossier sans être boutonnés : un QCM au gabarit mais sur l'**éclairage**, codé en
    vocabulaire privé (CAP/PRG/SYS) ; le QCM hérité de 24 questions, devenu matière première du
    nouveau ; et un TP dont le nom de fichier ment (`qcm_algorigrammes_domotique.html`).
+   *(Le lexique du lot suit le bouton, pas le dossier : il tient 30 notions, pas 60.)*
 4. **Les synthèses élève et professeur ne sont pas des fichiers.** La page porte une section
    « Synthèse — à retenir » et une « Fiche professeur » repliée ; le dossier `Synthèses/` ne
    contient qu'un `.gitkeep`. Le contenu existe, le fichier non — ce qui est exactement ce que le

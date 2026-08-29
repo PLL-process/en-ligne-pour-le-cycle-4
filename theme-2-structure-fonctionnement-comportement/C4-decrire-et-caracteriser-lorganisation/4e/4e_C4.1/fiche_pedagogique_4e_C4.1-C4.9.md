@@ -154,10 +154,12 @@ en viewport 390×844, hors ligne, aucune erreur JavaScript sur les deux pages.
    montage, ni fiche de sécurité imprimable. Sans préparation d'atelier, la classe bascule de
    fait en 🅱 — et les élèves qui ont besoin de la main pour comprendre restent en représentation.
    *(Défaut D02 des trois audits externes, vérifié.)*
-2. **Deux boutons de QCM dans la page**, alors que la règle d'or n°4 en veut un seul : le QCM du
-   lot, et `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html`. Le second est une ressource héritée ; il
-   a sa place en page professeur ou en bonus, pas dans le parcours. **Seule séquence des 17 du
-   Thème 2 à enfreindre la règle.**
+2. ~~Deux boutons de QCM dans la page~~ — **c'était faux, corrigé le 29/08/2026.** Je comptais
+   les liens `href` vers un fichier `qcm_`, pas les boutons. La page porte **un seul bouton**, et
+   un renvoi « pour aller plus loin » vers `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html`, placé
+   dans le bilan — ce que la règle d'or n°4 autorise expressément. Mesure refaite sur les
+   17 séquences du Thème 2 : **17 boutons pour 17 séquences, un chacune.** La règle est tenue
+   partout.
 3. **Aucun rôle de groupe nommé, aucun lexique** — comme les 16 autres séquences du Thème 2. Les
    outils existent (`poser_roles.py`, `generer_lexique.py`, écrits pour le Thème 1) et
    s'appliquent tels quels.
