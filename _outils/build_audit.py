@@ -700,6 +700,39 @@ OVERLAY = {
                       "ecran, figure du banc dotee de title et desc.",
         medias="Banc d'essai SVG original (CC0). Aucun media tiers.",
     ),
+    # ── Lot 3e_C8.2 « Le mât de la station », 29/08/2026 ────────────────────────
+    "3e_C8.2": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le mat de la station — proposer un protocole » : 2 seances de 90 min "
+                "pour 160 min d'activites, banc d'essai ORIGINAL integre a la page avec DEUX "
+                "sollicitations sur le meme mat (flexion et traction), trois verrous "
+                "experientiels. Le pivot du lot est une mesure, pas une affirmation : les cinq "
+                "candidats ne se classent pas dans le meme ordre selon l'essai — la barre "
+                "pleine acier est 1re en traction (125,7 kN) et 4e en flexion (157 N). L'eleve "
+                "applique donc le protocole de 5e, juste et correctement applique, et constate "
+                "lui-meme qu'il designe le mauvais mat ; c'est de la qu'il tire la necessite "
+                "d'en proposer un autre. Les dix releves de l'activite 3 sont compares aux "
+                "vraies valeurs du banc a 0,05 pres : 41 au lieu de 41,1 est refuse. "
+                "QCM 30 q / 90 refutations (C8.2 x20, C3.4 x10), lexique 30 notions, deux "
+                "syntheses, fiche, matrice de 23 notions, tests reels 32/32 et 26/26, "
+                "scripts de test et de calcul livres dans le dossier.",
+        anomalies="Aucun essai physique : le banc est une simulation, calculee par "
+                  "profils_3e_C8.2.py avec les formules de la poutre encastree et les "
+                  "resistances deja utilisees par le banc de 5e — la page le dit a l'eleve a "
+                  "trois endroits, dont une question de QCM. Le modele a un domaine : la "
+                  "fleche de 723,8 mm du PVC en sort, la page l'ecrit. Le verificateur ne lit "
+                  "pas le protocole redige — il compte des lignes — et c'est pour cela qu'une "
+                  "grille de relecture croisee en binome (7 criteres) figure dans la page.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement sans "
+                      "ecran, figure du banc dotee de title et desc detailles. Les trois "
+                      "boites alert() du gabarit herite sont remplacees par un bandeau "
+                      "aria-live (regle d'or n°188) — mesure au passage, hors archives : le "
+                      "meme defaut subsiste dans 46 QCM sur 51 et 35 sequences sur 46, ce qui "
+                      "demande une passe dediee et non un balayage glisse dans un lot.",
+        medias="Banc d'essai SVG original (CC0). Aucun media tiers.",
+    ),
     "3e_C9.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,

@@ -8483,3 +8483,141 @@ de la semaine commence à passer dans le geste plutôt que dans le rattrapage.
 - **n°209** — quand une ressource extérieure manque, construire l'instrument plutôt que d'attendre
   ses captures. Un banc dans la page ne dépend de personne, marche hors ligne, et se laisse
   interroger par un vérificateur — ce qu'une capture d'écran ne fera jamais.
+
+---
+
+## 2026-08-29 — Le lot 3e_C8.2 : rendre l'erreur mesurable pour pouvoir évaluer « proposer »
+
+La spirale C8 est terminée. Le dernier code réellement manquant du groupe, `3e_C8.2`, demande
+de **proposer** un protocole de test pour valider la tenue mécanique d'un matériau — là où la
+5<sup>e</sup> demandait d'en **appliquer** un, fourni.
+
+### Le problème de conception, et sa solution
+
+Une séquence qui se contente de faire écrire un protocole n'évalue rien. Tous les protocoles
+d'élèves se ressemblent, aucun n'est mis à l'épreuve, et le professeur note une rédaction.
+Le verbe « proposer » reste un mot.
+
+Il fallait donc que **se tromper de protocole ait une conséquence mesurable**. Cinq
+candidats-mâts ont été choisis pour cela, et leurs valeurs calculées, pas inventées :
+
+| Candidat | Traction | Rang | Flexion | Rang | Masse |
+|---|---|---|---|---|---|
+| Barre pleine acier Ø20 | **125,7 kN** | **1er** | 157 N | **4e** | 4,93 kg |
+| Tube acier galvanisé Ø33,7 × 2,6 | 101,6 kN | 2e | 367 N | 2e | 3,99 kg |
+| Tube aluminium Ø50 × 3 | 84,2 kN | 3e | **467 N** | **1er** | 2,39 kg |
+| Poutre bois 40 × 40 | 64,0 kN | 4e | 213 N | 3e | 1,60 kg |
+| Tube PVC Ø50 × 3 | 23,0 kN | 5e | 128 N | 5e | 1,24 kg |
+
+L'élève applique d'abord le protocole de 5<sup>e</sup> — juste, connu, correctement appliqué —
+relève ses cinq valeurs en traction, et désigne la barre pleine acier. Puis il bascule le banc
+en flexion, et découvre que son champion est quatrième. **La nécessité d'écrire un autre
+protocole n'est pas affirmée par la page : elle est établie par une mesure qu'il a faite.**
+
+Le coup de grâce est une comparaison de masses : 2,39 kg d'aluminium en tube tiennent 467 N,
+quand 4,93 kg d'acier plein n'en tiennent que 157. Deux fois plus lourd, trois fois moins
+résistant — parce que sa matière est au centre, là où elle ne travaille pas.
+
+### Les valeurs sont calculées, et les résistances sont celles du banc de 5e
+
+`profils_3e_C8.2.py`, livré dans le dossier, applique `F = σ·I/(v·L)`, `f = F·L³/(3·E·I)` et
+`F = σ·A` à un mât encastré de 2 000 mm. Les résistances employées sont **exactement** celles
+du banc de 5<sup>e</sup> : bois 40 MPa, PVC 52, aluminium 190, acier 400. C'est ce qui autorise
+la phrase adressée à l'élève sans tricher — *même matière, même résistance, autre essai, autre
+classement*. Aucune valeur n'a été saisie à la main dans la page : le tableau ci-dessus est la
+sortie du script.
+
+Le cahier des charges est vérifiable de la même façon : 180 km/h = 50 m/s, ½ρv² ≈ 1 530 Pa,
+C<sub>x</sub> 1,2 sur ≈ 0,054 m² au vent → ≈ 100 N de poussée équivalente. Coefficient 3 (et
+non 5 comme pour la patère : ici la charge est calculée, là elle était estimée) → 300 N exigés.
+Flèche admise 40 mm, soit 2 % de la hauteur, au-delà desquels l'inclinaison de la station
+fausse la mesure de direction du vent qu'elle sert justement à donner.
+
+### Deux critères, et 1,1 mm
+
+Deux candidats passent la rupture. Un seul passe aussi la flèche. Le tube acier galvanisé est
+recalé pour **1,1 mm** — 41,1 contre 40 admis.
+
+C'est la question la plus difficile du lot, et la bonne réponse n'est ni « on accepte » ni
+« on refuse » sèchement : c'est « **on refuse en l'état, et mon protocole aurait dû annoncer
+son incertitude** ». Un seuil qu'on arrange après coup n'est plus un seuil ; et trancher au
+dixième de millimètre avec un instrument dont on ignore la précision n'est pas trancher.
+
+### Le banc, et ce qu'il refuse
+
+Un seul mât, deux sollicitations : basculer de ⟂ flexion à ↕ traction ne change ni le profilé
+ni la matière, seulement la façon de charger. En flexion le mât se courbe et rompt au ras de
+l'encastrement ; en traction il s'allonge à peine et rompt en pleine longueur, à une charge
+des centaines de fois plus élevée.
+
+Trois verrous expérientiels (`flex3`, `trac5`, `flex5`), et surtout : les dix relevés de
+l'activité 3 sont comparés aux vraies valeurs du banc **à 0,05 près**. 41 au lieu de 41,1 est
+refusé, et le test le vérifie. C'est le cœur du code — on évalue la mise en œuvre, pas la
+capacité à retrouver un ordre de grandeur.
+
+### Ce que le lot dit qu'il ne fait pas
+
+Le vérificateur **ne lit pas** le protocole rédigé : il compte des lignes et une longueur. La
+page l'écrit à l'élève, en toutes lettres, et c'est la raison d'être de la grille de relecture
+croisée en binôme — 7 critères, sur le protocole de l'autre. Prétendre le contraire aurait été
+une décoration de plus (règle n°190).
+
+Le modèle a aussi un domaine : la flèche de 723,8 mm calculée pour le PVC en sort. La page
+l'écrit et en tire une leçon plutôt qu'un chiffre — *un mât qui plie de 70 cm sur 2 m est
+éliminé sans qu'on ait besoin de discuter la décimale*.
+
+### Une règle d'or appliquée à une seule page n'est pas appliquée
+
+Le gabarit de QCM hérité ouvre **trois boîtes `alert()`**. Le générateur du lot les compte,
+refuse de continuer s'il n'en trouve pas exactement trois, et les remplace par `#savedNote`,
+qui portait déjà `role="status"` et `aria-live="polite"`. Trois tests le vérifient : aucune
+boîte modale sur tout le parcours.
+
+Puis j'ai mesuré le reste du dépôt. Premier comptage : « 49 QCM sur 68, 41 séquences ».
+**Faux**, et faux deux fois : le glob ramassait les copies de `_archive-anciennes-versions/`,
+et le motif attrapait des `.alert(` de commentaires. Deuxième comptage, hors archives et sur
+les seuls appels situés dans un `<script>` : **46 QCM sur 51** en ouvrent au moins une, pour
+**224 appels**, et **35 séquences sur 46**, pour 38 appels. Je comptais le fichier, pas
+l'appel — la famille d'erreur des règles n°184 et n°194, prise cette fois avant publication.
+
+La règle n°188 a donc été écrite il y a trois jours et appliquée à une page sur cinquante et
+une. C'est une passe dédiée qu'il faut, mesurée, avec un contrôle qui refuse de rendre un
+tableau vide — pas un balayage glissé dans un lot du thème 3, que le garde-périmètre
+refuserait d'ailleurs à juste titre.
+
+### Le dépôt local de Pascal avait cent PR de retard
+
+Trois bundles refusés d'affilée avec « *Repository lacks these prerequisite commits* ». J'ai
+cherché le défaut dans mes bundles ; il n'y était pas. Lecture du dépôt local : `main` y est à
+`46c53142`, posé sur la fusion de la **PR #166** du 9 août, quand `origin/main` en est à la
+**#274**. Le clone ne connaissait aucun des commits que mes bundles prennent pour base.
+
+Un `git fetch origin` — qui n'écrit que dans `.git` et ne touche ni à `main` ni au répertoire
+de travail — a suffi. J'ai vérifié avant de proposer quoi que ce soit que le commit local
+`46c53142` ne contenait que `.nojekyll` et les deux fichiers d'audit régénérables, et je n'ai
+proposé aucune commande qui l'efface.
+
+Un détail de méthode : le pont Linux m'affichait 783 fichiers « modifiés » dans son dépôt.
+C'est un artefact de normalisation des fins de ligne, pas un état. Je le lui ai dit plutôt que
+de le lui apprendre comme une découverte — c'est exactement la famille d'erreurs des règles
+n°184 et n°194.
+
+### Ce que le lot porte
+
+2 séances de 90 min pour 160 min d'activités, marge +20 · banc original SVG + JS, deux
+sollicitations, trois verrous · QCM 30 q / 90 réfutations (C8.2 ×20, C3.4 ×10, les deux
+au-dessus du seuil) · lexique 30 notions · deux synthèses · fiche · matrice de 23 notions ·
+**tests réels 32/32 et 26/26**, avec les scripts livrés dans le dossier · biais de longueur
+surveillé dès l'écriture : 0 bonne réponse détachée, écart moyen **+1,7 caractère**.
+
+### Les règles nouvelles
+
+- **n°210** — pour évaluer un verbe comme « proposer », il faut rendre l'erreur mesurable.
+  Tant que deux protocoles plausibles donnent la même réponse, on n'évalue pas une démarche,
+  on note une rédaction. La séquence doit contenir le cas où se tromper de protocole se voit.
+- **n°211** — appliquer une règle d'or à une seule page, c'est l'avoir écrite, pas l'avoir
+  appliquée. Le corollaire est une mesure : combien de fichiers du dépôt portent encore le
+  défaut ? Sans ce nombre, la règle est un décor.
+- **n°212** — un dépôt local qu'on ne met jamais à jour finit par ne plus pouvoir recevoir ce
+  qu'on lui envoie. Quand une livraison échoue trois fois de suite, l'erreur n'est plus dans la
+  livraison : il faut aller lire l'état de la machine qui reçoit.
