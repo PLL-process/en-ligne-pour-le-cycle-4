@@ -1,0 +1,159 @@
+{
+ "niveau": "3e",
+ "annonce": 180,
+ "activitesMin": 160,
+ "formulation": "Choisir les moyens et produire la forme voulue.",
+ "appui": "3e_C8.1",
+ "securite": "un support arraché part en éclats",
+ "editable": true,
+ "temoin": [
+  "tr_surplomb",
+  "45"
+ ],
+ "atelier": {
+  "essais": [
+   {
+    "titre": "le dessin tel qu'il sort de la modélisation",
+    "regle": {},
+    "nRet": "0",
+    "j2": "0",
+    "capables": [],
+    "etats": [
+     "epaisseur:✔",
+     "surplomb:✘",
+     "res_z:✘",
+     "tol:✘",
+     "r_int:✔"
+    ],
+    "verdict": "Aucun moyen de l'atelier ne sait produire cette forme",
+    "exp": "zero"
+   },
+   {
+    "titre": "la casquette seule corrigée",
+    "regle": {
+     "tr_surplomb": "45"
+    },
+    "nRet": "0",
+    "j2": "0",
+    "capables": [],
+    "etats": [
+     "epaisseur:✔",
+     "surplomb:✔",
+     "res_z:✘",
+     "tol:✘",
+     "r_int:✔"
+    ]
+   },
+   {
+    "titre": "les deux premières corrigées",
+    "regle": {
+     "tr_surplomb": "45",
+     "tr_res_z": "0,6"
+    },
+    "nRet": "0",
+    "j2": "0",
+    "capables": [],
+    "etats": [
+     "epaisseur:✔",
+     "surplomb:✔",
+     "res_z:✔",
+     "tol:✘",
+     "r_int:✔"
+    ]
+   },
+   {
+    "titre": "les trois corrections",
+    "regle": {
+     "tr_surplomb": "45",
+     "tr_res_z": "0,6",
+     "tr_tol": "0,4"
+    },
+    "nRet": "1",
+    "j2": "0",
+    "capables": [
+     "Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)"
+    ],
+    "etats": [
+     "epaisseur:✔",
+     "surplomb:✔",
+     "res_z:✔",
+     "tol:✔",
+     "r_int:✔"
+    ],
+    "verdict": "1 moyen(s) savent la produire",
+    "exp": "unSeul"
+   },
+   {
+    "titre": "les trois, plus deux cotes touchées sans nécessité",
+    "regle": {
+     "tr_surplomb": "45",
+     "tr_res_z": "0,6",
+     "tr_tol": "0,4",
+     "tr_epaisseur": "4",
+     "tr_r_int": "2"
+    },
+    "nRet": "1",
+    "j2": "2",
+    "capables": [
+     "Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)"
+    ],
+    "verdict": "cote(s) modifiée(s) sans nécessité"
+   }
+  ]
+ },
+ "refus": {
+  "act": "1",
+  "id": "a1q1",
+  "faux": "les corriger aussi, pour que tout le dessin soit adapté à l'impression",
+  "attendu": "5/6"
+ },
+ "verrou": {
+  "act": "2",
+  "exp": "unSeul"
+ },
+ "activites": {
+  "0": {
+   "a0r0": "un bourrelet à la base, et des stries sur toutes les faces inclinées",
+   "a0r1": "un trait de coupe de 0,2 mm : toute ouverture sort plus large",
+   "a0r2": "un rayon de 1,5 mm imposé à chaque angle interne",
+   "a0r3": "une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds",
+   "a0q1": "parce qu'un avertissement signale un risque, il n'interdit pas : c'est à nous de lire"
+  },
+  "1": {
+   "a1r0": "au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse",
+   "a1r1": "une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie",
+   "a1r2": "l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent",
+   "a1q1": "rien : elles passent déjà, et les modifier ne ferait qu'ajouter du risque",
+   "a1q2": "d'un calcul de 3e_C7.3 : elle tient le vent, et l'impression la sait faire",
+   "a1q3": "à ne pas dépenser une heure de machine pour découvrir ce qu'un tableau disait"
+  },
+  "2": {
+   "rel0": "45",
+   "rel1": "0,6",
+   "rel2": "0,4",
+   "a2q1": "oui : c'est la pente qui écarte l'eau, et 45° est déjà une forte pente",
+   "a2q2": "rien : même matière, même encombrement, même étanchéité, même masse admise",
+   "a2q3": "là on changeait ce que l'objet doit faire ; ici on change comment on le dessine"
+  },
+  "3": {
+   "a4y0": "on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu",
+   "a4y1": "on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support",
+   "a4y2": "on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant",
+   "a3q1": "que les couches imprimées se séparent plus facilement entre elles que dans la matière",
+   "a3j": "Je retiens ce moyen parce que son domaine contient la pièce à produire, et parce que le temps machine dont nous disposons avant la date le permet pour la série demandée. Je dis aussi ce que la machine fera de mon dessin, et ce que j'ai corrigé pour cela. Je retiens ce moyen parce que son domaine contient la pièce à produire, et parce que le temps machine dont nous disposons avant la date le permet pour la série demandée. Je dis aussi ce que la machine fera de mon dessin, et ce que j'ai corrigé pour cela."
+  },
+  "4": {
+   "reinv": "Je retiens ce moyen parce que son domaine contient la pièce à produire, et parce que le temps machine dont nous disposons avant la date le permet pour la série demandée. Je dis aussi ce que la machine fera de mon dessin, et ce que j'ai corrigé pour cela. Je retiens ce moyen parce que son domaine contient la pièce à produire, et parce que le temps machine dont nous disposons avant la date le permet pour la série demandée. Je dis aussi ce que la machine fera de mon dessin, et ce que j'ai corrigé pour cela."
+  }
+ },
+ "totaux": {
+  "0": "5/5",
+  "1": "6/6",
+  "2": "6/6",
+  "3": "5/5",
+  "4": "1/1"
+ },
+ "persistance": {
+  "a3j": "Je retiens ce moyen parce que son domaine contient la pièce à produire, et parce que le temps machine dont nous disposons avant la date le permet pour la série demandée. Je dis aussi ce que la machine fera de mon dessin, et ce que j'ai corrigé pour cela. Je retiens ce moyen parce que son domaine contient la pièce à produire, et parce que le temps machine dont nous disposons avant la date le permet pour la série demandée. Je dis aussi ce que la machine fera de mon dessin, et ce que j'ai corrigé pour cela."
+ }
+}

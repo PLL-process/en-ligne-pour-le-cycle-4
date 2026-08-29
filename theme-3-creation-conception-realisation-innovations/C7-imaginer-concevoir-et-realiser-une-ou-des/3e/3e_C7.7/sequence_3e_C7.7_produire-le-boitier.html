@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e — Produire le boîtier (3e_C7.7)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Atelier des moyens — original, CC0 ─────────────────────────────────── */
+.atel{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+table.traits{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.traits th,table.traits td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.traits th{background:#173666;color:var(--hl)}
+table.traits td.val{width:120px}
+table.traits td.val input{width:100%;padding:3px 6px;font-size:.92em;text-align:right}
+table.traits td.pq{font-size:.9em;color:var(--sub)}
+table.traits td.etat{width:34px;text-align:center;font-weight:700}
+table.traits tr.ko td.etat{color:var(--err)}
+table.traits tr.ok td.etat{color:var(--ok)}
+table.traits tr.touche td.val input{outline:2px solid var(--warn)}
+table.moy{width:100%;border-collapse:collapse;font-size:.85em;margin:8px 0}
+table.moy th,table.moy td{border:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top}
+table.moy th{background:#173666;color:var(--hl);text-align:center}
+table.moy td.nom{width:26%}
+table.moy td.t{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.moy td.hors{color:var(--err)}
+table.moy tr.ok td{background:rgba(34,197,94,.10)}
+table.moy tr.ok td.ver{color:var(--ok);font-weight:600}
+table.moy tr.ko td{color:var(--sub)}
+table.moy tr.ko td.ver{color:var(--err)}
+table.moy td.emp{font-size:.93em;color:var(--warn)}
+.compteur{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.jauge{flex:1;min-width:170px;background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 11px}
+.jauge b{display:block;font-size:1.5em;color:var(--hl);font-variant-numeric:tabular-nums}
+.jauge span{font-size:.8em;color:var(--sub)}
+.jauge.zero b{color:var(--err)}
+.jauge.un b{color:var(--warn)}
+.jauge.plus b{color:var(--ok)}
+.jauge.bon b{color:var(--ok)}
+.atel-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.atel-cmd label{font-size:.9em;color:var(--sub)}
+.atel-cmd select{width:auto;min-width:210px}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:170px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.7.html">📖 Lexique</a></nav>
+
+<h1>🖨 Produire le boîtier</h1>
+<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C7.7</span>
+  <span class="badge code">3e_C8.1 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D3 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 90 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Tout est décidé. <code>3e_C7.3</code> a choisi la matière <b>et</b> le procédé : PETG,
+  imprimé au collège — c'était la seule sortie qui laissait le boîtier réparable sur place.
+  <code>3e_C7.6</code> l'a modélisé : 200 × 150 × 90 mm, sa casquette anti-pluie, sa rainure de
+  joint, son couvercle.</p>
+  <p><b>Ce qui change aujourd'hui :</b> on lance la fabrication, et <b>elle ne part pas</b>. Le
+  dessin est juste, la matière est bonne, la machine est là — et trois cotes sur cinq sont
+  hors du domaine de la buse.</p>
+  <p><b>Et ce n'est pas le geste de C7.3.</b> Là, aucun matériau ne passait, et il fallait
+  rouvrir le <b>cahier des charges</b> en disant qui paierait le relâchement. Ici, le cahier des
+  charges est intouchable : la station doit toujours tenir dix ans en tête de mât, être étanche,
+  peser moins de 1,2 kg. C'est le <b>dessin</b> qu'on corrige — et seulement lui.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>3e_C7.7</b></td><td>Choisir les moyens et produire la forme voulue.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
+    <tr><td>3e_C8.1 <span style="color:var(--sub)">(appui)</span></td><td>Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.</td><td>Activité 3, REFAIRE et synthèse</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>Le fichier part à l'imprimante. Le logiciel de découpe en couches affiche
+trois avertissements, puis un quatrième message : <b>impression lancée</b>. Personne ne lit les
+avertissements, et la machine tourne cinquante-cinq minutes.</p>
+<p>Le boîtier qui sort est <b>inutilisable</b>. La casquette anti-pluie est velue là où les
+supports ont été arrachés. La rainure de joint n'existe pas : à sa place, une ondulation. Et le
+couvercle ne ferme pas — il est soudé au fond sur trois centimètres.</p>
+<p>Rien n'est cassé, rien n'a mal tourné. <b>La machine a fait exactement ce qu'on lui a
+demandé</b>, avec les moyens qu'elle a. Le dessin, lui, avait été fait sans elle.</p></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Le dessin est juste et la pièce est ratée. Que faut-il corriger — et surtout, que faut-il surtout ne pas toucher ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, quand une machine ne rend pas la pièce dessinée, il faut…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚠️ Ce que l'impression impose — et ce qui ne se délègue pas</h2>
+  <div class="danger">
+    <p><b>L'impression se fait en local ventilé, capot fermé.</b> Une buse à 240 °C émet des
+    particules ultrafines : on ne se penche pas au-dessus du plateau pour regarder la première
+    couche, et l'extraction tourne pendant toute l'impression.</p>
+    <p><b>La buse et le plateau restent chauds longtemps après la fin.</b> On décolle une pièce
+    avec une spatule, plateau refroidi, jamais avec les doigts ni un couteau. Le retrait des
+    supports se fait <b>avec des lunettes</b> : un support arraché part en éclats.</p>
+    <p><b>Le PVC ne s'imprime pas et ne se découpe pas au laser</b> — chlorure d'hydrogène. Il
+    est dans la liste de l'atelier ; il n'est dans aucun des deux procédés de ce lot.</p>
+    <p><b>Côté électricité, rien ne change :</b> la station est alimentée en <b>très basse
+    tension</b>, aucun élève ne manipule le <b>secteur</b>, et la pose en tête de mât reste un
+    geste d'agent, pas d'élève.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec l'imprimante</b> — on imprime une <b>éprouvette de coin</b> : quinze
+      millimètres de boîtier avec sa rainure, sa casquette et son bord de couvercle, en huit
+      minutes. Les trois défauts s'y voient à l'œil nu, et les corrections s'y vérifient pour le
+      prix d'une seconde éprouvette. Cette version-là fait foi.</li>
+    <li><b>🅱 Avec l'atelier de cette page</b> — hors ligne, sans rien installer. Il permet ce
+      que la machine ne permet pas : <b>essayer une correction et la défaire</b>, autant de fois
+      qu'on veut, sans consommer de filament ni de temps machine.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — le dessin coté au tableau, cinq bandes de papier pour
+      les cinq cotes, et une règle du jeu : on ne déplace une bande qu'en disant <b>ce que la
+      machine ne sait pas faire</b> et <b>ce que le cahier des charges en pense</b>.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>🔍 Activité 0 — Ce que la machine fera de ton dessin ⏱ ~25 min</h2>
+  <p>Aucune machine ne rend le dessin. Chacune y met son accent, toujours le même,
+  et cet accent porte un nom : c'est son <b>empreinte</b>. La connaître, c'est pouvoir dessiner
+  pour elle plutôt que contre elle.</p>
+  <div class="exo">
+
+    <p>Associe chaque moyen à ce qu'il laisse toujours sur la pièce.</p>
+    <p style="margin-top:12px"><b>L'impression 3D</b></p>
+    <select id="a0r0">
+      <option value="">— je choisis —</option>
+      <option>un bourrelet à la base, et des stries sur toutes les faces inclinées</option>
+      <option>un rayon de 1,5 mm imposé à chaque angle interne</option>
+      <option>un trait de coupe de 0,2 mm : toute ouverture sort plus large</option>
+      <option>une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</option>
+    </select>
+    <p style="margin-top:12px"><b>La découpe laser</b></p>
+    <select id="a0r1">
+      <option value="">— je choisis —</option>
+      <option>un bourrelet à la base, et des stries sur toutes les faces inclinées</option>
+      <option>un rayon de 1,5 mm imposé à chaque angle interne</option>
+      <option>un trait de coupe de 0,2 mm : toute ouverture sort plus large</option>
+      <option>une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</option>
+    </select>
+    <p style="margin-top:12px"><b>La fraiseuse numérique</b></p>
+    <select id="a0r2">
+      <option value="">— je choisis —</option>
+      <option>un bourrelet à la base, et des stries sur toutes les faces inclinées</option>
+      <option>un rayon de 1,5 mm imposé à chaque angle interne</option>
+      <option>un trait de coupe de 0,2 mm : toute ouverture sort plus large</option>
+      <option>une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</option>
+    </select>
+    <p style="margin-top:12px"><b>Le thermoformage</b></p>
+    <select id="a0r3">
+      <option value="">— je choisis —</option>
+      <option>un bourrelet à la base, et des stries sur toutes les faces inclinées</option>
+      <option>un rayon de 1,5 mm imposé à chaque angle interne</option>
+      <option>un trait de coupe de 0,2 mm : toute ouverture sort plus large</option>
+      <option>une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</option>
+    </select>
+    <p style="margin-top:14px"><b>Et une question.</b> Le logiciel de découpe en couches avait
+    affiché trois avertissements avant de lancer l'impression. Pourquoi la machine a-t-elle
+    quand même imprimé ?</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>parce qu'un avertissement signale un risque, il n'interdit pas : c'est à nous de lire</option>
+      <option>parce que le fichier envoyé ne comportait aucune erreur de géométrie détectable</option>
+      <option>parce que la machine corrige d'elle-même les formes qu'elle ne sait pas produire</option>
+      <option>parce que les avertissements ne concernaient que la durée totale de l'impression</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>L'impression 3D</b> — un bourrelet à la base, et des stries sur toutes les faces inclinées</p>
+      <p><b>La découpe laser</b> — un trait de coupe de 0,2 mm : toute ouverture sort plus large</p>
+      <p><b>La fraiseuse numérique</b> — un rayon de 1,5 mm imposé à chaque angle interne</p>
+      <p><b>Le thermoformage</b> — une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds</p>
+      <p style="margin-top:10px"><b>Une machine ne refuse presque jamais.</b> Elle signale, puis
+      elle exécute — parce qu'elle ne sait pas si le surplomb que tu as dessiné est une erreur ou
+      une intention. C'est à celui qui lance de savoir. Cinquante-cinq minutes de machine et
+      quarante grammes de filament se perdent en silence.</p>
+      <p style="color:var(--sub)"><b>Une empreinte n'est pas un défaut.</b> Les stries de
+      l'impression, le trait de coupe du laser, le rayon de la fraiseuse : ce sont les traces de
+      la façon dont chaque machine travaille. On ne les supprime pas — on dessine en les
+      connaissant.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🚫 Activité 1 — Personne ne sait produire ce dessin ⏱ ~35 min</h2>
+  <p>Voici l'atelier, chargé du dessin tel qu'il sort de la modélisation. Clique sur
+  <b>🏭 Lancer l'atelier</b>.</p>
+  <p>La jauge affiche <b>0</b>. Regarde maintenant la colonne de gauche du tableau des cotes :
+  chaque ligne porte <b>✔</b>, <b>✘</b> ou un point. Trois lignes portent une croix — et deux
+  n'en portent pas.</p><div id="etabli">
+  <div class="atel">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'atelier : cinq moyens, et un dessin qu'aucun ne sait produire. Chaque cote se modifie — le cahier des charges, lui, ne bouge pas.</b></p>
+
+    <p style="font-size:.9em;color:var(--sub);margin:8px 0 2px">Chaque cote se modifie. <b>Le cahier des charges, lui, ne bouge pas</b> : ni la matière, ni l'encombrement, ni ce que l'objet doit faire.</p>
+    <table class="traits">
+      <tr><th></th><th>Ce que le dessin demande</th><th>Cote dessinée</th><th>Pourquoi</th></tr>
+      <tr id="li_epaisseur"><td class="etat" id="et_epaisseur">·</td><td>Paroi étanche de 2,9 mm</td><td class="val"><input type="text" inputmode="decimal" id="tr_epaisseur" value="2,9" aria-label="Cote : Paroi étanche de 2,9 mm"></td><td class="pq">l'épaisseur calculée en 3e_C7.3 : e = 3,00 × racine(50 ÷ 53) pour le PETG</td></tr>
+      <tr id="li_surplomb"><td class="etat" id="et_surplomb">·</td><td>Casquette anti-pluie inclinée à 70°</td><td class="val"><input type="text" inputmode="decimal" id="tr_surplomb" value="70,0" aria-label="Cote : Casquette anti-pluie inclinée à 70°"></td><td class="pq">elle écarte l'eau du joint : c'est une fonction, pas une décoration</td></tr>
+      <tr id="li_res_z"><td class="etat" id="et_res_z">·</td><td>Rainure de joint de 0,3 mm de profondeur</td><td class="val"><input type="text" inputmode="decimal" id="tr_res_z" value="0,3" aria-label="Cote : Rainure de joint de 0,3 mm de profondeur"></td><td class="pq">le joint torique doit se loger et rester en place</td></tr>
+      <tr id="li_tol"><td class="etat" id="et_tol">·</td><td>Jeu de 0,1 mm entre le couvercle et le fond</td><td class="val"><input type="text" inputmode="decimal" id="tr_tol" value="0,1" aria-label="Cote : Jeu de 0,1 mm entre le couvercle et le fond"></td><td class="pq">le couvercle doit fermer juste, sans forcer et sans jouer</td></tr>
+      <tr id="li_r_int"><td class="etat" id="et_r_int">·</td><td>Angles internes vifs au fond du boîtier</td><td class="val"><input type="text" inputmode="decimal" id="tr_r_int" value="0,0" aria-label="Cote : Angles internes vifs au fond du boîtier"></td><td class="pq">l'électronique se cale dans les coins</td></tr>
+    </table>
+    <p style="font-size:.88em;color:var(--sub);margin:2px 0 10px">La colonne de gauche se lit <b>pour Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)</b> — le moyen déjà retenu par le cahier des charges. <b>✘</b> : cette cote est hors de son domaine. <b>✔</b> : elle passe.</p>
+    <div class="atel-cmd"><label for="qte">Nombre de pièces à produire :</label>
+      <select id="qte">
+        <option value="1">1 — le prototype de la station</option>
+        <option value="12">12 — une station par bâtiment, en série</option>
+      </select></div>
+
+    <div class="compteur">
+      <div class="jauge" id="jRet"><b id="nRet">—</b><span>moyen(s) capable(s) de produire cette forme</span></div>
+      <div class="jauge" id="j2"><b id="nInutile">—</b><span>cote(s) modifiée(s) sans nécessité</span></div>
+    </div>
+
+    <table class="moy" id="tab">
+      <tr><th>Moyen</th><th>Temps machine</th><th>Ce qu'il fera de ton dessin</th><th>Verdict</th></tr>
+    </table>
+
+    <div class="atel-cmd">
+      <button class="btn" id="evaluer" type="button">🏭 Lancer l'atelier</button>
+      <button class="btn" id="reinit" type="button">↺ Remettre le dessin d'origine</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Règle le dessin, puis lance l'atelier.</div></div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <h4>Les trois lignes qui bloquent</h4>
+    <p>Associe chaque cote bloquante à ce que la machine lui reproche.</p>
+    <p style="margin-top:12px"><b>La casquette anti-pluie inclinée à 70°</b></p>
+    <select id="a1r0">
+      <option value="">— je choisis —</option>
+      <option>au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</option>
+      <option>l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</option>
+      <option>une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</option>
+    </select>
+    <p style="margin-top:12px"><b>La rainure de joint de 0,3 mm de profondeur</b></p>
+    <select id="a1r1">
+      <option value="">— je choisis —</option>
+      <option>au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</option>
+      <option>l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</option>
+      <option>une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</option>
+    </select>
+    <p style="margin-top:12px"><b>Le jeu de 0,1 mm entre le couvercle et le fond</b></p>
+    <select id="a1r2">
+      <option value="">— je choisis —</option>
+      <option>au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</option>
+      <option>l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</option>
+      <option>une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</option>
+    </select>
+    <p style="margin-top:14px"><b>1.</b> Deux cotes ne bloquent rien : la <b>paroi de 2,9 mm</b>
+    et les <b>angles internes vifs</b>. Que faut-il en faire ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>rien : elles passent déjà, et les modifier ne ferait qu'ajouter du risque</option>
+      <option>les corriger aussi, pour que tout le dessin soit adapté à l'impression</option>
+      <option>les arrondir légèrement, car un angle vif fragilise toujours une pièce</option>
+      <option>les supprimer du dessin, puisqu'elles ne sont pas contraintes par la machine</option>
+    </select>
+    <p style="margin-top:14px"><b>2.</b> D'où vient la paroi de 2,9 mm, et pourquoi ne la
+    touche-t-on pas ?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>d'un calcul de 3e_C7.3 : elle tient le vent, et l'impression la sait faire</option>
+      <option>d'un réglage par défaut du logiciel de modélisation utilisé en 3e_C7.6</option>
+      <option>d'une norme d'étanchéité qui impose 2,9 mm à tout boîtier d'extérieur</option>
+      <option>du diamètre de la buse : 2,9 mm correspond à sept passes de 0,4 mm</option>
+    </select>
+    <p style="margin-top:14px"><b>3.</b> À quoi sert de savoir tout cela <em>avant</em>
+    d'imprimer ?</p>
+    <select id="a1q3">
+      <option value="">— je choisis —</option>
+      <option>à ne pas dépenser une heure de machine pour découvrir ce qu'un tableau disait</option>
+      <option>à pouvoir reprocher au logiciel de découpe de ne pas avoir bloqué l'impression</option>
+      <option>à choisir un autre moyen de fabrication que l'impression tridimensionnelle</option>
+      <option>à rien de particulier : on aurait vu les trois défauts sur la pièce imprimée</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Lance d'abord l'atelier sur le dessin d'origine : le résultat de cette activité est justement ce que l'atelier affiche.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>La casquette anti-pluie inclinée à 70°</b> — au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse</p>
+      <p><b>La rainure de joint de 0,3 mm de profondeur</b> — une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie</p>
+      <p><b>Le jeu de 0,1 mm entre le couvercle et le fond</b> — l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent</p>
+      <p style="margin-top:10px"><b>1 et 2. Le plus difficile de cette séance est de ne pas
+      toucher à ce qui va.</b> La paroi de 2,9 mm vient du calcul de <code>3e_C7.3</code> :
+      <b>e = 3,00 × racine(50 ÷ 53)</b> pour le PETG, l'épaisseur qui tient le vent en tête de
+      mât. L'impression demande au moins 1,6 mm pour une paroi étanche — quatre passes de buse —
+      et on en a sept. Elle passe, et elle passe pour une raison qui n'a rien à voir avec la
+      machine.</p>
+      <p>Les angles internes vifs, de même : l'impression les fait parfaitement. C'est la
+      <em>fraiseuse</em> qui ne saurait pas — et on n'imprime pas à la fraiseuse. <b>Corriger une
+      cote qui va, c'est ajouter un risque sans résoudre un problème.</b> L'atelier compte ces
+      corrections-là sur une jauge séparée, et il a raison de les compter.</p>
+      <p><b>3.</b> Les trois défauts se voyaient dans un tableau. Ils ont coûté <b>55 minutes de
+      machine</b> et une pièce. Ce n'est pas cher pour un prototype — ce le devient quand il n'y
+      a qu'un seul tirage, et c'est justement la situation de l'activité 3.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✏️ Activité 2 — Corriger le dessin, et rien d'autre ⏱ ~40 min</h2>
+  <p>Les trois cotes bloquantes se modifient directement dans le tableau. À chaque
+  frappe, l'atelier recalcule. <b>L'objectif est double</b> : amener la jauge de gauche à
+  <b>1 moyen capable</b>, et laisser celle de droite à <b>0 cote modifiée sans nécessité</b>.</p>
+  <p>Une correction n'est acceptable que si elle ne touche <b>ni la matière, ni l'encombrement,
+  ni ce que l'objet doit faire</b>. Le cahier des charges n'est pas rouvert : il est tenu.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'atelier</a> — c'est le même, et il a gardé ton dessin. Une page ne porte qu'un seul atelier : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+  <table class="releve">
+    <tr><th>La cote corrigée — et rien d'autre que la cote</th><th class="num">Ta valeur</th></tr>
+    <tr><td>Inclinaison de la casquette anti-pluie</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… °"></td></tr>
+    <tr><td>Profondeur de la rainure de joint</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… mm"></td></tr>
+    <tr><td>Jeu entre le couvercle et le fond</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… mm"></td></tr>
+  </table>
+    <p style="margin-top:14px"><b>1.</b> La casquette passe de 70° à 45°. Écarte-t-elle encore
+    l'eau du joint ?</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>oui : c'est la pente qui écarte l'eau, et 45° est déjà une forte pente</option>
+      <option>non : à 45° l'eau ruisselle directement dans la rainure du joint torique</option>
+      <option>oui, à condition d'ajouter une gouttière sur le pourtour du couvercle</option>
+      <option>non : il faudrait au moins 60° pour que l'eau soit correctement écartée</option>
+    </select>
+    <p style="margin-top:14px"><b>2.</b> Qu'est-ce que ces trois corrections ont changé au
+    <b>cahier des charges</b> ?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>rien : même matière, même encombrement, même étanchéité, même masse admise</option>
+      <option>l'étanchéité, qui devient moins bonne avec un jeu de couvercle plus grand</option>
+      <option>la masse, qui augmente parce que la rainure est deux fois plus profonde</option>
+      <option>la tenue au vent, car une casquette moins inclinée offre plus de prise</option>
+    </select>
+    <p style="margin-top:14px"><b>3.</b> En quoi ce geste diffère-t-il de celui de
+    <code>3e_C7.3</code>, où l'on avait dû relâcher une exigence ?</p>
+    <select id="a2q3">
+      <option value="">— je choisis —</option>
+      <option>là on changeait ce que l'objet doit faire ; ici on change comment on le dessine</option>
+      <option>il ne diffère pas : dans les deux cas on assouplit une contrainte trop sévère</option>
+      <option>là on changeait le dessin ; ici on change le matériau et son procédé</option>
+      <option>là le coût était nul ; ici chaque correction se paie en temps de machine</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Amène d'abord l'atelier à retenir UN moyen, en corrigeant les cotes qui bloquent : c'est l'expérience que cette activité demande de relever.</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <table class="refs">
+      <tr><th>La cote corrigée — et rien d'autre que la cote</th><th>Ta valeur</th></tr>
+      <tr><td>Inclinaison de la casquette anti-pluie</td><td><b>45 °</b></td></tr>
+      <tr><td>Profondeur de la rainure de joint</td><td><b>0,6 mm</b></td></tr>
+      <tr><td>Jeu entre le couvercle et le fond</td><td><b>0,4 mm</b></td></tr>
+      </table>
+      <p style="margin-top:10px"><b>Trois cotes, trois raisons, et aucune concession.</b></p>
+      <p><b>La casquette, 70° → 45°.</b> Quarante-cinq degrés est exactement l'angle qu'une buse
+      tient sans support : chaque couche s'appuie encore assez sur celle du dessous. Et une pente
+      à 45° écarte parfaitement l'eau — <b>c'est la pente qui compte, pas le nombre de
+      degrés</b>. La fonction est intacte.</p>
+      <p><b>La rainure, 0,3 → 0,6 mm.</b> Une couche fait 0,2 mm. Un creux de 0,3 mm, c'est une
+      couche et demie : la machine en fait une, ou deux, jamais une et demie. À 0,6 mm, c'est
+      <b>trois couches franches</b>, et le joint torique se loge mieux qu'avant.</p>
+      <p><b>Le jeu, 0,1 → 0,4 mm.</b> L'impression tient 0,3 mm de tolérance : deux surfaces
+      dessinées à 0,1 mm l'une de l'autre se touchent, et le plastique chaud les soude. À 0,4 mm
+      le couvercle ferme — et <b>l'étanchéité, elle, est faite par le joint</b>, pas par le jeu.
+      C'est le travail du joint, et c'est pour cela qu'il y en a un.</p>
+      <p><b>2 et 3.</b> Rien du cahier des charges n'a bougé : même PETG, mêmes 200 × 150 × 90 mm,
+      même étanchéité, même masse admise. En <code>3e_C7.3</code>, relâcher la tenue au sel ou la
+      masse changeait <em>ce que l'objet doit faire</em>, et il fallait nommer qui paierait. Ici
+      on change <em>comment on le dessine</em>, et <b>personne ne paie</b> — c'est ce qui rend ce
+      geste-là préférable, et c'est pourquoi on le cherche en premier.</p>
+      <p style="color:var(--sub)"><b>Et si tu as corrigé la paroi ou les angles vifs</b>, la jauge
+      de droite te l'a dit. Ce n'est pas une faute grave : c'est une correction inutile, donc un
+      risque ajouté pour rien. Un dossier de fabrication se juge aussi à ce qu'il n'a pas
+      touché.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🚚 Activité 3 — Une seule fournée ⏱ ~35 min</h2>
+  <p>Le dessin est corrigé, l'atelier retient l'impression 3D. Reste à produire —
+  et pas un boîtier : <b>douze</b>, un par bâtiment.</p>
+  <p>Passe la quantité à 12 sur l'atelier. L'impression demande <b>8 h 15</b> de machine, pour
+  <b>3 h disponibles</b> par semaine : près de trois semaines, et la saison cyclonique
+  n'attend pas. Le principal propose de faire imprimer le lot au <b>lycée voisin</b>, qui a
+  quatre machines. Même temps machine, mais <b>dix jours de délai</b> — et une seule fournée.</p>
+  <p><b>Une seule fournée veut dire : aucune itération.</b> Pas de « on imprime, on mesure, on
+  corrige, on réimprime ». Ce qu'on aurait appris en recommençant, il faut le savoir avant.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'atelier</a> — c'est le même, et il a gardé ton dessin. Une page ne porte qu'un seul atelier : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p>Associe chaque chose qu'on aurait apprise en recommençant à la façon de la savoir avant.</p>
+    <p style="margin-top:12px"><b>« Le couvercle ne ferme pas »</b></p>
+    <select id="a4y0">
+      <option value="">— je choisis —</option>
+      <option>on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</option>
+      <option>on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</option>
+      <option>on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</option>
+    </select>
+    <p style="margin-top:12px"><b>« La casquette est velue »</b></p>
+    <select id="a4y1">
+      <option value="">— je choisis —</option>
+      <option>on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</option>
+      <option>on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</option>
+      <option>on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</option>
+    </select>
+    <p style="margin-top:12px"><b>« La pièce a cassé au premier cyclone »</b></p>
+    <select id="a4y2">
+      <option value="">— je choisis —</option>
+      <option>on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</option>
+      <option>on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</option>
+      <option>on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</option>
+    </select>
+    <p style="margin-top:14px"><b>1.</b> La simulation de <code>3e_C8.1</code> dit que la pièce
+    tient le vent. Que ne dit-elle pas ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>que les couches imprimées se séparent plus facilement entre elles que dans la matière</option>
+      <option>quelle contrainte maximale la pièce subit au point le plus sollicité du boîtier</option>
+      <option>si la contrainte calculée dépasse ou non la limite élastique du matériau retenu</option>
+      <option>où se situe la zone la plus chargée de la pièce sous l'effort appliqué</option>
+    </select>
+    <p style="margin-top:14px"><b>2.</b> Rédige la note qui part avec le fichier au lycée voisin.
+    Trois choses doivent y figurer : <b>les trois cotes corrigées et pourquoi</b>, <b>les deux
+    cotes qu'il ne faut surtout pas « améliorer »</b>, et <b>ce qu'on demande de vérifier sur la
+    première pièce sortie</b>, avant de lancer les onze autres.</p>
+    <textarea id="a3j" rows="5" placeholder="Fichier joint : boîtier station, PETG. Cotes corrigées : … Ne pas modifier : … Sur la première pièce, vérifier : …"></textarea>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>« Le couvercle ne ferme pas »</b> — on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu</p>
+      <p><b>« La casquette est velue »</b> — on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support</p>
+      <p><b>« La pièce a cassé au premier cyclone »</b> — on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant</p>
+      <p style="margin-top:10px"><b>1. La simulation calcule une matière, pas une pièce
+      imprimée.</b> Elle suppose un matériau <em>homogène</em> : la même résistance dans toutes
+      les directions. Or une pièce imprimée est un <b>empilement de couches</b>, et la liaison
+      entre deux couches est plus faible que la matière d'une couche. La simulation dit où la
+      pièce est chargée et si la contrainte dépasse la limite élastique — elle ne sait rien de
+      l'orientation d'impression, qui décide pourtant de la direction où la pièce cédera.</p>
+      <p style="color:var(--sub)">C'est la limite honnête de <code>3e_C8.1</code> : une
+      simulation remplace beaucoup d'essais, jamais tous. Et elle ne remplace <b>aucun</b> des
+      essais qui portent sur la façon dont la pièce a été fabriquée.</p>
+      <p><b>2. Une note de lancement se juge à trois marques.</b> Les <b>cotes corrigées</b>, avec
+      leur raison — pour que personne au lycée ne « rétablisse » le dessin d'origine en croyant
+      bien faire. Les <b>cotes à ne pas toucher</b>, avec leur raison aussi : la paroi de 2,9 mm
+      vient d'un calcul de tenue au vent, pas d'un choix esthétique. Et un <b>contrôle sur la
+      première pièce</b> : fermeture du couvercle, profondeur de rainure au pied à coulisse,
+      surface de la casquette — trois mesures, dix minutes, avant d'engager onze heures de
+      machine.</p>
+      <p><b>Cette dernière ligne est la plus importante</b>, et c'est celle qu'on oublie. « Une
+      seule fournée » ne veut pas dire « on ne vérifie rien » : cela veut dire qu'on vérifie
+      <b>sur la première pièce, avant les autres</b>. L'itération n'a pas disparu — elle a été
+      réduite à un seul point de contrôle, et il faut savoir lequel.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~25 min</h2>
+<p>Le lycée voisin répond : ses quatre machines sont prises pour trois semaines, mais
+  il possède une <b>fraiseuse numérique</b> libre dès lundi, et des plaques de <b>PMMA</b> de
+  4 mm.</p>
+  <p>Écris : <b>ce que ce moyen sait faire du boîtier</b>, <b>ce qu'il faudrait changer</b>, et
+  <b>ce qui, cette fois, sortirait du cahier des charges</b>.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb4"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>La fraiseuse ne peut pas produire ce boîtier, et pour deux raisons de natures
+      différentes.</b></p>
+      <p><b>La matière d'abord.</b> Le PMMA n'est pas le PETG. <code>3e_C7.3</code> avait écarté
+      le PMMA sans même le mettre au tableau, et le PETG avait été retenu pour sa tenue au sel et
+      aux ultraviolets. Changer de matière, ce n'est pas corriger un dessin : c'est <b>rouvrir le
+      cahier des charges</b>, et il faudrait alors dire qui paie — ce qui est le geste de C7.3,
+      pas celui d'aujourd'hui.</p>
+      <p><b>La forme ensuite.</b> Une fraiseuse 3 axes usine une pièce <em>par le dessus</em> :
+      elle ne sait pas creuser un volume fermé. Le boîtier devrait être découpé en cinq faces
+      assemblées, avec autant de joints à étancher qu'il y a d'arêtes — et l'étanchéité, elle,
+      est au cahier des charges. Quant aux angles internes vifs, sa fraise les arrondirait à
+      1,5 mm : la carte électronique ne se calerait plus dans les coins.</p>
+      <p><b>La bonne réponse n'est donc pas technique, elle est de méthode :</b> on ne cherche pas
+      « un moyen libre », on cherche un moyen <b>dont le domaine contient la pièce</b>. Un
+      atelier disponible qui ne sait pas faire la pièce n'est pas une solution de repli — c'est
+      une perte de temps qui se découvre trois semaines plus tard.</p>
+      <p style="color:var(--sub)"><b>Et la vraie réponse à faire au principal</b> tient en une
+      phrase : attendre les trois semaines, ou chercher un troisième atelier qui imprime le PETG.
+      Le délai est négociable ; le domaine d'une machine ne l'est pas.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Aucune machine ne rend le dessin.</b> Chacune y laisse son empreinte, toujours la
+      même : stries et bourrelet pour l'impression, trait de coupe de 0,2 mm pour le laser, rayon
+      de 1,5 mm pour la fraiseuse. Ce ne sont pas des défauts — ce sont les traces de la façon
+      dont la machine travaille.</li>
+    <li><b>Une machine ne refuse presque jamais : elle signale, puis elle exécute.</b> Elle ne
+      sait pas si le surplomb dessiné est une erreur ou une intention. Cinquante-cinq minutes et
+      quarante grammes se perdent en silence.</li>
+    <li><b>Corriger le dessin n'est pas relâcher le cahier des charges.</b> Ramener la casquette
+      à 45°, creuser la rainure à 0,6 mm, dessiner 0,4 mm de jeu : ni la matière, ni
+      l'encombrement, ni l'étanchéité, ni la masse admise ne bougent. <b>Personne ne paie</b> —
+      c'est ce qui rend ce geste préférable, et pourquoi on le cherche en premier.</li>
+    <li><b>Le plus difficile est de ne pas toucher à ce qui va.</b> La paroi de 2,9 mm vient d'un
+      calcul de tenue au vent ; les angles vifs, l'impression les fait très bien. Corriger une
+      cote qui passe, c'est ajouter un risque sans résoudre un problème. Un dossier de
+      fabrication se juge aussi à ce qu'il n'a pas touché.</li>
+    <li><b>Une cote se corrige en connaissant le pas de la machine.</b> Une couche fait 0,2 mm :
+      un creux de 0,3 mm, c'est une couche et demie, et une machine n'en fait pas une et demie.
+      45° est l'angle qu'une buse tient sans support. 0,3 mm est sa tolérance.</li>
+    <li><b>Une seule fournée ne veut pas dire aucun contrôle</b> : cela veut dire un contrôle sur
+      la <b>première pièce</b>, avant de lancer les autres. L'itération n'a pas disparu, elle a
+      été réduite à un point — et il faut savoir lequel.</li>
+    <li><b>Une simulation remplace beaucoup d'essais, jamais tous.</b> Elle calcule une matière
+      homogène ; une pièce imprimée est un empilement de couches, et elle cède d'abord entre
+      elles. La simulation ne sait rien de l'orientation d'impression.</li>
+    <li><b>Un atelier disponible n'est pas un atelier capable.</b> On cherche un moyen dont le
+      domaine contient la pièce. Le délai se négocie ; le domaine d'une machine, non.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ proposait-elle de
+  changer la machine, ou de changer le dessin ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.7 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais corriger un dessin pour une machine donnée, et dire ce que je n'ai pas touché</option>
+    <option>Je sais le faire si on m'indique quelles cotes posent problème</option>
+    <option>Je repère les cotes bloquantes, mais je corrige aussi celles qui passaient déjà</option>
+    <option>Je ne sais pas encore quoi faire quand une machine ne rend pas la pièce dessinée</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur l'empreinte des moyens, la correction d'un dessin et ce qu'une seule fournée impose. 20 portent sur le choix des moyens et la production de la forme, 10 sur la simulation de tenue mécanique et ses limites.</p>
+  <a class="btn" href="qcm_3e_C7.7_produire-le-boitier.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Sur l'atelier, remets le dessin d'origine, puis corrige <b>une seule</b> cote à la fois et
+  relance. Combien de moyens capables obtiens-tu après une correction ? après deux ?</p>
+  <p>Tu verras qu'il n'y en a <b>aucun</b> tant que les trois ne sont pas faites. Écris en une
+  phrase ce que cela dit d'un dessin de fabrication — et pourquoi « corriger le plus gros
+  défaut » ne sert à rien tant que les autres restent.</p>
+
+</section>
+
+<footer>Séquence 3e_C7.7 — « Produire le boîtier ». Atelier des moyens original (CC0), domaines et temps calculés par moyens.py, aucune dépendance externe. Programme 2024, Thème 3.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_3e_C7_7";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── l'atelier des moyens ───────────────────────────────────────────────── */
+const MOYENS = [{"cle": "impression", "nom": "Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)", "e_min": 0.8, "e_etanche": 1.6, "r_int": 0.0, "surplomb": 45, "res_z": 0.4, "tol": 0.3, "min_piece": 40, "prep": 15, "matieres": ["PLA", "PETG", "PP recyclé"], "traversant": true, "borgne": true, "empreinte": "un bourrelet de première couche à la base, et des stries visibles sur les faces inclinées", "pourquoiRayon": null}, {"cle": "thermoformage", "nom": "Thermoformage sur moule", "e_min": 0.5, "e_etanche": 0.8, "r_int": 3.0, "surplomb": null, "res_z": 1.0, "tol": 1.0, "min_piece": 4, "prep": 60, "matieres": ["PMMA", "PVC", "PETG"], "traversant": false, "borgne": false, "empreinte": "une paroi qui s'amincit dans les angles, d'autant plus que la forme est profonde", "pourquoiRayon": "la matière chaude ne descend pas dans un angle plus serré que 3 mm"}, {"cle": "fraiseuse", "nom": "Fraiseuse numérique 3 axes (fraise Ø 3 mm)", "e_min": 1.5, "e_etanche": 1.5, "r_int": 1.5, "surplomb": null, "res_z": 0.05, "tol": 0.05, "min_piece": 12, "prep": 25, "matieres": ["PMMA", "PVC", "contreplaqué", "aluminium"], "traversant": true, "borgne": true, "empreinte": "tout angle interne arrondi au rayon de la fraise, soit 1,5 mm — ce n'est pas un défaut, c'est l'outil", "pourquoiRayon": "sa fraise de 3 mm arrondit tout angle interne à 1,5 mm"}, {"cle": "laser", "nom": "Découpe laser CO₂ (plaque à plat)", "e_min": 1.0, "e_etanche": 1.0, "r_int": 0.0, "surplomb": null, "res_z": 0.1, "tol": 0.2, "min_piece": 2, "prep": 10, "matieres": ["PMMA", "contreplaqué", "carton"], "traversant": true, "borgne": false, "empreinte": "un trait de coupe de 0,2 mm : toute ouverture sort 0,2 mm plus large que dessinée, et le chant est légèrement conique", "pourquoiRayon": null}, {"cle": "sciage", "nom": "Sciage et perçage à la main", "e_min": 1.0, "e_etanche": 1.0, "r_int": 0.0, "surplomb": null, "res_z": 0.5, "tol": 1.0, "min_piece": 18, "prep": 0, "matieres": ["PMMA", "PVC", "contreplaqué", "aluminium"], "traversant": true, "borgne": true, "empreinte": "une cote juste à 1 mm près, et deux pièces jamais tout à fait pareilles", "pourquoiRayon": null}];    /* domaine de chaque moyen */
+const TRAITS = [{"cle": "epaisseur", "lib": "Paroi étanche de 2,9 mm", "valeur": 2.9, "unite": "mm", "sansCorrection": true, "correction": 2.9}, {"cle": "surplomb", "lib": "Casquette anti-pluie inclinée à 70°", "valeur": 70.0, "unite": "°", "sansCorrection": false, "correction": 45.0}, {"cle": "res_z", "lib": "Rainure de joint de 0,3 mm de profondeur", "valeur": 0.3, "unite": "mm", "sansCorrection": false, "correction": 0.6}, {"cle": "tol", "lib": "Jeu de 0,1 mm entre le couvercle et le fond", "valeur": 0.1, "unite": "mm", "sansCorrection": false, "correction": 0.4}, {"cle": "r_int", "lib": "Angles internes vifs au fond du boîtier", "valeur": 0.0, "unite": "mm", "sansCorrection": true, "correction": 0.0}];    /* [{cle, lib, valeur, unite, sansCorrection, correction}] */
+const PIECE  = {"matiere": "PETG", "etanche": true, "tempsDispo": 180, "moyenVise": "impression"};     /* {matiere, etanche, tempsDispo} */
+const EDIT   = true;      /* les cotes sont-elles modifiables ? */
+
+function vg(x, d){ return x.toFixed(d).replace(".", ","); }
+function duree(min){
+  min = Math.round(min);
+  if(min < 60) return min + " min";
+  const h = Math.floor(min / 60), r = min % 60;
+  return r === 0 ? h + " h" : h + " h " + (r < 10 ? "0" : "") + r;
+}
+function cote(t){
+  if(!EDIT) return t.valeur;
+  const e = document.getElementById("tr_" + t.cle);
+  const v = parseFloat((e.value || "").replace(",", "."));
+  return isNaN(v) ? t.valeur : v;
+}
+function quantite(){ return parseInt(document.getElementById("qte").value, 10); }
+
+/* Les règles de domaine. Elles disent POURQUOI, jamais « ça ne marche pas ». */
+function tientTrait(m, t, v){
+  switch(t.cle){
+    case "epaisseur": {
+      const s = PIECE.etanche ? m.e_etanche : m.e_min;
+      return v >= s ? null
+        : "il ne fait pas une paroi " + (PIECE.etanche ? "étanche " : "") + "de moins de " + vg(s, 1) + " mm";
+    }
+    case "r_int":
+      return v >= m.r_int ? null : (m.pourquoiRayon || ("il impose un rayon de " + vg(m.r_int, 1) + " mm aux angles internes"));
+    case "surplomb":
+      if(m.surplomb === null) return null;
+      return v <= m.surplomb ? null
+        : "au-delà de " + m.surplomb + "° il faut un support, et le support laisse une surface rugueuse";
+    case "res_z":
+      return v >= m.res_z ? null
+        : "il ne tient pas un détail de moins de " + vg(m.res_z, 2) + " mm dans l'épaisseur";
+    case "tol":
+      return v >= m.tol ? null : "sa tolérance courante est de " + vg(m.tol, 2) + " mm";
+    case "traversant":
+      return (m.traversant || !v) ? null : "il ne perce pas";
+    case "borgne":
+      return (m.borgne || !v) ? null : "il ne fait pas de trou borgne";
+  }
+  return null;
+}
+
+function juge(m){
+  const rates = [];
+  if(m.matieres.indexOf(PIECE.matiere) < 0) rates.push("il n'accepte pas le " + PIECE.matiere);
+  TRAITS.forEach(t => { const r = tientTrait(m, t, cote(t)); if(r) rates.push(r); });
+  return rates;
+}
+
+/* Combien de cotes ont été touchées alors qu'elles n'en avaient pas besoin ? */
+function touchesInutiles(){
+  if(!EDIT) return [];
+  return TRAITS.filter(t => t.sansCorrection && Math.abs(cote(t) - t.valeur) > 1e-9);
+}
+
+function majAtelier(geste){
+  const n = quantite();
+  /* L'état de chaque trait. Quand le cahier des charges a DÉJÀ retenu un moyen
+     — c'est le cas du boîtier, choisi en 3e_C7.3 — la colonne se lit pour lui,
+     et pour lui seul : « trois cotes bloquent » n'a de sens que rapporté à une
+     machine précise. Sinon, on dit si au moins un moyen sait la produire. */
+  const CIBLE = PIECE.moyenVise ? MOYENS.filter(m => m.cle === PIECE.moyenVise)[0] : null;
+  TRAITS.forEach(t => {
+    const li = document.getElementById("li_" + t.cle), et = document.getElementById("et_" + t.cle);
+    let bloque;
+    if(CIBLE) bloque = tientTrait(CIBLE, t, cote(t)) !== null;
+    else bloque = MOYENS.every(m => tientTrait(m, t, cote(t)) !== null);
+    li.classList.toggle("ko", bloque);
+    li.classList.toggle("ok", !bloque);
+    li.classList.toggle("touche", EDIT && Math.abs(cote(t) - t.valeur) > 1e-9);
+    et.textContent = bloque ? "✘" : "✔";
+  });
+
+  const tb = document.getElementById("tab");
+  while(tb.rows.length > 1) tb.deleteRow(1);
+  let retenus = [], dansLesTemps = 0;
+  MOYENS.forEach(m => {
+    const rates = juge(m), ok = rates.length === 0;
+    const t = m.prep + n * m.min_piece, tient = t <= PIECE.tempsDispo;
+    if(ok){ retenus.push(m); if(tient) dansLesTemps++; }
+    const tr = tb.insertRow();
+    tr.className = ok ? "ok" : "ko";
+    const cel = x => { const d = tr.insertCell(); d.innerHTML = x; return d; };
+    cel("<b>" + m.nom + "</b>").className = "nom";
+    const c = cel(duree(t) + (tient ? "" : " <b>✗</b>"));
+    c.className = "t" + (tient ? "" : " hors");
+    cel(ok ? m.empreinte : "—").className = "emp";
+    cel(ok ? "✔ capable" : "✘ " + rates.join(" · ")).className = "ver";
+  });
+
+  const jR = document.getElementById("jRet");
+  document.getElementById("nRet").textContent = retenus.length;
+  jR.classList.toggle("zero", retenus.length === 0);
+  jR.classList.toggle("un", retenus.length === 1);
+  jR.classList.toggle("plus", retenus.length > 1);
+
+  const j2 = document.getElementById("j2");
+  if(EDIT){
+    const inut = touchesInutiles().length;
+    document.getElementById("nInutile").textContent = inut;
+    j2.classList.toggle("zero", inut > 0);
+    j2.classList.toggle("bon", inut === 0);
+  } else {
+    document.getElementById("nDelai").textContent = dansLesTemps;
+    j2.classList.toggle("zero", dansLesTemps === 0);
+    j2.classList.toggle("un", dansLesTemps === 1);
+    j2.classList.toggle("plus", dansLesTemps > 1);
+  }
+
+  if(geste){
+    if(retenus.length === 0) window.__exp.zero = true;
+    if(retenus.length === 1) window.__exp.unSeul = true;
+    if(retenus.length > 1) window.__exp.plusieurs = true;
+    if(EDIT && TRAITS.some(t => Math.abs(cote(t) - t.valeur) > 1e-9)) window.__exp.corrige = true;
+    if(!EDIT && n !== parseInt(document.getElementById("qte").options[0].value, 10))
+      window.__exp.quantite = true;
+    if(dansLesTemps < retenus.length) window.__exp.horsDelai = true;
+  }
+  save();
+  return retenus;
+}
+
+function ligne(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls; d.textContent = txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("evaluer").addEventListener("click", () => {
+  const r = majAtelier(true), n = quantite();
+  window.__exp.evalue = true;
+  if(!r.length){
+    ligne("ko", "Aucun moyen de l'atelier ne sait produire cette forme. Ce n'est pas une panne : "
+        + "c'est un résultat. Regarde quelles lignes du dessin portent une croix.");
+  } else {
+    const hors = r.filter(m => m.prep + n * m.min_piece > PIECE.tempsDispo);
+    ligne("ok", r.length + " moyen(s) savent la produire : " + r.map(m => m.nom).join(" · "));
+    if(hors.length)
+      ligne("wa", "Mais pour " + n + " pièces, " + hors.length + " d'entre eux dépassent les "
+          + duree(PIECE.tempsDispo) + " de machine disponibles : " + hors.map(m => m.nom).join(" · "));
+  }
+  if(EDIT){
+    const inut = touchesInutiles();
+    if(inut.length)
+      ligne("wa", inut.length + " cote(s) modifiée(s) sans nécessité : " + inut.map(t => t.lib).join(" · ")
+          + ". Elles passaient déjà.");
+  }
+  save();
+});
+document.getElementById("reinit").addEventListener("click", () => {
+  if(EDIT) TRAITS.forEach(t => {
+    document.getElementById("tr_" + t.cle).value = String(t.valeur).replace(".", ",");
+  });
+  const q = document.getElementById("qte");
+  q.value = q.options[0].value;
+  majAtelier(true);
+  ligne("wa", "Dessin remis tel qu'il sort de la modélisation.");
+});
+if(EDIT) TRAITS.forEach(t => {
+  const e = document.getElementById("tr_" + t.cle);
+  if(e) e.addEventListener("input", () => majAtelier(true));
+});
+document.getElementById("qte").addEventListener("change", () => majAtelier(true));
+/* Pas d'appel à majAtelier() ici : il enregistre, et il tournerait AVANT
+   restore() (règle d'or n°221). Le squelette restaure d'abord, puis met à jour.
+   Et l'appel du squelette ne passe AUCUN geste : un verrou que l'ouverture de
+   la page suffit à ouvrir n'est pas un verrou (règle d'or n°226). */
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0r0", "un bourrelet à la base, et des stries sur toutes les faces inclinées"); s += sv("a0r1", "un trait de coupe de 0,2 mm : toute ouverture sort plus large"); s += sv("a0r2", "un rayon de 1,5 mm imposé à chaque angle interne"); s += sv("a0r3", "une paroi qui s'amincit dans les angles, et d'autant plus qu'ils sont profonds"); s += sv("a0q1","parce qu'un avertissement signale un risque, il n'interdit pas : c'est à nous de lire");
+       return {score: s, total: 5, exp: true}; },
+  1(){ let s = 0;
+       s += sv("a1r0", "au-delà de 45° la buse a besoin d'un support, et le support laisse une surface rugueuse"); s += sv("a1r1", "une couche fait 0,2 mm : un détail de 0,3 mm, c'est une couche et demie"); s += sv("a1r2", "l'impression tient 0,3 mm : à 0,1 mm dessiné, les deux pièces se soudent"); s += sv("a1q1","rien : elles passent déjà, et les modifier ne ferait qu'ajouter du risque"); s += sv("a1q2","d'un calcul de 3e_C7.3 : elle tient le vent, et l'impression la sait faire"); s += sv("a1q3","à ne pas dépenser une heure de machine pour découvrir ce qu'un tableau disait");
+       return {score: s, total: 6, exp: !!window.__exp.zero,
+               expMsg: "Lance d'abord l'atelier sur le dessin d'origine : le résultat de cette activité est justement ce que l'atelier affiche."}; },
+  2(){ let s = 0;
+       s += nb("rel0", 45, 0); s += nb("rel1", 0.6, 0.05); s += nb("rel2", 0.4, 0.05); s += sv("a2q1","oui : c'est la pente qui écarte l'eau, et 45° est déjà une forte pente"); s += sv("a2q2","rien : même matière, même encombrement, même étanchéité, même masse admise"); s += sv("a2q3","là on changeait ce que l'objet doit faire ; ici on change comment on le dessine");
+       return {score: s, total: 6, exp: !!window.__exp.unSeul,
+               expMsg: "Amène d'abord l'atelier à retenir UN moyen, en corrigeant les cotes qui bloquent : c'est l'expérience que cette activité demande de relever."}; },
+  3(){ let s = 0;
+       s += sv("a4y0", "on l'aurait vu au premier tirage — sans tirage d'essai, il faut dessiner le jeu"); s += sv("a4y1", "on l'aurait poncée — sans second tirage, il faut l'angle qui évite le support"); s += sv("a4y2", "on ne l'aurait su qu'en vrai — c'est ce qu'une simulation sert à savoir avant"); s += sv("a3q1","que les couches imprimées se séparent plus facilement entre elles que dans la matière"); s += pres("a3j", 180);
+       return {score: s, total: 5, exp: true}; },
+  4(){ return {score: pres("reinv", 170), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majAtelier();
+})();
+</script>
+
+</body>
+</html>
