@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — 3e_C7.4 La station doit tenir 72 heures sans secteur</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.4_energie-de-la-station.html">📘 La séquence</a><a href="lexique_3e_C7.4.html">📖 Lexique</a></nav>
+<h1>🌀 Synthèse élève — La station doit tenir 72 heures sans secteur</h1>
+<p><em>3e_C7.4 — Choisir une source d'énergie pour un OST.</em></p>
+<h2>Les mots à savoir</h2>
+<div class="box">
+  <ul>
+    <li><b>Dimensionner sur le pire cas</b> — une réserve calculée sur la moyenne est vide le
+      jour où elle sert. Ici, le pire cas est le jour d'alerte : 6,04 Wh.</li>
+    <li><b>Le besoin sur une durée</b> — 6,04 Wh/jour × 3 jours = 18,12 Wh pour tenir 72 heures.
+      Une autonomie ne s'exprime pas sans la durée exigée.</li>
+    <li><b>Tout juste n'est pas assez</b> — deux accus donnent 18,8 Wh pour 18,12 exigés, soit
+      3,8 % de marge, quand un accu vieilli en perd 20 %. Même règle que la patère de 5<sup>e</sup>
+      et le mât de 3<sup>e</sup>.</li>
+    <li><b>Recharger n'est pas tenir</b> — un panneau est un robinet, une batterie un réservoir.
+      Sous un cyclone, le robinet est fermé et c'est le réservoir qui travaille.</li>
+    <li><b>« Autonome » ne veut rien dire seul</b> — il faut dire pendant combien de temps et
+      dans quelles conditions.</li>
+    <li><b>Le cycle de vie se raisonne par usage</b> — 787 piles par an pour une station, contre
+      trois accus tous les trois ans. Le débat sur le lithium se tient après ce nombre.</li>
+    <li><b>Une architecture, pas une source</b> — qui alimente d'habitude, qui prend le relais,
+      qui recharge. Et ce que l'ensemble coûtera en entretien.</li>
+    <li><b>Regarder la charge</b> — plus le site est difficile d'accès, plus il est rentable de
+      consommer moins plutôt que de produire plus.</li>
+  </ul>
+</div>
+<h2>L'architecture retenue</h2>
+<table>
+<tr><th>Élément</th><th>Rôle</th><th>Dimensionnement</th></tr>
+<tr><td>Secteur (adaptateur scellé)</td><td>source normale, 360 jours par an</td><td>illimitée tant qu'il y a du réseau</td></tr>
+<tr><td><b>3 accus 18650</b></td><td><b>tenir quand le réseau tombe</b></td><td><b>28,2 Wh pour 18,12 exigés — 112 h</b></td></tr>
+<tr><td>Panneau 2 W crête</td><td>recharger la réserve, soulager le secteur</td><td>7,4 Wh/jour pour 6,04 consommés</td></tr>
+</table>
+<div class="box attention"><p><b>Et ce que ce choix coûte, qu'il faut écrire :</b> trois accus à
+remplacer tous les trois à quatre ans, un panneau à fixer, orienter et nettoyer, un boîtier
+étanche qui vieillit au sel, et une bascule secteur/accu à tester — un secours jamais testé n'est
+pas un secours.</p></div>
+<h2>Ce que le banc a montré</h2>
+<table>
+<tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
+<tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td>89,4 %</td></tr>
+<tr><td>Buzzer d'alerte</td><td>30 mA</td><td>2 h</td><td>0,300 Wh</td><td>5,0 %</td></tr>
+<tr><td>Anémomètre à impulsions</td><td>1 mA</td><td>24 h</td><td>0,120 Wh</td><td>2,0 %</td></tr>
+<tr><td>Girouette</td><td>1 mA</td><td>24 h</td><td>0,120 Wh</td><td>2,0 %</td></tr>
+<tr><td>DEL indicatrice</td><td>10 mA</td><td>2 h</td><td>0,100 Wh</td><td>1,7 %</td></tr>
+<tr><th>Total</th><th></th><th></th><th>6,04 Wh</th><th>100 %</th></tr>
+</table>
+<table>
+<tr><th>Source</th><th>Énergie disponible</th><th>Face à 6,04 Wh/jour</th></tr>
+<tr><td>Pile 9 V alcaline</td><td>2,8 Wh</td><td>11 heures</td></tr>
+<tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>2,1 jours</td></tr>
+<tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>37 heures</td></tr>
+<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
+<tr><td>Panneau solaire 1 W crête + accu</td><td>3,7 Wh <b>par jour</b></td><td><b>ne suffit pas</b> : il manque 2,34 Wh/jour</td></tr>
+</table>
+<h2>Je dois être capable de…</h2>
+<ul><li>dimensionner sur le pire cas, et dire pourquoi ce n'est pas la moyenne</li><li>convertir une durée exigée en énergie nécessaire (72 h → 18,12 Wh)</li><li>calculer une marge et juger si elle suffit</li><li>distinguer une source qui recharge d'une réserve qui tient</li><li>répartir les rôles entre plusieurs sources</li><li>argumenter avec le cycle de vie, pas avec le matériau</li><li>annoncer l'entretien que l'installation demandera</li></ul>
+<footer>Synthèse élève — 3e_C7.4 « La station doit tenir 72 heures sans secteur » · Thème 3 · valeurs calculées par energie.py, à imprimer en noir et blanc sans rien perdre.</footer>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 3e_C7.4 La station doit tenir 72 heures sans secteur</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.4_energie-de-la-station.html">📘 La séquence</a><a href="synthese_eleve_3e_C7.4.html">🧑‍🎓 Synthèse élève</a></nav>
+<h1>🌀 Synthèse professeur — 3e_C7.4</h1>
+<p><em>Choisir une source d'énergie pour un OST.</em> Lot « La station doit tenir 72 heures sans secteur » — 2 séances de 90 min (1 h 30), 150 min d'activités.</p>
+<h2>Le pari didactique</h2>
+<div class="box"><p>Le verbe du code est <b>choisir une source pour un OST</b> — sans liste fermée, sans
+grille fournie. Le lot pose donc un objet réel, une contrainte réelle, et un avis à signer.</p>
+<p><b>Le pivot :</b> la station est alimentée par le secteur, et le réseau tombe exactement au
+moment où elle sert. La réponse attendue n'est pas UNE source, c'est une <b>architecture</b> :
+qui alimente d'habitude, qui prend le relais, qui recharge.</p>
+<p><b>La contre-intuition à faire vivre :</b> « un panneau solaire, c'est autonome ». Sous un
+cyclone, un panneau récolte moins d'un dixième de sa production — et une plaque plate à 180 km/h
+s'arrache. Le panneau ne <em>tient</em> pas : il <em>recharge</em>.</p>
+<p><b>Et la spirale se referme :</b> deux accus donnent 18,8 Wh pour 18,12 exigés, soit 3,8 % de
+marge. C'est le bois qui cassait à 41 kg pour 40 en 5<sup>e</sup> et le mât recalé pour 1,1 mm en
+3<sup>e</sup>. <b>Tout juste n'est pas assez</b>, trois fois, sur trois objets sans rapport.</p></div>
+<h2>Ce que le montage consomme</h2>
+<table>
+<tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
+<tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td>89,4 %</td></tr>
+<tr><td>Buzzer d'alerte</td><td>30 mA</td><td>2 h</td><td>0,300 Wh</td><td>5,0 %</td></tr>
+<tr><td>Anémomètre à impulsions</td><td>1 mA</td><td>24 h</td><td>0,120 Wh</td><td>2,0 %</td></tr>
+<tr><td>Girouette</td><td>1 mA</td><td>24 h</td><td>0,120 Wh</td><td>2,0 %</td></tr>
+<tr><td>DEL indicatrice</td><td>10 mA</td><td>2 h</td><td>0,100 Wh</td><td>1,7 %</td></tr>
+<tr><th>Total</th><th></th><th></th><th>6,04 Wh</th><th>100 %</th></tr>
+</table>
+<h2>Ce que les sources donnent</h2>
+<table>
+<tr><th>Source</th><th>Énergie disponible</th><th>Face à 6,04 Wh/jour</th></tr>
+<tr><td>Pile 9 V alcaline</td><td>2,8 Wh</td><td>11 heures</td></tr>
+<tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>2,1 jours</td></tr>
+<tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>37 heures</td></tr>
+<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
+<tr><td>Panneau solaire 1 W crête + accu</td><td>3,7 Wh <b>par jour</b></td><td><b>ne suffit pas</b> : il manque 2,34 Wh/jour</td></tr>
+</table>
+<p>Toutes ces valeurs sont <b>calculées</b> par <code>energie.py</code>, livré dans le dossier. Le rendement d'un régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas un réglage. L'ensoleillement retenu pour la Martinique est de 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+<h2>Ce que ce lot ne fait pas, et le dit</h2>
+<div class="box limite"><ul><li><b>Aucune mesure réelle.</b> Consommations et capacités sont des ordres de grandeur du commerce ; la version 🅰 les remplace par des mesures au multimètre.</li><li><b>« Moins d'un dixième » sous cyclone est un ordre de grandeur</b>, pas une mesure : l'éclairement sous couche épaisse tombe à quelques pour cent, ce qui suffit largement à la conclusion mais ne doit pas être présenté comme un relevé.</li><li><b>Le vieillissement des accus est traité en un seul chiffre</b> (≈ 20 % après quelques centaines de cycles). La réalité dépend de la température, de la profondeur de décharge et du courant — la chaleur martiniquaise mérite d'être discutée, et le défi bonus s'en charge.</li><li><b>La bascule secteur/accu n'est pas conçue ici.</b> Le lot dit qu'elle existe, qu'elle se teste, et renvoie au défi bonus. Ce serait un lot C7.5 à part entière.</li></ul></div>
+<h2>Différenciation</h2>
+<ul><li><b>🅰 avec le matériel</b> — montage réel, multimètre en série. Les valeurs mesurées remplacent alors celles du banc, et ce sont elles qui font foi.</li><li><b>🅱 avec le banc</b> — hors ligne, sans installation. Seule voie qui permette d'éteindre un consommateur pour voir ce qu'il pesait.</li><li><b>🅲 sans écran</b> — tableaux imprimables, valeurs dans les corrections.</li></ul>
+<h2>Évaluation — repères LSU</h2>
+<table><tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>propose une source sans calculer le besoin</td></tr>
+<tr><td>🟠 Fragile</td><td>calcule le besoin si on lui rappelle qu'il faut le pire jour</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>dimensionne sur le pire cas avec marge, et répartit les rôles</td></tr>
+<tr><td>⭐ Très bonne</td><td>et argumente avec le cycle de vie et annonce ce que le choix coûte</td></tr>
+</table>
+<footer>Synthèse professeur — 3e_C7.4 « La station doit tenir 72 heures sans secteur » · Thème 3 · banc d'énergie original (CC0).</footer>
+</body>
+</html>

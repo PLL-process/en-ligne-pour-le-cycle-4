@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 5e_C7.4 L'indicateur du hall</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C7.4_indicateur-du-hall.html">📘 La séquence</a><a href="synthese_eleve_5e_C7.4.html">🧑‍🎓 Synthèse élève</a></nav>
+<h1>🔌 Synthèse professeur — 5e_C7.4</h1>
+<p><em>Choisir une source d'énergie parmi plusieurs proposées et une forme d'énergie possible.</em> Lot « L'indicateur du hall » — 2 séances de 55 min, 95 min d'activités.</p>
+<h2>Le pari didactique</h2>
+<div class="box"><p>Le verbe du code est <b>choisir parmi plusieurs sources proposées</b>. Le piège que
+la séquence installe est le meilleur outil pour l'évaluer : <b>le panneau solaire suffit sur le
+papier</b> — 3,7 Wh récoltés pour 2,85 consommés — <b>et ne marche pas</b>, parce qu'il n'y a pas
+de soleil dans un hall.</p>
+<p>L'élève qui décide au seul vu du banc se trompe. L'élève qui a compris que le lieu fait partie
+du choix ne se trompe pas. Le REFAIRE ferme la démonstration : le même objet, posé sur le portail
+à vélos, retrouve le panneau — <b>sans qu'un seul chiffre change</b>.</p></div>
+<h2>Ce que le montage consomme</h2>
+<table>
+<tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
+<tr><td>Carte Arduino UNO</td><td>45 mA</td><td>10 h</td><td>2,250 Wh</td><td>78,9 %</td></tr>
+<tr><td>DEL indicatrice</td><td>10 mA</td><td>10 h</td><td>0,500 Wh</td><td>17,5 %</td></tr>
+<tr><td>Capteur d'humidité du sol</td><td>2 mA</td><td>10 h</td><td>0,100 Wh</td><td>3,5 %</td></tr>
+<tr><th>Total</th><th></th><th></th><th>2,85 Wh</th><th>100 %</th></tr>
+</table>
+<h2>Ce que les sources donnent</h2>
+<table>
+<tr><th>Source</th><th>Énergie disponible</th><th>Face à 2,85 Wh/jour</th></tr>
+<tr><td>Pile 9 V alcaline</td><td>2,8 Wh</td><td>24 heures</td></tr>
+<tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>4,4 jours</td></tr>
+<tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>3,3 jours</td></tr>
+<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
+<tr><td>Panneau solaire 1 W crête + accu</td><td>3,7 Wh <b>par jour</b></td><td>suffit, 30 % de marge</td></tr>
+</table>
+<p>Toutes ces valeurs sont <b>calculées</b> par <code>energie.py</code>, livré dans le dossier. Le rendement d'un régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas un réglage. L'ensoleillement retenu pour la Martinique est de 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+<h2>Ce que ce lot ne fait pas, et le dit</h2>
+<div class="box limite"><ul><li><b>Aucune mesure réelle.</b> Les courants sont des valeurs constructeur usuelles, les capacités des ordres de grandeur du commerce. La version 🅰 (multimètre en série) remplace ces valeurs par des mesures, et ce sont elles qui font foi.</li><li><b>Le banc ignore l'éclairement intérieur.</b> Il compte l'ensoleillement extérieur de la Martinique. C'est exactement ce qui rend l'activité 3 intéressante — mais un élève qui lit vite peut croire le panneau bon partout, et il faut le reprendre.</li><li><b>Le vieillissement n'est pas modélisé.</b> Une pile alcaline stockée deux ans a déjà perdu une partie de sa charge.</li></ul></div>
+<h2>Différenciation</h2>
+<ul><li><b>🅰 avec le matériel</b> — montage réel, multimètre en série. Les valeurs mesurées remplacent alors celles du banc, et ce sont elles qui font foi.</li><li><b>🅱 avec le banc</b> — hors ligne, sans installation. Seule voie qui permette d'éteindre un consommateur pour voir ce qu'il pesait.</li><li><b>🅲 sans écran</b> — tableaux imprimables, valeurs dans les corrections.</li></ul>
+<h2>Évaluation — repères LSU</h2>
+<table><tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>ne sait pas encore lire ce que donne une source au banc</td></tr>
+<tr><td>🟠 Fragile</td><td>lit le banc, mais choisit sans citer de chiffre</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>choisit une source et cite le relevé qui l'appuie</td></tr>
+<tr><td>⭐ Très bonne</td><td>et nomme la forme d'énergie et la contrainte de lieu qui a tranché</td></tr>
+</table>
+<footer>Synthèse professeur — 5e_C7.4 « L'indicateur du hall » · Thème 3 · banc d'énergie original (CC0).</footer>
+</body>
+</html>

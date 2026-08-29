@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 4e_C7.4 De quoi vit le jardin connecté</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.4_energie-du-jardin.html">📘 La séquence</a><a href="synthese_eleve_4e_C7.4.html">🧑‍🎓 Synthèse élève</a></nav>
+<h1>🌱 Synthèse professeur — 4e_C7.4</h1>
+<p><em>Comparer différentes sources d'énergie pour choisir la plus adaptée.</em> Lot « De quoi vit le jardin connecté » — 2 séances de 55 min, 100 min d'activités.</p>
+<h2>Le pari didactique</h2>
+<div class="box"><p>Le verbe du code est <b>comparer</b>. Faire choisir sans grille n'évalue rien : tous
+les élèves désignent le secteur, et personne n'a comparé. Le lot rend donc la comparaison
+<b>nécessaire</b> en installant deux surprises que seul le banc peut lever.</p>
+<p><b>Première surprise :</b> la pompe, gros consommateur évident, pèse <b>0,4 %</b> ; la carte,
+qui ne fait rien 99 % du temps, pèse <b>92 %</b>. L'intuition est démentie en trois clics.</p>
+<p><b>Seconde surprise, activité 4 :</b> comparer les sources finit par obliger à regarder la
+<b>charge</b>. Avec une carte sobre, le besoin tombe de 5,87 à 1,07 Wh et le panneau qui perdait
+toutes les comparaisons devient le meilleur. On croyait choisir une source ; on a changé le
+problème.</p></div>
+<h2>Ce que le montage consomme</h2>
+<table>
+<tr><th>Ce qui consomme</th><th>Courant</th><th>Par jour</th><th>Énergie</th><th>Part</th></tr>
+<tr><td>Carte Arduino UNO</td><td>45 mA</td><td>24 h</td><td>5,400 Wh</td><td>92,0 %</td></tr>
+<tr><td>Capteur d'humidité du sol</td><td>2 mA</td><td>24 h</td><td>0,240 Wh</td><td>4,1 %</td></tr>
+<tr><td>Écran LCD RGB</td><td>40 mA</td><td>1 h</td><td>0,200 Wh</td><td>3,4 %</td></tr>
+<tr><td>Pompe immergée 5 V</td><td>300 mA</td><td>60 s</td><td>0,025 Wh</td><td>0,4 %</td></tr>
+<tr><td>Module relais</td><td>70 mA</td><td>60 s</td><td>0,006 Wh</td><td>0,1 %</td></tr>
+<tr><th>Total</th><th></th><th></th><th>5,87 Wh</th><th>100 %</th></tr>
+</table>
+<h2>Ce que les sources donnent</h2>
+<table>
+<tr><th>Source</th><th>Énergie disponible</th><th>Face à 5,87 Wh/jour</th></tr>
+<tr><td>Pile 9 V alcaline</td><td>2,8 Wh</td><td>11 heures</td></tr>
+<tr><td>4 piles AA alcalines</td><td>12,5 Wh</td><td>2,1 jours</td></tr>
+<tr><td>Accu Li-ion 18650 rechargeable</td><td>9,4 Wh</td><td>38 heures</td></tr>
+<tr><td>Secteur — adaptateur USB scellé</td><td>illimitée</td><td>tient tant qu'il y a du réseau</td></tr>
+<tr><td>Panneau solaire 1 W crête + accu</td><td>3,7 Wh <b>par jour</b></td><td><b>ne suffit pas</b> : il manque 2,17 Wh/jour</td></tr>
+</table>
+<p>Toutes ces valeurs sont <b>calculées</b> par <code>energie.py</code>, livré dans le dossier. Le rendement d'un régulateur linéaire y vaut V<sub>sortie</sub> ÷ V<sub>entrée</sub> — c'est de la physique, pas un réglage. L'ensoleillement retenu pour la Martinique est de 5,3 heures équivalent plein soleil par jour, avec 30 % de pertes de chaîne.</p>
+<h2>Ce que ce lot ne fait pas, et le dit</h2>
+<div class="box limite"><ul><li><b>Aucune mesure réelle.</b> Les 45 mA de la carte sont une valeur usuelle : une UNO réelle mesurée au multimètre peut en donner 35 ou 60. Le défi bonus « mesure » demande justement l'écart.</li><li><b>Les 5 mA de la carte sobre sont une hypothèse d'étude.</b> La correction dit explicitement qu'une UNO complète ne descend pas sous 30 mA à cause de sa DEL d'alimentation et de son composant USB : c'est la carte qu'il faudrait changer.</li><li><b>Le coût annuel est un ordre de grandeur.</b> Prix indicatifs, hors remises et hors transport.</li><li><b>La grille ne pondère pas les critères.</b> C'est volontaire : la hiérarchisation est le travail de l'activité 3, et une question de QCM y est consacrée.</li></ul></div>
+<h2>Différenciation</h2>
+<ul><li><b>🅰 avec le matériel</b> — montage réel, multimètre en série. Les valeurs mesurées remplacent alors celles du banc, et ce sont elles qui font foi.</li><li><b>🅱 avec le banc</b> — hors ligne, sans installation. Seule voie qui permette d'éteindre un consommateur pour voir ce qu'il pesait.</li><li><b>🅲 sans écran</b> — tableaux imprimables, valeurs dans les corrections.</li></ul>
+<h2>Évaluation — repères LSU</h2>
+<table><tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>choisit une source sans grille de comparaison</td></tr>
+<tr><td>🟠 Fragile</td><td>remplit la grille si les critères lui sont donnés</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>écrit ses critères, les applique à toutes les sources et tranche</td></tr>
+<tr><td>⭐ Très bonne</td><td>et dit ce que son choix coûte, et quand changer la charge plutôt que la source</td></tr>
+</table>
+<footer>Synthèse professeur — 4e_C7.4 « De quoi vit le jardin connecté » · Thème 3 · banc d'énergie original (CC0).</footer>
+</body>
+</html>

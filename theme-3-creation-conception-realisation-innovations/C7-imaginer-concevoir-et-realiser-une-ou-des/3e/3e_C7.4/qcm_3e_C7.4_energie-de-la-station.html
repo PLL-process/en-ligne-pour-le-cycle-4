@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e · QCM — La station doit tenir 72 heures sans secteur (3e_C7.4)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.4_energie-de-la-station.html">← Séquence</a></nav>
+<h1>🌀 QCM — La station doit tenir 72 heures : choisir une source</h1>
+<p class="subtitle">Dimensionner au pire cas, marge, recharger ou tenir, cycle de vie — 20 questions sur 3e_C7.4, 10 sur 3e_C3.2</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">3e_C7.4 · 3e_C3.2</span>
+  <span class="badge theme">30 questions · 90 réfutations · chaque proposition fausse est réfutée une par une</span>
+</div>
+<p style="text-align:center"><a href="sequence_3e_C7.4_energie-de-la-station.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="BOI">📦 La boîte étiquetée</option>
+      <option value="LIR">🔎 Lire et tester un programme</option>
+      <option value="MOD">🔧 Modifier et régler</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C8.1 · C8.2 · C8.3 · Thème 3 · New York · Technologie cycle 4 (2024) · <a href="sequence_3e_C7.4_energie-de-la-station.html">atelier associé</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ 3e_C7.4 ═══ */
+{c:"3e_C7.4",n:"Dimensionner au pire cas",q:"Une réserve d'énergie se dimensionne sur…",
+ o:["la moyenne des jours de l'année","le jour le plus consommateur","le jour le plus fréquent","le jour le moins consommateur"],r:1,
+ expl:"Une réserve calculée sur la moyenne est vide le jour où elle sert. Le pire cas n'est pas une prudence excessive : c'est la définition même d'une réserve.",
+ ex:"La station consomme 5,64 Wh un jour calme et 6,04 un jour d'alerte. C'est 6,04 qui dimensionne.",
+ err:"Prendre la valeur courante parce qu'elle est plus représentative. Elle l'est — et c'est justement pourquoi elle ne protège de rien.",
+ d:["Une moyenne décrit l'année ordinaire, pas l'événement pour lequel l'objet existe.","","Le jour fréquent est le jour calme : la station n'a alors rien à faire.","Dimensionner au minimum garantit la panne au moment le plus mauvais."],
+ ret:"On dimensionne sur le pire cas, jamais sur le cas courant."},
+{c:"3e_C7.4",n:"Le jour d'alerte",q:"Entre un jour calme et un jour d'alerte, la station consomme…",
+ o:["5,64 Wh contre 11,3 Wh","5,64 Wh contre 6,04 Wh","3,02 Wh contre 6,04 Wh","6,04 Wh contre 6,04 Wh"],r:1,
+ expl:"Le buzzer et le voyant n'ajoutent que 0,40 Wh, soit 7 %. Ils font beaucoup de bruit et peu de watts-heures.",
+ ex:"Éteins les deux au banc : le total passe de 6,04 à 5,64.",
+ err:"Croire qu'une alerte double la consommation. L'écart est réel mais faible — et c'est quand même lui qu'on retient.",
+ d:["Le doublement supposerait un buzzer allumé en permanence à pleine puissance.","","Le jour calme ne consomme pas la moitié : la carte veille dans les deux cas.","Il y a bien un écart de 0,40 Wh entre les deux journées."],
+ ret:"Le jour d'alerte ne coûte que 7 % de plus — et c'est lui qui dimensionne."},
+{c:"3e_C7.4",n:"Le besoin sur 72 heures",q:"À 6,04 Wh par jour, tenir 72 heures demande…",
+ o:["434 Wh","6,04 Wh","72 Wh","18,12 Wh"],r:3,
+ expl:"72 heures font trois jours pleins : 6,04 × 3. Une autonomie ne s'exprime jamais sans la durée exigée.",
+ ex:"C'est ce nombre qui départage un accu (9,4 Wh) de trois accus (28,2 Wh).",
+ err:"Oublier de convertir les heures en jours, ou multiplier par 72 au lieu de 3.",
+ d:["434 Wh viendrait de 6,04 × 72 : on aurait multiplié des jours par des heures.","6,04 Wh est la consommation d'une seule journée.","72 est la durée en heures, pas une énergie.",""],
+ ret:"Besoin = consommation d'un jour × nombre de jours à tenir."},
+{c:"3e_C7.4",n:"Ce que donnent deux accus",q:"Deux accus 18650 délivrent, sous 5 V…",
+ o:["18,8 Wh","9,4 Wh","22,2 Wh","37,6 Wh"],r:0,
+ expl:"Un accu donne 9,4 Wh utiles après le convertisseur élévateur. Deux en donnent le double.",
+ ex:"18,8 Wh pour 18,12 exigés : ça passe — de très peu.",
+ err:"Confondre l'énergie brute (11,1 Wh par accu) et l'énergie utile après conversion (9,4).",
+ d:["","9,4 Wh est ce que donne un seul accu.","22,2 Wh est l'énergie brute de deux accus, avant le convertisseur.","37,6 Wh correspondrait à quatre accus."],
+ ret:"L'énergie utile se compte après conversion, pas avant."},
+{c:"3e_C7.4",n:"Lire une marge",q:"18,8 Wh disponibles pour 18,12 nécessaires, cela fait une marge de…",
+ o:["environ 96 %","environ 0,7 %","environ 20 %","environ 4 %"],r:3,
+ expl:"(18,8 − 18,12) ÷ 18,12 = 3,8 %. Une marge se calcule en rapportant l'écart au besoin, pas en le lisant brut.",
+ ex:"0,68 Wh d'écart, c'est deux heures et demie de fonctionnement.",
+ err:"Prendre l'écart brut pour la marge. 0,68 ne veut rien dire sans référence.",
+ d:["96 % est le rapport inverse : la part du besoin déjà couverte par le besoin lui-même.","0,7 est l'écart en watts-heures, pas la marge en pourcentage.","20 % demanderait 21,7 Wh, soit presque trois accus.",""],
+ ret:"Une marge, c'est l'écart rapporté au besoin — en pourcentage."},
+{c:"3e_C7.4",n:"Tout juste n'est pas assez",q:"Une marge de 3,8 % sur une réserve d'énergie est…",
+ o:["confortable : 18,8 dépasse bien 18,12","trop faible : le vieillissement la mange","excessive : c'est du gaspillage","sans importance : une batterie ne vieillit pas"],r:1,
+ expl:"Un accu perd environ 20 % de sa capacité après quelques centaines de cycles, et la consommation réelle dépasse toujours un peu la consommation calculée.",
+ ex:"C'est le même raisonnement que le bois cassant à 41 kg pour 40 exigés, en 5<sup>e</sup>, et que le mât recalé pour 1,1 mm de flèche.",
+ err:"Se contenter d'un dépassement arithmétique. Le calcul porte sur un accu neuf, dans des conditions parfaites.",
+ d:["Le dépassement est arithmétique ; il ne survit pas au premier vieillissement.","","Une réserve n'est jamais un gaspillage si le service doit être garanti.","Un accu vieillit à chaque cycle, et plus vite encore à la chaleur."],
+ ret:"Tout juste n'est pas assez : la marge protège de ce qu'on n'a pas mesuré."},
+{c:"3e_C7.4",n:"Ce que perd un accu en vieillissant",q:"Après quelques centaines de cycles, un accu Li-ion…",
+ o:["a perdu environ 20 % de sa capacité","délivre exactement la même énergie","a gagné en capacité grâce au rodage","ne fonctionne plus du tout"],r:0,
+ expl:"La capacité décroît progressivement. Un accu « en fin de vie » n'est pas mort : il donne moins, et c'est ce moins qu'il faut avoir prévu.",
+ ex:"Trois accus neufs donnent 28,2 Wh ; à 80 %, ils en donnent encore 22,6 — au-dessus des 18,12 exigés.",
+ err:"Dimensionner sur un accu neuf. L'installation doit tenir jusqu'au dernier jour de vie de sa batterie, pas jusqu'au premier.",
+ d:["","Une capacité constante n'existe pas : chaque cycle en retire un peu.","Aucun accumulateur ne gagne de capacité à l'usage.","Il fonctionne encore très bien : il stocke simplement moins."],
+ ret:"Une installation doit tenir avec une batterie usée, pas seulement avec une neuve."},
+{c:"3e_C7.4",n:"Trois accus",q:"Trois accus (28,2 Wh) font tenir la station…",
+ o:["112 heures, soit 4,7 jours","72 heures tout juste","90 heures environ","plus de deux semaines"],r:0,
+ expl:"28,2 ÷ 6,04 = 4,67 jours. On couvre les 72 heures demandées et 40 heures d'imprévu.",
+ ex:"C'est le dimensionnement retenu dans l'avis à la mairie.",
+ err:"S'arrêter à « ça passe ». La question est de savoir de combien, et ce que cette marge couvre.",
+ d:["","72 heures tout juste, c'est le cas de deux accus, et il a été écarté.","90 heures correspondraient à environ 22,6 Wh, soit des accus déjà vieillis.","Deux semaines demanderaient plus de 84 Wh, soit neuf accus."],
+ ret:"Autonomie = énergie utile ÷ consommation quotidienne, puis on la compare à l'exigence."},
+{c:"3e_C7.4",n:"Le réseau tombe quand la station sert",q:"Le problème central de l'alimentation de cette station est que…",
+ o:["elle consomme beaucoup trop d'énergie","le réseau tombe au moment où elle sert","personne ne sait la recharger sur place","le secteur n'arrive pas jusqu'au toit"],r:1,
+ expl:"Une source parfaite 360 jours par an et absente les cinq jours qui comptent n'est pas une solution complète.",
+ ex:"Après un cyclone majeur, le courant revient en 24 à 72 heures.",
+ err:"Choisir la source qui marche le plus souvent. Ici, ce qui compte n'est pas la fréquence, c'est le moment.",
+ d:["6 Wh par jour est une consommation très modeste, comparable à une veille de box.","","La recharge se fait automatiquement, par le secteur et par le panneau.","Le secteur arrive jusqu'à la station : c'est même sa source normale."],
+ ret:"Une source qui manque au moment où l'objet sert n'est pas une source suffisante."},
+{c:"3e_C7.4",n:"Recharger ou tenir",q:"La différence entre une source qui recharge et une réserve qui tient, c'est que…",
+ o:["l'une est écologique et l'autre ne l'est pas","l'une est électrique et l'autre est chimique","l'une coûte cher à l'achat et l'autre non","l'une donne un peu chaque jour, l'autre beaucoup"],r:3,
+ expl:"Un panneau est un robinet, un accu un réservoir. On ne remplace pas l'un par l'autre : on les associe.",
+ ex:"Pendant le cyclone, le robinet est fermé et c'est le réservoir qui travaille.",
+ err:"Prendre « panneau + accu » pour une seule source. Ce sont deux rôles distincts, qu'il faut dimensionner séparément.",
+ d:["Les deux ont un bilan environnemental à examiner ; ce n'est pas le critère ici.","Les deux finissent en électricité 5 V : la forme n'est pas ce qui les distingue.","Les prix se ressemblent, et ce n'est pas ce qui définit leur rôle.",""],
+ ret:"Un robinet donne tous les jours ; un réservoir donne beaucoup, une fois."},
+{c:"3e_C7.4",n:"Le panneau sous un cyclone",q:"Sous une couche nuageuse de cyclone, un panneau récolte…",
+ o:["autant que d'habitude","environ la moitié de sa récolte normale","moins d'un dixième de sa récolte normale","plus que d'habitude, la pluie le nettoie"],r:2,
+ expl:"L'éclairement tombe à quelques pour cent de sa valeur en plein soleil. Le panneau ne couvre alors pas 5 % du besoin, au moment précis où le besoin existe.",
+ ex:"3,7 Wh un jour normal ; quelques dixièmes de Wh pendant l'événement, pour 6,04 consommés.",
+ err:"Compter sur le solaire pour l'autonomie d'urgence. C'est l'erreur la plus fréquente sur ce type d'installation.",
+ d:["Une couche épaisse arrête l'essentiel du rayonnement utile.","La moitié correspondrait à un ciel gris ordinaire, pas à un cyclone.","","Un panneau propre produit mieux — encore faut-il qu'il y ait du soleil."],
+ ret:"Le solaire ne fait pas l'autonomie d'urgence : il n'y a pas de soleil dans une urgence météo."},
+{c:"3e_C7.4",n:"Une surface offerte au vent",q:"La seconde raison de ne pas compter sur le panneau pendant l'événement est que…",
+ o:["il faut le débrancher avant chaque cyclone","le panneau ne fonctionne pas mouillé","le vent refroidit le panneau et le bloque","une plaque plate peut être arrachée à 180 km/h"],r:3,
+ expl:"C'est exactement le calcul du mât : une surface offerte au vent subit une poussée, et elle arrache ou elle est arrachée.",
+ ex:"Un panneau de 2 W fait environ 0,02 m² ; à 1 530 Pa, cela fait déjà une trentaine de newtons sur ses fixations.",
+ err:"Ne penser qu'à la production. Un composant extérieur est aussi une pièce mécanique.",
+ d:["Débrancher n'y changerait rien : c'est la fixation mécanique qui est en jeu.","Un panneau est étanche par construction : la pluie ne l'arrête pas.","Le froid améliore légèrement le rendement d'un panneau, il ne le bloque pas.",""],
+ ret:"Tout composant extérieur est aussi une pièce mécanique exposée au vent."},
+{c:"3e_C7.4",n:"Ce que veut dire « autonome »",q:"Dire d'une installation qu'elle est « autonome » n'a de sens que si l'on précise…",
+ o:["quelle est la marque exacte du panneau employé","pendant combien de temps, et dans quelles conditions","combien elle a coûté à l'installation, en euros","qui en assure la maintenance, et à quel rythme"],r:1,
+ expl:"Une installation solaire est autonome les jours de soleil. Ce sont les autres jours qui dimensionnent, et le mot seul ne dit rien d'eux.",
+ ex:"« Autonome 72 heures sans réseau, y compris sans soleil » est une phrase vérifiable.",
+ err:"Employer « autonome » comme un label. C'est une propriété relative à une durée et à des conditions.",
+ d:["La marque ne dit rien de la durée pendant laquelle l'installation tient.","","Le coût est un autre sujet : il ne qualifie pas l'autonomie.","La maintenance importe, mais elle ne définit pas la durée d'autonomie."],
+ ret:"« Autonome » se complète toujours : combien de temps, et dans quelles conditions."},
+{c:"3e_C7.4",n:"Une architecture, pas une source",q:"Pour cette station, la réponse attendue est…",
+ o:["une répartition des rôles entre plusieurs sources","la meilleure source unique, après comparaison","la source la moins chère du tableau","la source la plus écologique disponible"],r:0,
+ expl:"Secteur en source normale, accus en réserve dimensionnée, panneau en recharge : trois rôles distincts, une seule installation.",
+ ex:"Le programme dit « choisir une source d'énergie pour un OST » ; il ne dit pas « une seule ».",
+ err:"Chercher LA source. Sur un objet dont le service doit être garanti, une source unique est presque toujours insuffisante.",
+ d:["","Aucune source unique ne couvre à la fois les 360 jours ordinaires et les 3 jours critiques.","Le prix ne peut pas trancher tant que le service n'est pas assuré.","L'argument écologique se pose une fois la solution technique établie, pas avant."],
+ ret:"Choisir une source pour un OST, c'est souvent répartir des rôles."},
+{c:"3e_C7.4",n:"Le rôle du panneau",q:"Dans cette installation, le panneau sert à…",
+ o:["rien du tout : il est purement décoratif","alimenter la station pendant le cyclone","remplacer complètement les accumulateurs","recharger la réserve et soulager le secteur"],r:3,
+ expl:"Il produit les jours ordinaires, ce qui remet de l'énergie dans les accus et réduit la consommation prise au réseau.",
+ ex:"3,7 Wh par jour avec 1 W, 7,4 avec 2 W : de quoi couvrir tout ou partie des 6,04 consommés un jour normal.",
+ err:"Lui donner le rôle de l'urgence. C'est le seul moment où il ne produit rien.",
+ d:["Il produit réellement, et il réduit la facture comme la dépendance au réseau.","Pendant le cyclone, il ne produit presque rien et risque d'être arraché.","Il ne stocke rien : sans accus, il n'y a plus de réserve du tout.",""],
+ ret:"Le panneau recharge et soulage ; il ne tient pas l'urgence."},
+{c:"3e_C7.4",n:"Un secours se teste",q:"Un circuit de bascule secteur/batterie doit être…",
+ o:["testé régulièrement, comme le reste","installé et laissé tranquille","testé une seule fois à l'installation","remplacé chaque année par précaution"],r:0,
+ expl:"Un secours jamais testé n'est pas un secours : c'est une hypothèse. Le jour du cyclone n'est pas le moment de le découvrir.",
+ ex:"C'est le même principe que la recette de la station en 3e_C8.3 : ce qui n'est pas essayé n'est pas validé.",
+ err:"Faire confiance à un dispositif de secours parce qu'il est neuf. Il ne sert qu'une fois sur mille, et c'est cette fois-là qui compte.",
+ d:["","Un dispositif laissé tranquille se corrode, se déconnecte, ou son accu se vide.","Un test unique valide l'installation, pas son état trois ans plus tard.","Un remplacement systématique coûte cher et ne prouve rien : c'est le test qui prouve."],
+ ret:"Un secours qu'on ne teste pas est une hypothèse, pas un secours."},
+{c:"3e_C7.4",n:"Annoncer l'entretien",q:"Un avis technique complet annonce aussi…",
+ o:["le nom du fournisseur des composants","le temps passé par le groupe à la concevoir","les solutions écartées, une par une","ce que l'installation demandera d'entretien"],r:3,
+ expl:"Accus à remplacer, panneau à nettoyer, bascule à tester : ce sont des coûts réels, et les taire fait de l'avis une publicité.",
+ ex:"« Trois accus à remplacer tous les trois à quatre ans » est une ligne de budget, pas un détail.",
+ err:"Ne présenter qu'une solution parfaite. Le commanditaire découvre l'entretien après avoir signé.",
+ d:["Le fournisseur relève de l'achat, pas de la décision technique.","Le temps passé n'engage que ceux qui l'ont passé.","Citer les solutions écartées est utile, mais ce n'est pas ce qui manque ici.",""],
+ ret:"Un avis complet annonce l'entretien : c'est une ligne de budget, pas un détail."},
+{c:"3e_C7.4",n:"La carte, encore",q:"Dans la station, la carte représente…",
+ o:["89 % de la consommation quotidienne","50 % de la consommation quotidienne","5 % de la consommation quotidienne","2 % de la consommation quotidienne"],r:0,
+ expl:"5,40 Wh sur 6,04. Le même raisonnement que sur le jardin en 4<sup>e</sup> : ce qui veille en permanence l'emporte sur ce qui agit brièvement.",
+ ex:"Le buzzer, qu'on entend à cent mètres, ne pèse que 5 %.",
+ err:"Croire que le poste dominant change d'un objet à l'autre. Sur un montage qui veille, c'est presque toujours la carte.",
+ d:["","La moitié laisserait 3 Wh aux capteurs et au buzzer : bien plus qu'ils ne consomment.","5 % est la part du buzzer d'alerte.","2 % est la part de l'anémomètre, ou celle de la girouette."],
+ ret:"Sur un objet qui veille, la carte est presque toujours le premier poste."},
+{c:"3e_C7.4",n:"Consommer moins quand l'accès est difficile",q:"Plus un site est difficile d'accès, plus il devient rentable de…",
+ o:["installer un panneau plus grand","augmenter la taille de la batterie","réduire la consommation du montage","prévoir des visites de maintenance"],r:2,
+ expl:"Sur un site accessible, on ajoute une pile ou on passe recharger. Sur un îlet, chaque visite coûte une demi-journée de bateau.",
+ ex:"Une carte sobre ferait tomber le besoin de 6,04 à environ 1,2 Wh par jour : un panneau de 2 W et deux accus suffiraient.",
+ err:"Résoudre un problème d'accès par du matériel plus gros. Le matériel plus gros tombe en panne aussi, et plus loin.",
+ d:["Un panneau plus grand s'arrache plus facilement et se salit autant.","Une plus grosse batterie coûte plus cher, pèse plus et vieillit pareil.","","Les visites sont justement ce qu'on cherche à éviter sur un site isolé."],
+ ret:"Sur un site isolé, consommer moins vaut mieux que produire plus."},
+{c:"3e_C7.4",n:"Les accus ne sont pas des piles",q:"Un accu Li-ion percé, écrasé ou court-circuité…",
+ o:["peut être réparé en le rechargeant","se décharge simplement plus vite","cesse de fonctionner sans autre risque","peut s'emballer thermiquement et prendre feu"],r:3,
+ expl:"L'emballement thermique est une réaction en chaîne : la chaleur accélère la réaction, qui produit plus de chaleur. Rien ne l'arrête une fois lancée.",
+ ex:"Un accu qui gonfle, chauffe ou sent se pose au sol, loin de tout, et on prévient — jamais dans un sac ni dans une poche.",
+ err:"Traiter un accu comme une pile alcaline. Ce sont deux objets différents, avec deux consignes de sécurité différentes.",
+ d:["Un accu endommagé ne se répare pas : il se met en sécurité et se rapporte.","Une décharge rapide est le moindre des risques dans ce cas.","L'arrêt sans risque est le cas favorable, pas le cas à prévoir.",""],
+ ret:"Un accu endommagé se pose au sol, loin de tout, et on prévient."},
+/* ═══ 3e_C3.2 ═══ */
+{c:"3e_C3.2",n:"Le cycle de vie d'une pile",q:"Le cycle de vie d'une pile jetable se caractérise par…",
+ o:["une fabrication sans matière première","une extraction amortie sur mille usages","une extraction pour un seul usage","une fin de vie sans filière organisée"],r:2,
+ expl:"Zinc et manganèse sont extraits, transformés, transportés — pour une seule décharge. Le coût de fabrication ne s'amortit sur rien.",
+ ex:"787 piles par an pour une seule station, soit 787 extractions pour un seul service.",
+ err:"Ne regarder que l'usage. La fabrication et la fin de vie pèsent souvent davantage.",
+ d:["Toute pile contient des métaux extraits et transformés.","C'est le cas d'un accu rechargeable, pas d'une pile jetable.","","La filière existe : les bacs de collecte sont obligatoires en magasin."],
+ ret:"Une pile jetable amortit sa fabrication sur un seul usage."},
+{c:"3e_C3.2",n:"Le cycle de vie d'un accu",q:"Un accu rechargeable supporte environ 500 cycles. Cela signifie que…",
+ o:["il faut le recharger tous les 500 jours","il dure 500 jours puis s'arrête net","sa fabrication s'amortit sur 500 décharges","il perd 500 % de capacité en fin de vie"],r:2,
+ expl:"La fabrication d'un accu est plus lourde que celle d'une pile — mais elle est divisée par le nombre de cycles réellement effectués.",
+ ex:"500 cycles remplacent 500 piles : c'est là que se joue la comparaison, pas sur le lithium seul.",
+ err:"Comparer une pile et un accu à l'unité. Il faut comparer un service rendu sur une durée.",
+ d:["La fréquence de recharge dépend de l'usage, pas du nombre de cycles supportés.","Il ne s'arrête pas net : sa capacité décroît progressivement.","","Un accu perd de l'ordre de 20 % de capacité, pas 500."],
+ ret:"Un accu divise sa fabrication par le nombre de cycles qu'il rend."},
+{c:"3e_C3.2",n:"Le cycle de vie d'un panneau",q:"Un panneau solaire a une fabrication très énergivore, et pourtant…",
+ o:["il produit ensuite vingt ans sans rien consommer","il consomme un peu d'électricité en produisant","il doit être remplacé tous les trois ans","il ne se recycle en aucune façon"],r:0,
+ expl:"C'est la durée qui décide : une fabrication lourde amortie sur vingt ans pèse moins qu'une fabrication légère répétée chaque semaine.",
+ ex:"Un panneau de 15 € contre 787 piles par an : la comparaison n'a de sens que sur la durée.",
+ err:"S'arrêter à « la fabrication pollue ». C'est vrai de tout, y compris d'une pile.",
+ d:["","Un panneau ne consomme rien pour produire : il convertit un rayonnement gratuit.","Trois ans est la durée de vie des accus, pas celle d'un panneau.","Des filières de recyclage du silicium et de l'aluminium existent et sont organisées."],
+ ret:"Une fabrication lourde amortie sur vingt ans peut peser moins qu'une légère répétée."},
+{c:"3e_C3.2",n:"L'électricité vient d'ailleurs",q:"Dire « le secteur ne produit aucun déchet côté station » est…",
+ o:["faux : le secteur produit des déchets sur place","entièrement vrai : il n'y a rien à jeter","vrai localement, mais incomplet","sans rapport avec le cycle de vie"],r:2,
+ expl:"L'énergie du réseau est produite ailleurs, et en Martinique encore largement par des centrales thermiques. Le déchet existe : il est simplement déplacé.",
+ ex:"C'est pourquoi un panneau qui « soulage le secteur » a un effet réel, même modeste.",
+ err:"Raisonner sur le périmètre de l'objet seul. Un cycle de vie remonte à la production de l'énergie consommée.",
+ d:["Sur place, le secteur ne laisse effectivement aucun déchet.","Rien à jeter sur place ne veut pas dire rien à produire ailleurs.","","L'origine de l'énergie consommée fait partie intégrante du cycle de vie."],
+ ret:"Un cycle de vie ne s'arrête pas aux limites de l'objet."},
+{c:"3e_C3.2",n:"Ce qui n'est pas une source",q:"Le boîtier étanche et les câbles de la station…",
+ o:["n'entrent pas dans le bilan, ce ne sont pas des sources","ont eux aussi un cycle de vie à compter","durent indéfiniment et ne comptent pas","se recyclent intégralement, donc ne comptent pas"],r:1,
+ expl:"Un cycle de vie porte sur l'objet entier, pas sur la seule source. Le boîtier se fabrique, vieillit au sel et se jette.",
+ ex:"En bord de mer, c'est souvent le boîtier ou un presse-étoupe qui lâche avant l'électronique.",
+ err:"Réduire le bilan environnemental à la batterie. C'est le poste le plus visible, pas le seul.",
+ d:["Le programme demande le cycle de vie de l'OST, pas seulement celui de sa source.","","Un boîtier exposé au sel et aux UV se dégrade en quelques années.","Un recyclage possible n'est pas un recyclage gratuit ni total."],
+ ret:"Le cycle de vie porte sur l'objet entier, pas sur sa seule source."},
+{c:"3e_C3.2",n:"Le chiffre qui tranche",q:"À 6,04 Wh par jour et 2,8 Wh par pile 9 V, il faudrait par an…",
+ o:["216 piles","365 piles","787 piles","2 205 piles"],r:2,
+ expl:"6,04 × 365 = 2 205 Wh par an ; 2 205 ÷ 2,8 = 787. Le nombre sort d'une consommation mesurée et d'une capacité connue.",
+ ex:"787 extractions, 787 transports et 787 collectes pour une seule station.",
+ err:"Diviser par la capacité brute (4,95 Wh) au lieu de la capacité utile (2,8).",
+ d:["216 correspondrait à une pile tenant près de deux jours.","365 supposerait une pile par jour, donc une pile de 6 Wh utiles.","","2 205 est l'énergie annuelle en watts-heures, pas un nombre de piles."],
+ ret:"Un cycle de vie s'argumente avec un nombre, pas avec une impression."},
+{c:"3e_C3.2",n:"Raisonner par usage",q:"Pour comparer l'impact d'une pile et d'un accu, il faut raisonner…",
+ o:["par matériau contenu dans chacun","par service rendu sur une durée","par masse de l'objet fini","par prix d'achat à l'unité"],r:1,
+ expl:"Le lithium d'un accu est un vrai problème ; 787 piles par an pour le même service en est un plus grand. C'est la comparaison à service égal qui tranche.",
+ ex:"Trois accus tous les trois ans contre 2 361 piles sur la même durée.",
+ err:"Comparer les matériaux dans l'absolu. « Le lithium, c'est mauvais » ne dit rien tant qu'on ne sait pas combien de piles il remplace.",
+ d:["Un matériau n'est ni bon ni mauvais en soi : c'est la quantité par service qui compte.","","La masse ne dit rien de la rareté ni de la difficulté d'extraction.","Le prix d'achat ignore le renouvellement, donc l'essentiel."],
+ ret:"On compare des cycles de vie à service rendu égal, jamais matériau contre matériau."},
+{c:"3e_C3.2",n:"Les trois piliers",q:"Argumenter un choix avec les trois piliers du développement durable, c'est peser…",
+ o:["l'énergie, la matière et l'information","l'environnement, la technique et l'esthétique","le coût, la durée et la sécurité","l'environnement, l'économie et le social"],r:3,
+ expl:"Trois piliers : ce que ça fait à l'environnement, ce que ça coûte, et ce que ça change pour les gens qui l'utilisent ou l'entretiennent.",
+ ex:"Ici : moins de déchets (environnement), moins de renouvellement (économie), et une station qui alerte vraiment quand il faut (social).",
+ err:"Ne retenir que le pilier environnemental. Un choix qui ruine le collège ou que personne ne peut entretenir n'est pas durable.",
+ d:["Énergie, matière et information sont les trois flux d'un système technique.","La technique et l'esthétique sont d'autres critères, pas les piliers du développement durable.","Coût, durée et sécurité sont des critères de conception, pas les trois piliers.",""],
+ ret:"Les trois piliers : environnement, économie, social — les trois, pas un seul."},
+{c:"3e_C3.2",n:"Argumenter, pas décréter",q:"Argumenter un choix, c'est…",
+ o:["citer ce que font les autres collèges","affirmer que c'est le meilleur choix","donner les faits qui permettent d'en juger","montrer qu'on a beaucoup travaillé"],r:2,
+ expl:"Un argument se vérifie. Le lecteur doit pouvoir refaire le raisonnement et, s'il le veut, arriver à une autre conclusion.",
+ ex:"« 28,2 Wh pour 18,12 nécessaires » est un argument ; « c'est la meilleure solution » n'en est pas un.",
+ err:"Confondre affirmation et argument. Une affirmation ne se discute pas — et donc ne convainc pas.",
+ d:["L'usage ailleurs répond à d'autres contraintes que les tiennes.","Une affirmation sans fait derrière n'engage que celui qui l'écrit.","","La quantité de travail ne dit rien de la justesse de la conclusion."],
+ ret:"Un argument donne au lecteur de quoi juger — y compris de quoi te contredire."},
+{c:"3e_C3.2",n:"La fin de vie fait partie du choix",q:"Au moment de choisir une source, sa fin de vie…",
+ o:["fait partie de la décision technique","se traite plus tard, quand elle arrive","ne concerne que le gestionnaire du collège","n'est pas au programme de technologie"],r:0,
+ expl:"Le programme de 2024 demande explicitement de prendre en compte le cycle de vie dans le choix. Ce n'est pas un supplément : c'est un critère.",
+ ex:"Trois accus à rapporter en collecte tous les trois ans est une ligne de l'avis, écrite avant l'achat.",
+ err:"Renvoyer la fin de vie à plus tard. À ce moment-là, le choix est fait et rien n'est modifiable.",
+ d:["","Traitée plus tard, elle ne peut plus influencer le choix : il est déjà fait.","Le concepteur décide de ce qu'il faudra jeter ; il en est donc responsable.","C'est explicitement au programme, dans les codes C3.2 et C7.4."],
+ ret:"La fin de vie se décide au moment du choix, pas au moment de jeter."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_3e_C7.4_energie_de_la_station";
+const $=id=>document.getElementById(id);
+/* Règle d'or n°188 : on informe sans bloquer. Les trois boîtes modales du
+   gabarit hérité sont devenues ce bandeau, déjà annoncé aux lecteurs d'écran. */
+let _signalTimer=null;
+function signale(msg){
+  const z=$("savedNote"); if(!z){ return; }
+  z.textContent=msg; z.classList.add("show");
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show"); }, 6000);
+}
+const COMP_LABELS={
+  "3e_C7.4":"3e_C7.4 — 🌀 Choisir une source d'énergie pour un OST.",
+  "3e_C3.2":"3e_C3.2 — ♻️ Choisir un OST et argumenter ce choix en prenant en compte son cycle de vie et les trois piliers du développement durable." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Variables, types, mise au point : les programmes n\'ont plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>
