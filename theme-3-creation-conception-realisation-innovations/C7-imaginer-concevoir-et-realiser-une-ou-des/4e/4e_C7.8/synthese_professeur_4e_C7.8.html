@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 4e_C7.8 Le jardin publie sa mesure</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.8_le-jardin-publie.html">📘 La séquence</a><a href="synthese_eleve_4e_C7.8.html">🧑‍🎓 Synthèse élève</a></nav>
+<h1>📡 Synthèse professeur — 4e_C7.8</h1>
+<p><em>Interfacer un objet technique avec un réseau.</em> Lot « Le jardin publie sa mesure » — 2 séances de 55 min, 95 min d'activités.</p>
+<h2>Le pari didactique</h2>
+<div class="box"><p>Le verbe du code est <b>interfacer</b>, et le piège de la séance est là : l'adressage
+est déjà fait. Le jardin a une adresse IP fixe depuis l'atelier SOS serre, il est joignable, et
+il ne dit rien. <b>Un objet branché n'est pas un objet qui communique.</b></p>
+<p>Le geste qui porte la séance est le bouton <b>✂ Couper le lien</b>. Un élève qui a composé un
+message parfait mais n'a pas décidé ce que l'objet fait hors ligne n'a pas fini le travail — et
+la page le lui montre plutôt que de le lui dire.</p>
+<p><b>Le moment le plus réussi du lot</b> est l'apparition différée du champ <code>t</code> :
+coché à l'activité 1 sans qu'on voie bien pourquoi (le récepteur sait quand il reçoit, non ?),
+il trouve sa raison d'être deux activités plus tard, quand douze mesures libérées d'un coup
+seraient toutes datées de la même minute.</p></div>
+<h2>Le message du lot</h2>
+<table>
+<tr><th>Champ</th><th>Ce que c'est</th><th></th></tr>
+<tr><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td><td>✅ à envoyer</td></tr>
+<tr><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td><td>✅ à envoyer</td></tr>
+<tr><td><code>u</code></td><td>l'unité de cette valeur</td><td>✅ à envoyer</td></tr>
+<tr><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td><td>✅ à envoyer</td></tr>
+<tr><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td><td>✅ à envoyer</td></tr>
+<tr><td><code>etat</code></td><td>les 127 variables internes de la carte</td><td>❌ à ne pas envoyer</td></tr>
+<tr><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td><td>❌ à ne pas envoyer</td></tr>
+</table>
+<h2>Les comportements hors liaison</h2>
+<table>
+<tr><th>Comportement</th><th>Ce que le banc en dit</th></tr>
+<tr><td>perd la mesure et passe à la suivante</td><td>✘ PERDUE  la mesure n'existe plus nulle part</td></tr>
+<tr><td>garde les mesures en file et les envoie au retour du lien</td><td>⚠ en file (N en attente) — elles partiront au retour</td></tr>
+<tr><td>cesse d'arroser jusqu'au retour du lien</td><td>✘ l'objet s'est ARRÊTÉ — et le réseau n'y était pour rien</td></tr>
+</table>
+<h2>Verrous expérientiels</h2>
+<table><tr><th>Verrou</th><th>Ce qu'il exige</th></tr>
+<tr><td><code>__exp.msgEssaye</code></td><td>Coche d'abord quelques champs dans le banc et regarde ce que le récepteur peut en faire — l'essai d'abord.</td></tr>
+<tr><td><code>__exp.msgOk</code></td><td>Compose d'abord, dans le banc, un message qui coche les cinq champs utiles et aucun des deux champs de trop.</td></tr>
+<tr><td><code>__exp.coupe</code></td><td>Coupe le lien au banc, envoie quelques mesures, essaie les trois comportements, puis rétablis — c'est l'essai qui répond.</td></tr>
+</table>
+<h2>Ce que ce lot ne fait pas, et le dit</h2>
+<div class="box limite"><ul><li><b>Aucune liaison réelle.</b> Le banc simule l'échange ; la version 🅰 le fait avec deux cartes et le moniteur série, et ce sont les trames observées qui font foi.</li><li><b>L'adressage n'est ni travaillé ni évalué ici.</b> Il l'est par l'atelier SOS serre (4e_C4.7), et ce lot s'appuie dessus sans le refaire — c'est délibéré, et c'est écrit dans la première section de la séquence.</li><li><b>Le format est imposé.</b> Le banc écrit du JSON ; le choix d'un format est traité en question de QCM et en défi bonus, pas en activité.</li><li><b>Le vérificateur ne lit pas la phrase rédigée</b> de l'activité 3 : il compte des caractères. C'est écrit dans la page.</li></ul></div>
+<h2>Différenciation</h2>
+<ul><li><b>🅰 avec le matériel</b> — deux cartes, un vrai réseau, le moniteur série. Les trames observées remplacent celles du banc.</li><li><b>🅱 avec le banc</b> — hors ligne, sans installation. Seule voie qui permette de couper le lien pour voir ce que l'objet devient.</li><li><b>🅲 sans écran (débranché)</b> — deux élèves jouent les deux objets, une feuille pliée fait le message, le professeur intercepte.</li></ul>
+<h2>Évaluation — repères LSU</h2>
+<table><tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>confond brancher un objet et l'interfacer</td></tr>
+<tr><td>🟠 Fragile</td><td>compose le message si on lui rappelle les champs</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>décide contenu, rythme et initiative, et les justifie</td></tr>
+<tr><td>⭐ Très bonne</td><td>et décide ce que l'objet fait quand le lien tombe</td></tr>
+</table>
+<footer>Synthèse professeur — 4e_C7.8 « Le jardin publie sa mesure » · Thème 3 · banc de liaison original (CC0).</footer>
+</body>
+</html>

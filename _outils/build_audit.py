@@ -811,6 +811,66 @@ OVERLAY = {
                       "par un bandeau aria-live.",
         medias="Banc d'energie original (HTML + JS, CC0). Aucun media tiers.",
     ),
+    # ── Lot C7.8 « Interfacer », 29/08/2026 ─────────────────────────────────────
+    "4e_C7.8": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le jardin publie sa mesure » : 2 seances de 55 min pour 95 min "
+                "d'activites, BANC DE LIAISON original integre a la page — l'eleve compose le "
+                "message case par case et le banc lui dit, ligne par ligne, ce que le "
+                "destinataire peut ou ne peut pas en faire. L'adressage n'est PAS refait : il "
+                "est traite par l'atelier SOS serre (4e_C4.7), et la premiere section de la "
+                "sequence le dit. Ce qui se decide ici est du cote de l'objet — ce qu'il envoie, "
+                "quand, a qui, et ce qu'il fait quand plus personne n'ecoute. Le geste qui porte "
+                "la seance est le bouton COUPER LE LIEN : le champ d'horodatage, coche a "
+                "l'activite 1 sans qu'on voie bien pourquoi, trouve sa raison d'etre deux "
+                "activites plus tard, quand douze mesures liberees d'un coup seraient toutes "
+                "datees de la meme minute. Trois verrous experientiels. QCM 30 q / 90 "
+                "refutations (C7.8 x20, C1.4 x10), lexique 30 notions, deux syntheses, fiche, "
+                "matrice de 17 notions, tests reels 35/35 et 26/26 avec scripts livres.",
+        anomalies="Aucune liaison reelle : le banc simule l'echange, et la version A le fait avec "
+                  "deux cartes et le moniteur serie — ce sont alors les trames observees qui font "
+                  "foi. Le format JSON est impose par le banc ; le choix d'un format est traite "
+                  "en question de QCM et en defi bonus, pas en activite. Le verificateur ne lit "
+                  "pas la phrase redigee de l'activite 3 : il compte des caracteres, et la page "
+                  "le dit a l'eleve.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (deux eleves jouent les deux objets, une feuille pliee fait le "
+                      "message), encadre de securite sur les donnees personnelles et les secrets. "
+                      "Les trois boites alert() du gabarit de QCM sont remplacees par un bandeau "
+                      "aria-live (regle d'or n°188).",
+        medias="Banc de liaison original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+    "3e_C7.8": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Deux stations qui se parlent » : 2 seances de 90 min pour 150 min "
+                "d'activites, meme banc de liaison. Deux objets, et personne pour arbitrer : "
+                "tout ce qu'un humain compensait sans y penser doit devenir un champ, une regle "
+                "ou un delai. Le ressort de la seance est que la regle de la mairie — la sirene "
+                "ne part que si les deux stations sont d'accord — cree aussitot un defaut PIRE "
+                "que celui qu'elle corrige : si Sainte-Anne est detruite par le grain qui arrive "
+                "sur Le Robert, il n'y a plus d'alerte du tout. Defaillance dangereuse. La bonne "
+                "reponse n'est pas un compromis mais un troisieme terme : on declenche ET on "
+                "ecrit qu'on etait seule. Regle d'accord a trois morceaux (sur quoi, quelle "
+                "tolerance, quel delai), delai de silence justifie (trois periodes d'emission), "
+                "et six essais dont la moitie portent sur des pannes. QCM 30 q / 90 refutations "
+                "(C7.8 x20, C8.3 x10), lexique 30 notions, deux syntheses, fiche, matrice de 17 "
+                "notions, tests reels 34/34 et 26/26 avec scripts livres.",
+        anomalies="Aucune liaison reelle : le banc simule. Le routage et l'adressage ne sont ni "
+                  "travailles ni evalues ici — ils le sont par 3e_C4.7 et 3e_C4.8, et le lot "
+                  "s'appuie dessus sans les refaire. La synchronisation des horloges est laissee "
+                  "en defi bonus : la regle de fraicheur suppose deux horloges a peu pres justes, "
+                  "le lot le dit et n'entre pas dans le mecanisme. L'accuse de reception n'est "
+                  "traite qu'en defi : un lot complet sur la fiabilite de transport serait un "
+                  "autre lot.",
+        accessibilite="Listes deroulantes, corrections depliables, version C debranchee, encadre "
+                      "de securite (aucun secret, aucune donnee personnelle, un secours se teste). "
+                      "Trois boites alert() du gabarit remplacees par un bandeau aria-live.",
+        medias="Banc de liaison original (HTML + JS, CC0). Aucun media tiers.",
+    ),
     "3e_C9.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — 4e_C7.8 Le jardin publie sa mesure</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.8_le-jardin-publie.html">📘 La séquence</a><a href="lexique_4e_C7.8.html">📖 Lexique</a></nav>
+<h1>📡 Synthèse élève — Le jardin publie sa mesure</h1>
+<p><em>4e_C7.8 — Interfacer un objet technique avec un réseau.</em></p>
+<h2>Les neuf points</h2>
+<div class="box">
+  <ul>
+    <li><b>Interfacer</b> — décider ce qu'un objet envoie, quand, à qui, et ce qu'il fait quand
+      plus personne n'écoute. Ce n'est pas le brancher : ça, c'est l'adressage.</li>
+    <li><b>Message suffisant</b> — celui dont le destinataire peut se servir sans rien deviner :
+      qui parle, quelle valeur, quelle unité, quand, et l'état utile.</li>
+    <li><b>Identifiant</b> — inutile tant qu'il n'y a qu'un objet, indispensable au deuxième.
+      On l'écrit dès le premier, parce qu'ajouter un champ après coup oblige à changer les deux
+      côtés.</li>
+    <li><b>Unité</b> — un nombre sans unité n'est pas une grandeur. Le récepteur ne devine pas,
+      et il ne doit pas deviner.</li>
+    <li><b>Horodatage</b> — l'heure de la <em>mesure</em>, pas celle de la réception. Dès qu'il y
+      a une file d'attente, les deux diffèrent.</li>
+    <li><b>Qui prend l'initiative</b> — l'objet pousse, ou le serveur demande. Le premier remplit
+      l'historique même la nuit ; le second n'enregistre que lorsqu'on regarde.</li>
+    <li><b>Un silence est une ambiguïté</b> — « rien reçu » peut vouloir dire « rien à dire » ou
+      « je suis mort ». Un message périodique lève l'ambiguïté.</li>
+    <li><b>Dégradé, pas éteint</b> — quand le lien tombe, un objet bien interfacé continue son
+      travail, garde ce qu'il peut, et le raconte au retour.</li>
+    <li><b>Ce qu'on n'envoie pas</b> — aucune donnée personnelle, aucun secret, et rien dont le
+      destinataire n'a l'usage.</li>
+  </ul>
+</div>
+<h2>Le message retenu</h2>
+<table>
+<tr><th>Champ</th><th>Ce que c'est</th><th></th></tr>
+<tr><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td><td>✅ à envoyer</td></tr>
+<tr><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td><td>✅ à envoyer</td></tr>
+<tr><td><code>u</code></td><td>l'unité de cette valeur</td><td>✅ à envoyer</td></tr>
+<tr><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td><td>✅ à envoyer</td></tr>
+<tr><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td><td>✅ à envoyer</td></tr>
+<tr><td><code>etat</code></td><td>les 127 variables internes de la carte</td><td>❌ à ne pas envoyer</td></tr>
+<tr><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td><td>❌ à ne pas envoyer</td></tr>
+</table>
+<h2>Ce que le destinataire peut faire, champ par champ</h2>
+<table>
+<tr><th>Champs présents</th><th>Ce que le destinataire peut alors faire</th></tr>
+<tr><td><code>id</code></td><td>savoir QUI envoie : c'est le jardin de la cour</td></tr>
+<tr><td><code>h</code></td><td>afficher une valeur</td></tr>
+<tr><td><code>h + u</code></td><td>savoir que 38 est un pourcentage d'humidité</td></tr>
+<tr><td><code>t</code></td><td>savoir quand la mesure a été prise</td></tr>
+<tr><td><code>pompe</code></td><td>savoir si le jardin a arrosé</td></tr>
+<tr><td><code>id + h + u + t</code></td><td>ranger la mesure dans un historique exploitable</td></tr>
+</table>
+<h2>Ce qu'on n'envoie pas</h2>
+<div class="box attention"><ul><li><code>etat</code> — 127 variables de trop : ça coûte de l'énergie, ça remplit l'historique, et personne n'en a l'usage.</li><li><code>eleve</code> — donnée personnelle : un prénom n'a rien à faire dans une mesure d'humidité.</li></ul></div>
+<h2>Dégradé, pas éteint</h2>
+<table>
+<tr><th>Comportement</th><th>Ce que le banc en dit</th></tr>
+<tr><td>perd la mesure et passe à la suivante</td><td>✘ PERDUE  la mesure n'existe plus nulle part</td></tr>
+<tr><td>garde les mesures en file et les envoie au retour du lien</td><td>⚠ en file (N en attente) — elles partiront au retour</td></tr>
+<tr><td>cesse d'arroser jusqu'au retour du lien</td><td>✘ l'objet s'est ARRÊTÉ — et le réseau n'y était pour rien</td></tr>
+</table>
+<h2>Je dois être capable de…</h2>
+<ul><li>distinguer raccorder un objet et l'interfacer</li><li>composer un message suffisant, et justifier chaque champ</li><li>expliquer pourquoi l'identifiant s'écrit dès le premier objet</li><li>choisir qui prend l'initiative, et à quel rythme</li><li>expliquer pourquoi un silence est une ambiguïté</li><li>décider ce que l'objet fait quand le lien tombe</li><li>dire ce qui ne doit jamais figurer dans un message</li></ul>
+<footer>Synthèse élève — 4e_C7.8 « Le jardin publie sa mesure » · Thème 3 · banc de liaison original (CC0), à imprimer en noir et blanc sans rien perdre.</footer>
+</body>
+</html>

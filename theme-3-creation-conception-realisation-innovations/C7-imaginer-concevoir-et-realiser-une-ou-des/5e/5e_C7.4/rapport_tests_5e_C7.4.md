@@ -51,7 +51,7 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ les verrous survivent au rechargement
 ```
 
-## 2. QCM — **26 / 26**
+## 2. QCM — **32 / 32**
 
 ```
 ✅ charge sans erreur JS
@@ -73,6 +73,12 @@ python3 energie.py          # recalcule toutes les valeurs du banc
 ✅ la correction déplie les trois réfutations
 ✅ la correction porte un « À retenir »
 ✅ une mauvaise réponse est déclarée incorrecte
+✅ valider sans réponse n’ouvre aucune boîte modale
+✅ valider sans réponse annonce et ne valide pas encore — Tu n'as choisi aucune réponse : elle comptera comme non répondue. — clique une seconde fois pour confirmer.
+✅ le second clic valide bien
+✅ « recommencer » n’ouvre aucune boîte modale
+✅ « recommencer » demande confirmation sans rien effacer — 30
+✅ le second clic remet bien à zéro — 0
 ✅ le mode « marquées » vide n’ouvre aucune boîte modale
 ✅ il affiche un bandeau à la place — Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question.
 ✅ 30 bonnes réponses donnent 100 % — 100 %

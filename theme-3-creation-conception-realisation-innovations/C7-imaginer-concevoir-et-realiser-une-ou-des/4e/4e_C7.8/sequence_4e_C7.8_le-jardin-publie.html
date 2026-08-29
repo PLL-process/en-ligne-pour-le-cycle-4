@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 4e — Le jardin publie sa mesure (4e_C7.8)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc de liaison — original, CC0 ────────────────────────────────────── */
+.lien{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+.lien-schema{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:12px}
+@media(max-width:620px){.lien-schema{grid-template-columns:1fr}}
+.boite{background:#173666;border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+.boite b{display:block;color:var(--hl);font-size:.95em}
+.boite span{font-size:.82em;color:var(--sub)}
+.canal{text-align:center;font-size:1.5em;color:var(--ok);transition:color .2s}
+.canal.coupe{color:var(--err)}
+.canal small{display:block;font-size:.42em;color:var(--sub)}
+table.champs{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.champs th,table.champs td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.champs th{background:#173666;color:var(--hl)}
+table.champs td.ck{width:34px;text-align:center}
+table.champs td input[type=checkbox]{width:17px;height:17px;accent-color:#61dafb}
+table.champs tr.pris td:not(.ck){color:#fff}
+.trame{font-family:ui-monospace,Menlo,Consolas,monospace;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:.9em;color:var(--hl);overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.taille{font-size:.8em;color:var(--sub);margin:4px 0 10px}
+ul.recu{list-style:none;padding:0;margin:8px 0}
+ul.recu li{padding:4px 0 4px 24px;position:relative;font-size:.92em}
+ul.recu li::before{position:absolute;left:0;font-weight:700}
+ul.recu li.oui::before{content:"✔";color:var(--ok)}
+ul.recu li.non::before{content:"✘";color:var(--err)}
+ul.recu li.alerte::before{content:"⚠";color:var(--warn)}
+ul.recu li.non,ul.recu li.alerte{color:var(--sub)}
+.lien-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.lien-cmd label{font-size:.9em;color:var(--sub)}
+.lien-cmd select{width:auto;min-width:230px}
+.journal{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.84em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:150px;overflow-y:auto}
+.journal div{padding:1px 0}
+.journal .ok{color:var(--ok)}.journal .ko{color:var(--err)}.journal .wa{color:var(--warn)}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.8.html">📖 Lexique</a></nav>
+
+<h1>📡 Le jardin publie sa mesure</h1>
+<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C7.8</span>
+  <span class="badge code">4e_C1.4 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D4 · D5</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Dans l'atelier <b>SOS serre</b> (4e_C4.7), tu as construit un plan d'adressage, donné une
+  <b>adresse IP fixe</b> à un objet connecté, réglé la passerelle et prouvé que le tout
+  communiquait. Tu sais donc <em>raccorder</em> un objet à un réseau.</p>
+  <p><b>Ce qui change aujourd'hui :</b> le raccordement est fait, l'objet est joignable — et il
+  n'a toujours rien à dire. Le programme parle d'<b>interfacer</b>, pas de brancher.</p>
+  <p class="retenir">📌 <b>Un objet branché n'est pas un objet qui communique.</b> Ce qui reste à
+  décider est de son côté à lui : <em>ce qu'il envoie, quand, à qui — et ce qu'il fait quand plus
+  personne n'écoute.</em></p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>4e_C7.8</b></td><td>Interfacer un objet technique avec un réseau.</td><td>Activités 0 à 3 et REFAIRE</td></tr>
+    <tr><td>4e_C1.4 <span style="color:var(--sub)">(appui)</span></td><td>Identifier et appliquer les règles pour un usage raisonné des objets communicants et des environnements numériques (propriété intellectuelle, identité numérique, témoins de connexion, géolocalisation).</td><td>Encadré de sécurité et activité 4</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>Le jardin connecté fonctionne. Le capteur lit, la carte décide, la pompe arrose. Tout va
+    bien — sauf que personne ne le sait.</p>
+    <p>Pour savoir si le carré a été arrosé, le gestionnaire traverse la cour, ouvre le boîtier
+    et lit l'écran. Il l'a fait deux fois. La troisième, il a dit :</p>
+    <p>« Il est <b>sur le réseau</b>, votre jardin, oui ou non&nbsp;? Je veux voir sa mesure
+    <b>depuis mon bureau</b>. »</p>
+    <p>Il est bien sur le réseau. Il a même une adresse fixe. Et il ne dit rien.</p>
+</div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Qu'est-ce qu'un objet doit ENVOYER pour que quelqu'un, à l'autre bout, puisse en faire quelque chose&nbsp;?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <p>Avant tout essai : d'après toi, <b>que faut-il mettre dans le message</b> que le jardin
+    envoie&nbsp;? Écris ta liste — trois ou quatre choses suffisent.</p>
+    <textarea id="hyp" rows="3" placeholder="Je mettrais… parce que…"></textarea>
+
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚠️ Avant de faire parler un objet — ce qui ne sort pas du collège</h2>
+  <div class="declencheur">
+    <ul>
+      <li>Un objet connecté envoie <b>ce qu'on lui a dit d'envoyer</b>, et rien d'autre.
+        Tout ce qui part est lisible par qui se trouve sur le chemin.</li>
+      <li><b>Aucune donnée personnelle</b> dans une mesure : ni prénom, ni classe, ni photo.
+        Une mesure d'humidité n'a besoin de nommer personne.</li>
+      <li><b>Aucun mot de passe, aucune clé Wi-Fi</b> dans un message. Jamais, sous aucun
+        prétexte, même « pour tester ».</li>
+      <li>Le montage reste en <b>très basse tension</b> : 5 V. On ne manipule jamais le secteur.</li>
+      <li>Le réseau utilisé est celui du collège : on n'ouvre pas l'objet vers l'extérieur sans
+        l'accord de la personne qui administre ce réseau.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — deux cartes réelles, un vrai réseau, et le moniteur série
+      pour lire ce qui passe. Les trames observées remplacent alors celles du banc : ce sont
+      elles qui font foi.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer.
+      C'est la voie par défaut, et la seule qui permette de COUPER le lien pour voir ce que
+      l'objet devient.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — deux élèves jouent les deux objets, une feuille pliée
+      fait le message, et le professeur intercepte. Le travail reste le même : décider ce qu'on
+      envoie, et ce qu'on fait quand plus rien n'arrive.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : composer un message ⏱ ~20 min</h2>
+  <p>Avant toute explication. Le banc ci-dessous met l'objet et le récepteur face à
+  face. <b>Coche des champs, regarde le message qui se forme</b>, et surtout la liste
+  « ce que le récepteur peut en faire ». Essaie d'abord de n'envoyer <em>que la valeur</em>.</p>
+  <div class="lien">
+    <div class="lien-schema">
+      <div class="boite"><b>Le jardin connecté</b><span>il mesure et il envoie</span></div>
+      <div class="canal" id="canal">──▶<small id="canalTxt">lien établi</small></div>
+      <div class="boite"><b>L'écran du bureau</b><span>il reçoit et il affiche</span></div>
+    </div>
+
+    <table class="champs">
+      <tr><th></th><th>Champ</th><th>Ce que c'est</th></tr>
+      <tr id="tr0"><td class="ck"><input type="checkbox" id="ch0"></td><td><code>id</code></td><td>l'identifiant de l'objet qui parle</td></tr>
+      <tr id="tr1"><td class="ck"><input type="checkbox" id="ch1"></td><td><code>h</code></td><td>la valeur lue par le capteur d'humidité</td></tr>
+      <tr id="tr2"><td class="ck"><input type="checkbox" id="ch2"></td><td><code>u</code></td><td>l'unité de cette valeur</td></tr>
+      <tr id="tr3"><td class="ck"><input type="checkbox" id="ch3"></td><td><code>t</code></td><td>l'heure à laquelle la mesure a été prise</td></tr>
+      <tr id="tr4"><td class="ck"><input type="checkbox" id="ch4"></td><td><code>pompe</code></td><td>l'état de la pompe au moment de la mesure</td></tr>
+      <tr id="tr5"><td class="ck"><input type="checkbox" id="ch5"></td><td><code>etat</code></td><td>les 127 variables internes de la carte</td></tr>
+      <tr id="tr6"><td class="ck"><input type="checkbox" id="ch6"></td><td><code>eleve</code></td><td>le prénom de l'élève qui a programmé la carte</td></tr>
+    </table>
+
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 4px">Le message que l'objet envoie :</p>
+    <div class="trame" id="trame">{}</div>
+    <p class="taille" id="taille">—</p>
+
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 0">Ce que le récepteur peut en faire :</p>
+    <ul class="recu" id="recu"></ul>
+
+    <div class="lien-cmd">
+      <label for="hors">Quand le lien est coupé, l'objet…</label>
+      <select id="hors">
+        <option value="">— je choisis —</option>
+        <option>perd la mesure et passe à la suivante</option>
+        <option>garde les mesures en file et les envoie au retour du lien</option>
+        <option>cesse d'arroser jusqu'au retour du lien</option>
+      </select>
+    </div>
+    <div class="lien-cmd">
+      <button class="btn" id="envoyer" type="button">📨 Envoyer une mesure</button>
+      <button class="btn" id="couper" type="button">✂ Couper le lien</button>
+      <button class="btn" id="vider" type="button">↺ Vider le journal</button>
+    </div>
+    <div class="journal" id="journal"><div>Journal vide — compose un message, puis envoie.</div></div>
+
+  </div>
+
+  <div class="exo">
+
+    <h4>Après avoir essayé</h4>
+    <p><b>1.</b> Avec un message qui ne contient que <code>{"h":38}</code>, le récepteur…</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>affiche un nombre, et ne sait rien en faire d'autre</option>
+      <option>sait tout ce qu'il lui faut : la mesure est là</option>
+      <option>ne reçoit rien du tout : le message est vide</option>
+      <option>devine l'unité d'après la valeur 38</option>
+    </select>
+    <p><b>2.</b> Sans l'identifiant de l'objet, le problème est que…</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>plusieurs objets envoient sur le même réseau, et on ne sait plus qui parle</option>
+      <option>le message ne peut pas arriver jusqu'au récepteur</option>
+      <option>le récepteur affiche le message deux fois</option>
+      <option>il n'y a aucun problème : il n'y a qu'un seul jardin</option>
+    </select>
+    <p><b>3.</b> Sans l'unité, la valeur 38…</p>
+    <select id="a0q3">
+      <option value="">— je choisis —</option>
+      <option>ne veut rien dire : 38 %, 38 °C ou 38 mL ?</option>
+      <option>veut forcément dire 38 pour cent</option>
+      <option>est refusée par le réseau</option>
+      <option>est convertie automatiquement par le récepteur</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Coche d'abord quelques champs dans le banc et regarde ce que le récepteur peut en faire — l'essai d'abord.</p>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — il affiche un nombre.</b> C'est tout ce qu'il peut faire, et c'est très peu :
+      il ne peut ni le ranger, ni le comparer, ni savoir s'il est récent.</p>
+      <p><b>2 — on ne sait plus qui parle.</b> Sur le réseau du collège il y a la serre, le
+      jardin, l'imprimante et trente ordinateurs. Un message sans expéditeur est un mot anonyme
+      glissé sous une porte.</p>
+      <p><b>3 — 38 ne veut rien dire.</b> C'est la même règle qu'en mesure : <b>un nombre sans
+      unité n'est pas une grandeur.</b> Le récepteur ne devine pas, et il ne doit pas deviner :
+      le jour où quelqu'un changera le capteur, la « devinette » deviendra fausse sans prévenir.</p>
+      <p class="retenir">📌 Un message n'a pas à être long. Il a à être <b>suffisant</b> : celui
+      qui le reçoit doit pouvoir en faire quelque chose sans rien deviner.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Activité 1 — Composer le message qui suffit ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> décider ce que l'objet envoie. <b>Compétence :</b> 4e_C7.8.
+  <b>Production attendue :</b> un message valide + 4 réponses.</p>
+  <div class="exo" style="background:#173666">
+    <h4>Ce que le gestionnaire demande</h4>
+    <ul>
+      <li>Savoir <b>quelle humidité</b> le capteur a lue, et <b>quand</b>.</li>
+      <li>Savoir <b>si la pompe a tourné</b>, pour comprendre une terre encore sèche.</li>
+      <li>Pouvoir garder <b>un historique</b> de la semaine, jardin par jardin — il y en aura
+        trois l'an prochain.</li>
+    </ul>
+  </div>
+  <p>Remonte au banc et compose le message. Le verrou ne s'ouvre que si tu as coché <b>les cinq
+  champs utiles</b> et <b>aucun des deux champs de trop</b>.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Pourquoi faut-il l'<b>heure</b> de la mesure, alors que le récepteur sait bien
+    quand il l'a reçue&nbsp;?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>parce qu'une mesure gardée en file arrive plus tard qu'elle n'a été prise</option>
+      <option>parce que le récepteur n'a pas d'horloge</option>
+      <option>parce que le réseau met plusieurs heures à transporter un message</option>
+      <option>ce n'est pas nécessaire : l'heure de réception suffit toujours</option>
+    </select>
+    <p><b>2.</b> Pourquoi l'<b>identifiant</b> devient-il indispensable l'an prochain&nbsp;?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>parce qu'il y aura trois jardins qui enverront la même sorte de message</option>
+      <option>parce que le réseau exige un identifiant dans chaque message</option>
+      <option>parce que l'adresse IP du jardin va changer</option>
+      <option>parce que le gestionnaire ne connaît pas le nom du jardin</option>
+    </select>
+    <p><b>3.</b> Les <b>127 variables internes</b> de la carte : pourquoi ne pas tout envoyer,
+    au cas où&nbsp;?</p>
+    <select id="a1q3">
+      <option value="">— je choisis —</option>
+      <option>ça coûte de l'énergie et de la place, et personne n'en a l'usage</option>
+      <option>la carte n'a pas le droit de lire ses propres variables</option>
+      <option>le récepteur ne saurait pas les afficher</option>
+      <option>il n'y a aucune raison : envoyer plus est toujours mieux</option>
+    </select>
+    <p><b>4.</b> Et le <b>prénom de l'élève</b> qui a programmé la carte&nbsp;?</p>
+    <select id="a1q4">
+      <option value="">— je choisis —</option>
+      <option>c'est une donnée personnelle : elle n'a rien à faire dans une mesure</option>
+      <option>c'est utile pour savoir qui appeler en cas de panne</option>
+      <option>c'est obligatoire pour identifier l'objet sur le réseau</option>
+      <option>c'est sans importance, un prénom n'est pas une donnée</option>
+    </select>
+    <p><b>5.</b> Recopie ici le message que le banc affiche quand il est complet :</p>
+    <textarea id="a1msg" rows="2" placeholder='{"id":"jardin-cour", …}'></textarea>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Compose d'abord, dans le banc, un message qui coche les cinq champs utiles et aucun des deux champs de trop.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p>Le message attendu tient en cinq champs :</p>
+      <div class="codebox">{"id":"jardin-cour","h":38,"u":"%","t":"14:07","pompe":false}</div>
+      <p style="margin-top:10px"><b>1 — l'heure de la MESURE, pas de la réception.</b> Dès que
+      l'objet garde ses mesures en file pendant une coupure, les deux heures diffèrent, parfois
+      de plusieurs heures. Une mesure sans sa propre heure devient fausse sans prévenir.</p>
+      <p><b>2 — trois jardins.</b> Un identifiant ne sert à rien tant qu'il n'y a qu'un objet,
+      et devient indispensable au deuxième. On l'écrit dès le premier, parce qu'ajouter un champ
+      à un message déjà en service oblige à modifier <em>les deux</em> côtés.</p>
+      <p><b>3 — ça coûte, et ça ne sert à personne.</b> Un message long consomme plus d'énergie
+      à émettre, passe moins bien quand le réseau est chargé, et remplit un historique de
+      colonnes que personne ne lira. <b>On envoie ce dont le destinataire a besoin.</b></p>
+      <p><b>4 — une donnée personnelle.</b> Un prénom identifie une personne : il ne se met pas
+      dans une mesure d'humidité, et surtout pas dans un flux qui traversera le réseau et
+      s'entassera dans un historique. En cas de panne, on appelle le professeur, pas la trame.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔁 Activité 2 — Qui prend l'initiative, et à quel rythme ⏱ ~15 min</h2>
+  <p><b>Objectif :</b> décider qui parle en premier. <b>Compétences :</b> 4e_C7.8 et
+  4e_C4.7. <b>Production attendue :</b> 3 réponses.</p>
+  <p>Deux façons de faire circuler la même mesure, et elles ne s'équivalent pas :</p>
+  <ul>
+    <li><b>L'objet pousse</b> — il envoie tout seul, toutes les cinq minutes.</li>
+    <li><b>Le serveur demande</b> — il interroge l'objet quand quelqu'un ouvre la page.</li>
+  </ul>
+  <div class="exo">
+
+    <p><b>1.</b> Si <b>le serveur demande</b>, que se passe-t-il la nuit, quand personne
+    n'ouvre la page&nbsp;?</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>aucune mesure n'est enregistrée : l'historique a un trou</option>
+      <option>l'objet envoie quand même, par sécurité</option>
+      <option>le serveur enregistre les mesures à l'avance</option>
+      <option>rien ne change : l'historique est complet</option>
+    </select>
+    <p><b>2.</b> Si <b>l'objet pousse</b> toutes les cinq minutes, que se passe-t-il quand
+    l'humidité ne bouge pas de la journée&nbsp;?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>on envoie 288 fois la même valeur, pour rien</option>
+      <option>l'objet s'arrête tout seul, faute de nouveauté</option>
+      <option>le réseau bloque les messages identiques</option>
+      <option>c'est parfait : plus il y a de mesures, mieux c'est</option>
+    </select>
+    <p><b>3.</b> Le gestionnaire veut un historique complet <b>et</b> peu de messages. La bonne
+    règle est donc…</p>
+    <select id="a2q3">
+      <option value="">— je choisis —</option>
+      <option>envoyer si la valeur a changé, et au moins une fois par heure</option>
+      <option>envoyer toutes les cinq minutes, quoi qu'il arrive</option>
+      <option>n'envoyer que lorsque le serveur le demande</option>
+      <option>n'envoyer que lorsque la pompe se déclenche</option>
+    </select>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — un trou dans l'historique.</b> Un système où le récepteur commande ne mesure que
+      lorsqu'on le regarde. C'est parfois exactement ce qu'on veut — et ici, non : le
+      gestionnaire veut savoir ce qui s'est passé la nuit.</p>
+      <p><b>2 — 288 fois la même valeur.</b> Douze par heure, vingt-quatre heures. Chaque envoi
+      coûte de l'énergie à l'objet et une ligne dans l'historique.</p>
+      <p><b>3 — sur changement, avec un minimum garanti.</b> C'est la règle qu'on retrouve dans
+      presque toutes les installations réelles, et elle tient en deux morceaux :</p>
+      <ul>
+        <li><b>« si ça change »</b> évite les 288 répétitions ;</li>
+        <li><b>« au moins une fois par heure »</b> prouve que l'objet est encore vivant. Sans ce
+          second morceau, un objet en panne et un objet dont la mesure ne bouge pas se
+          ressemblent exactement — et c'est un vrai piège.</li>
+      </ul>
+      <p class="retenir">📌 <b>Un silence n'est pas une information : c'est une ambiguïté.</b>
+      « Rien reçu » peut vouloir dire « rien à dire » ou « je suis mort ». Un message
+      périodique, même identique, lève l'ambiguïté.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✂ Activité 3 — Couper le lien, et voir ce que l'objet devient ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> décider du comportement hors ligne. <b>Compétence :</b>
+  4e_C7.8. <b>Production attendue :</b> 3 réponses + une phrase.</p>
+  <p>Remonte au banc. <b>Coupe le lien</b>, choisis un comportement, envoie plusieurs mesures,
+  regarde le journal. Recommence avec les trois comportements, puis <b>rétablis</b>.</p>
+  <div class="exo">
+
+    <p><b>1.</b> Avec « <b>perd la mesure</b> », que reste-t-il de la coupure&nbsp;?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>rien : les mesures de la coupure n'existent plus nulle part</option>
+      <option>un message d'erreur dans l'historique</option>
+      <option>les mesures, qui repartiront au retour du lien</option>
+      <option>une alerte envoyée au gestionnaire</option>
+    </select>
+    <p><b>2.</b> Avec « <b>garde en file</b> », que se passe-t-il au rétablissement&nbsp;?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>toutes les mesures en attente partent d'un coup, avec leur heure d'origine</option>
+      <option>seule la dernière mesure est envoyée</option>
+      <option>les mesures partent avec l'heure du rétablissement</option>
+      <option>la file est effacée : elle ne sert qu'à compter</option>
+    </select>
+    <p><b>3.</b> Et « <b>cesse d'arroser</b> »&nbsp;?</p>
+    <select id="a3q3">
+      <option value="">— je choisis —</option>
+      <option>c'est un défaut grave : le réseau n'a rien à voir avec l'arrosage</option>
+      <option>c'est prudent : mieux vaut ne rien faire sans supervision</option>
+      <option>c'est obligatoire : un objet non surveillé doit s'arrêter</option>
+      <option>c'est équivalent aux deux autres comportements</option>
+    </select>
+    <p><b>En une phrase :</b> quelle différence fais-tu entre un objet <em>branché</em> et un
+    objet <em>interfacé</em>&nbsp;?</p>
+    <textarea id="a3ph" rows="2" placeholder="Un objet branché… tandis qu'un objet interfacé…"></textarea>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Coupe le lien au banc, envoie quelques mesures, essaie les trois comportements, puis rétablis — c'est l'essai qui répond.</p>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1 — il ne reste rien.</b> Une coupure d'une heure fait un trou d'une heure. Pour une
+      humidité de terre, c'est peut-être acceptable ; pour une alarme, non. <b>C'est au concepteur
+      de le décider, pas au hasard.</b></p>
+      <p><b>2 — tout part d'un coup, avec l'heure d'origine.</b> Et c'est exactement pour ça que
+      le champ <code>t</code> existait dès l'activité 1 : sans lui, douze mesures arrivées à
+      15 h 12 seraient toutes datées de 15 h 12, et l'historique mentirait.</p>
+      <p><b>3 — un défaut grave.</b> La plante ne sait pas que le Wi-Fi est tombé. Un objet dont
+      la <em>fonction principale</em> dépend du réseau alors qu'elle pourrait s'en passer est mal
+      conçu : le réseau sert à <b>rendre compte</b>, pas à autoriser l'arrosage.</p>
+      <p class="retenir">📌 <b>La bonne règle : dégradé, pas éteint.</b> Quand la liaison tombe,
+      un objet bien interfacé continue son travail, garde ce qu'il peut, et le raconte au retour.
+      Tu retrouveras exactement cette règle en 3<sup>e</sup>, quand deux stations devront décider
+      seules.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🕳️ Activité 4 — Ce qu'on n'envoie pas, et pourquoi ⏱ ~10 min</h2>
+  <p><b>Objectif :</b> savoir ce qui ne doit pas circuler. <b>Compétence :</b>
+  4e_C7.8. <b>Production attendue :</b> 4 associations.</p>
+  <p>Associe chaque chose qu'on serait tenté d'ajouter au message à la raison de ne pas le faire.</p>
+  <div class="exo">
+    <p style="margin-top:12px"><b>Le mot de passe du réseau Wi-Fi du collège</b></p>
+    <select id="a4a0">
+      <option value="">— je choisis —</option>
+      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
+      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
+      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
+      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
+    </select>
+    <p style="margin-top:12px"><b>La photo de la classe qui a monté le jardin</b></p>
+    <select id="a4a1">
+      <option value="">— je choisis —</option>
+      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
+      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
+      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
+      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
+    </select>
+    <p style="margin-top:12px"><b>Les 127 variables internes de la carte</b></p>
+    <select id="a4a2">
+      <option value="">— je choisis —</option>
+      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
+      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
+      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
+      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
+    </select>
+    <p style="margin-top:12px"><b>L'humidité mesurée, avec son unité et son heure</b></p>
+    <select id="a4a3">
+      <option value="">— je choisis —</option>
+      <option>Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</option>
+      <option>De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</option>
+      <option>Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</option>
+      <option>Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</option>
+    </select>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Le mot de passe du réseau Wi-Fi du collège</b> — Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin.</p>
+      <p><b>La photo de la classe qui a monté le jardin</b> — Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien.</p>
+      <p><b>Les 127 variables internes de la carte</b> — De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage.</p>
+      <p><b>L'humidité mesurée, avec son unité et son heure</b> — Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.</p>
+      <p class="retenir">📌 <b>À retenir :</b> un message se conçoit par <em>ce que le
+      destinataire doit pouvoir faire</em>, jamais par « au cas où ». Chaque champ en trop coûte
+      de l'énergie, de la place, et parfois bien davantage.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~10 min</h2>
+<p>L'an prochain, <b>trois jardins</b> envoient sur le même écran, et le gestionnaire
+  veut en plus être <b>prévenu</b> quand un jardin n'a pas arrosé depuis deux jours.</p>
+  <p><b>Qu'est-ce qui change dans ton message, et qu'est-ce qui ne change pas&nbsp;?</b>
+  Dis aussi comment le récepteur peut savoir qu'un jardin est en panne.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+    <p><b>Le message ne change pas.</b> C'est le signe qu'il était bien conçu : les cinq champs
+    suffisent aux trois jardins, parce que l'identifiant était là dès le premier.</p>
+    <p><b>Ce qui change est du côté du récepteur</b>, qui range désormais par identifiant et
+    surveille trois historiques au lieu d'un.</p>
+    <p><b>Et la panne&nbsp;?</b> Elle se détecte par le <b>silence</b> — à condition d'avoir posé
+    la règle « au moins un message par heure » de l'activité 2. Sans elle, un jardin muet et un
+    jardin dont l'humidité ne bouge pas sont indiscernables. Avec elle, deux heures sans nouvelles
+    valent alerte.</p>
+    <p>Une nuance honnête : « n'a pas arrosé depuis deux jours » n'est pas forcément une panne.
+    S'il a plu, la terre est humide et la pompe n'avait rien à faire. C'est le champ
+    <code>pompe</code> <em>et</em> le champ <code>h</code> ensemble qui permettent de distinguer
+    « en panne » de « rien à faire » — un seul des deux ne suffirait pas.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Interfacer</b> — décider ce qu'un objet envoie, quand, à qui, et ce qu'il fait quand
+      plus personne n'écoute. Ce n'est pas le brancher : ça, c'est l'adressage.</li>
+    <li><b>Message suffisant</b> — celui dont le destinataire peut se servir sans rien deviner :
+      qui parle, quelle valeur, quelle unité, quand, et l'état utile.</li>
+    <li><b>Identifiant</b> — inutile tant qu'il n'y a qu'un objet, indispensable au deuxième.
+      On l'écrit dès le premier, parce qu'ajouter un champ après coup oblige à changer les deux
+      côtés.</li>
+    <li><b>Unité</b> — un nombre sans unité n'est pas une grandeur. Le récepteur ne devine pas,
+      et il ne doit pas deviner.</li>
+    <li><b>Horodatage</b> — l'heure de la <em>mesure</em>, pas celle de la réception. Dès qu'il y
+      a une file d'attente, les deux diffèrent.</li>
+    <li><b>Qui prend l'initiative</b> — l'objet pousse, ou le serveur demande. Le premier remplit
+      l'historique même la nuit ; le second n'enregistre que lorsqu'on regarde.</li>
+    <li><b>Un silence est une ambiguïté</b> — « rien reçu » peut vouloir dire « rien à dire » ou
+      « je suis mort ». Un message périodique lève l'ambiguïté.</li>
+    <li><b>Dégradé, pas éteint</b> — quand le lien tombe, un objet bien interfacé continue son
+      travail, garde ce qu'il peut, et le raconte au retour.</li>
+    <li><b>Ce qu'on n'envoie pas</b> — aucune donnée personnelle, aucun secret, et rien dont le
+      destinataire n'a l'usage.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+<p>Tu avais écrit ta liste de champs avant tout essai. Compare-la aux cinq
+  retenus. Ce qui compte n'est pas d'avoir eu la bonne liste : c'est de savoir maintenant
+  <em>d'où</em> vient chaque champ — d'un besoin du destinataire, pas d'une habitude.</p>
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.8 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>🔴 Maîtrise insuffisante — je confonds brancher un objet et l'interfacer</option>
+    <option>🟠 Maîtrise fragile — je compose le message si on me rappelle les champs</option>
+    <option>🟢 Maîtrise satisfaisante — je décide le contenu, le rythme et l'initiative, et je les justifie</option>
+    <option>⭐ Très bonne maîtrise — et je décide ce que l'objet fait quand le lien tombe</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur le message suffisant, l'identifiant, l'unité, l'horodatage, l'initiative, le silence et le comportement hors ligne.</p>
+  <a class="btn" href="qcm_4e_C7.8_le-jardin-publie.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>🔤 Défi format :</b> le message du banc est en JSON. Cherche à quoi ressemblerait le même
+  message en CSV, et dis ce qu'on gagne et ce qu'on perd en changeant de format.</p>
+  <p><b>📏 Défi taille :</b> compte les caractères du message complet, puis de la version où tous
+  les champs porteraient leur nom en entier (<code>humidite</code>, <code>horodatage</code>…).
+  Sur 288 envois par jour, combien de caractères d'écart&nbsp;? Et est-ce que ça vaut la perte de
+  lisibilité&nbsp;?</p>
+  <p><b>🔌 Défi réel :</b> avec ta carte et le réseau du collège, fais afficher une seule mesure
+  sur le moniteur série d'un autre poste. Note ce qui a été plus difficile que dans le banc.</p>
+
+</section>
+
+<footer>Séquence 4e_C7.8 — <em>Le jardin publie sa mesure</em> · Thème 3 · banc de liaison original (CC0), hors ligne, sans dépendance.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_4e_C7_4";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── banc de liaison ────────────────────────────────────────────────────── */
+const CHAMPS = [{"cle": "id", "lib": "l'identifiant de l'objet qui parle", "val": "jardin-cour", "requis": true, "piege": false, "pourquoi": ""}, {"cle": "h", "lib": "la valeur lue par le capteur d'humidité", "val": 38, "requis": true, "piege": false, "pourquoi": ""}, {"cle": "u", "lib": "l'unité de cette valeur", "val": "%", "requis": true, "piege": false, "pourquoi": ""}, {"cle": "t", "lib": "l'heure à laquelle la mesure a été prise", "val": "14:07", "requis": true, "piege": false, "pourquoi": ""}, {"cle": "pompe", "lib": "l'état de la pompe au moment de la mesure", "val": false, "requis": true, "piege": false, "pourquoi": ""}, {"cle": "etat", "lib": "les 127 variables internes de la carte", "val": "…127 valeurs…", "requis": false, "piege": true, "pourquoi": "⚠ 127 variables de trop : ça coûte de l'énergie, ça remplit l'historique, et personne n'en a l'usage."}, {"cle": "eleve", "lib": "le prénom de l'élève qui a programmé la carte", "val": "Maëlys", "requis": false, "piege": true, "pourquoi": "⚠ donnée personnelle : un prénom n'a rien à faire dans une mesure d'humidité."}];      /* [{cle, lib, val, requis, piege, pourquoi}] */
+const LECTURES = [{"cles": ["id"], "oui": "savoir QUI envoie : c'est le jardin de la cour", "non": "impossible de savoir qui parle — plusieurs objets émettent sur ce réseau"}, {"cles": ["h"], "oui": "afficher une valeur", "non": "il n'y a aucune mesure dans le message"}, {"cles": ["h", "u"], "oui": "savoir que 38 est un pourcentage d'humidité", "non": "38 quoi ? pour cent, degrés, millilitres ? le nombre ne veut rien dire"}, {"cles": ["t"], "oui": "savoir quand la mesure a été prise", "non": "impossible de savoir si la valeur date d'une minute ou de trois jours"}, {"cles": ["pompe"], "oui": "savoir si le jardin a arrosé", "non": "le gestionnaire ne saura pas si la pompe a tourné"}, {"cles": ["id", "h", "u", "t"], "oui": "ranger la mesure dans un historique exploitable", "non": "impossible de constituer un historique : il manque de quoi identifier ou dater"}];  /* [{cles:[…], oui, non}] */
+const COMPORTEMENTS = {"perd la mesure et passe à la suivante": {"cls": "ko", "msg": "✘ PERDUE  la mesure n'existe plus nulle part"}, "garde les mesures en file et les envoie au retour du lien": {"cls": "wa", "file": true, "exp": "file", "msg": "⚠ en file ({n} en attente) — elles partiront au retour"}, "cesse d'arroser jusqu'au retour du lien": {"cls": "ko", "msg": "✘ l'objet s'est ARRÊTÉ — et le réseau n'y était pour rien"}}; /* texte → {cls, msg, exp?, file?} */
+let coupe = false, tic = 0, mesures = 0;
+
+function prisEnCompte(){ return CHAMPS.map((c, i) => document.getElementById("ch" + i).checked); }
+function message(){
+  const on = prisEnCompte(), o = {};
+  CHAMPS.forEach((c, i) => { if(on[i]) o[c.cle] = c.val; });
+  return o;
+}
+function majLien(){
+  const on = prisEnCompte(), msg = message();
+  CHAMPS.forEach((c, i) =>
+    document.getElementById("tr" + i).classList.toggle("pris", on[i]));
+  const txt = JSON.stringify(msg, null, 0);
+  document.getElementById("trame").textContent = txt;
+  document.getElementById("taille").textContent =
+    txt.length + " caractères — un message court coûte moins d'énergie et passe mieux.";
+
+  const u = document.getElementById("recu");
+  u.innerHTML = "";
+  LECTURES.forEach(l => {
+    const ok = l.cles.every(k => k in msg);
+    const li = document.createElement("li");
+    li.className = ok ? "oui" : "non";
+    li.textContent = ok ? l.oui : l.non;
+    u.appendChild(li);
+  });
+  CHAMPS.forEach((c, i) => { if(on[i] && c.piege){
+    const li = document.createElement("li");
+    li.className = "alerte"; li.textContent = c.pourquoi;
+    u.appendChild(li);
+  }});
+
+  const complet = CHAMPS.every((c, i) => c.requis ? on[i] : true)
+               && CHAMPS.every((c, i) => c.piege ? !on[i] : true);
+  if(complet) window.__exp.msgOk = true;
+  if(on.some(x => x)) window.__exp.msgEssaye = true;
+  save();
+}
+function ligne(cls, txt){
+  const j = document.getElementById("journal");
+  if(j.dataset.vide !== "non"){ j.innerHTML = ""; j.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls; d.textContent = txt;
+  j.appendChild(d); j.scrollTop = j.scrollHeight;
+}
+function horloge(){ tic += 5; const h = 14 + Math.floor(tic / 60), m = tic % 60;
+  return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0"); }
+function envoyer(){
+  const t = horloge(), msg = JSON.stringify(message());
+  if(!coupe){ ligne("ok", t + "  ✔ reçu   " + msg); mesures = 0; save(); return; }
+  window.__exp.horsLigne = true;
+  const c = COMPORTEMENTS[document.getElementById("hors").value];
+  if(!c){
+    ligne("wa", t + "  ⚠ lien coupé, et l'objet ne sait pas quoi faire : choisis un comportement");
+    save(); return;
+  }
+  if(c.file){ mesures += 1; }
+  ligne(c.cls, t + "  " + c.msg.replace("{n}", mesures));
+  if(c.exp) window.__exp[c.exp] = true;
+  save();
+}
+document.getElementById("envoyer").addEventListener("click", envoyer);
+document.getElementById("couper").addEventListener("click", () => {
+  coupe = !coupe;
+  const c = document.getElementById("canal");
+  c.classList.toggle("coupe", coupe);
+  c.firstChild.textContent = coupe ? "──✂──" : "──▶";
+  document.getElementById("canalTxt").textContent = coupe ? "lien coupé" : "lien établi";
+  document.getElementById("couper").textContent = coupe ? "🔌 Rétablir le lien" : "✂ Couper le lien";
+  ligne(coupe ? "ko" : "ok", horloge() + (coupe ? "  ✂ lien coupé" : "  🔌 lien rétabli"));
+  if(coupe) window.__exp.coupe = true;
+  if(!coupe && mesures > 0){
+    ligne("ok", horloge() + "  ✔ " + mesures + " message(s) en attente envoyé(s) d'un coup");
+    mesures = 0;
+  }
+  save();
+});
+document.getElementById("vider").addEventListener("click", () => {
+  const j = document.getElementById("journal");
+  j.innerHTML = "<div>Journal vidé.</div>"; j.dataset.vide = ""; tic = 0; save();
+});
+CHAMPS.forEach((c, i) =>
+  document.getElementById("ch" + i).addEventListener("change", majLien));
+document.getElementById("hors").addEventListener("change", save);
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0q1", "affiche un nombre, et ne sait rien en faire d'autre")
+              + sv("a0q2", "plusieurs objets envoient sur le même réseau, et on ne sait plus qui parle")
+              + sv("a0q3", "ne veut rien dire : 38 %, 38 °C ou 38 mL ?");
+       return {score: s, total: 3, exp: !!window.__exp.msgEssaye,
+               expMsg: "Coche d'abord quelques champs dans le banc et regarde ce que le récepteur peut en faire — l'essai d'abord."}; },
+  1(){ let s = 0;
+       s += sv("a1q1", "parce qu'une mesure gardée en file arrive plus tard qu'elle n'a été prise")
+              + sv("a1q2", "parce qu'il y aura trois jardins qui enverront la même sorte de message")
+              + sv("a1q3", "ça coûte de l'énergie et de la place, et personne n'en a l'usage")
+              + sv("a1q4", "c'est une donnée personnelle : elle n'a rien à faire dans une mesure")
+              + pres("a1msg", 40);
+       return {score: s, total: 5, exp: !!window.__exp.msgOk,
+               expMsg: "Compose d'abord, dans le banc, un message qui coche les cinq champs utiles et aucun des deux champs de trop."}; },
+  2(){ let s = 0;
+       s += sv("a2q1", "aucune mesure n'est enregistrée : l'historique a un trou")
+              + sv("a2q2", "on envoie 288 fois la même valeur, pour rien")
+              + sv("a2q3", "envoyer si la valeur a changé, et au moins une fois par heure");
+       return {score: s, total: 3, exp: true}; },
+  3(){ let s = 0;
+       s += sv("a3q1", "rien : les mesures de la coupure n'existent plus nulle part")
+              + sv("a3q2", "toutes les mesures en attente partent d'un coup, avec leur heure d'origine")
+              + sv("a3q3", "c'est un défaut grave : le réseau n'a rien à voir avec l'arrosage")
+              + pres("a3ph", 50);
+       return {score: s, total: 4, exp: !!window.__exp.coupe,
+               expMsg: "Coupe le lien au banc, envoie quelques mesures, essaie les trois comportements, puis rétablis — c'est l'essai qui répond."}; },
+  4(){ let s = 0;
+       s += sv("a4a0", "Un secret ne circule jamais dans un message : tout ce qui passe est lisible sur le chemin."); s += sv("a4a1", "Une donnée personnelle, et des milliers de fois le poids d'une mesure, pour rien."); s += sv("a4a2", "De l'énergie et de la place dépensées pour des valeurs dont personne n'a l'usage."); s += sv("a4a3", "Celle-là s'envoie : c'est exactement ce dont le destinataire a besoin.");
+       return {score: s, total: 4, exp: true}; },
+  5(){ return {score: pres("reinv", 90), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majLien();
+})();
+</script>
+
+</body>
+</html>

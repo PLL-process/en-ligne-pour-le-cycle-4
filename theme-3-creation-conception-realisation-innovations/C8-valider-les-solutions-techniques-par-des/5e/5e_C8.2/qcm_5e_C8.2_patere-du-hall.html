@@ -477,6 +477,24 @@ const QUESTIONS = [
 /* ═══════════ Moteur du QCM ═══════════ */
 const KEY="qcm_5e_C8.2_patere_du_hall";
 const $=id=>document.getElementById(id);
+/* Règle d'or n°188 : on informe sans bloquer, et on confirme en deux temps.
+   `signale` écrit dans le bandeau #savedNote, qui porte déjà role="status" et
+   aria-live="polite". `demande` remplace un confirm() : le premier clic annonce,
+   le second dans les six secondes exécute. */
+let _signalTimer=null, _demandes={};
+function signale(msg){
+  const z=$("savedNote"); if(!z){ return; }
+  z.textContent=msg; z.classList.add("show");
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show"); }, 6000);
+}
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
 const COMP_LABELS={
   "C8.2":"5e_C8.2 — 🧪 Mettre en œuvre un protocole de test fourni pour valider la tenue mécanique d'un matériau.",
   "C3.1":"5e_C3.1 — ⚖️ Identifier les caractéristiques à prendre en compte dans le choix d'un objet ou d'un système technique." };
@@ -551,9 +569,9 @@ function setMode(mode){
   }
   else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
   else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
-    if(!etat.sousListe.length){ alert("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
   else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
-    if(!etat.sousListe.length){ alert("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
   const l=listeActive();
   if(!l.includes(etat.courante)) etat.courante=l[0];
   save(); rendreTout();
@@ -674,7 +692,7 @@ $("btnValider").addEventListener("click",()=>{
   const i=etat.courante;
   if(etat.validees[i]) return;
   if(choixTemp===null&&etat.reponses[i]===null){
-    if(!confirm("Tu n'as choisi aucune réponse. Valider quand même (compte comme non répondu) ?")) return;
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
   }
   if(choixTemp!==null) etat.reponses[i]=choixTemp;
   etat.validees[i]=true; choixTemp=null;
@@ -695,7 +713,7 @@ $("btnNonRep").addEventListener("click",()=>{
   const l=listeActive(), pos=l.indexOf(etat.courante);
   const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
   const cible=apres.find(i=>!etat.validees[i]);
-  if(cible===undefined){ alert("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
   etat.courante=cible; choixTemp=null; rendreTout();
 });
 
@@ -708,7 +726,7 @@ $("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
 $("btnImprimer").addEventListener("click",()=>window.print());
 $("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
 $("btnRecommencer").addEventListener("click",()=>{
-  if(confirm("Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés (l'identité est conservée).")){
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
     const idt=etat.identite;
     etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
     clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
