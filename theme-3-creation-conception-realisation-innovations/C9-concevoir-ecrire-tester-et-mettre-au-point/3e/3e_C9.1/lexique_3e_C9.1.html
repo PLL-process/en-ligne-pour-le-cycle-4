@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexique — 3e_C9.1</title>
+<style>
+  :root{ --bg:#050f24; --panel:#0d2347; --border:#274a8a; --title:#81aaff;
+          --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5; --hl:#61dafb; }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 16px 60px;line-height:1.55;
+       font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+  h1{font-size:1.45em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .sub{text-align:center;color:var(--sub);margin-bottom:14px;font-size:.95em}
+  main{max-width:880px;margin:0 auto}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:14px;
+           padding:14px 20px;margin-bottom:16px}
+  h2{color:var(--head);font-size:1.05em;margin:.2em 0 .6em}
+  dl{margin:0}
+  dt{font-weight:700;color:var(--hl);margin-top:.7em}
+  dd{margin:.15em 0 0 0}
+  dd.vide{color:var(--sub);font-style:italic}
+  .compte{color:var(--sub);font-size:.85em}
+  nav a{color:var(--hl)}
+  footer{max-width:880px;margin:20px auto 0;color:var(--sub);font-size:.85em;text-align:center}
+  @media print{
+    body{background:#fff;color:#000;padding:0}
+    section{background:#fff;border:1px solid #666;break-inside:avoid}
+    h1,h2,dt{color:#000} dd.vide{color:#444} nav,footer{display:none}
+  }
+</style>
+</head>
+<body>
+<nav style="padding-top:12px"><a href="sequence_3e_C9.1_variables_types_systemes.html">← Revenir à la séquence</a></nav>
+<h1>📖 Lexique — 3e_C9.1</h1>
+<p class="sub">30 notions, tirées mot pour mot des QCM du lot · imprimable · fonctionne hors ligne</p>
+<main>
+<section>
+ <h2>MAP <span class="compte">· 7 notions</span></h2>
+ <dl>
+  <dt>Le banc de tests</dt>
+  <dd>Un test par cas + un test par frontière. Les bugs vivent aux frontières.</dd>
+  <dt>Le cas limite</dt>
+  <dd>&gt; ou &gt;= : c&#x27;est le CAHIER DES CHARGES qui tranche, et un test frontière qui vérifie.</dd>
+  <dt>Du programme au système</dt>
+  <dd>Dans un système réel, la variable devient commande : l&#x27;information pilote l&#x27;énergie (règle n°6 !).</dd>
+  <dt>Élaborer avant de taper</dt>
+  <dd>Élaborer (français) → traduire (Python) → tester. Le plan d&#x27;abord.</dd>
+  <dt>Fini, vraiment fini ?</dt>
+  <dd>Au point = tous les tests verts. Le banc reste, prêt pour la prochaine modification.</dd>
+  <dt>La non-régression</dt>
+  <dd>Toute correction → rejouer TOUS les tests. C&#x27;est la non-régression.</dd>
+  <dt>Pourquoi une fonction</dt>
+  <dd>Fonction = machine réutilisable et testable : reçoit des paramètres, renvoie un résultat.</dd>
+ </dl>
+</section>
+<section>
+ <h2>PRG <span class="compte">· 7 notions</span></h2>
+ <dl>
+  <dt>= ou == ?</dt>
+  <dd>= range, == demande. Le if n&#x27;accepte que des questions.</dd>
+  <dt>Une chose à la fois</dt>
+  <dd>Une correction → une réexécution. Toujours.</dd>
+  <dt>Le message d&#x27;erreur, un allié</dt>
+  <dd>Lire le message d&#x27;erreur EN ENTIER : il donne l&#x27;opération et les types coupables.</dd>
+  <dt>L&#x27;ordre des lignes</dt>
+  <dd>Une variable se crée AVANT de s&#x27;utiliser : l&#x27;ordre des lignes est un choix de conception.</dd>
+  <dt>Prédire avant d&#x27;exécuter</dt>
+  <dd>Prédire → tester → reporter : l&#x27;écart prédiction/réalité est le meilleur professeur.</dd>
+  <dt>Relire un programme d&#x27;un coup d&#x27;œil</dt>
+  <dd>init à 0 + « c = c + 1 » = compteur. Apprendre à reconnaître les MOTIFS.</dd>
+  <dt>La trace du technicien</dt>
+  <dd>Bug silencieux → print() aux étapes clés : rendre visible, puis raisonner.</dd>
+ </dl>
+</section>
+<section>
+ <h2>TYP <span class="compte">· 8 notions</span></h2>
+ <dl>
+  <dt>L&#x27;affichage mixte</dt>
+  <dd>Dans print, la virgule sépare et évalue ; le + colle (et exige le même type).</dd>
+  <dt>Le décodeur</dt>
+  <dd>int() et float() convertissent le texte en nombre.</dd>
+  <dt>Le doute méthodique</dt>
+  <dd>En cas de doute : type(x). Mesurer plutôt que supposer.</dd>
+  <dt>L&#x27;opération impossible</dt>
+  <dd>str − int → TypeError. L&#x27;erreur de type est une ALLIÉE : elle montre le bug.</dd>
+  <dt>Le piège des guillemets</dt>
+  <dd>str + str = collage. Le type décide du métier du +.</dd>
+  <dt>Les quatre familles</dt>
+  <dd>int entier · float à virgule-point · str entre guillemets · bool True/False.</dd>
+  <dt>La virgule qui fâche</dt>
+  <dd>Décimale = point. La virgule sépare, elle ne « décimale » pas.</dd>
+  <dt>Vrai ou faux</dt>
+  <dd>Comparer produit un bool : le carburant des if.</dd>
+ </dl>
+</section>
+<section>
+ <h2>VAR <span class="compte">· 8 notions</span></h2>
+ <dl>
+  <dt>La boîte étiquetée</dt>
+  <dd>Variable = étiquette + contenu, dans la mémoire.</dd>
+  <dt>Le compteur</dt>
+  <dd>total = total + x : le motif « compteur », à reconnaître au premier regard.</dd>
+  <dt>L&#x27;échange de contenus</dt>
+  <dd>Échanger deux variables exige une troisième (temp).</dd>
+  <dt>Lire de droite à gauche</dt>
+  <dd>Affectation : calcule à droite, range à gauche.</dd>
+  <dt>Nommer, c&#x27;est déjà programmer</dt>
+  <dd>Un nom de variable dit ce qu&#x27;il contient (underscore, pas d&#x27;espace).</dd>
+  <dt>Où va l&#x27;ancienne valeur ?</dt>
+  <dd>Affecter écrase : pour garder, recopier AVANT.</dd>
+  <dt>Suivre à la trace</dt>
+  <dd>La table de suivi est le multimètre du programmeur.</dd>
+  <dt>Le vrai sens du signe =</dt>
+  <dd>= affecte (range) ; == compare.</dd>
+ </dl>
+</section>
+</main>
+<footer>
+  Chaque ligne provient d'une question de qcm_3e_C9.1_variables_types_systemes.html. Rien n'a été réécrit ici :
+  ce lexique rassemble ce que les corrections disaient déjà, une par une.
+</footer>
+</body>
+</html>

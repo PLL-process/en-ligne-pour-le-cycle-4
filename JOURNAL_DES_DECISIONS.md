@@ -8287,3 +8287,34 @@ productions des cinq séances.
 
 Les quatre lots concernés portent désormais tous leur réserve. Aucune banque n'a été retouchée
 pour ça : le défaut n'était pas dans les questions, il était dans ce qu'on prétendait en tirer.
+
+## 2026-08-29 — Le Thème 3 rejoint les deux autres, et les outils périmés partent
+
+Dernier tour. Le Thème 3 n'avait ni lexique ni rôle, comme le Thème 2 avant-hier — sauf que
+cette fois les outils étaient déjà réparés, et le passage s'est fait sans surprise. C'est
+d'ailleurs le premier signe que les correctifs de la n°204 tiennent : un outil qui traverse un
+troisième vocabulaire sans se tromper commence à être un outil.
+
+| | Thème 1 | Thème 2 | Thème 3 | total |
+|---|---|---|---|---|
+| lexiques | 13 | 17 | **8** | **38** |
+| blocs de rôles | 5 | 6 | **3** | **14** |
+
+Trois blocs de rôles seulement pour douze séquences : les neuf autres se font seul, et on ne
+leur pose rien (n°186). Huit lexiques pour douze séquences : les cinq pages du lot `3e_C9.2`
+partagent un dossier, donc un lexique — et les cinq le désignent.
+
+**Contrôle sur les trois thèmes : 38 lexiques, 0 orphelin, 0 lien mort.** Toutes les pages
+modifiées passent au navigateur sans une erreur.
+
+### Le ménage
+
+`poser_roles.py` et `generer_lexique.py` avaient été écrits dans
+`theme-3-…/C7-imaginer-concevoir-et-realiser-une-ou-des/`, parce que c'est là que le besoin
+était né. Ils vivent depuis avant-hier dans `_outils/`, corrigés. Les deux copies du Thème 3
+sont supprimées : deux exemplaires d'un outil, c'est un exemplaire qui sera corrigé et un autre
+qu'on lancera par erreur.
+
+- **n°206** — un outil qui sert trois thèmes n'appartient à aucun. Il vit dans `_outils/`, en un
+  seul exemplaire. Une copie laissée « au cas où » est un piège à retardement : c'est toujours
+  la mauvaise qu'on lance.
