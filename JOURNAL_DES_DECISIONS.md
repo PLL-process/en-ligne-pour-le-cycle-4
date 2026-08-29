@@ -8133,3 +8133,63 @@ Reste `qcm_book-train.html` (5/30 détachées, Thème 2, hérité) : hors périm
   une bonne réponse bavarde : c'est le diagnostic qui choisit, pas la recette.
 - **n°202** — un QCM peut mobiliser une compétence sans l'évaluer. En dessous de cinq questions,
   un code se cite en appui, il ne se reporte pas seul au LSU.
+
+---
+
+## 2026-08-29 — Un QCM peut mobiliser une compétence sans l'évaluer
+
+Fin du chantier ouvert par le contrôle des longueurs. Trois choses.
+
+### 1. La dernière banque signalée est réparée
+
+`qcm_book-train.html` (5/30 questions détachées, +7,9 caractères) : cinq bonnes réponses
+raccourcies, sens inchangé. **Les 43 banques du dépôt passent désormais le contrôle des
+longueurs** — plus aucune n'est signalée. Tests réels : 17/17.
+
+### 2. Une suspicion vérifiée avant d'être écrite — et démentie
+
+En mesurant l'échantillonnage, j'ai vu que **12 banques sur 43 codent leurs questions avec un
+vocabulaire maison** (EN, ID, RES, PRO, CAP, PRG, VAR, BOI…) plutôt qu'avec les codes du
+programme. J'ai cru tenir un défaut de gouvernance : un « bilan par compétence » qui rend un
+score sous un intitulé qui n'est pas une compétence, et qui ne peut donc pas nourrir le LSU.
+
+Vérification faite : **les douze raccrochent**. Chaque clé maison porte un libellé qui nomme les
+codes couverts — « Énergie — 4e_C4.1 · C4.2 », « Forme et procédé — 4e_C4.3 ». Ce sont des
+**groupes**, pas des compétences inventées. Rien à corriger.
+
+C'est la première fois cette semaine que la règle n°184 sert **avant** publication plutôt
+qu'après. La différence tient à un réflexe : la clé s'écrit « PRO », mais ce qui compte est ce
+que le libellé en dit.
+
+### 3. Le vrai défaut est ailleurs, et l'audit externe l'avait vu
+
+`_outils/controle_echantillonnage.py` compte les questions par code — en résolvant d'abord les
+clés de groupe, sans quoi il compterait des conventions d'écriture. Seuil : **cinq questions**
+pour qu'un code se conclue seul. Quatre banques portent au moins un code en dessous :
+
+| Banque | codes sous le seuil |
+|---|---|
+| `qcm_5e_C4.1-C4.8_lampadaire_intelligent` | **les huit codes, à 4 questions chacun** |
+| `qcm_4e_C6.2_arrosage_automatique` | C4.4 (5) évaluable ; C4.5 (4), C4.1 (3), C1.4 (2) non |
+| `qcm_4e_C4.1-C4.9_jardin_connecte` | C4.3 (3 questions) |
+| `qcm_5e_C1.1-C1.6_chengdu` (Thème 1) | C1.6 (4 questions) |
+
+Le cas du lampadaire est celui que **l'audit externe ChatGPT désignait** : « la fiche prévoit
+QCM 32 questions, quatre par code, puis bilan par code et LSU — quatre questions sont trop peu
+fiables pour valider isolément une compétence ». C'est exact. Sur quatre questions, un élève qui
+maîtrise la moitié d'une notion obtient 2/4 ou 4/4 selon lesquelles il connaît, et l'écart part
+au bulletin.
+
+**Aucune banque n'a été retouchée pour ça** : quatre questions par code sur huit codes, c'est un
+choix de couverture défendable pour un lot qui balaie tout un îlot. Ce qui ne l'est pas, c'est de
+reporter ce score code par code au LSU. Les trois fiches du Thème 2 concernées le disent
+désormais, chacune à sa manière : le bilan du lampadaire est un **repérage** ; `4e_C4.3` se lit
+dans la production de l'activité 5, pas dans le score ; et le QCM `4e_C6.2` n'évalue que
+`4e_C6.2`, ses quatre autres codes étant des appuis.
+
+La réserve pour `5e_C1.1-C1.6` (Thème 1) attend une branche Thème 1.
+
+- **n°202** — un QCM peut mobiliser une compétence sans l'évaluer. En dessous de cinq questions,
+  un code se cite en appui ; il ne se reporte pas seul au LSU. *(Posée hier, mesurée aujourd'hui.)*
+- **n°203** — avant d'écrire qu'un indicateur est faux, lire ce que le fichier dit de lui-même.
+  Douze banques semblaient inventer leurs compétences ; leurs libellés nommaient les codes.

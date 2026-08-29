@@ -89,6 +89,12 @@ C1.4 (2), répartition A/B/C/D 8/7/7/8. Écrit le 28/08/2026 à partir des 24 qu
 hérité du lot, qui portaient sur le bon sujet mais exposaient la bonne réponse dans le code de
 la page (`value="v0"`). Correspondance notion → numéro de question dans
 `matrice_couverture_4e_C6.2.csv`.
+> **Ce que ce QCM évalue, et ce qu'il ne fait que mobiliser.** Un seul code y est assez
+> échantillonné pour être conclu seul : **4e_C6.2, avec 16 questions**. Les quatre autres sont des
+> appuis — C4.4 (5 q.), C4.5 (4 q.), C4.1 (3 q.), C1.4 (2 q.) : ils donnent au QCM son ancrage
+> dans l'objet, ils ne se reportent pas au LSU. Deux questions ne valident pas une compétence.
+> Mesure : `_outils/controle_echantillonnage.py`.
+
 **Sommative** : à construire par l'enseignant. Aucun corrigé sommatif publié.
 
 ## Dépendances — à lire avant de réserver la salle
