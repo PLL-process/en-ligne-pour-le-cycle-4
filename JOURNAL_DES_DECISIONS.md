@@ -8421,3 +8421,65 @@ celui que je m'apprêtais à écrire.
 - **n°208** — avant de créer ce qu'un audit déclare manquant, chercher qui le fait déjà. Un
   code « à créer » peut être un code non signalé — et produire deux fois la même chose coûte
   plus cher que de ne rien produire.
+
+---
+
+## 2026-08-29 — Le lot 5e_C8.2, et un banc d'essai plutôt que des captures d'écran
+
+Pascal a demandé des simulateurs de tenue mécanique — il en connaissait, mais payants. Recherche
+faite et vérifiée, le meilleur est **« Le laboratoire des matériaux »** du Réseau National
+Technologie Collège, publié par éduscol STI : essais de traction et de compression sur cinq
+éprouvettes, **gratuit, sans compte, CC BY-NC-SA 3.0**, versions PC et Mac, avec une séquence
+pédagogique en PDF. Écrit pour le cycle 4. Deux autres candidats écartés : PlayTest demande un
+compte et n'affiche aucun tarif ; SimScale est de la vraie simulation par éléments finis, mais
+son offre gratuite plafonne à dix simulations et les offres payantes vendent les « projets
+privés » comme une fonctionnalité — ce qui laisse penser que le travail d'élève y serait public.
+
+### Le problème des captures, et sa solution
+
+Pascal proposait de prendre lui-même les captures d'écran du simulateur pour la séquence. Je ne
+peux pas les faire : mon conteneur bloque le réseau sortant (403 sur le téléchargement éduscol),
+et de toute façon le laboratoire est une **application à installer**, pas une page web.
+
+La bonne réponse n'était pas de me passer les captures. C'était de **mettre le banc d'essai dans
+la page** — comme le jardin de 4ᵉ a son banc de tests et la station de 3ᵉ son banc d'essai. Le
+banc est original, en SVG et JavaScript, sans dépendance, hors ligne : cinq matériaux, une
+éprouvette identique de 2 × 5 mm, une charge par paliers, et l'éprouvette qui s'allonge puis casse.
+
+Le laboratoire d'éduscol devient alors la **version 🅰** pour qui veut installer l'application, et
+non un prérequis. Une séquence qui exige un téléchargement de plus est une séquence qui ne se fait
+pas.
+
+### Les valeurs, vérifiées avant d'être écrites
+
+Charges de rupture calculées à partir des résistances à la traction usuelles, sur une section de
+10 mm² : bois 41 kg, PLA 51, PVC 53, aluminium 194, acier 408. Simulées, et la page le dit à
+l'élève — une question du QCM porte précisément là-dessus.
+
+Ces chiffres font le sel de la séance. Un sac trempé de 8 kg avec un coefficient de sécurité de 5
+demande **40 kg**. **Les cinq matériaux passent.** La traction ne départage donc pas, et il faut
+un autre critère : c'est le pivot entre mesurer (C8.2) et choisir (C3.1). Et le bois passe à 41
+pour 40 — 2,5 % de marge, sur une éprouvette *sans défaut*, alors que la vraie planche aura un
+nœud. C'est là que le coefficient de sécurité cesse d'être une formule.
+
+### Le verrou qui compte
+
+En 5e_C8.2, le verbe est **mettre en œuvre**, pas mesurer juste. Le vérificateur de l'activité 2
+compare donc les cinq relevés **aux vraies valeurs du banc** : un chiffre recopié sur le voisin
+est refusé, un chiffre approché aussi. Le test n°10 de la suite le vérifie explicitement — 40 au
+lieu de 41 donne 4/5. C'est ce qui distingue ce lot d'un exercice où l'on rendrait le bon nombre
+sans avoir rien cassé.
+
+### Ce que le lot porte
+
+2 séances de 55 min pour 100 min d'activités · QCM 30 q / 90 réfutations (C8.2 ×20, C3.1 ×10,
+les deux au-dessus du seuil de cinq) · lexique 30 notions · deux synthèses · fiche · matrice ·
+README · **tests réels 14/14 et 17/17**.
+
+Et la longueur des options a été surveillée **dès l'écriture** cette fois : trois jeux resserrés
+avant la première génération, écart moyen +2,1 caractères, zéro bonne réponse détachée. La leçon
+de la semaine commence à passer dans le geste plutôt que dans le rattrapage.
+
+- **n°209** — quand une ressource extérieure manque, construire l'instrument plutôt que d'attendre
+  ses captures. Un banc dans la page ne dépend de personne, marche hors ligne, et se laisse
+  interroger par un vérificateur — ce qu'une capture d'écran ne fera jamais.

@@ -679,6 +679,27 @@ OVERLAY = {
                "des symboles normalisés, trace d'exécution au banc d'essai), avec title et "
                "desc accessibles de 585 à 700 caractères.",
     ),
+    # ── Lot 5e_C8.2 « La patère du hall », 29/08/2026 ───────────────────────────
+    "5e_C8.2": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « La patère du hall — éprouver un matériau » : 2 séances de 55 min, banc "
+                "d'essai de traction ORIGINAL intégré à la page (cinq matériaux, éprouvette "
+                "normalisée de 2 x 5 mm, charge par paliers, rupture), deux verrous "
+                "expérientiels — le vérificateur de l'activité 2 compare les cinq relevés aux "
+                "vraies valeurs du banc, donc un chiffre recopié ou inventé est refusé, ce qui "
+                "est le coeur du code : en C8.2 on evalue la mise en oeuvre, pas le nombre. "
+                "QCM 30 q / 90 refutations (C8.2 x20, C3.1 x10), lexique 30 notions, deux "
+                "syntheses, fiche, matrice, rapport de tests reels 14/14 et 17/17.",
+        anomalies="Aucun essai physique : le banc est une simulation, et la page le dit a l'eleve "
+                  "(une question du QCM porte precisement la-dessus). La version A renvoie au "
+                  "« laboratoire des materiaux » du Reseau National Technologie College "
+                  "(eduscol STI, gratuit, sans compte, CC BY-NC-SA 3.0) sans en faire un prerequis.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement sans "
+                      "ecran, figure du banc dotee de title et desc.",
+        medias="Banc d'essai SVG original (CC0). Aucun media tiers.",
+    ),
     "3e_C9.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=True, synthese=True,
