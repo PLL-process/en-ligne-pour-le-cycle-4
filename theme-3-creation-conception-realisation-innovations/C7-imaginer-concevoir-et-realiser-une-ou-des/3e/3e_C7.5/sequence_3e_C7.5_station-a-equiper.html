@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e — La station qu'il faut équiper (3e_C7.5)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Établi Grove — original, CC0 ───────────────────────────────────────── */
+.etabli{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+.chaine{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:620px){.chaine{grid-template-columns:repeat(2,1fr)}}
+.fct{background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 8px;text-align:center;transition:background .2s,border-color .2s}
+.fct b{display:block;font-size:.9em;color:var(--sub)}
+.fct span{font-size:.78em;color:var(--sub)}
+.fct.tenue{background:#14532d;border-color:var(--ok)}
+.fct.tenue b{color:#eafff0}
+table.cat{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.cat th,table.cat td{border:1px solid var(--border);padding:5px 8px;text-align:left;vertical-align:middle}
+table.cat th{background:#173666;color:var(--hl)}
+table.cat td.pt{width:150px}
+table.cat td.pt select{width:100%;min-width:0;padding:4px 6px;font-size:.92em}
+table.cat tr.monte td:not(.pt){color:#fff}
+table.cat td.ma{width:70px;text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
+.budget{font-size:.86em;color:var(--sub);margin:4px 0 10px}
+.budget b{color:var(--hl)}
+.budget.trop b{color:var(--err)}
+.etabli-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:170px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+.prog{font-family:ui-monospace,Menlo,Consolas,monospace;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:.86em;color:var(--hl);overflow-x:auto;white-space:pre;margin:8px 0}
+.prog .cm{color:#7f9cc4}
+.symp{background:#3a2a10;border-left:4px solid var(--warn);border-radius:0 8px 8px 0;padding:8px 12px;margin:8px 0;font-size:.92em}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C7.5.html">📖 Lexique</a></nav>
+
+<h1>🌀 La station qu'il faut équiper</h1>
+<p class="subtitle">Thème 3 · 3<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C7.5</span>
+  <span class="badge code">3e_C4.3 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D2 · D3 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 90 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Tu as caractérisé la chaîne d'information de la station d'alerte (3e_C4.3), calculé son
+  autonomie et choisi sa source d'énergie (3e_C7.4), et validé la tenue de son mât (3e_C8.2).
+  Tu sais décrire un objet et justifier un choix isolé.</p>
+  <p><b>Ce qui change aujourd'hui :</b> on te donne un catalogue plus large que nécessaire et
+  un cahier des charges à quatre exigences. Choisir un constituant n'est plus une question à
+  une réponse : chaque choix ferme et ouvre des portes ailleurs dans le montage. C'est le
+  moment où l'on cesse de répondre à une question pour commencer à concevoir.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>3e_C7.5</b></td><td>Choisir les constituants et assembler un prototype.</td><td>Activités 1 à 4 et REFAIRE</td></tr>
+    <tr><td>3e_C4.3 <span style="color:var(--sub)">(appui)</span></td><td>Décrire un OST en caractérisant sa chaîne d'information.</td><td>Activité 0 et synthèse</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>La station d'alerte cyclonique du collège existe : le mât est dimensionné,
+l'énergie est calculée, le programme est écrit et chargé. <b>Le carton du fournisseur contient
+dix constituants</b> — plus qu'il n'en faut, parce que le fournisseur ne connaît pas le
+cahier des charges de <em>votre</em> collège.</p>
+<p>La commission de sécurité passe dans quinze jours. Elle a écrit ce qu'elle attend :</p>
+<ol>
+  <li>déclencher l'alerte <b>au-delà de 90 km/h</b> de vent moyen ;</li>
+  <li>une alerte <b>visible depuis la cour, en plein jour</b> ;</li>
+  <li>une station qui tient <b>72 heures sans intervention</b> ;</li>
+  <li>un <b>historique des mesures</b> consultable après l'événement.</li>
+</ol></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Le catalogue contient plus de constituants qu'il n'en faut. Comment un cahier des charges décide-t-il, à lui seul, lesquels on garde ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="Pour choisir sans essayer au hasard, je partirais de…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚡ Sécurité — une station qui reste dehors</h2>
+  <div class="danger">
+    <p><b>Très basse tension uniquement.</b> Carte, capteurs, bandeau, batterie : tout est en
+    5 V. <b>Aucun élève ne manipule le secteur</b>, ni pour recharger la batterie, ni pour
+    alimenter l'établi. Le bloc de charge est raccordé par le professeur.</p>
+    <p><b>Le bandeau de DEL chauffe.</b> 480 mA à pleine puissance, ce n'est plus une DEL
+    témoin : on ne le tient pas dans la main allumé, et on ne le laisse pas au contact d'un
+    boîtier fermé sans ventilation. C'est aussi pour ça qu'on compte le courant avant de
+    brancher, et pas après.</p>
+    <p><b>Le mât reste au sol pendant tout le montage.</b> On ne câble pas en hauteur, et on
+    ne lève rien tant que l'essai n'est pas concluant.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — le carton complet est posé sur une table, cahier des
+      charges affiché, et chaque groupe repart avec ce qu'il a choisi. La contrainte de courant
+      se mesure alors pour de vrai, avec un multimètre en série.</li>
+    <li><b>🅱 Avec l'établi de cette page</b> — hors ligne, sans rien installer, et il permet
+      ce que le carton ne permet pas : essayer un choix, le refuser, revenir en arrière, et
+      comparer deux configurations en trente secondes.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — dix fiches cartonnées, une par constituant, avec le
+      port admis et le courant écrits dessus. Le cahier des charges se lit à voix haute, et le
+      groupe défend son choix. Le budget se calcule au tableau : c'est la version où l'on
+      argumente le plus.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>📋 Activité 0 — Ce que chaque exigence impose ⏱ ~25 min</h2>
+  <p>Un cahier des charges ne dit pas quels constituants acheter : il dit ce que
+  l'objet doit faire. Le passage de l'un à l'autre est le travail du concepteur, et il se fait
+  <b>exigence par exigence</b>.</p>
+  <div class="exo">
+
+    <p>Associe chaque exigence de la commission au constituant qu'elle impose.</p>
+    <p style="margin-top:12px"><b>Exigence 1 — déclencher au-delà de 90 km/h de vent</b></p>
+    <select id="a0r0">
+      <option value="">— je choisis —</option>
+      <option>elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</option>
+      <option>elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</option>
+      <option>elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</option>
+      <option>elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</option>
+    </select>
+    <p style="margin-top:12px"><b>Exigence 2 — une alerte visible depuis la cour en plein jour</b></p>
+    <select id="a0r1">
+      <option value="">— je choisis —</option>
+      <option>elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</option>
+      <option>elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</option>
+      <option>elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</option>
+      <option>elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</option>
+    </select>
+    <p style="margin-top:12px"><b>Exigence 3 — tenir 72 heures sans intervention</b></p>
+    <select id="a0r2">
+      <option value="">— je choisis —</option>
+      <option>elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</option>
+      <option>elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</option>
+      <option>elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</option>
+      <option>elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</option>
+    </select>
+    <p style="margin-top:12px"><b>Exigence 4 — un historique consultable après l'événement</b></p>
+    <select id="a0r3">
+      <option value="">— je choisis —</option>
+      <option>elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</option>
+      <option>elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</option>
+      <option>elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</option>
+      <option>elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</option>
+    </select>
+    <p style="margin-top:14px"><b>Et une question de fond :</b> le module carte SD ne mesure
+    rien, ne décide rien, n'agit pas et ne fournit pas d'énergie. Que faut-il en conclure ?</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>un cahier des charges peut exiger un constituant hors des quatre fonctions</option>
+      <option>la carte SD est un constituant facultatif, qu'on peut retirer sans conséquence</option>
+      <option>les quatre fonctions sont incomplètes : il en existe une cinquième, « mémoriser »</option>
+      <option>il s'agit d'une erreur du fournisseur : ce module n'a rien à faire dans le carton</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Exigence 1 — déclencher au-delà de 90 km/h de vent</b> — elle impose l'anémomètre : c'est la seule grandeur du cahier des charges</p>
+      <p><b>Exigence 2 — une alerte visible depuis la cour en plein jour</b> — elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres</p>
+      <p><b>Exigence 3 — tenir 72 heures sans intervention</b> — elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence</p>
+      <p><b>Exigence 4 — un historique consultable après l'événement</b> — elle impose la carte SD : sans elle, la station alerte mais ne prouve rien</p>
+      <p style="margin-top:10px"><b>Les quatre fonctions décrivent ce qui fait fonctionner un
+      objet, pas tout ce qu'un cahier des charges peut demander.</b> La carte SD n'est ni un
+      capteur, ni un processeur, ni un actionneur, ni une source — et sans elle, l'exigence 4
+      n'est pas tenue. Le Base Shield est dans le même cas : indispensable, hors des quatre.</p>
+      <p>Il n'y a pas de cinquième fonction à ajouter à la liste : la liste décrit la chaîne,
+      et un objet technique réel porte des constituants qui ne sont pas dans la chaîne —
+      fixation, protection, mémoire, connectique.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎯 Activité 1 — Choisir, et l'écrire ⏱ ~35 min</h2>
+  <p>Le catalogue propose dix constituants. Le cahier des charges en impose une
+  partie et en exclut une autre. <b>Choisis, puis justifie</b> — et la justification compte
+  autant que le choix : un choix juste qu'on ne sait pas défendre ne tient pas devant une
+  commission.</p>
+  <div class="exo">
+
+    <p style="margin-top:12px"><b>Pour mesurer la grandeur du seuil, je retiens…</b></p>
+    <select id="a1x0">
+      <option value="">— je choisis —</option>
+      <option>l'anémomètre</option>
+      <option>la batterie et le panneau solaire</option>
+      <option>le bandeau de 8 DEL</option>
+      <option>le module carte SD</option>
+    </select>
+    <p style="margin-top:12px"><b>Pour rendre l'alerte visible depuis la cour, je retiens…</b></p>
+    <select id="a1x1">
+      <option value="">— je choisis —</option>
+      <option>l'anémomètre</option>
+      <option>la batterie et le panneau solaire</option>
+      <option>le bandeau de 8 DEL</option>
+      <option>le module carte SD</option>
+    </select>
+    <p style="margin-top:12px"><b>Pour garder l'historique, je retiens…</b></p>
+    <select id="a1x2">
+      <option value="">— je choisis —</option>
+      <option>l'anémomètre</option>
+      <option>la batterie et le panneau solaire</option>
+      <option>le bandeau de 8 DEL</option>
+      <option>le module carte SD</option>
+    </select>
+    <p style="margin-top:12px"><b>Pour alimenter la station sur son mât, je retiens…</b></p>
+    <select id="a1x3">
+      <option value="">— je choisis —</option>
+      <option>l'anémomètre</option>
+      <option>la batterie et le panneau solaire</option>
+      <option>le bandeau de 8 DEL</option>
+      <option>le module carte SD</option>
+    </select>
+    <p style="margin-top:16px"><b>La justification.</b> Écris, en quelques lignes : pourquoi
+    le capteur de pluie ne peut pas remplacer l'anémomètre, et pourquoi l'écran LCD ne peut pas
+    remplacer le bandeau. Ces deux-là <em>fonctionnent parfaitement</em> — ce n'est pas leur
+    qualité qui est en cause.</p>
+    <textarea id="a1j" rows="4" placeholder="Le capteur de pluie fonctionne, mais… / L'écran LCD affiche bien, mais…"></textarea>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Pour mesurer la grandeur du seuil, je retiens…</b> — l'anémomètre</p>
+      <p><b>Pour rendre l'alerte visible depuis la cour, je retiens…</b> — le bandeau de 8 DEL</p>
+      <p><b>Pour garder l'historique, je retiens…</b> — le module carte SD</p>
+      <p><b>Pour alimenter la station sur son mât, je retiens…</b> — la batterie et le panneau solaire</p>
+      <p style="margin-top:10px"><b>Le capteur de pluie</b> mesure une grandeur réelle et le
+      fait bien. Mais le seuil du cahier des charges porte sur <em>le vent</em>, en km/h. Un
+      cyclone s'accompagne de pluie, donc la corrélation existe — et une corrélation n'est pas
+      une mesure : on ne déclenche pas une alerte à 90 km/h avec un capteur qui répond
+      « mouillé ».</p>
+      <p><b>L'écran LCD</b> affiche la valeur exacte, avec son unité, et coûte 20 mA contre 480.
+      Il est meilleur sur tous les critères sauf un : il se lit à trente centimètres. L'exigence
+      ne dit pas « afficher », elle dit « visible depuis la cour, en plein jour ». <b>Une
+      exigence d'usage se juge depuis l'endroit où l'on est</b>, pas depuis la fiche technique.</p>
+      <p style="color:var(--sub)">Les deux constituants écartés ne sont pas mauvais. Ils
+      répondent à un autre besoin que celui-ci — c'est tout ce que « choisir » veut dire.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔧 Activité 2 — Assembler et prouver ⏱ ~30 min</h2>
+  <p>Monte ta station sur l'établi. Le programme sous le tableau te dit où il lit
+  et où il écrit. L'établi refusera tant qu'une exigence n'est pas tenue — et il te dira
+  <b>laquelle</b>, pas « erreur ».</p><div id="etabli">
+  <div class="etabli">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'établi : le catalogue contient plus de constituants qu'il n'en faut. Choisis, monte, teste — et lis ce que le refus t'apprend sur ton choix.</b></p>
+
+    <div class="chaine">
+      <div class="fct" id="f_acquerir"><b>Acquérir</b><span>prendre la mesure</span></div>
+      <div class="fct" id="f_traiter"><b>Traiter</b><span>décider quoi faire</span></div>
+      <div class="fct" id="f_agir"><b>Agir</b><span>produire l'effet</span></div>
+      <div class="fct" id="f_alimenter"><b>Alimenter</b><span>fournir l'énergie</span></div>
+    </div>
+
+    <table class="cat">
+      <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
+      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_anemo"><td><b>Anémomètre Grove</b></td><td>il mesure la vitesse du vent</td><td class="ma" id="ma_anemo">—</td><td class="pt"><select id="pt_anemo" aria-label="Port de Anémomètre Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_pluie"><td><b>Capteur de pluie Grove</b></td><td>il détecte la présence de pluie</td><td class="ma" id="ma_pluie">—</td><td class="pt"><select id="pt_pluie" aria-label="Port de Capteur de pluie Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_lcd"><td><b>Écran LCD I2C Grove (16 × 2)</b></td><td>il affiche la mesure, lisible à 30 cm</td><td class="ma" id="ma_lcd">—</td><td class="pt"><select id="pt_lcd" aria-label="Port de Écran LCD I2C Grove (16 × 2)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_bandeau"><td><b>Bandeau de 8 DEL de puissance</b></td><td>il signale l'alerte, visible de la cour</td><td class="ma" id="ma_bandeau">—</td><td class="pt"><select id="pt_bandeau" aria-label="Port de Bandeau de 8 DEL de puissance"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_buzzer"><td><b>Buzzer Grove</b></td><td>il émet un son d'alerte</td><td class="ma" id="ma_buzzer">—</td><td class="pt"><select id="pt_buzzer" aria-label="Port de Buzzer Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_sd"><td><b>Module carte SD Grove</b></td><td>il enregistre les mesures et leur heure</td><td class="ma" id="ma_sd">—</td><td class="pt"><select id="pt_sd" aria-label="Port de Module carte SD Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (500 mA)</b></td><td>il alimente depuis un ordinateur</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_alim"><td><b>Batterie 5 V / 2 A + panneau solaire (TBT)</b></td><td>elle alimente la station sur site</td><td class="ma" id="ma_alim">—</td><td class="pt"><select id="pt_alim" aria-label="Port de Batterie 5 V / 2 A + panneau solaire (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+    </table>
+    <p class="budget" id="budget">—</p>
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
+    <div class="prog">vent = analogRead(A0)          <span class="cm">// anémomètre sur A0, en km/h</span>
+enregistrer(vent, heure)       <span class="cm">// sur la carte SD, à chaque mesure</span>
+si vent &gt; 90 alors            <span class="cm">// seuil du cahier des charges</span>
+    digitalWrite(6, HAUT)      <span class="cm">// bandeau au rouge, sur D6</span>
+sinon
+    digitalWrite(6, BAS)       <span class="cm">// bandeau au vert</span></div>
+
+    <div class="etabli-cmd">
+      <button class="btn" id="tester" type="button">⚡ Tester le prototype</button>
+      <button class="btn" id="demonter" type="button">↺ Tout démonter</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Monte les constituants, puis teste.</div></div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <h4>Une fois que l'établi affiche ✔</h4>
+    <p>Les cinq premières encoches relisent <b>ton établi</b>. La sixième est une question.</p>
+    <p><b>Pourquoi le bandeau doit-il être sur D6 et pas sur D2 ?</b></p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>parce que le programme écrit sur D6, et qu'on ne le modifie pas ici</option>
+      <option>parce que D2 ne supporte pas les 480 mA du bandeau</option>
+      <option>parce que D6 est le seul port numérique libre du Base Shield</option>
+      <option>parce que les ports au-delà de D5 sont les seuls à piloter des DEL</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Fais d'abord accepter ton prototype par l'établi : on ne commente pas un montage qu'on n'a pas fait fonctionner.</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p>L'anémomètre sur <b>A0</b>, le bandeau sur <b>D6</b>, la carte SD sur <b>UART</b>, la
+      batterie sur <b>ALIM EXT</b>, la carte et le shield sur le <b>socle</b>.</p>
+      <p><b>D6, parce que le programme l'écrit.</b> Aucun port numérique n'est meilleur qu'un
+      autre pour piloter un bandeau, et aucun ne « supporte » 480 mA — le courant du bandeau ne
+      passe pas par le port de données, il vient de l'alimentation. Le seul argument valable est
+      celui-là : <code>digitalWrite(6, …)</code> est écrit dans un programme qu'on ne modifie
+      pas dans cette séquence.</p>
+      <p style="color:var(--sub)">Modifier le programme pour qu'il écrive ailleurs serait un
+      choix légitime — c'est le travail de la compétence C6.2, et il faut alors le tester.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>➖ Activité 3 — Ce que coûte chaque retrait ⏱ ~25 min</h2>
+  <p>Ta station fonctionne. Retire un constituant, re-teste, lis le refus, puis
+  remets-le. Quatre retraits, quatre refus <b>différents</b> — et c'est cette différence qui
+  prouve qu'aucun de tes choix n'était décoratif.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'établi</a> — c'est le même, et il a gardé ton montage. Une page ne porte qu'un seul établi : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p>Associe chaque retrait au refus que l'établi t'a opposé.</p>
+    <p style="margin-top:12px"><b>On retire l'anémomètre</b></p>
+    <select id="a2s0">
+      <option value="">— je choisis —</option>
+      <option>il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre</option>
+      <option>l'alerte existe dans la carte, et personne dans la cour ne la voit</option>
+      <option>la station alerte correctement, et ne peut rien prouver après l'événement</option>
+      <option>la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</option>
+    </select>
+    <p style="margin-top:12px"><b>On retire le bandeau de DEL</b></p>
+    <select id="a2s1">
+      <option value="">— je choisis —</option>
+      <option>il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre</option>
+      <option>l'alerte existe dans la carte, et personne dans la cour ne la voit</option>
+      <option>la station alerte correctement, et ne peut rien prouver après l'événement</option>
+      <option>la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</option>
+    </select>
+    <p style="margin-top:12px"><b>On retire le module carte SD</b></p>
+    <select id="a2s2">
+      <option value="">— je choisis —</option>
+      <option>il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre</option>
+      <option>l'alerte existe dans la carte, et personne dans la cour ne la voit</option>
+      <option>la station alerte correctement, et ne peut rien prouver après l'événement</option>
+      <option>la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</option>
+    </select>
+    <p style="margin-top:12px"><b>On retire la batterie</b></p>
+    <select id="a2s3">
+      <option value="">— je choisis —</option>
+      <option>il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre</option>
+      <option>l'alerte existe dans la carte, et personne dans la cour ne la voit</option>
+      <option>la station alerte correctement, et ne peut rien prouver après l'événement</option>
+      <option>la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Fais d'abord fonctionner la station, puis retire un constituant et re-teste : c'est le retrait qui montre ce que le choix apportait.</p>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>On retire l'anémomètre</b> — la station ne peut plus mesurer la grandeur sur laquelle porte le seuil</p>
+      <p><b>On retire le bandeau de DEL</b> — l'alerte existe dans la carte, et personne dans la cour ne la voit</p>
+      <p><b>On retire le module carte SD</b> — la station alerte correctement, et ne peut rien prouver après l'événement</p>
+      <p><b>On retire la batterie</b> — il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre</p>
+      <p style="margin-top:10px">Remarque la nature des quatre refus : le premier porte sur une
+      <b>grandeur</b>, le deuxième sur un <b>usage</b>, le troisième sur une <b>preuve</b>, le
+      quatrième sur une <b>quantité d'énergie</b>. Un cahier des charges à quatre exigences
+      produit quatre refus de quatre natures. C'est ce qui fait qu'on ne peut pas « à peu
+      près » équiper une station.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔋 Activité 4 — Le choix qui coûte ⏱ ~20 min</h2>
+  <p>Le bandeau est le seul afficheur qui tienne l'exigence 2. Il est aussi celui
+  qui coûte <b>vingt-quatre fois</b> le courant de l'écran LCD. <b>Le bon choix a créé le
+  problème suivant</b> — et c'est normal : c'est ce qu'est une conception.</p>
+  <p>Retire la batterie de ton montage complet, re-teste, et lis les nombres.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'établi</a> — c'est le même, et il a gardé ton montage. Une page ne porte qu'un seul établi : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+  <table class="releve">
+    <tr><th>Configuration testée</th><th class="num">Courant demandé, en mA</th></tr>
+    <tr><td>Carte + anémomètre + écran LCD + carte SD</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… mA"></td></tr>
+    <tr><td>Carte + anémomètre + bandeau de DEL + carte SD</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… mA"></td></tr>
+    <tr><td>Ce que fournit le câble USB</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… mA"></td></tr>
+  </table>
+    <p style="margin-top:14px"><b>Et la conclusion :</b> qu'est-ce que le budget de courant a
+    imposé, dans cette conception ?</p>
+    <select id="a4q1">
+      <option value="">— je choisis —</option>
+      <option>une exigence d'usage a fini par décider de la source d'énergie</option>
+      <option>il fallait renoncer au bandeau et accepter un écran LCD</option>
+      <option>le budget de courant n'a rien imposé : il se constate après coup</option>
+      <option>il fallait deux cartes, une par constituant gourmand</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Retire la batterie de ton montage complet et re-teste : l'établi te donnera le nombre exact qu'on te demande ici.</p>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <table class="refs">
+      <tr><th>Configuration testée</th><th>Courant demandé, en mA</th></tr>
+      <tr><td>Carte + anémomètre + écran LCD + carte SD</td><td><b>120,0 mA</b></td></tr>
+      <tr><td>Carte + anémomètre + bandeau de DEL + carte SD</td><td><b>580,0 mA</b></td></tr>
+      <tr><td>Ce que fournit le câble USB</td><td><b>500,0 mA</b></td></tr>
+      </table>
+      <p style="margin-top:10px"><b>Suis la chaîne :</b> la commission veut une alerte visible
+      depuis la cour → le seul afficheur qui tienne est le bandeau → le bandeau demande 480 mA →
+      le montage passe à 580 mA → l'USB, qui en donne 500, ne suffit plus → il faut la batterie
+      et le panneau. <b>Une exigence d'usage, écrite par quelqu'un qui ne connaît rien à
+      l'électronique, a décidé de la source d'énergie de la station.</b></p>
+      <p>C'est le mouvement propre à la conception : les exigences ne s'additionnent pas côte à
+      côte, elles se propagent. Et l'exigence 3 — tenir 72 heures — devient soudain beaucoup
+      plus difficile à tenir qu'avec un écran LCD. Tu as calculé ce genre d'autonomie en
+      3e_C7.4 : 580 mA sous 5 V, c'est près de 3 W, et 72 heures à ce régime dépassent de loin
+      ce qu'un petit panneau recharge en Martinique.</p>
+      <p style="color:var(--sub)"><b>Ce que ce prototype ne résout pas :</b> le bandeau ne peut
+      pas rester allumé en permanence. La vraie station ne l'allume qu'au-dessus du seuil, et
+      c'est le programme qui s'en charge. Un prototype d'établi montre que le montage tient ;
+      il ne montre pas qu'il tient trois jours.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+<p>La commission ajoute une cinquième exigence : <b>« l'alerte doit aussi être
+  perceptible par une personne malvoyante présente dans la cour »</b>.</p>
+  <p>Écris : <b>quel constituant du catalogue</b> tu ajoutes, <b>sur quel type de port</b>,
+  ce que devient le <b>courant total</b>, et surtout — <b>quelle exigence déjà tenue</b> cet
+  ajout vient fragiliser.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Le buzzer</b>, sur un <b>port numérique libre</b> (D2, D3, D5…), 30 mA. Il tient la
+      fonction « agir », comme le bandeau : deux constituants pour une même fonction, deux
+      canaux de perception différents. C'est la définition même d'une alerte accessible — on ne
+      remplace pas le visuel, on l'ajoute.</p>
+      <p><b>Courant total :</b> 45 + 15 + 480 + 40 + 30 = <b>610 mA</b>. Toujours sous les
+      2000 mA de la batterie : le montage passe.</p>
+      <p><b>L'exigence fragilisée est la troisième</b> : tenir 72 heures. On vient d'ajouter
+      30 mA permanents à un budget déjà tendu par le bandeau. La bonne réponse n'est pas
+      « ça passe » mais « ça passe, et il faut refaire le calcul d'autonomie ».</p>
+      <p style="color:var(--sub)">Une exigence d'accessibilité n'est jamais « en plus » : elle
+      entre dans le même budget que les autres, et c'est précisément pour ça qu'on l'écrit dans
+      le cahier des charges au début, et pas à la fin.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Le cahier des charges choisit, pas le catalogue.</b> On part des exigences, on
+      traduit chacune en constituant, et ce qui reste dans le carton n'est pas mauvais : il
+      répond à un autre besoin.</li>
+    <li><b>Deux constituants qui tiennent la même fonction ne sont pas interchangeables.</b>
+      L'écran LCD et le bandeau « affichent » tous les deux ; un seul se voit depuis la cour.
+      Une fonction se lit dans la chaîne, un usage se juge depuis l'endroit où l'on est.</li>
+    <li><b>Un cahier des charges peut exiger un constituant hors des quatre fonctions</b> :
+      la carte SD ne mesure, ne décide, n'agit ni n'alimente — et sans elle la station ne
+      prouve rien.</li>
+    <li><b>Les exigences se propagent.</b> Une exigence d'usage a imposé le bandeau, le bandeau
+      a imposé la batterie, et la batterie remet en cause l'autonomie. Concevoir, c'est suivre
+      cette chaîne jusqu'au bout — pas cocher des cases.</li>
+    <li><b>Le courant se compte avant de brancher.</b> 580 mA demandés à une source qui en
+      donne 500 ne produisent pas une panne franche, mais des redémarrages en boucle.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ton point de départ était-il le
+  catalogue, ou le cahier des charges ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 3e_C7.5 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais traduire chaque exigence en constituant, assembler, et défendre un choix écarté</option>
+    <option>Je sais choisir quand on m'aide à relire le cahier des charges exigence par exigence</option>
+    <option>Je sais assembler correctement, mais je choisis encore d'après ce qui est disponible</option>
+    <option>Je ne sais pas encore par où prendre un catalogue plus large que le besoin</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur le choix des constituants, les exigences qui se propagent et le budget de courant. 20 portent sur l'assemblage et le choix, 10 sur la chaîne d'information que tu sais déjà caractériser.</p>
+  <a class="btn" href="qcm_3e_C7.5_station-a-equiper.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Le collège voisin a le <b>même carton</b> et un cahier des charges différent : sa station
+  doit <b>prévenir le personnel de vie scolaire à l'intérieur du bâtiment</b>, sans qu'aucune
+  alerte ne soit visible dans la cour — pour ne pas affoler les élèves.</p>
+  <p>Sur l'établi, monte la station de ce collège-là. Puis écris ce que tu observes :
+  <b>combien de constituants changent, et de combien le budget de courant baisse.</b>
+  Un même carton, deux cahiers des charges, deux stations — voilà pourquoi le fournisseur
+  ne peut pas choisir à votre place.</p>
+
+</section>
+
+<footer>Séquence 3e_C7.5 — « La station qu'il faut équiper ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_3e_C7_5";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+const FONCTIONS_ID = ["acquerir","traiter","agir","alimenter"];
+const LIB = {acquerir:"Acquérir", traiter:"Traiter", agir:"Agir", alimenter:"Alimenter"};
+const LIBPORT = {
+  A:"une entrée analogique (A0 à A3)", D:"un port numérique (D2 à D8)",
+  I2C:"un port I2C", UART:"le port UART", SOCLE:"une place sur le socle",
+  ALIM:"l'alimentation externe"
+};
+const MANQUE = {
+  acquerir:"Sans capteur, le prototype n'a aucune information sur le monde : il ne peut que répéter la même chose.",
+  traiter:"Sans carte programmable, personne ne décide : une mesure sans décision ne déclenche rien.",
+  agir:"Sans actionneur, la décision reste à l'intérieur : rien ne se passe dans le monde réel.",
+  alimenter:"Sans source d'énergie, aucun des trois autres ne fonctionne — c'est la fonction qu'on oublie en dernier et qui arrête tout en premier."
+};
+
+/* ── établi Grove ───────────────────────────────────────────────────────── */
+/* CONSTITUANTS : {id, nom, fonction, ports:[types admis], mA, attendu?, cle?} */
+const CONST = [{"id": "carte", "nom": "Carte Arduino UNO", "role": "elle exécute le programme", "fonction": "traiter", "ports": ["SOCLE"], "mA": 45, "pourquoi": "La carte se pose sur l'établi, elle ne se branche pas sur un port."}, {"id": "shield", "nom": "Base Shield V2", "role": "il donne des ports Grove à la carte", "fonction": "liaison", "ports": ["SOCLE"], "mA": 0, "pourquoi": "Le shield s'emboîte sur la carte : il n'occupe pas un port, il les crée."}, {"id": "anemo", "nom": "Anémomètre Grove", "role": "il mesure la vitesse du vent", "fonction": "acquerir", "ports": ["A"], "mA": 15, "pourquoi": "Il rend une tension proportionnelle à la vitesse : il faut une entrée analogique, capable de rendre un nombre et pas seulement un oui/non."}, {"id": "pluie", "nom": "Capteur de pluie Grove", "role": "il détecte la présence de pluie", "fonction": "acquerir", "ports": ["D"], "mA": 8, "pourquoi": "Il ne rend qu'un état, mouillé ou sec : une entrée numérique suffit."}, {"id": "lcd", "nom": "Écran LCD I2C Grove (16 × 2)", "role": "il affiche la mesure, lisible à 30 cm", "fonction": "agir", "ports": ["I2C"], "mA": 20, "pourquoi": "Il dialogue par deux fils de données partagés et se reconnaît à son adresse ; un port numérique ne porte qu'un seul fil de signal."}, {"id": "bandeau", "nom": "Bandeau de 8 DEL de puissance", "role": "il signale l'alerte, visible de la cour", "fonction": "agir", "ports": ["D"], "mA": 480, "sens": "écrit sur", "pourquoi": "Il se pilote par un seul fil de données : une sortie numérique."}, {"id": "buzzer", "nom": "Buzzer Grove", "role": "il émet un son d'alerte", "fonction": "agir", "ports": ["D"], "mA": 30, "sens": "écrit sur", "pourquoi": "On ne lui demande que deux états, silencieux ou sonore : sortie numérique."}, {"id": "sd", "nom": "Module carte SD Grove", "role": "il enregistre les mesures et leur heure", "fonction": "liaison", "ports": ["UART"], "mA": 40, "pourquoi": "Il échange des blocs de données en série : c'est le port UART du shield."}, {"id": "usb", "nom": "Câble USB 5 V (500 mA)", "role": "il alimente depuis un ordinateur", "fonction": "alimenter", "ports": ["SOCLE"], "mA": 0, "externe": false, "pourquoi": "Le câble se branche sur la carte elle-même."}, {"id": "alim", "nom": "Batterie 5 V / 2 A + panneau solaire (TBT)", "role": "elle alimente la station sur site", "fonction": "alimenter", "ports": ["ALIM"], "mA": 0, "externe": true, "pourquoi": "Elle se raccorde au bornier d'alimentation, pas à un port Grove."}];
+const BUDGET = 500;          /* mA disponibles sans alimentation externe */
+const ATTENDU = {"anemo": "A0", "bandeau": "D6"};        /* {id: "A0"} — ce que le programme lit/écrit */
+const OBLIGE = ["acquerir", "traiter", "agir", "alimenter"];          /* fonctions que ce prototype doit tenir */
+const REQUIS = {"anemo": "Rien ne mesure le vent. Le cahier des charges déclenche l'alerte « au-delà de 90 km/h de vent moyen » : sans anémomètre, aucun autre capteur ne peut fournir cette grandeur-là. La pluie, la température, l'humidité disent autre chose — vrai, mais hors sujet.", "bandeau": "L'alerte n'est pas visible depuis la cour. Un écran LCD se lit à trente centimètres ; le cahier des charges demande qu'on la voie « de la cour, en plein jour ». Une exigence d'usage ne se satisfait pas d'un afficheur qui affiche : elle demande celui qu'on voit d'où on est.", "sd": "Rien ne garde les mesures. La commission de sécurité demande l'historique : une station qui alerte sans conserver ne peut rien prouver après coup. Ce constituant ne tient aucune des quatre fonctions — et il est exigé quand même."};          /* {id: raison} — constituants sans lesquels le cahier
+                                       des charges n'est pas tenu, même si la fonction l'est */
+const MARCHE = "Vent moyen à 104 km/h, au-delà des 90 km/h du cahier des charges : le bandeau passe au rouge et se voit depuis toute la cour en plein jour ; la mesure part sur la carte SD avec son heure. Redescendu à 62 km/h, le bandeau repasse au vert et la mesure est quand même enregistrée.";          /* phrase décrivant le comportement obtenu */
+let dejaOk = false;
+
+function typePort(p){
+  if(!p) return "";
+  if(p === "ALIM EXT") return "ALIM";
+  if(p === "SOCLE" || p === "I2C" || p === "UART") return p;
+  return p[0];                       /* "A0" → "A", "D4" → "D" */
+}
+function montes(){
+  return CONST.filter(c => document.getElementById("pt_" + c.id).value);
+}
+function portDe(c){ return document.getElementById("pt_" + c.id).value; }
+
+function majEtabli(){
+  const m = montes();
+  CONST.forEach(c => {
+    const mo = !!portDe(c);
+    document.getElementById("tr_" + c.id).classList.toggle("monte", mo);
+    document.getElementById("ma_" + c.id).textContent = mo ? c.mA : "—";
+  });
+  FONCTIONS_ID.forEach(f => {
+    const tenue = m.some(c => c.fonction === f);
+    document.getElementById("f_" + f).classList.toggle("tenue", tenue);
+  });
+  const somme = m.reduce((s, c) => s + c.mA, 0);
+  const ext = m.some(c => c.fonction === "alimenter" && c.externe);
+  const b = document.getElementById("budget");
+  b.textContent = "Courant demandé : " + somme + " mA sur " + (ext ? "l'alimentation externe (2000 mA)" : BUDGET + " mA disponibles par l'USB")
+    + (somme > (ext ? 2000 : BUDGET) ? " — c'est trop." : "");
+  b.classList.toggle("trop", somme > (ext ? 2000 : BUDGET));
+  if(m.length) window.__exp.monte = true;
+  save();
+}
+
+/* Le diagnostic, du plus grossier au plus fin — comme celui d'un dépanneur. */
+function diagnostic(){
+  const m = montes(), noms = m.map(c => c.id);
+  if(!noms.includes("carte"))
+    return ["ko", "Rien ne s'exécute : il n'y a pas de carte. Le programme n'a nulle part où tourner.", "sans_carte"];
+  if(CONST.some(c => c.id === "shield") && !noms.includes("shield"))
+    return ["ko", "Aucun module ne peut être branché : le Base Shield manque. Les connecteurs Grove n'ont pas de prise sur la carte nue.", "sans_shield"];
+
+  for(const c of m){
+    const p = portDe(c), t = typePort(p);
+    if(c.ports.length && !c.ports.includes(t))
+      return ["ko", c.nom + " est sur " + p + ", et il lui faut " + c.ports.map(x => LIBPORT[x] || x).join(" ou ") + ". " + c.pourquoi, "port_" + c.id];
+  }
+  const doublons = {};
+  for(const c of m){ const p = portDe(c);
+    if(p !== "ALIM EXT" && p !== "SOCLE" && doublons[p])
+      return ["ko", "Deux constituants sur " + p + " : " + doublons[p] + " et " + c.nom + ". Un port ne reçoit qu'un module.", "doublon"];
+    doublons[p] = c.nom; }
+
+  /* un constituant qui en exige un autre : la puissance ne se commande pas
+     directement depuis une sortie de carte. */
+  for(const c of m){
+    if(c.exige && !noms.includes(c.exige))
+      return ["ko", c.siManque, "exige_" + c.exige];
+  }
+  for(const f of OBLIGE){
+    if(!m.some(c => c.fonction === f))
+      return ["ko", "La fonction « " + LIB[f] + " » n'est tenue par aucun constituant. " + MANQUE[f], "fonction_" + f];
+  }
+  /* la fonction peut être tenue et le cahier des charges non tenu : deux choses
+     différentes, et c'est exactement ce qu'un prototype incomplet enseigne. */
+  for(const id in REQUIS){
+    if(!noms.includes(id)) return ["ko", REQUIS[id], "requis_" + id];
+  }
+  const somme = m.reduce((s, c) => s + c.mA, 0);
+  const ext = m.some(c => c.fonction === "alimenter" && c.externe);
+  const dispo = ext ? 2000 : BUDGET;
+  if(somme > dispo)
+    return ["ko", "Le montage demande " + somme + " mA et n'en a que " + dispo + ". La carte s'effondre et redémarre en boucle : il faut une alimentation externe très basse tension.", "budget"];
+
+  for(const c of m){
+    const att = ATTENDU[c.id];
+    if(att && portDe(c) !== att)
+      return ["ko", "Le programme " + (c.sens || "lit") + " " + att + ", et " + c.nom + " est sur " + portDe(c) + " : l'ordre et la mesure se croisent sans se rencontrer. Le branchement et le programme doivent dire la même chose.", "attendu_" + c.id];
+  }
+  return ["ok", MARCHE, "ok"];
+}
+
+function verdict(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls;
+  d.textContent = (cls === "ok" ? "✔ " : "✘ ") + txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("tester").addEventListener("click", () => {
+  const [cls, txt, id] = diagnostic();
+  verdict(cls, txt);
+  window.__exp.teste = true;
+  window.__exp["diag_" + id] = true;   /* on a VU ce diagnostic-là, pas un autre */
+  if(cls === "ko") window.__exp.panne = true;
+  if(cls === "ok"){ window.__exp.ok = true; dejaOk = true; }
+  else if(dejaOk) window.__exp.retire = true;
+  save();
+});
+document.getElementById("demonter").addEventListener("click", () => {
+  CONST.forEach(c => { document.getElementById("pt_" + c.id).value = ""; });
+  majEtabli(); verdict("ko", "Établi vide.");
+});
+CONST.forEach(c =>
+  document.getElementById("pt_" + c.id).addEventListener("change", majEtabli));
+/* Pas d'appel à majEtabli() ici : il enregistre, et il tournerait AVANT restore().
+   La page écraserait alors sa propre sauvegarde par un établi vide à chaque
+   ouverture. C'est le squelette qui appelle restore() puis majEtabli(). */
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0r0", "elle impose l'anémomètre : c'est la seule grandeur du cahier des charges"); s += sv("a0r1", "elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres"); s += sv("a0r2", "elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence"); s += sv("a0r3", "elle impose la carte SD : sans elle, la station alerte mais ne prouve rien"); s += sv("a0q1","un cahier des charges peut exiger un constituant hors des quatre fonctions");
+       return {score: s, total: 5, exp: true}; },
+  1(){ let s = 0;
+       s += sv("a1x0", "l'anémomètre"); s += sv("a1x1", "le bandeau de 8 DEL"); s += sv("a1x2", "le module carte SD"); s += sv("a1x3", "la batterie et le panneau solaire"); s += pres("a1j", 130);
+       return {score: s, total: 5, exp: true}; },
+  2(){ let s = 0;
+       s += sv("pt_anemo","A0"); s += sv("pt_bandeau","D6"); s += sv("pt_sd","UART"); s += sv("pt_alim","ALIM EXT"); s += sv("pt_carte","SOCLE"); s += sv("a2q1","parce que le programme écrit sur D6, et qu'on ne le modifie pas ici");
+       return {score: s, total: 6, exp: !!window.__exp.ok,
+               expMsg: "Fais d'abord accepter ton prototype par l'établi : on ne commente pas un montage qu'on n'a pas fait fonctionner."}; },
+  3(){ let s = 0;
+       s += sv("a2s0", "la station ne peut plus mesurer la grandeur sur laquelle porte le seuil"); s += sv("a2s1", "l'alerte existe dans la carte, et personne dans la cour ne la voit"); s += sv("a2s2", "la station alerte correctement, et ne peut rien prouver après l'événement"); s += sv("a2s3", "il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre");
+       return {score: s, total: 4, exp: !!window.__exp.retire,
+               expMsg: "Fais d'abord fonctionner la station, puis retire un constituant et re-teste : c'est le retrait qui montre ce que le choix apportait."}; },
+  4(){ let s = 0;
+       s += nb("rel0", 120, 0); s += nb("rel1", 580, 0); s += nb("rel2", 500, 0); s += sv("a4q1","une exigence d'usage a fini par décider de la source d'énergie");
+       return {score: s, total: 4, exp: !!window.__exp.diag_budget,
+               expMsg: "Retire la batterie de ton montage complet et re-teste : l'établi te donnera le nombre exact qu'on te demande ici."}; },
+  5(){ return {score: pres("reinv", 150), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majEtabli();
+})();
+</script>
+
+</body>
+</html>

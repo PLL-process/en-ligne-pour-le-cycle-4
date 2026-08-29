@@ -811,6 +811,87 @@ OVERLAY = {
                       "par un bandeau aria-live.",
         medias="Banc d'energie original (HTML + JS, CC0). Aucun media tiers.",
     ),
+    # ── Lot C7.5 « Assembler un prototype », 30/08/2026 ─────────────────────────
+    "5e_C7.5": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « L'eclairage du preau » : 2 seances de 55 min pour 95 min d'activites, "
+                "ETABLI GROVE original integre a la page — l'eleve place chaque constituant sur "
+                "un port et l'etabli ne repond jamais « ca ne marche pas » : il repond POURQUOI, "
+                "du plus grossier au plus fin, comme un depanneur. Le mot du code est FOURNIS : "
+                "en 5e on ne choisit pas, on place. Le geste qui porte la seance est l'activite 2 "
+                "— RETIRER un constituant d'un montage qui marchait et lire les quatre pannes "
+                "differentes que cela produit (regle d'or n°213). Le cas le plus instructif est "
+                "le capteur sur A1 quand le programme lit A0 : rien ne chauffe, rien ne fume, et "
+                "rien ne marche. Cinq verrous experientiels. QCM 30 q / 90 refutations "
+                "(C7.5 x20, C4.5 x10), lexique 30 notions, deux syntheses, fiche, matrice de 30 "
+                "notions engendree depuis la banque, tests reels 39/39 et 32/32, scripts livres.",
+        anomalies="Aucun assemblage reel : l'etabli simule, et la version A le fait avec la carte, "
+                  "le Base Shield et deux modules Grove — c'est elle qui fait foi. Le programme "
+                  "est donne, charge et lu, jamais modifie : le modifier releve de C6.2. Le "
+                  "catalogue est reduit au strict necessaire ; choisir entre plusieurs "
+                  "constituants est le travail de la 3e. Le budget de courant est affiche, pas "
+                  "travaille — il devient une contrainte en 4e.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (quatre eleves tiennent les quatre fonctions), encadre de "
+                      "securite TBT 5 V verifie par un test. Aucune boite modale : les messages "
+                      "passent par un bandeau aria-live (regle d'or n°188).",
+        medias="Etabli Grove original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+    "4e_C7.5": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le jardin qui n'arrose pas encore » : 2 seances de 55 min pour 95 min "
+                "d'activites. Trois prototypes livres, chacun incomplet d'une maniere "
+                "DIFFERENTE, et chacun empruntant une branche differente du diagnostic : un "
+                "constituant qui en exige un autre (la pompe sans relais), un budget de courant "
+                "depasse (800 mA sur 500, donc un defaut INTERMITTENT qui ne se voit qu'a la "
+                "mise en eau), et une fonction tenue par le mauvais capteur (une temperature "
+                "comparee a un seuil d'humidite). Le point de depart n'est pas le montage mais "
+                "le cahier des charges : un manque se compare, une panne se teste. QCM 30 q / 90 "
+                "refutations (C7.5 x20, C4.4 x10), lexique 30 notions, deux syntheses, fiche, "
+                "matrice de 30 notions, tests reels 39/39 et 32/32, scripts livres.",
+        anomalies="Aucun montage reel : l'etabli charge les trois cas, et la version A les "
+                  "prepare sur trois plateaux. Le programme n'est ni ecrit ni modifie — il est "
+                  "correct dans les trois cas, ce qui est justement ce qui rend la recherche du "
+                  "manque interessante. Le quatrieme cas du reinvestissement n'a PAS de solution "
+                  "unique : deux causes restent possibles, et la correction le dit — le resultat "
+                  "attendu est un essai qui tranche, pas une reponse.",
+        accessibilite="Listes deroulantes, corrections depliables, version C debranchee (fiches "
+                      "cartonnees et liste attendue), encadre de securite TBT avec la regle de "
+                      "l'essai a sec avant toute mise en eau. Aucune boite modale (regle n°188).",
+        medias="Etabli Grove original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+    "3e_C7.5": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « La station qu'il faut equiper » : 2 seances de 90 min pour 150 min "
+                "d'activites. Le catalogue contient dix constituants pour un cahier des charges "
+                "a quatre exigences, et le lot ne porte pas sur le tri mais sur la PROPAGATION : "
+                "l'exigence « visible depuis la cour » impose le bandeau de DEL, le bandeau "
+                "impose 480 mA, 580 mA au total imposent la batterie, et la batterie remet en "
+                "cause l'autonomie de 72 h qui etait tenue. Le bon choix cree le probleme "
+                "suivant — c'est ce qu'un exercice de tri ne montre jamais. Quatre retraits "
+                "produisent quatre refus de quatre NATURES : une grandeur, un usage, une preuve, "
+                "une quantite d'energie. QCM 30 q / 90 refutations (C7.5 x20, C4.3 x10), lexique "
+                "30 notions, deux syntheses, fiche, matrice de 30 notions, tests reels 42/42 et "
+                "32/32, scripts livres.",
+        anomalies="Aucune station reelle : l'etabli simule, la version A utilise le carton "
+                  "complet et la contrainte de courant s'y mesure au multimetre. L'autonomie "
+                  "n'est pas calculee ici — elle l'a ete en 3e_C7.4 ; ce lot montre seulement "
+                  "que le choix du bandeau la remet en cause, et le dit. Le verificateur ne lit "
+                  "pas la justification ecrite de l'activite 1 : il compte des caracteres, et la "
+                  "correction donne les deux arguments attendus mot pour mot.",
+        accessibilite="Listes deroulantes, corrections depliables, version C debranchee (dix "
+                      "fiches cartonnees, cahier des charges lu a voix haute, budget calcule au "
+                      "tableau), encadre de securite TBT avec l'avertissement thermique du "
+                      "bandeau de 480 mA. Le reinvestissement porte sur une exigence "
+                      "d'accessibilite. Aucune boite modale (regle n°188).",
+        medias="Etabli Grove original (HTML + JS, CC0). Aucun media tiers.",
+    ),
     # ── Lot C7.8 « Interfacer », 29/08/2026 ─────────────────────────────────────
     "4e_C7.8": dict(
         statut="COMPLET ET VALIDABLE",

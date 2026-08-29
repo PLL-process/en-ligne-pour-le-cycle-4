@@ -8920,3 +8920,107 @@ ce qu'il était — un loquet de confort visible dans la source, pas un secret.
   Exiger la garde d'un bouton qui n'a jamais rien eu à garder fabrique des faux coupables, et on
   apprend vite à ignorer un contrôle qui crie pour rien.
 
+---
+
+## 2026-08-30 — Lots C7.5 aux trois niveaux : placer, compléter, choisir
+*(Fable, branche `fable/theme-3/lots-c7-5`)*
+
+### Une décision de Pascal, portée ici pour qu'elle soit contestable
+
+**Imprimante 3D présumée disponible** — décision de Pascal du 30/08 : « on va considérer qu'on
+en a une, la majeure partie des établissements en sont dotés, pour ne pas dire tous ». Elle
+change la version 🅰 de `C7.7` (impression réelle depuis Onshape, la découpe manuelle sur gabarit
+devenant le repli 🅱). Elle ne change rien à ce lot : **C7.5 ne fabrique rien, il assemble.**
+
+`ENVIRONNEMENT_TECHNIQUE.md` classe encore l'imprimante 3D, la découpe laser et la fraiseuse
+dans « à confirmer — jamais présumés disponibles ». La garde-périmètre m'interdit ce fichier
+depuis une branche de thème : **la ligne d'inventaire reste à changer par Pascal**, et jusque-là
+c'est cette entrée de journal qui fait foi sur la décision.
+
+### Une erreur de ma part, corrigée avant de construire
+
+J'avais écrit que les codes C7.5 et C7.7 « dépendent de l'atelier, sans fabrication numérique ».
+C'était un raccourci, et il était faux pour C7.5. Le programme dit *constituants*, pas *pièces
+fabriquées* :
+
+| | intitulé exact |
+|---|---|
+| 5e_C7.5 | Assembler les **constituants fournis** pour réaliser un prototype |
+| 4e_C7.5 | Identifier les **constituants manquants** dans un prototype et le compléter |
+| 3e_C7.5 | **Choisir les constituants** et assembler un prototype |
+
+Grove est exactement cela : des constituants qui s'assemblent sans soudure. Aucune imprimante
+n'a jamais été en jeu. C'est Pascal qui a posé la question — « sans fabrication numérique :
+comment ? » — et la question était la bonne.
+
+### Ce que le lot travaille : trois gestes, pas trois difficultés
+
+Les trois intitulés ne décrivent pas le même geste à trois niveaux de difficulté. Ils décrivent
+**trois gestes différents**, et la séquence de chaque niveau est bâtie sur le sien.
+
+* **5e — « L'éclairage du préau »** (2 × 55 min, 95 min d'activités). Les constituants sont
+  fournis, tous les bons, aucun en trop : le travail est de **placer**. Ce qui s'y apprend est
+  qu'un prototype tient quatre fonctions à la fois — et cela ne se démontre qu'en **retirant**.
+  Quatre retraits, quatre pannes différentes.
+* **4e — « Le jardin qui n'arrose pas encore »** (2 × 55 min, 95 min). Trois prototypes livrés,
+  chacun incomplet **d'une manière différente** : la pompe sans relais, le budget de courant
+  dépassé, le mauvais capteur sur A0. Le travail est de **comparer** — un manque ne se cherche
+  pas comme une panne, et le point de départ est le cahier des charges, pas le montage.
+* **3e — « La station qu'il faut équiper »** (2 × 90 min, 150 min). Dix constituants pour quatre
+  exigences : le travail est de **choisir**. Et le lot ne porte pas sur le tri : il porte sur la
+  **propagation**. « Visible depuis la cour » impose le bandeau ; le bandeau impose 480 mA ;
+  580 mA imposent la batterie ; et la batterie remet en cause l'autonomie de 72 h qui était
+  tenue. *Le bon choix crée le problème suivant.*
+
+### L'instrument
+
+`etabli.py` engendre un **établi Grove** : on pose chaque constituant sur un port, on teste, et
+la page ne répond jamais « ça ne marche pas ». Elle répond **pourquoi**, et dans un ordre —
+du plus grossier au plus fin, comme un dépanneur : sans carte, rien ne s'exécute, inutile de
+parler du port du capteur. Six branches de diagnostic, chacune avec son message et son verrou
+expérientiel propre, de sorte qu'une activité peut exiger que l'élève ait **vu ce
+diagnostic-là**, et pas un autre.
+
+Le cas le plus instructif est le plus discret : le capteur sur A1 quand le programme lit A0.
+Rien ne chauffe, rien ne fume, aucune erreur ne s'affiche — et rien ne marche.
+
+### Ce que les tests ont attrapé, et que la relecture n'aurait pas vu
+
+Deux défauts, même symptôme, deux causes :
+
+1. **L'établi était écrit deux fois.** Il figurait dans chaque activité qui l'utilise. La page
+   portait donc deux jeux d'éléments avec les mêmes identifiants : la sauvegarde n'en retenait
+   qu'un, et le montage de l'élève disparaissait au rechargement. L'établi n'est plus écrit
+   qu'une fois ; les activités suivantes y renvoient par un lien.
+2. **L'établi écrasait sa propre sauvegarde.** Il appelait sa mise à jour à la fin de son bloc
+   de script — donc au chargement, **avant** la restauration. Chaque ouverture de la page
+   remplaçait la sauvegarde par un établi vide. Le banc du lot C7.8 n'avait pas ce défaut :
+   c'est en écrivant le nouvel instrument que je l'ai introduit.
+
+Vérification faite ensuite sur les lots déjà fusionnés (C7.4, C7.8) : **aucun identifiant en
+double**, leurs instruments n'étaient pas dupliqués. Rien à reprendre.
+
+### Ce que le lot porte
+
+3 séquences · 3 QCM de 30 questions et 90 réfutations · 3 lexiques de 30 notions · 6 synthèses ·
+3 fiches · **3 matrices engendrées depuis la banque de QCM** — donc exhaustives par construction,
+les 90 questions y figurent sans qu'on puisse en oublier une · **tests réels 39/39, 39/39, 42/42
+sur les séquences et 32/32 sur chacun des trois QCM**, scripts, jeux de réponses et `etabli.py`
+livrés dans chaque dossier. Biais de longueur : **0 bonne réponse détachée sur 90**, écarts
+moyens +3,3, +2,2 et +0,5 caractère. Aucune boîte modale nulle part.
+
+Il reste **6 codes « À CRÉER »** : `5e_C1.5`, `5e_C1.6`, `5e_C7.3`, `3e_C7.3`, `4e_C7.7`,
+`3e_C7.7`.
+
+### Les règles nouvelles
+
+- **n°220** — un instrument ne s'écrit **qu'une fois** dans une page. Le répéter à chaque
+  activité qui s'en sert crée deux éléments portant les mêmes identifiants : la page en affiche
+  un et en enregistre l'autre. Les activités suivantes y renvoient, elles ne le recopient pas.
+- **n°221** — **ce qui enregistre ne tourne jamais avant ce qui restaure.** Une mise à jour
+  appelée au chargement écrase la sauvegarde qu'elle allait relire, et le défaut est invisible
+  tant qu'on ne recharge pas la page en cours de travail.
+- **n°222** — quand un même code se décline en trois intitulés (« fournis », « manquants »,
+  « choisir »), ce sont **trois gestes différents**, pas trois niveaux de difficulté du même
+  geste. Bâtir la même séquence en trois tailles, c'est passer à côté de deux d'entre eux.
+

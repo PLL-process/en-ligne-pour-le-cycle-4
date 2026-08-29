@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 4e — Le jardin qui n'arrose pas encore (4e_C7.5)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Établi Grove — original, CC0 ───────────────────────────────────────── */
+.etabli{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+.chaine{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:620px){.chaine{grid-template-columns:repeat(2,1fr)}}
+.fct{background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 8px;text-align:center;transition:background .2s,border-color .2s}
+.fct b{display:block;font-size:.9em;color:var(--sub)}
+.fct span{font-size:.78em;color:var(--sub)}
+.fct.tenue{background:#14532d;border-color:var(--ok)}
+.fct.tenue b{color:#eafff0}
+table.cat{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.cat th,table.cat td{border:1px solid var(--border);padding:5px 8px;text-align:left;vertical-align:middle}
+table.cat th{background:#173666;color:var(--hl)}
+table.cat td.pt{width:150px}
+table.cat td.pt select{width:100%;min-width:0;padding:4px 6px;font-size:.92em}
+table.cat tr.monte td:not(.pt){color:#fff}
+table.cat td.ma{width:70px;text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
+.budget{font-size:.86em;color:var(--sub);margin:4px 0 10px}
+.budget b{color:var(--hl)}
+.budget.trop b{color:var(--err)}
+.etabli-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:170px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+.prog{font-family:ui-monospace,Menlo,Consolas,monospace;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:.86em;color:var(--hl);overflow-x:auto;white-space:pre;margin:8px 0}
+.prog .cm{color:#7f9cc4}
+.symp{background:#3a2a10;border-left:4px solid var(--warn);border-radius:0 8px 8px 0;padding:8px 12px;margin:8px 0;font-size:.92em}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.5.html">📖 Lexique</a></nav>
+
+<h1>🌱 Le jardin qui n'arrose pas encore</h1>
+<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C7.5</span>
+  <span class="badge code">4e_C4.4 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D2 · D3 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Avec le <b>jardin connecté</b> (4e_C4.1 à C4.9) tu as identifié les constituants d'une
+  chaîne d'information sur un objet <em>qui marchait</em>, et tu as associé chacun à sa
+  fonction. Avec le <b>dépannage du jardin</b> (4e_C5.1 à C5.3) tu as cherché une pièce
+  <em>défectueuse</em> à partir d'un symptôme.</p>
+  <p><b>Ce qui change aujourd'hui :</b> rien n'est en panne. Tout ce qui est présent fonctionne
+  parfaitement. Il <em>manque</em> quelque chose — et un manque ne se cherche pas comme une
+  panne : on ne teste pas ce qui est là, on établit ce qui devrait y être et on compare.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>4e_C7.5</b></td><td>Identifier les constituants manquants dans un prototype et le compléter.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
+    <tr><td>4e_C4.4 <span style="color:var(--sub)">(appui)</span></td><td>Identifier les constituants de la chaîne d'information d'un objet réel et les associer à leur fonction.</td><td>Activité 0 et synthèse</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>Trois collèges du secteur ont commandé le même prototype d'arrosage
+automatique pour leur jardin pédagogique. Les trois cartons sont arrivés, les trois montages ont
+été faits en suivant la notice, et <b>aucun des trois ne fonctionne</b> — mais pas de la même
+façon.</p>
+<p>Le fournisseur est formel : « tous les modules livrés sont testés et fonctionnels ».
+Il a raison. Le programme, lui, est le même dans les trois cartes, et il est correct.</p></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Aucune pièce n'est défectueuse et le programme est juste. Comment trouve-t-on, alors, ce qui manque à un prototype ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="Pour trouver ce qui manque sans rien démonter, je commencerais par…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚡ Sécurité — la pompe change la donne</h2>
+  <div class="danger">
+    <p><b>Très basse tension uniquement.</b> La carte, le shield, les capteurs, le relais et la
+    pompe fonctionnent tous en 5 V. <b>Aucun élève ne manipule le secteur.</b> L'alimentation
+    externe est un bloc fermé : c'est le professeur qui le raccorde à la prise murale, et
+    l'élève ne touche que le côté 5 V.</p>
+    <p><b>Une pompe, c'est de l'eau et de l'électricité au même endroit.</b> On essaie toujours
+    à sec d'abord — le relais doit claquer, la pompe tourner à vide une seconde — avant de
+    plonger quoi que ce soit. Le bac se remplit une fois le montage vérifié, jamais avant.</p>
+    <p><b>On câble hors tension</b>, et l'alimentation se raccorde en dernier.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — le professeur prépare réellement les trois montages
+      incomplets sur trois plateaux, et les groupes tournent. C'est la version la plus juste :
+      un manque se voit mieux sur une table que sur un écran.</li>
+    <li><b>🅱 Avec l'établi de cette page</b> — les trois cas se chargent d'un clic, hors ligne
+      et sans rien installer. C'est la voie par défaut, et la seule qui permette de <b>refaire
+      un cas autant de fois qu'on veut</b> sans re-câbler.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — les constituants sont des cartes de papier posées sur
+      une table, la notice donne la liste attendue, et l'élève compare. Le raisonnement est
+      identique : établir la liste, puis pointer le manque.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>🧩 Activité 0 — Chaque constituant, sa fonction ⏱ ~15 min</h2>
+  <p>Avant de chercher ce qui manque, il faut savoir ce qui devrait être là. Le
+  cahier des charges du jardin tient en une phrase : <b>« arroser six secondes dès que
+  l'humidité du sol descend sous 35 %, et afficher la mesure »</b>.</p>
+  <div class="exo">
+
+    <p>Associe chaque constituant à sa fonction dans la chaîne.</p>
+    <p style="margin-top:12px"><b>Le capteur d'humidité du sol</b></p>
+    <select id="a0r0">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
+      <option>Agir — elle produit l'effet attendu dans le jardin</option>
+      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
+      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle compare la mesure au seuil et décide</option>
+    </select>
+    <p style="margin-top:12px"><b>La carte Arduino UNO</b></p>
+    <select id="a0r1">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
+      <option>Agir — elle produit l'effet attendu dans le jardin</option>
+      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
+      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle compare la mesure au seuil et décide</option>
+    </select>
+    <p style="margin-top:12px"><b>Le module relais</b></p>
+    <select id="a0r2">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
+      <option>Agir — elle produit l'effet attendu dans le jardin</option>
+      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
+      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle compare la mesure au seuil et décide</option>
+    </select>
+    <p style="margin-top:12px"><b>La pompe immergée</b></p>
+    <select id="a0r3">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
+      <option>Agir — elle produit l'effet attendu dans le jardin</option>
+      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
+      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle compare la mesure au seuil et décide</option>
+    </select>
+    <p style="margin-top:12px"><b>L'alimentation externe 5 V / 2 A</b></p>
+    <select id="a0r4">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
+      <option>Agir — elle produit l'effet attendu dans le jardin</option>
+      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
+      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle compare la mesure au seuil et décide</option>
+    </select>
+    <p style="margin-top:12px"><b>Le Base Shield V2</b></p>
+    <select id="a0r5">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend la mesure sur laquelle on décide</option>
+      <option>Agir — elle produit l'effet attendu dans le jardin</option>
+      <option>Agir — il laisse passer la puissance sur ordre de la carte</option>
+      <option>Alimenter — elle fournit le courant que l'USB ne peut pas fournir</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle compare la mesure au seuil et décide</option>
+    </select>
+    <p style="margin-top:14px"><b>Et une question qui compte :</b> deux constituants portent ici
+    la fonction « agir ». Pourquoi le prototype a-t-il besoin des deux ?</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>la carte commande de très faibles intensités, la pompe en demande beaucoup</option>
+      <option>le relais sert de rechange si la pompe tombe en panne</option>
+      <option>la pompe est trop lente, le relais accélère son démarrage</option>
+      <option>c'est une redondance de sécurité imposée par la norme électrique</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Le capteur d'humidité du sol</b> — Acquérir — il prend la mesure sur laquelle on décide</p>
+      <p><b>La carte Arduino UNO</b> — Traiter — elle compare la mesure au seuil et décide</p>
+      <p><b>Le module relais</b> — Agir — il laisse passer la puissance sur ordre de la carte</p>
+      <p><b>La pompe immergée</b> — Agir — elle produit l'effet attendu dans le jardin</p>
+      <p><b>L'alimentation externe 5 V / 2 A</b> — Alimenter — elle fournit le courant que l'USB ne peut pas fournir</p>
+      <p><b>Le Base Shield V2</b> — Relier — il ne tient aucune des quatre fonctions</p>
+      <p style="margin-top:10px"><b>Le relais et la pompe ne font pas double emploi.</b> Une
+      sortie de carte délivre au mieux 20 mA — de quoi allumer une DEL, pas de quoi faire
+      tourner une pompe qui en demande 700. Le relais est l'organe qui <b>sépare la décision de
+      la force</b> : d'un côté un ordre minuscule venu de la carte, de l'autre un circuit de
+      puissance qui se ferme.</p>
+      <p>C'est un schéma qu'on retrouve partout : le bouton d'un ascenseur ne soulève pas la
+      cabine, il commande ce qui la soulève.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔍 Activité 1 — Cas 1 : la pompe ne part jamais ⏱ ~20 min</h2>
+  <p>Charge le <b>cas 1</b> sur l'établi, puis teste. Le symptôme est précis :
+  l'écran affiche bien 42 %, donc la mesure arrive et la carte tourne. Et pourtant rien ne
+  s'arrose — même quand on assèche le pot et que l'écran descend à 20 %.</p><div id="etabli">
+  <div class="etabli">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'établi : charge un cas, lis le symptôme, teste — et l'établi te dit ce qui manque. Complète, re-teste, et vérifie que le symptôme a disparu.</b></p>
+    <div class="symp"><b>Cas chargé :</b> <span id="casTxt">aucun — choisis un cas ci-dessous.</span></div>
+
+    <div class="chaine">
+      <div class="fct" id="f_acquerir"><b>Acquérir</b><span>prendre la mesure</span></div>
+      <div class="fct" id="f_traiter"><b>Traiter</b><span>décider quoi faire</span></div>
+      <div class="fct" id="f_agir"><b>Agir</b><span>produire l'effet</span></div>
+      <div class="fct" id="f_alimenter"><b>Alimenter</b><span>fournir l'énergie</span></div>
+    </div>
+
+    <table class="cat">
+      <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
+      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_hum"><td><b>Capteur d'humidité du sol Grove</b></td><td>il mesure l'humidité du sol</td><td class="ma" id="ma_hum">—</td><td class="pt"><select id="pt_hum" aria-label="Port de Capteur d'humidité du sol Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_temp"><td><b>Capteur de température Grove</b></td><td>il mesure la température de l'air</td><td class="ma" id="ma_temp">—</td><td class="pt"><select id="pt_temp" aria-label="Port de Capteur de température Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_relais"><td><b>Module relais Grove</b></td><td>il laisse passer la puissance sur ordre</td><td class="ma" id="ma_relais">—</td><td class="pt"><select id="pt_relais" aria-label="Port de Module relais Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_pompe"><td><b>Pompe immergée 5 V (TBT)</b></td><td>elle envoie l'eau dans le bac</td><td class="ma" id="ma_pompe">—</td><td class="pt"><select id="pt_pompe" aria-label="Port de Pompe immergée 5 V (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_lcd"><td><b>Écran LCD I2C Grove</b></td><td>il affiche la mesure au jardinier</td><td class="ma" id="ma_lcd">—</td><td class="pt"><select id="pt_lcd" aria-label="Port de Écran LCD I2C Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_alim"><td><b>Alimentation externe 5 V / 2 A (TBT)</b></td><td>elle fournit la puissance</td><td class="ma" id="ma_alim">—</td><td class="pt"><select id="pt_alim" aria-label="Port de Alimentation externe 5 V / 2 A (TBT)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (500 mA)</b></td><td>il alimente la carte et les modules</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+    </table>
+    <p class="budget" id="budget">—</p>
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
+    <div class="prog">humidite = analogRead(A0)      <span class="cm">// capteur d'humidité du sol, sur A0</span>
+afficher(humidite, "%")        <span class="cm">// sur l'écran LCD</span>
+si humidite &lt; 35 alors        <span class="cm">// le sol est trop sec</span>
+    digitalWrite(4, HAUT)      <span class="cm">// on ferme le relais : la pompe tourne</span>
+    attendre(6 secondes)
+    digitalWrite(4, BAS)       <span class="cm">// on rouvre : la pompe s'arrête</span></div>
+
+    <div class="etabli-cmd">
+      <button class="btn" id="tester" type="button">⚡ Tester le prototype</button>
+      <button class="btn" id="demonter" type="button">↺ Tout démonter</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Monte les constituants, puis teste.</div></div>
+
+    <div class="etabli-cmd">
+      <label for="cas">Charger un prototype livré :</label>
+      <select id="cas">
+        <option value="">— je choisis —</option>
+        <option value="1">Cas 1 — l'écran affiche 42 %, la pompe ne part jamais</option>
+        <option value="2">Cas 2 — dès que la pompe démarre, la carte redémarre</option>
+        <option value="3">Cas 3 — la pompe tourne en permanence, même sol détrempé</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <p><b>1.</b> D'après le symptôme <em>seul</em>, avant même de tester : quelles fonctions
+    sont sûrement tenues ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule</option>
+      <option>aucune : si rien ne s'arrose, c'est que rien ne fonctionne</option>
+      <option>seulement alimenter : l'écran s'allume, c'est tout ce qu'on sait</option>
+      <option>toutes les quatre : l'affichage prouve que la chaîne est complète</option>
+    </select>
+    <p><b>2.</b> Quel constituant manque ?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>le module relais</option>
+      <option>le capteur d'humidité du sol</option>
+      <option>l'alimentation externe</option>
+      <option>le Base Shield V2</option>
+    </select>
+    <p><b>3.</b> Complète le prototype sur l'établi et re-teste jusqu'au ✔.</p>
+    <p style="color:var(--sub);font-size:.9em">La troisième encoche relit ton établi : elle
+    s'allume quand le montage est complet et juste.</p>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Charge le cas 1 sur l'établi et teste-le : c'est le diagnostic de l'établi qu'on te demande de lire, pas une hypothèse.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1.</b> L'écran affiche une valeur qui change quand on assèche le pot. Cela prouve
+      trois choses d'un coup : le capteur mesure (<b>acquérir</b>), la carte exécute le
+      programme (<b>traiter</b>), et le tout est sous tension (<b>alimenter</b>). Un symptôme
+      bien lu élimine trois fonctions sur quatre <em>avant</em> le premier test.</p>
+      <p><b>2.</b> Il manque le <b>module relais</b>. La pompe est raccordée à l'alimentation,
+      mais aucun organe ne peut la mettre en marche sur ordre de la carte. La fonction
+      « agir » <em>semblait</em> tenue — l'écran agit, lui aussi — et elle l'était pour
+      l'affichage, pas pour l'arrosage.</p>
+      <p><b>3.</b> Le relais va sur <b>D4</b>, parce que le programme écrit
+      <code>digitalWrite(4, …)</code>. Sur D3 il serait branché, alimenté, fonctionnel — et
+      il ne recevrait jamais l'ordre.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚡ Activité 2 — Cas 2 : la carte redémarre ⏱ ~20 min</h2>
+  <p>Charge le <b>cas 2</b>. Ici le relais est là, sur le bon port. Le symptôme est
+  spectaculaire : au moment précis où la pompe démarre, l'écran s'éteint, la carte redémarre,
+  et le cycle recommence en boucle.</p>
+  <p style="color:var(--sub);font-size:.92em">Regarde la ligne <b>« courant demandé »</b> sous
+  le tableau : elle change quand tu montes ou démontes un constituant.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'établi</a> — c'est le même, et il a gardé ton montage. Une page ne porte qu'un seul établi : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p><b>1.</b> Combien de milliampères le montage du cas 2 demande-t-il en tout ?</p>
+    <input type="text" inputmode="numeric" id="a2q1" placeholder="… mA">
+    <p><b>2.</b> Pourquoi la carte redémarre-t-elle exactement au démarrage de la pompe ?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>la demande dépasse ce que l'USB peut fournir : la tension s'effondre</option>
+      <option>la pompe envoie de l'eau sur la carte et provoque un court-circuit</option>
+      <option>le programme redémarre volontairement la carte après chaque arrosage</option>
+      <option>le relais coupe l'alimentation de la carte quand il se ferme</option>
+    </select>
+    <p><b>3.</b> Complète le prototype sur l'établi et re-teste jusqu'au ✔.</p>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Charge le cas 2 sur l'établi et teste-le : lis le nombre que l'établi te donne avant de répondre.</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1.</b> 45 (carte) + 5 (humidité) + 20 (écran) + 30 (relais) + 700 (pompe) =
+      <b>800 mA</b>. Le câble USB en fournit 500.</p>
+      <p><b>2.</b> Tant que la pompe est à l'arrêt, le montage ne demande que 100 mA : tout va
+      bien. À la seconde où le relais se ferme, la demande saute à 800 mA, l'alimentation ne
+      suit pas, la tension s'effondre sous le seuil de fonctionnement de la carte — qui
+      redémarre. Et comme le programme repart, il referme le relais, et ça recommence.</p>
+      <p><b>C'est le manque le plus difficile à voir</b>, parce que le constituant absent n'est
+      pas dans la chaîne d'information : il est en dessous. Rien de ce qui mesure, décide ou
+      agit ne manque. C'est l'énergie qui manque, et elle ne manque <em>que par moments</em>.</p>
+      <p><b>3.</b> L'<b>alimentation externe 5 V / 2 A</b> complète le prototype : 800 mA
+      demandés sur 2000 disponibles. Elle reste en très basse tension — c'est le bloc lui-même
+      qui est raccordé au secteur, jamais l'élève.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>💧 Activité 3 — Cas 3 : la pompe ne s'arrête plus ⏱ ~20 min</h2>
+  <p>Charge le <b>cas 3</b>. Le plus déroutant des trois : les quatre fonctions sont
+  tenues, l'alimentation est correcte, le relais est sur D4, et l'établi refuse quand même.
+  La pompe tourne sans arrêt et le bac déborde.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'établi</a> — c'est le même, et il a gardé ton montage. Une page ne porte qu'un seul établi : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p><b>1.</b> Quel capteur est monté sur A0 dans ce cas ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>le capteur de température de l'air</option>
+      <option>le capteur d'humidité du sol</option>
+      <option>aucun capteur n'est monté</option>
+      <option>les deux capteurs sont montés sur A0</option>
+    </select>
+    <p><b>2.</b> La fonction « acquérir » est pourtant bien tenue. Alors où est le problème ?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>on mesure une grandeur, mais pas celle sur laquelle le programme décide</option>
+      <option>un capteur de température consomme trop pour le budget disponible</option>
+      <option>deux capteurs analogiques ne peuvent pas cohabiter sur la même carte</option>
+      <option>le capteur de température doit être branché sur un port numérique</option>
+    </select>
+    <p><b>3.</b> Complète le prototype sur l'établi et re-teste jusqu'au ✔.</p>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Charge le cas 3 sur l'établi et teste-le : ce cas-là ne se devine pas, il se lit.</p>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1.</b> C'est le <b>capteur de température</b> qui occupe A0. Il fonctionne
+      parfaitement : il rend une valeur, elle est stable, elle s'affiche.</p>
+      <p><b>2.</b> Le programme lit A0 et compare la valeur à <b>35 %</b> d'humidité. Il y
+      trouve une température — disons 27. 27 est inférieur à 35, donc le programme conclut
+      « sol trop sec » et arrose. Toujours. Le sol peut être détrempé, la valeur ne changera
+      pas assez pour repasser au-dessus du seuil.</p>
+      <p><b>La fonction « acquérir » est tenue et le cahier des charges ne l'est pas.</b>
+      Ce sont deux choses différentes, et c'est la leçon du cas 3 : une case cochée dans la
+      chaîne d'information ne prouve pas qu'on mesure la <em>bonne</em> grandeur.</p>
+      <p><b>3.</b> Le capteur d'humidité du sol prend la place sur <b>A0</b>. Le capteur de
+      température peut rester monté sur A1 si on veut — il ne gêne pas, il ne sert simplement
+      à rien tant qu'aucune ligne du programme ne le lit.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~20 min</h2>
+<p>Un quatrième collège appelle. Son prototype affiche bien l'humidité, la pompe
+  démarre bien quand le sol est sec — mais <b>elle ne s'arrête jamais au bout de six
+  secondes</b> : elle tourne jusqu'à ce qu'on débranche tout. Aucun des trois cas précédents ne
+  correspond.</p>
+  <p>Écris ce que tu ferais : <b>quelles fonctions le symptôme prouve déjà tenues</b>, quelle
+  hypothèse tu formes, et <b>quel essai</b> permettrait de la vérifier sans rien démonter.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb4"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Ce que le symptôme prouve déjà :</b> la mesure arrive (l'écran affiche), la carte
+      décide (la pompe démarre <em>au bon moment</em>), le relais reçoit son ordre, et
+      l'alimentation suit puisque rien ne redémarre. Les quatre fonctions sont tenues. Le manque
+      n'est donc pas dans les constituants.</p>
+      <p><b>Une hypothèse raisonnable :</b> l'ordre d'arrêt n'est jamais donné, ou il est donné
+      et le relais ne s'ouvre pas. Deux causes possibles pour un même symptôme, l'une dans le
+      programme, l'autre dans le matériel.</p>
+      <p><b>Un essai qui tranche :</b> débrancher le capteur d'humidité pendant que la pompe
+      tourne. Si la pompe s'arrête, c'est que la carte continue de décider et que le relais
+      obéit — le défaut est dans la mesure. Si elle continue, c'est que le relais reste collé
+      quoi qu'on fasse : le défaut est là.</p>
+      <p style="color:var(--sub)">Et ce quatrième cas n'est plus un manque : c'est une panne, ou
+      un défaut de programme. Savoir dire « ce n'est pas un constituant qui manque » est déjà
+      un résultat — c'est ce qui décide de la suite du travail.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Un manque n'est pas une panne.</b> Une panne se cherche en testant ce qui est là ;
+      un manque se trouve en établissant ce qui <em>devrait</em> être là, puis en comparant.
+      Le point de départ est le cahier des charges, pas le montage.</li>
+    <li><b>Le symptôme élimine avant de désigner.</b> « L'écran affiche une valeur qui change »
+      prouve d'un coup que trois fonctions sur quatre sont tenues. Bien lu, un symptôme fait
+      la moitié du travail avant le premier test.</li>
+    <li><b>Une fonction tenue ne veut pas dire un besoin satisfait.</b> Un capteur de
+      température tient « acquérir » et ne mesure pas ce sur quoi le programme décide.</li>
+    <li><b>La décision et la puissance sont deux circuits.</b> Une sortie de carte délivre au
+      mieux 20 mA. Le relais est l'organe qui laisse passer 700 mA sur un ordre minuscule.</li>
+    <li><b>Le courant se compte avant de brancher.</b> Un montage qui dépasse ce que sa source
+      peut fournir ne tombe pas en panne franchement : il redémarre en boucle, ce qui ressemble
+      à tout autre chose.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ta méthode de départ partait-elle du
+  montage, ou du cahier des charges ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.5 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais partir d'un symptôme, éliminer les fonctions déjà tenues, et nommer le constituant qui manque</option>
+    <option>Je sais trouver le manque quand on me rappelle le cahier des charges</option>
+    <option>Je reconnais les fonctions, mais je pars encore du montage plutôt que du besoin</option>
+    <option>Je ne sais pas encore par quel bout prendre un prototype qui ne marche pas</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur les manques, les symptômes et le budget de courant. 20 portent sur l'identification d'un constituant manquant, 10 sur la chaîne d'information que tu sais déjà lire.</p>
+  <a class="btn" href="qcm_4e_C7.5_jardin-incomplet.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Sur l'établi, construis toi-même un <b>quatrième cas incomplet</b> : un montage qui affiche
+  la mesure, ne déclenche jamais l'arrosage, et dont le manque n'est <b>ni le relais, ni
+  l'alimentation, ni le capteur d'humidité</b>.</p>
+  <p>Puis écris le symptôme exact que verrait le collège qui l'a reçu — celui qu'il lirait au
+  téléphone, sans jamais ouvrir le boîtier. <b>Un bon symptôme est celui qui permet à
+  quelqu'un d'autre de trouver.</b></p>
+
+</section>
+
+<footer>Séquence 4e_C7.5 — « Le jardin qui n'arrose pas encore ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_4e_C7_5";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+const FONCTIONS_ID = ["acquerir","traiter","agir","alimenter"];
+const LIB = {acquerir:"Acquérir", traiter:"Traiter", agir:"Agir", alimenter:"Alimenter"};
+const LIBPORT = {
+  A:"une entrée analogique (A0 à A3)", D:"un port numérique (D2 à D8)",
+  I2C:"un port I2C", UART:"le port UART", SOCLE:"une place sur le socle",
+  ALIM:"l'alimentation externe"
+};
+const MANQUE = {
+  acquerir:"Sans capteur, le prototype n'a aucune information sur le monde : il ne peut que répéter la même chose.",
+  traiter:"Sans carte programmable, personne ne décide : une mesure sans décision ne déclenche rien.",
+  agir:"Sans actionneur, la décision reste à l'intérieur : rien ne se passe dans le monde réel.",
+  alimenter:"Sans source d'énergie, aucun des trois autres ne fonctionne — c'est la fonction qu'on oublie en dernier et qui arrête tout en premier."
+};
+
+/* ── établi Grove ───────────────────────────────────────────────────────── */
+/* CONSTITUANTS : {id, nom, fonction, ports:[types admis], mA, attendu?, cle?} */
+const CONST = [{"id": "carte", "nom": "Carte Arduino UNO", "role": "elle exécute le programme", "fonction": "traiter", "ports": ["SOCLE"], "mA": 45, "pourquoi": "La carte se pose sur l'établi, elle ne se branche pas sur un port."}, {"id": "shield", "nom": "Base Shield V2", "role": "il donne des ports Grove à la carte", "fonction": "liaison", "ports": ["SOCLE"], "mA": 0, "pourquoi": "Le shield s'emboîte sur la carte : il n'occupe pas un port, il les crée."}, {"id": "hum", "nom": "Capteur d'humidité du sol Grove", "role": "il mesure l'humidité du sol", "fonction": "acquerir", "ports": ["A"], "mA": 5, "pourquoi": "Il rend une tension proportionnelle à l'humidité : il faut une entrée capable de lire autre chose que 0 ou 1."}, {"id": "temp", "nom": "Capteur de température Grove", "role": "il mesure la température de l'air", "fonction": "acquerir", "ports": ["A"], "mA": 5, "pourquoi": "Comme tout capteur analogique, il demande une entrée A0 à A3."}, {"id": "relais", "nom": "Module relais Grove", "role": "il laisse passer la puissance sur ordre", "fonction": "agir", "ports": ["D"], "mA": 30, "sens": "écrit sur", "pourquoi": "On ne lui demande que deux états, fermé ou ouvert : une sortie numérique."}, {"id": "pompe", "nom": "Pompe immergée 5 V (TBT)", "role": "elle envoie l'eau dans le bac", "fonction": "agir", "ports": ["ALIM"], "mA": 700, "exige": "relais", "pourquoi": "La pompe se raccorde à l'alimentation, jamais à un port de la carte.", "siManque": "La pompe est raccordée, mais rien ne la commande. Une sortie de la carte fournit 20 mA au maximum ; la pompe en demande 700. Il manque le module relais, l'organe qui laisse passer la puissance sur un ordre de très faible intensité — c'est lui qui sépare la décision de la force."}, {"id": "lcd", "nom": "Écran LCD I2C Grove", "role": "il affiche la mesure au jardinier", "fonction": "agir", "ports": ["I2C"], "mA": 20, "pourquoi": "Il dialogue par deux fils de données partagés, et se reconnaît à son adresse ; un port numérique ne porte qu'un seul fil de signal."}, {"id": "alim", "nom": "Alimentation externe 5 V / 2 A (TBT)", "role": "elle fournit la puissance", "fonction": "alimenter", "ports": ["ALIM"], "mA": 0, "externe": true, "pourquoi": "Elle se raccorde au bornier d'alimentation, pas à un port Grove."}, {"id": "usb", "nom": "Câble USB 5 V (500 mA)", "role": "il alimente la carte et les modules", "fonction": "alimenter", "ports": ["SOCLE"], "mA": 0, "externe": false, "pourquoi": "Le câble se branche sur la carte elle-même."}];
+const BUDGET = 500;          /* mA disponibles sans alimentation externe */
+const ATTENDU = {"hum": "A0", "relais": "D4"};        /* {id: "A0"} — ce que le programme lit/écrit */
+const OBLIGE = ["acquerir", "traiter", "agir", "alimenter"];          /* fonctions que ce prototype doit tenir */
+const REQUIS = {"hum": "Aucune mesure d'humidité du sol n'arrive à la carte. Le programme compare toujours la même valeur au seuil de 35 % : il décide donc toujours la même chose. La pompe ne s'arrête plus — ou ne part jamais. Une fonction « acquérir » tenue par un autre capteur ne remplace pas celui que le cahier des charges demande."};          /* {id: raison} — constituants sans lesquels le cahier
+                                       des charges n'est pas tenu, même si la fonction l'est */
+const MARCHE = "Le sol est à 28 %, sous le seuil de 35 % : le relais colle, la pompe tourne six secondes, l'écran affiche « arrosage ». Remonté à 42 %, plus rien ne se déclenche. Le jardin arrose quand il faut, et seulement quand il faut.";          /* phrase décrivant le comportement obtenu */
+let dejaOk = false;
+
+function typePort(p){
+  if(!p) return "";
+  if(p === "ALIM EXT") return "ALIM";
+  if(p === "SOCLE" || p === "I2C" || p === "UART") return p;
+  return p[0];                       /* "A0" → "A", "D4" → "D" */
+}
+function montes(){
+  return CONST.filter(c => document.getElementById("pt_" + c.id).value);
+}
+function portDe(c){ return document.getElementById("pt_" + c.id).value; }
+
+function majEtabli(){
+  const m = montes();
+  CONST.forEach(c => {
+    const mo = !!portDe(c);
+    document.getElementById("tr_" + c.id).classList.toggle("monte", mo);
+    document.getElementById("ma_" + c.id).textContent = mo ? c.mA : "—";
+  });
+  FONCTIONS_ID.forEach(f => {
+    const tenue = m.some(c => c.fonction === f);
+    document.getElementById("f_" + f).classList.toggle("tenue", tenue);
+  });
+  const somme = m.reduce((s, c) => s + c.mA, 0);
+  const ext = m.some(c => c.fonction === "alimenter" && c.externe);
+  const b = document.getElementById("budget");
+  b.textContent = "Courant demandé : " + somme + " mA sur " + (ext ? "l'alimentation externe (2000 mA)" : BUDGET + " mA disponibles par l'USB")
+    + (somme > (ext ? 2000 : BUDGET) ? " — c'est trop." : "");
+  b.classList.toggle("trop", somme > (ext ? 2000 : BUDGET));
+  if(m.length) window.__exp.monte = true;
+  save();
+}
+
+/* Le diagnostic, du plus grossier au plus fin — comme celui d'un dépanneur. */
+function diagnostic(){
+  const m = montes(), noms = m.map(c => c.id);
+  if(!noms.includes("carte"))
+    return ["ko", "Rien ne s'exécute : il n'y a pas de carte. Le programme n'a nulle part où tourner.", "sans_carte"];
+  if(CONST.some(c => c.id === "shield") && !noms.includes("shield"))
+    return ["ko", "Aucun module ne peut être branché : le Base Shield manque. Les connecteurs Grove n'ont pas de prise sur la carte nue.", "sans_shield"];
+
+  for(const c of m){
+    const p = portDe(c), t = typePort(p);
+    if(c.ports.length && !c.ports.includes(t))
+      return ["ko", c.nom + " est sur " + p + ", et il lui faut " + c.ports.map(x => LIBPORT[x] || x).join(" ou ") + ". " + c.pourquoi, "port_" + c.id];
+  }
+  const doublons = {};
+  for(const c of m){ const p = portDe(c);
+    if(p !== "ALIM EXT" && p !== "SOCLE" && doublons[p])
+      return ["ko", "Deux constituants sur " + p + " : " + doublons[p] + " et " + c.nom + ". Un port ne reçoit qu'un module.", "doublon"];
+    doublons[p] = c.nom; }
+
+  /* un constituant qui en exige un autre : la puissance ne se commande pas
+     directement depuis une sortie de carte. */
+  for(const c of m){
+    if(c.exige && !noms.includes(c.exige))
+      return ["ko", c.siManque, "exige_" + c.exige];
+  }
+  for(const f of OBLIGE){
+    if(!m.some(c => c.fonction === f))
+      return ["ko", "La fonction « " + LIB[f] + " » n'est tenue par aucun constituant. " + MANQUE[f], "fonction_" + f];
+  }
+  /* la fonction peut être tenue et le cahier des charges non tenu : deux choses
+     différentes, et c'est exactement ce qu'un prototype incomplet enseigne. */
+  for(const id in REQUIS){
+    if(!noms.includes(id)) return ["ko", REQUIS[id], "requis_" + id];
+  }
+  const somme = m.reduce((s, c) => s + c.mA, 0);
+  const ext = m.some(c => c.fonction === "alimenter" && c.externe);
+  const dispo = ext ? 2000 : BUDGET;
+  if(somme > dispo)
+    return ["ko", "Le montage demande " + somme + " mA et n'en a que " + dispo + ". La carte s'effondre et redémarre en boucle : il faut une alimentation externe très basse tension.", "budget"];
+
+  for(const c of m){
+    const att = ATTENDU[c.id];
+    if(att && portDe(c) !== att)
+      return ["ko", "Le programme " + (c.sens || "lit") + " " + att + ", et " + c.nom + " est sur " + portDe(c) + " : l'ordre et la mesure se croisent sans se rencontrer. Le branchement et le programme doivent dire la même chose.", "attendu_" + c.id];
+  }
+  return ["ok", MARCHE, "ok"];
+}
+
+function verdict(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls;
+  d.textContent = (cls === "ok" ? "✔ " : "✘ ") + txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("tester").addEventListener("click", () => {
+  const [cls, txt, id] = diagnostic();
+  verdict(cls, txt);
+  window.__exp.teste = true;
+  window.__exp["diag_" + id] = true;   /* on a VU ce diagnostic-là, pas un autre */
+  if(cls === "ko") window.__exp.panne = true;
+  if(cls === "ok"){ window.__exp.ok = true; dejaOk = true; }
+  else if(dejaOk) window.__exp.retire = true;
+  save();
+});
+document.getElementById("demonter").addEventListener("click", () => {
+  CONST.forEach(c => { document.getElementById("pt_" + c.id).value = ""; });
+  majEtabli(); verdict("ko", "Établi vide.");
+});
+CONST.forEach(c =>
+  document.getElementById("pt_" + c.id).addEventListener("change", majEtabli));
+/* Pas d'appel à majEtabli() ici : il enregistre, et il tournerait AVANT restore().
+   La page écraserait alors sa propre sauvegarde par un établi vide à chaque
+   ouverture. C'est le squelette qui appelle restore() puis majEtabli(). */
+
+/* ── les trois prototypes livrés, chacun incomplet d'une manière différente ── */
+const CAS = {
+  "1": {txt:"Cas 1 — l'écran affiche 42 %, la pompe ne part jamais.",
+        ports:{carte:"SOCLE", shield:"SOCLE", hum:"A0", lcd:"I2C",
+               pompe:"ALIM EXT", alim:"ALIM EXT", usb:"SOCLE"}},
+  "2": {txt:"Cas 2 — dès que la pompe démarre, la carte redémarre et l'écran s'éteint.",
+        ports:{carte:"SOCLE", shield:"SOCLE", hum:"A0", lcd:"I2C", relais:"D4",
+               pompe:"ALIM EXT", usb:"SOCLE"}},
+  "3": {txt:"Cas 3 — la pompe tourne en permanence, même quand le sol est détrempé.",
+        ports:{carte:"SOCLE", shield:"SOCLE", temp:"A0", lcd:"I2C", relais:"D4",
+               pompe:"ALIM EXT", alim:"ALIM EXT", usb:"SOCLE"}}
+};
+document.getElementById("cas").addEventListener("change", e => {
+  const k = e.target.value, c = CAS[k];
+  document.getElementById("casTxt").textContent = c ? c.txt : "aucun — choisis un cas ci-dessous.";
+  if(!c) return;
+  CONST.forEach(x => { document.getElementById("pt_" + x.id).value = c.ports[x.id] || ""; });
+  window.__exp["cas" + k] = true;
+  majEtabli();
+  verdict("wa", "Prototype livré chargé. Teste-le : l'établi te dira ce qui manque.");
+});
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0r0", "Acquérir — il prend la mesure sur laquelle on décide"); s += sv("a0r1", "Traiter — elle compare la mesure au seuil et décide"); s += sv("a0r2", "Agir — il laisse passer la puissance sur ordre de la carte"); s += sv("a0r3", "Agir — elle produit l'effet attendu dans le jardin"); s += sv("a0r4", "Alimenter — elle fournit le courant que l'USB ne peut pas fournir"); s += sv("a0r5", "Relier — il ne tient aucune des quatre fonctions"); s += sv("a0q1","la carte commande de très faibles intensités, la pompe en demande beaucoup");
+       return {score: s, total: 7, exp: true}; },
+  1(){ let s = 0;
+       s += sv("a1q1","acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule"); s += sv("a1q2","le module relais"); s += sv("pt_relais","D4");
+       return {score: s, total: 3, exp: !!window.__exp.diag_exige_relais,
+               expMsg: "Charge le cas 1 sur l'établi et teste-le : c'est le diagnostic de l'établi qu'on te demande de lire, pas une hypothèse."}; },
+  2(){ let s = 0;
+       s += nb("a2q1", 800, 0); s += sv("a2q2","la demande dépasse ce que l'USB peut fournir : la tension s'effondre"); s += sv("pt_alim","ALIM EXT");
+       return {score: s, total: 3, exp: !!window.__exp.diag_budget,
+               expMsg: "Charge le cas 2 sur l'établi et teste-le : lis le nombre que l'établi te donne avant de répondre."}; },
+  3(){ let s = 0;
+       s += sv("a3q1","le capteur de température de l'air"); s += sv("a3q2","on mesure une grandeur, mais pas celle sur laquelle le programme décide"); s += sv("pt_hum","A0");
+       return {score: s, total: 3, exp: !!window.__exp.diag_requis_hum,
+               expMsg: "Charge le cas 3 sur l'établi et teste-le : ce cas-là ne se devine pas, il se lit."}; },
+  4(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majEtabli();
+})();
+</script>
+
+</body>
+</html>

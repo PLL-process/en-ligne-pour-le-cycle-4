@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Le jardin qui n'arrose pas encore (4e_C7.5)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.5_jardin-incomplet.html">← Séquence</a><a href="qcm_4e_C7.5_jardin-incomplet.html">🧠 QCM</a><a href="lexique_4e_C7.5.html">📖 Lexique</a></nav>
+<h1>🌱 Le jardin qui n'arrose pas encore — synthèse professeur</h1>
+<h2>Le pari de la séquence</h2>
+<p>Le verbe du code est <b>identifier</b> — identifier ce qui <em>manque</em>. Le pari
+du lot est qu'un manque ne se cherche pas comme une panne : une panne se teste, un manque se
+compare à ce qui devrait être là. Le point de départ n'est donc pas le montage, c'est le
+<b>cahier des charges</b>.</p>
+<p>Les trois cas ne sont pas trois variantes du même défaut : chacun emprunte une branche
+différente du diagnostic. Un constituant qui en exige un autre (le relais) ; un budget de
+courant dépassé, donc un défaut <em>intermittent</em> ; une fonction tenue par le mauvais
+capteur, donc un cahier des charges non tenu alors que la chaîne est complète.</p>
+<p><b>Le moment le plus difficile</b> est le cas 2 : le prototype réussit tous les essais à sec
+et échoue dès qu'on met de l'eau. C'est l'occasion de dire qu'un essai qui ne sollicite jamais
+le constituant le plus gourmand ne prouve rien.</p>
+<h2>Le catalogue de l'établi</h2>
+<table><tr><th>Constituant</th><th>Ce qu'il fait</th><th>Fonction</th><th>Port admis</th><th>Courant</th></tr>
+<tr><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td>traiter</td><td>SOCLE</td><td>45 mA</td></tr>
+<tr><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td>relier (hors des quatre)</td><td>SOCLE</td><td>0 mA</td></tr>
+<tr><td><b>Capteur d'humidité du sol Grove</b></td><td>il mesure l'humidité du sol</td><td>acquérir</td><td>A</td><td>5 mA</td></tr>
+<tr><td><b>Capteur de température Grove</b></td><td>il mesure la température de l'air</td><td>acquérir</td><td>A</td><td>5 mA</td></tr>
+<tr><td><b>Module relais Grove</b></td><td>il laisse passer la puissance sur ordre</td><td>agir</td><td>D</td><td>30 mA</td></tr>
+<tr><td><b>Pompe immergée 5 V (TBT)</b></td><td>elle envoie l'eau dans le bac</td><td>agir</td><td>ALIM</td><td>700 mA</td></tr>
+<tr><td><b>Écran LCD I2C Grove</b></td><td>il affiche la mesure au jardinier</td><td>agir</td><td>I2C</td><td>20 mA</td></tr>
+<tr><td><b>Alimentation externe 5 V / 2 A (TBT)</b></td><td>elle fournit la puissance</td><td>alimenter</td><td>ALIM</td><td>0 mA</td></tr>
+<tr><td><b>Câble USB 5 V (500 mA)</b></td><td>il alimente la carte et les modules</td><td>alimenter</td><td>SOCLE</td><td>0 mA</td></tr>
+</table>
+<h2>Ce que l'élève sait faire à la fin</h2>
+<ul>
+<li>distinguer un constituant manquant d'un constituant en panne</li>
+<li>partir du cahier des charges pour établir la liste attendue</li>
+<li>tirer d'un symptôme les fonctions déjà tenues, avant tout test</li>
+<li>expliquer pourquoi une sortie de carte ne commande pas une pompe</li>
+<li>calculer un courant total et le comparer à ce que la source fournit</li>
+<li>reconnaître qu'une fonction tenue ne garantit pas le besoin satisfait</li>
+<li>dire quand un défaut n'est plus un manque</li>
+</ul>
+<h2>Ce que la séquence ne fait pas — et pourquoi</h2>
+<div class="box limite"><p><b>Aucun montage réel.</b> L'établi charge les trois cas ; la version 🅰 les prépare sur trois plateaux, et c'est elle qui fait foi.</p></div>
+<div class="box limite"><p><b>Le programme n'est ni écrit ni modifié.</b> Il est donné et correct dans les trois cas — ce qui est justement ce qui rend la recherche du manque intéressante.</p></div>
+<div class="box limite"><p><b>Le catalogue est fermé.</b> L'élève complète un prototype, il ne choisit pas entre plusieurs solutions : c'est le travail de la 3e.</p></div>
+<div class="box limite"><p><b>Le quatrième cas du réinvestissement n'a pas de solution unique.</b> Deux causes restent possibles, et c'est écrit dans la correction : le résultat attendu est un essai qui tranche, pas une réponse.</p></div>
+<h2>Positionnement (LSU)</h2>
+<table><tr><th>Maîtrise</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>cherche un manque en testant les modules présents</td></tr>
+<tr><td>🟠 Fragile</td><td>trouve le manque si on lui rappelle le cahier des charges</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>part du besoin, lit le symptôme, désigne le manque</td></tr>
+<tr><td>⭐ Très bonne</td><td>et sait dire quand un défaut n'est plus un manque</td></tr>
+</table>
+<h2>Durée</h2>
+<p><b>2 séances de 55 min</b> — 95 minutes d'activités, marge comprise. Le bandeau de la séquence l'annonce, et <code>_outils/mesurer_temps_seances.py</code> le vérifie.</p>
+<footer>Synthèse professeur — 4e_C7.5. Programme 2024, Thème 3.</footer>
+</body>
+</html>
