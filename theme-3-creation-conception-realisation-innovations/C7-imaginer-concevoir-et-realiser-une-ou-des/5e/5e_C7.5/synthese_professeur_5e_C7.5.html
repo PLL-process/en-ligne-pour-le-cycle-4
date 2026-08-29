@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — L'éclairage du préau (5e_C7.5)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C7.5_eclairage-du-preau.html">← Séquence</a><a href="qcm_5e_C7.5_eclairage-du-preau.html">🧠 QCM</a><a href="lexique_5e_C7.5.html">📖 Lexique</a></nav>
+<h1>🔌 L'éclairage du préau — synthèse professeur</h1>
+<h2>Le pari de la séquence</h2>
+<p>Le verbe du code est <b>assembler</b>, et le mot qui décide de tout est
+<em>fournis</em> : en 5e on ne choisit pas les constituants, on les place. Le pari du lot est
+qu'un élève de 5e peut comprendre qu'un prototype tient <b>quatre fonctions à la fois</b>, et
+que c'est en <b>retirant</b> qu'il le comprend — pas en lisant un schéma.</p>
+<p>Le geste qui porte la séance est l'activité 2 : remettre un constituant sur « — non monté — »
+et re-tester. Quatre retraits, quatre pannes différentes. Un tableau de correspondance ne
+produirait jamais cette conviction-là.</p>
+<p><b>Le moment le plus utile</b> est celui où l'établi refuse un montage parfait parce que le
+capteur est sur A1 quand le programme lit A0. Rien ne chauffe, rien ne fume, la page ne dit pas
+« erreur » : elle dit ce qui se croise sans se rencontrer.</p>
+<h2>Le catalogue de l'établi</h2>
+<table><tr><th>Constituant</th><th>Ce qu'il fait</th><th>Fonction</th><th>Port admis</th><th>Courant</th></tr>
+<tr><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td>traiter</td><td>SOCLE</td><td>45 mA</td></tr>
+<tr><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td>relier (hors des quatre)</td><td>SOCLE</td><td>0 mA</td></tr>
+<tr><td><b>Capteur de luminosité Grove</b></td><td>il mesure la lumière du préau</td><td>acquérir</td><td>A</td><td>3 mA</td></tr>
+<tr><td><b>Module DEL Grove</b></td><td>il éclaire le préau</td><td>agir</td><td>D</td><td>20 mA</td></tr>
+<tr><td><b>Câble USB 5 V (500 mA)</b></td><td>il apporte l'énergie</td><td>alimenter</td><td>SOCLE</td><td>0 mA</td></tr>
+</table>
+<h2>Ce que l'élève sait faire à la fin</h2>
+<ul>
+<li>nommer les quatre fonctions et les reconnaître sur un montage</li>
+<li>placer un capteur sur une entrée du bon type, et dire pourquoi</li>
+<li>faire correspondre le branchement et ce que le programme lit</li>
+<li>dire ce que la disparition de chaque fonction produit comme symptôme</li>
+<li>ordonner les gestes du montage et justifier l'alimentation en dernier</li>
+<li>reconnaître un constituant indispensable qui ne tient aucune fonction</li>
+</ul>
+<h2>Ce que la séquence ne fait pas — et pourquoi</h2>
+<div class="box limite"><p><b>Aucun assemblage réel.</b> L'établi simule le montage ; la version 🅰 le fait avec la carte, le shield et deux modules Grove, et c'est elle qui fait foi.</p></div>
+<div class="box limite"><p><b>Le programme n'est pas modifié.</b> Il est donné, chargé, et lu — le modifier relève de C6.2, en 4e. La séquence le dit à l'élève.</p></div>
+<div class="box limite"><p><b>Le catalogue est réduit au strict nécessaire.</b> Choisir entre plusieurs constituants est le travail de la 3e : ici tout est fourni, et tout sert.</p></div>
+<div class="box limite"><p><b>Le budget de courant est affiché, pas travaillé.</b> Il apparaît dans le réinvestissement comme un calcul simple ; il devient une contrainte en 4e.</p></div>
+<h2>Positionnement (LSU)</h2>
+<table><tr><th>Maîtrise</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>ne distingue pas les quatre fonctions d'un prototype</td></tr>
+<tr><td>🟠 Fragile</td><td>place les constituants si on lui rappelle le type de port</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>monte le prototype et justifie chaque port</td></tr>
+<tr><td>⭐ Très bonne</td><td>et prévoit le symptôme que produirait chaque retrait</td></tr>
+</table>
+<h2>Durée</h2>
+<p><b>2 séances de 55 min</b> — 95 minutes d'activités, marge comprise. Le bandeau de la séquence l'annonce, et <code>_outils/mesurer_temps_seances.py</code> le vérifie.</p>
+<footer>Synthèse professeur — 5e_C7.5. Programme 2024, Thème 3.</footer>
+</body>
+</html>

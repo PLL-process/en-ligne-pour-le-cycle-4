@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — La station qu'il faut équiper (3e_C7.5)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.5_station-a-equiper.html">← Séquence</a><a href="qcm_3e_C7.5_station-a-equiper.html">🧠 QCM</a><a href="lexique_3e_C7.5.html">📖 Lexique</a></nav>
+<h1>🌀 La station qu'il faut équiper — synthèse professeur</h1>
+<h2>Le pari de la séquence</h2>
+<p>Le verbe du code est <b>choisir</b>. En 5e on place, en 4e on complète, en 3e on
+choisit — et choisir suppose qu'on puisse se tromper autrement qu'en se trompant de port. Le
+catalogue contient dix constituants pour un cahier des charges à quatre exigences.</p>
+<p>Le pari du lot est ailleurs que dans le tri : il est dans la <b>propagation</b>. L'exigence
+« visible depuis la cour » impose le bandeau de DEL ; le bandeau impose 480 mA ; 480 mA imposent
+la batterie ; et la batterie remet en cause l'autonomie de 72 heures, qui était tenue.
+<b>Le bon choix crée le problème suivant</b> — c'est exactement ce qu'est une conception, et
+c'est ce qu'un exercice de tri ne montre jamais.</p>
+<p><b>Le moment qui décide</b> est l'activité 4 : l'élève retire la batterie, lit 580 sur 500,
+et comprend qu'une exigence écrite par quelqu'un qui ne connaît rien à l'électronique vient de
+décider de la source d'énergie de la station.</p>
+<h2>Le catalogue de l'établi</h2>
+<table><tr><th>Constituant</th><th>Ce qu'il fait</th><th>Fonction</th><th>Port admis</th><th>Courant</th></tr>
+<tr><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td>traiter</td><td>SOCLE</td><td>45 mA</td></tr>
+<tr><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td>relier (hors des quatre)</td><td>SOCLE</td><td>0 mA</td></tr>
+<tr><td><b>Anémomètre Grove</b></td><td>il mesure la vitesse du vent</td><td>acquérir</td><td>A</td><td>15 mA</td></tr>
+<tr><td><b>Capteur de pluie Grove</b></td><td>il détecte la présence de pluie</td><td>acquérir</td><td>D</td><td>8 mA</td></tr>
+<tr><td><b>Écran LCD I2C Grove (16 × 2)</b></td><td>il affiche la mesure, lisible à 30 cm</td><td>agir</td><td>I2C</td><td>20 mA</td></tr>
+<tr><td><b>Bandeau de 8 DEL de puissance</b></td><td>il signale l'alerte, visible de la cour</td><td>agir</td><td>D</td><td>480 mA</td></tr>
+<tr><td><b>Buzzer Grove</b></td><td>il émet un son d'alerte</td><td>agir</td><td>D</td><td>30 mA</td></tr>
+<tr><td><b>Module carte SD Grove</b></td><td>il enregistre les mesures et leur heure</td><td>relier (hors des quatre)</td><td>UART</td><td>40 mA</td></tr>
+<tr><td><b>Câble USB 5 V (500 mA)</b></td><td>il alimente depuis un ordinateur</td><td>alimenter</td><td>SOCLE</td><td>0 mA</td></tr>
+<tr><td><b>Batterie 5 V / 2 A + panneau solaire (TBT)</b></td><td>elle alimente la station sur site</td><td>alimenter</td><td>ALIM</td><td>0 mA</td></tr>
+</table>
+<h2>Ce que l'élève sait faire à la fin</h2>
+<ul>
+<li>traduire chaque exigence d'un cahier des charges en constituant</li>
+<li>défendre un choix et dire pourquoi les constituants écartés ne conviennent pas</li>
+<li>distinguer une fonction tenue d'un usage satisfait</li>
+<li>reconnaître qu'un cahier des charges peut exiger un constituant hors des quatre fonctions</li>
+<li>calculer un budget de courant et en tirer le choix de la source</li>
+<li>suivre une exigence jusqu'à ses conséquences sur les autres</li>
+<li>dire ce qu'un essai de prototype ne prouve pas</li>
+</ul>
+<h2>Ce que la séquence ne fait pas — et pourquoi</h2>
+<div class="box limite"><p><b>Aucune station réelle.</b> L'établi simule le montage ; la version 🅰 utilise le carton complet, et la contrainte de courant s'y mesure au multimètre.</p></div>
+<div class="box limite"><p><b>L'autonomie n'est pas calculée ici.</b> Elle l'a été en 3e_C7.4 ; ce lot montre seulement que le choix du bandeau la remet en cause, et le dit explicitement.</p></div>
+<div class="box limite"><p><b>Le programme n'est pas modifié.</b> Les ports sont imposés par lui ; changer de port serait un choix légitime et relève de C6.2.</p></div>
+<div class="box limite"><p><b>Le vérificateur ne lit pas la justification écrite</b> de l'activité 1 : il compte des caractères. C'est écrit dans la page, et c'est pourquoi la correction donne les deux arguments attendus mot pour mot.</p></div>
+<h2>Positionnement (LSU)</h2>
+<table><tr><th>Maîtrise</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>choisit d'après ce qui est disponible dans le carton</td></tr>
+<tr><td>🟠 Fragile</td><td>choisit juste si on relit le cahier des charges avec lui</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>traduit chaque exigence en constituant et le justifie</td></tr>
+<tr><td>⭐ Très bonne</td><td>et suit une exigence jusqu'à ses conséquences sur les autres</td></tr>
+</table>
+<h2>Durée</h2>
+<p><b>2 séances de 90 min</b> — 150 minutes d'activités, marge comprise. Le bandeau de la séquence l'annonce, et <code>_outils/mesurer_temps_seances.py</code> le vérifie.</p>
+<footer>Synthèse professeur — 3e_C7.5. Programme 2024, Thème 3.</footer>
+</body>
+</html>

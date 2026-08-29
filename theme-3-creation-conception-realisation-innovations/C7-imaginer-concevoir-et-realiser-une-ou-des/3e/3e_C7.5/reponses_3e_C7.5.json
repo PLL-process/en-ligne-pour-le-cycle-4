@@ -1,0 +1,129 @@
+{
+ "securite": "Très basse tension uniquement.",
+ "etabli": {
+  "montageJuste": {
+   "carte": "SOCLE",
+   "shield": "SOCLE",
+   "anemo": "A0",
+   "pluie": "",
+   "lcd": "",
+   "bandeau": "D6",
+   "buzzer": "",
+   "sd": "UART",
+   "usb": "",
+   "alim": "ALIM EXT"
+  },
+  "budget": "580 mA",
+  "verdictOk": "le bandeau passe au rouge",
+  "erreurs": [
+   {
+    "titre": "le capteur de pluie à la place de l'anémomètre",
+    "pose": {
+     "anemo": "",
+     "pluie": "D2"
+    },
+    "attendu": "Rien ne mesure le vent",
+    "diag": "requis_anemo"
+   },
+   {
+    "titre": "l'écran LCD au lieu du bandeau",
+    "pose": {
+     "anemo": "A0",
+     "pluie": "",
+     "bandeau": "",
+     "lcd": "I2C"
+    },
+    "attendu": "n'est pas visible depuis la cour",
+    "diag": "requis_bandeau"
+   },
+   {
+    "titre": "la station sans carte SD",
+    "pose": {
+     "bandeau": "D6",
+     "lcd": "",
+     "sd": ""
+    },
+    "attendu": "Rien ne garde les mesures",
+    "diag": "requis_sd"
+   },
+   {
+    "titre": "la station sans batterie",
+    "pose": {
+     "sd": "UART",
+     "alim": "",
+     "usb": "SOCLE"
+    },
+    "attendu": "Le montage demande 580 mA",
+    "diag": "budget"
+   },
+   {
+    "titre": "le bandeau sur D2",
+    "pose": {
+     "alim": "ALIM EXT",
+     "usb": "",
+     "bandeau": "D2"
+    },
+    "attendu": "Le programme écrit sur D6",
+    "diag": "attendu_bandeau"
+   }
+  ],
+  "verrous": [
+   "monte",
+   "teste",
+   "ok",
+   "panne",
+   "retire"
+  ]
+ },
+ "activites": {
+  "0": {
+   "a0r0": "elle impose l'anémomètre : c'est la seule grandeur du cahier des charges",
+   "a0r1": "elle impose le bandeau de DEL : un écran de 16 caractères ne se lit pas à 30 mètres",
+   "a0r2": "elle impose la batterie et le panneau : l'USB suppose un ordinateur allumé en permanence",
+   "a0r3": "elle impose la carte SD : sans elle, la station alerte mais ne prouve rien",
+   "a0q1": "un cahier des charges peut exiger un constituant hors des quatre fonctions"
+  },
+  "1": {
+   "a1x0": "l'anémomètre",
+   "a1x1": "le bandeau de 8 DEL",
+   "a1x2": "le module carte SD",
+   "a1x3": "la batterie et le panneau solaire",
+   "a1j": "Le capteur de pluie fonctionne, mais le seuil porte sur la vitesse du vent en km/h : une averse sans vent déclencherait l'alerte. L'écran LCD affiche bien, avec l'unité, mais il se lit à trente centimètres, alors que l'exigence demande une alerte visible depuis la cour."
+  },
+  "2": {
+   "a2q1": "parce que le programme écrit sur D6, et qu'on ne le modifie pas ici"
+  },
+  "3": {
+   "a2s0": "la station ne peut plus mesurer la grandeur sur laquelle porte le seuil",
+   "a2s1": "l'alerte existe dans la carte, et personne dans la cour ne la voit",
+   "a2s2": "la station alerte correctement, et ne peut rien prouver après l'événement",
+   "a2s3": "il ne reste que l'USB : 580 mA demandés, 500 disponibles, la carte redémarre"
+  },
+  "4": {
+   "rel0": "120",
+   "rel1": "580",
+   "rel2": "500",
+   "a4q1": "une exigence d'usage a fini par décider de la source d'énergie"
+  },
+  "5": {
+   "reinv": "J'ajoute le buzzer sur un port numérique libre, D2 par exemple, pour 30 mA. Il tient la fonction agir comme le bandeau, sur un autre canal de perception. Le courant total passe à 610 mA, toujours sous les 2000 mA de la batterie. L'exigence fragilisée est celle des 72 heures d'autonomie : il faut refaire le calcul."
+  }
+ },
+ "totaux": {
+  "0": "5/5",
+  "1": "5/5",
+  "2": "6/6",
+  "3": "4/4",
+  "4": "4/4",
+  "5": "1/1"
+ },
+ "refus": {
+  "act": "4",
+  "id": "a4q1",
+  "faux": "il fallait renoncer au bandeau et accepter un écran LCD",
+  "attendu": "3/4"
+ },
+ "persistance": {
+  "a2q1": "parce que le programme écrit sur D6, et qu'on ne le modifie pas ici"
+ }
+}

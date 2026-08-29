@@ -1,0 +1,102 @@
+{
+ "securite": "Très basse tension uniquement.",
+ "etabli": {
+  "montageJuste": {
+   "carte": "SOCLE",
+   "shield": "SOCLE",
+   "lum": "A0",
+   "del": "D5",
+   "usb": "SOCLE"
+  },
+  "budget": "68 mA",
+  "verdictOk": "la DEL s'allume",
+  "erreurs": [
+   {
+    "titre": "le capteur sur D4",
+    "pose": {
+     "lum": "D4"
+    },
+    "attendu": "il lui faut une entrée analogique",
+    "diag": "port_lum"
+   },
+   {
+    "titre": "le capteur sur A1",
+    "pose": {
+     "lum": "A1"
+    },
+    "attendu": "Le programme lit A0",
+    "diag": "attendu_lum"
+   },
+   {
+    "titre": "la DEL retirée",
+    "pose": {
+     "lum": "A0",
+     "del": ""
+    },
+    "attendu": "La fonction « Agir »",
+    "diag": "fonction_agir"
+   },
+   {
+    "titre": "la carte retirée",
+    "pose": {
+     "del": "D5",
+     "carte": ""
+    },
+    "attendu": "il n'y a pas de carte",
+    "diag": "sans_carte"
+   }
+  ],
+  "verrous": [
+   "monte",
+   "teste",
+   "ok",
+   "panne",
+   "retire"
+  ]
+ },
+ "activites": {
+  "0": {
+   "a0f0": "Acquérir — il prend une mesure du monde",
+   "a0f1": "Traiter — elle décide quoi faire de la mesure",
+   "a0f2": "Agir — il produit un effet dans le monde réel",
+   "a0f3": "Alimenter — il fournit l'énergie aux trois autres",
+   "a0f4": "Relier — il ne tient aucune des quatre fonctions"
+  },
+  "1": {
+   "a1q1": "sa sortie varie continûment : une entrée numérique ne lirait que 0 ou 1"
+  },
+  "2": {
+   "a2s0": "la carte n'a plus aucune information : elle décide toujours la même chose",
+   "a2s1": "la décision est prise, mais rien ne se produit dans le préau",
+   "a2s2": "plus rien ne s'exécute : le programme n'a nulle part où tourner",
+   "a2s3": "aucun des trois autres ne fonctionne, même s'ils sont tous en place"
+  },
+  "3": {
+   "a3o0": "1er",
+   "a3o1": "2e",
+   "a3o2": "3e",
+   "a3o3": "4e",
+   "a3o4": "5e",
+   "a3q1": "brancher un module sur une carte déjà alimentée risque de l'abîmer"
+  },
+  "4": {
+   "reinv": "J'ajoute le capteur de mouvement sur un port numérique libre, D2 par exemple, parce que sa sortie ne vaut que 0 ou 1. Il tient la fonction acquérir, comme le capteur de luminosité, et le courant total passe de 68 à 80 mA sur les 500 disponibles."
+  }
+ },
+ "totaux": {
+  "0": "5/5",
+  "1": "6/6",
+  "2": "4/4",
+  "3": "6/6",
+  "4": "1/1"
+ },
+ "refus": {
+  "act": "1",
+  "id": "a1q1",
+  "faux": "le port D4 est réservé aux modules qui consomment moins de 5 mA",
+  "attendu": "5/6"
+ },
+ "persistance": {
+  "a1q1": "sa sortie varie continûment : une entrée numérique ne lirait que 0 ou 1"
+ }
+}

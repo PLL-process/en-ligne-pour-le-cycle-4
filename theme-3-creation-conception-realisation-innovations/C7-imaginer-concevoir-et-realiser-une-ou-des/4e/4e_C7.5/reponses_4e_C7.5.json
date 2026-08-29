@@ -1,0 +1,90 @@
+{
+ "securite": "Très basse tension uniquement.",
+ "etabli": {
+  "montageJuste": {
+   "carte": "SOCLE",
+   "shield": "SOCLE",
+   "hum": "A0",
+   "temp": "",
+   "relais": "D4",
+   "pompe": "ALIM EXT",
+   "lcd": "I2C",
+   "alim": "ALIM EXT",
+   "usb": "SOCLE"
+  },
+  "budget": "800 mA",
+  "verdictOk": "le relais colle, la pompe tourne six secondes",
+  "remise": true,
+  "erreurs": [
+   {
+    "titre": "cas 1, la pompe ne part jamais",
+    "cas": "1",
+    "attendu": "Il manque le module relais",
+    "diag": "exige_relais"
+   },
+   {
+    "titre": "cas 2, la carte redémarre",
+    "cas": "2",
+    "attendu": "Le montage demande 800 mA",
+    "diag": "budget"
+   },
+   {
+    "titre": "cas 3, la pompe ne s'arrête plus",
+    "cas": "3",
+    "attendu": "Aucune mesure d'humidité du sol",
+    "diag": "requis_hum"
+   }
+  ],
+  "verrous": [
+   "monte",
+   "teste",
+   "ok",
+   "panne",
+   "cas1",
+   "cas2",
+   "cas3"
+  ]
+ },
+ "activites": {
+  "0": {
+   "a0r0": "Acquérir — il prend la mesure sur laquelle on décide",
+   "a0r1": "Traiter — elle compare la mesure au seuil et décide",
+   "a0r2": "Agir — il laisse passer la puissance sur ordre de la carte",
+   "a0r3": "Agir — elle produit l'effet attendu dans le jardin",
+   "a0r4": "Alimenter — elle fournit le courant que l'USB ne peut pas fournir",
+   "a0r5": "Relier — il ne tient aucune des quatre fonctions",
+   "a0q1": "la carte commande de très faibles intensités, la pompe en demande beaucoup"
+  },
+  "1": {
+   "a1q1": "acquérir, traiter et alimenter : la mesure s'affiche, donc elle circule",
+   "a1q2": "le module relais"
+  },
+  "2": {
+   "a2q1": "800",
+   "a2q2": "la demande dépasse ce que l'USB peut fournir : la tension s'effondre"
+  },
+  "3": {
+   "a3q1": "le capteur de température de l'air",
+   "a3q2": "on mesure une grandeur, mais pas celle sur laquelle le programme décide"
+  },
+  "4": {
+   "reinv": "Le symptôme prouve que les quatre fonctions sont tenues : la mesure s'affiche, la pompe démarre au bon moment, le relais obéit et rien ne redémarre. Ce n'est donc pas un manque. J'essaie de débrancher le capteur pendant que la pompe tourne : si elle s'arrête, le défaut est dans la mesure."
+  }
+ },
+ "totaux": {
+  "0": "7/7",
+  "1": "3/3",
+  "2": "3/3",
+  "3": "3/3",
+  "4": "1/1"
+ },
+ "refus": {
+  "act": "3",
+  "id": "a3q1",
+  "faux": "le capteur d'humidité du sol",
+  "attendu": "2/3"
+ },
+ "persistance": {
+  "a1q2": "le module relais"
+ }
+}

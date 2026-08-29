@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 5e — L'éclairage du préau (5e_C7.5)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Établi Grove — original, CC0 ───────────────────────────────────────── */
+.etabli{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+.chaine{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:620px){.chaine{grid-template-columns:repeat(2,1fr)}}
+.fct{background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 8px;text-align:center;transition:background .2s,border-color .2s}
+.fct b{display:block;font-size:.9em;color:var(--sub)}
+.fct span{font-size:.78em;color:var(--sub)}
+.fct.tenue{background:#14532d;border-color:var(--ok)}
+.fct.tenue b{color:#eafff0}
+table.cat{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.cat th,table.cat td{border:1px solid var(--border);padding:5px 8px;text-align:left;vertical-align:middle}
+table.cat th{background:#173666;color:var(--hl)}
+table.cat td.pt{width:150px}
+table.cat td.pt select{width:100%;min-width:0;padding:4px 6px;font-size:.92em}
+table.cat tr.monte td:not(.pt){color:#fff}
+table.cat td.ma{width:70px;text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
+.budget{font-size:.86em;color:var(--sub);margin:4px 0 10px}
+.budget b{color:var(--hl)}
+.budget.trop b{color:var(--err)}
+.etabli-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:170px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+.prog{font-family:ui-monospace,Menlo,Consolas,monospace;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:.86em;color:var(--hl);overflow-x:auto;white-space:pre;margin:8px 0}
+.prog .cm{color:#7f9cc4}
+.symp{background:#3a2a10;border-left:4px solid var(--warn);border-radius:0 8px 8px 0;padding:8px 12px;margin:8px 0;font-size:.92em}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C7.5.html">📖 Lexique</a></nav>
+
+<h1>🔌 L'éclairage du préau</h1>
+<p class="subtitle">Thème 3 · 5<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C7.5</span>
+  <span class="badge code">5e_C4.5 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D2 · D3 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Avec le <b>lampadaire intelligent</b> (5e_C4.1 à C4.8), tu as appris à <em>reconnaître</em>
+  les constituants d'une chaîne d'information sur un objet déjà monté : qui mesure, qui décide,
+  qui agit. Tu sais lire un montage.</p>
+  <p><b>Ce qui change aujourd'hui :</b> le montage n'existe pas encore. Les constituants sont
+  sur la table, tous les bons, et aucun n'est branché. Lire un assemblage et le <em>réaliser</em>
+  ne demandent pas le même travail : le second oblige à choisir un port, et un port se trompe.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>5e_C7.5</b></td><td>Assembler les constituants fournis pour réaliser un prototype.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
+    <tr><td>5e_C4.5 <span style="color:var(--sub)">(appui)</span></td><td>Identifier des constituants de la chaîne d'information d'un OST (l'organisation de la chaîne d'information étant fournie).</td><td>Activité 0 et synthèse</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>Le préau du collège n'a pas d'éclairage. À 17 h en janvier, les élèves qui
+attendent le bus sont dans le noir. Le principal a acheté un kit : une carte, un capteur de
+luminosité, une DEL, et le câble qui va avec. <b>Tout est là. Rien n'est monté.</b></p>
+<p>Le programme, lui, est déjà écrit et déjà chargé dans la carte : personne ne le modifiera.
+Il attend son capteur sur une entrée précise, et sa DEL sur une sortie précise.</p></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Tous les constituants sont fournis. Alors pourquoi un prototype peut-il encore ne pas fonctionner ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, même avec toutes les pièces, ça peut rater parce que…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚡ Sécurité — à lire avant de toucher quoi que ce soit</h2>
+  <div class="danger">
+    <p><b>Très basse tension uniquement.</b> Tout ce que tu manipules ici fonctionne en 5 V :
+    la carte, le shield, le capteur, la DEL. <b>Aucun élève ne manipule le secteur</b> — ni la
+    prise murale, ni le câble d'un adaptateur branché. L'énergie arrive par le câble USB relié
+    à un ordinateur, et c'est le professeur qui branche l'adaptateur s'il y en a un.</p>
+    <p><b>On branche hors tension.</b> Le câble USB se relie <b>en dernier</b>, quand tous les
+    modules sont en place. Brancher un module sur une carte déjà alimentée, c'est risquer de
+    l'abîmer — et sur une carte de collège, ça se voit rarement tout de suite.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le matériel</b> — la carte, le Base Shield et les deux modules Grove, en
+      vrai. Les connecteurs Grove sont détrompés : on ne peut pas les brancher à l'envers.
+      C'est le <em>choix du port</em> qui reste à faire, et c'est là que ça se joue.</li>
+    <li><b>🅱 Avec l'établi de cette page</b> — il fonctionne hors ligne, sans rien installer,
+      et il permet ce que le matériel réel permet mal en classe : <b>retirer un constituant
+      d'un montage qui marchait</b> pour voir exactement ce que ça casse.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — quatre élèves tiennent les quatre fonctions et se
+      passent une carte « mesure », une carte « décision », une carte « action ». Retirer un
+      élève de la chaîne produit le même constat, sans une seule pile.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>🧩 Activité 0 — Quatre fonctions, pas cinq ⏱ ~15 min</h2>
+  <p>Un prototype qui fonctionne tient <b>quatre fonctions</b> en même temps :
+  acquérir, traiter, agir, alimenter. Le kit contient cinq objets. L'un d'eux ne tient
+  aucune de ces quatre fonctions — et il est pourtant indispensable.</p>
+  <div class="exo">
+
+    <p>Associe chaque constituant à ce qu'il fait dans le prototype.</p>
+    <p style="margin-top:12px"><b>Le capteur de luminosité</b></p>
+    <select id="a0f0">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend une mesure du monde</option>
+      <option>Agir — il produit un effet dans le monde réel</option>
+      <option>Alimenter — il fournit l'énergie aux trois autres</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle décide quoi faire de la mesure</option>
+    </select>
+    <p style="margin-top:12px"><b>La carte Arduino UNO</b></p>
+    <select id="a0f1">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend une mesure du monde</option>
+      <option>Agir — il produit un effet dans le monde réel</option>
+      <option>Alimenter — il fournit l'énergie aux trois autres</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle décide quoi faire de la mesure</option>
+    </select>
+    <p style="margin-top:12px"><b>Le module DEL</b></p>
+    <select id="a0f2">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend une mesure du monde</option>
+      <option>Agir — il produit un effet dans le monde réel</option>
+      <option>Alimenter — il fournit l'énergie aux trois autres</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle décide quoi faire de la mesure</option>
+    </select>
+    <p style="margin-top:12px"><b>Le câble USB</b></p>
+    <select id="a0f3">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend une mesure du monde</option>
+      <option>Agir — il produit un effet dans le monde réel</option>
+      <option>Alimenter — il fournit l'énergie aux trois autres</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle décide quoi faire de la mesure</option>
+    </select>
+    <p style="margin-top:12px"><b>Le Base Shield V2</b></p>
+    <select id="a0f4">
+      <option value="">— je choisis —</option>
+      <option>Acquérir — il prend une mesure du monde</option>
+      <option>Agir — il produit un effet dans le monde réel</option>
+      <option>Alimenter — il fournit l'énergie aux trois autres</option>
+      <option>Relier — il ne tient aucune des quatre fonctions</option>
+      <option>Traiter — elle décide quoi faire de la mesure</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Le capteur de luminosité</b> — Acquérir — il prend une mesure du monde</p>
+      <p><b>La carte Arduino UNO</b> — Traiter — elle décide quoi faire de la mesure</p>
+      <p><b>Le module DEL</b> — Agir — il produit un effet dans le monde réel</p>
+      <p><b>Le câble USB</b> — Alimenter — il fournit l'énergie aux trois autres</p>
+      <p><b>Le Base Shield V2</b> — Relier — il ne tient aucune des quatre fonctions</p>
+      <p style="margin-top:10px">Le Base Shield ne mesure rien, ne décide rien, n'agit pas et
+      ne produit pas d'énergie. Il <b>relie</b> : il transforme les broches nues de la carte en
+      connecteurs Grove détrompés. Sans lui, les quatre fonctions sont là et rien ne se
+      branche. Une fonction n'est pas la seule façon d'être utile.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔧 Activité 1 — Monter le prototype ⏱ ~25 min</h2>
+  <p>Voici l'établi. Choisis un port pour chacun des cinq constituants, puis
+  clique sur <b>⚡ Tester le prototype</b>. Lis le programme sous le tableau : il te dit
+  exactement où il va chercher la mesure et où il envoie l'ordre.</p>
+  <p style="color:var(--sub);font-size:.92em">Si l'établi refuse, il te dit pourquoi. Ce n'est
+  pas une punition : c'est un diagnostic, et il se lit du plus grossier au plus fin.</p><div id="etabli">
+  <div class="etabli">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'établi : place chaque constituant sur un port, puis teste. L'établi ne dit jamais « ça ne marche pas » — il dit pourquoi.</b></p>
+
+    <div class="chaine">
+      <div class="fct" id="f_acquerir"><b>Acquérir</b><span>prendre la mesure</span></div>
+      <div class="fct" id="f_traiter"><b>Traiter</b><span>décider quoi faire</span></div>
+      <div class="fct" id="f_agir"><b>Agir</b><span>produire l'effet</span></div>
+      <div class="fct" id="f_alimenter"><b>Alimenter</b><span>fournir l'énergie</span></div>
+    </div>
+
+    <table class="cat">
+      <tr><th>Constituant</th><th>Ce qu'il fait</th><th>mA</th><th>Port</th></tr>
+      <tr id="tr_carte"><td><b>Carte Arduino UNO</b></td><td>elle exécute le programme</td><td class="ma" id="ma_carte">—</td><td class="pt"><select id="pt_carte" aria-label="Port de Carte Arduino UNO"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_shield"><td><b>Base Shield V2</b></td><td>il donne des ports Grove à la carte</td><td class="ma" id="ma_shield">—</td><td class="pt"><select id="pt_shield" aria-label="Port de Base Shield V2"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_lum"><td><b>Capteur de luminosité Grove</b></td><td>il mesure la lumière du préau</td><td class="ma" id="ma_lum">—</td><td class="pt"><select id="pt_lum" aria-label="Port de Capteur de luminosité Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_del"><td><b>Module DEL Grove</b></td><td>il éclaire le préau</td><td class="ma" id="ma_del">—</td><td class="pt"><select id="pt_del" aria-label="Port de Module DEL Grove"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+      <tr id="tr_usb"><td><b>Câble USB 5 V (500 mA)</b></td><td>il apporte l'énergie</td><td class="ma" id="ma_usb">—</td><td class="pt"><select id="pt_usb" aria-label="Port de Câble USB 5 V (500 mA)"><option value="">— non monté —</option><option value="SOCLE">SOCLE</option><option value="D2">D2</option><option value="D3">D3</option><option value="D4">D4</option><option value="D5">D5</option><option value="D6">D6</option><option value="D7">D7</option><option value="D8">D8</option><option value="A0">A0</option><option value="A1">A1</option><option value="A2">A2</option><option value="A3">A3</option><option value="I2C">I2C</option><option value="UART">UART</option><option value="ALIM EXT">ALIM EXT</option></select></td></tr>
+    </table>
+    <p class="budget" id="budget">—</p>
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 2px">Le programme téléversé dans la carte (on ne le modifie pas) :</p>
+    <div class="prog">lumiere = analogRead(A0)      <span class="cm">// on lit le capteur sur A0</span>
+si lumiere &lt; 300 alors      <span class="cm">// en dessous de 300, il fait sombre</span>
+    digitalWrite(5, HAUT)     <span class="cm">// on allume la DEL branchée sur D5</span>
+sinon
+    digitalWrite(5, BAS)      <span class="cm">// sinon on l'éteint</span></div>
+
+    <div class="etabli-cmd">
+      <button class="btn" id="tester" type="button">⚡ Tester le prototype</button>
+      <button class="btn" id="demonter" type="button">↺ Tout démonter</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Monte les constituants, puis teste.</div></div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <h4>Une fois que l'établi affiche ✔</h4>
+    <p>Les encoches ci-dessous relisent <b>ton établi</b>, pas une copie : c'est ton montage
+    qui est corrigé.</p>
+    <p><b>1.</b> Pourquoi le capteur de luminosité ne peut-il pas être branché sur D4 ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>sa sortie varie continûment : une entrée numérique ne lirait que 0 ou 1</option>
+      <option>le port D4 est réservé aux modules qui consomment moins de 5 mA</option>
+      <option>le capteur est trop loin du port D4 sur le Base Shield</option>
+      <option>D4 est déjà occupé par la DEL dans tous les montages</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Fais d'abord fonctionner le prototype sur l'établi : tu ne peux pas expliquer un montage que tu n'as pas réussi.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p>La carte et le Base Shield se posent sur l'établi (<b>SOCLE</b>) : ils ne prennent pas
+      de port, ils en fournissent. Le câble USB aussi se relie à la carte, pas à un port Grove.</p>
+      <p>Le capteur va sur <b>A0</b> et la DEL sur <b>D5</b>, parce que c'est ce que dit le
+      programme : <code>analogRead(A0)</code> et <code>digitalWrite(5, …)</code>. Un montage
+      juste avec un programme qui regarde ailleurs ne fait rien du tout — le branchement et le
+      programme doivent dire la même chose.</p>
+      <p><b>1.</b> Sa sortie varie continûment entre 0 et 5 V. Une entrée numérique ne sait
+      répondre que « il y a de la tension » ou « il n'y en a pas » : elle ne saurait pas
+      distinguer la pénombre du plein jour. L'entrée analogique, elle, rend un nombre entre
+      0 et 1023.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>➖ Activité 2 — Retirer, pour voir ⏱ ~20 min</h2>
+  <p>Ton prototype marche. Maintenant on l'abîme, exprès. Remets un constituant sur
+  « — non monté — », re-teste, lis ce que l'établi répond, puis remonte-le et recommence avec
+  le suivant.</p>
+  <p style="color:var(--sub);font-size:.92em">Ce n'est pas du gâchis : on ne comprend à quoi
+  sert une fonction qu'en regardant ce qui se passe quand elle manque.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'établi</a> — c'est le même, et il a gardé ton montage. Une page ne porte qu'un seul établi : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p>Associe chaque retrait à ce que l'établi t'a répondu.</p>
+    <p style="margin-top:12px"><b>On retire le capteur de luminosité</b></p>
+    <select id="a2s0">
+      <option value="">— je choisis —</option>
+      <option>aucun des trois autres ne fonctionne, même s'ils sont tous en place</option>
+      <option>la carte n'a plus aucune information : elle décide toujours la même chose</option>
+      <option>la décision est prise, mais rien ne se produit dans le préau</option>
+      <option>plus rien ne s'exécute : le programme n'a nulle part où tourner</option>
+    </select>
+    <p style="margin-top:12px"><b>On retire le module DEL</b></p>
+    <select id="a2s1">
+      <option value="">— je choisis —</option>
+      <option>aucun des trois autres ne fonctionne, même s'ils sont tous en place</option>
+      <option>la carte n'a plus aucune information : elle décide toujours la même chose</option>
+      <option>la décision est prise, mais rien ne se produit dans le préau</option>
+      <option>plus rien ne s'exécute : le programme n'a nulle part où tourner</option>
+    </select>
+    <p style="margin-top:12px"><b>On retire la carte</b></p>
+    <select id="a2s2">
+      <option value="">— je choisis —</option>
+      <option>aucun des trois autres ne fonctionne, même s'ils sont tous en place</option>
+      <option>la carte n'a plus aucune information : elle décide toujours la même chose</option>
+      <option>la décision est prise, mais rien ne se produit dans le préau</option>
+      <option>plus rien ne s'exécute : le programme n'a nulle part où tourner</option>
+    </select>
+    <p style="margin-top:12px"><b>On retire le câble USB</b></p>
+    <select id="a2s3">
+      <option value="">— je choisis —</option>
+      <option>aucun des trois autres ne fonctionne, même s'ils sont tous en place</option>
+      <option>la carte n'a plus aucune information : elle décide toujours la même chose</option>
+      <option>la décision est prise, mais rien ne se produit dans le préau</option>
+      <option>plus rien ne s'exécute : le programme n'a nulle part où tourner</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Fais d'abord fonctionner le prototype, puis retire un constituant et re-teste : c'est ce geste-là qui montre à quoi il servait.</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>On retire le capteur de luminosité</b> — la carte n'a plus aucune information : elle décide toujours la même chose</p>
+      <p><b>On retire le module DEL</b> — la décision est prise, mais rien ne se produit dans le préau</p>
+      <p><b>On retire la carte</b> — plus rien ne s'exécute : le programme n'a nulle part où tourner</p>
+      <p><b>On retire le câble USB</b> — aucun des trois autres ne fonctionne, même s'ils sont tous en place</p>
+      <p style="margin-top:10px">Quatre retraits, quatre pannes <b>différentes</b>. C'est la
+      preuve que les quatre fonctions ne se remplacent pas : ce n'est pas « il manque une
+      pièce », c'est « il manque <em>cette</em> fonction-là », et le symptôme le dit.</p>
+      <p>Retiens l'ordre du diagnostic : on cherche d'abord ce qui empêche <b>tout</b>
+      (l'alimentation, la carte), ensuite seulement ce qui empêche <b>quelque chose</b>
+      (le capteur, l'actionneur).</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔒 Activité 3 — L'ordre du montage ⏱ ~20 min</h2>
+  <p>Sur l'établi, l'ordre n'a pas d'importance : rien ne chauffe et rien ne casse.
+  <b>Sur la table, si.</b> Voici les cinq gestes du montage réel : remets-les dans l'ordre.</p>
+  <div class="exo">
+
+    <p style="margin-top:12px"><b>Emboîter le Base Shield sur la carte, rien n'étant alimenté</b></p>
+    <select id="a3o0">
+      <option value="">— je choisis —</option>
+      <option>1er</option>
+      <option>2e</option>
+      <option>3e</option>
+      <option>4e</option>
+      <option>5e</option>
+    </select>
+    <p style="margin-top:12px"><b>Brancher le capteur de luminosité sur A0</b></p>
+    <select id="a3o1">
+      <option value="">— je choisis —</option>
+      <option>1er</option>
+      <option>2e</option>
+      <option>3e</option>
+      <option>4e</option>
+      <option>5e</option>
+    </select>
+    <p style="margin-top:12px"><b>Brancher le module DEL sur D5</b></p>
+    <select id="a3o2">
+      <option value="">— je choisis —</option>
+      <option>1er</option>
+      <option>2e</option>
+      <option>3e</option>
+      <option>4e</option>
+      <option>5e</option>
+    </select>
+    <p style="margin-top:12px"><b>Relier le câble USB à l'ordinateur</b></p>
+    <select id="a3o3">
+      <option value="">— je choisis —</option>
+      <option>1er</option>
+      <option>2e</option>
+      <option>3e</option>
+      <option>4e</option>
+      <option>5e</option>
+    </select>
+    <p style="margin-top:12px"><b>Masquer le capteur avec la main pour vérifier que la DEL s'allume</b></p>
+    <select id="a3o4">
+      <option value="">— je choisis —</option>
+      <option>1er</option>
+      <option>2e</option>
+      <option>3e</option>
+      <option>4e</option>
+      <option>5e</option>
+    </select>
+    <p style="margin-top:14px"><b>Et pour finir :</b> pourquoi le câble USB se branche-t-il en dernier ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>brancher un module sur une carte déjà alimentée risque de l'abîmer</option>
+      <option>le câble USB doit refroidir avant d'être manipulé par un élève</option>
+      <option>l'ordinateur ne reconnaît la carte que si elle est déjà complète</option>
+      <option>c'est plus pratique, mais ça n'a aucune conséquence réelle</option>
+    </select>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Emboîter le Base Shield sur la carte, rien n'étant alimenté</b> — 1er</p>
+      <p><b>Brancher le capteur de luminosité sur A0</b> — 2e</p>
+      <p><b>Brancher le module DEL sur D5</b> — 3e</p>
+      <p><b>Relier le câble USB à l'ordinateur</b> — 4e</p>
+      <p><b>Masquer le capteur avec la main pour vérifier que la DEL s'allume</b> — 5e</p>
+      <p style="margin-top:10px"><b>Le câble en dernier</b> : tant qu'il n'est pas relié, aucun
+      courant ne circule et un module mal enfiché ne peut rien abîmer. C'est la même règle que
+      pour n'importe quel montage électrique — <b>on câble hors tension</b>. Et le tout dernier
+      geste n'est pas un branchement : c'est une <b>vérification</b>. Masquer le capteur avec la
+      main, c'est se donner la preuve que le prototype fait ce qu'on attend.</p>
+      <p style="color:var(--sub)">Rappel : ici tout est en 5 V, très basse tension. Le secteur
+      n'est jamais manipulé par un élève.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+<p>Le principal est content, et il en veut plus : <b>l'éclairage doit aussi
+  s'allumer la nuit quand quelqu'un passe</b>, même si le capteur de luminosité n'y suffit pas.
+  On te fournit un capteur de mouvement Grove : sortie numérique, 12 mA.</p>
+  <p>Écris, en quelques lignes : <b>quel type de port</b> tu lui donnes et pourquoi, <b>quelle
+  fonction</b> il tient, et ce que devient le <b>courant total</b> demandé au câble USB.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb4"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p>Le capteur de mouvement va sur un <b>port numérique libre</b> — D2, D3, D6… mais pas
+      D5, déjà pris par la DEL, et pas un port analogique : sa sortie ne vaut que 0 ou 1
+      (« quelqu'un est passé » / « personne »).</p>
+      <p>Il tient la fonction <b>acquérir</b>, comme le capteur de luminosité. Un prototype
+      peut avoir <b>deux constituants pour la même fonction</b> : ils ne se remplacent pas, ils
+      mesurent deux choses différentes.</p>
+      <p>Courant total : 45 (carte) + 3 (luminosité) + 20 (DEL) + 12 (mouvement) =
+      <b>80 mA</b>, sur 500 disponibles. Il reste de la marge — mais c'est un calcul qu'on
+      refait à chaque ajout, pas une fois pour toutes.</p>
+      <p style="color:var(--sub)">Et le programme, lui, devra être modifié pour lire ce nouveau
+      capteur. Un constituant qu'aucune ligne de programme ne lit ne sert à rien : c'est le
+      travail de la compétence C6.2, en 4e.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Un prototype tient quatre fonctions à la fois</b> : acquérir (le capteur), traiter
+      (la carte), agir (l'actionneur), alimenter (la source). Il n'en manque jamais « un peu » :
+      dès qu'il en manque une, quelque chose de précis cesse de marcher.</li>
+    <li><b>Le type de port n'est pas un détail.</b> Un capteur dont la sortie varie continûment
+      va sur une entrée <b>analogique</b> (A0 à A3) ; un module qui n'a que deux états va sur
+      une entrée ou une sortie <b>numérique</b> (D2 à D8).</li>
+    <li><b>Le branchement et le programme doivent dire la même chose.</b> Un montage parfait
+      dont le programme lit ailleurs ne produit rien, et ne donne aucun message d'erreur.</li>
+    <li><b>Certains constituants ne tiennent aucune fonction et sont indispensables</b> : le
+      Base Shield relie, il ne fait rien d'autre.</li>
+    <li><b>On câble hors tension, l'alimentation en dernier</b>, et tout se manipule en très
+      basse tension. Le dernier geste du montage est une vérification, pas un branchement.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle
+  d'une pièce manquante, ou d'un port qui n'est pas du bon type ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.5 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais placer chaque constituant fourni sur un port du bon type, et vérifier que le prototype fonctionne</option>
+    <option>Je sais le faire si on me rappelle où le programme va chercher la mesure</option>
+    <option>Je sais nommer les quatre fonctions, mais le choix du port me résiste encore</option>
+    <option>Je ne sais pas encore dire à quoi sert chaque constituant</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions pour vérifier que tu sais placer un constituant, reconnaître la fonction qui manque et lire un diagnostic. 20 portent sur l'assemblage, 10 sur la chaîne d'information que tu connais déjà.</p>
+  <a class="btn" href="qcm_5e_C7.5_eclairage-du-preau.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Sur l'établi, monte <b>volontairement</b> le capteur sur A1 au lieu de A0, tout le reste
+  étant juste, et teste. Puis note la phrase exacte que l'établi te répond.</p>
+  <p>Cette panne-là est la plus traître de toutes : rien ne chauffe, rien ne fume, aucune
+  DEL rouge ne s'allume. Le prototype a l'air parfaitement monté et il ne fait rien.
+  <b>Comment un dépanneur peut-il la trouver ?</b> Écris ta méthode en deux lignes —
+  et compare avec ce que tu feras en 4e, en dépannage.</p>
+
+</section>
+
+<footer>Séquence 5e_C7.5 — « L'éclairage du préau ». Établi Grove original (CC0), aucune dépendance externe, fonctionne hors ligne. Programme 2024, Thème 3.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_5e_C7_5";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+const FONCTIONS_ID = ["acquerir","traiter","agir","alimenter"];
+const LIB = {acquerir:"Acquérir", traiter:"Traiter", agir:"Agir", alimenter:"Alimenter"};
+const LIBPORT = {
+  A:"une entrée analogique (A0 à A3)", D:"un port numérique (D2 à D8)",
+  I2C:"un port I2C", UART:"le port UART", SOCLE:"une place sur le socle",
+  ALIM:"l'alimentation externe"
+};
+const MANQUE = {
+  acquerir:"Sans capteur, le prototype n'a aucune information sur le monde : il ne peut que répéter la même chose.",
+  traiter:"Sans carte programmable, personne ne décide : une mesure sans décision ne déclenche rien.",
+  agir:"Sans actionneur, la décision reste à l'intérieur : rien ne se passe dans le monde réel.",
+  alimenter:"Sans source d'énergie, aucun des trois autres ne fonctionne — c'est la fonction qu'on oublie en dernier et qui arrête tout en premier."
+};
+
+/* ── établi Grove ───────────────────────────────────────────────────────── */
+/* CONSTITUANTS : {id, nom, fonction, ports:[types admis], mA, attendu?, cle?} */
+const CONST = [{"id": "carte", "nom": "Carte Arduino UNO", "role": "elle exécute le programme", "fonction": "traiter", "ports": ["SOCLE"], "mA": 45, "pourquoi": "La carte se pose sur l'établi, elle ne se branche pas sur un port."}, {"id": "shield", "nom": "Base Shield V2", "role": "il donne des ports Grove à la carte", "fonction": "liaison", "ports": ["SOCLE"], "mA": 0, "pourquoi": "Le shield s'emboîte sur la carte : il n'occupe pas un port, il les crée."}, {"id": "lum", "nom": "Capteur de luminosité Grove", "role": "il mesure la lumière du préau", "fonction": "acquerir", "ports": ["A"], "mA": 3, "pourquoi": "Sa sortie varie continûment entre 0 et 5 V ; une entrée numérique ne répondrait que « il y a de la tension » ou « il n'y en a pas », et ne distinguerait pas la pénombre du plein jour."}, {"id": "del", "nom": "Module DEL Grove", "role": "il éclaire le préau", "fonction": "agir", "ports": ["D"], "mA": 20, "sens": "écrit sur", "pourquoi": "On ne lui demande que deux états, allumé ou éteint : une sortie numérique suffit."}, {"id": "usb", "nom": "Câble USB 5 V (500 mA)", "role": "il apporte l'énergie", "fonction": "alimenter", "ports": ["SOCLE"], "mA": 0, "externe": false, "pourquoi": "Le câble se branche sur la carte elle-même, pas sur un port Grove."}];
+const BUDGET = 500;          /* mA disponibles sans alimentation externe */
+const ATTENDU = {"lum": "A0", "del": "D5"};        /* {id: "A0"} — ce que le programme lit/écrit */
+const OBLIGE = ["acquerir", "traiter", "agir", "alimenter"];          /* fonctions que ce prototype doit tenir */
+const REQUIS = {};          /* {id: raison} — constituants sans lesquels le cahier
+                                       des charges n'est pas tenu, même si la fonction l'est */
+const MARCHE = "Il fait sombre (le capteur lit 180) : la DEL s'allume. Il fait jour (820) : elle s'éteint. Le préau n'est éclairé que quand il en a besoin.";          /* phrase décrivant le comportement obtenu */
+let dejaOk = false;
+
+function typePort(p){
+  if(!p) return "";
+  if(p === "ALIM EXT") return "ALIM";
+  if(p === "SOCLE" || p === "I2C" || p === "UART") return p;
+  return p[0];                       /* "A0" → "A", "D4" → "D" */
+}
+function montes(){
+  return CONST.filter(c => document.getElementById("pt_" + c.id).value);
+}
+function portDe(c){ return document.getElementById("pt_" + c.id).value; }
+
+function majEtabli(){
+  const m = montes();
+  CONST.forEach(c => {
+    const mo = !!portDe(c);
+    document.getElementById("tr_" + c.id).classList.toggle("monte", mo);
+    document.getElementById("ma_" + c.id).textContent = mo ? c.mA : "—";
+  });
+  FONCTIONS_ID.forEach(f => {
+    const tenue = m.some(c => c.fonction === f);
+    document.getElementById("f_" + f).classList.toggle("tenue", tenue);
+  });
+  const somme = m.reduce((s, c) => s + c.mA, 0);
+  const ext = m.some(c => c.fonction === "alimenter" && c.externe);
+  const b = document.getElementById("budget");
+  b.textContent = "Courant demandé : " + somme + " mA sur " + (ext ? "l'alimentation externe (2000 mA)" : BUDGET + " mA disponibles par l'USB")
+    + (somme > (ext ? 2000 : BUDGET) ? " — c'est trop." : "");
+  b.classList.toggle("trop", somme > (ext ? 2000 : BUDGET));
+  if(m.length) window.__exp.monte = true;
+  save();
+}
+
+/* Le diagnostic, du plus grossier au plus fin — comme celui d'un dépanneur. */
+function diagnostic(){
+  const m = montes(), noms = m.map(c => c.id);
+  if(!noms.includes("carte"))
+    return ["ko", "Rien ne s'exécute : il n'y a pas de carte. Le programme n'a nulle part où tourner.", "sans_carte"];
+  if(CONST.some(c => c.id === "shield") && !noms.includes("shield"))
+    return ["ko", "Aucun module ne peut être branché : le Base Shield manque. Les connecteurs Grove n'ont pas de prise sur la carte nue.", "sans_shield"];
+
+  for(const c of m){
+    const p = portDe(c), t = typePort(p);
+    if(c.ports.length && !c.ports.includes(t))
+      return ["ko", c.nom + " est sur " + p + ", et il lui faut " + c.ports.map(x => LIBPORT[x] || x).join(" ou ") + ". " + c.pourquoi, "port_" + c.id];
+  }
+  const doublons = {};
+  for(const c of m){ const p = portDe(c);
+    if(p !== "ALIM EXT" && p !== "SOCLE" && doublons[p])
+      return ["ko", "Deux constituants sur " + p + " : " + doublons[p] + " et " + c.nom + ". Un port ne reçoit qu'un module.", "doublon"];
+    doublons[p] = c.nom; }
+
+  /* un constituant qui en exige un autre : la puissance ne se commande pas
+     directement depuis une sortie de carte. */
+  for(const c of m){
+    if(c.exige && !noms.includes(c.exige))
+      return ["ko", c.siManque, "exige_" + c.exige];
+  }
+  for(const f of OBLIGE){
+    if(!m.some(c => c.fonction === f))
+      return ["ko", "La fonction « " + LIB[f] + " » n'est tenue par aucun constituant. " + MANQUE[f], "fonction_" + f];
+  }
+  /* la fonction peut être tenue et le cahier des charges non tenu : deux choses
+     différentes, et c'est exactement ce qu'un prototype incomplet enseigne. */
+  for(const id in REQUIS){
+    if(!noms.includes(id)) return ["ko", REQUIS[id], "requis_" + id];
+  }
+  const somme = m.reduce((s, c) => s + c.mA, 0);
+  const ext = m.some(c => c.fonction === "alimenter" && c.externe);
+  const dispo = ext ? 2000 : BUDGET;
+  if(somme > dispo)
+    return ["ko", "Le montage demande " + somme + " mA et n'en a que " + dispo + ". La carte s'effondre et redémarre en boucle : il faut une alimentation externe très basse tension.", "budget"];
+
+  for(const c of m){
+    const att = ATTENDU[c.id];
+    if(att && portDe(c) !== att)
+      return ["ko", "Le programme " + (c.sens || "lit") + " " + att + ", et " + c.nom + " est sur " + portDe(c) + " : l'ordre et la mesure se croisent sans se rencontrer. Le branchement et le programme doivent dire la même chose.", "attendu_" + c.id];
+  }
+  return ["ok", MARCHE, "ok"];
+}
+
+function verdict(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls;
+  d.textContent = (cls === "ok" ? "✔ " : "✘ ") + txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("tester").addEventListener("click", () => {
+  const [cls, txt, id] = diagnostic();
+  verdict(cls, txt);
+  window.__exp.teste = true;
+  window.__exp["diag_" + id] = true;   /* on a VU ce diagnostic-là, pas un autre */
+  if(cls === "ko") window.__exp.panne = true;
+  if(cls === "ok"){ window.__exp.ok = true; dejaOk = true; }
+  else if(dejaOk) window.__exp.retire = true;
+  save();
+});
+document.getElementById("demonter").addEventListener("click", () => {
+  CONST.forEach(c => { document.getElementById("pt_" + c.id).value = ""; });
+  majEtabli(); verdict("ko", "Établi vide.");
+});
+CONST.forEach(c =>
+  document.getElementById("pt_" + c.id).addEventListener("change", majEtabli));
+/* Pas d'appel à majEtabli() ici : il enregistre, et il tournerait AVANT restore().
+   La page écraserait alors sa propre sauvegarde par un établi vide à chaque
+   ouverture. C'est le squelette qui appelle restore() puis majEtabli(). */
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0f0", "Acquérir — il prend une mesure du monde"); s += sv("a0f1", "Traiter — elle décide quoi faire de la mesure"); s += sv("a0f2", "Agir — il produit un effet dans le monde réel"); s += sv("a0f3", "Alimenter — il fournit l'énergie aux trois autres"); s += sv("a0f4", "Relier — il ne tient aucune des quatre fonctions");
+       return {score: s, total: 5, exp: true}; },
+  1(){ let s = 0;
+       s += sv("pt_carte","SOCLE"); s += sv("pt_shield","SOCLE"); s += sv("pt_lum","A0"); s += sv("pt_del","D5"); s += sv("pt_usb","SOCLE"); s += sv("a1q1","sa sortie varie continûment : une entrée numérique ne lirait que 0 ou 1");
+       return {score: s, total: 6, exp: !!window.__exp.ok,
+               expMsg: "Fais d'abord fonctionner le prototype sur l'établi : tu ne peux pas expliquer un montage que tu n'as pas réussi."}; },
+  2(){ let s = 0;
+       s += sv("a2s0", "la carte n'a plus aucune information : elle décide toujours la même chose"); s += sv("a2s1", "la décision est prise, mais rien ne se produit dans le préau"); s += sv("a2s2", "plus rien ne s'exécute : le programme n'a nulle part où tourner"); s += sv("a2s3", "aucun des trois autres ne fonctionne, même s'ils sont tous en place");
+       return {score: s, total: 4, exp: !!window.__exp.retire,
+               expMsg: "Fais d'abord fonctionner le prototype, puis retire un constituant et re-teste : c'est ce geste-là qui montre à quoi il servait."}; },
+  3(){ let s = 0;
+       s += sv("a3o0", "1er"); s += sv("a3o1", "2e"); s += sv("a3o2", "3e"); s += sv("a3o3", "4e"); s += sv("a3o4", "5e"); s += sv("a3q1","brancher un module sur une carte déjà alimentée risque de l'abîmer");
+       return {score: s, total: 6, exp: true}; },
+  4(){ return {score: pres("reinv", 120), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majEtabli();
+})();
+</script>
+
+</body>
+</html>
