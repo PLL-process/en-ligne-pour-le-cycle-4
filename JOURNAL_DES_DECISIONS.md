@@ -8372,3 +8372,52 @@ d'une heure de recherche. Pascal regarde, et tranche.
 - **n°207** — une source sérieuse et un titre qui colle ne remplacent pas un visionnage. On peut
   vérifier qu'une ressource existe sans savoir ce qu'elle montre ; livrer la première pour la
   seconde, c'est faire passer un indice pour une preuve.
+
+## 2026-08-29 — « Il manque 17 codes au Thème 3 » : trois d'entre eux étaient déjà faits
+
+Pascal a demandé qu'on attaque ce qui manque au Thème 3. L'audit annonçait **17 codes à
+créer sur 39**, dont cinq pour la famille C8 — « proposer un protocole de test ». Le lot à
+bâtir semblait tout tracé : trois niveaux, cinq codes.
+
+**Vérification faite avant de produire : trois des cinq étaient déjà écrits.**
+
+| Code | ce que disait l'audit | ce qui existe |
+|---|---|---|
+| `4e_C8.2` | à créer | activités 1 et 2 de « Jardin connecté — valider une solution » |
+| `4e_C8.3` | à créer | activités 2, 3 et le réinvestissement de la même séquence |
+| `5e_C8.3` | à créer | le mini-projet d'objet de 5ᵉ |
+| `3e_C8.2` | à créer | **rien** |
+| `5e_C8.2` | à créer | **rien** |
+
+Et la preuve n'était pas cachée : la séquence 4ᵉ porte un tableau intitulé **« Ce que dit le
+programme — recopié, pas reformulé »** où les trois codes sont mis en face des activités qui
+les portent. Le travail était fait, documenté, et annoncé dans la page. Ce qui manquait,
+c'était un fichier dans un dossier vide.
+
+C'est le même défaut que `4e_C4.2` / `4e_C4.4` avec le Book Train, découvert il y a deux jours :
+**l'audit lit les dossiers, l'enseignement vit dans les pages.** Deuxième fois cette semaine, et
+cette fois j'ai regardé avant de produire — ce qui a économisé les deux tiers d'un lot.
+
+### Ce que cette PR fait
+
+Les trois codes passent de « À CRÉER » à « COUVERT PAR UNE SÉQUENCE MUTUALISÉE » dans
+l'OVERLAY, avec la description de ce qui les porte. Et chacun reçoit un **README pointeur** :
+un enseignant remplaçant qui ouvre `4e_C8.2/` trouvait un dossier vide ; il trouve désormais le
+chemin exact vers les deux activités, et ce qu'elles demandent.
+
+Le Thème 3 passe de 17 à **14 codes réellement à créer**.
+
+### Ce qui manque vraiment en C8
+
+Deux codes, et ils forment une spirale nette :
+
+* **`5e_C8.2`** — *mettre en œuvre un protocole fourni pour valider la tenue mécanique d'un
+  matériau* ;
+* **`3e_C8.2`** — *proposer* ce protocole.
+
+Avec `4e_C8.2` au milieu, déjà couvert. C'est le prochain lot, et il est bien plus petit que
+celui que je m'apprêtais à écrire.
+
+- **n°208** — avant de créer ce qu'un audit déclare manquant, chercher qui le fait déjà. Un
+  code « à créer » peut être un code non signalé — et produire deux fois la même chose coûte
+  plus cher que de ne rien produire.

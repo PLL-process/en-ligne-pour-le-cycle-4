@@ -158,6 +158,51 @@ OVERLAY = {
                       "chromatique, mode essentiel, 7 versions étayées.",
         medias="3 SVG originaux CC0 produits pour ce lot.",
     ),
+    # ── C8 : trois codes déclarés « À CRÉER » alors que le travail existe ────────
+    # Mesure du 29/08/2026. Les dossiers 4e_C8.2, 4e_C8.3 et 5e_C8.3 sont vides, donc
+    # l'audit les classait « À CRÉER ». Mais les séquences qui les portent le disent
+    # elles-mêmes, dans leur tableau « Ce que dit le programme — recopié, pas
+    # reformulé » : c'est le dossier qui était vide, pas le travail.
+    # (Même défaut que 4e_C4.2 / 4e_C4.4 avec le Book Train — règle n°196.)
+    "4e_C8.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C8.1",
+        qualite="Porté par « Jardin connecté — valider une solution » (4e_C8.1), activités 1 "
+                "et 2 : l'élève remet en ordre le raisonnement de validation (attendu écrit "
+                "AVANT l'essai, exécution, comparaison, boucle de retest), puis juge la "
+                "conformité des quatre tests et propose le test discriminant qui départagerait "
+                "deux causes. Le tableau « Ce que dit le programme » de la séquence l'annonce "
+                "explicitement.",
+        anomalies="Aucune. Le dossier 4e_C8.2 reste un squelette, ce qui est normal pour un "
+                  "code mutualisé — mais il gagnerait un README pointeur (règle n°205).",
+        accessibilite="s.o.", medias="s.o.",
+    ),
+    "4e_C8.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C8.1",
+        qualite="Porté par « Jardin connecté — valider une solution » (4e_C8.1), activités 2 "
+                "et 3 et le réinvestissement : chaque amélioration proposée doit être "
+                "rattachée à un résultat d'essai précis — « une amélioration qui ne cite aucun "
+                "résultat d'essai est une idée, pas une correction » — et l'élève doit dire "
+                "quels essais rejouer après modification.",
+        anomalies="Aucune. Dossier squelette, README pointeur à écrire.",
+        accessibilite="s.o.", medias="s.o.",
+    ),
+    "5e_C8.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="5e_C7.1",
+        qualite="Porté par le mini-projet d'objet de 5e (5e_C7.1) : vérifier le comportement "
+                "d'un objet en suivant un protocole fourni. Le README de 5e_C8.1 documente "
+                "déjà cette mutualisation pour le code voisin.",
+        anomalies="Aucune. Dossier squelette, README pointeur à écrire.",
+        accessibilite="s.o.", medias="s.o.",
+    ),
     "3e_C1.2": dict(
         statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
         sequence=False, qcm=False, projet=False, synthese=False,
