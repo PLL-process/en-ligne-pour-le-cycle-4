@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexique — 3e_C6.1</title>
+<style>
+  :root{ --bg:#050f24; --panel:#0d2347; --border:#274a8a; --title:#81aaff;
+          --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5; --hl:#61dafb; }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 16px 60px;line-height:1.55;
+       font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+  h1{font-size:1.45em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .sub{text-align:center;color:var(--sub);margin-bottom:14px;font-size:.95em}
+  main{max-width:880px;margin:0 auto}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:14px;
+           padding:14px 20px;margin-bottom:16px}
+  h2{color:var(--head);font-size:1.05em;margin:.2em 0 .6em}
+  dl{margin:0}
+  dt{font-weight:700;color:var(--hl);margin-top:.7em}
+  dd{margin:.15em 0 0 0}
+  dd.vide{color:var(--sub);font-style:italic}
+  .compte{color:var(--sub);font-size:.85em}
+  nav a{color:var(--hl)}
+  footer{max-width:880px;margin:20px auto 0;color:var(--sub);font-size:.85em;text-align:center}
+  @media print{
+    body{background:#fff;color:#000;padding:0}
+    section{background:#fff;border:1px solid #666;break-inside:avoid}
+    h1,h2,dt{color:#000} dd.vide{color:#444} nav,footer{display:none}
+  }
+</style>
+</head>
+<body>
+<nav style="padding-top:12px"><a href="sequence_3e_C6.1-C6.3_programmer_alerte.html">← Revenir à la séquence</a></nav>
+<h1>📖 Lexique — 3e_C6.1</h1>
+<p class="sub">30 notions, tirées mot pour mot des QCM du lot · imprimable · fonctionne hors ligne</p>
+<main>
+<section>
+ <h2>C6.1 <span class="compte">· 15 notions</span></h2>
+ <dl>
+  <dt>Constante</dt>
+  <dd>Constante nommée (MAJUSCULES) = paramètre modifiable en un seul point.</dd>
+  <dt>Donnée lue non utilisée</dt>
+  <dd>Identifier les données révèle aussi les entrées INEXPLOITÉES : des pistes d&#x27;amélioration.</dd>
+  <dt>Donnée produite</dt>
+  <dd>Donnée produite = créée par le programme (résultat, commande, message).</dd>
+  <dt>Donnée utilisée</dt>
+  <dd>Donnée utilisée = lue depuis l&#x27;extérieur (capteur, constante, saisie).</dd>
+  <dt>Fonctionnalité</dt>
+  <dd>Fonctionnalité = service rendu ; le programme n&#x27;est que sa réalisation.</dd>
+  <dt>Initialisation</dt>
+  <dd>Initialiser les sorties à un état SÛR avant les décisions : actionneurs au repos par défaut.</dd>
+  <dt>Lire avant modifier</dt>
+  <dd>Comprendre (C6.1) avant de modifier (C6.3) : toujours dans cet ordre.</dd>
+  <dt>Ordre des tests</dt>
+  <dd>Avec des elif sur des seuils, tester du plus FORT au plus FAIBLE.</dd>
+  <dt>Pourquoi identifier les données</dt>
+  <dd>Identifier entrées/sorties = savoir ce que la modification peut impacter ailleurs.</dd>
+  <dt>Rôle du elif</dt>
+  <dd>if/elif = un seul chemin : le premier test vrai gagne, les autres sont ignorés.</dd>
+  <dt>Sorties vers le système</dt>
+  <dd>Les sorties de la v1 : vigilance (résultat), sirene_active (commande), message (information).</dd>
+  <dt>Trace simple</dt>
+  <dd>Les elif se testent dans l&#x27;ordre et s&#x27;arrêtent au premier vrai.</dd>
+  <dt>Transfert</dt>
+  <dd>La carte d&#x27;identité entrées/sorties s&#x27;établit par la lecture, sur n&#x27;importe quel programme.</dd>
+  <dt>Valeur frontière</dt>
+  <dd>&gt; est strict : à la frontière exacte, le test échoue. C&#x27;est là que &gt; et &gt;= diffèrent.</dd>
+  <dt>Variable réutilisée</dt>
+  <dd>Au sein du programme, une donnée produite peut être réutilisée ; le classement C6.1 se fait vis-à-vis de l&#x27;extérieur.</dd>
+ </dl>
+</section>
+<section>
+ <h2>C6.3 <span class="compte">· 15 notions</span></h2>
+ <dl>
+  <dt>Diagnostiquer par le test</dt>
+  <dd>Un échec de test aux frontières oriente vers l&#x27;opérateur de comparaison.</dd>
+  <dt>L&#x27;erreur d&#x27;indentation</dt>
+  <dd>Lire le message d&#x27;erreur : type + ligne = la moitié de la correction.</dd>
+  <dt>Étendre la structure</dt>
+  <dd>Étendre = nouvelle constante + elif à la bonne place dans l&#x27;ordre + tests aux nouvelles frontières.</dd>
+  <dt>Imiter le modèle</dt>
+  <dd>Étendre un programme = imiter ses motifs validés (initialisation → décision → commande).</dd>
+  <dt>Indentation</dt>
+  <dd>En Python, l&#x27;indentation fait partie du langage : elle délimite les blocs.</dd>
+  <dt>Jeu d&#x27;essai</dt>
+  <dd>Jeu d&#x27;essai = entrée + sortie attendue (à la main) + sortie obtenue + verdict.</dd>
+  <dt>Lire l&#x27;algorigramme</dt>
+  <dd>On implémente une SPÉCIFICATION (algorigramme), pas une intuition.</dd>
+  <dt>Modifier un paramètre</dt>
+  <dd>Modifier un paramètre = changer SA constante, en un seul point.</dd>
+  <dt>Modifier vs valider</dt>
+  <dd>C6.3 = modifier + tester, indissociables : la preuve fait partie de la modification.</dd>
+  <dt>Non-régression</dt>
+  <dd>Après toute modification : tester le NOUVEAU et re-tester l&#x27;ANCIEN (non-régression).</dd>
+  <dt>Prédire l&#x27;effet</dt>
+  <dd>Après chaque modification : re-tracer les cas concernés.</dd>
+  <dt>Sauvegarder et versionner</dt>
+  <dd>Toujours garder la version qui marche : comparer et pouvoir revenir en arrière.</dd>
+  <dt>Un seul échec</dt>
+  <dd>Validation = TOUS les tests passent. Un échec → corriger → tout rejouer.</dd>
+  <dt>Tester sans machine</dt>
+  <dd>Tester = comparer attendu et obtenu ; la trace manuelle est un vrai test.</dd>
+  <dt>Valeurs frontières</dt>
+  <dd>Tester AUX frontières : seuil-1, seuil, seuil+1.</dd>
+ </dl>
+</section>
+</main>
+<footer>
+  Chaque ligne provient d'une question de qcm_3e_C6.1-C6.3_programmer_alerte.html. Rien n'a été réécrit ici :
+  ce lexique rassemble ce que les corrections disaient déjà, une par une.
+</footer>
+</body>
+</html>

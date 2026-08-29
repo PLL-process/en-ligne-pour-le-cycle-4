@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexique — 3e_C4.8</title>
+<style>
+  :root{ --bg:#050f24; --panel:#0d2347; --border:#274a8a; --title:#81aaff;
+          --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5; --hl:#61dafb; }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 16px 60px;line-height:1.55;
+       font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+  h1{font-size:1.45em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .sub{text-align:center;color:var(--sub);margin-bottom:14px;font-size:.95em}
+  main{max-width:880px;margin:0 auto}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:14px;
+           padding:14px 20px;margin-bottom:16px}
+  h2{color:var(--head);font-size:1.05em;margin:.2em 0 .6em}
+  dl{margin:0}
+  dt{font-weight:700;color:var(--hl);margin-top:.7em}
+  dd{margin:.15em 0 0 0}
+  dd.vide{color:var(--sub);font-style:italic}
+  .compte{color:var(--sub);font-size:.85em}
+  nav a{color:var(--hl)}
+  footer{max-width:880px;margin:20px auto 0;color:var(--sub);font-size:.85em;text-align:center}
+  @media print{
+    body{background:#fff;color:#000;padding:0}
+    section{background:#fff;border:1px solid #666;break-inside:avoid}
+    h1,h2,dt{color:#000} dd.vide{color:#444} nav,footer{display:none}
+  }
+</style>
+</head>
+<body>
+<nav style="padding-top:12px"><a href="sequence_3e_C4.7-C4.8_pont_numerique_packet_tracer.html">← Revenir à la séquence</a></nav>
+<h1>📖 Lexique — 3e_C4.8</h1>
+<p class="sub">30 notions, tirées mot pour mot des QCM du lot · imprimable · fonctionne hors ligne</p>
+<main>
+<section>
+ <h2>C4.7 <span class="compte">· 12 notions</span></h2>
+ <dl>
+  <dt>À quoi sert le TTL</dt>
+  <dd>TTL = garde-fou anti-boucle : à zéro, le paquet est détruit.</dd>
+  <dt>Commutateur vs routeur</dt>
+  <dd>Commutateur = distribuer DANS le réseau. Routeur = franchir la frontière ENTRE réseaux.</dd>
+  <dt>Les deux adresses du routeur</dt>
+  <dd>Un routeur = une adresse PAR réseau où il a un pied.</dd>
+  <dt>Internet, réseau de réseaux</dt>
+  <dd>Internet = des réseaux reliés par des routeurs — notre montage, en des centaines de milliers d&#x27;exemplaires.</dd>
+  <dt>Lire un tracert</dt>
+  <dd>tracert = la liste ORDONNÉE des routeurs franchis jusqu&#x27;à la destination.</dd>
+  <dt>La passerelle incarnée</dt>
+  <dd>Passerelle = l&#x27;adresse du routeur côté quartier (le fameux .1).</dd>
+  <dt>Qui transporte le pont ?</dt>
+  <dd>Entre continents, la rue-pont réelle = câbles sous-marins (fibre optique).</dd>
+  <dt>Représenter la circulation</dt>
+  <dd>Représenter la circulation = dessiner CHAQUE maillon dans l&#x27;ordre réel du voyage.</dd>
+  <dt>Le schéma à deux réseaux</dt>
+  <dd>Notre pont = 3 réseaux : les deux quartiers + la rue-pont des routeurs.</dd>
+  <dt>Le TTL, compteur de frontières</dt>
+  <dd>TTL lu = 128 − nombre de routeurs traversés. TTL=126 → 2 frontières.</dd>
+  <dt>Le voyage dans l&#x27;Event List</dt>
+  <dd>Event List = toutes les étapes. tracert = seulement les frontières. Même voyage, deux loupes.</dd>
+  <dt>~1 ms par saut</dt>
+  <dd>Un saut ≈ quelques millisecondes : le voyage par étapes paraît instantané.</dd>
+ </dl>
+</section>
+<section>
+ <h2>C4.8 <span class="compte">· 18 notions</span></h2>
+ <dl>
+  <dt>Activité débranchée</dt>
+  <dd>Débranché + table donnée = comprendre la LOGIQUE du routage avant sa technique.</dd>
+  <dt>Câble croisé du pont</dt>
+  <dd>Même famille d&#x27;appareils = câble croisé. Le pont routeur-routeur en est LE cas d&#x27;école.</dd>
+  <dt>Le cas « directement connecté »</dt>
+  <dd>Destination dans un réseau connecté → livraison locale, sans franchir de frontière.</dd>
+  <dt>La commande derrière le clic</dt>
+  <dd>Ajouter une route = ip route réseau masque prochain-saut (la fenêtre l&#x27;écrit pour toi).</dd>
+  <dt>Diagnostic inter-réseaux</dt>
+  <dd>Local OK, étranger KO → suspecter le chemin inter-réseaux (passerelle, routes ALLER ET RETOUR, pont).</dd>
+  <dt>Du pont au DNB</dt>
+  <dd>Justifier = preuve (expérience) + échelle (Internet) + conclusion (protocole nécessaire).</dd>
+  <dt>L&#x27;expérience de la route effacée</dt>
+  <dd>Une ligne de table effacée = communication inter-réseaux morte. Preuve par l&#x27;expérience.</dd>
+  <dt>L&#x27;explosion des tables</dt>
+  <dd>n réseaux → n−1 routes par routeur, à maintenir partout, tout le temps. Intenable à la main.</dd>
+  <dt>La nécessité du protocole</dt>
+  <dd>Échelle + changements permanents ⇒ tables auto-remplies par un protocole de routage : NÉCESSAIRE.</dd>
+  <dt>Panne de câble sous-marin</dt>
+  <dd>Panne détectée → tables recalculées → trafic dérouté. La résilience d&#x27;Internet, c&#x27;est le routage.</dd>
+  <dt>Passerelle oubliée</dt>
+  <dd>Sans passerelle : local OK, sortie impossible. Symptôme-signature à connaître.</dd>
+  <dt>Port Status On</dt>
+  <dd>Prise de routeur = éteinte par défaut. On (no shutdown) → le lien monte.</dd>
+  <dt>Pourquoi deux routes en tout</dt>
+  <dd>Directement connecté = déjà connu. On n&#x27;écrit que les rues étrangères.</dd>
+  <dt>Le protocole en une phrase</dt>
+  <dd>Protocole de routage = les routeurs s&#x27;informent entre voisins et tiennent leurs tables à jour seuls.</dd>
+  <dt>La route du retour</dt>
+  <dd>Chaque sens du voyage exige SA route. Penser systématiquement « et le retour ? ».</dd>
+  <dt>Route statique</dt>
+  <dd>Route statique = ligne écrite à la main. Simple à 2 réseaux, impossible à l&#x27;échelle d&#x27;Internet.</dd>
+  <dt>La table de routage</dt>
+  <dd>Table de routage = des lignes « réseau de destination → prochain saut ».</dd>
+  <dt>Les trois cas du poste-frontière</dt>
+  <dd>Rue inconnue = paquet DÉTRUIT. C&#x27;est la règle, pas une panne.</dd>
+ </dl>
+</section>
+</main>
+<footer>
+  Chaque ligne provient d'une question de qcm_3e_C4.7-C4.8_pont_numerique.html. Rien n'a été réécrit ici :
+  ce lexique rassemble ce que les corrections disaient déjà, une par une.
+</footer>
+</body>
+</html>

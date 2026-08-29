@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexique — 3e_C4.3</title>
+<style>
+  :root{ --bg:#050f24; --panel:#0d2347; --border:#274a8a; --title:#81aaff;
+          --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5; --hl:#61dafb; }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 16px 60px;line-height:1.55;
+       font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
+  h1{font-size:1.45em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .sub{text-align:center;color:var(--sub);margin-bottom:14px;font-size:.95em}
+  main{max-width:880px;margin:0 auto}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:14px;
+           padding:14px 20px;margin-bottom:16px}
+  h2{color:var(--head);font-size:1.05em;margin:.2em 0 .6em}
+  dl{margin:0}
+  dt{font-weight:700;color:var(--hl);margin-top:.7em}
+  dd{margin:.15em 0 0 0}
+  dd.vide{color:var(--sub);font-style:italic}
+  .compte{color:var(--sub);font-size:.85em}
+  nav a{color:var(--hl)}
+  footer{max-width:880px;margin:20px auto 0;color:var(--sub);font-size:.85em;text-align:center}
+  @media print{
+    body{background:#fff;color:#000;padding:0}
+    section{background:#fff;border:1px solid #666;break-inside:avoid}
+    h1,h2,dt{color:#000} dd.vide{color:#444} nav,footer{display:none}
+  }
+</style>
+</head>
+<body>
+<nav style="padding-top:12px"><a href="sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html">← Revenir à la séquence</a></nav>
+<h1>📖 Lexique — 3e_C4.3</h1>
+<p class="sub">32 notions, tirées mot pour mot des QCM du lot · imprimable · fonctionne hors ligne</p>
+<main>
+<section>
+ <h2>C4.3 <span class="compte">· 8 notions</span></h2>
+ <dl>
+  <dt>Chaîne info vs chaîne énergie</dt>
+  <dd>Deux chaînes distinctes : la chaîne d&#x27;ÉNERGIE alimente, la chaîne d&#x27;INFORMATION mesure, décide, prévient.</dd>
+  <dt>Définition de la chaîne</dt>
+  <dd>À chaque bloc de la chaîne, la NATURE du signal change ; l&#x27;information portée reste la même.</dd>
+  <dt>Fonction Communiquer</dt>
+  <dd>COMMUNIQUER = diffuser l&#x27;information par tout canal : radio, son, lumière, écran, application.</dd>
+  <dt>Lire un schéma bloc</dt>
+  <dd>Schéma bloc = blocs fonctionnels + flèches de flux d&#x27;information étiquetées par la nature du signal.</dd>
+  <dt>Nature des signaux</dt>
+  <dd>Capteur : grandeur physique EN ENTRÉE → signal électrique EN SORTIE.</dd>
+  <dt>Ordre des fonctions</dt>
+  <dd>Chaîne d&#x27;information = ACQUÉRIR → TRAITER → COMMUNIQUER, toujours dans cet ordre.</dd>
+  <dt>Rôle du microcontrôleur</dt>
+  <dd>TRAITER = appliquer le programme et ses seuils pour transformer des mesures en décision.</dd>
+  <dt>Transfert à un autre OST</dt>
+  <dd>Dans TOUT objet connecté on retrouve Acquérir (capteur) / Traiter (processeur + programme) / Communiquer (vibreur, écran, radio).</dd>
+ </dl>
+</section>
+<section>
+ <h2>C4.4 <span class="compte">· 8 notions</span></h2>
+ <dl>
+  <dt>Analogique vs numérique</dt>
+  <dd>Analogique = continu (infinité de valeurs) · Numérique = discret (paliers en nombre limité).</dd>
+  <dt>Calcul de conversion</dt>
+  <dd>valeur = min + N × (étendue ÷ (2ⁿ − 1)) : toujours convertir N avant de l&#x27;interpréter.</dd>
+  <dt>CAN 8 bits (transfert)</dt>
+  <dd>La formule de conversion s&#x27;adapte à chaque CAN : identifier d&#x27;abord n (bits), le min et l&#x27;étendue.</dd>
+  <dt>Choix du nombre de bits</dt>
+  <dd>Nombre de bits du CAN = compromis précision / coût / poids des données.</dd>
+  <dt>Nombre de paliers</dt>
+  <dd>n bits → 2ⁿ valeurs, numérotées de 0 à 2ⁿ − 1.</dd>
+  <dt>Précision du convertisseur</dt>
+  <dd>Précision d&#x27;un CAN = étendue de mesure ÷ (2ⁿ − 1).</dd>
+  <dt>Valeur maximale</dt>
+  <dd>Sortie d&#x27;un CAN n bits : de 0 à 2ⁿ − 1 (10 bits : 0 à 1023).</dd>
+  <dt>Vocabulaire CAN</dt>
+  <dd>CAN = Convertisseur Analogique → Numérique (ADC en anglais) : tension continue → nombre entier.</dd>
+ </dl>
+</section>
+<section>
+ <h2>C4.5 <span class="compte">· 8 notions</span></h2>
+ <dl>
+  <dt>Choisir un descripteur</dt>
+  <dd>Descripteur : explicite + unité + sans espace ni accent (ex. vent_kmh, pression_hpa).</dd>
+  <dt>Coder en binaire</dt>
+  <dd>Binaire : positions = puissances de 2 (…, 4, 2, 1). Un code n&#x27;a de sens qu&#x27;avec sa table de correspondance.</dd>
+  <dt>Dimensionner un codage</dt>
+  <dd>Pour V valeurs : chercher le plus petit n tel que 2ⁿ ≥ V.</dd>
+  <dt>Notion d&#x27;enregistrement</dt>
+  <dd>Table structurée = descripteurs en colonnes + enregistrements en lignes, horodatés.</dd>
+  <dt>Puissances de 2</dt>
+  <dd>n bits → 2ⁿ combinaisons : 1 bit → 2, 2 bits → 4, 3 bits → 8, 4 bits → 16.</dd>
+  <dt>Représenter diverses natures</dt>
+  <dd>Toute information (mesure, lieu, état, instant) peut être représentée par une donnée du type adapté.</dd>
+  <dt>Le type booléen</dt>
+  <dd>Booléen = deux valeurs seulement (vrai/faux) : parfait pour les états binaires.</dd>
+  <dt>Types de données</dt>
+  <dd>Choisir le type selon la nature de l&#x27;information : entier, décimal, texte, booléen, date.</dd>
+ </dl>
+</section>
+<section>
+ <h2>C4.6 <span class="compte">· 8 notions</span></h2>
+ <dl>
+  <dt>Choisir selon l&#x27;usage</dt>
+  <dd>.pdf = document à mise en page figée, idéal pour diffuser et imprimer à l&#x27;identique.</dd>
+  <dt>Format tableau</dt>
+  <dd>Données tabulaires → .csv (ou .ods/.xlsx) : des valeurs qu&#x27;on peut trier, filtrer, calculer.</dd>
+  <dt>Mise en forme</dt>
+  <dd>Mise en forme = structurer la donnée dans un format adapté (csv, json, png, mp3, pdf…).</dd>
+  <dt>Nature → format</dt>
+  <dd>Chaque nature d&#x27;information a ses formats : tableau .csv · image .png/.svg · son .mp3 · message structuré .json · document .pdf.</dd>
+  <dt>Poids et compression</dt>
+  <dd>Compresser = réduire le poids du fichier pour transmettre plus vite et stocker moins — un compromis poids/qualité.</dd>
+  <dt>Redondance de stockage</dt>
+  <dd>Redondance = stocker en deux endroits indépendants pour résister aux pannes et coupures.</dd>
+  <dt>Rôle du serveur</dt>
+  <dd>Serveur = ordinateur qui stocke les fichiers et les met à disposition des terminaux via le réseau.</dd>
+  <dt>Transmission = copie</dt>
+  <dd>Transmettre = copier vers un autre équipement ; l&#x27;original reste en place.</dd>
+ </dl>
+</section>
+</main>
+<footer>
+  Chaque ligne provient d'une question de qcm_3e_C4.3-C4.6_station_alerte_cyclonique.html. Rien n'a été réécrit ici :
+  ce lexique rassemble ce que les corrections disaient déjà, une par une.
+</footer>
+</body>
+</html>
