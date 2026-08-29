@@ -9263,3 +9263,10 @@ une comparaison fausse : aucun test ne vérifie qu'on compare au bon candidat.
   de l'activité fautive étaient exacts, calculés, et vérifiés par un test. Ce qui était faux était
   le **candidat auquel on les comparait**. Une valeur se contrôle par le calcul ; un point de
   comparaison ne se contrôle que par la question « et par rapport à quoi, déjà ? ».
+- **n°231** — **ne jamais lancer une commande git qui écrit à travers le pont Linux.** La règle
+  existait déjà, pour une raison (les fins de ligne Windows) ; la vraie raison est plus dure. Le
+  pont **ne peut pas supprimer de fichier**. Or git pose des verrous — `index.lock`,
+  `objects/maintenance.lock` — et les retire à la fin. Un `git fetch` lancé là laisse donc ses
+  verrous en place, et le dépôt refuse ensuite toute commande qui écrit l'index. Vérifié sur ce
+  lot : `warning: unable to unlink '.git/objects/maintenance.lock'`. Les commandes git qui
+  écrivent se lancent **nativement** sur la machine, jamais depuis le montage.
