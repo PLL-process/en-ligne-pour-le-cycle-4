@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 5e — La patère du hall : éprouver un matériau (5e_C8.2)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc d'essai de traction — original, CC0 ───────────────────────────── */
+.banc{display:grid;grid-template-columns:minmax(220px,1fr) minmax(240px,1.1fr);gap:16px;align-items:start}
+@media(max-width:640px){.banc{grid-template-columns:1fr}}
+.banc svg{width:100%;height:auto;background:#081b3a}
+.banc-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.banc-cmd label{font-size:.9em;color:var(--sub)}
+.banc-cmd select{width:auto;min-width:190px}
+.jauge{height:14px;border-radius:7px;background:#0a1b3d;border:1px solid var(--border);overflow:hidden}
+.jauge>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa76d,#ffd66b,#ff7b88);transition:width .18s}
+.lecture{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.25em;color:var(--hl)}
+.casse{color:var(--err);font-weight:700}
+table.releve{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td input{padding:4px 8px}
+.verdict-ok{color:var(--ok);font-weight:700}
+.verdict-non{color:var(--err);font-weight:700}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C8.2.html">📖 Lexique</a></nav>
+
+<h1>🪝 La patère du hall — éprouver un matériau</h1>
+<p class="subtitle">Thème 3 · 5<sup>e</sup> — Valider les solutions techniques par des essais</p>
+<div class="badges">
+  <span class="badge">5e</span>
+  <span class="badge">5e_C8.2</span>
+  <span class="badge">Thème 3 — Création, conception, réalisation</span>
+  <span class="badge">Socle : D1.3 · D4 · D5</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu as déjà fait</h2>
+  <p>Dans le <strong>mini-projet du hall</strong>, tu as imaginé un indicateur de rangement, tu l'as
+  validé en suivant un protocole, et tu as écrit sa règle. Tu sais donc déjà ce qu'est un protocole :
+  une suite d'essais décidés <em>à l'avance</em>.</p>
+  <p><strong>Ce qui change aujourd'hui :</strong> jusqu'ici tu validais un <em>comportement</em> —
+  la LED s'allume-t-elle au bon moment ? Aujourd'hui tu valides une <strong>matière</strong> :
+  est-ce que ça tient, ou est-ce que ça casse ? Le protocole t'est encore fourni. En 3<sup>e</sup>,
+  c'est toi qui l'écriras.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>5e_C8.2</b></td>
+        <td>Mettre en œuvre un protocole de test fourni pour valider la tenue mécanique d'un matériau.</td>
+        <td>Activités 1, 2 et 3</td></tr>
+    <tr><td>5e_C3.1 <span style="color:var(--sub)">(appui)</span></td>
+        <td>Identifier les caractéristiques à prendre en compte dans le choix d'un OST.</td>
+        <td>Activités 3 et 4</td></tr>
+  </table>
+  <p class="retenir"><strong>Le verbe est « mettre en œuvre », pas « inventer ».</strong> Le protocole
+  est écrit, il est juste, et il n'attend qu'une chose : que quelqu'un l'applique <em>sans en sauter
+  une ligne</em>. C'est exactement ce qu'on te demande — et c'est plus difficile qu'il n'y paraît.</p>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>Trois patères du hall ont cédé cette semaine. Toujours de la même façon : un sac de cours
+    trempé par l'averse de midi, accroché d'un coup sec, et le crochet plie. Le gestionnaire du
+    collège veut les remplacer une bonne fois — mais il refuse de choisir « au feeling ».</p>
+    <p>« Vous avez un laboratoire, dit-il. Je veux un chiffre. Quel matériau, et pourquoi celui-là. »</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment savoir, <em>avant</em> de fabriquer, si un matériau tiendra la charge ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <p>D'après toi, lequel de ces cinq matériaux tiendra le plus lourd — bois, PLA imprimé en 3D,
+    PVC, aluminium, acier ? Et surtout : <em>comment pourrait-on le savoir sans casser la vraie patère&nbsp;?</em></p>
+    <textarea id="hyp" rows="3" placeholder="Mon hypothèse, et comment je m'y prendrais…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan. Personne ne
+    la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le vrai laboratoire</b> — le « laboratoire des matériaux » du Réseau National
+      Technologie Collège (application gratuite à installer, essais de traction et de compression
+      sur cinq éprouvettes). Le protocole ci-dessous s'y applique tel quel.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — le banc d'essai ci-dessous fonctionne hors ligne,
+      sans rien installer. C'est la voie par défaut.</li>
+    <li><b>🅲 Sans écran</b> — le tableau de relevés s'imprime, et les cinq charges de rupture sont
+      données dans la correction de l'activité 2. Le travail reste le même : lire, relever, décider.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois éprouvettes ⏱ ~10 min</h2>
+  <p>Avant toute explication. Choisis un matériau, augmente la charge, regarde ce qui se passe.
+  <strong>Casse au moins trois éprouvettes différentes</strong> avant de continuer.</p>
+
+  <div class="banc">
+    <div>
+      <svg viewBox="0 0 200 260" role="img" aria-labelledby="bancTitre bancDesc">
+        <title id="bancTitre">Banc d'essai de traction</title>
+        <desc id="bancDesc">Une éprouvette est tenue entre deux mors. Une charge suspendue en bas
+        l'étire. Quand la charge dépasse la résistance du matériau, l'éprouvette casse en deux.</desc>
+        <rect x="0" y="0" width="200" height="260" fill="#081b3a"/>
+        <rect x="55" y="14" width="90" height="16" fill="#274a8a"/>
+        <text x="100" y="10" fill="#9bbefc" font-size="9" text-anchor="middle">mors fixe</text>
+        <rect x="88" y="30" width="24" height="14" fill="#61dafb"/>
+        <g id="epr">
+          <rect id="eprHaut" x="94" y="44" width="12" height="70" fill="#c9d6ef"/>
+          <rect id="eprBas" x="94" y="114" width="12" height="70" fill="#c9d6ef"/>
+        </g>
+        <rect id="mors2" x="88" y="184" width="24" height="14" fill="#61dafb"/>
+        <g id="charge">
+          <line x1="100" y1="198" x2="100" y2="212" stroke="#9bbefc" stroke-width="2"/>
+          <rect x="72" y="212" width="56" height="30" rx="4" fill="#1d4e89" stroke="#61dafb"/>
+          <text id="chargeTxt" x="100" y="232" fill="#fff" font-size="13" text-anchor="middle">0 kg</text>
+        </g>
+        <text id="etat" x="100" y="256" fill="#81fba1" font-size="11" text-anchor="middle">intacte</text>
+      </svg>
+    </div>
+    <div>
+      <div class="banc-cmd">
+        <label for="mat">Éprouvette :</label>
+        <select id="mat">
+        <option value="Bois (pin)">Bois (pin)</option>
+        <option value="PLA imprimé en 3D">PLA imprimé en 3D</option>
+        <option value="PVC rigide">PVC rigide</option>
+        <option value="Aluminium">Aluminium</option>
+        <option value="Acier doux">Acier doux</option>
+      </select>
+      </div>
+      <div class="banc-cmd">
+        <button class="btn" id="plus10" type="button">+ 10 kg</button>
+        <button class="btn" id="plus50" type="button">+ 50 kg</button>
+        <button class="btn" id="reset" type="button">↺ Nouvelle éprouvette</button>
+      </div>
+      <p class="lecture">Charge : <span id="lect">0</span> kg</p>
+      <div class="jauge"><span id="jauge"></span></div>
+      <p id="msg" style="min-height:2.6em;font-size:.92em;color:var(--sub);margin:8px 0 0">
+        Choisis un matériau, puis charge jusqu'à la rupture.</p>
+      <p style="font-size:.82em;color:var(--sub);margin:4px 0 0">Éprouvettes identiques :
+        section 2 × 5 mm. Valeurs <b>simulées</b>, cohérentes avec les résistances usuelles.</p>
+    </div>
+  </div>
+
+  <div class="exo">
+    <h4>Après avoir cassé trois éprouvettes</h4>
+    <p>À charge égale, deux matériaux différents…</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>cassent toujours au même moment</option>
+      <option>ne cassent pas au même moment</option>
+      <option>ne cassent jamais</option>
+    </select>
+    <p style="margin-top:10px">Ce que le banc mesure, c'est…</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>la couleur du matériau</option>
+      <option>la charge à partir de laquelle l'éprouvette casse</option>
+      <option>le prix du matériau</option>
+      <option>le poids de l'éprouvette</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📋 Activité 1 — Lire le protocole AVANT d'y toucher ⏱ ~15 min</h2>
+  <p><b>Objectif :</b> comprendre ce qu'on te demande de faire, avant de le faire.
+  <b>Compétence :</b> 5e_C8.2. <b>Production attendue :</b> 4 réponses + une phrase.</p>
+
+  <div class="exo">
+    <h4>📄 Le protocole d'essai — fourni par le laboratoire</h4>
+    <div class="codebox">PROTOCOLE — tenue en traction d'un matériau
+
+1. Prendre une éprouvette NEUVE du matériau à tester.
+   Toutes les éprouvettes ont la même forme et la même section (2 x 5 mm).
+2. La fixer entre les deux mors du banc.
+3. Augmenter la charge par paliers, sans a-coup.
+4. Noter la charge au moment EXACT ou l'eprouvette casse.
+   C'est la CHARGE DE RUPTURE du materiau.
+5. Recommencer avec le materiau suivant.
+6. Ne comparer que des essais faits avec la MEME eprouvette et le MEME banc.</div>
+    <p style="margin-top:12px"><b>Question 1.</b> Pourquoi les éprouvettes doivent-elles toutes
+    avoir la même section ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>pour qu'elles soient jolies</option>
+      <option>pour que la comparaison porte sur le matériau, et pas sur la taille</option>
+      <option>pour qu'elles cassent toutes en même temps</option>
+      <option>parce que le banc n'accepte qu'une seule taille</option>
+    </select>
+    <p><b>Question 2.</b> À quel moment précis note-t-on la valeur ?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>au début, quand on accroche la première charge</option>
+      <option>quand l'éprouvette commence à s'allonger</option>
+      <option>au moment exact où l'éprouvette casse</option>
+      <option>quand on en a assez d'ajouter des poids</option>
+    </select>
+    <p><b>Question 3.</b> Le protocole dit « une éprouvette NEUVE ». Pourquoi pas réutiliser
+    la précédente ?</p>
+    <select id="a1q3">
+      <option value="">— je choisis —</option>
+      <option>parce qu'elle est sale</option>
+      <option>parce qu'une éprouvette déjà tirée est abîmée, même si ça ne se voit pas</option>
+      <option>parce que le banc l'a mémorisée</option>
+      <option>ce n'est pas important, on peut la réutiliser</option>
+    </select>
+    <p><b>Question 4.</b> La dernière ligne interdit de comparer des essais faits sur deux bancs
+    différents. Quel mot du protocole cette règle protège-t-elle ?</p>
+    <select id="a1q4">
+      <option value="">— je choisis —</option>
+      <option>« neuve »</option>
+      <option>« comparer »</option>
+      <option>« paliers »</option>
+      <option>« casser »</option>
+    </select>
+    <p><b>En une phrase :</b> qu'est-ce que ce protocole permet de mesurer, exactement ?</p>
+    <textarea id="a1ph" rows="2" placeholder="Ce protocole permet de mesurer…"></textarea>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction détaillée</summary><div>
+      <p><b>1 — même section.</b> Une grosse pièce tient plus qu'une petite, quel que soit le
+      matériau. Si les éprouvettes n'ont pas la même section, on compare des tailles, pas des
+      matières. C'est la première chose qu'un protocole verrouille : <em>ce qui ne doit pas varier</em>.</p>
+      <p><b>2 — au moment exact de la rupture.</b> Avant, on ne sait pas encore ; après, on a perdu
+      la valeur. La charge de rupture est un point, pas une plage.</p>
+      <p><b>3 — éprouvette neuve.</b> Une pièce qui a été tirée près de sa limite garde des fissures
+      invisibles. Elle cassera plus tôt la fois suivante, et le relevé sera faux sans que rien ne
+      le signale. C'est le piège des essais : une erreur qui ne se voit pas.</p>
+      <p><b>4 — « comparer ».</b> Toutes les précautions du protocole servent une seule chose :
+      que les cinq nombres relevés soient <em>comparables entre eux</em>. Un nombre seul ne décide
+      de rien ; c'est la comparaison qui décide.</p>
+      <p><b>La phrase attendue</b> dit deux choses : la charge à partir de laquelle un matériau
+      <em>casse en traction</em>, et pour une éprouvette <em>de forme et de section données</em>.
+      Sans la seconde moitié, la mesure ne veut rien dire.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧪 Activité 2 — Mettre en œuvre : les cinq relevés ⏱ ~25 min</h2>
+  <p><b>Objectif :</b> appliquer le protocole aux cinq matériaux et relever. <b>Compétence :</b>
+  5e_C8.2. <b>Production attendue :</b> 5 charges de rupture relevées au banc.</p>
+  <p>Remonte au banc de l'activité 0. Pour chaque matériau : éprouvette neuve (↺), charge par
+  paliers, et note la valeur <b>au moment de la rupture</b>.</p>
+
+  <table class="releve">
+    <tr><th>Matériau</th><th>Charge de rupture relevée (kg)</th></tr>
+    <tr><td>Bois (pin)</td><td><input type="text" inputmode="numeric" id="rel0" placeholder="… kg"></td></tr>
+    <tr><td>PLA imprimé en 3D</td><td><input type="text" inputmode="numeric" id="rel1" placeholder="… kg"></td></tr>
+    <tr><td>PVC rigide</td><td><input type="text" inputmode="numeric" id="rel2" placeholder="… kg"></td></tr>
+    <tr><td>Aluminium</td><td><input type="text" inputmode="numeric" id="rel3" placeholder="… kg"></td></tr>
+    <tr><td>Acier doux</td><td><input type="text" inputmode="numeric" id="rel4" placeholder="… kg"></td></tr>
+  </table>
+  <p style="font-size:.9em;color:var(--warn)">🔒 Le vérificateur attend que les cinq éprouvettes
+  aient réellement été cassées au banc.</p>
+  <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+  <div class="feedback" id="fb2"></div>
+  <details class="correction"><summary>📖 Correction — les cinq relevés</summary><div>
+    <table class="refs">
+      <tr><th>Matériau</th><th>Charge de rupture</th></tr>
+      <tr><td>Bois (pin)</td><td><b>41 kg</b></td></tr>
+      <tr><td>PLA imprimé en 3D</td><td><b>51 kg</b></td></tr>
+      <tr><td>PVC rigide</td><td><b>53 kg</b></td></tr>
+      <tr><td>Aluminium</td><td><b>194 kg</b></td></tr>
+      <tr><td>Acier doux</td><td><b>408 kg</b></td></tr>
+    </table>
+    <p style="margin-top:10px">Ces valeurs sont <b>simulées</b>, mais elles ne sont pas inventées :
+    elles viennent des résistances à la traction usuelles de ces matériaux, appliquées à une
+    éprouvette de 10 mm² de section. L'ordre de grandeur est juste, et c'est lui qui compte.</p>
+    <p class="retenir">⚠️ <b>Piège classique :</b> croire que l'acier est « dix fois plus solide »
+    que le bois <em>partout</em>. Ce que tu as mesuré, c'est la traction — tirer dans l'axe. En
+    flexion, en choc ou dans l'eau, le classement peut changer.</p>
+  </div></details>
+</section>
+
+<section class="card">
+  <h2>⚖️ Activité 3 — Décider, et le justifier ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> transformer cinq nombres en une décision. <b>Compétences :</b> 5e_C8.2 et
+  5e_C3.1. <b>Production attendue :</b> 3 réponses + une justification chiffrée.</p>
+
+  <div class="exo">
+    <h4>Le cahier des charges du gestionnaire</h4>
+    <ul>
+      <li>Un sac de cours trempé pèse <b>8 kg</b>.</li>
+      <li>Le collège applique un <b>coefficient de sécurité de 5</b> : la patère doit tenir cinq
+        fois la charge prévue, parce qu'un élève s'y suspend un jour ou l'autre.</li>
+    </ul>
+    <p><b>Question 1.</b> Quelle charge la patère doit-elle donc tenir ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>8 kg</option>
+      <option>13 kg</option>
+      <option>40 kg</option>
+      <option>100 kg</option>
+    </select>
+    <p><b>Question 2.</b> D'après tes relevés, combien de matériaux passent cette barre ?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>un seul</option>
+      <option>deux</option>
+      <option>les cinq</option>
+      <option>aucun</option>
+    </select>
+    <p><b>Question 3.</b> Le bois casse à 41 kg pour 40 kg exigés. Que dis-tu au gestionnaire ?</p>
+    <select id="a3q3">
+      <option value="">— je choisis —</option>
+      <option>c'est bon, 41 est plus grand que 40</option>
+      <option>ça passe tout juste : une pièce un peu moins bonne que l'éprouvette ne passe plus</option>
+      <option>c'est le meilleur choix puisqu'il est le moins cher</option>
+      <option>il faut refaire l'essai jusqu'à obtenir 40</option>
+    </select>
+    <p><b>Ta recommandation, en deux phrases.</b> Nomme le matériau, et cite <b>ton chiffre</b>.</p>
+    <textarea id="a3rec" rows="3" placeholder="Je recommande … parce que mon relevé donne … kg pour … kg exigés."></textarea>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction détaillée</summary><div>
+      <p><b>1 — 40 kg.</b> 8 × 5. Le coefficient de sécurité n'est pas une précaution de peureux :
+      c'est la reconnaissance qu'on ne connaît ni la vraie charge, ni la vraie pièce.</p>
+      <p><b>2 — les cinq</b> passent la barre des 40 kg : 41, 51, 53, 194 et 408. C'est justement
+      ce qui rend la décision intéressante — <em>tous</em> les candidats sont recevables sur le
+      seul critère de la traction. Il faut donc un autre critère pour trancher, et c'est
+      l'activité 4.</p>
+      <p><b>3 — ça passe tout juste.</b> 41 pour 40, c'est 2,5&nbsp;% de marge. Or ton éprouvette
+      était un morceau de bois <em>sans défaut</em>. La vraie patère aura un nœud, une fibre de
+      travers, une reprise d'humidité. Un essai réussi de 2,5&nbsp;% n'est pas un essai réussi :
+      c'est un essai qu'on n'a pas eu le temps de rater.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🕳️ Activité 4 — Ce que l'essai ne dit pas ⏱ ~15 min</h2>
+  <p><b>Objectif :</b> savoir ce qu'une mesure ne mesure pas. <b>Compétence :</b> 5e_C3.1.
+  <b>Production attendue :</b> 5 associations.</p>
+  <p>Les cinq matériaux passent la barre. Pourtant on ne va pas faire la patère en n'importe quoi.
+  Associe chaque matériau à la <em>chose que l'essai de traction n'a pas vue</em>.</p>
+  <div class="exo">
+    <p><b>Bois (pin)</b></p>
+    <select id="a4q0">
+      <option value="">— je choisis —</option>
+        <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
+        <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
+        <option>Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois.</option>
+        <option>Léger et solide, mais il se raye et se plie définitivement avant de casser.</option>
+        <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
+    </select>
+    <p><b>PLA imprimé en 3D</b></p>
+    <select id="a4q1">
+      <option value="">— je choisis —</option>
+        <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
+        <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
+        <option>Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois.</option>
+        <option>Léger et solide, mais il se raye et se plie définitivement avant de casser.</option>
+        <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
+    </select>
+    <p><b>PVC rigide</b></p>
+    <select id="a4q2">
+      <option value="">— je choisis —</option>
+        <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
+        <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
+        <option>Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois.</option>
+        <option>Léger et solide, mais il se raye et se plie définitivement avant de casser.</option>
+        <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
+    </select>
+    <p><b>Aluminium</b></p>
+    <select id="a4q3">
+      <option value="">— je choisis —</option>
+        <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
+        <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
+        <option>Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois.</option>
+        <option>Léger et solide, mais il se raye et se plie définitivement avant de casser.</option>
+        <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
+    </select>
+    <p><b>Acier doux</b></p>
+    <select id="a4q4">
+      <option value="">— je choisis —</option>
+        <option>51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</option>
+        <option>En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</option>
+        <option>Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois.</option>
+        <option>Léger et solide, mais il se raye et se plie définitivement avant de casser.</option>
+        <option>Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</option>
+    </select>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction — cinq angles morts</summary><div>
+      <p><b>Bois (pin)</b> — Un nœud dans la pièce, et la même éprouvette casse bien plus tôt.</p>
+      <p><b>PLA imprimé en 3D</b> — 51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié.</p>
+      <p><b>PVC rigide</b> — Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois.</p>
+      <p><b>Aluminium</b> — Léger et solide, mais il se raye et se plie définitivement avant de casser.</p>
+      <p><b>Acier doux</b> — En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.</p>
+      <p class="retenir">📌 <b>À retenir :</b> un essai répond à <em>une</em> question, celle qu'on
+      lui a posée. « Ça tient 51 kg » ne veut pas dire « c'est le bon matériau » : ça veut dire
+      « ça tient 51 kg, en traction, dans les conditions de l'essai ». Tout le reste est encore
+      à vérifier.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+  <p>Le CDI veut une <b>étagère</b> pour les manuels : 25 kg de livres, même coefficient de
+  sécurité de 5. Tu disposes du même banc et du même protocole.</p>
+  <p><b>Écris les trois premières lignes de ce que tu ferais</b> — et attention, une chose change
+  par rapport à la patère : l'étagère travaille en <em>flexion</em>, pas en traction.</p>
+  <textarea id="reinv" rows="4" placeholder="1. … 2. … 3. …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+    <p>La charge exigée se calcule pareil : 25 × 5 = <b>125 kg</b>. Le protocole s'applique
+    pareil : éprouvette neuve, paliers, note à la rupture, on ne compare que le comparable.</p>
+    <p><b>Mais l'essai de traction ne répond plus à la question.</b> Une étagère plie, elle ne
+    s'étire pas. Il faut un essai de <em>flexion</em> — et donc un autre protocole. Reconnaître
+    qu'un protocole ne convient pas à une question, c'est déjà de la 3<sup>e</sup>.</p>
+  </div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Éprouvette</b> — un morceau de matière de forme et de taille imposées, fait pour être
+      cassé. On ne compare des matériaux qu'à éprouvettes identiques.</li>
+    <li><b>Charge de rupture</b> — la charge à partir de laquelle l'éprouvette casse. C'est un
+      point, pas une plage : on la note au moment exact.</li>
+    <li><b>Traction</b> — tirer dans l'axe. Ce n'est pas la seule façon de casser : il y a aussi
+      la flexion, la compression, le choc.</li>
+    <li><b>Coefficient de sécurité</b> — le nombre par lequel on multiplie la charge prévue, parce
+      qu'on ne connaît ni la vraie charge, ni la vraie pièce.</li>
+    <li><b>Protocole</b> — la suite d'essais décidée <em>avant</em>. Ce qu'il verrouille compte
+      autant que ce qu'il mesure : ce qui ne doit pas varier.</li>
+    <li><b>Ce qu'un essai ne dit pas</b> — un essai répond à la question qu'on lui a posée, et à
+      elle seule.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton hypothèse de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+  <p>Compare-la à ce que tu as relevé. Avais-tu prévu le bon classement ? Et surtout : avais-tu
+  prévu que <em>tous</em> les matériaux passeraient, et qu'il faudrait un autre critère pour
+  trancher ?</p>
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 5e_C8.2 — mettre en œuvre un protocole fourni :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>🔴 Maîtrise insuffisante — je ne sais pas encore quoi noter, ni quand</option>
+    <option>🟠 Maîtrise fragile — j'y arrive avec le protocole sous les yeux, ligne par ligne</option>
+    <option>🟢 Maîtrise satisfaisante — j'applique le protocole seul·e et je relève juste</option>
+    <option>⭐ Très bonne maîtrise — je relève, je décide, et je dis ce que l'essai ne prouve pas</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur l'éprouvette, la charge
+  de rupture, le coefficient de sécurité et ce qu'un essai ne dit pas.</p>
+  <a class="btn" href="qcm_5e_C8.2_patere-du-hall.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>🔬 Défi laboratoire :</b> installe le « laboratoire des matériaux » du Réseau National
+  Technologie Collège (gratuit, sans compte) et refais le protocole en <em>compression</em>.
+  Le classement des cinq matériaux est-il le même qu'en traction ?</p>
+  <p><b>📏 Défi section :</b> le banc utilise une éprouvette de 2 × 5 mm. Si on doublait la
+  largeur, à quelle charge le bois casserait-il ? Explique ton raisonnement.</p>
+  <p><b>🌊 Défi bord de mer :</b> nous sommes en Martinique. Reprends les cinq matériaux et
+  classe-les non plus par charge de rupture, mais par tenue à l'air salé. Le gagnant change-t-il ?</p>
+</section>
+
+<footer>Séquence 5e_C8.2 — <em>La patère du hall</em> · Thème 3 · banc d'essai original (CC0),
+valeurs simulées cohérentes avec les résistances usuelles.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_5e_C8_2_patere";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+const MAT = {"Bois (pin)": {kg: 41}, "PLA imprimé en 3D": {kg: 51}, "PVC rigide": {kg: 53}, "Aluminium": {kg: 194}, "Acier doux": {kg: 408}};
+
+document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = e.textContent
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/^([A-Z][A-Z \u2014-]+)$/gm,'<span class="py-kw">$1</span>')
+  .replace(/^(\d+\.)/gm,'<span class="py-num">$1</span>'); });
+
+/* ── banc d'essai : verrou = trois éprouvettes réellement cassées ───────── */
+let charge = 0, cassee = false;
+const brisees = new Set();
+function dessine(){
+  const m = MAT[$("mat").value] || {kg: 1};
+  const r = Math.min(1, charge / m.kg);
+  $("lect").textContent = charge;
+  $("chargeTxt").textContent = charge + " kg";
+  $("jauge").style.width = (r * 100) + "%";
+  const allonge = cassee ? 0 : Math.round(r * 10);
+  $("eprHaut").setAttribute("height", 70 + allonge);
+  $("eprBas").setAttribute("y", 114 + allonge);
+  $("mors2").setAttribute("y", 184 + (cassee ? 26 : allonge));
+  $("charge").setAttribute("transform", "translate(0," + (cassee ? 26 : allonge) + ")");
+  $("eprBas").setAttribute("y", cassee ? 140 : 114 + allonge);
+  $("etat").textContent = cassee ? "CASSÉE" : (r > .8 ? "elle s'allonge…" : "intacte");
+  $("etat").setAttribute("fill", cassee ? "#ff7b88" : (r > .8 ? "#ffd66b" : "#81fba1"));
+}
+function ajoute(p){
+  if(cassee){ $("msg").innerHTML = "L'éprouvette est cassée. Clique sur <b>↺ Nouvelle éprouvette</b>."; return; }
+  const m = MAT[$("mat").value];
+  charge += p;
+  if(charge >= m.kg){
+    cassee = true; charge = m.kg;
+    brisees.add($("mat").value);
+    $("msg").innerHTML = '<span class="casse">✖ Rupture à ' + m.kg + ' kg.</span> ' +
+      (brisees.size < 3 ? "Encore " + (3 - brisees.size) + " matériau(x) à casser." :
+       "Trois éprouvettes cassées : tu peux répondre.");
+    if(brisees.size >= 3) window.__exp.banc3 = true;
+    if(brisees.size >= 5) window.__exp.banc5 = true;
+  } else {
+    $("msg").textContent = "Elle tient encore. Continue.";
+  }
+  dessine(); save();
+}
+$("plus10").addEventListener("click", () => ajoute(10));
+$("plus50").addEventListener("click", () => ajoute(50));
+$("reset").addEventListener("click", () => { charge = 0; cassee = false;
+  $("msg").textContent = "Éprouvette neuve en place."; dessine(); save(); });
+$("mat").addEventListener("change", () => { charge = 0; cassee = false;
+  $("msg").textContent = "Éprouvette neuve en place."; dessine(); save(); });
+
+/* ── vérificateurs ─────────────────────────────────────────────────────── */
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+const CHECKS = {
+  0(){ let s = sv("a0q1","ne cassent pas au même moment")
+             + sv("a0q2","la charge à partir de laquelle l'éprouvette casse");
+       return {score: s, total: 2, exp: !!window.__exp.banc3,
+               expMsg: "Casse d'abord trois éprouvettes différentes au banc — c'est l'expérience qui fait foi."}; },
+  1(){ let s = sv("a1q1","pour que la comparaison porte sur le matériau, et pas sur la taille")
+             + sv("a1q2","au moment exact où l'éprouvette casse")
+             + sv("a1q3","parce qu'une éprouvette déjà tirée est abîmée, même si ça ne se voit pas")
+             + sv("a1q4","« comparer »") + pres("a1ph", 25);
+       return {score: s, total: 5, exp: true}; },
+  2(){ let s = 0; s += nb("rel0", 41, 0); s += nb("rel1", 51, 0); s += nb("rel2", 53, 0); s += nb("rel3", 194, 0); s += nb("rel4", 408, 0);
+       return {score: s, total: 5, exp: !!window.__exp.banc5,
+               expMsg: "Casse les CINQ éprouvettes au banc : on ne recopie pas un relevé qu'on n'a pas fait."}; },
+  3(){ let s = sv("a3q1","40 kg") + sv("a3q2","les cinq")
+             + sv("a3q3","ça passe tout juste : une pièce un peu moins bonne que l'éprouvette ne passe plus")
+             + pres("a3rec", 40);
+       return {score: s, total: 4, exp: true}; },
+  4(){ let s = 0; s += sv("a4q0", "Un nœud dans la pièce, et la même éprouvette casse bien plus tôt."); s += sv("a4q1", "51 kg dans le sens des couches. En travers, l'éprouvette se déchire à moins de la moitié."); s += sv("a4q2", "Le PVC flue : sous une charge permanente, il se déforme lentement pendant des mois."); s += sv("a4q3", "Léger et solide, mais il se raye et se plie définitivement avant de casser."); s += sv("a4q4", "En bord de mer, sans protection, il rouille — et une patère rouillée tache les manteaux.");
+       return {score: s, total: 5, exp: true}; },
+  5(){ return {score: pres("reinv", 40), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+/* ── sauvegarde locale ─────────────────────────────────────────────────── */
+function save(){
+  const o = {inputs: {}, exp: window.__exp, brisees: [...brisees]};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  window.__exp = o.exp || {};
+  (o.brisees || []).forEach(b => brisees.add(b));
+  const h = $("hyp"); const r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); dessine();
+})();
+</script>
+
+</body>
+</html>
