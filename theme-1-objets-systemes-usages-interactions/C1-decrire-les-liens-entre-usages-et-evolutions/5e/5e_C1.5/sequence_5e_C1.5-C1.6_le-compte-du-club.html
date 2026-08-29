@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 5e — Le compte du club (5e_C1.5)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc de la publication — original, CC0 ─────────────────────────────── */
+.publi{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+table.elems{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.elems th,table.elems td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.elems th{background:#173666;color:var(--hl)}
+table.elems td.ck{width:34px;text-align:center}
+table.elems td input[type=checkbox]{width:17px;height:17px;accent-color:#61dafb}
+table.elems tr.pris td:not(.ck){color:#fff}
+.publi-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.publi-cmd label{font-size:.9em;color:var(--sub)}
+.publi-cmd select{width:auto;min-width:250px}
+.compteur{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.jauge{flex:1;min-width:190px;background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 11px}
+.jauge b{display:block;font-size:1.5em;color:var(--hl);font-variant-numeric:tabular-nums}
+.jauge span{font-size:.8em;color:var(--sub)}
+.jauge.zero b{color:var(--ok)}
+.jauge.alerte b{color:var(--err)}
+ul.revele{list-style:none;padding:0;margin:8px 0}
+ul.revele li{padding:4px 0 4px 24px;position:relative;font-size:.92em}
+ul.revele li::before{position:absolute;left:0;font-weight:700}
+ul.revele li.vu::before{content:"👁";color:var(--warn)}
+ul.revele li.loi::before{content:"⚖";color:var(--err)}
+ul.revele li.rien::before{content:"✔";color:var(--ok)}
+ul.revele li.rien{color:var(--sub)}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:150px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C1.5.html">📖 Lexique</a></nav>
+
+<h1>📣 Le compte du club</h1>
+<p class="subtitle">Thème 1 · 5<sup>e</sup> — Usages, interactions et responsabilité</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C1.5</span>
+  <span class="badge code">5e_C1.6 (appui)</span>
+  <span class="badge theme">Thème 1 — Les objets et les systèmes techniques : leurs usages et leurs interactions à découvrir et à analyser</span>
+  <span class="badge socle">Socle : D2 · D3</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Avec <b>Chengdu</b> (5e_C1.1 à C1.6) tu as appris ce qu'est une <b>donnée</b>, comment on la
+  recense et comment un système d'information la range. Tu sais qu'une donnée n'est pas un
+  nombre en l'air : elle désigne quelque chose, ou quelqu'un.</p>
+  <p><b>Ce qui change aujourd'hui :</b> la donnée sort du système et devient publique. Une fois
+  publiée, elle ne se reprend pas — et elle engage celui qui a appuyé sur le bouton. Ce n'est
+  plus une question de rangement, c'est une question de <b>responsabilité</b>.</p>
+  <p style="color:var(--sub);font-size:.93em">L'an prochain, la séquence de 4<sup>e</sup>
+  (<code>4e_C1.4</code>) reprendra ces règles pour les objets connectés : identité numérique,
+  témoins de connexion, géolocalisation. Ici on reste sur une publication, et sur ce qu'elle
+  révèle.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>5e_C1.5</b></td><td>Identifier des règles permettant de sécuriser un environnement numérique (bases de la cybersécurité) et des règles de respect de la propriété intellectuelle.</td><td>Activités 2 et 3, et le banc de publication</td></tr>
+    <tr><td>5e_C1.6 <span style="color:var(--sub)">(appui)</span></td><td>Appréhender la responsabilité de chacun dans les dérives (cyberviolence, atteinte à la vie privée, aux données personnelles, usurpation d'identité).</td><td>Activités 0, 1 et 4, et REFAIRE</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>Le club robotique du collège tient le compte du collège sur un réseau social.
+<b>Six élèves, un seul compte, un seul mot de passe</b> — celui-là même qui est écrit au feutre
+sur un coin du tableau de la salle de techno, « pour que tout le monde puisse publier ».</p>
+<p>Jeudi, quelqu'un du club a préparé une publication : la photo du jardin connecté, avec Maël
+devant, une belle image de tournesol trouvée en ligne pour illustrer, et un texte pour remercier
+la classe. <b>Tout le monde a trouvé ça très bien.</b> Personne n'a encore appuyé sur « publier ».</p></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Une publication ne dit pas seulement ce qu'on a voulu écrire. Que révèle-t-elle en plus, et qui en devient responsable ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, ce qu'une photo publiée révèle en plus, c'est…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🛡️ La règle de cette séquence — elle s'applique d'abord à la page</h2>
+  <div class="danger">
+    <p><b>Aucune donnée réelle n'entre dans cette page.</b> Maël Céleste n'existe pas, la rue et
+    l'heure sont inventées, et le banc ne te demande jamais ton nom, ta photo, ton adresse ni
+    aucun mot de passe. <b>Ne tape jamais un vrai mot de passe dans un exercice</b>, quel qu'il
+    soit, ni ici ni ailleurs : un exercice n'a aucune raison d'en connaître un.</p>
+    <p><b>Ce que tu écris reste sur cet ordinateur.</b> La page enregistre tes réponses dans le
+    navigateur, hors ligne, et n'envoie rien nulle part. Tu peux tout effacer quand tu veux.</p>
+    <p><b>Et si un jour tu es concerné·e.</b> Face à une image ou un message qui blesse
+    quelqu'un — toi ou un autre —, la première chose à faire n'est pas de répondre : c'est
+    d'en parler à un adulte de l'établissement. Le <b>3018</b> est le numéro national gratuit
+    pour les violences numériques.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec une publication réelle</b> — le compte du collège existe, et le professeur
+      prépare avec la classe une vraie publication : les mêmes questions se posent, avec les
+      vraies autorisations à demander. C'est la version qui engage le plus, et la seule qui
+      produise quelque chose de public.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — hors ligne, sans compte, sans rien installer, et
+      avec des personnes qui n'existent pas. C'est la voie par défaut : elle permet de
+      <b>retirer un élément</b> et de voir ce qui reste identifiable, ce qu'une vraie
+      publication ne permet jamais — une fois en ligne, on ne revient pas en arrière.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — la publication est une affiche A3, chaque élément est
+      une étiquette qu'on décolle, et la classe compte à voix haute les indices qui restent. Le
+      raisonnement est identique, et le geste de retirer est encore plus net.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>👁 Activité 0 — FAIRE d'abord : regarder ce que ça révèle ⏱ ~20 min</h2>
+  <p>Avant toute explication. Clique sur <b>📋 Charger la publication préparée par le
+  club</b>, puis sur <b>🔍 Regarder ce que ça révèle</b>. Lis la liste : elle ne juge pas, elle
+  énumère ce qu'un inconnu peut déduire de cette publication.</p><div id="etabli">
+  <div class="publi">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>Le banc de publication : coche ce que la publication contient, puis regarde. Le banc ne dit pas si c'est bien — il dit ce que ça révèle et ce que ça engage.</b></p>
+
+    <table class="elems">
+      <tr><th></th><th>Élément</th><th>Ce que c'est</th></tr>
+      <tr id="tr_jardin"><td class="ck"><input type="checkbox" id="el_jardin"></td><td><b>La photo du jardin connecté</b></td><td>le sujet de la publication</td></tr>
+      <tr id="tr_visage"><td class="ck"><input type="checkbox" id="el_visage"></td><td><b>Le visage de Maël, au premier plan</b></td><td>un camarade parfaitement reconnaissable</td></tr>
+      <tr id="tr_nom"><td class="ck"><input type="checkbox" id="el_nom"></td><td><b>Son nom et son prénom en légende</b></td><td>« Maël Céleste »</td></tr>
+      <tr id="tr_plaque"><td class="ck"><input type="checkbox" id="el_plaque"></td><td><b>La plaque de rue derrière lui</b></td><td>« rue Victor Schœlcher »</td></tr>
+      <tr id="tr_heure"><td class="ck"><input type="checkbox" id="el_heure"></td><td><b>La date et l'heure de la prise de vue</b></td><td>jeudi, 14 h 05</td></tr>
+      <tr id="tr_college"><td class="ck"><input type="checkbox" id="el_college"></td><td><b>Le nom du collège dans la légende</b></td><td>l'établissement, en clair</td></tr>
+      <tr id="tr_classe"><td class="ck"><input type="checkbox" id="el_classe"></td><td><b>La mention « la classe de 5eB »</b></td><td>dans le texte de la publication</td></tr>
+      <tr id="tr_geoloc"><td class="ck"><input type="checkbox" id="el_geoloc"></td><td><b>La géolocalisation enregistrée par le téléphone</b></td><td>une métadonnée du fichier, invisible à l'écran</td></tr>
+    </table>
+    <div class="publi-cmd"><label for="img">L'image d'illustration utilisée :</label>
+      <select id="img">
+        <option>— je choisis —</option>
+        <option>une image trouvée sur un site, sans licence indiquée</option>
+        <option>une image sous licence CC BY, avec le nom de l'auteur cité</option>
+        <option>une photo prise par la classe elle-même</option>
+        <option>aucune image d'illustration</option>
+      </select></div>
+    <div class="publi-cmd"><label for="autor">L'autorisation de publier la personne :</label>
+      <select id="autor">
+        <option>— je choisis —</option>
+        <option>aucune autorisation demandée</option>
+        <option>Maël est d'accord, il l'a dit à l'oral</option>
+        <option>accord écrit de Maël et de ses responsables légaux</option>
+      </select></div>
+    <div class="compteur">
+      <div class="jauge" id="jInd"><b id="nInd">0</b><span>indice(s) qui mènent à une personne réelle</span></div>
+      <div class="jauge" id="jLoi"><b id="nLoi">0</b><span>règle(s) non respectée(s)</span></div>
+    </div>
+
+    <p style="font-size:.9em;color:var(--sub);margin:10px 0 0">Ce qu'un inconnu peut en déduire :</p>
+    <ul class="revele" id="revele"></ul>
+
+    <div class="publi-cmd">
+      <button class="btn" id="regarder" type="button">🔍 Regarder ce que ça révèle</button>
+      <button class="btn" id="publier" type="button">📤 Publier</button>
+      <button class="btn" id="vider" type="button">↺ Tout décocher</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Compose la publication, puis regarde.</div></div>
+
+    <div class="publi-cmd">
+      <button class="btn" id="charger" type="button">📋 Charger la publication préparée par le club</button>
+    </div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <h4>Après avoir regardé</h4>
+    <p><b>1.</b> La publication contient un élément que <em>personne n'a écrit</em> et que
+    personne ne voit à l'écran. Lequel ?</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>la géolocalisation enregistrée par le téléphone dans le fichier</option>
+      <option>le nom du collège, ajouté automatiquement par le réseau social</option>
+      <option>le nom de famille de Maël, complété par le téléphone</option>
+      <option>l'heure de la prise de vue, ajoutée par le club dans le texte</option>
+    </select>
+    <p><b>2.</b> Ce que le banc appelle « un indice », c'est…</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>un élément qui aide à remonter à une personne réelle ou à l'endroit où elle est</option>
+      <option>une erreur d'orthographe repérée dans le texte de la publication</option>
+      <option>un élément que le réseau social refusera de publier</option>
+      <option>une information que le club a oublié d'écrire dans la légende</option>
+    </select>
+    <p><b>3.</b> Le banc signale que la plaque de rue et l'heure, ensemble, donnent « un
+    rendez-vous ». Pourquoi <em>ensemble</em> ?</p>
+    <select id="a0q3">
+      <option value="">— je choisis —</option>
+      <option>un lieu seul ou une heure seule ne dit pas où sera quelqu'un</option>
+      <option>parce que le réseau social les affiche l'un à côté de l'autre</option>
+      <option>parce que la plaque de rue est illisible sans l'heure de la photo</option>
+      <option>parce que l'heure change le sens de la photo aux yeux du lecteur</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Charge d'abord la publication du club sur le banc et clique sur « 🔍 Regarder ce que ça révèle » — on ne commente pas ce qu'on n'a pas regardé.</p>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1.</b> La <b>géolocalisation</b>. Le téléphone l'écrit dans le fichier de la photo,
+      avec la date, le modèle de l'appareil et parfois davantage. Personne ne l'a tapée, personne
+      ne la voit — et elle voyage avec l'image. C'est ce qu'on appelle une <b>métadonnée</b>.</p>
+      <p><b>2.</b> Un indice n'est pas une faute : c'est un élément qui <b>rapproche d'une
+      personne réelle</b>, ou de l'endroit où elle se trouve. Le banc les compte, sans dire si
+      c'est bien ou mal.</p>
+      <p><b>3.</b> Une rue sans heure, c'est un lieu où l'on passe parfois. Une heure sans lieu,
+      c'est un moment. <b>Les deux ensemble, c'est un rendez-vous auquel on n'a pas invité.</b>
+      C'est la leçon la plus importante du banc : ce n'est presque jamais un élément qui
+      identifie quelqu'un, c'est leur <b>combinaison</b>.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>➖ Activité 1 — Retirer, et compter ⏱ ~30 min</h2>
+  <p>La publication chargée compte <b>sept indices</b>. Décoche des éléments, un par
+  un, et regarde le compteur. Ton but : garder la photo du jardin connecté — c'est le sujet, on
+  ne va pas y renoncer — et faire tomber le compteur à <b>zéro</b>.</p>
+  <p style="color:var(--sub);font-size:.92em">Commence par retirer le visage. Puis regarde le
+  compteur : tu verras qu'il en reste beaucoup.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte au banc</a> — c'est le même, et il a gardé ta publication. Une page ne porte qu'un seul banc : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+  <table class="releve">
+    <tr><th>État de la publication</th><th class="num">Indices qui mènent encore à une personne</th></tr>
+    <tr><td>La publication du club, telle qu'elle est préparée</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… indices"></td></tr>
+    <tr><td>La même, sans le visage de Maël</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… indices"></td></tr>
+    <tr><td>Le minimum, en gardant la photo du jardin</td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… indices"></td></tr>
+  </table>
+    <p style="margin-top:14px"><b>Et la question qui compte :</b> pourquoi retirer le visage
+    ne suffit-il pas à rendre Maël non identifiable ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>son nom, sa classe et son collège le désignent toujours</option>
+      <option>le réseau social conserve une copie du visage effacé</option>
+      <option>parce que la photo reste floue au lieu de disparaître vraiment</option>
+      <option>parce qu'un visage retiré laisse une trace visible sur l'image</option>
+    </select>
+    <p><b>Et une deuxième :</b> l'accord écrit de Maël et de ses responsables légaux…</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>rend la publication licite, et ne le rend pas moins reconnaissable</option>
+      <option>fait tomber le compteur d'indices à zéro d'un seul coup</option>
+      <option>n'est pas nécessaire tant que la photo reste sur le compte du collège</option>
+      <option>remplace l'autorisation orale, qui suffisait déjà largement</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Descends d'abord le compteur d'indices à zéro sur le banc, en gardant la photo du jardin : c'est ce geste-là que l'activité te demande de commenter.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <table class="refs">
+      <tr><th>État de la publication</th><th>Indices qui mènent encore à une personne</th></tr>
+      <tr><td>La publication du club, telle qu'elle est préparée</td><td><b>7,0 indices</b></td></tr>
+      <tr><td>La même, sans le visage de Maël</td><td><b>6,0 indices</b></td></tr>
+      <tr><td>Le minimum, en gardant la photo du jardin</td><td><b>0,0 indices</b></td></tr>
+      </table>
+      <p style="margin-top:10px"><b>Retirer le visage fait passer de 7 à 6.</b> C'est un
+      élément sur sept, et le plus visible — mais le nom, la classe, le collège, la rue, l'heure
+      et la géolocalisation sont toujours là. Dans un collège, « Maël Céleste, 5eB » désigne une
+      personne et une seule.</p>
+      <p><b>L'autorisation écrite</b> change la <em>légalité</em>, pas la <em>visibilité</em>.
+      Avec elle, on a le droit de publier ; Maël reste exactement aussi reconnaissable. Ce sont
+      deux questions séparées, et il faut se poser les deux : <b>ai-je le droit ?</b> et
+      <b>est-ce nécessaire ?</b></p>
+      <p style="color:var(--sub)">Zéro indice s'obtient en gardant la photo du jardin seule.
+      La publication perd en chaleur — et c'est un vrai choix, pas une évidence. Le club peut
+      décider de publier le visage avec l'accord : ce qui compte, c'est que ce soit décidé.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🖼 Activité 2 — L'image d'illustration : à qui appartient-elle ? ⏱ ~25 min</h2>
+  <p>L'image de tournesol a été trouvée en ligne en trois secondes. Elle est belle,
+  elle est gratuite à télécharger — <b>et gratuite ne veut pas dire libre</b>. Sur le banc,
+  change la valeur de « l'image d'illustration utilisée » et regarde ce que le banc répond à
+  chaque fois.</p>
+  <div class="exo">
+
+    <p>Associe chaque provenance à ce qu'on a le droit d'en faire.</p>
+    <p style="margin-top:12px"><b>Une image sans mention de licence, trouvée sur un site</b></p>
+    <select id="a2l0">
+      <option value="">— je choisis —</option>
+      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
+      <option>protégée par défaut : on ne la reprend pas sans demander</option>
+      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
+      <option>réutilisable librement, y compris sans citer l'auteur</option>
+      <option>réutilisable, à condition de citer l'auteur</option>
+    </select>
+    <p style="margin-top:12px"><b>Une image sous licence CC BY</b></p>
+    <select id="a2l1">
+      <option value="">— je choisis —</option>
+      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
+      <option>protégée par défaut : on ne la reprend pas sans demander</option>
+      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
+      <option>réutilisable librement, y compris sans citer l'auteur</option>
+      <option>réutilisable, à condition de citer l'auteur</option>
+    </select>
+    <p style="margin-top:12px"><b>Une image sous licence CC BY-NC</b></p>
+    <select id="a2l2">
+      <option value="">— je choisis —</option>
+      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
+      <option>protégée par défaut : on ne la reprend pas sans demander</option>
+      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
+      <option>réutilisable librement, y compris sans citer l'auteur</option>
+      <option>réutilisable, à condition de citer l'auteur</option>
+    </select>
+    <p style="margin-top:12px"><b>Une image dans le domaine public ou en CC0</b></p>
+    <select id="a2l3">
+      <option value="">— je choisis —</option>
+      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
+      <option>protégée par défaut : on ne la reprend pas sans demander</option>
+      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
+      <option>réutilisable librement, y compris sans citer l'auteur</option>
+      <option>réutilisable, à condition de citer l'auteur</option>
+    </select>
+    <p style="margin-top:12px"><b>Une photo prise par la classe elle-même</b></p>
+    <select id="a2l4">
+      <option value="">— je choisis —</option>
+      <option>elle appartient à ceux qui l'ont prise : ce sont eux qui décident</option>
+      <option>protégée par défaut : on ne la reprend pas sans demander</option>
+      <option>réutilisable en citant l'auteur, mais pas dans un usage commercial</option>
+      <option>réutilisable librement, y compris sans citer l'auteur</option>
+      <option>réutilisable, à condition de citer l'auteur</option>
+    </select>
+    <p style="margin-top:14px"><b>Et pour finir :</b> une image affichée par un moteur de
+    recherche d'images est…</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>soumise aux mêmes règles que sur le site d'où elle vient</option>
+      <option>libre de droits, puisque le moteur la met à disposition</option>
+      <option>utilisable si on ne la modifie pas et qu'on ne la vend pas</option>
+      <option>utilisable dans un cadre scolaire, sans autre condition</option>
+    </select>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Une image sans mention de licence, trouvée sur un site</b> — protégée par défaut : on ne la reprend pas sans demander</p>
+      <p><b>Une image sous licence CC BY</b> — réutilisable, à condition de citer l'auteur</p>
+      <p><b>Une image sous licence CC BY-NC</b> — réutilisable en citant l'auteur, mais pas dans un usage commercial</p>
+      <p><b>Une image dans le domaine public ou en CC0</b> — réutilisable librement, y compris sans citer l'auteur</p>
+      <p><b>Une photo prise par la classe elle-même</b> — elle appartient à ceux qui l'ont prise : ce sont eux qui décident</p>
+      <p style="margin-top:10px">Un moteur de recherche d'images <b>affiche</b> des images ; il
+      ne les donne pas. Chacune reste soumise aux règles du site d'origine — et par défaut,
+      une œuvre est <b>protégée</b> : l'absence de mention ne veut pas dire « libre », elle veut
+      dire « il faut demander ».</p>
+      <p>Les licences <b>Creative Commons</b> servent exactement à ça : elles permettent à un
+      auteur de dire à l'avance ce qu'il autorise. <code>BY</code> = citer l'auteur ;
+      <code>NC</code> = pas d'usage commercial ; <code>CC0</code> = aucune condition.</p>
+      <p style="color:var(--sub)">Ce n'est pas une règle d'école : c'est le droit d'auteur, et il
+      protège aussi <b>tes</b> créations. La photo que tu prends t'appartient — et quelqu'un qui
+      la reprendrait sans te demander enfreindrait la même règle.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔑 Activité 3 — Un compte pour six : qui a publié ? ⏱ ~25 min</h2>
+  <p>Le club a un compte, et six personnes le mot de passe. C'était pratique. On va
+  regarder ce que ça coûte — et le coût le plus important n'est pas celui auquel on pense.</p>
+  <div class="exo">
+
+    <p>Associe chaque situation à sa conséquence.</p>
+    <p style="margin-top:12px"><b>Six élèves connaissent le mot de passe</b></p>
+    <select id="a3p0">
+      <option value="">— je choisis —</option>
+      <option>il garde l'accès tant que personne ne change le mot de passe</option>
+      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
+      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
+      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
+    </select>
+    <p style="margin-top:12px"><b>Un membre quitte le club en cours d'année</b></p>
+    <select id="a3p1">
+      <option value="">— je choisis —</option>
+      <option>il garde l'accès tant que personne ne change le mot de passe</option>
+      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
+      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
+      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
+    </select>
+    <p style="margin-top:12px"><b>Une publication maladroite apparaît sur le compte</b></p>
+    <select id="a3p2">
+      <option value="">— je choisis —</option>
+      <option>il garde l'accès tant que personne ne change le mot de passe</option>
+      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
+      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
+      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
+    </select>
+    <p style="margin-top:12px"><b>Le mot de passe est écrit au tableau de la salle</b></p>
+    <select id="a3p3">
+      <option value="">— je choisis —</option>
+      <option>il garde l'accès tant que personne ne change le mot de passe</option>
+      <option>le mot de passe n'est plus un secret : il n'en protège plus rien</option>
+      <option>on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</option>
+      <option>toute personne qui entre dans la salle peut publier au nom du collège</option>
+    </select>
+    <p style="margin-top:14px"><b>Et la question qui relie tout :</b> pourquoi un compte partagé
+    empêche-t-il de parler de responsabilité ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>être responsable suppose qu'on puisse établir qui a agi</option>
+      <option>parce que le réseau social interdit les comptes à plusieurs</option>
+      <option>parce qu'un compte partagé se fait pirater plus facilement</option>
+      <option>parce que les six membres sont alors responsables à parts égales</option>
+    </select>
+    <p><b>Et la réparation :</b> le club veut pouvoir dire qui publie. Que fait-il ?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>un compte par membre, avec un rôle donné et retirable</option>
+      <option>il garde le compte commun et note les publications sur un cahier</option>
+      <option>il change le mot de passe chaque semaine et le dit à voix haute</option>
+      <option>il demande à chacun de signer ses publications dans le texte</option>
+    </select>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Six élèves connaissent le mot de passe</b> — le mot de passe n'est plus un secret : il n'en protège plus rien</p>
+      <p><b>Un membre quitte le club en cours d'année</b> — il garde l'accès tant que personne ne change le mot de passe</p>
+      <p><b>Une publication maladroite apparaît sur le compte</b> — on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable</p>
+      <p><b>Le mot de passe est écrit au tableau de la salle</b> — toute personne qui entre dans la salle peut publier au nom du collège</p>
+      <p style="margin-top:10px"><b>Voilà la charnière de la séquence.</b> Un mot de passe
+      partagé n'est pas seulement moins sûr : il rend la <b>responsabilité indécidable</b>.
+      Quand une publication pose problème, on ne peut ni savoir qui l'a faite, ni la lui
+      attribuer, ni la lui retirer. Ce n'est pas un problème technique — c'est ce qui empêche
+      toute la suite.</p>
+      <p><b>La réparation</b> tient en une phrase : <b>un compte par personne</b>, et des
+      <b>rôles</b> donnés par un adulte responsable, qui se retirent quand quelqu'un s'en va.
+      Un cahier ne prouve rien ; signer dans le texte se falsifie ; changer le mot de passe à
+      voix haute recrée exactement le problème.</p>
+      <p style="color:var(--sub)">Et la règle générale, qui vaut bien au-delà du club :
+      <b>un mot de passe qui a été dit à quelqu'un n'est plus un mot de passe.</b> Le nombre de
+      personnes qui le connaissent est le nombre de personnes qui peuvent agir en ton nom.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>💬 Activité 4 — Le commentaire qui blesse ⏱ ~25 min</h2>
+  <p>La publication est en ligne depuis une heure. Sous la photo, un commentaire se
+  moque de Maël. Trois autres personnes ont mis un « j'aime ». Quelqu'un en a fait une capture
+  d'écran et l'a envoyée dans une conversation de classe.</p>
+  <p><b>Personne, à ce stade, ne pense avoir mal agi.</b> C'est justement ce qu'on va regarder.</p>
+  <div class="exo">
+
+    <p>Associe chaque personne à ce qu'elle engage.</p>
+    <p style="margin-top:12px"><b>Celui qui écrit le commentaire moqueur</b></p>
+    <select id="a4a0">
+      <option value="">— je choisis —</option>
+      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
+      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
+      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
+      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
+      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
+    </select>
+    <p style="margin-top:12px"><b>Celui qui met un « j'aime » sous ce commentaire</b></p>
+    <select id="a4a1">
+      <option value="">— je choisis —</option>
+      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
+      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
+      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
+      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
+      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
+    </select>
+    <p style="margin-top:12px"><b>Celui qui le voit et ne dit rien</b></p>
+    <select id="a4a2">
+      <option value="">— je choisis —</option>
+      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
+      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
+      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
+      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
+      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
+    </select>
+    <p style="margin-top:12px"><b>Celui qui en fait une capture et la renvoie ailleurs</b></p>
+    <select id="a4a3">
+      <option value="">— je choisis —</option>
+      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
+      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
+      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
+      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
+      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
+    </select>
+    <p style="margin-top:12px"><b>Celui qui tient le compte du club</b></p>
+    <select id="a4a4">
+      <option value="">— je choisis —</option>
+      <option>il est l'auteur : c'est lui qui engage sa responsabilité en premier</option>
+      <option>il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</option>
+      <option>il le rend plus visible et le soutient publiquement : il y prend part</option>
+      <option>il n'a rien écrit, et son silence laisse la situation durer</option>
+      <option>il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</option>
+    </select>
+    <p style="margin-top:14px"><b>Le premier geste.</b> Maël voit le commentaire. Que fait-il
+    en premier ?</p>
+    <select id="a4q1">
+      <option value="">— je choisis —</option>
+      <option>il en parle à un adulte de l'établissement, et garde une capture</option>
+      <option>il répond au commentaire pour rétablir la vérité</option>
+      <option>il supprime la publication pour que tout disparaisse</option>
+      <option>il attend quelques jours pour voir si ça se calme tout seul</option>
+    </select>
+    <p><b>Et l'usurpation.</b> Le lendemain, une publication insultante paraît sur le compte du
+    club. Aucun membre ne l'a écrite. Que peut prouver le club ?</p>
+    <select id="a4q2">
+      <option value="">— je choisis —</option>
+      <option>rien : avec un compte partagé, il ne peut même pas s'en dédouaner</option>
+      <option>que ce n'est aucun des six, puisqu'ils s'en portent garants</option>
+      <option>que le compte a été piraté, puisqu'ils n'ont rien écrit</option>
+      <option>que la publication est fausse, en la supprimant rapidement</option>
+    </select>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Celui qui écrit le commentaire moqueur</b> — il est l'auteur : c'est lui qui engage sa responsabilité en premier</p>
+      <p><b>Celui qui met un « j'aime » sous ce commentaire</b> — il le rend plus visible et le soutient publiquement : il y prend part</p>
+      <p><b>Celui qui le voit et ne dit rien</b> — il n'a rien écrit, et son silence laisse la situation durer</p>
+      <p><b>Celui qui en fait une capture et la renvoie ailleurs</b> — il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave</p>
+      <p><b>Celui qui tient le compte du club</b> — il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit</p>
+      <p style="margin-top:10px"><b>Le premier geste n'est pas de répondre.</b> Répondre nourrit,
+      et engage à son tour. On en parle à un adulte de l'établissement — professeur, CPE,
+      infirmière — et on <b>garde une capture</b> avant toute suppression : c'est ce qui permet
+      d'établir les faits. Supprimer tout de suite fait disparaître la preuve en même temps que
+      le commentaire. Le <b>3018</b> est le numéro national gratuit pour les violences numériques.</p>
+      <p><b>L'usurpation, et le retour du compte partagé.</b> Le club ne peut rien prouver — ni
+      qui a publié, ni que ce n'était aucun d'eux. <b>Un compte partagé ne permet même pas de
+      se dédouaner.</b> C'est le même défaut qu'à l'activité 3, vu de l'autre côté : ce qui
+      empêche d'attribuer une faute empêche aussi de s'en défendre.</p>
+      <p style="color:var(--sub)">Et le « j'aime » : il ne s'agit pas de dire que celui qui aime
+      est aussi coupable que celui qui écrit. Il s'agit de voir qu'il <b>rend visible</b> —
+      et qu'à partir de là, il y prend part.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+<p>Le club veut publier la photo de la remise des prix du concours de robotique :
+  huit élèves de face, la coupe, le nom du collège sur la banderole, et le trophée qu'on
+  distingue bien.</p>
+  <p>Écris, en quelques lignes : <b>ce que tu retires</b>, <b>ce que tu demandes et à qui</b>,
+  et <b>ce que le club change à son compte</b> avant de publier quoi que ce soit.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="5" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb5"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Ce qu'on retire :</b> la géolocalisation du fichier (elle est là même si personne ne
+      l'a écrite), et tout ce qui ajoute un indice sans servir le sujet — noms de famille,
+      classe, heure exacte. La banderole du collège peut rester : c'est le sujet.</p>
+      <p><b>Ce qu'on demande :</b> l'accord <b>écrit</b> des huit élèves <em>et</em> de leurs
+      responsables légaux, puisqu'ils sont mineurs et reconnaissables. Et si une seule famille
+      refuse, on ne recadre pas : on publie une photo où cette personne n'est pas.</p>
+      <p><b>Ce que le club change :</b> un compte par membre avec des rôles donnés par un adulte,
+      et le mot de passe commun effacé du tableau. Sans cela, la publication de demain
+      appartiendra à tout le monde et à personne.</p>
+      <p style="color:var(--sub)">Et une question qu'on n'a pas encore posée : <b>combien de
+      temps ?</b> Une photo publiée reste. Les huit élèves de la photo auront vingt ans, puis
+      trente. Le droit à l'effacement existe, il n'est pas automatique — et il ne rattrape pas
+      les copies déjà faites par d'autres.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Une publication révèle plus qu'elle ne dit.</b> La géolocalisation, la date, le modèle
+      de l'appareil voyagent dans le fichier sans que personne ne les écrive : ce sont des
+      <b>métadonnées</b>.</li>
+    <li><b>Ce n'est presque jamais un élément qui identifie, c'est leur combinaison.</b> Retirer
+      le visage fait passer de sept indices à six. Nom, classe, collège, rue et heure suffisent
+      largement.</li>
+    <li><b>Avoir le droit et être discret sont deux questions.</b> Une autorisation écrite rend
+      la publication licite ; elle ne rend personne moins reconnaissable. On se pose les deux
+      questions : <em>ai-je le droit ?</em> et <em>est-ce nécessaire ?</em></li>
+    <li><b>Gratuit ne veut pas dire libre.</b> Une image en ligne est protégée par défaut ;
+      l'absence de licence signifie « il faut demander ». Les licences Creative Commons servent à
+      dire d'avance ce qui est autorisé — et le droit d'auteur protège aussi tes créations.</li>
+    <li><b>Un mot de passe qui a été dit à quelqu'un n'est plus un mot de passe.</b> Le nombre de
+      personnes qui le connaissent est le nombre de personnes qui peuvent agir en ton nom.</li>
+    <li><b>La responsabilité suppose qu'on puisse dire qui a agi.</b> Un compte partagé la rend
+      indécidable — et empêche aussi bien d'attribuer une faute que de s'en défendre.</li>
+    <li><b>Devant un contenu qui blesse :</b> ne pas répondre, garder une capture, en parler à
+      un adulte de l'établissement. Le <b>3018</b> est le numéro national gratuit.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle d'un
+  élément à retirer, ou de la combinaison de plusieurs ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 5e_C1.5 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais dire ce qu'une publication révèle en plus, et ce que chacun y engage</option>
+    <option>Je sais le dire si on m'aide à repérer les éléments un par un</option>
+    <option>Je repère les éléments visibles, mais pas ce qui se déduit de leur combinaison</option>
+    <option>Je ne sais pas encore ce qu'une publication révèle au-delà de ce qu'elle montre</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur ce qu'une publication révèle, ce qu'on a le droit de reprendre, et ce que chacun engage. 15 portent sur 5e_C1.5, 15 sur 5e_C1.6.</p>
+  <a class="btn" href="qcm_5e_C1.5-C1.6_le-compte-du-club.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Sur le banc, trouve une publication qui a <b>zéro règle enfreinte</b> et <b>trois indices
+  ou plus</b>. Puis une autre qui a <b>zéro indice</b> et <b>une règle enfreinte</b>.</p>
+  <p>Les deux existent, et c'est tout l'intérêt : <b>être en règle et être discret sont deux
+  choses différentes</b>. Écris ensuite laquelle des deux publications tu accepterais de voir
+  te concerner — et pourquoi.</p>
+
+</section>
+
+<footer>Séquence 5e_C1.5 + 5e_C1.6 — « Le compte du club ». Banc de publication original (CC0), aucune donnée réelle, aucune connexion, fonctionne hors ligne. Programme 2024, Thème 1.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_5e_C1_5_C1_6";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── banc de la publication ─────────────────────────────────────────────── */
+/* ELEMENTS : {id, nom, indice, infraction?, leve_par?} */
+const ELEMENTS = [{"id": "jardin", "nom": "La photo du jardin connecté", "quoi": "le sujet de la publication", "indice": false}, {"id": "visage", "nom": "Le visage de Maël, au premier plan", "quoi": "un camarade parfaitement reconnaissable", "indice": true, "infraction": "Droit à l'image : publier le visage d'une personne reconnaissable demande son accord — et celui de ses responsables légaux si elle est mineure."}, {"id": "nom", "nom": "Son nom et son prénom en légende", "quoi": "« Maël Céleste »", "indice": true, "infraction": "Donnée personnelle : le nom d'un élève mineur ne se publie pas sans l'accord écrit de ses responsables légaux."}, {"id": "plaque", "nom": "La plaque de rue derrière lui", "quoi": "« rue Victor Schœlcher »", "indice": true}, {"id": "heure", "nom": "La date et l'heure de la prise de vue", "quoi": "jeudi, 14 h 05", "indice": true}, {"id": "college", "nom": "Le nom du collège dans la légende", "quoi": "l'établissement, en clair", "indice": true}, {"id": "classe", "nom": "La mention « la classe de 5eB »", "quoi": "dans le texte de la publication", "indice": true}, {"id": "geoloc", "nom": "La géolocalisation enregistrée par le téléphone", "quoi": "une métadonnée du fichier, invisible à l'écran", "indice": true}];
+const DEDUCTIONS = [{"cles": ["visage", "nom"], "txt": "Le visage et le nom sont associés : n'importe qui peut désormais reconnaître Maël dans la rue."}, {"cles": ["nom", "college"], "txt": "On sait où trouver Maël en semaine : son nom et son établissement suffisent."}, {"cles": ["plaque", "heure"], "txt": "On sait où il était et quand : une plaque de rue et un horaire, c'est un rendez-vous."}, {"cles": ["visage", "plaque", "heure"], "txt": "Visage, lieu et heure réunis : c'est exactement ce qu'il faut pour attendre quelqu'un quelque part."}, {"cles": ["geoloc"], "txt": "Les coordonnées du lieu de prise de vue sont dans le fichier, au mètre près — même si l'image ne montre aucune adresse et que personne ne les a écrites."}, {"cles": ["classe", "college"], "txt": "« 5eB » et le nom du collège désignent un groupe de vingt-huit élèves, tous identifiables par l'établissement."}];   /* {cles:[…], txt} — visible si tout est coché */
+const CHOIX = {"img": {"— je choisis —": {"manque": "la provenance de l'image d'illustration n'est pas décidée. Tant qu'on ne sait pas d'où elle vient, on ne peut pas la publier."}, "une image trouvée sur un site, sans licence indiquée": {"infraction": "Droit d'auteur : une image en ligne n'est pas libre par défaut. Sans licence indiquée, elle est protégée — la reprendre sans accord est interdit."}, "une image sous licence CC BY, avec le nom de l'auteur cité": {"note": "L'image est réutilisable : la licence CC BY l'autorise, à la condition de citer l'auteur — ce qui est fait."}, "une photo prise par la classe elle-même": {"note": "L'image appartient à ceux qui l'ont prise : aucune autorisation extérieure n'est nécessaire pour l'image elle-même."}, "aucune image d'illustration": {}}, "autor": {"— je choisis —": {"manque": "on n'a pas décidé si une autorisation a été demandée. Tant que ce n'est pas décidé, la publication ne peut pas être jugée."}, "aucune autorisation demandée": {}, "Maël est d'accord, il l'a dit à l'oral": {"note": "Un accord oral ne se prouve pas — et pour un mineur, ce sont les responsables légaux qui autorisent, pas lui seul."}, "accord écrit de Maël et de ses responsables légaux": {"leve": ["visage", "nom"], "note": "L'autorisation écrite rend la publication licite. Elle ne rend pas Maël moins reconnaissable : le compteur d'indices ne bouge pas d'un seul."}}};             /* {id: {valeur: {infraction?, leve?, note?}}} */
+const PUBLIABLE = "Publié. La photo montre le jardin connecté et rien d'autre : personne n'est reconnaissable, l'image d'illustration est utilisée dans les règles, et le club peut assumer devant n'importe qui ce qu'il a mis en ligne.";     /* phrase quand la publication est acceptée */
+
+function coches(){
+  return ELEMENTS.filter(e => document.getElementById("el_" + e.id).checked);
+}
+function valeurChoix(id){ const e = document.getElementById(id); return e ? e.value : ""; }
+
+/* Ce qui est levé par un choix (une autorisation, un crédit) : la règle cesse
+   d'être enfreinte — et l'indice, lui, reste. Une autorisation rend licite,
+   elle ne rend pas anonyme. */
+function leves(){
+  const s = [];
+  for(const id in CHOIX){
+    const c = CHOIX[id][valeurChoix(id)];
+    if(c && c.leve){ s.push(...c.leve); }
+  }
+  return s;
+}
+function infractions(){
+  const pris = coches(), l = leves(), out = [];
+  pris.forEach(e => {
+    if(e.infraction && !l.includes(e.id)) out.push({id:e.id, txt:e.infraction});
+  });
+  for(const id in CHOIX){
+    const c = CHOIX[id][valeurChoix(id)];
+    if(c && c.infraction) out.push({id:id, txt:c.infraction});
+  }
+  return out;
+}
+function indices(){ return coches().filter(e => e.indice).length; }
+
+/* Un choix non fait n'est pas une faute : c'est une décision qui manque.
+   Le banc ne compte donc pas de règle enfreinte tant qu'on n'a rien décidé —
+   il refuse simplement de publier, et il dit ce qu'il attend. */
+function indecis(){
+  const s = [];
+  for(const id in CHOIX){
+    const v = valeurChoix(id);
+    if(v.charAt(0) === "—"){ s.push(CHOIX[id][v] && CHOIX[id][v].manque); }
+  }
+  return s.filter(Boolean);
+}
+
+function majPubli(){
+  const pris = coches().map(e => e.id);
+  ELEMENTS.forEach(e =>
+    document.getElementById("tr_" + e.id).classList.toggle("pris", pris.includes(e.id)));
+
+  const nI = indices(), inf = infractions();
+  document.getElementById("nInd").textContent = nI;
+  document.getElementById("nLoi").textContent = inf.length;
+  document.getElementById("jInd").classList.toggle("zero", nI === 0);
+  document.getElementById("jInd").classList.toggle("alerte", nI >= 3);
+  document.getElementById("jLoi").classList.toggle("zero", inf.length === 0);
+  document.getElementById("jLoi").classList.toggle("alerte", inf.length > 0);
+
+  if(nI === 0) window.__exp.anonyme = true;
+  if(inf.length === 0 && !indecis().length && pris.length) window.__exp.legal = true;
+  if(pris.length) window.__exp.compose = true;
+  save();
+}
+
+function regarder(){
+  const u = document.getElementById("revele"), pris = coches().map(e => e.id);
+  u.innerHTML = "";
+  let n = 0;
+  DEDUCTIONS.forEach(d => {
+    if(d.cles.every(k => pris.includes(k))){
+      const li = document.createElement("li");
+      li.className = "vu"; li.textContent = d.txt;
+      u.appendChild(li); n += 1;
+    }
+  });
+  infractions().forEach(i => {
+    const li = document.createElement("li");
+    li.className = "loi"; li.textContent = i.txt;
+    u.appendChild(li); n += 1;
+  });
+  for(const id in CHOIX){
+    const c = CHOIX[id][valeurChoix(id)];
+    if(c && c.note){
+      const li = document.createElement("li");
+      li.className = "vu"; li.textContent = c.note;
+      u.appendChild(li); n += 1;
+    }
+  }
+  if(!n){
+    const li = document.createElement("li");
+    li.className = "rien";
+    li.textContent = "Rien ne permet de remonter à quelqu'un, et aucune règle n'est enfreinte.";
+    u.appendChild(li);
+  }
+  window.__exp.regarde = true;
+  save();
+}
+
+function ligne(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls; d.textContent = txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("regarder").addEventListener("click", () => {
+  regarder();
+  ligne("wa", "Relevé fait : " + indices() + " indice(s), " + infractions().length + " règle(s) enfreinte(s).");
+});
+document.getElementById("publier").addEventListener("click", () => {
+  regarder();
+  const inf = infractions(), nI = indices();
+  const rien = indecis();
+  if(!coches().length){
+    ligne("ko", "Il n'y a rien à publier : aucun élément n'est coché.");
+  } else if(rien.length){
+    ligne("wa", "Refusé — " + rien[0]);
+    window.__exp.indecis = true;
+  } else if(inf.length){
+    ligne("ko", "Refusé — " + inf[0].txt + (inf.length > 1 ? " (et " + (inf.length - 1) + " autre(s))" : ""));
+    window.__exp.refuse = true;
+  } else if(nI > 0){
+    ligne("wa", "Publiable, et " + nI + " indice(s) mènent encore à une personne réelle. "
+        + "C'est légal, ce n'est pas anodin : demande-toi si c'est nécessaire.");
+    window.__exp.publieAvecIndices = true;
+  } else {
+    ligne("ok", PUBLIABLE);
+    window.__exp.publie = true;
+  }
+  save();
+});
+document.getElementById("vider").addEventListener("click", () => {
+  ELEMENTS.forEach(e => { document.getElementById("el_" + e.id).checked = false; });
+  majPubli(); regarder();
+  ligne("wa", "Publication vidée.");
+});
+ELEMENTS.forEach(e =>
+  document.getElementById("el_" + e.id).addEventListener("change", () => { majPubli(); regarder(); }));
+for(const id in CHOIX){
+  const s = document.getElementById(id);
+  if(s) s.addEventListener("change", () => { majPubli(); regarder(); });
+}
+/* Pas d'appel à majPubli() ici : il enregistre, et il tournerait AVANT restore().
+   La page écraserait alors sa propre sauvegarde à chaque ouverture (règle n°221). */
+
+/* La publication telle que le club l'a préparée — tout y est, et c'est le problème. */
+document.getElementById("charger").addEventListener("click", () => {
+  ELEMENTS.forEach(e => { document.getElementById("el_" + e.id).checked = true; });
+  document.getElementById("img").value = "une image trouvée sur un site, sans licence indiquée";
+  document.getElementById("autor").value = "aucune autorisation demandée";
+  window.__exp.charge = true;
+  majPubli(); regarder();
+  ligne("wa", "Publication du club chargée. Regarde ce qu'elle révèle avant de juger.");
+});
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0q1","la géolocalisation enregistrée par le téléphone dans le fichier"); s += sv("a0q2","un élément qui aide à remonter à une personne réelle ou à l'endroit où elle est"); s += sv("a0q3","un lieu seul ou une heure seule ne dit pas où sera quelqu'un");
+       return {score: s, total: 3, exp: !!window.__exp.regarde,
+               expMsg: "Charge d'abord la publication du club sur le banc et clique sur « 🔍 Regarder ce que ça révèle » — on ne commente pas ce qu'on n'a pas regardé."}; },
+  1(){ let s = 0;
+       s += nb("rel0", 7, 0); s += nb("rel1", 6, 0); s += nb("rel2", 0, 0); s += sv("a1q1","son nom, sa classe et son collège le désignent toujours"); s += sv("a1q2","rend la publication licite, et ne le rend pas moins reconnaissable");
+       return {score: s, total: 5, exp: !!window.__exp.anonyme,
+               expMsg: "Descends d'abord le compteur d'indices à zéro sur le banc, en gardant la photo du jardin : c'est ce geste-là que l'activité te demande de commenter."}; },
+  2(){ let s = 0;
+       s += sv("a2l0", "protégée par défaut : on ne la reprend pas sans demander"); s += sv("a2l1", "réutilisable, à condition de citer l'auteur"); s += sv("a2l2", "réutilisable en citant l'auteur, mais pas dans un usage commercial"); s += sv("a2l3", "réutilisable librement, y compris sans citer l'auteur"); s += sv("a2l4", "elle appartient à ceux qui l'ont prise : ce sont eux qui décident"); s += sv("a2q1","soumise aux mêmes règles que sur le site d'où elle vient");
+       return {score: s, total: 6, exp: true}; },
+  3(){ let s = 0;
+       s += sv("a3p0", "le mot de passe n'est plus un secret : il n'en protège plus rien"); s += sv("a3p1", "il garde l'accès tant que personne ne change le mot de passe"); s += sv("a3p2", "on ne peut pas savoir qui l'a écrite : la responsabilité devient indécidable"); s += sv("a3p3", "toute personne qui entre dans la salle peut publier au nom du collège"); s += sv("a3q1","être responsable suppose qu'on puisse établir qui a agi"); s += sv("a3q2","un compte par membre, avec un rôle donné et retirable");
+       return {score: s, total: 6, exp: true}; },
+  4(){ let s = 0;
+       s += sv("a4a0", "il est l'auteur : c'est lui qui engage sa responsabilité en premier"); s += sv("a4a1", "il le rend plus visible et le soutient publiquement : il y prend part"); s += sv("a4a2", "il n'a rien écrit, et son silence laisse la situation durer"); s += sv("a4a3", "il le diffuse à des gens qui ne l'auraient jamais vu : il aggrave"); s += sv("a4a4", "il répond de ce qui reste publié sous ce compte, même s'il n'a rien écrit"); s += sv("a4q1","il en parle à un adulte de l'établissement, et garde une capture"); s += sv("a4q2","rien : avec un compte partagé, il ne peut même pas s'en dédouaner");
+       return {score: s, total: 7, exp: true}; },
+  5(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majPubli(); regarder();
+})();
+</script>
+
+</body>
+</html>
