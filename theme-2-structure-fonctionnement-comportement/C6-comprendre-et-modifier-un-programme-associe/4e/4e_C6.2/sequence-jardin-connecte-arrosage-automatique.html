@@ -696,11 +696,44 @@ document.querySelectorAll(".ae-btns").forEach(w => {
   });
 });
 
-/* ── mode enseignant (loquet de confort — code visible dans la source) ── */
+/* ── mode enseignant (loquet de confort — code visible dans la source) ──
+   Règle d'or n°188 : ce loquet ouvrait un prompt(), qui fige le navigateur.
+   Un prompt ne se remplace pas par une confirmation en deux temps — il rend du
+   texte, pas un oui/non. Il faut donc un champ dans la page. Le voici : un
+   label réel, un champ, un bouton, et le message d'erreur au même endroit
+   qu'avant. Aucune valeur n'est enregistrée ni envoyée nulle part. */
 $("btnTeacher").addEventListener("click", () => {
-  const code = prompt("Code enseignant :");
-  if(code === "GJEP"){ $("teacherPanel").classList.add("show"); $("teacherPanel").scrollIntoView({behavior:"smooth"}); }
-  else if(code !== null){ const b=$("btnTeacher"); let m=b.nextElementSibling; if(!(m&&m.classList&&m.classList.contains("tmsg"))){ m=document.createElement("span"); m.className="tmsg"; m.style.cssText="margin-left:8px;color:var(--err,#ff7b88);font-size:.85em"; b.insertAdjacentElement("afterend", m); } m.textContent="Code incorrect."; setTimeout(()=>{ m.textContent=""; }, 3000); }
+  const b = $("btnTeacher");
+  let z = document.getElementById("tcodeZone");
+  if(!z){
+    z = document.createElement("span");
+    z.id = "tcodeZone";
+    z.style.cssText = "margin-left:8px;display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap";
+    const l = document.createElement("label");
+    l.setAttribute("for", "tcode"); l.style.fontSize = ".85em"; l.textContent = "Code enseignant";
+    const i = document.createElement("input");
+    i.id = "tcode"; i.type = "text"; i.size = 8; i.autocomplete = "off"; i.style.fontSize = ".9em";
+    const v = document.createElement("button");
+    v.type = "button"; v.className = "ae-b"; v.textContent = "Ouvrir";
+    const m = document.createElement("span");
+    m.className = "tmsg"; m.setAttribute("role", "status"); m.setAttribute("aria-live", "polite");
+    m.style.cssText = "margin-left:6px;color:var(--err,#ff7b88);font-size:.85em";
+    z.append(l, i, v, m);
+    b.insertAdjacentElement("afterend", z);
+    const essai = () => {
+      if(i.value.trim() === "GJEP"){
+        m.textContent = "";
+        $("teacherPanel").classList.add("show");
+        $("teacherPanel").scrollIntoView({behavior:"smooth"});
+      } else {
+        m.textContent = "Code incorrect.";
+        setTimeout(() => { m.textContent = ""; }, 3000);
+      }
+    };
+    v.addEventListener("click", essai);
+    i.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); essai(); } });
+  }
+  document.getElementById("tcode").focus();
 });
 
 /* ── sauvegarde locale ── */
@@ -726,7 +759,7 @@ function restore(){
 }
 $("btnSave").addEventListener("click", save);
 $("btnPrint").addEventListener("click", () => window.print());
-$("btnReset").addEventListener("click", () => { if(confirm("Effacer ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); } });
+$("btnReset").addEventListener("click", () => { if(demande("effacer-ta-sauvegarde-locale","Effacer ta sauvegarde locale ?")){ localStorage.removeItem(KEY); location.reload(); } });
 document.addEventListener("change", e => { if(e.target.matches("input, select, textarea")) save(); });
 restore();
 })();
@@ -870,6 +903,45 @@ restore();
     armer();
   }
 })();
+
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
+
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
 </script>
 </body>
 </html>

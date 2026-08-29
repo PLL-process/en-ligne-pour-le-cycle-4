@@ -231,7 +231,7 @@
     // Sauvegarde l'état.
     function saveState(){localStorage.setItem('algoDomotiqueV12State',JSON.stringify(state))}
     // Active ou désactive le plein écran.
-    function toggleFullscreen(){const btn=document.getElementById('fullscreenBtn');if(!document.fullscreenElement){document.documentElement.requestFullscreen().then(()=>btn.textContent='⤢ Quitter plein écran').catch(()=>alert('Le plein écran est bloqué. Utilise F11 si nécessaire.'))}else{document.exitFullscreen().then(()=>btn.textContent='⛶ Plein écran')}}
+    function toggleFullscreen(){const btn=document.getElementById('fullscreenBtn');if(!document.fullscreenElement){document.documentElement.requestFullscreen().then(()=>btn.textContent='⤢ Quitter plein écran').catch(()=>signale('Le plein écran est bloqué. Utilise F11 si nécessaire.'))}else{document.exitFullscreen().then(()=>btn.textContent='⛶ Plein écran')}}
     // Met à jour le bouton plein écran en cas de touche Échap.
     document.addEventListener('fullscreenchange',()=>{const btn=document.getElementById('fullscreenBtn');if(btn)btn.textContent=document.fullscreenElement?'⤢ Quitter plein écran':'⛶ Plein écran'});
     // Change le thème.
@@ -301,7 +301,7 @@
     // Génère un code de validation.
     function generateCode(name,classe,score,date){const raw=`${name}-${classe}-${score}-${date}-V12`;return btoa(unescape(encodeURIComponent(raw))).replace(/[^A-Z0-9]/gi,'').substring(0,10).toUpperCase()}
     // Réinitialise la progression.
-    function resetAll(){if(!confirm('Réinitialiser toute la progression V12 ?'))return;Object.keys(localStorage).filter(k=>k.startsWith('algoDomotiqueV12')).forEach(k=>localStorage.removeItem(k));location.reload()}
+    function resetAll(){if(!demande("reinitialiser-toute-la-progression",'Réinitialiser toute la progression V12 ?'))return;Object.keys(localStorage).filter(k=>k.startsWith('algoDomotiqueV12')).forEach(k=>localStorage.removeItem(k));location.reload()}
     // Initialise la page.
     function init(){if(localStorage.getItem('algoDomotiqueV12Theme')==='light')document.body.classList.add('light');document.getElementById('studentDate').value=new Date().toISOString().slice(0,10);document.getElementById('lux').addEventListener('input',e=>document.getElementById('luxValue').textContent=e.target.value);renderBanks();updateProjectHelp();updateLives();showPhase(state.phase||0);updateProgress()}
     // Lance l'initialisation après chargement.
@@ -446,6 +446,45 @@
     armer();
   }
 })();
+
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
+
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
 </script>
 </body>
 </html>
