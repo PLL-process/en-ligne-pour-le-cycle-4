@@ -1,10 +1,10 @@
-# 🪴 Le bac du jardin — `4e_C7.3`
+# 🪵 Le banc de la cour — `5e_C7.3`
 
-> Trois matériaux passent toutes les exigences. Sur quoi les classe-t-on, quand le moins cher à l'achat n'est pas le moins cher ?
+> Six matériaux, aucun mauvais. Comment un cahier des charges en élimine-t-il quatre ?
 
-**Thème 3 · 4<sup>e</sup> — Comparer différents matériaux pour choisir le plus adapté.** · appui `4e_C3.2` · 2 séances de 55 min (95 min d'activités)
+**Thème 3 · 5<sup>e</sup> — Choisir un matériau parmi plusieurs proposés en fonction de leurs caractéristiques.** · appui `5e_C4.4` · 2 séances de 55 min (95 min d'activités)
 
-➡ **[Ouvrir la séquence](sequence_4e_C7.3_bac-du-jardin.html)** — hors ligne, sans installation ni compte.
+➡ **[Ouvrir la séquence](sequence_5e_C7.3_banc-de-la-cour.html)** — hors ligne, sans installation ni compte.
 
 ## Trois niveaux, trois gestes
 
@@ -37,17 +37,17 @@ Toutes les valeurs viennent de `materiaux.py` : masses, coûts, épaisseurs et v
 
 | Fichier | Ce que c'est |
 |---|---|
-| [`sequence_4e_C7.3_bac-du-jardin.html`](sequence_4e_C7.3_bac-du-jardin.html) | la séquence élève, hors ligne, avec le banc |
-| [`qcm_4e_C7.3_bac-du-jardin.html`](qcm_4e_C7.3_bac-du-jardin.html) | 30 questions — 20 sur `4e_C7.3`, 10 sur `4e_C3.2`, 90 réfutations |
-| [`lexique_4e_C7.3.html`](lexique_4e_C7.3.html) | 30 notions, engendrées depuis le QCM |
-| [`synthese_eleve_4e_C7.3.html`](synthese_eleve_4e_C7.3.html) | à retenir, imprimable en noir et blanc |
-| [`synthese_professeur_4e_C7.3.html`](synthese_professeur_4e_C7.3.html) | le pari, les limites, la grille LSU |
-| [`fiche_pedagogique_4e_C7.3.md`](fiche_pedagogique_4e_C7.3.md) | déroulé, versions, sécurité, origine des nombres |
-| [`matrice_couverture_4e_C7.3.csv`](matrice_couverture_4e_C7.3.csv) | notion → activité → production → question |
-| [`rapport_tests_4e_C7.3.md`](rapport_tests_4e_C7.3.md) | la sortie des deux suites, telle quelle |
-| `materiaux.py` · `banc_mat.py` · `tests_4e_C7.3_sequence.mjs` · `tests_4e_C7.3_qcm.mjs` · `reponses_4e_C7.3.json` | de quoi tout rejouer |
+| [`sequence_5e_C7.3_banc-de-la-cour.html`](sequence_5e_C7.3_banc-de-la-cour.html) | la séquence élève, hors ligne, avec le banc |
+| [`qcm_5e_C7.3_banc-de-la-cour.html`](qcm_5e_C7.3_banc-de-la-cour.html) | 30 questions — 20 sur `5e_C7.3`, 10 sur `5e_C4.4`, 90 réfutations |
+| [`lexique_5e_C7.3.html`](lexique_5e_C7.3.html) | 30 notions, engendrées depuis le QCM |
+| [`synthese_eleve_5e_C7.3.html`](synthese_eleve_5e_C7.3.html) | à retenir, imprimable en noir et blanc |
+| [`synthese_professeur_5e_C7.3.html`](synthese_professeur_5e_C7.3.html) | le pari, les limites, la grille LSU |
+| [`fiche_pedagogique_5e_C7.3.md`](fiche_pedagogique_5e_C7.3.md) | déroulé, versions, sécurité, origine des nombres |
+| [`matrice_couverture_5e_C7.3.csv`](matrice_couverture_5e_C7.3.csv) | notion → activité → production → question |
+| [`rapport_tests_5e_C7.3.md`](rapport_tests_5e_C7.3.md) | la sortie des deux suites, telle quelle |
+| `materiaux.py` · `banc_mat.py` · `tests_5e_C7.3_sequence.mjs` · `tests_5e_C7.3_qcm.mjs` · `reponses_5e_C7.3.json` | de quoi tout rejouer |
 
-**Tests réels : 44/44 sur la séquence, 32/32 sur le QCM.**
+**Tests réels : 41/41 sur la séquence, 32/32 sur le QCM.**
 
 ## Ancrage
 
@@ -58,8 +58,7 @@ d'ici, et elle s'écrit au cahier des charges comme les autres.
 
 ## Sécurité
 
-Le **PVC ne se découpe jamais au laser** : chauffé, il dégage du chlorure d'hydrogène,
-qui attaque les voies respiratoires et corrode la machine. Sciage et perçage seulement, sous
-aspiration. La **sciure de pin autoclave** ne se respire pas et ne se brûle pas ; les chutes vont
-en déchèterie. Côté électricité, la station du jardin est alimentée en **très basse tension**, et
-aucun élève ne manipule le **secteur**.
+Aucune électricité dans cette séquence : le banc est une pièce de structure. La version
+🅰 met six chutes de matériau au soleil et un **thermomètre infrarouge** entre les mains des
+élèves — on relève une température de surface, on ne pose pas la main dessus pour vérifier.
+Les chutes de **pin traité autoclave** ne se poncent pas sans aspiration et ne se brûlent jamais.

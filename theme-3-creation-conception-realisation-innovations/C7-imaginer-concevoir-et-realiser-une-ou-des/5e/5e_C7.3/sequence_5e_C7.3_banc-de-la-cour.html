@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 5e — Le banc de la cour (5e_C7.3)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc des matériaux — original, CC0 ─────────────────────────────────── */
+.bancm{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+table.mat{width:100%;border-collapse:collapse;font-size:.85em;margin:8px 0}
+table.mat th,table.mat td{border:1px solid var(--border);padding:5px 7px;text-align:right}
+table.mat th{background:#173666;color:var(--hl);text-align:center;font-size:.95em}
+table.mat td.nom{text-align:left;width:31%}
+table.mat td.ver{text-align:left;width:24%;font-size:.94em}
+table.mat tr.ok td{background:rgba(34,197,94,.10)}
+table.mat tr.ok td.ver{color:var(--ok);font-weight:600}
+table.mat tr.ko td{color:var(--sub)}
+table.mat tr.ko td.ver{color:var(--err)}
+table.mat td.faute{color:var(--err);font-weight:600}
+table.exig{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.exig th,table.exig td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.exig th{background:#173666;color:var(--hl)}
+table.exig td.ck{width:34px;text-align:center}
+table.exig td input[type=checkbox]{width:17px;height:17px;accent-color:#61dafb}
+table.exig td.sv{width:118px}
+table.exig td.sv input{width:100%;padding:3px 6px;font-size:.92em;text-align:right}
+table.exig tr.off td:not(.ck){color:var(--sub);text-decoration:line-through}
+table.exig td.pq{font-size:.9em;color:var(--sub)}
+.compteur{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.jauge{flex:1;min-width:180px;background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 11px}
+.jauge b{display:block;font-size:1.5em;color:var(--hl);font-variant-numeric:tabular-nums}
+.jauge span{font-size:.8em;color:var(--sub)}
+.jauge.zero b{color:var(--err)}
+.jauge.un b{color:var(--warn)}
+.jauge.plus b{color:var(--ok)}
+.bancm-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.bancm-cmd label{font-size:.9em;color:var(--sub)}
+.bancm-cmd select{width:auto;min-width:150px}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:160px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C7.3.html">📖 Lexique</a></nav>
+
+<h1>🪵 Le banc de la cour</h1>
+<p class="subtitle">Thème 3 · 5<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 5e</span>
+  <span class="badge code">5e_C7.3</span>
+  <span class="badge code">5e_C4.4 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D3 · D4 · D5</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Avec le <b>lampadaire intelligent</b> et la <b>station de vélos</b>, tu as appris à
+  <em>reconnaître</em> les matériaux d'un objet : celui-ci est en métal, celui-là en plastique,
+  cet autre en bois. Tu sais les nommer.</p>
+  <p><b>Ce qui change aujourd'hui :</b> personne ne te demande de reconnaître, on te demande de
+  <em>choisir</em>. Six matériaux sont proposés, avec leurs caractéristiques mesurées, et il faut
+  en retenir un. Nommer un matériau et le choisir ne sont pas le même travail : le second oblige
+  à dire <b>pour quoi faire</b>.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>5e_C7.3</b></td><td>Choisir un matériau parmi plusieurs proposés en fonction de leurs caractéristiques.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
+    <tr><td>5e_C4.4 <span style="color:var(--sub)">(appui)</span></td><td>Identifier les principaux matériaux constitutifs d'un OST.</td><td>Activité 0 et synthèse</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>La cour du collège n'a que trois bancs pour six cents élèves. Le conseil de
+vie collégienne en a demandé quatre de plus, et l'intendance a débloqué le budget. Reste à dire
+<b>en quoi</b> on les fait.</p>
+<p>Le fournisseur propose six matériaux, tous disponibles, tous avec leurs caractéristiques.
+<b>Aucun n'est mauvais.</b> Et pourtant quatre d'entre eux ne peuvent pas être retenus pour
+<em>ce</em> banc, dans <em>cette</em> cour, en Martinique.</p></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Six matériaux, aucun mauvais. Comment un cahier des charges en élimine-t-il quatre ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, pour choisir un matériau, il faut d'abord regarder…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>☀️ Ce que le climat impose ici — et qui ne figure sur aucun catalogue</h2>
+  <div class="danger">
+    <p><b>Le soleil.</b> En Martinique, une surface sombre en plein soleil monte à 60 °C et plus.
+    Au-delà de <b>55 °C</b>, on ne s'assoit pas : on se brûle. Ce n'est pas une préférence,
+    c'est une <b>condition d'usage</b> — un banc sur lequel on ne peut pas s'asseoir à midi n'est
+    pas un banc.</p>
+    <p><b>Le sel.</b> Le collège est à 900 m de la mer, et les alizés soufflent toute l'année.
+    L'air porte du sel jusque dans les terres : c'est ce qu'on appelle le <b>brouillard salin</b>,
+    et il attaque les métaux et les fixations bien plus vite qu'en métropole.</p>
+    <p><b>Les catalogues de fournisseurs ne disent presque jamais ces deux choses-là.</b> Ils
+    donnent une durée de vie « en usage extérieur » calculée sous un climat tempéré. C'est à
+    celui qui choisit de savoir où l'objet va vivre.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec des échantillons</b> — six chutes de matériau posées sur la table, un
+      thermomètre infrarouge et une heure de plein soleil. Les températures relevées remplacent
+      alors celles du banc : ce sont elles qui font foi.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — hors ligne, sans rien installer, et il permet ce
+      que la table ne permet pas : <b>retirer une exigence</b> et voir le résultat changer.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — six fiches cartonnées, une par matériau, et cinq
+      bandes d'exigences qu'on pose ou qu'on retire. Le raisonnement est identique.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>📋 Activité 0 — Ce que chaque caractéristique dit ⏱ ~15 min</h2>
+  <p>Un matériau n'est pas « bon » ou « mauvais » : il a des <b>caractéristiques</b>,
+  et chacune répond à une question précise. Avant de choisir, il faut savoir quelle question
+  chacune répond.</p>
+  <div class="exo">
+
+    <p>Associe chaque caractéristique à ce qu'elle permet de savoir.</p>
+    <p style="margin-top:12px"><b>La masse volumique, en kg/m³</b></p>
+    <select id="a0r0">
+      <option value="">— je choisis —</option>
+      <option>elle dit combien de temps la pièce reste utilisable dehors</option>
+      <option>elle dit combien pèsera la pièce, une fois sa taille connue</option>
+      <option>elle dit quelle charge la pièce supporte sans casser</option>
+      <option>elle dit si l'air marin l'attaque ou la laisse tranquille</option>
+      <option>il ne dit rien tant qu'on ne sait pas combien de kilos il en faut</option>
+    </select>
+    <p style="margin-top:12px"><b>La résistance, en MPa</b></p>
+    <select id="a0r1">
+      <option value="">— je choisis —</option>
+      <option>elle dit combien de temps la pièce reste utilisable dehors</option>
+      <option>elle dit combien pèsera la pièce, une fois sa taille connue</option>
+      <option>elle dit quelle charge la pièce supporte sans casser</option>
+      <option>elle dit si l'air marin l'attaque ou la laisse tranquille</option>
+      <option>il ne dit rien tant qu'on ne sait pas combien de kilos il en faut</option>
+    </select>
+    <p style="margin-top:12px"><b>La tenue au soleil, en années</b></p>
+    <select id="a0r2">
+      <option value="">— je choisis —</option>
+      <option>elle dit combien de temps la pièce reste utilisable dehors</option>
+      <option>elle dit combien pèsera la pièce, une fois sa taille connue</option>
+      <option>elle dit quelle charge la pièce supporte sans casser</option>
+      <option>elle dit si l'air marin l'attaque ou la laisse tranquille</option>
+      <option>il ne dit rien tant qu'on ne sait pas combien de kilos il en faut</option>
+    </select>
+    <p style="margin-top:12px"><b>La tenue au sel, de 0 à 5</b></p>
+    <select id="a0r3">
+      <option value="">— je choisis —</option>
+      <option>elle dit combien de temps la pièce reste utilisable dehors</option>
+      <option>elle dit combien pèsera la pièce, une fois sa taille connue</option>
+      <option>elle dit quelle charge la pièce supporte sans casser</option>
+      <option>elle dit si l'air marin l'attaque ou la laisse tranquille</option>
+      <option>il ne dit rien tant qu'on ne sait pas combien de kilos il en faut</option>
+    </select>
+    <p style="margin-top:12px"><b>Le prix au kilogramme</b></p>
+    <select id="a0r4">
+      <option value="">— je choisis —</option>
+      <option>elle dit combien de temps la pièce reste utilisable dehors</option>
+      <option>elle dit combien pèsera la pièce, une fois sa taille connue</option>
+      <option>elle dit quelle charge la pièce supporte sans casser</option>
+      <option>elle dit si l'air marin l'attaque ou la laisse tranquille</option>
+      <option>il ne dit rien tant qu'on ne sait pas combien de kilos il en faut</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>La masse volumique, en kg/m³</b> — elle dit combien pèsera la pièce, une fois sa taille connue</p>
+      <p><b>La résistance, en MPa</b> — elle dit quelle charge la pièce supporte sans casser</p>
+      <p><b>La tenue au soleil, en années</b> — elle dit combien de temps la pièce reste utilisable dehors</p>
+      <p><b>La tenue au sel, de 0 à 5</b> — elle dit si l'air marin l'attaque ou la laisse tranquille</p>
+      <p><b>Le prix au kilogramme</b> — il ne dit rien tant qu'on ne sait pas combien de kilos il en faut</p>
+      <p style="margin-top:10px"><b>La dernière ligne est la plus utile.</b> Le prix au kilogramme
+      ne se compare pas d'un matériau à l'autre : l'acier coûte 1,90 €/kg contre 14 €/kg pour le
+      teck, et l'assise en acier revient pourtant à 334 € contre 204 €. Parce qu'il en faut
+      <b>176 kg</b> d'un côté et <b>15 kg</b> de l'autre.</p>
+      <p><b>Un prix au kilo n'est pas un prix.</b> Ce qui compte est le prix de la pièce, et il
+      se calcule : masse volumique × volume de la pièce × prix au kilo.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚖ Activité 1 — Le banc élimine, et il dit pourquoi ⏱ ~25 min</h2>
+  <p>Voici le banc. Les cinq exigences du cahier des charges y sont écrites, avec la
+  raison de chaque seuil. Clique sur <b>⚖ Évaluer les candidats</b> et lis le tableau : les
+  valeurs en rouge sont celles qui font échouer.</p><div id="etabli">
+  <div class="bancm">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>Le banc des matériaux : six candidats, cinq exigences. Le banc n'attribue aucune note — il élimine, et il dit sur quel critère.</b></p>
+
+    <p style="font-size:.9em;color:var(--sub);margin:8px 0 2px">Les exigences du cahier des
+    charges. Décoche pour <b>retirer</b> un critère, ou change un seuil.</p>
+    <table class="exig">
+      <tr><th></th><th>Critère</th><th>Sens</th><th>Seuil</th><th>Pourquoi ce seuil</th></tr>
+      <tr id="ex_sigma"><td class="ck"><input type="checkbox" id="on_sigma" checked></td><td>Résistance</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_sigma" value="25" aria-label="Seuil de Résistance"></td><td class="pq">trois élèves assis au milieu, soit 2 000 N sur 1,60 m</td></tr>
+      <tr id="ex_uv"><td class="ck"><input type="checkbox" id="on_uv" checked></td><td>Tenue au soleil</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_uv" value="8" aria-label="Seuil de Tenue au soleil"></td><td class="pq">la cour est en plein soleil ; on ne remplace pas un banc tous les deux ans</td></tr>
+      <tr id="ex_sel"><td class="ck"><input type="checkbox" id="on_sel" checked></td><td>Tenue au sel</td><td>au moins</td><td class="sv"><input type="text" inputmode="decimal" id="sv_sel" value="3" aria-label="Seuil de Tenue au sel"></td><td class="pq">le collège est à 900 m de la mer : l'air porte du sel toute l'année</td></tr>
+      <tr id="ex_chaud"><td class="ck"><input type="checkbox" id="on_chaud" checked></td><td>Température au soleil</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_chaud" value="55" aria-label="Seuil de Température au soleil"></td><td class="pq">au-delà de 55 °C, on ne peut pas s'asseoir à midi sans se brûler</td></tr>
+      <tr id="ex_masse_max"><td class="ck"><input type="checkbox" id="on_masse_max" checked></td><td>Masse de la pièce</td><td>au plus</td><td class="sv"><input type="text" inputmode="decimal" id="sv_masse_max" value="35" aria-label="Seuil de Masse de la pièce"></td><td class="pq">deux agents doivent pouvoir le déplacer à deux pour laver le sol</td></tr>
+    </table>
+
+    <div class="compteur">
+      <div class="jauge" id="jRet"><b id="nRet">—</b><span>matériau(x) retenu(s)</span></div>
+      <div class="jauge" id="jMoins"><b id="nMoins">—</b><span>le moins cher des retenus</span></div>
+    </div>
+
+    <table class="mat" id="tab">
+      <tr><th>Matériau</th><th>Résistance<br><small>MPa</small></th><th>Tenue au soleil<br><small>ans</small></th><th>Tenue au sel<br><small>/5</small></th><th>Température au soleil<br><small>°C</small></th><th>Masse de la pièce<br><small>kg</small></th><th>Coût<br><small>€</small></th><th>Verdict</th></tr>
+    </table>
+
+    <div class="bancm-cmd">
+      <button class="btn" id="evaluer" type="button">⚖ Évaluer les candidats</button>
+      <button class="btn" id="reinit" type="button">↺ Remettre le cahier des charges</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Règle les exigences, puis évalue.</div></div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <h4>Après l'évaluation</h4>
+    <p>Associe chaque matériau recalé au motif de son élimination.</p>
+    <p style="margin-top:12px"><b>Le pin non traité</b></p>
+    <select id="a1r0">
+      <option value="">— je choisis —</option>
+      <option>il chauffe trop, et la pièce serait bien trop lourde</option>
+      <option>il monte trop haut en température au soleil</option>
+      <option>il n'est pas assez résistant en flexion, et il est trop lourd</option>
+      <option>il ne tient ni le soleil ni le sel</option>
+    </select>
+    <p style="margin-top:12px"><b>Le PVC rigide</b></p>
+    <select id="a1r1">
+      <option value="">— je choisis —</option>
+      <option>il chauffe trop, et la pièce serait bien trop lourde</option>
+      <option>il monte trop haut en température au soleil</option>
+      <option>il n'est pas assez résistant en flexion, et il est trop lourd</option>
+      <option>il ne tient ni le soleil ni le sel</option>
+    </select>
+    <p style="margin-top:12px"><b>L'acier galvanisé</b></p>
+    <select id="a1r2">
+      <option value="">— je choisis —</option>
+      <option>il chauffe trop, et la pièce serait bien trop lourde</option>
+      <option>il monte trop haut en température au soleil</option>
+      <option>il n'est pas assez résistant en flexion, et il est trop lourd</option>
+      <option>il ne tient ni le soleil ni le sel</option>
+    </select>
+    <p style="margin-top:12px"><b>Le béton préfabriqué</b></p>
+    <select id="a1r3">
+      <option value="">— je choisis —</option>
+      <option>il chauffe trop, et la pièce serait bien trop lourde</option>
+      <option>il monte trop haut en température au soleil</option>
+      <option>il n'est pas assez résistant en flexion, et il est trop lourd</option>
+      <option>il ne tient ni le soleil ni le sel</option>
+    </select>
+    <p style="margin-top:14px"><b>Et une question :</b> l'acier galvanisé est de très loin le plus
+    résistant des six (235 MPa contre 38 pour le pin traité). Pourquoi est-il recalé ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>être excellent sur un critère ne rattrape pas d'échouer sur un autre</option>
+      <option>parce que sa résistance est trop élevée pour l'usage prévu</option>
+      <option>parce que l'acier est interdit dans les cours de collège</option>
+      <option>parce qu'il coûte plus cher que le bois traité au kilogramme</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Clique d'abord sur « ⚖ Évaluer les candidats » : on ne commente pas un tri qu'on n'a pas fait.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>Le pin non traité</b> — il ne tient ni le soleil ni le sel</p>
+      <p><b>Le PVC rigide</b> — il monte trop haut en température au soleil</p>
+      <p><b>L'acier galvanisé</b> — il chauffe trop, et la pièce serait bien trop lourde</p>
+      <p><b>Le béton préfabriqué</b> — il n'est pas assez résistant en flexion, et il est trop lourd</p>
+      <p style="margin-top:10px"><b>C'est la leçon de l'activité.</b> Le banc ne donne pas de
+      notes et ne fait pas de moyenne. Chaque exigence est un <b>seuil</b> : on passe, ou on ne
+      passe pas. L'acier galvanisé est premier partout sauf sur deux critères — il monte à
+      68 °C au soleil, et l'assise pèserait 176 kg. Deux échecs suffisent, et cinq réussites ne
+      les rattrapent pas.</p>
+      <p style="color:var(--sub)">C'est vrai en dehors de la technologie : on ne compense pas une
+      exigence de sécurité par de bons résultats ailleurs.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>➖ Activité 2 — Retirer une exigence, et voir ce qui entre ⏱ ~25 min</h2>
+  <p>Sur le banc, chaque exigence a une case à cocher. <b>Décoche-la</b> : elle cesse
+  de compter, et le tri recommence. Fais les deux essais du tableau, dans l'ordre, en remettant
+  tout entre chaque (le bouton ↺ le fait).</p>
+  <p>Relève <b>deux chiffres à chaque fois</b> : le nombre de matériaux retenus, et la jauge
+  <b>« le moins cher des retenus »</b>. Ce sont deux questions différentes, et elles ne répondent
+  pas ensemble.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte au banc</a> — c'est le même, et il a gardé tes exigences. Une page ne porte qu'un seul banc : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+  <table class="releve">
+    <tr><th>Ce que tu règles sur le banc — et ce que tu lis</th><th class="num">Ta valeur</th></tr>
+    <tr><td>Le cahier des charges tel qu'il est écrit — <b>matériaux retenus</b></td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… matériaux"></td></tr>
+    <tr><td>Sans « température au soleil » — <b>matériaux retenus</b></td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… matériaux"></td></tr>
+    <tr><td>Sans « température au soleil » — <b>le moins cher des retenus</b></td><td class="num"><input type="text" inputmode="decimal" id="rel2" placeholder="… €"></td></tr>
+    <tr><td>Sans « tenue au soleil » NI « tenue au sel » — <b>matériaux retenus</b></td><td class="num"><input type="text" inputmode="decimal" id="rel3" placeholder="… matériaux"></td></tr>
+    <tr><td>Sans « tenue au soleil » NI « tenue au sel » — <b>le moins cher des retenus</b></td><td class="num"><input type="text" inputmode="decimal" id="rel4" placeholder="… €"></td></tr>
+  </table>
+    <p style="margin-top:14px"><b>1.</b> Le premier retrait fait entrer le PVC, à 109,76 €.
+    Pourtant la jauge « le moins cher des retenus » <b>ne bouge pas</b> : elle affiche 47 € avant
+    et 47 € après. Pourquoi ?</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>le PVC entre, mais il coûte plus cher que le pin traité déjà retenu</option>
+      <option>le PVC entre exactement au même prix que le pin traité déjà retenu</option>
+      <option>la jauge ne compte que les matériaux qui tiennent toutes les exigences</option>
+      <option>la jauge ne se met à jour qu'au clic sur « ⚖ Évaluer les candidats »</option>
+    </select>
+    <p style="margin-top:14px"><b>2.</b> Le second retrait, lui, fait tomber le moins cher de
+    47 € à 26 €. Vingt et un euros par banc, sur quatre bancs. Faut-il le faire ?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>non : le pin nu grisera en un an et sera pourri en trois, tout serait à refaire</option>
+      <option>oui : quatre-vingts euros sur la commande, c'est une économie bien réelle</option>
+      <option>oui, à condition de repeindre les bancs chaque année avec une lasure</option>
+      <option>non, mais seulement parce que le pin nu se recycle moins bien que le teck</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Décoche d'abord au moins une exigence sur le banc et ré-évalue : c'est ce geste-là que l'activité te demande de commenter.</p>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <table class="refs">
+      <tr><th>Ce que tu règles sur le banc — et ce que tu lis</th><th>Ta valeur</th></tr>
+      <tr><td>Le cahier des charges tel qu'il est écrit — <b>matériaux retenus</b></td><td><b>2 matériaux</b></td></tr>
+      <tr><td>Sans « température au soleil » — <b>matériaux retenus</b></td><td><b>3 matériaux</b></td></tr>
+      <tr><td>Sans « température au soleil » — <b>le moins cher des retenus</b></td><td><b>47 €</b></td></tr>
+      <tr><td>Sans « tenue au soleil » NI « tenue au sel » — <b>matériaux retenus</b></td><td><b>3 matériaux</b></td></tr>
+      <tr><td>Sans « tenue au soleil » NI « tenue au sel » — <b>le moins cher des retenus</b></td><td><b>26 €</b></td></tr>
+      </table>
+      <p style="margin-top:10px"><b>Retirer une exigence, c'est toujours faire entrer quelqu'un.
+      Ce n'est pas toujours faire baisser le prix.</b> Les deux essais le montrent, et ils ne
+      disent pas la même chose.</p>
+      <p><b>1. Le premier retrait ne rapporte rien du tout.</b> Le PVC entre à 109,76 €, et le
+      pin traité autoclave — déjà retenu, lui — coûte 46,82 €. Le nombre de retenus passe de deux
+      à trois, et le moins cher ne bouge pas d'un centime. Celui qui compare le PVC au <em>teck</em>
+      (203,84 €) croit économiser cent euros ; il compare au mauvais candidat. <b>On compare
+      toujours au moins cher de ceux qui passent déjà.</b></p>
+      <p>Et même si le PVC avait été le moins cher, il ne fallait pas le retenir : « température
+      au soleil » protégeait <b>l'usage même de l'objet</b>. Un banc sur lequel on ne peut pas
+      s'asseoir entre 11 h et 15 h n'est pas un banc moins bon, c'est un banc qui ne sert pas —
+      et l'ombre des arbres n'est pas une réponse : on choisit un matériau pour l'endroit où
+      l'objet ira vraiment, pas pour celui où on aimerait qu'il aille.</p>
+      <p><b>2. Le second retrait, lui, rapporte vraiment.</b> Sans « tenue au soleil » ni « tenue
+      au sel », le <b>pin non traité</b> entre à 25,63 € : le moins cher tombe à 26 €, et
+      l'économie est réelle — 21 € par banc, 84 € sur la commande. Elle est réelle, et elle est
+      quand même mauvaise : le pin nu grisera en un an et sera pourri en trois. Il faudra tout
+      refaire, et une seconde commande coûte bien plus de 84 €.</p>
+      <p style="color:var(--sub)"><b>Le moins cher à l'achat n'est pas le moins cher.</b> C'est la
+      seule des deux économies qui existe sur le papier — et c'est celle qui coûte le plus cher.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✅ Activité 3 — Choisir, entre les deux qui restent ⏱ ~15 min</h2>
+  <p>Deux matériaux tiennent le cahier des charges : le <b>pin traité autoclave</b>
+  (46,82 € l'assise) et le <b>teck</b> (203,84 €). Les deux passent toutes les exigences. Il faut
+  maintenant trancher — et cette fois, ce n'est plus le banc qui décide.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte au banc</a> — c'est le même, et il a gardé tes exigences. Une page ne porte qu'un seul banc : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p><b>1.</b> Entre deux matériaux qui tiennent tous les deux le cahier des charges, sur quoi
+    tranche-t-on ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>sur un critère qu'on ajoute, et qu'on écrit : prix, durée, provenance</option>
+      <option>sur celui qui a la meilleure moyenne sur l'ensemble des critères</option>
+      <option>sur celui que le fournisseur recommande dans son catalogue</option>
+      <option>on ne tranche pas : les deux conviennent, on prend au hasard</option>
+    </select>
+    <p><b>2.</b> Le teck tient 15 ans, le pin traité 8 ans. Sur 16 ans, lequel coûte le moins cher ?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>le pin traité : deux assises à 46,82 €, soit 93,64 €</option>
+      <option>le teck : une seule assise, donc un seul achat</option>
+      <option>les deux reviennent au même une fois le remplacement compté</option>
+      <option>on ne peut pas savoir sans connaître le prix de la pose</option>
+    </select>
+    <p><b>3.</b> Écris en deux phrases lequel tu retiens, et le critère qui t'a fait trancher.</p>
+    <textarea id="a3j" rows="3" placeholder="Je retiens … parce que …"></textarea>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1.</b> Quand plusieurs candidats passent, on <b>ajoute un critère et on l'écrit</b>.
+      Ce peut être le prix, la durée, la provenance, la facilité de réparation. Ce qui compte
+      est que le critère soit <em>dit</em> : un choix qui ne s'explique pas ne se défend pas.
+      Faire une moyenne n'a pas de sens — on ne fait pas la moyenne d'une durée et d'un prix.</p>
+      <p><b>2.</b> Sur 16 ans : deux assises en pin traité (2 × 46,82 = <b>93,64 €</b>) contre une
+      en teck (<b>203,84 €</b>). Le pin traité reste deux fois moins cher, remplacement compris.
+      La réponse aurait pu s'inverser — c'est ce qui arrive en 4<sup>e</sup>, sur le bac du
+      jardin — et c'est pourquoi on fait le calcul au lieu de le supposer.</p>
+      <p><b>3.</b> Les deux réponses se défendent, à condition d'être justifiées. <b>Le pin
+      traité</b> si le critère ajouté est le prix. <b>Le teck</b> si c'est la durée sans
+      intervention, ou l'aspect. Mais le teck pose une question que le banc ne mesure pas : d'où
+      vient-il, et à quel prix pour la forêt qui l'a fourni ? C'est une caractéristique aussi,
+      et elle ne se lit pas dans un tableau de MPa.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+<p>Le même collège veut maintenant <b>une table de pique-nique</b> pour le même
+  endroit. Mêmes six matériaux, même cour, même climat. Deux exigences changent : le plateau
+  reçoit des repas (il doit se nettoyer et ne rien relâcher), et la table ne se déplace jamais.</p>
+  <p>Écris : <b>quelle exigence tu retires</b>, <b>laquelle tu ajoutes</b>, et si cela change le
+  matériau retenu.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb4"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>On retire la masse maximale.</b> Elle existait parce que deux agents devaient déplacer
+      le banc pour laver le sol. Une table qui ne bouge jamais n'a pas cette contrainte — et
+      d'un seul coup, l'acier galvanisé et le béton redeviennent discutables.</p>
+      <p><b>On ajoute le contact alimentaire</b> et la facilité de nettoyage. Ce sont deux
+      exigences que le banc ne mesure pas : elles n'ont pas de colonne. C'est normal — un cahier
+      des charges nouveau demande souvent une <b>caractéristique qu'on n'avait pas mesurée</b>,
+      et c'est alors au concepteur d'aller la chercher.</p>
+      <p><b>Le matériau change-t-il ?</b> Sans la masse, l'acier reste recalé sur la température
+      (68 °C : on ne pose pas les avant-bras dessus). Le béton reste recalé sur la résistance en
+      flexion et sur la chaleur. Les deux bois restent en tête — et le teck prend l'avantage,
+      parce qu'un plateau qui reçoit des repas se nettoie souvent, et que le traitement autoclave
+      du pin n'est pas fait pour un contact alimentaire.</p>
+      <p style="color:var(--sub)"><b>Retirer une exigence n'a pas suffi à changer le choix.</b>
+      C'est un résultat, pas un échec : cela veut dire que ce n'était pas elle qui décidait.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Un matériau n'est ni bon ni mauvais.</b> Il a des caractéristiques mesurées, et c'est
+      le <b>cahier des charges</b> qui décide lesquelles comptent. Le meilleur matériau n'existe
+      pas ; le meilleur pour cet objet-là, dans cet endroit-là, existe.</li>
+    <li><b>Un seuil n'est pas une note.</b> On ne fait pas la moyenne des critères : chaque
+      exigence se passe ou ne se passe pas. L'acier est premier sur la résistance et recalé
+      quand même.</li>
+    <li><b>Un prix au kilogramme n'est pas un prix.</b> Il faut le multiplier par la masse de la
+      pièce — et la masse dépend de la masse volumique du matériau. 1,90 €/kg d'acier donne une
+      assise à 334 € ; 14 €/kg de teck en donne une à 204 €.</li>
+    <li><b>Retirer une exigence fait toujours entrer quelqu'un — pas toujours baisser le prix.</b>
+      Retirer « température au soleil » fait entrer le PVC à 109,76 € et ne change rien au moins
+      cher, qui reste le pin traité à 46,82 €. <b>On compare au moins cher de ceux qui passent
+      déjà</b>, jamais au plus cher.</li>
+    <li><b>Et il faut se demander à chaque fois ce que l'exigence protégeait.</b> Ici,
+      « température au soleil » protégeait l'usage même de l'objet : un banc où l'on ne peut pas
+      s'asseoir à midi ne sert pas.</li>
+    <li><b>Le climat fait partie du cahier des charges.</b> Le soleil et le brouillard salin de
+      la Martinique éliminent des matériaux qu'un catalogue générique retiendrait. Les durées de
+      vie annoncées « en usage extérieur » sont calculées sous un autre ciel.</li>
+    <li><b>Le moins cher à l'achat n'est pas le moins cher.</b> Il faut compter les
+      remplacements, et donc connaître la durée de vie.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle du
+  matériau, ou de ce que l'objet doit supporter ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 5e_C7.3 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais confronter des caractéristiques à des exigences, et dire pourquoi un matériau est écarté</option>
+    <option>Je sais le faire si on m'aide à relire les exigences une par une</option>
+    <option>Je lis le tableau, mais je choisis encore d'après le prix ou l'habitude</option>
+    <option>Je ne sais pas encore quelles caractéristiques regarder</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur les caractéristiques, les seuils et ce qu'ils protègent. 20 portent sur le choix d'un matériau, 10 sur les matériaux d'un objet que tu sais déjà reconnaître.</p>
+  <a class="btn" href="qcm_5e_C7.3_banc-de-la-cour.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Sur le banc, essaie de faire retenir le <b>béton</b>. Combien d'exigences faut-il retirer ou
+  assouplir pour y arriver ?</p>
+  <p>Puis regarde ce qu'il reste du cahier des charges quand tu as fini. <b>Un cahier des charges
+  qu'on assouplit jusqu'à ce qu'un matériau passe n'est plus un cahier des charges</b> : c'est
+  une justification écrite après coup. Écris en une phrase comment on reconnaît qu'on vient de
+  faire ça.</p>
+
+</section>
+
+<footer>Séquence 5e_C7.3 — « Le banc de la cour ». Banc des matériaux original (CC0), toutes les valeurs calculées par materiaux.py, aucune dépendance externe. Programme 2024, Thème 3.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_5e_C7_3";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── banc des matériaux ─────────────────────────────────────────────────── */
+const MATS = [{"cle": "pin", "nom": "Bois — pin non traité", "val": {"sigma": 40, "uv": 2, "sel": 2, "chaud": 42, "masse_max": 11.648000000000003}, "masse": 11.648000000000003, "cout": 25.62560000000001, "uv": 2, "note": "Le moins cher, le plus facile à travailler — et le premier à souffrir."}, {"cle": "pin_autoclave", "nom": "Bois — pin traité autoclave classe 4", "val": {"sigma": 38, "uv": 8, "sel": 3, "chaud": 43, "masse_max": 12.320000000000004}, "masse": 12.320000000000004, "cout": 46.81600000000001, "uv": 8, "note": "Traité pour le contact avec la terre. Le traitement ferme la filière de recyclage."}, {"cle": "teck", "nom": "Bois — teck (ou bois exotique dense)", "val": {"sigma": 75, "uv": 15, "sel": 5, "chaud": 44, "masse_max": 14.560000000000004}, "masse": 14.560000000000004, "cout": 203.84000000000006, "uv": 15, "note": "Tient tout, et coûte six fois le pin traité. La provenance est une question."}, {"cle": "pvc", "nom": "PVC rigide (stabilisé anti-UV)", "val": {"sigma": 45, "uv": 8, "sel": 5, "chaud": 58, "masse_max": 31.36000000000001}, "masse": 31.36000000000001, "cout": 109.76000000000003, "uv": 8, "note": "Imperméable et bon marché. Sa découpe laser dégage du chlorure d'hydrogène : interdite."}, {"cle": "acier_galva", "nom": "Acier galvanisé", "val": {"sigma": 235, "uv": 25, "sel": 3, "chaud": 68, "masse_max": 175.84000000000006}, "masse": 175.84000000000006, "cout": 334.0960000000001, "uv": 25, "note": "Très résistant et très lourd. La galvanisation protège tant qu'elle n'est pas rayée."}, {"cle": "beton", "nom": "Béton préfabriqué", "val": {"sigma": 5, "uv": 30, "sel": 4, "chaud": 61, "masse_max": 53.76000000000002}, "masse": 53.76000000000002, "cout": 18.816000000000006, "uv": 30, "note": "Increvable et immobile. On ne le porte pas, on le pose une fois."}];        /* [{cle, nom, val:{critere:…}, masse, cout, uv, note}] */
+const EXIG = [{"cle": "sigma", "lib": "Résistance", "unite": "MPa", "sens": "au moins", "defaut": 25}, {"cle": "uv", "lib": "Tenue au soleil", "unite": "ans", "sens": "au moins", "defaut": 8}, {"cle": "sel", "lib": "Tenue au sel", "unite": "/5", "sens": "au moins", "defaut": 3}, {"cle": "chaud", "lib": "Température au soleil", "unite": "°C", "sens": "au plus", "defaut": 55}, {"cle": "masse_max", "lib": "Masse de la pièce", "unite": "kg", "sens": "au plus", "defaut": 35}];        /* [{cle, lib, unite, sens, defaut}] */
+const COLS = ["sigma", "uv", "sel", "chaud", "masse_max"];        /* [critères affichés en colonnes] */
+
+function seuil(c){
+  const e = document.getElementById("sv_" + c);
+  const v = parseFloat((e.value || "").replace(",", "."));
+  return isNaN(v) ? null : v;
+}
+function actif(c){ return document.getElementById("on_" + c).checked; }
+function annees(){
+  const e = document.getElementById("duree");
+  return e ? parseInt(e.value, 10) : 0;
+}
+function coutSur(m){
+  const a = annees();
+  if(!a) return [m.cout, 1];
+  const n = Math.max(1, Math.ceil(a / m.uv));
+  return [m.cout * n, n];
+}
+function vg(x, d){ return x.toFixed(d).replace(".", ","); }
+
+/* Le nombre de décimales n'est pas une préférence d'écriture : c'est ce qui
+   décide si l'élève VOIT la différence. Le boîtier de 3e pèse 0,545 kg en PVC
+   et 0,557 kg en aluminium — arrondis au dixième, ils affichent 0,5 et 0,6, et
+   la page raconte alors le contraire de ce qu'elle démontre. On règle donc la
+   précision sur l'ordre de grandeur de l'objet, une fois, pour tout le tableau. */
+const DEC_C = Math.max.apply(null, MATS.map(m => m.cout)) < 40 ? 2 : 0;
+const DEC_M = Math.max.apply(null, MATS.map(m => m.masse)) < 10 ? 3 : 1;
+/* Quand « masse de la pièce » est une exigence, elle a déjà sa colonne. */
+const MASSE_A_PART = COLS.indexOf("masse_max") < 0;
+
+function juge(m){
+  const rates = [];
+  EXIG.forEach(e => {
+    if(!actif(e.cle)) return;
+    const s = seuil(e.cle);
+    if(s === null) return;
+    const v = m.val[e.cle];
+    const ok = e.sens === "au plus" ? v <= s : v >= s;
+    if(!ok) rates.push(e.lib.toLowerCase());
+  });
+  return rates;
+}
+
+/* `geste` : vrai quand la mise à jour vient d'une action de l'élève. Faux à
+   l'ouverture de la page. Un verrou expérientiel que l'état initial suffit à
+   ouvrir n'est pas un verrou — le boîtier de 3e ne retient AUCUN matériau tel
+   qu'il est écrit, et « avoir vu zéro » s'obtiendrait alors sans rien faire. */
+function majBanc(geste){
+  EXIG.forEach(e =>
+    document.getElementById("ex_" + e.cle).classList.toggle("off", !actif(e.cle)));
+  const t = document.getElementById("tab");
+  while(t.rows.length > 1) t.deleteRow(1);
+  let retenus = [], moins = null;
+  MATS.forEach(m => {
+    const rates = juge(m), ok = rates.length === 0;
+    const [c, n] = coutSur(m);
+    if(ok){ retenus.push(m); if(moins === null || c < moins[0]) moins = [c, m]; }
+    const tr = t.insertRow();
+    tr.className = ok ? "ok" : "ko";
+    const cel = x => { const d = tr.insertCell(); d.innerHTML = x; return d; };
+    cel("<b>" + m.nom + "</b>").className = "nom";
+    COLS.forEach(c2 => {
+      const e = EXIG.find(x => x.cle === c2);
+      const d = cel(vg(m.val[c2], c2 === "masse_max" ? DEC_M : 0));
+      if(e && actif(c2) && rates.includes(e.lib.toLowerCase())) d.className = "faute";
+    });
+    if(MASSE_A_PART) cel(vg(m.masse, DEC_M));
+    cel(n > 1 ? vg(c, DEC_C) + " <small>(" + n + "×)</small>" : vg(c, DEC_C));
+    cel(ok ? "✔ retenu" : "✘ " + rates.join(", ")).className = "ver";
+  });
+  const j = document.getElementById("jRet");
+  document.getElementById("nRet").textContent = retenus.length;
+  j.classList.toggle("zero", retenus.length === 0);
+  j.classList.toggle("un", retenus.length === 1);
+  j.classList.toggle("plus", retenus.length > 1);
+  document.getElementById("nMoins").textContent =
+    moins ? vg(moins[0], DEC_C) + " €" : "—";
+  document.getElementById("jMoins").classList.toggle("zero", !moins);
+
+  if(geste){
+    if(retenus.length === 0) window.__exp.zero = true;
+    if(retenus.length === 1) window.__exp.unSeul = true;
+    if(EXIG.some(e => !actif(e.cle))) window.__exp.retireCritere = true;
+    if(annees() > 0) window.__exp.duree = true;
+  }
+  save();
+  return retenus;
+}
+
+function ligne(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls; d.textContent = txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("evaluer").addEventListener("click", () => {
+  const r = majBanc(true);
+  window.__exp.evalue = true;
+  if(!r.length){
+    ligne("ko", "Aucun matériau ne tient ce cahier des charges. Ce n'est pas une panne du banc : "
+        + "c'est un résultat. Il faut changer une exigence, ou changer l'objet.");
+  } else if(r.length === 1){
+    ligne("wa", "Un seul candidat tient : " + r[0].nom + ". Un choix sans alternative n'est pas "
+        + "un choix — vérifie qu'aucun seuil n'est plus sévère que nécessaire.");
+  } else {
+    const l = r.map(m => m.nom + " (" + vg(coutSur(m)[0], DEC_C) + " €)").join(" · ");
+    ligne("ok", r.length + " candidats tiennent : " + l);
+  }
+  save();
+});
+document.getElementById("reinit").addEventListener("click", () => {
+  EXIG.forEach(e => {
+    document.getElementById("on_" + e.cle).checked = true;
+    document.getElementById("sv_" + e.cle).value = String(e.defaut).replace(".", ",");
+  });
+  const d = document.getElementById("duree");
+  if(d) d.value = d.options[0].value;
+  majBanc(true);
+  ligne("wa", "Cahier des charges remis tel qu'il est écrit.");
+});
+EXIG.forEach(e => {
+  document.getElementById("on_" + e.cle).addEventListener("change", () => majBanc(true));
+  document.getElementById("sv_" + e.cle).addEventListener("input", () => majBanc(true));
+});
+if(document.getElementById("duree"))
+  document.getElementById("duree").addEventListener("change", () => majBanc(true));
+/* Pas d'appel à majBanc() ici : il enregistre, et il tournerait AVANT restore()
+   (règle d'or n°221). Le squelette restaure d'abord, puis met à jour. */
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0r0", "elle dit combien pèsera la pièce, une fois sa taille connue"); s += sv("a0r1", "elle dit quelle charge la pièce supporte sans casser"); s += sv("a0r2", "elle dit combien de temps la pièce reste utilisable dehors"); s += sv("a0r3", "elle dit si l'air marin l'attaque ou la laisse tranquille"); s += sv("a0r4", "il ne dit rien tant qu'on ne sait pas combien de kilos il en faut");
+       return {score: s, total: 5, exp: true}; },
+  1(){ let s = 0;
+       s += sv("a1r0", "il ne tient ni le soleil ni le sel"); s += sv("a1r1", "il monte trop haut en température au soleil"); s += sv("a1r2", "il chauffe trop, et la pièce serait bien trop lourde"); s += sv("a1r3", "il n'est pas assez résistant en flexion, et il est trop lourd"); s += sv("a1q1","être excellent sur un critère ne rattrape pas d'échouer sur un autre");
+       return {score: s, total: 5, exp: !!window.__exp.evalue,
+               expMsg: "Clique d'abord sur « ⚖ Évaluer les candidats » : on ne commente pas un tri qu'on n'a pas fait."}; },
+  2(){ let s = 0;
+       s += nb("rel0", 2, 0); s += nb("rel1", 3, 0); s += nb("rel2", 47, 1); s += nb("rel3", 3, 0); s += nb("rel4", 26, 1); s += sv("a2q1","le PVC entre, mais il coûte plus cher que le pin traité déjà retenu"); s += sv("a2q2","non : le pin nu grisera en un an et sera pourri en trois, tout serait à refaire");
+       return {score: s, total: 7, exp: !!window.__exp.retireCritere,
+               expMsg: "Décoche d'abord au moins une exigence sur le banc et ré-évalue : c'est ce geste-là que l'activité te demande de commenter."}; },
+  3(){ let s = 0;
+       s += sv("a3q1","sur un critère qu'on ajoute, et qu'on écrit : prix, durée, provenance"); s += sv("a3q2","le pin traité : deux assises à 46,82 €, soit 93,64 €"); s += pres("a3j", 60);
+       return {score: s, total: 3, exp: true}; },
+  4(){ return {score: pres("reinv", 130), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majBanc();
+})();
+</script>
+
+</body>
+</html>

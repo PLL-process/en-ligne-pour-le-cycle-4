@@ -849,6 +849,105 @@ OVERLAY = {
                       "par un bandeau aria-live.",
         medias="Banc d'energie original (HTML + JS, CC0). Aucun media tiers.",
     ),
+    # ── Lot C7.3 « Choisir un materiau », 31/08/2026 ────────────────────────────
+    "5e_C7.3": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le banc de la cour » : 2 seances de 55 min pour 95 min d'activites, "
+                "BANC DES MATERIAUX original integre a la page — il ne note pas, ne pondere pas "
+                "et ne conseille pas : il ELIMINE, et il dit sur quel critere. Six candidats, "
+                "cinq exigences, deux retenus. Le geste qui porte la seance est l'activite 2 : "
+                "RETIRER une exigence et voir le nombre de retenus changer (regle d'or n°213) — "
+                "sans « temperature au soleil », le PVC entre a cent euros de moins, et c'est "
+                "exactement le critere qu'on n'a pas le droit de retirer. Deux verrous "
+                "experientiels (evaluer, retirer un critere). Toutes les valeurs — masses, couts, "
+                "verdicts — sont CALCULEES par materiaux.py, livre dans le dossier : aucun nombre "
+                "recopie a la main. QCM 30 q / 90 refutations (C7.3 x20, C4.4 x10), lexique 30 "
+                "notions, deux syntheses, fiche, matrice de 30 notions engendree depuis la banque "
+                "et associee par NOM et non par position, tests reels 41/41 et 32/32, scripts livres.",
+        anomalies="Les valeurs sont des ordres de grandeur d'usage pedagogique, tirees de plages "
+                  "courantes en construction — c'est le CLASSEMENT qui doit etre juste, pas la "
+                  "troisieme decimale, et la sequence le dit. Aucune mesure n'est faite par "
+                  "l'eleve : la version A releve les temperatures au thermometre infrarouge sur "
+                  "six chutes de materiau, et ce sont ces releves qui font foi. Le banc ne pondere "
+                  "pas et ne note pas — c'est un choix, pas une limite technique. La provenance et "
+                  "l'energie de fabrication n'ont pas de colonne : elles sont nommees dans la "
+                  "correction de l'activite 3, sans etre chiffrees.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (six fiches cartonnees et cinq bandes d'exigences qu'on pose ou "
+                      "qu'on retire), encadre climat verifie par un test. Aucune boite modale : "
+                      "les messages passent par un bandeau aria-live (regle d'or n°188).",
+        medias="Banc des materiaux original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+    "4e_C7.3": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le bac du jardin » : 2 seances de 55 min pour 95 min d'activites, banc des "
+                "materiaux muni d'un SELECTEUR DE DUREE. Le verbe du code est COMPARER, et "
+                "l'expression a ouvrir est « le plus adapte » — adapte a quoi, et pour combien de "
+                "temps. Trois materiaux tiennent le cahier des charges ; a l'achat PP recycle 90 € "
+                "< PVC 167 € < teck 309 €, et sur quinze ans PP 271 € < TECK 309 € < PVC 333 € : "
+                "le classement se retourne. Sur vingt ans il se retourne une SECONDE fois, le teck "
+                "repassant dernier a 619 € parce qu'un deuxieme teck part a la benne avec dix ans "
+                "de vie devant lui. Le classement n'appartient pas aux materiaux : il appartient a "
+                "la duree qu'on a choisie, et cette duree est une decision qui s'ecrit. Verrou "
+                "experientiel sur le changement de duree. QCM 30 q / 90 refutations (C7.3 x20, "
+                "C3.2 x10), lexique 30 notions, deux syntheses, fiche, matrice de 30 notions, "
+                "tests reels 44/44 et 32/32, scripts livres.",
+        anomalies="Tout le raisonnement repose sur les durees de vie annoncees, et le bonus demande "
+                  "justement a l'eleve d'ou elles viennent ; la version A les remplace par des "
+                  "garanties de fournisseurs reels. Le banc ne compte que la matiere : ni l'energie "
+                  "de fabrication, ni les kilometres, ni la pose — c'est ecrit dans la correction "
+                  "de l'activite 3. Aucune analyse de cycle de vie complete n'est conduite : "
+                  "4e_C3.2 est mobilise sur la comparaison chiffree et sur ce qu'elle laisse de "
+                  "cote. Le pilier social du developpement durable est absent du cahier des "
+                  "charges, et la sequence le dit plutot que de faire comme s'il y figurait. "
+                  "Ce lot REMPLACE le README de deux lignes qui renvoyait a un lot inexistant.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (une frise de vingt ans au tableau et trois bandes de couleur "
+                      "recollees a chaque remplacement), encadre de securite atelier — decoupe "
+                      "laser du PVC interdite, sciure de pin autoclave — verifie par un test. "
+                      "Aucune boite modale (regle d'or n°188).",
+        medias="Banc des materiaux original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+    "3e_C7.3": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le boitier de la station » : 2 seances de 90 min pour 160 min d'activites. "
+                "Le mot du code est CONSTITUTIF, et le lot en tire deux consequences que les deux "
+                "niveaux precedents n'avaient pas. (1) L'EPAISSEUR N'EST PAS DONNEE : elle se "
+                "deduit du materiau par e = e0 x racine(s0/s), si bien que l'aluminium, presque "
+                "deux fois plus dense que le PVC, donne un boitier de 0,557 kg contre 0,545 — "
+                "douze grammes. (2) AUCUN des six candidats ne passe le cahier des charges tel "
+                "qu'il est ecrit. Zero retenu n'est pas une panne : c'est la situation ordinaire "
+                "d'un bureau d'etudes. Trois sorties existent, une par exigence relachee, et "
+                "chacune envoie la facture ailleurs — le sel sur l'entretien, la masse sur celui "
+                "qui pose en haut d'une echelle, la duree sur celui qui remontera dans cinq ans. "
+                "Une contrainte relachee ne disparait pas : elle CHANGE DE PORTEUR. Deux verrous "
+                "experientiels (evaluer, obtenir exactement un retenu). QCM 30 q / 90 refutations "
+                "(C7.3 x20, C4.2 x10), lexique 30 notions, deux syntheses, fiche, matrice de 30 "
+                "notions, tests reels 43/43 et 32/32, scripts livres.",
+        anomalies="Aucune eprouvette n'est cassee : la loi en racine carree est admise, pas "
+                  "mesuree — la version A imprime trois plaques a 1, 2 et 3 mm et les casse sur le "
+                  "banc de flexion de 3e_C8.2. Cette loi est une simplification : paroi plane, "
+                  "meme chargement, meme critere de ruine ; elle donne l'ordre de grandeur et le "
+                  "bon classement, pas une cote de fabrication. Le lien avec le mat de 3e_C8.2 "
+                  "n'est PAS recalcule : le seuil de 1,2 kg vient de la pose a une main, argument "
+                  "deja employe dans ce lot-la contre la barre d'acier de 4,93 kg ; verifier "
+                  "l'effet d'une tete plus lourde sur le mat resterait a faire, et la sequence le "
+                  "dit. Le verificateur ne lit pas la justification de l'activite 3 : il compte "
+                  "des caracteres.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (six fiches, cinq bandes d'exigences, un seul seuil deplacable "
+                      "a la fois), encadre de securite atelier — PVC jamais au laser, impression "
+                      "en local ventile, metaux perces piece bridee sans gants — verifie par un "
+                      "test. Aucune boite modale (regle d'or n°188).",
+        medias="Banc des materiaux original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+
     # ── Lot C7.5 « Assembler un prototype », 30/08/2026 ─────────────────────────
     "5e_C7.5": dict(
         statut="COMPLET ET VALIDABLE",
