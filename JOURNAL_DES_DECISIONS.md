@@ -8318,3 +8318,57 @@ qu'on lancera par erreur.
 - **n°206** — un outil qui sert trois thèmes n'appartient à aucun. Il vit dans `_outils/`, en un
   seul exemplaire. Une copie laissée « au cas où » est un piège à retardement : c'est toujours
   la mauvaise qu'on lance.
+
+---
+
+## 2026-08-29 — Un candidat pour la dernière ressource vide, et pourquoi je ne la remplis pas
+
+`res-4e-C1-1-detection` est la seule entrée du registre des ressources externes restée vide. Sa
+spécification est exigeante, et c'est ce qui fait sa valeur :
+
+> Un système de détection réel au moment où il **DÉCIDE**. La vidéo doit laisser voir qu'un seul
+> capteur ne suffit pas — croisement d'indices, confirmation, délai. Ce qui disqualifie une
+> vidéo : une publicité de fabricant, ou une démonstration où le déclenchement est présenté
+> comme évident.
+
+Recherche faite. Le métier a un mot pour exactement ce geste : la **levée de doute**. Une
+première détection n'ouvre pas l'alarme générale — elle ouvre une alarme *restreinte*, que
+quelqu'un doit confirmer, avec un délai. C'est la preuve, énoncée par la profession elle-même,
+qu'un capteur seul ne décide de rien.
+
+Meilleur candidat trouvé : **« Prévention — La levée de doute en cas d'alarme incendie »**,
+publié par l'**ECA Vaud**, l'établissement cantonal d'assurance du canton de Vaud — un organisme
+public de prévention, pas un fabricant. Exactement ce que la spécification demande, et l'inverse
+de ce qu'elle disqualifie.
+
+### Ce que j'ai vérifié, et ce que je n'ai pas pu
+
+| Vérifié | Comment |
+|---|---|
+| la vidéo existe | API oEmbed de YouTube — titre et chaîne retournés |
+| la source est sérieuse | `eca-vaud.ch` publie une formation « Levée de doute pour la détection incendie » |
+
+| Non vérifié | Pourquoi |
+|---|---|
+| la durée | la page de la vidéo répond **429** depuis ce poste |
+| la licence | non lue à la source |
+| **le contenu** | **personne ne l'a regardée** |
+
+### Donc l'entrée reste vide
+
+Le candidat est enregistré dans un champ `candidats` que `poser_ressource.py` ne lit pas. Le
+bloc de la page 4ᵉ reste ce qu'il était : aucun lien, aucun QR, et le repli imprimé — qui suffit,
+puisque la séance repose sur la mesure de l'élève et non sur la vidéo.
+
+Poser un lien vers une vidéo que je n'ai pas vue, ce serait mettre devant une classe de 4ᵉ
+quelque chose dont je ne réponds pas. Une source publique et un titre qui colle ne sont pas un
+visionnage. C'est la n°181 (ce que je ne peux pas vérifier, je ne le livre pas rempli) et la
+n°183 (un aperçu ne fabrique pas de faux contrôle) — et cette fois elles s'appliquent avant la
+faute, pas après.
+
+Ce que cette PR livre n'est donc pas une ressource : c'est **trois minutes de décision** au lieu
+d'une heure de recherche. Pascal regarde, et tranche.
+
+- **n°207** — une source sérieuse et un titre qui colle ne remplacent pas un visionnage. On peut
+  vérifier qu'une ressource existe sans savoir ce qu'elle montre ; livrer la première pour la
+  seconde, c'est faire passer un indice pour une preuve.
