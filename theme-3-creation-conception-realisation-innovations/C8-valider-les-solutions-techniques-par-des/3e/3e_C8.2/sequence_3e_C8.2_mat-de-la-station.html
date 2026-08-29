@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e — Le mât de la station : proposer un protocole (3e_C8.2)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Banc d'essai de mât — original, CC0 ────────────────────────────────── */
+.banc{display:grid;grid-template-columns:minmax(200px,.85fr) minmax(250px,1.15fr);gap:16px;align-items:start}
+@media(max-width:660px){.banc{grid-template-columns:1fr}}
+.banc svg{width:100%;height:auto;background:#081b3a;border-radius:10px}
+.banc-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.banc-cmd label{font-size:.9em;color:var(--sub)}
+.banc-cmd select{width:auto;min-width:200px}
+.modes{display:flex;gap:0;border:1px solid var(--border);border-radius:9px;overflow:hidden;width:max-content}
+.modes button{background:#0a1b3d;color:var(--sub);border:none;padding:7px 14px;cursor:pointer;font-family:inherit;font-weight:600}
+.modes button.on{background:#1d4e89;color:#fff}
+.jauge{height:14px;border-radius:7px;background:#0a1b3d;border:1px solid var(--border);overflow:hidden}
+.jauge>span{display:block;height:100%;width:100%;background:linear-gradient(90deg,#3aa76d,#ffd66b,#ff7b88);clip-path:inset(0 100% 0 0);transition:clip-path .18s}
+.lecture{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.2em;color:var(--hl);margin:8px 0 4px}
+.lecture b{color:#fff}
+.casse{color:var(--err);font-weight:700}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td input{padding:4px 8px}
+table.releve td.num{width:34%}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+.protocadre{border:1px dashed var(--hl);border-radius:12px;padding:12px 14px;margin:10px 0}
+.protocadre h5{margin:0 0 8px;color:var(--hl);font-size:1em}
+.verdict-ok{color:var(--ok);font-weight:700}
+.verdict-non{color:var(--err);font-weight:700}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C8.2.html">📖 Lexique</a></nav>
+
+<h1>🗼 Le mât de la station — proposer un protocole</h1>
+<p class="subtitle">Thème 3 · 3<sup>e</sup> — Valider les solutions techniques par des essais</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 3e</span>
+  <span class="badge code">3e_C8.2</span>
+  <span class="badge code">3e_C3.4 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D1.3 · D2 · D3 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 90 min (1 h 30)</span>
+</div>
+
+<section class="card">
+  <h2>🔄 D'où tu viens — la spirale C8</h2>
+  <table class="refs">
+    <tr><th>Niveau</th><th>Ce qu'on te demandait</th><th>Qui écrivait le protocole</th></tr>
+    <tr><td>5<sup>e</sup> — 5e_C8.2</td>
+        <td>Éprouver cinq matériaux en traction pour choisir une patère.</td>
+        <td>Le laboratoire. Tu l'appliquais.</td></tr>
+    <tr><td>3<sup>e</sup> — 3e_C8.3</td>
+        <td>Écrire la recette de la station d'alerte cyclonique avant de la livrer.</td>
+        <td><b>Toi</b> — mais sur un <em>comportement</em> : ce que le programme fait.</td></tr>
+    <tr><td><b>3<sup>e</sup> — 3e_C8.2 (aujourd'hui)</b></td>
+        <td>Décider de quoi sera fait le mât qui portera la station.</td>
+        <td><b>Toi</b> — sur une <em>matière</em> : ce qui tient, ou ce qui plie.</td></tr>
+  </table>
+  <p class="retenir"><b>Ce qui change vraiment :</b> en 5<sup>e</sup>, si le protocole était mauvais,
+  ce n'était pas ta faute. Aujourd'hui, si le protocole ne répond pas à la question,
+  <em>c'est le tien</em>.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>3e_C8.2</b></td>
+        <td>Proposer un protocole de test pour valider la tenue mécanique d'un matériau.</td>
+        <td>Activités 1, 2, 3 et 5</td></tr>
+    <tr><td>3e_C3.4 <span style="color:var(--sub)">(appui)</span></td>
+        <td>Définir et mettre en œuvre un protocole pour mesurer une caractéristique,
+            une performance d'un OST.</td>
+        <td>Activités 2, 3 et 4</td></tr>
+  </table>
+  <p class="retenir"><b>Le verbe est « proposer ».</b> On n'évalue donc pas d'abord ton
+  résultat : on évalue <em>ton protocole</em> — ce qu'il mesure, ce qu'il verrouille, et
+  ce qu'il permet de décider. Un protocole qui donne un beau chiffre sans répondre à la
+  question posée vaut zéro, même si le chiffre est juste.</p>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>La station d'alerte cyclonique fonctionne. Son procès-verbal de recette est signé,
+    ses trois seuils sont vérifiés jusqu'aux frontières. La mairie l'accepte — et pose
+    aussitôt la question suivante :</p>
+    <p>« Elle va vivre dehors, en tête d'un mât de 2 m, sur le toit de l'annexe. Le jour
+    où elle doit servir, il y a 180 km/h de vent. De quoi fait-on ce mât&nbsp;?
+    Et surtout : <b>comment le prouvez-vous&nbsp;?</b> »</p>
+    <p>Cette fois, personne ne vous donne de protocole.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Quel essai faut-il inventer pour répondre à <em>cette</em> question-là&nbsp;?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <p>Tu as déjà éprouvé des matériaux en 5<sup>e</sup> : on tirait sur une éprouvette
+    jusqu'à la rupture. Est-ce que ce même essai répond à la question du mât&nbsp;?
+    Réponds franchement — personne ne corrige, et on relira ta réponse au bilan.</p>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, l'essai de traction de 5e… parce que…"></textarea>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📐 Le cahier des charges de la mairie</h2>
+  <ul>
+    <li>Mât <b>encastré au pied</b>, hauteur <b>2 m</b>, station en tête.</li>
+    <li>Le bureau d'études a converti le vent de <b>180 km/h</b> en une poussée
+      équivalente de <b>100 N appliquée en tête</b> de mât.</li>
+    <li>Coefficient de sécurité <b>3</b> : le vent peut dépasser la valeur de calcul,
+      et un mât qui tombe emporte justement la station qui devait donner l'alerte.</li>
+    <li>La station porte une girouette et un anémomètre : au-delà de <b>40 mm</b>
+      de déplacement en tête (2 % de la hauteur), la mesure de direction devient fausse.</li>
+  </ul>
+  <p style="font-size:.85em;color:var(--sub)">La conversion « vent → poussée » utilise
+  ½ ρ v² × C<sub>x</sub> × S — 180 km/h = 50 m/s donne environ 1 530 Pa, soit à peu près
+  100 N sur les 0,05 m² que la station et le mât offrent au vent. Ce calcul n'est pas
+  l'objet de la séquence : il t'est donné, comme un vrai bureau d'études le donnerait.</p>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le vrai laboratoire</b> — le « laboratoire des matériaux » du Réseau
+      National Technologie Collège (gratuit, sans compte) fait la traction et la
+      compression. Il ne fait pas la flexion : c'est déjà une information sur les limites
+      d'un instrument.</li>
+    <li><b>🅱 Avec le banc de cette page</b> — il fonctionne hors ligne, sans rien installer,
+      et il fait les deux essais. C'est la voie par défaut.</li>
+    <li><b>🅲 Sans écran</b> — les tableaux de relevés s'impriment et toutes les valeurs
+      figurent dans les corrections. Le travail reste le même : choisir l'essai, l'écrire,
+      relever, décider.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 0 — FAIRE d'abord : casser trois mâts ⏱ ~15 min</h2>
+  <p>Avant toute explication. Le banc tient un mât par le pied et pousse en tête, comme le
+  vent. Choisis un profilé, augmente la poussée, regarde <em>où</em> et <em>quand</em> il cède.
+  <b>Casse au moins trois profilés différents</b> avant de continuer.</p>
+
+  <div class="banc">
+    <div>
+      <svg viewBox="0 0 220 260" role="img" aria-labelledby="bancTitre bancDesc">
+        <title id="bancTitre">Banc d'essai de mât : flexion ou traction</title>
+        <desc id="bancDesc">Un mât est encastré dans un socle. En mode flexion, une poussée
+        horizontale s'applique en tête : le mât se courbe, et il finit par casser au ras du
+        socle, là où l'effort de pliage est le plus grand. En mode traction, la même
+        éprouvette est tirée vers le haut dans son axe : elle s'allonge à peine, puis casse
+        en pleine longueur, à une charge des centaines de fois plus élevée.</desc>
+        <rect x="0" y="0" width="220" height="260" fill="#081b3a"/>
+        <line x1="14" y1="230" x2="206" y2="230" stroke="#274a8a" stroke-width="2"/>
+        <rect x="52" y="230" width="56" height="16" fill="#274a8a"/>
+        <text id="socleTxt" x="80" y="258" fill="#9bbefc" font-size="9" text-anchor="middle">encastrement</text>
+        <path id="mat" d="M80,230 C80,175 80,110 80,45" stroke="#c9d6ef" stroke-width="9"
+              fill="none" stroke-linecap="round"/>
+        <circle id="rupt" cx="80" cy="228" r="0" fill="#ff7b88"/>
+        <g id="flechFlex">
+          <line x1="112" y1="45" x2="150" y2="45" stroke="#ffb454" stroke-width="3"/>
+          <polygon points="112,45 126,39 126,51" fill="#ffb454"/>
+          <text x="152" y="42" fill="#ffb454" font-size="10">vent</text>
+        </g>
+        <g id="flechTrac" style="display:none">
+          <line x1="80" y1="34" x2="80" y2="8" stroke="#ffb454" stroke-width="3"/>
+          <polygon points="80,4 74,18 86,18" fill="#ffb454"/>
+          <text x="94" y="16" fill="#ffb454" font-size="10">traction</text>
+        </g>
+        <line id="ligneRef" x1="80" y1="230" x2="80" y2="40" stroke="#274a8a"
+              stroke-width="1" stroke-dasharray="3 4"/>
+        <text id="etat" x="8" y="16" fill="#81fba1" font-size="11">intact</text>
+      </svg>
+    </div>
+    <div>
+      <div class="banc-cmd">
+        <span class="modes">
+          <button type="button" id="mFlex" class="on">⟂ flexion</button>
+          <button type="button" id="mTrac">↕ traction</button>
+        </span>
+      </div>
+      <div class="banc-cmd">
+        <label for="prof">Profilé :</label>
+        <select id="prof">
+        <option value="Tube aluminium Ø50 × 3">Tube aluminium Ø50 × 3</option>
+        <option value="Barre pleine acier Ø20">Barre pleine acier Ø20</option>
+        <option value="Tube PVC Ø50 × 3">Tube PVC Ø50 × 3</option>
+        <option value="Poutre bois 40 × 40">Poutre bois 40 × 40</option>
+        <option value="Tube acier galvanisé Ø33,7 × 2,6">Tube acier galvanisé Ø33,7 × 2,6</option>
+      </select>
+      </div>
+      <div class="banc-cmd">
+        <button class="btn" id="pas1" type="button">+ 10 N</button>
+        <button class="btn" id="pas2" type="button">+ 50 N</button>
+        <button class="btn" id="reset" type="button">↺ Profilé neuf</button>
+      </div>
+      <p class="lecture">Charge : <b><span id="lect">0</span></b> <span id="unite">N</span></p>
+      <p class="lecture"><span id="nomDep">Flèche en tête</span> :
+         <b><span id="dep">0,0</span></b> mm</p>
+      <div class="jauge"><span id="jauge"></span></div>
+      <p id="msg" style="min-height:2.8em;font-size:.92em;color:var(--sub);margin:8px 0 0">
+        Choisis un profilé, puis pousse jusqu'à la rupture.</p>
+      <p style="font-size:.8em;color:var(--sub);margin:4px 0 0">Mât de 2 m encastré au pied.
+        Valeurs <b>simulées</b> : calculées avec les formules de la poutre encastrée et les
+        résistances usuelles — les mêmes qu'au banc de 5<sup>e</sup>. Ces formules valent dans
+        le <b>domaine élastique</b> : au-delà de quelques pour cent de la hauteur, la flèche
+        affichée n'est plus qu'un ordre de grandeur, et c'est déjà une réponse — un mât qui
+        plie de 90 cm sur 2 m est hors de question, inutile de discuter le chiffre.</p>
+    </div>
+  </div>
+
+  <div class="exo">
+    <h4>Après avoir cassé trois profilés</h4>
+    <p><b>1.</b> En flexion, le mât casse…</p>
+    <select id="a0q1">
+      <option value="">— je choisis —</option>
+      <option>en pleine hauteur, au milieu</option>
+      <option>au ras du socle, là où il est encastré</option>
+      <option>tout en haut, sous la station</option>
+      <option>n'importe où, c'est au hasard</option>
+    </select>
+    <p><b>2.</b> Bascule le banc en <b>traction</b> et reprends le même profilé. Les deux
+    charges de rupture sont…</p>
+    <select id="a0q2">
+      <option value="">— je choisis —</option>
+      <option>les mêmes : c'est la même matière</option>
+      <option>très différentes : il cède des centaines de fois plus tôt en flexion</option>
+      <option>différentes de quelques newtons seulement</option>
+      <option>impossibles à comparer, le banc refuse</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>1 — au ras du socle.</b> Plus on descend le long du mât, plus le bras de levier de
+      la poussée est long, donc plus l'effort de pliage est grand. Le maximum est à
+      l'encastrement : c'est là que ça casse, et c'est là qu'il faudra soigner la fixation.</p>
+      <p><b>2 — des centaines de fois plus tôt.</b> Le même tube aluminium cède vers
+      467 N quand on le pousse en tête, et vers 84,2 kN — soit 84200 N —
+      quand on tire dessus dans l'axe : un rapport de <b>180</b>. Selon le profilé,
+      ce rapport va de 180 à 801. Ce n'est pas une erreur de banc :
+      tirer et plier ne sollicitent pas la matière de la même façon.
+      <b>Retiens ce désordre : la séquence entière est dedans.</b></p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🚫 Activité 1 — Le protocole de 5<sup>e</sup> ne répond pas ⏱ ~25 min</h2>
+  <p><b>Objectif :</b> montrer, par la mesure, qu'un protocole juste peut donner la mauvaise
+  réponse. <b>Compétence :</b> 3e_C8.2. <b>Production attendue :</b> 5 relevés + 3 réponses
+  + une phrase.</p>
+
+  <div class="exo">
+    <h4>📄 Le protocole que tu appliquais en 5<sup>e</sup></h4>
+    <div class="codebox">PROTOCOLE - tenue en traction d'un materiau
+
+1. Prendre une eprouvette NEUVE du materiau a tester.
+2. La fixer entre les deux mors du banc.
+3. Augmenter la charge par paliers, sans a-coup.
+4. Noter la charge au moment EXACT ou l'eprouvette casse.
+5. Recommencer avec le materiau suivant.
+6. Ne comparer que des essais faits avec le MEME banc.</div>
+    <p style="margin-top:12px">Ce protocole est <b>juste</b> : rien à y corriger. Applique-le
+    aux cinq candidats-mâts — banc en mode <b>↕ traction</b> — et relève les cinq charges de
+    rupture, en kN.</p>
+    <table class="releve">
+      <tr><th>Candidat</th><th class="num">Rupture en traction (kN)</th></tr>
+    <tr><td>Tube aluminium Ø50 × 3</td><td class="num"><input type="text" inputmode="decimal" id="trac0" placeholder="… kN"></td></tr>
+    <tr><td>Barre pleine acier Ø20</td><td class="num"><input type="text" inputmode="decimal" id="trac1" placeholder="… kN"></td></tr>
+    <tr><td>Tube PVC Ø50 × 3</td><td class="num"><input type="text" inputmode="decimal" id="trac2" placeholder="… kN"></td></tr>
+    <tr><td>Poutre bois 40 × 40</td><td class="num"><input type="text" inputmode="decimal" id="trac3" placeholder="… kN"></td></tr>
+    <tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td class="num"><input type="text" inputmode="decimal" id="trac4" placeholder="… kN"></td></tr>
+    </table>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Le vérificateur attend que les cinq
+    profilés aient réellement été rompus en traction au banc.</p>
+    <p><b>Question 1.</b> D'après ces cinq relevés, quel mât le protocole de 5<sup>e</sup>
+    désigne-t-il&nbsp;?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>Tube aluminium Ø50 × 3</option>
+      <option>Barre pleine acier Ø20</option>
+      <option>Tube PVC Ø50 × 3</option>
+      <option>Poutre bois 40 × 40</option>
+      <option>Tube acier galvanisé Ø33,7 × 2,6</option>
+    </select>
+    <p><b>Question 2.</b> Repasse le banc en <b>⟂ flexion</b> et refais le classement.
+    Le mât désigné est-il le même&nbsp;?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>oui, c'est le même dans les deux essais</option>
+      <option>non : celui qui gagne en traction n'est que quatrième en flexion</option>
+      <option>non, mais l'écart est trop petit pour compter</option>
+      <option>le banc donne le même ordre, seules les unités changent</option>
+    </select>
+    <p><b>Question 3.</b> Pourquoi la barre pleine en acier, la plus résistante de toutes en
+    traction, s'effondre-t-elle en flexion&nbsp;?</p>
+    <select id="a1q3">
+      <option value="">— je choisis —</option>
+      <option>parce que l'acier est un mauvais matériau pour un mât</option>
+      <option>parce qu'en flexion, ce qui compte est autant la forme que la matière</option>
+      <option>parce que le banc de flexion est moins précis</option>
+      <option>parce qu'elle est plus lourde que les autres</option>
+    </select>
+    <p><b>En une phrase :</b> qu'est-ce que le protocole de 5<sup>e</sup> mesure, et pourquoi
+    cela ne suffit-il pas ici&nbsp;?</p>
+    <textarea id="a1ph" rows="2" placeholder="Il mesure… mais le mât, lui,…"></textarea>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction — deux classements, cinq mêmes candidats</summary><div>
+      <table class="refs">
+        <tr><th>Candidat</th><th>Traction</th><th>Rang</th><th>Flexion</th><th>Rang</th><th>Masse</th></tr>
+        <tr><td>Tube aluminium Ø50 × 3</td><td>84,2 kN</td><td>3<sup>e</sup></td><td>467 N</td><td>1<sup>e</sup></td><td>2,39 kg</td></tr>
+        <tr><td>Barre pleine acier Ø20</td><td>125,7 kN</td><td>1<sup>e</sup></td><td>157 N</td><td>4<sup>e</sup></td><td>4,93 kg</td></tr>
+        <tr><td>Tube PVC Ø50 × 3</td><td>23,0 kN</td><td>5<sup>e</sup></td><td>128 N</td><td>5<sup>e</sup></td><td>1,24 kg</td></tr>
+        <tr><td>Poutre bois 40 × 40</td><td>64,0 kN</td><td>4<sup>e</sup></td><td>213 N</td><td>3<sup>e</sup></td><td>1,60 kg</td></tr>
+        <tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td>101,6 kN</td><td>2<sup>e</sup></td><td>367 N</td><td>2<sup>e</sup></td><td>3,99 kg</td></tr>
+      </table>
+      <p style="margin-top:10px"><b>1 — la barre pleine acier</b> : 125,7 kN, loin devant.
+      Le protocole de 5<sup>e</sup> est appliqué correctement et il désigne ce mât-là.</p>
+      <p><b>2 — non.</b> En flexion, cette même barre est <b>quatrième</b> sur cinq. Le protocole
+      n'est pas faux : il répond juste à une autre question que celle de la mairie.</p>
+      <p><b>3 — la forme.</b> En flexion, la matière loin de l'axe travaille beaucoup, celle
+      qui est près de l'axe ne fait presque rien. Un tube de Ø50 met toute sa matière loin de
+      l'axe ; une barre pleine de Ø20 la garde entassée au centre. Résultat : 2,39 kg
+      d'aluminium tiennent 467 N là où 4,93 kg d'acier plein n'en tiennent
+      que 157.</p>
+      <p class="retenir">📌 <b>Le point de la séquence :</b> un protocole juste, appliqué
+      correctement, peut désigner le mauvais objet — parce qu'il mesure autre chose que ce
+      qu'on cherche. <em>Choisir la sollicitation, c'est la première ligne du protocole,
+      et c'est celle qui décide de tout le reste.</em></p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✍️ Activité 2 — PROPOSER ton protocole ⏱ ~35 min</h2>
+  <p><b>Objectif :</b> écrire un protocole qui répond à la question de la mairie.
+  <b>Compétences :</b> 3e_C8.2 et 3e_C3.4. <b>Production attendue :</b> 6 décisions
+  + un protocole rédigé.</p>
+  <p>Un protocole n'est pas une liste de gestes : c'est une <b>suite de décisions prises
+  avant l'essai</b>. Prends-les une par une, puis rédige.</p>
+
+  <div class="exo">
+    <p><b>Décision 1 — la sollicitation.</b> Qu'est-ce que le banc doit faire subir au mât&nbsp;?</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>le tirer dans son axe, comme en 5e</option>
+      <option>le pousser en tête, perpendiculairement, comme le vent</option>
+      <option>l'écraser par le haut, comme un poids posé dessus</option>
+      <option>le chauffer jusqu'à ce qu'il se déforme</option>
+    </select>
+    <p><b>Décision 2 — la grandeur mesurée.</b> Une seule mesure ne suffit pas ici. Laquelle
+    manque au « il casse à tant de newtons »&nbsp;?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>la couleur du profilé après essai</option>
+      <option>la flèche en tête sous une charge d'essai commune</option>
+      <option>le prix au mètre de chaque profilé</option>
+      <option>le temps mis pour monter la charge</option>
+    </select>
+    <p><b>Décision 3 — ce qui ne doit pas varier.</b> D'un candidat à l'autre, on garde
+    identiques…</p>
+    <select id="a2q3">
+      <option value="">— je choisis —</option>
+      <option>la couleur et la marque des profilés</option>
+      <option>la hauteur, la fixation au pied et le point d'application de la charge</option>
+      <option>la section et la matière, pour que ce soit comparable</option>
+      <option>rien : chaque candidat s'essaie comme il vient</option>
+    </select>
+    <p><b>Décision 4 — le critère de rupture.</b> D'après le cahier des charges, la charge de
+    rupture exigée en tête vaut, en newtons :</p>
+    <input type="text" inputmode="numeric" id="a2q4" placeholder="… N">
+    <p><b>Décision 5 — la charge d'essai commune</b> sous laquelle on mesure la flèche de
+    tous les candidats, en newtons :</p>
+    <input type="text" inputmode="numeric" id="a2q5" placeholder="… N">
+    <p><b>Décision 6 — la règle de décision,</b> écrite AVANT de mesurer :</p>
+    <select id="a2q6">
+      <option value="">— je choisis —</option>
+      <option>je retiens le mât qui casse le plus tard, un point c'est tout</option>
+      <option>je retiens le mât le moins cher parmi ceux qui ne cassent pas</option>
+      <option>je retiens un mât seulement s'il tient les DEUX critères</option>
+      <option>je retiens le mât le plus léger, la solidité viendra après</option>
+    </select>
+
+    <div class="protocadre">
+      <h5>📝 Ton protocole, rédigé — six lignes numérotées</h5>
+      <p style="font-size:.9em;color:var(--sub);margin:0 0 8px">Reprends tes six décisions et
+      écris-les comme un protocole qu'un autre groupe pourrait exécuter sans te poser de
+      question. Numérote.</p>
+      <textarea id="a2proto" rows="8" placeholder="1. Fixer chaque candidat…
+2. …
+3. …
+4. …
+5. …
+6. …"></textarea>
+    </div>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+
+    <h4 style="margin-top:16px">🤝 Ce que le vérificateur ne peut pas juger — la relecture du binôme</h4>
+    <p style="font-size:.92em;color:var(--sub)">Un vérificateur automatique sait compter des
+    lignes, pas lire un protocole. Échangez vos écrans : chacun coche, sur le protocole de
+    <em>l'autre</em>, ce qui y est vraiment écrit.</p>
+    <ul class="grille">
+      <li><b>1.</b> La sollicitation est nommée (on sait si l'on tire ou si l'on pousse).</li>
+      <li><b>2.</b> On sait <em>où</em> la charge s'applique et <em>où</em> le mât est tenu.</li>
+      <li><b>3.</b> Les deux grandeurs mesurées sont nommées, avec leur unité.</li>
+      <li><b>4.</b> Ce qui doit rester identique d'un candidat à l'autre est écrit noir sur blanc.</li>
+      <li><b>5.</b> Les deux seuils chiffrés figurent — 300 N et 40 mm.</li>
+      <li><b>6.</b> La règle de décision est écrite <em>avant</em> les mesures.</li>
+      <li><b>7.</b> Un autre groupe pourrait l'exécuter sans te poser de question.</li>
+    </ul>
+    <details class="correction"><summary>📖 Correction — le protocole attendu</summary><div>
+      <div class="codebox">PROTOCOLE - tenue en flexion d'un mat de station
+
+1. Fixer le candidat par encastrement au pied, hauteur libre 2 000 mm,
+   la meme fixation pour tous les candidats.
+2. Appliquer une poussee HORIZONTALE en tete, par paliers, sans a-coup.
+3. A 100 N exactement, mesurer la FLECHE en tete, en mm.
+4. Poursuivre la montee en charge et noter la charge a la RUPTURE, en N.
+5. Recommencer avec un profile NEUF pour chaque candidat.
+6. DECISION : un candidat est retenu s'il verifie les DEUX criteres -
+   rupture >= 300 N ET fleche <= 40 mm sous 100 N.</div>
+      <p style="margin-top:10px"><b>Décision 4 — 300 N.</b> 100 N de poussée
+      × coefficient 3. Le coefficient n'est pas une frayeur : il dit qu'on ne connaît
+      exactement ni le vent réel, ni le mât réel, ni le vieillissement.</p>
+      <p><b>Décision 5 — 100 N.</b> Il faut une charge <em>commune</em>, sinon les
+      flèches ne sont pas comparables — et elle doit être inférieure à la rupture du plus
+      faible candidat, sans quoi on ne peut pas la mesurer sur lui. 100 N convient :
+      le plus fragile casse à 128 N.</p>
+      <p><b>Décision 6 — les deux critères.</b> Deux critères ne sont pas un critère : un
+      mât qui tient mais qui bat au vent rend fausse la mesure de direction, et une station
+      qui mesure faux pendant un cyclone est pire qu'une station absente.</p>
+      <p class="retenir">⚠️ <b>Ce qu'un bon protocole écrit et qu'on oublie presque toujours :
+      l'incertitude.</b> « Flèche ≤ 40 mm » n'a de sens que si l'on sait à combien
+      près on mesure. Tu vas en avoir besoin à l'activité 5, et ce sera la question la plus
+      difficile de la séquence.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧪 Activité 3 — Exécuter TON protocole ⏱ ~30 min</h2>
+  <p><b>Objectif :</b> appliquer, sans en sauter une ligne, le protocole que tu viens
+  d'écrire. <b>Compétences :</b> 3e_C8.2 et 3e_C3.4. <b>Production attendue :</b> 10 relevés.</p>
+  <p>Remonte au banc, mode <b>⟂ flexion</b>. Pour chaque candidat : profilé neuf (↺), montée
+  par paliers, <b>flèche lue à 100 N exactement</b>, puis rupture.</p>
+
+  <table class="releve">
+    <tr><th>Candidat</th><th class="num">Flèche sous 100 N (mm)</th><th class="num">Rupture en flexion (N)</th></tr>
+    <tr><td>Tube aluminium Ø50 × 3</td><td class="num"><input type="text" inputmode="decimal" id="fle0" placeholder="… mm"></td><td class="num"><input type="text" inputmode="numeric" id="rup0" placeholder="… N"></td></tr>
+    <tr><td>Barre pleine acier Ø20</td><td class="num"><input type="text" inputmode="decimal" id="fle1" placeholder="… mm"></td><td class="num"><input type="text" inputmode="numeric" id="rup1" placeholder="… N"></td></tr>
+    <tr><td>Tube PVC Ø50 × 3</td><td class="num"><input type="text" inputmode="decimal" id="fle2" placeholder="… mm"></td><td class="num"><input type="text" inputmode="numeric" id="rup2" placeholder="… N"></td></tr>
+    <tr><td>Poutre bois 40 × 40</td><td class="num"><input type="text" inputmode="decimal" id="fle3" placeholder="… mm"></td><td class="num"><input type="text" inputmode="numeric" id="rup3" placeholder="… N"></td></tr>
+    <tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td class="num"><input type="text" inputmode="decimal" id="fle4" placeholder="… mm"></td><td class="num"><input type="text" inputmode="numeric" id="rup4" placeholder="… N"></td></tr>
+  </table>
+  <p style="font-size:.9em;color:var(--warn)">🔒 Le vérificateur attend que les cinq profilés
+  aient réellement été rompus en flexion au banc — et il compare tes dix relevés aux vraies
+  valeurs. Un chiffre recopié à peu près est refusé.</p>
+  <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+  <div class="feedback" id="fb3"></div>
+  <details class="correction"><summary>📖 Correction — les dix relevés et les deux verdicts</summary><div>
+    <table class="refs">
+      <tr><th>Candidat</th><th>Flèche sous 100 N</th><th>Rupture</th><th>Verdict</th></tr>
+      <tr><td>Tube aluminium Ø50 × 3</td><td>31,0 mm</td><td>467 N</td><td class="verdict-ok">✅ retenu</td></tr>
+      <tr><td>Barre pleine acier Ø20</td><td>161,7 mm</td><td>157 N</td><td class="verdict-non">❌ rupture trop tôt</td></tr>
+      <tr><td>Tube PVC Ø50 × 3</td><td>723,8 mm</td><td>128 N</td><td class="verdict-non">❌ rupture trop tôt</td></tr>
+      <tr><td>Poutre bois 40 × 40</td><td>113,6 mm</td><td>213 N</td><td class="verdict-non">❌ rupture trop tôt</td></tr>
+      <tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td>41,1 mm</td><td>367 N</td><td class="verdict-non">❌ flèche trop grande</td></tr>
+    </table>
+    <p style="margin-top:10px">Un seul candidat tient les deux critères : le
+    <b>Tube aluminium Ø50 × 3</b>. Et un seul cas est vraiment intéressant : le <b>Tube acier galvanisé Ø33,7 × 2,6</b>, qui
+    dépasse largement en rupture (367 N pour 300 exigés) et se fait refuser sur
+    la flèche — de 1,1 mm.</p>
+    <p class="retenir">📌 Ces valeurs sont <b>simulées</b> mais pas inventées : elles sortent
+    des formules de la poutre encastrée (F = σ·I/(v·L) et f = F·L³/(3·E·I)) appliquées aux
+    résistances usuelles — les mêmes que celles du banc de 5<sup>e</sup>. L'ordre de grandeur
+    est juste, et c'est lui qui fait la décision.</p>
+  </div></details>
+</section>
+
+<section class="card">
+  <h2>🕳️ Activité 4 — Ce que ton protocole ne voit pas ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> savoir ce qu'un protocole ne mesure pas — et le dire dans l'avis.
+  <b>Compétence :</b> 3e_C3.4. <b>Production attendue :</b> 5 associations.</p>
+  <p>Ton banc pousse une fois, sur un profilé neuf, à température ambiante, dans une salle
+  sèche. Associe chaque candidat à ce que <em>ton</em> essai ne verra jamais.</p>
+  <div class="exo">
+    <p><b>Tube aluminium Ø50 × 3</b></p>
+    <select id="a4q0">
+      <option value="">— je choisis —</option>
+        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
+        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
+        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
+        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
+        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
+    </select>
+    <p><b>Barre pleine acier Ø20</b></p>
+    <select id="a4q1">
+      <option value="">— je choisis —</option>
+        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
+        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
+        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
+        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
+        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
+    </select>
+    <p><b>Tube PVC Ø50 × 3</b></p>
+    <select id="a4q2">
+      <option value="">— je choisis —</option>
+        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
+        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
+        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
+        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
+        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
+    </select>
+    <p><b>Poutre bois 40 × 40</b></p>
+    <select id="a4q3">
+      <option value="">— je choisis —</option>
+        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
+        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
+        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
+        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
+        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
+    </select>
+    <p><b>Tube acier galvanisé Ø33,7 × 2,6</b></p>
+    <select id="a4q4">
+      <option value="">— je choisis —</option>
+        <option>L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</option>
+        <option>La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</option>
+        <option>Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</option>
+        <option>Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</option>
+        <option>Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</option>
+    </select>
+    <button class="btn check" data-check="4" type="button">✅ Vérifier l'activité 4</button>
+    <div class="feedback" id="fb4"></div>
+    <details class="correction"><summary>📖 Correction — cinq angles morts</summary><div>
+      <p><b>Tube aluminium Ø50 × 3</b> — Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai.</p>
+      <p><b>Barre pleine acier Ø20</b> — Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien.</p>
+      <p><b>Tube PVC Ø50 × 3</b> — Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf.</p>
+      <p><b>Poutre bois 40 × 40</b> — L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec.</p>
+      <p><b>Tube acier galvanisé Ø33,7 × 2,6</b> — La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.</p>
+      <p class="retenir">📌 <b>À retenir :</b> un protocole honnête ne dit pas seulement ce
+      qu'il a mesuré — il dit ce qu'il n'a pas mesuré. « Le mât tient 467 N » est vrai.
+      « Le mât tiendra » est un mensonge : la fatigue, le sel, le soleil et le temps n'ont pas
+      été essayés.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚖️ Activité 5 — Décider, et signer l'avis ⏱ ~20 min</h2>
+  <p><b>Objectif :</b> transformer dix relevés en un avis qu'on assume devant la mairie.
+  <b>Compétence :</b> 3e_C8.2. <b>Production attendue :</b> 3 réponses + un avis rédigé.</p>
+  <div class="exo">
+    <p><b>Question 1.</b> Combien de candidats passent le critère de <b>rupture</b>
+    (≥ 300 N)&nbsp;?</p>
+    <select id="a5q1">
+      <option value="">— je choisis —</option>
+      <option>aucun</option>
+      <option>un seul</option>
+      <option>deux</option>
+      <option>les cinq</option>
+    </select>
+    <p><b>Question 2.</b> Combien passent <b>aussi</b> le critère de flèche
+    (≤ 40 mm)&nbsp;?</p>
+    <select id="a5q2">
+      <option value="">— je choisis —</option>
+      <option>aucun</option>
+      <option>un seul</option>
+      <option>deux</option>
+      <option>les cinq</option>
+    </select>
+    <p><b>Question 3.</b> Le Tube acier galvanisé Ø33,7 × 2,6 casse à 367 N pour 300 exigés, mais sa
+    flèche vaut 41,1 mm pour 40 admis. Que dis-tu à la mairie&nbsp;?</p>
+    <select id="a5q3">
+      <option value="">— je choisis —</option>
+      <option>on l'accepte : 1,1 mm d'écart, ce n'est rien du tout</option>
+      <option>on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude</option>
+      <option>on refait l'essai jusqu'à obtenir 40 mm</option>
+      <option>on le retient quand même, il est plus solide que l'autre en rupture</option>
+    </select>
+    <p><b>Ton avis, en deux ou trois phrases.</b> Nomme le mât retenu, cite <b>tes deux
+    chiffres</b>, et dis ce que ton essai n'a pas vérifié.</p>
+    <textarea id="a5avis" rows="4" placeholder="Je recommande … : sa rupture relevée est de … N pour … N exigés, et sa flèche de … mm pour … mm admis. En revanche, mon essai n'a pas vérifié …"></textarea>
+    <button class="btn check" data-check="5" type="button">✅ Vérifier l'activité 5</button>
+    <div class="feedback" id="fb5"></div>
+    <details class="correction"><summary>📖 Correction détaillée</summary><div>
+      <p><b>1 — deux.</b> Tube aluminium Ø50 × 3 (467 N) et Tube acier galvanisé Ø33,7 × 2,6 (367 N) dépassent
+      les 300 N.</p>
+      <p><b>2 — un seul.</b> Le Tube acier galvanisé Ø33,7 × 2,6 est éliminé par la flèche : 41,1 mm contre
+      40 admis.</p>
+      <p><b>3 — refusé en l'état, et le protocole était incomplet.</b> C'est la réponse
+      difficile, et c'est la bonne. 1,1 mm d'écart sur une mesure dont on n'a jamais dit
+      à combien près elle était faite, cela ne permet <em>pas</em> de trancher honnêtement.
+      Deux gestes de professionnel : refuser tant que le critère n'est pas tenu — un seuil
+      qu'on arrange après coup n'est plus un seuil — et corriger le protocole pour la fois
+      suivante, en y écrivant l'incertitude et le nombre d'essais par candidat.</p>
+      <p class="retenir">📌 <b>Ce qu'on évalue ici,</b> ce n'est pas d'avoir trouvé
+      « Tube aluminium Ø50 × 3 ». C'est d'avoir écrit un protocole qui <em>pouvait</em> le trouver, de
+      l'avoir exécuté sans le tordre, et de savoir dire ce qu'il ne prouve pas.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+  <p>La mairie ajoute un <b>petit panneau solaire</b> en tête de mât, pour rendre la station
+  autonome. La surface offerte au vent double : la poussée équivalente passe de 100 N
+  à <b>200 N</b>. Le reste du cahier des charges ne bouge pas.</p>
+  <p><b>Quelles lignes de ton protocole changent, et qu'est-ce que cela change au résultat ?</b></p>
+  <textarea id="reinv" rows="4" placeholder="Ligne … : … devient … — et alors, au banc, …"></textarea>
+  <button class="btn check" data-check="6" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb6"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+    <p><b>Deux lignes changent, et ce sont les deux lignes chiffrées.</b> La charge exigée
+    passe à 200 × 3 = <b>600 N</b>, et la charge d'essai commune passe
+    à 200 N.</p>
+    <p><b>Et alors, plus aucun candidat ne passe :</b> le meilleur, le Tube aluminium Ø50 × 3, casse à
+    467 N. Le protocole n'a pas changé de nature — il a changé de seuil, et la
+    conclusion s'inverse. C'est exactement pour cela qu'un protocole s'écrit <em>avant</em> :
+    on ne peut pas ajuster le seuil au résultat qu'on espère.</p>
+    <p><b>Un piège en prime :</b> à 200 N de charge d'essai, on ne peut plus mesurer
+    la flèche du tube PVC — il casse à 128 N, donc avant. Un protocole solide prévoit
+    ce cas : « si le candidat rompt avant la charge d'essai, il est éliminé et sa flèche n'est
+    pas mesurée ».</p>
+    <p>Les pistes réelles pour s'en sortir : un profilé plus gros (le Ø50 devient un Ø60),
+    un mât plus court, ou des haubans qui suppriment le bras de levier. Toutes se
+    re-vérifient au même banc, avec le même protocole — c'est là qu'on voit qu'il était bon.</p>
+  </div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Proposer un protocole</b> — décider, avant d'essayer : quelle sollicitation, quelle
+      grandeur, ce qui ne varie pas, quels seuils, quelle règle de décision.</li>
+    <li><b>Sollicitation</b> — la façon dont on charge la pièce : traction, compression,
+      flexion, choc. Le classement des matériaux change avec elle.</li>
+    <li><b>Flexion</b> — plier. La charge de rupture y dépend autant de la <em>forme</em> que
+      de la matière : la matière loin de l'axe travaille, celle du centre ne fait presque rien.</li>
+    <li><b>Flèche</b> — le déplacement de la pièce sous une charge donnée. Une pièce peut ne
+      pas casser et bouger beaucoup trop.</li>
+    <li><b>Charge d'essai commune</b> — la même pour tous les candidats, sinon les flèches ne
+      sont pas comparables.</li>
+    <li><b>Coefficient de sécurité</b> — le facteur qui reconnaît ce qu'on ne connaît pas :
+      le vent réel, la pièce réelle, le vieillissement.</li>
+    <li><b>Incertitude</b> — à combien près on mesure. Sans elle, un écart de 1,1 mm ne
+      se tranche pas : il se discute.</li>
+    <li><b>Ce qu'un protocole ne voit pas</b> — un essai unique, sur du neuf, au sec, ne dit
+      rien de la fatigue, du sel, du soleil ni du temps.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ta réponse de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+  <p>Tu pensais peut-être que l'essai de 5<sup>e</sup> suffisait. Il était juste — et il
+  désignait le mauvais mât. Qu'est-ce qui, dans ton protocole d'aujourd'hui, empêche cette
+  erreur&nbsp;?</p>
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 3e_C8.2 — proposer un protocole de test :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>🔴 Maîtrise insuffisante — je sais exécuter un protocole, pas encore en écrire un</option>
+    <option>🟠 Maîtrise fragile — j'écris le protocole si on me rappelle les rubriques</option>
+    <option>🟢 Maîtrise satisfaisante — je choisis la sollicitation, les seuils et la règle de décision</option>
+    <option>⭐ Très bonne maîtrise — et je sais dire ce que mon protocole ne prouve pas</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions — chaque mauvaise réponse est réfutée une par une — sur la sollicitation,
+  la flèche, la charge d'essai commune, les seuils et ce qu'un protocole ne prouve pas.</p>
+  <a class="btn" href="qcm_3e_C8.2_mat-de-la-station.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p><b>📐 Défi forme :</b> le tube aluminium Ø50 × 3 et le tube PVC Ø50 × 3 ont exactement
+  la même forme. Écris, en deux lignes, ce que la comparaison de leurs deux flèches mesure
+  <em>exactement</em> — et pourquoi c'est le seul couple du tableau qui le permet.</p>
+  <p><b>🌊 Défi Martinique :</b> reprends les cinq candidats et classe-les non plus par
+  tenue mécanique, mais par tenue à l'air salé. Écris le protocole de <em>cet</em> essai-là :
+  que mesure-t-on, sur combien de temps, et comment sait-on qu'on a fini&nbsp;?</p>
+  <p><b>🔬 Défi laboratoire :</b> installe le « laboratoire des matériaux » du Réseau National
+  Technologie Collège et cherche s'il propose un essai de flexion. S'il ne le propose pas,
+  écris ce que cela t'apprend sur le choix d'un instrument.</p>
+</section>
+
+<footer>Séquence 3e_C8.2 — <em>Le mât de la station</em> · Thème 3 · banc d'essai original (CC0),
+valeurs calculées avec les formules de la poutre encastrée.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_3e_C8_2_mat_station";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+const PROF = {"Tube aluminium Ø50 × 3": {flex: 467, trac: 84.2, kf: 0.31019, ka: 0.06450}, "Barre pleine acier Ø20": {flex: 157, trac: 125.7, kf: 1.61681, ka: 0.03032}, "Tube PVC Ø50 × 3": {flex: 128, trac: 23.0, kf: 7.23781, ka: 1.50501}, "Poutre bois 40 × 40": {flex: 213, trac: 64.0, kf: 1.13636, ka: 0.11364}, "Tube acier galvanisé Ø33,7 × 2,6": {flex: 367, trac: 101.6, kf: 0.41059, ka: 0.03749}};
+const CHARGE_ESSAI = 100;
+
+document.querySelectorAll(".codebox").forEach(e => { e.innerHTML = e.textContent
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/^([A-Z][A-Z 0-9\u2014-]+)$/gm,'<span class="py-kw">$1</span>')
+  .replace(/^(\d+\.)/gm,'<span class="py-num">$1</span>'); });
+
+/* ── banc d'essai : deux sollicitations, un seul mât ────────────────────── */
+let mode = "flex", charge = 0, casse = false;
+const rompus = {flex: new Set(), trac: new Set()};
+
+function cfg(){
+  const p = PROF[$("prof").value];
+  return mode === "flex"
+    ? {max: p.flex, pas: [10, 50], unite: "N", dec: 0, k: p.kf, nom: "Flèche en tête"}
+    : {max: p.trac, pas: [5, 25], unite: "kN", dec: 1, k: p.ka, nom: "Allongement"};
+}
+function fmt(v, dec){ return v.toFixed(dec).replace(".", ","); }
+
+function dessine(){
+  const c = cfg(), r = c.max ? Math.min(1, charge / c.max) : 0;
+  $("lect").textContent = fmt(charge, c.dec);
+  $("unite").textContent = c.unite;
+  $("nomDep").textContent = c.nom;
+  $("dep").textContent = fmt(charge * c.k, 1);
+  $("jauge").style.clipPath = "inset(0 " + (100 - r * 100).toFixed(1) + "% 0 0)";
+  $("flechFlex").style.display = mode === "flex" ? "" : "none";
+  $("flechTrac").style.display = mode === "trac" ? "" : "none";
+  $("socleTxt").textContent = mode === "flex" ? "encastrement" : "mors fixe";
+  $("ligneRef").style.display = mode === "flex" ? "" : "none";
+  if(mode === "flex"){
+    if(casse){
+      $("mat").setAttribute("d", "M80,230 L80,208 M91,213 L198,229");
+      $("rupt").setAttribute("cx", 80); $("rupt").setAttribute("cy", 226);
+    } else {
+      const dx = Math.min(48, charge * c.k * 0.30);
+      $("mat").setAttribute("d", "M80,230 C80,178 " + (80 + dx * 0.28).toFixed(1)
+        + ",112 " + (80 + dx).toFixed(1) + ",45");
+      $("rupt").setAttribute("cx", 80); $("rupt").setAttribute("cy", 228);
+    }
+  } else {
+    if(casse){
+      $("mat").setAttribute("d", "M80,230 L80,146 M80,132 L80,45");
+      $("rupt").setAttribute("cx", 80); $("rupt").setAttribute("cy", 139);
+    } else {
+      const dy = Math.min(14, charge * c.k * 1.6);
+      $("mat").setAttribute("d", "M80,230 C80,175 80,110 80," + (45 - dy).toFixed(1));
+    }
+  }
+  $("rupt").setAttribute("r", casse ? 5 : 0);
+  $("mat").setAttribute("stroke", casse ? "#ff7b88" : (r > .8 ? "#ffd66b" : "#c9d6ef"));
+  $("etat").textContent = casse ? (mode === "flex" ? "CASSÉ AU PIED" : "CASSÉ") :
+                          (r > .8 ? "il fatigue…" : "intact");
+  $("etat").setAttribute("fill", casse ? "#ff7b88" : (r > .8 ? "#ffd66b" : "#81fba1"));
+}
+
+function neuf(txt){ charge = 0; casse = false; $("msg").textContent = txt; dessine(); save(); }
+
+function ajoute(i){
+  const c = cfg();
+  if(casse){ $("msg").innerHTML = "Ce profilé est cassé. Clique sur <b>↺ Profilé neuf</b>."; return; }
+  charge += c.pas[i];
+  if(charge >= c.max){
+    casse = true; charge = c.max;
+    rompus[mode === "flex" ? "flex" : "trac"].add($("prof").value);
+    const nf = rompus.flex.size, nt = rompus.trac.size;
+    if(nf >= 3) window.__exp.flex3 = true;
+    if(nf >= 5) window.__exp.flex5 = true;
+    if(nt >= 5) window.__exp.trac5 = true;
+    let suite;
+    if(mode === "flex")
+      suite = nf < 3 ? "Encore " + (3 - nf) + " profilé(s) à casser en flexion."
+            : nf < 5 ? nf + " profilés cassés en flexion sur 5."
+                     : "Les cinq profilés sont rompus en flexion.";
+    else
+      suite = nt < 5 ? nt + " profilé(s) rompu(s) en traction sur 5."
+                     : "Les cinq profilés sont rompus en traction.";
+    $("msg").innerHTML = '<span class="casse">✖ Rupture à ' + fmt(c.max, c.dec) + " " + c.unite
+      + (mode === "flex" ? ", au ras de l'encastrement." : ", en pleine longueur.") + "</span> " + suite;
+  } else {
+    $("msg").textContent = charge === CHARGE_ESSAI && mode === "flex"
+      ? "Charge d'essai atteinte : relève la flèche maintenant."
+      : "Il tient encore. Continue.";
+  }
+  dessine(); save();
+}
+$("pas1").addEventListener("click", () => ajoute(0));
+$("pas2").addEventListener("click", () => ajoute(1));
+$("reset").addEventListener("click", () => neuf("Profilé neuf en place."));
+$("prof").addEventListener("change", () => neuf("Profilé neuf en place."));
+function bascule(m){
+  mode = m;
+  $("mFlex").classList.toggle("on", m === "flex");
+  $("mTrac").classList.toggle("on", m === "trac");
+  const c = cfg();
+  $("pas1").textContent = "+ " + c.pas[0] + " " + c.unite;
+  $("pas2").textContent = "+ " + c.pas[1] + " " + c.unite;
+  neuf(m === "flex" ? "Mode flexion : la poussée s'applique en tête, comme le vent."
+                    : "Mode traction : on tire le profilé dans son axe, comme au banc de 5e.");
+}
+$("mFlex").addEventListener("click", () => bascule("flex"));
+$("mTrac").addEventListener("click", () => bascule("trac"));
+
+/* ── vérificateurs ─────────────────────────────────────────────────────── */
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= 150;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+const CHECKS = {
+  0(){ return {score: sv("a0q1","au ras du socle, là où il est encastré")
+                    + sv("a0q2","très différentes : il cède des centaines de fois plus tôt en flexion"),
+               total: 2, exp: !!window.__exp.flex3,
+               expMsg: "Casse d'abord trois profilés différents en flexion — c'est l'expérience qui fait foi."}; },
+  1(){ let s = 0; s += nb("trac0", 84.2, 0.05); s += nb("trac1", 125.7, 0.05); s += nb("trac2", 23.0, 0.05); s += nb("trac3", 64.0, 0.05); s += nb("trac4", 101.6, 0.05);
+       s += sv("a1q1", "Barre pleine acier Ø20")
+          + sv("a1q2","non : celui qui gagne en traction n'est que quatrième en flexion")
+          + sv("a1q3","parce qu'en flexion, ce qui compte est autant la forme que la matière")
+          + pres("a1ph", 30);
+       return {score: s, total: 9, exp: !!window.__exp.trac5,
+               expMsg: "Romps les CINQ profilés en traction au banc : on ne recopie pas un relevé qu'on n'a pas fait."}; },
+  2(){ let s = sv("a2q1","le pousser en tête, perpendiculairement, comme le vent")
+             + sv("a2q2","la flèche en tête sous une charge d'essai commune")
+             + sv("a2q3","la hauteur, la fixation au pied et le point d'application de la charge")
+             + nb("a2q4", 300, 0) + nb("a2q5", 100, 0)
+             + sv("a2q6","je retiens un mât seulement s'il tient les DEUX critères")
+             + lignes("a2proto", 5);
+       return {score: s, total: 7, exp: true}; },
+  3(){ let s = 0; s += nb("fle0", 31.0, 0.05) + nb("rup0", 467, 0); s += nb("fle1", 161.7, 0.05) + nb("rup1", 157, 0); s += nb("fle2", 723.8, 0.05) + nb("rup2", 128, 0); s += nb("fle3", 113.6, 0.05) + nb("rup3", 213, 0); s += nb("fle4", 41.1, 0.05) + nb("rup4", 367, 0);
+       return {score: s, total: 10, exp: !!window.__exp.flex5,
+               expMsg: "Romps les CINQ profilés en flexion : le protocole que tu as écrit dit « pour chaque candidat »."}; },
+  4(){ let s = 0; s += sv("a4q0", "Le banc pousse une fois. Le vent fait vibrer le mât des milliers de fois : c'est la fatigue, et elle casse plus bas que l'essai."); s += sv("a4q1", "Presque 5 kg à hisser sur un toit et à fixer en haut d'une échelle : le banc, lui, ne pèse rien."); s += sv("a4q2", "Sous le soleil des tropiques, le PVC vieillit et devient cassant : l'essai, lui, est fait sur un tube neuf."); s += sv("a4q3", "L'humidité : une poutre qui a pris l'eau ne casse plus à la même charge, et le banc essaie du bois sec."); s += sv("a4q4", "La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier.");
+       return {score: s, total: 5, exp: true}; },
+  5(){ return {score: sv("a5q1","deux") + sv("a5q2","un seul")
+                    + sv("a5q3","on le refuse en l'état, et mon protocole aurait dû annoncer son incertitude")
+                    + pres("a5avis", 90), total: 4, exp: true}; },
+  6(){ return {score: pres("reinv", 60), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+/* ── sauvegarde locale ─────────────────────────────────────────────────── */
+function save(){
+  const o = {inputs: {}, exp: window.__exp, flex: [...rompus.flex], trac: [...rompus.trac]};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  window.__exp = o.exp || {};
+  (o.flex || []).forEach(x => rompus.flex.add(x));
+  (o.trac || []).forEach(x => rompus.trac.add(x));
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); bascule("flex");
+})();
+</script>
+
+</body>
+</html>

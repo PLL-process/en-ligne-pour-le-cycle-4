@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 3e_C8.2 Proposer un protocole</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:760px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C8.2_mat-de-la-station.html">📘 La séquence</a><a href="synthese_eleve_3e_C8.2.html">🧑‍🎓 Synthèse élève</a></nav>
+
+<h1>🗼 Synthèse professeur — 3e_C8.2</h1>
+<p><em>Proposer un protocole de test pour valider la tenue mécanique d'un matériau.</em>
+Lot « Le mât de la station » — 2 séances de 90 min, 160 min d'activités écrites, marge +20 min.</p>
+
+<h2>Le pari didactique du lot</h2>
+<div class="box">
+<p>Le verbe du code est <b>proposer</b>. Une séquence qui se contenterait de faire écrire un
+protocole plausible n'évaluerait rien : tous les protocoles d'élèves se ressembleraient, et
+aucun ne serait <em>mis à l'épreuve</em>.</p>
+<p>Le pari du lot est donc de rendre l'erreur <b>mesurable</b>. Les cinq candidats-mâts ne se
+classent pas dans le même ordre selon la sollicitation choisie. L'élève applique d'abord le
+protocole de 5<sup>e</sup> — juste, connu, appliqué correctement — et <b>constate lui-même</b>,
+banc en main, qu'il désigne un mât que la flexion élimine. La nécessité de proposer un autre
+protocole n'est pas affirmée par la page : elle est établie par une mesure que l'élève a faite.</p>
+</div>
+
+<h2>Ce que le banc donne, et pourquoi ces valeurs</h2>
+<table>
+  <tr><th>Candidat</th><th>Traction</th><th>Rang</th><th>Flexion</th><th>Rang</th><th>Flèche/100 N</th><th>Masse</th></tr>
+  <tr><td>Tube aluminium Ø50 × 3</td><td>84,2 kN</td><td>3<sup>e</sup></td><td>467 N</td><td>1<sup>er</sup></td><td>31,0 mm</td><td>2,39 kg</td></tr>
+  <tr><td>Barre pleine acier Ø20</td><td>125,7 kN</td><td>1<sup>er</sup></td><td>157 N</td><td>4<sup>e</sup></td><td>161,7 mm</td><td>4,93 kg</td></tr>
+  <tr><td>Tube PVC Ø50 × 3</td><td>23,0 kN</td><td>5<sup>e</sup></td><td>128 N</td><td>5<sup>e</sup></td><td>723,8 mm</td><td>1,24 kg</td></tr>
+  <tr><td>Poutre bois 40 × 40</td><td>64,0 kN</td><td>4<sup>e</sup></td><td>213 N</td><td>3<sup>e</sup></td><td>113,6 mm</td><td>1,60 kg</td></tr>
+  <tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td>101,6 kN</td><td>2<sup>e</sup></td><td>367 N</td><td>2<sup>e</sup></td><td>41,1 mm</td><td>3,99 kg</td></tr>
+</table>
+<p>Les valeurs sont <b>calculées</b>, pas choisies : charge de rupture en flexion
+<code>F = σ·I/(v·L)</code>, flèche <code>f = F·L³/(3·E·I)</code>, rupture en traction
+<code>F = σ·A</code>, pour un mât encastré de <b>L = 2 000 mm</b>. Les résistances σ employées sont
+<b>exactement celles du banc de 5<sup>e</sup></b> (bois 40 MPa, PVC 52, aluminium 190, acier 400),
+ce qui autorise la phrase adressée à l'élève : « même matière, même résistance, autre essai —
+et autre classement ». Le script <code>profils.py</code> du lot recalcule tout et imprime le
+tableau ci-dessus : aucune valeur n'a été saisie à la main dans la page.</p>
+
+<h2>Le cahier des charges, et d'où sortent ses chiffres</h2>
+<ul>
+  <li><b>Poussée équivalente 100 N</b> pour un vent de 180 km/h. Ordre de grandeur vérifiable :
+    180 km/h = 50 m/s, ½ρv² ≈ 1 530 Pa ; avec C<sub>x</sub> = 1,2 sur les ≈ 0,054 m² que la
+    station et le mât offrent au vent, on obtient bien ≈ 100 N. La page le dit, et précise que
+    cette conversion n'est pas l'objet de la séquence.</li>
+  <li><b>Coefficient de sécurité 3</b> → charge exigée <b>300 N</b>. Volontairement plus bas que
+    le 5 de la patère de 5<sup>e</sup> : ici la charge est <em>calculée</em>, là elle était
+    <em>estimée</em>, et personne ne se suspend à un mât. C'est un point de discussion à ouvrir
+    si le groupe est solide.</li>
+  <li><b>Flèche admissible 40 mm</b>, soit 2 % de la hauteur : au-delà, l'inclinaison de la
+    station fausse la mesure de direction du vent, qui est justement ce qu'elle sert à donner.</li>
+</ul>
+
+<h2>Les trois moments qui font la séance</h2>
+<ol>
+  <li><b>Activité 1 — l'inversion des classements.</b> Le moment charnière. Ne pas l'annoncer :
+    laisser les élèves relever les cinq valeurs en traction, désigner la barre pleine acier,
+    puis basculer le banc en flexion. La surprise est le levier.</li>
+  <li><b>Activité 2 — l'écriture du protocole.</b> Six décisions, puis six lignes rédigées.
+    Le vérificateur automatique juge les six décisions et compte les lignes ; <b>il ne juge pas
+    le texte</b>, et la page le dit à l'élève. La relecture croisée en binôme, avec la grille de
+    7 critères, est la partie qui porte réellement l'évaluation.</li>
+  <li><b>Activité 5 — les 1,1 mm.</b> La question la plus difficile du lot, et la plus formatrice :
+    refuser un candidat pour 1,1 mm suppose une incertitude annoncée. La bonne réponse n'est ni
+    « on accepte » ni « on refuse » sèchement, mais « on refuse en l'état, et le protocole était
+    incomplet ».</li>
+</ol>
+
+<h2>Verrous expérientiels</h2>
+<table>
+  <tr><th>Verrou</th><th>Ce qu'il exige</th><th>Ce qu'il empêche</th></tr>
+  <tr><td><code>__exp.flex3</code></td><td>3 profilés rompus en flexion</td><td>répondre à l'activité 0 sans avoir touché le banc</td></tr>
+  <tr><td><code>__exp.trac5</code></td><td>5 profilés rompus en traction</td><td>recopier le tableau de traction de l'activité 1</td></tr>
+  <tr><td><code>__exp.flex5</code></td><td>5 profilés rompus en flexion</td><td>remplir les 10 relevés de l'activité 3 sans essai</td></tr>
+</table>
+<p>Les dix relevés de l'activité 3 sont en outre comparés aux <b>vraies</b> valeurs du banc :
+41 au lieu de 41,1 est refusé. C'est le cœur du code — on évalue la mise en œuvre, pas la
+capacité à retrouver un nombre.</p>
+
+<h2>Différenciation</h2>
+<ul>
+  <li><b>🅰</b> — avec le « laboratoire des matériaux » du Réseau National Technologie Collège.
+    Attention : il fait la traction et la compression, <b>pas la flexion</b>. C'est une limite
+    réelle, et la séquence en fait un objet d'étude (activité 4 du QCM, défi bonus n°3).</li>
+  <li><b>🅱</b> — le banc de la page, hors ligne, sans installation. Voie par défaut.</li>
+  <li><b>🅲</b> — sans écran : les deux tableaux de relevés s'impriment, toutes les valeurs
+    figurent dans les corrections dépliables. Le travail — choisir, écrire, décider — est intact.</li>
+</ul>
+
+<h2>Ce que ce lot ne fait pas</h2>
+<div class="box limite">
+<ul>
+  <li><b>Aucun essai physique.</b> Le banc est une simulation, et la page le dit à l'élève à
+    trois endroits, dont une question de QCM entièrement consacrée à ce que vaut une valeur
+    simulée.</li>
+  <li><b>Le modèle a un domaine.</b> Les formules de la poutre valent en petits déplacements.
+    La flèche de 723,8 mm annoncée pour le PVC est hors de ce domaine, la page l'écrit — et
+    en tire une leçon plutôt qu'un chiffre : un mât qui plie de 70 cm sur 2 m est éliminé sans
+    qu'on ait besoin de discuter la décimale.</li>
+  <li><b>Le vérificateur ne lit pas le protocole rédigé.</b> Il compte des lignes et une longueur.
+    C'est écrit noir sur blanc dans la page, et c'est pour cela que la grille de relecture
+    croisée existe.</li>
+  <li><b>Un seul essai par candidat.</b> Une question de QCM (3e_C3.4) porte précisément sur ce
+    manque : un protocole sérieux répète et compare.</li>
+</ul>
+</div>
+
+<h2>Évaluation — repères LSU</h2>
+<table>
+  <tr><th>Niveau</th><th>Ce qu'on observe</th></tr>
+  <tr><td>🔴 Insuffisante</td><td>exécute un protocole donné, mais n'en écrit pas : les décisions restent vides ou hors sujet</td></tr>
+  <tr><td>🟠 Fragile</td><td>écrit le protocole si les rubriques lui sont rappelées ; oublie un verrouillage ou la règle de décision</td></tr>
+  <tr><td>🟢 Satisfaisante</td><td>choisit la sollicitation, fixe les deux seuils, écrit la règle avant de mesurer, relève juste</td></tr>
+  <tr><td>⭐ Très bonne</td><td>tout cela, et énonce ce que son protocole ne prouve pas — fatigue, sel, essai unique, incertitude</td></tr>
+</table>
+
+<footer>Synthèse professeur — 3e_C8.2 « Le mât de la station » · Thème 3 · banc d'essai original
+(CC0), valeurs recalculées par <code>profils.py</code>.</footer>
+</body>
+</html>
