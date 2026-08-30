@@ -25,7 +25,29 @@ bouge pas.
 Chaque cible est vérifiée sur le disque avant écriture. Un pointeur vers un
 fichier absent n'est pas écrit du tout.
 
-Usage : python3 pointeurs.py [--etat]
+Ce que la première version promettait sans le vérifier
+------------------------------------------------------
+Le champ « évalue-t-elle le code ? » était un **booléen écrit à la main**, et la
+phrase « **Ce code y est évalué** » en découlait. Exactement comme le statut de
+l'audit avant qu'on le contrôle : une déclaration ne se trompe jamais, elle se
+contente d'être fausse en silence.
+
+`controle_couverture.py` a mesuré. Trois pointeurs sur dix promettaient une
+évaluation qui n'existe nulle part : `5e_C7.2` et `3e_C7.2` (les mini-projets
+étiquettent leurs groupes en C7.1, C8.3 et C9.3 — jamais en C7.2) et `5e_C8.1`
+(dont les questions n'existaient pas encore).
+
+Le booléen reste écrit, mais il n'est plus cru : il est **confronté** au nombre
+de questions que la banque de la cible porte réellement pour ce code. En cas de
+désaccord, le README n'est pas écrit et l'outil sort en erreur. Règle d'or
+n°242 : un instrument ne prouve une absence que là où il a regardé — et ici,
+c'est la banque de la cible qu'il faut regarder.
+
+Un dossier qui porte SON PROPRE lot n'est jamais écrasé par un pointeur : la
+phrase « ce dossier ne porte aucune ressource propre » est vérifiable, donc
+elle est vérifiée.
+
+Usage : python3 pointeurs_codes.py [--etat]
 """
 import os
 import pathlib
@@ -34,6 +56,8 @@ import sys
 DEPOT = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).parent
 sys.path.insert(0, str(DEPOT / "_outils"))
 import data_competences as DC
+from controle_couverture import SEUIL_EVALUABLE, banques_du_depot
+from controle_statut import pieces_du_lot
 
 T3 = "theme-3-creation-conception-realisation-innovations"
 C7 = T3 + "/C7-imaginer-concevoir-et-realiser-une-ou-des"
@@ -46,11 +70,11 @@ POINTEURS = {
  "5e_C7.2": (C7 + "/5e/5e_C7.2", "../5e_C7.1/sequence_5e_C7_mini-projet-objet.html",
              "Séquence 5e — Le mini-projet d'objet",
              "Le mini-projet propose et fabrique une solution : c'est l'activité de conception "
-             "elle-même qui travaille ce code, du croquis au prototype.", True),
+             "elle-même qui travaille ce code, du croquis au prototype.", False),
  "3e_C7.2": (C7 + "/3e/3e_C7.2", "../3e_C7.1/sequence_3e_C7_capteur-confort-ny.html",
              "Séquence 3e — Le capteur de confort",
              "La séquence conçoit un ensemble de solutions pour un OST nouveau : le capteur de "
-             "confort de la salle, de la proposition au prototype.", True),
+             "confort de la salle, de la proposition au prototype.", False),
  "4e_C7.2": (C7 + "/4e/4e_C7.2", "../4e_C7.1/sequence_4e_C7_jardin-conception.html",
              "Séquence 4e — Le jardin connecté, conception",
              "L'activité 2 de la séquence est consacrée à ce code : deux solutions proposées et "
@@ -68,14 +92,6 @@ POINTEURS = {
              "TP 3e — Le boîtier étanche (atelier CAO)",
              "Le TP modélise une forme voulue : la coque, la rainure, le passage de câble, la "
              "vue en coupe. C'est ce boîtier que 3e_C7.7 produit ensuite.", False),
- "5e_C8.1": (C8 + "/5e/5e_C8.1", "../../../" + C7.split("/", 1)[1] + "/5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html",
-             "Séquence 5e — Le mini-projet d'objet",
-             "La validation par un protocole de test simple y est travaillée comme étape du "
-             "mini-projet, avec l'indicateur de place.", True),
- "3e_C8.1": (C8 + "/3e/3e_C8.1", "../../../" + C7.split("/", 1)[1] + "/3e/3e_C7.1/sequence_3e_C7_capteur-confort-ny.html",
-             "Séquence 3e — Le capteur de confort",
-             "La validation par protocole de test y est travaillée sur l'alerte de température "
-             "et l'îlot de chaleur.", True),
  "4e_C9.2": (C9 + "/4e/4e_C9.2", "../4e_C9.1/sequence_4e_C9_jardin-programme.html",
              "Séquence 4e — Le jardin connecté se programme",
              "L'activité 3 lui est consacrée : l'algorigramme devient un programme, en blocs "
@@ -105,15 +121,20 @@ MODELE = """# {code} — {titre}
 
 *Formulation recopiée de `_outils/data_competences.py`, seule autorité du dépôt sur les
 libellés du référentiel. Ce README est engendré par `_outils/pointeurs_codes.py` : il n'est
-écrit que si la ressource cible existe réellement sur le disque.*
+écrit que si la ressource cible existe réellement sur le disque, et la phrase sur l'évaluation
+est **mesurée** dans la banque de cette ressource, jamais déclarée.*
 """
 
-EVALUE = ("**Ce code y est évalué.** La ressource porte un QCM et une production d'élève qui "
-          "permettent de le positionner.")
-ENSEIGNE = ("**Ce code y est enseigné, et il n'y est pas évalué.** L'atelier CAO ne pose aucune "
-            "question de cours : on y apprend l'outil, et la notion s'évalue dans les séquences "
-            "de niveau (règle d'or n°81). Le statut du code reste donc « à vérifier par "
+EVALUE = ("**Ce code y est évalué.** La banque de la ressource porte {n} questions étiquetées "
+          "`{code}` ({banques}) : le score se reporte.")
+ENSEIGNE = ("**Ce code y est enseigné, et il n'y est pas évalué.** Aucune question de la banque "
+            "de la ressource ne porte `{code}` : on y apprend le geste, et la notion s'évalue "
+            "ailleurs (règle d'or n°81). Le statut du code reste donc « à vérifier par "
             "l'enseignant » : c'est à vous de dire où vous l'évaluez.")
+SOUS_SEUIL = ("**Ce code y est effleuré.** La banque de la ressource ne porte que {n} question(s) "
+              "étiquetée(s) `{code}` ({banques}), pour un seuil d'évaluabilité de "
+              "{seuil} : c'est trop peu pour reporter un score. Le statut du code reste « à "
+              "vérifier par l'enseignant ».")
 
 
 def formulation(code):
@@ -124,8 +145,34 @@ def formulation(code):
     raise KeyError(code)
 
 
+def mesure(code, dossier, cible, index):
+    """Combien de questions la banque de la CIBLE porte-t-elle pour ce code ?
+
+    C'est la seule question qui décide de la phrase « ce code y est évalué ».
+    On ne compte pas les questions d'ailleurs dans le dépôt : le README parle
+    d'une ressource précise, il ne doit promettre que ce qu'elle contient.
+    """
+    niveau, c = code.split("_")
+    cible_dir = os.path.dirname(os.path.normpath(os.path.join(dossier, cible)))
+    dedans = [(rel, n) for rel, n, _partage in index.get((niveau, c), [])
+              if rel.startswith(cible_dir + "/")]
+    return sum(n for _rel, n in dedans), [rel.split("/")[-1] for rel, _n in dedans]
+
+
+def porte_son_lot(dossier_absolu):
+    """Ce dossier porte-t-il sa propre séquence ou son propre QCM ?
+
+    Un pointeur affirme « ce dossier ne porte aucune ressource propre ». Le jour
+    où c'est faux, l'écraser remplacerait un lot complet par un renvoi. La
+    phrase est vérifiable : on la vérifie.
+    """
+    pieces = pieces_du_lot(str(dossier_absolu))
+    return bool(pieces["sequence"] or pieces["qcm"])
+
+
 def main(etat=False):
     ecrits, refuses, deja = [], [], []
+    index = banques_du_depot()
     for code, (dossier, cible, lien_titre, quoi, evalue) in sorted(POINTEURS.items()):
         d = DEPOT / dossier
         if not d.is_dir():
@@ -134,10 +181,27 @@ def main(etat=False):
         if not (d / cible).resolve().exists():
             refuses.append("%s : cible absente — %s" % (code, cible))
             continue
+        if porte_son_lot(d):
+            refuses.append("%s : ce dossier porte SON PROPRE lot — un pointeur l'écraserait. "
+                           "Retirer l'entrée de POINTEURS." % code)
+            continue
+        n, banques = mesure(code, dossier, cible, index)
+        if bool(evalue) != (n >= SEUIL_EVALUABLE):
+            refuses.append("%s : la déclaration dit « %s » et la mesure dit %d question(s) "
+                           "dans la banque de la cible (seuil %d)"
+                           % (code, "évalué" if evalue else "non évalué", n, SEUIL_EVALUABLE))
+            continue
+        if n >= SEUIL_EVALUABLE:
+            phrase = EVALUE.format(n=n, code=code, banques=", ".join("`%s`" % b for b in banques))
+        elif n:
+            phrase = SOUS_SEUIL.format(n=n, code=code, seuil=SEUIL_EVALUABLE,
+                                       banques=", ".join("`%s`" % b for b in banques))
+        else:
+            phrase = ENSEIGNE.format(code=code)
         f, socle = formulation(code)
         texte = MODELE.format(code=code, titre=f.rstrip("."), formulation=f, socle=socle,
                               lien_titre=lien_titre, cible=cible, quoi=quoi,
-                              evaluation=EVALUE if evalue else ENSEIGNE)
+                              evaluation=phrase)
         readme = d / "README.md"
         if readme.exists() and readme.read_text(encoding="utf-8") == texte:
             deja.append(code)
@@ -149,7 +213,9 @@ def main(etat=False):
     if deja:
         print("%d déjà à jour : %s" % (len(deja), ", ".join(deja)))
     if refuses:
-        print("⛔ %d refusé(s) — un pointeur vers une cible absente n'est pas écrit :" % len(refuses))
+        print("⛔ %d refusé(s) — un pointeur n'est écrit que si sa cible existe, si le "
+              "dossier ne porte pas son propre lot, et si la mesure confirme la "
+              "déclaration :" % len(refuses))
         for r in refuses:
             print("     " + r)
         return 1
