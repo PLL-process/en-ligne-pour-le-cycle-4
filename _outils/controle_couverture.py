@@ -13,8 +13,10 @@ Règle d'or n°238 : la preuve d'une couverture est une ligne, pas un dossier.
 Cet outil ne juge rien et ne modifie rien. Il ouvre les fichiers d'un lot et
 répond à une question de fait : **le code y est-il écrit, et où ?**
 
-    ÉVALUÉ      le QCM du lot porte au moins SEUIL_EVALUABLE questions
-                étiquetées de ce code — la couverture est mesurable
+    ÉVALUÉ      au moins SEUIL_EVALUABLE questions du QCM du lot se rattachent
+                à ce code, et à lui seul — la couverture est mesurable
+    PARTAGÉ     le seuil est atteint, mais par un groupe de questions que le
+                code partage avec d'autres (« Information — C4.4 · C4.5 · C4.6 »)
     CITÉ        le code est écrit dans une pièce qui enseigne ou qui atteste
                 (séquence, fiche, matrice, synthèse) mais aucune question ne
                 le porte en nombre suffisant
@@ -23,21 +25,38 @@ répond à une question de fait : **le code y est-il écrit, et où ?**
     NON NOMMÉ   le lot porte des fichiers et ne nomme jamais son propre code
     VIDE        rien à lire
 
-La distinction RENVOI / CITÉ n'est pas un détail de vocabulaire : depuis que
-`pointeurs_codes.py` écrit un README dans chaque dossier, *tout* code est
-« nommé » quelque part. Compter ces README comme des preuves rendrait l'outil
-aveugle le jour même de sa naissance.
+Deux distinctions font tout le travail, et l'outil est né sans elles.
 
-Le cas « NON NOMMÉ » n'accuse personne : la plupart de ces banques étiquettent
-leurs questions par un mot de thème (ELA, SIM, SEU…) au lieu du code. L'outil
-le dit aussi, en listant pour chaque banque les étiquettes qui ne sont pas des
-codes. C'est ce relevé qui permet de décider, question par question, quel code
-chaque groupe travaille réellement — décision pédagogique qui n'appartient pas
-à un script.
+**RENVOI / CITÉ.** Depuis que `pointeurs_codes.py` écrit un README dans chaque
+dossier, *tout* code est « nommé » quelque part. Compter ces README comme des
+preuves rendait l'outil aveugle le jour de sa naissance : il validait la trace
+de l'outil de la veille. D'où la séparation entre les pièces qui enseignent ou
+attestent et celles qui orientent.
+
+**L'étiquette et sa légende.** Le gabarit maison n'écrit pas le code dans le
+champ `c:` de chaque question : il écrit un mot de groupe (`PAR`, `SIM`, `ID`)
+et le rattache à son code dans le dictionnaire `COMP_LABELS` de la banque. La
+première version de cet outil ne lisait que `c:` et a conclu que sept banques
+ne nommaient aucun code. Elles le nommaient toutes, une ligne plus haut. Un
+instrument qui ne regarde pas là où la chose est écrite ne mesure pas une
+absence : il mesure sa propre myopie (règle d'or n°242).
+
+Une légende peut aussi ne nommer AUCUN code du programme — `"SEU":"CRCN 3.4 ·
+1.3 · 5.1"`. Ce groupe déclare travailler hors référentiel ; c'est une
+information sur le lot, pas un manque, et l'outil le range à part.
+
+Enfin, un code mutualisé ne porte pas ses questions : elles vivent dans la
+banque du lot qui l'enseigne. L'outil indexe donc TOUTES les banques du dépôt
+et sait dire, pour chaque renvoi, où il est effectivement évalué — ou qu'il ne
+l'est nulle part.
+
+Règle d'or n°237 : compter les pièces n'est pas vérifier la couverture.
+Règle d'or n°238 : la preuve d'une couverture est une ligne, pas un dossier.
+Règle d'or n°242 : un instrument ne prouve une absence que là où il a regardé.
 
 Usage :
     python3 _outils/controle_couverture.py             # rapport complet
-    python3 _outils/controle_couverture.py --muets     # les seuls sans preuve
+    python3 _outils/controle_couverture.py --muets     # les seuls cas litigieux
     python3 _outils/controle_couverture.py --json x.json
 
 Le code de sortie est toujours 0 : un diagnostic n'a pas de verdict.
@@ -117,30 +136,133 @@ def etiquettes_de_banque(chemin):
     return compte
 
 
+def legende_de_banque(chemin):
+    """Le dictionnaire `COMP_LABELS` d'une banque : étiquette → libellé affiché.
+
+    C'est là que le gabarit maison écrit à quel code chaque groupe se rattache —
+    `"PAR":"4e_C8.1 — Paramétrer la simulation"`. Une première version de cet
+    outil ne lisait que le champ `c:` et concluait que sept banques ne nommaient
+    aucun code. Elles le nommaient toutes, dans leur légende : l'instrument
+    regardait à côté (règle d'or n°242).
+    """
+    t = _texte(chemin)
+    m = re.search(r"COMP_LABELS\s*=\s*\{", t)
+    if not m:
+        return {}
+    fin = t.find("}", m.end())
+    if fin < 0:
+        return {}
+    return dict(re.findall(r'"([^"]+)"\s*:\s*"([^"]*)"', t[m.end():fin]))
+
+
+def codes_de_letiquette(etiquette, libelle, niveau):
+    """Les codes qu'une étiquette revendique — par elle-même ou par sa légende.
+
+    Une légende peut en nommer plusieurs (« Information — 4e_C4.4 · C4.5 · C4.6 ») :
+    les questions du groupe sont alors PARTAGÉES, jamais comptées en plein pour
+    chacun. Une légende peut aussi n'en nommer aucun (« CRCN 3.4 · 1.3 · 5.1 ») :
+    le groupe déclare alors travailler hors du référentiel du programme, et c'est
+    une information, pas un manque.
+    """
+    trouves = re.findall(r"(?<![A-Za-z0-9.])(?:%s[ _-])?(C\d\.\d)(?!\d)"
+                         % re.escape(niveau), "%s %s" % (etiquette, libelle))
+    return sorted(set(trouves))
+
+
 def questions_portant(chemin, niveau, code):
-    """Combien de questions d'une banque sont étiquetées de ce code."""
+    """(questions exclusives, questions partagées) portées par une banque.
+
+    Exclusives : le groupe ne revendique que ce code. Partagées : le groupe
+    revendique ce code avec d'autres — la couverture est réelle mais diluée.
+    """
     mot = _motif(niveau, code)
-    return sum(n for e, n in etiquettes_de_banque(chemin).items() if mot.search(e))
+    legende = legende_de_banque(chemin)
+    seul = partage = 0
+    for etiquette, n in etiquettes_de_banque(chemin).items():
+        codes = codes_de_letiquette(etiquette, legende.get(etiquette, ""), niveau)
+        if not codes:
+            # pas de légende exploitable : on s'en tient à l'étiquette elle-même
+            if mot.search(etiquette):
+                seul += n
+            continue
+        if code not in codes:
+            continue
+        if len(codes) == 1:
+            seul += n
+        else:
+            partage += n
+    return seul, partage
+
+
+NIVEAUX = ("5e", "4e", "3e")
+
+
+def _niveau_du_chemin(chemin):
+    for part in chemin.replace(os.sep, "/").split("/"):
+        if part in NIVEAUX:
+            return part
+    return ""
+
+
+def banques_du_depot():
+    """Où, dans TOUT le dépôt, chaque code est-il évalué ?
+
+    Un code mutualisé ne porte pas ses questions : elles vivent dans la banque du
+    lot qui l'enseigne. Ne regarder que son propre dossier ferait dire « aucune
+    preuve » d'un renvoi parfaitement tenu. On indexe donc les banques une fois,
+    et chaque renvoi devient vérifiable au lieu d'être seulement présent.
+
+    Renvoie {(niveau, code): [(chemin relatif, n questions, partagé), …]}.
+    """
+    index = {}
+    for racine, sous, noms in os.walk(RACINE):
+        sous[:] = [d for d in sous if d not in IGNORES and not d.startswith(".")]
+        for nom in noms:
+            if not (nom.lower().startswith("qcm") and nom.lower().endswith(".html")):
+                continue
+            chemin = os.path.join(racine, nom)
+            compte = etiquettes_de_banque(chemin)
+            if not compte:
+                continue
+            niveau_dossier = _niveau_du_chemin(chemin)
+            legende = legende_de_banque(chemin)
+            rel = os.path.relpath(chemin, RACINE).replace(os.sep, "/")
+            for etiquette, n in compte.items():
+                source = "%s %s" % (etiquette, legende.get(etiquette, ""))
+                trouves = re.findall(r"(?<![A-Za-z0-9.])(?:(5e|4e|3e)[ _-])?(C\d\.\d)(?!\d)",
+                                     source)
+                codes = sorted({(niv or niveau_dossier, c) for niv, c in trouves})
+                for cle in codes:
+                    if not cle[0]:
+                        continue
+                    index.setdefault(cle, []).append((rel, n, len(codes) > 1))
+    return index
 
 
 def examiner(niveau, code, dossier_absolu):
     """Où ce lot nomme-t-il son propre code ? Renvoie un dictionnaire de faits."""
     fichiers = _fichiers_du_lot(dossier_absolu)
     if not fichiers:
-        return dict(etat="VIDE", questions=0, ou=[], renvois=[],
-                    etiquettes={}, fichiers=0)
+        return dict(etat="VIDE", questions=0, partagees=0, ou=[], renvois=[],
+                    etiquettes={}, hors_referentiel={}, fichiers=0)
 
     mot = _motif(niveau, code)
     pieces = pieces_du_lot(dossier_absolu)
 
-    questions, etiquettes = 0, {}
+    questions = partagees = 0
+    etiquettes, hors = {}, {}
     for nom in pieces["qcm"] + pieces["qcm_herite"]:
         chemin = os.path.join(dossier_absolu, nom)
-        questions += questions_portant(chemin, niveau, code)
+        seul, part = questions_portant(chemin, niveau, code)
+        questions += seul
+        partagees += part
+        legende = legende_de_banque(chemin)
         for e, n in etiquettes_de_banque(chemin).items():
-            if not mot.search(e):
-                etiquettes[nom] = etiquettes.get(nom, {})
-                etiquettes[nom][e] = n
+            codes = codes_de_letiquette(e, legende.get(e, ""), niveau)
+            if not codes and not mot.search(e):
+                # aucune légende, ou une légende qui ne nomme aucun code
+                cible = hors if e in legende else etiquettes
+                cible.setdefault(nom, {})[e] = n
 
     ou, renvois = [], []
     for chemin in fichiers:
@@ -151,6 +273,8 @@ def examiner(niveau, code, dossier_absolu):
 
     if questions >= SEUIL_EVALUABLE:
         etat = "ÉVALUÉ"
+    elif questions + partagees >= SEUIL_EVALUABLE:
+        etat = "PARTAGÉ"
     elif ou:
         etat = "CITÉ"
     elif renvois:
@@ -158,8 +282,9 @@ def examiner(niveau, code, dossier_absolu):
     else:
         etat = "NON NOMMÉ"
 
-    return dict(etat=etat, questions=questions, ou=ou, renvois=renvois,
-                etiquettes=etiquettes, fichiers=len(fichiers))
+    return dict(etat=etat, questions=questions, partagees=partagees,
+                ou=ou, renvois=renvois, etiquettes=etiquettes,
+                hors_referentiel=hors, fichiers=len(fichiers))
 
 
 def statut_tenu(niveau, code, dossier_absolu):
@@ -176,27 +301,34 @@ def statut_tenu(niveau, code, dossier_absolu):
 
 
 def parcourir():
+    index = banques_du_depot()
     lignes = []
     for niveau, comp in COMP_BY_LEVEL.items():
         for parent, sous in comp.items():
             for code, texte, _dom in sous:
                 dossier = os.path.abspath(os.path.join(RACINE, code_dir(parent, niveau, code)))
                 fait = examiner(niveau, code, dossier)
+                propre = code_dir(parent, niveau, code).replace(os.sep, "/")
+                ailleurs = [(rel, n, part) for rel, n, part in index.get((niveau, code), [])
+                            if not rel.startswith(propre + "/")]
                 fait.update(niveau=niveau, code=code, parent=parent,
                             libelle="%s_%s" % (niveau, code),
                             statut=statut_tenu(niveau, code, dossier),
+                            ailleurs=ailleurs,
+                            questions_ailleurs=sum(n for _r, n, _p in ailleurs),
                             texte=texte)
                 lignes.append(fait)
     return lignes
 
 
-ORDRE = {"ÉVALUÉ": 0, "CITÉ": 1, "RENVOI": 2, "NON NOMMÉ": 3, "VIDE": 4}
+ORDRE = {"ÉVALUÉ": 0, "PARTAGÉ": 1, "CITÉ": 2, "RENVOI": 3,
+         "NON NOMMÉ": 4, "VIDE": 5}
 
 #: états qui ne portent aucune preuve dans le lot lui-même
 SANS_PREUVE = ("RENVOI", "NON NOMMÉ")
 
-#: le seul état où la couverture d'un code est mesurable
-MESURABLE = "ÉVALUÉ"
+#: états où la couverture d'un code est démontrée par des questions
+MESURABLES = ("ÉVALUÉ", "PARTAGÉ")
 
 
 def main():
@@ -208,16 +340,22 @@ def main():
             if l["etat"] == "VIDE":
                 continue
             q = ("%d question(s)" % l["questions"]) if l["questions"] else "aucune question"
+            if l["partagees"]:
+                q += " + %d partagée(s)" % l["partagees"]
             print("%-9s %-9s %s" % (l["libelle"], l["etat"], q))
             if l["ou"]:
                 print("            écrit dans : %s" % ", ".join(l["ou"][:4]))
             elif l["renvois"]:
                 print("            renvoi seul : %s" % ", ".join(l["renvois"][:4]))
+            if l["ailleurs"]:
+                print("            évalué ailleurs : %s" % " · ".join(
+                    "%s (%d%s)" % (rel.split("/")[-1], n, " partagées" if part else "")
+                    for rel, n, part in l["ailleurs"][:3]))
 
     muets = [l for l in lignes
-             if l["etat"] != MESURABLE and "VALIDABLE" in (l["statut"] or "")]
+             if l["etat"] not in MESURABLES and "VALIDABLE" in (l["statut"] or "")]
     print("\n%d code(s) tenu(s) pour complets dont la couverture n'est pas "
-          "mesurable dans le lot :" % len(muets))
+          "démontrée par des questions :" % len(muets))
     for l in sorted(muets, key=lambda l: l["libelle"]):
         preuve = (l["ou"] or l["renvois"] or ["—"])[0]
         print("  %-9s %-7s %d question(s)  → %s"
@@ -226,11 +364,26 @@ def main():
             detail = " ".join("%s:%d" % (e, n) for e, n in sorted(tags.items()))
             print("            %s → %s" % (banque, detail))
 
-    etrangeres = [l for l in lignes if l["etiquettes"] and l["etat"] != "ÉVALUÉ"]
+    orphelins = [l for l in lignes if l["etat"] in SANS_PREUVE
+                 and not l["questions_ailleurs"] and l["statut"]
+                 and "MUTUALIS" in l["statut"]]
+    print("\n%d renvoi(s) que rien n'évalue nulle part :" % len(orphelins))
+    for l in sorted(orphelins, key=lambda l: l["libelle"]):
+        print("  %-9s %s" % (l["libelle"], l["texte"][:78]))
+
+    etrangeres = [l for l in lignes if l["etiquettes"]]
     if etrangeres:
-        print("\nBanques dont les étiquettes ne sont pas des codes :")
+        print("\nÉtiquettes sans code ET sans légende qui en nomme un :")
         for l in sorted(etrangeres, key=lambda l: l["libelle"]):
             for banque, tags in l["etiquettes"].items():
+                detail = " ".join("%s:%d" % (e, n) for e, n in sorted(tags.items()))
+                print("  %-9s %-46s %s" % (l["libelle"], banque[:46], detail))
+
+    hors = [l for l in lignes if l["hors_referentiel"]]
+    if hors:
+        print("\nGroupes que leur propre légende déclare HORS du référentiel :")
+        for l in sorted(hors, key=lambda l: l["libelle"]):
+            for banque, tags in l["hors_referentiel"].items():
                 detail = " ".join("%s:%d" % (e, n) for e, n in sorted(tags.items()))
                 print("  %-9s %-46s %s" % (l["libelle"], banque[:46], detail))
 

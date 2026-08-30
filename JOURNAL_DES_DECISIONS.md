@@ -9622,3 +9622,78 @@ pire que l'imprécision actuelle, qui au moins se voit.
 
 Le durcissement de `controle_statut.py` attend les trois arbitrages. Il est écrit d'avance : le
 prédicat existe déjà, c'est `examiner()`.
+
+## 2026-08-31 — L'instrument regardait à côté : correction de la livraison précédente
+
+Deux heures après la fusion de #289, en ouvrant `4e_C8.1` pour préparer le lot suivant, je suis
+tombé sur ceci, au-dessus de la banque :
+
+```js
+const COMP_LABELS = { "PAR":"4e_C8.1 — 🖐️ Paramétrer la simulation",
+                      "PRO":"4e_C8.2 — 📐 Proposer un protocole",
+                      "PER":"4e_C8.3 — 📊 Comportement et performances" };
+```
+
+**Les sept banques que j'avais déclarées « sans code » nomment toutes leur code.** Le gabarit
+maison n'écrit pas le code dans le champ `c:` de chaque question — il écrit un mot de groupe et
+le rattache à son code dans une légende, une ligne plus haut. Mon outil ne lisait que `c:`.
+
+Je n'ai pas mesuré une absence. J'ai mesuré ma propre myopie, et je l'ai livrée dans un outil,
+un document de 219 lignes et une entrée de journal.
+
+### Ce que la correction change
+
+| | avant | après |
+|---|---:|---:|
+| ÉVALUÉ | 45 | **51** |
+| PARTAGÉ | — | 1 |
+| CITÉ | 15 | 8 |
+| codes tenus pour complets sans preuve par questions | 5 | **1** |
+| renvois que rien n'évalue nulle part | *non mesuré* | **0** |
+
+`3e_C7.1`, `4e_C7.1`, `4e_C8.1`, `5e_C7.1`, `5e_C9.1`, `3e_C9.1` passent tous de CITÉ à ÉVALUÉ.
+Ils n'ont pas changé : c'est l'instrument qui a appris à lire.
+
+### Deux dires faux, sur le même fait
+
+Sur `4e_C8.2` je me suis trompé deux fois de suite. Le 30 : « pas couvert du tout ». Le 31, en
+croyant me corriger : « trois questions ». La légende de la banque dit `PRO → 4e_C8.2` en
+entier — **dix questions**. Je relisais les questions une par une au lieu de lire la ligne qui
+les rattache. Se corriger dans la mauvaise direction est une manière particulièrement coûteuse
+d'avoir tort : elle donne à l'erreur l'apparence d'un travail de vérification.
+
+Et sur `3e_C7.1`, ma proposition contredisait la banque sur deux groupes : `SIM` (je lisais
+C8.3, la banque déclare **C8.1**) et `SEU` (je lisais C9.1, la banque déclare **CRCN 3.4 · 1.3 ·
+5.1**, c'est-à-dire hors référentiel). Le lot disait lui-même que ces dix questions ne
+travaillent aucun code du programme. Il fallait le lire, pas le deviner.
+
+### Ce que l'outil sait faire maintenant
+
+- **Lire les légendes.** Une étiquette se rattache au code de sa légende ; à plusieurs codes si
+  la légende en nomme plusieurs (état PARTAGÉ, la couverture est réelle mais diluée) ; à aucun
+  si la légende déclare un travail hors référentiel — et c'est alors une information, pas un
+  manque.
+- **Chercher hors du dossier.** Un code mutualisé ne porte pas ses questions : elles vivent dans
+  la banque du lot qui l'enseigne. L'outil indexe toutes les banques du dépôt et sait dire, pour
+  chaque renvoi, *où* il est évalué. Verdict : **aucun renvoi orphelin**.
+- **Se souvenir de ses erreurs.** Le banc de tests contient les deux cas exacts sur lesquels je
+  me suis trompé, avec la raison écrite à côté. 26 contrôles, tous verts.
+
+### Ce qui reste, et c'est peu
+
+Six codes qu'aucune question du dépôt n'évalue — `5e_C7.2`, `5e_C7.6`, `4e_C7.6`, `3e_C7.2`,
+`3e_C7.6` (tous « modéliser et fabriquer », chacun avec un TP Onshape et rien d'autre) et
+`5e_C8.1`, le seul code dont aucune pièce du dépôt ne parle. Quatre codes à quatre questions,
+dans le lot mutualisé du lampadaire. Un arbitrage, un seul : le seuil de cinq contre
+l'arithmétique de la mutualisation.
+
+Les deux autres arbitrages annoncés hier tombent. Ils n'existaient que dans mon relevé fautif.
+
+### La règle nouvelle
+
+- **n°242** — **un instrument ne prouve une absence que là où il a regardé.** Avant de conclure
+  qu'une chose manque, chercher l'endroit où elle serait écrite si elle existait, et vérifier
+  qu'on y a regardé. Un outil qui répond « rien » sans avoir ouvert le bon champ ne dit rien du
+  dépôt : il décrit son propre angle mort. Corollaire pratique : quand un contrôle neuf trouve
+  un grand nombre de fautes d'un coup, la première hypothèse à tester est que le contrôle a
+  tort.
