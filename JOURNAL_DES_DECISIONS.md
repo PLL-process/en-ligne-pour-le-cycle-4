@@ -9454,3 +9454,70 @@ Restent ensuite `5e_C7.1` et `3e_C7.1`, à qui il ne manque que la **matrice de 
 QCM n'étiquette pas ses questions par code de compétence mais par un mot-clé thématique
 (`CON`/`PRG`/`VAL`, `ELA`/`SEU`/`SIM`) : engendrer leur matrice demande de relier chaque question
 au code qu'elle travaille, et cela relève d'un choix pédagogique, pas d'un script.
+
+---
+
+## 2026-08-31 — Ce que les dossiers portent vraiment : dix README, cinq statuts, et un refus
+
+Seconde moitié de la livraison précédente : les dix README engendrés par
+`_outils/pointeurs_codes.py` vivent dans le thème 3, et la garde-périmètre les tenait à l'écart
+de la branche thème 2. Les voici, avec la mise à jour des statuts que le comptage des pièces
+avait rendue possible.
+
+### Cinq dossiers étaient entièrement muets
+
+`5e_C7.2`, `5e_C7.6`, `4e_C7.6`, `3e_C7.2`, `3e_C7.6` : ni fichier, ni README, rien. Un collègue
+qui ouvre l'un d'eux n'y trouve rien, et **rien ne lui dit où aller**. Ils portent désormais la
+formulation officielle du code, un lien vérifié vers la ressource qui travaille le geste, et une
+phrase qui dit si cette ressource **évalue** le code ou seulement l'**enseigne**.
+
+### Deux statuts promus, trois mutualisés — et un refusé
+
+| code | ce qui change | la preuve |
+|---|---|---|
+| `4e_C7.1` | → **complet et validable** | sa matrice relie notion → code → activité → questions |
+| `4e_C9.1` | → **complet et validable** | sa banque étiquette 10 questions par code, C9.1/C9.2/C9.3 |
+| `4e_C7.2` | → **mutualisé** vers `4e_C7.1` | la ligne « activité 2, questions 3, 8, 9, 13 » de sa matrice |
+| `4e_C9.2` · `4e_C9.3` | → **mutualisés** vers `4e_C9.1` | 10 questions chacun, étiquetées dans la banque |
+| `4e_C8.1` | **reste à vérifier** | *aucune* — et c'est tout le sujet |
+
+### Le refus est le plus instructif
+
+`4e_C8.1` porte ses **six pièces** : séquence, QCM de 30 questions, fiche, matrice, deux
+synthèses, rapport de tests. `controle_statut.py` le laisserait passer sans broncher. Et
+pourtant :
+
+* son QCM étiquette ses questions par **mot-clé thématique** — `PAR`, `PRO`, `PER` — et non par
+  code de compétence ;
+* sa matrice porte les colonnes `notion, seance, qcm_questions, synthese` : **aucune colonne de
+  code**.
+
+**Rien, dans ce lot, ne dit qu'il couvre `4e_C8.1`.** Les six pièces sont là et le lien manque.
+Le promouvoir aurait été déclarer une couverture que le lot ne démontre pas — exactement ce que
+le contrôle de statut existe pour empêcher, et qu'il ne sait pas voir.
+
+C'est la même chose pour `5e_C7.1` et `3e_C7.1`, à ceci près qu'eux n'ont pas de matrice du
+tout : leur QCM porte `CON`/`PRG`/`VAL` et `ELA`/`SEU`/`SIM`. Trois lots, un même manque.
+
+### Les règles nouvelles
+
+- **n°237** — **compter les pièces n'est pas vérifier la couverture.** Un lot peut porter ses six
+  pièces et ne nommer nulle part le code qu'il revendique. Le contrôle mesure la *présence* des
+  fichiers ; il ne mesure pas ce qu'ils *disent*. Un statut accordé sur un comptage est une
+  décoration mieux rangée.
+- **n°238** — **la preuve de couverture est une ligne, pas un dossier.** Elle s'écrit soit dans
+  la banque de QCM (une question étiquetée par le code), soit dans la matrice (une ligne
+  notion → code → production → questions). Un lot qui n'a ni l'une ni l'autre ne démontre rien,
+  quelle que soit sa qualité par ailleurs.
+
+### Ce que cela demande à l'outillage
+
+`controle_statut.py` devrait exiger, pour tout code revendiquant « complet et validable », que
+**le code lui-même apparaisse** dans la banque de QCM du lot ou dans sa matrice. C'est quelques
+lignes, et cela transformerait un comptage en vérification. L'outil vit dans `_outils/`, hors du
+périmètre d'une branche de thème 3 : il partira dans une livraison à part, avec l'harmonisation
+des étiquettes des quatre banques anciennes qui la rendrait applicable.
+
+**État du tableau de bord** : 47 codes complets et validables, 54 couverts par une séquence
+mutualisée, 10 à vérifier par l'enseignant, 3 existants à améliorer. Il en restait 16 à vérifier
+ce matin.

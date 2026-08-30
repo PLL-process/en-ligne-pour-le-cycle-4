@@ -1,27 +1,19 @@
-# 4e_C9.2 — Traduire un algorithme en programme (couvert par une séquence mutualisée)
+# 4e_C9.2 — Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme
 
-> Traduire un algorithme permettant de répondre à un besoin ou à un problème
-> simple en un programme.
+> Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme.
+>
+> Programme 2024 · cycle 4 · thème 3 · socle D1.3, D2, D4
 
-Ce code est **entièrement travaillé par la séquence « Le jardin connecté se
-programme »**, dont le dossier principal est
-[`4e_C9.1`](../4e_C9.1/README.md) :
+**Ce dossier ne porte aucune ressource propre.** Le geste de ce code est travaillé ici :
 
-➡ **[Ouvrir la séquence](../4e_C9.1/sequence_4e_C9_jardin-programme.html)** —
-c'est l'**activité 3** qui est consacrée à 4e_C9.2.
+➡ **[Séquence 4e — Le jardin connecté se programme](../4e_C9.1/sequence_4e_C9_jardin-programme.html)**
 
-* **Activité 3 — Écrire et exécuter, des blocs au Python.** L'algorigramme
-  construit à l'activité 2 devient un vrai programme : on le monte d'abord **en
-  blocs**, on lit le Python s'écrire à côté, puis on modifie le Python et on
-  regarde les blocs suivre. Quatre questions font retrouver, **ligne par ligne**,
-  chaque forme dessinée : le losange devient le `if`, les rectangles deviennent
-  des instructions, et les constantes de réglage se rangent en haut.
-* La production attendue est double : le programme **enregistré sous le nom de
-  l'élève**, et un **journal chiffré** — le vérificateur exige au moins trois
-  valeurs relevées, pour empêcher le « ça marche » qui ne prouve rien.
+L'activité 3 lui est consacrée : l'algorigramme devient un programme, en blocs puis en Python. Le QCM du lot y consacre 10 de ses 30 questions.
 
-Le QCM du lot consacre **10 questions à 4e_C9.2**, dont une illustrée sur les deux
-chaînes du jardin et le relais.
+**Ce code y est évalué.** La ressource porte un QCM et une production d'élève qui permettent de le positionner.
 
-*Contexte : le jardin du collège a soif — ou pas. Le capteur est en terre, la
-pompe est branchée, et il ne manque plus qu'un programme pour décider.*
+---
+
+*Formulation recopiée de `_outils/data_competences.py`, seule autorité du dépôt sur les
+libellés du référentiel. Ce README est engendré par `_outils/pointeurs_codes.py` : il n'est
+écrit que si la ressource cible existe réellement sur le disque.*
