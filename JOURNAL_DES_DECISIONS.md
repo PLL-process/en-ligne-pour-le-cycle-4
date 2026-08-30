@@ -10008,3 +10008,35 @@ et en 3e dans le programme. Un soupçon transformé en loi fabrique des fausses 
   « Modéliser une forme voulue » fait 26 caractères. Un contrôle réglé à 30 laissait passer,
   silencieusement, toute erreur portant sur les formulations les plus brèves du programme —
   celles qu'on recopie le plus vite, donc le plus mal.
+
+## 2026-08-31 — Les deux formulations que le contrôle a trouvées
+
+Second volet de la livraison précédente. `controle_formulations.py` avait signalé deux écarts
+réels ; les voici corrigés, et le dépôt passe à **69 citations reconnues, 69 justes, 0 écart**.
+
+### `5e_C8.2` — la formulation de la 4e sous un code de 5e
+
+Sous l'en-tête « Ce que dit le programme — **recopié, pas reformulé** », la séquence de la patère
+attribuait à `5e_C3.1` la phrase *« Identifier les caractéristiques à prendre en compte dans le
+choix d'un OST »*. C'est la formulation de **4e_C3.1**. Celle de la 5e est *« Repérer pour un OST
+les matériaux, les sources et les formes d'énergies, le traitement de l'information »*.
+
+C'est l'erreur que le contrôle appelle **AUTRE CODE**, et c'est la plus difficile à voir : chaque
+mot en est juste, la phrase est officielle, elle est simplement rangée sous le mauvais code.
+
+**Et c'est de là que je l'avais recopiée dans `5e_C8.1`, avant-hier.** La règle d'or n°234 dit
+qu'un lot voisin est une source de vérité ; elle ne dit pas qu'on peut s'en servir sans le
+vérifier. Une erreur dans un lot voisin se propage exactement comme une bonne idée.
+
+### `4e_C9.1` — un résumé à la place d'une citation
+
+L'exergue de son README, à l'endroit où le gabarit met la formulation officielle, portait
+*« Modifier un algorithme, le traduire en programme, le réaliser et le mettre au point »* — un
+résumé honnête des trois codes du lot, et une phrase qui n'est dans le programme nulle part. Elle
+est remplacée par les **trois** formulations, chacune sous son code.
+
+### Ce que ces deux corrections closent
+
+Toutes les formulations que le dépôt présente comme officielles le sont, dans les quatre formes
+que l'outil sait lire. Ce n'est pas « toutes les formulations du dépôt » — l'outil le dit à
+chaque exécution, et c'est la seule promesse qu'il puisse tenir.
