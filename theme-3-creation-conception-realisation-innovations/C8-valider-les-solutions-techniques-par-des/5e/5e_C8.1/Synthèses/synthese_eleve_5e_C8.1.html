@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — 5e_C8.1 La patère du hall</title>
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C8.1_patere-du-hall.html">📘 La séquence</a><a href="qcm_5e_C8.1_patere-du-hall.html">🧠 Le QCM</a><a href="lexique_5e_C8.1.html">📖 Lexique</a></nav>
+
+<h1>🪝 Synthèse élève — Ce que la simulation voyait</h1>
+<p><em>5e_C8.1 — utiliser une simulation fournie pour valider la tenue mécanique d’un matériau.</em></p>
+
+<h2>Les six mots à savoir</h2>
+<div class="box"><ul>
+  <li><b>Contrainte</b> — l'effort intérieur que la charge fait subir à la matière, en mégapascals
+  (MPa). Elle dépend de la charge et de la forme, <em>jamais</em> du matériau.</li>
+  <li><b>Limite élastique</b> — la contrainte au-delà de laquelle la pièce reste déformée, même
+  une fois la charge enlevée. C'est une panne, sans rupture.</li>
+  <li><b>Résistance à la rupture</b> — la contrainte à laquelle la pièce se sépare en deux. Elle
+  est toujours <em>plus haute</em> que la limite élastique : on plie avant de rompre.</li>
+  <li><b>Coefficient de sécurité</b> — limite ÷ contrainte de service. Il ne veut rien dire tant
+  qu'on n'a pas dit <em>de quelle limite</em> il vient.</li>
+  <li><b>Charge de service</b> — la charge réellement prévue en usage. Elle se pèse, elle ne se
+  devine pas : ici 12 kg, un sac de cours trempé.</li>
+  <li><b>Simulation fournie</b> — un calcul déjà réglé qu'on utilise pour éliminer vite, sans rien
+  casser. Elle ne remplace pas l'essai réel : elle le précède.</li>
+</ul></div>
+
+<h2>Le résultat qui fait toute la séquence</h2>
+<p>Le bras du crochet mesure 60 mm, sa section 25 × 12 mm.
+Sous 12 kg, il subit <b>11,8 MPa</b> —
+la même valeur pour les cinq matériaux.</p>
+<table>
+  <tr><th>Matériau</th><th>Limite élastique</th><th>Plie à</th><th>Casse à</th>
+      <th>Coefficient</th><th>Décision</th></tr>
+  <tr><td>Bois (pin)</td><td>25 MPa</td><td>25 kg</td><td>41 kg</td><td>2,1</td><td><b>écarté</b></td></tr><tr><td>PLA imprimé en 3D</td><td>45 MPa</td><td>46 kg</td><td>51 kg</td><td>3,8</td><td>retenu</td></tr><tr><td>PVC rigide</td><td>45 MPa</td><td>46 kg</td><td>53 kg</td><td>3,8</td><td>retenu</td></tr><tr><td>Aluminium</td><td>140 MPa</td><td>143 kg</td><td>194 kg</td><td>11,9</td><td>retenu</td></tr><tr><td>Acier doux</td><td>235 MPa</td><td>240 kg</td><td>408 kg</td><td>20,0</td><td>retenu</td></tr>
+</table>
+<div class="box attention">
+  <p><b>Le bois change de camp.</b> Au banc de 5e_C8.2, il tenait
+  41 kg avant de casser : coefficient
+  3,4, donc retenu. À la simulation, il plie
+  définitivement dès 25 kg : coefficient
+  2,1, donc écarté.</p>
+  <p>Les deux instruments sont justes. Le banc répond à « quand est-ce que ça casse ? », la
+  simulation à « quand est-ce que ça reste tordu ? ». Le gestionnaire, lui, avait décrit des
+  crochets qui <em>plient</em>.</p>
+</div>
+<p>Second enseignement : au banc, le PVC (53 kg) semblait meilleur que le
+PLA (51 kg). Leur limite élastique est <b>la même</b>
+(45 MPa). L'écart mesuré ne portait pas sur le critère de décision : il ne prouvait
+rien.</p>
+
+<h2>Le choix, et ce qu'il coûte</h2>
+<table>
+  <tr><th>Matériau retenu</th><th>Coût des 40</th><th>Atelier</th><th>Réserve</th></tr>
+  <tr><td>PLA imprimé en 3D</td><td>24 €</td><td>30,0 h</td><td>Insensible à l'eau, mais ramollit vers 55 °C — pas au soleil direct.</td></tr><tr><td>PVC rigide</td><td>84 €</td><td>6,7 h</td><td>Insensible à l'eau. Devient cassant après quelques années de UV.</td></tr><tr><td>Aluminium</td><td>192 €</td><td>10,0 h</td><td>Ne rouille pas : sa couche d'oxyde le protège toute seule.</td></tr><tr><td>Acier doux</td><td>220 €</td><td>10,0 h</td><td>Rouille dans un hall humide s'il n'est pas galvanisé (+ 1,60 €).</td></tr>
+</table>
+<p>L'atelier dispose de <b>8 heures</b> avant la rentrée. Le
+PLA imprimé en 3D est le moins cher (24 €) et le seul impossible :
+30 heures d'impression. Le <b>PVC rigide</b> tient les trois exigences —
+coefficient, délai, humidité — pour 84 € et 6,7 h.</p>
+<div class="box">Réserve à écrire dans l'avis : <em>le PVC devient cassant sous les
+ultraviolets ; cette patère ne conviendrait pas en extérieur.</em> Une réserve suit le matériau,
+pas le lieu du jour.</div>
+
+<h2>Ce que la simulation ne voit pas</h2>
+<p>Elle charge une fois, sur une matière neuve. Le vieillissement, la fatigue, les chocs répétés
+et l'humidité n'entrent pas dans son modèle. Un crochet validé sur le papier reste à surveiller
+dans le hall.</p>
+
+<footer>Hors ligne, sans compte, aucune donnée envoyée.</footer>
+</body>
+</html>

@@ -9697,3 +9697,123 @@ Les deux autres arbitrages annoncés hier tombent. Ils n'existaient que dans mon
   dépôt : il décrit son propre angle mort. Corollaire pratique : quand un contrôle neuf trouve
   un grand nombre de fautes d'un coup, la première hypothèse à tester est que le contrôle a
   tort.
+
+## 2026-08-31 — Lots C8.1 en 5e et 3e : ce que la simulation voyait, et ce que le banc ne voyait pas
+
+`5e_C8.1` était le **seul code des 114 dont aucune pièce du dépôt ne parlait** : ni séquence, ni
+QCM, ni synthèse, et pas une question dans aucune banque. `3e_C8.1` avait vingt questions, toutes
+logées chez les voisins, et aucune séquence à lui. Les deux lots existent maintenant.
+
+### Le choix : reprendre les objets des lots C8.2
+
+La patère du hall en 5e, le mât de la station en 3e — les mêmes objets que les lots « protocole »
+voisins. Ce n'est pas de l'économie, c'est la condition de la démonstration : **une simulation et
+un banc ne se confrontent que s'ils parlent du même objet** (règle d'or n°234).
+
+### 5e — la panne que le banc n'avait pas mesurée
+
+La situation déclenchante de `5e_C8.2` contient une phrase qui n'avait jamais été exploitée : « un
+sac de cours trempé, accroché d'un coup sec, et le crochet **plie** ». Le banc, lui, avait mesuré
+à quelle charge il **casse**.
+
+`patere.py` reproduit d'abord **exactement** les cinq relevés du banc — 41, 51, 53, 194, 408 kg —
+ce qui rend la simulation crédible avant qu'elle ne contredise. Puis il compare à la limite
+élastique :
+
+| Matériau | Plie à | Casse à | k élastique | k rupture | Décision |
+|---|---|---|---|---|---|
+| Bois (pin) | 25 kg | 41 kg | **2,1** | 3,4 | **écarté** |
+| PLA imprimé 3D | 46 kg | 51 kg | 3,8 | 4,2 | retenu |
+| PVC rigide | 46 kg | 53 kg | 3,8 | 4,4 | retenu |
+| Aluminium | 143 kg | 194 kg | 11,9 | 16,1 | retenu |
+| Acier doux | 240 kg | 408 kg | 20,0 | 34,0 | retenu |
+
+**Un seul matériau change de camp**, et c'est vérifié par le banc de tests, pas espéré. Si les
+cinq basculaient, l'élève conclurait « la simulation déclasse tout » ; si aucun ne basculait, le
+choix de la limite paraîtrait sans conséquence.
+
+Deux enseignements de second rang, eux aussi structurels : la contrainte vaut **11,8 MPa pour les
+cinq** (elle ne dépend pas du matériau — le simulateur ne *peut pas* afficher autre chose), et le
+PLA et le PVC ont la **même** limite élastique, ce qui rend les deux kilogrammes d'écart mesurés
+au banc démontrablement sans portée.
+
+Le choix final se fait sur quatre critères : le PLA est le moins cher (24 € les quarante) et le
+seul impossible — 30 heures d'impression pour 8 heures d'atelier.
+
+### 3e — le banc poussait pareil sur tout le monde
+
+Le bureau d'études conteste la méthode, pas la conclusion. Le banc de `3e_C8.2` appliquait
+**200 N·m à chacun des cinq mâts**. Le vent, non :
+
+| Profilé | Section | Banc | Vent 150 km/h | Écart |
+|---|---|---|---|---|
+| Tube aluminium Ø50 × 3 | ronde | 200 N·m | 204 N·m | +2 % |
+| Barre pleine acier Ø20 | ronde | 200 N·m | **128 N·m** | −36 % |
+| Tube PVC Ø50 × 3 | ronde | 200 N·m | 204 N·m | +2 % |
+| Poutre bois 40 × 40 | **carrée** | 200 N·m | **298 N·m** | +49 % |
+| Tube acier galvanisé Ø33,7 | ronde | 200 N·m | 163 N·m | −18 % |
+
+La barre fine était **désavantagée** par le banc, la poutre carrée **avantagée** — un carré freine
+le vent presque deux fois plus qu'un tube rond de même largeur. Les tubes Ø50, eux, recevaient au
+banc presque exactement leur charge réelle : la poussée de 100 N était, pour eux, un excellent
+substitut du cyclone.
+
+Douze réglages (3 hauteurs × 2 cas de charge × 2 limites), tous vérifiés un par un contre le
+modèle. Le réglage conforme au cahier des charges retient le tube aluminium — **le même verdict
+que le banc**.
+
+### Le piège délibéré
+
+Un élève qui recopie le réglage du banc obtient **la bonne réponse**. Le lot ne le sanctionne pas :
+il montre à l'activité suivante que ce bon résultat reposait sur une charge fausse pour deux
+candidats sur cinq. *Un bon résultat obtenu par un mauvais raisonnement ne se reproduira pas.*
+
+### Deux formulations « recopiées » étaient fausses
+
+La séquence de 3e annonçait « ce que dit le programme — **recopié, pas reformulé** » au-dessus
+d'une reformulation de `3e_C3.4`. Celle de 5e attribuait à `5e_C3.1` le texte de la **4e**. Deux
+mensonges dans un en-tête qui promet le contraire, et aucun test ne les voyait.
+
+Les deux générateurs lisent désormais `_outils/data_competences.py` : la page ne peut plus
+diverger du référentiel. Et le banc de tests compare la formulation du code **et celle du code
+d'appui** au référentiel, pas à ma mémoire.
+
+### Un pointeur qui promettait une évaluation inexistante
+
+Le README que `pointeurs_codes.py` avait écrit dans `5e/5e_C8.1` renvoyait au mini-projet de
+`5e_C7.1` et affirmait « **ce code y est évalué** ». La banque de ce lot étiquette son groupe de
+validation en `5e_C8.3`, jamais en `5e_C8.1`, et `controle_couverture.py` ne trouvait aucune
+question portant `5e_C8.1` dans tout le dépôt. Le booléen `evalue` de la table `POINTEURS` est
+**déclaré à la main**, comme l'était le statut de l'audit avant qu'on le contrôle.
+
+La table vit dans `_outils/`, hors du périmètre d'une branche de thème 3 : la correction partira à
+part, et l'outil devrait tirer ce booléen de `controle_couverture.py` au lieu de le croire.
+
+### Ce qui a été vérifié
+
+| Suite | Résultat |
+|---|---|
+| `tests_5e_C8.1_sequence.mjs` | **39 / 39** |
+| `tests_3e_C8.1_sequence.mjs` | **62 / 62** — dont les douze réglages |
+| `tests_5e_C8.1_qcm.mjs` | **32 / 32** |
+| `tests_3e_C8.1_qcm.mjs` | **32 / 32** |
+| `controle_longueurs.py` | 0 bonne réponse détachée sur les deux banques |
+| `controle_echantillonnage.py` | 20 + 10 questions par lot, tous codes au-dessus du seuil |
+| `mesurer_temps_seances.py` | 5e : +25 min de marge · 3e : +30 min |
+| `controle_couverture.py` | `5e_C8.1` et `3e_C8.1` → **ÉVALUÉ** |
+
+Tableau de bord : **49 codes complets et validables** (47 hier), 8 à vérifier (10 hier).
+
+### Les règles nouvelles
+
+- **n°243** — **une charge d'essai identique pour tous peut être injuste sans être fausse.** Un
+  banc applique la même force à chaque candidat ; le réel ne l'a jamais promis. Avant de comparer
+  des résultats d'essai, vérifier que la charge appliquée représente bien ce que chaque forme
+  recevra.
+- **n°244** — **un coefficient de sécurité sans sa limite n'est pas un nombre.** Le même bois, la
+  même charge : 3,4 sur la rupture, 2,1 sur la limite élastique. Annoncer « 3,4 » sans dire de
+  quelle limite il vient, c'est n'avoir rien annoncé.
+- **n°245** — **une formulation « recopiée » se recopie depuis le référentiel, pas de mémoire.**
+  Deux en-têtes de séquence promettaient « recopié, pas reformulé » au-dessus d'un texte faux. Un
+  générateur qui lit `data_competences.py` ne peut pas se tromper ; un rédacteur qui se souvient,
+  si. Le contrôle vaut aussi pour les codes d'appui, qu'on recopie plus vite et donc moins bien.

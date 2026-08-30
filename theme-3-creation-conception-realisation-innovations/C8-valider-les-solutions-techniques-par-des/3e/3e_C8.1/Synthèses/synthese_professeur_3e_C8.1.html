@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 3e_C8.1</title>
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C8.1_mat-de-la-station.html">📘 La séquence</a><a href="qcm_3e_C8.1_mat-de-la-station.html">🧠 Le QCM</a><a href="lexique_3e_C8.1.html">📖 Lexique</a></nav>
+
+<h1>📡 Synthèse professeur — 3e_C8.1</h1>
+<p><em>Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.</em></p>
+
+<h2>Ce que le lot démontre, et comment il le garantit</h2>
+<p>Le modèle <code>mat_station.py</code> reprend les cinq profilés de <code>3e_C8.2</code> — mêmes
+géométries, mêmes résistances à la rupture — et leur ajoute une <b>limite élastique</b>. Les
+douze réglages possibles (3 hauteurs × 2 cas de charge × 2 limites) sont tous vérifiés par le banc
+de tests contre le modèle Python.</p>
+<p>La progression pédagogique est garantie par les nombres, pas par la mise en scène :</p>
+<ol>
+  <li><b>Confiance.</b> Réglée « poussée du banc + rupture », la simulation retient
+  1 profilé — le même que le banc. L'élève vérifie
+  l'instrument sur une réponse connue avant de lui poser une question neuve.</li>
+  <li><b>Découverte.</b> Sous le vent, les moments cessent d'être égaux : de
+  128 N·m pour la barre pleine à
+  298 N·m pour la poutre carrée. La charge dépend de la
+  pièce, ce que le banc ne pouvait pas montrer.</li>
+  <li><b>Décision.</b> Sur la rupture, 2 profilés passent ;
+  sur la limite élastique, 1. Le choix de la limite est
+  celui qui décide.</li>
+  <li><b>Honnêteté.</b> Le verdict final est celui du banc. La simulation n'a pas changé la
+  réponse : elle a changé sa valeur de preuve, et corrigé deux jugements sur cinq.</li>
+</ol>
+
+<h2>Le piège réussi, et pourquoi il est bon</h2>
+<div class="box attention">
+<p>Un élève qui recopie le réglage du banc (« poussée + rupture ») obtient <b>le bon profilé</b>.
+C'est délibéré. Le lot ne punit pas la mauvaise méthode par une mauvaise réponse — il fait mieux :
+il montre, à l'activité 2, que ce bon résultat reposait sur une charge fausse pour deux des cinq
+candidats. <em>Un bon résultat obtenu par un mauvais raisonnement ne se reproduira pas.</em></p>
+</div>
+
+<h2>Les trois verrous expérientiels</h2>
+<table>
+  <tr><th>Verrou</th><th>Geste exigé</th><th>Activités qu'il ouvre</th></tr>
+  <tr><td><code>regle</code></td><td>une simulation lancée</td><td>activité 1</td></tr>
+  <tr><td><code>vent</code></td><td>une simulation lancée en cas « vent »</td><td>activité 2</td></tr>
+  <tr><td><code>bonreglage</code></td><td>2000 mm · vent · limite élastique</td><td>activités 3 et 4</td></tr>
+</table>
+<p>Aucun n'est ouvert au chargement : vérifié à chaque exécution du banc de tests.</p>
+
+<h2>Les limites du modèle, à dire aux élèves</h2>
+<ul>
+  <li><b>La vitesse du vent n'est pas réglable</b> — c'est volontaire, et c'est l'objet du
+  réinvestissement : savoir ce qu'un outil ne permet pas fait partie de sa maîtrise.</li>
+  <li><b>L'encastrement est supposé parfait.</b> Une platine qui tourne augmente la flèche. C'est
+  une des questions bonus.</li>
+  <li><b>La fatigue est hors modèle</b>, comme elle l'était hors du banc. C'est l'angle mort
+  partagé, et le lot le nomme au lieu de le taire.</li>
+  <li><b>Le coefficient de forme</b> (1.2 rond / 2 carré) est une valeur
+  d'ordre de grandeur, suffisante au collège et honnête sur son statut.</li>
+</ul>
+
+<h2>Lien avec le reste du dépôt</h2>
+<ul>
+  <li><code>3e_C8.2</code> — le banc dont ce lot reprend les cinq profilés. À faire <b>avant</b>.</li>
+  <li><code>3e_C7.3</code> et <code>3e_C7.7</code> — le boîtier de la station, dont la surface au
+  vent (300 cm²) entre dans le calcul du moment.</li>
+  <li><code>5e_C8.1</code> et <code>4e_C8.1</code> — les deux marches précédentes de la spirale.</li>
+</ul>
+
+<footer>Hors ligne, sans compte, aucune donnée envoyée.</footer>
+</body>
+</html>

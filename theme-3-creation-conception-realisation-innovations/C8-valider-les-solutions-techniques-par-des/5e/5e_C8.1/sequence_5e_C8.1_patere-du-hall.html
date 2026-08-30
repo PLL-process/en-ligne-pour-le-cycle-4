@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 5e — La patère du hall : ce que la simulation voyait (5e_C8.1)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}
+.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}
+.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}
+.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}
+table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2);margin:10px 0}
+.etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+.etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.piege{border-left:4px solid var(--err);background:rgba(255,123,136,.07);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.critere{border-left:4px solid var(--hl);background:rgba(97,218,251,.07);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+@media(max-width:680px){section.card table{display:block;overflow-x:auto;max-width:100%}}
+@media print{.toolbar{display:none}}
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px}
+.simu h4{margin:0 0 10px;color:var(--hl);font-size:1em}
+.atelier{display:grid;grid-template-columns:minmax(210px,.9fr) minmax(260px,1.1fr);gap:16px;align-items:start}
+@media(max-width:660px){.atelier{grid-template-columns:1fr}}
+.atelier svg{width:100%;height:auto;background:#081b3a;border-radius:10px}
+.cmd{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+.cmd label{font-size:.9em;color:var(--sub)}
+.cmd select,.cmd input[type=number]{width:auto;min-width:110px}
+.lecture{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.1em;color:var(--hl);margin:6px 0 2px}
+.lecture b{color:#fff}
+.jauge{height:16px;border-radius:8px;background:#0a1b3d;border:1px solid var(--border);overflow:hidden;position:relative}
+.jauge>span{display:block;height:100%;width:100%;background:linear-gradient(90deg,#3aa76d,#ffd66b,#ff7b88);clip-path:inset(0 100% 0 0);transition:clip-path .18s}
+.jauge>i{position:absolute;top:-3px;bottom:-3px;width:2px;background:#fff;opacity:.85}
+table.releve{width:100%;border-collapse:collapse;font-size:.86em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve tr.ok td{background:rgba(129,251,161,.10)}
+table.releve tr.ko td{background:rgba(255,123,136,.10)}
+.verdict-ok{color:var(--ok);font-weight:700}
+.verdict-non{color:var(--err);font-weight:700}
+.ecart{border-left:4px solid var(--warn);background:rgba(255,214,102,.08);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+</style>
+</head>
+<body>
+
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_5e_C8.1.html">📖 Lexique</a></nav>
+
+<h1>🪝 La patère du hall — ce que la simulation voyait</h1>
+<p class="subtitle">Ta mission : utiliser une simulation fournie pour dire si un matériau tiendra,
+<b>avant</b> de casser quoi que ce soit.</p>
+<div class="badges">
+  <span class="badge">5e</span><span class="badge">5e_C8.1</span>
+  <span class="badge">Thème 3 — Création, conception, réalisation</span>
+  <span class="badge">Socle : D1.3 · D2 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 D'où tu viens — la spirale C8</h2>
+  <p>Dans <b>La patère du hall — éprouver un matériau</b> (5e_C8.2), tu as appliqué un protocole
+  fourni : charger, ajouter, recommencer, noter la charge à laquelle chaque crochet <b>casse</b>.
+  Tu as obtenu cinq chiffres, et tu as classé.</p>
+  <p><b>Ce qui change aujourd'hui :</b> tu ne casses rien. Un service technique t'envoie une
+  <b>simulation</b> déjà réglée, et tu t'en sers pour décider. Le verbe du programme est
+  « utiliser » — pas « écrire », pas « régler ». En 4<sup>e</sup> tu la paramètreras ; en
+  3<sup>e</sup> tu la mettras en œuvre toi-même.</p>
+  <div class="retenir">Une simulation ne remplace pas l'essai réel : elle permet
+  d'<b>éliminer vite</b>, sans rien détruire, avant d'aller au banc.</div>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td>5e_C8.1</td><td>Utiliser une simulation fournie pour valider la tenue mécanique d’un matériau.</td><td>Activités 1, 2 et 3</td></tr>
+    <tr><td>5e_C3.1 <i>(appui)</i></td><td>Repérer pour un OST les matériaux, les sources et les formes d'énergies, le traitement de l'information.</td><td>Activité 4</td></tr>
+  </table>
+  <p style="font-size:.92em;color:var(--sub)">Le verbe est <b>« utiliser »</b>. La simulation
+  t'est donnée réglée, juste, et complète. Ce qu'on te demande, c'est de savoir
+  <b>ce qu'elle répond — et à quelle question</b>.</p>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>Le gestionnaire relit son propre courrier de l'an dernier : « un sac de cours trempé,
+    accroché d'un coup sec, et le crochet <b>plie</b> ».</p>
+    <p>« Vos essais m'ont donné la charge à laquelle chaque crochet <b>casse</b>. Mais aucun de
+    mes crochets n'a cassé. Ils ont plié, et une patère tordue, je dois quand même la
+    remplacer. Est-ce que votre laboratoire sait me dire à partir de quand ça plie ? »</p>
+    <p>Le service technique de la mairie répond en envoyant un fichier : une <b>simulation</b>
+    du crochet, déjà réglée sur sa forme exacte.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment savoir, sans rien casser, à partir de quelle charge un crochet
+  se déforme <b>pour toujours</b> ?</p>
+</section>
+
+<section class="card">
+  <h2>💡 Ton idée à toi, avant toute simulation</h2>
+  <p>Au banc, le bois a tenu 41 kg avant de casser — presque trois fois
+  le poids d'un sac trempé. D'après toi, est-ce que cela suffit à dire « le bois convient » ?
+  Écris ta réponse : personne ne la corrige, elle sert à mesurer le chemin parcouru.</p>
+  <textarea id="hyp" rows="2" placeholder="À mon avis…"></textarea>
+  <p class="saved-note" id="notehyp"></p>
+</section>
+
+<section class="card">
+  <h2>📐 Le cahier des charges du gestionnaire</h2>
+  <ul>
+    <li><b>Charge de service :</b> 12 kg — un sac de cours trempé, pesé au
+    secrétariat.</li>
+    <li><b>Coefficient de sécurité exigé :</b> 3. Le crochet doit rester élastique
+    jusqu'à 3 × 12 = 36 kg.</li>
+    <li><b>Nombre :</b> 40 patères à remplacer dans le hall.</li>
+    <li><b>Délai :</b> avant la rentrée de janvier — l'atelier dispose de 8 heures
+    de machine, pas une de plus.</li>
+    <li><b>Lieu :</b> un hall couvert, mais humide : la pluie de midi entre avec les sacs.</li>
+  </ul>
+  <div class="critere"><b>Critère de réussite de la séquence :</b> tu sais dire quel matériau
+  choisir, avec son coefficient de sécurité, et tu sais expliquer pourquoi le banc et la
+  simulation ne classent pas pareil.</div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le banc réel du laboratoire</b> — le « laboratoire des matériaux » du Réseau
+    National Technologie Collège, comme en 5e_C8.2. On compare ses relevés à ceux de la
+    simulation. <b>Consigne de sécurité :</b> ne jamais placer une main ni la tête sous une
+    charge suspendue, charger par paliers, lunettes obligatoires à la rupture.</li>
+    <li><b>🅱 Avec le simulateur de cette page</b> — il fonctionne hors ligne, sans rien
+    installer. C'est la voie par défaut.</li>
+    <li><b>🅲 Sans écran</b> — le tableau des cinq matériaux est fourni imprimé ; tu calcules
+    les coefficients à la main avec la formule donnée. Aucune manipulation électrique dans
+    cette séquence : ni très basse tension, ni secteur.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 1 — Prendre le simulateur en main <span class="chrono">⏱ ~15 min</span></h2>
+  <p><b>Objectif :</b> lire ce que le simulateur affiche. <b>Production :</b> trois réponses
+  justes. <b>Ressource :</b> le simulateur ci-dessous.</p>
+  
+<div class="simu">
+  <h4>🖥️ Le simulateur fourni par le service technique</h4>
+  <p style="font-size:.9em;color:var(--sub);margin:0 0 10px">
+    Il calcule la contrainte de flexion dans le bras du crochet, et la compare à la
+    <b>limite élastique</b> du matériau — la valeur au-delà de laquelle le crochet
+    reste tordu même une fois le sac enlevé. Tu ne le programmes pas : tu l'utilises.
+  </p>
+  <div class="atelier">
+    <div><svg viewBox="0 0 300 210" role="img" aria-labelledby="svgT svgD">
+  <title id="svgT">Le crochet du hall vu de côté, et la contrainte dans son bras</title>
+  <desc id="svgD">Un mur vertical à gauche. Un bras horizontal de 60 mm part du mur ;
+  une charge est suspendue à son extrémité. La couleur du bras montre la contrainte de
+  flexion : elle est maximale contre le mur, nulle au bout. Un texte donne la valeur en
+  mégapascals et indique si le crochet reste élastique ou plie pour toujours.</desc>
+  <defs>
+    <linearGradient id="gradC" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff7b88" id="g0"/>
+      <stop offset="55%" stop-color="#ffd66b" id="g1"/>
+      <stop offset="100%" stop-color="#3aa76d" id="g2"/>
+    </linearGradient>
+    <pattern id="mur" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#12305e"/>
+      <path d="M0 8h16M8 0v8M0 16h16" stroke="#274a8a" stroke-width="1.4"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="60" height="210" fill="url(#mur)"/>
+  <line x1="60" y1="0" x2="60" y2="210" stroke="#61dafb" stroke-width="2"/>
+  <g id="bras">
+    <rect id="brasRect" x="60" y="72" width="180" height="26" rx="4" fill="url(#gradC)"/>
+    <rect x="60" y="72" width="180" height="26" rx="4" fill="none" stroke="#0a1b3d" stroke-width="1.5"/>
+  </g>
+  <path id="crochet" d="M240 98 q22 0 22 26 q0 20 -20 20" fill="none" stroke="#9bbefc" stroke-width="9" stroke-linecap="round"/>
+  <g id="sac">
+    <path d="M228 150 l30 0 l7 40 l-44 0 z" fill="#2966b1" stroke="#81aaff" stroke-width="2"/>
+    <path d="M236 150 q7 -14 14 0" fill="none" stroke="#81aaff" stroke-width="3"/>
+  </g>
+  <text x="150" y="60" text-anchor="middle" fill="#9bbefc" font-size="12">contrainte maximale contre le mur</text>
+  <text x="70" y="120" fill="#ff7b88" font-size="13" id="svgSigma">— MPa</text>
+  <text x="150" y="205" text-anchor="middle" fill="#e4eaf5" font-size="13" id="svgEtat">règle le simulateur</text>
+</svg></div>
+    <div>
+      <div class="cmd">
+        <label for="mat">Matériau</label>
+        <select id="mat"><option>Bois (pin)</option><option>PLA imprimé en 3D</option><option>PVC rigide</option><option>Aluminium</option><option>Acier doux</option></select>
+      </div>
+      <div class="cmd">
+        <label for="charge">Charge suspendue</label>
+        <input type="number" id="charge" min="1" max="250" step="1" value="12"> kg
+      </div>
+      <div class="cmd">
+        <button class="btn" id="calculer">▶ Calculer</button>
+        <button class="btn" id="ajouter">＋ Reporter dans le tableau</button>
+      </div>
+      <p class="lecture">contrainte : <b id="lSigma">—</b> · limite élastique : <b id="lLim">—</b></p>
+      <p class="lecture">coefficient de sécurité : <b id="lCoef">—</b> (exigé : 3)</p>
+      <div class="jauge" aria-hidden="true"><span id="jSigma"></span><i id="jSeuil" style="left:0"></i></div>
+      <p id="lVerdict" style="margin:8px 0 0">—</p>
+    </div>
+  </div>
+
+  <table class="releve" id="tab">
+    <thead><tr><th>Matériau</th><th>σ sous 12 kg</th><th>limite élastique</th>
+      <th>coefficient</th><th>décision</th></tr></thead>
+    <tbody><tr><td colspan="5" style="color:var(--sub)">Aucun essai reporté pour l'instant.</td></tr></tbody>
+  </table>
+  <p class="lecture">essais reportés : <b id="nEssais">0</b> · retenus : <b id="nRetenus">0</b></p>
+</div>
+
+  <div class="exo">
+    <h4>Fais, puis réponds</h4>
+    <ol>
+      <li>Choisis <b>Aluminium</b>, laisse la charge à 12 kg, clique
+      <b>▶ Calculer</b>.</li>
+      <li>Sans rien changer d'autre, choisis <b>Acier doux</b> et recalcule.</li>
+    </ol>
+    <p><label for="a1q1">1. Quelle contrainte le simulateur affiche-t-il pour l'aluminium sous
+    12 kg ?</label>
+    <select id="a1q1"><option value="">— choisis —</option>
+      <option>11,8 MPa</option>
+      <option>140 MPa</option>
+      <option>12 MPa</option>
+      <option>1,18 MPa</option></select></p>
+    <p><label for="a1q2">2. En passant à l'acier doux, la contrainte affichée…</label>
+    <select id="a1q2"><option value="">— choisis —</option>
+      <option>ne change pas</option><option>diminue beaucoup</option>
+      <option>augmente beaucoup</option><option>devient nulle</option></select></p>
+    <p><label for="a1q3">3. Pourquoi ?</label>
+    <select id="a1q3"><option value="">— choisis —</option>
+      <option>la contrainte ne dépend que de la charge et de la forme du bras</option>
+      <option>l'acier est plus solide, donc il subit moins de contrainte</option>
+      <option>le simulateur garde en mémoire le calcul précédent</option>
+      <option>l'acier est plus lourd, ce qui compense</option></select></p>
+    <button class="btn" data-check="1">Vérifier l'activité 1</button>
+    <p class="feedback" id="fb1"></p>
+    <details class="etayage"><summary>Un coup de pouce</summary>
+      <p>Regarde la formule affichée sous le simulateur : σ = charge × g × longueur du bras ÷
+      module de la forme. Cherche où le <i>nom du matériau</i> apparaît dans cette formule.</p>
+      <p>Il n'y apparaît pas. Ce qui change d'un matériau à l'autre, c'est la <b>limite</b> à
+      laquelle on compare — pas la contrainte elle-même.</p></details>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Le bras du crochet mesure 60 mm, sa section 25 × 12 mm,
+      donc son module de flexion vaut 600 mm³. Sous 12 kg :</p>
+      <p style="font-family:monospace">σ = 12 × 9.81 × 60 ÷ 600
+      = <b>11,8 MPa</b></p>
+      <p>Aucun des trois nombres de cette formule ne parle du matériau. La contrainte est
+      <b>la même pour les cinq</b> : 11,8 MPa. Ce qui les
+      distingue, c'est leur <b>limite élastique</b> : 25 MPa pour le bois,
+      235 MPa pour l'acier doux.</p>
+    </div></details>
+    <div class="piege"><b>Piège classique :</b> croire qu'un matériau « solide » subit moins de
+    contrainte. Non : il en subit autant, il la supporte mieux.</div>
+    <div class="retenir">La <b>contrainte</b> vient de la charge et de la forme.
+    La <b>limite</b> vient du matériau. Ce sont deux choses différentes.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📊 Activité 2 — Cinq matériaux, une seule contrainte <span class="chrono">⏱ ~20 min</span></h2>
+  <p><b>Objectif :</b> classer les cinq matériaux. <b>Production :</b> le tableau du simulateur
+  rempli. <b>Ressource :</b> le simulateur de l'activité 1.</p>
+  <div class="exo">
+    <h4>Fais, puis réponds</h4>
+    <p>Reviens au simulateur. Pour <b>chacun des cinq matériaux</b>, à
+    12 kg, clique <b>＋ Reporter dans le tableau</b>. Le tableau se remplit tout
+    seul ; il ne se remplit que si tu le fais.</p>
+    <p><label for="a2q1">1. Combien de matériaux sont retenus (coefficient ≥ 3) ?</label>
+    <select id="a2q1"><option value="">— choisis —</option>
+      <option>5</option><option>4</option><option>3</option><option>2</option></select></p>
+    <p><label for="a2q2">2. Lequel est écarté ?</label>
+    <select id="a2q2"><option value="">— choisis —</option>
+      <option>Bois (pin)</option><option>PLA imprimé en 3D</option><option>PVC rigide</option><option>Aluminium</option><option>Acier doux</option></select></p>
+    <p><label for="a2q3">3. Quel est son coefficient de sécurité ?</label>
+    <select id="a2q3"><option value="">— choisis —</option>
+      <option>2,1</option><option>3,8</option>
+      <option>11,9</option><option>20,0</option></select></p>
+    <button class="btn" data-check="2">Vérifier l'activité 2</button>
+    <p class="feedback" id="fb2"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>La contrainte de service est la même pour tous :
+      11,8 MPa. Le coefficient, lui, est le rapport
+      limite élastique ÷ contrainte :</p>
+      <table class="refs">
+        <tr><th>Matériau</th><th>Limite élastique</th><th>Coefficient</th><th>Décision</th></tr>
+        <tr><td>Bois (pin)</td><td>25 MPa</td><td>2,1</td><td><b>écarté</b></td></tr><tr><td>PLA imprimé en 3D</td><td>45 MPa</td><td>3,8</td><td>retenu</td></tr><tr><td>PVC rigide</td><td>45 MPa</td><td>3,8</td><td>retenu</td></tr><tr><td>Aluminium</td><td>140 MPa</td><td>11,9</td><td>retenu</td></tr><tr><td>Acier doux</td><td>235 MPa</td><td>20,0</td><td>retenu</td></tr>
+      </table>
+      <p>Le bois plie définitivement dès 25 kg. Deux sacs trempés
+      accrochés au même crochet suffisent.</p>
+    </div></details>
+    <div class="retenir">Le coefficient de sécurité répond à une question précise :
+    <b>combien de fois la charge prévue avant que ça se déforme pour de bon ?</b></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚖️ Activité 3 — Le banc ne disait pas la même chose <span class="chrono">⏱ ~20 min</span></h2>
+  <p><b>Objectif :</b> comprendre pourquoi deux instruments justes se contredisent.
+  <b>Production :</b> trois réponses justes. <b>Ressource :</b> tes relevés de 5e_C8.2.</p>
+  <table class="refs">
+    <tr><th>Matériau</th><th>Charge de rupture relevée au banc</th>
+      <th>Coefficient sur la rupture</th><th>Décision du banc</th></tr>
+    <tr><td>Bois (pin)</td><td>41 kg</td><td>3,4</td><td>retenu</td></tr><tr><td>PLA imprimé en 3D</td><td>51 kg</td><td>4,2</td><td>retenu</td></tr><tr><td>PVC rigide</td><td>53 kg</td><td>4,4</td><td>retenu</td></tr><tr><td>Aluminium</td><td>194 kg</td><td>16,1</td><td>retenu</td></tr><tr><td>Acier doux</td><td>408 kg</td><td>34,0</td><td>retenu</td></tr>
+  </table>
+  <div class="exo">
+    <h4>Compare, puis réponds</h4>
+    <p><label for="a3q1">1. D'après le banc, le bois aurait-il été retenu ?</label>
+    <select id="a3q1"><option value="">— choisis —</option>
+      <option>oui, son coefficient sur la rupture vaut 3,4</option>
+      <option>non, il casse trop tôt</option>
+      <option>oui, mais seulement s'il est verni</option>
+      <option>on ne peut pas savoir avec ces chiffres</option></select></p>
+    <p><label for="a3q2">2. Pourquoi les deux instruments ne concluent-ils pas pareil sur le bois ?</label>
+    <select id="a3q2"><option value="">— choisis —</option>
+      <option>ils ne mesurent pas la même chose : le banc mesure la rupture, la simulation la déformation permanente</option>
+      <option>le banc s'est trompé : les relevés étaient mal faits</option>
+      <option>la simulation est plus sévère parce qu'elle est théorique</option>
+      <option>le bois a changé entre les deux essais</option></select></p>
+    <p><label for="a3q3">3. Au banc, le PVC (53 kg) a battu le PLA
+    (51 kg). Que dit la simulation de ces deux-là ?</label>
+    <select id="a3q3"><option value="">— choisis —</option>
+      <option>leur limite élastique est la même (45 MPa) : le classement du banc ne prouve rien entre eux</option>
+      <option>le PVC est meilleur, la simulation le confirme</option>
+      <option>le PLA est meilleur, la simulation inverse le classement</option>
+      <option>la simulation ne sait pas comparer deux plastiques</option></select></p>
+    <button class="btn" data-check="3">Vérifier l'activité 3</button>
+    <p class="feedback" id="fb3"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Les deux instruments sont justes. Ils répondent à deux questions différentes :</p>
+      <ul>
+        <li>le <b>banc</b> répond à « <i>quand est-ce que ça casse ?</i> » ;</li>
+        <li>la <b>simulation</b> répond à « <i>quand est-ce que ça reste tordu ?</i> ».</li>
+      </ul>
+      <p>Pour le bois, la première réponse est 41 kg
+      (coefficient 3,4, donc « retenu ») et la seconde
+      25 kg (coefficient 2,1, donc « écarté »).
+      C'est la seconde qui correspond à la panne décrite par le gestionnaire : ses crochets
+      n'ont pas cassé, ils ont plié.</p>
+      <p>PLA et PVC ont exactement la même limite élastique (45 MPa). L'écart de
+      deux kilogrammes mesuré au banc porte sur la rupture, pas sur la déformation : il ne
+      permet de classer ni l'un ni l'autre pour cet usage.</p>
+    </div></details>
+    <div class="piege"><b>Piège classique :</b> conclure qu'un des deux instruments « s'est
+    trompé ». Aucun des deux. La faute serait de leur poser une question et de lire la réponse
+    de l'autre.</div>
+    <div class="retenir">Avant de comparer deux chiffres, vérifie qu'ils répondent à la
+    <b>même question</b>.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🧾 Activité 4 — Choisir, et signer l'avis <span class="chrono">⏱ ~20 min</span></h2>
+  <p><b>Objectif :</b> transformer un classement en décision. <b>Production :</b> un matériau
+  choisi et une réserve écrite. <b>Ressource :</b> le tableau ci-dessous.</p>
+  <table class="refs">
+    <tr><th>Matériau retenu</th><th>Coût des 40 patères</th>
+      <th>Temps d'atelier</th><th>Réserve</th></tr>
+    <tr><td>PLA imprimé en 3D</td><td>24.00 €</td><td>30,0 h</td><td>Insensible à l'eau, mais ramollit vers 55 °C — pas au soleil direct.</td></tr><tr><td>PVC rigide</td><td>84.00 €</td><td>6,7 h</td><td>Insensible à l'eau. Devient cassant après quelques années de UV.</td></tr><tr><td>Aluminium</td><td>192.00 €</td><td>10,0 h</td><td>Ne rouille pas : sa couche d'oxyde le protège toute seule.</td></tr><tr><td>Acier doux</td><td>220.00 €</td><td>10,0 h</td><td>Rouille dans un hall humide s'il n'est pas galvanisé (+ 1,60 €).</td></tr>
+  </table>
+  <p style="font-size:.92em;color:var(--sub)">Rappel du cahier des charges : l'atelier dispose
+  de <b>8 heures</b> de machine avant la rentrée.</p>
+  <div class="exo">
+    <h4>Décide</h4>
+    <p><label for="a4q1">1. Quel est le moins cher des retenus ?</label>
+    <select id="a4q1"><option value="">— choisis —</option>
+      <option>PLA imprimé en 3D</option><option>PVC rigide</option><option>Aluminium</option><option>Acier doux</option></select></p>
+    <p><label for="a4q2">2. Combien d'heures d'atelier demanderait-il pour les
+    40 patères ?</label>
+    <select id="a4q2"><option value="">— choisis —</option>
+      <option>6,7 h</option><option>10,0 h</option><option>10,0 h</option><option>30,0 h</option></select></p>
+    <p><label for="a4q3">3. Quel matériau tient à la fois le coefficient, le délai et
+    l'humidité ?</label>
+    <select id="a4q3"><option value="">— choisis —</option>
+      <option>Bois (pin)</option><option>PLA imprimé en 3D</option><option>PVC rigide</option><option>Aluminium</option><option>Acier doux</option></select></p>
+    <p><label for="a4q4">4. Quelle réserve écris-tu dans l'avis ?</label>
+    <select id="a4q4"><option value="">— choisis —</option>
+      <option>le PVC devient cassant sous les UV : cette patère ne conviendrait pas en extérieur</option>
+      <option>aucune réserve : le PVC est parfait partout</option>
+      <option>le PVC risque de rouiller dans un hall humide</option>
+      <option>le PVC ramollit vers 55 °C dans un hall couvert</option></select></p>
+    <button class="btn" data-check="4">Vérifier l'activité 4</button>
+    <p class="feedback" id="fb4"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Le <b>PLA imprimé en 3D</b> est le moins cher (24 € pour les 40), et
+      c'est justement lui qui est impossible : 30 heures d'impression pour
+      8 heures disponibles. Un prix qui ne tient pas dans le temps disponible n'est
+      pas un prix, c'est un projet pour l'an prochain.</p>
+      <p>L'aluminium demande 10 h — encore trop.
+      L'acier doux rouillerait dans un hall où entre la pluie de midi.</p>
+      <p>Reste le <b>PVC rigide</b> : 84 €, 6,7 h d'atelier,
+      insensible à l'eau. Sa réserve — il devient cassant sous les ultraviolets — ne s'applique
+      pas dans un hall couvert. On l'écrit quand même : la réserve suit le matériau, pas
+      l'humeur du jour.</p>
+    </div></details>
+    <div class="retenir">Un choix technique se fait sur <b>tous</b> les critères du cahier des
+    charges à la fois. Le moins cher n'est pas le choix si l'atelier ne peut pas le fabriquer
+    à temps.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~10 min</span></h2>
+  <p>La salle de techno veut une étagère murale : même principe, bras de 200 mm au lieu de
+  60 mm, charge prévue 25 kg.</p>
+  <div class="exo">
+    <p><label for="a5q1">1. Sans calculer, la contrainte dans le bras sera…</label>
+    <select id="a5q1"><option value="">— choisis —</option>
+      <option>beaucoup plus grande : le bras est plus long ET la charge plus lourde</option>
+      <option>la même : c'est toujours de la flexion</option>
+      <option>plus petite : une étagère est plus solide qu'un crochet</option>
+      <option>impossible à dire sans connaître le matériau</option></select></p>
+    <p><label for="a5q2">2. Quand tu changes de matériau dans le simulateur, quel est le seul
+    nombre affiché qui change ?</label>
+    <select id="a5q2"><option value="">— choisis —</option>
+      <option>la limite élastique</option><option>la contrainte</option>
+      <option>la charge</option><option>la longueur du bras</option></select></p>
+    <button class="btn" data-check="5">Vérifier le réinvestissement</button>
+    <p class="feedback" id="fb5"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>σ = charge × g × longueur ÷ module. La charge passe de 12 à 25 kg
+      (elle double environ) et le bras de 60 à 200 mm (il triple environ) : la contrainte
+      est multipliée par plus de six, à section égale. C'est pour cela qu'une étagère se fixe
+      avec des équerres — pour raccourcir le bras.</p>
+      <p>Dans le simulateur, changer de matériau ne change que la <b>limite élastique</b> et,
+      par conséquent, le coefficient. La contrainte, elle, ne bouge pas.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li>La <b>contrainte</b> est ce que la charge fait subir à la pièce : elle dépend de la
+    charge et de la forme, jamais du matériau.</li>
+    <li>La <b>limite élastique</b> est ce que le matériau supporte sans rester déformé. La
+    <b>résistance à la rupture</b> est ce qu'il supporte avant de casser. La première est
+    toujours plus basse.</li>
+    <li>Le <b>coefficient de sécurité</b> = limite ÷ contrainte de service. Il faut dire à
+    quelle limite on le rapporte, sinon le chiffre ne veut rien dire.</li>
+    <li>Une simulation <b>fournie</b> s'utilise ; elle ne dispense pas de savoir à quelle
+    question elle répond.</li>
+    <li>Deux instruments justes peuvent classer différemment : c'est le signe qu'ils ne
+    mesurent pas la même grandeur.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>Ton hypothèse du début :</b> <i id="rappelHyp">—</i></p>
+  <p>Le bois tenait 41 kg au banc. Avec ce que tu sais maintenant,
+  dirais-tu encore que cela suffit ?</p>
+  <textarea id="bilan" rows="2" placeholder="Maintenant, je dirais que…"></textarea>
+  <p style="margin-top:12px"><label for="auto1">5e_C8.1 — utiliser une simulation fournie pour valider la tenue mécanique d’un matériau :</label>
+  <select id="auto1"><option value="">— choisis —</option>
+    <option>je sais le faire seul·e</option><option>je sais le faire avec de l'aide</option>
+    <option>je ne sais pas encore</option></select></p>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur cette séquence, dont 4 illustrées. Tu peux la refaire autant de fois que
+  tu veux : tes réponses sont gardées dans ce navigateur.</p>
+  <a class="btn" href="qcm_5e_C8.1_patere-du-hall.html">▶ Ouvrir le QCM (30 questions)</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <ul>
+    <li>Le crochet fait 25 mm de large et 12 mm d'épaisseur. Que se
+    passerait-il si on le posait « à plat » — 12 mm de large et
+    25 mm d'épaisseur ? Cherche « module de flexion » et explique.</li>
+    <li>Trouve, dans ta cuisine ou ta salle de bain, un objet en métal qui a été plié et qui ne
+    s'est pas redressé. Photographie-le et écris où était la contrainte maximale.</li>
+    <li>Le service technique n'a pas envoyé la masse des patères. Pour 40 crochets fixés
+    en hauteur, en quoi cela pourrait-il compter ?</li>
+  </ul>
+</section>
+
+<footer>Séquence 5e_C8.1 — hors ligne, sans compte, aucune donnée envoyée.
+Tes réponses restent dans ce navigateur.</footer>
+
+<script>
+(function(){
+const KEY = "seq_5e_C81_patere";
+
+/* ── le simulateur fourni ────────────────────────────────────────────────
+   Les matériaux viennent du modèle Python (patere.py) : aucune valeur n'est
+   recopiée ici à la main. */
+const MAT = [{"nom": "Bois (pin)", "sigma_e": 25, "sigma_r": 40, "prix": 1.2, "minutes": 12, "humidite": "Gonfle et se fend si l'eau reste ; le hall reçoit la pluie de midi."}, {"nom": "PLA imprimé en 3D", "sigma_e": 45, "sigma_r": 50, "prix": 0.6, "minutes": 45, "humidite": "Insensible à l'eau, mais ramollit vers 55 °C — pas au soleil direct."}, {"nom": "PVC rigide", "sigma_e": 45, "sigma_r": 52, "prix": 2.1, "minutes": 10, "humidite": "Insensible à l'eau. Devient cassant après quelques années de UV."}, {"nom": "Aluminium", "sigma_e": 140, "sigma_r": 190, "prix": 4.8, "minutes": 15, "humidite": "Ne rouille pas : sa couche d'oxyde le protège toute seule."}, {"nom": "Acier doux", "sigma_e": 235, "sigma_r": 400, "prix": 3.9, "minutes": 15, "humidite": "Rouille dans un hall humide s'il n'est pas galvanisé (+ 1,60 €)."}];
+const GEO = {"L": 60.0, "module": 600.0, "g": 9.81, "coef": 3, "service": 12, "nombre": 40};
+const $ = i => document.getElementById(i);
+const fr = (x, d) => x.toFixed(d).replace(".", ",");
+const releves = {};
+
+function courant(){ return MAT.filter(m => m.nom === $("mat").value)[0]; }
+
+/** Contrainte de flexion, en MPa. Elle ne dépend PAS du matériau : seulement
+ *  de la charge et de la forme du bras. C'est le piège n°1 de la séquence. */
+function contrainte(kg){ return kg * GEO.g * GEO.L / GEO.module; }
+
+function peindre(m, kg){
+  const s = contrainte(kg), k = m.sigma_e / s;
+  const part = Math.min(s / m.sigma_e, 1);
+  $("jSigma").style.clipPath = "inset(0 " + (100 - part * 100) + "% 0 0)";
+  $("jSeuil").style.left = (100 / GEO.coef) + "%";
+  $("lSigma").textContent = fr(s, 1) + " MPa";
+  $("lLim").textContent = m.sigma_e + " MPa";
+  $("lCoef").textContent = fr(k, 1);
+  $("svgSigma").textContent = fr(s, 1) + " MPa";
+  const ok = k >= GEO.coef;
+  $("svgEtat").textContent = s > m.sigma_e
+    ? "le crochet plie pour toujours"
+    : (ok ? "élastique, avec la marge exigée" : "élastique, mais sans la marge exigée");
+  $("svgEtat").setAttribute("fill", ok ? "#81fba1" : "#ff7b88");
+  $("lVerdict").innerHTML = ok
+    ? '<span class="verdict-ok">✔ retenu — ' + fr(k, 1) + ' ≥ ' + GEO.coef + '</span>'
+    : '<span class="verdict-non">✘ écarté — ' + fr(k, 1) + ' &lt; ' + GEO.coef + '</span>';
+}
+
+function tableau(){
+  const tb = $("tab").tBodies[0];
+  const noms = Object.keys(releves);
+  if(!noms.length){
+    tb.innerHTML = '<tr><td colspan="5" style="color:var(--sub)">Aucun essai reporté pour l\'instant.</td></tr>';
+  } else {
+    tb.innerHTML = noms.map(n => {
+      const r = releves[n];
+      return '<tr class="' + (r.ok ? "ok" : "ko") + '"><td>' + n + '</td><td>' + fr(r.sigma, 1)
+        + ' MPa</td><td>' + r.lim + ' MPa</td><td>' + fr(r.k, 1) + '</td><td>'
+        + (r.ok ? '<span class="verdict-ok">retenu</span>'
+                : '<span class="verdict-non">écarté</span>') + '</td></tr>';
+    }).join("");
+  }
+  $("nEssais").textContent = noms.length;
+  $("nRetenus").textContent = noms.filter(n => releves[n].ok).length;
+}
+
+$("calculer").addEventListener("click", () => {
+  const m = courant(), kg = Math.max(1, +$("charge").value || 1);
+  peindre(m, kg);
+  /* Un verrou ne s'ouvre que par un geste — jamais au chargement (règle n°226). */
+  window.__exp = window.__exp || {};
+  window.__exp.simule = true;
+  if(save) save();
+});
+
+$("ajouter").addEventListener("click", () => {
+  const m = courant(), kg = Math.max(1, +$("charge").value || 1);
+  peindre(m, kg);
+  const s = contrainte(kg), k = m.sigma_e / s;
+  releves[m.nom] = {sigma: s, lim: m.sigma_e, k: k, ok: k >= GEO.coef, kg: kg};
+  tableau();
+  window.__exp = window.__exp || {};
+  window.__exp.simule = true;
+  if(Object.keys(releves).length >= MAT.length) window.__exp.tous = true;
+  if(releves["Bois (pin)"] && !releves["Bois (pin)"].ok) window.__exp.bois = true;
+  if(save) save();
+});
+
+
+/* ── vérificateurs ─────────────────────────────────────────────────────── */
+const ATTENDUS = {
+  1: {a1q1: "11,8 MPa",
+      a1q2: "ne change pas",
+      a1q3: "la contrainte ne dépend que de la charge et de la forme du bras"},
+  2: {a2q1: "4", a2q2: "Bois (pin)", a2q3: "2,1"},
+  3: {a3q1: "oui, son coefficient sur la rupture vaut 3,4",
+      a3q2: "ils ne mesurent pas la même chose : le banc mesure la rupture, la simulation la déformation permanente",
+      a3q3: "leur limite élastique est la même (45 MPa) : le classement du banc ne prouve rien entre eux"},
+  4: {a4q1: "PLA imprimé en 3D", a4q2: "30,0 h", a4q3: "PVC rigide",
+      a4q4: "le PVC devient cassant sous les UV : cette patère ne conviendrait pas en extérieur"},
+  5: {a5q1: "beaucoup plus grande : le bras est plus long ET la charge plus lourde",
+      a5q2: "la limite élastique"}
+};
+
+/* Un verrou EXIGÉ par une activité : le geste doit avoir eu lieu. */
+const VERROUS = {
+  1: {cle: "simule", texte: "🔒 Lance d'abord un calcul avec le bouton ▶ Calculer."},
+  2: {cle: "tous", texte: "🔒 Reporte d'abord les cinq matériaux dans le tableau."},
+  3: {cle: "bois", texte: "🔒 Reporte d'abord le bois dans le tableau du simulateur : il faut l'avoir vu écarté."}
+};
+
+document.querySelectorAll("[data-check]").forEach(b => b.addEventListener("click", () => {
+  const n = b.dataset.check, fb = document.getElementById("fb" + n);
+  const v = VERROUS[n];
+  if(v && !(window.__exp && window.__exp[v.cle])){
+    fb.textContent = v.texte; fb.className = "feedback show warn"; return;
+  }
+  const att = ATTENDUS[n]; let bons = 0, total = 0;
+  Object.entries(att).forEach(([id, bon]) => {
+    total++; const e = document.getElementById(id);
+    if(!e) return;
+    const ok = e.value === bon;
+    e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && e.value !== "");
+    if(ok) bons++;
+  });
+  const r = bons / total;
+  if(r === 1){ fb.textContent = "✅ " + bons + "/" + total + " — tout est juste."; fb.className = "feedback show ok"; }
+  else if(r >= .5){ fb.textContent = "🟡 " + bons + "/" + total + " — les champs en rouge te montrent où reprendre."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + bons + "/" + total + " — relis l'énoncé, la correction reste à portée."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+/* ── sauvegarde locale ─────────────────────────────────────────────────── */
+function save(){
+  const o = {inputs: {}, exp: window.__exp || {}, releves: releves};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => {
+    const e = document.getElementById(k); if(e) e.value = v; });
+  window.__exp = o.exp || {};
+  Object.entries(o.releves || {}).forEach(([k, v]) => { releves[k] = v; });
+  tableau();
+  const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore();
+})();
+</script>
+
+</body>
+</html>

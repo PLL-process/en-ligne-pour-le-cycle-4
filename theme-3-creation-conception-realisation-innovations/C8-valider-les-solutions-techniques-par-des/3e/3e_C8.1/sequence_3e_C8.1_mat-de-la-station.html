@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e — Le mât de la station : la simulation avant le banc (3e_C8.1)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}
+.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}
+.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}
+.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}
+table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2);margin:10px 0}
+.etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+.etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.piege{border-left:4px solid var(--err);background:rgba(255,123,136,.07);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.critere{border-left:4px solid var(--hl);background:rgba(97,218,251,.07);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+@media(max-width:680px){section.card table{display:block;overflow-x:auto;max-width:100%}}
+@media print{.toolbar{display:none}}
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px}
+.simu h4{margin:0 0 10px;color:var(--hl);font-size:1em}
+.reglages{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin:10px 0}
+.reglages > div{flex:1 1 190px}
+.reglages label{display:block;font-size:.86em;color:var(--sub);margin-bottom:4px}
+.atelier{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(280px,1.2fr);gap:16px;align-items:start}
+@media(max-width:700px){.atelier{grid-template-columns:1fr}}
+.atelier svg{width:100%;height:auto;background:#081b3a;border-radius:10px}
+table.releve{width:100%;border-collapse:collapse;font-size:.84em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:5px 7px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve tr.ok td{background:rgba(129,251,161,.10)}
+table.releve tr.ko td{background:rgba(255,123,136,.08)}
+.lecture{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.05em;color:var(--hl);margin:6px 0 2px}
+.lecture b{color:#fff}
+.verdict-ok{color:var(--ok);font-weight:700}
+.verdict-non{color:var(--err);font-weight:700}
+.ecart{border-left:4px solid var(--warn);background:rgba(255,214,102,.08);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+</style>
+</head>
+<body>
+
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_3e_C8.1.html">📖 Lexique</a></nav>
+
+<h1>📡 Le mât de la station — la simulation avant le banc</h1>
+<p class="subtitle">Ta mission : mettre en œuvre une simulation, et découvrir qu'elle ne répond
+qu'à la question que tu lui as posée.</p>
+<div class="badges">
+  <span class="badge">3e</span><span class="badge">3e_C8.1</span>
+  <span class="badge">Thème 3 — Création, conception, réalisation</span>
+  <span class="badge">Socle : D1.3 · D2 · D4 · D5</span>
+  <span class="badge duree">⏱ 3 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 D'où tu viens — la spirale C8</h2>
+  <p>Dans <b>Le mât de la station — proposer un protocole</b> (3e_C8.2), tu as écrit toi-même un
+  protocole, tu l'as exécuté au banc, et tu as retenu <b>un seul</b> des cinq profilés : le tube
+  aluminium Ø50 × 3. Les quatre autres sont tombés sur la charge de rupture ou sur la flèche.</p>
+  <p><b>Ce qui change aujourd'hui :</b> tu n'as plus de banc. Tu as une simulation, et
+  <b>c'est toi qui la règles</b>. En 5<sup>e</sup> on l'utilisait toute faite ; en 4<sup>e</sup>
+  on en paramétrait les valeurs ; en 3<sup>e</sup> on choisit <b>la question</b>.</p>
+  <div class="retenir">Une simulation mal réglée ne se trompe pas : elle répond juste, à une
+  autre question que la tienne.</div>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td>3e_C8.1</td><td>Mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.</td><td>Activités 1 à 4</td></tr>
+    <tr><td>3e_C3.4 <i>(appui)</i></td><td>Définir et mettre en œuvre un protocole pour mesurer une caractéristique, une performance d’un OST.</td><td>Activités 3 et 4</td></tr>
+  </table>
+  <p style="font-size:.92em;color:var(--sub)">« Mettre en œuvre » veut dire : choisir le cas de
+  charge, choisir la géométrie, choisir la limite de comparaison — puis assumer le résultat.</p>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur">
+    <p>Le bureau d'études de la mairie a lu votre avis de l'an dernier. Il est d'accord avec la
+    conclusion, et pas du tout avec la méthode.</p>
+    <p>« Vous avez poussé <b>100 N en tête</b> de chaque mât. Mais le cyclone ne
+    pousse pas en tête : il pousse sur toute la hauteur, et il pousse d'autant plus fort que le
+    mât est large. Votre banc a traité un tube de 50 mm et une barre de 20 mm exactement de la
+    même façon. Le vent, lui, ne le fera pas. »</p>
+    <p>« Refaites le calcul. Vous avez une simulation. À vous de la régler. »</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Comment régler une simulation pour qu'elle réponde à la question qu'on
+  se pose vraiment ?</p>
+</section>
+
+<section class="card">
+  <h2>💡 Ton idée à toi, avant tout réglage</h2>
+  <p>Le bureau d'études dit que le banc a été injuste. D'après toi, quel profilé le banc a-t-il
+  le plus <b>désavantagé</b>, et lequel a-t-il le plus <b>avantagé</b> ? Personne ne corrige
+  cette réponse : on la relira au bilan.</p>
+  <textarea id="hyp" rows="2" placeholder="À mon avis, le banc a désavantagé… et avantagé…"></textarea>
+</section>
+
+<section class="card">
+  <h2>📐 Le cahier des charges de la mairie</h2>
+  <ul>
+    <li><b>Vent de référence :</b> 150 km/h — cyclone de catégorie 1. La pression
+    dynamique correspondante vaut 1063 Pa.</li>
+    <li><b>Coefficient de sécurité exigé :</b> 3.</li>
+    <li><b>Flèche admise en tête :</b> 40 mm — au-delà, l'anémomètre ne vise plus
+    juste.</li>
+    <li><b>Hauteur imposée :</b> 2000 mm. En dessous, l'anémomètre lit les
+    turbulences du toit et non le vent réel : la mesure ne vaut plus rien.</li>
+    <li><b>Boîtier en tête :</b> 300 cm² offerts au vent.</li>
+  </ul>
+  <div class="critere"><b>Critère de réussite :</b> tu sais dire quel réglage répond au cahier
+  des charges, quel profilé il retient, et ce qu'aucun des deux instruments ne voit.</div>
+</section>
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 Avec le banc réel</b> — celui de 3e_C8.2, pour vérifier que la simulation réglée
+    « poussée du banc » retrouve bien vos relevés. <b>Consigne de sécurité :</b> personne dans
+    l'axe du mât pendant l'essai, charge appliquée par paliers, lunettes à la rupture.</li>
+    <li><b>🅱 Avec le simulateur de cette page</b> — hors ligne, sans rien installer. Voie par
+    défaut.</li>
+    <li><b>🅲 Sans écran</b> — le tableau des moments est fourni imprimé ; tu calcules les
+    coefficients à la main. Aucune manipulation électrique dans cette séquence : ni très basse
+    tension, ni secteur.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🖐️ Activité 1 — Refaire dire au calcul ce que le banc a dit <span class="chrono">⏱ ~25 min</span></h2>
+  <p><b>Objectif :</b> vérifier que la simulation est digne de confiance. <b>Production :</b>
+  deux réponses justes. <b>Ressource :</b> le simulateur ci-dessous et tes relevés de 3e_C8.2.</p>
+  
+<div class="simu">
+  <h4>🖥️ Le simulateur — c'est toi qui le règles</h4>
+  <p style="font-size:.9em;color:var(--sub);margin:0 0 10px">
+    Il ne décide de rien tout seul. Il applique le cas de charge que tu choisis, sur la hauteur
+    que tu choisis, et compare à la limite que tu choisis. Trois réglages, et le verdict change.
+  </p>
+  <div class="reglages">
+    <div><label for="haut">Hauteur du mât</label>
+      <select id="haut"><option value="1200">1200 mm</option><option value="1500">1500 mm</option><option value="2000" selected>2000 mm</option></select></div>
+    <div><label for="cas">Cas de charge</label>
+      <select id="cas">
+        <option value="banc">Poussée du banc — 100 N en tête</option>
+        <option value="vent">Vent de cyclone — 150 km/h</option>
+      </select></div>
+    <div><label for="crit">Limite de comparaison</label>
+      <select id="crit">
+        <option value="elastique">Limite élastique</option>
+        <option value="rupture">Résistance à la rupture</option>
+      </select></div>
+    <div><button class="btn" id="simuler">▶ Lancer la simulation</button></div>
+  </div>
+  <div class="atelier">
+    <div><svg viewBox="0 0 220 300" role="img" aria-labelledby="mT mD">
+  <title id="mT">Le mât de la station vu de face, et la charge que la simulation lui applique</title>
+  <desc id="mD">Un mât vertical encastré dans une dalle de toit. En tête, le boîtier de la
+  station. Selon le cas de charge choisi, une flèche unique pousse la tête du mât (poussée du
+  banc) ou une série de flèches réparties pousse toute sa hauteur (vent). Le mât se courbe
+  d'autant plus que la flèche calculée est grande, et un texte donne sa valeur en millimètres.</desc>
+  <rect x="0" y="252" width="220" height="48" fill="#12305e"/>
+  <path d="M0 252h220" stroke="#61dafb" stroke-width="2"/>
+  <g id="fleches"></g>
+  <path id="matPath" d="M110 252 L110 60" stroke="#9bbefc" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <rect id="boitier" x="94" y="38" width="32" height="24" rx="4" fill="#2966b1" stroke="#81aaff" stroke-width="2"/>
+  <text x="110" y="288" text-anchor="middle" fill="#9bbefc" font-size="11">encastrement au pied</text>
+  <text x="8" y="20" fill="#61dafb" font-size="12" id="svgFleche">flèche : —</text>
+  <text x="8" y="36" fill="#ffd66b" font-size="12" id="svgMoment">moment : —</text>
+</svg></div>
+    <div>
+      <table class="releve" id="tab">
+        <thead><tr><th>Profilé</th><th>moment</th><th>σ</th><th>k</th><th>flèche</th><th>verdict</th></tr></thead>
+        <tbody><tr><td colspan="6" style="color:var(--sub)">Règle les trois menus, puis lance la simulation.</td></tr></tbody>
+      </table>
+      <p class="lecture">profilés retenus : <b id="nRet">—</b> · réglage :
+      <b id="lReglage">aucun</b></p>
+      <p class="lecture">pression du vent : <b id="lPression">1063 Pa</b> ·
+      coefficient exigé : <b>3</b> · flèche admise : <b>40 mm</b></p>
+    </div>
+  </div>
+</div>
+
+  <div class="exo">
+    <h4>Règle, lance, réponds</h4>
+    <p>Hauteur <b>2000 mm</b>, cas <b>poussée du banc</b>, limite <b>résistance à la rupture</b> —
+    exactement ce que faisait le banc l'an dernier. Lance la simulation.</p>
+    <p><label for="b1q1">1. Combien de profilés sont retenus ?</label>
+    <select id="b1q1"><option value="">— choisis —</option>
+      <option>1</option><option>2</option>
+      <option>3</option><option>5</option></select></p>
+    <p><label for="b1q2">2. Que peut-on en conclure sur la simulation ?</label>
+    <select id="b1q2"><option value="">— choisis —</option>
+      <option>réglée comme le banc, elle retrouve le verdict du banc : on peut lui faire confiance pour la suite</option>
+      <option>elle est inutile puisqu'elle redit ce qu'on savait déjà</option>
+      <option>elle est plus précise que le banc, donc le banc était faux</option>
+      <option>elle n'a servi à rien : le banc suffisait</option></select></p>
+    <button class="btn" data-check="1">Vérifier l'activité 1</button>
+    <p class="feedback" id="fb1"></p>
+    <details class="etayage"><summary>Un coup de pouce</summary>
+      <p>Un instrument neuf se vérifie d'abord sur un cas dont on connaît déjà la réponse. Si la
+      simulation, réglée exactement comme le banc, ne retrouvait pas le verdict du banc, il
+      faudrait s'arrêter là et chercher pourquoi.</p></details>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Réglée « poussée du banc + rupture », la simulation retient
+      1 profilé — le Tube aluminium Ø50 × 3 — et écarte les quatre autres, comme le
+      banc de 3e_C8.2. C'est exactement ce qu'on attendait : <b>on ne fait confiance à un
+      instrument qu'après l'avoir vu retrouver une réponse connue.</b></p>
+    </div></details>
+    <div class="retenir">Avant d'utiliser un instrument sur une question nouvelle, on le règle
+    sur une question dont on connaît déjà la réponse.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🌬️ Activité 2 — Le vent ne pousse pas comme le banc <span class="chrono">⏱ ~35 min</span></h2>
+  <p><b>Objectif :</b> voir que la charge réelle dépend de la forme. <b>Production :</b> trois
+  réponses justes. <b>Ressource :</b> le simulateur, réglé sur le vent.</p>
+  <div class="exo">
+    <h4>Change UN seul réglage</h4>
+    <p>Garde la hauteur à 2000 mm, passe le cas de charge à <b>vent de
+    150 km/h</b>, et relance. Compare la colonne « moment » avant et après.</p>
+    <table class="refs">
+      <tr><th>Profilé</th><th>Section</th><th>Moment sous la poussée du banc</th>
+        <th>Moment sous le vent</th></tr>
+      <tr><td>Tube aluminium Ø50 × 3</td><td>ronde</td><td>200 N·m</td><td>204 N·m</td></tr><tr><td>Barre pleine acier Ø20</td><td>ronde</td><td>200 N·m</td><td>128 N·m</td></tr><tr><td>Tube PVC Ø50 × 3</td><td>ronde</td><td>200 N·m</td><td>204 N·m</td></tr><tr><td>Poutre bois 40 × 40</td><td>carrée</td><td>200 N·m</td><td>298 N·m</td></tr><tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td>ronde</td><td>200 N·m</td><td>163 N·m</td></tr>
+    </table>
+    <p><label for="b2q1">1. Quel profilé reçoit le <b>moins</b> de moment sous le vent ?</label>
+    <select id="b2q1"><option value="">— choisis —</option>
+      <option>Tube aluminium Ø50 × 3</option><option>Barre pleine acier Ø20</option><option>Tube PVC Ø50 × 3</option><option>Poutre bois 40 × 40</option><option>Tube acier galvanisé Ø33,7 × 2,6</option></select></p>
+    <p><label for="b2q2">2. Pourquoi celui-là ?</label>
+    <select id="b2q2"><option value="">— choisis —</option>
+      <option>il est le plus étroit : il offre moins de surface au vent</option>
+      <option>il est le plus résistant : il encaisse mieux</option>
+      <option>il est le plus lourd : il résiste au vent par son poids</option>
+      <option>il est en acier, et l'acier est insensible au vent</option></select></p>
+    <p><label for="b2q3">3. La poutre bois est large de 40 mm, le tube PVC de 50 mm. Pourtant le
+    bois reçoit 298 N·m et le PVC
+    204 N·m. Pourquoi le plus étroit prend-il le plus ?</label>
+    <select id="b2q3"><option value="">— choisis —</option>
+      <option>sa section est carrée : un carré freine le vent presque deux fois plus qu'un tube rond de même largeur</option>
+      <option>le bois est plus rugueux, donc le vent accroche davantage</option>
+      <option>le bois est plus léger, donc il bouge plus</option>
+      <option>c'est une erreur du simulateur</option></select></p>
+    <button class="btn" data-check="2">Vérifier l'activité 2</button>
+    <p class="feedback" id="fb2"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Le banc appliquait 100 N à tout le monde, donc
+      200 N·m pour chacun. Le vent, lui, agit sur la
+      <b>surface offerte</b> : moment = pression × coefficient de forme × largeur × hauteur² ÷ 2,
+      plus l'effet du boîtier en tête.</p>
+      <ul>
+        <li>La Barre pleine acier Ø20 ne fait que 20 mm de large : elle ne reçoit que
+        128 N·m, soit
+        36 % de moins que
+        ce que le banc lui infligeait. <b>Le banc l'avait désavantagée.</b></li>
+        <li>La Poutre bois 40 × 40 est carrée. Un profil carré offre au vent un coefficient de forme de
+        2 contre 1.2 pour un tube rond : elle reçoit
+        298 N·m, soit
+        49 % de <b>plus</b> que
+        ce que le banc lui infligeait. <b>Le banc l'avait avantagée.</b></li>
+      </ul>
+      <p>Les tubes Ø50 reçoivent 204 N·m, tout près des
+      200 N·m du banc : pour eux, la poussée de
+      100 N était un bon substitut. Pour les autres, non.</p>
+    </div></details>
+    <div class="piege"><b>Piège classique :</b> croire qu'un banc d'essai est neutre. Un banc
+    applique la même charge à tout le monde ; le réel n'a jamais promis de faire pareil.</div>
+    <div class="retenir">Un essai « équitable » — la même force pour tous — peut être
+    <b>injuste</b> : il ne reproduit pas la charge que chaque forme recevra vraiment.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📏 Activité 3 — À quelle limite compares-tu ? <span class="chrono">⏱ ~25 min</span></h2>
+  <p><b>Objectif :</b> choisir la limite, et savoir ce que ce choix change. <b>Production :</b>
+  trois réponses justes. <b>Ressource :</b> le simulateur.</p>
+  <div class="exo">
+    <h4>Deux lancements, un seul réglage change</h4>
+    <p>Hauteur 2000 mm, cas <b>vent</b>. Lance une fois avec <b>résistance à la rupture</b>, puis
+    une fois avec <b>limite élastique</b>. Note le nombre de retenus à chaque fois.</p>
+    <p><label for="b3q1">1. Combien de retenus avec la <b>rupture</b> ?</label>
+    <select id="b3q1"><option value="">— choisis —</option>
+      <option>2</option><option>1</option>
+      <option>3</option><option>4</option></select></p>
+    <p><label for="b3q2">2. Combien avec la <b>limite élastique</b> ?</label>
+    <select id="b3q2"><option value="">— choisis —</option>
+      <option>1</option><option>2</option>
+      <option>3</option><option>0</option></select></p>
+    <p><label for="b3q3">3. Quel profilé disparaît, et pourquoi ce choix de limite compte-t-il
+    ici ?</label>
+    <select id="b3q3"><option value="">— choisis —</option>
+      <option>le Tube acier galvanisé Ø33,7 × 2,6 : avec un coefficient de 2,7 il plierait définitivement, sans casser — et un mât tordu ne mesure plus rien</option>
+      <option>le Tube aluminium Ø50 × 3 : il est trop souple pour l'anémomètre</option>
+      <option>aucun ne disparaît : les deux limites donnent le même résultat</option>
+      <option>le Tube PVC Ø50 × 3 : il ne tenait déjà pas sur la rupture</option></select></p>
+    <button class="btn" data-check="3">Vérifier l'activité 3</button>
+    <p class="feedback" id="fb3"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Sur la <b>rupture</b>, 2 profilés passent : le Tube aluminium Ø50 × 3 et le
+      Tube acier galvanisé Ø33,7 × 2,6. Sur la <b>limite élastique</b>, il n'en reste
+      1 : le Tube acier galvanisé Ø33,7 × 2,6 tombe à
+      2,7, sous le coefficient exigé de
+      3.</p>
+      <p>Choisir la rupture, c'est accepter un mât qui reste tordu après le premier coup de vent.
+      Il ne sera pas par terre — il sera penché, et l'anémomètre lira un vent qui n'existe pas.
+      Pour un instrument de mesure, <b>plier est une panne complète</b>.</p>
+    </div></details>
+    <div class="retenir">Un coefficient de sécurité ne veut rien dire tant qu'on n'a pas dit
+    <b>par rapport à quelle limite</b> il est calculé.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚖️ Activité 4 — Le bon réglage, et ce qu'il ne voit pas <span class="chrono">⏱ ~30 min</span></h2>
+  <p><b>Objectif :</b> conclure, et nommer l'angle mort. <b>Production :</b> un profilé retenu et
+  une réserve écrite. <b>Ressource :</b> le simulateur et le tableau ci-dessous.</p>
+  <table class="refs">
+    <tr><th>Hauteur</th><th>Retenus (vent + limite élastique)</th><th>Lesquels</th></tr>
+    <tr><td>1200 mm</td><td>2</td><td>Tube aluminium Ø50 × 3, Tube acier galvanisé Ø33,7 × 2,6</td></tr><tr><td>1500 mm</td><td>2</td><td>Tube aluminium Ø50 × 3, Tube acier galvanisé Ø33,7 × 2,6</td></tr><tr><td>2000 mm</td><td>1</td><td>Tube aluminium Ø50 × 3</td></tr>
+  </table>
+  <div class="exo">
+    <h4>Décide</h4>
+    <p><label for="b4q1">1. Descendre le mât à 1 500 mm ferait passer un profilé de plus.
+    Peut-on le faire ?</label>
+    <select id="b4q1"><option value="">— choisis —</option>
+      <option>non : sous 2000 mm l'anémomètre lit les turbulences du toit, et la mesure ne vaut plus rien</option>
+      <option>oui : moins haut, c'est plus sûr, et c'est ce qui compte</option>
+      <option>oui, si on accepte un coefficient de 2 au lieu de 3</option>
+      <option>oui : la hauteur ne change rien au moment</option></select></p>
+    <p><label for="b4q2">2. Avec le réglage qui répond au cahier des charges — 2000 mm, vent,
+    limite élastique — quel profilé retiens-tu ?</label>
+    <select id="b4q2"><option value="">— choisis —</option>
+      <option>Tube aluminium Ø50 × 3</option><option>Barre pleine acier Ø20</option><option>Tube PVC Ø50 × 3</option><option>Poutre bois 40 × 40</option><option>Tube acier galvanisé Ø33,7 × 2,6</option></select></p>
+    <p><label for="b4q3">3. Le banc de 3e_C8.2 retenait déjà celui-là. La simulation n'a donc
+    servi à rien ?</label>
+    <select id="b4q3"><option value="">— choisis —</option>
+      <option>si : elle a montré que le bon verdict tenait pour les bonnes raisons, et que deux concurrents avaient été mal jugés par le banc</option>
+      <option>non, en effet : le banc suffisait, la simulation a fait perdre du temps</option>
+      <option>si : elle prouve que le banc était faux</option>
+      <option>on ne peut pas savoir</option></select></p>
+    <p><label for="b4q4">4. Quel angle mort partagent le banc ET la simulation ?</label>
+    <select id="b4q4"><option value="">— choisis —</option>
+      <option>la fatigue : les deux chargent une seule fois, le vent fait vibrer le mât des milliers de fois</option>
+      <option>la résistance du matériau, qu'aucun des deux ne mesure</option>
+      <option>la hauteur du mât, qu'aucun des deux ne prend en compte</option>
+      <option>aucun : ensemble, ils voient tout</option></select></p>
+    <button class="btn" data-check="4">Vérifier l'activité 4</button>
+    <p class="feedback" id="fb4"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>Le cahier des charges impose 2000 mm : la hauteur n'est pas une variable
+      d'ajustement, c'est une contrainte de <b>mesure</b>. Gagner un profilé en descendant le mât
+      serait gagner sur la mécanique en perdant sur la fonction.</p>
+      <p>Le Tube aluminium Ø50 × 3 est retenu, avec un coefficient de
+      3,4 et une flèche de
+      27 mm.</p>
+      <p>La simulation confirme le verdict du banc — mais elle a montré en chemin que la
+      Barre pleine acier Ø20 avait été jugée sur une charge qu'elle ne recevra jamais, et que la
+      Poutre bois 40 × 40 avait été jugée sur une charge trop faible. Le bon résultat obtenu par un
+      mauvais raisonnement reste un mauvais raisonnement.</p>
+      <p>Et les deux instruments partagent le même angle mort : Le vent fait vibrer le mât des milliers de fois : c'est la fatigue. Ni le banc ni la simulation ne la voient — ils chargent une seule fois.</p>
+    </div></details>
+    <div class="retenir">Deux instruments peuvent tomber d'accord et se tromper ensemble, s'ils
+    ignorent la même chose.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement <span class="chrono">⏱ ~20 min</span></h2>
+  <p>La mairie veut installer le même type de mât sur le <b>quai du port</b>, où le vent de
+  référence monte à 180 km/h.</p>
+  <div class="exo">
+    <p><label for="b5q1">1. Sans lancer la simulation : la pression du vent passe de 150 à
+    180 km/h. Elle est multipliée par…</label>
+    <select id="b5q1"><option value="">— choisis —</option>
+      <option>environ 1,4 — la pression dépend du CARRÉ de la vitesse</option>
+      <option>1,2 — comme la vitesse</option>
+      <option>2,0 — le vent double d'effet</option>
+      <option>elle ne change pas : c'est le même vent</option></select></p>
+    <p><label for="b5q2">2. Quel réglage du simulateur faut-il changer pour le vérifier ?</label>
+    <select id="b5q2"><option value="">— choisis —</option>
+      <option>aucun des trois : la vitesse du vent n'est pas réglable ici, il faudrait la rendre réglable</option>
+      <option>la hauteur</option><option>la limite de comparaison</option>
+      <option>le cas de charge suffit</option></select></p>
+    <button class="btn" data-check="5">Vérifier le réinvestissement</button>
+    <p class="feedback" id="fb5"></p>
+    <details class="correction"><summary>Voir la correction complète</summary><div>
+      <p>q = ½ · ρ · V². En passant de 150 à 180 km/h, V est multipliée par 1,2 et la pression
+      par 1,2² = <b>1,44</b>. Les moments augmentent d'autant.</p>
+      <p>Et c'est la limite de ce simulateur : la vitesse du vent y est <b>fixée</b> à
+      150 km/h. Le réglage qui manque est celui dont on a besoin — savoir ce
+      qu'un outil ne permet PAS de faire fait partie de sa maîtrise.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Mettre en œuvre</b> une simulation, c'est choisir le cas de charge, la géométrie et
+    la limite de comparaison. Chacun de ces trois choix peut changer le verdict.</li>
+    <li>On règle d'abord un instrument sur une réponse connue, pour vérifier qu'il la retrouve.
+    Ensuite seulement on lui pose une question nouvelle.</li>
+    <li>La charge du vent dépend de la <b>surface offerte</b> et de la <b>forme</b> : un carré
+    freine presque deux fois plus qu'un tube rond de même largeur.</li>
+    <li>Un banc applique la même force à tous ; c'est commode, et ce n'est pas ce que subit
+    l'objet réel.</li>
+    <li>Un coefficient de sécurité s'annonce toujours avec sa limite : élastique ou rupture.</li>
+    <li>Deux instruments d'accord peuvent partager un angle mort — ici la <b>fatigue</b>.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>Ton hypothèse du début :</b> <i id="rappelHyp">—</i></p>
+  <p>La réponse est écrite dans la correction de l'activité 2. L'avais-tu vue ?</p>
+  <textarea id="bilan" rows="2" placeholder="Maintenant, je dirais que…"></textarea>
+  <p style="margin-top:12px"><label for="auto1">3e_C8.1 — mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau :</label>
+  <select id="auto1"><option value="">— choisis —</option>
+    <option>je sais le faire seul·e</option><option>je sais le faire avec de l'aide</option>
+    <option>je ne sais pas encore</option></select></p>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2>🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur cette séquence, dont 4 illustrées. Tes réponses restent dans ce
+  navigateur ; tu peux la refaire autant de fois que tu veux.</p>
+  <a class="btn" href="qcm_3e_C8.1_mat-de-la-station.html">▶ Ouvrir le QCM (30 questions)</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <ul>
+    <li>Le simulateur ne connaît qu'un encastrement parfait au pied. Cherche ce qui se passerait
+    si la platine était boulonnée dans un béton qui travaille un peu : la flèche
+    augmenterait-elle ou diminuerait-elle ?</li>
+    <li>Ajoute un hauban à mi-hauteur, en pensée. Où passerait alors le moment maximal ?</li>
+    <li>Les cinq profilés ont des masses très différentes. Écris l'essai qui manque aux deux
+    instruments pour trancher entre deux profilés qui passent tous les deux.</li>
+  </ul>
+</section>
+
+<footer>Séquence 3e_C8.1 — hors ligne, sans compte, aucune donnée envoyée.
+Tes réponses restent dans ce navigateur.</footer>
+
+<script>
+(function(){
+const KEY = "seq_3e_C81_mat";
+
+/* ── le simulateur mis en œuvre par l'élève ──────────────────────────────
+   Les cinq profilés viennent du modèle Python (mat_station.py). */
+const PROFILES = [{"nom": "Tube aluminium Ø50 × 3", "I": 122811.92541229559, "v": 25.0, "largeur": 50, "cd": 1.2, "sigma_e": 140, "sigma_r": 190, "E": 70000, "angle": "Le vent fait vibrer le mât des milliers de fois : c'est la fatigue. Ni le banc ni la simulation ne la voient — ils chargent une seule fois."}, {"nom": "Barre pleine acier Ø20", "I": 7853.981633974483, "v": 10.0, "largeur": 20, "cd": 1.2, "sigma_e": 235, "sigma_r": 400, "E": 210000, "angle": "Presque 5 kg à hisser sur un toit : ni le banc ni la simulation ne pèsent le mât avant de le monter."}, {"nom": "Tube PVC Ø50 × 3", "I": 122811.92541229559, "v": 25.0, "largeur": 50, "cd": 1.2, "sigma_e": 45, "sigma_r": 52, "E": 3000, "angle": "Sous le soleil des tropiques le PVC vieillit et devient cassant. Les deux instruments travaillent sur un tube neuf."}, {"nom": "Poutre bois 40 × 40", "I": 213333.33333333334, "v": 20.0, "largeur": 40, "cd": 2.0, "sigma_e": 25, "sigma_r": 40, "E": 11000, "angle": "Une poutre qui a pris l'eau ne tient plus la même charge, et sa section carrée prend presque deux fois plus de vent qu'un tube rond."}, {"nom": "Tube acier galvanisé Ø33,7 × 2,6", "I": 30927.10029532632, "v": 16.85, "largeur": 33.7, "cd": 1.2, "sigma_e": 235, "sigma_r": 400, "E": 210000, "angle": "La galvanisation protège tant qu'on ne la perce pas : c'est le trou de fixation, non traité, qui rouille en premier."}];
+const CFG = {"rho": 1.225, "vent": 150, "poussee": 100, "aireBoitier": 0.03, "coef": 3, "flecheMax": 40, "hauteurMesure": 2000};
+const $ = i => document.getElementById(i);
+const fr = (x, d) => x.toFixed(d).replace(".", ",");
+let dernier = null;
+
+function pression(){ const v = CFG.vent / 3.6; return 0.5 * CFG.rho * v * v; }
+
+function moment(p, h, cas){
+  if(cas === "banc") return CFG.poussee * h;
+  const q = pression(), L = h / 1000;
+  const w = q * p.cd * (p.largeur / 1000);
+  return (w * L * L / 2 + q * p.cd * CFG.aireBoitier * L) * 1000;
+}
+function fleche(p, h, cas){
+  const EI = p.E * p.I;
+  if(cas === "banc") return CFG.poussee * Math.pow(h, 3) / (3 * EI);
+  const q = pression();
+  const w = q * p.cd * (p.largeur / 1000) / 1000;
+  const fb = q * p.cd * CFG.aireBoitier;
+  return w * Math.pow(h, 4) / (8 * EI) + fb * Math.pow(h, 3) / (3 * EI);
+}
+function contrainte(p, h, cas){ return moment(p, h, cas) * p.v / p.I; }
+function coefficient(p, h, cas, crit){
+  return (crit === "elastique" ? p.sigma_e : p.sigma_r) / contrainte(p, h, cas);
+}
+function tient(p, h, cas, crit){
+  return coefficient(p, h, cas, crit) >= CFG.coef && fleche(p, h, cas) <= CFG.flecheMax;
+}
+
+function dessiner(h, cas, fMax){
+  const g = $("fleches"); g.innerHTML = "";
+  const yTete = 252 - (h / 2000) * 192;
+  $("matPath").setAttribute("d",
+    "M110 252 Q" + (110 + fMax * 0.5) + " " + ((252 + yTete) / 2) + " "
+    + (110 + fMax) + " " + yTete);
+  $("boitier").setAttribute("x", 94 + fMax);
+  $("boitier").setAttribute("y", yTete - 22);
+  const fl = (y, l) => '<path d="M' + (60 - l) + ' ' + y + ' L104 ' + y
+    + ' l-7 -4 m7 4 l-7 4" stroke="#ffd66b" stroke-width="2" fill="none"/>';
+  if(cas === "banc"){ g.innerHTML = fl(yTete, 34); }
+  else {
+    let s = "";
+    for(let y = yTete; y <= 250; y += 26) s += fl(y, 22);
+    g.innerHTML = s;
+  }
+}
+
+function simuler(){
+  const h = +$("haut").value, cas = $("cas").value, crit = $("crit").value;
+  const lignes = PROFILES.map(p => {
+    const m = moment(p, h, cas), s = contrainte(p, h, cas);
+    const k = coefficient(p, h, cas, crit), f = fleche(p, h, cas);
+    return {nom: p.nom, m: m, s: s, k: k, f: f, ok: tient(p, h, cas, crit)};
+  });
+  $("tab").tBodies[0].innerHTML = lignes.map(l =>
+    '<tr class="' + (l.ok ? "ok" : "ko") + '"><td>' + l.nom + '</td><td>'
+    + fr(l.m / 1000, 0) + ' N·m</td><td>' + fr(l.s, 0) + ' MPa</td><td>'
+    + fr(l.k, 1) + '</td><td>' + fr(l.f, 0) + ' mm</td><td>'
+    + (l.ok ? '<span class="verdict-ok">retenu</span>'
+            : '<span class="verdict-non">écarté</span>') + '</td></tr>').join("");
+  const retenus = lignes.filter(l => l.ok);
+  $("nRet").textContent = retenus.length;
+  $("lReglage").textContent = h + " mm · " + (cas === "banc" ? "poussée du banc" : "vent")
+    + " · " + (crit === "elastique" ? "limite élastique" : "rupture");
+  const ref = lignes.filter(l => l.nom === PROFILES[0].nom)[0];
+  dessiner(h, cas, Math.min(ref.f * 0.35, 34));
+  $("svgFleche").textContent = "flèche : " + fr(ref.f, 0) + " mm";
+  $("svgMoment").textContent = "moment : " + fr(ref.m / 1000, 0) + " N·m";
+  dernier = {h: h, cas: cas, crit: crit, n: retenus.length};
+
+  /* Les verrous ne s'ouvrent que par un geste (règle d'or n°226). */
+  window.__exp = window.__exp || {};
+  window.__exp.regle = true;
+  if(cas === "vent") window.__exp.vent = true;
+  if(cas === "vent" && crit === "elastique" && h === CFG.hauteurMesure)
+    window.__exp.bonreglage = true;
+  if(save) save();
+}
+$("simuler").addEventListener("click", simuler);
+
+
+const ATTENDUS = {
+  1: {b1q1: "1",
+      b1q2: "réglée comme le banc, elle retrouve le verdict du banc : on peut lui faire confiance pour la suite"},
+  2: {b2q1: "Barre pleine acier Ø20",
+      b2q2: "il est le plus étroit : il offre moins de surface au vent",
+      b2q3: "sa section est carrée : un carré freine le vent presque deux fois plus qu'un tube rond de même largeur"},
+  3: {b3q1: "2", b3q2: "1",
+      b3q3: "le Tube acier galvanisé Ø33,7 × 2,6 : avec un coefficient de 2,7 il plierait définitivement, sans casser — et un mât tordu ne mesure plus rien"},
+  4: {b4q1: "non : sous 2000 mm l'anémomètre lit les turbulences du toit, et la mesure ne vaut plus rien",
+      b4q2: "Tube aluminium Ø50 × 3",
+      b4q3: "si : elle a montré que le bon verdict tenait pour les bonnes raisons, et que deux concurrents avaient été mal jugés par le banc",
+      b4q4: "la fatigue : les deux chargent une seule fois, le vent fait vibrer le mât des milliers de fois"},
+  5: {b5q1: "environ 1,4 — la pression dépend du CARRÉ de la vitesse",
+      b5q2: "aucun des trois : la vitesse du vent n'est pas réglable ici, il faudrait la rendre réglable"}
+};
+
+const VERROUS = {
+  1: {cle: "regle", texte: "🔒 Lance d'abord la simulation avec le bouton ▶."},
+  2: {cle: "vent", texte: "🔒 Lance d'abord la simulation avec le cas de charge « vent »."},
+  3: {cle: "bonreglage", texte: "🔒 Lance d'abord le réglage 2000 mm · vent · limite élastique."},
+  4: {cle: "bonreglage", texte: "🔒 Lance d'abord le réglage 2000 mm · vent · limite élastique."}
+};
+
+document.querySelectorAll("[data-check]").forEach(b => b.addEventListener("click", () => {
+  const n = b.dataset.check, fb = document.getElementById("fb" + n);
+  const v = VERROUS[n];
+  if(v && !(window.__exp && window.__exp[v.cle])){
+    fb.textContent = v.texte; fb.className = "feedback show warn"; return;
+  }
+  const att = ATTENDUS[n]; let bons = 0, total = 0;
+  Object.entries(att).forEach(([id, bon]) => {
+    total++; const e = document.getElementById(id);
+    if(!e) return;
+    const ok = e.value === bon;
+    e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && e.value !== "");
+    if(ok) bons++;
+  });
+  const r = bons / total;
+  if(r === 1){ fb.textContent = "✅ " + bons + "/" + total + " — tout est juste."; fb.className = "feedback show ok"; }
+  else if(r >= .5){ fb.textContent = "🟡 " + bons + "/" + total + " — les champs en rouge te montrent où reprendre."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + bons + "/" + total + " — relis l'énoncé, la correction reste à portée."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, exp: window.__exp || {}, dernier: dernier};
+  document.querySelectorAll("input, select, textarea").forEach(e => { if(e.id) o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => {
+    const e = document.getElementById(k); if(e) e.value = v; });
+  window.__exp = o.exp || {};
+  if(o.dernier) simuler();
+  const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = document.getElementById("hyp"), r = document.getElementById("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore();
+})();
+</script>
+
+</body>
+</html>

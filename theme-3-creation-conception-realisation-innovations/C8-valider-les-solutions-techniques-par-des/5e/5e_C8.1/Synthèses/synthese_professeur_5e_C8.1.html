@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — 5e_C8.1</title>
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_5e_C8.1_patere-du-hall.html">📘 La séquence</a><a href="qcm_5e_C8.1_patere-du-hall.html">🧠 Le QCM</a><a href="lexique_5e_C8.1.html">📖 Lexique</a></nav>
+
+<h1>🪝 Synthèse professeur — 5e_C8.1</h1>
+<p><em>Utiliser une simulation fournie pour valider la tenue mécanique d’un matériau.</em></p>
+
+<h2>Ce que le lot démontre, et comment il le garantit</h2>
+<p>Le modèle <code>patere.py</code> reproduit <b>exactement</b> les cinq charges de rupture
+relevées par le banc de <code>5e_C8.2</code> (41, 51, 53, 194, 408 kg).
+Ce n'est pas un ornement : c'est ce qui rend la simulation crédible aux yeux des élèves avant
+qu'elle ne les contredise.</p>
+<p>La démonstration est <b>structurellement garantie</b>, pas mise en scène :</p>
+<ul>
+  <li>la contrainte de service vaut 11,8 MPa pour les cinq
+  matériaux — le simulateur ne peut pas afficher autre chose, la formule ne contient aucun
+  paramètre matériau ;</li>
+  <li><b>un seul</b> matériau change de décision entre les deux limites : le bois
+  (3,4 → 2,1). Les quatre autres
+  gardent leur marge, donc l'élève ne peut pas conclure « la simulation déclasse tout » ;</li>
+  <li>PLA et PVC ont la même limite élastique, donc l'écart de 2 kg
+  mesuré au banc est démontrablement sans portée pour cette décision.</li>
+</ul>
+
+<h2>Les trois verrous expérientiels</h2>
+<table>
+  <tr><th>Verrou</th><th>Geste exigé</th><th>Activité qu'il ouvre</th></tr>
+  <tr><td><code>simule</code></td><td>un clic sur « ▶ Calculer »</td><td>activité 1</td></tr>
+  <tr><td><code>tous</code></td><td>les cinq matériaux reportés au tableau</td><td>activité 2</td></tr>
+  <tr><td><code>bois</code></td><td>le bois reporté <em>et vu écarté</em></td><td>activité 3</td></tr>
+</table>
+<p>Aucun n'est ouvert au chargement de la page : le banc de tests le vérifie à chaque exécution
+(règle d'or n°226).</p>
+
+<h2>Les erreurs à attendre, et ce qu'elles valent</h2>
+<div class="box attention"><ul>
+  <li><b>« L'acier subit moins de contrainte »</b> — la plus fréquente, et la plus utile. Le
+  simulateur permet de la réfuter en deux clics : même charge, même forme, même
+  11,8 MPa.</li>
+  <li><b>« Le banc s'est trompé »</b> — à ne pas laisser passer. Les deux instruments sont justes ;
+  seule la question diffère. C'est le cœur du lot.</li>
+  <li><b>« Le moins cher gagne »</b> — le PLA à 24 € demande
+  30 h pour 8 h disponibles. Le délai est une exigence, pas
+  un détail.</li>
+</ul></div>
+
+<h2>Ce que ce lot ne fait pas</h2>
+<ul>
+  <li><b>Aucune manipulation d'objet réel</b> en version 🅱. La version 🅰 renvoie au banc du
+  laboratoire de <code>5e_C8.2</code> ; c'est le seul chemin qui fait toucher la matière.</li>
+  <li><b>Aucune électricité</b> : ni très basse tension, ni secteur. La consigne de sécurité porte
+  sur la charge suspendue, en version 🅰 uniquement.</li>
+  <li><b>La fatigue et le vieillissement</b> sont hors modèle, et le lot le dit à l'élève dans sa
+  synthèse plutôt que de le taire.</li>
+</ul>
+
+<h2>Lien avec le reste du dépôt</h2>
+<ul>
+  <li><code>5e_C8.2</code> — le banc dont ce lot reprend les cinq relevés. À faire <b>avant</b>.</li>
+  <li><code>5e_C7.3</code> — le choix de matériau du banc de la cour : la même méthode, sans
+  simulation.</li>
+  <li><code>4e_C8.1</code> puis <code>3e_C8.1</code> — la suite de la spirale : paramétrer, puis
+  mettre en œuvre.</li>
+</ul>
+
+<footer>Hors ligne, sans compte, aucune donnée envoyée.</footer>
+</body>
+</html>
