@@ -10,10 +10,11 @@
 
 Le TP met en œuvre les moyens de modélisation selon une procédure fournie : esquisser, coter, extruder, enlever, adoucir.
 
-**Ce code y est enseigné, et il n'y est pas évalué.** L'atelier CAO ne pose aucune question de cours : on y apprend l'outil, et la notion s'évalue dans les séquences de niveau (règle d'or n°81). Le statut du code reste donc « à vérifier par l'enseignant » : c'est à vous de dire où vous l'évaluez.
+**Ce code y est enseigné, et il n'y est pas évalué.** Aucune question de la banque de la ressource ne porte `5e_C7.6` : on y apprend le geste, et la notion s'évalue ailleurs (règle d'or n°81). Le statut du code reste donc « à vérifier par l'enseignant » : c'est à vous de dire où vous l'évaluez.
 
 ---
 
 *Formulation recopiée de `_outils/data_competences.py`, seule autorité du dépôt sur les
 libellés du référentiel. Ce README est engendré par `_outils/pointeurs_codes.py` : il n'est
-écrit que si la ressource cible existe réellement sur le disque.*
+écrit que si la ressource cible existe réellement sur le disque, et la phrase sur l'évaluation
+est **mesurée** dans la banque de cette ressource, jamais déclarée.*

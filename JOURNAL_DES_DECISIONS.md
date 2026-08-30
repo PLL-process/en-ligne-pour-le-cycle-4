@@ -9872,3 +9872,21 @@ c'est l'outil qui a raison.
   toutes deux mesurables en trois lignes. Les écrire de confiance, c'est fabriquer une fausseté à
   l'échelle : un générateur ne se trompe pas une fois, il se trompe dans tous les fichiers qu'il
   écrit.
+
+## 2026-08-31 — Les huit README que la mesure a réécrits
+
+Second volet de la livraison précédente : `pointeurs_codes.py` mesure désormais au lieu de
+déclarer, et voici ce que la mesure a changé dans les fichiers.
+
+| README | avant | après |
+|---|---|---|
+| `5e_C7.2` · `3e_C7.2` | « ce code y est **évalué** » | « il y est **enseigné, et il n'y est pas évalué** » |
+| `4e_C7.2` · `4e_C9.2` · `4e_C9.3` | « la ressource porte un QCM » | « la banque porte **10 questions** étiquetées `…` (`qcm_…`) » |
+| `5e_C7.6` · `4e_C7.6` · `3e_C7.6` | inchangé sur le fond | la phrase cite maintenant le code au lieu de parler « de l'atelier CAO » |
+
+Deux promesses fausses retirées, six phrases devenues vérifiables. Un collègue qui ouvre
+`5e_C7.2` lit maintenant que le mini-projet lui **enseigne** le geste sans l'**évaluer**, et que
+c'est à lui de dire où il l'évalue — au lieu de croire qu'un score l'attend quelque part.
+
+Aucun statut d'audit ne bouge : ces trois codes étaient déjà « à vérifier par l'enseignant ».
+Le README disait le contraire du tableau de bord ; c'est le README qui avait tort.
