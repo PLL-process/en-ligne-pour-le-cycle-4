@@ -134,6 +134,18 @@ def main():
         echecs.append("ENSEIGNE_AILLEURS renvoie encore l'enseignant à lui-même alors "
                       "qu'une banque évalue le code")
 
+    # ── 4 bis. le thème annoncé est celui du référentiel, pas celui du gabarit
+    # Le modèle portait « thème 3 » EN DUR, parce que les dix premiers pointeurs
+    # étaient tous du thème 3. Les onze suivants sont du thème 1 (règle n°256).
+    for code, attendu in (("5e_C3.3", 1), ("3e_C1.2", 1), ("4e_C7.2", 3),
+                          ("4e_C9.2", 3)):
+        controles += 1
+        if PC.theme(code) != attendu:
+            echecs.append("%s : thème %s, attendu %d" % (code, PC.theme(code), attendu))
+    controles += 1
+    if "thème {theme}" not in PC.MODELE:
+        echecs.append("le gabarit ne lit plus le thème : il est redevenu écrit en dur")
+
     # ── 5. l'outil lui-même doit passer, sans rien avoir à réécrire ─────────
     controles += 1
     if PC.main(etat=True) != 0:

@@ -63,6 +63,19 @@ de dire où vous l'évaluez ». C'est encore la règle d'or n°242, sur un autre
 instrument : on regarde donc maintenant **tout le dépôt** avant de renvoyer
 l'enseignant à lui-même, et on nomme la banque quand elle existe.
 
+Le deuxième relevé, le 30/08/2026
+---------------------------------
+Onze dossiers du **thème 1** étaient restés entièrement muets : un `Images/` et
+un `Synthèses/` vides, et rien d'autre. Pas un README, pas un lien. Un
+professeur qui ouvrait `5e/5e_C3.3/` n'y trouvait rien — et en concluait,
+raisonnablement, que le code n'était pas traité.
+
+Il l'était. Les onze sont **évalués**, entre 7 et 10 questions chacun, dans la
+séquence mutualisée du dossier voisin — Shanghai, Hangzhou, Shenzhen, Tsinghua.
+Ce n'était pas un trou de couverture, c'était un trou de **lisibilité**, et il
+ne se voyait pas dans le relevé de couverture : `controle_couverture.py` range
+ces dossiers en `VIDE` et n'imprime pas leur ligne.
+
 Usage : python3 pointeurs_codes.py [--etat]
 """
 import os
@@ -75,6 +88,10 @@ import data_competences as DC
 from controle_couverture import SEUIL_EVALUABLE, banques_du_depot
 from controle_statut import pieces_du_lot
 
+T1 = "theme-1-objets-systemes-usages-interactions"
+C1 = T1 + "/C1-decrire-les-liens-entre-usages-et-evolutions"
+C3 = T1 + "/C3-caracteriser-et-choisir-un-objet-ou-un"
+
 T3 = "theme-3-creation-conception-realisation-innovations"
 C7 = T3 + "/C7-imaginer-concevoir-et-realiser-une-ou-des"
 C8 = T3 + "/C8-valider-les-solutions-techniques-par-des"
@@ -83,6 +100,65 @@ C9 = T3 + "/C9-concevoir-ecrire-tester-et-mettre-au-point"
 #: code → (dossier, cible relative, titre du lien, ce que la cible fait de ce code,
 #:         évalue-t-elle le code ? — un README ne promeut jamais un statut)
 POINTEURS = {
+ # ── les onze dossiers muets du thème 1, relevés le 30/08/2026 ───────────────
+ # Ni fichier, ni README : rien qu'un `Images/` et un `Synthèses/` vides. Les
+ # onze codes sont pourtant ÉVALUÉS, entre 7 et 10 questions chacun, dans la
+ # séquence mutualisée de leur dossier voisin. Ce n'était donc pas un trou de
+ # couverture, c'était un trou de LISIBILITÉ — et un dossier muet apprend à ne
+ # plus ouvrir les dossiers (règle d'or n°183).
+ "3e_C1.2": (C1 + "/3e/3e_C1.2", "../3e_C1.1/sequence_3e_C1.1-C1.4_tsinghua_feux.html",
+             "Séquence 3e — Robots, drones et IA face aux feux",
+             "L'activité 1 remonte de la découverte de l'infrarouge par Herschel — qui ne "
+             "cherchait pas cela — jusqu'aux caméras thermiques des drones de détection. "
+             "Deux siècles séparent la découverte de son usage, et c'est le sujet.", True),
+ "3e_C1.3": (C1 + "/3e/3e_C1.3",
+             "../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
+             "Séquence 3e — Numérique, société, environnement et santé",
+             "L'activité 5 fait écrire un argumentaire de six à huit lignes sur l'incidence "
+             "de l'objet, dont la dernière ligne nomme ses propres angles morts : un "
+             "argumentaire honnête dit ce qu'il ne sait pas.", True),
+ "3e_C1.4": (C1 + "/3e/3e_C1.4",
+             "../3e_C1.5/sequence-numerique-societe-economie-environnement-sante.html",
+             "Séquence 3e — Numérique, société, environnement et santé",
+             "L'activité 4 travaille ce qui ne se convertit pas en chiffres, et pourquoi un "
+             "ratio parfaitement juste peut rester fragile : la contrainte sociétale ne se "
+             "réduit pas à une unité.", True),
+ "3e_C3.2": (C3 + "/3e/3e_C3.2", "../3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
+             "Séquence 3e — Shenzhen, comment refroidir un local qui surchauffe ?",
+             "Les activités 4 et 5 argumentent le choix à trois entrées — environnement, "
+             "économie, social — et s'arrêtent sur le pilier social, celui qu'on oublie le "
+             "plus souvent.", True),
+ "3e_C3.3": (C3 + "/3e/3e_C3.3", "../3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
+             "Séquence 3e — Shenzhen, comment refroidir un local qui surchauffe ?",
+             "L'activité 2 construit une grille de critères, puis la pondère : évaluer, ce "
+             "n'est pas juger, c'est confronter à des critères écrits d'avance.", True),
+ "3e_C3.4": (C3 + "/3e/3e_C3.4", "../3e_C3.1/sequence_3e_C3.1-C3.4_shenzhen.html",
+             "Séquence 3e — Shenzhen, comment refroidir un local qui surchauffe ?",
+             "L'activité 3 fait rédiger un protocole en cinq étapes numérotées — écrit pour "
+             "un AUTRE, pas pour soi — puis le fait exécuter tel quel.", True),
+ "4e_C3.2": (C3 + "/4e/4e_C3.2", "../4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html",
+             "Séquence 4e — Hangzhou, quelle flotte de vélos pour la ville ?",
+             "L'activité 2 rapporte l'incidence au service rendu — des grammes par kilomètre, "
+             "calculés au tableur — et montre que le classement se déplace selon la base "
+             "retenue.", True),
+ "4e_C3.3": (C3 + "/4e/4e_C3.3", "../4e_C3.1/sequence_4e_C3.1-C3.3_hangzhou.html",
+             "Séquence 4e — Hangzhou, quelle flotte de vélos pour la ville ?",
+             "L'activité 3 associe chaque grandeur à son appareil : c'est la grandeur qui "
+             "commande l'appareil, et non l'inverse — force, newton, dynamomètre.", True),
+ "5e_C3.2": (C3 + "/5e/5e_C3.2", "../5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html",
+             "Séquence 5e — Shanghai, quel véhicule pour le dernier kilomètre ?",
+             "L'activité 2 nomme les cinq étapes du cycle de vie dans l'ordre, et montre que "
+             "sur un objet qui dure, c'est l'utilisation qui domine — pas la fabrication.",
+             True),
+ "5e_C3.3": (C3 + "/5e/5e_C3.3", "../5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html",
+             "Séquence 5e — Shanghai, quel véhicule pour le dernier kilomètre ?",
+             "L'activité 4 écrit un cahier des charges AVANT de choisir, puis filtre au "
+             "tableur : une exigence se tient ou ne se tient pas, elle ne se moyenne pas.",
+             True),
+ "5e_C3.4": (C3 + "/5e/5e_C3.4", "../5e_C3.1/sequence_5e_C3.1-C3.4_shanghai.html",
+             "Séquence 5e — Shanghai, quel véhicule pour le dernier kilomètre ?",
+             "L'activité 3 explique les trois conditions d'un protocole de mesure, et "
+             "pourquoi on répète les essais avant d'en faire une moyenne.", True),
  "3e_C7.2": (C7 + "/3e/3e_C7.2", "../3e_C7.1/sequence_3e_C7_capteur-confort-ny.html",
              "Séquence 3e — Le capteur de confort",
              "La séquence conçoit un ensemble de solutions pour un OST nouveau : le capteur de "
@@ -114,7 +190,7 @@ MODELE = """# {code} — {titre}
 
 > {formulation}
 >
-> Programme 2024 · cycle 4 · thème 3 · socle {socle}
+> Programme 2024 · cycle 4 · thème {theme} · socle {socle}
 
 **Ce dossier ne porte aucune ressource propre.** Le geste de ce code est travaillé ici :
 
@@ -159,6 +235,19 @@ def formulation(code):
         if cc == c:
             return f, socle
     raise KeyError(code)
+
+
+def theme(code):
+    """Le numéro de thème du code — LU dans le référentiel, jamais écrit ici.
+
+    Le gabarit portait « thème 3 » en dur, parce que les dix premiers pointeurs
+    étaient tous du thème 3. Les onze du 30/08 sont du thème 1, et les onze
+    README annonçaient donc le mauvais thème. Règle d'or n°256 : ce qui est codé
+    en dur dans un générateur devient faux dans tous les fichiers qu'il produit,
+    sauf ceux pour lesquels il a été écrit.
+    """
+    parent = code.split("_")[1].split(".")[0]
+    return DC.C_PARENT[parent][2]
 
 
 def mesure(code, dossier, cible, index):
@@ -244,6 +333,7 @@ def main(etat=False):
                 phrase = ENSEIGNE.format(code=code)
         f, socle = formulation(code)
         texte = MODELE.format(code=code, titre=f.rstrip("."), formulation=f, socle=socle,
+                              theme=theme(code),
                               lien_titre=lien_titre, cible=cible, quoi=quoi,
                               evaluation=phrase)
         readme = d / "README.md"
