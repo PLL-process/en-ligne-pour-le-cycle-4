@@ -849,6 +849,81 @@ OVERLAY = {
                       "par un bandeau aria-live.",
         medias="Banc d'energie original (HTML + JS, CC0). Aucun media tiers.",
     ),
+    # ── Lot C7.7 « Choisir les moyens et produire la forme », 31/08/2026 ────────
+    "4e_C7.7": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le support du capteur » : 2 seances de 55 min pour 95 min d'activites, "
+                "ATELIER DES MOYENS original integre a la page. Il ne classe pas les machines du "
+                "meilleur au pire : il dit lesquelles savent produire CETTE forme-la, et CE "
+                "QU'ELLES EN FERONT. La phrase du programme est identique en 3e — ce n'est donc "
+                "pas elle qui distingue les niveaux, c'est le geste : en 4e la forme est DONNEE "
+                "et l'on choisit le moyen. Deux moyens savent produire le support, et aucun des "
+                "deux ne rend le dessin : le laser elargit la fente de son trait de coupe "
+                "(3,00 mm dessines sortent a 3,20), la fraiseuse arrondit ses extremites au rayon "
+                "de sa fraise et le meplat de 20 mm ne trouve plus que 17 mm de droit. On corrige "
+                "en dessinant des DEGAGEMENTS D'ANGLE. Puis la quantite decide : a 4 pieces les "
+                "deux moyens tiennent dans les 3 h de machine disponibles, a 30 la fraiseuse sort "
+                "du delai (6 h 25 contre 1 h 10) tout en restant parfaitement CAPABLE — deux "
+                "jauges separees, parce qu'on confond les deux questions. Verrous experientiels "
+                "sur l'evaluation et sur le changement de quantite. Toutes les valeurs calculees "
+                "par moyens.py. QCM 30 q / 90 refutations (C7.7 x20, C4.3 x10), lexique 30 "
+                "notions, deux syntheses, fiche, matrice associee par NOM, tests reels 38/38 et "
+                "32/32, scripts livres.",
+        anomalies="Les temps sont des ordres de grandeur d'atelier de college, pas des fiches "
+                  "constructeur : ce qui doit etre vrai est QUEL MOYEN SAIT FAIRE QUOI, pas la "
+                  "seconde pres. Aucune piece n'est reellement produite — la version A lance les "
+                  "deux moyens sur une chute et mesure la fente au pied a coulisse, et c'est elle "
+                  "qui fait foi. Les 3 h de machine disponibles sont une donnee du scenario, et le "
+                  "bonus demande justement d'ou elles viennent. Le cout matiere n'entre pas dans "
+                  "le lot : il ne departage pas ici, et l'ajouter aurait brouille la seule "
+                  "question posee.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (cinq fiches cartonnees et le dessin cote au tableau), encadre "
+                      "de securite atelier — PVC jamais au laser, piece bridee et AUCUN GANT a la "
+                      "fraiseuse — verifie par un test. Aucune boite modale (regle d'or n°188).",
+        medias="Atelier des moyens original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+    "3e_C7.7": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Produire le boitier » : 2 seances de 90 min pour 160 min d'activites. "
+                "Meme phrase de programme qu'en 4e, geste tout autre — ici le moyen est CHOISI "
+                "DEPUIS LONGTEMPS (3e_C7.3 : PETG imprime au college) et la forme est MODELISEE "
+                "(3e_C7.6). Tout est decide, et rien n'est fabricable : trois cotes sur cinq sont "
+                "hors du domaine de la buse. Le geste est de faire remonter la contrainte de "
+                "fabrication DANS LE DESSIN — et c'est un geste distinct de celui de C7.3, ou l'on "
+                "rouvrait le CAHIER DES CHARGES en nommant qui paierait. Ici on n'y touche pas : "
+                "ni matiere, ni encombrement, ni etancheite, ni masse admise. PERSONNE NE PAIE, et "
+                "c'est ce qui rend ce geste preferable. Trois corrections au pas de la machine : "
+                "casquette 70° → 45° (l'angle qu'une buse tient sans support), rainure 0,3 → "
+                "0,6 mm (trois couches franches au lieu d'une couche et demie), jeu du couvercle "
+                "0,1 → 0,4 mm (sous la tolerance, les deux pieces se soudent). Le piege est "
+                "symetrique : DEUX COTES N'ONT BESOIN D'AUCUNE CORRECTION — la paroi de 2,9 mm "
+                "calculee en C7.3 et les angles vifs que l'impression fait tres bien — et les "
+                "toucher est compte sur une JAUGE A PART (regle d'or n°219). Enfin l'impression "
+                "deportee supprime l'iteration : meme temps machine, un delai, UNE SEULE FOURNEE. "
+                "QCM 30 q / 90 refutations (C7.7 x20, C8.1 x10), lexique 30 notions, deux "
+                "syntheses, fiche, matrice, tests reels 52/52 et 32/32, scripts livres.",
+        anomalies="Aucune piece n'est imprimee dans la version B : la version A imprime une "
+                  "EPROUVETTE DE COIN — 15 mm de boitier, 8 min — ou les trois defauts se voient a "
+                  "l'oeil nu, et c'est elle qui fait foi. Aucune simulation n'est lancee : "
+                  "3e_C8.1 est mobilise, pas reenseigne — le lot travaille ce qu'une simulation "
+                  "remplace et ce qu'elle IGNORE, notamment l'anisotropie d'une piece imprimee, "
+                  "qui cede d'abord entre deux couches. Les valeurs de domaine sont des ordres de "
+                  "grandeur (buse 0,4 mm, couche 0,2 mm, tolerance 0,3 mm) : une autre machine "
+                  "deplacerait les trois seuils sans changer le raisonnement. Le scenario de "
+                  "l'impression deportee est une hypothese de travail tiree d'une decision "
+                  "d'etablissement.",
+        accessibilite="Listes deroulantes, corrections depliables, version C entierement "
+                      "debranchee (le dessin cote au tableau et cinq bandes de papier, une par "
+                      "cote), encadre de securite atelier — local ventile, capot ferme, LUNETTES "
+                      "pour retirer les supports — verifie par un test. Aucune boite modale.",
+        medias="Atelier des moyens original (HTML + JS, CC0). Aucun media tiers.",
+    ),
+
     # ── Lot C7.3 « Choisir un materiau », 31/08/2026 ────────────────────────────
     "5e_C7.3": dict(
         statut="COMPLET ET VALIDABLE",

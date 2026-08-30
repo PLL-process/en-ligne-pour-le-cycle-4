@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Produire le boîtier (3e_C7.7)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C7.7_produire-le-boitier.html">← Séquence</a><a href="qcm_3e_C7.7_produire-le-boitier.html">🧠 QCM</a><a href="lexique_3e_C7.7.html">📖 Lexique</a></nav>
+<h1>🖨 Produire le boîtier — synthèse professeur</h1>
+<h2>Le pari de la séquence</h2>
+<p>Même phrase de programme qu'en 4e, et un geste tout autre. En 4e la forme était
+donnée et on choisissait le moyen ; ici <b>le moyen est choisi depuis longtemps</b> —
+<code>3e_C7.3</code> a retenu le PETG imprimé au collège, <code>3e_C7.6</code> a modélisé le
+boîtier. Tout est décidé, et rien n'est fabricable.</p>
+<p>Le pari du lot est que le geste attendu n'est pas celui de C7.3. Là, aucun matériau ne passait
+et il fallait rouvrir le <b>cahier des charges</b> en nommant qui paierait. Ici on n'y touche
+pas : ni la matière, ni l'encombrement, ni l'étanchéité, ni la masse admise. <b>C'est le dessin
+qu'on corrige</b> — trois cotes, et personne ne paie. C'est ce qui rend ce geste préférable, et
+c'est pourquoi on le cherche en premier.</p>
+<p><b>Le piège est symétrique.</b> Sur cinq cotes, <b>deux n'ont besoin d'aucune correction</b> :
+la paroi de 2,9 mm calculée en C7.3, et les angles internes vifs que l'impression fait très bien.
+Les toucher est compté sur une jauge à part (règle d'or n°219). Le plus difficile de la séance
+est de ne pas toucher à ce qui va.</p>
+<p><b>Et le tout ne fonctionne qu'ensemble :</b> une correction, puis deux, laissent toujours
+zéro moyen capable. Il faut les trois. « Corriger le plus gros défaut » ne sert à rien tant que
+les autres restent — et c'est ce que le bonus fait découvrir.</p>
+<h2>Les moyens de l'atelier, et leur verdict</h2>
+<table><tr><th>Moyen</th><th>Temps machine</th><th>Ce qu'il laisse sur la pièce</th><th>Verdict sur le dessin d'origine</th></tr>
+<tr><td><b>Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)</b></td><td>1 p. : 55 min · 12 p. : 8 h 15 <b>✗</b></td><td>un bourrelet de première couche à la base, et des stries visibles sur les faces inclinées</td><td>✘ au-delà de 45° il faut un support, et le support laisse une surface rugueuse · il ne tient pas un détail de moins de 0,40 mm dans l'épaisseur · sa tolérance courante est de 0,30 mm</td></tr>
+<tr><td><b>Thermoformage sur moule</b></td><td>1 p. : 1 h 04 · 12 p. : 1 h 48</td><td>une paroi qui s'amincit dans les angles, d'autant plus que la forme est profonde</td><td>✘ il ne tient pas un détail de moins de 1,00 mm dans l'épaisseur · sa tolérance courante est de 1,00 mm · la matière chaude ne descend pas dans un angle plus serré que 3 mm</td></tr>
+<tr><td><b>Fraiseuse numérique 3 axes (fraise Ø 3 mm)</b></td><td>1 p. : 37 min · 12 p. : 2 h 49</td><td>tout angle interne arrondi au rayon de la fraise, soit 1,5 mm — ce n'est pas un défaut, c'est l'outil</td><td>✘ il n'accepte pas le PETG · sa fraise de 3 mm arrondit tout angle interne à 1,5 mm</td></tr>
+<tr><td><b>Découpe laser CO₂ (plaque à plat)</b></td><td>1 p. : 12 min · 12 p. : 34 min</td><td>un trait de coupe de 0,2 mm : toute ouverture sort 0,2 mm plus large que dessinée, et le chant est légèrement conique</td><td>✘ il n'accepte pas le PETG · sa tolérance courante est de 0,20 mm</td></tr>
+<tr><td><b>Sciage et perçage à la main</b></td><td>1 p. : 18 min · 12 p. : 3 h 36 <b>✗</b></td><td>une cote juste à 1 mm près, et deux pièces jamais tout à fait pareilles</td><td>✘ il n'accepte pas le PETG · il ne tient pas un détail de moins de 0,50 mm dans l'épaisseur · sa tolérance courante est de 1,00 mm</td></tr>
+</table>
+<p style="font-size:.9em;color:#555">Temps machine disponible avant la date : <b>3 h</b>. Toutes ces valeurs sont calculées par <code>moyens.py</code>, livré dans ce dossier.</p>
+<h2>Ce que l'élève sait faire à la fin</h2>
+<ul>
+<li>nommer l'empreinte que chaque moyen laisse toujours sur la pièce</li>
+<li>lire une colonne d'état et distinguer les cotes qui bloquent de celles qui passent</li>
+<li>corriger une cote au pas de la machine : angle de surplomb, couche, tolérance</li>
+<li>distinguer corriger un dessin et relâcher une exigence du cahier des charges</li>
+<li>laisser intactes les cotes qui passent, et dire pourquoi elles passent</li>
+<li>rédiger une note de lancement en fabrication avec son point de contrôle</li>
+<li>dire ce qu'une simulation de tenue mécanique ne sait pas d'une pièce imprimée</li>
+</ul>
+<h2>Ce que la séquence ne fait pas — et pourquoi</h2>
+<div class="box limite"><p><b>Aucune pièce n'est imprimée dans la version 🅱.</b> La version 🅰 imprime une éprouvette de coin — quinze millimètres, huit minutes — où les trois défauts se voient à l'œil nu. C'est elle qui fait foi.</p></div>
+<div class="box limite"><p><b>Aucune simulation n'est lancée.</b> <code>3e_C8.1</code> est mobilisé, pas réenseigné : le lot travaille ce qu'une simulation remplace et ce qu'elle ignore, notamment l'anisotropie d'une pièce imprimée.</p></div>
+<div class="box limite"><p><b>Les valeurs de domaine sont des ordres de grandeur</b> : buse 0,4 mm, couche 0,2 mm, tolérance 0,3 mm. Elles correspondent aux réglages courants d'une machine de collège, et une autre machine déplacerait les trois seuils sans changer le raisonnement.</p></div>
+<div class="box limite"><p><b>Le scénario de l'impression déportée est une hypothèse de travail</b>, tirée d'une décision d'établissement : même temps machine, un délai, une seule fournée. Un autre établissement s'organiserait autrement, et la leçon — trouver avant plutôt que corriger après — resterait la même.</p></div>
+<h2>Positionnement (LSU)</h2>
+<table><tr><th>Maîtrise</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>relance l'impression sans lire ce qui a bloqué</td></tr>
+<tr><td>🟠 Fragile</td><td>corrige les cotes bloquantes si on les lui désigne</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>trouve les trois cotes, les corrige au pas de la machine, et laisse le reste</td></tr>
+<tr><td>⭐ Très bonne</td><td>et rédige la note de lancement avec son point de contrôle</td></tr>
+</table>
+<h2>Durée</h2>
+<p><b>2 séances de 90 min</b> — 160 minutes d'activités, marge comprise. Le bandeau de la séquence l'annonce, et <code>_outils/mesurer_temps_seances.py</code> le vérifie.</p>
+<footer>Synthèse professeur — 3e_C7.7. Programme 2024, Thème 3.</footer>
+</body>
+</html>

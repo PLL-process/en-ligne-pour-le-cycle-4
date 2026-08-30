@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 4e — Le support du capteur (4e_C7.7)</title>
+<style>
+:root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;--sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;--err:#ff7b88}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,system-ui,sans-serif;margin:0;padding:0 16px 60px;line-height:1.55}
+h1{font-size:1.55em;text-align:center;margin:22px 0 4px;color:var(--title)}.subtitle{text-align:center;color:var(--sub);margin-bottom:8px}
+.badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}.badge{padding:4px 12px;border-radius:999px;font-size:.74em;font-weight:600;border:1px solid var(--border);background:#173666}
+section.card{max-width:940px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+h2{color:var(--head);font-size:1.08em;margin:0 0 10px}
+.declencheur{border-left:5px solid var(--warn);background:rgba(255,214,102,.07);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.problematique{font-weight:700;color:#fff;background:linear-gradient(90deg,#1d4e89,#2966b1);padding:12px 16px;border-radius:10px;text-align:center;font-size:1.06em}
+.exo{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}.exo h4{margin:0 0 8px;color:#fff}
+.btn{background:#1d4e89;color:#fff;border:none;border-radius:9px;padding:8px 15px;cursor:pointer;font-weight:600;font-family:inherit;text-decoration:none;display:inline-block}.btn:hover{background:#2966b1}
+.retenir{background:rgba(129,251,161,.1);border-left:4px solid var(--ok);padding:9px 13px;border-radius:0 10px 10px 0;margin:10px 0}
+.codebox{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;background:#0a1b3d;border:1px solid var(--border);border-radius:10px;padding:13px;overflow-x:auto;font-size:.88em;white-space:pre}
+table.refs{width:100%;border-collapse:collapse;font-size:.86em}table.refs th,table.refs td{border:1px solid var(--border);padding:7px 9px;text-align:left}table.refs th{background:#173666;color:var(--hl)}
+input,select,textarea{background:#173666;border:1px solid #2e5d9f;color:var(--text);border-radius:8px;padding:6px 10px;font-family:inherit;width:100%}
+.bonus{background:rgba(255,214,102,.08);border:1px dashed var(--warn);border-radius:12px;padding:14px}
+footer{max-width:940px;margin:28px auto 0;text-align:center;color:#5b7bb8;font-size:.8em}
+#navharm{position:sticky;top:0;z-index:1500;display:flex;gap:8px;align-items:center;padding:7px 12px;margin:0 -16px;background:rgba(5,15,36,.93);border-bottom:1px solid var(--border)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--panel);color:var(--sub);font-size:.92em;text-decoration:none;line-height:1.2;width:auto}
+#navharm a:hover{border-color:var(--hl);color:var(--hl)}
+select.ok,input.ok,textarea.ok{border-color:var(--ok)!important;box-shadow:0 0 0 1.5px var(--ok)}
+select.ko,input.ko,textarea.ko{border-color:var(--err)!important;box-shadow:0 0 0 1.5px var(--err)}
+.qmark{font-weight:700;margin-left:8px;font-size:1.05em}.qmark.ok{color:var(--ok)}.qmark.ko{color:var(--err)}
+.feedback{margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.9em;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+.feedback.warn{background:rgba(255,214,102,.13);color:var(--warn)}
+.feedback.ko{background:rgba(255,123,136,.14);color:#ffb0b8}
+details.correction{border:1px solid var(--border);border-radius:10px;margin:10px 0;background:#0a1b3d}
+details.correction>summary{cursor:pointer;padding:10px 14px;color:var(--ok);font-weight:600;list-style:none}
+details.correction>summary::-webkit-details-marker{display:none}
+details.correction>div{padding:0 14px 12px}
+.py-var{color:var(--hl)}.py-str{color:var(--ok)}.py-num{color:#ffb454}.py-kw{color:var(--head);font-weight:600}.py-op{color:var(--warn);font-weight:600}.py-com{color:#5b7bb8;font-style:italic}
+.py-legende{font-size:.8em;color:var(--sub);margin:6px 0 0;font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace}
+details.vs{border:2px solid #61dafb;border-radius:14px;margin:16px 0;background:linear-gradient(135deg,#0a1b3d,#0e2f56);box-shadow:0 0 16px rgba(97,218,251,.22)}
+details.vs>summary{cursor:pointer;padding:13px 17px;font-weight:700;font-size:1.02em;color:#61dafb;list-style:none;display:block;border-radius:12px}
+details.vs>summary::-webkit-details-marker{display:none}
+details.vs>summary:hover{background:rgba(97,218,251,.1)}
+details.vs>summary::after{content:"▼ CLIQUE ICI — l'éditeur s'ouvre dans la page, rien à installer";display:block;margin-top:7px;font-size:.82em;font-weight:600;color:#ffd66b;animation:vsPulse 1.8s ease-in-out infinite}
+details.vs[open]>summary::after{content:"▲ replier l'éditeur";animation:none;color:#9bbefc}
+@keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){details.vs>summary::after{animation:none}}
+details.vs iframe{width:100%;height:560px;border:0;border-radius:0 0 10px 10px;background:#fff}
+details.vs .vs-note{padding:0 16px 10px;color:var(--sub);font-size:.85em}
+.saved-note{color:#5b7bb8;font-size:.8em;min-height:1.2em;display:inline-block}
+.contrat18{background:rgba(129,170,255,.08);border:1.5px solid #3a5ea8;border-radius:12px;padding:12px 16px;margin:10px 0;font-size:.92em}
+.contrat18 b{color:var(--hl)}
+.chrono{color:var(--warn);font-size:.85em;font-weight:600}
+  /* ══ Harmonisation du 26/08/2026 — dispositifs communs au dépôt ══ */
+  body.essentiel .referentiel-card,
+  body.essentiel details.correction,
+  body.essentiel .approfondissement,
+  body.essentiel .crcn,
+  body.essentiel .prof{display:none}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;max-width:940px;justify-content:center}
+  .choix-parcours-boutons{display:flex;flex-wrap:wrap;gap:8px;margin:10px auto;align-items:center;justify-content:center;max-width:940px}
+  .parcours-label{color:var(--sub);font-size:.9em;font-weight:600}
+  .parcours-btn[aria-pressed="true"]{outline:3px solid var(--hl);outline-offset:2px}
+  body.parcours-a [data-parcours]:not([data-parcours="a"]),
+  body.parcours-b [data-parcours]:not([data-parcours="b"]),
+  body.parcours-c [data-parcours]:not([data-parcours="c"]){display:none}
+  .taches-bandeau{display:grid;gap:6px}
+  .taches-bandeau .tache{padding:6px 10px;border-radius:8px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);font-size:.92em}
+  .taches-bandeau .tache.fait{border-color:var(--ok);color:var(--ok)}
+  .taches-bandeau .coche{font-weight:700;margin-right:6px}
+  .etayage{border:1px solid var(--border);border-radius:10px;background:var(--panel2,#102a55);margin:10px 0}
+  .etayage>summary{cursor:pointer;padding:9px 13px;color:var(--warn);font-weight:600}
+  .etayage>p,.etayage>ul{padding:0 14px 10px;margin:6px 0}
+  .progress-wrap{max-width:940px;margin:10px auto;text-align:center}
+  .progress-bar{height:10px;border-radius:6px;background:var(--panel2,#102a55);
+    border:1px solid var(--border);overflow:hidden;margin-top:6px}
+  .progress-bar>div{height:100%;width:0;background:var(--ok);transition:width .3s}
+  /* ══ Filet mobile (règle d'or n°135, volet débordement) ══ */
+  @media(max-width:680px){
+    section.card table,table.refs,table.recette{display:block;overflow-x:auto;max-width:100%}
+  }
+  figcaption,.saved-note,.source,figcaption span{overflow-wrap:anywhere}
+  @media print{ .choix-parcours-boutons,.toolbar{display:none} }
+
+.simu{background:#081733;border:1.5px solid var(--hl);border-radius:12px;padding:16px;text-align:center}
+.led{display:inline-block;width:34px;height:34px;border-radius:50%;background:#333;border:3px solid #555;vertical-align:middle;transition:background .2s, box-shadow .2s}
+.led.rouge{background:#ff5252;border-color:#ff8a80;box-shadow:0 0 18px #ff5252}
+.led.verte{background:#4caf50;border-color:#81fba1;box-shadow:0 0 18px #4caf50}
+.algostep{display:flex;align-items:center;gap:10px;margin:6px 0;background:#102a55;border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.algostep select{width:78px}
+.algoshape{font-size:.78em;color:var(--sub);min-width:88px;text-align:right}
+
+/* ── Atelier des moyens — original, CC0 ─────────────────────────────────── */
+.atel{background:#0a1b3d;border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}
+table.traits{width:100%;border-collapse:collapse;font-size:.88em;margin:8px 0}
+table.traits th,table.traits td{border:1px solid var(--border);padding:5px 8px;text-align:left}
+table.traits th{background:#173666;color:var(--hl)}
+table.traits td.val{width:120px}
+table.traits td.val input{width:100%;padding:3px 6px;font-size:.92em;text-align:right}
+table.traits td.pq{font-size:.9em;color:var(--sub)}
+table.traits td.etat{width:34px;text-align:center;font-weight:700}
+table.traits tr.ko td.etat{color:var(--err)}
+table.traits tr.ok td.etat{color:var(--ok)}
+table.traits tr.touche td.val input{outline:2px solid var(--warn)}
+table.moy{width:100%;border-collapse:collapse;font-size:.85em;margin:8px 0}
+table.moy th,table.moy td{border:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top}
+table.moy th{background:#173666;color:var(--hl);text-align:center}
+table.moy td.nom{width:26%}
+table.moy td.t{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.moy td.hors{color:var(--err)}
+table.moy tr.ok td{background:rgba(34,197,94,.10)}
+table.moy tr.ok td.ver{color:var(--ok);font-weight:600}
+table.moy tr.ko td{color:var(--sub)}
+table.moy tr.ko td.ver{color:var(--err)}
+table.moy td.emp{font-size:.93em;color:var(--warn)}
+.compteur{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.jauge{flex:1;min-width:170px;background:#132c58;border:1px solid var(--border);border-radius:10px;padding:9px 11px}
+.jauge b{display:block;font-size:1.5em;color:var(--hl);font-variant-numeric:tabular-nums}
+.jauge span{font-size:.8em;color:var(--sub)}
+.jauge.zero b{color:var(--err)}
+.jauge.un b{color:var(--warn)}
+.jauge.plus b{color:var(--ok)}
+.jauge.bon b{color:var(--ok)}
+.atel-cmd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.atel-cmd label{font-size:.9em;color:var(--sub)}
+.atel-cmd select{width:auto;min-width:210px}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:#050f24;border:1px solid var(--border);border-radius:9px;padding:9px 11px;max-height:170px;overflow-y:auto}
+.verdict div{padding:1px 0}
+.verdict .ok{color:var(--ok)}.verdict .ko{color:var(--err)}.verdict .wa{color:var(--warn)}
+table.releve{width:100%;border-collapse:collapse;font-size:.87em;margin:8px 0}
+table.releve th,table.releve td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+table.releve th{background:#173666;color:var(--hl)}
+table.releve td.num{width:32%}
+table.releve td input{padding:4px 8px}
+.grille{list-style:none;padding:0;margin:8px 0}
+.grille li{border-left:3px solid var(--head);background:rgba(198,142,242,.08);padding:7px 12px;border-radius:0 8px 8px 0;margin:6px 0;font-size:.94em}
+</style>
+</head>
+<body>
+
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="lexique_4e_C7.7.html">📖 Lexique</a></nav>
+
+<h1>🏭 Le support du capteur</h1>
+<p class="subtitle">Thème 3 · 4<sup>e</sup> — Imaginer, concevoir et réaliser</p>
+<div class="badges">
+  <span class="badge niveau">Niveau 4e</span>
+  <span class="badge code">4e_C7.7</span>
+  <span class="badge code">4e_C4.3 (appui)</span>
+  <span class="badge theme">Thème 3 — Création, conception, réalisation : des objets et des systèmes techniques à créer</span>
+  <span class="badge socle">Socle : D2 · D3 · D4</span>
+  <span class="badge duree">⏱ 2 séances de 55 min</span>
+</div>
+
+<section class="card">
+  <h2>🔄 Ce que tu sais déjà faire — et ce qu'on ne refera pas</h2>
+  <p>Tu as <b>modifié une forme à l'aide d'une modélisation</b> (<code>4e_C7.6</code>, le dé sur
+  son socle), et tu as <b>comparé des matériaux</b> pour choisir le bac du jardin
+  (<code>4e_C7.3</code>). Tu sais dessiner une pièce, et tu sais en quoi la faire.</p>
+  <p><b>Ce qui change aujourd'hui :</b> il faut la <em>produire</em>. Et entre le dessin et la
+  pièce, il y a une machine — qui a ses limites, et qui ne les annonce pas. Un dessin
+  parfaitement juste peut être <b>infabricable ici</b>, ou sortir différent de ce qu'on a
+  demandé.</p>
+</section>
+
+<section class="card">
+  <h2>🎯 Ce que dit le programme — recopié, pas reformulé</h2>
+  <table class="refs">
+    <tr><th>Code</th><th>Formulation officielle (programme 2024)</th><th>Où, dans cette séquence</th></tr>
+    <tr><td><b>4e_C7.7</b></td><td>Choisir les moyens et produire la forme voulue.</td><td>Activités 1 à 3 et REFAIRE</td></tr>
+    <tr><td>4e_C4.3 <span style="color:var(--sub)">(appui)</span></td><td>Mettre en relation la forme d’une pièce avec le procédé de réalisation.</td><td>Activités 0 et 2, et synthèse</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📖 Situation déclenchante</h2>
+  <div class="declencheur"><p>Le jardin connecté fonctionne. La sonde d'humidité, elle, tient encore avec
+du ruban adhésif : elle glisse au fond du bac, la mesure part en vrille, et l'arrosage se
+déclenche n'importe quand.</p>
+<p>Le bureau d'études du club a dessiné le <b>support</b> : une plaque de 60 × 40 mm, 3 mm
+d'épaisseur, avec une <b>fente de 20 × 3 mm</b> où le méplat de la sonde vient se loger, et deux
+perçages Ø 4 mm pour les vis. Le dessin est fini, coté, validé.</p>
+<p><b>Reste à le fabriquer.</b> L'atelier du collège a cinq moyens. Trois ne savent pas produire
+cette pièce — et pas pour la raison qu'on croit. Les deux qui restent la produisent
+<em>différemment l'un de l'autre</em>.</p></div>
+</section>
+
+<section class="card">
+  <h2>❓ Problématique</h2>
+  <p class="problematique">Le dessin est validé. Comment savoir, avant de lancer la machine, si elle rendra bien la pièce qu'on a dessinée ?</p>
+  <div class="exo">
+    <h4>💡 Ton idée à toi, avant tout essai</h4>
+    <textarea id="hyp" rows="3" placeholder="À mon avis, pour choisir la machine qui fabriquera une pièce, il faut regarder…"></textarea>
+    <p style="font-size:.9em;color:var(--sub);margin:6px 0 0">On la reprendra au bilan.
+    Personne ne la corrige : elle sert à mesurer le chemin parcouru.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚠️ Ce que l'atelier impose — avant de toucher une machine</h2>
+  <div class="danger">
+    <p><b>La découpe laser ne reçoit jamais de PVC.</b> Chauffé, il dégage du <b>chlorure
+    d'hydrogène</b> : il brûle les voies respiratoires et corrode la machine de l'intérieur.
+    Le PMMA de ce support, lui, se découpe très bien. <b>On ne regarde pas le faisceau</b>, le
+    capot reste fermé, et l'extraction tourne pendant toute la découpe et une minute après.</p>
+    <p><b>La fraiseuse ne tourne jamais sur une pièce tenue à la main.</b> Pièce bridée,
+    lunettes, cheveux attachés, manches remontées, <b>aucun gant</b> — un gant happé entraîne
+    la main. Les copeaux se retirent à la brosse une fois la broche arrêtée, jamais aux doigts
+    ni à l'air comprimé.</p>
+    <p><b>Côté électricité, rien ne change :</b> la sonde et la station du jardin sont
+    alimentées en <b>très basse tension</b>. Aucune activité de cette séquence ne fait manipuler
+    le <b>secteur</b> par un élève.</p>
+  </div>
+</section>
+
+
+<section class="card">
+  <h2>🔀 Trois façons de vivre la séquence</h2>
+  <ul>
+    <li><b>🅰 À l'atelier</b> — on lance réellement les deux moyens sur une chute, et on mesure
+      la fente au pied à coulisse. Les mesures relevées remplacent alors celles de la page :
+      ce sont elles qui font foi, et l'écart avec le modèle se commente.</li>
+    <li><b>🅱 Avec l'atelier de cette page</b> — hors ligne, sans rien installer, et il permet ce
+      que la machine ne permet pas : <b>changer la quantité</b> et voir un moyen sortir du
+      délai sans avoir gâché une plaque.</li>
+    <li><b>🅲 Sans écran (débranché)</b> — cinq fiches cartonnées, une par moyen, et le dessin
+      coté au tableau. On pose les fiches qui tombent, et on dit pourquoi. Le raisonnement est
+      identique.</li>
+  </ul>
+</section>
+
+
+<section class="card">
+  <h2>📋 Activité 0 — Ce que chaque moyen ne sait pas faire ⏱ ~15 min</h2>
+  <p>Un moyen de fabrication n'a pas de <em>qualité</em> : il a un <b>domaine</b>.
+  Hors de son domaine, il ne fait pas « moins bien » — il ne fait pas, ou il fait autre chose.
+  Avant de choisir, il faut savoir ce que chacun ne sait pas faire.</p>
+  <div class="exo">
+
+    <p>Associe chaque moyen à ce qui lui est impossible.</p>
+    <p style="margin-top:12px"><b>La découpe laser</b></p>
+    <select id="a0r0">
+      <option value="">— je choisis —</option>
+      <option>un angle interne plus serré que le rayon de sa fraise</option>
+      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
+      <option>un trou qui ne traverse pas, ni le moindre relief</option>
+      <option>une fente étroite, ni une cote au dixième de millimètre</option>
+    </select>
+    <p style="margin-top:12px"><b>La fraiseuse numérique</b></p>
+    <select id="a0r1">
+      <option value="">— je choisis —</option>
+      <option>un angle interne plus serré que le rayon de sa fraise</option>
+      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
+      <option>un trou qui ne traverse pas, ni le moindre relief</option>
+      <option>une fente étroite, ni une cote au dixième de millimètre</option>
+    </select>
+    <p style="margin-top:12px"><b>Le thermoformage</b></p>
+    <select id="a0r2">
+      <option value="">— je choisis —</option>
+      <option>un angle interne plus serré que le rayon de sa fraise</option>
+      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
+      <option>un trou qui ne traverse pas, ni le moindre relief</option>
+      <option>une fente étroite, ni une cote au dixième de millimètre</option>
+    </select>
+    <p style="margin-top:12px"><b>Le sciage à la main</b></p>
+    <select id="a0r3">
+      <option value="">— je choisis —</option>
+      <option>un angle interne plus serré que le rayon de sa fraise</option>
+      <option>un perçage, ni une forme qui bloquerait au démoulage</option>
+      <option>un trou qui ne traverse pas, ni le moindre relief</option>
+      <option>une fente étroite, ni une cote au dixième de millimètre</option>
+    </select>
+    <button class="btn check" data-check="0" type="button">✅ Vérifier l'activité 0</button>
+    <div class="feedback" id="fb0"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>La découpe laser</b> — un trou qui ne traverse pas, ni le moindre relief</p>
+      <p><b>La fraiseuse numérique</b> — un angle interne plus serré que le rayon de sa fraise</p>
+      <p><b>Le thermoformage</b> — un perçage, ni une forme qui bloquerait au démoulage</p>
+      <p><b>Le sciage à la main</b> — une fente étroite, ni une cote au dixième de millimètre</p>
+      <p style="margin-top:10px"><b>Aucune de ces quatre lignes n'est un défaut.</b> Ce sont des
+      conséquences directes de la façon dont la machine travaille : un faisceau laser traverse
+      ou ne traverse pas, il ne s'arrête pas à mi-épaisseur ; une fraise est ronde, donc elle
+      laisse un angle rond ; une pièce thermoformée doit sortir de son moule.</p>
+      <p><b>C'est pour cela qu'on ne classe pas les moyens du meilleur au pire.</b> On ne dit pas
+      « la fraiseuse est moins bonne que le laser » : on dit « cette forme-ci a un angle interne
+      vif, donc la fraiseuse ne la rendra pas telle quelle ». Le domaine se lit avant, la
+      question de la qualité ne se pose même pas.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🏭 Activité 1 — L'atelier trie, et il dit pourquoi ⏱ ~25 min</h2>
+  <p>Voici l'atelier, chargé du dessin du support : 3 mm de paroi, une tolérance de
+  0,3 mm sur la fente, deux perçages traversants, et du <b>PMMA</b>. Clique sur
+  <b>🏭 Lancer l'atelier</b> et lis la colonne « Verdict ».</p><div id="etabli">
+  <div class="atel">
+    <p style="font-size:.92em;color:var(--sub);margin:0 0 8px"><b>L'atelier du collège : cinq moyens, un dessin. L'atelier ne classe pas les moyens du meilleur au pire — il dit lesquels savent produire CETTE forme-là, et ce que chacun en fera.</b></p>
+
+    <p style="font-size:.9em;color:var(--sub);margin:8px 0 2px">La forme est donnée : elle sort de la modélisation. <b>Tu ne la modifies pas</b> — tu choisis par quel moyen la produire.</p>
+    <table class="traits">
+      <tr><th></th><th>Ce que le dessin demande</th><th>Valeur</th><th>Pourquoi</th></tr>
+      <tr id="li_epaisseur"><td class="etat" id="et_epaisseur">·</td><td>Paroi de 3 mm</td><td class="val"><b>3,0</b> <span style="color:var(--sub)">mm</span></td><td class="pq">la plaque tient la sonde sans fléchir quand la terre pousse</td></tr>
+      <tr id="li_tol"><td class="etat" id="et_tol">·</td><td>Tolérance de 0,3 mm sur la fente</td><td class="val"><b>0,3</b> <span style="color:var(--sub)">mm</span></td><td class="pq">trop large, la sonde bouge ; trop étroite, elle n'entre pas</td></tr>
+      <tr id="li_traversant"><td class="etat" id="et_traversant">·</td><td>Deux perçages traversants Ø 4 mm</td><td class="val"><b>oui</b> <span style="color:var(--sub)"></span></td><td class="pq">deux vis M4 traversent la paroi du bac et serrent le support</td></tr>
+    </table>
+    <div class="atel-cmd"><label for="qte">Nombre de pièces à produire :</label>
+      <select id="qte">
+        <option value="4">4 — les quatre bacs du jardin</option>
+        <option value="30">30 — un support par élève, une classe entière</option>
+      </select></div>
+
+    <div class="compteur">
+      <div class="jauge" id="jRet"><b id="nRet">—</b><span>moyen(s) capable(s) de produire cette forme</span></div>
+      <div class="jauge" id="j2"><b id="nDelai">—</b><span>moyen(s) qui tiennent dans le temps machine disponible</span></div>
+    </div>
+
+    <table class="moy" id="tab">
+      <tr><th>Moyen</th><th>Temps machine</th><th>Ce qu'il fera de ton dessin</th><th>Verdict</th></tr>
+    </table>
+
+    <div class="atel-cmd">
+      <button class="btn" id="evaluer" type="button">🏭 Lancer l'atelier</button>
+      <button class="btn" id="reinit" type="button">↺ Remettre le dessin d'origine</button>
+    </div>
+    <div class="verdict" id="verdict"><div>Aucun essai. Règle le dessin, puis lance l'atelier.</div></div>
+
+  </div>
+</div>
+  <div class="exo">
+
+    <h4>Après l'essai</h4>
+    <p>Associe chaque moyen écarté au motif exact de son élimination.</p>
+    <p style="margin-top:12px"><b>L'impression 3D</b></p>
+    <select id="a1r0">
+      <option value="">— je choisis —</option>
+      <option>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</option>
+      <option>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</option>
+      <option>sa tolérance est trop grande, et il ne sait pas percer les deux trous</option>
+    </select>
+    <p style="margin-top:12px"><b>Le sciage à la main</b></p>
+    <select id="a1r1">
+      <option value="">— je choisis —</option>
+      <option>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</option>
+      <option>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</option>
+      <option>sa tolérance est trop grande, et il ne sait pas percer les deux trous</option>
+    </select>
+    <p style="margin-top:12px"><b>Le thermoformage</b></p>
+    <select id="a1r2">
+      <option value="">— je choisis —</option>
+      <option>elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</option>
+      <option>sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</option>
+      <option>sa tolérance est trop grande, et il ne sait pas percer les deux trous</option>
+    </select>
+    <p style="margin-top:14px"><b>1.</b> L'impression 3D est le moyen le plus polyvalent de
+    l'atelier : elle seule fabrique un volume creux ou une contre-dépouille. Elle est pourtant
+    écartée la première. Que faut-il en conclure ?</p>
+    <select id="a1q1">
+      <option value="">— je choisis —</option>
+      <option>un moyen très polyvalent ne sert à rien s'il n'accepte pas la matière</option>
+      <option>que la polyvalence d'un moyen se paie toujours par un manque de précision</option>
+      <option>que le support aurait dû être dessiné pour pouvoir être imprimé en 3D</option>
+      <option>que l'impression 3D ne convient jamais aux pièces plates et minces</option>
+    </select>
+    <p style="margin-top:14px"><b>2.</b> Le sciage à la main est le seul moyen sans aucun temps
+    de préparation : on prend la scie et on commence. Est-ce un avantage ici ?</p>
+    <select id="a1q2">
+      <option value="">— je choisis —</option>
+      <option>non : il est écarté sur la tolérance, avant même qu'on parle de temps</option>
+      <option>oui : sans préparation, c'est lui qui fabrique les quatre supports au plus vite</option>
+      <option>oui, à condition de tracer la fente très soigneusement avant de scier</option>
+      <option>non : il est écarté parce qu'il ne sait pas percer des trous de 4 mm</option>
+    </select>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Clique d'abord sur « 🏭 Lancer l'atelier » : on ne commente pas un tri qu'on n'a pas fait.</p>
+    <button class="btn check" data-check="1" type="button">✅ Vérifier l'activité 1</button>
+    <div class="feedback" id="fb1"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>L'impression 3D</b> — elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP</p>
+      <p><b>Le sciage à la main</b> — sa tolérance de 1 mm est plus de trois fois trop grande pour la fente</p>
+      <p><b>Le thermoformage</b> — sa tolérance est trop grande, et il ne sait pas percer les deux trous</p>
+      <p style="margin-top:10px"><b>1.</b> La matière se lit <b>avant</b> tout le reste. Un moyen
+      qui n'accepte pas la matière du cahier des charges est écarté sans qu'on ait besoin de
+      regarder une seule de ses performances — et l'impression 3D, qui sait tout faire par
+      ailleurs, n'imprime pas le PMMA. <b>Un domaine n'est pas une note : c'est une liste de
+      conditions, et il suffit qu'une seule manque.</b></p>
+      <p><b>2.</b> Le sciage n'arrive jamais à la question du temps. Sa tolérance courante est de
+      <b>1 mm</b> quand la fente en demande 0,3 : la sonde aurait du jeu, ou n'entrerait pas.
+      L'ordre compte — on élimine d'abord sur ce que le moyen <em>sait faire</em>, on compare
+      ensuite les temps de ceux qui restent. Comparer les temps de moyens incapables de produire
+      la pièce, c'est comparer des choses qui n'existent pas.</p>
+      <p style="color:var(--sub)">Il reste <b>deux</b> moyens : la découpe laser et la fraiseuse
+      numérique. C'est maintenant que la séance commence vraiment.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔍 Activité 2 — Le même dessin, deux pièces différentes ⏱ ~25 min</h2>
+  <p>Deux moyens savent produire le support. On pourrait croire qu'ils donnent la
+  même pièce : c'est le même fichier. <b>Ils ne donnent pas la même pièce.</b></p>
+  <p>Relis la colonne <b>« Ce qu'il fera de ton dessin »</b> pour les deux moyens retenus, et
+  remplis le tableau. La fente est dessinée à <b>20 × 3 mm</b>, pour un méplat de sonde de
+  20 × 3 mm.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'atelier</a> — c'est le même, et il a gardé ton dessin. Une page ne porte qu'un seul atelier : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+  <table class="releve">
+    <tr><th>Ce que tu relèves dans la colonne « Ce qu'il fera de ton dessin »</th><th class="num">Ta valeur</th></tr>
+    <tr><td>Largeur réelle de la fente sortie de la découpe laser</td><td class="num"><input type="text" inputmode="decimal" id="rel0" placeholder="… mm"></td></tr>
+    <tr><td>Longueur droite utile de la fente sortie de la fraiseuse</td><td class="num"><input type="text" inputmode="decimal" id="rel1" placeholder="… mm"></td></tr>
+  </table>
+    <p style="margin-top:14px"><b>1.</b> La sonde fait 20 mm de long. Entre-t-elle dans la fente
+    sortie de la <b>fraiseuse</b> ?</p>
+    <select id="a2q1">
+      <option value="">— je choisis —</option>
+      <option>non : les extrémités sont arrondies, il ne reste que 17 mm de fente droite</option>
+      <option>oui : la fente mesure toujours 20 mm de long, seuls les coins sont adoucis</option>
+      <option>oui : la fraiseuse est le moyen le plus précis, à cinq centièmes près</option>
+      <option>non : la fraiseuse creuse la fente 1,5 mm trop étroite pour le méplat</option>
+    </select>
+    <p style="margin-top:14px"><b>2.</b> Est-ce un défaut de la fraiseuse ?</p>
+    <select id="a2q2">
+      <option value="">— je choisis —</option>
+      <option>non : un outil rond ne peut pas creuser un angle vif, c'est son domaine</option>
+      <option>oui : une machine numérique doit rendre exactement le dessin qu'on lui donne</option>
+      <option>oui : il suffirait de la régler plus finement pour obtenir des angles vifs</option>
+      <option>non : c'est un défaut du dessin, qui n'aurait pas dû comporter de fente</option>
+    </select>
+    <p style="margin-top:14px"><b>3.</b> On veut garder la fraiseuse. Que faut-il ajouter au
+    <b>dessin</b> pour que la sonde entre quand même ?</p>
+    <select id="a2q3">
+      <option value="">— je choisis —</option>
+      <option>deux dégagements d'angle aux extrémités, qui libèrent la longueur droite</option>
+      <option>rien du tout : il suffit de limer les deux extrémités après l'usinage</option>
+      <option>allonger la fente à 23 mm, pour compenser les deux arrondis de 1,5 mm</option>
+      <option>élargir la fente à 4,5 mm, afin que le méplat puisse entrer de biais</option>
+    </select>
+    <button class="btn check" data-check="2" type="button">✅ Vérifier l'activité 2</button>
+    <div class="feedback" id="fb2"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <table class="refs">
+      <tr><th>Ce que tu relèves dans la colonne « Ce qu'il fera de ton dessin »</th><th>Ta valeur</th></tr>
+      <tr><td>Largeur réelle de la fente sortie de la découpe laser</td><td><b>3,2 mm</b></td></tr>
+      <tr><td>Longueur droite utile de la fente sortie de la fraiseuse</td><td><b>17 mm</b></td></tr>
+      </table>
+      <p style="margin-top:10px"><b>1.</b> La fraise fait 3 mm de diamètre. Elle creuse une fente
+      de 3 mm de large — et ses deux extrémités sont des <b>demi-cercles de 1,5 mm de rayon</b>.
+      La longueur <em>droite</em> disponible n'est donc plus 20 mm mais <b>20 − 3 = 17 mm</b>.
+      Le méplat de 20 mm bute sur les arrondis.</p>
+      <p><b>2.</b> Non, et c'est le cœur de la séance. Une fraise est un cylindre : elle ne peut
+      laisser derrière elle qu'une trace ronde. Lui demander un angle vif, c'est lui demander de
+      ne pas être elle-même. <b>Le laser, lui, fait des angles parfaitement vifs</b> — parce qu'un
+      faisceau n'a pas de rayon. Deux machines, deux géométries, deux pièces.</p>
+      <p><b>3.</b> On dessine des <b>dégagements d'angle</b> : deux petits perçages ou deux
+      losanges aux extrémités de la fente, qui repoussent la matière hors du chemin du méplat.
+      La longueur droite redevient 20 mm. C'est une correction qui <em>ajoute</em> quelque chose
+      au dessin sans rien changer à la fonction — la sonde tient toujours pareil.</p>
+      <p style="color:var(--sub)"><b>Et le laser, lui, n'est pas exact non plus.</b> Son faisceau
+      brûle un trait de <b>0,2 mm</b> de large : une fente dessinée à 3,00 mm sort à
+      <b>3,20 mm</b>. Ici c'est sans conséquence — la tolérance admise est de 0,3 mm — mais si
+      l'on voulait exactement 3,00, il faudrait dessiner 2,80. <b>Aucun moyen ne rend le
+      dessin.</b> Chacun y met son accent, et il faut le connaître.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⏱ Activité 3 — Quatre pièces, ou trente ⏱ ~15 min</h2>
+  <p>Les deux moyens savent produire le support. Reste une question que le dessin ne
+  pose pas : <b>combien en faut-il ?</b> L'atelier du collège dispose de <b>3 h de machine</b>
+  avant la date. Passe la quantité de 4 à 30 et regarde la colonne des temps.</p>    <p style="font-size:.92em;color:var(--sub);margin:8px 0"><a href="#etabli">↑ Remonte à l'atelier</a> — c'est le même, et il a gardé ton dessin. Une page ne porte qu'un seul atelier : deux exemplaires, ce seraient deux instruments qui répondent au même nom.</p>
+
+  <div class="exo">
+
+    <p><b>1.</b> Pour les <b>4 bacs</b> du jardin, les deux moyens tiennent-ils dans les 3 h ?</p>
+    <select id="a3q1">
+      <option value="">— je choisis —</option>
+      <option>oui : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique</option>
+      <option>non : seule la découpe laser y arrive, la fraiseuse demande plus de 3 h</option>
+      <option>oui, mais seulement si l'on prépare les deux machines la veille</option>
+      <option>non : aucun des deux ne tient, il faudrait étaler sur deux semaines</option>
+    </select>
+    <p><b>2.</b> Pour <b>30 supports</b>, un par élève, que se passe-t-il ?</p>
+    <select id="a3q2">
+      <option value="">— je choisis —</option>
+      <option>la fraiseuse sort du délai : 6 h 25 contre 1 h 10 à la découpe laser</option>
+      <option>les deux sortent du délai, et il faut renoncer à équiper toute la classe</option>
+      <option>rien ne change : les deux moyens restent capables de produire la pièce</option>
+      <option>la découpe laser sort du délai, car son temps de préparation se répète</option>
+    </select>
+    <p><b>3.</b> Écris en deux phrases le moyen que tu retiens pour les 4 bacs, celui que tu
+    retiendrais pour 30 supports, et ce qui a fait changer la réponse.</p>
+    <textarea id="a3j" rows="3" placeholder="Pour 4 supports je retiens … ; pour 30 je retiens … ; ce qui change est …"></textarea>
+    <p style="font-size:.9em;color:var(--warn)">🔒 Change d'abord la quantité sur l'atelier (le menu « Nombre de pièces à produire ») : c'est ce geste-là que l'activité te demande de commenter.</p>
+    <button class="btn check" data-check="3" type="button">✅ Vérifier l'activité 3</button>
+    <div class="feedback" id="fb3"></div>
+    <details class="correction"><summary>📖 Correction</summary><div>
+
+      <p><b>1.</b> Oui, largement : <b>18 min</b> au laser — soit 10 de préparation plus
+      4 × 2 — et <b>1 h 13</b> à la fraiseuse, soit 25 plus 4 × 12. Pour quatre pièces, la
+      quantité ne décide rien —
+      on peut choisir sur autre chose, par exemple sur la géométrie de la fente.</p>
+      <p><b>2.</b> Tout change. Le laser passe à <b>1 h 10</b>, la fraiseuse à <b>6 h 25</b> : elle
+      sort des 3 h disponibles. Elle n'est pas devenue incapable de produire la pièce — elle en
+      est toujours capable, et elle ne le fera pas <em>à temps</em>. <b>Ce sont deux questions
+      différentes, et l'atelier les affiche sur deux jauges séparées.</b></p>
+      <p>La raison tient à la structure du temps : chaque moyen coûte une <b>préparation</b>
+      payée une fois, et un <b>temps par pièce</b> payé à chaque exemplaire. Le laser prépare en
+      10 min et produit en 2 ; la fraiseuse prépare en 25 et produit en 12. Plus la série est
+      longue, plus c'est le temps par pièce qui commande — et l'écart se creuse.</p>
+      <p><b>3.</b> Les deux réponses se défendent, à condition de dire ce qui a changé.
+      <b>Pour 4 supports</b>, la fraiseuse est défendable si l'on préfère sa précision, à
+      condition d'avoir dessiné les dégagements d'angle. <b>Pour 30</b>, le laser s'impose : ce
+      n'est plus un choix de goût, c'est le seul qui tienne le délai.</p>
+      <p style="color:var(--sub)"><b>La quantité n'est pas une question d'intendance.</b> C'est un
+      critère de choix du moyen, au même titre que l'épaisseur minimale — et il n'apparaît nulle
+      part sur le dessin.</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🔄 REFAIRE — Réinvestissement ⏱ ~15 min</h2>
+<p>Le collège voisin veut les mêmes supports pour son jardin. Il n'a <b>pas de
+  découpeuse laser</b> : son atelier compte une fraiseuse numérique et une imprimante 3D, rien
+  d'autre. Le dessin, lui, est le même.</p>
+  <p>Écris : <b>quel moyen reste possible</b>, <b>ce qu'il faut changer</b> — au dessin ou à la
+  matière — et <b>ce que ce changement coûte</b>.</p>
+  <textarea id="reinv" rows="4" placeholder="Je choisirais … parce que …"></textarea>
+  <button class="btn check" data-check="4" type="button">✅ Vérifier le réinvestissement</button>
+  <div class="feedback" id="fb4"></div>
+  <details class="correction"><summary>📖 Correction</summary><div>
+      <p><b>Deux chemins, et ils ne coûtent pas la même chose.</b></p>
+      <p><b>Garder le PMMA et fraiser.</b> C'est le chemin court : on ajoute au dessin les
+      <b>dégagements d'angle</b> aux extrémités de la fente, et la fraiseuse rend une pièce
+      utilisable. Rien d'autre ne bouge — ni la matière, ni les cotes extérieures, ni les
+      perçages. Le coût est un <b>temps de dessin</b>, et il est faible.</p>
+      <p><b>Changer de matière et imprimer.</b> En PETG ou en PLA, l'impression 3D redevient
+      possible. Mais elle demande <b>40 min par pièce</b> : 2 h 55 pour quatre supports, contre
+      1 h 13 à la fraiseuse. Et le PLA se déforme dès 55 °C — dans un bac au soleil, ce serait un
+      mauvais choix, comme le disait déjà <code>4e_C7.3</code>.</p>
+      <p><b>Le premier chemin est le bon, et la raison mérite d'être dite :</b> on a changé le
+      <b>dessin</b>, pas le cahier des charges. La sonde tient toujours à 12 cm de profondeur,
+      dans la même matière, avec les mêmes vis. <b>Modifier un dessin pour qu'une machine sache
+      le produire n'est pas un renoncement</b> — c'est le travail normal de celui qui conçoit
+      en sachant qui fabriquera.</p>
+      <p style="color:var(--sub)">C'est exactement ce que tu feras en 3<sup>e</sup>, en plus
+      difficile : là, ce sera à toi de trouver <em>quelles</em> cotes corriger, et lesquelles
+      surtout ne pas toucher.</p></div></details>
+</section>
+
+<section class="card">
+  <h2>📝 Synthèse — à retenir</h2>
+  <ul>
+    <li><b>Un moyen de fabrication n'a pas de qualité : il a un domaine.</b> Hors de son domaine
+      il ne fait pas « moins bien », il ne fait pas — ou il fait autre chose. On ne classe pas
+      les moyens du meilleur au pire.</li>
+    <li><b>La matière se lit avant tout le reste.</b> L'impression 3D sait presque tout faire, et
+      elle est écartée la première parce qu'elle n'imprime pas le PMMA. Il suffit qu'une seule
+      condition du domaine manque.</li>
+    <li><b>Aucun moyen ne rend le dessin.</b> Le laser brûle un trait de 0,2 mm et élargit toute
+      ouverture d'autant ; la fraiseuse arrondit les angles internes au rayon de sa fraise ;
+      l'impression laisse un bourrelet de première couche. <b>Le dessin est ce qu'on a demandé,
+      la pièce est ce qu'on obtient.</b></li>
+    <li><b>Une fente de 20 mm fraisée à la fraise Ø 3 n'offre que 17 mm de droit.</b> Ce n'est pas
+      un défaut de la machine : un outil rond ne peut laisser qu'une trace ronde. On corrige en
+      dessinant des <b>dégagements d'angle</b>.</li>
+    <li><b>On élimine d'abord sur ce que le moyen sait faire, on compare les temps ensuite.</b>
+      Comparer les temps de moyens incapables de produire la pièce, c'est comparer des choses
+      qui n'existent pas.</li>
+    <li><b>La quantité choisit le moyen.</b> Préparation payée une fois, temps payé à chaque
+      pièce : plus la série est longue, plus c'est le temps par pièce qui commande. 4 supports,
+      les deux moyens tiennent ; 30 supports, la fraiseuse sort du délai.</li>
+    <li><b>« Capable » et « à temps » sont deux questions différentes.</b> L'atelier les affiche
+      sur deux jauges séparées, parce qu'on les confond tout le temps.</li>
+  </ul>
+
+</section>
+
+<section class="card">
+  <h2>🙋 Mon bilan personnel</h2>
+  <p><b>🔙 Ton idée de départ :</b> <span id="rappelHyp" style="font-style:italic;color:var(--sub)">—</span></p>
+
+  <p style="font-size:.92em;color:var(--sub)">Compare : ta réponse de départ parlait-elle de ce
+  que la machine ferait du dessin ?</p>
+
+  <textarea id="bilan" rows="3" placeholder="Ce que je sais faire maintenant, et ce qui me résiste encore…"></textarea>
+  <p style="margin-top:12px"><b>Je me positionne sur 4e_C7.7 :</b></p>
+  <select id="pos">
+    <option value="">— je me positionne —</option>
+    <option>Je sais confronter un dessin aux moyens de l'atelier et dire ce que chacun en fera</option>
+    <option>Je sais le faire si on m'aide à relire le domaine de chaque moyen</option>
+    <option>Je lis le tableau, mais je choisis encore le moyen le plus précis ou le plus rapide</option>
+    <option>Je ne sais pas encore ce qu'il faut regarder pour choisir une machine</option>
+  </select>
+</section>
+
+<section class="card" style="text-align:center">
+  <h2 style="justify-content:center">🧠 Prêt·e à t'entraîner ?</h2>
+  <p>30 questions sur les domaines des moyens, ce que chacun fait du dessin et le rôle de la quantité. 20 portent sur le choix des moyens, 10 sur le lien entre la forme d'une pièce et son procédé de réalisation.</p>
+  <a class="btn" href="qcm_4e_C7.7_support-du-capteur.html" style="text-decoration:none">🚀 Ouvrir le QCM d'entraînement</a>
+</section>
+
+<section class="card bonus">
+  <h2>🎁 Bonus (facultatif — hors parcours obligatoire)</h2>
+  <p>Sur l'atelier, cherche à partir de combien de supports la découpe laser devient
+  indispensable — c'est-à-dire la première quantité pour laquelle la fraiseuse dépasse les 3 h.
+  Le calcul tient en une ligne : 25 + 12 × n ≤ 180.</p>
+  <p>Puis pose la question que personne n'a posée : <b>ces 3 h, d'où viennent-elles ?</b> Une
+  contrainte de temps machine n'est pas une loi de la physique — c'est un emploi du temps, et un
+  emploi du temps se négocie. Écris en une phrase à qui tu irais le demander.</p>
+
+</section>
+
+<footer>Séquence 4e_C7.7 — « Le support du capteur ». Atelier des moyens original (CC0), temps et domaines calculés par moyens.py, aucune dépendance externe. Programme 2024, Thème 3.</footer>
+
+<script>
+(function(){
+"use strict";
+const KEY = "seq_4e_C7_7";
+const $ = id => document.getElementById(id);
+window.__exp = window.__exp || {};
+
+function qmark(e, state){
+  let m = e.previousElementSibling;
+  if(!(m && m.classList && m.classList.contains("qmark"))){
+    m = document.createElement("span"); m.className = "qmark";
+    e.insertAdjacentElement("beforebegin", m);
+  }
+  if(state === null){ m.textContent = ""; m.className = "qmark"; }
+  else { m.textContent = state ? "✔" : "✘"; m.className = "qmark " + (state ? "ok" : "ko"); }
+}
+function sv(id, ok){ const e = $(id); if(!e) return 0;
+  const good = Array.isArray(ok) ? ok.includes(e.value) : e.value === ok;
+  e.classList.toggle("ok", good && !!e.value); e.classList.toggle("ko", !good && !!e.value);
+  qmark(e, e.value ? good : null); return good ? 1 : 0; }
+function pres(id, min){ const e = $(id); const ok = e.value.trim().length >= (min || 15);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function nb(id, attendu, tol){ const e = $(id); const v = parseFloat((e.value||"").replace(",", "."));
+  const ok = !isNaN(v) && Math.abs(v - attendu) <= (tol || 0);
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+function lignes(id, n, mini){ const e = $(id);
+  const l = e.value.split("\n").filter(x => x.trim().length > 8).length;
+  const ok = l >= n && e.value.trim().length >= mini;
+  e.classList.toggle("ok", ok); e.classList.toggle("ko", !ok && !!e.value.trim());
+  qmark(e, e.value.trim() ? ok : null); return ok ? 1 : 0; }
+
+/* ── l'atelier des moyens ───────────────────────────────────────────────── */
+const MOYENS = [{"cle": "laser", "nom": "Découpe laser CO₂ (plaque à plat)", "e_min": 1.0, "e_etanche": 1.0, "r_int": 0.0, "surplomb": null, "res_z": 0.1, "tol": 0.2, "min_piece": 2, "prep": 10, "matieres": ["PMMA", "contreplaqué", "carton"], "traversant": true, "borgne": false, "empreinte": "un trait de coupe de 0,2 mm : toute ouverture sort 0,2 mm plus large que dessinée, et le chant est légèrement conique", "pourquoiRayon": null}, {"cle": "fraiseuse", "nom": "Fraiseuse numérique 3 axes (fraise Ø 3 mm)", "e_min": 1.5, "e_etanche": 1.5, "r_int": 1.5, "surplomb": null, "res_z": 0.05, "tol": 0.05, "min_piece": 12, "prep": 25, "matieres": ["PMMA", "PVC", "contreplaqué", "aluminium"], "traversant": true, "borgne": true, "empreinte": "tout angle interne arrondi au rayon de la fraise, soit 1,5 mm — ce n'est pas un défaut, c'est l'outil", "pourquoiRayon": "sa fraise de 3 mm arrondit tout angle interne à 1,5 mm"}, {"cle": "impression", "nom": "Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)", "e_min": 0.8, "e_etanche": 1.6, "r_int": 0.0, "surplomb": 45, "res_z": 0.4, "tol": 0.3, "min_piece": 40, "prep": 15, "matieres": ["PLA", "PETG", "PP recyclé"], "traversant": true, "borgne": true, "empreinte": "un bourrelet de première couche à la base, et des stries visibles sur les faces inclinées", "pourquoiRayon": null}, {"cle": "sciage", "nom": "Sciage et perçage à la main", "e_min": 1.0, "e_etanche": 1.0, "r_int": 0.0, "surplomb": null, "res_z": 0.5, "tol": 1.0, "min_piece": 18, "prep": 0, "matieres": ["PMMA", "PVC", "contreplaqué", "aluminium"], "traversant": true, "borgne": true, "empreinte": "une cote juste à 1 mm près, et deux pièces jamais tout à fait pareilles", "pourquoiRayon": null}, {"cle": "thermoformage", "nom": "Thermoformage sur moule", "e_min": 0.5, "e_etanche": 0.8, "r_int": 3.0, "surplomb": null, "res_z": 1.0, "tol": 1.0, "min_piece": 4, "prep": 60, "matieres": ["PMMA", "PVC", "PETG"], "traversant": false, "borgne": false, "empreinte": "une paroi qui s'amincit dans les angles, d'autant plus que la forme est profonde", "pourquoiRayon": "la matière chaude ne descend pas dans un angle plus serré que 3 mm"}];    /* domaine de chaque moyen */
+const TRAITS = [{"cle": "epaisseur", "lib": "Paroi de 3 mm", "valeur": 3.0, "unite": "mm", "sansCorrection": true, "correction": 2.9}, {"cle": "tol", "lib": "Tolérance de 0,3 mm sur la fente", "valeur": 0.3, "unite": "mm", "sansCorrection": false, "correction": 0.4}, {"cle": "traversant", "lib": "Deux perçages traversants Ø 4 mm", "valeur": true, "unite": "", "sansCorrection": false, "correction": null}];    /* [{cle, lib, valeur, unite, sansCorrection, correction}] */
+const PIECE  = {"matiere": "PMMA", "etanche": false, "tempsDispo": 180, "moyenVise": null};     /* {matiere, etanche, tempsDispo} */
+const EDIT   = false;      /* les cotes sont-elles modifiables ? */
+
+function vg(x, d){ return x.toFixed(d).replace(".", ","); }
+function duree(min){
+  min = Math.round(min);
+  if(min < 60) return min + " min";
+  const h = Math.floor(min / 60), r = min % 60;
+  return r === 0 ? h + " h" : h + " h " + (r < 10 ? "0" : "") + r;
+}
+function cote(t){
+  if(!EDIT) return t.valeur;
+  const e = document.getElementById("tr_" + t.cle);
+  const v = parseFloat((e.value || "").replace(",", "."));
+  return isNaN(v) ? t.valeur : v;
+}
+function quantite(){ return parseInt(document.getElementById("qte").value, 10); }
+
+/* Les règles de domaine. Elles disent POURQUOI, jamais « ça ne marche pas ». */
+function tientTrait(m, t, v){
+  switch(t.cle){
+    case "epaisseur": {
+      const s = PIECE.etanche ? m.e_etanche : m.e_min;
+      return v >= s ? null
+        : "il ne fait pas une paroi " + (PIECE.etanche ? "étanche " : "") + "de moins de " + vg(s, 1) + " mm";
+    }
+    case "r_int":
+      return v >= m.r_int ? null : (m.pourquoiRayon || ("il impose un rayon de " + vg(m.r_int, 1) + " mm aux angles internes"));
+    case "surplomb":
+      if(m.surplomb === null) return null;
+      return v <= m.surplomb ? null
+        : "au-delà de " + m.surplomb + "° il faut un support, et le support laisse une surface rugueuse";
+    case "res_z":
+      return v >= m.res_z ? null
+        : "il ne tient pas un détail de moins de " + vg(m.res_z, 2) + " mm dans l'épaisseur";
+    case "tol":
+      return v >= m.tol ? null : "sa tolérance courante est de " + vg(m.tol, 2) + " mm";
+    case "traversant":
+      return (m.traversant || !v) ? null : "il ne perce pas";
+    case "borgne":
+      return (m.borgne || !v) ? null : "il ne fait pas de trou borgne";
+  }
+  return null;
+}
+
+function juge(m){
+  const rates = [];
+  if(m.matieres.indexOf(PIECE.matiere) < 0) rates.push("il n'accepte pas le " + PIECE.matiere);
+  TRAITS.forEach(t => { const r = tientTrait(m, t, cote(t)); if(r) rates.push(r); });
+  return rates;
+}
+
+/* Combien de cotes ont été touchées alors qu'elles n'en avaient pas besoin ? */
+function touchesInutiles(){
+  if(!EDIT) return [];
+  return TRAITS.filter(t => t.sansCorrection && Math.abs(cote(t) - t.valeur) > 1e-9);
+}
+
+function majAtelier(geste){
+  const n = quantite();
+  /* L'état de chaque trait. Quand le cahier des charges a DÉJÀ retenu un moyen
+     — c'est le cas du boîtier, choisi en 3e_C7.3 — la colonne se lit pour lui,
+     et pour lui seul : « trois cotes bloquent » n'a de sens que rapporté à une
+     machine précise. Sinon, on dit si au moins un moyen sait la produire. */
+  const CIBLE = PIECE.moyenVise ? MOYENS.filter(m => m.cle === PIECE.moyenVise)[0] : null;
+  TRAITS.forEach(t => {
+    const li = document.getElementById("li_" + t.cle), et = document.getElementById("et_" + t.cle);
+    let bloque;
+    if(CIBLE) bloque = tientTrait(CIBLE, t, cote(t)) !== null;
+    else bloque = MOYENS.every(m => tientTrait(m, t, cote(t)) !== null);
+    li.classList.toggle("ko", bloque);
+    li.classList.toggle("ok", !bloque);
+    li.classList.toggle("touche", EDIT && Math.abs(cote(t) - t.valeur) > 1e-9);
+    et.textContent = bloque ? "✘" : "✔";
+  });
+
+  const tb = document.getElementById("tab");
+  while(tb.rows.length > 1) tb.deleteRow(1);
+  let retenus = [], dansLesTemps = 0;
+  MOYENS.forEach(m => {
+    const rates = juge(m), ok = rates.length === 0;
+    const t = m.prep + n * m.min_piece, tient = t <= PIECE.tempsDispo;
+    if(ok){ retenus.push(m); if(tient) dansLesTemps++; }
+    const tr = tb.insertRow();
+    tr.className = ok ? "ok" : "ko";
+    const cel = x => { const d = tr.insertCell(); d.innerHTML = x; return d; };
+    cel("<b>" + m.nom + "</b>").className = "nom";
+    const c = cel(duree(t) + (tient ? "" : " <b>✗</b>"));
+    c.className = "t" + (tient ? "" : " hors");
+    cel(ok ? m.empreinte : "—").className = "emp";
+    cel(ok ? "✔ capable" : "✘ " + rates.join(" · ")).className = "ver";
+  });
+
+  const jR = document.getElementById("jRet");
+  document.getElementById("nRet").textContent = retenus.length;
+  jR.classList.toggle("zero", retenus.length === 0);
+  jR.classList.toggle("un", retenus.length === 1);
+  jR.classList.toggle("plus", retenus.length > 1);
+
+  const j2 = document.getElementById("j2");
+  if(EDIT){
+    const inut = touchesInutiles().length;
+    document.getElementById("nInutile").textContent = inut;
+    j2.classList.toggle("zero", inut > 0);
+    j2.classList.toggle("bon", inut === 0);
+  } else {
+    document.getElementById("nDelai").textContent = dansLesTemps;
+    j2.classList.toggle("zero", dansLesTemps === 0);
+    j2.classList.toggle("un", dansLesTemps === 1);
+    j2.classList.toggle("plus", dansLesTemps > 1);
+  }
+
+  if(geste){
+    if(retenus.length === 0) window.__exp.zero = true;
+    if(retenus.length === 1) window.__exp.unSeul = true;
+    if(retenus.length > 1) window.__exp.plusieurs = true;
+    if(EDIT && TRAITS.some(t => Math.abs(cote(t) - t.valeur) > 1e-9)) window.__exp.corrige = true;
+    if(!EDIT && n !== parseInt(document.getElementById("qte").options[0].value, 10))
+      window.__exp.quantite = true;
+    if(dansLesTemps < retenus.length) window.__exp.horsDelai = true;
+  }
+  save();
+  return retenus;
+}
+
+function ligne(cls, txt){
+  const v = document.getElementById("verdict");
+  if(v.dataset.vide !== "non"){ v.innerHTML = ""; v.dataset.vide = "non"; }
+  const d = document.createElement("div");
+  d.className = cls; d.textContent = txt;
+  v.appendChild(d); v.scrollTop = v.scrollHeight;
+}
+
+document.getElementById("evaluer").addEventListener("click", () => {
+  const r = majAtelier(true), n = quantite();
+  window.__exp.evalue = true;
+  if(!r.length){
+    ligne("ko", "Aucun moyen de l'atelier ne sait produire cette forme. Ce n'est pas une panne : "
+        + "c'est un résultat. Regarde quelles lignes du dessin portent une croix.");
+  } else {
+    const hors = r.filter(m => m.prep + n * m.min_piece > PIECE.tempsDispo);
+    ligne("ok", r.length + " moyen(s) savent la produire : " + r.map(m => m.nom).join(" · "));
+    if(hors.length)
+      ligne("wa", "Mais pour " + n + " pièces, " + hors.length + " d'entre eux dépassent les "
+          + duree(PIECE.tempsDispo) + " de machine disponibles : " + hors.map(m => m.nom).join(" · "));
+  }
+  if(EDIT){
+    const inut = touchesInutiles();
+    if(inut.length)
+      ligne("wa", inut.length + " cote(s) modifiée(s) sans nécessité : " + inut.map(t => t.lib).join(" · ")
+          + ". Elles passaient déjà.");
+  }
+  save();
+});
+document.getElementById("reinit").addEventListener("click", () => {
+  if(EDIT) TRAITS.forEach(t => {
+    document.getElementById("tr_" + t.cle).value = String(t.valeur).replace(".", ",");
+  });
+  const q = document.getElementById("qte");
+  q.value = q.options[0].value;
+  majAtelier(true);
+  ligne("wa", "Dessin remis tel qu'il sort de la modélisation.");
+});
+if(EDIT) TRAITS.forEach(t => {
+  const e = document.getElementById("tr_" + t.cle);
+  if(e) e.addEventListener("input", () => majAtelier(true));
+});
+document.getElementById("qte").addEventListener("change", () => majAtelier(true));
+/* Pas d'appel à majAtelier() ici : il enregistre, et il tournerait AVANT
+   restore() (règle d'or n°221). Le squelette restaure d'abord, puis met à jour.
+   Et l'appel du squelette ne passe AUCUN geste : un verrou que l'ouverture de
+   la page suffit à ouvrir n'est pas un verrou (règle d'or n°226). */
+
+
+const CHECKS = {
+  0(){ let s = 0;
+       s += sv("a0r0", "un trou qui ne traverse pas, ni le moindre relief"); s += sv("a0r1", "un angle interne plus serré que le rayon de sa fraise"); s += sv("a0r2", "un perçage, ni une forme qui bloquerait au démoulage"); s += sv("a0r3", "une fente étroite, ni une cote au dixième de millimètre");
+       return {score: s, total: 4, exp: true}; },
+  1(){ let s = 0;
+       s += sv("a1r0", "elle n'accepte pas le PMMA : elle imprime du PLA, du PETG ou du PP"); s += sv("a1r1", "sa tolérance de 1 mm est plus de trois fois trop grande pour la fente"); s += sv("a1r2", "sa tolérance est trop grande, et il ne sait pas percer les deux trous"); s += sv("a1q1","un moyen très polyvalent ne sert à rien s'il n'accepte pas la matière"); s += sv("a1q2","non : il est écarté sur la tolérance, avant même qu'on parle de temps");
+       return {score: s, total: 5, exp: !!window.__exp.evalue,
+               expMsg: "Clique d'abord sur « 🏭 Lancer l'atelier » : on ne commente pas un tri qu'on n'a pas fait."}; },
+  2(){ let s = 0;
+       s += nb("rel0", 3.2, 0.05); s += nb("rel1", 17, 0.5); s += sv("a2q1","non : les extrémités sont arrondies, il ne reste que 17 mm de fente droite"); s += sv("a2q2","non : un outil rond ne peut pas creuser un angle vif, c'est son domaine"); s += sv("a2q3","deux dégagements d'angle aux extrémités, qui libèrent la longueur droite");
+       return {score: s, total: 5, exp: true}; },
+  3(){ let s = 0;
+       s += sv("a3q1","oui : 18 min à la découpe laser, 1 h 13 à la fraiseuse numérique"); s += sv("a3q2","la fraiseuse sort du délai : 6 h 25 contre 1 h 10 à la découpe laser"); s += pres("a3j", 70);
+       return {score: s, total: 3, exp: !!window.__exp.quantite,
+               expMsg: "Change d'abord la quantité sur l'atelier (le menu « Nombre de pièces à produire ») : c'est ce geste-là que l'activité te demande de commenter."}; },
+  4(){ return {score: pres("reinv", 140), total: 1, exp: true}; }
+};
+document.querySelectorAll(".btn.check").forEach(btn => btn.addEventListener("click", () => {
+  const n = btn.dataset.check, r = CHECKS[n](), fb = $("fb"+n), ratio = r.score / r.total;
+  if(!r.exp){ fb.textContent = "🔒 " + r.expMsg; fb.className = "feedback show warn"; save(); return; }
+  if(ratio === 1){ fb.textContent = "🎉 Activité validée — " + r.score + "/" + r.total + ". Ouvre la correction pour comparer."; fb.className = "feedback show ok"; }
+  else if(ratio >= .5){ fb.textContent = "🟡 " + r.score + "/" + r.total + " — les encoches ✘ te montrent où regarder, puis re-vérifie."; fb.className = "feedback show warn"; }
+  else { fb.textContent = "🔴 " + r.score + "/" + r.total + " — reprends l'énoncé, la correction reste à portée, et re-vérifie quand tu veux."; fb.className = "feedback show ko"; }
+  save();
+}));
+
+function save(){
+  const o = {inputs: {}, checks: {}, exp: window.__exp};
+  document.querySelectorAll("input, select, textarea").forEach(e => {
+    if(!e.id) return;
+    if(e.type === "checkbox") o.checks[e.id] = e.checked; else o.inputs[e.id] = e.value; });
+  try{ localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+function restore(){
+  let o; try{ o = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){}
+  if(!o) return;
+  Object.entries(o.inputs || {}).forEach(([k, v]) => { const e = $(k); if(e) e.value = v; });
+  Object.entries(o.checks || {}).forEach(([k, v]) => { const e = $(k); if(e) e.checked = v; });
+  window.__exp = o.exp || {};
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r && h.value.trim()) r.textContent = h.value;
+}
+document.addEventListener("input", () => {
+  save();
+  const h = $("hyp"), r = $("rappelHyp");
+  if(h && r) r.textContent = h.value.trim() || "—";
+});
+restore(); majAtelier();
+})();
+</script>
+
+</body>
+</html>

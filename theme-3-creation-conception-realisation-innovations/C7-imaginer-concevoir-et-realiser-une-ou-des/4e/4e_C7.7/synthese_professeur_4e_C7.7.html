@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse professeur — Le support du capteur (4e_C7.7)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:740px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+.limite{background:#fdeff1;border-left:4px solid #b0344b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+code{background:#eef3fa;padding:1px 5px;border-radius:4px;font-size:.92em}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_4e_C7.7_support-du-capteur.html">← Séquence</a><a href="qcm_4e_C7.7_support-du-capteur.html">🧠 QCM</a><a href="lexique_4e_C7.7.html">📖 Lexique</a></nav>
+<h1>🏭 Le support du capteur — synthèse professeur</h1>
+<h2>Le pari de la séquence</h2>
+<p>Le verbe du code est <b>choisir</b>, et la phrase du programme est <em>exactement la
+même qu'en 3e</em>. Ce n'est donc pas elle qui distingue les deux niveaux : c'est le geste.
+En 4e, la forme est <b>donnée</b> — elle sort de la modélisation — et le travail est de la
+confronter aux moyens de l'atelier.</p>
+<p>Le pari du lot tient en une phrase : <b>aucun moyen ne rend le dessin</b>. Deux savent
+produire le support, et ils n'en produisent pas le même. Le laser élargit la fente de son trait
+de coupe ; la fraiseuse arrondit ses extrémités au rayon de sa fraise, et le méplat de 20 mm ne
+trouve plus que 17 mm de droit. Ce n'est pas un défaut : c'est l'outil.</p>
+<p><b>Le moment qui décide</b> est l'activité 3. La quantité passe de 4 à 30, et la fraiseuse —
+toujours parfaitement capable — sort des 3 h de machine disponibles. <b>« Capable » et « à
+temps » sont deux questions différentes</b>, et l'atelier les affiche sur deux jauges séparées
+parce qu'on les confond tout le temps.</p>
+<h2>Les moyens de l'atelier, et leur verdict</h2>
+<table><tr><th>Moyen</th><th>Temps machine</th><th>Ce qu'il laisse sur la pièce</th><th>Verdict sur le dessin d'origine</th></tr>
+<tr><td><b>Découpe laser CO₂ (plaque à plat)</b></td><td>4 p. : 18 min · 30 p. : 1 h 10</td><td>un trait de coupe de 0,2 mm : toute ouverture sort 0,2 mm plus large que dessinée, et le chant est légèrement conique</td><td>✔ capable</td></tr>
+<tr><td><b>Fraiseuse numérique 3 axes (fraise Ø 3 mm)</b></td><td>4 p. : 1 h 13 · 30 p. : 6 h 25 <b>✗</b></td><td>tout angle interne arrondi au rayon de la fraise, soit 1,5 mm — ce n'est pas un défaut, c'est l'outil</td><td>✔ capable</td></tr>
+<tr><td><b>Impression 3D (dépôt de fil, buse 0,4 mm, couche 0,2 mm)</b></td><td>4 p. : 2 h 55 · 30 p. : 20 h 15 <b>✗</b></td><td>un bourrelet de première couche à la base, et des stries visibles sur les faces inclinées</td><td>✘ il n'accepte pas le PMMA</td></tr>
+<tr><td><b>Sciage et perçage à la main</b></td><td>4 p. : 1 h 12 · 30 p. : 9 h <b>✗</b></td><td>une cote juste à 1 mm près, et deux pièces jamais tout à fait pareilles</td><td>✘ sa tolérance courante est de 1,00 mm</td></tr>
+<tr><td><b>Thermoformage sur moule</b></td><td>4 p. : 1 h 16 · 30 p. : 3 h</td><td>une paroi qui s'amincit dans les angles, d'autant plus que la forme est profonde</td><td>✘ sa tolérance courante est de 1,00 mm · il ne perce pas</td></tr>
+</table>
+<p style="font-size:.9em;color:#555">Temps machine disponible avant la date : <b>3 h</b>. Toutes ces valeurs sont calculées par <code>moyens.py</code>, livré dans ce dossier.</p>
+<h2>Ce que l'élève sait faire à la fin</h2>
+<ul>
+<li>dire ce que chaque moyen de l'atelier ne sait pas faire, et pourquoi</li>
+<li>écarter un moyen sur la matière avant d'examiner ses performances</li>
+<li>prévoir ce qu'une machine fera d'un dessin avant de la lancer</li>
+<li>calculer la longueur droite utile d'une fente usinée à la fraise</li>
+<li>corriger un dessin par des dégagements d'angle sans toucher à la fonction</li>
+<li>tenir compte de la quantité et du temps machine dans le choix du moyen</li>
+</ul>
+<h2>Ce que la séquence ne fait pas — et pourquoi</h2>
+<div class="box limite"><p><b>Les temps sont des ordres de grandeur d'atelier de collège</b>, pas des fiches constructeur. Ce qui doit être vrai, c'est quel moyen sait faire quoi — pas la seconde près. La version 🅰 mesure les temps réels, et l'écart se commente.</p></div>
+<div class="box limite"><p><b>Aucune pièce n'est réellement produite.</b> L'atelier simule ; la version 🅰 lance les deux moyens sur une chute et mesure la fente au pied à coulisse. C'est elle qui fait foi.</p></div>
+<div class="box limite"><p><b>Les 3 h de machine disponibles sont une donnée du scénario.</b> Le bonus demande justement d'où elles viennent — un emploi du temps se négocie, contrairement au domaine d'une machine.</p></div>
+<div class="box limite"><p><b>Le coût matière n'entre pas dans le lot.</b> Il ne départage pas ici, et l'ajouter aurait brouillé la seule question posée : quel moyen sait produire cette forme, et dans quel délai.</p></div>
+<h2>Positionnement (LSU)</h2>
+<table><tr><th>Maîtrise</th><th>Ce qu'on observe</th></tr>
+<tr><td>🔴 Insuffisante</td><td>choisit la machine la plus précise ou la plus rapide</td></tr>
+<tr><td>🟠 Fragile</td><td>écarte les moyens si on relit le domaine de chacun avec lui</td></tr>
+<tr><td>🟢 Satisfaisante</td><td>écarte, puis compare les temps, et dit ce que la machine fera du dessin</td></tr>
+<tr><td>⭐ Très bonne</td><td>et corrige le dessin pour qu'un moyen disponible sache le produire</td></tr>
+</table>
+<h2>Durée</h2>
+<p><b>2 séances de 55 min</b> — 95 minutes d'activités, marge comprise. Le bandeau de la séquence l'annonce, et <code>_outils/mesurer_temps_seances.py</code> le vérifie.</p>
+<footer>Synthèse professeur — 4e_C7.7. Programme 2024, Thème 3.</footer>
+</body>
+</html>

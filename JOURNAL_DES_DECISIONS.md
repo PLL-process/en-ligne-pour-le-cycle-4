@@ -9270,3 +9270,123 @@ une comparaison fausse : aucun test ne vérifie qu'on compare au bon candidat.
   verrous en place, et le dépôt refuse ensuite toute commande qui écrit l'index. Vérifié sur ce
   lot : `warning: unable to unlink '.git/objects/maintenance.lock'`. Les commandes git qui
   écrivent se lancent **nativement** sur la machine, jamais depuis le montage.
+
+---
+
+## 2026-08-31 — Lots C7.7 en 4e et 3e : confronter, puis corriger — et plus aucun code « À CRÉER »
+
+Le programme 2024 emploie **la même phrase** aux deux niveaux : « Choisir les moyens et produire
+la forme voulue ». Ce n'est donc pas elle qui distingue 4<sup>e</sup> et 3<sup>e</sup>, et il a
+fallu chercher le geste ailleurs (règle n°222).
+
+| niveau | ce qui est donné | ce qui se règle | le geste |
+|---|---|---|---|
+| 4<sup>e</sup> | la forme, sortie de la modélisation | **la quantité** | **confronter** |
+| 3<sup>e</sup> | le moyen, choisi en `C7.3` | **chaque cote du dessin** | **corriger** |
+
+### L'instrument, et les deux idées qu'il rend calculables
+
+`atelier.py` engendre un **atelier des moyens** — six procédés, chacun décrit par un **domaine**
+et non par une note. Deux idées y deviennent manipulables :
+
+- **un moyen n'a pas de qualité, il a un domaine.** Hors de son domaine il ne fait pas
+  « moins bien » : il ne fait pas, ou il fait autre chose. Une fraiseuse ne *rate* pas un angle
+  interne vif — elle le fait rond, parce qu'un outil rond ne peut rien faire d'autre ;
+- **tout moyen déforme le dessin, à sa manière, et toujours.** C'est le champ `empreinte`, et
+  c'est le cœur du code d'appui `4e_C4.3`.
+
+`moyens.py` calcule tout : temps, seuils, empreintes, verdicts. `python3 moyens.py` rejoue les
+deux tables.
+
+### 4e — le support du capteur : le même dessin, deux pièces
+
+Cinq moyens, trois écartés — et pas pour la raison qu'on croit. L'impression 3D, la plus
+polyvalente de l'atelier, tombe **la première** : elle n'imprime pas le PMMA. Le sciage tombe sur
+la tolérance, avant qu'on ait parlé de temps.
+
+Restent deux moyens, et **aucun ne rend le dessin** :
+
+| moyen | ce qu'il fait de la fente 20 × 3 |
+|---|---|
+| découpe laser | trait de coupe de 0,2 mm → la fente sort à **3,20 mm**, angles vifs |
+| fraiseuse Ø 3 | extrémités en demi-cercle R1,5 → **17 mm** de droit au lieu de 20 |
+
+Le méplat de 20 mm bute sur les arrondis. On corrige en dessinant des **dégagements d'angle**,
+qui libèrent la longueur droite sans rien changer à la fonction.
+
+Puis la quantité tranche : à **4 pièces**, 18 min au laser et 1 h 13 à la fraiseuse — les deux
+tiennent dans les 3 h disponibles. À **30 pièces**, 1 h 10 contre **6 h 25** : la fraiseuse sort
+du délai **tout en restant parfaitement capable**. Deux jauges séparées, parce qu'on confond
+les deux questions (règle n°224).
+
+### 3e — produire le boîtier : corriger le dessin, pas le cahier des charges
+
+Tout est décidé — `C7.3` a choisi le PETG imprimé au collège, `C7.6` a modélisé la pièce — et
+rien n'est fabricable. Trois cotes sur cinq sont hors du domaine de la buse :
+
+| la cote | ce que la machine lui reproche | la correction |
+|---|---|---|
+| casquette à **70°** | au-delà de 45°, la couche ne repose plus assez | **45°** — la pente écarte toujours l'eau |
+| rainure de **0,3 mm** | une couche fait 0,2 : c'est une couche et demie | **0,6 mm** — trois couches franches |
+| jeu de **0,1 mm** | la tolérance est de 0,3 : les pièces se soudent | **0,4 mm** — le joint fait l'étanchéité |
+
+**Et ce n'est pas le geste de C7.3.** Là, aucun matériau ne passait, il fallait rouvrir le
+*cahier des charges* et nommer qui paierait. Ici on n'y touche pas : ni matière, ni encombrement,
+ni étanchéité, ni masse admise. **Personne ne paie** — c'est ce qui rend ce geste préférable, et
+pourquoi on le cherche en premier.
+
+**Le piège est symétrique**, et c'est le meilleur moment du lot : **deux cotes n'ont besoin
+d'aucune correction**. La paroi de 2,9 mm vient du calcul de `3e_C7.3`, et les angles internes
+vifs, l'impression les fait très bien. Les toucher est compté sur une **jauge à part**. Le plus
+difficile de la séance est de ne pas toucher à ce qui va.
+
+Dernier temps : l'impression déportée, décidée le 30/08. Douze boîtiers demandent **8 h 15** de
+machine pour 3 h disponibles par semaine. Le lycée voisin les imprime : même temps machine, dix
+jours de délai, **et une seule fournée**. On perd l'itération — d'où l'appui sur `3e_C8.1`, et
+d'où la seule chose qui la remplace : **un contrôle sur la première pièce, avant de lancer les
+onze autres.**
+
+### Ce que les lots portent
+
+2 séquences · 2 QCM de 30 questions et 90 réfutations · 2 lexiques de 30 notions · 4 synthèses ·
+2 fiches · 2 matrices engendrées depuis les banques et associées par nom · **tests réels 38/38 et
+52/52 sur les séquences, 32/32 sur chacun des deux QCM**. Biais de longueur : **0 bonne réponse
+détachée sur 60**, écarts moyens +0,1 et +0,5 caractère.
+
+**Et il ne reste aucun code « À CRÉER ».** Les 114 codes du cycle 4 sont couverts : 51 par une
+séquence mutualisée, 44 complets et validables, 16 à vérifier par l'enseignant, 3 existants à
+améliorer.
+
+### Quatre défauts attrapés, dont deux qu'aucun test n'aurait vus seul
+
+- **la colonne d'état contredisait le texte de la séquence.** L'activité annonce « trois lignes
+  portent une croix » ; l'instrument n'en affichait aucune, parce qu'il lisait l'état d'une cote
+  sur *l'ensemble* des moyens au lieu de le lire sur celui que le cahier des charges a déjà
+  retenu. Le texte était juste, l'instrument racontait autre chose ;
+- **la paroi contredisait le lot voisin.** Le dessin d'origine portait 1,2 mm quand `3e_C7.3`
+  avait calculé **2,9 mm** pour le PETG. Deux lots auraient affirmé deux épaisseurs pour la même
+  pièce. La cote a été remise à sa valeur calculée, et le défaut déplacé sur le jeu du couvercle ;
+- **le motif de refus parlait de « fraise » pour le thermoformage.** Un message engendré par une
+  règle générique attribuait à toutes les machines l'outil d'une seule ;
+- **le 4e mesurait 105 min d'activités pour 95 réellement écrites.** Une correction contenait
+  « (10 min de préparation » : la parenthèse suivie d'un nombre et de « min » est exactement le
+  motif que `mesurer_temps_seances.py` cherche. Reformulé sans parenthèse.
+
+### Les règles nouvelles
+
+- **n°232** — **quand deux niveaux portent la même formulation officielle, le geste ne se lit
+  pas dans la phrase.** Il se lit dans **ce qui est donné et ce qui se règle**. Ici : en 4<sup>e</sup>
+  la forme est donnée et la quantité se règle ; en 3<sup>e</sup> le moyen est donné et les cotes
+  se règlent. Sans ce déplacement, on aurait écrit deux fois la même séquence.
+- **n°233** — **un instrument doit dire ce que le texte annonce, ligne par ligne.** « Trois cotes
+  bloquent » n'a de sens que rapporté à une machine précise ; calculé sur l'ensemble de l'atelier,
+  le même mot devient faux. Un indicateur juste dans l'absolu peut être faux dans la phrase qui
+  l'annonce.
+- **n°234** — **un lot voisin est une source de vérité, pas un décor.** Reprendre une pièce déjà
+  traitée oblige à relire ses valeurs : la paroi de 2,9 mm avait été *calculée*, et j'en avais
+  redessiné une autre sans m'en apercevoir. Deux lots qui se citent doivent se vérifier l'un
+  l'autre.
+- **n°235** — **une mesure fausse VERS LE HAUT est aussi une mesure fausse.** Les 105 min lues
+  pour 95 écrites rognaient la marge annoncée : conservateur, et faux. Le pendant de la règle
+  n°218, et la même cause — un indicateur bâti sur une convention d'écriture mesure la
+  convention.
