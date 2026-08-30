@@ -10,10 +10,11 @@
 
 L'activité 3 lui est consacrée : l'algorigramme devient un programme, en blocs puis en Python. Le QCM du lot y consacre 10 de ses 30 questions.
 
-**Ce code y est évalué.** La ressource porte un QCM et une production d'élève qui permettent de le positionner.
+**Ce code y est évalué.** La banque de la ressource porte 10 questions étiquetées `4e_C9.2` (`qcm_4e_C9_jardin-programme.html`) : le score se reporte.
 
 ---
 
 *Formulation recopiée de `_outils/data_competences.py`, seule autorité du dépôt sur les
 libellés du référentiel. Ce README est engendré par `_outils/pointeurs_codes.py` : il n'est
-écrit que si la ressource cible existe réellement sur le disque.*
+écrit que si la ressource cible existe réellement sur le disque, et la phrase sur l'évaluation
+est **mesurée** dans la banque de cette ressource, jamais déclarée.*

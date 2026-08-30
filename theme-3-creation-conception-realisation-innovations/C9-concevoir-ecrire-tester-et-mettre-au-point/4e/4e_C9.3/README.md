@@ -10,10 +10,11 @@
 
 Trois activités lui sont consacrées : le jeu d'essais, le clignotement corrigé par hystérésis, et le réinvestissement sans modèle. Le QCM du lot y consacre 10 de ses 30 questions.
 
-**Ce code y est évalué.** La ressource porte un QCM et une production d'élève qui permettent de le positionner.
+**Ce code y est évalué.** La banque de la ressource porte 10 questions étiquetées `4e_C9.3` (`qcm_4e_C9_jardin-programme.html`) : le score se reporte.
 
 ---
 
 *Formulation recopiée de `_outils/data_competences.py`, seule autorité du dépôt sur les
 libellés du référentiel. Ce README est engendré par `_outils/pointeurs_codes.py` : il n'est
-écrit que si la ressource cible existe réellement sur le disque.*
+écrit que si la ressource cible existe réellement sur le disque, et la phrase sur l'évaluation
+est **mesurée** dans la banque de cette ressource, jamais déclarée.*
