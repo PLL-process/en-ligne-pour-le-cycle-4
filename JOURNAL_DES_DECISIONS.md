@@ -10280,3 +10280,38 @@ Tous les codes de C7 sont désormais évalués quelque part, aux trois niveaux.
 *L'entrée `5e_C7.2` de `POINTEURS` est à retirer — le dossier porte son lot. Elle vit dans
 `_outils/`, hors périmètre : livraison à part, et l'outil signale lui-même le retard sans rien
 écraser.*
+
+## 2026-08-30 — Quatorze coches vertes que personne ne pouvait rejouer
+
+Le rapport du lot `5e_C8.2` annonçait « Séquence 14/14 » dans un tableau **écrit à la main**.
+Quatorze lignes, quatorze coches, et rien pour les relancer. Son QCM avait reçu son script la
+veille ; la séquence était restée avec sa liste de bonnes intentions.
+
+- **n°259** — **un tableau de résultats qu'on ne peut pas relancer ne dit pas « ça marche », il
+  dit « ça marchait le jour où quelqu'un a regardé ».** Et il vieillit sans prévenir : rien ne
+  distingue, à la lecture, une coche vérifiée hier d'une coche vérifiée il y a six mois sur une
+  page depuis modifiée.
+
+`tests_5e_C8.2_sequence.mjs` rejoue les quatorze, et **conduit le banc pour de vrai** : il choisit
+un matériau, clique sur les paliers jusqu'à la rupture, remet une éprouvette neuve, recommence
+cinq fois. Les verrous ne sont pas forcés dans le code — ils s'ouvrent par le geste, comme pour
+un élève (règle d'or n°226). Dix contrôles s'ajoutent, dont la comparaison de la formulation
+officielle au référentiel : le test la **lit** dans `data_competences.py` plutôt que de la
+recopier, sinon il cesserait de tester la citation.
+
+### Ce que la suite a trouvé en naissant
+
+**La séquence ne portait aucune consigne de sécurité.** Son voisin immédiat, `5e_C8.1`, écrit
+pourtant « aucune manipulation électrique dans cette séquence : ni très basse tension, ni
+secteur ». Celui-ci décrit un banc de traction où une masse est suspendue, et ne disait rien.
+
+La consigne est ajoutée : le banc de la page est un **simulateur**, il n'y a pas de secteur — et
+si le professeur monte un banc réel, la charge se pose et se retire **à l'arrêt**, personne ne
+reste sous la masse, et c'est lui qui l'installe.
+
+C'est le vingt-quatrième test qui l'a dit, et il ne l'aurait pas dit s'il s'était contenté de
+vérifier les quatorze affirmations d'origine. Un banc de tests qui ne fait que confirmer ce qu'on
+lui a demandé de confirmer ne trouve jamais rien.
+
+*Au passage : la fiche de l'atelier CAO disait encore « 1 séance de 55 minutes par TP » et « les
+trois TP » — elle en compte quatre depuis ce matin. Deux lignes remises d'aplomb.*
