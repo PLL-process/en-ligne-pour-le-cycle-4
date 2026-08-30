@@ -44,7 +44,7 @@ besoin donné.**
 
 - [5e_C2 — Shenzhen, la station de vélos](../../../C2-decrire-les-interactions-entre-un-objet-ou/5e/5e_C2.1/sequence_5e_C2_shenzhen_station_velos.html) — les interactions avec l'utilisateur ;
 - **5e_C3 (ici) — Shanghai, le dernier kilomètre** — caractériser et choisir ;
-- [4e_C1 — Tsinghua, la détection des feux](../../../C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_detection_feux.html) — usages et évolutions ;
-- [3e_C1 — Tsinghua, robotique et feux](../../../C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.1/sequence_3e_C1.1-C1.4_tsinghua_robotique_feux.html) — innovations de rupture.
+- [4e_C1 — Tsinghua, la détection des feux](../../../C1-decrire-les-liens-entre-usages-et-evolutions/4e/4e_C1.1/sequence_4e_C1.1-C1.3_tsinghua_feux.html) — usages et évolutions ;
+- [3e_C1 — Tsinghua, robotique et feux](../../../C1-decrire-les-liens-entre-usages-et-evolutions/3e/3e_C1.1/sequence_3e_C1.1-C1.4_tsinghua_feux.html) — innovations de rupture.
 
 *Lot Thème 1 · 5e — une décision technique qui n'a de sens qu'avec un cahier des charges.*
