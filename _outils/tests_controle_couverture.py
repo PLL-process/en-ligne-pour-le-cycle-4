@@ -2,9 +2,16 @@
 """tests_controle_couverture.py — ce que l'outil doit refuser de croire.
 
 Un diagnostic qui se trompe est pire qu'un diagnostic absent : il rassure.
-Les deux règles que `controle_couverture.py` applique — « ce texte nomme-t-il
-ce code ? » et « ce fichier enseigne-t-il ou oriente-t-il ? » — sont donc
-vérifiées ici sur des cas construits pour les mettre en défaut.
+Les trois règles que `controle_couverture.py` applique — « ce texte nomme-t-il
+ce code ? », « ce fichier enseigne-t-il ou oriente-t-il ? » et « à quel(s)
+code(s) cette étiquette se rattache-t-elle ? » — sont donc vérifiées ici sur
+des cas construits pour les mettre en défaut.
+
+La troisième famille de cas existe parce que la première version de l'outil ne
+lisait pas les légendes `COMP_LABELS` : elle a conclu que sept banques ne
+nommaient aucun code, alors qu'elles le nommaient toutes. Chaque cas de
+`LEGENDES` est un exemple réel du dépôt, y compris les deux sur lesquels je
+m'étais trompé.
 
 Usage : python3 _outils/tests_controle_couverture.py
 Sortie : 0 si tout passe, 1 sinon.
@@ -15,7 +22,28 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from controle_couverture import ORIENTATION, SEUIL_EVALUABLE, _motif  # noqa: E402
+from controle_couverture import (ORIENTATION, SEUIL_EVALUABLE,  # noqa: E402
+                                 _motif, codes_de_letiquette)
+
+#: (étiquette, libellé de la légende, niveau, codes attendus, pourquoi)
+LEGENDES = [
+    ("PAR", "4e_C8.1 — 🖐️ Paramétrer la simulation", "4e", ["C8.1"],
+     "le cas qui a fait tomber la première version de l'outil"),
+    ("PRO", "4e_C8.2 — 📐 Proposer un protocole", "4e", ["C8.2"],
+     "j'avais lu C8.3 dans les questions ; la légende dit C8.2"),
+    ("SEU", "CRCN 3.4 · 1.3 · 5.1 — 📐 Le seuil, le programme, le diagnostic",
+     "3e", [],
+     "une légende peut déclarer un groupe HORS du référentiel — ce n'est pas un manque"),
+    ("ID", "Information et données — 4e_C4.4 · C4.5 · C4.6", "4e",
+     ["C4.4", "C4.5", "C4.6"],
+     "une légende peut nommer plusieurs codes : les questions sont partagées"),
+    ("C6.1", "5e_C6.1 — Identifier les données du programme", "5e", ["C6.1"],
+     "étiquette et légende disent la même chose : un seul code, pas deux"),
+    ("MOD", "5e_C9.2 · C9.3 — 🔧 Modifier et régler", "5e", ["C9.2", "C9.3"],
+     "le second code est écrit sans son niveau"),
+    ("C4.2", "", "5e", ["C4.2"],
+     "sans légende, l'étiquette elle-même fait foi"),
+]
 
 #: (code, niveau, texte, doit_correspondre, pourquoi ce cas existe)
 NOMMAGE = [
@@ -68,17 +96,23 @@ def main():
             echecs.append("orientation %r : attendu %s, obtenu %s (%s)"
                           % (rel, attendu, obtenu, pourquoi))
 
+    for etiquette, libelle, niveau, attendu, pourquoi in LEGENDES:
+        obtenu = codes_de_letiquette(etiquette, libelle, niveau)
+        if obtenu != attendu:
+            echecs.append("légende %r → %r : attendu %s, obtenu %s (%s)"
+                          % (etiquette, libelle[:40], attendu, obtenu, pourquoi))
+
     if SEUIL_EVALUABLE != 5:
         echecs.append("le seuil d'évaluabilité a changé sans que ce test le sache "
                       "(%d) — voir controle_echantillonnage.py" % SEUIL_EVALUABLE)
 
-    total = len(NOMMAGE) + len(ORIENTE) + 1
+    total = len(NOMMAGE) + len(ORIENTE) + len(LEGENDES) + 1
     if echecs:
         for e in echecs:
             print("❌ " + e)
         print("\n%d / %d" % (total - len(echecs), total))
         return 1
-    print("✅ %d contrôles — nommage, orientation, seuil" % total)
+    print("✅ %d contrôles — nommage, orientation, légendes, seuil" % total)
     print("\n%d / %d" % (total, total))
     return 0
 
