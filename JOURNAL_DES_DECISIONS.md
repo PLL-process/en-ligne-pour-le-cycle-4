@@ -9939,3 +9939,72 @@ Une question qui attend un arbitrage mérite d'abord qu'on vérifie qu'elle en e
   programme 2024 différencie presque tous ses codes par un verbe qui monte d'un cran chaque
   année. Un tableau qui donne le même libellé en 5e, 4e et 3e n'a pas simplifié : il a effacé
   l'enseignement, et il y a de bonnes chances qu'il ne cite plus le programme du tout.
+
+## 2026-08-31 — Un contrôle pour la phrase « le programme dit »
+
+Quatre fois en deux jours, une formulation officielle s'est révélée fausse là où le dépôt
+promettait de la recopier. Deux fois dans mes propres séquences C8.1, deux fois dans la fiche de
+l'atelier CAO. À chaque fois trouvée à l'œil, par hasard, en cherchant autre chose.
+
+`_outils/controle_formulations.py` relit désormais tout le dépôt et compare chaque citation à
+`data_competences.py`. Verdicts, du plus grave au plus bénin :
+
+| verdict | ce que cela veut dire |
+|---|---|
+| **AUTRE CODE** | c'est une formulation officielle — celle d'un **autre** code. Chaque mot en est juste. |
+| **ÉTRANGÈRE** | elle ne ressemble à aucune case du référentiel, là où une citation est promise |
+| **FAUSSE** | elle ressemble à la bonne et en diffère |
+| **TRONQUÉE** | elle en est un début exact, arrêté avant la fin |
+
+### Six versions, et cinq d'entre elles avaient tort
+
+Le tableau ci-dessous n'est pas une confession : c'est le compte rendu d'un outil qui a failli
+être livré faux cinq fois de suite, et chaque fois de la même manière — **il cherchait la
+promesse trop loin, ou il regardait au mauvais endroit**.
+
+| version | ce qu'elle rendait | pourquoi c'était faux |
+|---|---:|---|
+| 1 | 72 écarts | l'exergue d'un README se plie sur plusieurs lignes `>` : je lisais la première |
+| 2 | 67 écarts | le gras Markdown comptait comme une différence ; l'exergue avalait le rappel du socle |
+| 3 | 36 écarts | toute cellule voisine d'un code était réputée citer le programme |
+| 4 | 14 écarts | l'en-tête « promettant » cherché était celui d'un **autre** tableau |
+| 5 | 14 écarts | le motif HTML franchissait les cellules et appariait un code avec une ligne bien plus bas |
+| 6 | **2 écarts** | les deux sont réels |
+
+« 7,4 Wh/jour pour 6,04 consommés » a été signalé trois versions de suite comme une citation
+fautive du programme. C'est exactement le défaut que la règle d'or n°242 décrit — et je l'ai
+reproduit cinq fois sur l'outil censé l'incarner. Un contrôle neuf qui trouve beaucoup de fautes
+a d'abord tort ; ce n'est qu'après l'avoir démenti cinq fois qu'on peut le croire.
+
+### Les deux écarts qui restent, et ils sont vrais
+
+- **`5e_C8.2`** — sa séquence, sous l'en-tête « Ce que dit le programme — recopié, pas
+  reformulé », attribue à `5e_C3.1` la formulation de la **4e**. C'est de là que je l'avais
+  recopiée dans `5e_C8.1` : une erreur héritée d'un lot voisin, exactement ce que la règle
+  n°234 encourage à faire — et qu'elle ne dispense pas de vérifier.
+- **`4e_C9.1`** — l'exergue de son README résume trois codes en une phrase de son cru, à
+  l'endroit où le gabarit met la formulation officielle.
+
+Les deux vivent dans le thème 3 : correction dans une livraison à part.
+
+### Le banc de tests rejoue les quatre erreurs réelles
+
+`_outils/tests_controle_formulations.py` — 20 contrôles. Six erreurs à voir (dont les deux
+phrases inventées de la fiche CAO), sept citations justes à laisser tranquilles (pliée, en gras,
+suivie du socle, multi-codes), et une vérification du référentiel lui-même.
+
+Ce banc m'a repris trois fois. `3e_C3.4` n'était pas « FAUSSE » mais « ÉTRANGÈRE ». « Modéliser
+une forme voulue » fait 26 caractères et passait sous le seuil de comparaison — une formulation
+officielle courte, rangeable sous n'importe quel code sans que rien ne bronche. Et surtout :
+j'avais écrit la règle n°247 comme une **loi**, alors que `C7.7` est bel et bien identique en 4e
+et en 3e dans le programme. Un soupçon transformé en loi fabrique des fausses alertes.
+
+### Les règles nouvelles
+
+- **n°248** — **un contrôle neuf qui trouve beaucoup de fautes a d'abord tort.** Six versions,
+  cinq fausses. La bonne question devant un rapport accablant n'est pas « comment réparer tout
+  cela ? » mais « qu'est-ce que mon instrument regarde au juste ? ».
+- **n°249** — **un seuil de longueur doit être plus bas que le plus court des cas vrais.**
+  « Modéliser une forme voulue » fait 26 caractères. Un contrôle réglé à 30 laissait passer,
+  silencieusement, toute erreur portant sur les formulations les plus brèves du programme —
+  celles qu'on recopie le plus vite, donc le plus mal.
