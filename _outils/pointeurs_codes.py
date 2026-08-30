@@ -96,18 +96,6 @@ POINTEURS = {
              "L'activité 2 de la séquence est consacrée à ce code : deux solutions proposées et "
              "justifiées. La matrice de couverture du lot le relie aux questions 3, 8, 9 et 13 "
              "du QCM.", True),
- "5e_C7.6": (C7 + "/5e/5e_C7.6", "../../atelier-cao/tp_5e_de_onshape.html",
-             "TP 5e — Le dé (atelier CAO)",
-             "Le TP met en œuvre les moyens de modélisation selon une procédure fournie : "
-             "esquisser, coter, extruder, enlever, adoucir.", False),
- "4e_C7.6": (C7 + "/4e/4e_C7.6", "../../atelier-cao/tp_4e_socle_assemblage.html",
-             "TP 4e — Le dé sur son socle (atelier CAO)",
-             "Le TP modifie une forme à l'aide d'une modélisation : la révolution, puis "
-             "l'assemblage et les contraintes.", False),
- "3e_C7.6": (C7 + "/3e/3e_C7.6", "../../atelier-cao/tp_3e_boitier_etanche.html",
-             "TP 3e — Le boîtier étanche (atelier CAO)",
-             "Le TP modélise une forme voulue : la coque, la rainure, le passage de câble, la "
-             "vue en coupe. C'est ce boîtier que 3e_C7.7 produit ensuite.", False),
  "4e_C9.2": (C9 + "/4e/4e_C9.2", "../4e_C9.1/sequence_4e_C9_jardin-programme.html",
              "Séquence 4e — Le jardin connecté se programme",
              "L'activité 3 lui est consacrée : l'algorigramme devient un programme, en blocs "
@@ -118,6 +106,11 @@ POINTEURS = {
              "hystérésis, et le réinvestissement sans modèle. Le QCM du lot y consacre 10 de ses "
              "30 questions.", True),
 }
+
+#: retirés le 30/08/2026 : `5e_C7.6`, `4e_C7.6` et `3e_C7.6` renvoyaient au TP de
+#: l'atelier CAO. Ces trois dossiers portent maintenant leur propre lot — QCM,
+#: synthèses, fiche, matrice, lexique, rapport — et leur propre README. L'outil
+#: les avait lui-même signalés comme « dossiers qui ont grandi ».
 
 MODELE = """# {code} — {titre}
 

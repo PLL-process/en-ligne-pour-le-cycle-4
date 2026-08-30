@@ -10157,3 +10157,43 @@ phrase.
 *Note de date : plusieurs entrées et fichiers des deux derniers jours portent la date du
 **31/08/2026** alors qu'ils ont été écrits le **30/08**. L'erreur est mienne ; elle n'est pas
 reprise ici, et les anciennes mentions sont laissées telles quelles plutôt que réécrites.*
+
+## 2026-08-30 — L'angle mort que le contrôle déclarait, et la table qu'il fallait ranger
+
+Deux suites courtes à la livraison CAO, l'une et l'autre demandées par les outils eux-mêmes.
+
+### Les ancres
+
+`controle_liens.py` annonçait, à chaque exécution : *« les ancres `#…` ne sont pas suivies : il
+vérifie le fichier, pas l'identifiant à l'intérieur »*. Déclarer un angle mort est honnête ; le
+laisser ouvert quand il se comble en trente lignes ne l'est plus.
+
+Un lien d'ancre morte est particulier : il ne mène pas *ailleurs*, il mène **en haut de la bonne
+page**. Le lecteur croit avoir mal cliqué, recommence, et renonce. Rien ne signale l'erreur — ni
+un 404, ni une page blanche.
+
+Le dépôt en compte **48, toutes justes**. C'est précisément le bon moment pour installer le
+contrôle : pendant qu'il ne dénonce personne, on peut vérifier qu'il dit vrai plutôt que de le
+régler sous la pression d'un rapport accablant.
+
+Quatre indulgences, tenues explicitement : `#top` est toujours accepté (le navigateur remonte
+sans identifiant), la forme ancienne `name="…"` compte autant qu'un `id`, une ancre vers un
+fichier Markdown n'est pas vérifiée (son identifiant naît au rendu, pas dans le texte), et un
+identifiant **posé par un script à l'exécution** n'est pas visible ici — le contrôle lit la
+source brute et ne réclame que ce qu'il ne trouve nulle part.
+
+- **n°255** — **un lien d'ancre morte ne mène pas ailleurs, il mène en haut de la bonne page.**
+  C'est ce qui le rend indétectable : aucune erreur ne s'affiche, et le lecteur se croit fautif.
+
+Banc : `tests_controle_liens.py` passe de 11 à **16 contrôles** — l'ancre morte qu'il faut voir,
+et les quatre formes sur lesquelles il ne doit pas crier.
+
+### La table des pointeurs
+
+`pointeurs_codes.py` signalait depuis la fusion du lot CAO trois « dossiers qui ont grandi » :
+`5e_C7.6`, `4e_C7.6`, `3e_C7.6` portent désormais leur propre lot et leur propre README. Leurs
+entrées sont retirées de `POINTEURS`, avec une note qui dit pourquoi. L'outil ne signale plus
+rien.
+
+C'était le comportement voulu : le message n'était pas une alerte, c'était un rappel — et un
+rappel qu'on laisse traîner redevient du bruit.
