@@ -1,0 +1,70 @@
+{
+ "titre": "5e_C8.1 — la patère du hall",
+ "securite": "ne jamais placer une main ni la tête sous une charge suspendue",
+ "formulation": "Utiliser une simulation fournie pour valider la tenue mécanique d’un matériau.",
+ "appui": "5e_C3.1",
+ "formulationAppui": "Repérer pour un OST les matériaux, les sources et les formes d’énergies, le traitement de l’information.",
+ "annonce": 110,
+ "activitesMin": 85,
+ "simulateur": {
+  "sigma_service": "11,8 MPa",
+  "materiaux": [
+   "Bois (pin)",
+   "PLA imprimé en 3D",
+   "PVC rigide",
+   "Aluminium",
+   "Acier doux"
+  ],
+  "coefficients": {
+   "Bois (pin)": "2,1",
+   "PLA imprimé en 3D": "3,8",
+   "PVC rigide": "3,8",
+   "Aluminium": "11,9",
+   "Acier doux": "20,0"
+  },
+  "retenus": 4,
+  "ecarte": "Bois (pin)",
+  "sigma_identique": [
+   "11,8 MPa",
+   "11,8 MPa",
+   "11,8 MPa",
+   "11,8 MPa",
+   "11,8 MPa"
+  ]
+ },
+ "verrous": {
+  "1": "simule",
+  "2": "tous",
+  "3": "bois"
+ },
+ "activites": {
+  "1": {
+   "a1q1": "11,8 MPa",
+   "a1q2": "ne change pas",
+   "a1q3": "la contrainte ne dépend que de la charge et de la forme du bras"
+  },
+  "2": {
+   "a2q1": "4",
+   "a2q2": "Bois (pin)",
+   "a2q3": "2,1"
+  },
+  "3": {
+   "a3q1": "oui, son coefficient sur la rupture vaut 3,4",
+   "a3q2": "ils ne mesurent pas la même chose : le banc mesure la rupture, la simulation la déformation permanente",
+   "a3q3": "leur limite élastique est la même (45 MPa) : le classement du banc ne prouve rien entre eux"
+  },
+  "4": {
+   "a4q1": "PLA imprimé en 3D",
+   "a4q2": "30,0 h",
+   "a4q3": "PVC rigide",
+   "a4q4": "le PVC devient cassant sous les UV : cette patère ne conviendrait pas en extérieur"
+  },
+  "5": {
+   "a5q1": "beaucoup plus grande : le bras est plus long ET la charge plus lourde",
+   "a5q2": "la limite élastique"
+  }
+ },
+ "persistance": {
+  "hyp": "Je pense que 41 kg suffisent largement."
+ }
+}

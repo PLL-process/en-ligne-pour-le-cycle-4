@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thème 3 · 3e · QCM — Le mât de la station (3e_C8.1)</title>
+<style>
+  :root{
+    --bg:#050f24; --panel:#0d2347; --panel2:#0a1b3d; --border:#274a8a;
+    --title:#81aaff; --sub:#9bbefc; --head:#c68ef2; --text:#e4eaf5;
+    --input-bg:#173666; --input-bd:#2e5d9f; --btn:#1d4e89; --btn-h:#2966b1;
+    --hl:#61dafb; --ok:#81fba1; --warn:#ffd66b; --err:#ff7b88;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;padding:0 16px 70px;line-height:1.55}
+  h1{font-size:1.5em;text-align:center;margin:22px 0 4px;color:var(--title)}
+  .subtitle{text-align:center;color:var(--sub);margin-bottom:10px;font-size:.95em}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  section.card{max-width:880px;margin:0 auto 18px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px 22px;box-shadow:0 10px 26px rgba(0,0,0,.28)}
+  h2{color:var(--head);font-size:1.08em;margin-top:0}
+  a{color:var(--hl)}
+  .identite{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:880px;margin:0 auto 10px}
+  @media(max-width:720px){.identite{grid-template-columns:1fr 1fr}}
+  .identite label{font-size:.75em;color:var(--sub);display:block;margin-bottom:3px}
+  input,select,textarea{background:var(--input-bg);border:1px solid var(--input-bd);color:var(--text);border-radius:8px;padding:7px 10px;font-family:inherit;font-size:.92em;width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--hl);outline-offset:1px}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-family:inherit;font-size:.9em}
+  .btn:hover{background:var(--btn-h)}
+  .btn.small{padding:6px 11px;font-size:.8em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd)}
+  .btn.warn{background:#8a4a1d}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  /* tableau de bord */
+  .dash{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;font-size:.78em;text-align:center;margin-bottom:10px}
+  @media(max-width:820px){.dash{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:520px){.dash{grid-template-columns:repeat(2,1fr)}}
+  .dash>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 4px}
+  .dash b{display:block;font-size:1.35em}
+  .dash .v-ok{color:var(--ok)} .dash .v-err{color:var(--err)} .dash .v-hl{color:var(--hl)} .dash .v-warn{color:var(--warn)}
+  .progress-bar{height:12px;background:#08132c;border-radius:999px;overflow:hidden;margin:4px 0 10px}
+  .progress-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#1d4e89,var(--hl));transition:width .4s;border-radius:999px}
+  /* minuteur */
+  .timer-zone{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .timer-display{font-family:ui-monospace,'Cascadia Mono','Segoe UI Mono','Roboto Mono',Menlo,Consolas,monospace;font-size:1.5em;color:var(--warn);min-width:110px;text-align:center}
+  .timer-off{color:#5b7bb8;font-size:.8em}
+  /* modes */
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .modes .btn.mode-actif{background:linear-gradient(90deg,#7a3fa0,#c68ef2)}
+  /* grille navigation */
+  .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:10px}
+  .grille button{aspect-ratio:1;border-radius:9px;border:1px solid var(--input-bd);background:var(--input-bg);color:var(--text);font-weight:700;cursor:pointer;font-family:inherit;font-size:.85em;position:relative}
+  .grille button.actuelle{outline:3px solid var(--hl)}
+  .grille button.q-ok{background:#123322;border-color:var(--ok);color:var(--ok)}
+  .grille button.q-err{background:#3a1218;border-color:var(--err);color:var(--err)}
+  .grille button.q-rep{background:#173666;border-color:var(--hl)}
+  .grille button .marque{position:absolute;top:-6px;right:-4px;font-size:.8em}
+  .filtres{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .filtres .btn.actif{background:var(--btn-h);outline:2px solid var(--hl)}
+  /* question */
+  .q-comp{font-size:.78em;color:var(--head);font-weight:600}
+  .q-texte{font-size:1.05em;font-weight:600;margin:8px 0 14px}
+  .q-figure{margin:0 0 14px}
+  .q-figure img{width:100%;max-width:760px;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--border);background:#050f24}
+  .q-figure figcaption{text-align:center;font-size:.78em;color:var(--sub);margin-top:4px}
+  .options{display:grid;gap:9px}
+  .option{background:var(--panel2);border:2px solid var(--input-bd);border-radius:11px;padding:11px 14px;cursor:pointer;text-align:left;color:var(--text);font-family:inherit;font-size:.95em;display:flex;gap:10px;align-items:flex-start}
+  .option:hover:not(:disabled){border-color:var(--hl)}
+  .option .lettre{font-weight:700;color:var(--hl)}
+  .option.choisie{border-color:var(--hl);background:#12305e}
+  .option.bonne{border-color:var(--ok);background:rgba(129,251,161,.1)}
+  .option.mauvaise{border-color:var(--err);background:rgba(255,123,136,.1)}
+  .option:disabled{cursor:default;opacity:.92}
+  .q-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  /* correction */
+  .correction-bloc{margin-top:16px;border-radius:12px;padding:14px 16px;display:none}
+  .correction-bloc.show{display:block}
+  .correction-bloc.c-ok{background:rgba(129,251,161,.08);border:1px solid #2f6b40}
+  .correction-bloc.c-err{background:rgba(255,123,136,.07);border:1px solid #6b2f38}
+  .correction-bloc h3{margin:0 0 6px;font-size:1em}
+  .correction-bloc .verdict-ok{color:var(--ok)} .correction-bloc .verdict-err{color:var(--err)} .correction-bloc .verdict-nr{color:var(--warn)}
+  .bloc-detail{background:rgba(8,19,44,.6);border-radius:9px;padding:9px 12px;margin:8px 0;font-size:.9em}
+  .bloc-detail b{color:var(--hl)}
+  .bloc-detail.nuance{border:1px solid #3d5c8a;background:rgba(20,34,66,.72)}
+  .bloc-detail.nuance b{color:#8fb6ff}
+  .bloc-detail.retenir{border:1px solid #2f6b40}
+  .bloc-detail.retenir b{color:var(--ok)}
+  .bloc-detail.encoura{border:1px solid #6a5a1f}
+  .bloc-detail.encoura b{color:var(--warn)}
+  .dist-liste{margin:4px 0 0;padding-left:18px;font-size:.88em}
+  .dist-liste li{margin:4px 0}
+  /* résultats */
+  .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;font-size:.85em}
+  @media(max-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
+  .res-grid>div{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .res-grid b{display:block;font-size:1.5em}
+  .note20{font-size:2.4em;text-align:center;color:var(--warn);font-weight:700;margin:8px 0}
+  table.bilan{width:100%;border-collapse:collapse;font-size:.85em;margin-top:10px}
+  table.bilan th,table.bilan td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+  table.bilan th{background:var(--input-bg);color:var(--hl)}
+  .maitrise-ok{color:var(--ok);font-weight:600}
+  .maitrise-moyen{color:var(--warn);font-weight:600}
+  .maitrise-ko{color:var(--err);font-weight:600}
+  footer{max-width:880px;margin:26px auto 0;text-align:center;color:#5b7bb8;font-size:.78em}
+  .ecran{display:none}
+  .ecran.actif{display:block}
+  .saved-note{font-size:.76em;color:var(--ok);text-align:center;min-height:1.1em}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    body{background:#fff;color:#111}
+    section.card{background:#fff;color:#111;border-color:#999;box-shadow:none}
+    .btn,.grille,.filtres,.modes,.timer-zone{display:none!important}
+    .ecran{display:block!important}
+    h1,h2{color:#111}
+  }
+</style>
+</head>
+<body>
+<style id="navharm-css">
+#navharm{position:sticky;top:0;z-index:1200;display:flex;gap:8px;align-items:center;
+ padding:7px 12px;background:rgba(5,15,36,.93);border-bottom:1px solid #274a8a;
+ -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+#navharm a{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:5px 14px;
+ border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;color:#9bbefc;
+ font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+#navharm a:focus-visible{outline:2px solid #61dafb;outline-offset:2px}
+@media print{#navharm{display:none}}
+</style>
+<nav id="navharm" aria-label="Navigation du site"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C8.1_mat-de-la-station.html">← Séquence</a></nav>
+<h1>📡 QCM — Le mât de la station : la simulation avant le banc</h1>
+<p class="subtitle">Régler un instrument sur une réponse connue, la charge du vent qui dépend de la forme, la limite qu'on choisit, et l'angle mort que deux instruments partagent — 20 questions sur 3e_C8.1, 10 sur 3e_C3.4</p>
+<div class="badges">
+  <span class="badge niveau">3e</span>
+  <span class="badge code">3e_C8.1 · 3e_C3.4</span>
+  <span class="badge theme">30 questions · 90 réfutations · chaque proposition fausse est réfutée une par une</span>
+</div>
+<p style="text-align:center"><a href="sequence_3e_C8.1_mat-de-la-station.html">⬅ Revenir à la séquence</a></p>
+
+<div class="identite">
+  <div><label for="id_nom">Nom</label><input type="text" id="id_nom"></div>
+  <div><label for="id_prenom">Prénom</label><input type="text" id="id_prenom"></div>
+  <div><label for="id_classe">Classe</label><input type="text" id="id_classe"></div>
+  <div><label for="id_date">Date</label><input type="date" id="id_date"></div>
+</div>
+<p class="saved-note" id="savedNote" role="status" aria-live="polite"></p>
+
+<section class="card">
+  <h2>📊 Ma progression</h2>
+  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><div id="pfill"></div></div>
+  <div class="dash">
+    <div>Répondu<b id="dRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="dOk" class="v-ok">0</b></div>
+    <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">30</b></div>
+    <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
+    <div>Score<b id="dScore" class="v-hl">0 %</b></div>
+    <div>Note<b id="dNote" class="v-warn">— /20</b></div>
+  </div>
+  <div class="timer-zone">
+    <span class="timer-display" id="timerDisp" aria-live="off">00:00</span>
+    <button class="btn small" id="tStart">▶ Démarrer</button>
+    <button class="btn small ghost" id="tPause" disabled>⏸ Pause</button>
+    <button class="btn small ghost" id="tResume" disabled>⏵ Reprendre</button>
+    <label class="timer-off" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="tSans" style="width:auto"> travailler sans minuteur</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎛 Mode de travail</h2>
+  <div class="modes">
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (30)</button>
+    <button class="btn" data-mode="dix">10 questions</button>
+    <button class="btn" data-mode="cible">Révision ciblée</button>
+    <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
+    <button class="btn" data-mode="marquees">Marquées « à revoir »</button>
+  </div>
+  <div id="cibleChoix" style="display:none;margin-top:10px;text-align:center">
+    <label for="selComp" style="font-size:.85em;color:var(--sub)">Compétence à réviser :</label>
+    <select id="selComp" style="max-width:420px;display:inline-block">
+      <option value="BOI">📦 La boîte étiquetée</option>
+      <option value="LIR">🔎 Lire et tester un programme</option>
+      <option value="MOD">🔧 Modifier et régler</option>
+    </select>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🗺 Navigation</h2>
+  <div class="filtres" role="group" aria-label="Filtres de la grille">
+    <button class="btn small actif" data-filtre="toutes">Toutes</button>
+    <button class="btn small" data-filtre="non">Non répondues</button>
+    <button class="btn small" data-filtre="ok">Correctes</button>
+    <button class="btn small" data-filtre="err">Incorrectes</button>
+    <button class="btn small" data-filtre="marq">🔖 À revoir</button>
+  </div>
+  <div class="grille" id="grille" aria-label="Grille des questions"></div>
+</section>
+
+<section class="card ecran actif" id="ecranQuestion">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span class="q-comp" id="qComp">—</span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">30</b></span>
+    <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
+  </div>
+  <p class="q-texte" id="qTexte">—</p>
+  <figure class="q-figure" id="qFigure" hidden><img id="qImg" src="" alt=""><figcaption id="qImgCap"></figcaption></figure>
+  <div class="options" id="qOptions" role="group" aria-label="Choix de réponse"></div>
+  <div class="q-actions">
+    <button class="btn" id="btnValider">✔ Valider ma réponse</button>
+    <button class="btn ghost" id="btnPrec">← Précédente</button>
+    <button class="btn ghost" id="btnSuiv">Suivante →</button>
+    <button class="btn ghost" id="btnNonRep">⏭ Prochaine non répondue</button>
+    <button class="btn warn" id="btnTerminer">🏁 Terminer et voir le bilan</button>
+  </div>
+  <div class="correction-bloc" id="corrBloc" aria-live="polite"></div>
+</section>
+
+<section class="card ecran" id="ecranResultat">
+  <h2>🏁 Résultat final</h2>
+  <div class="note20" id="rNote">— /20</div>
+  <div class="res-grid">
+    <div>Questions<b id="rTot">30</b></div>
+    <div>Répondues<b id="rRep" class="v-hl">0</b></div>
+    <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
+    <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
+    <div>Non répondues<b id="rNon" style="color:var(--warn)">0</b></div>
+    <div>Score brut<b id="rBrut">0</b></div>
+    <div>Pourcentage<b id="rPct">0 %</b></div>
+    <div>Temps total<b id="rTemps">—</b></div>
+  </div>
+  <h2 style="margin-top:16px">📚 Bilan par compétence</h2>
+  <table class="bilan" id="tblBilan">
+    <thead><tr><th>Compétence</th><th>Score</th><th>Maîtrise</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <div id="rNotions" style="margin-top:12px;font-size:.92em"></div>
+  <p id="rEncoura" style="margin-top:12px;font-weight:600;color:var(--warn)"></p>
+  <div class="q-actions" style="justify-content:center">
+    <button class="btn" id="btnRejouerErreurs">🔁 Réessayer mes erreurs</button>
+    <button class="btn warn" id="btnRecommencer">♻ Recommencer entièrement</button>
+    <button class="btn ghost" id="btnImprimer">🖨 Imprimer / PDF</button>
+    <button class="btn ghost" id="btnRetourQ">← Revenir aux questions</button>
+  </div>
+</section>
+
+<footer>
+  <p>QCM d’entraînement 4e_C8.1 · C8.2 · C8.3 · Thème 3 · New York · Technologie cycle 4 (2024) · <a href="sequence_3e_C8.1_mat-de-la-station.html">atelier associé</a></p>
+  <p>Utilisable à la maison sur téléphone, tablette ou ordinateur · sauvegarde locale automatique : tu peux fermer et reprendre plus tard · aucune donnée envoyée sur un serveur</p>
+</footer>
+
+<script>
+"use strict";
+/* Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3), 3 illustrees (regle images v2) */
+const QUESTIONS = [
+/* ═══ 3e_C8.1 ═══ */
+{c:"3e_C8.1",n:"Le verbe de la 3e",q:"En 5e on UTILISE une simulation fournie, en 4e on la PARAMÈTRE. Qu'attend-on de toi en 3e ?",
+ o:["que tu la remplaces par un essai réel, plus fiable qu'un calcul théorique","que tu la programmes entièrement, à partir des équations de la mécanique","que tu la mettes en œuvre : le cas de charge et la limite sont tes choix","que tu vérifies les calculs du logiciel un par un, à la main et au crayon"],r:2,
+ expl:"Utiliser, paramétrer, mettre en œuvre : le geste monte d'un cran chaque année. En 3e, c'est la QUESTION posée à la simulation qui devient ton travail.",
+ ex:"Poussée du banc ou vent de cyclone ? Rupture ou limite élastique ? À toi de trancher.",
+ err:"Croire que « mettre en œuvre » veut dire « écrire le logiciel ».",
+ d:["la simulation ne remplace pas l'essai : elle le prépare et l'éclaire","écrire le modèle est un travail de lycée et d'ingénieur, pas de troisième","","refaire les calculs à la main n'apprend rien de plus que de bien les régler"],
+ ret:"Suivre (5e) → paramétrer (4e) → mettre en œuvre (3e). Le geste change, la question aussi."},
+{c:"3e_C8.1",n:"Régler sur une réponse connue",q:"Avant de poser une question nouvelle à la simulation, on la règle comme le banc. Pourquoi ?",
+ o:["pour vérifier qu'elle retrouve un verdict déjà connu, et mériter confiance","pour gagner du temps, car ce réglage est le plus rapide à saisir","parce que le logiciel refuse de démarrer sur un autre cas de charge","parce que le banc est le seul cas de charge scientifiquement valable"],r:0,
+ expl:"Un instrument neuf se contrôle sur une réponse déjà établie. S'il ne la retrouve pas, on s'arrête et on cherche pourquoi — avant de lui confier une question difficile.",
+ ex:"Réglée « poussée du banc + rupture », la simulation retient le tube aluminium, comme le banc.",
+ err:"Faire confiance à un calcul neuf parce qu'il est neuf, sans l'avoir jamais vérifié.",
+ d:["","les trois réglages se saisissent aussi vite les uns que les autres","tous les cas de charge du simulateur fonctionnent dès l'ouverture","le cas du vent est bien plus proche de la réalité que la poussée du banc"],
+ ret:"On vérifie un instrument sur une réponse connue avant de lui poser une question neuve."},
+{c:"3e_C8.1",n:"Ce que le banc appliquait",q:"Le banc de 3e_C8.2 poussait 100 N en tête. Quel moment cela produisait-il au pied d'un mât de 2 m ?",
+ o:["un moment différent pour chacun, calculé à partir de sa largeur","200 N·m pour les tubes ronds, et bien moins pour la poutre carrée","200 N·m pour chacun des cinq profilés, quelle que soit sa forme","un moment nul, puisque le mât est solidement encastré à son pied"],r:2,
+ expl:"Moment = force × bras de levier = 100 × 2 000 mm. Ni la forme ni la matière n'y entrent : c'est la même valeur pour les cinq.",
+ ex:"Tube Ø50, barre Ø20, poutre carrée : 200 N·m pour tout le monde.",
+ err:"Croire qu'un banc « adapte » sa charge à la pièce essayée. Il applique la même à tous.",
+ d:["c'est le vent qui donne un moment différent par profilé, pas le banc","le moment du banc ne dépend pas de la forme : seulement de la force et de la hauteur","","l'encastrement est précisément l'endroit où le moment est le plus grand"],
+ ret:"Le banc applique la même force à tous : même moment pour tous."},
+{c:"3e_C8.1",n:"Ce que le vent applique",q:"Sous le vent, le moment au pied dépend de…",
+ o:["la pression, la largeur offerte au vent, la forme et la hauteur du mât","la résistance du matériau, puisqu'un mât solide encaisse davantage","la seule hauteur du mât, la largeur n'ayant aucune influence utile","la masse du mât, qui s'oppose au vent par sa propre inertie"],r:0,
+ expl:"Le vent pousse sur une SURFACE. Plus le mât est large et haut, plus il en reçoit — et la forme de la section décide de la part du vent qui est freinée.",
+ ex:"Tube Ø50 : 204 N·m. Barre Ø20 : 128 N·m. Même vent, même hauteur, deux charges.",
+ err:"Traiter la charge du vent comme une donnée fixe, indépendante de la pièce.",
+ d:["","la résistance décide si le mât tient, pas de la charge qu'il reçoit","la largeur intervient directement : c'est la surface offerte au vent","la masse ne s'oppose pas à la flexion d'un mât encastré"],
+ ret:"La charge du vent dépend de la pièce elle-même. Celle du banc, non."},
+{c:"3e_C8.1",n:"La barre que le banc désavantageait",q:"La barre pleine Ø20 recevait 200 N·m au banc et 128 N·m sous le vent. Que faut-il en conclure ?",
+ o:["le vent est plus doux que le banc pour tous les profilés sans exception","le banc lui infligeait une charge qu'elle ne subira jamais dans la réalité","la barre est plus solide qu'on ne le croyait quand on l'a essayée","les deux chiffres se contredisent : l'un des deux calculs est faux"],r:1,
+ expl:"Elle ne fait que 20 mm de large : elle offre au vent deux fois et demie moins de surface qu'un tube de 50. Le banc, lui, poussait pareil sur tout le monde.",
+ ex:"Elle était éliminée au banc. Sous le vent réel, elle reçoit 36 % de charge en moins.",
+ err:"Prendre le verdict d'un banc pour un verdict sur l'objet réel.",
+ d:["la poutre bois reçoit 298 N·m sous le vent, contre 200 au banc : c'est l'inverse","","sa résistance n'a pas changé : c'est la charge qu'on lui applique qui change","les deux calculs sont justes ; ils décrivent deux chargements différents"],
+ ret:"Un banc peut être injuste sans être faux : il applique une charge qui n'est pas la vraie."},
+{c:"3e_C8.1",n:"La poutre que le banc avantageait",q:"La poutre bois 40 × 40 reçoit 298 N·m sous le vent, contre 200 N·m au banc. Pourquoi autant ?",
+ o:["le bois est rugueux, et la rugosité accroche fortement le vent","sa section carrée freine le vent presque deux fois plus qu'un tube rond","le bois est léger, donc il se déplace davantage sous la même charge","elle est plus large que tous les autres profilés de la comparaison"],r:1,
+ expl:"Un profil carré a un coefficient de forme de 2,0 contre 1,2 pour un tube rond. À largeur égale, il reçoit près du double — et le banc ne le voyait pas.",
+ ex:"40 mm de large seulement, et pourtant la charge la plus élevée des cinq.",
+ err:"Croire que la largeur seule décide. La forme de la section compte autant.",
+ d:["la rugosité joue à la marge ; c'est la forme de la section qui décide","","la légèreté ne change pas la force que le vent exerce sur la surface","elle est la plus étroite des trois profilés larges : 40 mm contre 50"],
+ ret:"À largeur égale, un carré prend presque deux fois plus de vent qu'un tube rond."},
+{c:"3e_C8.1",n:"Le tube Ø50 et le banc",q:"Les tubes Ø50 reçoivent 204 N·m sous le vent, contre 200 N·m au banc. Que dire du choix de 100 N ?",
+ o:["cela prouve que le banc était réglé sur le vent depuis le début","c'était un mauvais choix, puisque les deux valeurs ne sont pas égales","c'était un hasard heureux, sans aucun rapport avec le vent réel","pour ces tubes-là, c'était un très bon substitut du vent de référence"],r:3,
+ expl:"Quatre newtons-mètres d'écart sur deux cents, c'est deux pour cent. Pour un tube de cinquante millimètres, la poussée de 100 N représentait bien le cyclone.",
+ ex:"204 contre 200 : la charge du banc tombait juste, pour cette largeur-là.",
+ err:"Rejeter un essai parce qu'il n'est pas exact, alors qu'il était représentatif.",
+ d:["le banc appliquait une force unique en tête, ce que le vent ne fait pas","deux pour cent d'écart, c'est une excellente représentativité pour un essai","le rapprochement s'explique par le calcul : ce n'est pas un hasard",""],
+ ret:"Une charge d'essai bien choisie représente la charge réelle — pour la pièce visée."},
+{c:"3e_C8.1",n:"La limite qu'on choisit",q:"À 2 000 mm sous le vent, la simulation retient 2 profilés sur la rupture et 1 sur la limite élastique. Pourquoi cet écart ?",
+ o:["la limite élastique est plus haute : elle avantage les profilés résistants","la limite élastique est plus basse : la marge exigée est plus dure à tenir","le calcul de la rupture est approximatif, donc plus permissif par nature","les deux limites sont équivalentes, et l'écart vient d'un arrondi d'affichage"],r:1,
+ expl:"Un même coefficient exigé, deux limites différentes : sur l'élastique, il faut une contrainte trois fois plus faible qu'une valeur elle-même plus basse.",
+ ex:"Tube galvanisé : coefficient 4,5 sur la rupture, 2,7 sur la limite élastique.",
+ err:"Choisir la limite qui donne le résultat souhaité plutôt que celle qui décrit la panne.",
+ d:["la limite élastique est toujours plus basse que la résistance à la rupture","","les deux calculs sont aussi précis l'un que l'autre","l'écart est de 4,5 contre 2,7 : ce n'est pas un arrondi"],
+ ret:"Sur la limite élastique, la même pièce a une marge plus faible. C'est voulu."},
+{c:"3e_C8.1",n:"Un mât tordu",q:"Pourquoi refuser un mât qui plierait sans casser, alors qu'il resterait debout ?",
+ o:["un mât penché ne peut plus être démonté pour son entretien annuel","un mât penché finit toujours par tomber dans les jours qui suivent","un mât penché n'est plus conforme aux règles d'urbanisme de la commune","penché, l'anémomètre ne vise plus juste : la station mesure un vent faux"],r:3,
+ expl:"La station existe pour mesurer. Un instrument de mesure qui reste en place mais lit faux est plus dangereux qu'un instrument tombé : personne ne s'en aperçoit.",
+ ex:"Le mât tient, l'anémomètre tourne, et le chiffre affiché ne veut plus rien dire.",
+ err:"Juger une panne sur ce qui se voit plutôt que sur la fonction perdue.",
+ d:["le démontage reste possible ; c'est la mesure qui est perdue","un mât plié peut rester debout des années : ce n'est pas le problème","l'urbanisme n'a rien à voir avec la validité d'une mesure de vent",""],
+ ret:"Pour un instrument de mesure, se déformer est une panne complète et silencieuse."},
+{c:"3e_C8.1",n:"La hauteur n'est pas un réglage libre",q:"Descendre le mât à 1 500 mm ferait passer un profilé de plus. Pourquoi refuser ?",
+ o:["sous 2 000 mm le mât deviendrait trop court pour porter le boîtier","sous 2 000 mm l'anémomètre lit les turbulences du toit, pas le vent réel","sous 2 000 mm la mairie n'accorderait pas l'autorisation de travaux","sous 2 000 mm le moment au pied augmenterait au lieu de diminuer"],r:1,
+ expl:"La hauteur est une exigence de MESURE, pas une variable d'ajustement mécanique. Gagner un candidat en descendant le mât, c'est gagner sur la tenue et perdre la fonction.",
+ ex:"1 500 mm : deux profilés passent — et la station ne mesure plus le bon vent.",
+ err:"Ajuster une contrainte du cahier des charges pour faire passer une solution.",
+ d:["un mât de 1 500 mm porterait très bien le boîtier de la station","","aucune autorisation n'est en jeu : c'est la qualité de la mesure","le moment diminue avec la hauteur : c'est bien pour cela qu'un profilé passe"],
+ ret:"On ne fait pas passer une solution en abaissant une exigence du cahier des charges."},
+{c:"3e_C8.1",n:"La pression du vent",q:"La pression dynamique d'un vent de 150 km/h vaut environ 1 060 Pa. D'où vient ce nombre ?",
+ o:["de q = ½ × masse volumique de l'air × vitesse au carré, en m/s","d'une mesure faite par la station météo de la commune l'an dernier","d'un tableau réglementaire qui donne la pression pour chaque région","de la force du vent divisée par la surface du boîtier de la station"],r:0,
+ expl:"150 km/h font 41,7 m/s. q = 0,5 × 1,225 × 41,7² ≈ 1 063 Pa. Le calcul se refait, et c'est ce qui permet de le discuter.",
+ ex:"Doubler la vitesse multiplierait la pression par quatre, pas par deux.",
+ err:"Recopier une pression sans savoir d'où elle vient, donc sans pouvoir la recalculer.",
+ d:["","aucune station ne mesure une pression : elle mesure une vitesse","les tableaux réglementaires existent, mais ce nombre-ci vient du calcul","la force se déduit de la pression, pas l'inverse"],
+ ret:"q = ½ ρ V². La pression dépend du CARRÉ de la vitesse."},
+{c:"3e_C8.1",n:"Vitesse doublée",q:"Si le vent de référence passait de 150 à 180 km/h, la pression serait multipliée par…",
+ o:["environ 2,0, car tout effet du vent double avec la vitesse","environ 1,2, exactement comme le rapport des deux vitesses","environ 1,44, car le rapport des vitesses est élevé au carré","environ 1,0, la pression ne dépendant pas de la vitesse du vent"],r:2,
+ expl:"180 ÷ 150 = 1,2. Et 1,2² = 1,44. Trente kilomètres-heure de plus, c'est quarante-quatre pour cent de charge en plus.",
+ ex:"Le tube aluminium passerait de 204 à 294 N·m : son coefficient tomberait sous 3.",
+ err:"Raisonner en proportion simple sur une grandeur qui varie au carré.",
+ d:["le facteur 2 correspondrait à une vitesse multipliée par 1,41","1,2 est le rapport des vitesses ; la pression suit son carré","","la pression dépend au contraire très fortement de la vitesse"],
+ ret:"Vitesse × 1,2 → pression × 1,44. Le carré rend les écarts de vent très coûteux."},
+{c:"3e_C8.1",n:"Ce que le simulateur ne règle pas",q:"Tu veux vérifier le mât pour un vent de 180 km/h. Que t'apprend le simulateur ?",
+ o:["qu'il suffit de choisir le cas de charge « vent » pour tout recalculer","qu'il ne le permet pas : sa vitesse de vent est fixée, et c'est sa limite","qu'il faut augmenter la hauteur du mât pour simuler un vent plus fort","qu'il faut passer sur la limite de rupture pour représenter la tempête"],r:1,
+ expl:"Connaître ce qu'un outil ne permet PAS fait partie de sa maîtrise. Ici, il faudrait rendre la vitesse réglable — c'est une demande à formuler, pas un réglage à trouver.",
+ ex:"Trois menus : hauteur, cas de charge, limite. Aucun ne touche à la vitesse.",
+ err:"Chercher indéfiniment un réglage qui n'existe pas, au lieu de constater la limite.",
+ d:["le cas « vent » utilise une vitesse fixée à 150 km/h, non modifiable","","changer la hauteur change la charge, mais ne simule pas un autre vent","changer la limite change le verdict, pas le vent appliqué"],
+ ret:"Savoir ce qu'un outil ne permet pas fait partie de sa maîtrise."},
+{c:"3e_C8.1",n:"La flèche en tête",q:"Pourquoi le cahier des charges limite-t-il aussi la flèche en tête à 40 mm ?",
+ o:["parce que la flèche est la seule grandeur que le banc savait mesurer","parce qu'au-delà de 40 mm le mât se rompt systématiquement au pied","parce que 40 mm est la tolérance de fabrication des tubes du commerce","parce qu'un mât qui oscille trop fait osciller la mesure de l'anémomètre"],r:3,
+ expl:"Un critère de tenue ne suffit pas : la station doit aussi rester utilisable. Un mât qui plie élastiquement de 15 cm ne casse pas, et ne mesure plus rien de stable.",
+ ex:"Le tube galvanisé passait le critère de charge au banc, et échouait sur la flèche.",
+ err:"Ne retenir qu'un seul critère quand le cahier des charges en pose deux.",
+ d:["le banc mesurait aussi la charge de rupture, en plus de la flèche","une flèche de 40 mm reste élastique : elle n'annonce aucune rupture","les tolérances de fabrication sont de l'ordre du dixième de millimètre",""],
+ ret:"Un cahier des charges peut poser deux critères. Il faut les tenir tous les deux."},
+{c:"3e_C8.1",n:"Le profilé retenu",q:"Avec le réglage qui répond au cahier des charges — 2 000 mm, vent, limite élastique — que retient la simulation ?",
+ o:["aucun profilé : le cahier des charges est impossible à tenir","le tube aluminium et le tube acier galvanisé, tous les deux","la barre pleine acier Ø20, la mieux placée sous le vent réel","le tube aluminium Ø50 × 3, seul, avec un coefficient de 3,4"],r:3,
+ expl:"Coefficient 3,4 et flèche de 27 mm : les deux critères sont tenus. Le tube galvanisé tombe à 2,7 sur la limite élastique.",
+ ex:"Le même verdict que le banc de 3e_C8.2 — obtenu pour de meilleures raisons.",
+ err:"Croire qu'un raisonnement plus juste doit forcément donner un résultat différent.",
+ d:["un profilé le tient : l'aluminium, avec 3,4","le tube galvanisé n'atteint que 2,7 sur la limite élastique","la barre pleine reçoit moins de vent, mais sa section est trop faible : 1,4",""],
+ ret:"La bonne méthode confirme parfois le résultat connu. Elle en change la valeur de preuve."},
+{c:"3e_C8.1",n:"Bon résultat, mauvais raisonnement",q:"Le banc et la simulation retiennent le même profilé. La simulation a-t-elle servi à quelque chose ?",
+ o:["oui : elle prouve que les relevés du banc étaient entachés d'erreurs","non : le résultat étant le même, tout ce travail était finalement inutile","non : elle n'a fait que confirmer ce que l'essai réel avait déjà prouvé","oui : elle montre que deux concurrents avaient été jugés sur une charge fausse"],r:3,
+ expl:"Un bon résultat obtenu par un mauvais raisonnement reste un mauvais raisonnement : la fois suivante, avec d'autres profilés, il donnera une mauvaise réponse.",
+ ex:"La barre pleine avait été éliminée sur une charge 36 % trop forte.",
+ err:"Juger une méthode sur son résultat du jour plutôt que sur ce qu'elle garantit.",
+ d:["les relevés du banc sont justes ; c'est la charge appliquée qui était discutable","le raisonnement a changé, même si le résultat n'a pas bougé","elle a corrigé deux jugements sur cinq : ce n'est pas une simple confirmation",""],
+ ret:"Un bon résultat obtenu par un mauvais raisonnement ne se reproduira pas."},
+{c:"3e_C8.1",n:"L'angle mort partagé",q:"Qu'est-ce que le banc ET la simulation ignorent tous les deux ?",
+ o:["le poids du boîtier, absent des deux modèles de calcul utilisés ici","la résistance des matériaux, qu'aucun des deux ne sait prendre en compte","la fatigue : les deux chargent une fois, le vent des milliers de fois","la hauteur du mât, qu'aucun des deux instruments ne fait intervenir"],r:2,
+ expl:"Deux instruments d'accord peuvent se tromper ensemble s'ils ignorent la même chose. Une charge appliquée une fois ne dit rien d'une charge appliquée cent mille fois.",
+ ex:"Un mât qui tient au premier coup de vent peut céder au bout de trois saisons.",
+ err:"Prendre un accord entre deux méthodes pour une preuve qu'il ne reste rien à voir.",
+ d:["le boîtier figure explicitement dans le calcul du moment du vent","les deux utilisent au contraire les résistances des cinq matériaux","","la hauteur intervient dans les deux : c'est le bras de levier"],
+ ret:"Deux instruments d'accord peuvent partager un angle mort. Il faut le nommer."},
+{c:"3e_C8.1",n:"Où est le moment maximal",q:"Sur un mât encastré au pied et poussé par le vent, où la contrainte est-elle la plus forte ?",
+ o:["partout de la même façon, car le mât a une section constante","en tête, juste sous le boîtier, là où la force du vent s'applique","à mi-hauteur, où la matière travaille le plus dans les deux sens","au pied, à l'encastrement, là où le bras de levier est le plus long"],r:3,
+ expl:"Le moment vaut force × distance au point considéré. Au pied, cette distance est maximale : c'est là que la matière travaille le plus, et là que la rupture commence.",
+ ex:"Un mât cassé se casse au pied, ou au premier trou de fixation.",
+ err:"Croire que la contrainte est maximale là où la force s'applique.",
+ d:["la section est constante, mais le moment ne l'est pas du tout","en tête, le bras de levier est nul : le moment y est nul aussi","à mi-hauteur, le moment vaut environ la moitié de celui du pied",""],
+ ret:"Sur une pièce encastrée, la contrainte est maximale à l'encastrement."},
+{c:"3e_C8.1",n:"Un modèle et ses hypothèses",q:"Le simulateur suppose un encastrement parfait au pied. Que se passerait-il si la platine tournait un peu ?",
+ o:["le moment au pied augmenterait, la rotation ajoutant un effort","la flèche en tête diminuerait, le mât étant moins bloqué à sa base","rien ne changerait, l'encastrement n'ayant d'effet que sur le moment","la flèche en tête augmenterait, et le mât pourrait sortir des 40 mm admis"],r:3,
+ expl:"Un encastrement parfait n'existe pas. Toute rotation à la base s'ajoute à la flexion du mât et se retrouve, amplifiée, en tête.",
+ ex:"Deux degrés de rotation à la base font déjà 35 mm de déplacement en tête.",
+ err:"Oublier qu'une hypothèse de calcul est une promesse faite au montage.",
+ d:["une rotation libre diminuerait au contraire le moment repris par la base","une base qui tourne libère du déplacement : la flèche augmente","l'encastrement agit d'abord sur la flèche, avant d'agir sur le moment",""],
+ ret:"Une hypothèse de calcul est une promesse : au montage, il faut la tenir."},
+{c:"3e_C8.1",n:"Ce qu'on écrit dans l'avis",q:"Que doit contenir l'avis technique remis à la mairie ?",
+ o:["le profilé retenu, le réglage qui l'a désigné, et l'angle mort restant","le profilé retenu seul, pour que la décision reste claire et rapide","les cinq profilés classés, sans conclusion, la mairie devant trancher","le profilé retenu et son prix, les autres éléments étant techniques"],r:0,
+ expl:"Un avis qui ne dit pas comment il a été obtenu ne peut pas être rediscuté. Un avis qui tait ses limites laisse croire qu'il n'en a pas.",
+ ex:"« Tube aluminium Ø50 × 3, réglage vent + limite élastique, k = 3,4. Réserve : fatigue. »",
+ err:"Rendre un avis net en supprimant ce qui le rendait honnête.",
+ d:["","un avis sans sa méthode ne peut être ni vérifié ni réutilisé","un bureau d'études rend une conclusion, pas seulement un classement","le prix compte, mais il ne remplace ni le réglage ni la réserve"],
+ ret:"Un avis technique dit ce qu'il conclut, comment, et ce qu'il n'a pas vu."},
+/* ═══ 3e_C3.4 ═══ */
+{c:"3e_C3.4",n:"Définir un protocole",q:"Définir un protocole de mesure, c'est écrire…",
+ o:["ce qu'on mesure, avec quoi, dans quelles conditions, et ce qu'on attend","la liste du matériel disponible dans la salle au moment de l'essai","les résultats obtenus, une fois la série de mesures entièrement finie","la conclusion visée, pour orienter les mesures qui vont la confirmer"],r:0,
+ expl:"Un protocole se rédige AVANT, et il doit pouvoir être exécuté par quelqu'un d'autre sans vous. C'est cela qui le rend vérifiable.",
+ ex:"« Anémomètre à 2 000 mm du toit, relevé toutes les 10 s pendant 5 min. »",
+ err:"Écrire le protocole après coup, à partir de ce qu'on a effectivement fait.",
+ d:["","le matériel fait partie du protocole, mais il ne suffit pas à le définir","les résultats viennent après : ce sont eux que le protocole permet d'obtenir","annoncer la conclusion avant la mesure, c'est cesser de mesurer"],
+ ret:"Un protocole s'écrit avant, et il doit être exécutable sans son auteur."},
+{c:"3e_C3.4",n:"La hauteur de mesure",q:"Pourquoi l'anémomètre doit-il être à 2 000 mm au-dessus du toit ?",
+ o:["pour être visible depuis la cour, et rassurer les élèves sur son bon état","pour sortir des turbulences du toit et mesurer le vent réel de la zone","pour éviter que les élèves du dernier étage puissent l'atteindre à la main","pour que le boîtier reçoive assez de soleil sur son panneau solaire"],r:1,
+ expl:"Un obstacle crée derrière lui un écoulement désordonné. Mesurer dedans, c'est mesurer le toit, pas le vent. La hauteur est une condition de VALIDITÉ de la mesure.",
+ ex:"À 1 000 mm, l'anémomètre lit des rafales qui n'existent qu'au-dessus de ce toit-là.",
+ err:"Traiter la hauteur comme une commodité de montage, alors qu'elle conditionne la mesure.",
+ d:["la visibilité depuis la cour n'a aucun effet sur la qualité de la mesure","","la sécurité d'accès est un autre sujet, réglé par l'accès au toit lui-même","l'ensoleillement dépend de l'orientation, pas de deux mètres de hauteur"],
+ ret:"La position d'un capteur fait partie du protocole : mal placé, il mesure autre chose."},
+{c:"3e_C3.4",n:"Une mesure qui n'a pas de sens",q:"La station affiche une vitesse de vent alors que le mât est tordu de 20°. Que vaut cette mesure ?",
+ o:["elle est fausse mais sans importance, car seules les rafales comptent","elle reste juste : un anémomètre mesure une vitesse, pas une direction","elle est juste à 20 % près, ce qui reste acceptable pour une alerte","rien : l'anémomètre ne vise plus la bonne direction, et il le dit pas"],r:3,
+ expl:"Le pire défaut d'un instrument n'est pas de s'arrêter : c'est de continuer à afficher un nombre plausible alors qu'il ne mesure plus ce qu'il devrait.",
+ ex:"Le chiffre s'affiche, la courbe est belle, et personne ne se doute de rien.",
+ err:"Faire confiance à une mesure parce qu'elle est affichée.",
+ d:["les rafales sont mesurées par le même capteur, donc aussi faussées","un anémomètre à coupelles mal orienté sous-estime la vitesse horizontale","on ne peut pas quantifier l'erreur sans savoir dans quel sens il penche",""],
+ ret:"Une panne silencieuse est pire qu'une panne visible : elle ne demande rien à personne."},
+{c:"3e_C3.4",n:"Mesurer et comparer",q:"Pour comparer deux profilés, il ne suffit pas de mesurer chacun. Que faut-il en plus ?",
+ o:["que les deux mesures aient été prises par la même personne","que les deux profilés aient exactement la même masse au départ","que les deux mesures aient été faites dans les mêmes conditions","que les deux profilés proviennent du même fournisseur agréé"],r:2,
+ expl:"Comparer, c'est faire varier UNE chose et garder les autres fixes. Deux mesures faites dans deux conditions différentes ne se comparent pas, même si elles sont justes.",
+ ex:"Même hauteur, même cas de charge, même limite : alors seulement on compare.",
+ err:"Comparer deux nombres justes obtenus dans deux situations différentes.",
+ d:["l'opérateur importe moins que les conditions, si le protocole est bien écrit","des masses différentes sont normales : c'est même une des données comparées","","le fournisseur ne change pas les conditions de l'essai"],
+ ret:"Comparer, c'est faire varier une seule chose. Sinon on ne compare rien."},
+{c:"3e_C3.4",n:"L'attendu écrit d'avance",q:"Pourquoi écrire le résultat attendu AVANT de lancer la mesure ?",
+ o:["parce que le protocole exige que toutes les cases soient remplies","parce que l'écart entre l'attendu et l'obtenu est ce qui enseigne","parce qu'on peut ainsi arrêter la mesure dès que l'attendu est atteint","parce que cela permet de ne garder que les mesures qui conviennent"],r:1,
+ expl:"Sans attendu écrit, la mémoire réécrit ce qu'on pensait, et tout résultat paraît normal. L'écart, lui, ne se discute pas.",
+ ex:"Attendu : 3,4. Obtenu : 2,7. L'écart pose une question ; sans attendu, il n'y a rien.",
+ err:"Écrire l'attendu après coup, ce qui revient à ne rien avoir prédit.",
+ d:["remplir une case n'est pas une raison : c'est l'écart qui compte","","arrêter une mesure dès qu'elle plaît est exactement ce qu'il faut éviter","trier les mesures selon ce qui arrange n'est plus une mesure"],
+ ret:"Attendu d'abord, obtenu ensuite. C'est l'écart qui enseigne."},
+{c:"3e_C3.4",n:"Le cas frontière",q:"Le coefficient exigé est 3. Un profilé affiche exactement 3,0. Que dit le cahier des charges ?",
+ o:["il est retenu : l'exigence est « au moins 3 », donc 3,0 la satisfait","il est écarté : à égalité, on refuse toujours par prudence élémentaire","on ne peut pas trancher : il faut refaire la mesure une seconde fois","il est retenu, mais uniquement si la flèche est inférieure à 20 mm"],r:0,
+ expl:"Une exigence s'écrit avec son sens de comparaison. « ≥ 3 » et « > 3 » ne désignent pas le même ensemble, et le cas d'égalité est précisément là pour être tranché d'avance.",
+ ex:"k ≥ 3 : 3,0 passe. k > 3 : 3,0 ne passe pas. Il faut l'avoir écrit avant.",
+ err:"Laisser le cas d'égalité à l'appréciation du jour où il se présente.",
+ d:["","refuser par prudence sans l'avoir écrit, c'est changer la règle en cours de route","la mesure est juste : c'est la règle de décision qu'il fallait préciser","la flèche est un second critère, il ne modifie pas le seuil du premier"],
+ ret:"Un seuil s'écrit avec son sens de comparaison. Le cas d'égalité se tranche d'avance."},
+{c:"3e_C3.4",n:"Deux critères, une décision",q:"Le cahier des charges pose un coefficient minimal ET une flèche maximale. Comment décide-t-on ?",
+ o:["on fait la moyenne des deux critères et on compare à un seuil unique","il suffit qu'un des deux soit tenu, l'autre pouvant être négocié après","les deux doivent être tenus : un seul échec suffit à écarter le profilé","on retient le critère le plus sévère et on oublie l'autre pour simplifier"],r:2,
+ expl:"Des exigences se cumulent, elles ne se compensent pas. Une excellente marge de charge ne rachète pas une flèche excessive : ce sont deux pannes différentes.",
+ ex:"Tube galvanisé au banc : charge tenue, flèche à 41 mm. Écarté.",
+ err:"Compenser un critère raté par un autre critère largement tenu.",
+ d:["faire une moyenne mélange des grandeurs qui n'ont rien à voir","négocier après coup revient à réécrire le cahier des charges","","abandonner un critère, c'est accepter la panne qu'il devait éviter"],
+ ret:"Des exigences se cumulent. Elles ne se compensent jamais entre elles."},
+{c:"3e_C3.4",n:"La trace de la mesure",q:"Que faut-il conserver d'une campagne de mesures pour qu'elle serve encore dans deux ans ?",
+ o:["le protocole, les conditions, les relevés bruts et la décision prise","la conclusion seule, les détails n'intéressant que ceux qui l'ont menée","les relevés bruts seuls, une conclusion pouvant toujours être refaite","le nom du responsable et la date, pour retrouver qui interroger"],r:0,
+ expl:"Dans deux ans, personne ne se souviendra des conditions. Sans elles, les relevés ne sont plus que des nombres, et la décision devient impossible à rediscuter.",
+ ex:"C'est ce qui a permis, cette année, de reprendre les relevés du banc de l'an dernier.",
+ err:"Ne garder que la conclusion, et devoir tout refaire à la première question.",
+ d:["","sans les détails, la conclusion ne peut être ni vérifiée ni transposée","des relevés sans leurs conditions ne permettent aucune conclusion","interroger quelqu'un de mémoire ne vaut pas une trace écrite"],
+ ret:"Pas de trace des conditions, pas de mesure réutilisable."},
+{c:"3e_C3.4",n:"Mesurer une performance",q:"Parmi ces phrases, laquelle énonce une performance mesurable ?",
+ o:["l'anémomètre reste à moins de 5 % d'erreur jusqu'à 150 km/h","l'anémomètre est fiable et donne de bons résultats en toute saison","l'anémomètre est le meilleur modèle disponible dans cette gamme","l'anémomètre a été choisi par le bureau d'études de la mairie"],r:0,
+ expl:"Une performance se mesure : une grandeur, une valeur, une condition. « Fiable » ne se mesure pas, donc ne se vérifie pas, donc ne s'exige pas.",
+ ex:"On peut vérifier « moins de 5 % jusqu'à 150 km/h ». On ne peut pas vérifier « fiable ».",
+ err:"Écrire une exigence avec un adjectif au lieu d'une grandeur et d'un seuil.",
+ d:["","« fiable » et « bons résultats » ne se mesurent pas : rien n'est vérifiable","« le meilleur » dépend du classement choisi, et ne se mesure pas","l'origine du choix n'est pas une performance de l'appareil"],
+ ret:"Une performance s'écrit avec une grandeur, une valeur et une condition."},
+{c:"3e_C3.4",n:"Mesurer ou simuler",q:"Quand faut-il mesurer sur l'objet réel plutôt que simuler ?",
+ o:["jamais : la simulation est plus rapide et suffit dans tous les cas","toujours : une mesure réelle est supérieure à tout calcul possible","quand la réponse dépend de ce que le modèle ne contient pas","quand la simulation donne un résultat qui ne nous convient pas"],r:2,
+ expl:"Fatigue, vieillissement, défauts de montage : rien de tout cela n'est dans le modèle. C'est exactement là que la mesure réelle devient indispensable.",
+ ex:"La tenue du mât après trois saisons de vibrations ne se calcule pas ici : elle s'observe.",
+ err:"Choisir entre mesurer et simuler par habitude, au lieu de regarder ce que le modèle ignore.",
+ d:["la simulation ignore le temps, la fatigue et les défauts de montage","une mesure réelle est coûteuse et destructrice : on la réserve à ce qui l'exige","","changer d'instrument parce que le résultat déplaît n'est plus une démarche"],
+ ret:"On mesure en vrai ce que le modèle ne contient pas."}
+];
+
+</script>
+
+<script>
+"use strict";
+/* ═══════════ Moteur du QCM ═══════════ */
+const KEY="qcm_3e_C8.1_mat_de_la_station";
+const $=id=>document.getElementById(id);
+/* `demande` remplace une boîte de confirmation : le premier clic annonce, le
+   second dans les six secondes exécute. On ne supprime jamais une confirmation
+   destructive — on la rend non bloquante. */
+let _demandes={};
+function demande(cle,msg){
+  const t=Date.now();
+  if(_demandes[cle] && t-_demandes[cle] < 6000){ _demandes[cle]=0; return true; }
+  _demandes[cle]=t;
+  signale(msg + " — clique une seconde fois pour confirmer.");
+  return false;
+}
+/* Règle d'or n°188 : on informe sans bloquer. `signale` écrit dans le bandeau
+   #savedNote, qui porte role="status" et aria-live="polite". Si la page n'en a
+   pas, il en crée un : une confirmation en deux temps dont le premier temps ne
+   dit rien serait un effacement silencieux, donc pire que la boîte modale. */
+let _signalTimer=null;
+function _zoneSignal(){
+  let z=document.getElementById("savedNote");
+  if(z){ return z; }
+  z=document.createElement("div");
+  z.id="savedNote"; z.dataset.cree="1";
+  z.setAttribute("role","status"); z.setAttribute("aria-live","polite");
+  z.style.cssText="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);"
+    +"max-width:90vw;background:#1d4e89;color:#fff;padding:10px 16px;border-radius:8px;"
+    +"font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25);"
+    +"z-index:9999;visibility:hidden";
+  (document.body||document.documentElement).appendChild(z);
+  return z;
+}
+function signale(msg){
+  const z=_zoneSignal();
+  z.textContent=msg; z.classList.add("show");
+  if(z.dataset.cree){ z.style.visibility="visible"; }
+  clearTimeout(_signalTimer);
+  _signalTimer=setTimeout(()=>{ z.textContent=""; z.classList.remove("show");
+    if(z.dataset.cree){ z.style.visibility="hidden"; } }, 6000);
+}
+const COMP_LABELS={
+  "3e_C8.1":"3e_C8.1 — 📡 Mettre en œuvre une simulation pour valider la tenue mécanique d'un matériau.",
+  "3e_C3.4":"3e_C3.4 — 📊 Mesurer et comparer les performances d'un OST par rapport à un cahier des charges." };
+const N=QUESTIONS.length;
+
+/* état */
+let etat={
+  reponses:Array(N).fill(null),   // index choisi ou null
+  validees:Array(N).fill(false),
+  marquees:Array(N).fill(false),
+  courante:0,
+  mode:"complet",
+  sousListe:null,                 // indices actifs selon le mode
+  tempsMs:0, timerOn:false, sansMinuteur:false,
+  identite:{}
+};
+let timerInterval=null, choixTemp=null;
+
+/* ───── sauvegarde ───── */
+function save(){
+  etat.identite={nom:$("id_nom").value,prenom:$("id_prenom").value,classe:$("id_classe").value,date:$("id_date").value};
+  try{ localStorage.setItem(KEY, JSON.stringify(etat)); }catch(e){}
+}
+function restore(){
+  let o=null; try{o=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){}
+  if(!o) return;
+  ["reponses","validees","marquees","courante","mode","sousListe","tempsMs","sansMinuteur","identite"].forEach(k=>{ if(o[k]!==undefined) etat[k]=o[k]; });
+  const idt=etat.identite||{};
+  $("id_nom").value=idt.nom||""; $("id_prenom").value=idt.prenom||""; $("id_classe").value=idt.classe||""; $("id_date").value=idt.date||"";
+  $("tSans").checked=!!etat.sansMinuteur;
+  if(etat.tempsMs>0){ $("savedNote").textContent="✔ Progression restaurée : tu peux reprendre où tu t'étais arrêté·e."; }
+}
+
+/* ───── minuteur ───── */
+function fmt(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+  return (h?String(h).padStart(2,"0")+":":"")+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0"); }
+function majTimer(){ $("timerDisp").textContent=fmt(etat.tempsMs); }
+function timerStart(){ if(etat.sansMinuteur||etat.timerOn) return;
+  etat.timerOn=true; $("tStart").disabled=true; $("tPause").disabled=false; $("tResume").disabled=true;
+  let last=Date.now();
+  timerInterval=setInterval(()=>{ const now=Date.now(); etat.tempsMs+=now-last; last=now; majTimer(); },500);
+}
+function timerPause(){ if(!etat.timerOn) return;
+  etat.timerOn=false; clearInterval(timerInterval);
+  $("tPause").disabled=true; $("tResume").disabled=false; save();
+}
+$("tStart").addEventListener("click",timerStart);
+$("tPause").addEventListener("click",timerPause);
+$("tResume").addEventListener("click",timerStart);
+$("tSans").addEventListener("change",e=>{
+  etat.sansMinuteur=e.target.checked;
+  if(etat.sansMinuteur){ timerPause(); $("tStart").disabled=true; }
+  else { $("tStart").disabled=etat.timerOn; }
+  save();
+});
+
+/* ───── listes selon mode ───── */
+function listeActive(){
+  if(etat.sousListe && etat.sousListe.length) return etat.sousListe;
+  return [...Array(N).keys()];
+}
+function setMode(mode){
+  etat.mode=mode;
+  document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("mode-actif",b.dataset.mode===mode));
+  $("cibleChoix").style.display = mode==="cible" ? "block" : "none";
+  if(mode==="complet"){ etat.sousListe=null; }
+  else if(mode==="dix"){
+    const nonRep=[...Array(N).keys()].filter(i=>!etat.validees[i]);
+    const base=nonRep.length>=10?nonRep:[...Array(N).keys()];
+    // échantillon régulier, stable (pas d'aléatoire)
+    const pas=base.length/10; etat.sousListe=[...Array(10).keys()].map(k=>base[Math.floor(k*pas)]);
+  }
+  else if(mode==="cible"){ const c=$("selComp").value; etat.sousListe=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c); }
+  else if(mode==="erreurs"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.validees[i]&&etat.reponses[i]!==QUESTIONS[i].r);
+    if(!etat.sousListe.length){ signale("Aucune erreur enregistrée pour l'instant — bravo ! Le parcours complet est réactivé."); return setMode("complet"); } }
+  else if(mode==="marquees"){ etat.sousListe=[...Array(N).keys()].filter(i=>etat.marquees[i]);
+    if(!etat.sousListe.length){ signale("Aucune question marquée « à revoir ». Utilise le bouton 🔖 sur une question."); return setMode("complet"); } }
+  const l=listeActive();
+  if(!l.includes(etat.courante)) etat.courante=l[0];
+  save(); rendreTout();
+}
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+$("selComp").addEventListener("change",()=>setMode("cible"));
+
+/* ───── grille + filtres ───── */
+let filtre="toutes";
+document.querySelectorAll("[data-filtre]").forEach(b=>b.addEventListener("click",()=>{
+  filtre=b.dataset.filtre;
+  document.querySelectorAll("[data-filtre]").forEach(x=>x.classList.toggle("actif",x===b));
+  rendreGrille();
+}));
+function visibleParFiltre(i){
+  const rep=etat.validees[i], ok=rep&&etat.reponses[i]===QUESTIONS[i].r;
+  switch(filtre){
+    case "non": return !rep;
+    case "ok": return ok;
+    case "err": return rep&&!ok;
+    case "marq": return etat.marquees[i];
+    default: return true;
+  }
+}
+function rendreGrille(){
+  const g=$("grille"); g.innerHTML="";
+  listeActive().forEach(i=>{
+    if(!visibleParFiltre(i)) return;
+    const b=document.createElement("button");
+    b.textContent=i+1;
+    b.setAttribute("aria-label",`Question ${i+1}`);
+    if(etat.validees[i]) b.classList.add(etat.reponses[i]===QUESTIONS[i].r?"q-ok":"q-err");
+    else if(etat.reponses[i]!==null) b.classList.add("q-rep");
+    if(i===etat.courante) b.classList.add("actuelle");
+    if(etat.marquees[i]){ const m=document.createElement("span"); m.className="marque"; m.textContent="🔖"; b.appendChild(m); }
+    b.addEventListener("click",()=>{ etat.courante=i; montrerEcran("q"); rendreTout(); });
+    g.appendChild(b);
+  });
+  if(!g.children.length){ g.innerHTML='<p style="grid-column:1/-1;color:#5b7bb8;font-size:.85em">Aucune question ne correspond à ce filtre.</p>'; }
+}
+
+/* ───── tableau de bord ───── */
+function stats(){
+  let ok=0,err=0,rep=0;
+  for(let i=0;i<N;i++){ if(etat.validees[i]){ rep++; if(etat.reponses[i]===QUESTIONS[i].r) ok++; else err++; } }
+  return {ok,err,rep,rest:N-rep,marq:etat.marquees.filter(Boolean).length};
+}
+function rendreDash(){
+  const s=stats();
+  $("dRep").textContent=s.rep; $("dOk").textContent=s.ok; $("dErr").textContent=s.err;
+  $("dRest").textContent=s.rest; $("dMarq").textContent=s.marq;
+  const pct=s.rep? Math.round(s.ok/s.rep*100):0;
+  $("dScore").textContent=pct+" %";
+  $("dNote").textContent=s.rep? (Math.round(s.ok/N*20*10)/10).toFixed(1).replace(".",",")+" /20" : "— /20";
+  $("pfill").style.width=(s.rep/N*100)+"%";
+  $("pbar").setAttribute("aria-valuenow",Math.round(s.rep/N*100));
+}
+
+/* ───── écran question ───── */
+function montrerEcran(quel){
+  $("ecranQuestion").classList.toggle("actif",quel==="q");
+  $("ecranResultat").classList.toggle("actif",quel==="r");
+}
+function rendreQuestion(){
+  const i=etat.courante, Q=QUESTIONS[i];
+  $("qComp").textContent=COMP_LABELS[Q.c]+"  ·  notion : "+Q.n;
+  $("qNum").textContent=i+1; $("qTot").textContent=N;
+  $("qTexte").textContent=Q.q;
+  if(Q.img){ $("qFigure").hidden=false; $("qImg").src=Q.img.src; $("qImg").alt=Q.img.alt||""; $("qImgCap").textContent="📷 Document à lire pour répondre"; }
+  else { $("qFigure").hidden=true; $("qImg").removeAttribute("src"); }
+  $("btnMarquer").textContent=etat.marquees[i]?"🔖 Marquée — retirer":"🔖 À revoir";
+  const zone=$("qOptions"); zone.innerHTML="";
+  const lettres=["A","B","C","D"];
+  Q.o.forEach((opt,k)=>{
+    const b=document.createElement("button");
+    b.className="option"; b.innerHTML=`<span class="lettre">${lettres[k]}</span><span>${opt}</span>`;
+    if(etat.validees[i]){
+      b.disabled=true;
+      if(k===Q.r) b.classList.add("bonne");
+      if(k===etat.reponses[i]&&k!==Q.r) b.classList.add("mauvaise");
+    } else {
+      if((choixTemp!==null?choixTemp:etat.reponses[i])===k) b.classList.add("choisie");
+      b.addEventListener("click",()=>{ choixTemp=k; rendreQuestion(); });
+    }
+    zone.appendChild(b);
+  });
+  $("btnValider").disabled=etat.validees[i];
+  rendreCorrection();
+}
+const ENC_OK=["Très bien : tu as correctement identifié la notion clé !","Excellente réponse — la démarche est maîtrisée.","Bravo ! Cette notion est solide, continue ainsi."];
+const ENC_KO=["Ce n'est pas encore acquis, mais l'explication ci-dessous va t'aider — relis-la puis réessaie.","Bonne tentative : vérifie le raisonnement expliqué ci-dessous, puis retente ta chance.","Relis la notion, observe l'exemple, puis essaie une nouvelle fois : c'est comme ça qu'on progresse."];
+const ENC_NR=["Tu n'avais pas répondu à cette question : lis la correction puis réessaie-la."];
+function rendreCorrection(){
+  const i=etat.courante,Q=QUESTIONS[i],bloc=$("corrBloc");
+  if(!etat.validees[i]){ bloc.className="correction-bloc"; bloc.innerHTML=""; return; }
+  const choix=etat.reponses[i], ok=choix===Q.r, lettres=["A","B","C","D"];
+  const verdict= choix===null ? `<span class="verdict-nr">⭘ Non répondu</span>` : ok? `<span class="verdict-ok">✔ Correct</span>`:`<span class="verdict-err">✘ Incorrect</span>`;
+  const enc = choix===null? ENC_NR[0] : ok? ENC_OK[i%ENC_OK.length] : ENC_KO[i%ENC_KO.length];
+  let dist="";
+  Q.d.forEach((txt,k)=>{ if(k!==Q.r&&txt) dist+=`<li><b>${lettres[k]}.</b> ${txt}</li>`; });
+  bloc.className="correction-bloc show "+(ok?"c-ok":"c-err");
+  bloc.innerHTML=`
+    <h3>${verdict}</h3>
+    <div class="bloc-detail"><b>Bonne réponse :</b> ${lettres[Q.r]}. ${Q.o[Q.r]}</div>
+    <div class="bloc-detail"><b>Explication et raisonnement :</b> ${Q.expl}</div>
+    <div class="bloc-detail"><b>Exemple concret :</b> ${Q.ex}</div>
+    ${Q.err ? `<div class="bloc-detail"><b>Erreur fréquente :</b> ${Q.err}</div>` : ""}
+    <div class="bloc-detail"><b>Pourquoi les autres réponses ne conviennent pas :</b><ul class="dist-liste">${dist}</ul></div>
+    ${Q.nuance ? `<div class="bloc-detail nuance"><b>🤔 Et si tu te disais…</b> ${Q.nuance}</div>` : ""}
+    <div class="bloc-detail retenir"><b>📌 À retenir :</b> ${Q.ret}</div>
+    <div class="bloc-detail encoura"><b>💬</b> ${enc}</div>
+    <button class="btn small" id="btnRetenter">🔁 Réessayer cette question</button>`;
+  $("btnRetenter").addEventListener("click",()=>{
+    etat.validees[i]=false; etat.reponses[i]=null; choixTemp=null; save(); rendreTout();
+  });
+}
+$("btnValider").addEventListener("click",()=>{
+  const i=etat.courante;
+  if(etat.validees[i]) return;
+  if(choixTemp===null&&etat.reponses[i]===null){
+    if(!demande("valider","Tu n'as choisi aucune réponse : elle comptera comme non répondue.")) return;
+  }
+  if(choixTemp!==null) etat.reponses[i]=choixTemp;
+  etat.validees[i]=true; choixTemp=null;
+  if(!etat.timerOn&&!etat.sansMinuteur&&etat.tempsMs===0) timerStart();
+  save(); rendreTout();
+});
+$("btnMarquer").addEventListener("click",()=>{
+  etat.marquees[etat.courante]=!etat.marquees[etat.courante]; save(); rendreTout();
+});
+function aller(delta){
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const np=Math.min(l.length-1,Math.max(0,pos+delta));
+  etat.courante=l[np]; choixTemp=null; montrerEcran("q"); rendreTout();
+}
+$("btnPrec").addEventListener("click",()=>aller(-1));
+$("btnSuiv").addEventListener("click",()=>aller(1));
+$("btnNonRep").addEventListener("click",()=>{
+  const l=listeActive(), pos=l.indexOf(etat.courante);
+  const apres=l.slice(pos+1).concat(l.slice(0,pos+1));
+  const cible=apres.find(i=>!etat.validees[i]);
+  if(cible===undefined){ signale("Toutes les questions de ce mode sont répondues ! Tu peux terminer et voir ton bilan."); return; }
+  etat.courante=cible; choixTemp=null; rendreTout();
+});
+
+/* ───── résultat final ───── */
+$("btnTerminer").addEventListener("click",()=>{
+  timerPause(); rendreResultat(); montrerEcran("r");
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+});
+$("btnRetourQ").addEventListener("click",()=>montrerEcran("q"));
+$("btnImprimer").addEventListener("click",()=>window.print());
+$("btnRejouerErreurs").addEventListener("click",()=>{ montrerEcran("q"); setMode("erreurs"); });
+$("btnRecommencer").addEventListener("click",()=>{
+  if(demande("recommencer","Recommencer entièrement ? Toutes tes réponses et ton temps seront effacés.")){
+    const idt=etat.identite;
+    etat={reponses:Array(N).fill(null),validees:Array(N).fill(false),marquees:Array(N).fill(false),courante:0,mode:"complet",sousListe:null,tempsMs:0,timerOn:false,sansMinuteur:etat.sansMinuteur,identite:idt};
+    clearInterval(timerInterval); $("tStart").disabled=false; $("tPause").disabled=true; $("tResume").disabled=true;
+    save(); majTimer(); montrerEcran("q"); setMode("complet");
+  }
+});
+function rendreResultat(){
+  const s=stats();
+  const note=Math.round(s.ok/N*20*10)/10;
+  $("rNote").textContent=note.toFixed(1).replace(".",",")+" /20";
+  $("rTot").textContent=N; $("rRep").textContent=s.rep; $("rOk").textContent=s.ok;
+  $("rErr").textContent=s.err; $("rNon").textContent=s.rest;
+  $("rBrut").textContent=s.ok+" / "+N;
+  $("rPct").textContent=(s.rep?Math.round(s.ok/N*100):0)+" %";
+  $("rTemps").textContent=etat.sansMinuteur?"sans minuteur":fmt(etat.tempsMs);
+  /* bilan par compétence */
+  const tb=document.querySelector("#tblBilan tbody"); tb.innerHTML="";
+  const acquis=[],arevoir=[];
+  Object.keys(COMP_LABELS).forEach(c=>{
+    const idx=[...Array(N).keys()].filter(i=>QUESTIONS[i].c===c);
+    const okC=idx.filter(i=>etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r).length;
+    const ratio=okC/idx.length;
+    const cls=ratio>=0.75?"maitrise-ok":ratio>=0.5?"maitrise-moyen":"maitrise-ko";
+    const lbl=ratio>=0.75?"✔ Maîtrisée":ratio>=0.5?"≈ En cours d'acquisition":"✘ À retravailler";
+    tb.insertAdjacentHTML("beforeend",`<tr><td>${COMP_LABELS[c]}</td><td>${okC} / ${idx.length}</td><td class="${cls}">${lbl}</td></tr>`);
+    /* notions */
+    idx.forEach(i=>{
+      if(etat.validees[i]&&etat.reponses[i]===QUESTIONS[i].r) acquis.push(QUESTIONS[i].n);
+      else if(etat.validees[i]) arevoir.push(QUESTIONS[i].n+" ("+c+")");
+    });
+  });
+  let html="";
+  if(acquis.length) html+=`<p><b style="color:var(--ok)">Notions maîtrisées :</b> ${[...new Set(acquis)].join(" · ")}</p>`;
+  if(arevoir.length) html+=`<p><b style="color:var(--err)">Notions à revoir :</b> ${[...new Set(arevoir)].join(" · ")} — utilise le mode « Uniquement mes erreurs » puis relis la séquence.</p>`;
+  $("rNotions").innerHTML=html||"<p>Réponds aux questions pour construire ton bilan de notions.</p>";
+  const msg= note>=16?"Remarquable ! Variables, types, mise au point : les programmes n\'ont plus de secret pour toi — prêt·e pour l\'évaluation.":
+    note>=12?"Bon niveau : consolide les notions à revoir ci-dessus et vise l'excellence au prochain essai !":
+    note>=8?"Tu progresses : reprends la séquence sur les notions à revoir, puis rejoue tes erreurs — c'est le chemin normal de l'apprentissage.":
+    "Courage, rien n'est perdu ! Relis la synthèse de la séquence, refais les activités avec les aides, et reviens t'entraîner : chaque essai te rapproche du but.";
+  $("rEncoura").textContent=msg;
+}
+
+/* ───── init ───── */
+document.addEventListener("input",()=>save());
+function rendreTout(){ rendreDash(); rendreGrille(); rendreQuestion(); }
+restore(); majTimer();
+if(etat.sansMinuteur) $("tStart").disabled=true;
+setMode(etat.mode||"complet");
+</script>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+</body>
+</html>

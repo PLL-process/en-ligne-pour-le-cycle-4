@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse élève — 3e_C8.1 Le mât de la station</title>
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../index.html">⌂ Accueil</a><a href="sequence_3e_C8.1_mat-de-la-station.html">📘 La séquence</a><a href="qcm_3e_C8.1_mat-de-la-station.html">🧠 Le QCM</a><a href="lexique_3e_C8.1.html">📖 Lexique</a></nav>
+
+<h1>📡 Synthèse élève — La simulation avant le banc</h1>
+<p><em>3e_C8.1 — mettre en œuvre une simulation pour valider la tenue mécanique d’un matériau.</em></p>
+
+<h2>Les sept mots à savoir</h2>
+<div class="box"><ul>
+  <li><b>Mettre en œuvre une simulation</b> — choisir le cas de charge, la géométrie et la limite
+  de comparaison. Chacun de ces trois choix peut changer le verdict.</li>
+  <li><b>Cas de charge</b> — la façon dont on charge la pièce dans le calcul. Ici : la poussée du
+  banc (100 N en tête) ou le vent de 150 km/h réparti.</li>
+  <li><b>Pression dynamique</b> — q = ½ ρ V². À 150 km/h elle vaut
+  1063 Pa. Elle dépend du <em>carré</em> de la vitesse.</li>
+  <li><b>Coefficient de forme</b> — 1.2 pour un tube rond, 2 pour une section
+  carrée. À largeur égale, un carré prend presque deux fois plus de vent.</li>
+  <li><b>Moment de flexion</b> — force × bras de levier, en N·m. Maximal au pied, là où le mât
+  est encastré.</li>
+  <li><b>Flèche</b> — le déplacement en tête, en mm. Limitée à 40 mm pour que
+  l'anémomètre vise juste.</li>
+  <li><b>Angle mort</b> — ce qu'un instrument ne peut pas voir. Ici, la <em>fatigue</em> : les
+  deux chargent une fois, le vent fait vibrer des milliers de fois.</li>
+</ul></div>
+
+<h2>Ce que le banc appliquait, ce que le vent applique</h2>
+<table>
+  <tr><th>Profilé</th><th>Section</th><th>Moment du banc</th><th>Moment du vent</th></tr>
+  <tr><td>Tube aluminium Ø50 × 3</td><td>ronde</td><td>200 N·m</td><td>204 N·m</td></tr><tr><td>Barre pleine acier Ø20</td><td>ronde</td><td>200 N·m</td><td>128 N·m</td></tr><tr><td>Tube PVC Ø50 × 3</td><td>ronde</td><td>200 N·m</td><td>204 N·m</td></tr><tr><td>Poutre bois 40 × 40</td><td>carrée</td><td>200 N·m</td><td>298 N·m</td></tr><tr><td>Tube acier galvanisé Ø33,7 × 2,6</td><td>ronde</td><td>200 N·m</td><td>163 N·m</td></tr>
+</table>
+<div class="box attention">
+  <p>Le banc appliquait <b>200 N·m à tout le monde</b>. Le vent,
+  non.</p>
+  <ul>
+    <li>la Barre pleine acier Ø20 ne reçoit que 128 N·m — elle est fine,
+    elle offre peu de surface. <b>Le banc la désavantageait.</b></li>
+    <li>la Poutre bois 40 × 40 en reçoit 298 N·m — sa section carrée
+    freine bien plus. <b>Le banc l'avantageait.</b></li>
+    <li>les tubes Ø50 reçoivent 204 N·m : pour eux, la poussée
+    de 100 N était un excellent substitut du cyclone.</li>
+  </ul>
+</div>
+
+<h2>Trois réglages, quatre verdicts</h2>
+<table>
+  <tr><th>Réglage à 2000 mm</th><th>Retenus</th><th>Lesquels</th></tr>
+  <tr><td>poussée du banc + rupture</td><td>1</td><td>Tube aluminium Ø50 × 3</td></tr><tr><td>poussée du banc + limite élastique</td><td>1</td><td>Tube aluminium Ø50 × 3</td></tr><tr><td>vent + rupture</td><td>2</td><td>Tube aluminium Ø50 × 3, Tube acier galvanisé Ø33,7 × 2,6</td></tr><tr><td>vent + limite élastique</td><td>1</td><td>Tube aluminium Ø50 × 3</td></tr>
+</table>
+<p>Le réglage qui répond au cahier des charges est <b>vent + limite élastique</b> : il retient le
+Tube aluminium Ø50 × 3, avec un coefficient de 3,4 et une flèche de
+27 mm.</p>
+<p>Sur la <em>rupture</em>, le Tube acier galvanisé Ø33,7 × 2,6 passerait aussi
+(4,5) alors qu'il plierait définitivement
+(2,7 sur la limite élastique). Un mât tordu ne casse
+pas : il vise faux, et personne ne s'en aperçoit.</p>
+
+<h2>La hauteur n'est pas une variable d'ajustement</h2>
+<p>À 1 500 mm, 2 profilés passeraient au lieu de
+1. Mais sous 2000 mm l'anémomètre lit les
+turbulences du toit et non le vent réel : la mesure ne vaut plus rien. On ne fait pas passer une
+solution en abaissant une exigence.</p>
+
+<h2>L'angle mort partagé</h2>
+<p>Le vent fait vibrer le mât des milliers de fois : c'est la fatigue. Ni le banc ni la simulation ne la voient — ils chargent une seule fois.</p>
+<p>Le banc et la simulation tombent d'accord — et ils ignorent la même chose. Deux instruments
+d'accord peuvent se tromper ensemble.</p>
+
+<footer>Hors ligne, sans compte, aucune donnée envoyée.</footer>
+</body>
+</html>

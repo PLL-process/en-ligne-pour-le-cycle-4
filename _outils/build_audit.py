@@ -63,6 +63,45 @@ RACINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 # fichier réel reçoivent automatiquement le statut "À CRÉER".
 # ---------------------------------------------------------------------------
 OVERLAY = {
+    "3e_C8.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le mât de la station — la simulation avant le banc » (Fable, 31/08/2026) — "
+                "séquence 3 séances, simulateur à trois réglages (hauteur × cas de charge × "
+                "limite), QCM 30 q (20 sur le code, 10 sur 3e_C3.4), 2 synthèses, fiche, matrice, "
+                "lexique, modèle `mat_station.py` et suite de 62 + 32 tests exécutés et verts. "
+                "Les DOUZE réglages possibles sont vérifiés un par un contre le modèle Python. "
+                "Découverte centrale : le banc appliquait 200 N·m à tous, le vent en applique de "
+                "128 à 298 selon la largeur et la forme de la section.",
+        anomalies="La vitesse du vent n'est pas réglable dans le simulateur : c'est délibéré, et "
+                  "c'est l'objet du réinvestissement (savoir ce qu'un outil ne permet pas). "
+                  "Encastrement supposé parfait ; fatigue hors modèle — l'angle mort est nommé "
+                  "dans la séquence, la synthèse et le QCM.",
+        accessibilite="Vérifiée : labels sur les trois menus, title/desc sur le SVG du mât, "
+                      "verdicts écrits en toutes lettres, hors ligne intégral.",
+        medias="1 SVG original CC0 écrit pour le lot — le mât qui se courbe et les flèches de "
+               "charge, réparties ou ponctuelles selon le cas choisi.",
+    ),
+    "5e_C8.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « La patère du hall — ce que la simulation voyait » (Fable, 31/08/2026) — "
+                "séquence 2 séances avec simulateur intégré hors ligne, QCM 30 q (20 sur le code, "
+                "10 sur 5e_C3.1), 2 synthèses, fiche, matrice, lexique, modèle de calcul "
+                "`patere.py` et suite de 39 + 32 tests exécutés et verts. Le modèle reproduit "
+                "EXACTEMENT les cinq charges de rupture relevées au banc de 5e_C8.2 (41, 51, 53, "
+                "194, 408 kg), puis change de question et compare à la limite élastique : un seul "
+                "matériau change de camp, le bois (3,4 sur la rupture, 2,1 sur l'élastique).",
+        anomalies="Aucune manipulation d'objet réel sur le parcours 🅱 : le geste sur la matière "
+                  "est celui de 5e_C8.2, dont ce lot est la suite. Fatigue et vieillissement hors "
+                  "modèle — déclaré à l'élève dans la synthèse, pas tu.",
+        accessibilite="Vérifiée : labels sur tous les champs, title/desc sur le SVG du crochet, "
+                      "signalement non chromatique (mots « retenu »/« écarté »), hors ligne intégral.",
+        medias="1 SVG original CC0 écrit pour le lot — le crochet vu de côté, avec la contrainte "
+               "peinte en dégradé et sa valeur en clair.",
+    ),
     "5e_C1.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,
