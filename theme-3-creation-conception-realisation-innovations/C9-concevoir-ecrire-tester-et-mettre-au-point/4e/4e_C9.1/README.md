@@ -1,6 +1,12 @@
 # 4e_C9.1 — « Le jardin connecté se programme » (Thème 3)
 
-> Modifier un algorithme, le traduire en programme, le réaliser et le mettre au point.
+> **4e_C9.1** — Modifier un algorithme permettant de répondre au besoin ou au problème posé.
+> **4e_C9.2** — Traduire un algorithme permettant de répondre à un besoin ou à un problème simple en un programme.
+> **4e_C9.3** — Réaliser et mettre au point un programme commandant un système réel incluant éventuellement une interaction entre un humain et une machine.
+>
+> *Formulations recopiées de `_outils/data_competences.py`. L'exergue résumait
+> auparavant les trois codes en une phrase de son cru — à l'endroit même où le
+> gabarit met la citation officielle.*
 
 Dossier principal du lot **4e_C9.1 + 4e_C9.2 + 4e_C9.3**. Objet-fil de 4e : le
 jardin connecté, dont le support a été conçu (C7) puis validé (C8), reçoit enfin
