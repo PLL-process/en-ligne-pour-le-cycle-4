@@ -217,7 +217,7 @@ def palier_html(p, n):
     return "".join(out)
 
 
-def construire(scenario_path: pathlib.Path) -> pathlib.Path:
+def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Path:
     s = json.loads(scenario_path.read_text(encoding="utf-8"))
     global SANS_ENREGISTREMENT
     SANS_ENREGISTREMENT = bool(s.get("logiciel_sans_enregistrement"))
@@ -257,6 +257,33 @@ def construire(scenario_path: pathlib.Path) -> pathlib.Path:
               '  <p class="deja">%s</p>\n  <p class="change">%s</p>\n%s</section>\n'
               % (rap["deja"], rap["change"],
                  ('  <p class="filet">%s</p>\n' % rap["filet"]) if rap.get("filet") else ""))
+
+    # Règle d'or n°256 : ce qui est codé en dur dans un générateur devient faux
+    # dans tous les fichiers qu'il produit, sauf un. « Et maintenant ? » était
+    # écrit ici, au futur de la 5e — et les TP de 4e et de 3e le portaient mot
+    # pour mot : « on repartira de ces gestes-là, en 4e ». Le scénario le dit
+    # maintenant, et le générateur REFUSE de l'inventer.
+    ens = s.get("et_ensuite") or {}
+    if not (ens.get("acquis") and ens.get("bouton")):
+        raise SystemExit(
+            "Règle n°256 : chaque TP doit dire ce qu'on sait faire APRÈS lui, et\n"
+            "vers quoi l'on repart. Le générateur ne l'invente pas.\n"
+            'Ajoute au JSON : "et_ensuite": {"acquis": "…", "bouton": "…", "note": "…"}')
+    et_ensuite = ('<section class="card et-ensuite">\n'
+                  '  <h2>&#10145; Et maintenant&nbsp;?</h2>\n'
+                  '  <p>%s</p>\n'
+                  '  <p><a class="btn" href="@@RETOUR@@">%s</a></p>\n%s</section>'
+                  % (ens["acquis"], ens["bouton"],
+                     ('  <p class="note">%s</p>\n' % ens["note"]) if ens.get("note") else ""))
+
+    # Le bandeau d'entrée : ce qu'il faut savoir AVANT de cliquer (connexion,
+    # compte, ce qui s'évalue ailleurs). Facultatif, mais jamais inventé.
+    avant = s.get("avant_de_commencer") or []
+    if isinstance(avant, str):
+        avant = [avant]
+    avant_bloc = ("" if not avant else
+                  '<div class="card avertir">\n%s</div>\n'
+                  % "".join("  <p>%s</p>\n" % x for x in avant))
 
     retour = str(s.get("retour_sequence", "")).strip()
     if not retour:
@@ -308,17 +335,10 @@ En <span style="color:var(--head);font-style:italic">italique coloré, ce que tu
 produire à l'écran</span> — si tu ne le vois pas, ne continue pas&nbsp;: reprends l'étape.
 Les encadrés orange préviennent des pièges. À la fin de chaque partie, une image te montre
 <b>ce que tu dois obtenir</b>&nbsp;: compare, tu n'as besoin de personne pour te corriger.</p>
-%(rappel)s
+%(avant)s%(rappel)s
 %(corps)s
 
-<section class="card et-ensuite">
-  <h2>&#10145; Et maintenant&nbsp;?</h2>
-  <p>Tu sais ouvrir un plan, esquisser, coter, extruder, enlever de la matière et adoucir une
-  arête. <b>C'est tout ce qu'il faut</b> pour dessiner l'objet de ton projet.</p>
-  <p><a class="btn" href="%(retour)s">&#8592; Revenir à ta séquence et dessiner ton support</a></p>
-  <p class="note">Garde ton document&nbsp;: on repartira de ces gestes-là, en 4e, pour
-  <b>assembler</b> deux pièces — et là, une pièce pourra en empêcher une autre de bouger.</p>
-</section>
+%(et_ensuite)s
 <footer>%(pied)s</footer>
 </div>
 @@LOUPE@@
@@ -328,9 +348,10 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
        "css": CSS, "css_tp": STYLE_TP, "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
        "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt.")),
-       "retour": retour, "rappel": rappel}
+       "retour": retour, "rappel": rappel, "avant": avant_bloc,
+       "et_ensuite": et_ensuite.replace("@@RETOUR@@", retour)}
 
-    sortie = D / s["fichier_sortie"]
+    sortie = pathlib.Path(sortie_ailleurs) if sortie_ailleurs else D / s["fichier_sortie"]
     # La loupe est posée ICI, après la mise en forme : le bloc contient des
     # « % » (max-width:100%) que l'opérateur de formatage prendrait pour des
     # jetons. Une seule source, importée, jamais recopiée.
@@ -353,6 +374,9 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if len(args) != 1:
         raise SystemExit(__doc__)
-    construire(pathlib.Path(sys.argv[1]).resolve())
+    ailleurs = [a for a in sys.argv[1:] if a.startswith("--sortie=")]
+    construire(pathlib.Path(args[0]).resolve(),
+               pathlib.Path(ailleurs[0].split("=", 1)[1]) if ailleurs else None)

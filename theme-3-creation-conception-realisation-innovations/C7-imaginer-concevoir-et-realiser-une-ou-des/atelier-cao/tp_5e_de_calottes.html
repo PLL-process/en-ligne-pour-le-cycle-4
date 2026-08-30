@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TP de réinvestissement en 5e : améliorer un objet technique existant. On reprend le dé du TP nº1, on met de côté un creux cylindrique et on le remplace par une calotte sphérique, avec la primitive Sphère en mode Retirer. Plan décalé, esquisse d&#x27;un point, soustraction d&#x27;une bille de Ø20, mesure du résultat, décision de généraliser ou non.">
+<title>Thème 3 · 5e — TP : le dé, en mieux — les vraies calottes (5e_C7.2)</title>
+<style>
+  /* Règle d'or n°40 — hors ligne d'abord : aucune police distante, pile système. */
+  :root{--bg:#050f24;--panel:#0d2347;--panel2:#0a1b3d;--border:#274a8a;--title:#81aaff;
+        --sub:#9bbefc;--head:#c68ef2;--text:#e4eaf5;--hl:#61dafb;--ok:#81fba1;--warn:#ffd66b;
+        --err:#ff7b88;--input-bg:#0b1b39;--input-bd:#2f5695;--btn:#1d4e89}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);margin:0;padding:0 0 46px;line-height:1.6;
+       font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
+  .page{max-width:940px;margin:0 auto;padding:0 16px}
+  h1{font-size:1.5em;color:var(--title);text-align:center;margin:16px 0 4px}
+  h2{font-size:1.14em;color:var(--head);margin:20px 0 8px}
+  h3{font-size:1em;color:var(--hl);margin:16px 0 6px}
+  h4{font-size:.95em;color:var(--sub);margin:12px 0 4px}
+  .sous{text-align:center;color:var(--sub);margin:0 0 12px}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .badge{padding:4px 12px;border-radius:999px;font-size:.75em;font-weight:600;border:1px solid var(--border)}
+  .badge.niveau{background:#0d2347;color:var(--hl)}
+  .badge.code{background:#173666;color:#fff}
+  .badge.theme{background:#2b1a3f;color:var(--head)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:14px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .btn{background:var(--btn);color:#fff;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;
+       font-family:inherit;font-weight:600;font-size:.92em}
+  .btn.ghost{background:transparent;border:1px solid var(--input-bd);color:var(--sub)}
+  .btn.small{font-size:.86em;padding:7px 13px}
+  .btn.qcm{background:#2b1a3f;border:1px solid var(--head);color:var(--head)}
+  .btn:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+  a{color:var(--hl);text-decoration:underline;text-underline-offset:2px}
+  .saved-note{text-align:center;color:var(--sub);font-size:.84em;margin:4px 0}
+  .progress-wrap{max-width:940px;margin:8px auto;padding:0 16px}
+  .progress{background:var(--input-bg);border:1px solid var(--input-bd);border-radius:999px;height:12px;overflow:hidden}
+  .progress>div{background:linear-gradient(90deg,#1d4e89,#61dafb);height:100%;width:0;transition:width .3s}
+  #progTxt{text-align:center;color:var(--sub);font-size:.85em;margin:4px 0}
+  .seance-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 auto 14px;max-width:940px;padding:0 16px}
+  .seance-tab{flex:1;min-width:150px;padding:10px 8px;border-radius:10px;background:var(--input-bg);
+    border:1px solid var(--input-bd);cursor:pointer;text-align:center;font-size:.84em;font-weight:600;
+    color:var(--text);font-family:inherit;line-height:1.35}
+  .seance-tab.active{background:var(--btn);color:#fff;box-shadow:0 0 12px rgba(97,218,251,.35)}
+  .seance-tab .done{color:var(--ok)}
+  .seance-panel{display:none}.seance-panel.active{display:block}
+  .meta{background:var(--panel2);border-left:3px solid var(--hl);border-radius:0 8px 8px 0;padding:8px 13px;margin:8px 0;font-size:.88em}
+  .assoc{margin:8px 0}
+  .assoc label{display:block;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;background:var(--input-bg);color:var(--text);
+    border:1px solid var(--input-bd);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:.94em}
+  textarea{min-height:78px;resize:vertical}
+  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+  th,td{border:1px solid var(--input-bd);padding:6px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--sub)}
+  .legende-badges{max-width:880px;margin:0 auto 12px;font-size:.82em;color:var(--sub);
+    background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 14px;line-height:1.5}
+  [title]{cursor:help}
+  .fig{margin:10px 0}
+  .fig img{width:100%;max-width:820px;display:block;border-radius:10px;border:1px solid var(--border);background:#050f24}
+  .fig figcaption{color:var(--sub);font-size:.82em;margin-top:4px}
+  details.aide,details.correction,details.etayage{margin:6px 0;border:1px solid var(--input-bd);
+    border-radius:8px;padding:6px 12px;background:rgba(11,27,57,.6)}
+  details summary{cursor:pointer;font-weight:600;color:var(--sub)}
+  details.correction summary{color:var(--warn)}
+  details.etayage{border-left:4px solid var(--hl)}
+  details.etayage summary{color:var(--hl)}
+  details.etayage ul{margin:6px 0;padding-left:22px}
+  details.etayage li{margin:5px 0}
+  .feedback{margin:8px 0;padding:9px 13px;border-radius:9px;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(129,251,161,.14);color:var(--ok)}
+  .feedback.mixte{background:rgba(255,214,107,.14);color:var(--warn)}
+  .feedback.err{background:rgba(255,123,136,.14);color:#ffb0b8}
+  .retenir{border-left:3px solid var(--ok);padding-left:11px;color:var(--ok)}
+  .piege{border-left:3px solid var(--err);padding-left:11px;color:#ffb0b8}
+  /* Règle d'or n°29 — mode essentiel */
+  body.essentiel .referentiel-card, body.essentiel details.correction,
+  body.essentiel .approfondissement{display:none}
+  /* Règle d'or n°30 — la barre COMPTE, ce bandeau SITUE */
+  #tachesBandeau{max-width:940px;margin:10px auto 14px;padding:9px 15px;background:#0d2347;
+    border:1px solid var(--border);border-radius:10px;font-size:.92em;line-height:1.55}
+  #tachesBandeau .tb-titre{font-weight:700;color:var(--hl);display:block;margin-bottom:3px}
+  #tachesBandeau ul{list-style:none;margin:0;padding:0}
+  #tachesBandeau li.faite{opacity:.6;text-decoration:line-through}
+  footer{color:var(--sub);font-size:.84em;text-align:center;margin-top:22px}
+  @media(max-width:620px){.seance-tab{min-width:118px;font-size:.78em}}
+  @media print{body{background:#fff;color:#111}.toolbar,.btn,.seance-tabs,.progress-wrap,
+    .saved-note,#tachesBandeau,#navharm{display:none!important}
+    .seance-panel{display:block!important}.card{background:#fff;border-color:#999}
+    h1,h2,h3{color:#111}}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+
+  .palier{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    padding:14px 18px;margin:16px 0}
+  .palier > h2{margin-top:2px}
+  .niveau{float:right;font-size:.72em;padding:3px 10px;border-radius:999px;
+    border:1px solid var(--input-bd);color:var(--sub);font-weight:600}
+  .niveau.detaille{border-color:var(--hl);color:var(--hl)}
+  .niveau.allege{border-color:var(--warn);color:var(--warn)}
+  .niveau.resultat{border-color:var(--ok);color:var(--ok)}
+  ol.etapes{padding-left:22px;margin:10px 0}
+  ol.etapes > li{margin:12px 0}
+  .voir{display:block;color:var(--head);font-style:italic;margin-top:4px;
+    border-left:3px solid var(--head);padding-left:10px}
+  .btn-icone{height:1.35em;vertical-align:-.3em;margin:0 3px;border-radius:3px;
+    background:#fff;padding:1px}
+  .avertir{background:#3a2a0d;border:1px solid var(--warn);border-left-width:5px;
+    border-radius:8px;padding:9px 13px;margin:10px 0;color:#ffd8a0;font-size:.94em}
+  .avertir b{color:var(--warn)}
+  .capture{margin:10px 0}
+  /* « Où est-ce ? » : l'image du bouton, glissée entre le geste et son
+     résultat. Plus petite et décalée, pour qu'on ne la confonde pas avec
+     l'état d'écran obtenu. */
+  .capture.ou-est-ce{margin:8px 0 8px 1.1rem;border-left:3px solid #ffb300;padding-left:.7rem}
+  .capture.ou-est-ce img{max-width:min(100%,520px)}
+  .capture img{max-width:100%;height:auto;border:1px solid var(--input-bd);
+    border-radius:8px;background:#fff}
+  .capture figcaption{font-size:.88em;color:var(--sub);margin-top:6px}
+  .capture-absente{margin:8px 0;padding:10px 12px;border:1px dashed #6b7a99;
+    border-radius:8px;background:rgba(255,255,255,.03);color:#9bbefc;font-size:.9em}
+  .exemple-note{color:var(--warn);font-size:.88em;margin-top:4px}
+  .attendu{background:var(--panel2);border:1px solid var(--ok);border-radius:10px;
+    padding:11px 14px;margin:12px 0}
+  .attendu > b{color:var(--ok)}
+  .rituel{color:var(--sub);font-size:.92em;margin-top:10px}
+  .recompense{border-color:var(--ok)}
+  .critere{background:var(--panel2);border-left:4px solid var(--hl);
+    padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.94em}
+
+.rappel-spiralaire{border-left:5px solid var(--accent,#61dafb)}
+.rappel-spiralaire .change{margin:.6em 0;padding:.6em .8em;border-radius:8px;
+ background:rgba(255,255,255,.04);border:1px dashed #274a8a}
+.rappel-spiralaire .filet{font-size:.92em;opacity:.85}
+#navharm{display:flex;flex-wrap:wrap;gap:10px;max-width:900px;margin:14px auto 0;padding:0 18px}
+#navharm a{padding:6px 12px;border:1.5px solid #274a8a;border-radius:999px;background:#0d2347;
+ color:#9bbefc;font-size:.92em;text-decoration:none;line-height:1.2}
+#navharm a:hover{border-color:#61dafb;color:#61dafb}
+@media print{#navharm{display:none}}
+</style>
+</head>
+<body>
+<nav id="navharm" aria-label="Navigation du site">
+  <a href="../../../index.html">&#8962; Accueil</a>
+  <a href="../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html">&#8592; Revenir à la séquence de 5e</a>
+  <a href="tp_modele_demonstration.html">&#128209; Le modèle de démonstration</a>
+</nav>
+<div class="page">
+<h1>🥄 TP nº1 bis — Le dé, en mieux</h1>
+<p class="sous">Ton dé existe. Il tourne, il se lit, il s'imprime — et ses points sont des trous à fond plat. Sur un dé du commerce, ce sont des <b>calottes</b> : le fond est rond, comme le creux d'une cuillère. Tu vas améliorer <b>ton</b> objet, sur <b>un</b> point, puis décider si ça vaut la peine de le faire vingt fois de plus.</p>
+<div class="badges"><span class="badge niveau">5e</span>
+<span class="badge code">Onshape</span><span class="badge theme">5e_C7.2</span><span class="badge theme">environ 40 min</span><span class="badge theme">Prolonge le TP nº1 « Le dé »</span><span class="badge theme">Aucun risque électrique</span></div>
+<p class="legende-badges">🧭 <b>Comment lire ce TP.</b> En clair, <b>ce que tu fais</b>.
+En <span style="color:var(--head);font-style:italic">italique coloré, ce que tu dois voir se
+produire à l'écran</span> — si tu ne le vois pas, ne continue pas&nbsp;: reprends l'étape.
+Les encadrés orange préviennent des pièges. À la fin de chaque partie, une image te montre
+<b>ce que tu dois obtenir</b>&nbsp;: compare, tu n'as besoin de personne pour te corriger.</p>
+<div class="card avertir">
+  <p><b>Avant de commencer, deux choses.</b></p>
+  <p><b>Ce TP a besoin d'Internet du début à la fin.</b> Onshape fonctionne dans le navigateur et n'a <b>aucun mode hors connexion</b>&nbsp;: sans réseau, la séance ne peut pas avoir lieu, elle se reporte. La connexion se fait avec <b>le compte de la classe</b>, pas avec un compte à ton nom.</p>
+  <p><b>Ce TP ne te note pas</b>&nbsp;: on y apprend l'outil. Ce qui s'évalue vient après — et tout cela fonctionne <b>hors ligne</b>, s'imprime, et ne demande aucun compte&nbsp;: <a href="../5e/5e_C7.2/qcm_5e_C7.2_le-de-ameliore.html">le QCM «&nbsp;Le dé, en mieux&nbsp;» (30 questions)</a>, <a href="../5e/5e_C7.2/Synthèses/synthese_eleve_5e_C7.2.html">la synthèse</a> et <a href="../5e/5e_C7.2/lexique_5e_C7.2.html">le lexique</a>.</p>
+</div>
+
+<section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>1 &middot; Ranger avant de commencer — et garder l'original</h2><p>Améliorer un objet, c'est en faire une <b>version 2</b>. Si on modifie la version 1, on n'a plus rien à quoi comparer — et une amélioration qu'on ne peut pas comparer ne se démontre pas. On travaille donc sur une copie, toujours.</p><ol class="etapes"><li>Ouvre <b>Onshape</b> et connecte-toi avec le compte de la classe.<span class="voir">La page <b>Documents</b> s'affiche.</span></li><li>Ouvre ton document <b>Dé — TON NOM</b>, celui du TP nº1.<span class="voir">Ton dé apparaît, avec ses vingt et un creux et ses arêtes adoucies.</span></li><li>Tout en bas de l'écran, <b>clic droit</b> sur l'onglet <b>Part Studio 1</b>, puis <b>Dupliquer</b> (<i>Duplicate</i>).<span class="voir">Un second onglet apparaît juste à côté, nommé <b>Part Studio 1 (1)</b>. Ton dé y est identique, arbre des fonctions compris.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Si tu ne trouves pas <b>Dupliquer</b>, <b>survole</b> les entrées du menu : selon le réglage du compte, Onshape affiche <i>Duplicate</i>. Les icônes, elles, sont les mêmes partout.</div></li><li><b>Double-clique</b> sur le nom du nouvel onglet et écris <b>Dé v2</b>.<span class="voir">L'onglet s'appelle maintenant <b>Dé v2</b>. L'onglet d'origine n'a pas bougé : c'est ton témoin.</span></li><li>Travaille désormais <b>uniquement</b> dans l'onglet <b>Dé v2</b>.<span class="voir">Le nom de l'onglet actif est écrit en clair au bas de l'écran.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> ton document contient DEUX onglets : celui d'origine, intact, et « Dé v2 »</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section><section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>2 &middot; Regarder le défaut, et le nommer</h2><p>On ne corrige pas ce qu'on n'a pas nommé. Avant de toucher au dé, regarde ce qui ne va pas — et dis-le avec des mots précis.</p><ol class="etapes"><li>Tourne le dé pour voir la <b>face du 1</b> presque de profil (molette enfoncée, puis déplace la souris).<span class="voir">Le creux du 1 se voit en biais : on distingue son bord et son fond.</span></li><li>Zoome fort sur ce creux (molette).<span class="voir">Le fond est <b>plat</b>, et le bord est une <b>arête vive</b> : un angle net, comme le bord d'une pièce de monnaie.</span></li><li>Compare avec un dé du commerce, si tu en as un sous la main : passe le doigt dans un de ses points.<span class="voir">Chez lui, rien n'accroche : le creux est <b>rond</b>. C'est une <b>calotte</b> — la trace qu'une bille laisserait en s'enfonçant un peu.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Le TP nº1 avait fait ce choix exprès, et l'avait écrit : un cylindre peu profond est plus simple à obtenir. <b>Un modèle n'est jamais l'objet : c'est une simplification qu'on assume et qu'on sait nommer.</b> Aujourd'hui, on lève la simplification.</div></li></ol><div class="attendu"><b>Ce que tu dois obtenir&nbsp;:</b><figure class="capture"><img src="Images/coupe_calotte_5e.svg" alt="Une coupe de la face du dé : à gauche le creux actuel, un cylindre de Ø10 à fond plat et arête vive ; à droite la calotte, creusée par une bille de Ø20 dont le centre est 8,5 mm au-dessus de la face. Les deux creux ont la même profondeur de 1,5 mm ; la calotte est large de Ø10,54 et son fond est rond."></figure></div><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> tu peux dire, en deux mots, ce qui distingue ton creux de celui d'un vrai dé</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section><section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>3 &middot; Mettre l'ancien creux de côté (sans l'effacer)</h2><p>Une amélioration ne se pose pas <b>par-dessus</b> le défaut : elle le <b>remplace</b>. Il faut donc d'abord retirer l'ancien creux — mais sans le détruire, pour pouvoir revenir en arrière.</p><ol class="etapes"><li>Dans l'arbre des fonctions, à gauche, trouve l'enlèvement de matière de la face du 1 — il s'appelle <b>Extruder 2</b> (<i>Extrude 2</i>) si tu as suivi l'ordre du TP nº1. Clique-le pour vérifier.<span class="voir">Le creux du 1 <b>s'affiche en surbrillance</b> sur le dé : c'est bien lui.</span></li><li><b>Clic droit</b> sur cette ligne, puis <b>Supprimer la fonction</b> (<i>Suppress feature</i>).<span class="voir">La ligne <b>devient grisée</b> dans l'arbre, et le creux disparaît : la face du 1 est de nouveau lisse.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> <b>Supprimer la fonction</b> n'est pas <b>Supprimer</b>. La première met de côté — la ligne reste, grisée, et un clic droit la réveille. La seconde efface pour de bon. Quand on essaie une amélioration, on garde toujours le chemin du retour.</div></li><li>Regarde les autres faces : elles n'ont pas changé.<span class="voir">Les vingt autres creux sont toujours là, cylindriques. C'est voulu : on améliore <b>un</b> point d'abord, on jugera ensuite.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> la face du 1 est redevenue lisse, et l'ancienne fonction est toujours dans l'arbre, grisée</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section><section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>4 &middot; Le plan à 8,5 mm, et le point du centre</h2><p>Pour creuser une calotte, il faut une bille — et pour poser une bille, il faut lui dire <b>où est son centre</b>. Il n'est pas sur la face : il est au-dessus, dans le vide. C'est tout le geste de ce palier.</p><ol class="etapes"><li>Dans la barre du haut, clique <b>Plan</b> (<i>Plane</i>). Clique la <b>face du 1</b>, choisis <b>Décalage</b> (<i>Offset</i>) et entre <b>8,5</b>.<span class="voir">Un rectangle transparent flotte au-dessus de la face, à la distance demandée.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> <b>D'où vient 8,5 ?</b> La bille fait Ø20, donc <b>10</b> de rayon. On veut qu'elle s'enfonce de <b>1,5</b> dans la matière. Son centre est donc à 10 − 1,5 = <b>8,5</b> au-dessus de la face. Une seule soustraction, et toute la suite en dépend.</div></li><li>Si le plan part du mauvais côté (vers l'intérieur du dé), clique le bouton <b>d'inversion</b> dans le panneau.<span class="voir">Le plan repasse au-dessus de la face, à l'extérieur de la matière.</span></li><li>Clique <b>Esquisse</b>, puis clique ce nouveau plan.<span class="voir">Le plan se met à plat devant toi : on peut dessiner dessus.</span></li><li>Choisis l'outil <b>Point</b> et pose un point à peu près au milieu.<span class="voir">Un point bleu apparaît : bleu veut dire <b>pas encore contraint</b>, il peut donc encore glisser.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Pose-le <b>à peu près</b>. On ne vise pas à l'œil : c'est la cote qui va le fixer, à l'étape suivante.</div></li><li>Cote ce point à <b>25</b> de deux bords voisins du plan.<span class="voir">Le point <b>devient noir</b> : il est contraint, et il ne bouge plus quand on essaie de le tirer.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> 25, c'est la moitié de 50 : le centre exact de la face. Les points du TP nº1 étaient cotés à 11, 25 ou 39 — celui du milieu vaut 25, comme le 1 du dé.</div></li><li>Ferme l'esquisse.<span class="voir">L'esquisse rejoint l'arbre des fonctions, et le point reste visible.</span></li></ol><div class="attendu"><b>Ce que tu dois obtenir&nbsp;:</b><figure class="capture"><img src="Images/coupe_calotte_5e.svg" alt="Une coupe de la face du dé : à gauche le creux actuel, un cylindre de Ø10 à fond plat et arête vive ; à droite la calotte, creusée par une bille de Ø20 dont le centre est 8,5 mm au-dessus de la face. Les deux creux ont la même profondeur de 1,5 mm ; la calotte est large de Ø10,54 et son fond est rond."></figure></div><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> un point noir, coté, flotte au-dessus du centre de la face du 1</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section><section class="palier"><span class="niveau allege">Aide allégée</span><h2>5 &middot; La bille, en mode « Retirer »</h2><p>Le geste neuf de ce TP. Une <b>primitive</b> est une forme toute faite — cube, cylindre, sphère — qu'on pose sans l'esquisser. Et comme toute fonction de matière, elle sait <b>ajouter</b> ou <b>retirer</b>.</p><ol class="etapes"><li>Barre du haut : <b>Primitives</b>, puis <b>Sphère</b> (<i>Sphere</i>).<span class="voir">Un panneau s'ouvre et demande un <b>centre</b> et un <b>diamètre</b>.</span></li><li>Centre : clique le <b>point</b> que tu viens de coter. Diamètre : <b>20</b>. Mode : <b>Retirer</b> (<i>Remove</i>).<span class="voir">La face du 1 se creuse d'un rond doux. La bille elle-même disparaît : il ne reste que son empreinte.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Si <b>tout le dé</b> disparaît, tu es en mode <b>Nouveau</b> ou <b>Ajouter</b>. Rouvre la fonction et choisis <b>Retirer</b> : c'est le même bouton à trois positions que l'extrusion du TP nº1.</div></li><li>Tourne le dé et regarde le nouveau creux de profil.<span class="voir">Plus d'arête vive : le bord descend en pente douce, et le fond est rond.</span></li></ol><div class="attendu"><b>Ce que tu dois obtenir&nbsp;:</b><figure class="capture"><img src="Images/coupe_calotte_5e.svg" alt="Une coupe de la face du dé : à gauche le creux actuel, un cylindre de Ø10 à fond plat et arête vive ; à droite la calotte, creusée par une bille de Ø20 dont le centre est 8,5 mm au-dessus de la face. Les deux creux ont la même profondeur de 1,5 mm ; la calotte est large de Ø10,54 et son fond est rond."></figure></div><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> la face du 1 porte un creux rond, et le dé n'a pas disparu</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section><section class="palier"><span class="niveau allege">Aide allégée</span><h2>6 &middot; Mesurer, comparer — puis décider</h2><p>Une amélioration se juge, elle ne se proclame pas. Ton dé porte maintenant <b>une</b> calotte et <b>vingt</b> cylindres : c'est le meilleur banc d'essai possible, puisque les deux sont sur le même objet.</p><ol class="etapes"><li>Clique le <b>bord</b> du nouveau creux.<span class="voir">En bas à droite, Onshape <b>s'affiche en</b> clair : le diamètre vaut <b>10,54</b>.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> L'ancien creux faisait Ø10. La calotte est donc plus large de <b>0,54 mm</b> seulement, et sa profondeur n'a pas changé : le dé garde exactement son allure. Il ne gagne qu'une chose — la douceur du fond.</div></li><li>Tourne le dé pour voir en même temps la face du 1 et une face voisine.<span class="voir">La différence saute aux yeux de profil, et presque pas de face.</span></li><li>Compte ce que coûterait la même chose partout : un plan et une esquisse par face, soit <b>6</b> plans et <b>6</b> esquisses, et <b>21</b> billes en tout.<span class="voir">Le chiffre est là, écrit : c'est le prix de la généralisation.</span></li><li>Note sur ton cahier ce que tu décides — généraliser aux 21 points, ou garder cette v2 comme essai — et la raison en une ligne.<span class="voir">Ta décision est écrite quelque part. Les deux réponses se défendent ; ce qui ne se défend pas, c'est de ne pas trancher.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> tu connais le diamètre du nouveau creux, et tu as tranché sur la suite</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section><section class="palier"><span class="niveau detaille">Aide détaillée</span><h2>7 &middot; Emporter les DEUX versions</h2><p>Une amélioration se garde à côté de ce qu'elle améliore. Deux fichiers, deux versions : c'est ce qui permettra de les imprimer et de les comparer en main.</p><ol class="etapes"><li>Dans l'onglet <b>Dé v2</b>, <b>clic droit</b> sur la pièce, puis <b>Exporter</b> (<i>Export</i>).<span class="voir">Un panneau demande un format et une unité.</span></li><li>Format <b>STL</b>, unité <b>Millimètre</b>. Nomme le fichier <b>de_v2_TON_NOM</b>.<span class="voir">Le fichier arrive dans tes téléchargements, à côté du <b>v1</b> de la dernière fois.</span><div class="avertir"><b>À savoir avant de commencer&nbsp;:</b> Le format <b>et</b> l'unité. Un dé exporté en pouces sort vingt-cinq fois trop grand — et ça ne se voit qu'à l'impression.</div></li><li>Vérifie que tu as bien <b>les deux</b> fichiers, v1 et v2.<span class="voir">Deux lignes dans le dossier des téléchargements, deux noms différents.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> deux fichiers STL sont dans tes téléchargements, et leurs noms se distinguent au premier coup d'œil</p></section><section class="palier recompense"><span class="niveau resultat">À toi de jouer</span><h2>8 &middot; 🎁 Deux dés, une seule différence</h2><p>Le plaisir de la fin : rendre la comparaison visible d'un coup d'œil.</p><ol class="etapes"><li>Dans <b>Dé v2</b>, clic droit sur la pièce → <b>Modifier l'apparence</b> (<i>Edit appearance</i>). Choisis une couleur — par exemple un bleu franc.<span class="voir">Le dé change de couleur. Sa forme, elle, n'a pas bougé d'un millimètre.</span><p class="exemple-note">⚠️ Cette valeur est <b>un exemple</b>&nbsp;: ne la recopie pas sans réfléchir, choisis la tienne.</p></li><li>Fais de même dans l'onglet d'origine, avec une autre couleur.<span class="voir">Les deux onglets se distinguent maintenant à la vignette.</span></li><li>Passe d'un onglet à l'autre, plusieurs fois de suite, en regardant la face du 1.<span class="voir">Un seul creux change. Tout le reste est identique — et c'est exactement ce qu'on voulait : améliorer sans abîmer.</span></li></ol><p class="critere">🎯 <b>Tu peux passer à la suite quand&nbsp;:</b> on voit d'un regard laquelle est la v1 et laquelle est la v2</p><p class="rituel">💾 <b>Point de reprise.</b> Tu n'as rien à enregistrer&nbsp;: c'est déjà fait, tout seul, depuis le début. Si le poste redémarrait maintenant, tu retrouverais ton travail exactement ici.</p></section>
+
+<section class="card et-ensuite">
+  <h2>&#10145; Et maintenant&nbsp;?</h2>
+  <p>Tu sais reprendre un objet qui <b>existe déjà</b>, mettre une fonction de côté sans l'effacer, poser un plan là où il n'y a pas de matière, et creuser avec une forme toute faite. Surtout&nbsp;: tu as <b>comparé</b> avant de décider.</p>
+  <p><a class="btn" href="../5e/5e_C7.1/sequence_5e_C7_mini-projet-objet.html">&#8592; Revenir à ta séquence de 5e</a></p>
+  <p class="note">Une amélioration ne se juge pas à l'écran. Tes deux fichiers STL sont là pour être imprimés et comparés <b>en main</b>&nbsp;: le vrai critère, c'est le doigt qui passe dans le creux.</p>
+</section>
+<footer>Ressource originale du dépôt · Thème 3 · les cotes de ce TP sont engendrées par <code>calotte.py</code> · méthode dans GUIDAGE_PAS_A_PAS.md</footer>
+</div>
+
+<!-- loupe-images-v1 — agrandisseur d'images, règle d'or n°92. Aucune bibliothèque, aucun
+     réseau. Clic ou Entrée pour agrandir, Échap ou clic dans le fond pour
+     refermer. Le focus revient sur l'image quittée. -->
+<style>
+  .loupe-fond{position:fixed;inset:0;background:rgba(12,14,18,.92);display:none;
+    z-index:9999;padding:2rem;box-sizing:border-box;overflow:auto;
+    align-items:center;justify-content:center}
+  .loupe-fond[data-ouvert="oui"]{display:flex}
+  .loupe-fond img{max-width:100%;max-height:88vh;height:auto;
+    box-shadow:0 0 0 1px rgba(255,255,255,.15),0 24px 60px rgba(0,0,0,.6);
+    background:#fff;border-radius:4px}
+  .loupe-legende{position:fixed;left:0;right:0;bottom:.9rem;text-align:center;
+    color:#e7e9ee;font:400 .95rem/1.4 system-ui,sans-serif;padding:0 2rem}
+  .loupe-fermer{position:fixed;top:.8rem;right:1rem;background:#1b1f27;
+    color:#e7e9ee;border:1px solid #3a4150;border-radius:6px;
+    font:600 1rem/1 system-ui,sans-serif;padding:.6rem .9rem;cursor:pointer}
+  .loupe-fermer:focus-visible,.loupe-cliquable:focus-visible{outline:3px solid #ffb300;
+    outline-offset:3px}
+  .loupe-cliquable{cursor:zoom-in}
+  @media print{.loupe-fond{display:none !important}}
+  @media (prefers-reduced-motion:no-preference){
+    .loupe-fond[data-ouvert="oui"] img{animation:loupe-ouvre .16s ease-out}
+    @keyframes loupe-ouvre{from{transform:scale(.97);opacity:.4}to{transform:none;opacity:1}}
+  }
+</style>
+<script>
+(function(){
+  "use strict";
+  var fond, grande, legende, dernier = null;
+
+  function construire(){
+    fond = document.createElement("div");
+    fond.className = "loupe-fond";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.setAttribute("aria-label", "Image agrandie");
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "loupe-fermer";
+    bouton.textContent = "Fermer \u2715";
+    grande = document.createElement("img");
+    grande.alt = "";
+    legende = document.createElement("p");
+    legende.className = "loupe-legende";
+    fond.appendChild(bouton); fond.appendChild(grande); fond.appendChild(legende);
+    document.body.appendChild(fond);
+    bouton.addEventListener("click", fermer);
+    fond.addEventListener("click", function(e){ if (e.target === fond) fermer(); });
+  }
+
+  function ouvrir(img){
+    if (!fond) construire();
+    dernier = img;
+    grande.src = img.currentSrc || img.src;
+    grande.alt = img.alt || "";
+    // L'alternative textuelle sert de légende : elle DIT ce que l'image montre.
+    legende.textContent = img.alt ? img.alt + "  \u2014  \u00c9chap pour refermer"
+                                  : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function fermer(){
+    if (!fond) return;
+    fond.removeAttribute("data-ouvert");
+    grande.removeAttribute("src");
+    if (dernier) { dernier.focus(); dernier = null; }
+  }
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && fond && fond.getAttribute("data-ouvert")) fermer();
+  });
+
+  // Les schémas du dépôt sont souvent des SVG écrits directement dans la page.
+  // On les sérialise à la volée pour les afficher en grand — sans réseau : le
+  // dessin est déjà là, on ne fait que le relire.
+  function ouvrirSvg(svg){
+    if (!fond) construire();
+    dernier = svg;
+    var copie = svg.cloneNode(true);
+    if (!copie.getAttribute("xmlns")) {
+      copie.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    }
+    var texte = new XMLSerializer().serializeToString(copie);
+    grande.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(texte);
+    var titre = svg.querySelector("title");
+    var mot = titre ? titre.textContent : (svg.getAttribute("aria-label") || "");
+    grande.alt = mot;
+    legende.textContent = mot ? mot + "  \u2014  \u00c9chap pour refermer"
+                              : "\u00c9chap pour refermer";
+    fond.setAttribute("data-ouvert", "oui");
+    fond.querySelector(".loupe-fermer").focus();
+  }
+
+  function armerSvg(){
+    var dessins = document.querySelectorAll("svg");
+    for (var i = 0; i < dessins.length; i++) {
+      var svg = dessins[i];
+      if (svg.closest(".loupe-fond")) continue;
+      if (svg.dataset.loupe === "non") continue;
+      // Une icône de 20 px n'a pas besoin d'être agrandie : seuls les
+      // schémas, ceux qu'on doit LIRE, sont concernés.
+      var boite = svg.getBoundingClientRect();
+      if (boite.width < 120 || boite.height < 90) continue;
+      svg.classList.add("loupe-cliquable");
+      svg.setAttribute("tabindex", "0");
+      svg.addEventListener("click", function(){ ouvrirSvg(this); });
+      svg.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrirSvg(this); }
+      });
+    }
+  }
+
+  function armer(){
+    armerSvg();
+    var images = document.querySelectorAll("img");
+    for (var i = 0; i < images.length; i++) {
+      var img = images[i];
+      if (img.closest(".loupe-fond")) continue;
+      if (img.dataset.loupe === "non") continue;      // opt-out explicite
+      img.classList.add("loupe-cliquable");
+      img.tabIndex = 0;
+      if (!img.getAttribute("title")) {
+        img.setAttribute("title", "Cliquer pour agrandir");
+      }
+      img.addEventListener("click", function(){ ouvrir(this); });
+      img.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ouvrir(this); }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", armer);
+  } else {
+    armer();
+  }
+})();
+</script>
+
+</body>
+</html>

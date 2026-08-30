@@ -10197,3 +10197,86 @@ rien.
 
 C'était le comportement voulu : le message n'était pas une alerte, c'était un rappel — et un
 rappel qu'on laisse traîner redevient du bruit.
+
+## 2026-08-30 — Le geste que le TP annonçait sans l'écrire
+
+`5e_C7.2` — *fabriquer une solution pour améliorer un OST existant* — était le dernier code de
+C7 que rien n'évaluait. Il avait résisté à deux tentatives de le combler, et les deux étaient du
+même genre : **rattacher plutôt qu'écrire**.
+
+D'abord la fiche de l'atelier et le badge du TP nº1, qui annonçaient `C7.2` pour le TP du dé.
+Retiré ce matin : le dé n'améliore aucun objet, et rien n'y est fabriqué. Ensuite le mini-projet
+de `5e_C7.1`, dont la problématique dit pourtant mot pour mot « comment **améliorer** un objet
+scolaire » — mais qui s'arrête **avant** de fabriquer : le support de l'indicateur n'est dessiné
+et imprimé nulle part. Y ajouter dix questions n'aurait rien couvert, puisque le geste manquait.
+
+C'est Pascal qui a nommé l'objet que je ne voyais pas : **les calottes**. Pas le hall, pas le
+support du voyant — le dé lui-même. Et le TP nº1 l'avait déjà écrit, au palier 4 :
+
+> « Sur un dé du commerce, les points sont des **calottes** : le fond est arrondi, comme le creux
+> d'une cuillère. Nous faisons plus simple — un cylindre peu profond — parce qu'une calotte
+> demanderait de soustraire une sphère, et ça, c'est **un geste d'après**. »
+
+Le geste d'après était annoncé, daté, justifié — et jamais écrit. C'est lui, le lot.
+
+- **n°258** — **un trou de couverture qui résiste deux fois n'attend pas des questions, il
+  attend une ressource.** Quand on cherche à quel support rattacher un code plutôt que ce qu'on
+  pourrait écrire, on cherche du mauvais côté.
+
+### Ce que le TP fait faire
+
+L'élève reprend **son** dé, le duplique — la v1 devient un témoin —, met de côté **un** creux
+sans l'effacer, crée un plan à 8,5 mm au-dessus de la face, y pose un point, et creuse avec une
+bille de Ø20 en mode *Retirer*. Puis il mesure, compare, chiffre ce que coûterait la
+généralisation (6 plans, 6 esquisses, 21 billes), et **tranche**.
+
+La géométrie est calculée par `calotte.py`, pas écrite à la main : une bille de Ø20 enfoncée de
+1,5 mm laisse un creux de **Ø10,54** — un demi-millimètre de plus que les Ø10 d'aujourd'hui, donc
+un dé qui garde exactement son allure et ne gagne que la douceur du fond. Le modèle répond aussi
+à la question qui commande tout le TP : **peut-on poser la calotte par-dessus l'ancien creux ?**
+Non — dès 0,16 mm sous la face, le cylindre est déjà plus large que la calotte, qui se referme
+en descendant. Il faut retirer ce qu'on remplace.
+
+Et une calotte retire **43 % de matière en moins** qu'un cylindre de même profondeur. Un creux
+plus large en surface peut enlever moins de matière : c'est la forme entière qui compte.
+
+### La chaîne de production ne décrivait plus les fichiers
+
+En voulant ajouter un quatrième TP, j'ai regardé la chaîne que le manifeste déclare — un
+générateur, des scénarios, une empreinte par scénario. Elle ne disait plus vrai :
+
+- **trois empreintes sur quatre étaient fausses** ;
+- **les trois pages avaient été modifiées à la main** — par moi, ce matin, pour y poser le
+  bandeau de connexion. Régénérer les aurait effacées sans prévenir ;
+- deux pages étaient en retard d'une amélioration du générateur.
+
+Pire : le bloc « **Et maintenant ?** » était écrit **dans le générateur**, au futur de la 5e. Les
+quatre TP le portaient mot pour mot — y compris celui de 3e, qui annonçait à ses élèves qu'« on
+repartira de ces gestes-là, **en 4e**, pour assembler deux pièces ». Faux depuis le 11 août, sous
+les yeux de tout le monde.
+
+- **n°256** — **ce qui est codé en dur dans un générateur devient faux dans tous les fichiers
+  qu'il produit, sauf un.** Un texte au singulier dans un outil qui produit au pluriel n'est pas
+  un défaut de style : c'est une affirmation fausse, recopiée autant de fois qu'il y a de
+  fichiers.
+- **n°257** — **un fichier engendré qu'on modifie à la main cesse d'être engendré, et personne
+  ne le sait.** Le fichier reste juste ; c'est la chaîne qui devient un mensonge, et elle ne
+  redevient vraie qu'au prochain qui régénère — en effaçant le travail fait à la main.
+
+Corrigé : `et_ensuite` et `avant_de_commencer` sont désormais des champs de **scénario**, le
+générateur **refuse** un TP qui ne dit pas ce qu'on sait faire après lui, les quatre pages sont
+régénérées depuis leurs scénarios, et les empreintes sont recalculées.
+
+Et un contrôle neuf, `verif_chaine.py`, régénère chaque TP dans un fichier temporaire et le
+compare **octet par octet** à la page du disque. Il dit maintenant : *chaque page est exactement
+ce que son scénario produit, et chaque empreinte dit vrai*. Il a fallu une modification du
+générateur pour cela — une sortie choisie (`--sortie=`), pour pouvoir comparer sans écraser.
+
+### État de la couverture
+
+`ÉVALUÉ` 56 → **57** · `CITÉ` 5 → **4** · toujours **0 renvoi que rien n'évalue nulle part**.
+Tous les codes de C7 sont désormais évalués quelque part, aux trois niveaux.
+
+*L'entrée `5e_C7.2` de `POINTEURS` est à retirer — le dossier porte son lot. Elle vit dans
+`_outils/`, hors périmètre : livraison à part, et l'outil signale lui-même le retard sans rien
+écraser.*
