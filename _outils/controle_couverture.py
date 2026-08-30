@@ -23,7 +23,13 @@ répond à une question de fait : **le code y est-il écrit, et où ?**
     RENVOI      le code n'apparaît que dans une pièce d'orientation — README,
                 manifeste, lexique. Le lot dit où aller, il ne montre rien.
     NON NOMMÉ   le lot porte des fichiers et ne nomme jamais son propre code
-    VIDE        rien à lire
+    VIDE        rien à lire — le dossier ne porte AUCUN fichier lisible.
+                Attention : cela ne dit rien de la couverture du code, qui
+                peut être évalué ailleurs. Le relevé les nomme un par un
+                depuis le 30/08/2026 : jusque-là il les comptait sans les
+                nommer, et onze dossiers du thème 1 sont restés muets des
+                semaines derrière un « VIDE 11 » que personne ne pouvait
+                traduire en action
 
 Deux distinctions font tout le travail, et l'outil est né sans elles.
 
@@ -363,6 +369,28 @@ def main():
         for banque, tags in l["etiquettes"].items():
             detail = " ".join("%s:%d" % (e, n) for e, n in sorted(tags.items()))
             print("            %s → %s" % (banque, detail))
+
+    # ── les dossiers muets, NOMMÉS ─────────────────────────────────────────
+    # Ils étaient comptés et jamais nommés : la boucle d'affichage saute les
+    # lignes VIDE, et le résumé se contentait d'un « VIDE 11 ». Onze dossiers
+    # du thème 1 sont restés ainsi pendant des semaines — un `Images/` et un
+    # `Synthèses/` vides, rien à lire — alors que les onze codes étaient
+    # évalués ailleurs. Un compteur qui ne nomme personne ne se corrige pas.
+    vides = [l for l in lignes if l["etat"] == "VIDE"]
+    print("\n%d dossier(s) MUET(S) — rien à lire, pas même un renvoi :" % len(vides))
+    for l in sorted(vides, key=lambda l: l["libelle"]):
+        if l["questions_ailleurs"]:
+            ou = " · ".join("%s (%d)" % (rel.split("/")[-1], n)
+                            for rel, n, _p in l["ailleurs"][:2])
+            print("  %-9s évalué ailleurs : %s" % (l["libelle"], ou))
+        else:
+            print("  %-9s évalué NULLE PART — c'est un vrai trou, pas un défaut "
+                  "de lisibilité" % l["libelle"])
+    if vides:
+        print("     Un dossier muet apprend à ne plus ouvrir les dossiers "
+              "(règle d'or n°183).")
+        print("     `python3 _outils/pointeurs_codes.py` leur écrit un renvoi, "
+              "à condition qu'une entrée existe dans sa table.")
 
     orphelins = [l for l in lignes if l["etat"] in SANS_PREUVE
                  and not l["questions_ailleurs"] and l["statut"]

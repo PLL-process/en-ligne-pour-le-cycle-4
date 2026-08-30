@@ -102,17 +102,44 @@ def main():
             echecs.append("légende %r → %r : attendu %s, obtenu %s (%s)"
                           % (etiquette, libelle[:40], attendu, obtenu, pourquoi))
 
+    # ── un compteur qui ne nomme personne ne se corrige pas ─────────────────
+    # Le relevé sautait les lignes VIDE et se contentait d'un « VIDE 11 » dans
+    # le résumé. Onze dossiers du thème 1 sont restés muets des semaines
+    # derrière ce nombre. On vérifie ici une PROPRIÉTÉ, pas un compte : quel
+    # que soit l'état du dépôt, tout code en VIDE doit être NOMMÉ dans la
+    # sortie. Le jour où il n'y en aura plus, le test passera tout autant.
+    import contextlib
+    import io
+    from controle_couverture import main as releve_complet
+    tampon = io.StringIO()
+    with contextlib.redirect_stdout(tampon):
+        releve_complet()
+    sortie = tampon.getvalue()
+    controles_muets = 1
+    if "dossier(s) MUET(S)" not in sortie:
+        echecs.append("le relevé ne comporte plus de section « dossiers muets » : "
+                      "les VIDE redeviennent invisibles")
+    else:
+        from controle_couverture import parcourir
+        muets = [l["libelle"] for l in parcourir() if l["etat"] == "VIDE"]
+        controles_muets += len(muets)
+        for code in muets:
+            if code not in sortie:
+                echecs.append("%s est en VIDE et n'est nommé nulle part dans le "
+                              "relevé — il resterait invisible" % code)
+
     if SEUIL_EVALUABLE != 5:
         echecs.append("le seuil d'évaluabilité a changé sans que ce test le sache "
                       "(%d) — voir controle_echantillonnage.py" % SEUIL_EVALUABLE)
 
-    total = len(NOMMAGE) + len(ORIENTE) + len(LEGENDES) + 1
+    total = len(NOMMAGE) + len(ORIENTE) + len(LEGENDES) + 1 + controles_muets
     if echecs:
         for e in echecs:
             print("❌ " + e)
         print("\n%d / %d" % (total - len(echecs), total))
         return 1
-    print("✅ %d contrôles — nommage, orientation, légendes, seuil" % total)
+    print("✅ %d contrôles — nommage, orientation, légendes, seuil, et chaque "
+          "dossier muet nommé" % total)
     print("\n%d / %d" % (total, total))
     return 0
 
