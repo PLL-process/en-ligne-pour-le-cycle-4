@@ -83,10 +83,6 @@ C9 = T3 + "/C9-concevoir-ecrire-tester-et-mettre-au-point"
 #: code → (dossier, cible relative, titre du lien, ce que la cible fait de ce code,
 #:         évalue-t-elle le code ? — un README ne promeut jamais un statut)
 POINTEURS = {
- "5e_C7.2": (C7 + "/5e/5e_C7.2", "../5e_C7.1/sequence_5e_C7_mini-projet-objet.html",
-             "Séquence 5e — Le mini-projet d'objet",
-             "Le mini-projet propose et fabrique une solution : c'est l'activité de conception "
-             "elle-même qui travaille ce code, du croquis au prototype.", False),
  "3e_C7.2": (C7 + "/3e/3e_C7.2", "../3e_C7.1/sequence_3e_C7_capteur-confort-ny.html",
              "Séquence 3e — Le capteur de confort",
              "La séquence conçoit un ensemble de solutions pour un OST nouveau : le capteur de "
@@ -107,10 +103,12 @@ POINTEURS = {
              "30 questions.", True),
 }
 
-#: retirés le 30/08/2026 : `5e_C7.6`, `4e_C7.6` et `3e_C7.6` renvoyaient au TP de
-#: l'atelier CAO. Ces trois dossiers portent maintenant leur propre lot — QCM,
-#: synthèses, fiche, matrice, lexique, rapport — et leur propre README. L'outil
-#: les avait lui-même signalés comme « dossiers qui ont grandi ».
+#: retirés le 30/08/2026 : `5e_C7.6`, `4e_C7.6`, `3e_C7.6` et `5e_C7.2`. Les
+#: trois premiers renvoyaient au TP de l'atelier CAO ; le quatrième renvoyait au
+#: mini-projet de `5e_C7.1`, qui ENSEIGNE bien l'amélioration d'un objet mais
+#: s'arrête avant de fabriquer. Les quatre dossiers portent maintenant leur
+#: propre lot et leur propre README — l'outil les avait lui-même signalés comme
+#: « dossiers qui ont grandi ».
 
 MODELE = """# {code} — {titre}
 
