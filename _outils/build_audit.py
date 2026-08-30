@@ -849,6 +849,103 @@ OVERLAY = {
                       "par un bandeau aria-live.",
         medias="Banc d'energie original (HTML + JS, CC0). Aucun media tiers.",
     ),
+    # ── Statuts remis a jour d'apres ce que les dossiers portent, 31/08/2026 ────
+    # Le statut n'est pas calcule, il est DECLARE ici. Trois lots complets etaient
+    # restes marques « a verifier » faute d'avoir ete declares ; deux le meritent
+    # (leur couverture est demontree), le troisieme non — et c'est dit.
+    "4e_C7.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=True, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le jardin connecte, conception » : sequence, QCM de 30 questions, fiche, "
+                "lexique, deux syntheses, rapport de tests, script de tests livre, et un ATELIER "
+                "DE PLANIFICATION des taches. Le lot etait complet sur le disque depuis "
+                "longtemps et l'OVERLAY ne l'avait jamais declare : il restait affiche « a "
+                "verifier par l'enseignant » alors qu'il porte ses six pieces. Sa MATRICE DE "
+                "COUVERTURE relie chaque notion a un code (4e_C7.1, 4e_C7.2, 4e_C7.3), a une "
+                "activite, a une production d'eleve et aux numeros de questions du QCM : c'est "
+                "cette piece-la qui demontre la couverture, et c'est elle qui autorise le statut.",
+        anomalies="Le QCM etiquette ses questions par MOT-CLE THEMATIQUE (ORG, SOL, MAT) et non "
+                  "par code de competence : c'est une convention des premiers lots du depot. La "
+                  "matrice porte le lien notion → code, et elle seule. Une harmonisation des "
+                  "etiquettes rendrait le controle d'echantillonnage utilisable sur ce lot ; elle "
+                  "n'est pas faite. Par ailleurs la matrice revendique 4e_C7.3, qui dispose "
+                  "depuis le 31/08 de son propre lot (« Le bac du jardin ») : les deux se "
+                  "completent, le lot C7.3 evalue le code, celui-ci le mobilise.",
+        accessibilite="Corrections depliables, atelier de planification imprimable, syntheses "
+                      "eleve et professeur separees. Aucune boite modale (verifie).",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
+    ),
+    "4e_C7.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C7.1",
+        qualite="Couvert par la sequence « Le jardin connecte, conception » du dossier 4e_C7.1. "
+                "La PREUVE est dans la matrice de couverture de ce lot, qui porte la ligne : "
+                "« Proposition de solutions techniques · 4e_C7.2 · Activite 2 · 2 solutions + "
+                "justification · questions 3, 8, 9, 13 ». Le dossier recoit un README engendre "
+                "par _outils/pointeurs_codes.py, avec la formulation officielle et un lien "
+                "verifie vers la sequence.",
+        anomalies="Le dossier ne porte aucune ressource propre, et c'est voulu : le geste est "
+                  "travaille dans le lot voisin. Le README precedent disait « Voir le lot 01 dans "
+                  "4e_C7.1 » — une reference interne que personne ne pouvait resoudre, et sans "
+                  "lien cliquable.",
+        accessibilite="README seul, lisible hors ligne, lien verifie sur le disque avant ecriture.",
+        medias="Aucun.",
+    ),
+    "4e_C9.1": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le jardin connecte se programme » : 3 seances de 55 min, six activites, "
+                "editeur embarque, algorigramme, jeu d'essais, et un defaut de CLIGNOTEMENT "
+                "corrige par hysteresis. Le lot etait complet sur le disque et l'OVERLAY ne "
+                "l'avait jamais declare. Sa banque de QCM est la seule des lots anciens a "
+                "etiqueter ses questions par CODE DE COMPETENCE : 10 sur C9.1, 10 sur C9.2, 10 "
+                "sur C9.3 — la couverture est demontree dans la banque elle-meme, question par "
+                "question. Controle : 30 questions, repartition A/B/C/D 8/7/7/8, 4 options et 3 "
+                "refutations partout, 30 notions distinctes, une seule bonne reponse detachee par "
+                "sa longueur sur 30, ecart moyen +0,7 caractere, aucune erreur JS, aucune boite "
+                "modale.",
+        anomalies="L'execution est simulee dans l'editeur embarque : elle prouve la logique, pas "
+                  "le montage. Le lot couvre trois codes a lui seul, ce qui est coherent avec la "
+                  "sequence — six activites, dont trois consacrees a C9.3 — mais laisse peu de "
+                  "place a chacun : 10 questions par code, soit le double du seuil "
+                  "d'evaluabilite, sans plus.",
+        accessibilite="Corrections depliables, journal chiffre exige par le verificateur (au "
+                      "moins trois valeurs relevees, pour empecher le « ca marche » qui ne prouve "
+                      "rien). Aucune boite modale.",
+        medias="Voir SOURCES_MEDIAS.md du dossier.",
+    ),
+    "4e_C9.2": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C9.1",
+        qualite="Couvert par la sequence « Le jardin connecte se programme » du dossier 4e_C9.1, "
+                "activite 3 : l'algorigramme devient un programme, en blocs puis en Python. La "
+                "PREUVE est dans la banque du lot, qui etiquette 10 de ses 30 questions par le "
+                "code 4e_C9.2. README engendre, lien verifie.",
+        anomalies="Le dossier ne porte aucune ressource propre, et c'est voulu.",
+        accessibilite="README seul, lisible hors ligne, lien verifie.",
+        medias="Aucun.",
+    ),
+    "4e_C9.3": dict(
+        statut="COUVERT PAR UNE SÉQUENCE MUTUALISÉE",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=False, correction=False, situation=False, problematique=False,
+        mutualise_avec="4e_C9.1",
+        qualite="Couvert par la sequence « Le jardin connecte se programme » du dossier 4e_C9.1, "
+                "activites 4 a 6 : le jeu d'essais (nominaux, frontieres, exclusions, absurdes), "
+                "le clignotement corrige par hysteresis, et le reinvestissement sans modele "
+                "fourni. La PREUVE est dans la banque du lot, qui etiquette 10 de ses 30 "
+                "questions par le code 4e_C9.3. README engendre, lien verifie.",
+        anomalies="Le dossier ne porte aucune ressource propre, et c'est voulu.",
+        accessibilite="README seul, lisible hors ligne, lien verifie.",
+        medias="Aucun.",
+    ),
+
     # ── 4e_C6.2 : les deux syntheses qui manquaient, 31/08/2026 ─────────────────
     "4e_C6.2": dict(
         statut="COMPLET ET VALIDABLE",
