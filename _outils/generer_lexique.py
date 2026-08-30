@@ -209,6 +209,26 @@ def ecrire_lexique(dossier, titre, retour):
     return sortie, total
 
 
+def page_de_retour(dossier):
+    """Vers quelle page le lexique doit-il ramener l'élève ?
+
+    La séquence du lot, quand le lot en porte une. Mais un lot peut vivre autour
+    d'une ressource **mutualisée** : les trois lots de l'atelier CAO n'ont pas de
+    séquence propre, ils tournent autour d'un TP commun, dont chaque dossier de
+    code porte la page de renvoi (`tp_*.html`).
+
+    La première version ne cherchait que `sequence*.html` et, faute d'en trouver,
+    **sautait le dossier en silence** : le lexique n'était pas écrit, et rien ne
+    le disait. Un outil qui ne trouve pas sa cible doit le dire, pas s'abstenir
+    (règle d'or n°183).
+    """
+    for motif in ("sequence*.html", "tp_*.html"):
+        trouves = sorted(glob.glob(os.path.join(dossier, motif)))
+        if trouves:
+            return os.path.basename(trouves[0])
+    return ""
+
+
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     tous = "--tous" in sys.argv
@@ -220,11 +240,12 @@ if __name__ == "__main__":
         else:
             dossiers.append(a)
     for d in dossiers:
-        seqs = sorted(glob.glob(os.path.join(d, "sequence*.html")))
-        if not seqs:
-            continue
         titre = os.path.basename(d)
-        r = ecrire_lexique(d, titre, os.path.basename(seqs[0]))
+        retour = page_de_retour(d)
+        if not retour:
+            print("%-58s  ni séquence ni TP dans ce dossier — NON GÉNÉRÉ" % titre[:56])
+            continue
+        r = ecrire_lexique(d, titre, retour)
         if r:
             print("%-58s %3d notions → %s" % (titre[:56], r[1], os.path.basename(r[0])))
         else:

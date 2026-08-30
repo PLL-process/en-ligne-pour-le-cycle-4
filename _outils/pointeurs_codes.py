@@ -45,7 +45,23 @@ c'est la banque de la cible qu'il faut regarder.
 
 Un dossier qui porte SON PROPRE lot n'est jamais écrasé par un pointeur : la
 phrase « ce dossier ne porte aucune ressource propre » est vérifiable, donc
-elle est vérifiée.
+elle est vérifiée. Deux cas s'y cachent, et ils n'ont pas la même gravité :
+
+  · le dossier a **grandi** — il porte son lot ET un README qui n'est plus le
+    pointeur engendré. La table est simplement en retard : on le dit, on invite
+    à retirer l'entrée, et on sort en 0. C'est le cas des trois codes de
+    l'atelier CAO le jour où ils ont reçu leur QCM ;
+  · le dossier porte un lot **derrière un renvoi** — son README est encore le
+    pointeur engendré, qui affirme « ce dossier ne porte aucune ressource
+    propre » alors que c'est faux. Là, on refuse.
+
+La deuxième erreur de la première version : la phrase « la notion s'évalue
+ailleurs » ne disait pas OÙ, et n'avait rien regardé pour l'affirmer. Elle ne
+comptait que dans la banque de la cible. Le jour où `3e_C7.2` a reçu dix
+questions dans la banque du boîtier, le README a continué de dire « c'est à vous
+de dire où vous l'évaluez ». C'est encore la règle d'or n°242, sur un autre
+instrument : on regarde donc maintenant **tout le dépôt** avant de renvoyer
+l'enseignant à lui-même, et on nomme la banque quand elle existe.
 
 Usage : python3 pointeurs_codes.py [--etat]
 """
@@ -131,10 +147,19 @@ ENSEIGNE = ("**Ce code y est enseigné, et il n'y est pas évalué.** Aucune que
             "de la ressource ne porte `{code}` : on y apprend le geste, et la notion s'évalue "
             "ailleurs (règle d'or n°81). Le statut du code reste donc « à vérifier par "
             "l'enseignant » : c'est à vous de dire où vous l'évaluez.")
+ENSEIGNE_AILLEURS = (
+    "**Ce code y est enseigné, et il n'y est pas évalué — mais il l'est ailleurs.** Aucune "
+    "question de la banque de la ressource ne porte `{code}` : on y apprend le geste (règle "
+    "d'or n°81). {n} question(s) l'évaluent dans une autre banque du dépôt ({banques}) : "
+    "c'est de là que le score se reporte.")
 SOUS_SEUIL = ("**Ce code y est effleuré.** La banque de la ressource ne porte que {n} question(s) "
               "étiquetée(s) `{code}` ({banques}), pour un seuil d'évaluabilité de "
               "{seuil} : c'est trop peu pour reporter un score. Le statut du code reste « à "
               "vérifier par l'enseignant ».")
+
+#: la phrase qui signe un README engendré — elle sert à savoir si un dossier a
+#: reçu son propre README, ou s'il porte encore le renvoi
+SIGNATURE = "Ce README est engendré par `_outils/pointeurs_codes.py`"
 
 
 def formulation(code):
@@ -159,6 +184,21 @@ def mesure(code, dossier, cible, index):
     return sum(n for _rel, n in dedans), [rel.split("/")[-1] for rel, _n in dedans]
 
 
+def mesure_ailleurs(code, dossier, cible, index):
+    """Combien de questions évaluent ce code AILLEURS dans le dépôt, et où ?
+
+    On ne le demande qu'après avoir constaté que la banque de la cible n'en
+    porte pas : le README parle d'abord de sa ressource. Mais renvoyer
+    l'enseignant à lui-même (« c'est à vous de dire où vous l'évaluez ») alors
+    qu'une banque du dépôt évalue le code est une absence non vérifiée.
+    """
+    niveau, c = code.split("_")
+    cible_dir = os.path.dirname(os.path.normpath(os.path.join(dossier, cible)))
+    dehors = [(rel, n) for rel, n, _partage in index.get((niveau, c), [])
+              if not rel.startswith(cible_dir + "/")]
+    return sum(n for _rel, n in dehors), [rel.split("/")[-1] for rel, _n in dehors]
+
+
 def porte_son_lot(dossier_absolu):
     """Ce dossier porte-t-il sa propre séquence ou son propre QCM ?
 
@@ -171,7 +211,7 @@ def porte_son_lot(dossier_absolu):
 
 
 def main(etat=False):
-    ecrits, refuses, deja = [], [], []
+    ecrits, refuses, deja, promus = [], [], [], []
     index = banques_du_depot()
     for code, (dossier, cible, lien_titre, quoi, evalue) in sorted(POINTEURS.items()):
         d = DEPOT / dossier
@@ -182,8 +222,16 @@ def main(etat=False):
             refuses.append("%s : cible absente — %s" % (code, cible))
             continue
         if porte_son_lot(d):
-            refuses.append("%s : ce dossier porte SON PROPRE lot — un pointeur l'écraserait. "
-                           "Retirer l'entrée de POINTEURS." % code)
+            readme = d / "README.md"
+            propre = readme.exists() and SIGNATURE not in readme.read_text(encoding="utf-8")
+            if propre:
+                promus.append("%s : ce dossier porte désormais SON PROPRE lot et son propre "
+                              "README — l'entrée de POINTEURS peut être retirée." % code)
+            else:
+                refuses.append("%s : ce dossier porte un lot DERRIÈRE un renvoi — le README "
+                               "engendré affirme « aucune ressource propre », et c'est faux. "
+                               "Retirer l'entrée de POINTEURS et écrire le README du lot."
+                               % code)
             continue
         n, banques = mesure(code, dossier, cible, index)
         if bool(evalue) != (n >= SEUIL_EVALUABLE):
@@ -197,7 +245,12 @@ def main(etat=False):
             phrase = SOUS_SEUIL.format(n=n, code=code, seuil=SEUIL_EVALUABLE,
                                        banques=", ".join("`%s`" % b for b in banques))
         else:
-            phrase = ENSEIGNE.format(code=code)
+            ailleurs, ou = mesure_ailleurs(code, dossier, cible, index)
+            if ailleurs >= SEUIL_EVALUABLE:
+                phrase = ENSEIGNE_AILLEURS.format(
+                    code=code, n=ailleurs, banques=", ".join("`%s`" % b for b in ou))
+            else:
+                phrase = ENSEIGNE.format(code=code)
         f, socle = formulation(code)
         texte = MODELE.format(code=code, titre=f.rstrip("."), formulation=f, socle=socle,
                               lien_titre=lien_titre, cible=cible, quoi=quoi,
@@ -212,6 +265,11 @@ def main(etat=False):
     print("%d README %s : %s" % (len(ecrits), "à écrire" if etat else "écrits", ", ".join(ecrits) or "aucun"))
     if deja:
         print("%d déjà à jour : %s" % (len(deja), ", ".join(deja)))
+    if promus:
+        print("%d dossier(s) qui ont grandi — la table est en retard, rien n'est faux :"
+              % len(promus))
+        for p in promus:
+            print("     " + p)
     if refuses:
         print("⛔ %d refusé(s) — un pointeur n'est écrit que si sa cible existe, si le "
               "dossier ne porte pas son propre lot, et si la mesure confirme la "
