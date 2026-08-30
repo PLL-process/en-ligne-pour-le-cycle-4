@@ -1,6 +1,6 @@
 # Fiche pédagogique — La progression CAO du cycle 4 (C7.2, C7.6)
 
-**Niveaux** : 5e, 4e et 3e — un TP par niveau, dans une ressource commune.
+**Niveaux** : 5e, 4e et 3e — quatre TP, dans une ressource commune.
 **Durée** : 1 séance de 55 minutes par TP, en salle informatique.
 **Logiciel** : Onshape Éducation (navigateur, aucun poste à installer).
 **Thème** : 3 — Création, conception et réalisation d'innovations.
@@ -9,7 +9,7 @@
 
 | Code | Formulation du référentiel (2024) | TP qui la travaille | Où il est évalué |
 |---|---|---|---|
-| **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | *aucun* — voir ci-dessous | nulle part à ce jour |
+| **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | TP nº1 **bis** — Le dé, en mieux | QCM du lot `5e_C7.2` — 30 questions |
 | **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle (contribution) | séquence `4e_C7.1` — 10 questions |
 | **3e_C7.2** | Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº4 — Le boîtier étanche | QCM du lot `3e_C7.6` — 10 questions |
 | **5e_C7.6** | Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie. | TP nº1 — Le dé | QCM du lot `5e_C7.6` — 30 questions |
@@ -29,8 +29,16 @@
 > dé n'améliore aucun objet, et rien n'est fabriqué pendant la séance (le fichier part à
 > l'impression plus tard). Ce geste appartient au **mini-projet de `5e_C7.1`**, ce que dit déjà
 > le README du dossier `5e_C7.2`. Le badge du TP, qui affichait « C7.2 · C7.6 », est corrigé lui
-> aussi. Conséquence à assumer : **`5e_C7.2` n'est évalué nulle part dans le dépôt** — c'est un
-> trou réel, et il ne se comble pas en le rattachant au mauvais TP.
+> aussi.
+>
+> **Suite, le même jour.** Le code n'est pas resté orphelin pour autant. Le TP nº1 annonçait
+> lui-même le geste qui manquait — *« une calotte demanderait de soustraire une sphère, et ça,
+> c'est un geste d'après »* — et ce geste est maintenant écrit : **TP nº1 bis, « Le dé, en
+> mieux »**. L'élève y reprend SON dé, garde la version d'avant, remplace un creux à fond plat
+> par une vraie calotte, puis décide si l'amélioration vaut d'être répétée vingt fois. L'objet
+> existe, il est amélioré, et la solution est fabriquée : les trois exigences du code sont
+> tenues, ce qui n'était le cas ni du TP nº1 ni du mini-projet de `5e_C7.1` (qui enseigne
+> l'amélioration mais s'arrête avant de fabriquer).
 
 Les trois TP **exposent** aussi C7.3 — choisir (5e), comparer (4e) un matériau —
 sans l'évaluer : aucune question notée n'y est posée. C'est aux séquences de
@@ -45,6 +53,7 @@ séparées, **hors ligne, imprimables, sans compte**.
 | Niveau | Lot | Pièces |
 |---|---|---|
 | 5e | [`5e/5e_C7.6/`](../5e/5e_C7.6/README.md) | QCM 30 q · 2 synthèses · fiche · matrice · lexique · rapport de tests |
+| 5e | [`5e/5e_C7.2/`](../5e/5e_C7.2/README.md) | QCM 30 q · 2 synthèses · fiche · matrice · lexique · rapport · modèle `calotte.py` |
 | 4e | [`4e/4e_C7.6/`](../4e/4e_C7.6/README.md) | QCM 30 q · 2 synthèses · fiche · matrice · lexique · rapport de tests |
 | 3e | [`3e/3e_C7.6/`](../3e/3e_C7.6/README.md) | QCM 30 q (20 + 10) · 2 synthèses · fiche · matrice · lexique · rapport de tests |
 
@@ -63,6 +72,7 @@ faire son travail toute seule.
 | Niveau | Objet | Geste nouveau | Ce qui change vraiment |
 |---|---|---|---|
 | **5e** | Le dé | esquisser, coter, extruder, enlever, adoucir | On fabrique **une pièce**. |
+| **5e bis** | Le dé, en mieux | le plan décalé, la **primitive** en mode Retirer | On **améliore** une pièce qui existe — et on décide si ça vaut le coup. |
 | **4e** | Le dé sur son socle | la **révolution**, puis l'**assemblage** et les contraintes | On tient **deux pièces ensemble** — et l'une peut empêcher l'autre de bouger. |
 | **3e** | Le boîtier étanche | la **coque**, la rainure, le passage de câble, la vue en coupe | L'objet doit **résister à quelque chose de réel**. |
 

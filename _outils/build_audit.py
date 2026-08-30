@@ -933,6 +933,33 @@ OVERLAY = {
         accessibilite="README seul, lisible hors ligne, lien verifie sur le disque avant ecriture.",
         medias="Aucun.",
     ),
+    "5e_C7.2": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=False, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        mutualise_avec="atelier CAO — TP nº1 bis « Le dé, en mieux »",
+        qualite="Lot « Le dé, en mieux » (Fable, 30/08/2026) — TP de réinvestissement de "
+                "40 min, QCM 30 questions toutes étiquetées 5e_C7.2, 2 synthèses, fiche, "
+                "matrice de 11 groupes, lexique de 30 notions, modèle `calotte.py` et suite "
+                "de 31 tests exécutés et verts. Le code n'était évalué NULLE PART, et il "
+                "n'était pas vraiment enseigné non plus : le TP nº1 annonçait le geste sans "
+                "l'écrire (« une calotte demanderait de soustraire une sphère, et ça, c'est "
+                "un geste d'après »). L'élève reprend SON dé, garde la v1 comme témoin, "
+                "remplace un creux à fond plat par une calotte creusée à la bille Ø20, "
+                "mesure (Ø10,54 contre Ø10) et décide s'il généralise aux 21 points. Toutes "
+                "les cotes des pages sont engendrées par le modèle.",
+        anomalies="Les gestes Onshape (plan décalé, primitive Sphère en mode Retirer) sont "
+                  "décrits d'après la documentation et NON constatés sur poste : à dérouler "
+                  "une fois en salle avant de donner le TP. Cinq paliers sur huit n'ont pas "
+                  "d'image de résultat (règle n°77) ; seul le dessin de coupe existe, et il "
+                  "est original. Aucun parcours hors connexion pour le geste — exception "
+                  "assumée à la règle de conception n°5, annoncée en tête du TP.",
+        accessibilite="Vérifiée : aucune boîte modale, SVG avec title et desc, corrections "
+                      "dépliables, deux synthèses séparées, lexique imprimable, hors ligne "
+                      "intégral pour tout ce qui évalue.",
+        medias="1 SVG original CC0 engendré par `calotte.py` — la coupe comparée des deux "
+               "creux, avec la bille en pointillés et la hauteur de son centre.",
+    ),
     "5e_C7.6": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=False, qcm=True, projet=False, synthese=True,

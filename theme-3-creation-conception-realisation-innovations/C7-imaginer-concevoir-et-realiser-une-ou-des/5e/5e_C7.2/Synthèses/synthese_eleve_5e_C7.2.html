@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synthèse eleve — 5e_C7.2 Le dé, en mieux</title>
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.55;color:#1a1a1a}
+h1{color:#1d4e89}h2{color:#2966b1;border-bottom:2px solid #e0e8f5;padding-bottom:4px}
+.box{background:#f0f6ff;border-left:4px solid #1d4e89;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0}
+.attention{background:#fff6e0;border-left:4px solid #b8860b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94em}
+th,td{border:1px solid #b9cbe4;padding:7px 9px;text-align:left}th{background:#e8f0fb;color:#1d4e89}
+figure{margin:14px 0}figure img{width:100%;border:1px solid #b9cbe4;border-radius:8px}
+figcaption{font-size:.88em;color:#555;margin-top:4px}
+ul{padding-left:1.2em}footer{margin-top:32px;font-size:.85em;color:#666}
+#navharm{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}#navharm a{padding:5px 11px;border:1.5px solid #b9cbe4;border-radius:999px;background:#f0f7ff;color:#1d4e89;font-size:.88em;text-decoration:none;line-height:1.2}#navharm a:hover{border-color:#1d4e89}@media print{#navharm{display:none}}</style>
+</head>
+<body>
+<nav id="navharm"><a href="../../../../../index.html">⌂ Accueil</a><a href="../../../atelier-cao/tp_5e_de_calottes.html">🧪 Le TP</a><a href="../qcm_5e_C7.2_le-de-ameliore.html">🧠 Le QCM</a><a href="../lexique_5e_C7.2.html">📖 Lexique</a><a href="synthese_professeur_5e_C7.2.html">🧑‍🏫 Synthèse professeur</a></nav>
+
+<h1>🥄 Synthèse élève — Le dé, en mieux</h1>
+<p><em>5e_C7.2 — Fabriquer une solution pour améliorer un OST existant.</em></p>
+
+<h2>Améliorer, ce n'est pas recommencer</h2>
+<p>Ton dé existait déjà : il tourne, il se lit, il s'imprime. On ne l'a pas refait, on ne l'a
+pas remplacé — on lui a changé <b>une seule chose</b>, et tout le reste est resté
+reconnaissable. C'est cela, améliorer un objet technique existant.</p>
+<div class="box">
+  <p><b>La règle des trois versions du cycle.</b> En 5e on <em>améliore</em> un objet qui
+  existe. En 4e on lui <em>ajoute une fonction</em> qu'il n'avait pas. En 3e on <em>produit</em>
+  un objet entièrement nouveau. Le verbe change à chaque niveau, et c'est le verbe qui dit ce
+  qu'on attend de toi.</p>
+</div>
+
+<h2>Le défaut, en deux mots</h2>
+<p>Avant de corriger, il a fallu <b>nommer</b>. Le creux du dé a un <b>fond plat</b> et une
+<b>arête vive</b> : c'est la forme que laisse forcément un enlèvement de matière par extrusion.
+Sur un dé du commerce, le creux est une <b>calotte</b> — la trace qu'une bille laisserait en
+s'enfonçant un peu.</p>
+<div class="box attention">
+  <p><b>Personne n'a décrété que c'était un défaut.</b> On l'a constaté en comparant à l'usage :
+  le doigt sent l'arête chez l'un, et rien chez l'autre. Un défaut se compare, il ne se
+  décrète pas.</p>
+</div>
+
+<h2>La bille, et où se place son centre</h2>
+<figure><img src="../../../atelier-cao/Images/coupe_calotte_5e.svg" alt="Coupe de la face du dé : à gauche le creux cylindrique à fond plat, à droite la calotte creusée par une bille de Ø20 dont le centre est à 8,5 mm au-dessus de la face. Même profondeur de 1,5 mm ; la calotte fait Ø10,54."><figcaption>La coupe est engendrée par <code>calotte.py</code> : ses cotes ne sont pas dessinées à la main.</figcaption></figure>
+<div class="box"><ul>
+  <li>La bille fait <b>Ø20</b>, donc <b>10</b> de rayon.</li>
+  <li>On veut qu'elle s'enfonce de <b>1,5 mm</b> dans la matière.</li>
+  <li>Son centre est donc à 10 − 1,5 = <b>8,5 mm</b> au-dessus de la face —
+  dans le vide, d'où le <b>plan décalé</b> qu'il a fallu créer pour l'y poser.</li>
+</ul></div>
+<p>Une bille ne laisse pas son diamètre : elle laisse la <b>trace de sa tranche</b> à la hauteur
+de la surface. Ici <b>Ø10,54</b> — soit 0,54 mm de plus que l'ancien creux, ce qui ne
+se voit pas de face.</p>
+
+<h2>Ce qu'on a mesuré</h2>
+<table>
+  <tr><th>Bille</th><th>Centre au-dessus de la face</th><th>Creux obtenu</th><th>Matière retirée</th></tr>
+  <tr><td>Ø10</td><td>3,5 mm</td><td>Ø7,14</td><td>31,8 mm³</td></tr>
+  <tr><td>Ø20</td><td>8,5 mm</td><td>Ø10,54</td><td>67,2 mm³</td></tr>
+  <tr><td>Ø30</td><td>13,5 mm</td><td>Ø13,08</td><td>102,5 mm³</td></tr>
+</table>
+<p>À <b>enfoncement égal</b>, une bille plus grosse laisse un creux <b>plus large</b> — et plus
+doux. La profondeur, elle, ne dépend que de la hauteur du centre.</p>
+<div class="box">
+  <p><b>Et la matière ?</b> La calotte se referme vers le bas : elle retire
+  <b>67,2 mm³</b> quand le cylindre en retire <b>117,8</b>, soit <b>43 % de
+  moins</b>. Un creux plus large en surface peut donc enlever moins de matière : c'est la forme
+  entière qui compte, pas son ouverture.</p>
+</div>
+<p><b>Pourquoi il a fallu retirer l'ancien creux d'abord ?</b> Parce que la calotte est large en
+haut et se referme en descendant : dès <b>0,16 mm</b> sous la face, le cylindre Ø10
+est déjà plus large qu'elle. Posée par-dessus, la bille n'aurait mordu que le bord.</p>
+
+<h2>Essayer, puis décider</h2>
+<p>On n'a amélioré <b>qu'un</b> point sur vingt et un. Ce n'est pas de la paresse : c'est la
+démarche. On dépense peu, on regarde, et on décide ensuite — avec le prix sous les yeux :
+<b>6 plans, 6 esquisses, 21 billes</b>.</p>
+<div class="box attention">
+  <p><b>Le vrai critère n'est pas à l'écran.</b> Le défaut se sentait au doigt : c'est au doigt
+  qu'il se juge. Les deux fichiers STL, v1 et v2, sont là pour être imprimés et comparés en
+  main. Tant qu'on n'a pas tenu les deux dés, on a une opinion, pas une démonstration.</p>
+</div>
+
+<footer>Lot « Le dé, en mieux » — atelier CAO du cycle 4. Cette page fonctionne hors ligne, sans compte, et s'imprime en noir et blanc.</footer>
+</body>
+</html>
