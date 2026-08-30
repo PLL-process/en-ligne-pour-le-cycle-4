@@ -43,9 +43,13 @@ AVEC_LOT = [
 ]
 
 #: dossiers qui n'ont vraiment aucune ressource propre
+#: (`5e_C7.2` y figurait jusqu'au 30/08/2026 ; il porte désormais son lot « Le
+#: dé, en mieux », et un dossier de contrôle qui grandit cesse d'être un
+#: contrôle)
 SANS_LOT = [
-    C7 + "/5e/5e_C7.2",
     C7 + "/4e/4e_C7.2",
+    "theme-3-creation-conception-realisation-innovations"
+    "/C9-concevoir-ecrire-tester-et-mettre-au-point/4e/4e_C9.2",
 ]
 
 
