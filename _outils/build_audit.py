@@ -849,6 +849,38 @@ OVERLAY = {
                       "par un bandeau aria-live.",
         medias="Banc d'energie original (HTML + JS, CC0). Aucun media tiers.",
     ),
+    # ── 4e_C6.2 : les deux syntheses qui manquaient, 31/08/2026 ─────────────────
+    "4e_C6.2": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=True, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        qualite="Lot « Le jardin connecte s'arrose » : 3 seances de 55 min, editeur embarque, "
+                "banc de tests. Le verbe du code est COMPLETER, et le mot qui decide est "
+                "FOURNI : le programme existe, il tourne, il lui manque une piece. Le moment qui "
+                "porte la seance est le CAS FRONTIERE — l'essai exactement au seuil, le seul qui "
+                "distingue < de <=, et celui que personne n'ecrit spontanement. La difficulte la "
+                "plus interessante est ailleurs : UN MAUVAIS SEUIL NE CASSE RIEN. Le programme "
+                "s'execute, la pompe tourne, et le jardin est mal arrose — defaut de reglage, pas "
+                "de code, et il faut un banc de tests pour le voir. QCM 30 q / 90 refutations "
+                "dont 16 sur C6.2, lexique, fiche, matrice, rapport de tests. Les DEUX SYNTHESES "
+                "manquaient : elles sont ecrites, et engendrees par synthese_4e_C6.2.py livre "
+                "dans le dossier — chaque encadre reprend un « a retenir » de la banque de QCM ou "
+                "la trace ecrite de la sequence, rien n'y est ajoute.",
+        anomalies="Le programme n'est pas ecrit de zero : il est fourni, remis en ordre puis "
+                  "complete — ecrire un programme entier releve de 4e_C9.3, et la sequence le dit "
+                  "a l'eleve. L'execution est SIMULEE dans l'editeur embarque : elle prouve la "
+                  "logique, pas le montage. Le QCM deborde sur quatre autres codes (C4.1 3 q., "
+                  "C4.4 5 q., C4.5 4 q., C1.4 2 q.) : sous le seuil d'evaluabilite, ils y sont "
+                  "MOBILISES et non mesures — seul 4e_C6.2, avec 16 questions, est evaluable. Le "
+                  "choix du seuil n'est pas tranche par la sequence, volontairement : l'eleve "
+                  "doit l'argumenter.",
+        accessibilite="Corrections depliables, trace ecrite depliable, trois facons de vivre "
+                      "l'atelier dont une debranchee, differenciation explicite. Les deux "
+                      "syntheses sont imprimables en noir et blanc et lisibles hors ligne. "
+                      "Aucune boite modale (verifie par sans_modale.py).",
+        medias="Aucun media tiers ajoute par cette livraison.",
+    ),
+
     # ── Lot C7.7 « Choisir les moyens et produire la forme », 31/08/2026 ────────
     "4e_C7.7": dict(
         statut="COMPLET ET VALIDABLE",

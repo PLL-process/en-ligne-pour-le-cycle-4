@@ -9390,3 +9390,67 @@ améliorer.
   pour 95 écrites rognaient la marge annoncée : conservateur, et faux. Le pendant de la règle
   n°218, et la même cause — un indicateur bâti sur une convention d'écriture mesure la
   convention.
+
+---
+
+## 2026-08-31 — Le tableau de bord sous-déclarait le dépôt : premier correctif
+
+Une fois le dernier code « À CRÉER » livré, j'ai regardé les seize codes classés « À VÉRIFIER
+PAR L'ENSEIGNANT » en me demandant ce qu'il leur manquait vraiment. **La réponse n'était pas
+celle que je croyais.**
+
+Le statut « à vérifier » n'est pas calculé : il est **déclaré** dans l'OVERLAY. `controle_statut.py`
+le dit lui-même — « on ne promeut jamais, on ne fait que refuser une revendication non tenue ».
+Un lot peut donc être complet sur le disque et rester marqué « à vérifier » indéfiniment, parce
+que personne n'a mis l'OVERLAY à jour.
+
+En comptant les pièces réellement présentes dans les seize dossiers :
+
+| ce qu'on trouve | combien | ce que c'est |
+|---|---|---|
+| **six pièces sur six** | 3 | `4e_C7.1`, `4e_C8.1`, `4e_C9.1` — des lots complets que le tableau de bord ignore |
+| **à une ou deux pièces près** | 3 | `4e_C6.2` (synthèses), `5e_C7.1` et `3e_C7.1` (matrice) |
+| **aucune pièce** | 10 | des dossiers-pointeurs — dont **cinq entièrement muets** |
+
+### Ce que cette livraison corrige
+
+**`4e_C6.2` — les deux synthèses.** C'était la seule pièce manquante du lot. Elles sont écrites,
+et engendrées par `synthese_4e_C6.2.py`, livré dans le dossier : **chaque encadré reprend un
+« à retenir » de la banque de QCM du lot ou la trace écrite de la séquence**, rien n'y est
+ajouté. Une synthèse qui dirait autre chose que la séquence serait un troisième document à
+maintenir, et il divergerait au premier ajustement.
+
+**`_outils/pointeurs_codes.py`** — l'outil qui donne un README à tout dossier de code qui n'en a
+pas. Il écrit trois choses : la **formulation officielle** recopiée de `data_competences.py`,
+**où le geste est travaillé**, et **si la ressource cible l'évalue ou seulement l'enseigne**. Il
+vérifie chaque cible sur le disque avant d'écrire : un pointeur vers un fichier absent n'est pas
+écrit du tout.
+
+C'est ce contrôle qui a trouvé le défaut suivant.
+
+### Deux pointeurs étaient faux depuis toujours, et invisibles
+
+`5e_C8.1` et `3e_C8.1` portaient un README annonçant « COUVERT » avec un chemin
+`../../C7-.../…`. Depuis `C8-…/5e/5e_C8.1/`, deux remontées mènent à `C8-…/`, pas à la racine du
+thème : **le chemin désignait `C8-…/C7-…/`, qui n'existe pas.** Personne ne l'avait vu parce que
+le chemin était écrit dans un **bloc de code** et non en lien : rien ne cliquait, donc rien ne
+cassait visiblement. J'ai reproduit l'erreur en recopiant le chemin existant, et c'est la
+vérification d'existence de l'outil qui l'a arrêtée.
+
+### La règle nouvelle
+
+- **n°236** — **un chemin qu'on ne peut pas cliquer n'est jamais vérifié.** Écrire une référence
+  de fichier en bloc de code plutôt qu'en lien la soustrait à tous les contrôles, humains comme
+  automatiques : elle a l'air d'une information, elle n'en est plus une. Tout chemin vers une
+  ressource du dépôt s'écrit en **lien**, et un outil vérifie qu'il mène quelque part.
+
+### Ce qui reste, et pourquoi ce n'est pas dans cette livraison
+
+Les dix README engendrés vivent dans le **thème 3**, et la garde-périmètre interdit de les
+livrer sur la même branche que les synthèses du thème 2 et l'outil de `_outils/`. Ils partent
+donc dans une seconde livraison, **après** celle-ci — l'outil d'abord, ce qu'il engendre ensuite.
+
+Restent ensuite `5e_C7.1` et `3e_C7.1`, à qui il ne manque que la **matrice de couverture**. Leur
+QCM n'étiquette pas ses questions par code de compétence mais par un mot-clé thématique
+(`CON`/`PRG`/`VAL`, `ELA`/`SEU`/`SIM`) : engendrer leur matrice demande de relier chaque question
+au code qu'elle travaille, et cela relève d'un choix pédagogique, pas d'un script.
