@@ -42,10 +42,27 @@ disent où un lecteur naïf se trompe :
 
 Le contrôle laisse donc de côté : les commentaires, le contenu des balises
 `<script>` et `<style>`, les blocs de code Markdown, et toute adresse qui porte
-une marque de gabarit (`${…}`, `{{…}}`). Il laisse aussi de côté :
+une marque de gabarit (`${…}`, `{{…}}`).
 
-  · les **ancres** (`#partie-2`) : il vérifie le fichier, pas l'identifiant à
-    l'intérieur ;
+LES ANCRES — l'angle mort de la première version
+------------------------------------------------
+Elle vérifiait le fichier et s'arrêtait là : `page.html#partie-2` était déclaré
+juste tant que `page.html` existait. Or un lien d'ancre morte ne mène pas
+« ailleurs », il mène **en haut de la bonne page** — le lecteur croit avoir mal
+cliqué et recommence. Le dépôt en compte 48, tous justes à ce jour ; c'est
+précisément le moment d'installer le contrôle, pendant qu'il ne dénonce
+personne.
+
+Un identifiant est cherché dans le fichier visé **tel qu'il est écrit sur le
+disque**, `id="…"` ou `name="…"`. Deux réserves, tenues du côté indulgent :
+`#top` est toujours accepté (le navigateur remonte, sans identifiant), et un
+identifiant **posé par un script à l'exécution** n'est pas visible ici — le
+contrôle ne le réclame que s'il ne le trouve nulle part dans la source. Enfin,
+une ancre visant un fichier Markdown n'est pas vérifiée : l'identifiant y est
+fabriqué par le rendu, pas écrit dans le texte.
+
+Il laisse aussi de côté :
+
   · les **adresses distantes** : un lien vers `https://…` n'est pas de son
     ressort, et le dépôt doit rester lisible hors ligne de toute façon ;
   · `_archive-anciennes-versions/` (des versions gelées, dont les liens pointent
@@ -131,9 +148,34 @@ def ecarte(relatif):
     return False
 
 
+#: `#top` remonte en haut de page sans qu'aucun identifiant existe
+ANCRES_TOUJOURS_VALIDES = {"top"}
+
+IDENTIFIANT = r'\b(?:id|name)\s*=\s*["\']%s["\']'
+
+
+def identifiant_present(chemin, ancre, _cache={}):
+    """Le fichier visé porte-t-il cet identifiant, écrit dans sa source ?
+
+    On lit le fichier BRUT, sans rien taire : un identifiant reste un
+    identifiant où qu'il se trouve, et mieux vaut se taire à tort que dénoncer
+    à tort (règle d'or n°248).
+    """
+    if ancre in ANCRES_TOUJOURS_VALIDES:
+        return True
+    cle = str(chemin)
+    if cle not in _cache:
+        try:
+            _cache[cle] = chemin.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            _cache[cle] = ""
+    return re.search(IDENTIFIANT % re.escape(ancre), _cache[cle]) is not None
+
+
 def parcourir(racine=DEPOT, tout=False):
-    """(liens vérifiés, liens cassés, pages écartées, zones tues)."""
-    verifies, casses, pages_ecartees, tues = 0, [], 0, 0
+    """Relevé complet : liens, ancres, ce qui a été tu et ce qui a été écarté."""
+    releve = dict(verifies=0, casses=[], pages_ecartees=0, tues=0,
+                  ancres_verifiees=0, ancres_mortes=[], ancres_non_verifiables=0)
     for page in sorted(racine.rglob("*")):
         if page.is_dir() or page.suffix.lower() not in (".html", ".md"):
             continue
@@ -141,7 +183,7 @@ def parcourir(racine=DEPOT, tout=False):
         if ".git/" in relatif or relatif.startswith(".git"):
             continue
         if not tout and ecarte(relatif):
-            pages_ecartees += 1
+            releve["pages_ecartees"] += 1
             continue
         try:
             texte = page.read_text(encoding="utf-8", errors="ignore")
@@ -149,39 +191,63 @@ def parcourir(racine=DEPOT, tout=False):
             continue
         suffixe = page.suffix.lower()
         texte, n = taire(texte, suffixe)
-        tues += n
+        releve["tues"] += n
         for a in adresses(texte, suffixe):
-            if not locale(a):
+            ancre = a.split("#", 1)[1] if "#" in a else ""
+            if locale(a):
+                releve["verifies"] += 1
+                c = cible(page, a)
+                if c is None or not c.exists():
+                    releve["casses"].append((relatif, a))
+                    continue
+                visee = c
+            elif a.strip().startswith("#") and not GABARIT.search(a):
+                visee = page          # une ancre dans la page elle-même
+            else:
                 continue
-            verifies += 1
-            c = cible(page, a)
-            if c is None or not c.exists():
-                casses.append((relatif, a))
-    return verifies, casses, pages_ecartees, tues
+            if not ancre:
+                continue
+            if visee.suffix.lower() not in (".html", ".htm"):
+                releve["ancres_non_verifiables"] += 1
+                continue
+            releve["ancres_verifiees"] += 1
+            if not identifiant_present(visee, ancre):
+                releve["ancres_mortes"].append((relatif, a))
+    return releve
 
 
-def main(tout=False):
-    verifies, casses, pages_ecartees, tues = parcourir(tout=tout)
-    print("%d adresses locales vérifiées · %d cassée(s)" % (verifies, len(casses)))
-    print("%d zone(s) tue(s) avant lecture : %s — un navigateur ne les suit pas."
-          % (tues, ", ".join(quoi for _m, quoi in MUETS + MUETS_MD)))
-    if not tout:
-        print("%d page(s) volontairement hors périmètre :" % pages_ecartees)
-        for prefixe, pourquoi in ECARTES:
-            print("     %-38s %s" % (prefixe, pourquoi))
-        print("     (les ancres `#…` ne sont pas suivies, aucune adresse distante n'est "
-              "testée, et une adresse de gabarit `${…}` n'est pas un chemin)")
-    if not casses:
-        print("✅ aucun lien mort dans le périmètre regardé")
-        return 0
+def _lister(titre, defauts):
     par_page = {}
-    for page, a in casses:
+    for page, a in defauts:
         par_page.setdefault(page, []).append(a)
-    print("⛔ %d lien(s) mort(s) dans %d page(s) :" % (len(casses), len(par_page)))
+    print("⛔ %s — %d dans %d page(s) :" % (titre, len(defauts), len(par_page)))
     for page in sorted(par_page):
         print("   %s" % page)
         for a in par_page[page]:
             print("       → %s" % a)
+
+
+def main(tout=False):
+    r = parcourir(tout=tout)
+    print("%d adresses locales vérifiées · %d cassée(s)" % (r["verifies"], len(r["casses"])))
+    print("%d ancre(s) vérifiée(s) · %d introuvable(s) · %d non vérifiable(s) (cible non HTML)"
+          % (r["ancres_verifiees"], len(r["ancres_mortes"]), r["ancres_non_verifiables"]))
+    print("%d zone(s) tue(s) avant lecture : %s — un navigateur ne les suit pas."
+          % (r["tues"], ", ".join(quoi for _m, quoi in MUETS + MUETS_MD)))
+    if not tout:
+        print("%d page(s) volontairement hors périmètre :" % r["pages_ecartees"])
+        for prefixe, pourquoi in ECARTES:
+            print("     %-38s %s" % (prefixe, pourquoi))
+        print("     (aucune adresse distante n'est testée, une adresse de gabarit `${…}` "
+              "n'est pas un chemin, et un identifiant posé par un script à l'exécution "
+              "n'est pas visible ici)")
+    if not r["casses"] and not r["ancres_mortes"]:
+        print("✅ aucun lien mort, aucune ancre introuvable dans le périmètre regardé")
+        return 0
+    if r["casses"]:
+        _lister("lien(s) mort(s)", r["casses"])
+    if r["ancres_mortes"]:
+        _lister("ancre(s) introuvable(s) — la page existe, la section non", r["ancres_mortes"])
     return 1
 
 

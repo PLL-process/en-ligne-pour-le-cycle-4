@@ -14,6 +14,12 @@ Deux familles de cas, et les deux comptent autant :
     neuf qui trouve beaucoup de fautes a d'abord tort (règle d'or n°248), et
     c'est ici qu'on l'écrit.
 
+S'y ajoute l'angle mort que la première version déclarait sans le combler : les
+**ancres**. `page.html#partie-2` était réputé juste tant que `page.html`
+existait. Six cas le couvrent maintenant, dans les deux sens — l'ancre morte
+qu'il faut voir, et les quatre formes sur lesquelles il ne doit pas crier
+(`#top`, `name="…"`, une cible Markdown, une ancre dans la page même).
+
 Les cas travaillent sur une arborescence temporaire, pas sur le dépôt : un test
 qui dépend de l'état du dépôt cesse de tester le jour où le dépôt change.
 
@@ -57,7 +63,7 @@ def cas_nav_fausse():
     racine = pathlib.Path(tempfile.mkdtemp())
     try:
         arborescence(racine, NAV_FAUSSE)
-        _v, casses, _e, _t = parcourir(racine, tout=True)
+        casses = parcourir(racine, tout=True)["casses"]
         adr = sorted(a for _p, a in casses)
         attendu = sorted(["../../../../index.html",
                           "sequence_5e_C8.1_patere-du-hall.html",
@@ -72,7 +78,7 @@ def cas_nav_juste():
     racine = pathlib.Path(tempfile.mkdtemp())
     try:
         arborescence(racine, NAV_JUSTE)
-        _v, casses, _e, _t = parcourir(racine, tout=True)
+        casses = parcourir(racine, tout=True)["casses"]
         return not casses, "cassés = %s" % [a for _p, a in casses]
     finally:
         shutil.rmtree(racine)
@@ -86,7 +92,8 @@ def cas_commentaire():
             "<p>texte</p>\n<!-- 📷 à décommenter :\n"
             '<figure><img src="photos/absente.jpg" alt="a"></figure>\n-->\n',
             encoding="utf-8")
-        _v, casses, _e, tues = parcourir(racine, tout=True)
+        r = parcourir(racine, tout=True)
+        casses, tues = r["casses"], r["tues"]
         return (not casses and tues == 1), "cassés = %s, zones tues = %d" % (
             [a for _p, a in casses], tues)
     finally:
@@ -106,7 +113,7 @@ def cas_script():
         (racine / "p.html").write_text(
             '<p>ok</p><script>var t = \'<img src="absente.png">\';</script>',
             encoding="utf-8")
-        _v, casses, _e, _t = parcourir(racine, tout=True)
+        casses = parcourir(racine, tout=True)["casses"]
         return not casses, "cassés = %s" % [a for _p, a in casses]
     finally:
         shutil.rmtree(racine)
@@ -119,7 +126,7 @@ def cas_markdown():
         (racine / "R.md").write_text(
             "Voir [la séquence](sequence_absente.html).\n\n"
             "```\n[exemple](aussi_absente.html)\n```\n", encoding="utf-8")
-        _v, casses, _e, _t = parcourir(racine, tout=True)
+        casses = parcourir(racine, tout=True)["casses"]
         adr = [a for _p, a in casses]
         return adr == ["sequence_absente.html"], "cassés = %s" % adr
     finally:
@@ -131,20 +138,92 @@ def cas_ancre_seule():
     racine = pathlib.Path(tempfile.mkdtemp())
     try:
         (racine / "p.html").write_text('<a href="#partie-2">bas de page</a>', encoding="utf-8")
-        v, casses, _e, _t = parcourir(racine, tout=True)
+        r = parcourir(racine, tout=True)
+        v, casses = r["verifies"], r["casses"]
         return (v == 0 and not casses), "vérifiés = %d, cassés = %d" % (v, len(casses))
     finally:
         shutil.rmtree(racine)
 
 
 def cas_ancre_sur_fichier():
-    """`page.html#partie-2` : on vérifie le fichier, et on s'arrête là."""
+    """`page.html#partie-2` : le fichier existe, la section non — c'est un défaut.
+
+    C'est l'angle mort de la première version : elle s'arrêtait au fichier. Un
+    lien d'ancre morte ne mène pas ailleurs, il mène en haut de la bonne page,
+    et le lecteur croit avoir mal cliqué.
+    """
     racine = pathlib.Path(tempfile.mkdtemp())
     try:
         (racine / "page.html").write_text("<h2 id='autre'>x</h2>", encoding="utf-8")
         (racine / "p.html").write_text('<a href="page.html#partie-2">là</a>', encoding="utf-8")
-        _v, casses, _e, _t = parcourir(racine, tout=True)
-        return not casses, "cassés = %s" % [a for _p, a in casses]
+        r = parcourir(racine, tout=True)
+        return (not r["casses"] and [a for _p, a in r["ancres_mortes"]]
+                == ["page.html#partie-2"]), "ancres mortes = %s" % r["ancres_mortes"]
+    finally:
+        shutil.rmtree(racine)
+
+
+def cas_ancre_juste():
+    """La même ancre, présente dans la page visée : rien à signaler."""
+    racine = pathlib.Path(tempfile.mkdtemp())
+    try:
+        (racine / "page.html").write_text('<h2 id="partie-2">x</h2>', encoding="utf-8")
+        (racine / "p.html").write_text('<a href="page.html#partie-2">là</a>', encoding="utf-8")
+        r = parcourir(racine, tout=True)
+        return (not r["ancres_mortes"] and r["ancres_verifiees"] == 1,
+                "vérifiées = %d, mortes = %s" % (r["ancres_verifiees"], r["ancres_mortes"]))
+    finally:
+        shutil.rmtree(racine)
+
+
+def cas_ancre_dans_la_page():
+    """Une ancre sans chemin vise la page elle-même — et se vérifie aussi."""
+    racine = pathlib.Path(tempfile.mkdtemp())
+    try:
+        (racine / "p.html").write_text(
+            '<a href="#bas">descendre</a><a href="#absent">nulle part</a>'
+            '<h2 id="bas">bas</h2>', encoding="utf-8")
+        r = parcourir(racine, tout=True)
+        return ([a for _p, a in r["ancres_mortes"]] == ["#absent"]
+                and r["verifies"] == 0), "mortes = %s, liens = %d" % (
+                    r["ancres_mortes"], r["verifies"])
+    finally:
+        shutil.rmtree(racine)
+
+
+def cas_ancre_top():
+    """`#top` remonte en haut de page : le navigateur n'a besoin d'aucun id."""
+    racine = pathlib.Path(tempfile.mkdtemp())
+    try:
+        (racine / "p.html").write_text('<a href="#top">remonter</a>', encoding="utf-8")
+        r = parcourir(racine, tout=True)
+        return not r["ancres_mortes"], "mortes = %s" % r["ancres_mortes"]
+    finally:
+        shutil.rmtree(racine)
+
+
+def cas_ancre_vers_markdown():
+    """Une ancre vers un `.md` n'est pas vérifiable : l'identifiant naît au rendu."""
+    racine = pathlib.Path(tempfile.mkdtemp())
+    try:
+        (racine / "R.md").write_text("## Une partie\n", encoding="utf-8")
+        (racine / "p.html").write_text('<a href="R.md#une-partie">là</a>', encoding="utf-8")
+        r = parcourir(racine, tout=True)
+        return (not r["ancres_mortes"] and r["ancres_non_verifiables"] == 1,
+                "mortes = %s, non vérifiables = %d" % (
+                    r["ancres_mortes"], r["ancres_non_verifiables"]))
+    finally:
+        shutil.rmtree(racine)
+
+
+def cas_ancre_name():
+    """L'ancienne forme `name="…"` compte autant qu'un `id`."""
+    racine = pathlib.Path(tempfile.mkdtemp())
+    try:
+        (racine / "page.html").write_text('<a name="vieille">x</a>', encoding="utf-8")
+        (racine / "p.html").write_text('<a href="page.html#vieille">là</a>', encoding="utf-8")
+        r = parcourir(racine, tout=True)
+        return not r["ancres_mortes"], "mortes = %s" % r["ancres_mortes"]
     finally:
         shutil.rmtree(racine)
 
@@ -155,7 +234,7 @@ def cas_espace_encode():
     try:
         (racine / "mon fichier.html").write_text("x", encoding="utf-8")
         (racine / "p.html").write_text('<a href="mon%20fichier.html">là</a>', encoding="utf-8")
-        _v, casses, _e, _t = parcourir(racine, tout=True)
+        casses = parcourir(racine, tout=True)["casses"]
         return not casses, "cassés = %s" % [a for _p, a in casses]
     finally:
         shutil.rmtree(racine)
@@ -181,7 +260,12 @@ CAS = [
     ("une adresse construite dans un <script> n'est pas suivie", cas_script),
     ("Markdown : le texte compte, le bloc de code non", cas_markdown),
     ("un lien d'ancre seul ne désigne aucun fichier", cas_ancre_seule),
-    ("une ancre sur un fichier : on vérifie le fichier", cas_ancre_sur_fichier),
+    ("une ancre morte sur un fichier existant est un défaut", cas_ancre_sur_fichier),
+    ("la même ancre, présente : rien à signaler", cas_ancre_juste),
+    ("une ancre sans chemin vise la page elle-même", cas_ancre_dans_la_page),
+    ("#top est toujours valide, sans identifiant", cas_ancre_top),
+    ("une ancre vers un .md n'est pas vérifiable, et c'est compté", cas_ancre_vers_markdown),
+    ("l'ancienne forme name= compte autant qu'un id", cas_ancre_name),
     ("un espace encodé %20 se résout comme un espace", cas_espace_encode),
     ("les adresses distantes ne sont pas comptées", cas_distant),
     ("taire une zone ne recolle pas ses bords", cas_taire_ne_recolle_pas),
