@@ -7,10 +7,22 @@
 
 ## Les codes, en toutes lettres
 
-| Code | Formulation du référentiel (2024) |
-|---|---|
-| 5e / 4e / 3e **C7.2** | Imaginer, créer et simuler tout ou partie d'un objet. |
-| 5e / 4e / 3e **C7.6** | Réaliser, de manière collaborative, le prototype d'un objet. |
+| Code | Formulation du référentiel (2024) | TP qui la travaille |
+|---|---|---|
+| **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | TP nº1 — Le dé |
+| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle |
+| **3e_C7.2** | Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº4 — Le boîtier étanche |
+| **5e_C7.6** | Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie. | TP nº1 — Le dé |
+| **4e_C7.6** | Modifier une forme à l’aide d’une modélisation. | TP nº2 — Le dé sur son socle |
+| **3e_C7.6** | Modéliser une forme voulue. | TP nº4 — Le boîtier étanche |
+
+> **Correction du 31/08/2026.** Ce tableau donnait auparavant deux formulations, identiques aux
+> trois niveaux : « Imaginer, créer et simuler tout ou partie d'un objet » pour C7.2 et
+> « Réaliser, de manière collaborative, le prototype d'un objet » pour C7.6. **Aucune des deux
+> n'est dans le programme 2024**, et surtout : le programme différencie ces codes par niveau,
+> ce que la formulation unique effaçait. Les six libellés ci-dessus sont recopiés de
+> `_outils/data_competences.py`, seule autorité du dépôt sur le référentiel. Les six pages
+> d'orientation des dossiers de codes portaient la même erreur ; elles sont corrigées.
 
 Les trois TP **exposent** aussi C7.3 — choisir (5e), comparer (4e) un matériau —
 sans l'évaluer : aucune question notée n'y est posée. C'est aux séquences de

@@ -9890,3 +9890,52 @@ c'est à lui de dire où il l'évalue — au lieu de croire qu'un score l'attend
 
 Aucun statut d'audit ne bouge : ces trois codes étaient déjà « à vérifier par l'enseignant ».
 Le README disait le contraire du tableau de bord ; c'est le README qui avait tort.
+
+## 2026-08-31 — Deux formulations qui n'existent pas dans le programme, dans sept fichiers
+
+En ouvrant l'atelier CAO pour préparer le lot des codes « modéliser et fabriquer », j'ai lu la
+fiche pédagogique commune aux trois TP :
+
+| Code | Formulation du référentiel (2024) |
+|---|---|
+| 5e / 4e / 3e **C7.2** | Imaginer, créer et simuler tout ou partie d'un objet. |
+| 5e / 4e / 3e **C7.6** | Réaliser, de manière collaborative, le prototype d'un objet. |
+
+**Aucune de ces deux phrases n'est dans le programme 2024.** Et le défaut est plus grave que
+l'inexactitude : le programme **différencie ces codes par niveau**, et une formulation unique
+pour les trois efface précisément ce que la spirale enseigne.
+
+| | ce que dit vraiment le programme |
+|---|---|
+| `5e_C7.2` | Fabriquer une solution pour améliorer un OST existant. |
+| `4e_C7.2` | Proposer et fabriquer une solution pour **ajouter une nouvelle fonction** à un OST. |
+| `3e_C7.2` | Proposer et fabriquer **un ensemble de solutions** pour produire un **nouvel** OST. |
+| `5e_C7.6` | **Mettre en œuvre** les moyens pour réaliser une forme **selon une procédure fournie**. |
+| `4e_C7.6` | **Modifier** une forme à l'aide d'une modélisation. |
+| `3e_C7.6` | **Modéliser** une forme voulue. |
+
+Fabriquer → proposer et fabriquer → proposer un ensemble. Mettre en œuvre → modifier → modéliser.
+C'est exactement la progression que les trois TP font vivre — le dé, le dé sur son socle, le
+boîtier étanche — et le tableau censé la décrire disait trois fois la même chose.
+
+Sept fichiers portaient l'erreur : la fiche, et les six pages d'orientation des dossiers de codes
+(`5e_C7.2`, `5e_C7.6`, `4e_C7.2`, `4e_C7.6`, `3e_C7.2`, `3e_C7.6`), chacune dans son sous-titre.
+Tous corrigés, et le remplacement a été fait **par un script qui lit
+`_outils/data_competences.py`** — corriger une formulation à la main serait se redonner la chance
+de la recopier faux (règle d'or n°245).
+
+### Ce que cela résout, au passage
+
+« Réaliser, de manière collaborative, le prototype d'un objet » traînait dans mon carnet depuis
+plusieurs jours comme **une divergence à arbitrer** : la fiche citait une phrase absente du
+référentiel, et je ne savais pas laquelle des deux sources faisait foi. Ce n'était pas un
+arbitrage. C'était une erreur, et il suffisait de comparer.
+
+Une question qui attend un arbitrage mérite d'abord qu'on vérifie qu'elle en est une.
+
+### La règle nouvelle
+
+- **n°247** — **une formulation identique à tous les niveaux doit éveiller le soupçon.** Le
+  programme 2024 différencie presque tous ses codes par un verbe qui monte d'un cran chaque
+  année. Un tableau qui donne le même libellé en 5e, 4e et 3e n'a pas simplifié : il a effacé
+  l'enseignement, et il y a de bonnes chances qu'il ne cite plus le programme du tout.
