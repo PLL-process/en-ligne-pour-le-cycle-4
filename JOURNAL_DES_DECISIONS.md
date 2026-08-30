@@ -9817,3 +9817,58 @@ Tableau de bord : **49 codes complets et validables** (47 hier), 8 à vérifier 
   Deux en-têtes de séquence promettaient « recopié, pas reformulé » au-dessus d'un texte faux. Un
   générateur qui lit `data_competences.py` ne peut pas se tromper ; un rédacteur qui se souvient,
   si. Le contrôle vaut aussi pour les codes d'appui, qu'on recopie plus vite et donc moins bien.
+
+## 2026-08-31 — Le pointeur promettait une évaluation : il la mesure maintenant
+
+`pointeurs_codes.py` écrit dans chaque dossier de code sans ressource propre un README qui dit
+trois choses : la formulation officielle, où le geste est travaillé, et **si la ressource cible
+évalue ce code**. La troisième était un **booléen écrit à la main**.
+
+En construisant les lots C8.1, j'ai lu le README que cet outil avait posé dans `5e/5e_C8.1` :
+« **Ce code y est évalué.** » Or `controle_couverture.py` ne trouvait aucune question portant
+`5e_C8.1` dans tout le dépôt. La promesse était fausse depuis le premier jour.
+
+### Trois pointeurs sur dix promettaient une évaluation inexistante
+
+| pointeur | déclaré | mesuré dans la banque de la cible |
+|---|---|---|
+| `5e_C7.2` | évalué | **0** — le mini-projet étiquette CON→C7.1, VAL→C8.3, PRG→C9.3 |
+| `3e_C7.2` | évalué | **0** — le capteur étiquette ELA→C7.1, SIM→C8.1, SEU→CRCN |
+| `5e_C8.1` | évalué | **0** — ses questions n'existaient pas encore |
+| `4e_C7.2` · `4e_C9.2` · `4e_C9.3` | évalué | 10 chacun ✓ |
+| `5e_C7.6` · `4e_C7.6` · `3e_C7.6` | non évalué | 0 ✓ |
+
+Les trois lots visés **enseignent** bien le geste : le mini-projet fabrique une solution, c'est
+incontestable. Ils ne l'**évaluent** pas, et c'est ce que le README affirmait.
+
+### Le danger qui n'était pas encore arrivé
+
+Le README d'un pointeur commence par « **Ce dossier ne porte aucune ressource propre.** » Depuis
+la livraison des lots C8.1, c'est faux pour `5e_C8.1` et `3e_C8.1`. Relancer l'outil aurait
+**remplacé deux lots complets par un renvoi** — silencieusement, avec un message de succès.
+
+### Ce qui change
+
+- Les deux pointeurs devenus des lots sont retirés de la table.
+- L'outil **refuse** d'écrire dans un dossier qui porte sa propre séquence ou son propre QCM. La
+  phrase est vérifiable, donc elle est vérifiée.
+- Le booléen reste écrit, mais il n'est plus cru : il est **confronté** au nombre de questions que
+  la banque de la cible porte pour ce code. En cas de désaccord, rien n'est écrit et l'outil sort
+  en erreur.
+- Trois phrases au lieu de deux : évalué (avec le nombre de questions et le nom de la banque),
+  **effleuré** (sous le seuil de 5, et le README le chiffre), enseigné sans être évalué.
+- `_outils/tests_pointeurs_codes.py` — 22 contrôles sur le dépôt réel, et les deux gardes sont
+  vérifiées en les faisant *échouer* volontairement : un banc qui ne passe que sur un dépôt sain
+  ne prouve rien.
+
+Les huit README régénérés vivent dans le thème 3 : ils partent dans une livraison à part, juste
+après celle-ci. Entre les deux fusions, l'outil et les fichiers ne disent pas la même chose —
+c'est l'outil qui a raison.
+
+### La règle nouvelle
+
+- **n°246** — **une phrase vérifiable dans un fichier engendré doit être vérifiée par le
+  générateur.** « Ce dossier ne porte aucune ressource propre » et « ce code y est évalué » sont
+  toutes deux mesurables en trois lignes. Les écrire de confiance, c'est fabriquer une fausseté à
+  l'échelle : un générateur ne se trompe pas une fois, il se trompe dans tous les fichiers qu'il
+  écrit.
