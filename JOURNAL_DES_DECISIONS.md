@@ -9521,3 +9521,104 @@ des étiquettes des quatre banques anciennes qui la rendrait applicable.
 **État du tableau de bord** : 47 codes complets et validables, 54 couverts par une séquence
 mutualisée, 10 à vérifier par l'enseignant, 3 existants à améliorer. Il en restait 16 à vérifier
 ce matin.
+
+## 2026-08-31 — L'outil qui lit ce que les lots disent, et les huit banques qu'il a trouvées
+
+La livraison précédente s'achevait sur une promesse : `controle_statut.py` devrait exiger que le
+code apparaisse dans la banque ou la matrice du lot, et cela partirait « dans une livraison à
+part ». La voici — mais pas dans l'ordre annoncé. **Le durcissement ne part pas.** Ce qui part,
+c'est l'instrument qui permet de savoir ce qu'il casserait.
+
+### `_outils/controle_couverture.py`
+
+Il ne juge rien, ne modifie rien, et sort toujours en 0. Pour chacun des 114 codes, il ouvre les
+fichiers du lot et répond à une question de fait : **où ce lot nomme-t-il son propre code ?**
+
+| état | codes | ce que cela veut dire |
+|---|---:|---|
+| ÉVALUÉ | 45 | au moins 5 questions du QCM du lot portent ce code |
+| CITÉ | 15 | le code est écrit dans une séquence, une fiche, une matrice, une synthèse — mais aucune question ne le porte assez |
+| RENVOI | 43 | le code n'apparaît que dans un README, un manifeste, un lexique |
+| VIDE | 11 | dossier sans fichier |
+
+Il lit le statut **tenu** après contrôle de pièces, jamais le statut déclaré dans l'OVERLAY :
+`4e_C4.2` et `4e_C4.4` sont déjà reclassés par `controle_statut.py`, et les recompter aurait été
+annoncer deux fois le même manque. Verdict : **cinq codes tenus pour complets dont la couverture
+n'est pas mesurable dans leur propre lot** — `3e_C9.1`, `4e_C4.1`, `4e_C7.1`, `5e_C9.1` (zéro
+question chacun) et `5e_C4.1` (quatre).
+
+### La distinction qui a failli ne pas exister
+
+La première version ne connaissait que « NOMMÉ » et « NON NOMMÉ ». Elle a rendu, du premier
+coup, **zéro code non nommé** — un résultat parfait, et faux. Depuis la livraison d'hier,
+`pointeurs_codes.py` écrit dans chaque dossier un README qui cite le code. L'outil comptait donc
+comme preuve la trace laissée par l'outil précédent, et validait le jour de sa naissance
+exactement les lots qui l'avaient motivé.
+
+D'où la séparation entre les pièces qui **enseignent ou attestent** (séquence, fiche, matrice,
+synthèse, QCM) et celles qui **orientent** (README, manifeste, lexique, liste de sources). Seules
+les premières valent preuve.
+
+### Ce que l'instrument a trouvé
+
+Trois lots sans preuve, disais-je hier. Il y en a **huit** — sept banques étiquetées par mot de
+thème, et une huitième, honnêtement étiquetée, qui échoue pour une raison entièrement
+différente.
+
+| banque | lot | étiquettes |
+|---|---|---|
+| `qcm_3e_C7_capteur-confort-ny.html` | 3e_C7.1 | ELA · SIM · SEU |
+| `qcm_5e_C7_mini-projet.html` | 5e_C7.1 | CON · VAL · PRG |
+| `qcm_4e_C7_jardin-conception.html` | 4e_C7.1 | ORG · SOL · MAT |
+| `qcm_4e_C8_jardin-validation.html` | 4e_C8.1 | PAR · PRO · PER |
+| `qcm_4e_C4.1-C4.9_jardin_connecte.html` | 4e_C4.1 | EN · ID · RES · PRO |
+| `qcm_3e_C9.1_variables_types_systemes.html` | 3e_C9.1 | VAR · TYP · PRG · MAP |
+| `qcm_5e_C9.1-C9.3_boite_etiquetee.html` | 5e_C9.1 | BOI · LIR · MOD |
+| `qcm_5e_C4.1-C4.8_lampadaire_intelligent.html` | 5e_C4.1 | **des codes réels** |
+
+La dernière est le cas intéressant. Sa banque est irréprochable : trente-deux questions, huit
+codes, quatre questions chacun. Aucun n'atteint le seuil de cinq. Ce n'est pas une négligence,
+c'est une soustraction : un lot mutualisé sur huit codes **ne peut pas** donner cinq questions à
+chacun avec une banque de trente. Le seuil et la mutualisation se contredisent, et c'est le seuil
+qui a tort de ne pas le savoir.
+
+### Une phrase d'hier était fausse
+
+J'ai écrit hier que la banque de `4e_C8.1` ne couvrait « pas du tout » `4e_C8.2`. En relisant les
+trente questions une par une, trois d'entre elles portent bien sur la tenue mécanique d'un
+matériau : le gel qui fait échouer un critère, l'attache cassée par le froid, les essais à
+rejouer après remplacement. Trois, c'est sous le seuil. Ce n'est pas zéro, et je n'avais pas le
+droit de l'écrire.
+
+### La proposition, et pourquoi elle n'est pas appliquée
+
+`_outils/COUVERTURE_ETIQUETTES.md` donne, groupe de questions par groupe de questions, le code
+que chacun travaille réellement — cent cinquante questions relues sur leur texte, pas sur leur
+nom. La bonne nouvelle : après relabellisation, **les huit lots atteindraient le seuil pour leur
+propre code**, sauf `4e_C4.1`, dont un seul code sur neuf (C4.8) y arrive.
+
+Rien n'est renommé. Trois arbitrages manquent, et aucun ne se déduit d'un contrôle : le seuil
+face aux lots mutualisés ; le sort des vingt-six questions de prérequis (variables et types, qui
+préparent le geste sans être le geste) ; et le sort des neuf codes qui resteraient sous le seuil
+une fois les étiquettes justes. Une étiquette fausse rendrait l'audit faussement sûr de lui —
+pire que l'imprécision actuelle, qui au moins se voit.
+
+### Les règles nouvelles
+
+- **n°239** — **un diagnostic qui compte ses propres traces ne diagnostique rien.** L'outil de
+  couverture validait tout parce qu'un outil de la veille avait écrit le code dans chaque
+  dossier. Une preuve doit venir d'une pièce qui enseigne ou qui atteste ; jamais d'une pièce qui
+  oriente. Avant de croire un instrument neuf, chercher ce qu'il compte sans le savoir.
+- **n°240** — **un seuil fixe d'évaluabilité punit la mutualisation.** Cinq questions par code
+  est impossible pour un lot qui en couvre huit avec une banque de trente. Soit le seuil dépend
+  du nombre de codes portés, soit on écrit qu'un code mutualisé n'est pas évaluable seul. Ce
+  qu'on n'a pas le droit de faire, c'est reprocher à un lot honnête une arithmétique qu'on lui a
+  imposée.
+- **n°241** — **« pas couvert » et « couvert sous le seuil » ne sont pas la même phrase.** Se
+  tromper en annonçant une absence est une erreur au même titre que se tromper en annonçant une
+  présence. Un manque s'énonce avec son chiffre.
+
+### Ce qui reste
+
+Le durcissement de `controle_statut.py` attend les trois arbitrages. Il est écrit d'avance : le
+prédicat existe déjà, c'est `examiner()`.
