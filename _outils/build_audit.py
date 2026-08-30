@@ -933,6 +933,77 @@ OVERLAY = {
         accessibilite="README seul, lisible hors ligne, lien verifie sur le disque avant ecriture.",
         medias="Aucun.",
     ),
+    "5e_C7.6": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=False, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        mutualise_avec="atelier CAO — TP nº1 « Le dé », mutualisé entre les trois niveaux",
+        qualite="Lot « Le dé » (Fable, 30/08/2026) — QCM 30 questions toutes étiquetées "
+                "5e_C7.6, 2 synthèses, fiche, matrice de 13 groupes, lexique de 30 notions, "
+                "suite de 31 tests exécutés et verts. Le code n'était évalué NULLE PART dans le "
+                "dépôt : il l'est maintenant. La séquence est le TP de l'atelier CAO, mutualisé "
+                "entre les trois niveaux et non dupliqué ici — d'où le reclassement.",
+        anomalies="Aucun parcours hors connexion pour le geste de modélisation : Onshape n'a pas "
+                  "de mode hors ligne. Exception assumée à la règle de conception n°5 (décision "
+                  "du 31/08/2026, option a), désormais annoncée en tête des trois TP. Le QCM, "
+                  "les synthèses et le lexique, eux, fonctionnent hors ligne et sans compte. Les "
+                  "images du TP ne sont pas toutes produites (limite déclarée de l'atelier).",
+        accessibilite="Vérifiée : aucune boîte modale, corrections dépliables, deux synthèses "
+                      "séparées, lexique imprimable en noir et blanc, hors ligne intégral.",
+        medias="Aucun média propre : le lot n'ajoute aucune image, il accompagne le TP.",
+    ),
+    "4e_C7.6": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=False, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        mutualise_avec="atelier CAO — TP nº2 « Le dé sur son socle », mutualisé entre les trois niveaux",
+        qualite="Lot « Le dé sur son socle » (Fable, 30/08/2026) — QCM 30 questions toutes "
+                "étiquetées 4e_C7.6, 2 synthèses, fiche, matrice de 13 groupes, lexique de 30 "
+                "notions, suite de 31 tests exécutés et verts. Le code n'était évalué nulle part. "
+                "Le partage des questions dit le point de bascule de la 4e : NEUF questions sur "
+                "la contrainte (ce qu'elle est, comment on la vérifie, ce qu'elle survit) contre "
+                "cinq sur la révolution, qui est pourtant le geste visible du TP.",
+        anomalies="Aucun parcours hors connexion pour le geste de modélisation (voir 5e_C7.6). "
+                  "Le lot ne dit rien de la TENUE réelle de l'assemblage — que le dé ne bascule "
+                  "pas relève de C8 ; l'angle mort est nommé dans la synthèse.",
+        accessibilite="Vérifiée : aucune boîte modale, corrections dépliables, deux synthèses "
+                      "séparées, lexique imprimable, hors ligne intégral.",
+        medias="Aucun média propre.",
+    ),
+    "3e_C7.6": dict(
+        statut="COMPLET ET VALIDABLE",
+        sequence=False, qcm=True, projet=False, synthese=True,
+        evaluation=True, correction=True, situation=True, problematique=True,
+        mutualise_avec="atelier CAO — TP nº4 « Le boîtier étanche », mutualisé entre les trois niveaux",
+        qualite="Lot « Le boîtier étanche » (Fable, 30/08/2026) — QCM 30 questions (20 sur "
+                "3e_C7.6, 10 sur 3e_C7.2), 2 synthèses, fiche, matrice de 12 groupes, lexique de "
+                "30 notions, suite de 32 tests exécutés et verts. Les DEUX codes étaient "
+                "évalués nulle part ; ils dépassent maintenant le seuil d'évaluabilité de 5 "
+                "questions. Contresens central traité de front : l'eau n'entre pas par la "
+                "matière, elle entre par ce qu'on a ouvert exprès.",
+        anomalies="Aucun parcours hors connexion pour le geste de modélisation (voir 5e_C7.6). "
+                  "Aucun essai d'étanchéité n'est fourni ni chiffré : le lot dit qu'il faut le "
+                  "faire, un protocole d'arrosage relèverait de C8.",
+        accessibilite="Vérifiée : aucune boîte modale, corrections dépliables, deux synthèses "
+                      "séparées, lexique imprimable, hors ligne intégral.",
+        medias="Aucun média propre.",
+    ),
+    "3e_C7.2": dict(
+        statut="À VÉRIFIER PAR L’ENSEIGNANT",
+        sequence=False, qcm=False, projet=False, synthese=False,
+        evaluation=True, correction=True, situation=False, problematique=False,
+        qualite="Enseigné par la séquence « Le capteur de confort » de 3e_C7.1, et ÉVALUÉ depuis "
+                "le 30/08/2026 par les dix dernières questions du QCM du lot 3e_C7.6 « Le "
+                "boîtier étanche » — c'est là que la fabrication a lieu, le boîtier étant la "
+                "seule pièce du parcours réellement imprimée. Enseigner et évaluer à deux "
+                "endroits différents est permis (règle d'or n°81) ; le taire ne l'est pas, et le "
+                "README du dossier le dit maintenant, mesure à l'appui.",
+        anomalies="Le dossier ne porte aucune ressource propre : c'est un renvoi. Le statut reste "
+                  "« à vérifier par l'enseignant » parce que le report d'un score évalué dans un "
+                  "AUTRE lot est une décision d'enseignant, pas une conséquence mécanique.",
+        accessibilite="README seul, lisible hors ligne, liens vérifiés sur le disque.",
+        medias="Aucun.",
+    ),
     "4e_C9.1": dict(
         statut="COMPLET ET VALIDABLE",
         sequence=True, qcm=True, projet=False, synthese=True,

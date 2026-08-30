@@ -10040,3 +10040,120 @@ est remplacée par les **trois** formulations, chacune sous son code.
 Toutes les formulations que le dépôt présente comme officielles le sont, dans les quatre formes
 que l'outil sait lire. Ce n'est pas « toutes les formulations du dépôt » — l'outil le dit à
 chaque exécution, et c'est la seule promesse qu'il puisse tenir.
+
+## 2026-08-30 — Trois TP qui enseignaient sans rien évaluer
+
+L'atelier CAO portait depuis le 11 août trois TP soignés : le dé en 5e, le socle en 4e, le
+boîtier étanche en 3e. Trente-cinq étapes, huit paliers, une aide qui décroît, un
+« ce que tu dois voir » à chaque étape. Et derrière, **rien**. Les quatre codes qu'ils
+travaillent — `5e_C7.6`, `4e_C7.6`, `3e_C7.6`, `3e_C7.2` — n'étaient évalués **nulle part dans
+le dépôt**. Un élève passait une séance à modéliser, et aucune trace ne mesurait ce qu'il en
+avait retenu.
+
+Ces trois lots viennent **après** le TP, sans le remplacer : 90 questions, six synthèses, trois
+lexiques, trois matrices, trois fiches, trois rapports de tests. Le TP reste non évaluatif
+(règle d'or n°81) ; tout ce qui évalue est une page séparée, **hors ligne, imprimable, sans
+compte** — exactement ce que le logiciel, lui, ne sait pas faire.
+
+### Ce que les banques portent
+
+| Lot | Questions | Ce que le partage révèle |
+|---|---|---|
+| `5e_C7.6` — Le dé | 30 | quatre questions transversales : suivre une procédure **est** une compétence |
+| `4e_C7.6` — Le socle | 30 | **neuf** questions sur la contrainte, cinq sur la révolution |
+| `3e_C7.6` · `3e_C7.2` — Le boîtier | 20 + 10 | l'eau n'entre pas par la matière, elle entre par ce qu'on a ouvert |
+
+La 4e est le cas intéressant. La révolution est le geste *visible* du TP ; ce n'est pas elle qui
+porte la compétence. « Modifier une forme à l'aide d'une modélisation », c'est **la
+contrainte** : changer la cote du socle et voir le dé rester centré. Le partage des questions le
+dit, et il donne une consigne de séance : si le temps manque, protéger le palier 7, pas le
+palier 3.
+
+### Une revendication écartée : `5e_C7.2`
+
+La fiche de l'atelier et le badge du TP de 5e annonçaient `C7.2` — *fabriquer une solution pour
+améliorer un OST existant*. Le dé n'améliore aucun objet, et rien n'est fabriqué pendant la
+séance : le fichier part à l'impression plus tard, dans le mini-projet. Le README du dossier
+`5e_C7.2` disait déjà la vérité en renvoyant au mini-projet de `5e_C7.1` ; c'est la fiche et le
+badge qui mentaient.
+
+Il aurait été facile d'écrire dix questions de plus et de déclarer le code couvert. La
+conséquence assumée est l'inverse : **`5e_C7.2` n'est évalué nulle part**, et c'est maintenant
+écrit noir sur blanc dans la fiche, dans le manifeste et dans le relevé de couverture.
+
+- **n°254** — **rattacher un code au mauvais support ne le couvre pas, cela cache un trou.** Un
+  code déclaré « travaillé ici » sans que le geste y soit disparaît des relevés de manques sans
+  avoir été enseigné nulle part. Le trou n'a pas été bouché : il a été rendu invisible.
+
+### La connexion, et la règle n°5
+
+Décision du jour, option **a** : on assume l'exception. Onshape exige une connexion permanente ;
+il n'existe **aucun** mode hors ligne, et il n'y a donc pas de version 🅱 pour le geste de
+modélisation. Trois conséquences écrites, plutôt qu'une promesse tue :
+
+1. les trois TP portent en tête un avertissement — *ce TP a besoin d'Internet du début à la fin,
+   sans réseau la séance se reporte* — et rappellent que la connexion se fait avec **le compte de
+   la classe** ;
+2. la fiche de l'atelier disait « **un compte par élève** », ce qui contredisait son propre TP de
+   5e (« connecte-toi avec le compte de la classe ») et aggravait l'écart à la règle n°5. Corrigé ;
+3. ce qui évalue, lui, fonctionne hors ligne. Un élève privé de réseau ne perd pas la notion, il
+   perd la manipulation — et c'est elle qu'on reporte.
+
+La ligne à ajouter à la règle n°5 elle-même vit dans `ENVIRONNEMENT_TECHNIQUE.md`, qui n'est
+accessible depuis aucune branche de thème : elle reste à coller à la main.
+
+### Seize liens morts que personne ne pouvait voir
+
+En vérifiant les barres de navigation des nouvelles synthèses, un doute : les synthèses vivent
+dans `Synthèses/`, un cran sous le dossier du lot. Les quatre synthèses livrées les 29 et 30 août
+(`5e_C8.1`, `3e_C8.1`) portaient une barre recopiée depuis une page de la racine du lot :
+**seize liens, seize morts** — l'accueil, la séquence, le QCM, le lexique. Aucun ne se voyait à
+la lecture.
+
+D'où `_outils/controle_liens.py`, qui ouvre chaque page du dépôt et vérifie chaque adresse locale
+sur le disque. **2 618 adresses vérifiées, 0 cassée** après correction — les seize, plus deux
+liens du README de `5e_C3.1` qui citaient des noms de séquences inexistants.
+
+Sa première version en trouvait 21, et **cinq n'en étaient pas** : une photo proposée au
+professeur dans un bloc `<!-- … -->` prêt à décommenter, et un `src="${q.img}"` fabriqué par un
+script. Règle n°248, appliquée à moi-même.
+
+- **n°251** — **une barre de navigation ne se recopie pas d'un dossier à l'autre.** Un lien
+  relatif juste ailleurs est mort ici, et il en a exactement l'air juste. C'est le défaut le plus
+  invisible du dépôt : rien ne le signale, ni à l'écriture, ni à la relecture, ni à l'ouverture
+  de la page.
+- **n°253** — **un contrôle qui lit une page doit taire ce qu'un navigateur ne suit pas.**
+  Commentaires, scripts, blocs de code, adresses de gabarit : ce que le navigateur ignore, le
+  contrôle doit l'ignorer aussi, et **dire** ce qu'il a tu.
+
+### Le renvoi qui ne disait pas où
+
+`3e_C7.2` est **enseigné** par la séquence du capteur de confort et **évalué** par le QCM du
+boîtier : deux endroits différents, ce qui est permis (règle d'or n°81). Mais son README, engendré
+par `pointeurs_codes.py`, continuait d'affirmer « la notion s'évalue ailleurs […] c'est à vous de
+dire où vous l'évaluez ». L'outil ne comptait que dans la banque de sa cible : il déclarait une
+absence qu'il n'avait pas cherchée. C'est la règle n°242, sur un troisième instrument.
+
+Il regarde maintenant **tout le dépôt** avant de renvoyer l'enseignant à lui-même, et nomme la
+banque et le nombre de questions quand elles existent.
+
+- **n°250** — **« la notion s'évalue ailleurs » doit dire où.** Sans le nom de la ressource, la
+  phrase ne renvoie à personne : elle transfère une charge de recherche à l'enseignant, en
+  ayant l'air de l'informer.
+- **n°252** — **un dossier qui grandit met sa table en retard, pas en faute.** Le jour où les
+  trois dossiers de `C7.6` ont reçu leur lot, l'outil refusait en bloc. Deux cas s'y cachaient :
+  un dossier qui a reçu son lot *et* son propre README (la table est simplement en retard — on le
+  signale, on n'écrase rien), et un lot caché *derrière* un README de renvoi qui affirme le
+  contraire (là, on refuse). Confondre les deux, c'est apprendre à ignorer l'alerte.
+
+### Découpage de la livraison, et une note de date
+
+Le périmètre des branches impose trois livraisons : les **outils** (`_outils/`) sur une branche
+de thème 2, les **deux liens du README de `5e_C3.1`** sur une branche de thème 1, et **le lot**
+sur celle-ci. Les fichiers ne se recouvrent pas ; l'ordre conseillé est outils d'abord, pour
+qu'une exécution de `pointeurs_codes.py` ne réécrive pas le README de `3e_C7.2` avec l'ancienne
+phrase.
+
+*Note de date : plusieurs entrées et fichiers des deux derniers jours portent la date du
+**31/08/2026** alors qu'ils ont été écrits le **30/08**. L'erreur est mienne ; elle n'est pas
+reprise ici, et les anciennes mentions sont laissées telles quelles plutôt que réécrites.*

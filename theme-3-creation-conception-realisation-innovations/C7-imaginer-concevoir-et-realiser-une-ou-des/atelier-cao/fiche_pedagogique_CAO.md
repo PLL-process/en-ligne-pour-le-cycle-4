@@ -7,14 +7,14 @@
 
 ## Les codes, en toutes lettres
 
-| Code | Formulation du référentiel (2024) | TP qui la travaille |
-|---|---|---|
-| **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | TP nº1 — Le dé |
-| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle |
-| **3e_C7.2** | Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº4 — Le boîtier étanche |
-| **5e_C7.6** | Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie. | TP nº1 — Le dé |
-| **4e_C7.6** | Modifier une forme à l’aide d’une modélisation. | TP nº2 — Le dé sur son socle |
-| **3e_C7.6** | Modéliser une forme voulue. | TP nº4 — Le boîtier étanche |
+| Code | Formulation du référentiel (2024) | TP qui la travaille | Où il est évalué |
+|---|---|---|---|
+| **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | *aucun* — voir ci-dessous | nulle part à ce jour |
+| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle (contribution) | séquence `4e_C7.1` — 10 questions |
+| **3e_C7.2** | Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº4 — Le boîtier étanche | QCM du lot `3e_C7.6` — 10 questions |
+| **5e_C7.6** | Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie. | TP nº1 — Le dé | QCM du lot `5e_C7.6` — 30 questions |
+| **4e_C7.6** | Modifier une forme à l’aide d’une modélisation. | TP nº2 — Le dé sur son socle | QCM du lot `4e_C7.6` — 30 questions |
+| **3e_C7.6** | Modéliser une forme voulue. | TP nº4 — Le boîtier étanche | QCM du lot `3e_C7.6` — 20 questions |
 
 > **Correction du 31/08/2026.** Ce tableau donnait auparavant deux formulations, identiques aux
 > trois niveaux : « Imaginer, créer et simuler tout ou partie d'un objet » pour C7.2 et
@@ -24,9 +24,29 @@
 > `_outils/data_competences.py`, seule autorité du dépôt sur le référentiel. Les six pages
 > d'orientation des dossiers de codes portaient la même erreur ; elles sont corrigées.
 
+> **Correction du 30/08/2026 — `5e_C7.2` ne relève pas de ce TP.** Le tableau annonçait « TP nº1
+> — Le dé ». Or ce code demande de **fabriquer une solution pour améliorer un OST existant** : le
+> dé n'améliore aucun objet, et rien n'est fabriqué pendant la séance (le fichier part à
+> l'impression plus tard). Ce geste appartient au **mini-projet de `5e_C7.1`**, ce que dit déjà
+> le README du dossier `5e_C7.2`. Le badge du TP, qui affichait « C7.2 · C7.6 », est corrigé lui
+> aussi. Conséquence à assumer : **`5e_C7.2` n'est évalué nulle part dans le dépôt** — c'est un
+> trou réel, et il ne se comble pas en le rattachant au mauvais TP.
+
 Les trois TP **exposent** aussi C7.3 — choisir (5e), comparer (4e) un matériau —
 sans l'évaluer : aucune question notée n'y est posée. C'est aux séquences de
 niveau de le faire.
+
+## Ce qui s'évalue, et où
+
+Depuis le 30/08/2026, chaque TP a son **lot d'évaluation** dans le dossier du code
+correspondant. Le TP reste non évaluatif ; le QCM, la synthèse et le lexique sont des pages
+séparées, **hors ligne, imprimables, sans compte**.
+
+| Niveau | Lot | Pièces |
+|---|---|---|
+| 5e | [`5e/5e_C7.6/`](../5e/5e_C7.6/README.md) | QCM 30 q · 2 synthèses · fiche · matrice · lexique · rapport de tests |
+| 4e | [`4e/4e_C7.6/`](../4e/4e_C7.6/README.md) | QCM 30 q · 2 synthèses · fiche · matrice · lexique · rapport de tests |
+| 3e | [`3e/3e_C7.6/`](../3e/3e_C7.6/README.md) | QCM 30 q (20 + 10) · 2 synthèses · fiche · matrice · lexique · rapport de tests |
 
 ## La problématique
 
@@ -54,7 +74,8 @@ averse.
 ## Ce que chaque TP n'est pas
 
 **Ce n'est pas une évaluation.** Aucune question de cours n'y figure (règle
-d'or n°81) : on apprend l'outil, on évalue la notion dans la séquence. Mélanger
+d'or n°81) : on apprend l'outil ici, on évalue la notion après, dans le QCM du
+lot de niveau (voir « Ce qui s'évalue, et où » plus haut). Mélanger
 les deux, c'est punir l'élève lent à trouver un bouton.
 
 **Ce n'est pas un tutoriel à suivre les yeux fermés.** L'aide décroît : le
@@ -100,10 +121,28 @@ n'ont pas le leur.
 
 ## Matériel et contraintes
 
-Onshape Éducation fonctionne dans un navigateur : rien à installer, mais **un
-compte par élève** et une connexion stable. Prévoir le cas du poste sans
-connexion — le TP se lit et se prépare sur papier, les gestes se font à la
-séance suivante.
+Onshape Éducation fonctionne dans un navigateur : **rien à installer**, et la
+connexion se fait avec **le compte de la classe** — pas un compte par élève.
+C'est ce que dit le TP de 5e au palier 1, et c'est ce qui permet de tenir la
+règle de conception n°5 sur ce point.
+
+**Sur l'autre point, la règle n'est pas tenue, et c'est assumé.** La règle n°5
+demande un « fonctionnement hors connexion raisonnable ». Onshape n'a **aucun
+mode hors ligne** : sans réseau, la séance ne peut pas avoir lieu, elle se
+reporte. Il n'existe donc **pas de version 🅱** pour le geste de modélisation, et
+le prétendre serait faux. Les trois TP le disent maintenant en tête.
+
+Ce qui fonctionne hors ligne, en revanche, c'est tout ce qui s'évalue : les
+trois QCM, les six synthèses et les trois lexiques sont des pages autonomes,
+imprimables, sans compte. Un élève privé de réseau ne perd pas la notion, il
+perd la manipulation — et c'est elle qu'on reporte.
+
+> **Décision du 30/08/2026 (option a).** Plutôt que d'écrire un modeleur hors
+> ligne dans la page (~1 journée) ou une version papier complète (~2 heures), on
+> assume l'exception : Onshape exige le réseau, la règle n°5 le note
+> explicitement pour la CAO, et la séance se reporte en cas de coupure. La ligne
+> correspondante est à ajouter par l'enseignant dans `ENVIRONNEMENT_TECHNIQUE.md`,
+> qui n'est accessible depuis aucune branche de thème.
 
 Aucun risque électrique : ce sont des TP entièrement logiciels.
 
