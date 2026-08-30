@@ -4,17 +4,38 @@
 >
 > Programme 2024 · cycle 4 · thème 3 · socle D2, D3, D4
 
-**Ce dossier ne porte aucune ressource propre.** Le geste de ce code est travaillé ici :
+## Le lot « Le boîtier étanche »
 
-➡ **[TP 3e — Le boîtier étanche (atelier CAO)](../../atelier-cao/tp_3e_boitier_etanche.html)**
+Ce dossier ne porte pas de séquence propre : le geste s'apprend dans un **TP mutualisé** entre
+les trois niveaux, qui vit dans l'[atelier CAO](../../atelier-cao/tp_3e_boitier_etanche.html) et n'est pas dupliqué
+ici. Ce que ce lot ajoute, c'est ce qui venait après et qui manquait : de quoi réviser, et de
+quoi évaluer.
 
-Le TP modélise une forme voulue : la coque, la rainure, le passage de câble, la vue en coupe. C'est ce boîtier que 3e_C7.7 produit ensuite.
+| Pièce | Fichier |
+|---|---|
+| TP (séance en salle informatique) | [`tp_3e_boitier_etanche.html — mutualisé, non dupliqué ici`](../../atelier-cao/tp_3e_boitier_etanche.html) |
+| QCM (30 questions) | [`qcm_3e_C7.6_le-boitier.html`](qcm_3e_C7.6_le-boitier.html) |
+| Synthèse élève | [`Synthèses/synthese_eleve_3e_C7.6.html`](Synthèses/synthese_eleve_3e_C7.6.html) |
+| Synthèse professeur | [`Synthèses/synthese_professeur_3e_C7.6.html`](Synthèses/synthese_professeur_3e_C7.6.html) |
+| Fiche pédagogique | [`fiche_pedagogique_3e_C7.6.md`](fiche_pedagogique_3e_C7.6.md) |
+| Matrice de couverture | [`matrice_couverture_3e_C7.6.csv`](matrice_couverture_3e_C7.6.csv) |
+| Lexique | [`lexique_3e_C7.6.html`](lexique_3e_C7.6.html) |
+| Rapport de tests | [`rapport_tests_3e_C7.6.md`](rapport_tests_3e_C7.6.md) |
+| Suite de tests | [`tests_3e_C7.6_qcm.mjs`](tests_3e_C7.6_qcm.mjs) |
 
-**Ce code y est enseigné, et il n'y est pas évalué.** Aucune question de la banque de la ressource ne porte `3e_C7.6` : on y apprend le geste, et la notion s'évalue ailleurs (règle d'or n°81). Le statut du code reste donc « à vérifier par l'enseignant » : c'est à vous de dire où vous l'évaluez.
+## Codes travaillés
 
----
+| Code | Rôle | Questions |
+|---|---|---|
+| `3e_C7.6` | principal | 20 |
+| `3e_C7.2` | appui — proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | 10 |
 
-*Formulation recopiée de `_outils/data_competences.py`, seule autorité du dépôt sur les
-libellés du référentiel. Ce README est engendré par `_outils/pointeurs_codes.py` : il n'est
-écrit que si la ressource cible existe réellement sur le disque, et la phrase sur l'évaluation
-est **mesurée** dans la banque de cette ressource, jamais déclarée.*
+## Ce que ce README remplace
+
+Ce dossier portait un **pointeur** engendré par `_outils/pointeurs_codes.py`, qui renvoyait au TP
+et disait la vérité de l'époque : « ce code y est enseigné, et il n'y est pas évalué ». Il l'est
+maintenant, et le dossier porte son propre lot — le pointeur n'a donc plus lieu d'être.
+
+*L'entrée `3e_C7.6` de la table `POINTEURS` doit être retirée en conséquence. Elle vit dans
+`_outils/`, hors du périmètre d'une branche de thème 3 : elle part dans une livraison à part. En
+attendant, `pointeurs_codes.py` signale ce dossier comme « ayant grandi » et n'écrase rien.*

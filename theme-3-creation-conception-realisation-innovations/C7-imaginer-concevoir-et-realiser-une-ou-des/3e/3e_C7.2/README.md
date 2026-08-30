@@ -10,7 +10,7 @@
 
 La séquence conçoit un ensemble de solutions pour un OST nouveau : le capteur de confort de la salle, de la proposition au prototype.
 
-**Ce code y est enseigné, et il n'y est pas évalué.** Aucune question de la banque de la ressource ne porte `3e_C7.2` : on y apprend le geste, et la notion s'évalue ailleurs (règle d'or n°81). Le statut du code reste donc « à vérifier par l'enseignant » : c'est à vous de dire où vous l'évaluez.
+**Ce code y est enseigné, et il n'y est pas évalué — mais il l'est ailleurs.** Aucune question de la banque de la ressource ne porte `3e_C7.2` : on y apprend le geste (règle d'or n°81). 10 question(s) l'évaluent dans une autre banque du dépôt (`qcm_3e_C7.6_le-boitier.html`) : c'est de là que le score se reporte.
 
 ---
 
