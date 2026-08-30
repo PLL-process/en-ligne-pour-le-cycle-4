@@ -1,32 +1,47 @@
 # Rapport de tests — lot 5e_C8.2 « La patère du hall »
 
 **Environnement réel d'exécution** : Chromium (Playwright), pages ouvertes en `file://`, hors ligne.
-Tests **réellement exécutés** le 29/08/2026.
+Tests **réellement exécutés** le 29/08/2026, puis rejoués et complétés le 30/08/2026.
 
-**Résultat : séquence 14/14 · QCM 17/17 · zéro erreur JavaScript sur les deux pages.**
+**Résultat : séquence 24/24 · QCM 17/17 · zéro erreur JavaScript sur les deux pages.**
+Les deux suites sont dans ce dossier et se relancent&nbsp;: `tests_5e_C8.2_sequence.mjs` et
+`tests_5e_C8.2_qcm.mjs`.
 
-## Séquence (14 tests)
+## Séquence — `tests_5e_C8.2_sequence.mjs` (24 tests)
 
-| # | Test | Résultat |
-|---|---|---|
-| 1 | La page charge sans erreur JS | ✅ |
-| 2 | Aucune requête échouée (hors ligne) | ✅ |
-| 3 | Aucune boîte modale (règle n°188) | ✅ |
-| 4 | Le bois casse au 5ᵉ palier de 10 kg | ✅ |
-| 5 | La rupture annonce la bonne charge (41 kg) | ✅ |
-| 6 | Le verrou tient tant que 3 éprouvettes ne sont pas cassées | ✅ |
-| 7 | Verrou « 3 éprouvettes » ouvert après 3 ruptures | ✅ |
-| 8 | Verrou « 5 éprouvettes » ouvert après 5 ruptures | ✅ |
-| 9 | Activité 2 validée avec les cinq bons relevés (5/5) | ✅ |
-| 10 | **Un relevé faux (40 au lieu de 41) est refusé** (4/5) | ✅ |
-| 11 | Activité 3 validée (4/4) | ✅ |
-| 12 | Bandeau de durée présent | ✅ |
-| 13 | Un seul bouton QCM (règle n°4) | ✅ |
-| 14 | Hypothèse d'entrée présente | ✅ |
+    node tests_5e_C8.2_sequence.mjs sequence_5e_C8.2_patere-du-hall.html
 
-Le test n°10 est celui qui compte : il vérifie qu'on **ne peut pas valider l'activité 2 avec un
-chiffre approché**. En 5e_C8.2, c'est la mise en œuvre qui est évaluée ; un relevé recopié sur le
-voisin ne passe pas.
+**24 / 24**, sous Chromium (Playwright), le 30/08/2026.
+
+> **Ce que ce bloc remplace.** Il portait un tableau de **quatorze lignes écrites à la main**,
+> quatorze coches vertes, et rien pour les rejouer. Le QCM avait reçu son script le 29/08 ; la
+> séquence était restée avec sa liste de bonnes intentions. Un tableau qu'on ne peut pas
+> relancer ne dit pas « ça marche », il dit « ça marchait le jour où quelqu'un a regardé ».
+
+La suite **conduit le banc pour de vrai** : elle choisit un matériau, clique sur les paliers de
+charge jusqu'à la rupture, remet une éprouvette neuve, et recommence cinq fois. Les verrous ne
+sont donc pas forcés dans le code — ils s'ouvrent par le geste, comme pour un élève.
+
+Les quatorze affirmations d'origine sont toutes rejouées. S'y ajoutent dix contrôles que le
+tableau ne faisait pas :
+
+- **aucun verrou expérientiel ouvert à l'ouverture de la page** (règle d'or n°226) ;
+- une éprouvette déjà cassée refuse une charge de plus, et le dit ;
+- les cinq charges de rupture sont lues sur la page, une par une (41 · 51 · 53 · 194 · 408 kg) ;
+- la **formulation officielle du code** est comparée à `_outils/data_competences.py` — le test la
+  lit dans le référentiel plutôt que de la recopier, sinon il cesserait de tester la citation ;
+- aucun identifiant HTML en double ;
+- relevés, verrous et hypothèse survivent au rechargement.
+
+### Le contrôle qui a trouvé quelque chose
+
+**La séquence ne portait aucune consigne de sécurité.** Son voisin `5e_C8.1` écrit pourtant
+« aucune manipulation électrique dans cette séquence : ni très basse tension, ni secteur ».
+Celui-ci, qui décrit un banc de traction où une masse est suspendue, ne disait rien du tout.
+
+La consigne est ajoutée au palier du banc : le banc de la page est un **simulateur**, il n'y a
+pas de secteur — et si le professeur monte un banc réel, la charge se pose et se retire à
+l'arrêt, personne ne reste sous la masse, et c'est lui qui l'installe.
 
 ## QCM (17 tests)
 

@@ -1,7 +1,7 @@
 # Fiche pédagogique — La progression CAO du cycle 4 (C7.2, C7.6)
 
 **Niveaux** : 5e, 4e et 3e — quatre TP, dans une ressource commune.
-**Durée** : 1 séance de 55 minutes par TP, en salle informatique.
+**Durée** : 1 séance de 55 minutes par TP (2 pour le dé, 40 min pour « en mieux »), en salle informatique.
 **Logiciel** : Onshape Éducation (navigateur, aucun poste à installer).
 **Thème** : 3 — Création, conception et réalisation d'innovations.
 
@@ -40,7 +40,7 @@
 > tenues, ce qui n'était le cas ni du TP nº1 ni du mini-projet de `5e_C7.1` (qui enseigne
 > l'amélioration mais s'arrête avant de fabriquer).
 
-Les trois TP **exposent** aussi C7.3 — choisir (5e), comparer (4e) un matériau —
+Les TP de 5e et de 4e **exposent** aussi C7.3 — choisir (5e), comparer (4e) un matériau —
 sans l'évaluer : aucune question notée n'y est posée. C'est aux séquences de
 niveau de le faire.
 
