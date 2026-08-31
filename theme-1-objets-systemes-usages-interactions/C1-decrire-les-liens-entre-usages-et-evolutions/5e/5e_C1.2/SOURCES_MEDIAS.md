@@ -41,3 +41,18 @@ fournisseur réel n'est nommé.
 La manipulation de la séance 1 demande **un vélo**, quel qu'il soit, et une clé Allen. Aucun
 matériel n'est à acheter, rien n'est démonté, et la très basse tension n'entre pas en jeu — il n'y a
 pas d'électricité dans ce lot.
+
+## Deux SVG présents mais employés par aucune page (relevé du 31/08/2026)
+
+Ces deux fichiers sont, comme les autres, des **créations originales (Fable, CC0)**, du SVG écrit
+à la main, sans raster embarqué ni référence distante. Ils sont documentés ici pour que leur
+licence ne dépende de personne. Mais **aucune page du lot ne les affiche** :
+
+| Fichier | Titre porté par le SVG | Poids |
+|---|---|---|
+| `Images/comparer_freins_velo.svg` | Comparer deux principes de freinage | ~2 Ko |
+| `Images/eclairer_principes.svg` | Deux principes pour éclairer | ~2 Ko |
+
+À trancher, pas à deviner : schémas devenus sans emploi et à retirer, ou images-objets dont le
+câblage dans la séquence a été oublié. `_outils/controle_medias.py` les compte et les nomme sans
+les refuser : un fichier inemployé est une dette, pas un mensonge.

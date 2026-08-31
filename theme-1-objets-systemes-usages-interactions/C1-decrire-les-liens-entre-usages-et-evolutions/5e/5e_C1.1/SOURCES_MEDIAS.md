@@ -49,3 +49,22 @@ ne valent pas fiche technique.
   LibreOffice Calc et Excel, et restent valables d'une version à l'autre ;
 - aucune photographie ;
 - aucun appel réseau, aucune police distante, aucun script tiers.
+
+## Quatre SVG présents mais employés par aucune page (relevé du 31/08/2026)
+
+Ces quatre fichiers sont, comme les autres, des **créations originales (Fable, CC0)**, du SVG
+écrit à la main, sans raster embarqué ni référence distante. Ils sont documentés ici pour que
+leur licence ne dépende de personne. Mais **aucune page du lot ne les affiche** :
+
+| Fichier | Titre porté par le SVG | Poids |
+|---|---|---|
+| `Images/collecte_temperature_salles.svg` | Collecte de températures dans quatre salles | ~2 Ko |
+| `Images/donnee_information_tableur.svg` | De la donnée à l'information | ~1 Ko |
+| `Images/tri_filtre_moyenne.svg` | Trier, filtrer et calculer dans un tableur | ~2 Ko |
+| `Images/choisir_graphique.svg` | Choisir un graphique adapté | ~2 Ko |
+
+Deux lectures possibles, et c'est à trancher, pas à deviner : ou bien ces schémas ont été
+dessinés pour des activités qui ont changé de forme et n'ont plus de place — alors ils sont à
+retirer ; ou bien ils devaient illustrer la séquence et le câblage a été oublié — alors ce sont
+quatre images-objets qui manquent à l'élève. `_outils/controle_medias.py` les compte et les
+nomme sans les refuser : un fichier inemployé est une dette, pas un mensonge.
