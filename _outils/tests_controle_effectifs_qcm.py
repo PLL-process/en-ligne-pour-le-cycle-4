@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """tests_controle_effectifs_qcm.py — le contrôle doit refuser, et ne pas crier au loup.
 
-Ce banc joue sur des arborescences **fabriquées** les cinq refus attendus et les
-quatre silences attendus — dont celui qui a failli coûter cher : un manifeste
+Ce banc joue sur des arborescences **fabriquées** les refus attendus et les
+silences attendus — dont celui qui a failli coûter cher : un manifeste
 posé dans le même dossier qu'une banque ne parle pas forcément d'elle. Sur le
 dépôt réel, la première version du contrôle produisait neuf faux écarts sur
 `4e_C4.7/`, qui porte quatre banques et un manifeste ne décrivant que l'une
@@ -27,15 +27,24 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import controle_effectifs_qcm as CE  # noqa: E402
 
 
-def page(total, par_code, dits=None):
-    """Une page de QCM minimale : une banque, et les nombres qu'elle affiche."""
+def page(total, par_code, dits=None, illustrees=0):
+    """Une page de QCM minimale : une banque, et les nombres qu'elle affiche.
+
+    `illustrees` donne le nombre de questions portant un bloc `img:{…}` — le
+    nombre que `questions_illustrees` prétend décrire."""
     dits = dits or {}
     d = lambda cle: dits.get(cle, total)  # noqa: E731
     banque = []
+    reste = illustrees
     for code, n in par_code.items():
         for i in range(n):
-            banque.append('{c:"%s",n:"n%s%d",q:"?",o:["a","b","c","d"],r:0,'
-                          'expl:"e",ex:"x",err:"r",d:["","b","c","d"],ret:"t"}' % (code, code, i))
+            img = ''
+            if reste > 0:
+                img = 'img:{src:"Images/s%d.svg",alt:"a"},' % reste
+                reste -= 1
+            banque.append('{c:"%s",n:"n%s%d",%sq:"?",o:["a","b","c","d"],r:0,'
+                          'expl:"e",ex:"x",err:"r",d:["","b","c","d"],ret:"t"}'
+                          % (code, code, i, img))
     return (
         '<html><body>\n'
         '<span class="badge theme">%d questions · lot</span>\n'
@@ -49,11 +58,11 @@ def page(total, par_code, dits=None):
 
 
 def lot(racine, total=8, par_code=None, dits=None, manifeste=None, nom_qcm="qcm_essai.html",
-        lexique=None):
+        lexique=None, illustrees=0):
     r = pathlib.Path(racine)
     r.mkdir(parents=True, exist_ok=True)
     par_code = par_code or {"C4.1": 4, "C4.2": 4}
-    (r / nom_qcm).write_text(page(total, par_code, dits), encoding="utf-8")
+    (r / nom_qcm).write_text(page(total, par_code, dits, illustrees), encoding="utf-8")
     if manifeste is not None:
         (r / "manifest_essai.json").write_text(json.dumps(manifeste, ensure_ascii=False),
                                                encoding="utf-8")
@@ -129,6 +138,23 @@ def main():
         cas("le manifeste ment sur un code", lot(b / "c9", manifeste=m9), True,
             "questions_par_code[5e_C4.2]")
 
+        # ── 9 bis. le manifeste ment sur le nombre de questions ILLUSTRÉES ──
+        # Ce champ n'était pas confronté avant le 31/08/2026 : deux manifestes
+        # du dépôt étaient en écart, `5e_C6.1` et `5e_C2.1` (règle n°264).
+        m9b = json.loads(json.dumps(MANIFESTE)); m9b["contenu"]["questions_illustrees"] = 9
+        cas("le manifeste ment sur le nombre de questions illustrées",
+            lot(b / "c9b", manifeste=m9b, illustrees=3), True, "questions_illustrees = 9")
+
+        # ── 9 ter. le même, juste ────────────────────────────────────────────
+        m9t = json.loads(json.dumps(MANIFESTE)); m9t["contenu"]["questions_illustrees"] = 3
+        cas("le manifeste dit vrai sur le nombre de questions illustrées",
+            lot(b / "c9t", manifeste=m9t, illustrees=3), False)
+
+        # ── 9 quater. une banque SANS aucune image et un manifeste à zéro ────
+        m9q = json.loads(json.dumps(MANIFESTE)); m9q["contenu"]["questions_illustrees"] = 0
+        cas("une banque sans image, annoncée à zéro, passe",
+            lot(b / "c9q", manifeste=m9q, illustrees=0), False)
+
         # ── 10. le lexique ment sur son nombre de notions ───────────────────
         cas("le lexique annonce plus de notions qu'il n'en porte",
             lot(b / "c10", manifeste=MANIFESTE, lexique=(30, 3)), True, "annonce 30 notions")
@@ -151,6 +177,14 @@ def main():
         (r12 / "qcm_sans_banque.html").write_text("<html><body>page vide</body></html>",
                                                   encoding="utf-8")
         cas("une page « qcm… » sans bloc QUESTIONS est écartée", r12, False)
+
+        # ── 12 bis. un manifeste qui n'annonce PAS ses illustrations n'est
+        # pas jugé là-dessus : ce contrôle confronte ce qui est déclaré, il
+        # n'exige pas qu'on déclare (règle n°248).
+        m12b = json.loads(json.dumps(MANIFESTE))
+        m12b["contenu"].pop("questions_illustrees", None)
+        cas("un manifeste muet sur ses illustrations n'est pas jugé là-dessus",
+            lot(b / "c12b", manifeste=m12b, illustrees=3), False)
 
         # ── 13. un lexique sans nombre annoncé n'est pas jugé ───────────────
         r13 = lot(b / "c13", manifeste=MANIFESTE)
