@@ -11209,3 +11209,43 @@ annonce (règle d'or n°39).
 > Tolérer un cas sans écrire lequel, pourquoi, et ce qui le résoudra, ce n'est pas tolérer :
 > c'est renoncer en silence. Un contrôle qui accepte des exceptions doit donc aussi dire
 > quand l'une d'elles n'a plus lieu d'être.
+
+## 2026-08-31 — « Programmer l'alerte » : une suite qui écrit du code, et qui prend le programme dans la page
+
+Sixième lot de la file : `3e_C6.1`, 17 coches, aucun script cité.
+`tests_3e_C6.1-C6.3.mjs` — **35 contrôles, 35/35** — paie la dette et l'élargit.
+
+### Le premier lot où le vérificateur lit du code
+
+Les cinq lots précédents jugeaient des menus déroulants et des simulateurs. Celui-ci lit le
+**programme Python que l'élève a écrit** dans l'éditeur CodeLab :
+
+- l'activité 3 exige que `SEUIL_ORANGE` ait vraiment été recalibré **dans le code** — deux
+  bonnes réponses ne suffisent pas, et la page le dit en toutes lettres ;
+- l'activité 4 passe **sept** expressions régulières sur le programme : l'initialisation, les
+  deux passages à `True`, le bloc final, son indentation, et l'**absence** de gyrophare dans la
+  branche rouge. Elle nomme ce qui manque, un manque à la fois.
+
+La suite écrit donc du code : elle recalibre une ligne, vérifie que le comparateur en annonce
+**exactement une** de différente, puis colle le v2 entier.
+
+### Le programme v2 n'est pas écrit dans le test
+
+Il est **lu dans la correction que la page publie elle-même**, puis collé dans l'éditeur. Si la
+correction affichée à l'élève et le vérificateur divergeaient un jour, la suite le dirait. Un
+programme recopié dans le test ne peut pas rendre ce service : il vieillirait à part, et le
+jour où l'un des deux changerait, c'est le test qu'on corrigerait.
+
+De même, le nombre de contrôles de code n'est pas compté à la main : il est **demandé à la
+fonction** (`CHECKS[4]().total`). Le compter dans le source par expression régulière donnait
+**11 au lieu de 7** — une leçon déjà apprise, reprise ici : quand un objet sait se compter, on
+le lui demande (règles n°264 et n°268).
+
+### Deux nombres de prose, encore
+
+Ce rapport annonçait « 22/22 réussis » là où ses tableaux comptaient 17 lignes ; celui de
+`3e_C5.1` disait « 30/30 » pour 18 lignes. Deux nombres qu'un document affirme sur lui-même,
+mais **dans une phrase** — hors de portée de `controle_effectifs_qcm.py`, qui ne lit que des
+champs, et a raison de s'en tenir là (règle n°264). Ils se corrigent à la main, et c'est fait.
+
+File d'attente après ce lot : **2 lots, 33 coches** — `3e_C4.7` (17) et `4e_C6.2` (16).
