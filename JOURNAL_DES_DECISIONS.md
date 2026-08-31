@@ -11156,3 +11156,56 @@ la seule occurrence qu'on a sous les yeux (règle d'or n°261).
 
 File d'attente après ce lot : **3 lots, 50 coches** — `3e_C6.1` (17), `3e_C4.7` (17),
 `4e_C6.2` (16).
+
+## 2026-08-31 — Cinquante-deux synthèses rendues atteignables, et un compteur qui comptait mes propres tests
+
+Suite annoncée à la PR #324 : le correctif du constat des **56 synthèses inatteignables**.
+
+### La cause tenait en une ligne
+
+`_outils/make_index.py` lisait **le dossier du code**, et rien d'autre. Les synthèses vivent
+dans un sous-dossier `Synthèses/` : le générateur ne les voyait pas, l'index ne les listait
+pas, et 40 séquences sur 46 ne les liaient pas davantage. Personne n'avait donc de chemin
+vers elles.
+
+Le correctif est une constante déclarée — `SOUS_DOSSIERS_PEDAGOGIQUES = ("Synthèses",)` — et
+un second parcours. **72 des 76 synthèses sont désormais atteignables** depuis l'index. Il en
+reste quatre, celles des deux ateliers (`atelier-cao`, `atelier-planification`), qui ne vivent
+pas dans un dossier `{niveau}_{code}` : le générateur ne parcourt pas leur arborescence. Leurs
+TP, eux, sont atteignables et devront les lier — branche thème 3.
+
+### Un contrôle qui refuse la sixième, pas seulement qui compte les cinq
+
+`_outils/controle_atteignabilite.py` part d'`index.html`, suit les liens de proche en proche,
+et **refuse** toute page que la marche n'atteint pas — sauf celles nommées dans `TOLEREES`
+avec leur raison et ce qui les débloquera. Cinq y figurent aujourd'hui : les quatre synthèses
+d'atelier et `_reperes/carte_des_representations.html`.
+
+Une liste nommée vaut mieux qu'un simple compte : un compte laisse la dette grandir sans
+bruit, une liste acte les cas connus et **refuse le suivant**. Le contrôle signale en plus une
+tolérée redevenue atteignable, pour que la liste ne puisse que rétrécir. Banc : 9 contrôles,
+dont le chemin accentué encodé (`Synth%C3%A8ses/…`) — sans son décodage, la marche déclarerait
+72 fichiers inatteignables et le contrôle crierait au loup sur son propre correctif.
+
+### Le compteur de l'index comptait mes suites de tests comme des ressources pour la classe
+
+En régénérant, une seconde chose est apparue : `tests_3e_C5.1-C5.4.mjs` s'affichait sur
+l'index en « 📄 Ressource — Tests ». Le motif de maintenance connaissait `^tests_.*\.py$` et
+lui seul. **59 suites `.mjs` du dépôt** étaient donc annoncées à l'élève comme des ressources
+pédagogiques, et comptées comme telles.
+
+C'est la troisième fois que la même erreur se paie — une liste d'extensions qui ignore une
+extension du dépôt (règle n°269, née le 31/08/2026 sur `controle_rapports_tests.py`, revue le
+même jour sur `controle_medias.py`). Et c'est moi qui l'ai creusée : chaque suite livrée
+depuis ce matin gonflait le compteur.
+
+Le compte de l'index passe donc de **421** à **435** : + 72 synthèses désormais visibles,
+− 58 suites de tests qui n'avaient rien à y faire. Un compteur compte ce que son étiquette
+annonce (règle d'or n°39).
+
+### Règle d'or n°273
+
+> **Une liste d'exceptions doit être nommée, datée, et ne pouvoir que rétrécir.**
+> Tolérer un cas sans écrire lequel, pourquoi, et ce qui le résoudra, ce n'est pas tolérer :
+> c'est renoncer en silence. Un contrôle qui accepte des exceptions doit donc aussi dire
+> quand l'une d'elles n'a plus lieu d'être.
