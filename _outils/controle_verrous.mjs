@@ -16,9 +16,16 @@
  * CE QUE CE CONTRÔLE FAIT
  * -----------------------
  * Il ouvre CHAQUE séquence et chaque TP du dépôt dans un navigateur neuf —
- * contexte vierge, aucun stockage hérité — et lit `window.__exp` juste après le
- * chargement. Toute clé portant une valeur **vraie** est un verrou ouvert sans
- * geste.
+ * contexte vierge, aucun stockage hérité — et lit, juste après le chargement,
+ * **toutes** les variables `window.__…` que la page s'est données. Toute valeur
+ * **vraie** y est un verrou ouvert sans geste.
+ *
+ * Il ne lisait que `window.__exp` jusqu'au 31/08/2026. Or deux lots gardent leur
+ * état d'expérience sous d'autres noms — `__sim` pour « SOS station », `__simOk`
+ * et `__rerouteVu` pour « Internet jusqu'à Sainte-Luce » — et leurs verrous
+ * échappaient donc entièrement à la mesure. Ne connaître qu'un nom, c'est ne
+ * rien voir de ce qui s'appelle autrement (règle d'or n°269, prise par le nom
+ * plutôt que par l'extension).
  *
  * CE QU'IL NE COMPTE PAS, ET POURQUOI
  * ------------------------------------
@@ -43,6 +50,19 @@ const ICI = path.dirname(new URL(import.meta.url).pathname);
 const DEPOT = path.dirname(ICI);
 const ECARTES = /_archive-anciennes-versions|[/\\]\.git/;
 const A_VERROUS = /^(sequence|tp|atelier)_.*\.html$/i;
+
+/** Les `window.__…` qui ne SONT PAS des observations, et pourquoi.
+ *
+ *  Cette liste est déclarée, jamais devinée : sans elle, la taille de police de
+ *  l'éditeur CodeLab (`__clFs = 14`) serait signalée comme un verrou ouvert, et
+ *  un contrôle qui signale du correct finit ignoré (règle d'or n°248). Elle ne
+ *  doit contenir que des états d'INTERFACE ou de VALIDATION — jamais la trace
+ *  d'un geste. */
+const PAS_DES_OBSERVATIONS = {
+  __valid: 'les validations d\'activité : un résultat, pas une expérience',
+  __clFs: 'la taille de police de l\'éditeur CodeLab — préférence d\'affichage',
+  __clHlRange: 'les lignes surlignées par une consigne — affichage, pas trace',
+};
 
 /** Toutes les pages susceptibles de porter un verrou expérientiel. */
 function pages(dossier, acc = []) {
@@ -75,11 +95,26 @@ for (const f of liste) {
   try {
     await p.goto('file://' + f, { waitUntil: 'load' });
     await p.waitForTimeout(160);
-    const exp = await p.evaluate(() => window.__exp || null);
-    if (!exp) { sansVerrou++; }
+    /* Toutes les variables que la page s'est données, aplaties en couples
+       « nom (ou nom.clé) → valeur » : `__exp` est un sac de clés, les autres
+       sont des drapeaux nus. Les deux se lisent de la même façon. */
+    const etat = await p.evaluate((ignores) => {
+      const out = {};
+      for (const nom of Object.getOwnPropertyNames(window)) {
+        if (!nom.startsWith('__') || ignores.includes(nom)) continue;
+        const v = window[nom];
+        if (v && typeof v === 'object' && !Array.isArray(v)) {
+          for (const [k, w] of Object.entries(v)) out[nom + '.' + k] = w;
+          if (!Object.keys(v).length) out[nom] = v;
+        } else out[nom] = v;
+      }
+      return out;
+    }, Object.keys(PAS_DES_OBSERVATIONS));
+    const cles = Object.keys(etat);
+    if (!cles.length) { sansVerrou++; }
     else {
-      const ouverts = Object.entries(exp).filter(([, v]) => estUneObservation(v));
-      if (ouverts.length === 0) casiers += Object.keys(exp).length;
+      const ouverts = Object.entries(etat).filter(([, v]) => estUneObservation(v));
+      if (ouverts.length === 0) casiers += cles.length;
       else ecarts.push({ f: path.relative(DEPOT, f), ouverts });
     }
   } catch (e) {
@@ -92,7 +127,9 @@ await navigateur.close();
 
 if (!muet) {
   console.log(`${liste.length} page(s) à verrous ouvertes dans un contexte neuf · `
-    + `${sansVerrou} sans window.__exp · ${casiers} casier(s) vide(s) déclaré(s) d'avance`);
+    + `${sansVerrou} sans aucun état window.__… · ${casiers} casier(s) vide(s) déclaré(s) d'avance`);
+  console.log('     Écartés par déclaration : '
+    + Object.entries(PAS_DES_OBSERVATIONS).map(([k, r]) => `${k} (${r})`).join(' · '));
   console.log('     NON LU : ce qu\'une page fait APRÈS le chargement — qu\'un verrou s\'ouvre\n'
     + '     au bon geste relève de la suite de tests du lot.');
 }
