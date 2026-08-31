@@ -1782,10 +1782,18 @@ OVERLAY = {
                 "expérientiel : jour/nuit/nuit+passage), descripteurs et données "
                 "(table des 6 lampadaires), réseau local et jeu du courrier "
                 "débranché (prescription C4.8), réinvestissement sonnette "
-                "connectée. Versions A/B/C, QCM 32 q (4 par code) dont 6 "
-                "illustrées, synthèses, fiche, matrice, 3 SVG CC0, rapport de "
-                "tests. Première entrée 5e du Thème 2, langue calibrée 12 ans.",
-        anomalies="Aucune.",
+                "connectée. Versions A/B/C, QCM 36 q dont 6 illustrées, "
+                "synthèses, fiche, matrice, 3 SVG CC0, rapport de tests et "
+                "suite rejouable `tests_5e_C4.1-C4.8_qcm.mjs` (25/25). "
+                "Première entrée 5e du Thème 2, langue calibrée 12 ans.",
+        anomalies="Quatre des huit codes n'ont que 4 questions DANS cette banque "
+                  "(C4.4, C4.5, C4.7, C4.8) : ils sont renforcés ailleurs, et le "
+                  "manifeste nomme la banque de renfort pour chacun (règle n°250). "
+                  "Les quatre autres — C4.1, C4.2, C4.3, C4.6 — n'étaient renforcés "
+                  "nulle part et sont passés à 5 le 31/08/2026, chacun sur une notion "
+                  "que la banque n'abordait pas. Les 16 contrôles de la SÉQUENCE "
+                  "restent un tableau écrit à la main : leur suite est à écrire "
+                  "(règle n°259).",
         accessibilite="Clavier, aria/alt, listes déroulantes (DYS), "
                       "reduced-motion, impression A4, minuteur désactivable.",
         medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",

@@ -10464,3 +10464,81 @@ contrôle qui ne saurait pas séparer « n'était » de « n'est » signalerait 
 pour en trouver une fausse — et un contrôle qui signale du faux finit ignoré (n°248). Sur une
 population de trois, la règle et la relecture coûtent moins cher que l'outil et mentent moins.
 La phrase est corrigée à la main, et c'est écrit ici pour que la question ne se repose pas.
+
+## 2026-08-31 — Le dernier arbitrage, tranché en écrivant les questions qui manquaient
+
+`_outils/COUVERTURE_ETIQUETTES.md` § 4 portait depuis #289 le seul arbitrage encore ouvert du
+dépôt : **le seuil de cinq questions face aux lots mutualisés.** La banque du lampadaire couvre
+huit codes avec trente-deux questions, quatre chacun — sous le seuil. Trois issues étaient
+proposées : abaisser le seuil selon le nombre de codes, inventer un état « couvert mais pas
+évaluable », ou **écrire quatre questions de plus**.
+
+C'est la troisième. Les deux autres changent l'instrument sans changer ce que l'élève passe, et
+la raison d'être du seuil n'est pas administrative : sur quatre questions, un élève qui en sait
+la moitié obtient 2/4 ou 4/4 selon lesquelles il connaît, et l'écart part au LSU.
+
+### La mesure d'abord, l'écriture ensuite
+
+Sur les huit codes, **quatre sont renforcés ailleurs** et dépassent largement le seuil une fois
+tout compté — `C4.4` (+10 dans le banc de la cour), `C4.5` (+10 dans l'éclairage du préau),
+`C4.7` (+16) et `C4.8` (+14) dans le réseau local. **Quatre ne le sont nulle part** : `C4.1`,
+`C4.2`, `C4.3`, `C4.6`. Il ne fallait donc pas quatre questions au hasard, mais **une par code**,
+et sur une notion que la banque n'abordait pas — sinon on remplit un compteur.
+
+| Code | Ce que les quatre premières ne demandaient jamais |
+|---|---|
+| `5e_C4.1` | elles vont toujours de la fonction vers la solution, jamais l'inverse : un constituant qui porte **deux** fonctions n'était pas interrogeable |
+| `5e_C4.2` | elles décrivent la chaîne à l'arrêt ; jamais ce qui se passe **quand un maillon est vide**, ni comment on remonte une panne |
+| `5e_C4.3` | les pertes sont nommées, jamais **suivies** : où passe l'énergie qui n'éclaire pas ? |
+| `5e_C4.6` | le code s'intitule « descripteurs, **types et formats** de données » — les quatre questions ne parlaient que de descripteurs |
+
+La dernière ligne est la plus parlante. Ce n'est pas le seuil qui a créé un trou : c'est le seuil
+qui a rendu visible une maigreur déjà là. Un code dont le libellé nomme trois notions et dont la
+banque n'en évalue qu'une était mal évalué à quatre questions comme il l'aurait été à quarante.
+
+Résultat mesuré : `5e_C4.1` passe de **CITÉ** à **ÉVALUÉ**, et la ligne « codes tenus pour
+complets dont la couverture n'est pas démontrée » tombe de **1 à 0**.
+
+### Dix endroits pour un nombre
+
+Avant d'écrire la première question, on a cherché où « 32 » était écrit. **Dix endroits, six
+fichiers** : cinq fois dans la page (badge, compteur « Restantes », bouton « Parcours complet »,
+total du parcours, total du bilan) plus le commentaire de tête de banque ; la séquence ; le
+lexique (« 32 notions ») ; la fiche et la synthèse professeur ; le manifeste (`questions_qcm` et
+huit `questions_par_code`) ; le rapport de tests ; et `_outils/build_audit.py`, qui le recopie
+dans l'audit. C'est exactement la règle n°261, vue **avant** la faute au lieu d'après.
+
+`_outils/controle_effectifs_qcm.py` confronte désormais, pour les **65 banques du dépôt**, chaque
+nombre qu'une page affiche à son propre sujet au nombre d'entrées de sa banque, plus les champs
+du manifeste et le compte de notions des 58 lexiques — **521 nombres auto-déclarés**. Toutes
+disaient vrai avant ce lot ; le contrôle a nommé les **onze** que ce lot rendait fausses, une par
+une, et c'est ainsi qu'elles ont été corrigées plutôt que de mémoire.
+
+- **n°264** — **un nombre qu'un document affirme sur lui-même est un champ, pas une phrase : il
+  se vérifie.** Une page qui dit « 36 questions » et en porte 32 n'est pas une coquille, c'est
+  une page qui ment à l'élève sur ce qui l'attend. Ce qui reste hors de portée d'un contrôle,
+  c'est le nombre écrit dans une prose libre — et là, la liste des endroits vaut mieux qu'un
+  script qui croirait les lire tous (n°242, n°248).
+
+### Ce que le contrôle a trouvé en naissant, et qui n'était pas de moi
+
+Sa première version signalait **neuf écarts dans `4e_C4.7/`** — un dossier qui porte quatre
+banques et un manifeste. Le manifeste décrit le lot « SOS serre » ; les trois autres banques sont
+celles du lot « réseaux ». Confronter tout manifeste à toute banque du même dossier, c'était
+déduire un rattachement du **voisinage** au lieu de le lire là où il est **déclaré** — le bloc
+`fichiers.qcm` (règles n°248 et n°263). Corrigé : 32 manifestes se rattachent maintenant à la
+banque qu'ils nomment, et les neuf faux écarts ont disparu. Le cas est le onzième du banc.
+
+### Le rapport de tests qui citait un script absent
+
+Le rapport du lot annonçait « 26 / 26 » et attribuait ses résultats à un script `tests_lot05.js`
+**jamais commité**. Vingt-six coches que personne ne pouvait relancer (n°259). Le QCM — la partie
+modifiée ce jour-là — a maintenant sa suite livrée dans le dossier :
+`tests_5e_C4.1-C4.8_qcm.mjs`, **25 contrôles**, qui parcourt réellement les 36 questions, clique
+la bonne réponse et lit la note affichée. Il lit les effectifs **dans le manifeste** plutôt que
+de les recopier, vérifie le gabarit maison question par question, et refuse le lot si un code
+sous le seuil n'est pas accompagné du nom de la banque qui le renforce.
+
+**Limite déclarée, et elle est réelle** : les **16 contrôles de la séquence** restent un tableau
+écrit à la main. Ils n'ont pas été rejoués — la séquence n'a changé que d'un nombre. Écrire leur
+suite est le prochain geste dû à ce lot, et c'est inscrit dans son rapport comme dans l'audit.
