@@ -134,7 +134,7 @@
 <div class="badges">
   <span class="badge niveau">5e</span>
   <span class="badge code">5e_C4.1</span><span class="badge code">5e_C4.2</span><span class="badge code">5e_C4.3</span><span class="badge code">5e_C4.4</span><span class="badge code">5e_C4.5</span><span class="badge code">5e_C4.6</span><span class="badge code">5e_C4.7</span><span class="badge code">5e_C4.8</span>
-  <span class="badge theme">32 questions · schémas à lire · corrections détaillées</span>
+  <span class="badge theme">36 questions · schémas à lire · corrections détaillées</span>
 </div>
 <p style="text-align:center"><a href="sequence_5e_C4.1-C4.8_lampadaire_intelligent.html">⬅ Revenir à la séquence</a></p>
 
@@ -153,7 +153,7 @@
     <div>Répondu<b id="dRep" class="v-hl">0</b></div>
     <div>Correctes<b id="dOk" class="v-ok">0</b></div>
     <div>Incorrectes<b id="dErr" class="v-err">0</b></div>
-    <div>Restantes<b id="dRest" class="v-warn">32</b></div>
+    <div>Restantes<b id="dRest" class="v-warn">36</b></div>
     <div>À revoir 🔖<b id="dMarq" class="v-warn">0</b></div>
     <div>Score<b id="dScore" class="v-hl">0 %</b></div>
     <div>Note<b id="dNote" class="v-warn">— /20</b></div>
@@ -170,7 +170,7 @@
 <section class="card">
   <h2>🎛 Mode de travail</h2>
   <div class="modes">
-    <button class="btn mode-actif" data-mode="complet">Parcours complet (32)</button>
+    <button class="btn mode-actif" data-mode="complet">Parcours complet (36)</button>
     <button class="btn" data-mode="dix">10 questions</button>
     <button class="btn" data-mode="cible">Révision ciblée</button>
     <button class="btn" data-mode="erreurs">Uniquement mes erreurs</button>
@@ -206,7 +206,7 @@
 <section class="card ecran actif" id="ecranQuestion">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
     <span class="q-comp" id="qComp">—</span>
-    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">32</b></span>
+    <span style="font-size:.82em;color:var(--sub)">Question <b id="qNum">1</b> / <b id="qTot">36</b></span>
     <button class="btn small ghost" id="btnMarquer">🔖 À revoir</button>
   </div>
   <p class="q-texte" id="qTexte">—</p>
@@ -226,7 +226,7 @@
   <h2>🏁 Résultat final</h2>
   <div class="note20" id="rNote">— /20</div>
   <div class="res-grid">
-    <div>Questions<b id="rTot">32</b></div>
+    <div>Questions<b id="rTot">36</b></div>
     <div>Répondues<b id="rRep" class="v-hl">0</b></div>
     <div>Correctes<b id="rOk" style="color:var(--ok)">0</b></div>
     <div>Incorrectes<b id="rErr" style="color:var(--err)">0</b></div>
@@ -257,9 +257,12 @@
 
 <script>
 "use strict";
-/* Banque de questions LOT 05 — 32 questions (4 par code 5e_C4.1 → C4.8), 6 illustrées (règle images v2) */
+/* Banque de questions LOT 05 — 36 questions (4 par code 5e_C4.1 → C4.8, plus une
+   cinquième pour C4.1, C4.2, C4.3 et C4.6 ajoutée le 31/08/2026 : ces quatre-là
+   n'étaient renforcés par aucune autre banque et restaient sous le seuil
+   d'évaluabilité), 6 illustrées (règle images v2) */
 const QUESTIONS = [
-/* ═══ C4.1 — fonctions/solutions (4 q) ═══ */
+/* ═══ C4.1 — fonctions/solutions (5 q) ═══ */
 {c:"C4.1",n:"Fonction vs solution",q:"« Éclairer le parking » est une… et « le bloc de LED » est une…",
  o:["solution technique · fonction technique","fonction technique · solution technique","élément de décoration · pièce détachée","chaîne d'énergie · chaîne d'information"],r:1,
  expl:"La fonction dit CE QUE l'objet doit faire ; la solution est L'ÉLÉMENT choisi pour le faire. On énonce d'abord les fonctions, puis on choisit les solutions.",
@@ -289,7 +292,14 @@ const QUESTIONS = [
  err:"Répondre par un élément « connu » sans le relier à la fonction demandée.",
  d:["","Le guidon assure la fonction « diriger ».","La sonnette assure « avertir ».","Le phare assure « éclairer »."],
  ret:"L'analyse fonction → solution s'applique à tous les objets techniques."},
-/* ═══ C4.2 — chaîne d'énergie (4 q) ═══ */
+{c:"C4.1",n:"Un constituant, deux fonctions",q:"La carte électronique décide d'allumer, ET elle lit le capteur de luminosité. Qu'en conclure ?",
+ o:["Un même constituant peut assurer plusieurs fonctions","Une fonction n'a jamais qu'une seule solution possible","Le capteur de luminosité ne sert donc plus à rien ici","La carte remplace à elle seule la chaîne d'énergie"],r:0,
+ expl:"Fonctions et solutions ne se correspondent pas une pour une. Ici un constituant en assure deux ; ailleurs, une fonction accepte plusieurs solutions (LED ou ampoule). C'est pourquoi on lit un objet dans les DEUX sens : de la fonction vers la solution, et de la solution vers les fonctions.",
+ ex:"Le régulateur aussi : il distribue l'énergie ET protège la batterie.",
+ err:"Croire qu'à chaque fonction correspond une pièce, et une seule.",
+ d:["","Le lampadaire prouve le contraire : LED ou ampoule, deux solutions.","Il sert toujours : c'est lui qui renseigne la carte.","Elle commande cette chaîne, elle ne la remplace pas."],
+ ret:"Un constituant peut porter plusieurs fonctions, et une fonction accepter plusieurs solutions."},
+/* ═══ C4.2 — chaîne d'énergie (5 q) ═══ */
 {c:"C4.2",n:"Ordre de la chaîne",q:"Quel est le bon ordre de la chaîne d'énergie du lampadaire ?",
  img:{src:"Images/chaines_energie_information_lampadaire.svg",alt:"Chaîne d'énergie : panneau, batterie, régulateur, LED ; chaîne d'information : capteurs, carte, commande"},
  o:["batterie → panneau → LED → régulateur","panneau → batterie → régulateur → LED","LED → batterie → panneau → régulateur","régulateur → LED → batterie → panneau"],r:1,
@@ -319,7 +329,14 @@ const QUESTIONS = [
  err:"Chercher un « capter » : la lampe de poche ne capte rien, on recharge/remplace la pile.",
  d:["","L'énergie ne part pas de l'ampoule.","L'interrupteur ne fournit pas d'énergie.","L'énergie ne revient pas à la pile."],
  ret:"On sait décrire la chaîne d'énergie de n'importe quel objet simple : stocker → distribuer → convertir."},
-/* ═══ C4.3 — nature des énergies (4 q) ═══ */
+{c:"C4.2",n:"Remonter la chaîne",q:"Après une semaine de pluie, le lampadaire n'éclaire plus la nuit. Panneau et LED sont intacts. Que soupçonner d'abord ?",
+ o:["Le mât, qui a pu se tordre sous la pluie","La batterie, qui n'a pas pu se recharger","Les LED, qui éclairent moins par temps froid","Le soleil, qui ne brille pas assez la nuit"],r:1,
+ expl:"Une chaîne d'énergie se parcourt dans l'ordre, et un maillon vide arrête tout ce qui suit. Sans soleil, le panneau capte peu ; la batterie ne stocke plus ; il n'y a plus rien à distribuer, donc plus rien à convertir en lumière. La panne est en amont de ce qu'on voit.",
+ ex:"capter → stocker → distribuer → convertir : on cherche la panne EN REMONTANT.",
+ err:"Chercher la panne au bout visible de la chaîne — les LED — au lieu de remonter.",
+ d:["Un mât tordu n'empêche pas l'énergie de circuler.","","Le froid gêne peu les LED : ce sont elles qui chauffent.","C'est justement pour la nuit qu'on a mis une batterie."],
+ ret:"Un maillon vide arrête tout l'aval : une panne d'énergie se cherche en remontant la chaîne."},
+/* ═══ C4.3 — nature des énergies (5 q) ═══ */
 {c:"C4.3",n:"Entrée du panneau",q:"Quelle énergie ENTRE dans le panneau solaire ?",
  o:["De l'énergie électrique","De l'énergie chimique","De l'énergie lumineuse","De l'énergie sonore"],r:2,
  expl:"Le panneau reçoit la lumière du soleil et la convertit en électricité. À chaque constituant, on sait dire ce qui entre et ce qui sort.",
@@ -349,6 +366,13 @@ const QUESTIONS = [
  err:"Sauter l'étape chimique du stockage.",
  d:["Le chemin commence au soleil.","","Aucun son dans cette chaîne.","Il manque les étapes électriques."],
  ret:"lumineuse → électrique → chimique → électrique → lumineuse : la carte d'identité énergétique du lampadaire."},
+{c:"C4.3",n:"Où passe le reste",q:"Les LED reçoivent 10 unités d'énergie électrique et n'en rendent que 8 en lumière. Que sont devenues les 2 autres ?",
+ o:["Elles ont disparu : l'énergie se perd vraiment","Elles sont reparties se stocker dans la batterie","Elles ont chauffé la LED et son support","Elles ont été mises de côté pour la nuit suivante"],r:2,
+ expl:"L'énergie ne disparaît jamais et ne se fabrique pas : elle CHANGE DE NATURE. Ce qui n'est pas converti en lumière l'est en chaleur. Dire « l'énergie se perd » est une facilité de langage : elle part ailleurs, sous une nature qu'on ne voulait pas.",
+ ex:"Touche un chargeur de téléphone en fin de charge : cette tiédeur, ce sont les pertes.",
+ err:"Croire qu'une partie de l'énergie s'efface, au lieu de chercher sous quelle nature elle est partie.",
+ d:["L'énergie change de nature, elle ne s'efface pas.","Le courant va de la batterie vers les LED, jamais l'inverse.","","Stocker demande une batterie ; cette chaleur part dans l'air."],
+ ret:"Rien ne disparaît : ce qui n'éclaire pas chauffe. Une perte est une énergie qui a changé de nature."},
 /* ═══ C4.4 — matériaux (4 q) ═══ */
 {c:"C4.4",n:"Matériau du mât",q:"Le mât est en acier GALVANISÉ. Que signifie « galvanisé » ?",
  o:["Peint en gris pour l'esthétique","Plus lourd que l'acier normal","Recouvert de zinc contre la rouille","Fabriqué dans la région de Galvanie"],r:2,
@@ -409,7 +433,7 @@ const QUESTIONS = [
  err:"Croire que les deux chaînes s'ignorent.",
  d:["Ce n'est pas de l'énergie qui circule là : c'est un ORDRE.","La lumière sort des LED, pas de la carte.","","Le schéma est correct !"],
  ret:"La chaîne d'information COMMANDE la chaîne d'énergie : c'est leur coopération qui rend l'objet intelligent."},
-/* ═══ C4.6 — descripteurs (4 q) ═══ */
+/* ═══ C4.6 — descripteurs (5 q) ═══ */
 {c:"C4.6",n:"Bon descripteur",q:"Pour la colonne « niveau de batterie en % », le meilleur descripteur est…",
  o:["la batterie du lampadaire numéro X","batterie_pct","b","donnée3"],r:1,
  expl:"Un bon descripteur est court, explicite, sans espace ni accent, et précise l'unité si utile. Il doit rester compréhensible dans six mois par n'importe qui.",
@@ -438,6 +462,13 @@ const QUESTIONS = [
  err:"Croire que « plus d'objets = plus compliqué » : bien décrits, non !",
  d:["","C'est justement l'intérêt des données : éviter les tournées inutiles.","Une seule table suffit : une ligne par lampadaire.","Pas encore 😉 — mais leurs données, si !"],
  ret:"Décrire par des données rend la gestion possible à toute échelle."},
+{c:"C4.6",n:"Nombre ou texte",q:"Dans la colonne batterie_pct, faut-il écrire « 12 % » ou 12 ?",
+ o:["« 12 % », pour qu'on comprenne l'unité","L'un ou l'autre, la table s'en moque","« douze pour cent », en toutes lettres","12 : l'unité est déjà dans le nom"],r:3,
+ expl:"Le NOM de la colonne porte l'unité (batterie_pct), la case ne porte que la valeur. La colonne est alors du TYPE nombre : on peut la trier, la comparer, en faire une moyenne. Avec « 12 % », la case devient du texte — et « 100 % » se rangerait avant « 12 % », comme « ab » avant « b ».",
+ ex:"id (nombre) · emplacement (texte) · batterie_pct (nombre) · etat (texte) · annee_pose (nombre).",
+ err:"Mettre l'unité dans la case au lieu du nom de colonne, et perdre le tri sans s'en apercevoir.",
+ d:["Le % dans la case en fait du texte : le tri se dérègle.","Elle ne s'en moque pas : tri et calculs en dépendent.","En toutes lettres, plus aucun calcul n'est possible.",""],
+ ret:"Le nom de la colonne porte l'unité, la case porte la valeur. Type nombre = tri et calculs possibles."},
 /* ═══ C4.7 — réseau local (4 q) ═══ */
 {c:"C4.7",n:"Les terminaux",q:"Dans le réseau du collège, quels équipements sont des TERMINAUX ?",
  img:{src:"Images/reseau_local_college_5e.svg",alt:"Réseau local : PC, tablettes, imprimante, commutateur, borne Wi-Fi, serveur"},

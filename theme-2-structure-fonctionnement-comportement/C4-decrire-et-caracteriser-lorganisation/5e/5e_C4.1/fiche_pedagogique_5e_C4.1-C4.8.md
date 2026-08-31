@@ -49,7 +49,7 @@ Aides ×2 par activité ; corrections exhaustives ; listes déroulantes (limite 
 
 ## Évaluation
 
-Formative : vérificateurs intégrés à chaque activité, verrou expérientiel au simulateur (les 3 situations doivent être réellement observées). QCM 32 q (4 par code, 6 illustrées). Sommative à construire par l'enseignant, corrigé non publié.
+Formative : vérificateurs intégrés à chaque activité, verrou expérientiel au simulateur (les 3 situations doivent être réellement observées). QCM 36 q (4 par code, et 5 pour C4.1, C4.2, C4.3 et C4.6 — les quatre que nulle autre banque ne renforce ; 6 illustrées). Sommative à construire par l'enseignant, corrigé non publié.
 
 > **Réserve sur le report au LSU — mesurée le 29/08/2026.** Le QCM porte **quatre questions par
 > code**, sur les huit codes du lot (`_outils/controle_echantillonnage.py`). Quatre questions ne

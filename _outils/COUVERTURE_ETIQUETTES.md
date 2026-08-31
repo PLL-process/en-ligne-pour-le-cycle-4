@@ -90,11 +90,11 @@ dix questions — seuil, algorigramme, condition Python, boucle, mise au point �
 travaillent des compétences numériques transversales, pas un code du programme
 de Technologie. Le lot le dit lui-même. Rien à corriger ; il fallait le lire.
 
-## 4. Le seul arbitrage qui reste
+## 4. L'arbitrage qui restait — tranché le 31/08/2026, option 3
 
 **Le seuil face aux lots mutualisés.** Cinq questions par code, c'est le seuil
 de `controle_echantillonnage.py`. Un lot qui couvre huit codes ne peut pas le
-tenir. Trois issues possibles :
+tenir. Trois issues étaient possibles :
 
 1. un seuil qui dépend du nombre de codes portés par le lot, par exemple
    `min(5, questions_de_la_banque // nombre_de_codes)` ;
@@ -102,9 +102,58 @@ tenir. Trois issues possibles :
    PARTAGÉ qui vaut couverture sans valoir évaluation ;
 3. quatre questions de plus dans la banque du lampadaire.
 
-Les deux autres arbitrages annoncés en #289 tombent : les prérequis (VAR, TYP,
-BOI) sont rattachés à leur code par la légende de leur propre banque, et les
-« neuf codes sous le seuil » n'existaient que dans mon relevé fautif.
+**C'est la troisième qui a été retenue**, et voici pourquoi. Les options 1 et 2
+changent l'instrument ; aucune ne change ce que l'élève passe. Or la raison
+d'être du seuil n'est pas administrative : sur quatre questions, un élève qui
+en sait la moitié obtient 2/4 ou 4/4 selon lesquelles il connaît, et l'écart
+part au LSU. Baisser le seuil pour qu'un nombre passe, c'est mesurer moins bien
+en le sachant.
+
+**La mesure, faite avant d'écrire quoi que ce soit.** Sur les huit codes du
+lampadaire, quatre sont **renforcés par une autre banque** et dépassent
+largement le seuil une fois tout compté :
+
+| Code | dans le lampadaire | ailleurs | total |
+|---|---|---|---|
+| `5e_C4.4` | 4 | `qcm_5e_C7.3_banc-de-la-cour` (10) | 14 |
+| `5e_C4.5` | 4 | `qcm_5e_C7.5_eclairage-du-preau` (10) | 14 |
+| `5e_C4.7` | 4 | `qcm_5e_C4.7-C4.8_reseau_local` (16) | 20 |
+| `5e_C4.8` | 4 | `qcm_5e_C4.7-C4.8_reseau_local` (14) | 18 |
+| **`5e_C4.1`** | **4** | **rien** | **4** |
+| **`5e_C4.2`** | **4** | **rien** | **4** |
+| **`5e_C4.3`** | **4** | **rien** | **4** |
+| **`5e_C4.6`** | **4** | **rien** | **4** |
+
+Quatre codes seulement étaient réellement en cause. Il ne fallait donc pas
+« quatre questions de plus » au hasard, mais **une par code, sur une notion que
+la banque n'abordait pas** — sans quoi on aurait rempli un compteur.
+
+**Ce que les quatre questions ajoutent, et pourquoi elles manquaient.**
+
+| Code | Ce que les quatre premières ne demandaient jamais |
+|---|---|
+| `5e_C4.1` | elles vont toujours de la fonction vers la solution, jamais l'inverse : un constituant qui porte **deux** fonctions n'était pas interrogeable. |
+| `5e_C4.2` | elles décrivent la chaîne à l'arrêt ; aucune ne demande ce qui se passe **quand un maillon est vide**, ni comment on cherche une panne en remontant. |
+| `5e_C4.3` | les pertes sont nommées, jamais **suivies** : où passe l'énergie qui n'éclaire pas ? La conservation n'était nulle part. |
+| `5e_C4.6` | le code s'intitule « descripteurs, **types et formats** de données », et les quatre questions ne parlaient que de descripteurs. Ni type, ni format. |
+
+La dernière ligne est la plus parlante : ce n'est pas le seuil qui a créé un
+trou, c'est le seuil qui a rendu visible une maigreur déjà là. Un code dont le
+libellé nomme trois notions et dont la banque n'en évalue qu'une était mal
+évalué à 4 questions comme il l'aurait été à 40.
+
+**Ce que l'option 3 laisse en place.** Le seuil reste à 5, et
+`controle_echantillonnage.py` n'est pas touché. Un code peut rester sous le
+seuil dans une banque donnée — c'est le cas de quatre d'entre eux ici — à
+condition que le manifeste **nomme la banque qui le renforce** (règle n°250) :
+le champ `contenu.codes_renforces_ailleurs` le fait, et
+`tests_5e_C4.1-C4.8_qcm.mjs` refuse le lot si un code sous le seuil n'y figure
+pas, ou si le fichier nommé n'existe pas.
+
+*Les deux autres arbitrages annoncés en #289 tombaient déjà : les prérequis
+(VAR, TYP, BOI) sont rattachés à leur code par la légende de leur propre
+banque, et les « neuf codes sous le seuil » n'existaient que dans mon relevé
+fautif.*
 
 ## 5. Ce que cette erreur laisse comme méthode
 
