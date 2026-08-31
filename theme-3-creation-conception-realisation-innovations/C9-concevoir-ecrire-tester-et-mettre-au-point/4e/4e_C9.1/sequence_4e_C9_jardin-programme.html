@@ -1163,7 +1163,12 @@ function bancDecide(H, heure){
   if(H > S_HAUT) return false;     // vraiment humide
   return BANC.pompe;               // bande morte : on garde l'état
 }
-function bancMaj(){
+/* `tracer` dit si l'appel vient d'un GESTE de l'élève. Au chargement, la page doit
+   AFFICHER le banc sans compter ce qu'elle affiche comme une observation : sinon
+   `vuSec` est déjà coché à l'ouverture, et le verrou « j'ai fait varier l'humidité »
+   n'attend plus qu'une moitié de geste (règles d'or n°226 et n°265, corrigé le
+   31/08/2026 — mesuré par `_outils/controle_verrous.mjs`). */
+function bancMaj(tracer){
   if(!$("bHum")) return;
   BANC.mode = bancMode();
   const H = parseInt($("bHum").value, 10);
@@ -1195,8 +1200,9 @@ function bancMaj(){
     else                        d.textContent = "Fais varier l'humidité et regarde ce compteur : c'est lui qui dira si ton programme est nerveux.";
   }
 
-  /* verrous expérientiels */
+  /* verrous expérientiels — seulement sur un geste */
   const e = window.__exp;
+  if(!tracer){ majVerrous(); return; }
   /* « avoir fait varier » ne se mesure pas au nombre de valeurs touchées, mais au
      fait d'avoir traversé le seuil : il faut avoir vu la pompe des DEUX côtés. */
   if(H < SEUIL_UN) e.vuSec = true;
@@ -1222,18 +1228,18 @@ function majVerrous(){
     li.textContent = (fait ? "✔ " : "☐ ") + lib;
   });
 }
-["bHum","bHeure"].forEach(id=>{ if($(id)) $(id).addEventListener("input", bancMaj); });
+["bHum","bHeure"].forEach(id=>{ if($(id)) $(id).addEventListener("input", ()=>bancMaj(true)); });
 if($("bHumNum")) $("bHumNum").addEventListener("input", ()=>{
   let v = parseInt($("bHumNum").value, 10);
   if(isNaN(v)) return;
   v = Math.max(0, Math.min(100, v));
-  $("bHum").value = v; bancMaj();
+  $("bHum").value = v; bancMaj(true);
 });
-document.querySelectorAll('input[name="bMode"]').forEach(r=>r.addEventListener("change", ()=>{ BANC.mode = bancMode(); bancMaj(); }));
+document.querySelectorAll('input[name="bMode"]').forEach(r=>r.addEventListener("change", ()=>{ BANC.mode = bancMode(); bancMaj(true); }));
 if($("btnRAZ")) $("btnRAZ").addEventListener("click", ()=>{
   BANC.bascules = 0;
   if($("bCompteur")) $("bCompteur").textContent = "0";
-  bancMaj();
+  bancMaj(true);
 });
 
 /* Le tremblement : la MÊME suite de valeurs dans les deux modes — c'est ce qui
@@ -1254,7 +1260,7 @@ if($("btnTrembler")) $("btnTrembler").addEventListener("click", ()=>{
       return;
     }
     $("bHum").value = TREMBLEMENT[i++];
-    bancMaj();
+    bancMaj(true);
   }, 220);
 });
 
@@ -1493,7 +1499,7 @@ if($("btnEssentiel")) $("btnEssentiel").addEventListener("click", ()=>{
 /* ══════ Démarrage ══════ */
 restore();
 if(window.__exp && window.__exp.essentiel) document.body.classList.add("essentiel");
-majEssentiel(); majParcours(); majProgress(); majTaches(); majHyp(); majVerrous(); bancMaj();
+majEssentiel(); majParcours(); majProgress(); majTaches(); majHyp(); majVerrous(); bancMaj(false);
 })();
 </script>
 

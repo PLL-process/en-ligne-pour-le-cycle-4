@@ -4,6 +4,14 @@ Tests **réels**, joués dans un navigateur Chromium par Playwright, sur les fic
 qu'ils sont livrés. Les scripts sont dans ce dossier : on peut les rejouer, et cette page est la
 sortie de la dernière exécution, recopiée telle quelle.
 
+
+> **Correction du 31/08/2026 — le verrou expérientiel s'ouvrait en partie au chargement.**
+> `_outils/controle_verrous.mjs`, écrit ce jour-là, ouvre chaque séquence du dépôt dans un
+> navigateur **neuf** et lit `window.__exp` juste après le chargement. Cette page en portait
+> déjà `stock` et la source sélectionnée par défaut dans `src` **avant tout geste** : la fonction d'affichage du banc était appelée à
+> l'initialisation, et elle enregistrait ce qu'elle affichait. Le verrou « les cinq sources » n'en réclamait donc plus que quatre. La fonction ne trace plus que
+> sur un geste ; vérifié après correction : `__exp` est **vide** à l'ouverture, et le verrou
+> s'ouvre normalement dès les manipulations réelles (règles d'or n°226 et n°265).
 ```bash
 node tests_3e_C7.4_sequence.mjs "$PWD/sequence_3e_C7.4_energie-de-la-station.html" 3e reponses_3e.json
 node tests_3e_C7.4_qcm.mjs      "$PWD/qcm_3e_C7.4_energie-de-la-station.html" 3e_C7.4 3e_C3.2 sequence_3e_C7.4_energie-de-la-station.html

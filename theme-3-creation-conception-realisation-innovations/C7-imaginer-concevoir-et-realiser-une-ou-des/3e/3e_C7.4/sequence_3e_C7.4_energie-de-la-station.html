@@ -720,7 +720,12 @@ function whJour(){
   const on = actifs();
   return CONSOS.map((c, i) => on[i] ? c.ma / 1000 * TENSION * c.h : 0);
 }
-function majBanc(){
+/* `tracer` dit si l'appel vient d'un GESTE de l'élève. Au chargement, la page doit
+   AFFICHER le banc sans compter ce qu'elle affiche comme un essai : sinon la source
+   sélectionnée par défaut est déjà cochée dans `__exp.src`, et le verrou « les cinq
+   sources » n'en réclame plus que quatre (règles d'or n°226 et n°265, corrigé le
+   31/08/2026 — mesuré par `_outils/controle_verrous.mjs`). */
+function majBanc(tracer){
   const w = whJour(), tot = w.reduce((s, x) => s + x, 0);
   const on = actifs();
   CONSOS.forEach((c, i) => {
@@ -769,17 +774,20 @@ function majBanc(){
         + fmt(tot, 2) + " Wh par jour)";
       v.className = "verdict " + (j >= 2 ? "ok" : j >= 1 ? "limite" : "non");
     }
-    window.__exp.stock = true;
+    if(tracer) window.__exp.stock = true;
   }
+  if(tracer){
   window.__exp.src = window.__exp.src || {};
   window.__exp.src[document.getElementById("src").value] = true;
   if(Object.keys(window.__exp.src).length >= 5) window.__exp.srcAll = true;
   if(on.some(x => !x)) window.__exp.eteint = true;
   
+  }
+  
   save();
 }
-CONSOS.forEach((c, i) => document.getElementById("ck" + i).addEventListener("change", majBanc));
-document.getElementById("src").addEventListener("change", majBanc);
+CONSOS.forEach((c, i) => document.getElementById("ck" + i).addEventListener("change", ()=>majBanc(true)));
+document.getElementById("src").addEventListener("change", ()=>majBanc(true));
 
 const CHECKS = {
   0(){ let s = 0;
@@ -841,7 +849,7 @@ document.addEventListener("input", () => {
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
-restore(); majBanc();
+restore(); majBanc(false);
 })();
 </script>
 
