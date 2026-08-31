@@ -10975,3 +10975,69 @@ hors du périmètre d'une branche « thème 2 » et feront l'objet d'une PR sœu
 > code que le pilote prétend interpréter.
 
 File d'attente après ce lot : **5 lots, 89 coches**. En tête, `4e_C4.1` (21), puis `3e_C5.1` (18).
+
+## 2026-08-31 — D'où vient chaque image : un contrôle qui refuse l'absence de provenance, pas l'absence d'emploi
+
+La PR #320 annonçait d'étendre `controle_effectifs_qcm.py` aux champs `questions_illustrees`
+et `fichiers.images` des manifestes. Le premier est fait. **Le second ne l'est pas, et c'est
+une décision.**
+
+### Pourquoi `fichiers.images` n'est pas devenu une règle
+
+Mesuré avant d'écrire : douze lots sur trente-deux emploient ce champ pour nommer les
+**originaux notables**, pas tout ce que le dossier contient — 118 fichiers cités par une page
+n'y figurent pas. Lui imposer le sens « inventaire exhaustif » aurait produit 118 écarts sur
+une convention que le dépôt n'a jamais eue. Un contrôle qui signale du correct finit ignoré
+(règle n°248) ; on ne mesure pas une règle qu'on vient d'inventer.
+
+### Ce qui compte vraiment : la provenance
+
+Mesure sur les 276 fichiers médias du dépôt :
+
+| Constat | Nombre |
+|---|---|
+| Image déclarée par un manifeste et **absente du disque** | **0** |
+| Média dans un dossier **sans aucun `SOURCES_MEDIAS.md`** | 9 + 2 (corrigés : PR #321 et celle-ci) |
+| Média sous un lot pourvu d'un `SOURCES_MEDIAS.md` qui ne le nomme pas | 88 |
+| Image qu'aucune page n'affiche et qu'aucun manifeste ne nomme | 38 |
+| Image inemployée mais **nommée** par son manifeste (`herite_conserve`) | 2 |
+
+`_outils/controle_medias.py` **refuse** les deux premières lignes — une image dont rien ne dit
+d'où elle vient, une image promise et absente — et **compte sans refuser** les trois autres.
+
+La ligne est déclarée : payer les 88 d'un coup demanderait d'écrire quatre-vingt-huit
+affirmations de licence en une séance, et **une licence écrite pour rendre un contrôle vert
+est pire que le trou qu'elle bouche**. La dette est nommée lot par lot, pour être payée là où
+quelqu'un sait ce qu'il écrit.
+
+### Le piège qui s'est refermé pendant l'écriture
+
+Première version : les deux SVG orphelins de `5e_C1.2` ont **disparu** du relevé — parce que je
+venais d'écrire leur ligne de licence dans `SOURCES_MEDIAS.md`, et que le contrôle lisait ce
+fichier comme un emploi. Documenter une image la rendait invisible, c'est-à-dire exactement au
+moment où l'on s'en occupe. Un `SOURCES_MEDIAS.md` et un manifeste **décrivent** ; ils
+n'affichent pas. Les deux sont désormais écartés du calcul d'emploi, et le banc garde ce cas.
+
+### Une décision écrite n'est pas un oubli
+
+Deuxième correction du même relevé : le manifeste de `5e_C1.2` range ses deux SVG inemployés
+sous `herite_conserve` — « hérités, gardés exprès ». Une image que le manifeste nomme, où que
+ce soit dans son texte, n'est pas oubliée : quelqu'un a décidé qu'elle restait. Le contrôle les
+range à part. **Le `SOURCES_MEDIAS.md` que j'ai écrit pour ce lot en #321 pose donc la question
+comme si elle était ouverte ; elle ne l'est pas.** À corriger à la prochaine branche thème 1.
+
+### `4e_C6.2` : un export draw.io avec 35 Ko de raster embarqué
+
+Ce lot portait deux médias sans provenance écrite. Le premier est un SVG original de la maison.
+Le second, `schema_eclairage_automatique.svg`, est un **export draw.io** de 67 Ko qui embarque
+**sept PNG en base64** et qu'aucune page n'affiche — seule la fiche pédagogique le nomme.
+L'algorigramme qu'il porte est bien un contenu du lot, mais son auteur n'est pas traçable : le
+fichier entre par le commit de réorganisation 2024. Sa ligne de licence dit « à confirmer », et
+la question est posée à Pascal plutôt que tranchée à sa place.
+
+### Règle d'or n°271
+
+> **Un document qui décrit une ressource ne l'emploie pas.**
+> Compter l'inventaire comme un usage fait disparaître du relevé précisément ce qu'on vient de
+> documenter. Et l'inverse est vrai aussi : ce qu'un inventaire nomme n'est pas oublié — une
+> décision écrite n'est pas une négligence, même quand rien ne s'en sert encore.

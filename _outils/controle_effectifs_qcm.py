@@ -34,8 +34,13 @@ CE QU'IL VÉRIFIE
 **1. La page contre elle-même.** Chaque nombre qu'une page de QCM affiche à son
 propre sujet doit valoir le nombre d'entrées de sa banque.
 
-**2. Le manifeste du lot contre la banque.** `questions_qcm` et chaque valeur de
-`questions_par_code` sont confrontées au comptage réel par étiquette `c:`.
+**2. Le manifeste du lot contre la banque.** `questions_qcm`, chaque valeur de
+`questions_par_code` et `questions_illustrees` sont confrontés au comptage réel —
+par étiquette `c:` pour les codes, par bloc `img:{…}` pour les illustrations.
+
+`questions_illustrees` a été ajouté le 31/08/2026 : ce contrôle confrontait déjà
+521 nombres auto-déclarés, mais pas celui-là, et **deux** manifestes étaient en
+écart — `5e_C6.1` (2 annoncées, 3 dans la banque) et `5e_C2.1` (4 annoncées, 5).
 
 **3. Le lexique contre lui-même.** « N notions » doit valoir le nombre d'entrées
 qu'il porte — c'est le seul nombre qu'un lexique affirme.
@@ -96,6 +101,19 @@ def comptage(bloc):
     """(nombre total de questions, nombre par étiquette `c:`)."""
     codes = re.findall(r'\{c:"([^"]+)"', bloc)
     return len(codes), collections.Counter(codes)
+
+
+#: Une question illustrée porte un bloc `img:{src:…}`. Le nombre qu'un manifeste
+#: en annonce est un champ, pas une phrase (règle d'or n°264) : il se confronte.
+#: Ajouté le 31/08/2026, après DEUX manifestes trouvés en écart — `5e_C6.1`
+#: (2 déclarées, 3 dans la banque) et `5e_C2.1` (4 déclarées, 5 dans la banque).
+#: Ce contrôle confrontait déjà 521 nombres auto-déclarés, mais pas celui-là.
+ILLUSTREE = re.compile(r"\bimg\s*:\s*\{")
+
+
+def comptage_illustrees(bloc):
+    """Le nombre de questions de la banque qui portent une image."""
+    return len(ILLUSTREE.findall(bloc))
 
 
 def pages(racine):
@@ -178,6 +196,13 @@ def juger_page(chemin, ecarts, releve):
             if n != reel:
                 ecarts.append("%s\n     %s : questions_par_code[%s] = %s, mesuré %d"
                               % (nom, os.path.basename(mf), code, n, reel))
+        illustrees = contenu.get("questions_illustrees")
+        if isinstance(illustrees, int):
+            releve["declarations"] += 1
+            reel = comptage_illustrees(bloc)
+            if illustrees != reel:
+                ecarts.append("%s\n     %s : questions_illustrees = %d, la banque en porte %d"
+                              % (nom, os.path.basename(mf), illustrees, reel))
 
 
 def juger_lexique(chemin, ecarts, releve):
