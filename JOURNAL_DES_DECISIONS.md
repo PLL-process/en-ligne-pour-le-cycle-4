@@ -10798,3 +10798,60 @@ deviner là où le dépôt déclare.
 
 File d'attente après ce lot : **13 lots, 258 coches**. En tête, désormais, deux lots du Thème 1 :
 `5e_C1.1` (26) et `5e_C1.2` (25).
+
+## 2026-08-31 — Un outil qui ne connaissait qu'un langage, et six suites rouges qu'il masquait
+
+En allant payer les deux plus gros lots de la file d'attente — `5e_C1.1` (26 coches) et
+`5e_C1.2` (25) —, j'ai ouvert leurs dossiers. Ils portaient déjà leur suite :
+`tests_5e_C1.1_chengdu.py` et `tests_5e_C1.2_sainte_luce.py`. Exécutées : **43/43** et **36/36**.
+
+`controle_rapports_tests.py` ne reconnaissait que `.mjs` et `.js`. Mesure faite : **treize
+dossiers** étaient comptés en dette alors qu'ils portent une suite **Python** — **103 coches**,
+dont les deux qu'il mettait en tête de file. Il ne s'était pas trompé sur les faits qu'il
+regardait ; il regardait la moitié du dépôt.
+
+- **n°269** — **un outil qui reconnaît les fichiers par leur extension doit connaître toutes
+  celles que le dépôt emploie, et la façon de les connaître est de regarder.** Le coût de
+  l'erreur n'est pas cosmétique : elle désignait comme travail à faire deux suites qui existent,
+  passent, et qu'il aurait fallu réécrire dans un autre langage pour rien.
+
+Le contrôle lit désormais `.mjs`, `.js` et `.py`, à la citation comme au fichier livré. La file
+tombe de **13 lots / 258 coches** à **8 lots / 155 coches**, et il ne reste plus que des lots du
+Thème 2. Deux cas s'ajoutent au banc (12 au total) : une suite Python compte comme suite, et une
+citation de script Python absent est refusée comme les autres.
+
+### Ce que la vérification a trouvé au passage : six suites rouges
+
+Puisque les suites existaient, je les ai **toutes relancées** — ce que personne n'avait fait
+depuis leur livraison. Six étaient rouges, chacune sur un seul contrôle, et toujours le même :
+
+| Suite | Score |
+|---|---|
+| `tests_3e_C2.1_pekin` | 53 / 54 |
+| `tests_5e_C2.1-C2.2_shenzhen` | 46 / 47 |
+| `tests_4e_C2.1-C2.2_hangzhou` | 59 / 60 |
+| `tests_3e_C3.1-C3.4_shenzhen` | 27 / 28 |
+| `tests_4e_C3.1-C3.3_hangzhou` | 27 / 28 |
+| `tests_5e_C3.1-C3.4_shanghai` | 26 / 27 |
+
+> ✘ séquence : hors ligne, aucune ressource distante (n°40)
+
+**La faute n'était pas dans les pages.** Le contrôle cherchait la chaîne `http://` dans le HTML
+sérialisé — où chaque **SVG en ligne** porte son `xmlns="http://www.w3.org/2000/svg"`, un
+identifiant d'espace de noms qu'aucun navigateur ne va chercher. Les six séquences étaient rouges
+du jour où l'on y a dessiné un schéma.
+
+Les trois suites du C2 avaient vu le problème **à moitié** : l'exemption du `xmlns` y était
+écrite pour `https://`, et l'espace de noms s'écrit `http://`. La clause suivante le rattrapait.
+
+Le contrôle regarde maintenant ce que la page **irait charger** — `src`, `link href`,
+`object data`, `iframe`, `use` — sans les hyperliens, qui ont le droit d'être distants. C'est la
+lecture juste de la règle n°40 : « hors ligne » parle de ce qu'on télécharge, pas des chaînes
+présentes dans le texte. Vérifié dans les deux sens : les six passent, et `5e_C3.1` redevient
+rouge — en nommant l'adresse fautive — si l'on injecte une vraie ressource distante dans sa page.
+
+Ces six correctifs relèvent du Thème 1 : ils sont livrés dans une **PR sœur**, qui ne touche que
+ses douze fichiers. L'ordre de fusion n'a pas d'importance.
+
+*Quatrième fausse alerte de la journée, et la plus coûteuse des quatre : les trois premières
+faisaient perdre du temps sur des fichiers justes, celle-ci faisait refaire du travail fini.*
