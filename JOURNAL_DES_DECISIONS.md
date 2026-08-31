@@ -10711,3 +10711,45 @@ Les rapports les plus fournis sans aucune suite : `theme-3/_notes` (58), `theme-
 (34), `3e_C4.3` et `5e_C1.1` (26), `5e_C1.2` (25), `4e_C6.1` (23), `3e_C6.2`, `5e_C5.1`,
 `3e_C4.1` (22), `5e_C6.1` (21). L'outil les liste à chaque exécution, et le nombre baissera d'un
 lot à chaque fois.
+
+## 2026-08-31 — La file d'attente nommait trois dossiers qu'aucune suite ne peut servir
+
+`controle_rapports_tests.py`, livré il y a une heure, publie à chaque exécution la file des
+rapports en attente de suite, classée par ampleur. En tête, il mettait trois dossiers :
+`theme-3/_notes` (58 coches), `theme-1/_gouvernance` (34) et la racine du `theme-2` (23).
+
+Ces trois-là ne portent **aucune page** : ce sont des rapports d'**audit de conformité**, qui
+relatent une mesure et non le comportement d'une page. Aucune suite Playwright ne peut les
+servir. Les mettre en tête de file, c'était désigner comme prochain travail trois choses qu'on
+ne peut pas faire — et repousser d'autant les onze lots qui, eux, attendent vraiment.
+
+- **n°267** — **une file d'attente doit nommer ce qu'on peut réellement payer.** Un relevé juste
+  qui trie mal vaut moins qu'un relevé plus étroit et actionnable. Le critère est déclaré, pas
+  deviné : un rapport n'entre dans la file que si son dossier contient une page qu'une suite
+  pourrait conduire (`sequence_*`, `qcm_*`, `tp_*`, `atelier_*`). Les autres sont comptés à
+  part, et nommés pour ce qu'ils sont.
+
+La file passe de 18 entrées / 421 coches à **15 lots / 306 coches**, plus une ligne qui dit
+« 3 rapports d'audit écartés, 115 coches ». Deux cas s'ajoutent au banc (10 au total) : un
+dossier d'audit ne doit pas entrer dans la file, et il doit être nommé dans le relevé.
+
+C'est la troisième fois aujourd'hui qu'un outil neuf demande une correction dans l'heure —
+`verif_effectifs` (deux fois), `controle_effectifs_qcm` (les neuf faux écarts de `4e_C4.7`), et
+celui-ci. Aucun des trois ne se trompait sur les faits ; tous les trois disaient mal ce qu'ils
+avaient trouvé. Un contrôle ne se juge pas seulement à ce qu'il détecte, mais à ce qu'il fait
+faire ensuite.
+
+### Le deuxième lot de la file est payé
+
+`5e_C5.1` « Dépanner le lampadaire » reçoit sa suite : `tests_5e_C5.1-C5.3.mjs`, **26 contrôles**
+pour les vingt-deux lignes de son tableau. L'inspecteur visuel est cliqué zone par zone, le
+simulateur de réparation conduit étape par étape — dont une étape jouée trop tôt, qui doit tout
+remettre à zéro —, les quatre activités remplies avec les réponses **extraites des `CHECKS` de
+la page**, la page rechargée verrous compris, puis le QCM ouvert et joué.
+
+Quatre contrôles s'ajoutent au tableau d'origine : aucun verrou ouvert au chargement (n°226),
+les réponses lues et non recopiées, les réfutations parallèles vérifiées question par question,
+et l'absence de boîte modale sur tout le parcours.
+
+File d'attente après ce lot : **14 lots, 284 coches**. En tête, `3e_C4.3` (26) et, au Thème 1,
+`5e_C1.1` (26) et `5e_C1.2` (25).
