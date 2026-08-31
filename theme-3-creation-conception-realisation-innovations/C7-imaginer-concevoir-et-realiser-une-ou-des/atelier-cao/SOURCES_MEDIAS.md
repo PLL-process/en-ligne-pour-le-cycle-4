@@ -125,3 +125,126 @@ plus large que la calotte qu'à partir de 0,16 mm de profondeur.
 **Limite déclarée** : ce dessin est le **seul** média du quatrième TP, et il sert à trois
 paliers sur huit. Les cinq autres n'ont aucune image de résultat — la règle n°77 refuse donc ce
 TP, et `RELEVE_DES_CAPTURES_5e-bis.md` dit lesquelles prendre.
+
+## Les 74 captures des quatre TP — famille documentée le 31/08/2026
+
+`_outils/controle_medias.py`, livré le 31/08/2026, relevait que ce dossier portait
+**74 fichiers** — 31 Mo — que ce document ne nommait pas un par un. Les voici comme
+**famille**, ce qui est la seule façon honnête de parler d'eux : les nommer un par un
+donnerait soixante-quatorze lignes identiques, et cacherait la seule question qui compte.
+
+| Préfixe | Nombre | Ce que ce sont |
+|---|---|---|
+| `p4_…` à `p9_…` | 36 | les captures de gestes, palier par palier, du TP 5e « Le dé » |
+| `tp3_…`, `tp4_…`, `tp5e_…` | 36 | les captures des TP 3e, 4e et de la reprise 5e |
+| `r2_…` | 2 | deux rendus de résultat |
+
+**Origine** : ce sont des **captures de l'interface d'Onshape**, prises en déroulant les TP sur
+un poste dont l'interface est en **français** (règle d'or n°70), et recadrées sur la zone utile.
+Elles ne sont ni téléchargées, ni tirées d'un manuel, ni reprises du document FabLab-Neuch cité
+plus haut — dont ce fichier explique justement pourquoi il n'est **pas** redistribué.
+
+**La question qui reste, et qu'on ne tranche pas à la place de Pascal.** Une capture d'écran
+montre l'interface d'un logiciel tiers. Le geste de l'élève, le modèle, le cadrage et la
+légende sont à nous ; les icônes et la disposition d'Onshape sont à Onshape. Publier ces
+captures sur un dépôt ouvert relève de l'usage pédagogique, mais **ce n'est pas à un contrôle
+automatique d'en décider** — pas plus qu'à l'agent qui écrit cette ligne.
+
+Deux voies, à trancher :
+
+1. **on assume l'usage pédagogique** — c'est la position implicite depuis août 2026, et il
+   suffit alors de l'écrire ici noir sur blanc pour que la question soit close ;
+2. **on demande à Onshape** — la plupart des éditeurs autorisent explicitement les captures
+   à des fins d'enseignement, et une ligne de leur part vaut mieux qu'une présomption.
+
+En attendant, les fichiers restent, leur origine est écrite, et personne ne pourra dire qu'on
+ne savait pas.
+
+### L'inventaire, nom par nom
+Écrit en toutes lettres pour deux raisons : un contrôle qui vérifie la présence d'un nom ne
+peut rien faire d'un préfixe, et une capture ajoutée demain sans sa ligne doit réveiller ce
+contrôle. Toutes ont la même origine et la même réserve que ci-dessus.
+
+**TP 5e « Le dé », palier par palier (préfixes p4 à p9)** — 36 fichiers, 24819 Ko :
+- `Images/p4_01_esquisse_face.png`
+- `Images/p4_01b_face_a_plat.png`
+- `Images/p4_01c_vue_normale_touche_N.png`
+- `Images/p4_02_outil_cercle.png`
+- `Images/p4_02b_cercle_trace.png`
+- `Images/p4_03_cote_gauche.png`
+- `Images/p4_04_cote_haut.png`
+- `Images/p4_05_cote_diametre.png`
+- `Images/p4_06_extrudeur.png`
+- `Images/p4_07_zone_choisie.png`
+- `Images/p4_08_retraite_1mm5.png`
+- `Images/p4_08a_erreur_virgule.png`
+- `Images/p4_M_mesures_controle.png`
+- `Images/p4_R_face1.png`
+- `Images/p5_01_face_opposee.png`
+- `Images/p5_02_six_cercles.png`
+- `Images/p5_03_cotes_posees.png`
+- `Images/p5_03a_esquisse_non_resolue.png`
+- `Images/p5_04_retraite.png`
+- `Images/p5_M_mesures_controle.png`
+- `Images/p5_Q2_repetition_lineaire.png`
+- `Images/p5_R_face6.png`
+- `Images/p6_01_face2_esquisse.png`
+- `Images/p6_02_face2_cotes.png`
+- `Images/p6_04_face5_cotes.png`
+- `Images/p6_R_face2.png`
+- `Images/p6_R_face3.png`
+- `Images/p6_R_face5.png`
+- `Images/p7_01_conge3_selection.png`
+- `Images/p7_02_conge3_appercu.png`
+- `Images/p7_04_conge1_21aretes.png`
+- `Images/p8_01_exportateur_menu.png`
+- `Images/p8_03_unites_mm.png`
+- `Images/p9_01_modifier_apparence.png`
+- `Images/p9_05_masse_bronze.png`
+- `Images/p9_06_masse_abs.png`
+
+**Rendus de résultat (préfixe r2)** — 2 fichiers, 1938 Ko :
+- `Images/r2_mesure_fond_face1.png`
+- `Images/r2_mesure_fond_face3.png`
+
+**TP 3e « Boîtier étanche » (préfixe tp3)** — 3 fichiers, 408 Ko :
+- `Images/tp3e_R2_coque.png`
+- `Images/tp3e_R3_rainure.png`
+- `Images/tp3e_R4_passage_cable.png`
+
+**TP 4e « Socle d'assemblage » (préfixe tp4)** — 5 fichiers, 993 Ko :
+- `Images/tp4e_R2_socle_brut.png`
+- `Images/tp4e_R3_socle_moulure.png`
+- `Images/tp4e_R4_deux_pieces.png`
+- `Images/tp4e_R5_assemblage_libre.png`
+- `Images/tp4e_R6_de_centre.png`
+
+**TP 5e, reprise (préfixe tp5e)** — 28 fichiers, 2852 Ko :
+- `Images/tp5e_01_creer_document.png`
+- `Images/tp5e_01b_onglets.png`
+- `Images/tp5e_01c_nom_saisi.png`
+- `Images/tp5e_02_esquisse_plan.png`
+- `Images/tp5e_02b_document_vide.png`
+- `Images/tp5e_03_rectangle_centre.png`
+- `Images/tp5e_03a_plan_haut.png`
+- `Images/tp5e_03b_vue_normale.png`
+- `Images/tp5e_03c_rectangle_trace.png`
+- `Images/tp5e_04_cotation.png`
+- `Images/tp5e_04a_double_clic.png`
+- `Images/tp5e_04b_clic_simple.png`
+- `Images/tp5e_04c_coche_verte.png`
+- `Images/tp5e_05_carre_50.png`
+- `Images/tp5e_05a_infobulle_extrudeur.png`
+- `Images/tp5e_06_extruder.png`
+- `Images/tp5e_06a_panneau_vide.png`
+- `Images/tp5e_06b_zone_choisie.png`
+- `Images/tp5e_06c_piece_creee.png`
+- `Images/tp5e_06d_menu_isometrique.png`
+- `Images/tp5e_07_cercle_cote.png`
+- `Images/tp5e_08_enlevement.png`
+- `Images/tp5e_09_conge.png`
+- `Images/tp5e_10_exportateur.png`
+- `Images/tp5e_11_formats.png`
+- `Images/tp5e_12_export_stl.png`
+- `Images/tp5e_13_retrouver.png`
+- `Images/tp5e_15_bibliotheque_materiaux.png`

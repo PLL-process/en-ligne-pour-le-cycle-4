@@ -11368,3 +11368,67 @@ C'est la sixième convention d'écriture des attendus rencontrée en huit lots :
 **File d'attente : vide.** Huit lots payés en une journée — `5e_C8.2`, `5e_C4.1`, `5e_C6.1`,
 `4e_C4.1`, `3e_C5.1`, `3e_C6.1`, `3e_C4.7`, `4e_C6.2` — plus `3e_C4.1`, `4e_C6.1`, `5e_C5.1`,
 `4e_C5.1` et `3e_C4.3` livrés dans la même série.
+
+## 2026-08-31 — Thème 3 : les quatre dernières synthèses trouvent leur chemin, et 74 captures trouvent leur ligne
+
+PR sœur annoncée en #325. Trois choses y étaient dues, et l'une d'elles était **fausse**.
+
+### Les quatre synthèses d'atelier
+
+`atelier-cao` et `atelier-planification` ne vivent pas dans un dossier `{niveau}_{code}` : le
+générateur d'index ne parcourt pas leur arborescence, et leurs quatre synthèses restaient
+inatteignables même après le correctif de #325. Leurs huit pages — cinq TP et trois ateliers —
+portent désormais le bloc « Les traces à garder », comme les autres séquences du dépôt.
+
+**Les 76 synthèses du dépôt sont maintenant atteignables.** Il ne reste qu'une page hors
+d'atteinte, `_reperes/carte_des_representations.html`, qui est du thème 1.
+
+Détail qui a failli passer : j'avais d'abord écrit les liens avec des entités HTML —
+`href="Synth&egrave;ses/…"`. Un navigateur les décode et le lien marche ; `controle_liens.py`
+lit l'attribut brut et a refusé les huit pages d'un coup. Il avait raison de refuser : le reste
+du dépôt écrit `Synthèses/` en toutes lettres, et une seule façon d'écrire un chemin vaut mieux
+que deux façons qui marchent.
+
+### La PR #320 disait « huit manifestes du thème 3 dans le même cas ». C'était faux.
+
+Le champ `fichiers.suite_de_tests` est une convention du thème 1, portée au thème 2 en #320.
+En regardant vraiment les manifestes du thème 3 :
+
+| Forme rencontrée | Nombre | Ce qui a été fait |
+|---|---|---|
+| `fichiers` en **dictionnaire** ou en **liste à plat**, suite déjà nommée | 3 | rien — c'était déjà écrit |
+| `fichiers` présent, suite absente | 4 | la suite ajoutée **dans la forme du manifeste**, dictionnaire ou liste |
+| **aucun bloc `fichiers`** — carte de métadonnées | 3 | rien, et c'est délibéré |
+
+Les trois derniers (`manifest_lot_05`, `manifest_lot_04`, `manifest_cao`) n'inventorient aucun
+fichier : ce sont des cartes de métadonnées. Leur ajouter un `fichiers.suite_de_tests` aurait
+été **inventer une convention que leur auteur n'a jamais employée** — exactement ce que j'ai
+refusé de faire pour `fichiers.images` en #322. La cohérence se mesure à ce qu'on refuse
+d'uniformiser autant qu'à ce qu'on aligne.
+
+### Les 74 captures de l'atelier CAO
+
+`controle_medias.py` relevait 74 fichiers — 31 Mo — que le `SOURCES_MEDIAS.md` du dossier ne
+nommait pas. Ce sont les captures des quatre TP Onshape, prises sur l'interface française
+(règle n°70).
+
+Elles sont maintenant documentées **deux fois** : comme famille, parce que soixante-quatorze
+lignes identiques cacheraient l'essentiel ; puis **nom par nom**, parce qu'un contrôle qui
+vérifie la présence d'un nom ne peut rien faire d'un préfixe, et parce qu'une capture ajoutée
+demain sans sa ligne doit réveiller ce contrôle.
+
+**Et la question qui compte est posée, pas tranchée.** Une capture montre l'interface d'un
+logiciel tiers : le geste, le modèle, le cadrage et la légende sont à nous, les icônes et la
+disposition sont à Onshape. Publier ces captures sur un dépôt ouvert relève de l'usage
+pédagogique — mais ce n'est ni à un contrôle automatique ni à l'agent qui écrit ces lignes d'en
+décider. Les deux voies sont écrites dans le fichier : assumer l'usage pédagogique en l'écrivant
+noir sur blanc, ou demander une ligne à Onshape. **C'est à Pascal.**
+
+Dette de documentation des médias : **82 → 8**. Les huit restants sont dans `4e_C4.7`, thème 2.
+
+### Règle d'or n°275
+
+> **Uniformiser ce qui n'a jamais été uniforme, c'est inventer une règle et la faire passer
+> pour une correction.** Avant d'aligner trois fichiers sur un quatrième, il faut regarder si
+> les trois disent la même chose autrement — et, s'ils ne disent rien de tel, se demander si le
+> manque est chez eux ou dans l'attente.
