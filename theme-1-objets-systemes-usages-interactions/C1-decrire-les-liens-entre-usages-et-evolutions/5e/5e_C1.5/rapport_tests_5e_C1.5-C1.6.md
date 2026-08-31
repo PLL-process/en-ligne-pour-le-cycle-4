@@ -3,6 +3,18 @@
 Tests **réels**, joués dans un navigateur Chromium par Playwright, sur les fichiers du lot tels
 qu'ils sont livrés. Cette page est la sortie de la dernière exécution, recopiée telle quelle.
 
+
+> **Correction du 31/08/2026 — deux verrous expérientiels s'ouvraient au chargement.**
+> `_outils/controle_verrous.mjs` ouvre chaque séquence du dépôt dans un navigateur **neuf** et
+> lit `window.__exp` juste après le chargement. Cette page en portait **deux** avant tout
+> geste : `anonyme` (un profil vide n'a aucun indice, donc la condition « zéro indice » était
+> vraie d'emblée) et `regarde` (la fonction qui affiche ce que le profil laisse voir était
+> appelée à l'initialisation). Les activités qui exigent « j'ai regardé ce que mon profil
+> laisse voir » et « j'ai composé un profil anonyme » étaient donc déverrouillées avant que
+> l'élève ait coché une seule case. `majPubli` et `regarder` prennent désormais un `tracer` et
+> n'enregistrent que sur un geste ; l'initialisation passe `false`. Vérifié : `__exp` est
+> **vide** à l'ouverture, et vaut `{anonyme, compose, regarde}` dès la première case cochée
+> (règles d'or n°226 et n°265).
 ```bash
 node tests_5e_C1.5-C1.6_sequence.mjs "$PWD/sequence_5e_C1.5-C1.6_le-compte-du-club.html" 5e reponses_5e_C1.5-C1.6.json
 node tests_5e_C1.5-C1.6_qcm.mjs      "$PWD/qcm_5e_C1.5-C1.6_le-compte-du-club.html" 5e_C1.5 5e_C1.6 sequence_5e_C1.5-C1.6_le-compte-du-club.html 15 15

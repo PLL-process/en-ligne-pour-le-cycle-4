@@ -815,7 +815,12 @@ function indecis(){
   return s.filter(Boolean);
 }
 
-function majPubli(){
+/* `tracer` dit si l'appel vient d'un GESTE de l'élève. Au chargement, la page doit
+   AFFICHER le profil sans compter ce qu'elle affiche : un profil vide n'a aucun
+   indice, donc `anonyme` était coché avant que l'élève ait touché une case
+   (règles d'or n°226 et n°265, corrigé le 31/08/2026 — mesuré par
+   `_outils/controle_verrous.mjs`). */
+function majPubli(tracer){
   const pris = coches().map(e => e.id);
   ELEMENTS.forEach(e =>
     document.getElementById("tr_" + e.id).classList.toggle("pris", pris.includes(e.id)));
@@ -828,13 +833,16 @@ function majPubli(){
   document.getElementById("jLoi").classList.toggle("zero", inf.length === 0);
   document.getElementById("jLoi").classList.toggle("alerte", inf.length > 0);
 
-  if(nI === 0) window.__exp.anonyme = true;
-  if(inf.length === 0 && !indecis().length && pris.length) window.__exp.legal = true;
-  if(pris.length) window.__exp.compose = true;
-  save();
+  if(tracer){
+    if(nI === 0) window.__exp.anonyme = true;
+    if(inf.length === 0 && !indecis().length && pris.length) window.__exp.legal = true;
+    if(pris.length) window.__exp.compose = true;
+    save();
+  }
 }
 
-function regarder(){
+/* Idem : afficher ce que le profil laisse voir n'est pas « avoir regardé ». */
+function regarder(tracer){
   const u = document.getElementById("revele"), pris = coches().map(e => e.id);
   u.innerHTML = "";
   let n = 0;
@@ -864,8 +872,10 @@ function regarder(){
     li.textContent = "Rien ne permet de remonter à quelqu'un, et aucune règle n'est enfreinte.";
     u.appendChild(li);
   }
-  window.__exp.regarde = true;
-  save();
+  if(tracer){
+    window.__exp.regarde = true;
+    save();
+  }
 }
 
 function ligne(cls, txt){
@@ -877,11 +887,11 @@ function ligne(cls, txt){
 }
 
 document.getElementById("regarder").addEventListener("click", () => {
-  regarder();
+  regarder(true);
   ligne("wa", "Relevé fait : " + indices() + " indice(s), " + infractions().length + " règle(s) enfreinte(s).");
 });
 document.getElementById("publier").addEventListener("click", () => {
-  regarder();
+  regarder(true);
   const inf = infractions(), nI = indices();
   const rien = indecis();
   if(!coches().length){
@@ -904,14 +914,14 @@ document.getElementById("publier").addEventListener("click", () => {
 });
 document.getElementById("vider").addEventListener("click", () => {
   ELEMENTS.forEach(e => { document.getElementById("el_" + e.id).checked = false; });
-  majPubli(); regarder();
+  majPubli(true); regarder(true);
   ligne("wa", "Publication vidée.");
 });
 ELEMENTS.forEach(e =>
-  document.getElementById("el_" + e.id).addEventListener("change", () => { majPubli(); regarder(); }));
+  document.getElementById("el_" + e.id).addEventListener("change", () => { majPubli(true); regarder(true); }));
 for(const id in CHOIX){
   const s = document.getElementById(id);
-  if(s) s.addEventListener("change", () => { majPubli(); regarder(); });
+  if(s) s.addEventListener("change", () => { majPubli(true); regarder(true); });
 }
 /* Pas d'appel à majPubli() ici : il enregistre, et il tournerait AVANT restore().
    La page écraserait alors sa propre sauvegarde à chaque ouverture (règle n°221). */
@@ -922,7 +932,7 @@ document.getElementById("charger").addEventListener("click", () => {
   document.getElementById("img").value = "une image trouvée sur un site, sans licence indiquée";
   document.getElementById("autor").value = "aucune autorisation demandée";
   window.__exp.charge = true;
-  majPubli(); regarder();
+  majPubli(true); regarder(true);
   ligne("wa", "Publication du club chargée. Regarde ce qu'elle révèle avant de juger.");
 });
 
@@ -977,7 +987,7 @@ document.addEventListener("input", () => {
   const h = $("hyp"), r = $("rappelHyp");
   if(h && r) r.textContent = h.value.trim() || "—";
 });
-restore(); majPubli(); regarder();
+restore(); majPubli(false); regarder(false);
 })();
 </script>
 
