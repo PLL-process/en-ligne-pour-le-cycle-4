@@ -4,6 +4,8 @@
 pages chargées en `file://` (mode hors ligne — polices Google absentes, filtrées comme
 attendu). Suite : `tests_lot11.js` — 23 tests, **tous réellement exécutés** le 24/07/2026.
 
+> **Ce script n'est pas dans le dépôt et n'y a jamais été commité** — les coches ci-dessous disent ce qui a été observé ce jour-là, elles ne sont pas rejouables aujourd'hui (règle d'or n°259, relevé du 31/08/2026 par `_outils/controle_rapports_tests.py`). La suite reste à écrire.
+
 **Résultat : 23 / 23 réussis · aucune erreur JavaScript · aucune requête locale échouée.**
 
 ## Séquence (15 tests)

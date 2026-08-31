@@ -13,7 +13,9 @@
 > règle d'or n°226 interdit. La fonction ne trace plus que sur un geste ; vérifié : `__exp`
 > est vide à l'ouverture, et se remplit dès le premier mouvement de curseur.
 Conformément au prompt maître : tous les tests listés ont été **réellement
-exécutés** (script `tests_lot07.js`) ; aucun résultat n'est déclaré sans exécution.
+exécutés** le jour de la livraison (script `tests_lot07.js`) ; aucun résultat n'est déclaré sans exécution.
+
+> **Ce script n'est pas dans le dépôt et n'y a jamais été commité** — les coches ci-dessous disent ce qui a été observé ce jour-là, elles ne sont pas rejouables aujourd'hui (règle d'or n°259, relevé du 31/08/2026 par `_outils/controle_rapports_tests.py`). La suite reste à écrire.
 
 ## Séquence (13 tests)
 

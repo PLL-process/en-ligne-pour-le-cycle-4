@@ -2,7 +2,23 @@
 
 **Environnement réel d'exécution** : Chromium (Playwright), viewport mobile 390×844,
 pages chargées en `file://` (mode hors ligne — polices Google absentes, filtrées comme
-attendu). Suite : `tests_lot10.js` — 23 tests, **tous réellement exécutés** le 24/07/2026.
+attendu). Suite d'origine : `tests_lot10.js` — 23 tests, exécutés le 24/07/2026, **mais ce
+script n'a jamais été commité**.
+
+> **Correction du 31/08/2026 — la suite existe, et elle est dans ce dossier.**
+> `tests_5e…` non : `tests_4e_C5.1-C5.3.mjs`, **26 contrôles**, rejoue les vingt-trois lignes
+> ci-dessous pour de vrai — le poste de diagnostic conduit test par test, le simulateur de
+> remplacement geste par geste, les quatre activités remplies avec les réponses **lues dans la
+> page**, le rechargement, puis le QCM ouvert et joué.
+>
+> ```
+> node tests_4e_C5.1-C5.3.mjs      →  26 / 26
+> ```
+>
+> **Ce qu'elle a trouvé en naissant** : la ligne 19 du tableau annonçait « 3 questions
+> illustrées ». La banque en porte **quatre** (`jardin_symptomes`, `capteur_humidite_croute`,
+> `remplacement_capteur`, `choix_procedes_support`). Le nombre était écrit à la main dans un
+> tableau que rien ne relançait — personne ne pouvait s'en apercevoir. La ligne est corrigée.
 
 **Résultat : 23 / 23 réussis · aucune erreur JavaScript sur les deux pages.**
 
@@ -33,7 +49,7 @@ attendu). Suite : `tests_lot10.js` — 23 tests, **tous réellement exécutés**
 | 16 | Chargement, titre « SOS jardin connecté », 30 questions annoncées | ✅ |
 | 17 | Banque : 30 questions exactement, 10 par code | ✅ |
 | 18 | Répartition des bonnes réponses A/B/C/D = 8/7/7/8 (graine 42) et `d[r]` vide pour chaque question | ✅ |
-| 19 | 3 questions illustrées (règle images v2), fichiers SVG présents | ✅ |
+| 19 | **4** questions illustrées (règle images v2), fichiers SVG présents — le tableau disait « 3 » | ✅ |
 | 20 | Chaque question : 4 options, explication, exemple, erreur, « à retenir », 3 distracteurs expliqués | ✅ |
 | 21 | Une partie démarre et une réponse se joue réellement (correction affichée) | ✅ |
 | 22 | Clé localStorage `qcm_4e_C5.1-C5.3_depanner_jardin` | ✅ |

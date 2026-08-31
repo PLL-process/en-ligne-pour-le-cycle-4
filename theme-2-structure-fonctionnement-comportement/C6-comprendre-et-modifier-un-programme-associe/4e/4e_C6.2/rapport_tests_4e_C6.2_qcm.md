@@ -3,6 +3,8 @@
 **Environnement réel d'exécution** : Chromium (Playwright), page ouverte en `file://`, hors ligne.
 Suite : `tests.mjs` — 16 tests, **tous réellement exécutés** le 28/08/2026.
 
+> **Ce script n'est pas dans le dépôt et n'y a jamais été commité** — les coches ci-dessous disent ce qui a été observé ce jour-là, elles ne sont pas rejouables aujourd'hui (règle d'or n°259, relevé du 31/08/2026 par `_outils/controle_rapports_tests.py`). La suite reste à écrire.
+
 **Résultat : 16 / 16 réussis · aucune erreur JavaScript · aucune requête échouée.**
 
 | # | Test | Résultat | Mesure |
