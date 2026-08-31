@@ -10606,3 +10606,57 @@ Cinq pages ouvrent encore un verrou au chargement, hors de la garde-périmètre 
 
 `controle_verrous.mjs` **sort en erreur** tant qu'elles sont là : c'est voulu, et ce n'est pas un
 oubli. Deux livraisons restent à faire, une par thème, et l'outil les nommera jusque-là.
+
+## 2026-08-31 — Les quatre verrous du Thème 3, et ce qu'ils réclamaient vraiment
+
+`_outils/controle_verrous.mjs` avait nommé huit pages ouvrant un verrou expérientiel au
+chargement. Trois relevaient du Thème 2 et ont été corrigées en #310 ; quatre relèvent du
+Thème 3 et le sont ici. Il en reste une, au Thème 1.
+
+| Page | Ce qui s'ouvrait seul | Ce que le verrou exigeait |
+|---|---|---|
+| `5e_C7.4` l'indicateur du hall | `stock`, et `src["Pile 9 V alcaline"]` | **les cinq** sources passées au banc |
+| `4e_C7.4` l'énergie du jardin | idem, plus `sansPompe` / `sansCarte` selon les cases | idem, plus les deux comparaisons |
+| `3e_C7.4` l'énergie de la station | idem | idem |
+| `4e_C9.1` le jardin programmé | `vuSec` | avoir vu la pompe des **deux** côtés du seuil |
+
+Le mécanisme est le même dans les quatre : une fonction d'affichage du banc (`majBanc`,
+`bancMaj`) appelée à l'initialisation, qui enregistre ce qu'elle affiche. La source
+**sélectionnée par défaut** dans la liste était donc comptée comme un essai — le verrou « les
+cinq sources » n'en réclamait plus que quatre. Sur `4e_C9.1`, l'humidité de départ étant sous le
+seuil, `vuSec` était acquis d'avance : le verrou « j'ai fait varier l'humidité » n'attendait plus
+qu'une moitié de geste.
+
+Ce que les trois pages du C7.4 écrivent à l'élève rend la chose plus nette encore :
+
+> *« Passe les cinq sources au banc : **on ne recopie pas un relevé qu'on n'a pas fait**. »*
+
+Une des cinq était faite pour lui.
+
+La correction est celle de la règle n°265, appliquée telle quelle : `majBanc(tracer)` et
+`bancMaj(tracer)` n'enregistrent que si l'appel vient d'un geste ; l'initialisation passe
+`false`. Les pages affichent toujours leur état de départ, elles ne le comptent plus.
+
+**Vérifié après correction, page par page** : `window.__exp` est **vide** à l'ouverture ; il se
+remplit dès la première manipulation ; et `srcAll` s'ouvre bien quand les cinq sources — la
+première comprise — ont réellement été sélectionnées. Aucune erreur JS sur les quatre pages.
+
+### La huitième et dernière, au Thème 1
+
+`5e_C1.5` « le compte du club » ouvrait **deux** verrous au chargement, et pour deux raisons
+différentes : `regarde`, parce que la fonction qui affiche ce que le profil laisse voir était
+appelée à l'initialisation ; et `anonyme`, parce qu'un profil vide n'a aucun indice — la
+condition « zéro indice » était donc vraie **avant** que l'élève ait coché quoi que ce soit. Les
+deux activités qui exigent « j'ai regardé ce que mon profil laisse voir » et « j'ai composé un
+profil anonyme » étaient déverrouillées d'avance.
+
+Le fichier portait déjà, quatorze lignes plus haut, ce commentaire : *« Pas d'appel à
+majPubli() ici : il enregistre, et il tournerait AVANT restore(). »* Quelqu'un avait vu que
+cette fonction enregistre — et n'en avait pas tiré la conséquence pour l'appel d'initialisation
+situé soixante lignes plus bas. Savoir qu'une fonction enregistre et vérifier **tous** ses
+appels sont deux choses différentes (n°261, encore).
+
+Cette page relève du Thème 1 : sa correction est livrée dans une **PR sœur**, qui ne touche que
+ses deux fichiers. Le journal et les nouveautés de toute la série sont portés ici, pour que les
+deux livraisons ne se disputent pas les fichiers communs. Une fois les deux fusionnées,
+`controle_verrous.mjs` passe au vert : **zéro verrou ouvert au chargement sur 76 pages**.

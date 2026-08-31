@@ -5,6 +5,14 @@ Agent : Fable · Environnement : Chromium headless (Playwright 1.55),
 viewport 1280×900 + émulation téléphone 390×844 · Suite : `tests_4e_C9.mjs`
 (committée dans ce dossier, rejouable : `node tests_4e_C9.mjs .`).
 
+
+> **Correction du 31/08/2026 — le verrou expérientiel s'ouvrait en partie au chargement.**
+> `_outils/controle_verrous.mjs`, écrit ce jour-là, ouvre chaque séquence du dépôt dans un
+> navigateur **neuf** et lit `window.__exp` juste après le chargement. Cette page en portait
+> déjà `vuSec` **avant tout geste** : la fonction d'affichage du banc était appelée à
+> l'initialisation, et elle enregistrait ce qu'elle affichait. Le verrou « j'ai fait varier l'humidité » exige d'avoir vu la pompe des DEUX côtés du seuil : il n'en attendait plus qu'un. La fonction ne trace plus que
+> sur un geste ; vérifié après correction : `__exp` est **vide** à l'ouverture, et le verrou
+> s'ouvre normalement dès les manipulations réelles (règles d'or n°226 et n°265).
 La suite **simule la séquence comme un élève** et prend une capture d'écran à
 chaque action (23 captures). Elle ne déclare que ce qu'elle exécute.
 
