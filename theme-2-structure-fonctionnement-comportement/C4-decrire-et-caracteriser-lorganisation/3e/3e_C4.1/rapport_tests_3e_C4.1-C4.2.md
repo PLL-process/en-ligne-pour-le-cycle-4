@@ -13,7 +13,26 @@
 > règle d'or n°226 interdit. La fonction ne trace plus que sur un geste ; vérifié : `__exp`
 > est vide à l'ouverture, et se remplit dès le premier mouvement de curseur.
 Conformément au prompt maître : tous les tests listés ont été **réellement
-exécutés** le jour de la livraison (script `tests_lot06.js`). **Ce script n'est pas dans le dépôt et n'y a jamais été commité** — les coches ci-dessous disent ce qui a été observé ce jour-là, elles ne sont pas rejouables aujourd'hui (règle d'or n°259, relevé du 31/08/2026 par `_outils/controle_rapports_tests.py`). La suite reste à écrire.
+exécutés** le jour de la livraison (script `tests_lot06.js`). **Ce script n'est pas dans le dépôt et n'y a jamais été commité** (relevé du 31/08/2026).
+
+> **La suite est écrite, et elle est ici.** `tests_3e_C4.1-C4.2.mjs`, **23 contrôles**, rejoue
+> les vingt-trois lignes ci-dessous.
+>
+> Elle s'attarde sur ce que ce lot a d'unique : son verrou exige **deux essais de sens
+> contraire**. La suite vérifie le refus (« fais VRAIMENT les deux essais »), puis règle le
+> simulateur aux **bornes réelles de ses curseurs** — la plus petite batterie avec la plus
+> grosse consommation, qui rend « ❌ Station muette après 12 h » ; puis l'inverse, qui rend
+> « ✅ La station tient les 72 h ». Les deux clés `insuffisant` et `suffisant` apparaissent
+> alors, et l'activité se valide.
+>
+> ```
+> node tests_3e_C4.1-C4.2.mjs      →  23 / 23
+> ```
+>
+> Les **35 champs** de réponse sont extraits des `CHECKS` de la page selon quatre conventions,
+> dont celle des « intrus » : un `new Set` de deux champs et les deux valeurs qu'il doit
+> contenir. Seule la justification en prose est rédigée par le test — et les contraintes
+> qu'elle doit croiser sont lues dans le code de la page.
 
  Un défaut réel a été détecté par la
 suite (lien inter-dossiers vers la séquence station) et corrigé avant livraison ;

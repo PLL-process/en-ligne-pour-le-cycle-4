@@ -10885,3 +10885,34 @@ alors qu'une table écrite à la main aurait vieilli en silence, comme tous les 
 recopie (n°261).
 
 File d'attente après ce lot : **7 lots, 132 coches**. En tête, `3e_C4.1` (22).
+
+## 2026-08-31 — « L'énergie de la station » : le verrou aux deux essais, éprouvé aux bornes
+
+Deuxième lot de la file : `3e_C4.1`, 23 coches, script `tests_lot06.js` jamais commité.
+`tests_3e_C4.1-C4.2.mjs` — **23 contrôles, 23/23** — les rejoue.
+
+Ce lot est celui dont le verrou avait été corrigé le matin même (PR #310) : sa fonction
+d'affichage du simulateur cochait `suffisant` au chargement, si bien que la moitié du verrou
+était acquise d'avance. Sa consigne écrit pourtant à l'élève : *« teste D'ABORD une configuration
+insuffisante, PUIS ta solution — la page vérifie que tu as vraiment fait les deux essais »*.
+
+La suite éprouve les deux moitiés, dans l'ordre :
+
+1. `__exp` est **vide** à l'ouverture (le correctif du matin tient) ;
+2. l'activité 2 est **refusée** — 3/3 de réponses justes, et invalide, avec le rappel « fais
+   VRAIMENT les deux essais » ;
+3. le simulateur est réglé aux **bornes réelles de ses curseurs**, lues dans la page : la plus
+   petite batterie avec la plus grosse consommation → « ❌ Station muette après 12 h » ; puis
+   l'inverse → « ✅ La station tient les 72 h » ;
+4. les deux clés `insuffisant` et `suffisant` apparaissent, et l'activité se valide.
+
+Régler le simulateur **aux bornes lues** plutôt qu'à des valeurs choisies évite le piège
+habituel : une valeur écrite dans le test cesse de convenir le jour où la plage du curseur
+change, et le test devient rouge sans que rien ne soit cassé.
+
+Les **35 champs** de réponse sont extraits des `CHECKS` selon quatre conventions, dont une
+nouvelle : celle des « intrus » — un `new Set` de deux champs, et les deux valeurs que cet
+ensemble doit contenir. Seule la justification en prose est rédigée par le test, et les
+contraintes qu'elle doit croiser (vent, sel, recyclable, UV) sont lues dans le code de la page.
+
+File d'attente après ce lot : **6 lots, 110 coches**. En tête, `5e_C6.1` (21) et `4e_C4.1` (21).
