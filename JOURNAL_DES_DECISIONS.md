@@ -11041,3 +11041,56 @@ la question est posée à Pascal plutôt que tranchée à sa place.
 > Compter l'inventaire comme un usage fait disparaître du relevé précisément ce qu'on vient de
 > documenter. Et l'inverse est vrai aussi : ce qu'un inventaire nomme n'est pas oublié — une
 > décision écrite n'est pas une négligence, même quand rien ne s'en sert encore.
+
+## 2026-08-31 — « Le jardin connecté » : deux verrous de natures différentes, et une suite qui se trompe exprès
+
+Quatrième lot de la file : `4e_C4.1`, 21 coches, script `tests_lot09.js` jamais commité.
+`tests_4e_C4.1-C4.9.mjs` — **35 contrôles, 35/35** — les rejoue et en ajoute treize.
+
+Ce lot est le premier de la file à porter **deux verrous expérientiels qui ne fonctionnent
+pas de la même manière** :
+
+- **l'explorateur de table** compte les gestes : trois bacs filtrés, compteur 3 / 3, verrou
+  posé. On ne peut pas s'y tromper, seulement ne pas le faire ;
+- **le simulateur réseau** juge le geste : trois pannes, et un diagnostic **faux** est
+  refusé sans faire avancer le compteur.
+
+La suite se trompe donc exprès une fois — mauvaise cause choisie dans les options réelles du
+menu, jamais écrite dans le test — et vérifie que la page dit ❌, que le compteur reste à
+0 / 3 et que `__exp.reseau` n'apparaît pas. Puis elle répare les trois pannes et l'activité
+se valide. Les deux verrous sont éprouvés dans les deux sens : d'abord **refusés avec toutes
+les réponses justes**, ensuite ouverts par le geste.
+
+### Le billet d'entrée : ce qu'on mesure quand une page dit qu'elle ne sanctionne pas
+
+Ce lot ouvre par un billet d'entrée « sans note » (règle n°26). Sa promesse — *il oriente, il
+ne sanctionne pas* — n'est pas vérifiable telle quelle : le message d'encouragement contient
+le mot « activité », et le premier jet de la suite a refusé la page pour cette raison. La
+promesse a pourtant une **conséquence observable** : le billet ne compte pas dans les cinq
+activités. Le contrôle mesure donc la progression, qui reste à 0 / 5 une fois le billet fait.
+
+C'est la même leçon qu'hier, prise par l'autre bout : un test qui échoue accuse d'abord la
+page (n°270) — et quand une promesse ne se mesure pas directement, on cherche ce qu'elle
+change, pas ce qu'elle dit.
+
+### Un débordement constaté à l'œil se reconstate à l'œil
+
+La ligne 15 du rapport d'origine disait « bouton QCM du bilan sans débordement (correctif
+gabarit hérité) ». C'est une observation visuelle : elle n'était rejouable par personne. Elle
+est remplacée par une mesure — `scrollWidth − clientWidth ≤ 1 px` sur les boutons de fin de
+bilan, au viewport 390 px. Le correctif tient, et on le saura le jour où il ne tiendra plus.
+
+### Deux nombres, encore
+
+Le rapport annonçait **3** questions illustrées ; la banque en porte **4**. Le manifeste, lui,
+ne déclarait pas `questions_illustrees` — il n'était donc pas en écart, et le contrôle
+livré en PR #322 avait raison de se taire. Le nombre faux était dans la prose du rapport,
+que ce contrôle ne lit pas et ne prétend pas lire (règle n°264). Il est corrigé à la main,
+et la suite le vérifie désormais à chaque exécution.
+
+Six SVG de ce dossier — les pictogrammes de la seconde banque, `qcm_automatisation_premium.html` —
+n'étaient nommés par aucun `SOURCES_MEDIAS.md`. Vérifiés un par un, documentés : la dette de
+documentation du dépôt passe de **88 à 82** médias.
+
+File d'attente après ce lot : **4 lots, 68 coches**. En tête `3e_C5.1` (18), puis `3e_C6.1`
+et `3e_C4.7` (17 chacun).
