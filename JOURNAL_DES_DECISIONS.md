@@ -11249,3 +11249,55 @@ mais **dans une phrase** — hors de portée de `controle_effectifs_qcm.py`, qui
 champs, et a raison de s'en tenir là (règle n°264). Ils se corrigent à la main, et c'est fait.
 
 File d'attente après ce lot : **2 lots, 33 coches** — `3e_C4.7` (17) et `4e_C6.2` (16).
+
+## 2026-08-31 — « Internet jusqu'à Sainte-Luce » : un verrou qui ne survivait pas à un rechargement, et un contrôle qui ne connaissait qu'un nom
+
+Septième lot de la file : `3e_C4.7`, 17 coches, aucun script cité.
+`tests_3e_C4.7-C4.8.mjs` — **35 contrôles, 35/35** — paie la dette.
+
+### Le graphe est lu, jamais recopié
+
+Le simulateur de panne calcule le plus court chemin R1→R5 par un parcours en largeur. La
+suite ne connaît ni le chemin initial, ni le chemin de secours : elle lit le graphe dans la
+page, lit le chemin **que la page annonce**, puis coupe une liaison **de ce chemin-là**, et
+vérifie qu'un autre apparaît. Elle isole ensuite l'arrivée et vérifie la livraison
+impossible, puis répare tout et vérifie le retour au chemin d'origine.
+
+Le rapport d'origine de ce lot racontait précisément l'inverse comme une anomalie : la
+correction écrite à la main annonçait R1→R2→R4→R5 alors que le simulateur calcule R1→R3→R5.
+Un chemin recopié dans un test aurait vieilli de la même façon.
+
+### Deux verrous qui ne survivaient pas à un rechargement
+
+Le contrôle 22 a trouvé ce que personne n'avait vérifié : `__simOk` et `__rerouteVu`
+**n'étaient pas enregistrés**. La page sauvegardait les réponses, les validations, et jusqu'aux
+liaisons coupées du réseau — mais pas les deux traces d'expérience. Un élève qui rechargeait
+retrouvait tout, sauf le droit de valider : les activités 3 et 5 le renvoyaient refaire une
+expérience qu'il avait faite.
+
+C'est le miroir exact de la règle n°226 : le matin, des verrous s'ouvraient **trop tôt** ;
+celui-ci se **referme** derrière l'élève. Corrigé dans `collect()` et `restore()`.
+
+### Le contrôle des verrous ne connaissait qu'un nom
+
+`_outils/controle_verrous.mjs` lisait `window.__exp`, et rien d'autre. Or deux lots gardent
+leur état d'expérience sous d'autres noms : `__sim` pour « SOS station », `__simOk` et
+`__rerouteVu` ici. Leurs verrous échappaient donc **entièrement** à la mesure — et le bogue
+ci-dessus aurait pu s'installer dans n'importe quel lot sans que rien ne le voie.
+
+Le contrôle lit désormais **toutes** les variables `window.__…` qu'une page se donne, moins
+une liste déclarée de ce qui n'est pas une observation : `__valid` (une validation, pas une
+expérience), `__clFs` et `__clHlRange` (des préférences d'affichage). Sans cette liste, la
+taille de police de l'éditeur CodeLab serait signalée comme un verrou ouvert — et un contrôle
+qui signale du correct finit ignoré (règle n°248).
+
+Il surveille maintenant **64 casiers** au lieu de 4. Vérifié dans les deux sens : une page
+d'essai posant `window.__monVerrou = true` au chargement est bien refusée, et retirée, le
+dépôt repasse au vert.
+
+C'est la quatrième fois aujourd'hui que la règle n°269 se paie — après les extensions de
+fichiers dans trois outils, ce sont ici les **noms de variables**. La forme générale se
+dégage : *tout outil qui reconnaît quelque chose à son nom doit dire quels noms il connaît,
+et se demander qui d'autre s'appelle autrement.*
+
+File d'attente après ce lot : **1 lot, 16 coches** — `4e_C6.2`.

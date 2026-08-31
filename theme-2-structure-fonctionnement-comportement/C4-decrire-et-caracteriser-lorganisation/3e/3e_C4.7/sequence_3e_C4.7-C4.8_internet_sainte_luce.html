@@ -783,7 +783,15 @@
 const KEY = "seq_3e_C4.7-C4.8_internet";
 const $ = id => document.getElementById(id);
 function collect(){
-  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, coupees: window.__coupees || []};
+  /* Les deux verrous d'expérience de ce lot — le réassemblage réussi et le
+     re-routage observé — étaient les seuls états que la page n'enregistrait
+     pas. Un élève qui rechargeait retrouvait ses réponses et ses liaisons
+     coupées, mais l'activité 3 et l'activité 5 le renvoyaient refaire une
+     expérience qu'il avait faite. Corrigé le 31/08/2026, vérifié par
+     `tests_3e_C4.7-C4.8.mjs` (contrôle 22). */
+  const o = {inputs:{}, radios:{}, valid: window.__valid || {}, coupees: window.__coupees || [],
+             simOk: !!window.__simOk, rerouteVu: !!window.__rerouteVu,
+             isoleVu: !!window.__isoleVu};
   document.querySelectorAll("input[id],textarea[id],select[id]").forEach(el=>{ if(el.type!=="radio") o.inputs[el.id]=el.value; });
   document.querySelectorAll("input[type=radio]").forEach(r=>{ if(r.checked) o.radios[r.name]=r.value; });
   return o;
@@ -801,6 +809,9 @@ function restore(){
   Object.entries(o.radios||{}).forEach(([n,v])=>{ const r=document.querySelector(`input[name="${n}"][value="${v}"]`); if(r) r.checked=true; });
   window.__valid = o.valid || {};
   window.__coupees = o.coupees || [];
+  window.__simOk = !!o.simOk;
+  window.__rerouteVu = !!o.rerouteVu;
+  window.__isoleVu = !!o.isoleVu;
 }
 let saveTimer=null;
 document.addEventListener("input", ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>save(false), 600); });
