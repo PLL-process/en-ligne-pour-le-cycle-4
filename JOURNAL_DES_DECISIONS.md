@@ -11094,3 +11094,65 @@ documentation du dépôt passe de **88 à 82** médias.
 
 File d'attente après ce lot : **4 lots, 68 coches**. En tête `3e_C5.1` (18), puis `3e_C6.1`
 et `3e_C4.7` (17 chacun).
+
+## 2026-08-31 — « SOS station » : le simulateur qui fait payer l'erreur, et 56 synthèses que personne ne peut ouvrir
+
+Cinquième lot de la file : `3e_C5.1`, 18 coches, aucun script cité — une dette honnête.
+`tests_3e_C5.1-C5.4.mjs` — **34 contrôles, 34/34** — la paie et l'élargit.
+
+### Un simulateur qui fait payer le mauvais geste
+
+Les verrous rencontrés jusqu'ici comptaient les gestes (`5e_C6.1`, `4e_C4.1`) ou les
+jugeaient (`4e_C4.1`, le réseau). Celui-ci **facture** : remplacer une pièce saine est refusé
+*et* incrémente le compteur de mesures — « une réparation inutile coûte cher », dit le code
+dans son propre commentaire. La suite se trompe donc exprès, vérifie le refus **et le coût**
+(compteur 4 → 5), puis répare les deux pannes, la seconde s'activant toute seule.
+
+### Quatre conventions d'écriture dans un seul lot
+
+Ce lot n'emploie pas l'objet `att` — sauf pour une de ses six activités. Il écrit ses
+attendus en quatre formes, toutes extraites du source : **20 égalités**, **9 préfixes**
+(`startsWith`, l'option exacte étant retrouvée dans le menu réel de la page), **5 nombres**,
+**1 objet `att`**. C'est le lot le plus hétérogène de la file, et l'extraction générique tient.
+
+### Ce qu'une suite peut dire d'une prose, et ce qu'elle ne peut pas
+
+Trois activités demandent une justification rédigée, que la page juge par **mots-clés et
+longueur**. La suite lit ces contraintes dans le code et compose un texte qui les satisfait.
+Elle montre donc que le verrou s'ouvre **aux conditions déclarées** — pas que la page sait
+reconnaître une bonne justification. **Écrire l'inverse serait mentir sur ce qu'on mesure.**
+Le contrôle utile est le symétrique : trois parcours justes et une justification de quatre
+mots, et l'activité est refusée.
+
+### 56 synthèses sur 76 ne sont atteignables par aucun chemin
+
+Le contrôle des liens ne trouvait que **quatre** liens internes dans cette séquence : index,
+lexique, QCM, ancre. Ses deux synthèses n'y figurent pas. En marchant depuis `index.html` de
+lien en lien sur tout le dépôt :
+
+| | |
+|---|---|
+| Synthèses du dépôt | 76 |
+| **Atteignables depuis `index.html`** | **20** |
+| **Atteignables par aucun chemin** | **56** |
+| Séquences liant toutes leurs synthèses | 6 sur 46 |
+| Autre page inatteignable | `_reperes/carte_des_representations.html` |
+
+Ce n'est donc pas un défaut de ce lot : c'est la règle du dépôt, et non l'exception. Mais la
+synthèse est **le document que l'élève emporte** : une synthèse qu'on ne peut pas ouvrir est
+une synthèse qui n'existe pas pour lui.
+
+Le correctif ne se fait pas dans quarante séquences : il se fait **au générateur d'index**,
+en un endroit. Contrôle + correctif dans une PR à part — annoncés ici pour ne pas corriger
+la seule occurrence qu'on a sous les yeux (règle d'or n°261).
+
+### Règle d'or n°272
+
+> **Un fichier livré qu'aucun chemin n'atteint n'est pas livré.**
+> Il passe tous les contrôles : il existe, il est bien formé, ses liens sortants marchent,
+> aucun lien mort ne le désigne — précisément parce qu'aucun lien ne le désigne. Vérifier
+> les liens d'une page ne dit rien de ce que personne ne pointe : il faut marcher depuis la
+> porte d'entrée.
+
+File d'attente après ce lot : **3 lots, 50 coches** — `3e_C6.1` (17), `3e_C4.7` (17),
+`4e_C6.2` (16).
