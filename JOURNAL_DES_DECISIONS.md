@@ -10916,3 +10916,62 @@ ensemble doit contenir. Seule la justification en prose est rédigée par le tes
 contraintes qu'elle doit croiser (vent, sel, recyclable, UV) sont lues dans le code de la page.
 
 File d'attente après ce lot : **6 lots, 110 coches**. En tête, `5e_C6.1` (21) et `4e_C4.1` (21).
+
+## 2026-08-31 — « Programmer le lampadaire » : deux essais, et deux nombres qu'un manifeste affirmait sur lui-même
+
+Troisième lot de la file : `5e_C6.1`, 23 coches, script `tests_lot07.js` jamais commité.
+`tests_5e_C6.1-C6.3.mjs` — **32 contrôles, 32/32** — les rejoue et les élargit.
+
+Le verrou de ce lot demande lui aussi **deux essais**, mais de nature différente : d'abord le
+réglage d'origine du lampadaire (seuil 30), puis la mission de la mairie (seuil relevé
+au-dessus de 45, vérifié à 45 % de luminosité). C'est encore une des pages réparées le matin
+même (PR #310) : la clé `defaut` se posait au chargement, si bien que la moitié du verrou était
+acquise d'avance. La suite vérifie que `__exp` est vide à l'ouverture, que l'activité 3 est
+**refusée malgré 3 réponses justes**, puis qu'elle se valide une fois les deux essais faits.
+
+**Les nombres de la mission ne sont pas écrits dans le test.** Ils sont extraits du source de
+`majSim` — `seuil === 30`, `seuil > 45`, `lum === 45` — et les positions de curseur sont bornées
+par les `min` / `max` réels des curseurs. Un test qui recopie un seuil devient rouge le jour où
+la page le change, sans que rien ne soit cassé.
+
+### Une convention d'extraction oubliée fait accuser la page à tort
+
+Au premier jet, la suite rendait **7 / 8** à l'activité 1 et la déclarait en échec. La page
+comptait juste : le huitième champ est un nombre, et ce lot ne le range pas dans l'objet
+`att` — il le compare à part, `num("e1_7") === 30`. L'extraction ne lisait que `att` ; le champ
+restait vide, et le test accusait la page de son propre angle mort. C'est la cinquième
+convention d'écriture reconnue par ces suites.
+
+### Deux nombres qu'un manifeste affirmait sur lui-même
+
+Le contrôle des questions illustrées a fait apparaître un écart : `manifest_lot_07.json`
+annonçait **2** questions illustrées et **2** images, alors que le LOT 12 avait ajouté un
+troisième SVG le 25/07/2026 — documenté dans `SOURCES_MEDIAS.md`, jamais reporté dans le
+manifeste. Corrigé ici.
+
+**Mesure faite sur les 32 manifestes du dépôt : dix sont dans ce cas** — un second écart de
+`questions_illustrees` (`5e_C2.1`, thème 1) et huit listes `images` incomplètes.
+`_outils/controle_effectifs_qcm.py` confronte déjà 521 nombres auto-déclarés, mais **pas ces
+deux champs-là**. Le contrôle est à étendre : c'est le prochain travail, et il vaut mieux
+l'annoncer que corriger la seule occurrence qu'on a sous les yeux (règle d'or n°261).
+
+Nuance déclarée pour ce futur contrôle : une image **déclarée et absente** est une promesse
+fausse et doit être refusée ; une image **présente et non déclarée** est une dette de
+documentation — plusieurs le sont d'ailleurs dans `SOURCES_MEDIAS.md`, qui est le document que
+la charte impose. Refuser la seconde ferait crier au loup (règles n°259 et n°266).
+
+### Une suite livrée qu'aucun manifeste ne nommait
+
+Le bloc `fichiers` d'un manifeste est l'inventaire du lot. La convention `suite_de_tests`, née
+au thème 1, n'avait jamais été portée aux thèmes 2 et 3 : **quinze** manifestes voisinaient une
+suite sans la nommer. Les **sept du thème 2** sont corrigés ici ; les **huit du thème 3** sont
+hors du périmètre d'une branche « thème 2 » et feront l'objet d'une PR sœur.
+
+### Règle d'or n°270
+
+> **Un test qui échoue accuse d'abord la page ; commence par vérifier qu'il sait la lire.**
+> Une convention d'écriture non reconnue par le pilote produit exactement la même trace qu'un
+> défaut de la page : un score inférieur au total. La différence ne se voit qu'en relisant le
+> code que le pilote prétend interpréter.
+
+File d'attente après ce lot : **5 lots, 89 coches**. En tête, `4e_C4.1` (21), puis `3e_C5.1` (18).
