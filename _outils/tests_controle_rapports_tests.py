@@ -25,12 +25,17 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import controle_rapports_tests as CR  # noqa: E402
 
 
-def lot(racine, rapport, scripts=()):
+def lot(racine, rapport, scripts=(), pages=("sequence_essai.html",)):
+    """Un dossier de lot : un rapport, d'éventuels scripts, et les pages qu'une
+    suite pourrait conduire. `pages=()` fabrique un dossier d'AUDIT — un rapport
+    qui relate une mesure, sans page à piloter."""
     r = pathlib.Path(racine)
     r.mkdir(parents=True, exist_ok=True)
     (r / "rapport_tests_essai.md").write_text(rapport, encoding="utf-8")
     for s in scripts:
         (r / s).write_text("// vide\n", encoding="utf-8")
+    for f in pages:
+        (r / f).write_text("<html></html>\n", encoding="utf-8")
     return r
 
 
@@ -102,6 +107,16 @@ def main():
         elif "sans aucun script" not in texte or "2 ✅" not in texte:
             echecs.append("la dette n'est pas comptée ni nommée dans le relevé\n     "
                           + texte.strip().replace("\n", "\n     "))
+
+        # ── 6 bis. un rapport d'AUDIT n'entre pas dans la file d'attente ────
+        # Sans cette distinction, les trois dossiers de gouvernance du dépôt
+        # occupaient la tête de file — 115 coches qu'aucune suite ne peut payer.
+        controles += 1
+        _c, texte = jouer(lot(b / "c6bis", "# Audit\n\n| a | ✅ |\n| b | ✅ |\n", pages=()))
+        if "LOT(S) portent des coches" in texte:
+            echecs.append("un rapport d'audit est compté comme un lot en attente de suite")
+        if "rapport(s) d'AUDIT écartés" not in texte:
+            echecs.append("les rapports d'audit écartés ne sont pas nommés dans le relevé")
 
         # ── 7. un rapport sans coche ni script n'encombre pas le relevé ─────
         controles += 1

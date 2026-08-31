@@ -61,6 +61,13 @@ CITATION = re.compile(r"`((?:tests?|test)[\w.\-]*\.(?:mjs|js))`")
 #: un script livré à côté de ce qu'il vérifie
 SCRIPT = re.compile(r"^(?:tests?_.*\.(?:mjs|js)|.*\.test\.(?:mjs|js))$", re.I)
 
+#: une page qu'une suite pourrait conduire. Un rapport dont le dossier n'en porte
+#: aucune n'est pas un lot en attente de suite : c'est un rapport d'AUDIT, qui
+#: relate une mesure et non le comportement d'une page. Les compter ensemble
+#: mettait en tête de file trois dossiers qu'aucune suite ne peut servir — une
+#: file d'attente doit nommer ce qu'on peut réellement payer (règle n°248).
+PAGE_CONDUISIBLE = re.compile(r"^(?:sequence|qcm|tp|atelier)[_-].*\.html$", re.I)
+
 #: la phrase avoue que le script manque — la citation n'est alors pas une promesse
 AVEU = re.compile(r"jamais\s+(?:été\s+)?commit|n'a\s+jamais\s+existé|n'est\s+pas\s+dans\s+le\s+dépôt"
                   r"|introuvable|absent|manquant|n'existe\s+pas|pas\s+livré", re.I)
@@ -88,8 +95,12 @@ def scripts_du_dossier(dossier):
     return sorted(f for f in os.listdir(dossier) if SCRIPT.match(f))
 
 
+def pages_conduisibles(dossier):
+    return sorted(f for f in os.listdir(dossier) if PAGE_CONDUISIBLE.match(f))
+
+
 def main(muet=False):
-    fantomes, dettes = [], []
+    fantomes, dettes, audits = [], [], []
     lus = avoues = 0
 
     for chemin in rapports(DEPOT):
@@ -118,19 +129,28 @@ def main(muet=False):
                             "sont attribuées" % (nom, cite, coches))
 
         if coches and not livres:
-            dettes.append((coches, nom))
+            if pages_conduisibles(dossier):
+                dettes.append((coches, nom))
+            else:
+                audits.append((coches, nom))
 
     if not muet:
         print("%d citation(s) de script lues dans les rapports du dépôt · %d accompagnées d'un "
               "aveu (le rapport dit lui-même que le script manque)" % (lus, avoues))
         if dettes:
             total = sum(c for c, _ in dettes)
-            print("\n%d rapport(s) portent des coches sans aucun script dans leur dossier — "
+            print("\n%d LOT(S) portent des coches sans aucun script dans leur dossier — "
                   "%d coches au total.\n     Ce n'est pas une faute, c'est une dette : ils "
                   "disent ce qu'ils ont vu, et\n     leur suite reste à écrire (règle n°259). "
                   "Les plus fournis d'abord :" % (len(dettes), total))
             for c, nom in sorted(dettes, reverse=True)[:12]:
                 print("     %4d ✅  %s" % (c, os.path.dirname(nom)))
+        if audits:
+            print("\n     (%d rapport(s) d'AUDIT écartés de cette file, %d coches : leur dossier "
+                  "ne porte\n     aucune page qu'une suite pourrait conduire — ils relatent une "
+                  "mesure, pas le\n     comportement d'une page. Les lister ici mettrait en tête "
+                  "de file des dossiers\n     qu'aucune suite ne peut servir.)"
+                  % (len(audits), sum(c for c, _ in audits)))
 
     if fantomes:
         print("\n⛔ %d rapport(s) attribuent leurs résultats à un script qui n'existe pas :"
