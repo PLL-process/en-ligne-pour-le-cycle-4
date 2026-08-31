@@ -11544,3 +11544,61 @@ de lot : elle l'est depuis la porte d'entrée, ce qui est sa place.
 | Médias qu'un `SOURCES_MEDIAS.md` ne nomme pas | **0** sur 267 |
 | Entrées tolérées dans un contrôle | **0** |
 | Images qu'aucune page n'affiche | 29, toutes nommées, chacune avec sa question |
+
+## 2026-08-31 — Règle n°4 : Pascal signale, on mesure, et la mesure se trompe d'abord
+
+Pascal rappelle sa demande : **le bloc Bonus et le QCM doivent être à la dernière page ou à la
+dernière étape** de chaque séquence. C'est la règle d'or n°4 §4, écrite le 24/07/2026 :
+*« ces deux blocs closent la séquence : après le bilan, avant le pied de page »*.
+
+### Le premier relevé accusait une page qui était conforme
+
+Mon expression régulière cherchait « Prêt·e à t**'**entraîner » avec l'apostrophe **droite**.
+`5e_C1.3` écrit la sienne avec l'apostrophe **typographique** — « t’entraîner » — et se
+retrouvait donc dans la liste des non conformes, alors que son bloc était là, complet, au bon
+endroit. Une page correcte accusée par un contrôle qui ne connaît qu'une graphie : c'est la
+règle n°269 encore, prise cette fois par la **ponctuation**.
+
+Corrigé, et c'est la mesure juste qui suit.
+
+### Ce que dit la mesure, une fois qu'elle sait lire
+
+| | |
+|---|---|
+| Pages examinées (séquences, TP, ateliers) | **79** |
+| Conformes avant cette PR | **58** |
+| **Pages-pointeurs écartées** (moins de 6 Ko : elles renvoient ailleurs) | **9** |
+| À reprendre | **12** |
+
+Les neuf pointeurs — `3e_C7.2/tp_3e_boitier_etanche.html` et ses semblables, 4 Ko chacun — ne
+sont pas des séquences : ce sont des panneaux indicateurs vers le TP réel de l'atelier. Leur
+poser un bloc « Prêt·e à t'entraîner » serait inventer une règle pour une page qui n'en relève
+pas (règle n°275, apprise ce matin).
+
+### Les deux séquences du thème 1
+
+`3e_C1.5` (numérique, société, environnement) et `4e_C1.4` (cybersécurité) sont antérieures au
+gabarit commun : ni bloc « Prêt·e », ni bloc Bonus, et le QCM n'était atteignable que par la
+barre de navigation du haut — c'est-à-dire **partout sauf à la fin**, exactement ce que Pascal
+signale.
+
+Les deux blocs sont posés après tout le contenu visible, bilan de métacognition compris, avec
+la palette de chaque page. Le nombre de questions et de questions illustrées est **lu dans la
+banque** de chaque QCM, pas recopié : 30 questions, aucune illustrée dans les deux cas.
+
+Les trois défis Bonus de chaque séquence sont écrits pour elle : remonter à la source d'un
+chiffre sur le numérique, comparer son empreinte à un geste martiniquais, retrouver un métier
+qui n'existait pas — pour la 3e ; l'atelier de double authentification déjà présent dans le
+lot, la phrase de passe, et ce que le collège sait de toi — pour la 4e.
+
+**Vérifié en navigateur** : les deux blocs sont visibles, dans l'ordre, après le dernier
+panneau de séance ; le bouton ne déborde pas à 390 px ; le lien pointe sur un fichier réel ;
+aucune erreur JS.
+
+**Reste 10 pages**, hors du périmètre d'une branche thème 1 : `atelier_pix_crcn_jardin`
+(thème 2) et neuf pages du thème 3 — les cinq TP de l'atelier CAO, `tp_mbot2_python`, et les
+trois premières stations de la série `3e_C9.2`. Deux PR sœurs suivent.
+
+**Arbitrage de Pascal, ce soir** : les TP portent le bloc **comme les séquences**, même quand
+ils écrivent eux-mêmes « ce TP ne te note pas ». Apprendre l'outil ne dispense pas de proposer
+l'entraînement.
