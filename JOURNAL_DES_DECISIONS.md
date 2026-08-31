@@ -10660,3 +10660,54 @@ Cette page relève du Thème 1 : sa correction est livrée dans une **PR sœur**
 ses deux fichiers. Le journal et les nouveautés de toute la série sont portés ici, pour que les
 deux livraisons ne se disputent pas les fichiers communs. Une fois les deux fusionnées,
 `controle_verrous.mjs` passe au vert : **zéro verrou ouvert au chargement sur 76 pages**.
+
+## 2026-08-31 — Sept rapports qui attribuaient leurs coches à des scripts absents
+
+Deux fois aujourd'hui, un lot a reçu la suite de tests que son rapport annonçait depuis des
+semaines — `5e_C8.2` hier, `5e_C4.1` ce matin — et deux fois le script cité n'était pas dans le
+dépôt. La troisième fois, on a compté au lieu de constater.
+
+Sur les **63 rapports de tests** du dépôt :
+
+- **18** portent des coches vertes et **aucun script** dans leur dossier : **421 coches** au
+  total ;
+- **7** vont plus loin : ils **nomment** un script — `tests_lot06.js` à `tests_lot11.js`, plus un
+  `tests.mjs` — qui n'a jamais été commité.
+
+La différence entre les deux compte, et c'est elle que `_outils/controle_rapports_tests.py`
+inscrit dans le dépôt. Un rapport sans script est une **dette** : il dit ce qu'il a vu, il ne
+trompe personne, sa suite reste à écrire. Un rapport qui cite un script absent fait une
+**promesse fausse** : il attribue ses résultats à un objet vérifiable, et l'objet n'existe pas.
+
+- **n°266** — **une dette se compte, une promesse fausse se refuse.** Un contrôle qui traite les
+  deux de la même façon oblige à tout réparer d'un coup, donc à ne rien réparer. Celui-ci refuse
+  les sept citations mortes et se contente de chiffrer les 421 coches en attente, en les classant
+  par ampleur — de quoi savoir par où commencer.
+
+L'outil lit le texte **aplati** (une citation ne s'arrête pas en fin de ligne, n°262) et connaît
+une échappatoire **déclarée** : quand la phrase porteuse — ou les quatre cents caractères qui la
+suivent — avoue que le script manque, le rapport est honnête et le contrôle se tait. Sans elle,
+on signalerait exactement les fichiers qui ont dit la vérité sur leur propre passé (n°248). Son
+banc, `tests_controle_rapports_tests.py`, tient neuf cas dont celui de l'aveu trop lointain, qui
+ne compte pas.
+
+### Ce que la première suite écrite a trouvé
+
+Les six rapports fautifs reçoivent leur aveu. Le septième, `4e_C5.1` « SOS jardin connecté »,
+reçoit mieux : **sa suite**. `tests_4e_C5.1-C5.3.mjs`, **26 contrôles**, rejoue les vingt-trois
+lignes de son tableau — le poste de diagnostic conduit test par test (y compris un test joué
+trop tôt, qui doit remettre à zéro), le simulateur de remplacement geste par geste, les quatre
+activités remplies avec les réponses **lues dans la page**, le rechargement, puis le QCM ouvert
+et joué.
+
+Elle a trouvé, à sa dix-neuvième ligne, que le tableau annonçait « 3 questions illustrées »
+quand la banque en porte **quatre**. Le nombre était écrit à la main dans un tableau que rien ne
+relançait : cinq semaines sans que personne puisse s'en apercevoir. C'est très exactement ce que
+la règle n°259 décrit, et la démonstration la plus courte qu'on puisse en faire.
+
+### La file d'attente, par ampleur
+
+Les rapports les plus fournis sans aucune suite : `theme-3/_notes` (58), `theme-1/_gouvernance`
+(34), `3e_C4.3` et `5e_C1.1` (26), `5e_C1.2` (25), `4e_C6.1` (23), `3e_C6.2`, `5e_C5.1`,
+`3e_C4.1` (22), `5e_C6.1` (21). L'outil les liste à chaque exécution, et le nombre baissera d'un
+lot à chaque fois.
