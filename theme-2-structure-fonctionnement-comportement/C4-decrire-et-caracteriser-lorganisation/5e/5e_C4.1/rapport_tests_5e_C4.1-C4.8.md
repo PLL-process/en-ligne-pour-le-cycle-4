@@ -2,7 +2,7 @@
 
 **Date** : 2026-07-23, **QCM rejoué le 2026-08-31** · **Agent** : Fable (Thème 2) ·
 **Outil** : Playwright (Chromium headless), viewport mobile 390×844 ·
-**Verdict global : 21 / 21 (séquence, tableau écrit) + 25 / 25 (QCM, rejouable) ✅**
+**Verdict global : 30 / 30 (séquence) + 25 / 25 (QCM) — les deux rejouables ✅**
 
 > **Mise au point du 31/08/2026.** Ce rapport annonçait « 26 / 26 » et citait un script
 > `tests_lot05.js` qui **n'a jamais été commité**. Vingt-six coches que personne ne
@@ -11,12 +11,28 @@
 > **livrée dans le dossier** : `tests_5e_C4.1-C4.8_qcm.mjs`, 25 contrôles, qui parcourt
 > réellement les 36 questions et lit la note affichée.
 >
-> **Limite déclarée, et elle est réelle** : les 16 contrôles de la séquence restent un
-> tableau écrit à la main. Ils n'ont pas été rejoués le 31/08 — la séquence n'a pas été
-> modifiée ce jour-là, à un nombre près (« 36 questions » au lieu de « 32 »). Écrire
-> leur suite est le prochain geste dû à ce lot.
+> **Suite du même jour.** La séquence a reçu la sienne : `tests_5e_C4.1-C4.8_sequence.mjs`,
+> **30 contrôles**, qui remplit les sept activités, manœuvre le simulateur et provoque un
+> passage devant le détecteur. Les bonnes réponses n'y sont pas recopiées : elles sont
+> extraites des fonctions `CHECKS` de la page.
+>
+> **Ce qu'elle a trouvé en naissant.** `window.__exp` valait `{"jour":"eteint"}` **dès
+> l'ouverture de la page** : la fonction d'affichage du simulateur était appelée à
+> l'initialisation et enregistrait l'état affiché comme une expérience observée. Le verrou
+> de l'activité 3 en exige trois — il s'ouvrait donc **d'un tiers tout seul**, avant que
+> l'élève ait touché le curseur. La ligne « refus de valider l'act. 3 sans expériences
+> réelles » de ce tableau était donc **partiellement fausse depuis l'origine**. Corrigé.
 
-## Séquence (16 tests)
+## Séquence — suite rejouable `tests_5e_C4.1-C4.8_sequence.mjs` (30 contrôles)
+
+```
+node tests_5e_C4.1-C4.8_sequence.mjs
+```
+
+Les seize lignes d'origine, plus quatorze que le tableau ne faisait pas : aucun
+verrou ouvert au chargement (n°226), les réponses lues dans la page et non
+recopiées, le simulateur conduit situation par situation, les liens locaux et les
+identifiants en double.
 
 | Test | Résultat |
 |---|---|

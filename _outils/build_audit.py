@@ -1784,16 +1784,18 @@ OVERLAY = {
                 "débranché (prescription C4.8), réinvestissement sonnette "
                 "connectée. Versions A/B/C, QCM 36 q dont 6 illustrées, "
                 "synthèses, fiche, matrice, 3 SVG CC0, rapport de tests et "
-                "suite rejouable `tests_5e_C4.1-C4.8_qcm.mjs` (25/25). "
+                "deux suites rejouables — `tests_5e_C4.1-C4.8_qcm.mjs` (25/25) et "
+                "`tests_5e_C4.1-C4.8_sequence.mjs` (30/30). "
                 "Première entrée 5e du Thème 2, langue calibrée 12 ans.",
         anomalies="Quatre des huit codes n'ont que 4 questions DANS cette banque "
                   "(C4.4, C4.5, C4.7, C4.8) : ils sont renforcés ailleurs, et le "
                   "manifeste nomme la banque de renfort pour chacun (règle n°250). "
                   "Les quatre autres — C4.1, C4.2, C4.3, C4.6 — n'étaient renforcés "
                   "nulle part et sont passés à 5 le 31/08/2026, chacun sur une notion "
-                  "que la banque n'abordait pas. Les 16 contrôles de la SÉQUENCE "
-                  "restent un tableau écrit à la main : leur suite est à écrire "
-                  "(règle n°259).",
+                  "que la banque n'abordait pas. Les deux suites de tests sont "
+                  "livrées et rejouables (QCM 25/25, séquence 30/30) ; la seconde a "
+                  "trouvé un verrou expérientiel qui s'ouvrait d'un tiers au "
+                  "chargement de la page, corrigé le même jour (règle n°226).",
         accessibilite="Clavier, aria/alt, listes déroulantes (DYS), "
                       "reduced-motion, impression A4, minuteur désactivable.",
         medias="3 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",

@@ -3,6 +3,15 @@
 **Date** : 2026-07-23 · **Agent** : Fable (Thème 2) · **Outil** : Playwright
 (Chromium headless), viewport mobile 390×844 · **Verdict global : 23 / 23 ✅**
 
+
+> **Correction du 31/08/2026 — le verrou expérientiel s'ouvrait en partie tout seul.**
+> `_outils/controle_verrous.mjs`, écrit ce jour-là, ouvre chaque séquence du dépôt dans un
+> navigateur neuf et lit `window.__exp` juste après le chargement. Cette page en portait déjà
+> la clé `defaut` **avant tout geste** : la fonction d'affichage du simulateur était appelée à
+> l'initialisation et enregistrait l'état affiché comme une observation. Le verrou de
+> l'activité concernée s'ouvrait donc en partie sans que l'élève ait rien manœuvré, ce que la
+> règle d'or n°226 interdit. La fonction ne trace plus que sur un geste ; vérifié : `__exp`
+> est vide à l'ouverture, et se remplit dès le premier mouvement de curseur.
 Conformément au prompt maître : tous les tests listés ont été **réellement
 exécutés** (script `tests_lot07.js`) ; aucun résultat n'est déclaré sans exécution.
 
