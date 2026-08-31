@@ -102,9 +102,18 @@ with sync_playwright() as p:
     pg.wait_for_timeout(500)
     t("séquence : aucune erreur JS", not errs, str(errs))
     contenu = pg.content()
+    # L'exemption avait été écrite pour « https:// » — et l'espace de noms SVG
+    # s'écrit « http:// ». La clause suivante le rattrapait donc, et ce contrôle
+    # était rouge dès qu'un schéma était dessiné dans la page. On regarde
+    # maintenant ce que la page IRAIT CHERCHER : les attributs de chargement, sans
+    # les hyperliens, qui eux ont le droit d'être distants (n°40, corrigé le
+    # 31/08/2026).
+    distantes = pg.eval_on_selector_all(
+        "[src], link[href], object[data], iframe[src], use[href]",
+        "l=>l.map(e=>e.getAttribute('src')||e.getAttribute('href')||e.getAttribute('data'))"
+        ".filter(u=>u && /^(https?:)?\/\//i.test(u))")
     t("séquence : hors ligne, aucune ressource distante (n°40)",
-      "http://" not in contenu and "https://" not in contenu.replace(
-          'xmlns="http://www.w3.org/2000/svg"', ""))
+      "fonts.googleapis" not in contenu and not distantes, str(distantes))
     t("séquence : lien d'accueil valide (n°11)", pathlib.Path("../../../../index.html").exists())
     t("bandeau de tâches affiché (n°30)", "Séance 1" in pg.inner_text("#tachesBandeau"))
     n_ta = pg.eval_on_selector_all("textarea", "a=>a.length")

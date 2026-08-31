@@ -2,6 +2,20 @@
 
 **Date** 08/08/2026 · **Agent** Fable · **Branche** `fable/theme-1/lot-hangzhou-4e-C3`
 
+
+> **Correction du 31/08/2026 — la suite de ce lot était rouge, et c'est le test qui avait tort.**
+> Réexécutée ce jour-là (personne ne l'avait relancée depuis sa livraison), elle échouait sur
+> « séquence : hors ligne, aucune ressource distante (n°40) ». La cause n'était pas dans la
+> page : le contrôle cherchait la chaîne `http://` dans le HTML sérialisé, où **chaque SVG en
+> ligne porte son `xmlns="http://www.w3.org/2000/svg"** — un identifiant d'espace de noms, que
+> nul navigateur ne va chercher. Le contrôle regarde désormais ce que la page **irait charger**
+> (`src`, `link href`, `object data`, `iframe`, `use`), sans les hyperliens, qui ont le droit
+> d'être distants. Vérifié dans les deux sens : la suite passe, et elle redevient rouge si l'on
+> injecte une vraie ressource distante dans la page.
+>
+> ```
+> 28 / 28 tests passés
+> ```
 ```
 python3 tests_4e_C3.1-C3.3_hangzhou.py     # depuis ce dossier, Playwright + Chromium
 ```

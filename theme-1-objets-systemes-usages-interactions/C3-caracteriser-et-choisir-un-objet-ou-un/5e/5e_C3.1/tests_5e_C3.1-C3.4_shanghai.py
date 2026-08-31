@@ -13,8 +13,19 @@ with sync_playwright() as p:
 
     pg.goto(SEQ); pg.wait_for_timeout(600)
     t("séquence : aucune erreur JS", not errs, str(errs))
+    # `pg.content()` sérialise le DOM : chaque SVG en ligne y porte son
+    # `xmlns="http://www.w3.org/2000/svg"`, qui est un identifiant d'espace de noms
+    # et non une ressource — aucun navigateur ne le demande. Chercher « http:// »
+    # dans le HTML rendait donc ce contrôle rouge dès qu'un schéma était dessiné
+    # dans la page. On regarde maintenant ce que la page IRAIT CHERCHER : les
+    # attributs de chargement, sans les hyperliens, qui eux ont le droit d'être
+    # distants (règle d'or n°40, correction du 31/08/2026).
+    distantes = pg.eval_on_selector_all(
+        "[src], link[href], object[data], iframe[src], use[href]",
+        "l=>l.map(e=>e.getAttribute('src')||e.getAttribute('href')||e.getAttribute('data'))"
+        ".filter(u=>u && /^(https?:)?\/\//i.test(u))")
     t("séquence : hors ligne, aucune ressource distante (n°40)",
-      "fonts.googleapis" not in pg.content() and "http://" not in pg.content())
+      "fonts.googleapis" not in pg.content() and not distantes, str(distantes))
     t("bandeau de tâches affiché (n°30)", "Séance 1" in pg.inner_text("#tachesBandeau"))
     n_ta = pg.eval_on_selector_all("textarea", "a=>a.length")
     n_et = pg.eval_on_selector_all("details.etayage", "a=>a.length")
