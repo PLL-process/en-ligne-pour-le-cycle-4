@@ -29,6 +29,24 @@ réclamait :
   · le manifeste déclarait servir `4e_C7.2` sans donner l'adresse où ce code
     s'évalue — et la fiche, elle, la donnait fausse (une séquence au lieu du QCM).
 
+CE QU'IL A LAISSÉ PASSER LE LENDEMAIN, ET CE QUE ÇA A CORRIGÉ
+--------------------------------------------------------------
+La première version de ce fichier a été livrée le 31/08/2026 et déclarée verte. Une
+**septième** occurrence lui a échappé — « exception assumée […] écrite en tête des
+trois TP », dans `5e/5e_C7.6/Synthèses/synthese_professeur_5e_C7.6.html` — pour deux
+raisons indépendantes, dont chacune aurait suffi :
+
+  · **elle allait à la ligne.** Le texte disait « des trois\\n  TP », et le contrôle
+    lisait *ligne par ligne*. Deux recherches `grep` l'avaient manquée pour la même
+    raison. Une phrase ne s'arrête pas en fin de ligne (règle d'or n°262) : le texte
+    est désormais **aplati** avant lecture, et c'est la phrase, non la ligne, qui est
+    citée dans le rapport ;
+  · **elle vivait ailleurs.** Le périmètre était le dossier `atelier-cao/` ; la phrase
+    était dans un dossier de lot voisin. Ce qui parle d'une ressource vit rarement
+    dans son dossier (règle d'or n°263) : le contrôle lit maintenant, en plus, **tout
+    fichier du sous-arbre C7 qui nomme Onshape ou l'atelier CAO** — critère déclaré,
+    pas deviné. 37 voisins entrent ainsi dans le périmètre ; un seul portait un compte.
+
 CE QUE CE CONTRÔLE FAIT
 -----------------------
 **1. Les listes déclarées doivent correspondre au dossier.** Le manifeste énumère les
@@ -36,7 +54,8 @@ pages élèves, les scénarios, les relevés de captures et les adresses d'éval
 listes sont confrontées à ce qui existe : rien de deviné, tout de comparé.
 
 **2. Un nombre écrit à côté du mot « TP » doit valoir le nombre de TP déclarés.** Dans
-les pages et les documents de l'atelier, et dans les phrases du manifeste lui-même.
+les pages et les documents de l'atelier, dans les fichiers voisins qui parlent de lui,
+et dans les phrases du manifeste lui-même.
 
 CE QU'IL NE VOIT PAS, ET LE DIT
 -------------------------------
@@ -98,6 +117,11 @@ RESTREINTE = re.compile(r"\b(?:de|en|du)\s+(?:5e|4e|3e|niveau)\b", re.I)
 #: fichiers de prose de l'atelier (le manifeste est traité à part, phrase par phrase)
 PROSE = ("*.md", "*.html", "Synthèses/*.html")
 
+#: Un fichier qui PARLE de l'atelier est tenu par les comptes de l'atelier, où
+#: qu'il vive. Le 31/08/2026, la phrase fautive était dans la synthèse professeur
+#: de `5e_C7.6` — un dossier voisin, hors de tout périmètre de dossier (n°263).
+PARLE_DE_LATELIER = re.compile(r"onshape|atelier[ -]cao", re.I)
+
 
 def effectifs(manifeste):
     """Les effectifs réels, lus dans le manifeste et non écrits ici."""
@@ -118,26 +142,43 @@ def phrases_du_manifeste(manifeste):
     return descendre(manifeste, "")
 
 
+#: la fin d'une phrase — c'est l'unité de lecture, pas la ligne (règle n°262)
+FIN_DE_PHRASE = re.compile(r"(?<=[.!?;:])\s")
+
+
+def phrase_autour(plat, debut, fin):
+    """La phrase qui porte l'occurrence, dans le texte aplati."""
+    gauche = max((m.end() for m in FIN_DE_PHRASE.finditer(plat, 0, debut)), default=0)
+    m = FIN_DE_PHRASE.search(plat, fin)
+    return plat[gauche:m.start() + 1 if m else min(len(plat), fin + 160)].strip()
+
+
 def compter(texte, attendus, ou, ecarts, releve):
-    """Confronte chaque nombre écrit à côté d'un nom du vocabulaire à son effectif."""
-    for ligne in texte.splitlines():
-        for nom, motif in MOTIFS.items():
-            for m in motif.finditer(ligne):
-                releve["lus"] += 1
-                brut = m.group(1).lower()
-                dit = int(brut) if brut.isdigit() else NOMBRES[brut]
-                if DATEE.search(ligne):
-                    releve["datees"] += 1
-                    continue
-                if RESTREINTE.search(ligne[m.end():m.end() + 24]):
-                    releve["restreintes"] += 1
-                    continue
-                if dit != attendus[nom]:
-                    # On ne s'arrête PAS à la première : c'est tout le sujet. Le
-                    # 30 août, la même phrase était fausse à six endroits, et n'en
-                    # corriger qu'un a suffi à croire le travail fait (n°261).
-                    ecarts.append("%s : « %s » — l'atelier en compte %d\n        %s"
-                                  % (ou, m.group(0), attendus[nom], ligne.strip()[:96]))
+    """Confronte chaque nombre écrit à côté d'un nom du vocabulaire à son effectif.
+
+    On lit le texte **aplati**, pas ligne par ligne. Une phrase ne s'arrête pas
+    en fin de ligne : le 31/08/2026, « écrite en tête des trois\\n  TP » a
+    traversé ce contrôle et deux recherches `grep` sans être vue (n°262).
+    """
+    plat = re.sub(r"\s+", " ", texte)
+    for nom, motif in MOTIFS.items():
+        for m in motif.finditer(plat):
+            releve["lus"] += 1
+            brut = m.group(1).lower()
+            dit = int(brut) if brut.isdigit() else NOMBRES[brut]
+            phrase = phrase_autour(plat, m.start(), m.end())
+            if DATEE.search(phrase):
+                releve["datees"] += 1
+                continue
+            if RESTREINTE.search(plat[m.end():m.end() + 24]):
+                releve["restreintes"] += 1
+                continue
+            if dit != attendus[nom]:
+                # On ne s'arrête PAS à la première : c'est tout le sujet. Le
+                # 30 août, la même phrase était fausse à six endroits, et n'en
+                # corriger qu'un a suffi à croire le travail fait (n°261).
+                ecarts.append("%s : « %s » — l'atelier en compte %d\n        %s"
+                              % (ou, m.group(0), attendus[nom], phrase[:120]))
 
 
 def listes_declarees(manifeste, ecarts, racine=None):
@@ -197,27 +238,46 @@ def main(racine=None):
     manifeste = json.loads((racine / "manifest_cao.json").read_text(encoding="utf-8"))
     attendus = effectifs(manifeste)
     ecarts = []
-    releve = dict(lus=0, datees=0, restreintes=0, fichiers=0, tues=0)
+    releve = dict(lus=0, datees=0, restreintes=0, fichiers=0, tues=0, voisins=0)
 
     listes_declarees(manifeste, ecarts, racine)
 
+    def lire(chemin, ou):
+        releve["fichiers"] += 1
+        texte, tues = taire(chemin.read_text(encoding="utf-8", errors="replace"),
+                            chemin.suffix)
+        releve["tues"] += tues
+        compter(texte, attendus, ou, ecarts, releve)
+        return texte
+
     for motif in PROSE:
         for chemin in sorted(racine.glob(motif)):
-            releve["fichiers"] += 1
-            texte, tues = taire(chemin.read_text(encoding="utf-8"), chemin.suffix)
-            releve["tues"] += tues
-            compter(texte, attendus, chemin.name, ecarts, releve)
+            lire(chemin, chemin.name)
+
+    # Les voisins qui parlent de l'atelier : ils en héritent les comptes (n°263).
+    voisinage = racine.parent
+    for chemin in sorted(voisinage.rglob("*")):
+        if chemin.is_dir() or chemin.suffix not in (".md", ".html"):
+            continue
+        if racine in chemin.parents or chemin.parent == racine:
+            continue                       # déjà lu au titre de l'atelier
+        brut = chemin.read_text(encoding="utf-8", errors="replace")
+        if not PARLE_DE_LATELIER.search(brut):
+            continue
+        releve["voisins"] += 1
+        lire(chemin, str(chemin.relative_to(voisinage)))
 
     for chemin, phrase in phrases_du_manifeste(manifeste):
         compter(phrase, attendus, "manifest_cao.json → %s" % chemin, ecarts, releve)
 
     print("Effectifs déclarés : %s"
           % " · ".join("%d %s" % (n, nom) for nom, n in sorted(attendus.items())))
-    print("%d fichier(s) de prose lus · %d zone(s) tues avant lecture · %d nombre(s) "
-          "rencontrés à côté du vocabulaire (%d écartés comme datés, %d comme restreints "
-          "à un niveau)"
-          % (releve["fichiers"], releve["tues"], releve["lus"], releve["datees"],
-             releve["restreintes"]))
+    print("%d fichier(s) de prose lus, dont %d voisins qui parlent de l'atelier · "
+          "%d zone(s) tues avant lecture"
+          % (releve["fichiers"], releve["voisins"], releve["tues"]))
+    print("%d nombre(s) rencontrés à côté du vocabulaire (%d écartés comme datés, %d comme "
+          "restreints à un niveau)"
+          % (releve["lus"], releve["datees"], releve["restreintes"]))
 
     if ecarts:
         print("\n⛔ %d écart(s) — l'atelier ne se compte plus juste :" % len(ecarts))
