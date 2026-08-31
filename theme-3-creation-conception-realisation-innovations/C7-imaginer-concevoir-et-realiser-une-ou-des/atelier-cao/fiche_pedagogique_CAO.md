@@ -10,7 +10,7 @@
 | Code | Formulation du référentiel (2024) | TP qui la travaille | Où il est évalué |
 |---|---|---|---|
 | **5e_C7.2** | Fabriquer une solution pour améliorer un OST existant. | TP nº1 **bis** — Le dé, en mieux | QCM du lot `5e_C7.2` — 30 questions |
-| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle (contribution) | séquence `4e_C7.1` — 10 questions |
+| **4e_C7.2** | Proposer et fabriquer une solution pour ajouter une nouvelle fonction à un OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº2 — Le dé sur son socle (contribution) | QCM `qcm_4e_C7_jardin-conception.html` du lot `4e_C7.1` — 10 questions |
 | **3e_C7.2** | Proposer et fabriquer un ensemble de solutions pour produire un nouvel OST (croquis, schéma, graphique, algorithme, modélisation). | TP nº4 — Le boîtier étanche | QCM du lot `3e_C7.6` — 10 questions |
 | **5e_C7.6** | Mettre en œuvre les moyens pour réaliser une forme selon une procédure fournie. | TP nº1 — Le dé | QCM du lot `5e_C7.6` — 30 questions |
 | **4e_C7.6** | Modifier une forme à l’aide d’une modélisation. | TP nº2 — Le dé sur son socle | QCM du lot `4e_C7.6` — 30 questions |
@@ -140,12 +140,14 @@ règle de conception n°5 sur ce point.
 demande un « fonctionnement hors connexion raisonnable ». Onshape n'a **aucun
 mode hors ligne** : sans réseau, la séance ne peut pas avoir lieu, elle se
 reporte. Il n'existe donc **pas de version 🅱** pour le geste de modélisation, et
-le prétendre serait faux. Les trois TP le disent maintenant en tête.
+le prétendre serait faux. Les quatre TP le disent maintenant en tête.
 
 Ce qui fonctionne hors ligne, en revanche, c'est tout ce qui s'évalue : les
-trois QCM, les six synthèses et les trois lexiques sont des pages autonomes,
+QCM, les synthèses et les lexiques des quatre lots sont des pages autonomes,
 imprimables, sans compte. Un élève privé de réseau ne perd pas la notion, il
-perd la manipulation — et c'est elle qu'on reporte.
+perd la manipulation — et c'est elle qu'on reporte. (Le tableau « Ce qui
+s'évalue, et où » plus haut donne le compte, et il se relit ; le répéter ici en
+toutes lettres n'ajoutait rien qu'une occasion de vieillir.)
 
 > **Décision du 30/08/2026 (option a).** Plutôt que d'écrire un modeleur hors
 > ligne dans la page (~1 journée) ou une version papier complète (~2 heures), on
@@ -164,9 +166,16 @@ puisque le boîtier protège un capteur réel de la séquence.
 
 ## Limites déclarées
 
-Les images des trois TP ne sont pas toutes produites à ce jour : le générateur
+Les images des quatre TP ne sont pas toutes produites à ce jour : le générateur
 signale celles qui manquent et la règle n°77 refuse le TP tant qu'il en reste.
-Le détail figure dans `RELEVE_DES_CAPTURES_5e.md`, `_4e.md` et `_3e.md`.
+Le détail figure dans un relevé par TP — `RELEVE_DES_CAPTURES_5e.md`,
+`_5e-bis.md`, `_4e.md` et `_3e.md` — et `verif_effectifs.py` refuse qu'un TP
+n'ait pas le sien.
+
+Le plus démuni est le quatrième, « Le dé, en mieux » : **cinq paliers sur huit**
+n'ont aucune image de résultat, et les trois qui en ont une portent toutes le
+**même** dessin de coupe. Un élève y avance donc sans pouvoir se comparer, ce qui
+est précisément ce que la règle n°77 interdit.
 
 La justesse des gestes décrits — le bouton existe-t-il, est-il au bon endroit
 dans cette version d'Onshape — n'est **pas** vérifiée par script. Elle se

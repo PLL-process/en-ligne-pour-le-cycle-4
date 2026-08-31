@@ -58,7 +58,7 @@ exactement 125 000 − 21 × π × 5² × 5.
 et les neuf captures d'interface `tp5e_01` à `tp5e_09` — elles doivent montrer les panneaux
 d'Onshape **en français** (règle d'or n°70).
 
-## Les seize rendus des trois TP (11 août 2026)
+## Les seize rendus produits le 11 août 2026 (les TP de 5e, 4e et 3e d'alors)
 
 `Images/tp5e_R6_conges.png` · `tp5e_R7_de_colore.png` · `tp4e_R1_profil.png` →
 `tp4e_R7_presse_papier.png` · `tp3e_R1_bloc.png` → `tp3e_R7_boitier_fini.png`
@@ -101,3 +101,27 @@ traçable sur les quatre côtés, mais à l'échelle du couvercle entier elle re
 se rend pas ombrée) et les neuf captures d'interface `tp5e_01` à `tp5e_09`, qui doivent montrer
 les panneaux d'Onshape **en français** (règle d'or n°70).
 
+
+## Le dessin de coupe du TP « Le dé, en mieux » (30 août 2026)
+
+`Images/coupe_calotte_5e.svg`
+
+**Origine** : dessin vectoriel **engendré** par `../5e/5e_C7.2/calotte.py`, fonction
+`dessin_coupe()`. Ce n'est ni une capture d'écran ni un rendu : c'est un tracé calculé, où
+chaque cote provient du modèle géométrique et non d'un report à la main. Relancer le script
+redessine le fichier à l'identique.
+
+**Ce qu'il montre** : la face du 1 en coupe, l'ancien creux (cylindre Ø10 à fond plat, arête
+vive) à gauche, la calotte à droite, la bille de Ø20 en pointillés et la hauteur de son centre.
+
+**Contrôles, relevés sur le modèle et non sur l'intention.** Bille Ø20, profondeur 1,5 mm →
+centre à 10 − 1,5 = **8,5 mm** au-dessus de la face ; largeur de la calotte
+2·√(10² − 8,5²) = **Ø10,54**, soit 0,54 mm de plus que le cylindre qu'elle remplace. Volume
+retiré : 67,2 mm³ contre 117,8 mm³ pour le cylindre, **43 % de moins**. Le cylindre ne devient
+plus large que la calotte qu'à partir de 0,16 mm de profondeur.
+
+**Licence** : tracé créé pour ce dépôt, réutilisable sous sa licence.
+
+**Limite déclarée** : ce dessin est le **seul** média du quatrième TP, et il sert à trois
+paliers sur huit. Les cinq autres n'ont aucune image de résultat — la règle n°77 refuse donc ce
+TP, et `RELEVE_DES_CAPTURES_5e-bis.md` dit lesquelles prendre.

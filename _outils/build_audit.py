@@ -970,11 +970,16 @@ OVERLAY = {
                 "suite de 31 tests exécutés et verts. Le code n'était évalué NULLE PART dans le "
                 "dépôt : il l'est maintenant. La séquence est le TP de l'atelier CAO, mutualisé "
                 "entre les trois niveaux et non dupliqué ici — d'où le reclassement.",
+        # Ce texte disait « en tête des trois TP » : un compte écrit en dur dans un
+        # générateur, donc faux dans tous les fichiers qu'il produit le jour où
+        # l'atelier en a reçu un quatrième (règles n°256 et n°261). On ne le corrige
+        # pas en « quatre », on cesse de compter.
         anomalies="Aucun parcours hors connexion pour le geste de modélisation : Onshape n'a pas "
                   "de mode hors ligne. Exception assumée à la règle de conception n°5 (décision "
-                  "du 31/08/2026, option a), désormais annoncée en tête des trois TP. Le QCM, "
-                  "les synthèses et le lexique, eux, fonctionnent hors ligne et sans compte. Les "
-                  "images du TP ne sont pas toutes produites (limite déclarée de l'atelier).",
+                  "du 30/08/2026, option a), désormais annoncée en tête de chaque TP de "
+                  "l'atelier. Le QCM, les synthèses et le lexique, eux, fonctionnent hors ligne "
+                  "et sans compte. Les images du TP ne sont pas toutes produites (limite "
+                  "déclarée de l'atelier).",
         accessibilite="Vérifiée : aucune boîte modale, corrections dépliables, deux synthèses "
                       "séparées, lexique imprimable en noir et blanc, hors ligne intégral.",
         medias="Aucun média propre : le lot n'ajoute aucune image, il accompagne le TP.",
