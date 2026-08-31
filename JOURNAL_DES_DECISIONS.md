@@ -10855,3 +10855,33 @@ ses douze fichiers. L'ordre de fusion n'a pas d'importance.
 
 *Quatrième fausse alerte de la journée, et la plus coûteuse des quatre : les trois premières
 faisaient perdre du temps sur des fichiers justes, celle-ci faisait refaire du travail fini.*
+
+## 2026-08-31 — « Ajuster le programme du jardin » : le banc de scénarios rejoué pour de vrai
+
+Premier lot de la file d'attente après la correction d'hier soir : `4e_C6.1`, 23 coches, script
+`tests_lot11.js` jamais commité. `tests_4e_C6.1-C6.3.mjs` — **29 contrôles, 29/29** — les rejoue.
+
+Ce lot a une particularité que le tableau écrit à la main mentionnait sans la démontrer : son
+banc de scénarios accepte **l'ordre libre**. La suite commence donc volontairement par le
+scénario nº2 et vérifie qu'il compte pour 1/4 ; puis elle joue les trois autres dans le
+désordre, et le verrou `__exp.scen` s'ouvre bien à 4/4. Elle vérifie aussi le refus qui précède :
+tant que le banc n'est pas joué, l'activité 3 affiche son score complet **et reste invalide**,
+avec le rappel « joue VRAIMENT les 4 scénarios ». Un score plein qui ne vaut pas validation,
+c'est exactement ce qu'un verrou expérientiel doit produire.
+
+Les 27 champs de réponse sont extraits des `CHECKS` de la page, selon les deux conventions que ce
+lot emploie : l'objet `att = {id: "valeur"}` et la **liste de paires** `[["ag1","1"], …]` de
+l'algorigramme — une cinquième convention, ajoutée au répertoire des pilotes.
+
+### Une devinette de moins
+
+La première version supposait dans quel onglet de séance vivait chaque champ, et s'est trompée :
+l'algorigramme est en séance 1, pas en séance 2. Playwright refuse d'écrire dans ce qui est
+masqué, et la suite s'est arrêtée net.
+
+Le pilote **ne devine plus** : il ouvre les onglets l'un après l'autre jusqu'à ce que le champ
+soit visible. C'est plus court à écrire, et cela survit au jour où la répartition changera —
+alors qu'une table écrite à la main aurait vieilli en silence, comme tous les nombres qu'on
+recopie (n°261).
+
+File d'attente après ce lot : **7 lots, 132 coches**. En tête, `3e_C4.1` (22).

@@ -4,7 +4,27 @@
 pages chargées en `file://` (mode hors ligne — polices Google absentes, filtrées comme
 attendu). Suite : `tests_lot11.js` — 23 tests, **tous réellement exécutés** le 24/07/2026.
 
-> **Ce script n'est pas dans le dépôt et n'y a jamais été commité** — les coches ci-dessous disent ce qui a été observé ce jour-là, elles ne sont pas rejouables aujourd'hui (règle d'or n°259, relevé du 31/08/2026 par `_outils/controle_rapports_tests.py`). La suite reste à écrire.
+> **Ce script n'est pas dans le dépôt et n'y a jamais été commité** (relevé du 31/08/2026 par
+> `_outils/controle_rapports_tests.py`).
+>
+> **La suite est écrite, et elle est ici.** `tests_4e_C6.1-C6.3.mjs`, **29 contrôles**, rejoue
+> les vingt-trois lignes ci-dessous : le **banc de scénarios** conduit scénario par scénario —
+> en commençant volontairement par le nº2, pour vérifier que l'ordre est bien libre —, le refus
+> de l'activité 3 tant que les quatre scénarios ne sont pas joués, les quatre activités et
+> l'algorigramme remplis avec les réponses **lues dans la page**, le rechargement verrou compris,
+> puis le QCM ouvert et joué.
+>
+> ```
+> node tests_4e_C6.1-C6.3.mjs      →  29 / 29
+> ```
+>
+> Six contrôles s'ajoutent au tableau d'origine : aucun verrou ouvert au chargement (n°226), les
+> 27 champs extraits de la page et non recopiés, l'algorigramme remis dans l'ordre, les coches
+> des onglets, les réfutations parallèles vérifiées question par question, et l'absence de boîte
+> modale ou de requête échouée.
+>
+> *Le pilote n'y devine pas dans quel onglet vit un champ : il ouvre les onglets jusqu'à ce que
+> le champ soit visible. Une première version avait supposé la répartition, et s'est trompée.*
 
 **Résultat : 23 / 23 réussis · aucune erreur JavaScript · aucune requête locale échouée.**
 
