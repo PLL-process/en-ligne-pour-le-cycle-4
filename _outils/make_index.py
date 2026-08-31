@@ -73,7 +73,12 @@ TYPES_PEDAGOGIQUES = [
 MOTIFS_MAINTENANCE = (
     r"^README\.md$", r"^SOURCES_MEDIAS\.md$", r"^matrice_couverture", r"^manifest",
     r"^MANIFESTE_LOT", r"^rapport_tests", r"^RAPPORT_TESTS", r"^JOURNAL_LOT",
-    r"^tests_.*\.py$", r"^CRCN_regle7\.md$",
+    # Une suite de tests n'est pas une ressource pour la classe. Ce motif ne
+    # connaissait que Python : les suites `.mjs` livrées depuis le 31/08/2026
+    # étaient comptées et affichées comme ressources pédagogiques — un outil qui
+    # reconnaît les fichiers par leur extension doit connaître toutes celles que
+    # le dépôt emploie (règle d'or n°269).
+    r"^tests_.*\.(py|mjs|js)$", r"^CRCN_regle7\.md$",
     # Documents de travail internes : utiles au dépôt, sans usage en classe.
     r"^(CADRAGE|PLAN_LOT|RAPPORT_CONTROLES|ANTICIPATION|AVIS_|MIGRATION_|ENTREE_NOUVEAUTES"
     r"|MATRICE_COUVERTURE|REGLE_OR|SOURCES_DONNEES)", r"^couverture_.*\.json$", r"\.json$",
@@ -217,8 +222,19 @@ def lot_sibling_dirs(cnum, niveau, code):
     return out
 
 
+#: Les sous-dossiers d'un lot dont le contenu est une ressource pour la classe.
+#: Le 31/08/2026, une marche depuis `index.html` de lien en lien a montré que
+#: **56 des 76 synthèses du dépôt n'étaient atteignables par aucun chemin** :
+#: elles vivent dans `Synthèses/`, ce générateur ne lisait que le dossier du
+#: code, et 40 séquences sur 46 ne les lient pas davantage. Une synthèse est
+#: pourtant le document que l'élève emporte — et un fichier livré qu'aucun
+#: chemin n'atteint n'est pas livré (règle d'or n°272).
+SOUS_DOSSIERS_PEDAGOGIQUES = ("Synthèses",)
+
+
 def content_files(rel_dir):
-    """Fichiers de contenu réel (hors .gitkeep) directement dans le dossier code."""
+    """Fichiers de contenu réel (hors .gitkeep) du dossier code, puis de ses
+    sous-dossiers pédagogiques — rendus avec leur chemin relatif au dossier."""
     full = os.path.join(DST, rel_dir)
     if not os.path.isdir(full):
         return []
@@ -227,6 +243,13 @@ def content_files(rel_dir):
         p = os.path.join(full, fn)
         if os.path.isfile(p) and fn != ".gitkeep":
             out.append(fn)
+    for sous in SOUS_DOSSIERS_PEDAGOGIQUES:
+        chemin = os.path.join(full, sous)
+        if not os.path.isdir(chemin):
+            continue
+        for fn in sorted(os.listdir(chemin)):
+            if os.path.isfile(os.path.join(chemin, fn)) and fn != ".gitkeep":
+                out.append(sous + "/" + fn)
     return out
 
 
@@ -360,7 +383,10 @@ for theme_n in [1, 2, 3]:
 
                 peda, maint = [], []
                 for r, fn in paires:
-                    genre = classer(fn)
+                    # `fn` peut porter un sous-dossier (« Synthèses/… ») : le lien
+                    # a besoin du chemin, le classement et le titre du seul nom.
+                    nom = fn.rsplit("/", 1)[-1]
+                    genre = classer(nom)
                     lien = f'{html.escape(r)}/{html.escape(fn)}'
                     herit = ('<span class="badge-herit" title="Ressource héritée — modernisation prévue (règle d\'or n°12)">🛠</span>'
                              if f"{r}/{fn}" in HERITEES else "")
@@ -369,10 +395,10 @@ for theme_n in [1, 2, 3]:
                         # Un TP porte son rang et son nom dans son <h1> : on les
                         # lit plutôt que de les deviner d'après le nom de fichier.
                         titre = (titre_depuis_h1(r, fn, DST) if libelle == "Travaux pratiques" else None) \
-                                or titre_pedagogique(fn, libelle)
+                                or titre_pedagogique(nom, libelle)
                         peda.append(f'<li>{emoji} <a href="{lien}">{html.escape(titre)}</a>{herit}</li>')
                     else:
-                        maint.append(f'<a href="{lien}">{html.escape(fn)}</a>')
+                        maint.append(f'<a href="{lien}">{html.escape(nom)}</a>')
                 n_peda += len(peda)
 
                 statut = STATUT_PAR_CODE.get(full_code, "")
