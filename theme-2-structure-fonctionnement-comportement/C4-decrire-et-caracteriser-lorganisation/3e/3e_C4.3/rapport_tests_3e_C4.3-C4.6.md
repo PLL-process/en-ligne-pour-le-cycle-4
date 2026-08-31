@@ -2,6 +2,30 @@
 
 Date : 2026-07-22 · Agent : Fable (Thème 2) · Environnement : Chromium headless (Playwright), viewport téléphone 390×844 + vérifications scriptées Python/Node.
 
+
+> **Suite livrée le 31/08/2026 — `tests_3e_C4.3-C4.6.mjs`, 23 contrôles, `23 / 23`.**
+> Ce lot était le plus fourni de la file d'attente publiée par
+> `_outils/controle_rapports_tests.py` : vingt-six coches vertes qu'aucun script ne relançait
+> (règles d'or n°259 et n°266). La suite conduit le simulateur de CAN au curseur, remplit les
+> sept activités avec les réponses **extraites des `CHECKS` de la page** (45 champs), recharge,
+> et joue le QCM **trois fois** pour rejouer les trois scénarios de notes que ce rapport
+> calculait à la main.
+>
+> ```
+> node tests_3e_C4.3-C4.6.mjs      →  23 / 23
+> ```
+>
+> **Deux limites déclarées plutôt que masquées.** Les activités 4 et 6 emploient deux
+> conventions d'écriture que le pilote ne parse pas — la concaténation de trois champs binaires
+> (`a4_b1..b3`) et le texte normalisé de `a6_1`. Elles se valident donc à `8/9` et `3/4`, ce que
+> la page elle-même accepte (`ok>=8`, `ok>=3`), et le contrôle nº7 bis exige exactement ces deux
+> scores : si un troisième point venait à manquer, il tomberait.
+>
+> **Une erreur du test, pas de la page.** La première version cherchait le lien d'évitement par
+> son libellé (« évitement », « aller au ») ; celui de cette page dit « Aller directement aux
+> activités » et n'était pas trouvé. Il se reconnaît à sa classe `skip-link` — convention du
+> dépôt —, et le contrôle vérifie en plus qu'il vise une ancre réelle et se montre au focus
+> clavier.
 ## 1. Tests automatisés exécutés — 40/40 réussis (suite principale) + 10/10 (scénarios de notes)
 
 ### Séquence (`sequence_3e_C4.3-C4.6_station_alerte_cyclonique.html`)
