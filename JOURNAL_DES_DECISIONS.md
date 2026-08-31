@@ -10400,3 +10400,67 @@ Le brouillon de `RELEVE_DES_CAPTURES_5e-bis.md` racontait l'histoire ainsi : « 
 continué d'annoncer trois relevés pour trois TP ». Le contrôle l'a refusé — la phrase ne portait
 pas de date, donc elle parlait du présent, donc elle était fausse. Elle est datée maintenant.
 Le premier fichier qu'il a recalé est celui qui l'accompagne.
+
+## 2026-08-31 — La septième occurrence, et pourquoi le contrôle ne l'a pas vue
+
+La PR précédente corrigeait six occurrences de « trois TP » dans un atelier qui en compte quatre,
+et livrait `verif_effectifs.py` pour qu'aucune ne revienne. Le contrôle passait au vert.
+
+Il y en avait une **septième**, et elle est restée. Dans
+`5e/5e_C7.6/Synthèses/synthese_professeur_5e_C7.6.html` :
+
+> « c'est une exception assumée à la règle de conception n°5, écrite en tête des **trois** TP »
+
+Deux raisons indépendantes l'ont protégée, et **chacune aurait suffi**.
+
+**Elle allait à la ligne.** Le fichier écrit « des trois⏎ TP ». Le contrôle lisait *ligne par
+ligne* ; deux recherches `grep` faites la veille l'avaient manquée pour exactement la même
+raison — et j'avais conclu de leur silence qu'il n'y avait plus rien.
+
+- **n°262** — **une phrase ne s'arrête pas en fin de ligne, et un contrôle qui lit par lignes ne
+  lit pas des phrases.** Le retour à la ligne est une décision de mise en page, invisible au
+  lecteur et sans rapport avec le sens. Un contrôle qui en dépend trouve ce qui tient sur une
+  ligne et rate le reste — silencieusement, en affichant un vert.
+
+**Elle vivait ailleurs.** Le périmètre du contrôle était le dossier `atelier-cao/`. La phrase
+parlait de l'atelier depuis le dossier d'un lot voisin.
+
+- **n°263** — **ce qui parle d'une ressource vit rarement dans son dossier ; un contrôle dont le
+  périmètre est un dossier mesure le dossier, pas la ressource.** Les synthèses professeur, les
+  README, les fiches d'un lot commentent tous des ressources qui ne sont pas chez eux.
+
+Les deux sont corrigées. Le texte est **aplati** avant lecture, et c'est la **phrase** qui est
+citée dans le rapport, plus la ligne. Le périmètre s'étend à tout fichier du sous-arbre C7 qui
+**nomme Onshape ou l'atelier CAO** — critère déclaré, pas deviné : 37 voisins y entrent, un seul
+portait un compte, et c'était le bon. Trois cas s'ajoutent au banc (21 au total) : la phrase
+coupée, le voisin qui parle de l'atelier, et le voisin qui n'en parle pas et qu'on ne juge donc
+pas.
+
+### Ce que le même fichier disait d'autre, et qui était faux
+
+Le paragraphe « Lien avec le reste du dépôt » de cette synthèse affirmait :
+
+> « `5e_C7.2` […] appartient au mini-projet de `5e_C7.1`, où il reste **à ce jour enseigné sans
+> être évalué**. »
+
+C'était vrai le 30 août au matin. Le soir même, le TP nº1 bis « Le dé, en mieux » était écrit
+précisément parce que le mini-projet *enseigne* l'amélioration mais s'arrête avant de fabriquer,
+et le code y reçoit **30 questions**. La correction avait été portée dans la fiche de l'atelier —
+pas ici. C'est encore la règle n°261 : une conclusion révisée se recopie aussi mal qu'un nombre.
+
+### Le contrôle que je n'ai PAS écrit, et pourquoi
+
+Tentation immédiate : un contrôle qui vérifierait toute affirmation de non-couverture contre
+l'index mesuré. Mesure faite, le dépôt en porte **trois** :
+
+| Affirmation | Verdict |
+|---|---|
+| « `3e_C7.6`, qui n'**était** évalué nulle part » | correcte — imparfait, décrit l'avant |
+| « `5e_C7.6` **était** enseigné et n'**était** évalué nulle part » | correcte — idem |
+| « il reste **à ce jour** enseigné sans être évalué » | **fausse** — présent |
+
+Deux sur trois sont justes, et ce qui les distingue de la troisième est **un temps de verbe**. Un
+contrôle qui ne saurait pas séparer « n'était » de « n'est » signalerait deux phrases correctes
+pour en trouver une fausse — et un contrôle qui signale du faux finit ignoré (n°248). Sur une
+population de trois, la règle et la relecture coûtent moins cher que l'outil et mentent moins.
+La phrase est corrigée à la main, et c'est écrit ici pour que la question ne se repose pas.

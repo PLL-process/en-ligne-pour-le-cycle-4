@@ -46,9 +46,15 @@ SCENARIOS = {
 }
 
 
-def atelier(tmp, manifeste=None, scenarios=None, prose=None, fichiers=None):
-    """Fabrique un atelier minimal et renvoie sa racine."""
-    r = pathlib.Path(tmp)
+def atelier(tmp, manifeste=None, scenarios=None, prose=None, fichiers=None, voisins=None):
+    """Fabrique un atelier minimal et renvoie sa racine.
+
+    `tmp` est le dossier PARENT : l'atelier vit dans `tmp/atelier-cao`, et
+    `voisins` y dépose des fichiers frères — c'est là que vivait la phrase
+    fautive du 31/08 (n°263). Chaque cas a son propre parent, sinon un cas
+    lirait les voisins d'un autre.
+    """
+    r = pathlib.Path(tmp) / "atelier-cao"
     (r / "scenarios").mkdir(parents=True, exist_ok=True)
     (r / "Synthèses").mkdir(parents=True, exist_ok=True)
     m = json.loads(json.dumps(manifeste if manifeste is not None else MANIFESTE_JUSTE))
@@ -63,6 +69,10 @@ def atelier(tmp, manifeste=None, scenarios=None, prose=None, fichiers=None):
     if prose:
         for nom, texte in prose.items():
             (r / nom).write_text(texte, encoding="utf-8")
+    for nom, texte in (voisins or {}).items():
+        chemin = r.parent / nom
+        chemin.parent.mkdir(parents=True, exist_ok=True)
+        chemin.write_text(texte, encoding="utf-8")
     return r
 
 
@@ -205,7 +215,33 @@ def main():
                     {"doc.md": "```\nles deux TP\n```\n"}, f),
             False)
 
-    # ── 18. l'atelier réel doit passer, sans rien avoir à réécrire ──────────
+        # ── 18. une phrase qui va à la ligne reste une phrase (n°262) ───────
+        # Le cas réel du 31/08 : « écrite en tête des trois\n  TP ». Il avait
+        # traversé la première version de ce contrôle ET deux recherches grep.
+        cas("un compte coupé par un retour à la ligne",
+            atelier(base / "c18", m, sc,
+                    {"s.html": "<p>exception assumée, écrite en tête des deux\n  TP.</p>\n"},
+                    f),
+            True, "deux TP")
+
+        # ── 19. un voisin qui parle de l'atelier en hérite les comptes (n°263)
+        cas("un fichier voisin qui parle d'Onshape et compte faux",
+            atelier(base / "c19", m, sc, None, f,
+                    voisins={"5e/5e_C7.6/Synthèses/s.html":
+                             "<p>Onshape exige le réseau : écrit en tête des deux TP.</p>\n"}),
+            True, "deux TP")
+
+        # ── 20. un voisin étranger à l'atelier reste hors périmètre ─────────
+        # Le périmètre est DÉCLARÉ — un fichier qui nomme Onshape ou l'atelier
+        # CAO —, pas deviné. Un lot réseaux qui compte ses propres TP n'a rien
+        # à voir avec celui-ci.
+        cas("un fichier voisin étranger à l'atelier n'est pas jugé",
+            atelier(base / "c20", m, sc, None, f,
+                    voisins={"4e/4e_C4.7/README.md":
+                             "Le lot réseaux comprend deux TP débranchés.\n"}),
+            False)
+
+    # ── 21. l'atelier réel doit passer, sans rien avoir à réécrire ──────────
     controles += 1
     code, texte = jouer(VE.A)
     if code != 0:
