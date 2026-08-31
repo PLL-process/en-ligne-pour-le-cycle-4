@@ -11432,3 +11432,51 @@ Dette de documentation des médias : **82 → 8**. Les huit restants sont dans `
 > pour une correction.** Avant d'aligner trois fichiers sur un quatrième, il faut regarder si
 > les trois disent la même chose autrement — et, s'ils ne disent rien de tel, se demander si le
 > manque est chez eux ou dans l'attente.
+
+## 2026-08-31 — Le dépôt entier est atteignable, et une imprécision de ma main est corrigée
+
+Dernière PR sœur annoncée en #325 et #329.
+
+### 338 pages sur 338
+
+`_reperes/carte_des_representations.html` était la dernière page qu'aucun chemin n'atteignait.
+C'est un **document de référence pour l'enseignant** — quinze façons de montrer une idée
+technique, leur nom officiel, leur nom de métier, leur place dans la démarche. Il ne va donc pas
+dans une séquence d'élève.
+
+La carte cite déjà la séquence de `5e_C1.1`. **La synthèse professeur de ce lot lui répond**, et
+la boucle se ferme : le lien existait dans un sens, il existe maintenant dans les deux.
+
+```
+338 page(s) HTML dans le dépôt · 338 atteignables depuis index.html · 0 non
+     dont 76 synthèse(s), 76 atteignable(s)
+```
+
+Ce n'est pas le meilleur foyer possible : un repère transversal à tout le cycle mériterait
+d'être atteignable depuis l'**index**, et non depuis la synthèse d'un lot. Mais l'index est
+engendré par `_outils/make_index.py`, hors du périmètre d'une branche « thème 1 ». La ligne de
+pied de page qui le placerait vraiment à sa place viendra avec la PR thème 2 qui vide
+`TOLEREES` — et alors ce lien-ci deviendra un renfort, pas une béquille.
+
+### L'imprécision que je devais
+
+Le `SOURCES_MEDIAS.md` de `5e_C1.2`, écrit en PR #321, posait au sujet de deux SVG une question
+ouverte : « schémas devenus sans emploi, ou câblage oublié ? ». **Elle ne l'était pas.** Le
+manifeste du lot les range sous `herite_conserve`, à côté de l'activité CRCN dont ils viennent :
+quelqu'un avait décidé qu'ils restaient, et l'avait écrit. Je l'avais lu trop vite.
+
+Le contrôle écrit le lendemain — `controle_medias.py` — les range déjà à part, parmi les images
+« gardées exprès ». Le texte du lot dit maintenant la même chose, et raconte la correction plutôt
+que de l'effacer (règle d'or n°248 : sans quoi on signalerait précisément les fichiers qui ont
+dit la vérité).
+
+### État des lieux, fin de journée
+
+| Mesure | Valeur |
+|---|---|
+| Rapports portant des coches sans suite exécutable | **0** |
+| Pages inatteignables depuis l'index | **0** |
+| Médias sans provenance écrite | **0** |
+| Médias qu'un `SOURCES_MEDIAS.md` existant ne nomme pas | **8** (`4e_C4.7`) |
+| Entrées périmées dans `TOLEREES` | **5** (à vider, branche thème 2) |
+| Séquences chargeant une ressource distante | **12 sur 72**, dont **1 mesurée hors ligne** |

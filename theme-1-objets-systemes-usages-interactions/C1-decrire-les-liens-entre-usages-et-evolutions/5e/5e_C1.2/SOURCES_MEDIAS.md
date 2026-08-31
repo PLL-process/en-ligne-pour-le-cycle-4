@@ -53,6 +53,13 @@ licence ne dépende de personne. Mais **aucune page du lot ne les affiche** :
 | `Images/comparer_freins_velo.svg` | Comparer deux principes de freinage | ~2 Ko |
 | `Images/eclairer_principes.svg` | Deux principes pour éclairer | ~2 Ko |
 
-À trancher, pas à deviner : schémas devenus sans emploi et à retirer, ou images-objets dont le
-câblage dans la séquence a été oublié. `_outils/controle_medias.py` les compte et les nomme sans
-les refuser : un fichier inemployé est une dette, pas un mensonge.
+> **Correction du 31/08/2026.** La version de cette section publiée en PR #321 posait la
+> question comme si elle était ouverte : « schémas devenus sans emploi, ou câblage oublié ? ».
+> Elle ne l'est pas. Le manifeste de ce lot range ces deux fichiers sous `herite_conserve`,
+> aux côtés de `activite_crcn_donnees_freinage_5e_C1.2.html` : **quelqu'un a décidé qu'ils
+> restaient**, et l'a écrit. Je l'avais lu trop vite, et `_outils/controle_medias.py` — écrit
+> le lendemain — les range désormais à part, parmi les images « gardées exprès ».
+
+Ces deux fichiers sont donc **hérités et conservés volontairement**, avec l'activité CRCN dont
+ils proviennent. Ils ne sont ni oubliés ni en attente d'une décision : leur emploi éventuel
+appartient à cette activité. Une décision écrite n'est pas une négligence (règle d'or n°271).
