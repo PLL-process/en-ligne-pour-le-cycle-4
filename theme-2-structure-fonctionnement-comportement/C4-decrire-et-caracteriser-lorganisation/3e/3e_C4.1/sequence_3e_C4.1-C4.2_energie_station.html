@@ -591,7 +591,11 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
 
 /* ══════ Simulateur d'autonomie (activité 2) ══════ */
 window.__exp = window.__exp || {};
-function majSim(){
+/* `tracer` dit si l'appel vient d'un GESTE de l'élève. Au chargement, la page
+   doit AFFICHER l'état du simulateur sans le compter comme une expérience
+   observée : sinon le verrou s'ouvre en partie tout seul (règle d'or n°226,
+   corrigée le 31/08/2026 — mesurée par `_outils/controle_verrous.mjs`). */
+function majSim(tracer){
   const cap = parseInt($("simCap").value,10);
   const conso = parseInt($("simConso").value,10);
   $("simCapVal").textContent = cap;
@@ -602,11 +606,13 @@ function majSim(){
   $("simVerdict").textContent = ok ? "✅ La station tient les 72 h" : "❌ Station muette après " + heures + " h";
   $("simVerdict").style.color = ok ? "#81fba1" : "#ff7b88";
   $("simAuto").style.color = ok ? "#81fba1" : "#ff7b88";
-  window.__exp[ok ? "suffisant" : "insuffisant"] = heures;
-  save(false);
+  if(tracer){
+    window.__exp[ok ? "suffisant" : "insuffisant"] = heures;
+    save(false);
+  }
 }
-$("simCap").addEventListener("input", majSim);
-$("simConso").addEventListener("input", majSim);
+$("simCap").addEventListener("input", ()=>majSim(true));
+$("simConso").addEventListener("input", ()=>majSim(true));
 
 /* ══════ Vérifications ══════ */
 window.__valid = window.__valid || {};
@@ -726,7 +732,7 @@ function majEssentiel(){
 })();
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
-majEssentiel(); majSim(); majProgress(); majHyp();
+majEssentiel(); majSim(false); majProgress(); majHyp();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {

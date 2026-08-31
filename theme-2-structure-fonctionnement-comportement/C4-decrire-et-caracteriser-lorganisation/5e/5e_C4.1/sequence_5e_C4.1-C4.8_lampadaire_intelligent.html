@@ -810,7 +810,12 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
 window.__exp = window.__exp || {};   // trace des situations réellement observées
 let passageTimer = null;
 window.__passage = false;
-function majLampe(){
+/* `tracer` dit si l'appel vient d'un GESTE de l'élève. Au chargement, la page
+   doit AFFICHER l'état du simulateur sans le compter comme une expérience :
+   sinon le verrou de l'activité 3 s'ouvre d'un tiers tout seul, avant que
+   personne n'ait touché le curseur (règle d'or n°226, corrigée le 31/08/2026 —
+   `window.__exp` valait `{"jour":"eteint"}` dès l'ouverture). */
+function majLampe(tracer){
   const lum = parseInt($("simJour").value,10);
   const nuit = lum < 30;
   $("simLum").textContent = lum;
@@ -822,16 +827,17 @@ function majLampe(){
   else { etat="veille"; icone="🌗"; txtEtat="veille (30 %) — nuit calme"; }
   $("simLed").textContent = icone;
   $("simLedTxt").textContent = txtEtat;
-  // trace des expériences observées
-  const cle = (nuit?"nuit":"jour") + (window.__passage?"+passage":"");
-  window.__exp[cle] = etat;
-  save(false);
+  if(tracer){                       // trace des expériences RÉELLEMENT observées
+    const cle = (nuit?"nuit":"jour") + (window.__passage?"+passage":"");
+    window.__exp[cle] = etat;
+    save(false);
+  }
 }
-$("simJour").addEventListener("input", majLampe);
+$("simJour").addEventListener("input", ()=>majLampe(true));
 $("btnPassage").addEventListener("click", ()=>{
-  window.__passage = true; majLampe();
+  window.__passage = true; majLampe(true);
   clearTimeout(passageTimer);
-  passageTimer = setTimeout(()=>{ window.__passage=false; majLampe(); }, 5000);
+  passageTimer = setTimeout(()=>{ window.__passage=false; majLampe(true); }, 5000);
 });
 
 /* ══════ Vérifications ══════ */
@@ -957,7 +963,7 @@ function majEssentiel(){
 })();
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
-majEssentiel(); majLampe(); majProgress(); majHyp();
+majEssentiel(); majLampe(false); majProgress(); majHyp();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {

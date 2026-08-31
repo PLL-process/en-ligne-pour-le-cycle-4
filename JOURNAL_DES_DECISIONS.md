@@ -10542,3 +10542,67 @@ sous le seuil n'est pas accompagné du nom de la banque qui le renforce.
 **Limite déclarée, et elle est réelle** : les **16 contrôles de la séquence** restent un tableau
 écrit à la main. Ils n'ont pas été rejoués — la séquence n'a changé que d'un nombre. Écrire leur
 suite est le prochain geste dû à ce lot, et c'est inscrit dans son rapport comme dans l'audit.
+
+## 2026-08-31 — Le verrou qui s'ouvrait tout seul, et les sept autres pages
+
+La PR précédente laissait une dette écrite noir sur blanc : *« les 16 contrôles de la SÉQUENCE
+restent un tableau écrit à la main : leur suite est à écrire (règle n°259). »* La voici —
+`tests_5e_C4.1-C4.8_sequence.mjs`, **30 contrôles**, qui remplit les sept activités, manœuvre le
+simulateur et provoque un passage devant le détecteur.
+
+Les bonnes réponses n'y sont pas recopiées : elles sont **extraites des fonctions `CHECKS` de la
+page** — 51 champs sur 7 activités. Un test qui recopie ce qu'il doit vérifier cesse de le
+vérifier, et se désynchronise en silence le jour où la séquence change une option.
+
+### Ce qu'elle a trouvé à sa troisième ligne
+
+`window.__exp` valait `{"jour":"eteint"}` **au chargement de la page**. La fonction d'affichage
+du simulateur, `majLampe()`, était appelée à l'initialisation — et elle enregistrait l'état
+affiché comme une expérience observée. Le verrou de l'activité 3 en exige trois (jour, nuit,
+nuit + passage) : **il s'ouvrait d'un tiers tout seul**, avant que l'élève ait touché le curseur.
+
+Le rapport du lot affirmait exactement le contraire : *« Verrou expérientiel : refus de valider
+l'act. 3 sans expériences réelles ✅ »*. La coche était partiellement fausse **depuis l'origine**,
+et aucune relecture ne l'aurait vue : il fallait ouvrir la page et regarder une variable.
+
+La correction est d'une ligne d'intention : `majLampe(tracer)` n'enregistre que si l'appel vient
+d'un geste, et l'initialisation appelle `majLampe(false)`. La page affiche toujours l'état de
+départ ; elle ne le compte plus comme une observation.
+
+### Sept autres pages, mesurées
+
+`_outils/controle_verrous.mjs` ouvre **chaque séquence et chaque TP du dépôt** dans un contexte
+de navigateur **neuf** — aucun stockage hérité — et lit `window.__exp` juste après le chargement.
+Sur **76 pages** : 23 ne portent aucun verrou, 4 déclarent des casiers vides, et **8 ouvraient un
+verrou sans geste**, dont le lampadaire.
+
+Distinguer les deux derniers cas est tout le travail de justesse de cet outil. `{"bench":{}}` ou
+`{"zoom":false}` sont des **casiers déclarés d'avance**, pas des observations ; les signaler
+aurait noyé les vrais (règle n°248). Ne comptent que les clés portant une valeur **vraie**.
+
+Trois pages relevaient du Thème 2 et sont corrigées ici :
+
+| Page | Ce qui s'ouvrait seul | Ce que le verrou exigeait |
+|---|---|---|
+| `5e_C4.1` lampadaire | `jour = "eteint"` | jour **et** nuit **et** nuit+passage |
+| `3e_C4.1` énergie de la station | `suffisant = 80` | une configuration **insuffisante** ET une suffisante |
+| `5e_C6.1` programmer le lampadaire | `defaut = true` | le réglage par **défaut** ET la mission mairie |
+
+Le cas de `3e_C4.1` est le plus net : sa consigne écrit à l'élève « la page vérifie que tu as
+vraiment fait les deux essais », et la page n'en vérifiait qu'un.
+
+- **n°265** — **une fonction d'affichage appelée à l'initialisation ne doit rien enregistrer.**
+  Afficher l'état de départ et déclarer que l'élève l'a observé sont deux gestes différents ; les
+  confondre ouvre un verrou que personne n'a manœuvré. Le symptôme est invisible à la lecture du
+  code d'un verrou — il faut ouvrir la page dans un contexte neuf et regarder la variable.
+
+### Ce qui reste, et qui n'est pas de ce périmètre
+
+Cinq pages ouvrent encore un verrou au chargement, hors de la garde-périmètre de cette branche :
+
+- **Thème 1** : `5e_C1.5` le compte du club (`anonyme`, `regarde`) ;
+- **Thème 3** : `3e_C7.4`, `4e_C7.4`, `5e_C7.4` (`stock`, et une source déjà cochée dans `src`),
+  et `4e_C9.1` le jardin programmé (`vuSec`).
+
+`controle_verrous.mjs` **sort en erreur** tant qu'elles sont là : c'est voulu, et ce n'est pas un
+oubli. Deux livraisons restent à faire, une par thème, et l'outil les nommera jusque-là.

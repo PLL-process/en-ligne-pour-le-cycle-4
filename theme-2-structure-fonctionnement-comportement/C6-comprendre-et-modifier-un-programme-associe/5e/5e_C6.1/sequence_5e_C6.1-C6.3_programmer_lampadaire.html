@@ -569,7 +569,11 @@ document.querySelectorAll(".seance-tab").forEach(tab=>{
 window.__exp = window.__exp || {};
 let passageTimer = null;
 window.__passage = false;
-function majSim(){
+/* `tracer` dit si l'appel vient d'un GESTE de l'élève. Au chargement, la page
+   doit AFFICHER l'état du simulateur sans le compter comme une expérience
+   observée : sinon le verrou s'ouvre en partie tout seul (règle d'or n°226,
+   corrigée le 31/08/2026 — mesurée par `_outils/controle_verrous.mjs`). */
+function majSim(tracer){
   const seuil = parseInt($("pSeuil").value,10);
   const duree = parseInt($("pDuree").value,10);
   const lum = parseInt($("simLum").value,10);
@@ -583,8 +587,8 @@ function majSim(){
   else { icone="🌗"; txtEtat="veille (30 %) — nuit pour ce réglage"; }
   $("simLed").textContent = icone;
   $("simLedTxt").textContent = txtEtat;
-  if(seuil===30){ window.__exp["defaut"] = true; }
-  if(seuil>45 && lum===45 && nuit){
+  if(tracer && seuil===30){ window.__exp["defaut"] = true; }
+  if(tracer && seuil>45 && lum===45 && nuit){
     window.__exp["mission"] = seuil;
     $("simMission").textContent = "Mission mairie : ✅ vérifiée (seuil " + seuil + ", éclairé à 45 %)";
     $("simMission").style.color = "#81fba1";
@@ -593,13 +597,13 @@ function majSim(){
   }
   save(false);
 }
-$("pSeuil").addEventListener("input", majSim);
-$("pDuree").addEventListener("input", majSim);
-$("simLum").addEventListener("input", majSim);
+$("pSeuil").addEventListener("input", ()=>majSim(true));
+$("pDuree").addEventListener("input", ()=>majSim(true));
+$("simLum").addEventListener("input", ()=>majSim(true));
 $("btnPassage").addEventListener("click", ()=>{
-  window.__passage = true; majSim();
+  window.__passage = true; majSim(true);
   clearTimeout(passageTimer);
-  passageTimer = setTimeout(()=>{ window.__passage=false; majSim(); }, parseInt($("pDuree").value,10)*1000);
+  passageTimer = setTimeout(()=>{ window.__passage=false; majSim(true); }, parseInt($("pDuree").value,10)*1000);
 });
 
 /* ══════ Vérifications ══════ */
@@ -711,7 +715,7 @@ function majEssentiel(){
 })();
 restore();
 if((window.__exp||{})["mode_essentiel"]) document.body.classList.add("essentiel");
-majEssentiel(); majSim(); majProgress(); majHyp();
+majEssentiel(); majSim(false); majProgress(); majHyp();
 
 /* ══════ Règle d'or n°30 — tableau de bord des tâches (libellés écrits à la main) ══════ */
 const TACHES = {
