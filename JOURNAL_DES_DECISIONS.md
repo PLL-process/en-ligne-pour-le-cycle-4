@@ -10753,3 +10753,48 @@ et l'absence de boîte modale sur tout le parcours.
 
 File d'attente après ce lot : **14 lots, 284 coches**. En tête, `3e_C4.3` (26) et, au Thème 1,
 `5e_C1.1` (26) et `5e_C1.2` (25).
+
+## 2026-08-31 — Le LOT 01 redevient vérifiable, et le pilote déclare ses deux angles morts
+
+`3e_C4.3` « Station d'alerte cyclonique » est le **premier lot du Thème 2**, livré le 22 juillet,
+et il était en tête de la file d'attente : vingt-six coches vertes qu'aucun script ne relançait.
+
+`tests_3e_C4.3-C4.6.mjs` — **23 contrôles, 23/23** — conduit le simulateur de convertisseur
+analogique-numérique au curseur (N(943 hPa) = 512, et le mot binaire affiché vaut bien le nombre
+affiché), vérifie les 48 enregistrements de la table, remplit les sept activités, recharge la
+page, et **joue le QCM trois fois** pour rejouer les trois scénarios de notes que le rapport
+calculait à la main : 32/32 → 20,0/20 · 16+16 → 10,0/20 · 8+8+16 non répondues → 5,0/20. Les
+trois tombent juste.
+
+### Le pilote, et ce qu'il ne pilote pas
+
+Ce lot n'écrit pas ses vérifications comme les précédents : sur sept fonctions `CHECKS`, trois
+seulement emploient la forme `att = {id: "valeur"}`. Les autres comparent champ par champ. Le
+pilote lit donc **quatre conventions d'écriture**, déclarées en tête du fichier — l'objet, la
+comparaison directe, le `startsWith`, et la valeur numérique avec ou sans tolérance — ce qui lui
+donne **45 champs** extraits de la page, aucune réponse recopiée.
+
+Deux formes lui échappent : la **concaténation** de trois champs binaires (`a4_b1..b3`) et le
+**texte normalisé** de `a6_1`. Les activités 4 et 6 se valident donc à `8/9` et `3/4` — ce que la
+page accepte (`ok>=8`, `ok>=3`).
+
+- **n°268** — **un pilote de test déclare ce qu'il ne pilote pas, et le verrouille.** La
+  tentation était d'assouplir le contrôle jusqu'à ce qu'il passe. À la place, le verdict retenu
+  est celui de la **page** (`window.__valid`), et un contrôle supplémentaire exige exactement les
+  deux scores incomplets : si un troisième point venait à manquer, il tomberait. Un angle mort
+  écrit et borné vaut mieux qu'un test complaisant.
+
+### Une erreur du test, pas de la page
+
+La première version cherchait le lien d'évitement par son libellé — « évitement », « aller au ».
+Celui de cette page dit « **Aller directement aux activités** » : le test l'a déclaré absent,
+alors qu'il est là depuis juillet. Il se reconnaît à sa **classe** `skip-link`, qui est la
+convention du dépôt, et le contrôle vérifie maintenant trois choses au lieu d'une : le lien
+existe, il vise une ancre réelle, et il se montre au focus clavier.
+
+C'est la deuxième fois aujourd'hui qu'un contrôle accuse une page à tort — après les neuf faux
+écarts de `4e_C4.7`. Chercher une chose par son libellé quand elle porte une classe, c'est
+deviner là où le dépôt déclare.
+
+File d'attente après ce lot : **13 lots, 258 coches**. En tête, désormais, deux lots du Thème 1 :
+`5e_C1.1` (26) et `5e_C1.2` (25).
