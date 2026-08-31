@@ -80,3 +80,43 @@ structure qu'on enseigne.
 Les huit fichiers `*_hd.jpg` et `doc3_schema_parcours.png` qui n'étaient déclarés
 nulle part ont été **supprimés** du dépôt.
 
+## Post-scriptum du 31/08/2026 — la suppression annoncée n'avait pas eu lieu
+
+La phrase ci-dessus était écrite au passé, et elle était fausse : **les neuf fichiers étaient
+toujours là** le 31 août 2026, vingt jours plus tard. `_outils/controle_medias.py`, écrit ce
+jour-là, les a relevés — huit médias qu'aucun `SOURCES_MEDIAS.md` ne nommait, et neuf que plus
+aucune page n'affichait.
+
+Ouverts et regardés avant de trancher :
+
+- les huit `*_hd.jpg` sont des rasters de 3 à 223 Ko, de 225×225 à 1600×1600 px, dont
+  **trois ne sont même pas des JPEG** — un PNG et deux WebP portant l'extension `.jpg`, la
+  signature d'une image enregistrée depuis un navigateur ;
+- `doc3_schema_parcours.png` est un **extrait de manuel scolaire** : la légende « DOC 3 —
+  Structure d'un réseau informatique » dans la mise en page d'un éditeur, avec sa typographie
+  et son cadre de couleur.
+
+Ils sont **retirés pour de bon** ce 31/08/2026. Ils restent dans l'historique git si la
+décision doit être revue. La leçon vaut d'être écrite : *une suppression annoncée au passé
+dans un document n'est pas une suppression* — c'est une intention, et personne ne la vérifie.
+
+## Les dix schémas de remplacement ne sont employés par aucune page
+
+Second constat du même relevé, et celui-là demande une décision pédagogique.
+
+Les dix SVG originaux dessinés le 11/08 pour remplacer les images tierces — `reseau_routeur_lan_internet.svg`,
+`reseau_switch_ports.svg`, `reseau_filaire_vs_sansfil.svg`, `reseau_zigbee_maillage.svg`,
+`reseau_nfc_paiement.svg`, `reseau_rfid_portique.svg`, `reseau_bluetooth_paire.svg`,
+`reseau_rj45_cable.svg`, `reseau_local_schema.svg` et `licences_symboles.svg` — **ne sont
+affichés par aucune page du lot**. Le QCM `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html`, qui
+appelait les dix images tierces, n'appelle plus aucune image du tout.
+
+Le remplacement a donc été **dessiné et documenté, mais jamais câblé**. En l'état, ce QCM a
+perdu ses illustrations au lieu d'en gagner de meilleures — et c'est le contraire de ce que
+la correction du 11/08 annonçait.
+
+Recâbler ces dix schémas dans les questions du QCM est un acte pédagogique : il faut choisir
+quelle question porte quelle image, et récrire l'`alt`. **Cela revient à Pascal**, pas à un
+contrôle ni à l'agent qui écrit cette ligne. Les dix fichiers restent, documentés, en
+attendant.
+

@@ -11480,3 +11480,67 @@ dit la vérité).
 | Médias qu'un `SOURCES_MEDIAS.md` existant ne nomme pas | **8** (`4e_C4.7`) |
 | Entrées périmées dans `TOLEREES` | **5** (à vider, branche thème 2) |
 | Séquences chargeant une ressource distante | **12 sur 72**, dont **1 mesurée hors ligne** |
+
+## 2026-08-31 — Ménage final : une suppression annoncée qui n'avait pas eu lieu, et un remplacement jamais câblé
+
+Dernière PR de la série. Trois choses de ménage, et l'une d'elles était une vraie trouvaille.
+
+### Neuf images tierces que le dépôt croyait avoir supprimées
+
+Le `SOURCES_MEDIAS.md` de `4e_C4.7` porte depuis le 11/08/2026 une correction exemplaire : il
+raconte que le QCM XXL appelait dix images hébergées ailleurs — Wikimedia, Amazon, iStock,
+YouTube et quatre sites commerciaux —, que huit copies traînaient dans `Images/`, et il conclut :
+*« Les huit fichiers `*_hd.jpg` et `doc3_schema_parcours.png` … ont été supprimés du dépôt. »*
+
+**Ils étaient toujours là**, vingt jours plus tard. `controle_medias.py` les a relevés : huit
+médias qu'aucun `SOURCES_MEDIAS.md` ne nommait, neuf que plus aucune page n'affichait.
+
+Ouverts avant de trancher : les huit `*_hd.jpg` sont des rasters de 3 à 223 Ko dont **trois ne
+sont même pas des JPEG** — un PNG et deux WebP portant l'extension `.jpg`, signature d'une image
+enregistrée depuis un navigateur. Et `doc3_schema_parcours.png` est un **extrait de manuel
+scolaire**, légende « DOC 3 » et mise en page d'éditeur comprises — le deuxième trouvé
+aujourd'hui, après `image_extraite_08.png` au thème 1.
+
+Retirés pour de bon, l'historique git les garde. Et la leçon s'écrit :
+
+> **Règle d'or n°276 — une suppression annoncée au passé dans un document n'est pas une
+> suppression.** C'est une intention, et personne ne la vérifie : le document qui l'affirme est
+> précisément celui qu'on relit pour savoir ce qui a été fait. Deux fois aujourd'hui, un
+> nettoyage écrit au passé avait laissé des fichiers derrière lui.
+
+### Le remplacement dessiné, documenté, et jamais câblé
+
+Second constat du même relevé : les **dix SVG originaux** dessinés le 11/08 pour remplacer les
+images tierces ne sont affichés **par aucune page**. Le QCM XXL, qui appelait dix images
+hébergées ailleurs, n'appelle plus aucune image du tout.
+
+Le remplacement a donc été fait à moitié : la partie qui protégeait le dépôt (retirer les
+appels distants) a été exécutée, la partie qui servait l'élève (poser les schémas à la place) ne
+l'a pas été. En l'état, ce QCM a **perdu ses illustrations au lieu d'en gagner de meilleures**.
+
+Recâbler dix schémas dans un QCM est un acte pédagogique — choisir quelle question porte quelle
+image, récrire l'`alt`. **C'est à Pascal.** Les dix fichiers restent, documentés, et la question
+est écrite dans le `SOURCES_MEDIAS.md` du lot plutôt que dans un coin de ma mémoire.
+
+### `TOLEREES` est vide, et l'index porte enfin ses repères
+
+Les cinq entrées tolérées de `controle_atteignabilite.py` sont retirées une à une, à mesure que
+leur PR passait (#329 pour les quatre synthèses d'atelier, #330 pour la carte). Le fichier ne
+contient plus qu'un commentaire disant ce qui s'y trouvait et pourquoi c'est parti.
+
+`make_index.py` parcourt désormais les dossiers `_reperes/` de chaque thème et pose leurs pages
+au pied de l'index, sous « 🧭 Repères pour l'enseignant », avec le titre que chaque page se donne
+dans son `<h1>`. La carte des représentations n'est donc plus atteignable par une seule synthèse
+de lot : elle l'est depuis la porte d'entrée, ce qui est sa place.
+
+### Le dépôt, à la fin de cette journée
+
+| Mesure | Valeur |
+|---|---|
+| Rapports portant des coches sans suite exécutable | **0** |
+| Pages inatteignables depuis l'index | **0** sur 338 |
+| Synthèses atteignables | **76 / 76** |
+| Médias sans provenance écrite | **0** |
+| Médias qu'un `SOURCES_MEDIAS.md` ne nomme pas | **0** sur 267 |
+| Entrées tolérées dans un contrôle | **0** |
+| Images qu'aucune page n'affiche | 29, toutes nommées, chacune avec sa question |

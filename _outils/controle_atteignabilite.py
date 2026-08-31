@@ -65,23 +65,16 @@ ECARTES = ("_archive-anciennes-versions", "_outils")
 #: la débloquera. Cette liste ne doit que RÉTRÉCIR : une entrée s'en retire le
 #: jour où sa PR passe, et rien ne s'y ajoute sans une décision écrite.
 TOLEREES = {
-    "theme-1-objets-systemes-usages-interactions/_reperes/carte_des_representations.html":
-        "repère transversal du thème 1 : aucune séquence ne le lie encore, et le "
-        "générateur d'index ne parcourt pas `_reperes/`. À rattacher — branche thème 1.",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/"
-    "atelier-cao/Synthèses/synthese_eleve_CAO.html":
-        "l'atelier CAO n'est pas un dossier `{niveau}_{code}` : le générateur d'index ne le "
-        "parcourt pas. Ses quatre TP sont atteignables et devront lier leurs synthèses — "
-        "branche thème 3.",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/"
-    "atelier-cao/Synthèses/synthese_professeur_CAO.html":
-        "même dossier d'atelier, même raison — branche thème 3.",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/"
-    "atelier-planification/Synthèses/synthese_eleve_C7.1_planification.html":
-        "atelier de planification, hors arborescence `{niveau}_{code}` — branche thème 3.",
-    "theme-3-creation-conception-realisation-innovations/C7-imaginer-concevoir-et-realiser-une-ou-des/"
-    "atelier-planification/Synthèses/synthese_professeur_C7.1_planification.html":
-        "atelier de planification, hors arborescence `{niveau}_{code}` — branche thème 3.",
+    # Vide au 31/08/2026, et c'est un fait mesuré, pas un vœu : les 338 pages du
+    # dépôt sont atteignables depuis l'index. Les cinq entrées qui figuraient ici
+    # ont été retirées une à une, à mesure que leur PR passait :
+    #   · les 4 synthèses des ateliers CAO et planification — PR #329, leurs huit
+    #     pages portent désormais le bloc « Les traces à garder » ;
+    #   · `_reperes/carte_des_representations.html` — PR #330, la synthèse
+    #     professeur de `5e_C1.1` répond au lien que la carte lui adressait déjà,
+    #     et ce fichier-ci le pose maintenant au pied de l'index.
+    # Une entrée ne s'ajoute ici qu'avec sa raison ET ce qui la débloquera
+    # (règle d'or n°273 : une liste d'exceptions ne peut que rétrécir).
 }
 
 #: Un lien local vers une page. On lit `href`, `src` et `data` : une séquence

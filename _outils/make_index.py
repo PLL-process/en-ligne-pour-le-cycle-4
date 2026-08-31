@@ -232,6 +232,35 @@ def lot_sibling_dirs(cnum, niveau, code):
 SOUS_DOSSIERS_PEDAGOGIQUES = ("Synthèses",)
 
 
+#: Les dossiers `_reperes/` d'un thème : des documents de référence POUR
+#: L'ENSEIGNANT, transversaux à tout le cycle, qui n'appartiennent à aucun code.
+#: `carte_des_representations.html` a vécu là sans qu'aucun chemin ne l'atteigne
+#: jusqu'au 31/08/2026 — pas parce qu'il était mal rangé, mais parce que rien ne
+#: parcourait son dossier (règle d'or n°272).
+def reperes(racine):
+    """(chemin relatif, titre) de chaque page de repère, tous thèmes confondus."""
+    out = []
+    for theme in sorted(THEME_SLUG.values()):
+        dossier = os.path.join(racine, theme, "_reperes")
+        if not os.path.isdir(dossier):
+            continue
+        for fn in sorted(os.listdir(dossier)):
+            if not fn.lower().endswith(".html"):
+                continue
+            rel = f"{theme}/_reperes/{fn}"
+            titre = fn
+            try:
+                src = open(os.path.join(dossier, fn), encoding="utf-8").read(20000)
+                m = TITRE_H1.search(src)
+                if m:
+                    titre = html.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip()
+                    titre = re.sub(r"^[^\w]+", "", titre.replace("\u00a0", " ")).strip()
+            except OSError:
+                pass
+            out.append((rel, titre))
+    return out
+
+
 def content_files(rel_dir):
     """Fichiers de contenu réel (hors .gitkeep) du dossier code, puis de ses
     sous-dossiers pédagogiques — rendus avec leur chemin relatif au dossier."""
@@ -428,8 +457,16 @@ for theme_n in [1, 2, 3]:
     parts.append("</section>")
 parts.append("</main>")
 
+LIGNE_REPERES = ""
+_rep = reperes(DST)
+if _rep:
+    LIGNE_REPERES = ("<p>🧭 Repères pour l'enseignant : "
+                     + " · ".join(f'<a href="{html.escape(r)}">{html.escape(ti)}</a>'
+                                  for r, ti in _rep) + "</p>")
+
 parts.append(f"""<footer>
 <p>📦 <a href="_ressources-communes/">Ressources communes</a> · 🗄️ <a href="_archive-anciennes-versions/">Archive des anciennes versions</a> · <a href="RAPPORT_MIGRATION.md">Rapport de migration</a></p>
+{LIGNE_REPERES}
 <p><b>Référence normative</b> : programme de technologie du cycle 4 — BO n°9 du 29 février 2024.<br><b>Codification opérationnelle</b> : adaptation pédagogique de ce dépôt, appuyée sur les repères de progressivité du programme et sur les cahiers Nathan 5e/4e/3e (éd. 2024). Structure générée depuis le classeur <em>Référentiel_Technologie_Cycle4_2024.xlsx</em>.<br><span style="color:#7d9bd6">Page générée automatiquement depuis <code>_outils/data_competences.py</code> — aucun intitulé n'est ressaisi à la main (règle d'or n°38).</span></p>
 </footer>
 <script>
