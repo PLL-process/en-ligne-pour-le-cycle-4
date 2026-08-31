@@ -55,11 +55,18 @@ import sys
 DEPOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ECARTES = ("_archive-anciennes-versions",)
 
+#: Les deux langages dans lesquels ce dépôt écrit ses suites. Le 31/08/2026, ce
+#: contrôle ne connaissait que le premier : il a déclaré en dette **treize**
+#: dossiers qui portaient une suite Python — 103 coches — dont les deux qu'il
+#: mettait en tête de file, `5e_C1.1` et `5e_C1.2`, verts à 43/43 et 36/36
+#: (règle d'or n°269).
+LANGAGES = r"(?:mjs|js|py)"
+
 #: un script cité entre accents graves
-CITATION = re.compile(r"`((?:tests?|test)[\w.\-]*\.(?:mjs|js))`")
+CITATION = re.compile(r"`((?:tests?|test)[\w.\-]*\.%s)`" % LANGAGES)
 
 #: un script livré à côté de ce qu'il vérifie
-SCRIPT = re.compile(r"^(?:tests?_.*\.(?:mjs|js)|.*\.test\.(?:mjs|js))$", re.I)
+SCRIPT = re.compile(r"^(?:tests?_.*\.%s|.*\.test\.%s)$" % (LANGAGES, LANGAGES), re.I)
 
 #: une page qu'une suite pourrait conduire. Un rapport dont le dossier n'en porte
 #: aucune n'est pas un lot en attente de suite : c'est un rapport d'AUDIT, qui

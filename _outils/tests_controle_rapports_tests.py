@@ -108,6 +108,23 @@ def main():
             echecs.append("la dette n'est pas comptée ni nommée dans le relevé\n     "
                           + texte.strip().replace("\n", "\n     "))
 
+        # ── 5 bis. une suite PYTHON compte autant qu'une suite JavaScript ───
+        # Le 31/08/2026, ce contrôle ne connaissait que .mjs/.js : il a déclaré
+        # en dette treize dossiers portant une suite Python — 103 coches — dont
+        # les deux qu'il mettait en tête de file, verts l'un et l'autre.
+        controles += 1
+        _c, texte = jouer(lot(b / "c5bis",
+                              "# R\n\nSuite : `tests_essai.py` — 3 tests.\n\n| a | ✅ |\n",
+                              ["tests_essai.py"]))
+        if "LOT(S) portent des coches" in texte:
+            echecs.append("un dossier portant une suite Python est compté en dette")
+
+        controles += 1
+        code, _t = jouer(lot(b / "c5ter",
+                             "# R\n\nSuite : `tests_fantome.py`, 3 tests.\n\n| a | ✅ |\n"))
+        if code == 0:
+            echecs.append("une citation de script PYTHON absent n'est pas refusée")
+
         # ── 6 bis. un rapport d'AUDIT n'entre pas dans la file d'attente ────
         # Sans cette distinction, les trois dossiers de gouvernance du dépôt
         # occupaient la tête de file — 115 coches qu'aucune suite ne peut payer.
