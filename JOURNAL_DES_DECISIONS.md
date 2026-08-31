@@ -11301,3 +11301,70 @@ dégage : *tout outil qui reconnaît quelque chose à son nom doit dire quels no
 et se demander qui d'autre s'appelle autrement.*
 
 File d'attente après ce lot : **1 lot, 16 coches** — `4e_C6.2`.
+
+## 2026-08-31 — « L'arrosage automatique », dernier de la file : la séquence tient réseau coupé
+
+Huitième et **dernier** lot de la file publiée par `_outils/controle_rapports_tests.py`.
+`tests_4e_C6.2.mjs` — **35 contrôles, 35/35** — paie deux dettes d'un coup : le rapport de
+QCM citait `tests.mjs` jamais commité, celui de la séquence annonçait « 27/27 » sans coche ni
+script.
+
+**La file est vide.** Aucun rapport du dépôt ne porte plus de coches sans suite exécutable.
+
+### La seule séquence du thème 2 qui a besoin du réseau
+
+Elle charge **trois éditeurs Vittascience en iframe**, et deux de ses huit activités ont un
+verrou qui exige d'en ouvrir un. La question n'est pas de savoir si elle cite un domaine
+distant — elle le fait et l'assume dans son pied de page — mais **ce qu'il en reste sans
+réseau**.
+
+La suite ferme donc vraiment le robinet : toute requête `http(s)` est abandonnée avant de
+partir, pour toute la session, et les huit activités sont jouées dans cet état. **Elles
+passent toutes.** Les verrous `vs1` et `vs2` s'ouvrent sur le geste d'ouvrir le dépliant, pas
+sur le chargement de l'iframe : hors réseau, l'élève perd l'éditeur, pas la séquence. La
+version 🅲 « sans matériel » que la page annonce est tenue — et on le sait par mesure.
+
+### Douze séquences sur soixante-douze chargent une ressource distante
+
+Mesure faite au passage, parce qu'elle intéresse une décision en attente :
+
+| Hôte | Séquences / TP concernés |
+|---|---|
+| `fr.vittascience.com` | 8 (thèmes 2 et 3) |
+| `www.youtube.com` | 2 (thème 1) |
+| `programiz.com`, `online-python.com`, `www.arcep.fr` | 1 (3e_C1.5) |
+| `store.arduino.cc` | 2 (3e_C9.2) |
+
+**Douze sur soixante-douze**, hors Google Fonts. `INVENTAIRE_PEDAGOGIQUE.md` promet au point 4
+qu'aucune séquence ne demandera de connexion permanente : c'est ce chiffre-là qu'il faut y
+écrire, et non « quatre TP » comme le disait la note du 30/08. Pascal doit trancher le
+libellé ; le texte à coller est dans son dossier `Downloads`.
+
+**Nuance capitale, et mesurée pour une seule des douze** : « charger une ressource distante »
+n'est pas « exiger une connexion ». Pour `4e_C6.2`, la mesure dit que tout se valide hors
+réseau. Pour les onze autres, personne ne l'a mesuré. La méthode existe maintenant, elle tient
+en quatre lignes de Playwright, et elle est dans ce fichier.
+
+### Un script enfermé, et ce que cela change pour un pilote
+
+Les six lots précédents laissaient lire leurs `CHECKS` depuis la console : script classique,
+`const` globales. **Celui-ci enferme tout dans une fonction anonyme**, et rien n'en sort — le
+premier jet de la suite a échoué sur `ReferenceError: CHECKS is not defined`.
+
+La suite lit donc le **fichier source**, qui est la page. C'est plus robuste que d'interroger
+la fenêtre : cela marche que le script soit enfermé ou non, et cela ne demande rien à la page.
+Même chose pour la liste des activités validées, enfermée elle aussi : la suite lit ce que la
+page **montre** — la classe du bandeau de retour — plutôt que ce qu'elle garde pour elle.
+
+C'est la sixième convention d'écriture des attendus rencontrée en huit lots : `sv("id", "v")`.
+
+### Règle d'or n°274
+
+> **Un pilote de test lit ce que la page publie : son source et son affichage.**
+> Compter sur ses variables globales, c'est dépendre d'un détail d'écriture que rien
+> n'impose — et qu'un `(function(){…})()` suffit à retirer. Le source est toujours là ;
+> l'affichage est ce que l'élève voit. Les deux se lisent sans rien demander à personne.
+
+**File d'attente : vide.** Huit lots payés en une journée — `5e_C8.2`, `5e_C4.1`, `5e_C6.1`,
+`4e_C4.1`, `3e_C5.1`, `3e_C6.1`, `3e_C4.7`, `4e_C6.2` — plus `3e_C4.1`, `4e_C6.1`, `5e_C5.1`,
+`4e_C5.1` et `3e_C4.3` livrés dans la même série.

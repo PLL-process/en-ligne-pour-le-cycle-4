@@ -1,5 +1,11 @@
 # Rapport de tests — Jardin connecté v2 (4e_C6.2, densification du 30/07/2026)
 
+> **Ce document est un relevé historique, daté du 30/07/2026.** Il annonçait « 27/27 PASS »
+> sans citer de script et sans coche : une dette honnête, mais non rejouable. La suite qui
+> la paie est `tests_4e_C6.2.mjs`, livrée le 31/08/2026 dans ce dossier, et le rapport à
+> jour est `rapport_tests_4e_C6.2_qcm.md` — il couvre la séquence ET le QCM, **réseau
+> coupé**. Ce qui suit est conservé pour mémoire.
+
 Suite Playwright réelle (Chromium, mobile 390×844) : **27/27 PASS**.
 
 Couverture : titre charte, navigation ⌂, 3 barres 🧪, image des chaînes,
