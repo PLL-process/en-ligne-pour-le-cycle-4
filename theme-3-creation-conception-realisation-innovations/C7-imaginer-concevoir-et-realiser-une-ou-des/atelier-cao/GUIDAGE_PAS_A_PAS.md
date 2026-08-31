@@ -111,13 +111,18 @@ classe qui a mal suivi : c'est le TP qui a mal guidé.
 
 ---
 
-## 5. Les trois TP prévus
+## 5. Les TP de l'atelier
 
 | Niveau | Logiciel | Objet | Ce qui se retire par rapport au précédent |
 |---|---|---|---|
 | **5e** | Onshape | le dé | — (première prise en main) |
+| **5e bis** | Onshape | le même dé, dont **un** creux devient une vraie calotte | la face à esquisser, la cote et l'extrusion ne sont plus détaillées : elles ont été faites au TP nº1 |
 | **4e** | Onshape | assemblage du dé et d'un socle de style romain, **dé centré sur l'axe du socle** | l'esquisse et l'extrusion ne sont plus détaillées |
 | **3e** | Onshape | le boîtier étanche du capteur de confort | la forme n'est plus donnée : elle est déduite d'un besoin |
+
+Le quatrième est arrivé le 30/08/2026, et ce tableau ne l'a pas su pendant un jour : c'est ce
+retard qui a donné `verif_effectifs.py`, lequel refuse désormais qu'un nombre écrit à côté du mot
+« TP » cesse de dire vrai.
 
 Et, hors CAO, la même méthode servira à **mBlock 5** et aux simulateurs : mêmes cinq temps, même
 générateur, contenu entièrement réécrit.

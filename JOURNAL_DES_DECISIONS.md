@@ -10315,3 +10315,88 @@ lui a demandé de confirmer ne trouve jamais rien.
 
 *Au passage : la fiche de l'atelier CAO disait encore « 1 séance de 55 minutes par TP » et « les
 trois TP » — elle en compte quatre depuis ce matin. Deux lignes remises d'aplomb.*
+
+## 2026-08-31 — « Deux lignes remises d'aplomb » : il y en avait six
+
+L'entrée d'hier finissait par une note en italique : *« Au passage : la fiche de l'atelier CAO
+disait encore "1 séance de 55 minutes par TP" et "les trois TP" — elle en compte quatre depuis ce
+matin. Deux lignes remises d'aplomb. »*
+
+Deux sur six. Ce matin, l'atelier disait encore, à quatre autres endroits, qu'il comptait trois TP :
+
+| Où | Ce qui était écrit |
+|---|---|
+| `fiche_pedagogique_CAO.md` | « Les **trois** TP le disent maintenant en tête » |
+| `fiche_pedagogique_CAO.md` | « les **trois** QCM, les **six** synthèses et les **trois** lexiques » |
+| `fiche_pedagogique_CAO.md` | « Les images des **trois** TP ne sont pas toutes produites » |
+| `manifest_cao.json` | « la règle n°77 refuse les **trois** TP » |
+| `manifest_cao.json` | « les **trois** TP l'annoncent en tête » |
+| `Synthèses/synthese_professeur_CAO.html` | « Les images des **trois** TP » |
+| `GUIDAGE_PAS_A_PAS.md` | « ## 5. Les **trois** TP prévus », et une table à trois lignes |
+| `_outils/build_audit.py` | « annoncée en tête des **trois** TP », **en dur**, donc stampée dans `audit_couverture.json` |
+
+- **n°261** — **corriger l'occurrence qu'on a sous les yeux, c'est croire qu'il n'y en a
+  qu'une.** Une formulation qui compte quelque chose se recopie : elle vit dans la fiche, dans le
+  manifeste, dans la synthèse, dans le document de méthode et dans le générateur qui produit
+  l'audit. On ne la corrige pas en la relisant, on la corrige en la **cherchant**. Et le
+  corollaire, plus économique : un nombre écrit dans une prose partagée vieillit tout seul ;
+  s'il n'apporte rien, on l'enlève.
+
+C'est ce corollaire qui a été appliqué là où le compte ne servait à rien. La phrase « les trois
+QCM, les six synthèses et les trois lexiques » devient « les QCM, les synthèses et les lexiques
+des quatre lots » : le tableau « Ce qui s'évalue, et où », deux écrans plus haut, donne déjà le
+compte et se relit tout seul. Dans `build_audit.py`, « en tête des trois TP » devient « en tête
+de chaque TP de l'atelier » — un générateur ne compte pas en dur (n°256).
+
+### Ce que la croissance avait laissé d'autre
+
+Chercher les occurrences a fait apparaître trois trous que personne ne réclamait, tous nés du
+même jour où l'atelier est passé de trois TP à quatre.
+
+**Le quatrième TP n'avait pas de relevé de captures.** Les trois autres en ont un depuis le
+11 août ; « Le dé, en mieux » est né sans. Or **cinq de ses huit paliers n'ont aucune image de
+résultat**, et les trois qui en ont une portent toutes le **même** dessin de coupe. La règle n°77
+le refuse, à juste titre — mais aucun document ne disait quelles images prendre, donc personne ne
+pouvait les prendre. `RELEVE_DES_CAPTURES_5e-bis.md` les nomme : cinq fichiers, cinq cadrages,
+et l'indication de ce qui passe par l'API et de ce qui exige un poste en français.
+
+**Le manifeste déclarait servir `4e_C7.2` sans dire où ce code s'évalue** — et la fiche, elle,
+le disait faux : « séquence `4e_C7.1` ». Mesure faite, les dix questions sont dans le **QCM**
+`qcm_4e_C7_jardin-conception.html`. Rattacher un code au mauvais support ne le couvre pas
+(n°254) : les deux sont corrigés, et l'adresse est maintenant dans le manifeste.
+
+**Le seul média du quatrième TP n'avait pas de provenance.** `coupe_calotte_5e.svg` figure dans
+`Images/` depuis hier et n'apparaissait pas dans `SOURCES_MEDIAS.md`. Sa fiche y est : engendré
+par `calotte.py`, avec les contrôles relevés sur le modèle (centre à 8,5 mm, calotte Ø10,54,
+43 % de matière en moins que le cylindre).
+
+### Le contrôle qui refuse
+
+`atelier-cao/verif_effectifs.py` fait deux choses, et le dit à chaque exécution.
+
+Il confronte **les listes déclarées du manifeste au dossier** : chaque scénario engendrable
+produit-il une page déclarée ; chaque page a-t-elle son relevé de captures ; chaque relevé est-il
+rattaché à un TP ; chaque code déclaré servi dit-il où il s'évalue, et cette adresse existe-t-elle.
+C'est cette moitié-là qui aurait trouvé le relevé manquant et l'adresse absente.
+
+Il relit ensuite **tout nombre écrit à côté du mot « TP »** dans les pages, les documents et les
+phrases du manifeste, et le compare à l'effectif déclaré. Il ne s'arrête pas à la première
+faute : c'est tout le sujet.
+
+Il écarte, en le comptant, ce qu'un navigateur ne suit pas — il emprunte `taire()` à
+`_outils/controle_liens.py` plutôt que de la recopier —, les phrases **datées** (« les seize
+rendus produits le 11 août 2026 » décrit un passé) et les phrases **restreintes à un niveau**.
+Il ne connaît pas le nombre « un » : dans « un TP mené en classe », c'est un article. Cet angle
+mort est déclaré dans l'en-tête du fichier plutôt que caché (n°242).
+
+`tests_verif_effectifs.py` : **18 contrôles**, sur des arborescences fabriquées — les huit refus
+attendus, les cinq silences attendus, et l'exigence que l'atelier réel passe. Le troisième cas
+vérifie que le contrôle nomme bien **les trois** endroits fautifs et non le premier : sans lui,
+l'outil aurait reproduit l'erreur qu'il existe pour empêcher.
+
+### Ce qu'il a trouvé en naissant
+
+Le brouillon de `RELEVE_DES_CAPTURES_5e-bis.md` racontait l'histoire ainsi : « l'atelier a
+continué d'annoncer trois relevés pour trois TP ». Le contrôle l'a refusé — la phrase ne portait
+pas de date, donc elle parlait du présent, donc elle était fausse. Elle est datée maintenant.
+Le premier fichier qu'il a recalé est celui qui l'accompagne.
