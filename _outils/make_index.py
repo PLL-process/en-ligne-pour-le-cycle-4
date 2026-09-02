@@ -365,16 +365,19 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var
   .rep .maint{display:none}
   h1,.rep .form,.rep .cc{color:#111}
   a{color:#111}
-  /* — impression : rattrapage mesuré le 02/09/2026 (règle n°278) —
-     Les huit lignes ci-dessus blanchissaient le corps et trois panneaux, et
-     laissaient TOUT le reste dans les tons pâles conçus pour l'écran sombre :
-     645 textes sous 4,5:1 sur cette seule page, le pire score du dépôt. Le
-     relevé a été fait dans un navigateur en `media: print`, et ces deux règles
-     nomment ce qu'il a trouvé. */
-  .cc{background:#fff!important;background-image:none!important;color:#111!important;
-      border-color:#999!important;box-shadow:none!important}
-  .comp span,.count,.legend span,.maint a,.maint summary,.meta,.note,.note b,.note code,
-  .socle-cle,.socle-cle b,.statut,.sub,.sub strong,.theme header,a,b,code,em,p,span{color:#333!important}
+  /* — impression : fond blanc, couleurs CONSERVÉES (décision de Pascal, 02/09/2026)
+     « Je ne peux pas imprimer sur un fond gris : le fond doit être blanc et il faut
+     des couleurs. » Ces règles remplacent le rattrapage du matin, qui rendait la page
+     lisible en la passant en #333 — lisible, et grise. Chaque couleur garde ici sa
+     teinte et ne perd que de la clarté, jusqu'à 4,5 : 1 sur du blanc. */
+/* — impression : fond blanc, couleurs conservées (décision du 02/09/2026) — */
+  .cc,.dot{background:#fff!important;background-image:none!important;border-color:#999!important;box-shadow:none!important}
+  .count{color:#047fa0!important}
+  .socle-cle,.sub,.sub strong{color:#1a6af8!important}
+  .cc{color:#274a8a!important}
+  .comp span,.socle-cle b{color:#4b73bc!important}
+  .meta,.note,.note b,.note code{color:#4b74c6!important}
+  .legend span{color:#5475b5!important}
 }
 </style>
 </head>
