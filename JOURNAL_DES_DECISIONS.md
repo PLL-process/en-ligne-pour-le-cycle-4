@@ -12236,3 +12236,23 @@ première passe — à **1 : 1 exactement**, c'est-à-dire un texte de la couleu
 Le contrôle passe : **338 pages, 0 refusée**. Le banc : **10/10**.
 
 **Rien ne change à l'écran** : 72 pages rouvertes, 0 erreur JS, les 65 fonds sombres intacts.
+## 2026-09-02 (suite) — Le thème 3 ferme la campagne d'impression en couleur
+
+**167 pages, 3 837 sélecteurs**, avec les deux gardes que le thème 1 a values : un texte clair
+sous un fond blanchi reçoit un noir franc, et le `body` lui-même entre dans le blanchiment.
+
+Le dépôt entier imprime maintenant **sur du blanc, en couleur** :
+
+| | Pages | Sélecteurs |
+|---|---|---|
+| Thème 1 | 68 | 1 288 |
+| Thème 2 + `index.html` | 96 | 2 008 |
+| Thème 3 | 167 | 3 837 |
+
+Le contrôle passe sur les 338 pages, 0 refusée. Le banc : 10/10.
+
+**Rien ne change à l'écran** : 170 pages rouvertes, 0 erreur JS, et les 170 gardent leur fond
+sombre.
+
+Reste le chantier des **99 schémas sur 178** dont le fond sombre est dessiné à l'intérieur du
+SVG : un `@media print` ne les atteint pas, et c'est là qu'est le gros de l'encre.
