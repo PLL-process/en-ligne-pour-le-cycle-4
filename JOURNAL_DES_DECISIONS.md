@@ -12081,3 +12081,28 @@ fond sombre l'ont toujours. La 96ᵉ est l'index, dont le fond n'a jamais chang�
   il ne peut arriver qu'**après** le thème 3, sinon il refuse le dépôt le jour où il entre.
   C'est le même enchaînement que pour la règle n°4 : la mesure arrive quand elle peut être
   verte, et pas avant.
+## 2026-09-02 (suite) — Le thème 3 ferme la campagne d'impression
+
+| Thème 3 — 170 pages | Avant | Après |
+|---|---|---|
+| Occurrences sombre sur sombre | **2 446** sur 58 pages | **0** |
+| Textes sous 4,5 : 1 | 4 702 | 2 866 |
+
+Les 2 866 restants sont des accents de couleur sur fond blanc — faibles en niveaux de gris,
+pas en couleur, et l'imprimante de la salle est une laser couleur.
+
+**Rien ne change à l'écran** : 170 pages rouvertes, 0 erreur JS, et les **170** gardent leur
+fond sombre. Deux requêtes distantes échouent, comme avant cette PR : ce sont les ressources
+extérieures des séquences déjà relevées le 31/08, et un conteneur sans réseau les refuse.
+
+### Le compte des trois thèmes
+
+| | Avant | Après |
+|---|---|---|
+| Thème 1 (72 pages) | 2 149 | 0 |
+| Thème 2 (95 pages) + `index.html` | 2 400 + 645 pâles | 0 |
+| Thème 3 (170 pages) | 2 446 | 0 |
+| **Total** | **6 995** | **0** |
+
+Le contrôle peut maintenant entrer : il sera vert le jour où il arrivera, et c'est la seule
+condition pour qu'un contrôle vaille quelque chose.
