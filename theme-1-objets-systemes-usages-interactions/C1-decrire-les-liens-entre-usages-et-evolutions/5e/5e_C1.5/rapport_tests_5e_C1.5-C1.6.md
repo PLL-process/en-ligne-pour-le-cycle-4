@@ -65,7 +65,17 @@ node tests_5e_C1.5-C1.6_qcm.mjs      "$PWD/qcm_5e_C1.5-C1.6_le-compte-du-club.ht
 ✅ les verrous survivent au rechargement
 ```
 
-## 2. QCM — **32 / 32**
+## 2. QCM — **34 / 34**
+
+> **Ce qui a changé le 02/09/2026.** La suite exigeait *« aucune image héritée du lot
+> voisin »* — et le vérifiait en refusant **toute** image. Elle datait du jour où le
+> commentaire du fichier annonçait « 3 illustrees » alors qu'il n'en portait aucune : la
+> garde visait des images arrivées par copie du gabarit. Ce lot porte maintenant **une**
+> image, la sienne, et la ligne dit enfin ce qu'elle voulait dire : une image, s'il y en a
+> une, **vient du lot lui-même** (`Images/…`), porte un `alt` de plus de soixante caractères
+> qui transcrit ce qui est visible, et **se charge réellement** (`naturalWidth > 0`).
+> Deux contrôles de plus, et une garde qui n'interdit plus ce qu'elle devait seulement
+> localiser : 32 → 34.
 
 ```
 ✅ charge sans erreur JS
@@ -75,7 +85,9 @@ node tests_5e_C1.5-C1.6_qcm.mjs      "$PWD/qcm_5e_C1.5-C1.6_le-compte-du-club.ht
 ✅ 3 réfutations par question
 ✅ la bonne réponse n’a pas de réfutation
 ✅ tous les champs du gabarit remplis
-✅ aucune image héritée du lot voisin
+✅ aucune image héritée d’un autre lot — Images/licences_symboles.svg
+✅ chaque image porte un alt qui transcrit ce qui est visible — 292 car.
+✅ chaque image se charge réellement (naturalWidth > 0) — Images/licences_symboles.svg 660×240
 ✅ 30 notions distinctes — 30
 ✅ 15 questions sur 5e_C1.5 — {"5e_C1.5":15,"5e_C1.6":15}
 ✅ 15 questions sur 5e_C1.6 — {"5e_C1.5":15,"5e_C1.6":15}
@@ -100,6 +112,8 @@ node tests_5e_C1.5-C1.6_qcm.mjs      "$PWD/qcm_5e_C1.5-C1.6_le-compte-du-club.ht
 ✅ le lien vers la séquence pointe le bon fichier — sequence_5e_C1.5-C1.6_le-compte-du-club.html
 ✅ la progression survit au rechargement — 30
 ✅ aucune boîte modale sur tout le parcours
+
+34 / 34
 ```
 
 ## 3. Ce que ces tests vérifient de particulier

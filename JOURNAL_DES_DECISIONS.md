@@ -11757,3 +11757,67 @@ faire des entités ; les blocs les écrivent en clair aussi.
 **Ordre de fusion** : cette PR suppose la PR sœur du thème 3 déjà fusionnée — sans elle, le banc
 refuse au dernier cas, celui qui exige que le dépôt réel passe. C'est voulu : un banc qui
 excuserait l'état du jour pour tenir dans un ordre de fusion ne serait plus un banc.
+
+## 2026-09-02 — Le schéma des licences retrouve sa question, et une garde dit enfin ce qu'elle voulait dire
+
+`licences_symboles.svg` — ©, CC, CC0, ™ — a été dessiné le 11/08/2026 pour le **thème 2**,
+lot `4e_C4.7`, où il remplaçait une image iStock dans un QCM de 77 questions. Ce QCM a été
+scindé en trois le lendemain, et sa question sur le droit d'auteur n'a pas survécu à la
+scission : les trois QCM qui l'ont remplacé parlent de réseau local, d'adressage IP et de
+liaisons sans fil.
+
+Le schéma est donc resté trois semaines dans un lot dont plus aucune page ne parlait de
+licences, **pendant que les quatre seules questions du dépôt sur le sujet vivaient ici**, dans
+`5e_C1.5`, sans image.
+
+### Pourquoi la question 10 et pas la 7
+
+La question 7 demande : *« Une image en ligne ne porte aucune mention de licence. Que faut-il
+en déduire ? »* — et le schéma répond **en toutes lettres**, dans sa phrase du bas. L'y poser
+n'aurait pas donné un document à lire : cela aurait donné la réponse écrite.
+
+La question 10 — *« Une œuvre dans le domaine public ou en CC0 peut être… »* — demande un
+geste de plus : **trouver** le symbole CC0 parmi les quatre, lire ce qu'il signifie, et en
+déduire ce qu'il permet. C'est la convention du dépôt, celle des sept questions illustrées du
+QCM *SOS serre* : l'image est un **document à lire pour répondre**, jamais l'énoncé de la
+réponse.
+
+L'ordre des questions y contribue : la 7 est posée **avant** que le schéma n'apparaisse. Un
+élève y répond sans aide, et retrouve ensuite en image ce qu'il vient de raisonner.
+
+### La garde qui interdisait au lieu de localiser
+
+La suite du lot portait cette ligne :
+
+```js
+ok('aucune image héritée du lot voisin', banque.every(q => !q.img));
+```
+
+Elle refusait **toute** image. Elle datait du jour où le commentaire du fichier annonçait
+« 3 illustrees » alors qu'il n'en portait aucune : la garde visait des images arrivées **par
+copie du gabarit**, d'un lot voisin. Mais elle le vérifiait en interdisant le genre entier.
+
+Elle dit maintenant ce qu'elle voulait dire : une image, s'il y en a une, **vient du lot
+lui-même** (`Images/…`), porte un `alt` de plus de soixante caractères, et **se charge
+réellement** (`naturalWidth > 0`). Deux contrôles de plus, une interdiction de moins : la
+suite passe de **32/32 à 34/34**, et le rapport de tests porte la sortie réelle.
+
+> **Règle d'or n°280 — une garde qui interdit un genre entier pour empêcher un cas
+> particulier finira par refuser le travail qu'on attendait d'elle.** « Aucune image » était
+> facile à écrire et vrai ce jour-là ; « aucune image d'un autre lot » demandait de lire la
+> source de chaque image, et c'était la vraie question. Le jour où le lot a mérité son
+> illustration, c'est la garde qui a dit non.
+
+### Ce que la mesure a trouvé au passage : 31 QCM sur 37 mentent sur eux-mêmes
+
+Le commentaire faux de ce fichier — `/* Banque : 30 questions (10 4e_C8.1 + 10 4e_C8.2 +
+10 4e_C8.3), 3 illustrees */`, dans un lot qui est `5e_C1.5` et `5e_C1.6` — n'est pas isolé.
+
+**37 QCM du dépôt portent ce commentaire ; 31 en disent au moins une chose fausse** :
+29 annoncent un nombre d'images illustrées qu'ils ne portent pas, et 29 nomment des **codes
+de compétence appartenant à d'autres lots**. Le gabarit s'est recopié, et le commentaire avec
+lui.
+
+Aucun contrôle ne le voit : `controle_effectifs_qcm.py` lit ce que la page **affiche**, pas
+les commentaires de son script. Trois PR et un contrôle sont à écrire — un par thème, plus la
+mesure qui empêchera le trente-deuxième. Celle-ci corrige le seul fichier qu'elle touche.
