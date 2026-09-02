@@ -12106,3 +12106,60 @@ extérieures des séquences déjà relevées le 31/08, et un conteneur sans rés
 
 Le contrôle peut maintenant entrer : il sera vert le jour où il arrivera, et c'est la seule
 condition pour qu'un contrôle vaille quelque chose.
+
+## 2026-09-02 (suite) — Fond blanc et couleurs conservées : la décision de Pascal, et cinq essais pour la tenir
+
+> « Il va falloir que j'économise de l'encre, donc je ne peux pas imprimer sur un fond gris.
+> Il faudrait que pour l'impression le fond soit blanc et qu'il y ait des couleurs. »
+
+La campagne précédente (#338 à #341) avait rendu le texte **lisible** — en le forçant en `#111`
+et `#333`. Lisible, et gris. Ce n'était pas ce qui était demandé.
+
+Refait : **tout fond non blanc devient blanc**, et chaque couleur de texte **garde sa teinte et
+sa saturation**, ne perdant que de la clarté — juste assez pour atteindre 4,5 : 1 sur du blanc.
+Un texte blanc posé sur un bandeau coloré reprend la teinte **de ce bandeau** : le bandeau
+marine à texte blanc devient un titre marine sur blanc.
+
+### Cinq essais, cinq régressions — vues au RENDU, pas à la mesure
+
+1. **Le corps du texte est devenu brun.** Le repli `.page p` attrapait *tous* les paragraphes.
+2. **Restreint aux éléments ayant leur propre classe** : le brun disparaît, et les verbes
+   d'action « Ouvrir. / Nommer. » restent pâles, faute de classe.
+3. **Repli rouvert à toutes les balises**, en comptant sur la garde d'accord : le corps est
+   redevenu ocre — tous les `p` d'une carte partageaient la même couleur claire, donc aucun
+   désaccord à détecter.
+4. **Repli limité aux balises d'accent** : les verbes reviennent… et « **Chengdu** »,
+   « **90 lignes** », « **négative** » avec eux. `.card b` couvrait le verbe coloré ET le gras
+   du texte courant. D'où la **garde d'accord** : un sélecteur ne reçoit une couleur que si
+   tous les éléments qu'il désigne ont la même couleur d'origine.
+5. **Les badges de titre se sont vidés** : écartés par la garde d'accord, leur fond blanchi et
+   leur texte resté blanc. Ils reprennent désormais la teinte de leur **fond d'origine**.
+
+Et une sixième, sur l'index : les libellés de compétence sortaient gris pâle. J'ai d'abord
+accusé une **opacité** — à tort, la mesure le disait déjà. C'étaient des `<span>` sans classe,
+que ma liste d'exclusions avait rangés avec le corps du texte. Un `span` est un accent en ligne,
+comme un `b` : il est sorti de la liste, et les libellés s'impriment en bleu foncé.
+
+> **Règle d'or n°285 — un correctif de couleur ne se valide pas au chiffre, il se regarde.**
+> Les cinq essais faisaient tous baisser le compte des textes illisibles. Quatre abîmaient la
+> page, et aucune mesure ne le disait : c'est le rendu qui l'a dit, à chaque fois.
+
+### L'index, encore une fois, au générateur
+
+Les huit règles de `make_index.py` remplacent le rattrapage du matin. Résultat mesuré et
+regardé : fond blanc, libellés de compétence en bleu foncé, codes en noir, titres de thème dans
+leur couleur, compteurs en bleu.
+
+**Rien ne change à l'écran** : 95 pages du thème 2 rouvertes, 0 erreur JS, et les 94 fonds
+sombres le sont toujours.
+
+### Ce que le CSS ne peut pas atteindre : 99 schémas sur 178
+
+Un `@media print` blanchit le **conteneur** d'un schéma, pas le schéma. Or **99 des 178 SVG du
+dépôt portent un fond sombre dessiné à l'intérieur** — `#050f24` pour 93 d'entre eux. La table
+« Six façons de montrer la même expérience » de `3e_C2.1` reste un aplat marine de 430 pixels de
+haut sur une page A4.
+
+Les corriger demande d'entrer dans les fichiers, avec la même exigence : fond blanc, couleurs
+conservées, et un `@media print` **interne au SVG** pour que l'écran garde son fond sombre.
+C'est le chantier suivant : 27 schémas au thème 1, 40 au thème 2, 32 au thème 3.
