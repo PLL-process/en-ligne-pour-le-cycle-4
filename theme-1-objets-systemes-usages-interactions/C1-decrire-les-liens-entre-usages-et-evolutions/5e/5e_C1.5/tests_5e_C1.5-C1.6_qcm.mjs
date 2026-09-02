@@ -17,7 +17,7 @@ ok('aucune requête échouée', fail.length === 0, fail.slice(0, 2).join(' | '))
 
 const banque = await p.evaluate(() => QUESTIONS.map(q => ({
   c: q.c, n: q.n, r: q.r, no: q.o.length, nd: q.d.filter(x => x).length,
-  vide: q.d[q.r] === '', img: !!q.img,
+  vide: q.d[q.r] === '', img: q.img ? q.img.src : null, alt: q.img ? (q.img.alt || '') : '',
   champs: ['q', 'expl', 'ex', 'err', 'ret'].every(k => (q[k] || '').trim().length > 0),
 })));
 ok('30 questions', banque.length === 30, String(banque.length));
@@ -25,7 +25,29 @@ ok('4 options par question', banque.every(q => q.no === 4));
 ok('3 réfutations par question', banque.every(q => q.nd === 3));
 ok('la bonne réponse n’a pas de réfutation', banque.every(q => q.vide));
 ok('tous les champs du gabarit remplis', banque.every(q => q.champs));
-ok('aucune image héritée du lot voisin', banque.every(q => !q.img));
+// Cette ligne exigeait AUCUNE image : elle datait du jour où le commentaire du fichier
+// annonçait « 3 illustrees » alors qu'il n'y en avait pas une seule, et elle gardait contre
+// des images héritées du gabarit voisin. Elle dit maintenant ce qu'elle voulait dire : une
+// image, s'il y en a une, vient du lot LUI-MÊME, et elle est réellement lisible.
+ok('aucune image héritée d’un autre lot', banque.every(q => !q.img || /^Images\//.test(q.img)),
+   banque.filter(q => q.img).map(q => q.img).join(' | ') || 'aucune image');
+ok('chaque image porte un alt qui transcrit ce qui est visible',
+   banque.every(q => !q.img || q.alt.length > 60),
+   banque.filter(q => q.img).map(q => q.alt.length + ' car.').join(' | ') || 'aucune image');
+const rendues = await p.evaluate(async () => {
+  const out = [];
+  for (const q of QUESTIONS) {
+    if (!q.img) continue;
+    const im = new Image();
+    im.src = q.img.src;
+    await im.decode().catch(() => {});
+    out.push({ src: q.img.src, w: im.naturalWidth, h: im.naturalHeight });
+  }
+  return out;
+});
+ok('chaque image se charge réellement (naturalWidth > 0)',
+   rendues.every(r => r.w > 0),
+   rendues.map(r => `${r.src} ${r.w}×${r.h}`).join(' | ') || 'aucune image');
 ok('30 notions distinctes', new Set(banque.map(q => q.n)).size === 30,
    String(new Set(banque.map(q => q.n)).size));
 
