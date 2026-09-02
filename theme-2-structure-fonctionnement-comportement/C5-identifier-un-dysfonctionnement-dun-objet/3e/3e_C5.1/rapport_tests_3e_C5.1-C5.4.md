@@ -103,8 +103,11 @@ plutôt qu'en quarante — font l'objet d'une PR à part.
 
 ## Contrôles restant manuels
 
-Appareils réels ; atelier version 🅰 (multimètres **MATÉRIEL À CONFIRMER**) ; impression 3D
-(**À CONFIRMER**) ; relecture humaine.
+Appareils réels ; atelier version 🅰 (multimètres **MATÉRIEL À CONFIRMER**) ; relecture humaine.
+
+L'impression 3D **n'est plus à confirmer** : la salle porte une FlashForge Adventurer 5M Pro
+(confirmée par Pascal le 02/09/2026). Ce qui reste manuel, c'est l'impression elle-même — aucune
+suite de tests ne lance une machine.
 
 ## Limites connues
 

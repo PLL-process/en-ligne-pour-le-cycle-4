@@ -1621,8 +1621,9 @@ OVERLAY = {
                 "pédagogique), arbre de diagnostic, plan coté, versions A/B/C, QCM 32 q "
                 "dont 10 illustrées (règle images v2), synthèses, fiche, matrice, 5 SVG "
                 "originaux CC0, rapport de tests.",
-        anomalies="Multimètres et imprimante 3D : MATÉRIEL À CONFIRMER (alternatives "
-                  "simulation/gabarit prévues). Évaluation sommative à l'enseignant.",
+        anomalies="Multimètres : MATÉRIEL À CONFIRMER (alternative simulation prévue). "
+                  "Imprimante 3D confirmée le 02/09/2026 : FlashForge Adventurer 5M Pro, "
+                  "volume 220 × 220 × 220 mm. Évaluation sommative à l'enseignant.",
         accessibilite="Clavier, aria/alt, reduced-motion, impression A4, minuteur "
                       "désactivable.",
         medias="5 SVG originaux CC0 image-objet — SOURCES_MEDIAS.md complet.",
