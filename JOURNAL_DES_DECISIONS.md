@@ -12163,3 +12163,49 @@ haut sur une page A4.
 Les corriger demande d'entrer dans les fichiers, avec la même exigence : fond blanc, couleurs
 conservées, et un `@media print` **interne au SVG** pour que l'écran garde son fond sombre.
 C'est le chantier suivant : 27 schémas au thème 1, 40 au thème 2, 32 au thème 3.
+## 2026-09-02 (suite) — Le contrôle d'impression entre, et corrige une phrase que j'avais écrite trois fois
+
+`_outils/controle_impression.mjs` ouvre les 338 pages du dépôt en `media: print` et compare
+chaque texte au fond qu'il aura vraiment. Il **refuse une seule chose** : un texte sombre posé
+sur un fond resté sombre — le défaut des PR #338, #339 et #340, qui ne doit pas revenir.
+
+```
+338 page(s) ouvertes en « media: print » · 54 489 texte(s) lus · 0 page(s) refusée(s)
+✅ aucune page n'imprime un texte que le papier ne rendra pas
+```
+
+`_outils/tests_controle_impression.mjs` — **10 contrôles** — rejoue le défaut et les quatre cas
+qu'il ne doit surtout pas confondre avec lui.
+
+### Une phrase que j'ai écrite trois fois, et qui était fausse
+
+Dans les trois PR de la campagne, j'ai justifié les textes restants ainsi : *« ce sont des
+accents de couleur sur fond blanc, faibles **en niveaux de gris**, pas en couleur — et
+l'imprimante de la salle est une laser couleur. »*
+
+**C'est faux.** Le rapport que je calcule est le contraste WCAG, et il tient **déjà** compte de
+la couleur : sa formule pondère le rouge, le vert et le bleu par leur contribution réelle à la
+luminance. Un titre à 2,13 : 1 est faible sur une laser couleur, sur une laser noir et blanc,
+et sur l'écran. Il n'y avait pas de « niveaux de gris » dans ma mesure — j'ai employé le mot
+trois fois pour excuser un chiffre que je ne voulais pas corriger.
+
+Ce que la campagne a réellement réglé : **6 995 textes qui disparaissaient**. Ce qu'elle laisse :
+**3 957 textes à faible contraste**, une dette véritable, qui demande une décision de palette
+page par page et non un correctif mécanique. Le contrôle la **compte et la nomme** ; il ne la
+refuse pas, parce qu'un contrôle qui refuse ce que personne n'a décidé de corriger bloque le
+dépôt au lieu de le mesurer.
+
+> **Règle d'or n°284 — quand on explique pourquoi un chiffre restant n'est pas grave, il faut
+> vérifier l'explication aussi sérieusement que le chiffre.** « Faible en gris, pas en
+> couleur » était plausible, commode, et démontrable en trente secondes — je ne l'ai pas fait,
+> et je l'ai répété trois fois.
+
+### Ce que le contrôle refusait de trop, et qu'il ne refuse plus
+
+Écrit d'abord pour refuser **tout** texte sur fond sombre, il accusait dix-neuf pages dont
+l'en-tête est du **blanc sur marine** — parfaitement lisible sur le papier. Le défaut n'est pas
+le fond sombre : c'est la **combinaison** sombre sur sombre.
+
+Un bandeau blanc sur marine coûte de l'encre — 122 textes dans ce cas. C'est une question
+d'intendance, pas de lisibilité, et le contrôle la compte à part plutôt que de trancher à la
+place de Pascal.
