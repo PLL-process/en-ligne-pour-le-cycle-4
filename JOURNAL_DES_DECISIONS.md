@@ -11964,3 +11964,81 @@ texte à y coller est livré à part, comme la fois précédente.
 
 `FEUILLE_DE_ROUTE_COMPLETION.md` et la skill `sequence-pedagogique-engageante` portent la même
 mention, et relèvent de la même main.
+
+## 2026-09-02 — Une imprimante couleur nommée, et 213 pages qui s'imprimaient noir sur noir
+
+Pascal a nommé sa **HP Color LaserJet Pro MFP 3302sdw**. Le dépôt répète partout que ses pages
+« s'impriment ». Personne ne l'avait jamais vérifié — parce que personne ne savait sur quoi.
+
+### Ce que la mesure a trouvé
+
+Chaque page ouverte dans un navigateur en `media: print`, chaque texte comparé à son fond réel
+par le rapport de contraste WCAG. Sur **338 pages** et **57 373 textes** :
+
+| | |
+|---|---|
+| Pages portant au moins un texte illisible sur papier | **213 / 338** |
+| Occurrences « texte sombre sur fond sombre » | **6 830** sur 122 pages |
+| Occurrences « texte pâle sur fond blanc » | **4 346** sur 200 pages |
+
+La cause est mécanique et toujours la même. Le bloc `@media print` de chaque page fait
+`body{background:#fff;color:#111}` — **et s'arrête là**. Les panneaux intérieurs gardent leur
+fond marine d'écran, et le texte que la règle vient de noircir se pose dessus : `#111111` sur
+`#0a1b3d`, soit **1,11 : 1**. Sur le papier, un rectangle noir. Sur une laser, un rectangle noir
+**et une cartouche vidée**.
+
+Le miroir du même défaut : les accents clairs conçus pour un fond sombre — `#9bbefc`, `#61dafb`,
+`#81fba1` — restent pâles quand le fond devient blanc. Invisibles aussi, dans l'autre sens.
+
+Les **synthèses** s'en tirent le mieux (45 pages touchées sur 122) : ce sont les seules qui
+avaient été pensées pour le papier. Les TP, eux, sont touchés à **19 sur 19**.
+
+### La correction lit ce qui est RENDU, pas ce qui est écrit
+
+Premier essai : analyser le CSS, repérer les règles à fond sombre, écrire la surcharge. Résultat
+sur la pire page : deux panneaux corrigés, **deux autres toujours noirs**. Leur fond venait
+d'ailleurs — d'une variable, d'un ancêtre, d'une règle que l'analyse de texte n'avait pas su
+suivre.
+
+Deuxième essai, et le bon : **demander au navigateur**, page par page, en `media: print`, quels
+éléments finissent sombres, et écrire la surcharge avec **les sélecteurs de cette page-là** —
+sa classe si elle en a une, son id sinon, et à défaut `.ancetre balise`, jamais « tout ».
+C'est la règle n°278 appliquée à la lettre : le fichier dit ce qui est écrit, le navigateur dit
+ce qui arrive à l'élève.
+
+### Le thème 1, mesuré avant et après
+
+| Thème 1 (72 pages) | Avant | Après |
+|---|---|---|
+| Occurrences sombre sur sombre | **2 149** sur 25 pages | **0** |
+| Textes sous 4,5 : 1 | 2 999 | 549 |
+
+Les **549 restants sont voulus** : ce sont des accents de couleur sur fond blanc — l'orange d'un
+verbe d'action, le bleu d'un rappel. Ils sont faibles **en niveaux de gris**, pas en couleur, et
+l'imprimante de la salle est une laser **couleur**. Les forcer en noir écraserait une emphase
+délibérée pour satisfaire un chiffre : ce serait uniformiser ce qui n'a jamais été uniforme
+(règle n°275).
+
+**Rien ne change à l'écran.** Toute la correction vit dans `@media print`. Vérifié : les
+72 pages rouvertes à l'écran, 0 erreur JS, 0 requête échouée, et les 65 qui avaient un fond
+sombre l'ont toujours — exactement le même compte qu'avant.
+
+### La mesure s'est trompée, une quatrième fois aujourd'hui
+
+Il restait, après correction, **20 occurrences** sombre-sur-sombre : exactement **deux par
+séquence**, sur dix séquences. Trop régulier pour être un reste.
+
+C'était le **bandeau des tâches**, `#tachesBandeau` — que le bloc `@media print` de chaque page
+masque déjà par `display:none`. Il ne s'imprime jamais. Ma mesure vérifiait que l'élément
+lui-même n'était pas caché, **mais pas ses ancêtres** : elle comptait le texte d'un bandeau
+invisible comme un défaut d'impression.
+
+> **Règle d'or n°282 — un élément n'est pas visible parce qu'il n'est pas caché : il l'est
+> parce qu'aucun de ses ancêtres ne l'est.** La mesure corrigée, le thème 1 tombe de 2 149 à
+> **zéro**, et les vingt derniers défauts n'ont jamais existé.
+
+### Ce qui suit
+
+Les thèmes 2 et 3 portent le même défaut et attendent leur PR. Le contrôle qui l'empêchera de
+revenir vivra dans `_outils/` — donc au thème 2, avec le générateur d'index, qui produit lui
+aussi une page à corriger (`index.html`, **645 textes pâles**, le pire score du dépôt).
