@@ -11602,3 +11602,96 @@ trois premières stations de la série `3e_C9.2`. Deux PR sœurs suivent.
 **Arbitrage de Pascal, ce soir** : les TP portent le bloc **comme les séquences**, même quand
 ils écrivent eux-mêmes « ce TP ne te note pas ». Apprendre l'outil ne dispense pas de proposer
 l'entraînement.
+
+## 2026-08-31 (suite) — Règle n°4 au thème 3 : cinq pages closes, et un contrôle qui s'est trompé six fois
+
+Les cinq TP du thème 3 portent désormais les deux blocs de fin. Mais l'histoire de cette PR
+n'est pas celle des cinq pages : c'est celle de la **mesure**, qui a menti six fois avant de
+dire vrai — cinq fois en accusant, une fois en absolvant.
+
+### Les cinq TP
+
+| Page | QCM au bout | Questions |
+|---|---|---|
+| `atelier-cao/tp_5e_de_onshape.html` | `5e_C7.6 — Le dé` | 30, aucune illustrée |
+| `atelier-cao/tp_5e_de_calottes.html` | `5e_C7.2 — Le dé, en mieux` | 30, aucune illustrée |
+| `atelier-cao/tp_4e_socle_assemblage.html` | `4e_C7.6 — Le socle` | 30, aucune illustrée |
+| `atelier-cao/tp_3e_boitier_etanche.html` | `3e_C7.6 — Le boîtier` | 30, aucune illustrée |
+| `3e_C9.1/tp_mbot2_python.html` | `3e_C9.1 — Variables, types, systèmes` | 30, dont 3 illustrées |
+
+Chaque effectif est **lu dans la banque du QCM**, jamais recopié. Les trois défis Bonus de
+chaque page sont écrits pour elle, et aucun n'a de vérificateur : un bonus qui se corrige tout
+seul redevient un exercice.
+
+### Les cinq fois où le contrôle a accusé une page conforme
+
+1. **L'apostrophe droite** contre l'apostrophe typographique — `5e_C1.3`, déjà racontée ce matin.
+2. **L'emoji partagé** : 🎁 sert aussi au *palier récompense* des TP CAO, « 🎁 Ton boîtier,
+   dehors pour de bon », qui est une étape du parcours et non le bloc facultatif.
+3. **L'aparté du professeur** : `3e_C9.2` porte un `<details class="prof">` dont le `<summary>`
+   reprend mot pour mot « 🎁 Bonus (facultatif — hors parcours obligatoire) », pour parler
+   d'ArduBlock à l'adulte. **Le « Bonus mal placé » que j'avais signalé ce matin n'existe pas.**
+4. **La fenêtre trop courte** : le contrôle ne cherchait la mention « Page N sur M » que dans
+   les 20 000 premiers octets. Les quatre stations de `3e_C9.2` la portent à l'octet **20 826**.
+   Les trois premières étaient donc accusées d'un manque qui est leur définition même.
+5. **La balise au milieu du titre** : `3e_C1.1` écrit
+   `🎁 Bonus <span style="…">(facultatif — …)</span>`. Le mot et sa parenthèse séparés par une
+   balise, et le motif ne passait pas.
+
+### La sixième, qui allait dans l'autre sens — et que le navigateur seul a vue
+
+Les cinq précédentes criaient. Celle-ci se taisait. Le contrôle ne comptait que les liens QCM
+portant `class="btn"` : il en trouvait **un** par TP, déclarait la page conforme, et passait.
+
+Le navigateur, lui, a compté **deux** liens vers le même QCM dans chacun des quatre TP CAO. Le
+second, en texte courant, au **premier quart de la page** :
+
+> *Ce TP ne te note pas : on y apprend l'outil. Ce qui s'évalue vient après — et tout cela
+> fonctionne hors ligne, s'imprime, et ne demande aucun compte : le QCM « Le dé » (30
+> questions), la synthèse et le lexique.*
+
+La phrase est juste et utile — elle rassure un élève qui ouvre un TP non noté. C'est **le lien**
+qui pose problème : il propose l'entraînement avant le premier geste, ce que Pascal reprochait
+le 30/08. La phrase reste donc, mot pour mot ; seule sa destination change : elle mène
+maintenant au bloc du bas, `#pret-a-s-entrainer`, et le dit — *« 30 questions, en bas de cette
+page »*. Un seul lien **ouvre** le QCM dans chaque TP, et il est à 93–98 % de la page.
+
+> **Règle d'or n°277 — un contrôle se trompe dans les deux sens, et le second ne fait aucun
+> bruit.** Quand il accuse à tort, on le découvre le jour même : la page accusée se défend.
+> Quand il absout à tort, personne ne vient rien dire. Une mesure qui ne trouve rien n'est une
+> bonne nouvelle qu'après qu'on a vérifié qu'elle sait trouver.
+
+> **Règle d'or n°278 — mesurer un texte, c'est mesurer une apparence ; il faut aussi mesurer ce
+> qui est rendu.** Le fichier voyait un `class="btn"`, le navigateur voyait deux liens vers la
+> même page. Aucun des deux ne remplace l'autre : le fichier lit ce qui est écrit partout, le
+> navigateur lit ce qui arrive à l'élève.
+
+### Ce qui reste hors du bloc, et pourquoi c'est voulu
+
+- **`tp_modele_demonstration.html`** — un modèle de TP destiné à l'enseignant. Il montre la
+  forme d'un TP, il n'en est pas un, et aucun QCM ne lui correspond. Tolérée, avec sa raison.
+- **Les trois premières stations de `3e_C9.2`** — elles se déclarent « Page 1 sur 4 », « Page 2
+  sur 4 », « Page 3 sur 4 ». **La page 4 porte déjà les deux blocs.** Les poser aussi sur les
+  étapes remettrait le QCM avant la fin : la demande de Pascal, retournée contre elle-même.
+- **Neuf pages-pointeurs** de moins de 6 Ko, qui renvoient vers le TP réel.
+- **`atelier_pix_crcn_jardin.html`** — thème 2, hors du périmètre de cette branche. Il part
+  dans la PR sœur, avec le contrôle lui-même.
+
+### Mesuré, non corrigé ici
+
+`tp_mbot2_python.html` **déborde de 484 px** à 390 px de large : son tableau de référence de
+l'API mBot2 (`#apiBody`, 876 px) ne tient pas sur un téléphone. Le défaut est **antérieur à
+cette PR** — mesuré avant modification, à l'identique. Le corriger ici, ce serait glisser un
+sujet dans une PR qui n'est pas la sienne. Il attend la prochaine.
+
+### Vérifié
+
+**50 vérifications sur 50 en navigateur**, sur les cinq pages : blocs visibles, « Prêt » avant
+« Bonus », les deux après le dernier panneau du parcours, un seul lien ouvrant le QCM et il est
+dans le bloc, toute ancre interne résout, le QCM visé existe, le bouton ne déborde pas à
+390 px, aucune erreur JS. Puis les huit contrôles du dépôt : liens, atteignabilité, médias,
+effectifs QCM, rapports de tests, verrous, statut, couverture — tous verts.
+
+Le contrôle qui mesure cette règle, `_outils/controle_regle4.py`, **ne fait pas partie de cette
+PR** : `_outils/` appartient au thème 2. Il arrive avec la PR sœur, et il écarte alors une seule
+page — celle que cette PR sœur corrige.
