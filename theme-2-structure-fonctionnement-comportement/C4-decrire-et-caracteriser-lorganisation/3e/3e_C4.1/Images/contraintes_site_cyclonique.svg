@@ -58,4 +58,32 @@
   <rect x="60" y="446" width="820" height="40" rx="10" fill="#173666" stroke="#274a8a"/>
   <text x="470" y="464" fill="#e4eaf5" font-size="12" text-anchor="middle">Justifier un matériau en 3e = croiser <tspan fill="#ff7b88" font-weight="bold">contraintes techniques</tspan> ET <tspan fill="#81fba1" font-weight="bold">contraintes environnementales</tspan> —</text>
   <text x="470" y="480" fill="#9bbefc" font-size="11" text-anchor="middle">et choisir aussi le procédé de mise en forme adapté à la pièce et à la série.</text>
+<style><![CDATA[
+/* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026) —
+   Un objet embarqué applique le media print de la page qui l'appelle : ce
+   bloc ne change RIEN à l'écran, et blanchit le fond du schéma sur le papier
+   en fonçant ses couleurs claires, teinte gardée. Mesuré le 02/09 : une image
+   appelée par la balise img ne le fait pas — ces schémas-là ne sont pas ici. */
+@media print{
+  *:not(text):not(tspan)[fill="#050f24"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#0d2347"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#0e2f52"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#173666"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#274a8a"]{fill:#ffffff}
+  text[fill="#61dafb"],tspan[fill="#61dafb"],[fill="#61dafb"] text,[fill="#61dafb"] tspan{fill:#047fa0}
+  [stroke="#61dafb"]{stroke:#047fa0}
+  text[fill="#81aaff"],tspan[fill="#81aaff"],[fill="#81aaff"] text,[fill="#81aaff"] tspan{fill:#2069ff}
+  text[fill="#81fba1"],tspan[fill="#81fba1"],[fill="#81fba1"] text,[fill="#81fba1"] tspan{fill:#048827}
+  [stroke="#81fba1"]{stroke:#048827}
+  text[fill="#9bbefc"],tspan[fill="#9bbefc"],[fill="#9bbefc"] text,[fill="#9bbefc"] tspan{fill:#1a6af8}
+  text[fill="#c68ef2"],tspan[fill="#c68ef2"],[fill="#c68ef2"] text,[fill="#c68ef2"] tspan{fill:#a145ea}
+  [stroke="#c68ef2"]{stroke:#a145ea}
+  text[fill="#e4eaf5"],tspan[fill="#e4eaf5"],[fill="#e4eaf5"] text,[fill="#e4eaf5"] tspan{fill:#4b73bc}
+  text[fill="#ff7b88"],tspan[fill="#ff7b88"],[fill="#ff7b88"] text,[fill="#ff7b88"] tspan{fill:#eb0017}
+  [stroke="#ff7b88"]{stroke:#eb0017}
+  [stroke="#ffb454"]{stroke:#b06300}
+  text[fill="#ffd66b"],tspan[fill="#ffd66b"],[fill="#ffd66b"] text,[fill="#ffd66b"] tspan{fill:#996f00}
+  [stroke="#ffd66b"]{stroke:#996f00}
+}
+]]></style>
 </svg>

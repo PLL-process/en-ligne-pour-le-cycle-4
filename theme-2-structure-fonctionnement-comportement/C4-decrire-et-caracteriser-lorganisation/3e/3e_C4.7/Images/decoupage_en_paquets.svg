@@ -80,4 +80,30 @@
     <text x="60" y="380">• l'adresse <tspan fill="#61dafb" font-weight="bold">IP source</tspan> (qui a envoyé — pour répondre ou redemander un paquet perdu) ;</text>
     <text x="60" y="400">• le <tspan fill="#61dafb" font-weight="bold">numéro d'ordre</tspan> (n°2/3) — pour réassembler, détecter une perte et redemander SEULEMENT le paquet manquant.</text>
   </g>
+<style><![CDATA[
+/* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026) —
+   Un objet embarqué applique le media print de la page qui l'appelle : ce
+   bloc ne change RIEN à l'écran, et blanchit le fond du schéma sur le papier
+   en fonçant ses couleurs claires, teinte gardée. Mesuré le 02/09 : une image
+   appelée par la balise img ne le fait pas — ces schémas-là ne sont pas ici. */
+@media print{
+  *:not(text):not(tspan)[fill="#050f24"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#0d2347"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#123322"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#123c66"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#173666"]{fill:#ffffff}
+  *:not(text):not(tspan)[fill="#2b1a3f"]{fill:#ffffff}
+  text[fill="#61dafb"],tspan[fill="#61dafb"],[fill="#61dafb"] text,[fill="#61dafb"] tspan{fill:#047fa0}
+  [stroke="#61dafb"]{stroke:#047fa0}
+  text[fill="#81aaff"],tspan[fill="#81aaff"],[fill="#81aaff"] text,[fill="#81aaff"] tspan{fill:#2069ff}
+  text[fill="#81fba1"],tspan[fill="#81fba1"],[fill="#81fba1"] text,[fill="#81fba1"] tspan{fill:#048827}
+  [stroke="#81fba1"]{stroke:#048827}
+  text[fill="#9bbefc"],tspan[fill="#9bbefc"],[fill="#9bbefc"] text,[fill="#9bbefc"] tspan{fill:#1a6af8}
+  text[fill="#c68ef2"],tspan[fill="#c68ef2"],[fill="#c68ef2"] text,[fill="#c68ef2"] tspan{fill:#a145ea}
+  [stroke="#c68ef2"]{stroke:#a145ea}
+  text[fill="#e4eaf5"],tspan[fill="#e4eaf5"],[fill="#e4eaf5"] text,[fill="#e4eaf5"] tspan{fill:#4b73bc}
+  text[fill="#ffd66b"],tspan[fill="#ffd66b"],[fill="#ffd66b"] text,[fill="#ffd66b"] tspan{fill:#996f00}
+  [stroke="#ffd66b"]{stroke:#996f00}
+}
+]]></style>
 </svg>
