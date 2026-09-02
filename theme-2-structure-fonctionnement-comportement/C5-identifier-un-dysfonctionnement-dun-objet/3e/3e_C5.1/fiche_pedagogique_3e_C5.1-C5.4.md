@@ -37,7 +37,13 @@ S1 : symptômes → hypothèses (act. 1) + arbre de diagnostic (act. 2). S2 : r�
 
 ## Matériel, logiciels, sécurité
 
-Multimètres et imprimante 3D : **MATÉRIEL À CONFIRMER — prévoir une alternative par simulation** (prévue dans la page). FreeCAD gratuit ; SolidWorks si licence confirmée. **Sécurité : très basse tension uniquement ; jamais d'appareil relié au secteur ; jamais de bloc secteur ouvert ; câblage vérifié par l'enseignant avant mise sous tension.**
+Multimètres : **MATÉRIEL À CONFIRMER — prévoir une alternative par simulation** (prévue dans la page).
+
+Imprimante 3D : **confirmée le 02/09/2026 — FlashForge Adventurer 5M Pro**, en salle. Volume
+220 × 220 × 220 mm, buse 0,4 mm livrée, plateau PEI souple, capot fermé, filtration HEPA +
+charbon actif. Le constructeur écrit dans son manuel français : « Utilisez des matériaux non
+toxiques comme le PLA dans les lieux fréquentés par des enfants » et « Enfants et personnes non
+formées ne doivent pas utiliser seuls cet appareil » — voir la section Sécurité ci-dessous. FreeCAD gratuit ; SolidWorks si licence confirmée. **Sécurité : très basse tension uniquement ; jamais d'appareil relié au secteur ; jamais de bloc secteur ouvert ; câblage vérifié par l'enseignant avant mise sous tension.**
 
 ## Différenciation, inclusion, accessibilité
 

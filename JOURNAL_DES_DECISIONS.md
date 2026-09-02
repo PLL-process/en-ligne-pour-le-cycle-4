@@ -11900,3 +11900,67 @@ un de `4e_C6.2` — autant de sujets distincts, chacun pour sa propre PR.
 réellement rendu (`naturalWidth > 0`), chaque `alt` fait plus de soixante caractères, rien ne
 déborde à 390 px, une question non illustrée ne montre aucune figure, aucune erreur JS et
 **aucune requête réseau** : tout est local.
+
+## 2026-09-02 — L'imprimante 3D a un nom, et un nom change ce qu'on peut écrire
+
+Pascal : « il y a dans ma salle la **FlashForge Adventurer 5M Pro** et une **HP Color LaserJet
+Pro MFP 3302sdw** ».
+
+Depuis le premier jour, le dépôt écrivait « imprimante 3D : **MATÉRIEL À CONFIRMER** — prévoir
+une alternative par simulation ». C'était honnête : on ne présume pas d'une machine qu'on n'a
+pas vue. Ce n'est plus vrai, et une phrase qui reste prudente après la levée du doute n'est
+plus de la prudence — c'est une information périmée.
+
+### Ce qui change dans `3e_C5.1`
+
+Sept fichiers portaient le doute sur l'imprimante 3D. **Les multimètres, eux, ne sont pas
+confirmés** : Pascal a nommé deux imprimantes, pas des multimètres, et leur mention reste
+exactement où elle était. Confirmer plus que ce qui a été dit serait une autre façon de mentir.
+
+Le doute est remplacé partout par le **domaine réel de la machine**, qui est ce qui s'enseigne :
+
+- **220 × 220 × 220 mm** de volume d'impression (constructeur), buse 0,4 mm livrée, plateau PEI
+  souple amovible, capot fermé, filtration HEPA + charbon actif ;
+- dans le schéma `procedes_fabrication_piece.svg`, la ligne jaune « ⚠ imprimante du collège :
+  MATÉRIEL À CONFIRMER » devient « domaine de la machine : **220 × 220 × 220 mm au plus** ».
+  Même place, même couleur — un avertissement remplacé par une cote.
+
+Le repli découpe/assemblage **reste** dans la séquence. Il n'y était pas par doute sur la
+machine : un procédé de secours fait partie du raisonnement de fabrication, et il continue.
+
+### Une correction de sécurité, et elle vient du manuel du constructeur
+
+Le QCM disait : *« Modélisation FreeCAD → export STL → **impression en ASA** »*, et la
+correction de la séquence propose « ASA, ou ABS traité anti-UV » pour une pièce exposée aux UV.
+
+C'est **la bonne réponse d'ingénierie** — et c'est précisément la famille de matières que
+FlashForge encadre. Le manuel français de la machine écrit, littéralement :
+
+> « **À chaud, l'ABS dégage des gaz toxiques.** Il est recommandé d'activer le filtrage de la
+> circulation d'air interne pendant ou après l'impression. »
+
+> « **Utilisez des matériaux non toxiques comme le PLA dans les lieux fréquentés par des
+> enfants.** »
+
+Et le constructeur maintient l'avertissement malgré son propre filtre HEPA : *« We still
+advocate for printing ABS/ASA and similar materials in a well-ventilated area. »*
+
+Le choix de matière **n'a pas été changé** — changer l'ASA pour le PLA parce que c'est plus
+commode, ce serait enseigner une mauvaise ingénierie. Ce qui a été ajouté, c'est la condition
+que le constructeur pose : en classe on imprime en **PETG**, et **l'ASA se réserve à un tirage
+hors présence d'élèves**. La matière juste, et les conditions de la machine qui l'imprime.
+
+> **Règle d'or n°281 — un matériel nommé n'est pas seulement un doute levé : c'est un domaine
+> qui devient enseignable, et des conditions d'emploi qui deviennent opposables.** Tant que la
+> machine était « à confirmer », on ne pouvait ni dire à un élève quelle taille de pièce elle
+> refuse, ni lui opposer ce que son constructeur interdit. Les deux arrivent ensemble.
+
+### Ce que je n'ai pas touché, et pourquoi
+
+`ENVIRONNEMENT_TECHNIQUE.md` (« à confirmer, jamais présumés disponibles : imprimante 3D ») et
+`INVENTAIRE_PEDAGOGIQUE.md` (« Imprimante 3D : présente ? modèle ? consommables ? ») disent
+encore le contraire du réel. Ils ne sont **atteignables depuis aucune branche de thème** : le
+texte à y coller est livré à part, comme la fois précédente.
+
+`FEUILLE_DE_ROUTE_COMPLETION.md` et la skill `sequence-pedagogique-engageante` portent la même
+mention, et relèvent de la même main.
