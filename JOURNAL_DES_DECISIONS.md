@@ -11695,3 +11695,65 @@ effectifs QCM, rapports de tests, verrous, statut, couverture — tous verts.
 Le contrôle qui mesure cette règle, `_outils/controle_regle4.py`, **ne fait pas partie de cette
 PR** : `_outils/` appartient au thème 2. Il arrive avec la PR sœur, et il écarte alors une seule
 page — celle que cette PR sœur corrige.
+## 2026-08-31 (suite) — Le contrôle de la règle n°4 entre au dépôt, et l'atelier Pix close comme les autres
+
+La PR sœur du thème 3 raconte comment la mesure s'est trompée six fois. Celle-ci fait la seule
+chose qui empêche la septième : **installer la mesure dans le dépôt**, avec le banc qui rejoue
+les six.
+
+### `_outils/controle_regle4.py`
+
+Il part des pages `sequence_*`, `tp_*`, `atelier_*` et vérifie, pour chacune, que la page close
+sur le bloc « 🧠 Prêt·e à t'entraîner ? » puis le bloc « 🎁 Bonus (facultatif — hors parcours
+obligatoire) », avec **un seul lien** qui ouvre le QCM, dans la région finale.
+
+Ce qu'il écarte, chaque fois pour une raison écrite :
+
+- **les pages-pointeurs** de moins de 6 Ko, qui renvoient vers la ressource réelle ;
+- **les étapes** d'une séquence en plusieurs pages, reconnues à leur propre déclaration
+  « Page N sur M » — leur poser le QCM le mettrait avant la fin ;
+- **`tp_modele_demonstration.html`**, modèle de TP destiné à l'enseignant, nommé dans `TOLEREES`
+  avec sa raison.
+
+Ce qu'il ne lit pas, et le dit en clair : **ce que le bloc contient**. Qu'un défi Bonus soit
+réellement ouvert, réellement sans vérificateur, réellement écrit pour cette page-là — cela se
+lit, se juge, et ne se mesure pas.
+
+### `_outils/tests_controle_regle4.py` — le banc des six erreurs
+
+**18 contrôles.** Les six erreurs du 31/08 y sont rejouées avec la forme exacte qui les avait
+produites : l'apostrophe typographique, le 🎁 du palier récompense, le `<summary>` du professeur,
+la mention « Page 2 sur 4 » posée à l'octet 21 000, la balise glissée entre « Bonus » et
+« (facultatif », et le second lien QCM en texte courant qui ne portait pas `class="btn"`.
+
+Trois cas gardent en plus les frontières que la mesure ne doit **pas** franchir : deux liens
+tous deux dans la région finale ne sont pas un écart (`4e_C2.1` et `4e_C4.1` les portent à 69 %
+et 73 %) ; un renvoi interne vers `#pret-a-s-entrainer` n'est pas un lien vers le QCM ; et la
+dernière page d'une série — « Page 4 sur 4 » — est jugée, elle, et non écartée.
+
+### `4e_C4.1/atelier_pix_crcn_jardin.html`
+
+Le dernier écart du dépôt. L'atelier Pix menait ses trois ateliers, générait sa trace CRCN, et
+s'arrêtait là : le QCM du jardin connecté n'était atteignable que depuis la séquence. Il porte
+maintenant les deux blocs, avec sa propre palette, après la trace.
+
+Les effectifs sont **lus dans la banque** : 30 questions, dont 4 illustrées. Les trois défis
+Bonus prolongent chacun un atelier de la page — trier le tableau pour lui faire dire le
+contraire du vrai, écrire l'algorithme d'un bac de tomates et d'un bac de bananiers, et lister
+ce que le jardin ne saurait plus si sa sonde tombait en panne sans bruit.
+
+### Une erreur de plus, la même journée, et la même leçon
+
+En posant ces blocs, j'ai d'abord écrit `Pr&ecirc;t&#183;e &agrave; t'entra&icirc;ner` en
+entités HTML. La page s'affichait parfaitement — et le contrôle ne la voyait pas. C'est
+exactement le `Synth&egrave;ses/` du 30/08, à trois jours d'intervalle : une graphie qui
+convient au navigateur et à personne d'autre. La page écrit ses 374 accents en clair et n'a que
+faire des entités ; les blocs les écrivent en clair aussi.
+
+### Vérifié
+
+`10/10` en navigateur sur l'atelier Pix, `18/18` au banc, et les huit contrôles du dépôt verts.
+
+**Ordre de fusion** : cette PR suppose la PR sœur du thème 3 déjà fusionnée — sans elle, le banc
+refuse au dernier cas, celui qui exige que le dépôt réel passe. C'est voulu : un banc qui
+excuserait l'état du jour pour tenir dans un ordre de fusion ne serait plus un banc.
