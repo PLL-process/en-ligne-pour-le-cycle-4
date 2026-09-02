@@ -12256,3 +12256,17 @@ sombre.
 
 Reste le chantier des **99 schémas sur 178** dont le fond sombre est dessiné à l'intérieur du
 SVG : un `@media print` ne les atteint pas, et c'est là qu'est le gros de l'encre.
+
+## 2026-09-02 (suite) — Les schémas s'impriment sur du blanc : le thème 3
+
+Même bloc `@media print` interne qu'au thème 2, avec les cinq gardes que ce thème a values :
+CDATA, contours sombres préservés, styles internes lus, aplats jamais foncés, casse des
+couleurs respectée.
+
+**6 schémas, 121 règles.** Ouverts un par un en `media: print` : **0 mal formé, 0 texte sous
+4,5 : 1**, 0 aplat(s) encore sombre(s) — des `path` sans `fill` déclaré, noirs par défaut.
+
+**Rien ne change à l'écran.**
+
+Seuls les schémas appelés par `<object>` sont concernés : ceux appelés par `<img>` — 22 au
+thème 1, 14 au thème 3 — restent hors d'atteinte d'un media print, et attendent une décision.
