@@ -12209,3 +12209,30 @@ le fond sombre : c'est la **combinaison** sombre sur sombre.
 Un bandeau blanc sur marine coûte de l'encre — 122 textes dans ce cas. C'est une question
 d'intendance, pas de lisibilité, et le contrôle la compte à part plutôt que de trancher à la
 place de Pascal.
+
+## 2026-09-02 (suite) — Fond blanc et couleurs conservées : le thème 1, et le `body` oublié
+
+Même correction qu'au thème 2 et à l'index : **68 pages, 1 288 sélecteurs**. Fond blanc partout,
+corps du texte en noir, couleurs là où elles portent du sens.
+
+### Deux gardes de plus, données par le contrôle
+
+Le contrôle d'impression, entré la veille au soir, a refusé **trois pages** de ce thème après une
+première passe — à **1 : 1 exactement**, c'est-à-dire un texte de la couleur même de son fond.
+
+1. **Un texte clair sous un fond blanchi plus haut.** Un `<h2>` blanc n'a pas de fond à lui : son
+   panneau en avait un, blanchi par un autre sélecteur. Écarté par la garde d'accord, il restait
+   blanc — sur du blanc. Il reçoit désormais un noir franc : s'abstenir suffit tant qu'aucun fond
+   n'a bougé au-dessus.
+2. **Le `body` lui-même.** Trois pages n'ont aucune règle `body{background:#fff}` à l'impression,
+   et leur fond marine survivait. Mon correcteur partait de `document.querySelectorAll('body *')`
+   — il visitait tous les descendants et **sautait le body**. Le sous-titre y recevait la teinte
+   de ce fond, foncée : le même marine, sur le même marine.
+
+> **Règle d'or n°286 — un correctif qui parcourt « tous les descendants de X » oublie X.** La
+> formule est si naturelle qu'on ne la relit pas. Ici elle a laissé trois pages entièrement
+> marine, et c'est le contrôle — pas moi — qui l'a vu.
+
+Le contrôle passe : **338 pages, 0 refusée**. Le banc : **10/10**.
+
+**Rien ne change à l'écran** : 72 pages rouvertes, 0 erreur JS, les 65 fonds sombres intacts.
