@@ -12042,3 +12042,42 @@ invisible comme un défaut d'impression.
 Les thèmes 2 et 3 portent le même défaut et attendent leur PR. Le contrôle qui l'empêchera de
 revenir vivra dans `_outils/` — donc au thème 2, avec le générateur d'index, qui produit lui
 aussi une page à corriger (`index.html`, **645 textes pâles**, le pire score du dépôt).
+
+## 2026-09-02 (suite) — Le thème 2 et l'index cessent d'imprimer noir sur noir
+
+Même correction qu'au thème 1, même méthode : demander au navigateur, page par page, en
+`media: print`, quels éléments finissent sombres, et écrire la surcharge avec les sélecteurs de
+cette page-là.
+
+| | Avant | Après |
+|---|---|---|
+| Thème 2 — 95 pages, occurrences sombre sur sombre | **2 400** | **0** |
+| `index.html` — textes sous 4,5 : 1 | **645** | **0** |
+
+### L'index se corrige au générateur, pas dans le fichier
+
+`index.html` est **engendré** par `_outils/make_index.py` : y écrire la surcharge à la main
+aurait tenu jusqu'à la prochaine régénération, c'est-à-dire jusqu'à la fin de la journée. Le
+bloc `@media print` du générateur portait huit lignes — le corps, trois panneaux, les liens —
+et laissait tout le reste dans les tons pâles conçus pour l'écran sombre. **645 textes sous
+4,5 : 1 sur une seule page : le pire score du dépôt**, et c'était la page d'accueil.
+
+Les deux règles ajoutées nomment ce que le relevé a trouvé, et vivent désormais dans le
+générateur. Régénéré, mesuré : zéro.
+
+> **Règle d'or n°283 — corriger un fichier engendré, c'est écrire dans le sable.** La correction
+> appartient au générateur, ou elle n'appartient à personne. Le relevé, lui, se fait sur le
+> fichier produit : c'est lui que le navigateur ouvre.
+
+### Rien ne change à l'écran
+
+96 pages rouvertes à l'écran : **0 erreur JS, 0 requête échouée**, et les **95** qui avaient un
+fond sombre l'ont toujours. La 96ᵉ est l'index, dont le fond n'a jamais changé non plus.
+
+### Ce qui reste, et dans quel ordre
+
+- **Le thème 3** porte le même défaut : sa PR suit.
+- **Le contrôle** qui empêchera le défaut de revenir vit dans `_outils/`, donc au thème 2 — mais
+  il ne peut arriver qu'**après** le thème 3, sinon il refuse le dépôt le jour où il entre.
+  C'est le même enchaînement que pour la règle n°4 : la mesure arrive quand elle peut être
+  verte, et pas avant.
