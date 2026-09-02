@@ -11821,3 +11821,82 @@ lui.
 Aucun contrôle ne le voit : `controle_effectifs_qcm.py` lit ce que la page **affiche**, pas
 les commentaires de son script. Trois PR et un contrôle sont à écrire — un par thème, plus la
 mesure qui empêchera le trente-deuxième. Celle-ci corrige le seul fichier qu'elle touche.
+## 2026-09-02 — Les neuf schémas de réseau reviennent, et l'accusation du 31/08 visait le mauvais commit
+
+Le relevé du 31/08 disait que les dix SVG originaux du 11/08 avaient été « dessinés et
+documentés, mais jamais câblés ». **C'était faux.**
+
+### Ce que l'historique dit
+
+`git show ca35a77f` — le commit du 11/08 — montre dix lignes retirées et dix lignes ajoutées,
+une par image : Wikimedia, Amazon, iStock, YouTube et quatre sites commerciaux remplacés, un
+par un, par un schéma original CC0 avec son `alt`. **Le remplacement a été fait, et il a
+fonctionné.**
+
+Ce qui les a perdus, c'est le commit suivant. Le 12/08, `834480c0` — « le *XXL 40* scindé en
+trois » — a reconstruit ce QCM de 77 questions en trois QCM de 30, pilotés par un tableau
+`QUESTIONS` au lieu de HTML statique. La refonte a gardé les questions et **laissé les images
+derrière elle**. Vingt jours plus tard, le relevé a accusé le commit qui avait raison, parce
+que c'était le dernier à avoir parlé de ces fichiers.
+
+> **Règle d'or n°279 — une refonte perd ce qu'elle ne recopie pas, et le silence qui suit
+> ressemble à un travail jamais fait.** Quand une page change de forme — du HTML statique à
+> un tableau de données, d'un fichier à trois — ce qui n'est pas explicitement porté d'un
+> côté à l'autre disparaît sans erreur, sans alerte et sans trace. Le contrôle qui compte les
+> images orphelines l'a vu vingt jours après ; l'auteur de la refonte, jamais.
+
+### Le câblage n'a rien inventé : il a relu
+
+Le fichier d'avant la scission dit **où chaque image était posée**. Neuf des dix retrouvent
+donc leur question, ou son héritière directe :
+
+| Schéma | Question d'origine | Où il revient |
+|---|---|---|
+| `reseau_routeur_lan_internet.svg` | « Le routeur sert principalement à… » | QCM 1/3, Q11 — mot pour mot |
+| `reseau_switch_ports.svg` | « Un commutateur (switch) sert à… » | QCM 1/3, Q12 — mot pour mot |
+| `reseau_bluetooth_paire.svg` | « Le vidéoprojecteur de la salle est relié en… » | QCM 1/3, Q24 — mot pour mot |
+| `reseau_rj45_cable.svg` | « Quel câble pour relier un PC au switch ? » | QCM 1/3, Q3 |
+| `reseau_filaire_vs_sansfil.svg` | « Coche les liaisons filaires » | QCM 1/3, Q25 |
+| `reseau_local_schema.svg` | « À partir du schéma *Document 3*… » | QCM 1/3, Q28 — lire un schéma |
+| `reseau_zigbee_maillage.svg` | « Zigbee utilise typiquement la bande… » | QCM 3/3, Q7 |
+| `reseau_nfc_paiement.svg` | « NFC a une portée… » | QCM 3/3, Q21 — mot pour mot |
+| `reseau_rfid_portique.svg` | « Donne un usage typique de la RFID » | QCM 3/3, Q23 |
+
+Chaque `alt` **transcrit ce qui est visible** — traits pleins, ondes, annotations, légendes —
+et non ce qu'il faut en conclure. C'est la convention des sept questions illustrées du QCM
+*SOS serre* : l'image porte l'étiquette « 📷 Document à lire pour répondre », et la question
+se répond en la lisant.
+
+### Un commentaire faux dans trois fichiers
+
+Les trois QCM du lot portaient, à la ligne 257, le même commentaire :
+`/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees */`. Faux trois fois : ce lot est
+`4e_C4.7`, pas C6.1/C6.3 ; et il y avait **zéro** image, pas trois. Il venait d'un autre lot
+par copie, et il a survécu à la scission. Réécrit dans les trois, avec le nombre réel.
+
+Les badges disaient « 30 questions · 1er des trois QCM du lot » ; ils disent maintenant
+« dont 6 illustrées par un schéma à lire », comme le QCM *SOS serre* annonce ses sept.
+
+### Le dixième part au thème 1
+
+`licences_symboles.svg` (©, CC, CC0, ™) illustrait « Dans une chanson, le droit d'auteur
+protège… », question qui n'a pas survécu à la scission : les trois QCM de ce lot parlent de
+réseau, d'adressage et de liaisons sans fil.
+
+Les quatre questions du dépôt qui portent sur les licences sont au **thème 1**, dans
+`5e_C1.5/qcm_5e_C1.5-C1.6_le-compte-du-club.html`. La première demande mot pour mot : *« Une
+image en ligne ne porte aucune mention de licence. Que faut-il en déduire ? »* — et le schéma
+répond en toutes lettres : *« une image trouvée en ligne n'est PAS libre par défaut »*. Une PR
+sœur du thème 1 l'y installe ; celle-ci le retire d'ici.
+
+### Ce que la mesure dit maintenant
+
+Les images qu'aucune page n'affiche et qu'aucun manifeste ne nomme passent de **29 à 19**, et
+`4e_C4.7` sort de la liste. Il en reste quatre lots : les huit captures Onshape de l'atelier
+CAO (en attente de la décision de licence), six schémas de `5e_C1.3`, quatre de `5e_C1.1` et
+un de `4e_C6.2` — autant de sujets distincts, chacun pour sa propre PR.
+
+**Vérifié** : 42 vérifications sur 42 en navigateur — chaque figure s'affiche, chaque SVG est
+réellement rendu (`naturalWidth > 0`), chaque `alt` fait plus de soixante caractères, rien ne
+déborde à 390 px, une question non illustrée ne montre aucune figure, aucune erreur JS et
+**aucune requête réseau** : tout est local.

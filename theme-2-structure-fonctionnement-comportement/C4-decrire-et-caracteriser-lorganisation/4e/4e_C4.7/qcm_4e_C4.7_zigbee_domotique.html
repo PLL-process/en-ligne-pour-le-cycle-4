@@ -136,7 +136,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span class="badge code">4e_C4.7</span>
-  <span class="badge theme">30 questions · 3e des trois QCM du lot</span>
+  <span class="badge theme">30 questions · dont 3 illustrées par un schéma à lire · 3e des trois QCM du lot</span>
 </div>
 
 <div class="identite">
@@ -254,7 +254,10 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (4e_C4.7), 3 illustrée(s) — chaque image est un DOCUMENT
+   à lire pour répondre, pas une décoration (règle images v2).
+   Le commentaire précédent annonçait « 15 C6.1 + 15 C6.3, 3 illustrees » : il venait
+   d'un autre lot par copie, et il a survécu à la scission du « XXL 40 » en trois. */
 const QUESTIONS = [
 /* ═══ ZIG ═══ */
 {c:"ZIG",n:"Ce qu'est Zigbee",q:"Zigbee est un protocole…",
@@ -301,6 +304,7 @@ const QUESTIONS = [
  d:["C'est l'ordre de grandeur du NFC.","","Aucune technologie domestique ne porte aussi loin.","Rien n'est illimité."],
  ret:"Chaque saut est court ; le maillage rend le réseau long."},
 {c:"ZIG",n:"Ce qu'apporte le maillage",q:"Le maillage Zigbee apporte surtout…",
+ img:{src:"Images/reseau_zigbee_maillage.svg",alt:"Sept objets numérotés reliés entre eux par des liaisons en pointillés, et une passerelle sur le côté : plusieurs chemins différents mènent à chaque objet, et la légende dit que chaque objet relaie ceux qui sont trop loin de la passerelle."},
  o:["un très haut débit","une adresse IP publique","un chiffrement plus fort","une redondance des chemins"],r:3,
  expl:"Si un relais tombe ou si un mur gêne, le message prend un autre chemin. Le réseau continue de fonctionner avec un nœud en moins.",
  ex:"On débranche une ampoule relais : les capteurs derrière répondent toujours.",
@@ -402,6 +406,7 @@ const QUESTIONS = [
  ret:"Zigbee, c'est la domotique : capteurs et actionneurs."},
 /* ═══ COM ═══ */
 {c:"COM",n:"La portée du NFC",q:"La portée du NFC est…",
+ img:{src:"Images/reseau_nfc_paiement.svg",alt:"Une carte et un terminal de paiement, très proches, échangent des ondes sur une distance annotée « quelques centimètres » ; en dessous : « la portée très courte EST la sécurité »."},
  o:["très courte, quelques centimètres","de plusieurs dizaines de mètres","d'environ 100 m","illimitée en intérieur"],r:0,
  expl:"Il faut approcher les deux objets à se toucher, ou presque. Cette portée minuscule est une SÉCURITÉ : on ne paie pas sans le vouloir.",
  ex:"Le paiement sans contact : la carte doit toucher le terminal.",
@@ -416,6 +421,7 @@ const QUESTIONS = [
  d:["","Ils partagent le même principe physique.","Le RFID n'a rien à voir avec le Wi-Fi.","Ils ne rendent pas le même service."],
  ret:"NFC : du RFID de très près, qui parle dans les deux sens."},
 {c:"COM",n:"L'étiquette sans pile",q:"Comment une étiquette RFID passive fonctionne-t-elle sans pile ?",
+ img:{src:"Images/reseau_rfid_portique.svg",alt:"Une puce passe entre les deux montants d'un portique de sortie ; la légende indique que la puce n'a pas de pile, et que le portique lui envoie l'énergie et reçoit sa réponse."},
  o:["elle contient une micro-pile invisible","le lecteur lui fournit l'énergie","elle se recharge à la lumière","elle n'a besoin d'aucune énergie"],r:1,
  expl:"Le lecteur émet un champ qui induit un courant dans l'antenne de l'étiquette. Ce courant suffit à alimenter la puce le temps de répondre.",
  ex:"Un badge d'accès, resté deux ans dans une poche, fonctionne toujours.",

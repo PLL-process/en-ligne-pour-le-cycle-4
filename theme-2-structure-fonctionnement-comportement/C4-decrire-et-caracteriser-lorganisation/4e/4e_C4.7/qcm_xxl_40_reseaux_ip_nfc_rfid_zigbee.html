@@ -136,7 +136,7 @@
 <div class="badges">
   <span class="badge niveau">4e</span>
   <span class="badge code">4e_C4.7</span>
-  <span class="badge theme">30 questions · 1er des trois QCM du lot</span>
+  <span class="badge theme">30 questions · dont 6 illustrées par un schéma à lire · 1er des trois QCM du lot</span>
 </div>
 
 <div class="identite">
@@ -254,7 +254,10 @@
 
 <script>
 "use strict";
-/* Banque : 30 questions (15 C6.1 + 15 C6.3), 3 illustrees (regle images v2) */
+/* Banque : 30 questions (4e_C4.7), 6 illustrée(s) — chaque image est un DOCUMENT
+   à lire pour répondre, pas une décoration (règle images v2).
+   Le commentaire précédent annonçait « 15 C6.1 + 15 C6.3, 3 illustrees » : il venait
+   d'un autre lot par copie, et il a survécu à la scission du « XXL 40 » en trois. */
 const QUESTIONS = [
 /* ═══ LAN ═══ */
 {c:"LAN",n:"Ce que veut dire LAN",q:"Que signifie LAN ?",
@@ -272,6 +275,7 @@ const QUESTIONS = [
  d:["« Wired » veut dire filaire : ce serait un LAN ordinaire, et le W ne servirait à rien.","","« World » désignerait le monde entier — c'est l'inverse de local.","Ce sigle n'existe pas ; le mot juste est « wireless »."],
  ret:"WLAN = LAN sans fil."},
 {c:"LAN",n:"La liaison la plus courante",q:"Dans un LAN filaire, la liaison la plus courante est…",
+ img:{src:"Images/reseau_rj45_cable.svg",alt:"Un câble ouvert montrant quatre paires de fils torsadés, et le connecteur à huit broches auquel elles aboutissent ; la légende précise que les paires sont torsadées pour se protéger du bruit."},
  o:["la fibre noire","le câble coaxial TV","le câble Ethernet","la liaison satellite"],r:2,
  expl:"Le câble Ethernet, avec sa prise RJ45, relie la très grande majorité des postes d'un réseau local. C'est robuste, rapide et bon marché.",
  ex:"Le câble bleu ou gris qui va du PC à la prise murale de la salle.",
@@ -331,6 +335,7 @@ const QUESTIONS = [
  ret:"Un LAN vit sans Internet. Un accès à Internet, non."},
 /* ═══ MAT ═══ */
 {c:"MAT",n:"Le rôle du routeur",q:"Le routeur sert principalement à…",
+ img:{src:"Images/reseau_routeur_lan_internet.svg",alt:"Un ordinateur et une imprimante, réunis à gauche sous l'étiquette « réseau local (LAN) », rejoignent un routeur au centre ; à droite, un bloc « Internet — le reste du monde ». Sous le routeur : « il relie les deux mondes »."},
  o:["relier des appareils en local","alimenter les postes en électricité","stocker les fichiers du réseau","relier le réseau local à Internet"],r:3,
  expl:"Le routeur fait la frontière : il relie deux réseaux différents, en général le réseau local et Internet, et choisit par où faire passer chaque paquet.",
  ex:"La box de la maison est un routeur — plus quelques autres fonctions.",
@@ -338,6 +343,7 @@ const QUESTIONS = [
  d:["Relier des appareils entre eux dans la même salle, c'est le travail du commutateur.","Certains équipements alimentent bien les postes par le câble — c'est le PoE, et ce n'est pas le rôle du routeur.","Stocker, c'est le travail d'un serveur ou d'un NAS.",""],
  ret:"Routeur = la porte entre deux réseaux."},
 {c:"MAT",n:"Le rôle du commutateur",q:"Un commutateur (switch) sert à…",
+ img:{src:"Images/reseau_switch_ports.svg",alt:"Un boîtier « Commutateur (switch) » portant huit prises RJ45 alignées, une par appareil du réseau local ; la légende dit qu'il ne sort pas du réseau et ne fait que distribuer."},
  o:["commuter les trames du LAN","traduire les adresses IP en noms","créer un accès Internet","chiffrer le Wi-Fi"],r:0,
  expl:"Le commutateur regarde à qui est destinée chaque trame, et ne l'envoie que sur le port où se trouve le destinataire. Le reste du réseau n'en sait rien.",
  ex:"Vingt PC branchés sur un même commutateur : chacun ne reçoit que ce qui lui est adressé.",
@@ -423,6 +429,7 @@ const QUESTIONS = [
  d:["C'est justement le problème.","Rien n'accélère : au contraire, tout ralentit et se perd.","Aucune mise à jour ne corrige cela.",""],
  ret:"Une adresse, un seul appareil."},
 {c:"CHO",n:"Le vidéoprojecteur",q:"Le vidéoprojecteur de la salle est relié en Bluetooth. Ce choix est…",
+ img:{src:"Images/reseau_bluetooth_paire.svg",alt:"Un téléphone et une enceinte s'échangent des ondes sous le titre « appairage : une fois pour toutes » ; en dessous : deux appareils, l'un avec l'autre, sur une dizaine de mètres — « ce n'est pas un réseau : c'est un lien »."},
  o:["impossible techniquement à réaliser","le meilleur pour un réseau de vingt postes","obligatoire pour la vidéo","adapté à une liaison entre deux appareils"],r:3,
  expl:"Le Bluetooth est fait pour relier deux appareils proches, sans infrastructure. Ce n'est pas un réseau : c'est une liaison entre voisins.",
  ex:"Une enceinte, un clavier, un casque : du Bluetooth. Vingt PC : non.",
@@ -430,6 +437,7 @@ const QUESTIONS = [
  d:["C'est très courant.","Le Bluetooth ne monte pas à vingt appareils qui échangent des fichiers.","Rien n'oblige à cela ; le câble HDMI existe.",""],
  ret:"Bluetooth : deux appareils proches, pas un réseau."},
 {c:"CHO",n:"Ce que le câble apporte",q:"Comparé au Wi-Fi, le câble Ethernet est généralement…",
+ img:{src:"Images/reseau_filaire_vs_sansfil.svg",alt:"Deux colonnes comparées. À gauche, « Liaison filaire » : un ordinateur relié à la box par un trait plein — « un fil : rapide, stable, mais il faut le tirer ». À droite, « Liaison sans fil » : une tablette et la box reliées par des ondes — « des ondes : libre de bouger, mais partagé et affaibli par les murs »."},
  o:["plus lent et moins stable","plus rapide et plus régulier","identique en tout point","réservé aux serveurs"],r:1,
  expl:"Le câble ne partage rien avec les voisins et ne traverse aucun mur : les temps de réponse sont plus courts et surtout plus réguliers.",
  ex:"Un test de ping : quelques millisecondes très stables en filaire, plus variables en Wi-Fi.",
@@ -451,6 +459,7 @@ const QUESTIONS = [
  d:["Ils étaient au contraire plus simples et moins chers.","","Ils sont filaires.","Rien ne les interdit : ils sont simplement dépassés."],
  ret:"Le switch a remplacé le hub pour deux raisons : la vitesse ET la discrétion."},
 {c:"CHO",n:"Lire un schéma",q:"Sur un schéma de réseau, un trait plein relie deux appareils. Cela signifie…",
+ img:{src:"Images/reseau_local_schema.svg",alt:"Le schéma d'un réseau local : « Internet » en haut, relié par un trait plein à « Box / routeur », qui relie par un trait plein le « Commutateur », lequel dessert par des traits pleins l'ordinateur, l'imprimante et le serveur ; une tablette est reliée à la box par des ondes, sans trait."},
  o:["une liaison filaire","une liaison Wi-Fi","une panne","une simple proximité"],r:0,
  expl:"Par convention, le trait plein figure un câble et le trait en pointillés ou les arcs figurent une liaison sans fil.",
  ex:"Les PC en traits pleins vers le commutateur ; la tablette en pointillés vers la borne.",

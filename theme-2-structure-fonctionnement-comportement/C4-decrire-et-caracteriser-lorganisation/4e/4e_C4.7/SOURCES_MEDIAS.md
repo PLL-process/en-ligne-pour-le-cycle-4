@@ -74,7 +74,6 @@ structure qu'on enseigne.
 | `Images/reseau_rfid_portique.svg` | SVG original (Fable) | l'étiquette RFID sans pile, alimentée par le portique lui-même | CC0 |
 | `Images/reseau_bluetooth_paire.svg` | SVG original (Fable) | le Bluetooth : un lien entre deux appareils, pas un réseau | CC0 |
 | `Images/reseau_rj45_cable.svg` | SVG original (Fable) | quatre paires torsadées, huit broches — et pourquoi elles sont torsadées | CC0 |
-| `Images/licences_symboles.svg` | SVG original (Fable) | ©, CC, CC0, ™ — et le fait qu'une image en ligne est protégée par défaut | CC0 |
 | `Images/reseau_local_schema.svg` | SVG original (Fable) | le réseau local complet, d'Internet jusqu'aux appareils | CC0 |
 
 Les huit fichiers `*_hd.jpg` et `doc3_schema_parcours.png` qui n'étaient déclarés
@@ -100,23 +99,58 @@ Ils sont **retirés pour de bon** ce 31/08/2026. Ils restent dans l'historique g
 décision doit être revue. La leçon vaut d'être écrite : *une suppression annoncée au passé
 dans un document n'est pas une suppression* — c'est une intention, et personne ne la vérifie.
 
-## Les dix schémas de remplacement ne sont employés par aucune page
+## Les dix schémas de remplacement — et l'accusation qui visait le mauvais commit
 
-Second constat du même relevé, et celui-là demande une décision pédagogique.
+Le relevé du 31/08 constatait que les dix SVG originaux du 11/08 n'étaient affichés par
+**aucune page**, et en concluait qu'ils avaient été « dessinés et documentés, mais jamais
+câblés ».
 
-Les dix SVG originaux dessinés le 11/08 pour remplacer les images tierces — `reseau_routeur_lan_internet.svg`,
-`reseau_switch_ports.svg`, `reseau_filaire_vs_sansfil.svg`, `reseau_zigbee_maillage.svg`,
-`reseau_nfc_paiement.svg`, `reseau_rfid_portique.svg`, `reseau_bluetooth_paire.svg`,
-`reseau_rj45_cable.svg`, `reseau_local_schema.svg` et `licences_symboles.svg` — **ne sont
-affichés par aucune page du lot**. Le QCM `qcm_xxl_40_reseaux_ip_nfc_rfid_zigbee.html`, qui
-appelait les dix images tierces, n'appelle plus aucune image du tout.
+**C'était faux, et l'historique git le dit.** Le commit `ca35a77f` du 11/08 les a bel et bien
+posés, un par un, à la place exacte des dix images tierces : `git show ca35a77f` montre dix
+lignes retirées (Wikimedia, Amazon, iStock, YouTube, quatre sites commerciaux) et dix lignes
+ajoutées, chacune avec son `alt`. Le remplacement a été fait, et il a fonctionné.
 
-Le remplacement a donc été **dessiné et documenté, mais jamais câblé**. En l'état, ce QCM a
-perdu ses illustrations au lieu d'en gagner de meilleures — et c'est le contraire de ce que
-la correction du 11/08 annonçait.
+Ce sont les **commits suivants** qui les ont perdus. Le 12/08, `834480c0` — « l'éclairage
+automatique refait, le *XXL 40* scindé en trois » — a reconstruit ce QCM de 77 questions en
+trois QCM de 30, pilotés par un tableau `QUESTIONS` au lieu de HTML statique. La refonte a
+gardé les questions et **laissé les images derrière elle**.
 
-Recâbler ces dix schémas dans les questions du QCM est un acte pédagogique : il faut choisir
-quelle question porte quelle image, et récrire l'`alt`. **Cela revient à Pascal**, pas à un
-contrôle ni à l'agent qui écrit cette ligne. Les dix fichiers restent, documentés, en
-attendant.
+La leçon n'est donc pas celle qu'on avait écrite :
+
+> **Une refonte perd ce qu'elle ne recopie pas, et le silence qui suit ressemble à un
+> travail jamais fait.** Vingt jours plus tard, le relevé a accusé le commit qui avait
+> raison, parce que c'était le dernier à avoir parlé de ces fichiers.
+
+## Les neuf schémas de réseau sont recâblés (02/09/2026)
+
+Ils ne sont pas replacés au hasard : **la version d'avant la scission dit où chacun était**,
+et le câblage suit ce que la page faisait déjà.
+
+| Schéma | Question d'origine (avant la scission) | Où il revient |
+|---|---|---|
+| `reseau_routeur_lan_internet.svg` | « Le routeur sert principalement à… » | QCM 1/3, Q11 — mot pour mot |
+| `reseau_switch_ports.svg` | « Un commutateur (switch) sert à… » | QCM 1/3, Q12 — mot pour mot |
+| `reseau_bluetooth_paire.svg` | « Le vidéoprojecteur de la salle est relié en… » | QCM 1/3, Q24 — mot pour mot |
+| `reseau_rj45_cable.svg` | « Quel câble pour relier un PC au switch ? » | QCM 1/3, Q3 — l'héritière |
+| `reseau_filaire_vs_sansfil.svg` | « Coche les liaisons filaires » | QCM 1/3, Q25 — comparer câble et Wi-Fi |
+| `reseau_local_schema.svg` | « À partir du schéma *Document 3*, choisis le parcours d'une trame » | QCM 1/3, Q28 — lire un schéma |
+| `reseau_zigbee_maillage.svg` | « Zigbee utilise typiquement la bande… » | QCM 3/3, Q7 — ce qu'apporte le maillage |
+| `reseau_nfc_paiement.svg` | « NFC a une portée… » | QCM 3/3, Q21 — mot pour mot |
+| `reseau_rfid_portique.svg` | « Donne un usage typique de la RFID » | QCM 3/3, Q23 — l'étiquette sans pile |
+
+Chaque `alt` **transcrit ce qui est visible** — traits pleins, ondes, annotations, légendes —
+et non ce qu'il faut en conclure : c'est la convention des sept questions illustrées du QCM
+*SOS serre*, où l'image est un **document à lire pour répondre**, jamais une décoration.
+
+## Le dixième schéma part au thème 1
+
+`licences_symboles.svg` (©, CC, CC0, ™) illustrait la question « Dans une chanson, le droit
+d'auteur protège… », qui **n'a pas survécu à la scission** : les trois QCM de ce lot parlent
+de réseau local, d'adressage et de liaisons sans fil, pas de licences.
+
+Les quatre questions du dépôt qui portent sur les licences vivent au **thème 1**, dans
+`5e_C1.5/qcm_5e_C1.5-C1.6_le-compte-du-club.html` — dont la première demande mot pour mot :
+*« Une image en ligne ne porte aucune mention de licence. Que faut-il en déduire ? »*, ce que
+ce schéma répond en toutes lettres. Le fichier y est déplacé par une PR sœur du thème 1 ; il
+est retiré d'ici par celle-ci.
 
