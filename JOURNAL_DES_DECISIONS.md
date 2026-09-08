@@ -12471,3 +12471,47 @@ Ce que cela dit du 11/08 : un choix par mots-clés qui lit aussi le code de la p
 là où le code parle d'autre chose que la page (règle n°278, lire ce qui est rendu). Le garde à
 écrire est simple — *l'outil nommé dans l'encart doit apparaître dans le texte visible de la
 page hors de l'encart* — et rejoindra le contrôle des séquences dans une PR du thème 2.
+## 2026-09-08 — `de_50.step` existe enfin, et l'atelier CAO se régénère sans rien perdre
+
+### Le fichier promis
+
+`tp_4e_socle_assemblage.html` dit depuis sa création : *« ouvre le fichier `de_50.step` fourni
+avec le TP »*. Le fichier n'a jamais existé — la synthèse professeur demandait même de « prévoir »
+ce STEP. Il est engendré par `_generation/de_50.py` (CadQuery) aux cotes exactes du TP de 5e :
+cube 50 mm, douze arêtes R3, points Ø10 creusés de 1,5 mm avec congé de fond 1 mm, centres à
+11 mm des bords, faces opposées sommant à 7. **Mesuré** : 121 539 mm³ — le cube plein moins les
+congés (≈ 1 160) moins 21 points à ≈ 111 mm³ chacun, le chiffre que le TP de 5e annonce lui-même
+(*« ça retire 111 mm³ de matière »*) ; 89 faces (26 du cube arrondi + 3 par point) ; deux vues
+isométriques regardées, 1-2-3 d'un côté, 6-5-4 de l'autre. La mention devient un lien
+`download` (règle n°289).
+
+Première lecture trompeuse : en dépouillant le TP de ses balises, j'ai lu « profondeur 1 » là où
+la page écrit `1<code>.5</code>` — la source dit 1,5, et le premier dé engendré avait des creux de
+1 mm que le congé de fond mangeait (échec de l'opération). Lire la page rendue, pas son texte
+dépouillé (règle n°278, encore).
+
+### Ce que la régénération a révélé (règle n°283, deux fois)
+
+Régénérer `tp_4e` pour y mettre le lien a **effacé deux campagnes** écrites à la main dans les
+quatre TP engendrés :
+
+- le bloc d'impression du 02/09 (#344), posé dans les pages et non dans `gabarit_style.css` ;
+- **les trois sections de fin** — « Les traces à garder », « 🧠 Prêt·e à t'entraîner ? »,
+  « 🎁 Bonus » — posées par la campagne de la règle n°4 (#332–#334) dans les pages, jamais dans
+  les scénarios. `verif_chaine.py` le disait déjà : *empreinte déclarée ≠ mesurée* sur les quatre
+  TP, et personne ne l'avait relu.
+
+Les deux vivent désormais à la source : le bloc d'impression dans le gabarit (union des cinq
+blocs posés, un sélecteur n'agissant que là où il existe), et une clé **`apres`** dans chaque
+scénario, que `build_tp.py` insère entre « Et ensuite » et le pied de page. Les quatre TP
+régénérés sont **identiques** aux pages en ligne, au bloc CSS déplacé et au lien près ;
+`verif_chaine.py` redit vrai (empreintes recalculées) ; `controle_impression` compte
+exactement les mêmes textes qu'avant (328 · 397 · 267 · 767, 0 refus) ; `controle_regle4`
+0 écart ; `tests_verif_effectifs` 21 / 21. Les deux manquements de `verif_guidage.py` sur
+`tp_4e` (n°72, n°77) préexistent et ne sont pas touchés.
+
+> **Règle d'or n°290 — avant de corriger une page, demande-lui qui l'écrit.** Un lexique, un
+> TP de l'atelier CAO, l'index : ce sont des fichiers engendrés, et leur en-tête le dit à un
+> lecteur mais pas à un script. Un correcteur qui balaie « tous les HTML » écrit dans le sable
+> chaque fois qu'il en touche un ; la vérification d'empreinte (`verif_chaine.py`) est ce qui
+> le révèle — à condition de la lancer.
