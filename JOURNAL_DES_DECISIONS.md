@@ -12337,3 +12337,47 @@ couleurs respectée.
 
 Seuls les schémas appelés par `<object>` sont concernés : ceux appelés par `<img>` — 22 au
 thème 1, 14 au thème 3 — restent hors d'atteinte d'un media print, et attendent une décision.
+## 2026-09-08 — « Nomme les trois régimes » : de quels régimes parle-t-on ?
+
+Pascal, sur `3e_C1.1` (séquence Tsinghua, feux) : *« "nomme les trois régimes dans l'ordre" —
+sans avoir regardé l'aide, l'élève ne sait pas de quel régime il est question. Il serait
+souhaitable de détailler. Sachant que ce sont des élèves de 3e et qui sont très peu lecteurs. »*
+
+Il a raison, et la mesure le confirme : le mot **« régime »** apparaît pour la première fois à
+la ligne 307, dans une phrase de trois lignes que l'élève a lue — ou non — quinze minutes plus
+tôt ; il revient dans la consigne c) **sans être rappelé**, et le lexique du lot, engendré depuis
+les « à retenir » du QCM, écrivait *« Les régimes coexistent »* sans jamais dire ce qu'est un
+régime. Pour un lecteur fragile, le mot est une porte fermée.
+
+### Ce qui change
+
+- **L'introduction définit le mot** en langage courant — *« On appelle régime de surveillance
+  une façon de surveiller : qui regarde, avec quoi, et ce que cela permet de voir »* — puis pose
+  les trois régimes en **liste numérotée** (Régime 1, 2, 3) au lieu d'une phrase, et prévient :
+  *« Garde ces trois noms sous les yeux : la production c) te les redemande. »*
+- **La consigne c) redit les trois noms dans son propre texte** : *« nomme les trois régimes de
+  surveillance dans l'ordre — 1. la vigie humaine, 2. le satellite, 3. la détection
+  multi-indices (les trois façons de surveiller présentées en haut de cette activité) »*. L'élève
+  n'a plus besoin de l'aide pour savoir de quoi on parle ; l'aide reste pour *comment* le dire.
+- **Le lexique définit le mot** : l'« à retenir » de la question « Rupture et coexistence » du QCM
+  commence désormais par *« Un régime de surveillance, c'est une façon de surveiller (vigie,
+  satellite, capteurs) »* — et le lexique, régénéré, le porte.
+
+Le vérificateur de la production c) est inchangé : il acceptait déjà les trois noms dans
+n'importe quel ordre et n'exigeait aucun mot rare. 41 / 41 contrôles du lot.
+
+> **Règle d'or n°288 — une consigne ne réemploie pas un mot qu'elle n'a pas expliqué.** Un mot
+> abstrait introduit plus haut dans la page (*régime*, *grandeur*, *critère*, *protocole*) est
+> **redit et déplié dans la consigne même**, avec les noms concrets qu'il recouvre — pour l'élève
+> qui n'a pas lu l'introduction, ou qui l'a lue sans la retenir. L'aide de niveau 1 explique
+> *comment répondre* ; elle n'est pas là pour dire *de quoi on parle*.
+
+### Ce que la régénération a montré (règle n°283, encore)
+
+Régénérer `lexique_3e_C1.1.html` a **effacé le bloc d'impression** que la campagne du 02/09
+(#342) y avait écrit : la règle `.compte,.sub{color:#1a6af8}` avait été posée dans les
+**59 lexiques engendrés**, et non dans `_outils/generer_lexique.py` qui les engendre. C'est
+exactement écrire dans le sable. Ici, le lexique est régénéré avec le générateur corrigé
+(correction non commise sur cette branche : `_outils/` est hors périmètre du thème 1) ; la
+correction du générateur part dans une PR du thème 2, et chaque thème régénérera ses lexiques
+dans la sienne.
