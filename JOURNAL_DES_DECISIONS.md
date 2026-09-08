@@ -12325,6 +12325,7 @@ print ne les atteint pas. Deux voies, et c'est à Pascal de choisir :
   comme une figure de manuel.
 
 ## 2026-09-02 (suite) — Les schémas s'impriment sur du blanc : le thème 1
+## 2026-09-02 (suite) — Les schémas s'impriment sur du blanc : le thème 3
 
 Même bloc `@media print` interne qu'au thème 2, avec les cinq gardes que ce thème a values :
 CDATA, contours sombres préservés, styles internes lus, aplats jamais foncés, casse des
@@ -12332,6 +12333,8 @@ couleurs respectée.
 
 **5 schémas, 106 règles.** Ouverts un par un en `media: print` : **0 mal formé, 0 texte sous
 4,5 : 1**, 2 aplat(s) encore sombre(s) — des `path` sans `fill` déclaré, noirs par défaut.
+**6 schémas, 121 règles.** Ouverts un par un en `media: print` : **0 mal formé, 0 texte sous
+4,5 : 1**, 0 aplat(s) encore sombre(s) — des `path` sans `fill` déclaré, noirs par défaut.
 
 **Rien ne change à l'écran.**
 
