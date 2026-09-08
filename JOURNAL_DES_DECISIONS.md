@@ -12384,3 +12384,41 @@ exactement écrire dans le sable. Ici, le lexique est régénéré avec le gén�
 (correction non commise sur cette branche : `_outils/` est hors périmètre du thème 1) ; la
 correction du générateur part dans une PR du thème 2, et chaque thème régénérera ses lexiques
 dans la sienne.
+## 2026-09-08 — Un fichier nommé est un fichier qu'on peut prendre : le thème 1
+
+Pascal : *« Lors d'une séquence, si un élève a besoin d'un fichier nommé par exemple
+Fichier HF.csv, qu'il ait la possibilité de cliquer sur le lien afin de télécharger ce fichier.
+Il serait souhaitable de vérifier, pour tous les fichiers existants et toutes les séquences
+existantes, et d'établir une règle d'or. »*
+
+### Mesuré
+
+79 séquences, TP et ateliers lus ; **26 noms de fichiers de données** dans leur texte visible.
+Trois familles :
+
+- **11 fichiers CSV qui existent dans leur lot et qu'aucun lien ne désigne** — tous au thème 1,
+  dans cinq séquences (`4e_C1.1`, `5e_C1.1`, `5e_C1.2`, `3e_C2.1`, `4e_C2.1`). La page dit
+  *« Ouvre `donnees_feux_impacts_4e.csv` dans un tableur »* et le nom est écrit en toutes
+  lettres, sans lien : l'élève doit le chercher — et un élève de cycle 4 ne cherche pas, il lève
+  la main.
+- **5 noms qui sont du récit** : `truc.csv`, `finalV2 (copie).csv`, `capteur mardi PIC
+  ATTENTION.csv`… — le dossier en désordre que `5e_C1.1` donne en exemple. Ils n'existent pas et
+  ne sont pas promis ; ils ne sont pas des fichiers.
+- **1 promesse sans fichier** : `tp_4e_socle_assemblage.html` (atelier CAO) dit *« ouvre le
+  fichier `de_50.step` fourni avec le TP »*, et ce fichier n'a jamais existé. Nommé, tolérée
+  avec sa raison dans le contrôle ; il sera engendré et livré à part.
+- Au thème 3, les liens vers `station_alerte_cyclonique.ino` existent mais **sans `download`**,
+  et cinq séquences C7 nomment `materiaux.py` / `moyens.py` sans les lier (PR sœur du thème 3).
+
+### Ce que fait cette PR
+
+Chaque mention des 11 CSV du thème 1 est enveloppée d'un lien `<a href="…" download>`, avec le
+pictogramme 📥 et le nom conservé en `<code>` : *📥 `donnees_feux_impacts_4e.csv`*. Le clic
+enregistre le fichier sous son nom — vérifié dans le navigateur (événement `download`,
+`donnees_feux_impacts_4e.csv`). Les cinq lots repassent leurs bancs : 42, 43, 36, 54, 60.
+
+> **Règle d'or n°289 — un fichier nommé dans une page est un fichier qu'on peut prendre.**
+> Chaque mention d'un fichier de données (`.csv`, `.py`, `.ino`, `.stl`, `.step`…) porte un
+> lien `<a href download>` vers lui, et le fichier existe dans le lot. Une promesse (« fourni
+> avec le TP ») sans fichier est un écart ; un nom donné en exemple dans un récit n'en est pas
+> un. Mesuré par `_outils/controle_fichiers_telechargeables.py` (PR du thème 2).
