@@ -12256,3 +12256,70 @@ sombre.
 
 Reste le chantier des **99 schémas sur 178** dont le fond sombre est dessiné à l'intérieur du
 SVG : un `@media print` ne les atteint pas, et c'est là qu'est le gros de l'encre.
+
+## 2026-09-02 (suite) — Les schémas s'impriment aussi sur du blanc : le thème 2
+
+Un `@media print` blanchit le conteneur d'un schéma, pas le schéma. **99 des 178 SVG du dépôt**
+portent un fond sombre dessiné à l'intérieur du fichier.
+
+### La question qu'il fallait trancher par l'expérience
+
+Un `@media print` **à l'intérieur** d'un SVG s'applique-t-il quand la page qui l'appelle
+s'imprime ? La réponse dépend de la balise, et elle a été **mesurée**, pas supposée : une page
+témoin, le même schéma appelé deux fois, une capture en `media: print`.
+
+| Balise | Le media print interne s'applique | Conséquence |
+|---|---|---|
+| `<object>` | **oui** | corrigeable sans rien changer à l'écran |
+| `<img>` | **non** | hors d'atteinte : il faudra une décision |
+
+**47 des 99 schémas sont appelés en `<object>` seulement** — 5 au thème 1, **36 au thème 2**,
+6 au thème 3. Ce sont ceux-là, et eux seuls, que cette PR corrige.
+
+### Ce que le bloc fait, et les cinq erreurs qui l'ont formé
+
+Chaque couleur du fichier est classée : un **aplat** sombre part au blanc ; un **contour** garde
+sa couleur s'il est déjà lisible, fonce sinon ; un **texte** fonce jusqu'à 4,5 : 1 sur du blanc,
+teinte gardée. Cinq essais ont été nécessaires, chacun vu au rendu :
+
+1. **Le schéma entier a disparu**, remplacé par « Opening and ending tag mismatch: img and
+   style ». Le contenu d'un `<style>` dans un SVG est du **XML** : mon commentaire citait
+   « object » et « img » entre chevrons, et le parseur a lu des balises. D'où le `CDATA`.
+2. **Les traits bleus sont devenus invisibles.** Je blanchissais toute couleur sombre, `stroke`
+   compris : un contour sombre se voit très bien sur du blanc.
+3. **Les titres restaient presque blancs.** Je ne lisais que les attributs ; beaucoup de schémas
+   colorent leurs textes par classe, dans un `<style>` interne. Et le bloc, placé en tête,
+   perdait la cascade — il va désormais **juste avant `</svg>`**.
+4. **Un rectangle bleu ciel est devenu bleu canard**, et un `<g fill="…">` violet a teinté
+   vingt-six vignettes d'un coup. Foncer un **aplat**, c'est remplir la page d'encre : seuls les
+   textes et les contours foncent.
+5. **Vingt-deux textes sont passés blancs sur blanc**, et quatre aplats bleus ont survécu. Le
+   premier parce que `#5b7bb8` est « sombre » et que je blanchissais sans distinguer texte et
+   forme ; les seconds parce qu'un sélecteur d'attribut est **sensible à la casse** et que
+   j'écrivais `#2e75b6` là où le fichier dit `#2E75B6`.
+
+> **Règle d'or n°287 — un SVG n'est pas du HTML : son `<style>` est du XML, ses sélecteurs
+> d'attribut distinguent la casse, et son `fill` par défaut est le noir.** Trois pièges que rien
+> ne signale, et qui ne se voient qu'au rendu.
+
+### Mesuré
+
+**36 schémas, 663 règles.** Ouverts un par un en `media: print` : **0 mal formé, 0 texte sous
+4,5 : 1**, et les aplats sombres passent de **105 à 6**.
+
+Les six restants sont des `path` **sans `fill` déclaré** — noirs par défaut. Invisibles sur le
+fond marine d'origine, ils apparaissent sur le blanc. Les blanchir effacerait peut-être une
+forme utile : ils sont nommés ici plutôt que devinés.
+
+**Rien ne change à l'écran** : les 36 schémas rouverts en `media: screen` rendent exactement
+comme avant.
+
+### La décision qui reste
+
+**40 schémas sont appelés par `<img>`** — 22 au thème 1, 4 au thème 2, 14 au thème 3. Le media
+print ne les atteint pas. Deux voies, et c'est à Pascal de choisir :
+
+- **passer ces appels en `<object>`** — mais la « loupe cliquable » du dépôt repose sur `<img>`
+  et son script de zoom ;
+- **rendre ces schémas clairs à l'écran aussi** — un dessin sur fond blanc dans une page sombre,
+  comme une figure de manuel.
