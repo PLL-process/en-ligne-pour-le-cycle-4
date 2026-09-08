@@ -12440,3 +12440,34 @@ Reste nommée, tolérée avec sa raison : `tp_4e_socle_assemblage.html` promet *
 du TP de 5e) et livré dans une PR à part, avec sa mesure.
 
 Bancs : 3e_C9.2 135 / 135 · 3e_C7.3 43 · 4e_C7.3 44 · 5e_C7.3 41 · 3e_C7.7 52 · 4e_C7.7 38.
+
+## 2026-09-08 — `4e_C1.1` : le mauvais outil en tête de page, et une consigne sans correction
+
+Pascal, sur la séquence Tsinghua de 4e : *« "Ouvre l'éditeur (Arduino ou mBlock) et crée un
+nouveau programme." Peut-être qu'il y a une coquille. Pourquoi cet éditeur ? »* et *« "Note tes
+deux températures et leur écart. Puis, en une phrase : si un système déclenchait l'alerte
+au-dessus de 40 °C, que se passerait-il dans ta cour ?" Il serait intéressant d'avoir une
+correction. »*
+
+**L'outil.** Ce n'est pas une coquille, c'est une erreur d'aiguillage : l'encart « les quatre
+gestes » (règle n°93) posé le 11/08 sur cinq séquences avait choisi **Arduino** pour cette page,
+qui ne programme rien — elle ouvre un CSV dans un tableur. Le mot « arduino » n'y apparaissait
+que dans le vérificateur JavaScript de l'activité 4 (`/camera|capteur dht|…|arduino|…/`), et
+c'est ce que le choix par mots-clés avait lu. Mesure sur les 22 encarts du dépôt : **un seul**
+nomme un outil que sa page n'emploie pas — celui-là. L'encart devient celui du tableur, et il
+n'est plus générique : il dit d'ouvrir `donnees_feux_impacts_4e.csv`, de garder le
+point-virgule à l'import (c'est le séparateur du fichier) et d'enregistrer en `.ods`.
+
+**La correction.** La réponse existait, mais enfouie en fin de la correction de l'activité 1,
+après le fichier — un élève qui bloque sur a) ne la trouvait pas. Un dépliant « ✅ Correction
+de a) » suit désormais la zone de réponse : ce qu'on attend (deux températures, l'écart, une
+phrase), un exemple de phrase juste, pourquoi c'est la bonne réponse (la température mesure la
+chaleur, pas le feu → fausses alertes → plusieurs indices), et quoi faire si sa propre mesure
+donne un écart plus petit.
+
+42 / 42 contrôles du lot ; règle n°4 et liens à 0 écart. Rendu regardé.
+
+Ce que cela dit du 11/08 : un choix par mots-clés qui lit aussi le code de la page se trompe
+là où le code parle d'autre chose que la page (règle n°278, lire ce qui est rendu). Le garde à
+écrire est simple — *l'outil nommé dans l'encart doit apparaître dans le texte visible de la
+page hors de l'encart* — et rejoindra le contrôle des séquences dans une PR du thème 2.
