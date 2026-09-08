@@ -278,6 +278,11 @@ def construire(scenario_path: pathlib.Path, sortie_ailleurs=None) -> pathlib.Pat
 
     # Le bandeau d'entrée : ce qu'il faut savoir AVANT de cliquer (connexion,
     # compte, ce qui s'évalue ailleurs). Facultatif, mais jamais inventé.
+    apres = s.get("apres") or []
+    if isinstance(apres, str):
+        apres = [apres]
+    apres = "".join(x + "\n" for x in apres)
+
     avant = s.get("avant_de_commencer") or []
     if isinstance(avant, str):
         avant = [avant]
@@ -339,7 +344,7 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
 %(corps)s
 
 %(et_ensuite)s
-<footer>%(pied)s</footer>
+%(apres)s<footer>%(pied)s</footer>
 </div>
 @@LOUPE@@
 </body>
@@ -348,6 +353,10 @@ Les encadrés orange préviennent des pièges. À la fin de chaque partie, une i
        "css": CSS, "css_tp": STYLE_TP, "titre": esc(s["titre"]), "sous": esc(s["sous_titre"]),
        "niveau": esc(s["niveau"]), "logiciel": esc(s["logiciel"]), "badges": badges,
        "corps": corps, "pied": esc(s.get("pied", "Ressource originale du dépôt.")),
+       # ce qui suit « Et ensuite » : traces à garder, « Prêt·e à t'entraîner », Bonus
+       # (règle n°4 §4). HTML brut, ligne à ligne, tel quel — le scénario en est la
+       # source ; l'écrire dans la page engendrée s'efface à la régénération (n°283).
+       "apres": apres,
        "retour": retour, "rappel": rappel, "avant": avant_bloc,
        "et_ensuite": et_ensuite.replace("@@RETOUR@@", retour)}
 
