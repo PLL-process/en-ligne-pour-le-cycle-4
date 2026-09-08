@@ -12422,3 +12422,21 @@ enregistre le fichier sous son nom — vérifié dans le navigateur (événement
 > lien `<a href download>` vers lui, et le fichier existe dans le lot. Une promesse (« fourni
 > avec le TP ») sans fichier est un écart ; un nom donné en exemple dans un récit n'en est pas
 > un. Mesuré par `_outils/controle_fichiers_telechargeables.py` (PR du thème 2).
+## 2026-09-08 — Un fichier nommé est un fichier qu'on peut prendre : le thème 3
+
+Même règle (n°289) qu'au thème 1, même mesure. Au thème 3, deux formes d'écart :
+
+- `station_alerte_cyclonique.ino` était **lié, mais sans `download`** dans les trois pages de
+  `3e_C9.2` : selon le navigateur et le serveur, le clic enregistrait le fichier ou affichait du
+  C++ brut. `download` rend le geste le même partout.
+- `materiaux.py` (`3e/4e/5e_C7.3`) et `moyens.py` (`3e/4e_C7.7`) sont nommés en pied de page
+  comme la source des valeurs du banc, sans lien. Ils existent dans le lot : ils se prennent
+  maintenant d'un clic — un élève curieux, ou un professeur qui veut refaire le calcul, n'a
+  pas à fouiller le dépôt.
+
+Reste nommée, tolérée avec sa raison : `tp_4e_socle_assemblage.html` promet *« le fichier
+`de_50.step` fourni avec le TP »* et ce fichier n'a jamais existé. Il sera engendré (dé de
+50 mm, points de 1,5 mm de profondeur, congés de 3 mm, faces opposées sommant à 7 — les cotes
+du TP de 5e) et livré dans une PR à part, avec sa mesure.
+
+Bancs : 3e_C9.2 135 / 135 · 3e_C7.3 43 · 4e_C7.3 44 · 5e_C7.3 41 · 3e_C7.7 52 · 4e_C7.7 38.
