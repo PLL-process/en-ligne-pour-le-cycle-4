@@ -12323,3 +12323,17 @@ print ne les atteint pas. Deux voies, et c'est à Pascal de choisir :
   et son script de zoom ;
 - **rendre ces schémas clairs à l'écran aussi** — un dessin sur fond blanc dans une page sombre,
   comme une figure de manuel.
+
+## 2026-09-02 (suite) — Les schémas s'impriment sur du blanc : le thème 1
+
+Même bloc `@media print` interne qu'au thème 2, avec les cinq gardes que ce thème a values :
+CDATA, contours sombres préservés, styles internes lus, aplats jamais foncés, casse des
+couleurs respectée.
+
+**5 schémas, 106 règles.** Ouverts un par un en `media: print` : **0 mal formé, 0 texte sous
+4,5 : 1**, 2 aplat(s) encore sombre(s) — des `path` sans `fill` déclaré, noirs par défaut.
+
+**Rien ne change à l'écran.**
+
+Seuls les schémas appelés par `<object>` sont concernés : ceux appelés par `<img>` — 22 au
+thème 1, 14 au thème 3 — restent hors d'atteinte d'un media print, et attendent une décision.
