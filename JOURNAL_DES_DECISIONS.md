@@ -12532,3 +12532,13 @@ conservera. Les 42 lexiques des thèmes 1 et 3 seront régénérés dans leurs P
 retouches — leur bloc écrit à la main y reste correct jusque-là.
 
 Banc du générateur : 4 / 4.
+
+## 2026-09-08 — Le contrôle des fichiers téléchargeables attrape sa première page : la mienne
+
+Le banc de `controle_fichiers_telechargeables.py`, rejoué sur le dépôt après la fusion de #351,
+refuse une page : `4e_C1.1`. L'encart « les quatre gestes du tableur » que je venais d'y écrire
+dit *« ouvre le fichier `donnees_feux_impacts_4e.csv` que tu as téléchargé »* — sans lien. La
+règle n°289 date du même jour, la PR des 11 CSV aussi, et j'ai réécrit une mention sans lien
+deux heures plus tard. C'est exactement ce à quoi sert un contrôle : pas à juger le passé, à
+tenir le présent (règle n°277 — un contrôle se trompe dans les deux sens ; celui-ci ne s'est pas
+trompé). La mention devient un lien, comme les deux autres de la page.
