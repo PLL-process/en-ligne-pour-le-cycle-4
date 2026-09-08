@@ -12515,3 +12515,20 @@ exactement les mêmes textes qu'avant (328 · 397 · 267 · 767, 0 refus) ; `con
 > lecteur mais pas à un script. Un correcteur qui balaie « tous les HTML » écrit dans le sable
 > chaque fois qu'il en touche un ; la vérification d'empreinte (`verif_chaine.py`) est ce qui
 > le révèle — à condition de la lancer.
+## 2026-09-08 — Le bloc d'impression des lexiques revient là où il aurait dû naître
+
+En régénérant `lexique_3e_C1.1.html` pour y faire entrer la définition de « régime », le bloc
+`@media print{ .compte,.sub{color:#1a6af8} }` a disparu : la campagne du 02/09 (#342–#344) l'avait
+écrit **dans les 59 lexiques engendrés**, pas dans `_outils/generer_lexique.py` qui les engendre.
+La règle n°283 (*corriger un fichier engendré, c'est écrire dans le sable*) avait été formulée
+ce jour-là même — pour le bloc d'index — et pas appliquée à ces 59 fichiers. Le correcteur
+d'impression ne savait pas qu'ils étaient engendrés ; rien dans un lexique ne le dit à une
+machine, seul son en-tête le dit à un lecteur.
+
+Le générateur porte désormais la règle, avec le commentaire qui dit pourquoi elle vit là. Les
+**17 lexiques du thème 2** sont régénérés : même rendu sur le papier (`.compte` et `.sub` en
+`#1a6af8` sur blanc, mesuré en `media: print`), et cette fois la prochaine régénération le
+conservera. Les 42 lexiques des thèmes 1 et 3 seront régénérés dans leurs PR, au fil des
+retouches — leur bloc écrit à la main y reste correct jusque-là.
+
+Banc du générateur : 4 / 4.
