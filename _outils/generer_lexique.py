@@ -160,6 +160,10 @@ GABARIT = """<!DOCTYPE html>
     body{{background:#fff;color:#000;padding:0}}
     section{{background:#fff;border:1px solid #666;break-inside:avoid}}
     h1,h2,dt{{color:#000}} dd.vide{{color:#444}} nav,footer{{display:none}}
+    /* — impression : fond blanc, couleurs conservées (décision de Pascal, 02/09/2026).
+       Cette règle vit ICI, dans le générateur : la campagne du 02/09 l'avait écrite dans
+       les 59 lexiques engendrés, et la première régénération l'a effacée (règle n°283). — */
+    .compte,.sub{{color:#1a6af8}}
   }}
 </style>
 </head>
