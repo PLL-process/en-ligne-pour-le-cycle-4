@@ -43,6 +43,7 @@ BON = {
  "a1_4":"aucune alerte possible le matin : on saurait toujours la veille",
  "a1_5":"elle emploie une source radioactive : contrôle réglementaire hors de portée d'un collège",
  "a1_6":"la mesure dérive lentement sans que rien ne le signale",
+ "a1_7":"pour rapporter la masse de poussières à une même quantité d'air, et pouvoir comparer",
  "a2_1":"impossible : une concentration ne peut pas être négative",
  "a2_2":"très probablement un capteur figé : une vraie mesure varie presque toujours un peu — on le signale, et on vérifie l'appareil",
  "a2_3":"très probablement une virgule décalée : 25,1 devenu 251",

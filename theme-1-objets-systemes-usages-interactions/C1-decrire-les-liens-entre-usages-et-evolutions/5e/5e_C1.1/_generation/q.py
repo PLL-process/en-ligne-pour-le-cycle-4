@@ -15,9 +15,10 @@ réponse est fausse — elle ne se contente pas de dire qu'elle l'est.
 
 IMG_PRINCIPES = {
     "src": "Images/trois_principes_de_mesure.svg",
-    "alt": "Trois principes pour une même fonction — diffusion optique, gravimétrie, "
-           "atténuation bêta — avec pour chacun son temps de réponse, son incertitude, "
-           "son prix, sa consommation et ce qu'il exige d'entretien.",
+    "alt": "Trois principes pour une même fonction — observer la lumière (diffusion optique), "
+           "peser un filtre (gravimétrie), freiner un rayonnement (atténuation bêta) — chacun "
+           "avec son schéma, une comparaison familière, son délai, sa précision, son prix et "
+           "ce qu'il exige.",
 }
 IMG_ARBO = {
     "src": "Images/corrige_arborescence.svg",

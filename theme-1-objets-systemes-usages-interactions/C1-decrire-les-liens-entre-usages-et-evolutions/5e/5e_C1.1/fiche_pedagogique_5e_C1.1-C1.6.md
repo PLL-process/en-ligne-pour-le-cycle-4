@@ -80,7 +80,12 @@ Et un fait pédagogique qui n'est pas une anomalie : mardi et jeudi à 7 h, **66
 
 **Séance 1** — les élèves cherchent « le meilleur » principe et refusent qu'il dépende de l'usage.
 Insister sur le délai (la gravimétrie est la plus précise et la plus inutile ici) et sur le critère
-qui **élimine** au lieu de peser (la source radioactive).
+qui **élimine** au lieu de peser (la source radioactive). La planche des trois principes (09/09/2026)
+part de **ce qu'on mesure** — une concentration, µg par m³ — puis donne pour chaque principe un
+dessin en trois étapes et une comparaison familière ; les chiffres sont dans un tableau à part.
+Sources de la vulgarisation, pour qui veut aller plus loin : l'article de Sensirion sur la mesure
+optique des particules, le manuel du BAM-1022 de Met One pour l'atténuation bêta, et le rapport
+2009 du LCSQA sur le parc d'analyseurs (TEOM) pour la microbalance à vibration.
 
 **Séance 2** — trois anomalies sortent au tri. La quatrième résiste : on ne cherche pas une valeur
 bizarre, on cherche un **comportement** bizarre.

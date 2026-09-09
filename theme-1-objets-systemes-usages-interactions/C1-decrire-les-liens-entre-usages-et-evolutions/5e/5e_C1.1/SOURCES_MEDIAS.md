@@ -14,7 +14,7 @@ disparaît de la séquence.
 
 | Fichier | Ce qu'il donne à lire | `desc` |
 |---|---|---|
-| `Images/trois_principes_de_mesure.svg` | Les trois principes de mesure des poussières, avec délai, incertitude, prix, consommation et contrainte d'entretien de chacun. Sans lui, l'activité 1 n'a pas de données. | 1 509 car. |
+| `Images/trois_principes_de_mesure.svg` | Les trois principes de mesure des poussières, chacun avec un schéma en trois étapes, une comparaison familière (le rayon de soleil, le sac d'aspirateur, la lampe derrière un rideau), son délai, sa précision, son prix et ce qu'il exige. Redessiné le 09/09/2026 pour des élèves de 5e ; la séquence en porte la version détaillée (cartes, tableau des chiffres, lecture du µg/m³). Sans lui, le QCM et la synthèse n'ont pas de document. | 1 387 car. |
 | `Images/corrige_arborescence.svg` | **Corrigé** (règle n°43) : les quatorze entrées mal nommées à gauche, l'arborescence rangée à droite, et les quatre règles de nommage. | 1 384 car. |
 | `Images/corrige_systeme_information.svg` | **Corrigé** : les quatre étages du système d'information, et pour chacun qui a le droit d'y écrire. | 1 360 car. |
 | `Images/la_donnee_qui_designe.svg` | Les trois publications du même fait vrai — nommer l'agent, taire la cause, désigner l'organisation. C'est le document central de la séance 5. | 1 476 car. |
