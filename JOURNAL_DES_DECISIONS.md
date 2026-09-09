@@ -12784,3 +12784,57 @@ médias, impression, règle 4, fichiers téléchargeables : verts.
 > dans un tableau à part : ils décrivent des appareils, pas des principes. Et avant de remplacer un
 > principe par un autre plus simple, on mesure ce qui, dans le lot, repose sur lui — ici, le
 > critère qui élimine tenait tout entier dans la source radioactive.
+
+## 2026-09-09 — Audit externe du thème 1, deuxième passe : vingt-quatre reformulations, et trois boutons morts
+
+Pascal : « continue l'analyse de l'audit ». La première passe avait pris les 24 points du fichier
+de tête (A01–A24). Celle-ci lit le fichier des reformulations (R01–R24) et les rubriques de détail
+des cinquante séances — toujours en refaisant la mesure à la ligne citée (règle n°293).
+
+**Les reformulations.** Onze retenues, huit non retenues, trois à Pascal. Ce qui frappe : trois
+des retenues (R05, R07, R08) étaient des **contradictions que la première passe avait créées** —
+en corrigeant la séquence (A04, A09), j'avais laissé le `ret:` du QCM dire l'inverse, et le
+lexique, engendré depuis ce `ret:`, avec lui. Un lot se corrige jusqu'au dernier écho, ou l'élève
+lit deux phrases contraires (règle n°279, encore). Les non retenues sont des maximes que l'audit
+lisait hors de leur question : « En ville, la masse commande » porte son « en ville », et les
+48 kg contre 1 350 kg de la question ; « une moyenne cache sa queue » est une image doublée d'une
+phrase claire dans le même lexique. R08 était vraiment fausse : « la mesure fixe l'exigence » —
+non, le constructeur fixe l'exigence (32 °C), la mesure donne l'écart (9 °C). Corrigée dans le
+QCM, la séquence, la synthèse et la matrice ; la question s'appelle « La mesure donne l'écart ».
+
+**Ce que la vérification a fait trouver.** L'audit disait, sur `4e_C1.4` : « des mini-quiz
+affichent des symboles de bonne/mauvaise réponse dans leurs étiquettes avant validation » — lu
+dans le code, pas testé. Mesuré au navigateur : 95 icônes ✅/❌ visibles au chargement. La règle
+CSS cachait `<i>` ; un passage d'accessibilité avait fait des icônes des `<span class="ico">`. En
+cherchant le bouton qui devait les révéler, la mesure a trouvé le reste : les six « Vérifier »
+appelaient `checkSection()`, **jamais définie** — chaque clic levait une erreur et ne faisait
+rien ; « Voir la correction » appelait `toggleAnswer()`, absente aussi ; le bloc 1.b était une
+question tronquée à une seule option dont le `<div>` jamais fermé avalait la suite de la section ;
+les badges de score portaient les ids `s1/s2/s3`, ceux des panneaux de séance. Personne ne l'avait
+vu depuis le 25/08, parce qu'un bouton mort ne fait pas de bruit (règle n°277) — et parce que ce
+lot n'a pas de banc. Sur le dépôt entier, le même défaut existait une troisième fois : dans
+`3e_C1.5`, « Sauvegarder mon travail » appelait `saveProgress4()`, absente. Un élève qui cliquait
+n'enregistrait rien.
+
+**Refait dans `4e_C1.4`** : les icônes se cachent jusqu'à la vérification ; `checkSection` juge
+les blocs de la section (une question, un point ; les cases à cocher justes toutes ensemble),
+révèle les blocs répondus, écrit « x bonnes réponses sur y — n sans réponse », et le dénominateur
+se lit dans la page (règle n°155) ; `toggleAnswer` existe ; le bloc tronqué est retiré ; les
+badges ont leurs ids ; « Réinitialiser » fait ce qu'il dit. Les codes CRCN « S1.1/S2.2 » deviennent
+4.1/4.2. **Dans `3e_C1.5`** : `saveProgress4` enregistre les 53 champs dans le navigateur et la
+page les reprend à l'ouverture. **Dans `5e_C1.2`** : 5 + 40 + 50 + 40 + 10 font 145, pas 150.
+
+**Le contrôle** : `controle_boutons_vivants.py` — tout nom de fonction appelé depuis un `onclick`
+doit être défini dans un `<script>` de la page. 340 pages, 113 appels, trois absents avant, zéro
+après ; banc 8 / 8. Il ne lit pas les `addEventListener` (une fonction anonyme ne manque jamais)
+et ne dit pas si la fonction fait ce que le bouton promet — cela reste au banc du lot.
+
+**Mesuré** : bancs 5e_C1.1 43/43, 5e_C1.2 36/36, 3e_C2.1 54/54, 3e_C3.1 30/30, 4e_C3.1 28/28,
+5e_C3.1 29/29 ; contrôles liens, médias, règle 4, en-têtes QCM, gestes, fichiers, impression : verts.
+
+> **Règle d'or n°295 — un bouton mort ne fait pas de bruit : on l'écoute par la console.** Un
+> bouton qui appelle une fonction absente lève une erreur que seul l'outil de développement voit ;
+> l'élève, lui, voit un clic sans effet et conclut que c'est lui. Chaque nom appelé depuis un
+> `onclick` existe dans la page, et le contrôle le lit — mais seul le banc du lot, au navigateur,
+> dit si le bouton FAIT ce qu'il promet. Six « Vérifier » et un « Sauvegarder » sont restés morts
+> deux semaines dans des lots sans banc.

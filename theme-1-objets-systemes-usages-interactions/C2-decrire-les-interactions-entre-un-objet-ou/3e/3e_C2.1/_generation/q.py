@@ -84,7 +84,7 @@ q(C, "Qui abandonne vraiment", "En détaillant par profil, on trouve chez les ha
    "La moyenne générale ne s'applique à aucun profil en particulier : c'est justement ce que le détail révèle.",
    "Les occasionnels sont à 11 %, soit un abandon sur neuf ; les habitués, eux, n'en comptent aucun.",
    "Cinquante pour cent est le taux des personnes âgées, à l'autre extrémité de l'échelle."],
-  "Aucun habitué n'abandonne. Ce ne sont jamais les mêmes qui échouent.")
+  "Dans ces 30 retraits, aucun habitué n'abandonne : l'échec se concentre sur ceux qui découvrent la borne.")
 
 q(C, "La moyenne qui ne décrit personne", "La durée moyenne est de 77 s ; l'habitué met 41 s et la personne âgée 123 s. Cela montre que…",
   ["une moyenne calculée sur un groupe varié peut ne décrire personne",
@@ -455,7 +455,7 @@ q(C, "Le défaut d'ordre", "La borne encaisse le paiement, puis échoue à impri
   "On ne prend jamais l'argent d'un usager avant d'être sûr de pouvoir le servir.",
   img=IMG_C3)
 
-q(C, "Pourquoi l'algorigramme", "Pourquoi ce défaut ne peut-il être montré que par un algorigramme ?",
+q(C, "Pourquoi l'algorigramme", "Parmi les trois modes, pourquoi seul l'algorigramme montre-t-il ce défaut ?",
   ["parce qu'il porte sur l'ordre des opérations, que seul ce mode représente",
    "parce que c'est le mode le plus précis",
    "parce que le technicien préfère les schémas",
@@ -468,7 +468,7 @@ q(C, "Pourquoi l'algorigramme", "Pourquoi ce défaut ne peut-il être montré qu
    "La précision seule ne suffit pas : un tableau très précis ne montrerait toujours pas l'enchaînement des opérations.",
    "Les préférences du destinataire ne sont pas un critère ; ce qui compte est que le mode puisse montrer le défaut.",
    "C'est vrai, et sans rapport : l'algorigramme s'impose ici parce que le défaut est un défaut d'ordre."],
-  "Un défaut d'ordre ne se voit que sur un algorigramme.")
+  "Parmi les trois modes, seul l'algorigramme montre l'ordre des opérations — donc un défaut d'ordre.")
 
 q(C, "La correction", "Comment corriger l'incident du papier ?",
   ["tester le papier AVANT d'encaisser, et refuser le paiement s'il en manque",

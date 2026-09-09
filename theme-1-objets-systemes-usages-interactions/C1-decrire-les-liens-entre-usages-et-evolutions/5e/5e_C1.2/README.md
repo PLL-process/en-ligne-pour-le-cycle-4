@@ -22,7 +22,7 @@ est à quelques centaines de mètres.
 | 2 | **Comparer avec des chiffres** — six critères, et ce qu'ils ne disent pas | 50 min |
 | 3 | **Choisir pour Sainte-Luce** — un principe, deux chiffres, une perte assumée | 40 min |
 
-150 min annoncés pour 165 disponibles, billet d'entrée et bilan compris.
+145 min annoncés pour 165 disponibles, billet d'entrée et bilan compris (5 + 40 + 50 + 40 + 10).
 
 **Le piège qui porte tout le lot** : le frein à patins gagne sur **trois critères sur six** — masse,
 prix, réparabilité — et c'est pourtant le mauvais choix ici. Compter les colonnes gagnées revient à

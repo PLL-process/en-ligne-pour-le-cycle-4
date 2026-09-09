@@ -77,7 +77,7 @@ professeur.
 Qu'un **chiffre agrégé peut être exact et inutilisable**. Qu'une moyenne sur un groupe varié
 **décrit une personne qui n'existe pas**. Qu'un **mode n'est jamais bon en soi — il est bon pour
 quelqu'un**. Qu'on le justifie par son **angle mort**, pas par son point fort. Qu'un **défaut
-d'ordre** ne se voit que sur un algorigramme. Et que **représenter, c'est choisir ce qu'on montre,
+d'ordre** se voit sur l'algorigramme, le seul des trois modes qui montre l'ordre des opérations. Et que **représenter, c'est choisir ce qu'on montre,
 donc aussi ce qu'on cache**.
 
 ## 🎓 Lien DNB

@@ -116,11 +116,16 @@
   animation: tooltipSlide 0.3s ease-out;
 }
 
-/* Icônes cachées par défaut */
-.qcm-option i { display: none; }
+/* « Voir la correction » (3.b, micro-question 3) : la réponse est cachée tant qu'on ne l'a pas demandée.
+   Le bouton appelait toggleAnswer(), qui n'existait pas dans cette page (audit, 09/09/2026). */
+.answer{display:none;margin-top:10px;padding:10px;border-left:4px solid var(--hl,#61dafb);border-radius:4px}
+
+/* Icônes ✅/❌ cachées par défaut — les balises sont des <span class="ico"> depuis le passage
+   d'accessibilité, la règle visait encore <i> : 95 réponses étaient soufflées (audit, 09/09/2026) */
+.qcm-option i, .qcm-option .ico { display: none; }
 
 /* …et révélées seulement si le bloc a .reveal */
-.qcm-block.reveal .qcm-option i { display: inline-block; }
+.qcm-block.reveal .qcm-option i, .qcm-block.reveal .qcm-option .ico { display: inline-block; }
 
 /* Bonus accessibilité : on garde le feedback sélection sans trahir la correction */
 .qcm-option input:checked + label {
@@ -592,7 +597,7 @@
       <thead><tr><th>Domaine</th><th>Formulation</th><th>Traces (exemples)</th></tr></thead>
       <tbody>
         <tr><td>Socle — Domaine 2</td><td>Adopter des comportements responsables;<br/>Comprendre les risques numériques;<br/>Respecter les règles d'usage</td><td>Réponses aux quizzes sur les risques, adoption de bonnes pratiques dans les exercices DnD, respect des règles dans les quizzes sur les licences</td></tr>
-        <tr><td>CRCN — S1.1 / S2.2</td><td>Protéger ses données;<br/>Sécuriser ses comptes (mots de passe, 2FA);<br/>Gérer ses traces</td><td>Activation 2FA dans quizzes, mots de passe forts dans exercices, gestion traces dans quizzes et DnD</td></tr>
+        <tr><td>CRCN — 4.1 / 4.2</td><td>Protéger ses données;<br/>Sécuriser ses comptes (mots de passe, 2FA);<br/>Gérer ses traces</td><td>Activation 2FA dans quizzes, mots de passe forts dans exercices, gestion traces dans quizzes et DnD</td></tr>
         <tr><td>Technologie — C1→C3</td><td>Identifier risques et bonnes pratiques;<br/>Classer les données;<br/>Programmer un test d'URL (HTTP/HTTPS)</td><td>Identification risques dans quizzes, classification données dans DnD, code Python pour test URL dans quizzes</td></tr>
       </tbody>
     </table>
@@ -618,7 +623,7 @@ parce que des classes l'utilisent déjà. <strong>Ses points ne comptent pas</st
   <div class="section panel" id="sec1">
 
   <div class="qcm-question">
-    <h2 id="bloc1-risques">🛡️ 1. Risques et bonnes pratiques <span class="badge">Score : <span id="s1">0</span>/14</span></h2>
+    <h2 id="bloc1-risques">🛡️ 1. Risques et bonnes pratiques <span class="badge">Score : <span id="sc1">0</span>/<span id="scm1">…</span></span></h2>
 <!-- ressource: res-4e-C1-4-hameconnage -->
 <section class="ressource" id="res-4e-C1-4-hameconnage" aria-label="Ressource vidéo : Cybermalveillance.gouv.fr — Comment reconnaître un message de phishing ?">
   <header class="ressource-tete">
@@ -765,15 +770,6 @@ lui-même.</p>
     </div>
     <button class="btn" onclick="checkDragDrop('1a')">Vérifier 1a</button>
 
-
-    <h3>❓ 1.b&nbsp;—&nbsp;Micro‑question Phishing (1 point)</h3>
-
-<div class="qcm-block qcm-sec1" role="radiogroup">
-  <div class="qcm-question"><span class="ico" aria-hidden="true">🎣</span> Laquelle de ces propositions décrit le mieux le <em>phishing</em> ?</div>
-  <div class="qcm-option">
-    <input type="radio" name="q1p" value="0" id="q1p0">
-    <label for="q1p0"><span class="ico" aria-hidden="true">❌</span> Accélérer la connexion Internet</label>
-  </div>
 
 
 <h3>📦 1.c — Faites glisser chaque étiquette dans la bonne colonne (8 étiquettes) (3 points)</h3>
@@ -974,7 +970,6 @@ lui-même.</p>
         <span id="res1" class="badge"></span>
       </div>
     </div>
-    </div>
 
   <div id="help1" class="modal">
     <div class="box">
@@ -1014,7 +1009,7 @@ lui-même.</p>
   <section class="seance-panel" id="shors" role="tabpanel" aria-labelledby="tab-shors" data-titre="Hors parcours — Python (relève de C9)">
 <!-- 2. Python + Tab & indentation -->
   <div class="section panel" id="sec2">
-    <h2 id="bloc2-python">🧠 2. Programme Python — Touche Tab & Indentation <span class="badge">Score : <span id="s2">0</span>/8</span></h2>
+    <h2 id="bloc2-python">🧠 2. Programme Python — Touche Tab & Indentation <span class="badge">Score : <span id="sc2">0</span>/<span id="scm2">…</span></span></h2>
 
     <h3>📰 Mise en situation : L'importance de Python dans un monde connecté</h3><div>
      <div class="qcm-question">
@@ -1218,7 +1213,7 @@ Fin du programme.</code></pre>
 <section class="seance-panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" data-titre="Séance 2 — Mes données">
 <!-- 3. Données personnelles -->
   <div class="section panel" id="sec3">
-    <h2 id="bloc3-donnee-personnelle">🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="s3">0</span>/11</span></h2>
+    <h2 id="bloc3-donnee-personnelle">🗂️ 3. Qu'est‑ce qu'une donnée personnelle ? <span class="badge">Score : <span id="sc3">0</span>/<span id="scm3">…</span></span></h2>
 
     <h3>📰 Mise en situation : Le vol de données au collège</h3>
      <div class="qcm-question">
@@ -1446,7 +1441,7 @@ Fin du programme.</code></pre>
 
   <!-- 4. Protéger ses données personnelles -->
   <div class="section panel" id="sec4">
-    <h2 id="bloc4-proteger">🔒 4. Protéger ses données personnelles <span class="badge">Score : <span id="s4">0</span>/11</span></h2>
+    <h2 id="bloc4-proteger">🔒 4. Protéger ses données personnelles <span class="badge">Score : <span id="sc4">0</span>/<span id="scm4">…</span></span></h2>
 
     <h3>📰 Mise en situation : L'attaque sur ton compte scolaire</h3>
      <div class="qcm-question">
@@ -1676,7 +1671,7 @@ Fin du programme.</code></pre>
 <section class="seance-panel" id="s3" role="tabpanel" aria-labelledby="tab-s3" data-titre="Séance 3 — Mes traces">
 <!-- 5. Limiter ses traces en ligne -->
   <div class="section panel" id="sec5">
-    <h2 id="bloc5-traces">🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="s5">0</span>/10</span></h2>
+    <h2 id="bloc5-traces">🌐 5. Limiter ses traces en ligne <span class="badge">Score : <span id="sc5">0</span>/<span id="scm5">…</span></span></h2>
 
     <h3>📰 Mise en situation : Le suivi invisible sur les réseaux</h3>
      <div class="qcm-question">
@@ -1865,7 +1860,7 @@ Fin du programme.</code></pre>
 
    <!-- 6. Propriété intellectuelle & e-réputation -->
   <div class="section panel">
-    <h2 id="bloc6-propriete">⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="s6">0</span>/15</span></h2>
+    <h2 id="bloc6-propriete">⚖️ 6. Propriété intellectuelle et e‑réputation <span class="badge">Score : <span id="sc6">0</span>/<span id="scm6">…</span></span></h2>
     <h3>📰 Mise en situation : La photo virale au collège</h3>
      <div class="qcm-question">
     <p>Imagine que tu partages une photo drôle d'un camarade sur Snapchat sans son accord. Elle devient virale, et il subit du harcèlement. Ton compte est signalé, affectant ta réputation scolaire.</p>
@@ -2165,7 +2160,7 @@ Fin du programme.</code></pre>
     <h2>📄 Synthèse & Export</h2>
     <h3>Synthèse de la séquence</h3>
      <div class="qcm-question">
-    <p>Cette séquence sur la cybersécurité aligne parfaitement avec le programme de technologie au collège de 2024, qui met l'accent sur la protection des données, la sécurisation des comptes et la gestion des traces numériques au cycle 4. Inspirée du socle commun (domaine 2 : comportements responsables) et du CRCN (S1.1/S2.2), elle prépare les élèves à identifier risques et bonnes pratiques, classer données, et programmer des tests URL.</p>
+    <p>Cette séquence sur la cybersécurité aligne parfaitement avec le programme de technologie au collège de 2024, qui met l'accent sur la protection des données, la sécurisation des comptes et la gestion des traces numériques au cycle 4. Inspirée du socle commun (domaine 2 : comportements responsables) et du CRCN (domaine 4, « Protection et sécurité » : 4.1 sécuriser l'environnement numérique, 4.2 protéger les données personnelles et la vie privée), elle prépare les élèves à identifier risques et bonnes pratiques, classer données, et programmer des tests URL.</p>
     <p>En 2025, l'actualité souligne l'urgence : le Cybermois sensibilise aux cyberattaques en éducation, avec une enquête montrant 42% des écoles françaises touchées. Des incidents comme les fuites de données sensibles en avril 2025 (Algérie-Maroc) ou les perturbations DDoS aux aéroports (septembre 2025) rappellent que la vigilance est clé. Retenez : utilisez 2FA, mots de passe forts, VPN ; respectez droits d'auteur et image ; limitez traces pour une e-réputation solide. Ces compétences sont essentielles pour un monde numérique sûr !</p>
 
 
@@ -2487,27 +2482,7 @@ document.getElementById('btnPDF')?.addEventListener('click',()=>window.print());
 }
  
 
-// Révéler les icônes seulement quand on corrige
-([
-  ['#chk1', '#sec1'],
-  ['#chk2', '#sec2'],
-  ['#chk3', '#sec3'],
-  ['#chk4', '#sec4'],
-  ['#chk5', '#sec5'],
-  ['#chk6', 'body'] // ajuste si tu as un id de section 6
-]).forEach(([btnSel, scopeSel]) => {
-  const btn = document.querySelector(btnSel);
-  const scope = document.querySelector(scopeSel);
-  if (!btn || !scope) return;
-  btn.addEventListener('click', () => {
-  scope.querySelectorAll('.qcm-block').forEach(b => {
-      const hasChecked = b.querySelector('input:checked');
-      if (hasChecked) b.classList.add('reveal');
-  });
-
-    // ici tu peux aussi calculer les scores des QCM si besoin
-  });
-});
+// (le réveil des icônes ✅/❌ est fait par checkSection, plus bas)
 
 
 
@@ -2660,22 +2635,60 @@ function speak(text) {
 
 
 
-// ---- Poids des six blocs ----
-// Le total affiché était figé à 65 alors que la somme des poids fait 69 :
-// un élève parfait obtenait « 69/65 ». Le dénominateur se LIT désormais sur
-// les poids, il ne se recopie plus à la main (règle n°155).
-const scores = { s1:0, s2:0, s3:0, s4:0, s5:0, s6:0 };
-const W = { s1:14, s2:8, s3:11, s4:11, s5:10, s6:15 }; // tu l’as déjà plus bas
+// ---- Score des six blocs (09/09/2026) ----
+// Historique : le total affiché était figé à 65 pour 69 points de poids (règle n°155), puis le
+// bloc Python est sorti du parcours (règle n°170). L'audit externe du 09/09 a fait mesurer le
+// reste : `checkSection` n'existait pas — les six boutons « Vérifier » levaient une erreur et ne
+// faisaient rien ; les badges « Score » portaient les ids s1/s2/s3, déjà pris par les panneaux de
+// séance ; et les icônes ✅/❌ des 95 réponses étaient visibles avant toute vérification.
+// Désormais : une question vaut un point, le dénominateur se LIT dans la page (nombre de blocs de
+// la section), et rien ne se recopie à la main. Les ateliers glisser-déposer gardent leur propre
+// retour (checkDragDrop) et n'entrent pas dans ce total.
+window.scores = { s1:0, s2:0, s3:0, s4:0, s5:0, s6:0 };
+const DANS_LE_PARCOURS = ["s1", "s3", "s4", "s5", "s6"];   // s2 (Python) relève de C9, pas de C1
+
+function toggleAnswer(id){
+  const e = document.getElementById(id); if (!e) return;
+  e.style.display = (e.style.display === 'block') ? 'none' : 'block';
+}
+
+function blocsDe(n){ return [...document.querySelectorAll('.qcm-block.qcm-sec' + n)]; }
+
+function jugerBloc(b){
+  const inputs = [...b.querySelectorAll('input[type=radio], input[type=checkbox]')];
+  if (!inputs.length) return null;
+  const repondu = inputs.some(i => i.checked);
+  const juste = i => i.value === '1' || i.value === 'good' || i.dataset.correct === '1';
+  const ok = inputs[0].type === 'radio'
+    ? inputs.some(i => i.checked && juste(i))
+    : inputs.every(i => i.checked === juste(i));
+  return { repondu, ok };
+}
+
+function checkSection(btnId){
+  const n = String(btnId).replace(/\D/g, '');
+  let total = 0, repondues = 0, justes = 0;
+  blocsDe(n).forEach(b => {
+    const j = jugerBloc(b); if (!j) return;
+    total++;
+    if (j.repondu){ repondues++; b.classList.add('reveal'); if (j.ok) justes++; }
+  });
+  window.scores['s' + n] = justes;
+  const sc = document.getElementById('sc' + n); if (sc) sc.textContent = justes;
+  const res = document.getElementById('res' + n);
+  if (res){
+    const manque = total - repondues;
+    res.textContent = justes + ' bonne' + (justes > 1 ? 's' : '') + ' réponse' + (justes > 1 ? 's' : '') +
+      ' sur ' + total + (manque ? ' — ' + manque + ' sans réponse' : '');
+  }
+  recalc();
+  return justes;
+}
 
 function recalc(){
-  // Le bloc s2 (Python) est SORTI du parcours : il relève de C9, pas de C1.
-  // Il ne compte donc plus dans le score de la séquence — sinon un élève qui
-  // suit les trois séances plafonnerait à 61/69 sans jamais savoir pourquoi.
-  // Le dénominateur se lit toujours sur les poids, jamais recopié (règle n°170).
-  const DANS_LE_PARCOURS = ["s1", "s3", "s4", "s5", "s6"];
-  const total = DANS_LE_PARCOURS.reduce((s, k) => s + scores[k], 0);
-  const max   = DANS_LE_PARCOURS.reduce((s, k) => s + W[k], 0);
-  const pct = Math.max(0, Math.min(100, Math.round(100*total/max)));
+  const max = DANS_LE_PARCOURS.reduce((s, k) => s + blocsDe(k.slice(1)).length, 0);
+  const total = DANS_LE_PARCOURS.reduce((s, k) => s + (window.scores[k] || 0), 0);
+  const pct = max ? Math.max(0, Math.min(100, Math.round(100*total/max))) : 0;
   document.getElementById('scoreTotal').textContent = total;
   { const _m = document.getElementById('scoreMax'); if (_m) _m.textContent = max; }
   const bar = document.getElementById('prog');
@@ -2684,50 +2697,9 @@ function recalc(){
   if (piste) piste.setAttribute('aria-valuenow', pct);
 }
 
-
-
-
-
-  // Section 6 scoring - CORRIGÉ
-function score6(){
-  let pts=0;
-  // 6.a Droit à l'image (2pts)
-  const q = document.querySelector('input[name="img1"][data-correct="1"]')?.checked;
-  if(q) pts += 2;
-  
-  // 6.b Propriété intellectuelle (6 paires = 3pts)
-  const pairs=[['zPI1','cc'],['zPI2','ask'],['zPI3','np'],['zPI4','ccnc'],['zPI5','askim'],['zPI6','npcc']];
-  let ok=0; pairs.forEach(([id,t])=>{const z=document.getElementById(id); const d=z.querySelector('.draggable'); if(d && d.dataset.type===t) ok++; });
-  pts += Math.round((ok/6)*3);
-  
- // 6.c Jeu CC (4 zones = 4pts)
-  let ok6c = 0;
-  const zones6c = [
-    {id: 'zComm', accept: ['cc0','ccby','ccbysa','ccbynd']},
-    {id: 'zMod', accept: ['cc0','ccby','ccbysa','ccbync','ccbyncsa']},
-    {id: 'zAttr', accept: ['ccby','ccbysa','ccbynd','ccbync','ccbyncsa','ccbyncnd']},
-    {id: 'zSA', accept: ['ccbysa','ccbyncsa']},
-  ];
-  zones6c.forEach(zone => {
-    let zOk = 0, zTot = zone.accept.length;
-    zone.accept.forEach(correctType => {
-      const z = document.getElementById(zone.id);
-      const d = z.querySelector(`[data-type="${correctType}"]`);
-      if(d) zOk++;
-    });
-    ok6c += Math.round((zOk / zTot) * 1);
-  });
-  pts += ok6c;
-  
-  // Quiz 7 questions (7pts)
-  ['q6a','q6b','q6c','q6d','q6e','q6f','q6g'].forEach(q=>{
-    const correct = document.querySelector(`input[name="${q}"][value="1"]`)?.checked;
-    if(correct) pts += 1;
-  });
-  
-  document.getElementById('s6').textContent=pts; 
-  return pts;
-}
+// les dénominateurs des six badges se lisent dans la page
+for (let n = 1; n <= 6; n++){ const e = document.getElementById('scm' + n); if (e) e.textContent = blocsDe(n).length; }
+recalc();
 
 /* [RESTE DU CODE IDENTIQUE] */
     // EVENT LISTENERS
@@ -2738,6 +2710,11 @@ function score6(){
     document.getElementById('chk5').onclick = () => checkSection('chk5');
     document.getElementById('chk6').onclick = () => checkSection('chk6');
     document.getElementById('btnRecalc').onclick = recalc;
+    // « Réinitialiser » (section 3) n'avait pas de gestionnaire : il décoche, cache les icônes, remet le score
+    { const r = document.getElementById('rst3'); if (r) r.onclick = () => {
+        blocsDe(3).forEach(b => { b.classList.remove('reveal'); b.querySelectorAll('input').forEach(i => { i.checked = false; }); });
+        window.scores.s3 = 0; document.getElementById('sc3').textContent = 0;
+        const res = document.getElementById('res3'); if (res) res.textContent = ''; recalc(); }; }
 
     // ═══ Enregistrer et reprendre ═══
     // Le bouton n'existait pas : la séquence proposait plus de cent champs à

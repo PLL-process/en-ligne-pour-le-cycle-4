@@ -1316,6 +1316,47 @@ for u in urls:
     e.style.display = (e.style.display==='block') ? 'none' : 'block';
   }
 
+  // « Sauvegarder mon travail » — le bouton appelait saveProgress4(), qui n'existait pas : un élève qui
+  // cliquait ne sauvegardait rien, sans un mot (audit, 09/09/2026). Il enregistre désormais chaque champ
+  // portant un id (nom, classe, réponses, cases) dans le navigateur, et la page les reprend à l'ouverture.
+  var CLE_REPONSES = "reponses_3e_C1.5";
+  function champs(){
+    // les zones de réponse de cette page n'ont pas toutes un id : on en donne un, stable, dans l'ordre de la page
+    var n = 0, liste = [];
+    document.querySelectorAll("input, textarea, select").forEach(function(e){
+      if (e.type === "button" || e.type === "submit" || e.type === "file" || e.type === "hidden") return;
+      if (!e.id) e.id = "auto_" + (n++); else n++;
+      liste.push(e);
+    });
+    return liste;
+  }
+  function saveProgress4(){
+    var d = {};
+    champs().forEach(function(e){
+      d[e.id] = (e.type === "checkbox" || e.type === "radio") ? e.checked : e.value;
+    });
+    var ok = false;
+    try { localStorage.setItem(CLE_REPONSES, JSON.stringify(d)); ok = true; } catch(err) {}
+    var m = document.getElementById("msgSauvegarde4");
+    if (!m) {
+      m = document.createElement("p"); m.id = "msgSauvegarde4"; m.setAttribute("role", "status");
+      m.setAttribute("aria-live", "polite"); m.style.textAlign = "center";
+      var b = document.querySelector('button[onclick="saveProgress4()"]'); if (b) b.insertAdjacentElement("afterend", m);
+    }
+    m.textContent = ok ? "✅ Travail enregistré dans ce navigateur (" + Object.keys(d).length + " champs). Il sera repris à la prochaine ouverture."
+                       : "⚠️ Impossible d'enregistrer ici : copie tes réponses avant de fermer la page.";
+  }
+  (function reprendre(){
+    var brut = null;
+    try { brut = localStorage.getItem(CLE_REPONSES); } catch(err) {}
+    if (!brut) return;
+    var d; try { d = JSON.parse(brut); } catch(err) { return; }
+    champs().forEach(function(e){
+      if (!(e.id in d)) return;
+      if (e.type === "checkbox" || e.type === "radio") e.checked = !!d[e.id]; else e.value = d[e.id];
+    });
+  })();
+
   // Bouton "Copier le code" (copie texte brut sans balises)
   (function(){
     const btn = document.getElementById('copy-code');
