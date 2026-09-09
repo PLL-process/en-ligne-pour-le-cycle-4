@@ -1,6 +1,6 @@
 # Fiche pédagogique — 5e_C1.2 « Sainte-Luce : quel frein pour les vélos du collège ? »
 
-**Niveau** 5e · **Thème 1** · **Durée** 3 séances de 55 min (150 min annoncés pour 165)
+**Niveau** 5e · **Thème 1** · **Durée** 3 séances de 55 min (145 min annoncés pour 165 : 5 + 40 + 50 + 40 + 10)
 **Matériel** un **vélo** (manipulation obligatoire, séance 1) et une clé Allen · un tableur, utile
 mais **pas nécessaire** en séance 2
 

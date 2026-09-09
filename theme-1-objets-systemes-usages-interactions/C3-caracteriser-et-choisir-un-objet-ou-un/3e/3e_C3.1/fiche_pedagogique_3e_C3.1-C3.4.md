@@ -72,5 +72,5 @@ bandeau de tâches (n°30) · billet sans note (n°26) · hors ligne intégral (
 ## Honnêteté sur les données
 
 Les six solutions sont **simulées**. Et la séquence dit que l'addition des baisses de température
-donne un **ordre de grandeur** : les effets ne se cumulent pas parfaitement. Suffisant pour décider,
-pas pour promettre.
+donne un **ordre de grandeur** : les effets ne se cumulent pas parfaitement. De quoi choisir quoi
+essayer, pas de quoi promettre — la combinaison se vérifie en place.

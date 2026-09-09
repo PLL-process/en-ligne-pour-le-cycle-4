@@ -95,7 +95,7 @@ q("C1.1", "La valeur impossible",
    "que le capteur n'a jamais produit, et plus rien ne signalerait le défaut.",
    "Ne rien toucher est juste pour le fichier d'origine, mais la valeur doit être écartée "
    "du CALCUL et signalée : garder n'est pas la même chose que compter."],
-  "Une valeur hors du domaine physique possible n'est pas une mesure : c'est un signal de panne."),
+  "Une valeur hors du domaine physique possible n'est pas une mesure : c'est le signal d'un défaut — appareil, électronique ou enregistrement — à écarter du calcul et à signaler."),
 
 q("C1.1", "Le capteur bloqué",
   "Vendredi, de 9 h à 14 h, le fichier porte six fois exactement 23,7. C'est le signe…",
@@ -117,7 +117,7 @@ q("C1.1", "Le capteur bloqué",
    "il n'y a pas eu de recopie à laquelle attribuer l'erreur.",
    "Une valeur peut en effet se répéter deux fois par hasard ; six fois de suite à la "
    "décimale près, la probabilité devient si faible qu'on cherche une cause matérielle."],
-  "Une mesure qui ne bouge plus du tout ne mesure plus : elle se répète."),
+  "Six fois la même valeur à la décimale : très probablement un capteur figé — un soupçon fort, à vérifier sur l'appareil."),
 
 q("C1.1", "La donnée manquante",
   "Lundi 14 h, aucune ligne n'a été enregistrée. La bonne conduite est…",
@@ -506,7 +506,7 @@ q("C1.4", "Ni espaces, ni accents",
    "le piège dangereux.",
    "Un caractère accentué occupe un ou deux octets : à l'échelle d'un fichier, c'est "
    "totalement négligeable."],
-  "Un nom doit survivre au voyage. Sobre, il voyage ; décoré, il se casse."),
+  "Un nom doit survivre au voyage. Sobre, il passe partout ; décoré, il peut se casser en changeant de système."),
 
 q("C1.4", "Un dossier qui ne dit rien",
   "Un dossier nommé « Nouveau dossier/ » pose problème parce qu'il…",
