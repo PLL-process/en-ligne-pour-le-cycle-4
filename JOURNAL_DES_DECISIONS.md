@@ -12712,3 +12712,23 @@ Ce choix est à Pascal ; les fichiers 02 et 04 de l'audit sont la matière.
 > ne rejette un point sur sa formulation — on rouvre la page, on relit le vérificateur, on rejoue
 > la mesure. Dix points sur vingt-quatre étaient des défauts réels du dépôt ; les autres sont des
 > choix pédagogiques, qui appartiennent au professeur.
+## 2026-09-09 — Trois QCM du thème 2 disent vrai sur eux-mêmes, et le contrôle qui le tient
+
+Même point A15/A16 de l'audit externe, mesuré sur tout le dépôt (voir l'entrée du thème 1) : au
+thème 2, `4e_C4.7` (SOS serre) offrait un menu « Compétence à réviser » sans C4.9 — dix
+questions qu'aucun choix n'atteignait — et des libellés de 5e ; `3e_C4.8` (pont numérique) des
+libellés de 5e sur des codes de 3e ; `4e_C6.2` (arrosage) le menu et le pied de « C6.1 + C6.3 »,
+un lot qui n'est pas le sien. Recalculés depuis `COMP_LABELS` ; vérifié dans le navigateur.
+
+**`controle_entete_qcm.py`** : pour chaque QCM rangé dans un dossier de lot, titre, h1,
+sous-titre, badges, pied de page et options du menu ne nomment aucun code d'un autre niveau —
+sauf si ce code est vraiment celui de questions du QCM et que le tableau de correspondance le
+dit (`4e_C1.4` revisite `5e_C1.5` et `5e_C1.6`) ; le pied nomme le lot ; les options du menu sont
+exactement les codes des questions. Il ne lit pas le texte des questions, où un code d'un autre
+niveau est souvent un distracteur légitime. Banc **12 / 12** une fois les PR sœurs fusionnées.
+
+> **Règle d'or n°292 — un QCM se présente avec ses propres papiers.** Titre, sous-titre, badges,
+> pied de page et menu de révision se déduisent de ses questions et de son tableau de
+> correspondance, jamais d'un gabarit. Trente et un menus sur soixante-dix venaient d'un autre
+> lot, et le mode « cible » y rendait une liste vide sans un mot — personne ne l'avait vu, parce
+> qu'un menu vide ne fait pas de bruit (règle n°277).
