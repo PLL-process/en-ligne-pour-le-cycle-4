@@ -12583,3 +12583,22 @@ images) et garde en mémoire ce que disait l'ancienne, pour qu'on sache d'où ve
 Rien d'autre ne change : les 21 QCM rouverts dans le navigateur chargent sans erreur, leur
 tableau `QUESTIONS` intact. `controle_banque_qcm.py` (PR sœur du thème 2, avec son banc)
 comparera désormais chaque ligne au tableau qu'elle ouvre.
+## 2026-09-09 — La ligne « Banque » d'un QCM dit ce qu'il contient : le thème 2, et le contrôle
+
+Six QCM du thème 2 : quatre lignes comptaient une image de moins que le fichier (une image
+ajoutée après coup, la ligne jamais reprise — `4e_C4.1`, `4e_C4.7`, `4e_C5.1`, `5e_C6.1`), et
+les deux QCM de `4e_C6.2` portaient le gabarit « 15 C6.1 + 15 C6.3, 3 illustrees » pour des
+questions réparties sur C4.4, C4.1, C4.5, C6.2, C1.4 — ou par catégories CAP/PRG/SYS — sans
+image. Lignes recalculées, anciennes citées, six QCM rouverts sans erreur.
+
+**`controle_banque_qcm.py`** compare désormais chaque ligne « Banque » au tableau `QUESTIONS`
+qu'elle ouvre : nombre, répartition (par code de compétence, ou par catégorie quand le QCM
+range ainsi — les codes cités en marge d'un QCM à catégories sont une intention, pas un
+compte), images. Ce qui est cité entre guillemets « … » — l'ancienne ligne, gardée pour mémoire —
+n'est pas une promesse. Banc **13 / 13**, dont le gabarit copié, le « Sainte-Luce 5e », l'image
+ajoutée sans reprise, et le QCM sans ligne, qui n'a rien à prouver.
+
+> **Règle d'or n°291 — un commentaire de bilan est une mesure, pas une phrase.** « 30 questions,
+> 3 illustrées » se compte ; s'il n'est pas compté par un script, il finit copié d'un gabarit
+> et cru par le lecteur suivant. Trente lignes sur soixante-deux mentaient, dont vingt et une
+> identiques.
