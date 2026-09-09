@@ -1,6 +1,6 @@
 # Fiche pédagogique — 3e_C2.1 « Pékin : trois destinataires, trois représentations »
 
-**Niveau** 3e · **Thème 1** · **Durée** 3 séances de 55 min (150 min annoncés pour 165)
+**Niveau** 3e · **Thème 1** · **Durée** 3 séances de 55 min (140 min annoncés pour 165 — séance 1 : 5 + 40 = 45 min ; séance 2 : 30 + 25 = 55 min (les activités 2 et 3 étaient annoncées 35 + 30 = 65 dans un créneau de 55 — audit du 08/09) ; séance 3 : 30 + 10 = 40 min)
 **Matériel** aucun — page autonome hors ligne, plus un tableur pour la séance 1
 **Ce lot achève la compétence C2 sur les trois niveaux du cycle.**
 
@@ -52,8 +52,8 @@ marche est donc écrite **à l'élève**, pas seulement ici.
 
 0. **Billet d'entrée** (5 min, sans note) — moyenne sur groupe varié, test à deux sorties, exigence.
 1. **Ce que le chiffre ne dit pas** (~40 min) — les 40 observations, le taux d'abandon par profil.
-2. **Six modes, trois destinataires** (~35 min) — vocabulaire, élimination, appariement justifié.
-3. **L'algorigramme que seul lui peut montrer** (~30 min) — l'incident du papier. 🎓 *geste DNB.*
+2. **Six modes, trois destinataires** (~30 min) — vocabulaire, élimination, appariement justifié.
+3. **L'algorigramme que seul lui peut montrer** (~25 min) — l'incident du papier. 🎓 *geste DNB.*
 4. **Produire et défendre** (~30 min) — une représentation au choix, et sa défense en trois points.
 
 ## Le vocabulaire : à ne pas sauter

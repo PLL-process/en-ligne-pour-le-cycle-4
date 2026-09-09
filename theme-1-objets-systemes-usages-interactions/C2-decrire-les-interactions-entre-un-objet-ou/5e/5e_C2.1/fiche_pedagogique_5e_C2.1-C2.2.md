@@ -1,6 +1,6 @@
 # Fiche pédagogique — 5e_C2.1 · C2.2 « Shenzhen : la station de vélos et tout ce qui l'entoure »
 
-**Niveau** 5e · **Thème 1** · **Durée** 3 séances de 55 min (149 min annoncés pour 165)
+**Niveau** 5e · **Thème 1** · **Durée** 3 séances de 55 min (149 min annoncés pour 165 — l'activité 2 est à ~50 min dans la page comme ici ; elle y était annoncée 55, un créneau entier sans lancement ; audit du 08/09)
 **Matériel** aucun — page autonome, hors ligne, aucune donnée envoyée
 
 ## Ce que la séquence installe
