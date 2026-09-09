@@ -12609,3 +12609,29 @@ Suite de #353 : les 13 lexiques du thème 1 sont régénérés avec le générat
 désormais le bloc d'impression. Seule différence, mesurée sur chacun des 13 : le bloc CSS
 déplacé (4 lignes pour 7). Rien ne change à l'écran ni sur le papier ; la prochaine
 régénération ne perdra plus rien.
+## 2026-09-09 — L'audit externe du thème 1 : première trouvaille vérifiée, et ce qu'elle cachait
+
+Pascal a déposé un audit du thème 1 (C1 à C3) produit par un autre assistant : cinq fichiers,
+24 points priorisés, chacun avec un lien vers la ligne du dépôt. Règle de lecture : chaque point
+est une **mesure à refaire**, pas un fait — on vérifie à la ligne citée, on mesure sur tout le
+dépôt, puis on corrige ce qui est confirmé (et on écrit ce qui ne l'est pas).
+
+**A15, confirmé, et plus large que l'audit ne le disait.** Trois QCM de C1 (`3e_C1.5`, `4e_C1.4`,
+`5e_C1.3`) portaient le sous-titre, le menu « Compétence à réviser » et le pied de page du lot de
+freinage de 5e. Mesuré sur les 70 QCM du dépôt : **31 menus « Compétence à réviser » copiés d'un
+autre lot** — et dans ce cas le mode « cible » rend une liste vide, sans un mot d'explication :
+l'élève choisit une compétence et rien ne vient. Vérifié dans le navigateur : 4 QCM du thème 1
+sur 4, 0 question pour chaque option ; après correction, 10-10-10, 10-10-10, 16-14, 15-15.
+Les tableaux de correspondance JavaScript (`COMP_LABELS`) étaient justes partout : seul le HTML
+statique avait été copié — le même mal que les lignes « Banque » (règle n°291), un étage plus haut.
+
+**A16, confirmé** : le pied de `5e_C1.5` disait « 4e_C8.1 · C8.2 · C8.3 · Thème 3 · New York ».
+Vingt QCM de C7/C8 au thème 3 portent le même pied (PR sœur).
+
+Ce que fait cette PR au thème 1 : menus recalculés depuis `COMP_LABELS` (les options sont
+exactement les codes des questions), pieds de page recalculés (codes complets, avec leur niveau
+— `4e_C1.4 · 5e_C1.5 · 5e_C1.6` pour le QCM de cybersécurité qui revisite deux codes de 5e, et
+le dit), trois sous-titres réécrits pour leur lot. `controle_entete_qcm.py` (PR du thème 2)
+tiendra désormais : titre, sous-titre, badges, pied et menu d'un QCM disent vrai sur lui.
+
+Les autres points de l'audit sont en cours de vérification, un par un, à la ligne citée.
