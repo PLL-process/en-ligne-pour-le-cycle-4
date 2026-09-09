@@ -12647,3 +12647,16 @@ Menus et pieds recalculés depuis `COMP_LABELS` et les questions ; les codes du 
 complets et portent leur niveau (`3e_C7.3 · 3e_C4.2`). Le lot `4e_C8.1` lui-même garde son pied
 — c'est bien lui, New York et C8.1 à C8.3. Vérifié dans le navigateur : 25 QCM, 0 menu vide,
 0 erreur ; aucun lien mort.
+## 2026-09-09 — Les 23 lexiques engendrés du thème 3 sont régénérés — et deux ne le sont pas
+
+Suite de #353 : le bloc d'impression vit dans `generer_lexique.py`, les lexiques engendrés
+sont régénérés pour que la prochaine régénération ne perde rien. Au thème 3, **23 lexiques** :
+la seule différence est le bloc CSS déplacé (4 lignes pour 7, sur chacun des 23 — mesuré).
+
+**Deux lexiques ne sont pas régénérés** : `3e_C8.1` et `5e_C8.1`. La régénération les aurait
+remplacés — ils ne sont pas engendrés, ils ont été **écrits à la main** le 30/08 (un tableau
+« Mot / Ce qu'il veut dire », des définitions rédigées, un style clair), et le générateur aurait
+posé à leur place les « à retenir » du QCM (règle n°279 : une refonte perd ce qu'elle ne recopie
+pas). Ils gardent leur bloc d'impression écrit à la main, qui est correct. C'est une exception
+nommée, pas oubliée : si un jour on veut les faire rentrer dans le rang, ce sera en faisant
+entrer leurs définitions dans le générateur, pas en les effaçant.
