@@ -12602,3 +12602,10 @@ ajoutée sans reprise, et le QCM sans ligne, qui n'a rien à prouver.
 > 3 illustrées » se compte ; s'il n'est pas compté par un script, il finit copié d'un gabarit
 > et cru par le lecteur suivant. Trente lignes sur soixante-deux mentaient, dont vingt et une
 > identiques.
+
+## 2026-09-09 — Les 13 lexiques engendrés du thème 1 sont régénérés
+
+Suite de #353 : les 13 lexiques du thème 1 sont régénérés avec le générateur qui porte
+désormais le bloc d'impression. Seule différence, mesurée sur chacun des 13 : le bloc CSS
+déplacé (4 lignes pour 7). Rien ne change à l'écran ni sur le papier ; la prochaine
+régénération ne perdra plus rien.
