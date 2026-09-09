@@ -12635,3 +12635,15 @@ le dit), trois sous-titres réécrits pour leur lot. `controle_entete_qcm.py` (P
 tiendra désormais : titre, sous-titre, badges, pied et menu d'un QCM disent vrai sur lui.
 
 Les autres points de l'audit sont en cours de vérification, un par un, à la ligne citée.
+## 2026-09-09 — Vingt-cinq QCM du thème 3 disent vrai sur eux-mêmes
+
+Suite de la vérification du point A15/A16 de l'audit externe (voir l'entrée du thème 1) : au
+thème 3, **25 QCM** portaient le menu « Compétence à réviser » du lot `5e_C9.1` (« La boîte
+étiquetée », « Lire et tester un programme », « Modifier et régler ») — et pour 20 d'entre eux le
+pied de page du lot `4e_C8.1` (« 4e_C8.1 · C8.2 · C8.3 · Thème 3 · New York »), le gabarit dont
+ils ont été copiés. Dans les 25, le mode « cible » rendait une liste vide.
+
+Menus et pieds recalculés depuis `COMP_LABELS` et les questions ; les codes du pied sont
+complets et portent leur niveau (`3e_C7.3 · 3e_C4.2`). Le lot `4e_C8.1` lui-même garde son pied
+— c'est bien lui, New York et C8.1 à C8.3. Vérifié dans le navigateur : 25 QCM, 0 menu vide,
+0 erreur ; aucun lien mort.
