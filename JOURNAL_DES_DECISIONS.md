@@ -12542,3 +12542,23 @@ règle n°289 date du même jour, la PR des 11 CSV aussi, et j'ai réécrit une 
 deux heures plus tard. C'est exactement ce à quoi sert un contrôle : pas à juger le passé, à
 tenir le présent (règle n°277 — un contrôle se trompe dans les deux sens ; celui-ci ne s'est pas
 trompé). La mention devient un lien, comme les deux autres de la page.
+
+## 2026-09-09 — Deux contrôles pour tenir ce que le 08/09 a corrigé
+
+**`controle_fichiers_telechargeables.py`** mesure la règle n°289 : dans chaque séquence, TP et
+atelier, tout nom de fichier de données du texte visible (`.csv`, `.py`, `.ino`, `.stl`,
+`.step`…) doit être enveloppé d'un lien `<a href download>` vers un fichier qui existe dans le
+lot. Un fichier **promis** et absent (« fourni avec le TP ») est refusé ; un nom donné en
+exemple dans un récit (`truc.csv`, le dossier en désordre de `5e_C1.1`) est compté, jamais
+refusé. Son banc rejoue quinze cas dont chacun vient d'une forme réelle du dépôt : **18 / 18**.
+`TOLEREES` est vide, et c'est un fait mesuré — `de_50.step`, seule promesse sans fichier,
+a été livré hier. Le contrôle a déjà servi : rejoué après #351, il a refusé l'encart que je
+venais d'écrire dans `4e_C1.1` (#354).
+
+**`controle_gestes_outil.py`** mesure ce que Pascal a vu dans `4e_C1.1` : un encart « les
+quatre gestes » doit nommer un outil que sa page emploie — le mot doit apparaître dans le texte
+visible hors de l'encart, pas seulement dans un `<script>`. 22 encarts, 0 écart aujourd'hui ;
+un outil inconnu est refusé plutôt que deviné. Banc **7 / 7**, dont le cas du 08/09 mot pour mot.
+
+Ni l'un ni l'autre ne juge le contenu : qu'un fichier serve à la séquence, que quatre gestes
+soient justes pour telle version d'un logiciel, cela se lit devant l'écran.
