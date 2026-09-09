@@ -12562,3 +12562,11 @@ un outil inconnu est refusé plutôt que deviné. Banc **7 / 7**, dont le cas du
 
 Ni l'un ni l'autre ne juge le contenu : qu'un fichier serve à la séquence, que quatre gestes
 soient justes pour telle version d'un logiciel, cela se lit devant l'écran.
+
+## 2026-09-09 — La ligne « Banque » d'un QCM dit ce qu'il contient : le thème 1
+
+Trois QCM du thème 1 — `3e_C1.5`, `4e_C1.4`, `5e_C1.3` — ouvraient leur tableau de questions par
+*« Sainte-Luce 5e : 30 questions sur le seul code 5e_C1.2, … 8 illustrées »*. Aucun des trois
+n'est de Sainte-Luce, aucun ne porte 5e_C1.2, et ils ont 0, 0 et 3 images. La ligne est
+recalculée depuis les questions elles-mêmes et cite l'ancienne ; les trois QCM rouverts chargent
+sans erreur. Mesure d'ensemble et contrôle : voir l'entrée du thème 3 et la PR du thème 2.
