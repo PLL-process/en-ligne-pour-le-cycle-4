@@ -12570,3 +12570,16 @@ Trois QCM du thème 1 — `3e_C1.5`, `4e_C1.4`, `5e_C1.3` — ouvraient leur tab
 n'est de Sainte-Luce, aucun ne porte 5e_C1.2, et ils ont 0, 0 et 3 images. La ligne est
 recalculée depuis les questions elles-mêmes et cite l'ancienne ; les trois QCM rouverts chargent
 sans erreur. Mesure d'ensemble et contrôle : voir l'entrée du thème 3 et la PR du thème 2.
+## 2026-09-09 — La ligne « Banque » d'un QCM dit ce qu'il contient : le thème 3
+
+Le 31/08, trois QCM de `4e_C4.7` portaient un commentaire de bilan faux. Mesuré aujourd'hui sur
+les 62 QCM qui en ont un : **30 mentent**, dont **21 au thème 3** — et ces 21 répètent mot pour
+mot `10 4e_C8.1 + 10 4e_C8.2 + 10 4e_C8.3, 3 illustrees` en tête de QCM de `5e_C7.2`, `3e_C8.2`
+ou `4e_C7.6`, qui n'ont ni ces codes ni une seule image. Un gabarit copié vingt et une fois,
+jamais relu. Un commentaire qui ment est pire qu'aucun : le prochain lecteur le croit.
+
+Chaque ligne est **recalculée depuis les questions elles-mêmes** (nombre, répartition par `c`,
+images) et garde en mémoire ce que disait l'ancienne, pour qu'on sache d'où venait l'erreur.
+Rien d'autre ne change : les 21 QCM rouverts dans le navigateur chargent sans erreur, leur
+tableau `QUESTIONS` intact. `controle_banque_qcm.py` (PR sœur du thème 2, avec son banc)
+comparera désormais chaque ligne au tableau qu'elle ouvre.
