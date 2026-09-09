@@ -1,6 +1,6 @@
 # Fiche pédagogique — 4e_C1.1 à C1.3 « Tsinghua : concevoir avant de connecter »
 
-**Niveau** 4e · **Thème 1** · **Durée** 4 séances de 55 min (205 min annoncés pour 220)
+**Niveau** 4e · **Thème 1** · **Durée** 4 séances de 55 min (200 min annoncés pour 220 — séance 4 : 45 + 10 = 55 min ; l'activité 4 était annoncée à 50 min, ce qui faisait 60 avec le bilan dans un créneau de 55 — audit du 08/09)
 **Matériel** un **thermomètre** (mesure de 10 min en séance 1, comprise dans l'activité) · un
 tableur, utile mais **pas indispensable**
 
@@ -40,7 +40,7 @@ elle procède.
 | 1 | **Lire avant de calculer** | 45 min | la mesure de la cour + trois lignes sur la nature des chiffres |
 | 2 | **Estimer, et dire ce que l'estimation vaut** | 50 min | le ratio, l'estimation, **et l'avertissement en trois points** |
 | 3 | **Comparer sans confondre les périmètres** | 45 min | quatre équivalences avec **leur unité exacte** |
-| 4 | **Du nombre au besoin technique** | 50 min | **cinq exigences vérifiables**, sans aucun composant |
+| 4 | **Du nombre au besoin technique** | 45 min | **cinq exigences vérifiables**, sans aucun composant |
 | Bilan | Hypothèse, métacognition, auto-positionnement sur les 3 codes | 10 min | — |
 
 ## 🔧 La mesure dans la cour — dix minutes, et elle n'est pas facultative

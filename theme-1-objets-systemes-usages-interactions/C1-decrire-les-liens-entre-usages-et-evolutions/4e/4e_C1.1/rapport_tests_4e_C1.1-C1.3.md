@@ -31,7 +31,7 @@ classe, et **la faisabilité de la mesure de température**, qui se vérifie dan
 
 ## Vérificateur de règles : 8 sur 8
 
-n°23 (205 min pour 220), n°26, n°29, n°30, n°31 (5 versions étayées pour 11 zones), n°33, n°34,
+n°23 (200 min pour 220), n°26, n°29, n°30, n°31 (5 versions étayées pour 11 zones), n°33, n°34,
 n°42 (les trois formulations sont celles du référentiel).
 
 ## Trois incidents, tous instructifs

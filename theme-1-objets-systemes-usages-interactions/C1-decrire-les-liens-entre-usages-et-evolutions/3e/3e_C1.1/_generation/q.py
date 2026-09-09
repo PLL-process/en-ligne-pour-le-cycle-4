@@ -204,7 +204,7 @@ q("C1.2", "Ce que Herschel cherchait", "En 1800, William Herschel place des ther
   "Une découverte se fait souvent en cherchant autre chose.",
   img=IMG_HERSCHEL),
 
-q("C1.2", "Le délai", "Plus de deux siècles séparent la découverte de l'infrarouge du drone thermique. Ce délai montre que…",
+q("C1.2", "Le délai", "Plus d'un siècle sépare la découverte de l'infrarouge des premières caméras thermiques ; deux, du drone thermique. Ce délai montre que…",
   ["une découverte devient une technique quand une capacité de fabrication ET un besoin la rencontrent",
    "les scientifiques d'autrefois travaillaient lentement",
    "la découverte était inutile",

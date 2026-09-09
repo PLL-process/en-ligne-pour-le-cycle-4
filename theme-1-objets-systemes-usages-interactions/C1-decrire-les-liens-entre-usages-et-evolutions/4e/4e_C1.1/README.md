@@ -22,7 +22,7 @@ sont hétérogènes, les périmètres sont incompatibles. C'est précisément ce
 | 3 | **Comparer sans confondre les périmètres** | 45 min |
 | 4 | **Du nombre au besoin technique** | 50 min |
 
-205 min annoncés pour 220 disponibles.
+200 min annoncés pour 220 disponibles.
 
 ## Ce que la séquence démontre
 

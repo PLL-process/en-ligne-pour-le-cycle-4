@@ -12838,3 +12838,58 @@ et ne dit pas si la fonction fait ce que le bouton promet — cela reste au banc
 > `onclick` existe dans la page, et le contrôle le lit — mais seul le banc du lot, au navigateur,
 > dit si le bouton FAIT ce qu'il promet. Six « Vérifier » et un « Sauvegarder » sont restés morts
 > deux semaines dans des lots sans banc.
+
+## 2026-09-09 — L'audit externe du thème 1, deuxième passe, complément : ce que le fichier 01 mesurait encore
+
+Deux passes ont couru en parallèle sur les fichiers 01 et 03 de l'audit, dans deux sessions, sans se
+voir : la branche `fable/theme-1/reformulations-audit` (entrée ci-dessus) et celle-ci. Plutôt que
+deux PR qui se contredisent sur vingt fichiers, celle-ci est **rebâtie sur l'autre** et ne garde que
+ce que l'autre n'avait pas mesuré. Même règle de lecture (n°293).
+
+### Ce que le fichier 01 signale et qui se mesure
+
+| ID | Verdict | Ce que j'ai mesuré | Ce qui est fait |
+|---|---|---|---|
+| B02 | **confirmé** | 4e_C1.1, séance 4 : activité 4 (~50) + bilan (10) = 60 dans 55. | Activité 4 à ~45 ; fiche, README, rapport : 200 min pour 220. Même remède qu'A10. |
+| B03 | **confirmé** | 3e_C1.1, séance 5 : activité 5 (~50) + bilan (10) = 60 dans 55. | Activité 5 à ~45 ; fiche et synthèse professeur : 250 pour 275. |
+| B04 | **confirmé** | 5e_C2.1 : activité 2 annoncée ~55 dans la page, ~50 dans la fiche — un créneau entier sans lancement. | La page dit ~50, comme la fiche (149 min). |
+| B05 | **confirmé** | 3e_C2.1, tableau de bord `TACHES` : la séance 2 porte les activités 2 et 3, 35 + 30 = 65 dans 55, pendant que la séance 3 en a 40. | 30 + 25 ; la fiche détaille séance par séance (140 min). |
+| B07 | **confirmé** | 4e_C1.4, tableau d'ouverture : la ligne Technologie annonçait « C1→C3 » pour un lot 4e_C1.4, et « Programmer un test d'URL » comme trace — le bloc Python, hors parcours. | La ligne porte la formulation du référentiel (le vérificateur n°42 l'exige, et l'a mesuré) et dit que le bloc Python n'atteste pas cette compétence. |
+| B08 | **confirmé, nuancé** | 3e_C1.1, activité 1 b : « deux siècles entre Herschel et le drone » — vrai du drone, mais la page fait comme si rien n'était venu entre, alors que son propre régime 2 (le satellite) utilise l'infrarouge. | Page, QCM « Le délai », q.py, synthèse élève : plus d'un siècle avant les premières caméras thermiques, puis les satellites, puis le drone. Le SVG, qui parle de « cet usage », reste juste. |
+| B09 | **confirmé** | 5e_C3.1, synthèse professeur, « le fil conducteur : la masse » : « la distance de freinage croît elle aussi », « une même grandeur explique plusieurs phénomènes » — la causalité qu'A06 avait retirée de la page revenait par la synthèse. | « varie dans le même sens, sans qu'on puisse dire que c'est la masse » ; « explique un phénomène et en accompagne un autre ». |
+| B10 | **confirmé, un mot** | 3e_C3.1, activité 3 : « le plus défavorable en fin d'après-midi » posé comme une règle ; c'est celui de ce local. | « — ici, la fin d'après-midi » dans l'option, la correction, le banc et le texte. |
+| B11 | **pas de ma main** | 4e_C3.1, activité 3 c : un protocole rédigé est exigé pour valider (ligne 498, vérificateur ligne 843) quand 4e_C3.3 dit « à partir d'un protocole donné » et que la page écrit « le protocole de mesure aussi [était fourni] ». | Choix d'anticipation sur la 3e ; transmis avec les lignes. |
+| B12 | **pas de ma main** | 4e_C1.1, activité 4 : aucun nom de composant admis dans une exigence (vérificateur, ligne 1113). | C'est le geste du niveau, dit comme tel ; transmis. |
+| B13 | **pas de ma main** | 3e_C1.5 : problématique centrée vie privée pour un lot C1.5 (= A14) ; 3e_C2.1 : titre de l'activité 3 « que seul un algorigramme montre » (= A12) ; 5e_C3.1, activité 4 : le contrôle ne lit pas le classeur ; 3e_C3.1 : statut « protocole préparé / exécuté » (= A02). | Transmis. |
+| B14 | **non retenu** | 4e_C3.1 : « précision » pour la résolution. Le mot est celui du niveau, et la page dit « c'est la résolution de l'appareil » là où ça compte. | Rien. |
+
+### Là où les deux passes ne disent pas la même chose
+
+- **R10** (« En ville, la masse commande la consommation ») : l'autre passe ne retient pas —
+  les données (48 kg contre 1 350) justifient « cause principale » ; celle-ci aurait écrit « pèse le
+  plus — sans être seule en cause », parce que la maxime, seule dans le lexique et la matrice
+  (« La masse commande la consommation »), perd le « en ville » de l'explication. Les deux se
+  tiennent : **à Pascal**.
+- **R12** : l'autre passe écrit « parmi les trois modes, seul l'algorigramme montre l'ordre » ;
+  celle-ci aurait écrit « un test manquant ne se voit que là où les tests sont dessinés » — parce
+  qu'une chronologie montre aussi l'ordre, et que c'est le test absent que seul l'algorigramme
+  dessine. L'autre est en place ; celle-ci est une nuance de plus, **à Pascal**.
+
+### Trouvé en vérifiant
+
+- **`q.py` n'est plus la source de 5e_C1.1** : 7 questions et une cinquantaine d'options ou
+  d'explications du QCM publié n'y figurent plus mot pour mot (le QCM a été resserré à la main, le
+  générateur jamais rejoué). Reporter ce qui se reporte encore, c'est ce que font les deux passes ;
+  rejouer `build_qcm.py` sur ce lot **effacerait** des corrections. Les six autres `q.py` du thème
+  sont fidèles (mesuré : 0 ou 1 chaîne absente).
+- **`mesurer_temps_seances.py` compte 150 pour 5e_C1.2** : il additionne le sous-bloc « Version
+  réelle (5 min) » de l'activité 1, qui est dedans. À corriger dans l'outil, pas dans la page.
+
+**Mesuré** : bancs 3e_C1.1 41/41, 4e_C1.1 42/42, 5e_C2.1 47/47, 3e_C2.1 54/54, 3e_C3.1 30/30,
+5e_C3.1 29/29 ; `verif_regles_audit` sans manquement nouveau ; longueurs, formulations : verts.
+
+> **Règle d'or n°296 — une maxime se relit là où elle atterrit.** Un « à retenir » écrit pour
+> conclure une question devient l'entrée d'un lexique, une ligne de matrice, une phrase de synthèse
+> professeur — et ce qui passait comme chute devient une loi une fois seul. Quatre corrections de la
+> première passe (A04, A05, A06, A09) avaient été faites sur la page et laissées dans le QCM ou la
+> synthèse. On corrige une formulation partout où elle est reprise, et l'on grep avant de conclure.

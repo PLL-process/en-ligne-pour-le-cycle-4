@@ -94,7 +94,7 @@ with sync_playwright() as p:
     # ── le vérificateur de l'activité 3 juge un PROTOCOLE, pas quatre chiffres (audit du 08/09, A02) ──
     ATT3 = {"a3_1":"la grandeur mesurée, son unité et l'appareil",
             "a3_2":"ne suffit pas : l'air est plus chaud près des machines et sous le plafond",
-            "a3_3":"à plusieurs moments de la journée, dont le plus défavorable en fin d'après-midi",
+            "a3_3":"à plusieurs moments de la journée, dont le plus défavorable — ici, la fin d'après-midi",
             "a3_4":"la position du capteur, la porte fermée, et le nombre de machines allumées",
             "a3_5":"que la solution doit faire gagner au moins 9 °C au moment le plus défavorable",
             "a3_6":"ne dit rien du pic d'été : il faut préciser les conditions extérieures dans le protocole"}
